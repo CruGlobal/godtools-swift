@@ -50,6 +50,9 @@ enum FlowStep {
     case shareToolTappedFromShareToolMenu(resource: ResourceModel, language: LanguageModel, pageNumber: Int)
     case remoteShareToolTappedFromShareToolMenu
     
+    // share tool screen tutorial
+    case closeTappedFromShareToolScreenTutorial
+    
     // tutorial
     case closeTappedFromTutorial
     case startUsingGodToolsTappedFromTutorial

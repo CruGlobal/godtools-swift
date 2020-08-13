@@ -135,7 +135,6 @@ class TractViewModel: NSObject, TractViewModelType {
         tractRemoteShareSubscriber.navigationEventSignal.addObserver(self) { [weak self] (navigationEvent: TractRemoteShareNavigationEvent) in
             DispatchQueue.main.async { [weak self] in
                 self?.handleDidReceiveRemoteShareNavigationEvent(navigationEvent: navigationEvent)
-                print("\n DID RECEIVE NAVIGATION EVENT")
             }
         }
     }
@@ -148,8 +147,6 @@ class TractViewModel: NSObject, TractViewModelType {
                 
         tractRemoteShareSubscriber.subscribe(channelId: channelId) { [weak self] (error: TractRemoteShareSubscriberError?) in
             
-            print("\n DID SUBSCRIBE")
-            print("  error: \(error)")
         }
     }
     

@@ -13,7 +13,14 @@
         </array>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ShareToolScreenTutorialView" customModule="godtools" customModuleProvider="target">
+            <connections>
+                <outlet property="continueButton" destination="7EH-YG-4MN" id="xW0-2A-qGx"/>
+                <outlet property="pageControl" destination="Qqq-O9-MWg" id="D1h-YB-Ln1"/>
+                <outlet property="tutorialPagesView" destination="QTh-vy-oTR" id="5T2-9m-ZC5"/>
+                <outlet property="view" destination="iN0-l3-epB" id="EHd-AE-fBA"/>
+            </connections>
+        </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>

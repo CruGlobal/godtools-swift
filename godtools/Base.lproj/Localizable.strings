@@ -103,6 +103,7 @@ The app can be downloaded from https://godtoolsapp.com";
 "toolinfo_opentool" = "Open Tool";
 "add_to_favorites" = "Add to Favorites";
 "remove_from_favorites" = "Remove from Favorites";
+"share_link" = "Share link";
 
 // Alerts
 "error" = "Error";
@@ -204,3 +205,11 @@ The app can be downloaded from https://godtoolsapp.com";
 "tool_category_conversation_starter" = "Conversation Starter";
 "tool_category_growth" = "Christian Growth";
 "tool_category_training" = "Training";
+
+// Share Tool Screen Tutorial
+"share_tool_screen_tutorial.share_your_screen.title" = "Share your screen";
+"share_tool_screen_tutorial.share_your_screen.message" = "This option will send a link to this tool to a friend. When the link is opened it will start a screen sharing session.";
+"share_tool_screen_tutorial.mirrored_experience.title" = "Mirrored experience";
+"share_tool_screen_tutorial.mirrored_experience.message" = "As you scroll the tool on your phone, your friend's screen will respond in the same way. This allows you to walk through a tool together on 2 devices at the same time.";
+"share_tool_screen_tutorial.get_started.title" = "Get started";
+"share_tool_screen_tutorial.get_started.message" = "Send the link to one or more people to start a screen sharing session now.\nHave them download the GodTools app first before opening the link";

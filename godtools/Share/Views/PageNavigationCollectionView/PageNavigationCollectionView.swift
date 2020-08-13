@@ -101,6 +101,14 @@ class PageNavigationCollectionView: UIView, NibBased {
         )
     }
     
+    func scrollToFirstPage(animated: Bool) {
+        scrollToPage(page: 0, animated: animated)
+    }
+    
+    func scrollToLastPage(animated: Bool) {
+        scrollToPage(page: numberOfPages - 1, animated: animated)
+    }
+    
     // MARK: -
     
     var gestureScrollingEnabled: Bool = true {

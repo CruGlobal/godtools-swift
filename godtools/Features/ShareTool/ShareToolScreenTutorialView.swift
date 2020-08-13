@@ -1,5 +1,5 @@
 //
-//  ShareToolTutorialView.swift
+//  ShareToolScreenTutorialView.swift
 //  godtools
 //
 //  Created by Levi Eggert on 8/12/20.
@@ -7,21 +7,22 @@
 //
 
 import UIKit
+import YoutubePlayer_in_WKWebView
 
-class ShareToolTutorialView: UIViewController {
+class ShareToolScreenTutorialView: UIViewController {
     
-    private let viewModel: ShareToolTutorialViewModelType
+    private let viewModel: ShareToolScreenTutorialViewModelType
     
-    private var backButton: UIBarButtonItem?
     private var closeButton: UIBarButtonItem?
+    private var skipButton: UIBarButtonItem?
     
     @IBOutlet weak private var tutorialPagesView: PageNavigationCollectionView!
     @IBOutlet weak private var continueButton: OnboardPrimaryButton!
     @IBOutlet weak private var pageControl: UIPageControl!
     
-    required init(viewModel: ShareToolTutorialViewModelType) {
+    required init(viewModel: ShareToolScreenTutorialViewModelType) {
         self.viewModel = viewModel
-        super.init(nibName: String(describing: TutorialView.self), bundle: nil)
+        super.init(nibName: String(describing: ShareToolScreenTutorialView.self), bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -40,7 +41,7 @@ class ShareToolTutorialView: UIViewController {
         setupBinding()
         
         closeButton = addBarButtonItem(
-            to: .right,
+            to: .left,
             image: UIImage(named: "nav_item_close"),
             color: nil,
             target: self,
@@ -67,53 +68,56 @@ class ShareToolTutorialView: UIViewController {
     
     private func setupBinding() {
         
-//        viewModel.tutorialItems.addObserver(self) { [weak self] (tutorialItems: [TutorialItem]) in
-//            self?.pageControl.numberOfPages = tutorialItems.count
-//            self?.tutorialPagesView.reloadData()
-//        }
+        viewModel.tutorialItems.addObserver(self) { [weak self] (tutorialItems: [TutorialItem]) in
+            self?.pageControl.numberOfPages = tutorialItems.count
+            self?.tutorialPagesView.reloadData()
+        }
     }
     
     private func handleTutorialPageChange(page: Int) {
         
-//        pageControl.currentPage = page
-//
-//        setBackButton(hidden: page == 0)
-//
-//        let continueTitle: String
-//        if tutorialPagesView.isOnLastPage {
-//            continueTitle = viewModel.startUsingGodToolsTitle
-//        }
-//        else {
-//            continueTitle = viewModel.continueTitle
-//        }
-//
-//        continueButton.setTitle(continueTitle, for: .normal)
+        pageControl.currentPage = page
+
+        let continueTitle: String
+        if tutorialPagesView.isOnLastPage {
+            setSkipButton(hidden: true)
+            continueTitle = viewModel.shareLinkTitle
+        }
+        else {
+            setSkipButton(hidden: false)
+            continueTitle = viewModel.continueTitle
+        }
+
+        continueButton.setTitle(continueTitle, for: .normal)
     }
     
-    private func setBackButton(hidden: Bool) {
+    private func setSkipButton(hidden: Bool) {
         
-        let backButtonPosition: ButtonItemPosition = .left
+        let buttonPosition: ButtonItemPosition = .right
         
-        if backButton == nil && !hidden {
-            backButton = addBarButtonItem(
-                to: backButtonPosition,
-                image: UIImage(named: "nav_item_back"),
-                color: nil,
+        if skipButton == nil && !hidden {
+            
+            skipButton = addBarButtonItem(
+                to: buttonPosition,
+                title: viewModel.skipTitle,
+                style: .done,
+                color: .gtBlue,
                 target: self,
-                action: #selector(handleBack(barButtonItem:))
+                action: #selector(handleSkip(barButtonItem:))
             )
         }
-        else if let backButton = backButton {
-            hidden ? removeBarButtonItem(item: backButton, barPosition: backButtonPosition) : addBarButtonItem(item: backButton, barPosition: backButtonPosition)
+        else if let skipButton = skipButton {
+            hidden ? removeBarButtonItem(item: skipButton, barPosition: buttonPosition) : addBarButtonItem(item: skipButton, barPosition: buttonPosition)
         }
-    }
-    
-    @objc func handleBack(barButtonItem: UIBarButtonItem) {
-        tutorialPagesView.scrollToPreviousPage(animated: true)
     }
     
     @objc func handleClose(barButtonItem: UIBarButtonItem) {
         viewModel.closeTapped()
+    }
+    
+    @objc func handleSkip(barButtonItem: UIBarButtonItem) {
+        viewModel.skipTapped()
+        tutorialPagesView.scrollToLastPage(animated: true)
     }
     
     @objc func handlePageControlChanged() {
@@ -128,10 +132,10 @@ class ShareToolTutorialView: UIViewController {
 
 // MARK: - PageNavigationCollectionViewDelegate
 
-extension ShareToolTutorialView: PageNavigationCollectionViewDelegate {
+extension ShareToolScreenTutorialView: PageNavigationCollectionViewDelegate {
     
     func pageNavigationNumberOfPages(pageNavigation: PageNavigationCollectionView) -> Int {
-        return 0//return viewModel.tutorialItems.value.count
+        return viewModel.tutorialItems.value.count
     }
     
     func pageNavigation(pageNavigation: PageNavigationCollectionView, cellForPageAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -140,13 +144,13 @@ extension ShareToolTutorialView: PageNavigationCollectionViewDelegate {
             cellReuseIdentifier: TutorialCell.reuseIdentifier,
             indexPath: indexPath) as! TutorialCell
         
-//        let tutorialItem: TutorialItem = viewModel.tutorialItems.value[indexPath.item]
-//        let cellViewModel = TutorialCellViewModel(
-//            item: tutorialItem,
-//            deviceLanguage: viewModel.deviceLanguage
-//        )
-//
-//        cell.configure(viewModel: cellViewModel, delegate: self)
+        let tutorialItem: TutorialItem = viewModel.tutorialItems.value[indexPath.item]
+        let cellViewModel = TutorialCellViewModel(
+            item: tutorialItem,
+            customViewBuilder: viewModel.customViewBuilder
+        )
+
+        cell.configure(viewModel: cellViewModel, delegate: self)
         
         return cell
     }
@@ -173,5 +177,13 @@ extension ShareToolTutorialView: PageNavigationCollectionViewDelegate {
         pageControl.currentPage = page
         
         viewModel.pageDidAppear(page: page)
+    }
+}
+
+// MARK: - TutorialCellDelegate
+
+extension ShareToolScreenTutorialView: TutorialCellDelegate {
+    func tutorialCellVideoPlayer(cell: TutorialCell, didChangeTo state: WKYTPlayerState) {
+
     }
 }

@@ -8,8 +8,14 @@
 
 import Foundation
 
-protocol ShareToolTutorialViewModelType {
+protocol ShareToolScreenTutorialViewModelType {
         
+    var customViewBuilder: CustomViewBuilderType { get }
+    var tutorialItems: ObservableValue<[TutorialItem]> { get }
+    var skipTitle: String { get }
+    var continueTitle: String { get }
+    var shareLinkTitle: String { get }
+    
     func closeTapped()
     func skipTapped()
     func pageDidChange(page: Int)

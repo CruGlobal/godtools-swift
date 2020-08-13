@@ -144,7 +144,7 @@ extension TutorialView: PageNavigationCollectionViewDelegate {
         let tutorialItem: TutorialItem = viewModel.tutorialItems.value[indexPath.item]
         let cellViewModel = TutorialCellViewModel(
             item: tutorialItem,
-            deviceLanguage: viewModel.deviceLanguage
+            customViewBuilder: viewModel.customViewBuilder
         )
         
         cell.configure(viewModel: cellViewModel, delegate: self)

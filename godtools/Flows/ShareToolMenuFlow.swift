@@ -10,11 +10,14 @@ import UIKit
 
 class ShareToolMenuFlow: Flow {
 
+    private weak var flowDelegate: FlowDelegate?
+    
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
-    required init(appDiContainer: AppDiContainer, navigationController: UINavigationController, resource: ResourceModel, language: LanguageModel, pageNumber: Int) {
+    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, navigationController: UINavigationController, resource: ResourceModel, language: LanguageModel, pageNumber: Int) {
         
+        self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = navigationController
         
@@ -53,7 +56,27 @@ class ShareToolMenuFlow: Flow {
             )
             
         case .remoteShareToolTappedFromShareToolMenu:
-            break
+            
+            let tutorialItemsProvider = ShareToolScreenTutorialItemProvider(localizationServices: appDiContainer.localizationServices)
+                        
+            let viewModel = ShareToolScreenTutorialViewModel(
+                flowDelegate: self,
+                localizationServices: appDiContainer.localizationServices,
+                tutorialItemsProvider: tutorialItemsProvider
+            )
+
+            let view = ShareToolScreenTutorialView(viewModel: viewModel)
+            let modal = ModalNavigationController(rootView: view)
+
+            navigationController.present(
+                modal,
+                animated: true,
+                completion: nil
+            )
+            
+        case .closeTappedFromShareToolScreenTutorial:
+            navigationController.dismiss(animated: true, completion: nil)
+            flowDelegate?.navigate(step: .closeTappedFromShareToolScreenTutorial)
             
         default:
             break

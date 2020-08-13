@@ -139,6 +139,7 @@ class ToolsFlow: Flow {
         case .shareMenuTappedFromTract(let resource, let language, let pageNumber):
             
             let shareToolMenuFlow = ShareToolMenuFlow(
+                flowDelegate: self,
                 appDiContainer: appDiContainer,
                 navigationController: navigationController,
                 resource: resource,
@@ -147,6 +148,9 @@ class ToolsFlow: Flow {
             )
             
             self.shareToolMenuFlow = shareToolMenuFlow
+            
+        case .closeTappedFromShareToolScreenTutorial:
+            self.shareToolMenuFlow = nil
             
         case .openToolTappedFromToolDetails(let resource):
             navigateToTool(resource: resource)
