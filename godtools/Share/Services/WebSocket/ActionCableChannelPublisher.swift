@@ -14,8 +14,9 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherType {
     private let loggingEnabled: Bool
     
     private var channelIdToCreate: String?
-    private var isCreatingChannelIdForPublish: String?
     private var isObservingJsonSignal: Bool = false
+    
+    let didCreateChannelForPublish: SignalValue<String> = SignalValue()
     
     required init(webSocket: WebSocketType, loggingEnabled: Bool) {
         
@@ -26,7 +27,9 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherType {
     }
     
     deinit {
+        webSocket.didConnectSignal.removeObserver(self)
         removeJsonSignalObserver()
+        webSocket.disconnect()
     }
     
     func createChannelForPublish(url: URL, channelId: String) {
@@ -81,9 +84,7 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherType {
         }
         
         addJsonSignalObserver()
-        
-        isCreatingChannelIdForPublish = channelId
-        
+                
         let strChannel = "{ \"channel\": \"PublishChannel\",\"channelId\": \"\(channelId)\" }"
         let message = ["command" : "subscribe", "identifier": strChannel]
 
@@ -103,16 +104,28 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherType {
         
         if loggingEnabled {
             print("\n ActionCableChannelPublisher: handleDidReceiveJson() \(json)")
+            print("  channelIdToCreate: \(String(describing: channelIdToCreate))")
         }
-        
-        if let type = json["type"] as? String {
-            
-            if type == "welcome" {
+                        
+        let data: [String: Any]? = (json["message"] as? [String: Any])?["data"] as? [String: Any]
                 
-            }
-            else if type == "confirm_subscription" {
-
+        if let data = data, let type = data["type"] as? String {
+                
+            if type == "publisher-info", let subscriberChannelId = (data["attributes"] as? [String: Any])?["subscriberChannelId"] as? String {
+                                
+                if loggingEnabled {
+                    print("  channelIdToCreate: \(String(describing: channelIdToCreate))")
+                    print("  subscriberChannelId: \(subscriberChannelId)")
+                }
+                
+                handleDidCreateSubscriberChannelId(subscriberChannelId: subscriberChannelId)
             }
         }
+    }
+    
+    private func handleDidCreateSubscriberChannelId(subscriberChannelId: String) {
+        
+        channelIdToCreate = nil
+        didCreateChannelForPublish.accept(value: subscriberChannelId)
     }
 }

@@ -10,6 +10,8 @@ import Foundation
 
 protocol WebSocketChannelPublisherType {
     
+    var didCreateChannelForPublish: SignalValue<String> { get }
+    
     init(webSocket: WebSocketType, loggingEnabled: Bool)
     
     func createChannelForPublish(url: URL, channelId: String)

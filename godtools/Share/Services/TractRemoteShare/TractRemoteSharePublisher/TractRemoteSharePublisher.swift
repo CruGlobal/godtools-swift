@@ -10,10 +10,15 @@ import Foundation
 
 class TractRemoteSharePublisher: NSObject {
     
+    typealias CreateNewPublisherCompletion = ((_ subscriberChannelId: String) -> Void)
+    
     private let remoteUrl: URL
     private let webSocket: WebSocketType
     private let webSocketChannelPublisher: WebSocketChannelPublisherType
     private let loggingEnabled: Bool
+    
+    private var createNewPublisherBlock: CreateNewPublisherCompletion?
+    private var isObservingSignals: Bool = false
     
     required init(config: ConfigType, webSocket: WebSocketType, webSocketChannelPublisher: WebSocketChannelPublisherType, loggingEnabled: Bool) {
         
@@ -26,17 +31,48 @@ class TractRemoteSharePublisher: NSObject {
     }
     
     deinit {
-
+        
+        createNewPublisherBlock = nil
+        removeObsevers()
     }
     
     var webSocketIsConnected: Bool {
         return webSocket.isConnected
     }
     
-    func createNewPublisher() {
+    func createNewPublisher(complete: @escaping CreateNewPublisherCompletion) {
+        
+        createNewPublisherBlock = complete
+        
+        addObservers()
         
         let channelId: String = UUID().uuidString
         
         webSocketChannelPublisher.createChannelForPublish(url: remoteUrl, channelId: channelId)
+    }
+    
+    // MARK: - Observers
+    
+    private func addObservers() {
+        
+        if !isObservingSignals {
+            
+            isObservingSignals = true
+            
+            webSocketChannelPublisher.didCreateChannelForPublish.addObserver(self) { [weak self] (subscriberChannelId: String) in
+                
+                self?.createNewPublisherBlock?(subscriberChannelId)
+            }
+        }
+    }
+    
+    private func removeObsevers() {
+        
+        if isObservingSignals {
+            
+            isObservingSignals = false
+            
+            webSocketChannelPublisher.didCreateChannelForPublish.removeObserver(self)
+        }
     }
 }
