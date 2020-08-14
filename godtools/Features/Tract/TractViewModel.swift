@@ -132,9 +132,13 @@ class TractViewModel: NSObject, TractViewModelType {
     
     private func setupBinding() {
         
+        var isFirstRemoteShareNavigationEvent: Bool = true
+        
         tractRemoteShareSubscriber.navigationEventSignal.addObserver(self) { [weak self] (navigationEvent: TractRemoteShareNavigationEvent) in
             DispatchQueue.main.async { [weak self] in
-                self?.handleDidReceiveRemoteShareNavigationEvent(navigationEvent: navigationEvent)
+                let animated: Bool = !isFirstRemoteShareNavigationEvent
+                self?.handleDidReceiveRemoteShareNavigationEvent(navigationEvent: navigationEvent, animated: animated)
+                isFirstRemoteShareNavigationEvent = false
             }
         }
     }
@@ -150,13 +154,13 @@ class TractViewModel: NSObject, TractViewModelType {
         }
     }
     
-    private func handleDidReceiveRemoteShareNavigationEvent(navigationEvent: TractRemoteShareNavigationEvent) {
+    private func handleDidReceiveRemoteShareNavigationEvent(navigationEvent: TractRemoteShareNavigationEvent, animated: Bool = true) {
         
         if let page = navigationEvent.page {
             cachedTractRemoteShareNavigationEvents[page] = navigationEvent
-            currentTractPage.accept(value: AnimatableValue(value: page, animated: true))
+            currentTractPage.accept(value: AnimatableValue(value: page, animated: animated))
             if let cachedTractPage = getTractPageItem(page: page).tractPage {
-                cachedTractPage.setCard(card: navigationEvent.card, animated: true)
+                cachedTractPage.setCard(card: navigationEvent.card, animated: animated)
             }
         }
         

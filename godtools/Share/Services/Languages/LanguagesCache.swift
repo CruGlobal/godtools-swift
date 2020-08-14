@@ -44,6 +44,10 @@ class LanguagesCache {
     
     func getLanguage(realm: Realm, code: String) -> LanguageModel? {
         
+        guard !code.isEmpty else {
+            return nil
+        }
+        
         let lowercasedCode: String = code.lowercased()
         
         if let realmLanguage = realm.objects(RealmLanguage.self).filter(NSPredicate(format: "code".appending(" = [c] %@"), lowercasedCode)).first {

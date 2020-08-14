@@ -11,15 +11,17 @@ import Foundation
 class DeepLinkingService: NSObject {
     
     private let dataDownloader: InitialDataDownloader
+    private let loggingEnabled: Bool
     
     private var deepLinkUrl: URL?
         
     let processing: ObservableValue<Bool> = ObservableValue(value: false)
     let completed: ObservableValue<DeepLinkingType> = ObservableValue(value: .none)
     
-    required init(dataDownloader: InitialDataDownloader) {
+    required init(dataDownloader: InitialDataDownloader, loggingEnabled: Bool) {
         
         self.dataDownloader = dataDownloader
+        self.loggingEnabled = loggingEnabled
         
         super.init()
         
@@ -48,6 +50,10 @@ class DeepLinkingService: NSObject {
     }
     
     func processDeepLink(url: URL) {
+        
+        if loggingEnabled {
+            print("\n DeepLinkingService: processDeepLink() with url: \(url.absoluteString)")
+        }
         
         guard let host = url.host, !host.isEmpty else {
             return
@@ -100,8 +106,23 @@ class DeepLinkingService: NSObject {
             let key: String = keyValue[0]
             let value: String = keyValue[1]
             
-            if parallelLanguage == nil && key == "parallelLanguage" && !value.isEmpty, let queryParallelLanguage = dataDownloader.languagesCache.getLanguage(code: value) {
-                parallelLanguage = queryParallelLanguage
+            if key == "primaryLanguage" && !value.isEmpty {
+                let primaryLanguageCodes: [String] = value.components(separatedBy: ",")
+                for code in primaryLanguageCodes {
+                    if let cachedPrimaryLanguage = dataDownloader.languagesCache.getLanguage(code: code) {
+                        primaryLanguage = cachedPrimaryLanguage
+                        break
+                    }
+                }
+            }
+            else if key == "parallelLanguage" && !value.isEmpty {
+                let parallelLanguageCodes: [String] = value.components(separatedBy: ",")
+                for code in parallelLanguageCodes {
+                    if let cachedParallelLanguage = dataDownloader.languagesCache.getLanguage(code: code) {
+                        parallelLanguage = cachedParallelLanguage
+                        break
+                    }
+                }
             }
             else if key == "liveShareStream" {
                 liveShareStream = value
