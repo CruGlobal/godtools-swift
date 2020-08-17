@@ -12,6 +12,7 @@ class TractView: UIViewController {
         
     private let viewModel: TractViewModelType
             
+    private var remoteShareActiveNavItem: UIBarButtonItem?
     private var didLayoutSubviews: Bool = false
     private var didAddObservers: Bool = false
            
@@ -69,7 +70,7 @@ class TractView: UIViewController {
             target: self,
             action: #selector(handleShare(barButtonItem:))
         )
-        
+                
         languageControl?.addTarget(
             self,
             action: #selector(didChooseLanguage(segmentedControl:)),
@@ -124,6 +125,11 @@ class TractView: UIViewController {
             self?.title = title
         }
         
+        viewModel.remoteShareIsActive.addObserver(self) { [weak self] (isActive: Bool) in
+            
+            self?.setRemoteShareActiveNavItem(hidden: !isActive)
+        }
+        
         viewModel.selectedTractLanguage.addObserver(self) { [weak self] (tractLanguage: TractLanguage) in
             
             switch tractLanguage.languageType {
@@ -175,6 +181,36 @@ class TractView: UIViewController {
         ]
         
         navigationController?.navigationBar.tintColor = navBarControlColor
+    }
+    
+    private func setRemoteShareActiveNavItem(hidden: Bool) {
+        
+        let position: ButtonItemPosition = .right
+        
+        if hidden, let remoteShareActiveNavItem = remoteShareActiveNavItem {
+            removeBarButtonItem(item: remoteShareActiveNavItem, barPosition: position)
+            self.remoteShareActiveNavItem = nil
+        }
+        else if !hidden && remoteShareActiveNavItem == nil {
+            
+            let index: Int
+            
+            if rightItemsCount == 0 {
+                index = 0
+            }
+            else {
+                index = rightItemsCount + 1
+            }
+            
+            remoteShareActiveNavItem = addBarButtonItem(
+                to: .right,
+                index: index,
+                image: ImageCatalog.shareToolRemoteSessionActive.image,
+                color: .white,
+                target: nil,
+                action: nil
+            )
+        }
     }
     
     private func setupChooseLanguageControl() {

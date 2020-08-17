@@ -53,4 +53,8 @@ class ShareToolScreenTutorialViewModel: ShareToolScreenTutorialViewModelType {
     func continueTapped() {
         
     }
+    
+    func shareLinkTapped() {
+        flowDelegate?.navigate(step: .shareLinkTappedFromShareToolScreenTutorial)
+    }
 }

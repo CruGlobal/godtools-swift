@@ -254,6 +254,10 @@ class AppDiContainer {
         )
     }
     
+    var tractRemoteShareURLBuilder: TractRemoteShareURLBuilder {
+        return TractRemoteShareURLBuilder()
+    }
+    
     var tractManager: TractManager {
         return TractManager(translationsFileCache: translationsFileCache, resourcesSHA256FileCache: resourcesSHA256FileCache)
     }

@@ -126,7 +126,13 @@ class ShareToolScreenTutorialView: UIViewController {
     
     @objc func handleContinue(button: UIButton) {
         tutorialPagesView.scrollToNextPage(animated: true)
-        viewModel.continueTapped()
+        
+        if tutorialPagesView.isOnLastPage {
+            viewModel.shareLinkTapped()
+        }
+        else {
+            viewModel.continueTapped()
+        }
     }
 }
 

@@ -10,7 +10,7 @@ import Foundation
 
 class TractRemoteSharePublisher: NSObject {
     
-    typealias CreateNewPublisherCompletion = ((_ subscriberChannelId: String) -> Void)
+    typealias CreateNewPublisherCompletion = ((_ channel: TractRemoteShareChannel) -> Void)
     
     private let remoteUrl: URL
     private let webSocket: WebSocketType
@@ -40,7 +40,7 @@ class TractRemoteSharePublisher: NSObject {
         return webSocket.isConnected
     }
     
-    func createNewPublisher(complete: @escaping CreateNewPublisherCompletion) {
+    func createNewSubscriberChannelIdForPublish(complete: @escaping CreateNewPublisherCompletion) {
         
         createNewPublisherBlock = complete
         
@@ -61,7 +61,11 @@ class TractRemoteSharePublisher: NSObject {
             
             webSocketChannelPublisher.didCreateChannelForPublish.addObserver(self) { [weak self] (subscriberChannelId: String) in
                 
-                self?.createNewPublisherBlock?(subscriberChannelId)
+                let channel = TractRemoteShareChannel(
+                    subscriberChannelId: subscriberChannelId
+                )
+                
+                self?.createNewPublisherBlock?(channel)
             }
         }
     }

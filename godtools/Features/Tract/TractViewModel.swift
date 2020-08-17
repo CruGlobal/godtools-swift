@@ -39,6 +39,7 @@ class TractViewModel: NSObject, TractViewModelType {
     let selectedTractLanguage: ObservableValue<TractLanguage>
     let tractXmlPageItems: ObservableValue<[TractXmlPageItem]> = ObservableValue(value: [])
     let currentTractPage: ObservableValue<AnimatableValue<Int>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
+    let remoteShareIsActive: ObservableValue<Bool> = ObservableValue(value: false)
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -158,6 +159,7 @@ class TractViewModel: NSObject, TractViewModelType {
                 
         tractRemoteShareSubscriber.subscribe(channelId: channelId) { [weak self] (error: TractRemoteShareSubscriberError?) in
             
+            self?.reloadRemoteShareIsActive()
         }
     }
     
@@ -185,6 +187,11 @@ class TractViewModel: NSObject, TractViewModelType {
                 }
             }
         }
+    }
+    
+    private func reloadRemoteShareIsActive() {
+        
+        remoteShareIsActive.accept(value: false)
     }
     
     private func loadTractXmlPages() {
@@ -250,7 +257,7 @@ class TractViewModel: NSObject, TractViewModelType {
     }
     
     func shareTapped() {
-        flowDelegate?.navigate(step: .shareMenuTappedFromTract(resource: resource, language: selectedTractLanguage.value.language, pageNumber: tractPage))
+        flowDelegate?.navigate(step: .shareMenuTappedFromTract(tractRemoteSharePublisher: tractRemoteSharePublisher, resource: resource, selectedLanguage: selectedTractLanguage.value.language, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, pageNumber: tractPage))
     }
     
     func primaryLanguageTapped() {

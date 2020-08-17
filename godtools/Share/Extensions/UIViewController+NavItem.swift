@@ -15,6 +15,10 @@ enum ButtonItemPosition {
 
 extension UIViewController {
     
+    var rightItemsCount: Int {
+        return navigationItem.rightBarButtonItems?.count ?? 0
+    }
+    
     func setNavBarLogo(image: UIImage?) {
         navigationItem.titleView = UIImageView(image: image)
     }
@@ -24,7 +28,7 @@ extension UIViewController {
         navigationItem.setHidesBackButton(true, animated: false)
     }
         
-    func addBarButtonItem(to barPosition: ButtonItemPosition, title: String?, style: UIBarButtonItem.Style?, color: UIColor?, target: Any?, action: Selector?) -> UIBarButtonItem {
+    func addBarButtonItem(to barPosition: ButtonItemPosition, index: Int? = nil, title: String?, style: UIBarButtonItem.Style?, color: UIColor?, target: Any?, action: Selector?) -> UIBarButtonItem {
         
         let buttonStyle: UIBarButtonItem.Style = style ?? .plain
         
@@ -35,15 +39,15 @@ extension UIViewController {
         
         switch barPosition {
         case .left:
-            addLeftBarButtonItem(item: item)
+            addLeftBarButtonItem(item: item, index: index)
         case .right:
-            addRightBarButtonItem(item: item)
+            addRightBarButtonItem(item: item, index: index)
         }
         
         return item
     }
     
-    func addBarButtonItem(to barPosition: ButtonItemPosition, image: UIImage?, color: UIColor?, target: Any?, action: Selector?) -> UIBarButtonItem {
+    func addBarButtonItem(to barPosition: ButtonItemPosition, index: Int? = nil, image: UIImage?, color: UIColor?, target: Any?, action: Selector?) -> UIBarButtonItem {
         
         let item = UIBarButtonItem(image: image, style: .plain, target: target, action: action)
         if let color = color {
@@ -52,24 +56,24 @@ extension UIViewController {
         
         switch barPosition {
         case .left:
-            addLeftBarButtonItem(item: item)
+            addLeftBarButtonItem(item: item, index: index)
         case .right:
-            addRightBarButtonItem(item: item)
+            addRightBarButtonItem(item: item, index: index)
         }
         
         return item
     }
     
-    func addBarButtonItem(item: UIBarButtonItem, barPosition: ButtonItemPosition) {
+    func addBarButtonItem(item: UIBarButtonItem, barPosition: ButtonItemPosition, index: Int? = nil) {
         switch barPosition {
         case .left:
-            addLeftBarButtonItem(item: item)
+            addLeftBarButtonItem(item: item, index: index)
         case .right:
-            addRightBarButtonItem(item: item)
+            addRightBarButtonItem(item: item, index: index)
         }
     }
     
-    func removeBarButtonItem(item: UIBarButtonItem, barPosition: ButtonItemPosition) {
+    func removeBarButtonItem(item: UIBarButtonItem, barPosition: ButtonItemPosition, index: Int? = nil) {
         switch barPosition {
         case .left:
             removeLeftBarButtonItem(item: item)
@@ -78,10 +82,15 @@ extension UIViewController {
         }
     }
     
-    private func addLeftBarButtonItem(item: UIBarButtonItem) {
+    private func addLeftBarButtonItem(item: UIBarButtonItem, index: Int?) {
         if var leftItems = navigationItem.leftBarButtonItems {
             if !leftItems.contains(item) {
-                leftItems.append(item)
+                if let index = index, index >= 0 && index < leftItems.count {
+                    leftItems.insert(item, at: index)
+                }
+                else {
+                    leftItems.append(item)
+                }
                 navigationItem.leftBarButtonItems = leftItems
             }
         }
@@ -104,10 +113,15 @@ extension UIViewController {
         }
     }
     
-    private func addRightBarButtonItem(item: UIBarButtonItem) {
+    private func addRightBarButtonItem(item: UIBarButtonItem, index: Int?) {
         if var rightItems = navigationItem.rightBarButtonItems {
             if !rightItems.contains(item) {
-                rightItems.append(item)
+                if let index = index, index >= 0 && index < rightItems.count {
+                    rightItems.insert(item, at: index)
+                }
+                else {
+                    rightItems.append(item)
+                }
                 navigationItem.rightBarButtonItems = rightItems
             }
         }

@@ -136,14 +136,17 @@ class ToolsFlow: Flow {
         case .homeTappedFromTract(let isScreenSharing):
             flowDelegate?.navigate(step: .homeTappedFromTract(isScreenSharing: isScreenSharing))
             
-        case .shareMenuTappedFromTract(let resource, let language, let pageNumber):
+        case .shareMenuTappedFromTract(let tractRemoteSharePublisher, let resource, let selectedLanguage, let primaryLanguage, let parallelLanguage, let pageNumber):
             
             let shareToolMenuFlow = ShareToolMenuFlow(
                 flowDelegate: self,
                 appDiContainer: appDiContainer,
                 navigationController: navigationController,
+                tractRemoteSharePublisher: tractRemoteSharePublisher,
                 resource: resource,
-                language: language,
+                selectedLanguage: selectedLanguage,
+                primaryLanguage: primaryLanguage,
+                parallelLanguage: parallelLanguage,
                 pageNumber: pageNumber
             )
             
@@ -151,7 +154,7 @@ class ToolsFlow: Flow {
             
         case .closeTappedFromShareToolScreenTutorial:
             self.shareToolMenuFlow = nil
-            
+                        
         case .openToolTappedFromToolDetails(let resource):
             navigateToTool(resource: resource)
             

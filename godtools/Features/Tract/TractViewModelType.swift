@@ -21,6 +21,7 @@ protocol TractViewModelType {
     var tractXmlPageItems: ObservableValue<[TractXmlPageItem]> { get }
     var currentTractPage: ObservableValue<AnimatableValue<Int>> { get }
     var isRightToLeftLanguage: Bool { get }
+    var remoteShareIsActive: ObservableValue<Bool> { get }
     
     func navHomeTapped()
     func shareTapped()

@@ -18,6 +18,7 @@ enum ImageCatalog: String {
     case navSettings = "nav_gear"
     case navShare = "share"
     case notFavorited = "not_favorited"
+    case shareToolRemoteSessionActive = "share_tool_remote_session_active"
     case tutorialInMenuEnglish = "tutorial_in_menu_english"
     case tutorialInMenuNonEnglish = "tutorial_in_menu_non_english"
     case tutorialToolEnglish = "tutorial_tool_english"
