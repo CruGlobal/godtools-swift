@@ -14,6 +14,7 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherType {
     private let loggingEnabled: Bool
     
     private var channelIdToCreate: String?
+    private var publishingToSubscriberChannelId: String?
     private var isObservingJsonSignal: Bool = false
     
     let didCreateChannelForPublish: SignalValue<String> = SignalValue()
@@ -30,6 +31,10 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherType {
         webSocket.didConnectSignal.removeObserver(self)
         removeJsonSignalObserver()
         webSocket.disconnect()
+    }
+    
+    var isSubscriberChannelIdCreatedForPublish: Bool {
+        return publishingToSubscriberChannelId != nil
     }
     
     func createChannelForPublish(url: URL, channelId: String) {
@@ -126,6 +131,7 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherType {
     private func handleDidCreateSubscriberChannelId(subscriberChannelId: String) {
         
         channelIdToCreate = nil
+        publishingToSubscriberChannelId = subscriberChannelId
         didCreateChannelForPublish.accept(value: subscriberChannelId)
     }
 }

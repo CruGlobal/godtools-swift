@@ -108,10 +108,14 @@ class TractViewModel: NSObject, TractViewModelType {
         tractPageDidAppear(page: startingTractPage)
         
         subscribeToLiveShareStream(liveShareStream: liveShareStream)
+        
+        reloadRemoteShareIsActive()
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+        tractRemoteSharePublisher.didCreateNewSubscriberChannelIdForPublish.removeObserver(self)
+        tractRemoteSharePublisher.endPublishingSession(disconnectSocket: true)
         tractRemoteShareSubscriber.navigationEventSignal.removeObserver(self)
         tractRemoteShareSubscriber.unsubscribe(disconnectSocket: true)
         destroyTractPages()
@@ -137,6 +141,12 @@ class TractViewModel: NSObject, TractViewModelType {
         
         var isFirstRemoteShareNavigationEvent: Bool = true
         
+        tractRemoteSharePublisher.didCreateNewSubscriberChannelIdForPublish.addObserver(self) { [weak self] (channel: TractRemoteShareChannel) in
+            DispatchQueue.main.async { [weak self] in
+                self?.reloadRemoteShareIsActive()
+            }
+        }
+        
         tractRemoteShareSubscriber.navigationEventSignal.addObserver(self) { [weak self] (navigationEvent: TractRemoteShareNavigationEvent) in
             DispatchQueue.main.async { [weak self] in
                 let animated: Bool = !isFirstRemoteShareNavigationEvent
@@ -146,11 +156,6 @@ class TractViewModel: NSObject, TractViewModelType {
         }
     }
     
-    private var isScreenSharing: Bool {
-        // TODO: Return true if in tool remote share. ~Levi
-        return false
-    }
-    
     private func subscribeToLiveShareStream(liveShareStream: String?) {
         
         guard let channelId = liveShareStream, !channelId.isEmpty else {
@@ -158,8 +163,9 @@ class TractViewModel: NSObject, TractViewModelType {
         }
                 
         tractRemoteShareSubscriber.subscribe(channelId: channelId) { [weak self] (error: TractRemoteShareSubscriberError?) in
-            
-            self?.reloadRemoteShareIsActive()
+            DispatchQueue.main.async { [weak self] in
+                self?.reloadRemoteShareIsActive()
+            }
         }
     }
     
@@ -191,7 +197,9 @@ class TractViewModel: NSObject, TractViewModelType {
     
     private func reloadRemoteShareIsActive() {
         
-        remoteShareIsActive.accept(value: false)
+        let isActive: Bool = tractRemoteSharePublisher.isSubscriberChannelIdCreatedForPublish || tractRemoteShareSubscriber.isSubscribedToChannel
+        
+        remoteShareIsActive.accept(value: isActive)
     }
     
     private func loadTractXmlPages() {
@@ -253,7 +261,7 @@ class TractViewModel: NSObject, TractViewModelType {
     }
     
     func navHomeTapped() {
-        flowDelegate?.navigate(step: .homeTappedFromTract(isScreenSharing: isScreenSharing))
+        flowDelegate?.navigate(step: .homeTappedFromTract(isScreenSharing: remoteShareIsActive.value))
     }
     
     func shareTapped() {
