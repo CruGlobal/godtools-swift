@@ -64,7 +64,7 @@ class TractRemoteSharePublisher: NSObject {
         }
     }
     
-    func sendNavigationEvent() {
+    func sendNavigationEvent(navigationEvent: TractRemoteShareNavigationEvent) {
         
         print("\n SEND NAVIGATION EVENT")
     }

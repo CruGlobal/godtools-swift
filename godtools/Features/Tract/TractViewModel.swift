@@ -324,6 +324,28 @@ class TractViewModel: NSObject, TractViewModelType {
             buffer: 1,
             currentPage: page
         )
+        
+        let tractPageItem: TractPageItem = getTractPageItem(page: page)
+        
+        print("\n TractViewModel: tractPageDidChange()")
+        print("  card: \(tractPageItem.tractPage?.openedCard)")
+        print("  locale: \(selectedTractLanguage.value.language.code)")
+        print("  page: \(page)")
+        print("  tool: \(resource.abbreviation)")
+        
+        if tractRemoteSharePublisher.isSubscriberChannelIdCreatedForPublish {
+            
+            // TODO: Need to set card number.
+            
+            let navigationEvent = TractRemoteShareNavigationEvent(
+                card: tractPageItem.tractPage?.openedCard,
+                locale: selectedTractLanguage.value.language.code,
+                page: page,
+                tool: resource.abbreviation
+            )
+            
+            tractRemoteSharePublisher.sendNavigationEvent(navigationEvent: navigationEvent)
+        }
     }
     
     func tractPageDidAppear(page: Int) {

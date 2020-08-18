@@ -110,6 +110,22 @@ class TractPage: BaseTractElement {
         return nil
     }
     
+    private var tractCardsArray: [TractCard] {
+        
+        let tractCards: TractCards? = self.tractCards
+        var tractCardsArray: [TractCard] = Array()
+        
+        if let cardsElements = tractCards?.elements {
+            for cardElement in cardsElements {
+                if let tractCard = cardElement as? TractCard {
+                    tractCardsArray.append(tractCard)
+                }
+            }
+        }
+        
+        return tractCardsArray
+    }
+    
     private func searchTractCards(element: BaseTractElement) -> TractCards? {
         if let elements = element.elements {
             for element in elements {
@@ -126,16 +142,7 @@ class TractPage: BaseTractElement {
     
     func setCard(card: Int?, animated: Bool) {
         
-        let tractCards: TractCards? = self.tractCards
-        var tractCardsArray: [TractCard] = Array()
-        
-        if let cardsElements = tractCards?.elements {
-            for cardElement in cardsElements {
-                if let tractCard = cardElement as? TractCard {
-                    tractCardsArray.append(tractCard)
-                }
-            }
-        }
+        let tractCardsArray: [TractCard] = self.tractCardsArray
         
         guard !tractCardsArray.isEmpty else {
             return
@@ -165,6 +172,32 @@ class TractPage: BaseTractElement {
             tractCards.reset()
             tractCards.hideCallToAction()
         }
+    }
+    
+    var openedCard: Int? {
+        
+        let tractCardsArray: [TractCard] = self.tractCardsArray
+        
+        guard !tractCardsArray.isEmpty else {
+            return nil
+        }
+        
+        var openedCard: Int?
+        
+        for index in 0 ..< tractCardsArray.count {
+                            
+            let tractCard: TractCard = tractCardsArray[index]
+            let cardState = tractCard.cardProperties().cardState
+            
+            if cardState == .open {
+                openedCard = index
+            }
+            else {
+                return openedCard
+            }
+        }
+        
+        return openedCard
     }
     
     // MARK: - Helpers
