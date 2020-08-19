@@ -66,45 +66,32 @@ class TractRemoteSharePublisher: NSObject {
     
     func sendNavigationEvent(card: Int?, locale: String?, page: Int?, tool: String?) {
         
-        guard let channelId = webSocketChannelPublisher.subscriberChannelId else {
-            return
-        }
+        let stringPublishIdentifier: String = webSocketChannelPublisher.publishChannelIdentifier ?? ""
         
-        let navigationEvent = TractRemoteShareNavigationEvent(
-            card: card,
-            channel: "PublishChannel",
-            channelId: channelId,
-            locale: locale,
-            page: page,
-            tool: tool
-        )
+        let navigationAttributes = TractRemoteShareNavigationEvent.Attributes(card: card, locale: locale, page: page, tool: tool)
+        let navigationData = TractRemoteShareNavigationEvent.Data(attributes: navigationAttributes)
+        let navigationMessage = TractRemoteShareNavigationEvent.Message(data: navigationData)
         
-        let jsonServices: JsonServices = JsonServices()
-        
-        let identifier: [String: Any] = ["channel": "PublishChannel", "channelId": channelId]
-        let stringIdentifier: String = jsonServices.getJsonString(json: identifier)
-        
-        let data: [String: Any] = [
-            "data": [
-                "id": UUID().uuidString,
-                "type": "navigation-event",
-                "attributes": ["card": card ?? -1, "locale": locale ?? "", "page": page ?? -1, "tool": tool ?? ""]
-            ]
-        ]
-        let stringData: String = jsonServices.getJsonString(json: data)
+        let stringMessage: String
             
-        let message: [String: Any] = [
-            "identifier": stringIdentifier,
-            "data": stringData,
-            "command": "message"
-        ]
-        let stringMessage: String = jsonServices.getJsonString(json: message)
-        
-                
-        print("\n SEND NAVIGATION EVENT")
-        print("  webSocketIsConnected: \(webSocketIsConnected)")
-        print("  stringMessage: \(stringMessage)")
-        
+        do {
+                        
+            let navigationData: Data = try JSONEncoder().encode(navigationMessage)
+            let stringData: String = String(data: navigationData, encoding: .utf8) ?? ""
+            
+            let message: [String: Any] = [
+                "identifier": stringPublishIdentifier,
+                "data": stringData,
+                "command": "message"
+            ]
+            
+            let messageData: Data = try JSONSerialization.data(withJSONObject: message)
+            stringMessage = String(data: messageData, encoding: .utf8) ?? ""
+        }
+        catch {
+            stringMessage = ""
+        }
+                                                
         webSocket.write(string: stringMessage)
         
     }

@@ -10,55 +10,69 @@ import Foundation
 
 struct TractRemoteShareNavigationEvent: Codable {
     
-    let card: Int?
-    let id: String?
+    let message: TractRemoteShareNavigationEvent.Message?
     let identifier: ActionCableIdentifier?
-    let locale: String?
-    let page: Int?
-    let tool: String?
-    let type: String?
     
     enum RootKeys: String, CodingKey {
         
-        case identifier = "identifier"
         case message = "message"
+        case identifier = "identifier"
     }
     
-    enum IdentifierKeys: String, CodingKey {
+    struct Message: Codable {
         
-        case channel = "channel"
-        case channelId = "channelId"
+        let data: TractRemoteShareNavigationEvent.Data?
+        
+        enum RootKeys: String, CodingKey {
+            
+            case data = "data"
+        }
     }
     
-    enum MessageKeys: String, CodingKey {
+    struct Data: Codable {
         
-        case data = "data"
+        let attributes: TractRemoteShareNavigationEvent.Attributes?
+        let id: String
+        let type: String
+        
+        enum RootKeys: String, CodingKey {
+            
+            case attributes = "attributes"
+            case id = "id"
+            case type = "type"
+        }
+        
+        init(attributes: TractRemoteShareNavigationEvent.Attributes) {
+            
+            self.attributes = attributes
+            self.id = UUID().uuidString
+            self.type = "navigation-event"
+        }
     }
     
-    enum DataKeys: String, CodingKey {
+    struct Attributes: Codable {
         
-        case attributes = "attributes"
-        case id = "id"
-        case type = "type"
-    }
-    
-    enum AttributeKeys: String, CodingKey {
+        let card: Int?
+        let locale: String?
+        let page: Int?
+        let tool: String?
         
-        case card = "card"
-        case locale = "locale"
-        case page = "page"
-        case tool = "tool"
+        enum RootKeys: String, CodingKey {
+            
+            case card = "card"
+            case locale = "locale"
+            case page = "page"
+            case tool = "tool"
+        }
     }
     
     init(card: Int?, channel: String, channelId: String, locale: String?, page: Int?, tool: String?) {
         
-        self.card = card
-        self.id = UUID().uuidString
+        let attributes = TractRemoteShareNavigationEvent.Attributes(card: card, locale: locale, page: page, tool: tool)
+        let data = TractRemoteShareNavigationEvent.Data(attributes: attributes)
+        
+        self.message = TractRemoteShareNavigationEvent.Message(data: data)
         self.identifier = ActionCableIdentifier(channel: channel, channelId: channelId)
-        self.locale = locale
-        self.page = page
-        self.tool = tool
-        self.type = "navigation-event"
     }
     
     init(from decoder: Decoder) throws {
@@ -78,25 +92,13 @@ struct TractRemoteShareNavigationEvent: Codable {
         else {
             identifier = ActionCableIdentifier(channel: "", channelId: "")
         }
-        
-        var messageContainer: KeyedDecodingContainer<MessageKeys>?
-        var dataContainer: KeyedDecodingContainer<DataKeys>?
-        var attributesContainer: KeyedDecodingContainer<AttributeKeys>?
-        
+                
         do {
-            messageContainer = try container.nestedContainer(keyedBy: MessageKeys.self, forKey: .message)
-            dataContainer = try messageContainer?.nestedContainer(keyedBy: DataKeys.self, forKey: .data)
-            attributesContainer = try dataContainer?.nestedContainer(keyedBy: AttributeKeys.self, forKey: .attributes)
+                        
+            self.message = try container.decodeIfPresent(TractRemoteShareNavigationEvent.Message.self, forKey: .message)
         }
         catch {
-            
+            self.message = nil
         }
-        
-        card = try attributesContainer?.decodeIfPresent(Int.self, forKey: .card)
-        id = try dataContainer?.decodeIfPresent(String.self, forKey: .id)
-        locale = try attributesContainer?.decodeIfPresent(String.self, forKey: .locale)
-        page = try attributesContainer?.decodeIfPresent(Int.self, forKey: .page)
-        tool = try attributesContainer?.decodeIfPresent(String.self, forKey: .tool)
-        type = try dataContainer?.decodeIfPresent(String.self, forKey: .type)
     }
 }

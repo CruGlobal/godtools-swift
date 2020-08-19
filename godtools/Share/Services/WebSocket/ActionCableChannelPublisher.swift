@@ -18,6 +18,7 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherType {
     private var isObservingTextSignal: Bool = false
     
     private(set) var channelId: String?
+    private(set) var publishChannelIdentifier: String?
     
     let didCreateChannelForPublish: SignalValue<String> = SignalValue()
     
@@ -98,8 +99,10 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherType {
         
         addTextSignalObserver()
                 
-        let strChannel = "{ \"channel\": \"PublishChannel\",\"channelId\": \"\(channelId)\" }"
-        let message = ["command" : "subscribe", "identifier": strChannel]
+        let stringChannel = "{ \"channel\": \"PublishChannel\",\"channelId\": \"\(channelId)\" }"
+        let message = ["command" : "subscribe", "identifier": stringChannel]
+        
+        publishChannelIdentifier = stringChannel
 
         do {
             

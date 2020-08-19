@@ -171,15 +171,17 @@ class TractViewModel: NSObject, TractViewModelType {
     
     private func handleDidReceiveRemoteShareNavigationEvent(navigationEvent: TractRemoteShareNavigationEvent, animated: Bool = true) {
         
-        if let page = navigationEvent.page {
+        let attributes = navigationEvent.message?.data?.attributes
+        
+        if let page = attributes?.page {
             cachedTractRemoteShareNavigationEvents[page] = navigationEvent
             currentTractPage.accept(value: AnimatableValue(value: page, animated: animated))
             if let cachedTractPage = getTractPageItem(page: page).tractPage {
-                cachedTractPage.setCard(card: navigationEvent.card, animated: animated)
+                cachedTractPage.setCard(card: attributes?.card, animated: animated)
             }
         }
         
-        if let locale = navigationEvent.locale, !locale.isEmpty {
+        if let locale = attributes?.locale, !locale.isEmpty {
             
             let currentTractLanguage: TractLanguage = selectedTractLanguage.value
             let localeChanged: Bool = locale != currentTractLanguage.language.code

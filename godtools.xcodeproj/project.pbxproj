@@ -606,7 +606,6 @@
 		45F6E026249D4BE30077C7D9 /* LanguageSettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F6E025249D4BE30077C7D9 /* LanguageSettingsService.swift */; };
 		45F75F2C24ED926B0061BD91 /* ActionCableIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F75F2B24ED926B0061BD91 /* ActionCableIdentifier.swift */; };
 		45F75F2F24ED94EC0061BD91 /* TractRemoteShareNavigationEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F75F2E24ED94EC0061BD91 /* TractRemoteShareNavigationEvent.swift */; };
-		45F75F3124ED952D0061BD91 /* TractRemoteShareNavigationEventData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F75F3024ED952D0061BD91 /* TractRemoteShareNavigationEventData.swift */; };
 		45FA69632425180F0006878C /* TutorialAvailabilityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45732E922421A798006F0559 /* TutorialAvailabilityType.swift */; };
 		45FA6964242518120006878C /* TutorialAvailability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45732E902421A78F006F0559 /* TutorialAvailability.swift */; };
 		45FA69672425198F0006878C /* SupportedLanguagesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FA69662425198F0006878C /* SupportedLanguagesType.swift */; };
@@ -1287,7 +1286,6 @@
 		45F6E025249D4BE30077C7D9 /* LanguageSettingsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettingsService.swift; sourceTree = "<group>"; };
 		45F75F2B24ED926B0061BD91 /* ActionCableIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionCableIdentifier.swift; sourceTree = "<group>"; };
 		45F75F2E24ED94EC0061BD91 /* TractRemoteShareNavigationEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractRemoteShareNavigationEvent.swift; sourceTree = "<group>"; };
-		45F75F3024ED952D0061BD91 /* TractRemoteShareNavigationEventData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractRemoteShareNavigationEventData.swift; sourceTree = "<group>"; };
 		45FA6960242517590006878C /* MockSupportedLanguages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSupportedLanguages.swift; sourceTree = "<group>"; };
 		45FA69662425198F0006878C /* SupportedLanguagesType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportedLanguagesType.swift; sourceTree = "<group>"; };
 		45FA6969242519F50006878C /* TutorialLanguageAvailability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialLanguageAvailability.swift; sourceTree = "<group>"; };
@@ -3024,7 +3022,6 @@
 			isa = PBXGroup;
 			children = (
 				45F75F2E24ED94EC0061BD91 /* TractRemoteShareNavigationEvent.swift */,
-				45F75F3024ED952D0061BD91 /* TractRemoteShareNavigationEventData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3907,7 +3904,6 @@
 				451DB13E2461DA4200FB14BF /* TractHeadingProperties.swift in Sources */,
 				D15CD14A246C2431008EB17B /* SnowplowAnalyticsType.swift in Sources */,
 				45D3C92423DF998C00ECF70E /* TutorialViewModel.swift in Sources */,
-				45F75F3124ED952D0061BD91 /* TractRemoteShareNavigationEventData.swift in Sources */,
 				453A61B8248E802B00DD3C27 /* ResponseErrorAlertMessage.swift in Sources */,
 				4506DEE024B7A78700A1C50B /* GTTextField.swift in Sources */,
 				45668E7623E0E1CC002728E7 /* OnboardingWelcomeView.swift in Sources */,

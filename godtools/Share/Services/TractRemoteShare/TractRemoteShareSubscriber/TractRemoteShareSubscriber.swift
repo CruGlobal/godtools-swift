@@ -162,7 +162,7 @@ extension TractRemoteShareSubscriber {
         
         print("  OBJECT: \(object)")
         
-        if let object = object, object.type == "navigation-event" {
+        if let object = object, object.message?.data?.type == "navigation-event" {
             
             navigationEventSignal.accept(value: object)
         }

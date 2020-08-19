@@ -372,7 +372,7 @@ extension TractView: PageNavigationCollectionViewDelegate {
         if let tractPage = tractPageItem.tractPage {
             cell.setTractPage(tractPage: tractPage)
             if let navigationEvent = tractPageItem.navigationEvent {
-                tractPage.setCard(card: navigationEvent.card, animated: false)
+                tractPage.setCard(card: navigationEvent.message?.data?.attributes?.card, animated: false)
             }
             
             let tractCards: [TractCard] = tractPage.tractCardsArray
