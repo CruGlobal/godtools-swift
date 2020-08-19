@@ -374,6 +374,13 @@ extension TractView: PageNavigationCollectionViewDelegate {
             if let navigationEvent = tractPageItem.navigationEvent {
                 tractPage.setCard(card: navigationEvent.card, animated: false)
             }
+            
+            let tractCards: [TractCard] = tractPage.tractCardsArray
+            
+            for tractCard in tractCards {
+                
+                tractCard.cardProperties().delegate = self
+            }
         }
                                         
         return cell
@@ -387,5 +394,15 @@ extension TractView: PageNavigationCollectionViewDelegate {
     func pageNavigationDidStopOnPage(pageNavigation: PageNavigationCollectionView, page: Int) {
         
         viewModel.tractPageDidAppear(page: page)
+    }
+}
+
+// MARK: - TractCardPropertiesDelegate
+
+extension TractView: TractCardPropertiesDelegate {
+    
+    func tractCardPropertiesDidChangeCardState(properties: TractCardProperties, cardState: TractCardProperties.CardState) {
+        
+        viewModel.tractPageCardStateChanged(cardState: cardState)
     }
 }

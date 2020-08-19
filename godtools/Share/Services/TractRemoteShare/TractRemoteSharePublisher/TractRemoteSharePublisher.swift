@@ -64,9 +64,86 @@ class TractRemoteSharePublisher: NSObject {
         }
     }
     
-    func sendNavigationEvent(navigationEvent: TractRemoteShareNavigationEvent) {
+    func sendNavigationEvent(card: Int?, locale: String?, page: Int?, tool: String?) {
+        
+        guard let channelId = webSocketChannelPublisher.subscriberChannelId else {
+            return
+        }
+        
+        let navigationEvent = TractRemoteShareNavigationEvent(
+            card: card,
+            channelId: channelId,
+            locale: locale,
+            page: page,
+            tool: tool
+        )
+        
+        var encodedObject: [String: Any] = navigationEvent.encodedObject
+        
+        encodedObject.updateValue("message", forKey: "command")
+
+        let navigationEventString: String
+        
+        do {
+            let navigationData: Data = try JSONSerialization.data(withJSONObject: encodedObject, options: [])
+            navigationEventString = NSString(data: navigationData, encoding: String.Encoding.utf8.rawValue) as String? ?? ""
+        }
+        catch {
+            navigationEventString = ""
+        }
         
         print("\n SEND NAVIGATION EVENT")
+        
+//        let identifierJson: [String: Any] = ["channel": "SubscribeChannel", "channelId": channelId]
+//        let messageJson: [String: Any] = [
+//            "data": [
+//                "attributes": ["page": navigationEvent.page, "card": navigationEvent.card, "locale": navigationEvent.locale, "tool": navigationEvent.tool],
+//                "id": UUID().uuidString,
+//                "type": "navigation-event"
+//            ]
+//        ]
+//
+//        let json: Any = ["identifier": identifierJson, "message": messageJson, "command": "message"]
+//        let jsonString: String
+//
+//        do {
+//            let data: Data = try JSONSerialization.data(withJSONObject: json, options: [])
+//            jsonString = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? ?? ""
+//        }
+//        catch let error {
+//            jsonString = ""
+//        }
+        
+        print("  navigationEventString: \(navigationEventString)")
+        
+        /*
+        let jsonString: String
+        
+        do {
+            let data: Data = try JSONEncoder().encode(json)
+            jsonString = String(data: data, encoding: .utf8) ?? ""
+        }
+        catch let error {
+            jsonString = ""
+        }*/
+        
+        /*
+        let stringData = "{ \"page\": \"\(navigationEvent.page ?? 0)\" }"
+        let stringChannel = "{ \"channel\": \"SubscribeChannel\",\"channelId\": \"\(channelId)\" }"
+        let message = ["command" : "message", "identifier": stringChannel, "message": navigationEventString]
+        
+        let messageString: String
+        
+        do {
+            let data: Data = try JSONEncoder().encode(message)
+            messageString = String(data: data, encoding: .utf8) ?? ""
+        }
+        catch let error {
+            messageString = ""
+        }*/
+        
+        webSocket.write(string: navigationEventString)
+        
     }
     
     // MARK: - Observers

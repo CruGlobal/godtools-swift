@@ -30,6 +30,7 @@ protocol TractViewModelType {
     func viewLoaded()
     func tractPageDidChange(page: Int)
     func tractPageDidAppear(page: Int)
+    func tractPageCardStateChanged(cardState: TractCardProperties.CardState)
     func sendEmailTapped(subject: String?, message: String?, isHtml: Bool?)
     func getTractPageItem(page: Int) -> TractPageItem
 }

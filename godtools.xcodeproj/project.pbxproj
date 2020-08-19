@@ -523,6 +523,7 @@
 		45B881E4249AACED004DC491 /* RealmAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B881DD249AACED004DC491 /* RealmAttachment.swift */; };
 		45B881E5249AACED004DC491 /* RealmTranslation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B881DE249AACED004DC491 /* RealmTranslation.swift */; };
 		45B881E6249AACED004DC491 /* RealmLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B881DF249AACED004DC491 /* RealmLanguage.swift */; };
+		45BEE3FE24EC76AA003AA7A2 /* ActionCableEventType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BEE3FD24EC76AA003AA7A2 /* ActionCableEventType.swift */; };
 		45BFD71A23E4DF00004A097B /* MenuCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BFD71923E4DF00004A097B /* MenuCellViewModel.swift */; };
 		45C2CFEF2409B3A200683A98 /* GlobalActivityAnalyticsApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2CFEE2409B3A200683A98 /* GlobalActivityAnalyticsApi.swift */; };
 		45C2CFF12409B3CB00683A98 /* GlobalActivityAnalyticsApiType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2CFF02409B3CB00683A98 /* GlobalActivityAnalyticsApiType.swift */; };
@@ -1197,6 +1198,7 @@
 		45B881DD249AACED004DC491 /* RealmAttachment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmAttachment.swift; sourceTree = "<group>"; };
 		45B881DE249AACED004DC491 /* RealmTranslation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmTranslation.swift; sourceTree = "<group>"; };
 		45B881DF249AACED004DC491 /* RealmLanguage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmLanguage.swift; sourceTree = "<group>"; };
+		45BEE3FD24EC76AA003AA7A2 /* ActionCableEventType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionCableEventType.swift; sourceTree = "<group>"; };
 		45BFD71923E4DF00004A097B /* MenuCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCellViewModel.swift; sourceTree = "<group>"; };
 		45C2CFEE2409B3A200683A98 /* GlobalActivityAnalyticsApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalActivityAnalyticsApi.swift; sourceTree = "<group>"; };
 		45C2CFF02409B3CB00683A98 /* GlobalActivityAnalyticsApiType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalActivityAnalyticsApiType.swift; sourceTree = "<group>"; };
@@ -2574,6 +2576,7 @@
 		459A71DF24C9C4F500B77942 /* WebSocket */ = {
 			isa = PBXGroup;
 			children = (
+				45BEE3FC24EC76A2003AA7A2 /* Models */,
 				45A6E6C824E5CD8700AE5673 /* ActionCableChannelPublisher.swift */,
 				459A71E424C9CAF500B77942 /* ActionCableChannelSubscriber.swift */,
 				459A71E024C9C50300B77942 /* StarscreamWebSocket.swift */,
@@ -2712,6 +2715,14 @@
 				45B881DF249AACED004DC491 /* RealmLanguage.swift */,
 				45B881DC249AACED004DC491 /* RealmResource.swift */,
 				45B881DE249AACED004DC491 /* RealmTranslation.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		45BEE3FC24EC76A2003AA7A2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				45BEE3FD24EC76AA003AA7A2 /* ActionCableEventType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -4025,6 +4036,7 @@
 				4586D7E6246ECEE90062D988 /* TractEmail.swift in Sources */,
 				454D5A0424BF567A00B8528B /* FavoritingToolMessageCache.swift in Sources */,
 				4506DE9824B7972D00A1C50B /* AboutTextCell.swift in Sources */,
+				45BEE3FE24EC76AA003AA7A2 /* ActionCableEventType.swift in Sources */,
 				45732229244548A800D653FF /* ChooseLanguageCellViewModelType.swift in Sources */,
 				4530DCA824A3D4BD000DA516 /* JsonServicesType.swift in Sources */,
 				45249D2724AD0B1800E139AD /* ResourcesCacheResult.swift in Sources */,

@@ -15,7 +15,9 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherType {
     
     private var channelIdToCreate: String?
     private var publishingToSubscriberChannelId: String?
-    private var isObservingJsonSignal: Bool = false
+    private var isObservingTextSignal: Bool = false
+    
+    private(set) var channelId: String?
     
     let didCreateChannelForPublish: SignalValue<String> = SignalValue()
     
@@ -29,7 +31,7 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherType {
     
     deinit {
         webSocket.didConnectSignal.removeObserver(self)
-        removeJsonSignalObserver()
+        removeTextSignalObserver()
         webSocket.disconnect()
     }
     
@@ -37,9 +39,15 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherType {
         return publishingToSubscriberChannelId != nil
     }
     
+    var subscriberChannelId: String? {
+        return publishingToSubscriberChannelId
+    }
+    
     func createChannelForPublish(url: URL, channelId: String) {
                 
-        removeJsonSignalObserver()
+        removeTextSignalObserver()
+        
+        self.channelId = channelId
         
         channelIdToCreate = channelId
         
@@ -62,19 +70,19 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherType {
         }
     }
     
-    private func addJsonSignalObserver() {
-        if !isObservingJsonSignal {
-            isObservingJsonSignal = true
-            webSocket.didReceiveJsonSignal.addObserver(self) { [weak self] (json: [String: Any]) in
-                self?.handleDidReceiveJson(json: json)
+    private func addTextSignalObserver() {
+        if !isObservingTextSignal {
+            isObservingTextSignal = true
+            webSocket.didReceiveTextSignal.addObserver(self) { [weak self] (text: String) in
+                self?.handleDidReceiveText(text: text)
             }
         }
     }
     
-    private func removeJsonSignalObserver() {
-        if isObservingJsonSignal {
-            isObservingJsonSignal = false
-            webSocket.didReceiveJsonSignal.removeObserver(self)
+    private func removeTextSignalObserver() {
+        if isObservingTextSignal {
+            isObservingTextSignal = false
+            webSocket.didReceiveTextSignal.removeObserver(self)
         }
     }
     
@@ -88,7 +96,7 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherType {
             return
         }
         
-        addJsonSignalObserver()
+        addTextSignalObserver()
                 
         let strChannel = "{ \"channel\": \"PublishChannel\",\"channelId\": \"\(channelId)\" }"
         let message = ["command" : "subscribe", "identifier": strChannel]
@@ -105,18 +113,33 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherType {
         }
     }
     
-    private func handleDidReceiveJson(json: [String: Any]) {
+    private func handleDidReceiveText(text: String) {
         
         if loggingEnabled {
-            print("\n ActionCableChannelPublisher: handleDidReceiveJson() \(json)")
+            print("\n ActionCableChannelPublisher: handleDidReceiveText() \(text)")
             print("  channelIdToCreate: \(String(describing: channelIdToCreate))")
         }
-                        
-        let data: [String: Any]? = (json["message"] as? [String: Any])?["data"] as? [String: Any]
+        
+        guard let data = text.data(using: .utf8) else {
+            return
+        }
+        
+        let jsonObject: [String: Any]
+        
+        do {
+            
+            let json: Any = try JSONSerialization.jsonObject(with: data, options: [])
+            jsonObject = json as? [String: Any] ?? Dictionary()
+        }
+        catch {
+            jsonObject = Dictionary()
+        }
+               
+        let jsonData: [String: Any]? = (jsonObject["message"] as? [String: Any])?["data"] as? [String: Any]
                 
-        if let data = data, let type = data["type"] as? String {
+        if let jsonData = jsonData, let type = jsonData["type"] as? String {
                 
-            if type == "publisher-info", let subscriberChannelId = (data["attributes"] as? [String: Any])?["subscriberChannelId"] as? String {
+            if type == "publisher-info", let subscriberChannelId = (jsonData["attributes"] as? [String: Any])?["subscriberChannelId"] as? String {
                                 
                 if loggingEnabled {
                     print("  channelIdToCreate: \(String(describing: channelIdToCreate))")

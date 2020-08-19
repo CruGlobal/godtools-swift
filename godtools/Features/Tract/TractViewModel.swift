@@ -195,6 +195,21 @@ class TractViewModel: NSObject, TractViewModelType {
         }
     }
     
+    private func sendRemoteShareNavigationEventForPage(page: Int) {
+        
+        if tractRemoteSharePublisher.isSubscriberChannelIdCreatedForPublish {
+            
+            let tractPageItem: TractPageItem = getTractPageItem(page: page)
+            
+            tractRemoteSharePublisher.sendNavigationEvent(
+                card: tractPageItem.tractPage?.openedCard,
+                locale: selectedTractLanguage.value.language.code,
+                page: page,
+                tool: resource.abbreviation
+            )
+        }
+    }
+    
     private func reloadRemoteShareIsActive() {
         
         let isActive: Bool = tractRemoteSharePublisher.isSubscriberChannelIdCreatedForPublish || tractRemoteShareSubscriber.isSubscribedToChannel
@@ -325,27 +340,7 @@ class TractViewModel: NSObject, TractViewModelType {
             currentPage: page
         )
         
-        let tractPageItem: TractPageItem = getTractPageItem(page: page)
-        
-        print("\n TractViewModel: tractPageDidChange()")
-        print("  card: \(tractPageItem.tractPage?.openedCard)")
-        print("  locale: \(selectedTractLanguage.value.language.code)")
-        print("  page: \(page)")
-        print("  tool: \(resource.abbreviation)")
-        
-        if tractRemoteSharePublisher.isSubscriberChannelIdCreatedForPublish {
-            
-            // TODO: Need to set card number.
-            
-            let navigationEvent = TractRemoteShareNavigationEvent(
-                card: tractPageItem.tractPage?.openedCard,
-                locale: selectedTractLanguage.value.language.code,
-                page: page,
-                tool: resource.abbreviation
-            )
-            
-            tractRemoteSharePublisher.sendNavigationEvent(navigationEvent: navigationEvent)
-        }
+        sendRemoteShareNavigationEventForPage(page: page)
     }
     
     func tractPageDidAppear(page: Int) {
@@ -357,6 +352,14 @@ class TractViewModel: NSObject, TractViewModelType {
             siteSection: resource.abbreviation,
             siteSubSection: ""
         )
+    }
+    
+    func tractPageCardStateChanged(cardState: TractCardProperties.CardState) {
+        
+        if cardState == .open || cardState == .close {
+            
+            sendRemoteShareNavigationEventForPage(page: tractPage)
+        }
     }
     
     func sendEmailTapped(subject: String?, message: String?, isHtml: Bool?) {

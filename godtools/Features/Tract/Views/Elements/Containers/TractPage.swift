@@ -99,7 +99,7 @@ class TractPage: BaseTractElement {
         self.pageContainer = element
     }
     
-    private var tractCards: TractCards? {
+    var tractCards: TractCards? {
         if let elements = self.elements {
             for element in elements {
                 if let tractCards = searchTractCards(element: element) {
@@ -110,7 +110,7 @@ class TractPage: BaseTractElement {
         return nil
     }
     
-    private var tractCardsArray: [TractCard] {
+    var tractCardsArray: [TractCard] {
         
         let tractCards: TractCards? = self.tractCards
         var tractCardsArray: [TractCard] = Array()

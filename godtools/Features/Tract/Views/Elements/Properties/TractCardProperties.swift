@@ -8,11 +8,18 @@
 
 import UIKit
 
+protocol TractCardPropertiesDelegate: class {
+    
+    func tractCardPropertiesDidChangeCardState(properties: TractCardProperties, cardState: TractCardProperties.CardState)
+}
+
 class TractCardProperties: TractProperties {
     
     enum CardState {
         case open, preview, close, hidden, enable
     }
+    
+    weak var delegate: TractCardPropertiesDelegate?
     
     // MARK: - XML Properties
     
@@ -59,9 +66,14 @@ class TractCardProperties: TractProperties {
     
     // MARK: - View Properties
     
-    var cardState = CardState.preview
     var cardNumber = 0
     var cardLetterName = ""
     var analyticEventProperties: [TractAnalyticEvent] = []
     
+    var cardState: TractCardProperties.CardState = CardState.preview {
+        
+        didSet {
+            delegate?.tractCardPropertiesDidChangeCardState(properties: self, cardState: cardState)
+        }
+    }
 }
