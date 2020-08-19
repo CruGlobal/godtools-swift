@@ -480,7 +480,6 @@
 		459A71E324C9C50A00B77942 /* WebSocketType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459A71E224C9C50A00B77942 /* WebSocketType.swift */; };
 		459A71E524C9CAF500B77942 /* ActionCableChannelSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459A71E424C9CAF500B77942 /* ActionCableChannelSubscriber.swift */; };
 		459A71E724C9CFAB00B77942 /* WebSocketChannelSubscriberType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459A71E624C9CFAB00B77942 /* WebSocketChannelSubscriberType.swift */; };
-		459A71E924C9F06E00B77942 /* TractRemoteShareNavigationEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459A71E824C9F06E00B77942 /* TractRemoteShareNavigationEvent.swift */; };
 		459A71ED24CA207B00B77942 /* TractPageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459A71EC24CA207B00B77942 /* TractPageItem.swift */; };
 		459AA42524A5296F00CAA69C /* DownloadedTranslationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459AA42424A5296F00CAA69C /* DownloadedTranslationResult.swift */; };
 		459C3FE024C5F296006E81CA /* TractRemoteShareSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459C3FDF24C5F296006E81CA /* TractRemoteShareSubscriber.swift */; };
@@ -605,6 +604,9 @@
 		45F6E021249D44470077C7D9 /* LanguageSettingsUserDefaultsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F6E01E249D44470077C7D9 /* LanguageSettingsUserDefaultsCache.swift */; };
 		45F6E022249D44470077C7D9 /* LanguageSettingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F6E01F249D44470077C7D9 /* LanguageSettingType.swift */; };
 		45F6E026249D4BE30077C7D9 /* LanguageSettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F6E025249D4BE30077C7D9 /* LanguageSettingsService.swift */; };
+		45F75F2C24ED926B0061BD91 /* ActionCableIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F75F2B24ED926B0061BD91 /* ActionCableIdentifier.swift */; };
+		45F75F2F24ED94EC0061BD91 /* TractRemoteShareNavigationEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F75F2E24ED94EC0061BD91 /* TractRemoteShareNavigationEvent.swift */; };
+		45F75F3124ED952D0061BD91 /* TractRemoteShareNavigationEventData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F75F3024ED952D0061BD91 /* TractRemoteShareNavigationEventData.swift */; };
 		45FA69632425180F0006878C /* TutorialAvailabilityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45732E922421A798006F0559 /* TutorialAvailabilityType.swift */; };
 		45FA6964242518120006878C /* TutorialAvailability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45732E902421A78F006F0559 /* TutorialAvailability.swift */; };
 		45FA69672425198F0006878C /* SupportedLanguagesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FA69662425198F0006878C /* SupportedLanguagesType.swift */; };
@@ -1155,7 +1157,6 @@
 		459A71E224C9C50A00B77942 /* WebSocketType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketType.swift; sourceTree = "<group>"; };
 		459A71E424C9CAF500B77942 /* ActionCableChannelSubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionCableChannelSubscriber.swift; sourceTree = "<group>"; };
 		459A71E624C9CFAB00B77942 /* WebSocketChannelSubscriberType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketChannelSubscriberType.swift; sourceTree = "<group>"; };
-		459A71E824C9F06E00B77942 /* TractRemoteShareNavigationEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractRemoteShareNavigationEvent.swift; sourceTree = "<group>"; };
 		459A71EC24CA207B00B77942 /* TractPageItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractPageItem.swift; sourceTree = "<group>"; };
 		459AA42424A5296F00CAA69C /* DownloadedTranslationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadedTranslationResult.swift; sourceTree = "<group>"; };
 		459C3FDF24C5F296006E81CA /* TractRemoteShareSubscriber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractRemoteShareSubscriber.swift; sourceTree = "<group>"; };
@@ -1284,6 +1285,9 @@
 		45F6E01E249D44470077C7D9 /* LanguageSettingsUserDefaultsCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageSettingsUserDefaultsCache.swift; sourceTree = "<group>"; };
 		45F6E01F249D44470077C7D9 /* LanguageSettingType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageSettingType.swift; sourceTree = "<group>"; };
 		45F6E025249D4BE30077C7D9 /* LanguageSettingsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettingsService.swift; sourceTree = "<group>"; };
+		45F75F2B24ED926B0061BD91 /* ActionCableIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionCableIdentifier.swift; sourceTree = "<group>"; };
+		45F75F2E24ED94EC0061BD91 /* TractRemoteShareNavigationEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractRemoteShareNavigationEvent.swift; sourceTree = "<group>"; };
+		45F75F3024ED952D0061BD91 /* TractRemoteShareNavigationEventData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractRemoteShareNavigationEventData.swift; sourceTree = "<group>"; };
 		45FA6960242517590006878C /* MockSupportedLanguages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSupportedLanguages.swift; sourceTree = "<group>"; };
 		45FA69662425198F0006878C /* SupportedLanguagesType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportedLanguagesType.swift; sourceTree = "<group>"; };
 		45FA6969242519F50006878C /* TutorialLanguageAvailability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialLanguageAvailability.swift; sourceTree = "<group>"; };
@@ -2479,6 +2483,7 @@
 		457F3FEC24C352E700D8F9B1 /* TractRemoteShare */ = {
 			isa = PBXGroup;
 			children = (
+				45F75F2D24ED94EC0061BD91 /* Models */,
 				45A6E6C524E5C8D800AE5673 /* TractRemoteSharePublisher */,
 				459C3FDE24C5F296006E81CA /* TractRemoteShareSubscriber */,
 			);
@@ -2598,7 +2603,6 @@
 		459C3FDE24C5F296006E81CA /* TractRemoteShareSubscriber */ = {
 			isa = PBXGroup;
 			children = (
-				459A71E824C9F06E00B77942 /* TractRemoteShareNavigationEvent.swift */,
 				459C3FDF24C5F296006E81CA /* TractRemoteShareSubscriber.swift */,
 				45B3EE4624C917840042CF7C /* TractRemoteShareSubscriberError.swift */,
 			);
@@ -2723,6 +2727,7 @@
 			isa = PBXGroup;
 			children = (
 				45BEE3FD24EC76AA003AA7A2 /* ActionCableEventType.swift */,
+				45F75F2B24ED926B0061BD91 /* ActionCableIdentifier.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3013,6 +3018,15 @@
 				45F6E01F249D44470077C7D9 /* LanguageSettingType.swift */,
 			);
 			path = LanguageSettings;
+			sourceTree = "<group>";
+		};
+		45F75F2D24ED94EC0061BD91 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				45F75F2E24ED94EC0061BD91 /* TractRemoteShareNavigationEvent.swift */,
+				45F75F3024ED952D0061BD91 /* TractRemoteShareNavigationEventData.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		45FCFF31243D06C000865501 /* Protocols */ = {
@@ -3720,7 +3734,6 @@
 				4586D7E2246ECE350062D988 /* TractLink.swift in Sources */,
 				451DB1C12461DDE400FB14BF /* TractFormProperties.swift in Sources */,
 				45869EE42453419400733B0C /* HTMLDocument+ResourceUrls.swift in Sources */,
-				459A71E924C9F06E00B77942 /* TractRemoteShareNavigationEvent.swift in Sources */,
 				451DB1382461DA4200FB14BF /* TractEmailProperties.swift in Sources */,
 				4530DCAD24A3D598000DA516 /* AttachmentsFileCache.swift in Sources */,
 				45E7E1B824AE198100238419 /* DownloadedAttachmentResult.swift in Sources */,
@@ -3748,6 +3761,7 @@
 				45922587242539B300D7ED22 /* LanguageAvailabilityType.swift in Sources */,
 				452C5776248E792F00B39C09 /* NoResponseSuccessType.swift in Sources */,
 				4595F43824A2A33500B3733E /* WebArchiveQueueResult.swift in Sources */,
+				45F75F2F24ED94EC0061BD91 /* TractRemoteShareNavigationEvent.swift in Sources */,
 				45732E7B24218A00006F0559 /* OnboardingTutorialAvailabilityType.swift in Sources */,
 				45DC81CB2412D911001913D6 /* AppsFlyerType.swift in Sources */,
 				45249D1624ACC62B00E139AD /* RealmResourceView.swift in Sources */,
@@ -3810,6 +3824,7 @@
 				45668E7323E0E1CC002728E7 /* OnboardingTutorialItem.swift in Sources */,
 				451EE23F24ABF6DD00BB799F /* SharedSessionType.swift in Sources */,
 				4506DED824B7A78700A1C50B /* GTNotifications.swift in Sources */,
+				45F75F2C24ED926B0061BD91 /* ActionCableIdentifier.swift in Sources */,
 				45FFA1032493D2D900DD05F4 /* FileCache.swift in Sources */,
 				4573221424453EB200D653FF /* LanguageSettingsViewModel.swift in Sources */,
 				451DB13B2461DA4200FB14BF /* TractImageProperties.swift in Sources */,
@@ -3892,6 +3907,7 @@
 				451DB13E2461DA4200FB14BF /* TractHeadingProperties.swift in Sources */,
 				D15CD14A246C2431008EB17B /* SnowplowAnalyticsType.swift in Sources */,
 				45D3C92423DF998C00ECF70E /* TutorialViewModel.swift in Sources */,
+				45F75F3124ED952D0061BD91 /* TractRemoteShareNavigationEventData.swift in Sources */,
 				453A61B8248E802B00DD3C27 /* ResponseErrorAlertMessage.swift in Sources */,
 				4506DEE024B7A78700A1C50B /* GTTextField.swift in Sources */,
 				45668E7623E0E1CC002728E7 /* OnboardingWelcomeView.swift in Sources */,

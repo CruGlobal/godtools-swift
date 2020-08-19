@@ -8,11 +8,11 @@
 
 import Foundation
 
-struct TractRemoteShareNavigationEvent: Decodable {
+struct TractRemoteShareNavigationEvent: Codable {
     
     let card: Int?
     let id: String?
-    let identifier: String?
+    let identifier: ActionCableIdentifier?
     let locale: String?
     let page: Int?
     let tool: String?
@@ -50,11 +50,11 @@ struct TractRemoteShareNavigationEvent: Decodable {
         case tool = "tool"
     }
     
-    init(card: Int?, channelId: String, locale: String?, page: Int?, tool: String?) {
+    init(card: Int?, channel: String, channelId: String, locale: String?, page: Int?, tool: String?) {
         
         self.card = card
         self.id = UUID().uuidString
-        self.identifier = "{ \"channel\": \"SubscribeChannel\",\"channelId\": \"\(channelId)\" }"
+        self.identifier = ActionCableIdentifier(channel: channel, channelId: channelId)
         self.locale = locale
         self.page = page
         self.tool = tool
@@ -65,7 +65,19 @@ struct TractRemoteShareNavigationEvent: Decodable {
                 
         let container = try decoder.container(keyedBy: RootKeys.self)
         
-        identifier = try container.decodeIfPresent(String.self, forKey: .identifier)
+        let identifierString: String? = try container.decodeIfPresent(String.self, forKey: .identifier)
+        
+        if let identifierString = identifierString, let data = identifierString.data(using: .utf8) {
+            do {
+                identifier = try JSONDecoder().decode(ActionCableIdentifier.self, from: data)
+            }
+            catch {
+                identifier = ActionCableIdentifier(channel: "", channelId: "")
+            }
+        }
+        else {
+            identifier = ActionCableIdentifier(channel: "", channelId: "")
+        }
         
         var messageContainer: KeyedDecodingContainer<MessageKeys>?
         var dataContainer: KeyedDecodingContainer<DataKeys>?
@@ -86,53 +98,5 @@ struct TractRemoteShareNavigationEvent: Decodable {
         page = try attributesContainer?.decodeIfPresent(Int.self, forKey: .page)
         tool = try attributesContainer?.decodeIfPresent(String.self, forKey: .tool)
         type = try dataContainer?.decodeIfPresent(String.self, forKey: .type)
-    }
-    
-    var encodedObject: [String: Any] {
-        
-        // attributes
-        var attributes: [String: Any] = Dictionary()
-        
-        if let card = self.card {
-            attributes.updateValue(card, forKey: AttributeKeys.card.rawValue)
-        }
-        if let locale = self.locale {
-            attributes.updateValue(locale, forKey: AttributeKeys.locale.rawValue)
-        }
-        if let page = self.page {
-            attributes.updateValue(page, forKey: AttributeKeys.page.rawValue)
-        }
-        if let tool = self.tool {
-            attributes.updateValue(tool, forKey: AttributeKeys.tool.rawValue)
-        }
-        
-        // data
-        var data: [String: Any] = Dictionary()
-        
-        if !attributes.isEmpty {
-            data.updateValue(attributes, forKey: DataKeys.attributes.rawValue)
-        }
-        if let id = self.id {
-            data.updateValue(id, forKey: DataKeys.id.rawValue)
-        }
-        if let type = self.type {
-            data.updateValue(type, forKey: DataKeys.type.rawValue)
-        }
-        
-        // messages
-        var message: [String: Any] = Dictionary()
-        
-        message.updateValue(data, forKey: MessageKeys.data.rawValue)
-        
-        // encodedObject
-        var encodedObject: [String: Any] = Dictionary()
-        
-        if let identifier = self.identifier {
-            encodedObject.updateValue(identifier, forKey: RootKeys.identifier.rawValue)
-        }
-        
-        encodedObject.updateValue(message, forKey: RootKeys.message.rawValue)
-        
-        return encodedObject
     }
 }

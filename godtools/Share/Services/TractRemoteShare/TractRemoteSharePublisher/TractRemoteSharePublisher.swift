@@ -72,77 +72,40 @@ class TractRemoteSharePublisher: NSObject {
         
         let navigationEvent = TractRemoteShareNavigationEvent(
             card: card,
+            channel: "PublishChannel",
             channelId: channelId,
             locale: locale,
             page: page,
             tool: tool
         )
         
-        var encodedObject: [String: Any] = navigationEvent.encodedObject
+        let jsonServices: JsonServices = JsonServices()
         
-        encodedObject.updateValue("message", forKey: "command")
-
-        let navigationEventString: String
+        let identifier: [String: Any] = ["channel": "PublishChannel", "channelId": channelId]
+        let stringIdentifier: String = jsonServices.getJsonString(json: identifier)
         
-        do {
-            let navigationData: Data = try JSONSerialization.data(withJSONObject: encodedObject, options: [])
-            navigationEventString = NSString(data: navigationData, encoding: String.Encoding.utf8.rawValue) as String? ?? ""
-        }
-        catch {
-            navigationEventString = ""
-        }
+        let data: [String: Any] = [
+            "data": [
+                "id": UUID().uuidString,
+                "type": "navigation-event",
+                "attributes": ["card": card ?? -1, "locale": locale ?? "", "page": page ?? -1, "tool": tool ?? ""]
+            ]
+        ]
+        let stringData: String = jsonServices.getJsonString(json: data)
+            
+        let message: [String: Any] = [
+            "identifier": stringIdentifier,
+            "data": stringData,
+            "command": "message"
+        ]
+        let stringMessage: String = jsonServices.getJsonString(json: message)
         
+                
         print("\n SEND NAVIGATION EVENT")
+        print("  webSocketIsConnected: \(webSocketIsConnected)")
+        print("  stringMessage: \(stringMessage)")
         
-//        let identifierJson: [String: Any] = ["channel": "SubscribeChannel", "channelId": channelId]
-//        let messageJson: [String: Any] = [
-//            "data": [
-//                "attributes": ["page": navigationEvent.page, "card": navigationEvent.card, "locale": navigationEvent.locale, "tool": navigationEvent.tool],
-//                "id": UUID().uuidString,
-//                "type": "navigation-event"
-//            ]
-//        ]
-//
-//        let json: Any = ["identifier": identifierJson, "message": messageJson, "command": "message"]
-//        let jsonString: String
-//
-//        do {
-//            let data: Data = try JSONSerialization.data(withJSONObject: json, options: [])
-//            jsonString = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? ?? ""
-//        }
-//        catch let error {
-//            jsonString = ""
-//        }
-        
-        print("  navigationEventString: \(navigationEventString)")
-        
-        /*
-        let jsonString: String
-        
-        do {
-            let data: Data = try JSONEncoder().encode(json)
-            jsonString = String(data: data, encoding: .utf8) ?? ""
-        }
-        catch let error {
-            jsonString = ""
-        }*/
-        
-        /*
-        let stringData = "{ \"page\": \"\(navigationEvent.page ?? 0)\" }"
-        let stringChannel = "{ \"channel\": \"SubscribeChannel\",\"channelId\": \"\(channelId)\" }"
-        let message = ["command" : "message", "identifier": stringChannel, "message": navigationEventString]
-        
-        let messageString: String
-        
-        do {
-            let data: Data = try JSONEncoder().encode(message)
-            messageString = String(data: data, encoding: .utf8) ?? ""
-        }
-        catch let error {
-            messageString = ""
-        }*/
-        
-        webSocket.write(string: navigationEventString)
+        webSocket.write(string: stringMessage)
         
     }
     
@@ -174,6 +137,18 @@ class TractRemoteSharePublisher: NSObject {
             isObservingSignals = false
             
             webSocketChannelPublisher.didCreateChannelForPublish.removeObserver(self)
+        }
+    }
+    
+    // MARK: - Log
+    
+    private func log(method: String, label: String?, labelValue: String?) {
+        
+        if loggingEnabled {
+            print("\n TractRemoteSharePublisher \(method)")
+            if let label = label, let labelValue = labelValue {
+               print("  \(label): \(labelValue)")
+            }
         }
     }
 }

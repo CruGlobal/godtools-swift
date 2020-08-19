@@ -154,9 +154,13 @@ extension TractRemoteShareSubscriber {
     
     private func handleDidReceiveText(text: String) {
             
+        log(method: "handleDidReceiveText()", label: "text", labelValue: text)
+        
         let data: Data? = text.data(using: .utf8)
         
         let object: TractRemoteShareNavigationEvent? = jsonServices.decodeObject(data: data)
+        
+        print("  OBJECT: \(object)")
         
         if let object = object, object.type == "navigation-event" {
             
