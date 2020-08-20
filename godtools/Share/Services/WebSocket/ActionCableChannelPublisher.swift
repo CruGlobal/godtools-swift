@@ -71,6 +71,28 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherType {
         }
     }
     
+    func sendMessage(data: String) {
+        
+        let stringMessage: String
+            
+        do {
+            
+            let message: [String: Any] = [
+                "identifier": publishChannelIdentifier ?? "",
+                "data": data,
+                "command": "message"
+            ]
+            
+            let messageData: Data = try JSONSerialization.data(withJSONObject: message)
+            stringMessage = String(data: messageData, encoding: .utf8) ?? ""
+        }
+        catch {
+            stringMessage = ""
+        }
+                                                
+        webSocket.write(string: stringMessage)
+    }
+    
     private func addTextSignalObserver() {
         if !isObservingTextSignal {
             isObservingTextSignal = true

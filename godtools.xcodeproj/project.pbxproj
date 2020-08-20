@@ -60,6 +60,9 @@
 		4506DEE724B7A78700A1C50B /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4506DECF24B7A78700A1C50B /* String.swift */; };
 		4506DEE824B7A78700A1C50B /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4506DED024B7A78700A1C50B /* UIFont.swift */; };
 		4506DEE924B7A78700A1C50B /* TractManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4506DED124B7A78700A1C50B /* TractManager.swift */; };
+		4508728F24EEC7020047123E /* ShareToolScreenTutorialItemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4508728D24EEC7020047123E /* ShareToolScreenTutorialItemProvider.swift */; };
+		4508729024EEC7020047123E /* ShareToolScreenCustomTutorialViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4508728E24EEC7020047123E /* ShareToolScreenCustomTutorialViewBuilder.swift */; };
+		4508729224EEC71A0047123E /* ShareToolScreenTutorialNumberOfViewsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4508729124EEC71A0047123E /* ShareToolScreenTutorialNumberOfViewsCache.swift */; };
 		4508F7A72429669700ECA950 /* AdobeAnalyticsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4508F7A22429669700ECA950 /* AdobeAnalyticsType.swift */; };
 		4508F7A92429669700ECA950 /* AdobeAnalyticsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4508F7A52429669700ECA950 /* AdobeAnalyticsConstants.swift */; };
 		4508F7AA2429669700ECA950 /* AdobeAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4508F7A62429669700ECA950 /* AdobeAnalytics.swift */; };
@@ -471,11 +474,9 @@
 		4595F43C24A2AA8300B3733E /* ArticleAemImportDownloaderError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F43B24A2AA8300B3733E /* ArticleAemImportDownloaderError.swift */; };
 		4595F44424A2AF4200B3733E /* ArticlesCacheValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F44324A2AF4200B3733E /* ArticlesCacheValidation.swift */; };
 		4595F44624A2B6FD00B3733E /* ArticleAemImportDownloaderReceipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F44524A2B6FD00B3733E /* ArticleAemImportDownloaderReceipt.swift */; };
-		459A198424E4BCCB00A59BBD /* ShareToolScreenTutorialItemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459A198324E4BCCB00A59BBD /* ShareToolScreenTutorialItemProvider.swift */; };
 		459A198624E4C34500A59BBD /* CustomViewBuilderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459A198524E4C34500A59BBD /* CustomViewBuilderType.swift */; };
 		459A198A24E4C3DD00A59BBD /* TutorialItemViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459A198924E4C3DD00A59BBD /* TutorialItemViewBuilder.swift */; };
 		459A198C24E4C44800A59BBD /* CustomTutorialViewId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459A198B24E4C44800A59BBD /* CustomTutorialViewId.swift */; };
-		459A198E24E4CC2300A59BBD /* ShareToolScreenCustomTutorialViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459A198D24E4CC2300A59BBD /* ShareToolScreenCustomTutorialViewBuilder.swift */; };
 		459A71E124C9C50300B77942 /* StarscreamWebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459A71E024C9C50300B77942 /* StarscreamWebSocket.swift */; };
 		459A71E324C9C50A00B77942 /* WebSocketType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459A71E224C9C50A00B77942 /* WebSocketType.swift */; };
 		459A71E524C9CAF500B77942 /* ActionCableChannelSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459A71E424C9CAF500B77942 /* ActionCableChannelSubscriber.swift */; };
@@ -734,6 +735,9 @@
 		4506DECF24B7A78700A1C50B /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		4506DED024B7A78700A1C50B /* UIFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
 		4506DED124B7A78700A1C50B /* TractManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractManager.swift; sourceTree = "<group>"; };
+		4508728D24EEC7020047123E /* ShareToolScreenTutorialItemProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareToolScreenTutorialItemProvider.swift; sourceTree = "<group>"; };
+		4508728E24EEC7020047123E /* ShareToolScreenCustomTutorialViewBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareToolScreenCustomTutorialViewBuilder.swift; sourceTree = "<group>"; };
+		4508729124EEC71A0047123E /* ShareToolScreenTutorialNumberOfViewsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareToolScreenTutorialNumberOfViewsCache.swift; sourceTree = "<group>"; };
 		4508F7A22429669700ECA950 /* AdobeAnalyticsType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdobeAnalyticsType.swift; sourceTree = "<group>"; };
 		4508F7A52429669700ECA950 /* AdobeAnalyticsConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdobeAnalyticsConstants.swift; sourceTree = "<group>"; };
 		4508F7A62429669700ECA950 /* AdobeAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdobeAnalytics.swift; sourceTree = "<group>"; };
@@ -1147,11 +1151,9 @@
 		4595F43B24A2AA8300B3733E /* ArticleAemImportDownloaderError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleAemImportDownloaderError.swift; sourceTree = "<group>"; };
 		4595F44324A2AF4200B3733E /* ArticlesCacheValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticlesCacheValidation.swift; sourceTree = "<group>"; };
 		4595F44524A2B6FD00B3733E /* ArticleAemImportDownloaderReceipt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleAemImportDownloaderReceipt.swift; sourceTree = "<group>"; };
-		459A198324E4BCCB00A59BBD /* ShareToolScreenTutorialItemProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareToolScreenTutorialItemProvider.swift; sourceTree = "<group>"; };
 		459A198524E4C34500A59BBD /* CustomViewBuilderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewBuilderType.swift; sourceTree = "<group>"; };
 		459A198924E4C3DD00A59BBD /* TutorialItemViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialItemViewBuilder.swift; sourceTree = "<group>"; };
 		459A198B24E4C44800A59BBD /* CustomTutorialViewId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTutorialViewId.swift; sourceTree = "<group>"; };
-		459A198D24E4CC2300A59BBD /* ShareToolScreenCustomTutorialViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareToolScreenCustomTutorialViewBuilder.swift; sourceTree = "<group>"; };
 		459A71E024C9C50300B77942 /* StarscreamWebSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarscreamWebSocket.swift; sourceTree = "<group>"; };
 		459A71E224C9C50A00B77942 /* WebSocketType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketType.swift; sourceTree = "<group>"; };
 		459A71E424C9CAF500B77942 /* ActionCableChannelSubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionCableChannelSubscriber.swift; sourceTree = "<group>"; };
@@ -1595,6 +1597,16 @@
 			path = GeneralExtensions;
 			sourceTree = "<group>";
 		};
+		4508728C24EEC7020047123E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				4508728E24EEC7020047123E /* ShareToolScreenCustomTutorialViewBuilder.swift */,
+				4508728D24EEC7020047123E /* ShareToolScreenTutorialItemProvider.swift */,
+				4508729124EEC71A0047123E /* ShareToolScreenTutorialNumberOfViewsCache.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		4508F7A12429669700ECA950 /* Adobe */ = {
 			isa = PBXGroup;
 			children = (
@@ -1852,6 +1864,7 @@
 		451F3F1424E458A000A25D11 /* ShareTool */ = {
 			isa = PBXGroup;
 			children = (
+				4508728C24EEC7020047123E /* Services */,
 				4579169E24E84F8500C0CF49 /* LoadToolRemoteSessionViewModel.swift */,
 				451F3F1624E458A000A25D11 /* ShareToolMenuView.swift */,
 				451F3F1524E458A000A25D11 /* ShareToolMenuViewModel.swift */,
@@ -1866,7 +1879,6 @@
 				451F3F1824E458A000A25D11 /* ShareToolView.swift */,
 				451F3F1924E458A000A25D11 /* ShareToolViewModel.swift */,
 				451F3F1A24E458A000A25D11 /* ShareToolViewModelType.swift */,
-				459A198224E4BC8800A59BBD /* Models */,
 			);
 			path = ShareTool;
 			sourceTree = "<group>";
@@ -2565,15 +2577,6 @@
 				4595F42B24A294ED00B3733E /* ArticleAemImportDataParserError.swift */,
 			);
 			path = ArticleAemImportDataParser;
-			sourceTree = "<group>";
-		};
-		459A198224E4BC8800A59BBD /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				459A198D24E4CC2300A59BBD /* ShareToolScreenCustomTutorialViewBuilder.swift */,
-				459A198324E4BCCB00A59BBD /* ShareToolScreenTutorialItemProvider.swift */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		459A71DF24C9C4F500B77942 /* WebSocket */ = {
@@ -3762,6 +3765,7 @@
 				45732E7B24218A00006F0559 /* OnboardingTutorialAvailabilityType.swift in Sources */,
 				45DC81CB2412D911001913D6 /* AppsFlyerType.swift in Sources */,
 				45249D1624ACC62B00E139AD /* RealmResourceView.swift in Sources */,
+				4508729024EEC7020047123E /* ShareToolScreenCustomTutorialViewBuilder.swift in Sources */,
 				451DB1A12461DC3100FB14BF /* TractNumber.swift in Sources */,
 				451B9CE62475B812006ACD32 /* AppRootController.swift in Sources */,
 				4506DEE124B7A78700A1C50B /* Integer.swift in Sources */,
@@ -3803,7 +3807,6 @@
 				45E998E323FD9E870088DD0C /* ConfigType.swift in Sources */,
 				4595F42724A294D200B3733E /* ArticleAemImportDataType.swift in Sources */,
 				452C5774248E791A00B39C09 /* NoClientApiErrorType.swift in Sources */,
-				459A198E24E4CC2300A59BBD /* ShareToolScreenCustomTutorialViewBuilder.swift in Sources */,
 				451DB1392461DA4200FB14BF /* TractEmailsProperties.swift in Sources */,
 				4506DEE324B7A78700A1C50B /* AnalyticsRelay.swift in Sources */,
 				451D77882497F38200B7C83D /* TranslateLanguageNameViewModel.swift in Sources */,
@@ -3872,7 +3875,6 @@
 				454526CD243E138B00B84B29 /* AnalyticsContainer.swift in Sources */,
 				4595F42E24A294EE00B3733E /* ArticleJcrContentParser.swift in Sources */,
 				451DB0CE2461D90000FB14BF /* ManifestProperties.swift in Sources */,
-				459A198424E4BCCB00A59BBD /* ShareToolScreenTutorialItemProvider.swift in Sources */,
 				451F3F1324E44E4100A25D11 /* ShareToolMenuFlow.swift in Sources */,
 				45C2CFF72409B74900683A98 /* GlobalActivityAnalyticsUserDefaultsCache.swift in Sources */,
 				453DBA7D247485560000BA85 /* ArticlesErrorMessage.swift in Sources */,
@@ -4031,6 +4033,7 @@
 				451DB1402461DA4200FB14BF /* TractButtonProperties.swift in Sources */,
 				451DB1472461DA4200FB14BF /* TractPageProperties.swift in Sources */,
 				450EF81B247E9EEF00978926 /* ToolsViewModelType.swift in Sources */,
+				4508729224EEC71A0047123E /* ShareToolScreenTutorialNumberOfViewsCache.swift in Sources */,
 				451F3F2424E4739900A25D11 /* ShareToolScreenTutorialViewModel.swift in Sources */,
 				45B2AE5E2458D98C00253BAD /* GoogleAdwordsAnalytics.swift in Sources */,
 				452036C7240057F3002B2453 /* RequestOperation.swift in Sources */,
@@ -4158,6 +4161,7 @@
 				451F3F1D24E458A000A25D11 /* ShareToolMenuViewModelType.swift in Sources */,
 				451DB1462461DA4200FB14BF /* TractTabProperties.swift in Sources */,
 				4508F7A92429669700ECA950 /* AdobeAnalyticsConstants.swift in Sources */,
+				4508728F24EEC7020047123E /* ShareToolScreenTutorialItemProvider.swift in Sources */,
 				45732227244548A000D653FF /* ChooseLanguageCellViewModel.swift in Sources */,
 				45FCFF76243D0BE000865501 /* LanguageSettingsView.swift in Sources */,
 				45038D8724A2698E00345B42 /* TranslationDownloaderError.swift in Sources */,

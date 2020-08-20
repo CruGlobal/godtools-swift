@@ -206,6 +206,10 @@ The app can be downloaded from https://godtoolsapp.com";
 "tool_category_growth" = "Christian Growth";
 "tool_category_training" = "Training";
 
+// Share Tool Menu
+"share_tool_menu.send_tool" = "Send this tool";
+"share_tool_menu.remote_share_tool" = "Share your screen";
+
 // Share Tool Screen Tutorial
 "share_tool_screen_tutorial.share_your_screen.title" = "Share your screen";
 "share_tool_screen_tutorial.share_your_screen.message" = "This option will send a link to this tool to a friend. When the link is opened it will start a screen sharing session.";
@@ -217,3 +221,6 @@ The app can be downloaded from https://godtoolsapp.com";
 
 // Exit Tract Remote Share Session
 "exit_tract_remote_share_session.message" = "Exit the remote share session now?";
+
+// Loading Tool Remote Share Session
+"load_tool_remote_session.message" = "Starting Screen Sharing...";

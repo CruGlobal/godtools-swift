@@ -65,34 +65,22 @@ class TractRemoteSharePublisher: NSObject {
     }
     
     func sendNavigationEvent(card: Int?, locale: String?, page: Int?, tool: String?) {
-        
-        let stringPublishIdentifier: String = webSocketChannelPublisher.publishChannelIdentifier ?? ""
-        
+                
         let navigationAttributes = TractRemoteShareNavigationEvent.Attributes(card: card, locale: locale, page: page, tool: tool)
         let navigationData = TractRemoteShareNavigationEvent.Data(attributes: navigationAttributes)
         let navigationMessage = TractRemoteShareNavigationEvent.Message(data: navigationData)
         
-        let stringMessage: String
+        let stringData: String
             
         do {
-                        
             let navigationData: Data = try JSONEncoder().encode(navigationMessage)
-            let stringData: String = String(data: navigationData, encoding: .utf8) ?? ""
-            
-            let message: [String: Any] = [
-                "identifier": stringPublishIdentifier,
-                "data": stringData,
-                "command": "message"
-            ]
-            
-            let messageData: Data = try JSONSerialization.data(withJSONObject: message)
-            stringMessage = String(data: messageData, encoding: .utf8) ?? ""
+            stringData = String(data: navigationData, encoding: .utf8) ?? ""
         }
         catch {
-            stringMessage = ""
+            stringData = ""
         }
                                                 
-        webSocket.write(string: stringMessage)
+        webSocketChannelPublisher.sendMessage(data: stringData)
         
     }
     

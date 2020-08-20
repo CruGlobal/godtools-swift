@@ -17,9 +17,9 @@ class ShareToolMenuViewModel: ShareToolMenuViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    let shareToolTitle: String = "Send this tool"
-    let remoteShareToolTitle: String = "Share your screen"
-    let cancelTitle: String = "Cancel"
+    let shareToolTitle: String
+    let remoteShareToolTitle: String
+    let cancelTitle: String
     
     required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, resource: ResourceModel, language: LanguageModel, pageNumber: Int) {
         
@@ -28,6 +28,10 @@ class ShareToolMenuViewModel: ShareToolMenuViewModelType {
         self.resource = resource
         self.language = language
         self.pageNumber = pageNumber
+        
+        shareToolTitle = localizationServices.stringForMainBundle(key: "share_tool_menu.send_tool")
+        remoteShareToolTitle = localizationServices.stringForMainBundle(key: "share_tool_menu.remote_share_tool")
+        cancelTitle = localizationServices.stringForMainBundle(key: "cancel")
     }
     
     func shareToolTapped() {

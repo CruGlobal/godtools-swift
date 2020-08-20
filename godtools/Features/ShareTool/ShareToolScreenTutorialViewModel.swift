@@ -12,6 +12,8 @@ class ShareToolScreenTutorialViewModel: ShareToolScreenTutorialViewModelType {
     
     private let localizationServices: LocalizationServices
     private let tutorialItemsProvider: TutorialItemProviderType
+    private let shareToolScreenTutorialNumberOfViewsCache: ShareToolScreenTutorialNumberOfViewsCache
+    private let resource: ResourceModel
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -21,11 +23,13 @@ class ShareToolScreenTutorialViewModel: ShareToolScreenTutorialViewModelType {
     let continueTitle: String
     let shareLinkTitle: String
     
-    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, tutorialItemsProvider: TutorialItemProviderType) {
+    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, tutorialItemsProvider: TutorialItemProviderType, shareToolScreenTutorialNumberOfViewsCache: ShareToolScreenTutorialNumberOfViewsCache, resource: ResourceModel) {
         
         self.flowDelegate = flowDelegate
         self.localizationServices = localizationServices
         self.tutorialItemsProvider = tutorialItemsProvider
+        self.shareToolScreenTutorialNumberOfViewsCache = shareToolScreenTutorialNumberOfViewsCache
+        self.resource = resource
         self.customViewBuilder = ShareToolScreenCustomTutorialViewBuilder()
         self.skipTitle = localizationServices.stringForMainBundle(key: "navigationBar.navigationItem.skip")
         self.continueTitle = localizationServices.stringForMainBundle(key: "tutorial.continueButton.title.continue")
@@ -55,6 +59,7 @@ class ShareToolScreenTutorialViewModel: ShareToolScreenTutorialViewModelType {
     }
     
     func shareLinkTapped() {
+        shareToolScreenTutorialNumberOfViewsCache.tutorialViewed(resource: resource)
         flowDelegate?.navigate(step: .shareLinkTappedFromShareToolScreenTutorial)
     }
 }

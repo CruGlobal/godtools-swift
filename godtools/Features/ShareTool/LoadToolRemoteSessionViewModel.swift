@@ -12,9 +12,9 @@ class LoadToolRemoteSessionViewModel: LoadingViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    let message: ObservableValue<String> = ObservableValue(value: "Starting remote session...")
+    let message: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(flowDelegate: FlowDelegate, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareURLBuilder: TractRemoteShareURLBuilder, resource: ResourceModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?) {
+    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareURLBuilder: TractRemoteShareURLBuilder, resource: ResourceModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?) {
         
         self.flowDelegate = flowDelegate
         
@@ -32,5 +32,7 @@ class LoadToolRemoteSessionViewModel: LoadingViewModelType {
                 self?.flowDelegate?.navigate(step: .finishedLoadingToolRemoteSession(toolRemoteShareUrl: remoteShareUrl))
             }
         }
+        
+        message.accept(value: localizationServices.stringForMainBundle(key: "load_tool_remote_session.message"))
     }
 }

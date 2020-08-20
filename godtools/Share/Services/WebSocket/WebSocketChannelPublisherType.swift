@@ -19,4 +19,5 @@ protocol WebSocketChannelPublisherType {
     init(webSocket: WebSocketType, loggingEnabled: Bool)
     
     func createChannelForPublish(url: URL, channelId: String)
+    func sendMessage(data: String)
 }
