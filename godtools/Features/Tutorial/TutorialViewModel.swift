@@ -18,7 +18,7 @@ class TutorialViewModel: TutorialViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    let deviceLanguage: DeviceLanguageType
+    let customViewBuilder: CustomViewBuilderType
     let tutorialItems: ObservableValue<[TutorialItem]> = ObservableValue(value: [])
     let continueTitle: String
     let startUsingGodToolsTitle: String
@@ -28,7 +28,7 @@ class TutorialViewModel: TutorialViewModelType {
         self.flowDelegate = flowDelegate
         self.localizationServices = localizationServices
         self.analytics = analytics
-        self.deviceLanguage = deviceLanguage
+        self.customViewBuilder = TutorialItemViewBuilder(deviceLanguage: deviceLanguage)
         self.continueTitle = localizationServices.stringForMainBundle(key: "tutorial.continueButton.title.continue")
         self.startUsingGodToolsTitle = localizationServices.stringForMainBundle(key: "tutorial.continueButton.title.startUsingGodTools")
         

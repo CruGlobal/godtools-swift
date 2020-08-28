@@ -21,6 +21,7 @@ protocol TractViewModelType {
     var tractXmlPageItems: ObservableValue<[TractXmlPageItem]> { get }
     var currentTractPage: ObservableValue<AnimatableValue<Int>> { get }
     var isRightToLeftLanguage: Bool { get }
+    var remoteShareIsActive: ObservableValue<Bool> { get }
     
     func navHomeTapped()
     func shareTapped()
@@ -29,6 +30,7 @@ protocol TractViewModelType {
     func viewLoaded()
     func tractPageDidChange(page: Int)
     func tractPageDidAppear(page: Int)
+    func tractPageCardStateChanged(cardState: TractCardProperties.CardState)
     func sendEmailTapped(subject: String?, message: String?, isHtml: Bool?)
     func getTractPageItem(page: Int) -> TractPageItem
 }

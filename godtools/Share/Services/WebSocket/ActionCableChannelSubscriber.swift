@@ -11,24 +11,26 @@ import Foundation
 class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberType {
     
     private let webSocket: WebSocketType
+    private let loggingEnabled: Bool
     
     private var channelToSubscribeTo: String?
     private var isSubscribingToChannel: String?
     private var subscribedToChannel: String?
-    private var isObservingJsonSignal: Bool = false
+    private var isObservingTextSignal: Bool = false
     
     let didSubscribeToChannelSignal: SignalValue<String> = SignalValue()
     
-    required init(webSocket: WebSocketType) {
+    required init(webSocket: WebSocketType, loggingEnabled: Bool) {
         
         self.webSocket = webSocket
+        self.loggingEnabled = loggingEnabled
         
         super.init()
     }
     
     deinit {
         webSocket.didConnectSignal.removeObserver(self)
-        removeJsonSignalObserver()
+        removeTextSignalObserver()
         unsubscribe()
         webSocket.disconnect()
     }
@@ -39,7 +41,7 @@ class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberType {
     
     func subscribe(url: URL, channelId: String) {
         
-        removeJsonSignalObserver()
+        removeTextSignalObserver()
         
         channelToSubscribeTo = channelId
         
@@ -64,31 +66,31 @@ class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberType {
     
     func unsubscribe() {
         
-        removeJsonSignalObserver()
+        removeTextSignalObserver()
         channelToSubscribeTo = nil
         isSubscribingToChannel = nil
         subscribedToChannel = nil
     }
     
-    private func addJsonSignalObserver() {
-        if !isObservingJsonSignal {
-            isObservingJsonSignal = true
-            webSocket.didReceiveJsonSignal.addObserver(self) { [weak self] (json: [String: Any]) in
-                self?.handleDidReceiveJson(json: json)
+    private func addTextSignalObserver() {
+        if !isObservingTextSignal {
+            isObservingTextSignal = true
+            webSocket.didReceiveTextSignal.addObserver(self) { [weak self] (text: String) in
+                self?.handleDidReceiveText(text: text)
             }
         }
     }
     
-    private func removeJsonSignalObserver() {
-        if isObservingJsonSignal {
-            isObservingJsonSignal = false
-            webSocket.didReceiveJsonSignal.removeObserver(self)
+    private func removeTextSignalObserver() {
+        if isObservingTextSignal {
+            isObservingTextSignal = false
+            webSocket.didReceiveTextSignal.removeObserver(self)
         }
     }
     
     private func handleDidSubscribeToChannel(channelId: String) {
         
-        removeJsonSignalObserver()
+        removeTextSignalObserver()
         channelToSubscribeTo = nil
         isSubscribingToChannel = nil
         subscribedToChannel = channelId
@@ -96,12 +98,16 @@ class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberType {
     }
     
     private func handleDidConnectToWebsocket() {
-                
+               
+        if loggingEnabled {
+            print("\n ActionCableChannelSubscriber: handleDidConnectToWebsocket()")
+        }
+        
         guard let channelId = channelToSubscribeTo else {
             return
         }
         
-        addJsonSignalObserver()
+        addTextSignalObserver()
         
         isSubscribingToChannel = channelId
         
@@ -120,18 +126,32 @@ class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberType {
         }
     }
     
-    private func handleDidReceiveJson(json: [String: Any]) {
+    private func handleDidReceiveText(text: String) {
         
-        if let type = json["type"] as? String {
-            
-            if type == "welcome" { // sent when subscribing to a channel
+        if loggingEnabled {
+            print("\n ActionCableChannelSubscriber: handleDidReceiveText() \(text)")
+        }
                 
-            }
-            else if type == "confirm_subscription" { // sent when subscribing to a channel
-                if let channelToSubscribeTo = channelToSubscribeTo, let isSubscribingToChannel = isSubscribingToChannel {
-                    if channelToSubscribeTo == isSubscribingToChannel {
-                        handleDidSubscribeToChannel(channelId: channelToSubscribeTo)
-                    }
+        guard let data = text.data(using: .utf8) else {
+            return
+        }
+        
+        let event: ActionCableEventType?
+        
+        do {
+            event = try JSONDecoder().decode(ActionCableEventType.self, from: data)
+        }
+        catch {
+            event = nil
+        }
+        
+        if event?.type == "welcome" {
+
+        }
+        else if event?.type == "confirm_subscription" {
+            if let channelToSubscribeTo = channelToSubscribeTo, let isSubscribingToChannel = isSubscribingToChannel {
+                if channelToSubscribeTo == isSubscribingToChannel {
+                    handleDidSubscribeToChannel(channelId: channelToSubscribeTo)
                 }
             }
         }

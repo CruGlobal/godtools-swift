@@ -15,6 +15,7 @@ class TractRemoteShareSubscriber: NSObject {
     private let remoteUrl: URL
     private let webSocket: WebSocketType
     private let webSocketChannelSubscriber: WebSocketChannelSubscriberType
+    private let jsonServices: JsonServices = JsonServices()
     private let loggingEnabled: Bool
     
     private var timeoutTimer: Timer?
@@ -90,8 +91,8 @@ class TractRemoteShareSubscriber: NSObject {
                 self?.handleDidSubscribeToChannel(channelId: channelId, error: nil)
             }
             
-            webSocket.didReceiveJsonSignal.addObserver(self) { [weak self] (json: [String : Any]) in
-                self?.handleDidReceiveJson(json: json)
+            webSocket.didReceiveTextSignal.addObserver(self) { [weak self] (text: String) in
+                self?.handleDidReceiveText(text: text)
             }
         }
     }
@@ -103,7 +104,7 @@ class TractRemoteShareSubscriber: NSObject {
             isObservingSignals = false
             
             webSocketChannelSubscriber.didSubscribeToChannelSignal.removeObserver(self)
-            webSocket.didReceiveJsonSignal.removeObserver(self)
+            webSocket.didReceiveTextSignal.removeObserver(self)
         }
     }
     
@@ -151,31 +152,19 @@ class TractRemoteShareSubscriber: NSObject {
 
 extension TractRemoteShareSubscriber {
     
-    private func handleDidReceiveJson(json: [String: Any]) {
-                
-        if let messageObject = json["message"] as? [String: Any], let dataObject = messageObject["data"] as? [String: Any] {
+    private func handleDidReceiveText(text: String) {
             
-            guard let eventType = dataObject["type"] as? String, let attributes = dataObject["attributes"] as? [String: Any] else {
-                return
-            }
+        log(method: "handleDidReceiveText()", label: "text", labelValue: text)
+        
+        let data: Data? = text.data(using: .utf8)
+        
+        let object: TractRemoteShareNavigationEvent? = jsonServices.decodeObject(data: data)
+        
+        print("  OBJECT: \(object)")
+        
+        if let object = object, object.message?.data?.type == "navigation-event" {
             
-            let jsonServices = JsonServices()
-                        
-            let attributesData: Data? = jsonServices.getJsonData(json: attributes)
-            
-            if eventType == "navigation-event" {
-                
-                if loggingEnabled {
-                    log(method: "handleDidReceiveJson()", label: nil, labelValue: nil)
-                    print("  navigationEvent: \(json)")
-                }
-                
-                let navigationEvent: TractRemoteShareNavigationEvent? = jsonServices.decodeObject(data: attributesData)
-                
-                if let event = navigationEvent {
-                    navigationEventSignal.accept(value: event)
-                }
-            }
+            navigationEventSignal.accept(value: object)
         }
     }
 }

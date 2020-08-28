@@ -17,6 +17,7 @@ class TractViewModel: NSObject, TractViewModelType {
     private let parallelLanguage: LanguageModel?
     private let translateLanguageNameViewModel: TranslateLanguageNameViewModel
     private let tractManager: TractManager // TODO: Eventually would like to remove this class. ~Levi
+    private let tractRemoteSharePublisher: TractRemoteSharePublisher
     private let tractRemoteShareSubscriber: TractRemoteShareSubscriber
     private let followUpsService: FollowUpsService
     private let viewsService: ViewsService
@@ -38,10 +39,11 @@ class TractViewModel: NSObject, TractViewModelType {
     let selectedTractLanguage: ObservableValue<TractLanguage>
     let tractXmlPageItems: ObservableValue<[TractXmlPageItem]> = ObservableValue(value: [])
     let currentTractPage: ObservableValue<AnimatableValue<Int>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
+    let remoteShareIsActive: ObservableValue<Bool> = ObservableValue(value: false)
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, languageSettingsService: LanguageSettingsService, tractManager: TractManager, tractRemoteShareSubscriber: TractRemoteShareSubscriber, followUpsService: FollowUpsService, viewsService: ViewsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, tractPage: Int?) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, languageSettingsService: LanguageSettingsService, tractManager: TractManager, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, followUpsService: FollowUpsService, viewsService: ViewsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, tractPage: Int?) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -49,6 +51,7 @@ class TractViewModel: NSObject, TractViewModelType {
         self.parallelLanguage = parallelLanguage?.code != primaryLanguage.code ? parallelLanguage : nil
         self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(localizationServices: localizationServices)
         self.tractManager = tractManager
+        self.tractRemoteSharePublisher = tractRemoteSharePublisher
         self.tractRemoteShareSubscriber = tractRemoteShareSubscriber
         self.followUpsService = followUpsService
         self.viewsService = viewsService
@@ -105,10 +108,14 @@ class TractViewModel: NSObject, TractViewModelType {
         tractPageDidAppear(page: startingTractPage)
         
         subscribeToLiveShareStream(liveShareStream: liveShareStream)
+        
+        reloadRemoteShareIsActive()
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+        tractRemoteSharePublisher.didCreateNewSubscriberChannelIdForPublish.removeObserver(self)
+        tractRemoteSharePublisher.endPublishingSession(disconnectSocket: true)
         tractRemoteShareSubscriber.navigationEventSignal.removeObserver(self)
         tractRemoteShareSubscriber.unsubscribe(disconnectSocket: true)
         destroyTractPages()
@@ -134,6 +141,12 @@ class TractViewModel: NSObject, TractViewModelType {
         
         var isFirstRemoteShareNavigationEvent: Bool = true
         
+        tractRemoteSharePublisher.didCreateNewSubscriberChannelIdForPublish.addObserver(self) { [weak self] (channel: TractRemoteShareChannel) in
+            DispatchQueue.main.async { [weak self] in
+                self?.reloadRemoteShareIsActive()
+            }
+        }
+        
         tractRemoteShareSubscriber.navigationEventSignal.addObserver(self) { [weak self] (navigationEvent: TractRemoteShareNavigationEvent) in
             DispatchQueue.main.async { [weak self] in
                 let animated: Bool = !isFirstRemoteShareNavigationEvent
@@ -150,21 +163,25 @@ class TractViewModel: NSObject, TractViewModelType {
         }
                 
         tractRemoteShareSubscriber.subscribe(channelId: channelId) { [weak self] (error: TractRemoteShareSubscriberError?) in
-
+            DispatchQueue.main.async { [weak self] in
+                self?.reloadRemoteShareIsActive()
+            }
         }
     }
     
     private func handleDidReceiveRemoteShareNavigationEvent(navigationEvent: TractRemoteShareNavigationEvent, animated: Bool = true) {
         
-        if let page = navigationEvent.page {
+        let attributes = navigationEvent.message?.data?.attributes
+        
+        if let page = attributes?.page {
             cachedTractRemoteShareNavigationEvents[page] = navigationEvent
             currentTractPage.accept(value: AnimatableValue(value: page, animated: animated))
             if let cachedTractPage = getTractPageItem(page: page).tractPage {
-                cachedTractPage.setCard(card: navigationEvent.card, animated: animated)
+                cachedTractPage.setCard(card: attributes?.card, animated: animated)
             }
         }
         
-        if let locale = navigationEvent.locale, !locale.isEmpty {
+        if let locale = attributes?.locale, !locale.isEmpty {
             
             let currentTractLanguage: TractLanguage = selectedTractLanguage.value
             let localeChanged: Bool = locale != currentTractLanguage.language.code
@@ -178,6 +195,28 @@ class TractViewModel: NSObject, TractViewModelType {
                 }
             }
         }
+    }
+    
+    private func sendRemoteShareNavigationEventForPage(page: Int) {
+        
+        if tractRemoteSharePublisher.isSubscriberChannelIdCreatedForPublish {
+            
+            let tractPageItem: TractPageItem = getTractPageItem(page: page)
+            
+            tractRemoteSharePublisher.sendNavigationEvent(
+                card: tractPageItem.tractPage?.openedCard,
+                locale: selectedTractLanguage.value.language.code,
+                page: page,
+                tool: resource.abbreviation
+            )
+        }
+    }
+    
+    private func reloadRemoteShareIsActive() {
+        
+        let isActive: Bool = tractRemoteSharePublisher.isSubscriberChannelIdCreatedForPublish || tractRemoteShareSubscriber.isSubscribedToChannel
+        
+        remoteShareIsActive.accept(value: isActive)
     }
     
     private func loadTractXmlPages() {
@@ -239,11 +278,11 @@ class TractViewModel: NSObject, TractViewModelType {
     }
     
     func navHomeTapped() {
-        flowDelegate?.navigate(step: .homeTappedFromTract)
+        flowDelegate?.navigate(step: .homeTappedFromTract(isScreenSharing: remoteShareIsActive.value))
     }
     
     func shareTapped() {
-        flowDelegate?.navigate(step: .shareTappedFromTract(resource: resource, language: selectedTractLanguage.value.language, pageNumber: tractPage))
+        flowDelegate?.navigate(step: .shareMenuTappedFromTract(tractRemoteSharePublisher: tractRemoteSharePublisher, resource: resource, selectedLanguage: selectedTractLanguage.value.language, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, pageNumber: tractPage))
     }
     
     func primaryLanguageTapped() {
@@ -302,6 +341,8 @@ class TractViewModel: NSObject, TractViewModelType {
             buffer: 1,
             currentPage: page
         )
+        
+        sendRemoteShareNavigationEventForPage(page: page)
     }
     
     func tractPageDidAppear(page: Int) {
@@ -313,6 +354,14 @@ class TractViewModel: NSObject, TractViewModelType {
             siteSection: resource.abbreviation,
             siteSubSection: ""
         )
+    }
+    
+    func tractPageCardStateChanged(cardState: TractCardProperties.CardState) {
+        
+        if cardState == .open || cardState == .close {
+            
+            sendRemoteShareNavigationEventForPage(page: tractPage)
+        }
     }
     
     func sendEmailTapped(subject: String?, message: String?, isHtml: Bool?) {

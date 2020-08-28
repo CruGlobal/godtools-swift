@@ -9,12 +9,7 @@
 import UIKit
 
 class TutorialCellViewModel {
-    
-    enum CustomViewId: String {
-        case tutorialTools = "tutorial_tools"
-        case tutorialInMenu = "tutorial_in_menu"
-    }
-    
+        
     let title: String
     let message: String
     let mainImage: UIImage?
@@ -24,29 +19,26 @@ class TutorialCellViewModel {
     let hidesYouTubeVideoPlayer: Bool
     let hidesMainImage: Bool
     
-    required init(item: TutorialItem, deviceLanguage: DeviceLanguageType) {
+    required init(item: TutorialItem, customViewBuilder: CustomViewBuilderType) {
         
         title = item.title
         message = item.message
-        mainImage = UIImage(named: item.imageName ?? "")
+        if let imageName = item.imageName, !imageName.isEmpty {
+            mainImage = UIImage(named: imageName)
+        }
+        else {
+            mainImage = nil
+        }
         youTubeVideoId = item.youTubeVideoId ?? ""
         
-        let customViewId: CustomViewId? = CustomViewId(rawValue: item.customViewId ?? "")
-        if let customViewId = customViewId {
-            switch customViewId {
-            case .tutorialTools:
-                let tutorialTools: TutorialToolsView = TutorialToolsView()
-                tutorialTools.configure(viewModel: TutorialToolsViewModel(deviceLanguage: deviceLanguage))
-                customView = tutorialTools
-                
-            case .tutorialInMenu:
-                let tutorialInMenu: TutorialInMenuView = TutorialInMenuView()
-                tutorialInMenu.configure(viewModel: TutorialInMenuViewModel(deviceLanguage: deviceLanguage))
-                customView = tutorialInMenu
-            }
+        let didBuildCustomView: Bool
+        if let customViewId = item.customViewId, !customViewId.isEmpty, let builtCustomView = customViewBuilder.buildCustomView(customViewId: customViewId) {
+            customView = builtCustomView
+            didBuildCustomView = true
         }
         else {
             customView = UIView(frame: .zero)
+            didBuildCustomView = false
         }
         
         if mainImage != nil {
@@ -59,7 +51,7 @@ class TutorialCellViewModel {
             hidesYouTubeVideoPlayer = false
             hidesCustomView = true
         }
-        else if customViewId != nil {
+        else if didBuildCustomView {
             hidesMainImage = true
             hidesYouTubeVideoPlayer = true
             hidesCustomView = false

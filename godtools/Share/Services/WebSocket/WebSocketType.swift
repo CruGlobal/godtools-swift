@@ -13,7 +13,6 @@ protocol WebSocketType {
     var didConnectSignal: Signal { get }
     var didDisconnectSignal: Signal { get }
     var didReceiveTextSignal: SignalValue<String> { get }
-    var didReceiveJsonSignal: SignalValue<[String: Any]> { get }
     var isConnected: Bool { get }
         
     func connect(url: URL)
