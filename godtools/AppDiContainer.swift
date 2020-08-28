@@ -239,12 +239,30 @@ class AppDiContainer {
         return TractRemoteShareSubscriber(
             config: config,
             webSocket: webSocket,
-            webSocketChannelSubscriber: ActionCableChannelSubscriber(webSocket: webSocket),
-            loggingEnabled: false
+            webSocketChannelSubscriber: ActionCableChannelSubscriber(webSocket: webSocket, loggingEnabled: config.isDebug),
+            loggingEnabled: config.isDebug
         )
+    }
+    
+    var tractRemoteSharePublisher: TractRemoteSharePublisher {
+        let webSocket: WebSocketType = StarscreamWebSocket()
+        return TractRemoteSharePublisher(
+            config: config,
+            webSocket: webSocket,
+            webSocketChannelPublisher: ActionCableChannelPublisher(webSocket: webSocket, loggingEnabled: config.isDebug),
+            loggingEnabled: config.isDebug
+        )
+    }
+    
+    var tractRemoteShareURLBuilder: TractRemoteShareURLBuilder {
+        return TractRemoteShareURLBuilder()
     }
     
     var tractManager: TractManager {
         return TractManager(translationsFileCache: translationsFileCache, resourcesSHA256FileCache: resourcesSHA256FileCache)
+    }
+    
+    var shareToolScreenTutorialNumberOfViewsCache: ShareToolScreenTutorialNumberOfViewsCache {
+        return ShareToolScreenTutorialNumberOfViewsCache(sharedUserDefaultsCache: sharedUserDefaultsCache)
     }
 }

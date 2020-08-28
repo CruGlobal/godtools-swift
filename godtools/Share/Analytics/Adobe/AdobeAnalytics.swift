@@ -9,9 +9,9 @@
 import Foundation
 import AdobeMobileSDK
 import TheKeyOAuthSwift
+import GTMAppAuth
 
-class AdobeAnalytics: AdobeAnalyticsType {
-    
+class AdobeAnalytics: NSObject, AdobeAnalyticsType {
     private let config: ConfigType
     private let keyAuthClient: TheKeyOAuthClient
     private let languageSettingsService: LanguageSettingsService
@@ -60,7 +60,7 @@ class AdobeAnalytics: AdobeAnalyticsType {
         ))
         
         isConfigured = true
-        
+                
         log(method: "configure()", label: nil, labelValue: nil, data: nil)
     }
     
@@ -89,7 +89,7 @@ class AdobeAnalytics: AdobeAnalyticsType {
         let previousScreenName: String = self.previousTrackedScreenName
         
         previousTrackedScreenName = screenName
-        
+                
         createDefaultProperties(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: previousScreenName) { [weak self] (defaultProperties: AdobeAnalyticsProperties) in
             
             let data: [AnyHashable: Any] = JsonServices().encode(object: defaultProperties)
@@ -138,15 +138,33 @@ class AdobeAnalytics: AdobeAnalyticsType {
         }
     }
     
+    func syncVisitorId() {
+        DispatchQueue.global().async { [weak self] in
+            self?.assertFailureIfNotConfigured()
+
+            let isLoggedIn: Bool = self?.keyAuthClient.isAuthenticated() ?? false
+
+            let grMasterPersonID: String? = isLoggedIn ? self?.keyAuthClient.grMasterPersonId : nil
+            let ssoguid: String? = isLoggedIn ? self?.keyAuthClient.guid : nil
+            
+            let visitorId: String? = grMasterPersonID ?? ssoguid ?? self?.visitorMarketingCloudID
+            
+            let authState: ADBMobileVisitorAuthenticationState = ((grMasterPersonID ?? ssoguid) == nil) ? ADBMobileVisitorAuthenticationState.unknown : (isLoggedIn ? ADBMobileVisitorAuthenticationState.authenticated : ADBMobileVisitorAuthenticationState.loggedOut)
+
+            ADBMobile.visitorSyncIdentifier(withType: "cru_visitor_id", identifier: visitorId, authenticationState: authState)
+        }
+    }
+    
     private func createDefaultProperties(screenName: String?, siteSection: String?, siteSubSection: String?, previousScreenName: String?, complete: @escaping ((_ properties: AdobeAnalyticsProperties) -> Void)) {
+        let isLoggedIn: Bool = keyAuthClient.isAuthenticated()
         
         let appName: String = self.appName
         let contentLanguage: String? = languageSettingsService.primaryLanguage.value?.code
         let contentLanguageSecondary: String? = languageSettingsService.parallelLanguage.value?.code
         let grMasterPersonID: String? = keyAuthClient.isAuthenticated() ? keyAuthClient.grMasterPersonId : nil
         let loggedInStatus: String = self.loggedInStatus
-        let ssoguid: String? = keyAuthClient.isAuthenticated() ? keyAuthClient.guid : nil
-        
+        let ssoguid: String? = isLoggedIn ? keyAuthClient.guid : nil
+                
         DispatchQueue.global().async { [weak self] in
             
             let visitorMarketingCloudID: String? = self?.visitorMarketingCloudID
@@ -164,7 +182,7 @@ class AdobeAnalytics: AdobeAnalyticsType {
                 siteSubSection: siteSubSection,
                 ssoguid: ssoguid
             )
-            
+                        
             complete(defaultProperties)
         }
     }

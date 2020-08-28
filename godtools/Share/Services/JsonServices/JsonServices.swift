@@ -124,7 +124,7 @@ struct JsonServices: JsonServicesType {
         
         do {
             let data: Data = try JSONSerialization.data(withJSONObject: json, options: options)
-            let jsonString: String? = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String?
+            let jsonString: String? = String(data: data, encoding: .utf8)
             return .success(jsonString ?? "")
         }
         catch let error {

@@ -60,14 +60,16 @@ class TractCard: BaseTractElement {
         return self.parent as! TractCards
     }
     var currentAnimation: TractCard.CardAnimationState = .none
-    var animationYPos: CGFloat {
-        switch self.currentAnimation {
+    
+    private func getAnimationPosition(position: TractCard.CardAnimationState) -> CGFloat {
+        
+        switch position {
         case .show:
-            return TractCard.yTopMarginConstant - self.elementFrame.y
+            return TractCard.yTopMarginConstant - elementFrame.y
         case .hide:
-            return self.yDownPosition
+            return yDownPosition
         case .none:
-            return 0.0
+            return 0
         }
     }
     
@@ -175,11 +177,11 @@ class TractCard: BaseTractElement {
         switch cardElement.currentAnimation {
         case .show:
             self.cardsParentView.lastCardOpened = self
-            showCardWithoutAnimation()
+            setPositionToShowCard(animated: false)
             showTexts()
             showCallToAction()
         case .hide:
-            hideCardWithoutAnimation()
+            setPositionToHideCard(animated: false)
         default:
             break
         }
@@ -314,12 +316,7 @@ extension TractCard {
         }
         
         showTexts()
-        if animated {
-            showCardAnimation()
-        }
-        else {
-            showCardWithoutAnimation()
-        }
+        setPositionToShowCard(animated: animated)
         enableScrollview()
         
         self.cardsParentView.lastCardOpened = self
@@ -340,12 +337,7 @@ extension TractCard {
         
         hideTexts()
         self.cardsParentView.hideCallToAction()
-        if animated {
-            hideCardAnimation()
-        }
-        else {
-            hideCardWithoutAnimation()
-        }
+        setPositionToHideCard(animated: animated)
         disableScrollview()
 
     }
@@ -535,58 +527,75 @@ extension TractCard {
         })
     }
     
-    func showCardWithoutAnimation() {
+    private func setPositionToShowCard(animated: Bool) {
+                
         self.currentAnimation = .show
-        self.transform = CGAffineTransform(translationX: 0, y: self.animationYPos)
+        
+        let yPosition: CGFloat = getAnimationPosition(position: .show)
+        
+        if animated {
+            UIView.animate(withDuration: 0.35,
+            delay: 0.0,
+            options: UIView.AnimationOptions.curveEaseInOut,
+            animations: {
+             self.transform = CGAffineTransform(translationX: 0, y: yPosition) },
+            completion: nil)
+        }
+        else {
+            transform = CGAffineTransform(translationX: 0, y: yPosition)
+        }
     }
     
-    func hideCardWithoutAnimation() {
+    private func setPositionToHideCard(animated: Bool) {
+        
         self.currentAnimation = .hide
-        self.transform = CGAffineTransform(translationX: 0, y: self.animationYPos)
+        
+        let yPosition: CGFloat = getAnimationPosition(position: .hide)
+        
+        if animated {
+            UIView.animate(withDuration: 0.45,
+            delay: 0.0,
+            options: UIView.AnimationOptions.curveEaseInOut,
+            animations: {
+             self.transform = CGAffineTransform(translationX: 0, y: yPosition) },
+            completion: { (completed) in
+             if completed {
+                self.handleSetPositionToHideCompleted()
+             }})
+        }
+        else {
+            transform = CGAffineTransform(translationX: 0, y: yPosition)
+            handleSetPositionToHideCompleted()
+        }
+    }
+    
+    private func handleSetPositionToHideCompleted() {
+        
+        let properties = cardProperties()
+        
+        if properties.cardNumber == 0 {
+            cardsParentView.reset()
+        }
+        
+        if properties.cardState == .hidden {
+            isHidden = true
+        }
     }
     
     func resetCardToOriginalPositionWithoutAnimation() {
         self.currentAnimation = .none
-        self.transform = CGAffineTransform(translationX: 0, y: self.animationYPos)
-    }
-    
-    func showCardAnimation() {
-        self.currentAnimation = .show
-        UIView.animate(withDuration: 0.35,
-                       delay: 0.0,
-                       options: UIView.AnimationOptions.curveEaseInOut,
-                       animations: {
-                        self.transform = CGAffineTransform(translationX: 0, y: self.animationYPos) },
-                       completion: nil )
-    }
-    
-    func hideCardAnimation() {
-        self.currentAnimation = .hide
-        let properties = cardProperties()
-        UIView.animate(withDuration: 0.45,
-                       delay: 0.0,
-                       options: UIView.AnimationOptions.curveEaseInOut,
-                       animations: {
-                        self.transform = CGAffineTransform(translationX: 0, y: self.animationYPos) },
-                       completion: { (completed) in
-                        if completed {
-                            if properties.cardNumber == 0 {
-                                self.cardsParentView.reset()
-                            }
-                            
-                            if properties.cardState == .hidden {
-                                self.isHidden = true
-                            }
-                        }})
+        let yPosition: CGFloat = getAnimationPosition(position: .none)
+        self.transform = CGAffineTransform(translationX: 0, y: yPosition)
     }
     
     func resetCardToOriginalPositionAnimation() {
         self.currentAnimation = .none
+        let yPosition: CGFloat = getAnimationPosition(position: .none)
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
                        options: UIView.AnimationOptions.curveEaseInOut,
                        animations: {
-                        self.transform = CGAffineTransform(translationX: 0, y: self.animationYPos) },
+                        self.transform = CGAffineTransform(translationX: 0, y: yPosition) },
                        completion: nil )
     }
     

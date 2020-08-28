@@ -11,6 +11,7 @@ import UIKit
 class ToolsFlow: Flow {
     
     private var articlesFlow: ArticlesFlow?
+    private var shareToolMenuFlow: ShareToolMenuFlow?
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -132,27 +133,28 @@ class ToolsFlow: Flow {
         case .aboutToolTappedFromAllTools(let resource):
             navigateToToolDetail(resource: resource)
             
-        case .homeTappedFromTract:
-            flowDelegate?.navigate(step: .homeTappedFromTract)
+        case .homeTappedFromTract(let isScreenSharing):
+            flowDelegate?.navigate(step: .homeTappedFromTract(isScreenSharing: isScreenSharing))
             
-        case .shareTappedFromTract(let resource, let language, let pageNumber):
+        case .shareMenuTappedFromTract(let tractRemoteSharePublisher, let resource, let selectedLanguage, let primaryLanguage, let parallelLanguage, let pageNumber):
             
-            let viewModel = ShareToolViewModel(
+            let shareToolMenuFlow = ShareToolMenuFlow(
+                flowDelegate: self,
+                appDiContainer: appDiContainer,
+                navigationController: navigationController,
+                tractRemoteSharePublisher: tractRemoteSharePublisher,
                 resource: resource,
-                language: language,
-                pageNumber: pageNumber,
-                localizationServices: appDiContainer.localizationServices,
-                analytics: appDiContainer.analytics
+                selectedLanguage: selectedLanguage,
+                primaryLanguage: primaryLanguage,
+                parallelLanguage: parallelLanguage,
+                pageNumber: pageNumber
             )
             
-            let view = ShareToolView(viewModel: viewModel)
+            self.shareToolMenuFlow = shareToolMenuFlow
             
-            navigationController.present(
-                view.controller,
-                animated: true,
-                completion: nil
-            )
-            
+        case .closeTappedFromShareToolScreenTutorial:
+            self.shareToolMenuFlow = nil
+                        
         case .openToolTappedFromToolDetails(let resource):
             navigateToTool(resource: resource)
             
@@ -465,6 +467,7 @@ class ToolsFlow: Flow {
             parallelTranslationManifest: parallelTranslationManifest,
             languageSettingsService: appDiContainer.languageSettingsService,
             tractManager: appDiContainer.tractManager,
+            tractRemoteSharePublisher: appDiContainer.tractRemoteSharePublisher,
             tractRemoteShareSubscriber: appDiContainer.tractRemoteShareSubscriber,
             followUpsService: appDiContainer.followUpsService,
             viewsService: appDiContainer.viewsService,

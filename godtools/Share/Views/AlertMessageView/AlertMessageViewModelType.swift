@@ -10,8 +10,8 @@ import Foundation
 
 protocol AlertMessageViewModelType: class {
     
-    var title: String { get }
-    var message: String { get }
+    var title: String? { get }
+    var message: String? { get }
     var cancelTitle: String? { get }
     var acceptTitle: String { get }
     

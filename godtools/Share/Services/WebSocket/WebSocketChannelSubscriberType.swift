@@ -10,7 +10,7 @@ import Foundation
 
 protocol WebSocketChannelSubscriberType {
     
-    init(webSocket: WebSocketType)
+    init(webSocket: WebSocketType, loggingEnabled: Bool)
     
     var didSubscribeToChannelSignal: SignalValue<String> { get }
     var isSubscribedToChannel: Bool { get }

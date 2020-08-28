@@ -18,7 +18,6 @@ class StarscreamWebSocket: NSObject, WebSocketType {
     let didConnectSignal: Signal = Signal()
     let didDisconnectSignal: Signal = Signal()
     let didReceiveTextSignal: SignalValue<String> = SignalValue()
-    let didReceiveJsonSignal: SignalValue<[String : Any]> = SignalValue()
     let didReceiveEventSignal: SignalValue<WebSocketEvent> = SignalValue()
     
     override init() {
@@ -71,14 +70,7 @@ extension StarscreamWebSocket {
             didDisconnectSignal.accept()
         
         case .text(let string):
-            
             didReceiveTextSignal.accept(value: string)
-            
-            let data: Data? = string.data(using: .utf8)
-            let jsonObject: Any? = JsonServices().getJsonObject(data: data)
-            if let jsonObject = jsonObject as? [String: Any] {
-                didReceiveJsonSignal.accept(value: jsonObject)
-            }
         
         case .binary( _):
             break
