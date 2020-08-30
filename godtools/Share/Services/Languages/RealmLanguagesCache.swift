@@ -1,5 +1,5 @@
 //
-//  LanguagesCache.swift
+//  RealmLanguagesCache.swift
 //  godtools
 //
 //  Created by Levi Eggert on 6/27/20.
@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class LanguagesCache {
+class RealmLanguagesCache {
     
     private let realmDatabase: RealmDatabase
     

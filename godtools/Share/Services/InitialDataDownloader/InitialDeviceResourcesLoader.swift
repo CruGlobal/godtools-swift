@@ -17,11 +17,11 @@ class InitialDeviceResourcesLoader {
     private let translationsFileCache: TranslationsFileCache
     private let realmResourcesCache: RealmResourcesCache
     private let favoritedResourcesCache: FavoritedResourcesCache
-    private let languagesCache: LanguagesCache
+    private let languagesCache: RealmLanguagesCache
     private let deviceLanguage: DeviceLanguageType
     private let languageSettingsCache: LanguageSettingsCacheType
         
-    required init(realmDatabase: RealmDatabase, legacyRealmMigration: LegacyRealmMigration, attachmentsFileCache: AttachmentsFileCache, translationsFileCache: TranslationsFileCache, realmResourcesCache: RealmResourcesCache, favoritedResourcesCache: FavoritedResourcesCache, languagesCache: LanguagesCache, deviceLanguage: DeviceLanguageType, languageSettingsCache: LanguageSettingsCacheType) {
+    required init(realmDatabase: RealmDatabase, legacyRealmMigration: LegacyRealmMigration, attachmentsFileCache: AttachmentsFileCache, translationsFileCache: TranslationsFileCache, realmResourcesCache: RealmResourcesCache, favoritedResourcesCache: FavoritedResourcesCache, languagesCache: RealmLanguagesCache, deviceLanguage: DeviceLanguageType, languageSettingsCache: LanguageSettingsCacheType) {
         
         self.realmDatabase = realmDatabase
         self.legacyRealmMigration = legacyRealmMigration
