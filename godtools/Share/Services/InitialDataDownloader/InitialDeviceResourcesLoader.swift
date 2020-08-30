@@ -276,8 +276,8 @@ class InitialDeviceResourcesLoader {
         var deviceLanguage: LanguageModel?
         
         for languageCode in preferredDeviceLanguageCodes {
-            if let language = languagesCache.getLanguage(realm: realm, code: languageCode) {
-                deviceLanguage = language
+            if let cachedLanguage = languagesCache.getLanguage(realm: realm, code: languageCode) {
+                deviceLanguage = LanguageModel(model: cachedLanguage)
                 break
             }
         }
@@ -287,8 +287,8 @@ class InitialDeviceResourcesLoader {
         if let deviceLanguage = deviceLanguage {
             primaryLanguage = deviceLanguage
         }
-        else if let englishLanguage = languagesCache.getLanguage(realm: realm, code: "en") {
-            primaryLanguage = englishLanguage
+        else if let cachedEnglishLanguage = languagesCache.getLanguage(realm: realm, code: "en") {
+            primaryLanguage = LanguageModel(model: cachedEnglishLanguage)
         }
         else {
             primaryLanguage = nil

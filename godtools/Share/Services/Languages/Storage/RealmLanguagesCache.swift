@@ -18,31 +18,27 @@ class RealmLanguagesCache {
         self.realmDatabase = realmDatabase
     }
     
-    func getLanguages() -> [LanguageModel] {
+    func getLanguages() -> [RealmLanguage] {
         return getLanguages(realm: realmDatabase.mainThreadRealm)
     }
     
-    func getLanguages(realm: Realm) -> [LanguageModel] {
-        let realmLanguages: [RealmLanguage] = Array(realm.objects(RealmLanguage.self))
-        return realmLanguages.map({LanguageModel(realmLanguage: $0)})
+    func getLanguages(realm: Realm) -> [RealmLanguage] {
+        return Array(realm.objects(RealmLanguage.self))
     }
     
-    func getLanguage(id: String) -> LanguageModel? {
+    func getLanguage(id: String) -> RealmLanguage? {
         return getLanguage(realm: realmDatabase.mainThreadRealm, id: id)
     }
     
-    func getLanguage(realm: Realm, id: String) -> LanguageModel? {
-        if let realmLanguage = realm.object(ofType: RealmLanguage.self, forPrimaryKey: id) {
-            return LanguageModel(realmLanguage: realmLanguage)
-        }
-        return nil
+    func getLanguage(realm: Realm, id: String) -> RealmLanguage? {
+        return realm.object(ofType: RealmLanguage.self, forPrimaryKey: id)
     }
     
-    func getLanguage(code: String) -> LanguageModel? {
+    func getLanguage(code: String) -> RealmLanguage? {
         return getLanguage(realm: realmDatabase.mainThreadRealm, code: code)
     }
     
-    func getLanguage(realm: Realm, code: String) -> LanguageModel? {
+    func getLanguage(realm: Realm, code: String) -> RealmLanguage? {
         
         guard !code.isEmpty else {
             return nil
@@ -50,10 +46,6 @@ class RealmLanguagesCache {
         
         let lowercasedCode: String = code.lowercased()
         
-        if let realmLanguage = realm.objects(RealmLanguage.self).filter(NSPredicate(format: "code".appending(" = [c] %@"), lowercasedCode)).first {
-            return LanguageModel(realmLanguage: realmLanguage)
-        }
-        
-        return nil
+        return realm.objects(RealmLanguage.self).filter(NSPredicate(format: "code".appending(" = [c] %@"), lowercasedCode)).first
     }
 }

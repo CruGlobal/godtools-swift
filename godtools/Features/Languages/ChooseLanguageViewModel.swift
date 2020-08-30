@@ -100,7 +100,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
         let userPrimaryLanguage: LanguageModel? = languageSettingsService.primaryLanguage.value
         let userParallelLanguage: LanguageModel? = languageSettingsService.parallelLanguage.value
         
-        var availableLanguages: [LanguageModel] = dataDownloader.languagesCache.getLanguages()
+        var availableLanguages: [LanguageModel] = dataDownloader.getStoredLanguages()
 
         switch chooseLanguageType {
         
