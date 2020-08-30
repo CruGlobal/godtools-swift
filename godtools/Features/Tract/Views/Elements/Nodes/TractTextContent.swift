@@ -87,7 +87,7 @@ extension TractTextContent {
              Up to this point we are assuming that textAlignment is set correctly and that the language is left to right.
              If we find out here the language is right to left, we simply need to invert the value. left becomes right
              and vice versa.*/
-            if LanguageDirection.direction(language: language) == .rightToLeft {
+            if language.languageDirection == .rightToLeft {
                 switch alignment {
                 case .left:
                     label.textAlignment = .right

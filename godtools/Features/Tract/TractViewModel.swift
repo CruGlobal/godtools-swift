@@ -261,7 +261,7 @@ class TractViewModel: NSObject, TractViewModelType {
     }
     
     var isRightToLeftLanguage: Bool {
-        switch LanguageDirection.direction(language: primaryLanguage) {
+        switch primaryLanguage.languageDirection {
         case .leftToRight:
             return false
         case .rightToLeft:
