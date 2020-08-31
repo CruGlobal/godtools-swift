@@ -15,7 +15,6 @@ class TractViewModel: NSObject, TractViewModelType {
     private let resource: ResourceModel
     private let primaryLanguage: LanguageModel
     private let parallelLanguage: LanguageModel?
-    private let translateLanguageNameViewModel: TranslateLanguageNameViewModel
     private let tractManager: TractManager // TODO: Eventually would like to remove this class. ~Levi
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
     private let tractRemoteShareSubscriber: TractRemoteShareSubscriber
@@ -49,7 +48,6 @@ class TractViewModel: NSObject, TractViewModelType {
         self.resource = resource
         self.primaryLanguage = primaryLanguage
         self.parallelLanguage = parallelLanguage?.code != primaryLanguage.code ? parallelLanguage : nil
-        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(localizationServices: localizationServices)
         self.tractManager = tractManager
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
         self.tractRemoteShareSubscriber = tractRemoteShareSubscriber
@@ -75,11 +73,11 @@ class TractViewModel: NSObject, TractViewModelType {
         
         hidesChooseLanguageControl = parallelLanguage == nil || primaryLanguage.id == parallelLanguage?.id
         
-        chooseLanguageControlPrimaryLanguageTitle = primaryLanguage.translatedName(translateLanguageNameViewModel: translateLanguageNameViewModel)
+        chooseLanguageControlPrimaryLanguageTitle = LanguageViewModel(language: primaryLanguage, localizationServices: localizationServices).translatedLanguageName
         
         let parallelLocalizedName: String
         if let parallelLanguage = parallelLanguage {
-            parallelLocalizedName = parallelLanguage.translatedName(translateLanguageNameViewModel: translateLanguageNameViewModel)
+            parallelLocalizedName = LanguageViewModel(language: parallelLanguage, localizationServices: localizationServices).translatedLanguageName
         }
         else {
             parallelLocalizedName = ""

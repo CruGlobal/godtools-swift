@@ -14,7 +14,6 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
     private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
-    private let translateLanguageNameViewModel: TranslateLanguageNameViewModel
     private let deviceAttachmentBanners: DeviceAttachmentBanners
     
     private var downloadAttachmentsReceipt: DownloadAttachmentsReceipt?
@@ -37,7 +36,6 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
-        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(localizationServices: localizationServices)
         self.deviceAttachmentBanners = deviceAttachmentBanners
         
         super.init()
@@ -165,13 +163,13 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
         parallelLanguageName.accept(value: getLanguageName(language: parallelLanguage))
     }
     
-    private func getLanguageName(language: LanguageModelType?) -> String {
+    private func getLanguageName(language: LanguageModel?) -> String {
         
         if let language = language {
             
             if resource.supportsLanguage(languageId: language.id) {
                 let nameAvailablePrefix: String = "✓ "
-                let translatedName: String = language.translatedName(translateLanguageNameViewModel: translateLanguageNameViewModel)
+                let translatedName: String = LanguageViewModel(language: language, localizationServices: localizationServices).translatedLanguageName
                 
                 return nameAvailablePrefix + translatedName
             }
