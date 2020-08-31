@@ -20,5 +20,7 @@ class ShareToolRemoteSessionURLView {
             activityItems: [viewModel.shareMessage],
             applicationActivities: nil
         )
+        
+        viewModel.pageViewed()
     }
 }

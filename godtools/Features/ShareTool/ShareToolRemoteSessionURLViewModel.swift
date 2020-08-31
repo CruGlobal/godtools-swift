@@ -10,13 +10,22 @@ import Foundation
 
 class ShareToolRemoteSessionURLViewModel: ShareToolRemoteSessionURLViewModelType {
         
+    private let analytics: AnalyticsContainer
+    
     let shareMessage: String
     
-    required init(toolRemoteShareUrl: URL, localizationServices: LocalizationServices) {
-                
+    required init(toolRemoteShareUrl: URL, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
+              
+        self.analytics = analytics
+        
         shareMessage = String.localizedStringWithFormat(
             localizationServices.stringForMainBundle(key: "share_tool_remote_link_message"),
             toolRemoteShareUrl.absoluteString
         )
+    }
+    
+    func pageViewed() {
+        
+        analytics.trackActionAnalytics.trackAction(screenName: nil, actionName: "Share Screen Engaged", data: ["cru.sharescreenengaged": 1])
     }
 }
