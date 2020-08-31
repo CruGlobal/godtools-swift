@@ -444,11 +444,6 @@
 		4586D7E6246ECEE90062D988 /* TractEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4586D7E3246ECEE90062D988 /* TractEmail.swift */; };
 		4586D7E7246ECEE90062D988 /* TractCallToAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4586D7E4246ECEE90062D988 /* TractCallToAction.swift */; };
 		4586D7E8246ECEE90062D988 /* TractButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4586D7E5246ECEE90062D988 /* TractButton.swift */; };
-		458EA1ED24291B660002C263 /* IsNewUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458EA1E824291B660002C263 /* IsNewUserService.swift */; };
-		458EA1EE24291B660002C263 /* IsNewUserDefaultsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458EA1E924291B660002C263 /* IsNewUserDefaultsCache.swift */; };
-		458EA1EF24291B660002C263 /* DetermineIfNewUserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458EA1EA24291B660002C263 /* DetermineIfNewUserType.swift */; };
-		458EA1F124291B660002C263 /* IsNewUserCacheType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458EA1EC24291B660002C263 /* IsNewUserCacheType.swift */; };
-		458EA1F32429203C0002C263 /* DetermineNewUserIfPrimaryLanguageSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458EA1F22429203C0002C263 /* DetermineNewUserIfPrimaryLanguageSet.swift */; };
 		45922587242539B300D7ED22 /* LanguageAvailabilityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45922586242539B300D7ED22 /* LanguageAvailabilityType.swift */; };
 		4592258824253C8A00D7ED22 /* LanguageAvailabilityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45922586242539B300D7ED22 /* LanguageAvailabilityType.swift */; };
 		4592B26024A512B100044435 /* UIColor+HexColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4592B25F24A512B100044435 /* UIColor+HexColor.swift */; };
@@ -590,6 +585,13 @@
 		45EE3326246E237B003CC641 /* TractPageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EE3325246E237B003CC641 /* TractPageCache.swift */; };
 		45F4450124A403BE00162C48 /* TranslationManifestXmlParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F4450024A403BE00162C48 /* TranslationManifestXmlParser.swift */; };
 		45F4450324A4050B00162C48 /* TranslationManifestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F4450224A4050B00162C48 /* TranslationManifestType.swift */; };
+		45F5679F24FD78C80078D539 /* IsNewUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5679A24FD78C80078D539 /* IsNewUserService.swift */; };
+		45F567A024FD78C80078D539 /* IsNewUserDefaultsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5679B24FD78C80078D539 /* IsNewUserDefaultsCache.swift */; };
+		45F567A124FD78C80078D539 /* DetermineIfNewUserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5679C24FD78C80078D539 /* DetermineIfNewUserType.swift */; };
+		45F567A224FD78C80078D539 /* DetermineNewUserIfPrimaryLanguageSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5679D24FD78C80078D539 /* DetermineNewUserIfPrimaryLanguageSet.swift */; };
+		45F567A324FD78C80078D539 /* IsNewUserCacheType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5679E24FD78C80078D539 /* IsNewUserCacheType.swift */; };
+		45F567AE24FD7D600078D539 /* CardJumpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F567AC24FD7D600078D539 /* CardJumpService.swift */; };
+		45F567AF24FD7D600078D539 /* CardJumpUserDefaultsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F567AD24FD7D600078D539 /* CardJumpUserDefaultsCache.swift */; };
 		45F66CA523E4C3C20053CB5B /* MenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45F66CA323E4C3C20053CB5B /* MenuView.xib */; };
 		45F66CA623E4C3C20053CB5B /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F66CA423E4C3C20053CB5B /* MenuView.swift */; };
 		45F66CA823E4C51B0053CB5B /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F66CA723E4C51B0053CB5B /* MenuViewModel.swift */; };
@@ -1122,11 +1124,6 @@
 		4586D7E3246ECEE90062D988 /* TractEmail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractEmail.swift; sourceTree = "<group>"; };
 		4586D7E4246ECEE90062D988 /* TractCallToAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractCallToAction.swift; sourceTree = "<group>"; };
 		4586D7E5246ECEE90062D988 /* TractButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractButton.swift; sourceTree = "<group>"; };
-		458EA1E824291B660002C263 /* IsNewUserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IsNewUserService.swift; sourceTree = "<group>"; };
-		458EA1E924291B660002C263 /* IsNewUserDefaultsCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IsNewUserDefaultsCache.swift; sourceTree = "<group>"; };
-		458EA1EA24291B660002C263 /* DetermineIfNewUserType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetermineIfNewUserType.swift; sourceTree = "<group>"; };
-		458EA1EC24291B660002C263 /* IsNewUserCacheType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IsNewUserCacheType.swift; sourceTree = "<group>"; };
-		458EA1F22429203C0002C263 /* DetermineNewUserIfPrimaryLanguageSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetermineNewUserIfPrimaryLanguageSet.swift; sourceTree = "<group>"; };
 		45922586242539B300D7ED22 /* LanguageAvailabilityType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageAvailabilityType.swift; sourceTree = "<group>"; };
 		4592B25F24A512B100044435 /* UIColor+HexColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HexColor.swift"; sourceTree = "<group>"; };
 		4593FF4924B35F44001CEC5A /* DeviceAttachmentBanners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceAttachmentBanners.swift; sourceTree = "<group>"; };
@@ -1271,6 +1268,13 @@
 		45EE3325246E237B003CC641 /* TractPageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractPageCache.swift; sourceTree = "<group>"; };
 		45F4450024A403BE00162C48 /* TranslationManifestXmlParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationManifestXmlParser.swift; sourceTree = "<group>"; };
 		45F4450224A4050B00162C48 /* TranslationManifestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationManifestType.swift; sourceTree = "<group>"; };
+		45F5679A24FD78C80078D539 /* IsNewUserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IsNewUserService.swift; sourceTree = "<group>"; };
+		45F5679B24FD78C80078D539 /* IsNewUserDefaultsCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IsNewUserDefaultsCache.swift; sourceTree = "<group>"; };
+		45F5679C24FD78C80078D539 /* DetermineIfNewUserType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetermineIfNewUserType.swift; sourceTree = "<group>"; };
+		45F5679D24FD78C80078D539 /* DetermineNewUserIfPrimaryLanguageSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetermineNewUserIfPrimaryLanguageSet.swift; sourceTree = "<group>"; };
+		45F5679E24FD78C80078D539 /* IsNewUserCacheType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IsNewUserCacheType.swift; sourceTree = "<group>"; };
+		45F567AC24FD7D600078D539 /* CardJumpService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardJumpService.swift; sourceTree = "<group>"; };
+		45F567AD24FD7D600078D539 /* CardJumpUserDefaultsCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardJumpUserDefaultsCache.swift; sourceTree = "<group>"; };
 		45F66CA323E4C3C20053CB5B /* MenuView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuView.xib; sourceTree = "<group>"; };
 		45F66CA423E4C3C20053CB5B /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		45F66CA723E4C51B0053CB5B /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
@@ -2102,13 +2106,14 @@
 				45EDC544249BB2650020DC62 /* LocalizationServices.swift */,
 				45EC83672451E16400E8DE48 /* Articles */,
 				4530DCA924A3D4CA000DA516 /* Attachments */,
+				45F567AB24FD7D600078D539 /* CardJumpService */,
 				451EE23624ABC28300BB799F /* DeepLinkingService */,
-				458EA1E724291B660002C263 /* DetermineNewUser */,
 				45869EBF24530B9800733B0C /* FileCache */,
 				451EE24024ABFB5C00BB799F /* FollowUps */,
 				4530DCA424A3D4BD000DA516 /* JsonServices */,
 				4575C25F23FB45E600D3265B /* GlobalActivityServices */,
 				4532111224AA9C0900D07B49 /* InitialDataDownloader */,
+				45F5679924FD78C80078D539 /* IsNewUser */,
 				452AB58324461BF600445050 /* Languages */,
 				45732E942421A915006F0559 /* OpenTutorialCallout */,
 				45249D1C24AD051700E139AD /* RealmDatabase */,
@@ -2506,18 +2511,6 @@
 				45FFA0FD2493D2D900DD05F4 /* FileCache */,
 			);
 			path = FileCache;
-			sourceTree = "<group>";
-		};
-		458EA1E724291B660002C263 /* DetermineNewUser */ = {
-			isa = PBXGroup;
-			children = (
-				458EA1EA24291B660002C263 /* DetermineIfNewUserType.swift */,
-				458EA1F22429203C0002C263 /* DetermineNewUserIfPrimaryLanguageSet.swift */,
-				458EA1E824291B660002C263 /* IsNewUserService.swift */,
-				458EA1E924291B660002C263 /* IsNewUserDefaultsCache.swift */,
-				458EA1EC24291B660002C263 /* IsNewUserCacheType.swift */,
-			);
-			path = DetermineNewUser;
 			sourceTree = "<group>";
 		};
 		4595F3ED24A27DB700B3733E /* ArticleAemImportDownloader */ = {
@@ -2961,6 +2954,27 @@
 				45F4450024A403BE00162C48 /* TranslationManifestXmlParser.swift */,
 			);
 			path = TranslationsManifest;
+			sourceTree = "<group>";
+		};
+		45F5679924FD78C80078D539 /* IsNewUser */ = {
+			isa = PBXGroup;
+			children = (
+				45F5679D24FD78C80078D539 /* DetermineNewUserIfPrimaryLanguageSet.swift */,
+				45F5679C24FD78C80078D539 /* DetermineIfNewUserType.swift */,
+				45F5679E24FD78C80078D539 /* IsNewUserCacheType.swift */,
+				45F5679B24FD78C80078D539 /* IsNewUserDefaultsCache.swift */,
+				45F5679A24FD78C80078D539 /* IsNewUserService.swift */,
+			);
+			path = IsNewUser;
+			sourceTree = "<group>";
+		};
+		45F567AB24FD7D600078D539 /* CardJumpService */ = {
+			isa = PBXGroup;
+			children = (
+				45F567AC24FD7D600078D539 /* CardJumpService.swift */,
+				45F567AD24FD7D600078D539 /* CardJumpUserDefaultsCache.swift */,
+			);
+			path = CardJumpService;
 			sourceTree = "<group>";
 		};
 		45F66CA223E4C3620053CB5B /* Menu */ = {
@@ -3776,11 +3790,11 @@
 				454D5A0224BF552000B8528B /* SharedUserDefaultsCache.swift in Sources */,
 				45FCFF77243D0BE000865501 /* ChooseLanguageView.swift in Sources */,
 				451B9CE22475AEE6006ACD32 /* AppFlow.swift in Sources */,
-				458EA1EE24291B660002C263 /* IsNewUserDefaultsCache.swift in Sources */,
 				4506DEE924B7A78700A1C50B /* TractManager.swift in Sources */,
 				454315AD24A152D300B5C37B /* ProgressView.swift in Sources */,
 				450EF829247EAD6C00978926 /* FavoritedToolsViewModelType.swift in Sources */,
 				452036C4240057B2002B2453 /* RequestMethod.swift in Sources */,
+				45F567A224FD78C80078D539 /* DetermineNewUserIfPrimaryLanguageSet.swift in Sources */,
 				457551F824A585F70091652F /* ReferencedFile.swift in Sources */,
 				45B3EE4724C917840042CF7C /* TractRemoteShareSubscriberError.swift in Sources */,
 				45FA69672425198F0006878C /* SupportedLanguagesType.swift in Sources */,
@@ -3798,6 +3812,7 @@
 				45B2AE3F24587BAB00253BAD /* ShareArticleViewModel.swift in Sources */,
 				4586D7D1246ECBDB0062D988 /* TractHeader.swift in Sources */,
 				45668E5223E0D908002728E7 /* UIViewController+NavBackItem.swift in Sources */,
+				45F5679F24FD78C80078D539 /* IsNewUserService.swift in Sources */,
 				D15CD148246C23F4008EB17B /* SnowplowAnalytics.swift in Sources */,
 				4586D7D6246ECC5E0062D988 /* TractCards.swift in Sources */,
 				45D3C8CD23DF942100ECF70E /* UIViewController+NavItem.swift in Sources */,
@@ -3821,6 +3836,7 @@
 				4575C25623FB3F8900D3265B /* AccountItemCell.swift in Sources */,
 				45732E9D2421AF11006F0559 /* DeviceLanguageType.swift in Sources */,
 				4549058D24AA76480038A1A8 /* ToolShortcutItem.swift in Sources */,
+				45F567AE24FD7D600078D539 /* CardJumpService.swift in Sources */,
 				45668E7323E0E1CC002728E7 /* OnboardingTutorialItem.swift in Sources */,
 				451EE23F24ABF6DD00BB799F /* SharedSessionType.swift in Sources */,
 				4506DED824B7A78700A1C50B /* GTNotifications.swift in Sources */,
@@ -3841,17 +3857,18 @@
 				4573221C244546A300D653FF /* ChooseLanguageViewModelType.swift in Sources */,
 				45038D8624A2698E00345B42 /* TranslationDownloader.swift in Sources */,
 				45F6E01A249D44270077C7D9 /* LanguagesApiType.swift in Sources */,
+				45F567AF24FD7D600078D539 /* CardJumpUserDefaultsCache.swift in Sources */,
 				45249D1524ACC62B00E139AD /* ResourceViewModel.swift in Sources */,
 				45647251244F782300CB202D /* ArticleCell.swift in Sources */,
 				4575C26323FB45E600D3265B /* GlobalActivityServices.swift in Sources */,
 				45FCFF9D243D0F9F00865501 /* WebContentView.swift in Sources */,
-				458EA1F124291B660002C263 /* IsNewUserCacheType.swift in Sources */,
 				4595F41424A27DB700B3733E /* RealmArticleJcrContent.swift in Sources */,
 				45F66CA823E4C51B0053CB5B /* MenuViewModel.swift in Sources */,
 				451DB1432461DA4200FB14BF /* TractHeroProperties.swift in Sources */,
 				453DBA792474854C0000BA85 /* ArticlesErrorMessageView.swift in Sources */,
 				45249D2924AD10FA00E139AD /* InitialDataDownloaderError.swift in Sources */,
 				4537455024857B3200F672A1 /* RequestResponse+ResponseResult.swift in Sources */,
+				45F567A324FD78C80078D539 /* IsNewUserCacheType.swift in Sources */,
 				45732223244547A900D653FF /* ChooseLanguageCell.swift in Sources */,
 				451DB0ED2461D90000FB14BF /* BaseTractElement.swift in Sources */,
 				4568D164244E156C00328639 /* ArticlesFlow.swift in Sources */,
@@ -4057,6 +4074,7 @@
 				45249D2724AD0B1800E139AD /* ResourcesCacheResult.swift in Sources */,
 				45FCFF3F243D07B800865501 /* Flow.swift in Sources */,
 				45F6E01B249D44270077C7D9 /* LanguagesApi.swift in Sources */,
+				45F567A024FD78C80078D539 /* IsNewUserDefaultsCache.swift in Sources */,
 				45FFA0F62493CDE400DD05F4 /* RealmFavoritedResource.swift in Sources */,
 				45EC83852451E1EA00E8DE48 /* ArticleResource.swift in Sources */,
 				4539F33524EADDBD00B30DF9 /* TractRemoteShareURLBuilder.swift in Sources */,
@@ -4097,7 +4115,6 @@
 				452AB58F24464D8500445050 /* AboutView.swift in Sources */,
 				45E3748E24B75943001E8DF9 /* ToolCell.swift in Sources */,
 				45A97C7B24A3A5C2008D782E /* TranslationDownloaderErrorViewModel.swift in Sources */,
-				458EA1F32429203C0002C263 /* DetermineNewUserIfPrimaryLanguageSet.swift in Sources */,
 				450E21B52491887700D489A1 /* ResourcesApiType.swift in Sources */,
 				450E21BB2491890800D489A1 /* ResourceModel.swift in Sources */,
 				452E129C2422903000531B72 /* TutorialSupportedLanguages.swift in Sources */,
@@ -4196,7 +4213,6 @@
 				457551F424A585F70091652F /* Language.swift in Sources */,
 				4575C25023FAF7C200D3265B /* AccountItem.swift in Sources */,
 				45038D7F24A260CC00345B42 /* TranslationZipFileModelType+ManifestSHA256FileLocation.swift in Sources */,
-				458EA1ED24291B660002C263 /* IsNewUserService.swift in Sources */,
 				4F57328D1EA69CF00082035C /* AppDelegate.swift in Sources */,
 				454526D8243E195500B84B29 /* TermsOfUseWebContent.swift in Sources */,
 				45B881E4249AACED004DC491 /* RealmAttachment.swift in Sources */,
@@ -4211,7 +4227,6 @@
 				4539F33324EADA6300B30DF9 /* TractRemoteShareChannel.swift in Sources */,
 				4506DEA924B79E2F00A1C50B /* MenuSectionHeaderViewModel.swift in Sources */,
 				451DB13A2461DA4200FB14BF /* TractTextContentProperties.swift in Sources */,
-				458EA1EF24291B660002C263 /* DetermineIfNewUserType.swift in Sources */,
 				45732E982421A984006F0559 /* OpenTutorialCalloutCacheType.swift in Sources */,
 				45B881E5249AACED004DC491 /* RealmTranslation.swift in Sources */,
 				45F6E017249D44270077C7D9 /* LanguagesDataModel.swift in Sources */,
@@ -4253,6 +4268,7 @@
 				45E7E1B624AE176800238419 /* DownloadAttachmentsReceipt.swift in Sources */,
 				45869EE82453477100733B0C /* WebArchiveQueue.swift in Sources */,
 				45D3C93623DF9D9700ECF70E /* TutorialCellViewModel.swift in Sources */,
+				45F567A124FD78C80078D539 /* DetermineIfNewUserType.swift in Sources */,
 				45B2AE4C2458886B00253BAD /* CallbackHandler.swift in Sources */,
 				452036C924005816002B2453 /* RequestResponse.swift in Sources */,
 				45EDC545249BB2650020DC62 /* LocalizationServices.swift in Sources */,

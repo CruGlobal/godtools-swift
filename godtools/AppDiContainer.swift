@@ -154,8 +154,11 @@ class AppDiContainer {
         
         articleAemImportDownloader = ArticleAemImportDownloader(realmDatabase: realmDatabase)
                 
-        isNewUserService = IsNewUserService(languageSettingsCache: languageSettingsCache)
-        
+        isNewUserService = IsNewUserService(
+            isNewUserCache: IsNewUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache),
+            determineNewUser: DetermineNewUserIfPrimaryLanguageSet(languageSettingsCache: languageSettingsCache)
+        )
+                
         loginClient = TheKeyOAuthClient.shared
                 
         analytics = AnalyticsContainer(
@@ -264,5 +267,9 @@ class AppDiContainer {
     
     var shareToolScreenTutorialNumberOfViewsCache: ShareToolScreenTutorialNumberOfViewsCache {
         return ShareToolScreenTutorialNumberOfViewsCache(sharedUserDefaultsCache: sharedUserDefaultsCache)
+    }
+    
+    var cardJumpService: CardJumpService {
+        return CardJumpService(cardJumpCache: CardJumpUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache))
     }
 }

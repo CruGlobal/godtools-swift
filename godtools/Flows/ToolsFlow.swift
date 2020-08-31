@@ -469,6 +469,8 @@ class ToolsFlow: Flow {
             tractManager: appDiContainer.tractManager,
             tractRemoteSharePublisher: appDiContainer.tractRemoteSharePublisher,
             tractRemoteShareSubscriber: appDiContainer.tractRemoteShareSubscriber,
+            isNewUserService: appDiContainer.isNewUserService,
+            cardJumpService: appDiContainer.cardJumpService,
             followUpsService: appDiContainer.followUpsService,
             viewsService: appDiContainer.viewsService,
             localizationServices: appDiContainer.localizationServices,

@@ -19,6 +19,8 @@ class TractViewModel: NSObject, TractViewModelType {
     private let tractManager: TractManager // TODO: Eventually would like to remove this class. ~Levi
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
     private let tractRemoteShareSubscriber: TractRemoteShareSubscriber
+    private let isNewUserService: IsNewUserService
+    private let cardJumpService: CardJumpService
     private let followUpsService: FollowUpsService
     private let viewsService: ViewsService
     private let analytics: AnalyticsContainer
@@ -43,7 +45,7 @@ class TractViewModel: NSObject, TractViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, languageSettingsService: LanguageSettingsService, tractManager: TractManager, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, followUpsService: FollowUpsService, viewsService: ViewsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, tractPage: Int?) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, languageSettingsService: LanguageSettingsService, tractManager: TractManager, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, isNewUserService: IsNewUserService, cardJumpService: CardJumpService, followUpsService: FollowUpsService, viewsService: ViewsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, tractPage: Int?) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -53,6 +55,8 @@ class TractViewModel: NSObject, TractViewModelType {
         self.tractManager = tractManager
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
         self.tractRemoteShareSubscriber = tractRemoteShareSubscriber
+        self.isNewUserService = isNewUserService
+        self.cardJumpService = cardJumpService
         self.followUpsService = followUpsService
         self.viewsService = viewsService
         self.analytics = analytics
@@ -348,6 +352,8 @@ class TractViewModel: NSObject, TractViewModelType {
     func tractPageDidAppear(page: Int) {
                       
         self.tractPage = page
+        
+        getTractPageItem(page: page).tractPage?.viewDidAppearOnTract()
                         
         analytics.pageViewedAnalytics.trackPageView(
             screenName: resource.abbreviation + "-" + String(page),
@@ -487,11 +493,6 @@ class TractViewModel: NSObject, TractViewModelType {
     
     private func buildTractPage(page: Int, language: LanguageModel, tractXmlResource: TractXmlResource, tractManifest: ManifestProperties, parallelTractPage: TractPage?) -> TractPage? {
         
-        let dependencyContainer = BaseTractElementDiContainer(
-            followUpsService: followUpsService,
-            analytics: analytics
-        )
-        
         let pages: [XMLPage] = tractXmlResource.pages
         
         if page >= 0 && page < pages.count {
@@ -499,10 +500,19 @@ class TractViewModel: NSObject, TractViewModelType {
             let xmlPage: XMLPage = pages[page]
             
             let config = TractConfigurations()
+            
             config.defaultTextAlignment = .left
             config.pagination = xmlPage.pagination
             config.language = language
             config.resource = resource
+            
+            let dependencyContainer = BaseTractElementDiContainer(
+                config: config,
+                isNewUserService: isNewUserService,
+                cardJumpService: cardJumpService,
+                followUpsService: followUpsService,
+                analytics: analytics
+            )
             
             let tractPage = TractPage(
                 startWithData: xmlPage.pageContent(),
