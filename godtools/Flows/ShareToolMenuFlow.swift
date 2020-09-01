@@ -103,7 +103,8 @@ class ShareToolMenuFlow: Flow {
             
             let viewModel = ShareToolRemoteSessionURLViewModel(
                 toolRemoteShareUrl: remoteShareUrl,
-                localizationServices: appDiContainer.localizationServices
+                localizationServices: appDiContainer.localizationServices,
+                analytics: appDiContainer.analytics
             )
             let view = ShareToolRemoteSessionURLView(viewModel: viewModel)
             
