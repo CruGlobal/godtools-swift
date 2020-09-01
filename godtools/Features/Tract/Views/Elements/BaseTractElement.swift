@@ -414,14 +414,14 @@ class BaseTractElement: UIView {
     
     // MARK: View flow management
     
-    func notifyViewDidAppearOnTract() {
-        self.viewDidAppearOnTract()
-        for element in self.elements! {
-            element.notifyViewDidAppearOnTract()
+    func viewDidAppearOnTract() {
+        
+        if let elements = elements {
+            for element in elements {
+                element.viewDidAppearOnTract()
+            }
         }
     }
-    
-    func viewDidAppearOnTract() { }
     
     // MARK: Delegate getter & setter
     func setDelegate(_ delegate: BaseTractElementDelegate) {

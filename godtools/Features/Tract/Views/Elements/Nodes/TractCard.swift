@@ -194,6 +194,7 @@ class TractCard: BaseTractElement {
     }
     
     override func viewDidAppearOnTract() {
+                
         guard let cardsElement = self.parent as? TractCards else {
             return
         }
@@ -218,8 +219,12 @@ class TractCard: BaseTractElement {
     }
     
     func loadFirstTimeAccessAnimation() {
-        if TractConfigurations.isFirstTimeAccess() {
-            TractConfigurations.didAccessToTract()
+        
+        let isNewUser: Bool = dependencyContainer.isNewUserService.determineNewUser.isNewUser
+        let didShowCardJump: Bool = dependencyContainer.cardJumpService.didShowCardJump
+        
+        if isNewUser && !didShowCardJump {
+            dependencyContainer.cardJumpService.saveDidShowCardJump()
             openingAnimation()
         }
     }
