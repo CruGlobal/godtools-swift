@@ -68,7 +68,7 @@ class ResourcesCache {
         let realm: Realm = realmDatabase.mainThreadRealm
         if let realmResource = realm.object(ofType: RealmResource.self, forPrimaryKey: resourceId) {
             let realmLanguages: [RealmLanguage] = Array(realmResource.languages)
-            return realmLanguages.map({LanguageModel(realmLanguage: $0)})
+            return realmLanguages.map({LanguageModel(model: $0)})
         }
         return []
     }

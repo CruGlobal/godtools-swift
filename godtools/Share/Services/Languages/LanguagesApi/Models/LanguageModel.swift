@@ -50,13 +50,13 @@ struct LanguageModel: LanguageModelType, Decodable {
         name = try attributesContainer?.decode(String.self, forKey: .name) ?? ""
     }
     
-    init(realmLanguage: RealmLanguage) {
+    init(model: LanguageModelType) {
         
-        code = realmLanguage.code
-        direction = realmLanguage.direction
-        id = realmLanguage.id
-        name = realmLanguage.name
-        type = realmLanguage.type
+        code = model.code
+        direction = model.direction
+        id = model.id
+        name = model.name
+        type = model.type
     }
 }
 

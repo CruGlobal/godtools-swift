@@ -77,7 +77,7 @@ class DeepLinkingService: NSObject {
                 continue
             }
             
-            if primaryLanguage == nil, let pathPrimaryLanguage = dataDownloader.languagesCache.getLanguage(code: path) {
+            if primaryLanguage == nil, let pathPrimaryLanguage = dataDownloader.getStoredLanguage(code: path) {
                 primaryLanguage = pathPrimaryLanguage
             }
             else if resource == nil, let pathResource = dataDownloader.resourcesCache.getResource(abbreviation: path) {
@@ -109,7 +109,7 @@ class DeepLinkingService: NSObject {
             if key == "primaryLanguage" && !value.isEmpty {
                 let primaryLanguageCodes: [String] = value.components(separatedBy: ",")
                 for code in primaryLanguageCodes {
-                    if let cachedPrimaryLanguage = dataDownloader.languagesCache.getLanguage(code: code) {
+                    if let cachedPrimaryLanguage = dataDownloader.getStoredLanguage(code: code) {
                         primaryLanguage = cachedPrimaryLanguage
                         break
                     }
@@ -118,7 +118,7 @@ class DeepLinkingService: NSObject {
             else if key == "parallelLanguage" && !value.isEmpty {
                 let parallelLanguageCodes: [String] = value.components(separatedBy: ",")
                 for code in parallelLanguageCodes {
-                    if let cachedParallelLanguage = dataDownloader.languagesCache.getLanguage(code: code) {
+                    if let cachedParallelLanguage = dataDownloader.getStoredLanguage(code: code) {
                         parallelLanguage = cachedParallelLanguage
                         break
                     }

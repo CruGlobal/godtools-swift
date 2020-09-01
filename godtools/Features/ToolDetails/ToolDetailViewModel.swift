@@ -16,7 +16,6 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
-    private let translateLanguageNameViewModel: TranslateLanguageNameViewModel
     private let analytics: AnalyticsContainer
     private let exitLinkAnalytics: ExitLinkAnalytics
     
@@ -48,7 +47,6 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         self.favoritedResourcesCache = favoritedResourcesCache
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
-        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(localizationServices: localizationServices)
         self.analytics = analytics
         self.exitLinkAnalytics = exitLinkAnalytics
                 
@@ -139,7 +137,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         }
         
         let languages: [LanguageModel] =  dataDownloader.resourcesCache.getResourceLanguages(resourceId: resource.id)
-        let languageNames: [String] = languages.map({$0.translatedName(translateLanguageNameViewModel: translateLanguageNameViewModel)})
+        let languageNames: [String] = languages.map({LanguageViewModel(language: $0, localizationServices: localizationServices).translatedLanguageName})
         let sortedLanguageNames: String = languageNames.sorted(by: { $0 < $1 }).joined(separator: ", ")
         
         let numberOfLanguages: Int = languages.count

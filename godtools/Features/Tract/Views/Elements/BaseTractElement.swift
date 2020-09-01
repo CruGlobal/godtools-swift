@@ -85,7 +85,7 @@ class BaseTractElement: UIView {
     
     var isRightToLeft: Bool {
         if let language = tractConfigurations?.language {
-            return LanguageDirection.direction(language: language) == .rightToLeft
+            return language.languageDirection == .rightToLeft
         }
         return false
     }

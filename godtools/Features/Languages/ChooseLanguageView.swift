@@ -91,11 +91,11 @@ class ChooseLanguageView: UIViewController {
             }
         }
         
-        viewModel.languages.addObserver(self) { [weak self] (languages: [LanguageModel]) in
+        viewModel.numberOfLanguages.addObserver(self) { [weak self] (numberOfLanguages: Int) in
             self?.languagesTableView.reloadData()
         }
         
-        viewModel.selectedLanguage.addObserver(self) { [weak self] (selectedLanguage: LanguageModel?) in
+        viewModel.selectedLanguageIndex.addObserver(self) { [weak self] (index: Int?) in
             self?.languagesTableView.reloadData()
         }
     }
@@ -151,14 +151,12 @@ extension ChooseLanguageView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.languages.value.count
+        return viewModel.numberOfLanguages.value
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let language: LanguageModel = viewModel.languages.value[indexPath.row]
-        
-        viewModel.languageTapped(language: language)
+        viewModel.languageTapped(index: indexPath.row)
         
         searchBar.resignFirstResponder()
     }
@@ -169,15 +167,7 @@ extension ChooseLanguageView: UITableViewDelegate, UITableViewDataSource {
         withIdentifier: ChooseLanguageCell.reuseIdentifier,
         for: indexPath) as! ChooseLanguageCell
         
-        let language: LanguageModel = viewModel.languages.value[indexPath.row]
-               
-        let cellViewModel = ChooseLanguageCellViewModel(
-            language: language,
-            translateLanguageNameViewModel: viewModel.translateLanguageNameViewModel,
-            downloadedLanguagesCache: viewModel.downloadedLanguagesCache,
-            hidesDownloadButton: true,
-            hidesSelected: language.id != viewModel.selectedLanguage.value?.id
-        )
+        let cellViewModel: ChooseLanguageCellViewModel = viewModel.willDisplayLanguage(index: indexPath.row)
         
         cell.configure(viewModel: cellViewModel)
                 

@@ -66,7 +66,7 @@ struct TranslationModel: TranslationModelType, Decodable {
         }
         
         if let realmLanguage = realmTranslation.language {
-            language = LanguageModel(realmLanguage: realmLanguage)
+            language = LanguageModel(model: realmLanguage)
         }
         else {
             language = nil

@@ -12,7 +12,6 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
 
     private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
-    private let translateLanguageNameViewModel: TranslateLanguageNameViewModel
     private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
     
@@ -31,7 +30,6 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
-        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(localizationServices: localizationServices)
         self.localizationServices = localizationServices
         self.analytics = analytics
         
@@ -98,7 +96,7 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
         let title: String
         
         if let primaryLanguage = languageSettingsService.primaryLanguage.value {
-            title = primaryLanguage.translatedName(translateLanguageNameViewModel: translateLanguageNameViewModel)
+            title = LanguageViewModel(language: primaryLanguage, localizationServices: localizationServices).translatedLanguageName
         }
         else {
             title = localizationServices.stringForMainBundle(key: "select_primary_language")
@@ -112,7 +110,7 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
         let title: String
         
         if let parallelLanguage = languageSettingsService.parallelLanguage.value {
-            title = parallelLanguage.translatedName(translateLanguageNameViewModel: translateLanguageNameViewModel)
+            title = LanguageViewModel(language: parallelLanguage, localizationServices: localizationServices).translatedLanguageName
         }
         else {
             title = localizationServices.stringForMainBundle(key: "select_parallel_language")

@@ -15,6 +15,7 @@ class InitialDataDownloader: NSObject {
     private let initialDeviceResourcesLoader: InitialDeviceResourcesLoader
     private let resourcesDownloader: ResourcesDownloader
     private let realmResourcesCache: RealmResourcesCache
+    private let languagesCache: RealmLanguagesCache
     private let resourcesCleanUp: ResourcesCleanUp
     private let attachmentsDownloader: AttachmentsDownloader
     private let languageSettingsCache: LanguageSettingsCacheType
@@ -25,7 +26,6 @@ class InitialDataDownloader: NSObject {
     private(set) var didComplete: Bool = false
         
     let resourcesCache: ResourcesCache
-    let languagesCache: LanguagesCache
     let attachmentsFileCache: AttachmentsFileCache
     
     // observables
@@ -34,17 +34,17 @@ class InitialDataDownloader: NSObject {
     let attachmentsDownload: ObservableValue<DownloadAttachmentsReceipt?> = ObservableValue(value: nil)
     let latestTranslationsDownload: ObservableValue<DownloadResourceTranslationsReceipts?> = ObservableValue(value: nil)
     
-    required init(realmDatabase: RealmDatabase, initialDeviceResourcesLoader: InitialDeviceResourcesLoader, resourcesDownloader: ResourcesDownloader, realmResourcesCache: RealmResourcesCache, resourcesCache: ResourcesCache, languagesCache: LanguagesCache, resourcesCleanUp: ResourcesCleanUp, attachmentsDownloader: AttachmentsDownloader, languageSettingsCache: LanguageSettingsCacheType, favoritedResourceTranslationDownloader: FavoritedResourceTranslationDownloader) {
+    required init(realmDatabase: RealmDatabase, initialDeviceResourcesLoader: InitialDeviceResourcesLoader, resourcesDownloader: ResourcesDownloader, realmResourcesCache: RealmResourcesCache, resourcesCache: ResourcesCache, languagesCache: RealmLanguagesCache, resourcesCleanUp: ResourcesCleanUp, attachmentsDownloader: AttachmentsDownloader, languageSettingsCache: LanguageSettingsCacheType, favoritedResourceTranslationDownloader: FavoritedResourceTranslationDownloader) {
         
         self.realmDatabase = realmDatabase
         self.initialDeviceResourcesLoader = initialDeviceResourcesLoader
         self.resourcesDownloader = resourcesDownloader
         self.realmResourcesCache = realmResourcesCache
+        self.languagesCache = languagesCache
         self.resourcesCleanUp = resourcesCleanUp
         self.attachmentsDownloader = attachmentsDownloader
         self.languageSettingsCache = languageSettingsCache
         self.resourcesCache = resourcesCache
-        self.languagesCache = languagesCache
         self.attachmentsFileCache = attachmentsDownloader.attachmentsFileCache
         self.favoritedResourceTranslationDownloader = favoritedResourceTranslationDownloader
         
@@ -152,5 +152,33 @@ class InitialDataDownloader: NSObject {
         let downloadTranslationsReceipts: DownloadResourceTranslationsReceipts = favoritedResourceTranslationDownloader.downloadAllDownloadedLanguagesTranslationsForAllFavoritedResources(realm: realm)
         
         latestTranslationsDownload.accept(value: downloadTranslationsReceipts)
+    }
+}
+
+// MARK: - Languages
+
+extension InitialDataDownloader {
+    
+    func getStoredLanguage(id: String) -> LanguageModel? {
+        
+        if let cachedLanguage = languagesCache.getLanguage(id: id) {
+            return LanguageModel(model: cachedLanguage)
+        }
+        
+        return nil
+    }
+    
+    func getStoredLanguage(code: String) -> LanguageModel? {
+        
+        if let cachedLanguage = languagesCache.getLanguage(code: code) {
+            return LanguageModel(model: cachedLanguage)
+        }
+        
+        return nil
+    }
+    
+    func getStoredLanguages() -> [LanguageModel] {
+        
+        return languagesCache.getLanguages().map({LanguageModel(model: $0)})
     }
 }
