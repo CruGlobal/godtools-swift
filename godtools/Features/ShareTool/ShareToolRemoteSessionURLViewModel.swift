@@ -14,13 +14,13 @@ class ShareToolRemoteSessionURLViewModel: ShareToolRemoteSessionURLViewModelType
     
     let shareMessage: String
     
-    required init(toolRemoteShareUrl: URL, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
+    required init(toolRemoteShareUrl: String, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
               
         self.analytics = analytics
         
         shareMessage = String.localizedStringWithFormat(
             localizationServices.stringForMainBundle(key: "share_tool_remote_link_message"),
-            toolRemoteShareUrl.absoluteString
+            toolRemoteShareUrl
         )
     }
     

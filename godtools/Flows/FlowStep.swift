@@ -51,7 +51,7 @@ enum FlowStep {
     case remoteShareToolTappedFromShareToolMenu
     case closeTappedFromShareToolScreenTutorial
     case shareLinkTappedFromShareToolScreenTutorial
-    case finishedLoadingToolRemoteSession(toolRemoteShareUrl: URL?)
+    case finishedLoadingToolRemoteSession(toolRemoteShareUrl: String?)
     
     // tutorial
     case closeTappedFromTutorial

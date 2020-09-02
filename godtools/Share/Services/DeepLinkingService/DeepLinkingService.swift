@@ -92,21 +92,15 @@ class DeepLinkingService: NSObject {
         var parallelLanguage: LanguageModel?
         var liveShareStream: String?
         
-        let queryComponents: [String] = url.query?.components(separatedBy: "&") ?? []
-        
-        for component in queryComponents {
+        let components: URLComponents? = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        let queryItems: [URLQueryItem] = components?.queryItems ?? []
+                
+        for queryItem in queryItems {
             
-            let keyValue: [String] = component.components(separatedBy: "=")
-            let isValidKeyValuePair: Bool = keyValue.count == 2
-            
-            guard isValidKeyValuePair else {
-                continue
-            }
-            
-            let key: String = keyValue[0]
-            let value: String = keyValue[1]
-            
-            if key == "primaryLanguage" && !value.isEmpty {
+            let key: String = queryItem.name
+            let value: String? = queryItem.value
+                        
+            if key == "primaryLanguage", let value = value {
                 let primaryLanguageCodes: [String] = value.components(separatedBy: ",")
                 for code in primaryLanguageCodes {
                     if let cachedPrimaryLanguage = dataDownloader.getStoredLanguage(code: code) {
@@ -115,7 +109,7 @@ class DeepLinkingService: NSObject {
                     }
                 }
             }
-            else if key == "parallelLanguage" && !value.isEmpty {
+            else if key == "parallelLanguage", let value = value {
                 let parallelLanguageCodes: [String] = value.components(separatedBy: ",")
                 for code in parallelLanguageCodes {
                     if let cachedParallelLanguage = dataDownloader.getStoredLanguage(code: code) {
@@ -131,11 +125,7 @@ class DeepLinkingService: NSObject {
                 
         processing.accept(value: false)
         deepLinkUrl = nil
-        
-        print("\n DeepLinkingService: processDeepLink() url: \(url.absoluteString)")
-        print("  parallelLanguage: \(String(describing: parallelLanguage?.code))")
-        print("  liveShareStream: \(String(describing: liveShareStream))")
-        
+                
         if let resource = resource, let primaryLanguage = primaryLanguage {
             completed.accept(value: .tool(resource: resource, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, liveShareStream: liveShareStream, page: page))
         }

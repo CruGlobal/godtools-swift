@@ -20,7 +20,7 @@ class LoadToolRemoteSessionViewModel: LoadingViewModelType {
         
         tractRemoteSharePublisher.createNewSubscriberChannelIdForPublish { [weak self] (channel: TractRemoteShareChannel) in
             
-            let remoteShareUrl: URL? = tractRemoteShareURLBuilder.buildRemoteShareURL(
+            let remoteShareUrl: String? = tractRemoteShareURLBuilder.buildRemoteShareURL(
                 resource: resource,
                 primaryLanguage: primaryLanguage,
                 parallelLanguage: parallelLanguage,
