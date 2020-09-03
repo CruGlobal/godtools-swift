@@ -158,6 +158,7 @@ extension TutorialView: PageNavigationCollectionViewDelegate {
     
     func pageNavigation(pageNavigation: PageNavigationCollectionView, didEndDisplaying pageCell: UICollectionViewCell, forPageAt indexPath: IndexPath) {
         if let tutorialCell = pageCell as? TutorialCell {
+            print("???")
             tutorialCell.stopVideo()
         }
     }
