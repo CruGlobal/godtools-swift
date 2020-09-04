@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var currentAuthorizationFlow: OIDAuthorizationFlowSession?
     let loginClient = TheKeyOAuthClient.shared
     fileprivate let kClientID = "5337397229970887848"
-    fileprivate let kRedirectURI = "https://godtoolsapp.com/auth"
+    fileprivate let kRedirectURI = "https://godtoolsapp.com/auth/beta"
     fileprivate let kAppAuthExampleAuthStateKey = "authState"
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {

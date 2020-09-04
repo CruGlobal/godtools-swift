@@ -143,14 +143,16 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
             self?.assertFailureIfNotConfigured()
 
             let isLoggedIn: Bool = self?.keyAuthClient.isAuthenticated() ?? false
-
+            print ("isLoggedIn: \(self?.keyAuthClient.isAuthenticated())")
             let grMasterPersonID: String? = isLoggedIn ? self?.keyAuthClient.grMasterPersonId : nil
+            print ("GRMPID: \(grMasterPersonID ?? "")")
             let ssoguid: String? = isLoggedIn ? self?.keyAuthClient.guid : nil
+            print ("SSOGUID: \(ssoguid ?? "")")
             
             let visitorId: String? = grMasterPersonID ?? ssoguid ?? self?.visitorMarketingCloudID
             
             let authState: ADBMobileVisitorAuthenticationState = ((grMasterPersonID ?? ssoguid) == nil) ? ADBMobileVisitorAuthenticationState.unknown : (isLoggedIn ? ADBMobileVisitorAuthenticationState.authenticated : ADBMobileVisitorAuthenticationState.loggedOut)
-
+            print ("auth state: \(authState.rawValue)")
             ADBMobile.visitorSyncIdentifier(withType: "cru_visitor_id", identifier: visitorId, authenticationState: authState)
         }
     }
