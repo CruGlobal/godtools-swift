@@ -71,10 +71,12 @@ class ShareToolMenuFlow: Flow {
         case .remoteShareToolTappedFromShareToolMenu:
             
             let shareToolScreenTutorialNumberOfViewsCache: ShareToolScreenTutorialNumberOfViewsCache = appDiContainer.shareToolScreenTutorialNumberOfViewsCache
-            
             let numberOfTutorialViews: Int = shareToolScreenTutorialNumberOfViewsCache.getNumberOfViews(resource: resource)
             
-            if numberOfTutorialViews >= 3 {
+            if tractRemoteSharePublisher.webSocketIsConnected, let channel = tractRemoteSharePublisher.tractRemoteShareChannel {
+                navigate(step: .finishedLoadingToolRemoteSession(channel: channel))
+            }
+            else if numberOfTutorialViews >= 3 || (tractRemoteSharePublisher.webSocketIsConnected && tractRemoteSharePublisher.tractRemoteShareChannel != nil) {
                 navigateToLoadToolRemoteSession()
             }
             else {
@@ -92,12 +94,40 @@ class ShareToolMenuFlow: Flow {
             
             navigateToLoadToolRemoteSession()
                         
-        case .finishedLoadingToolRemoteSession(let toolRemoteShareUrl):
+        case .finishedLoadingToolRemoteSession(let tractRemoteShareChannel):
             
             navigationController.dismiss(animated: true, completion: nil)
             
-            guard let remoteShareUrl = toolRemoteShareUrl else {
-                // TODO: Show error that url could not be created. ~Levi
+            guard let channel = tractRemoteShareChannel else {
+                
+                let viewModel = AlertMessageViewModel(
+                    title: "Error",
+                    message: "Failed to create remote share channel.",
+                    cancelTitle: nil,
+                    acceptTitle: "OK",
+                    acceptHandler: nil
+                )
+                let view = AlertMessageView(viewModel: viewModel)
+                
+                navigationController.present(view.controller, animated: true, completion: nil)
+                
+                return
+            }
+            
+            let tractRemoteShareURLBuilder: TractRemoteShareURLBuilder = appDiContainer.tractRemoteShareURLBuilder
+            guard let remoteShareUrl = tractRemoteShareURLBuilder.buildRemoteShareURL(resource: resource, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, subscriberChannelId: channel.subscriberChannelId) else {
+                
+                let viewModel = AlertMessageViewModel(
+                    title: "Error",
+                    message: "Failed to create remote share url.",
+                    cancelTitle: nil,
+                    acceptTitle: "OK",
+                    acceptHandler: nil
+                )
+                let view = AlertMessageView(viewModel: viewModel)
+                
+                navigationController.present(view.controller, animated: true, completion: nil)
+                
                 return
             }
             
@@ -142,11 +172,7 @@ class ShareToolMenuFlow: Flow {
         let viewModel = LoadToolRemoteSessionViewModel(
             flowDelegate: self,
             localizationServices: appDiContainer.localizationServices,
-            tractRemoteSharePublisher: tractRemoteSharePublisher,
-            tractRemoteShareURLBuilder: appDiContainer.tractRemoteShareURLBuilder,
-            resource: resource,
-            primaryLanguage: primaryLanguage,
-            parallelLanguage: parallelLanguage
+            tractRemoteSharePublisher: tractRemoteSharePublisher
         )
         let view = LoadingView(viewModel: viewModel)
         

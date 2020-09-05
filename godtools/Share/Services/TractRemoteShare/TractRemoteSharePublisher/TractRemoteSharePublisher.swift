@@ -20,6 +20,8 @@ class TractRemoteSharePublisher: NSObject {
     private var createNewPublisherBlock: CreateNewPublisherCompletion?
     private var isObservingSignals: Bool = false
     
+    private(set) var tractRemoteShareChannel: TractRemoteShareChannel?
+    
     let didCreateNewSubscriberChannelIdForPublish: SignalValue<TractRemoteShareChannel> = SignalValue()
     
     required init(config: ConfigType, webSocket: WebSocketType, webSocketChannelPublisher: WebSocketChannelPublisherType, loggingEnabled: Bool) {
@@ -34,6 +36,7 @@ class TractRemoteSharePublisher: NSObject {
     
     deinit {
         
+        tractRemoteShareChannel = nil
         createNewPublisherBlock = nil
         removeObsevers()
     }
@@ -44,6 +47,10 @@ class TractRemoteSharePublisher: NSObject {
     
     var isSubscriberChannelIdCreatedForPublish: Bool {
         return webSocketChannelPublisher.isSubscriberChannelIdCreatedForPublish
+    }
+    
+    var subscriberChannelId: String? {
+        return webSocketChannelPublisher.subscriberChannelId
     }
     
     func createNewSubscriberChannelIdForPublish(complete: @escaping CreateNewPublisherCompletion) {
@@ -58,6 +65,10 @@ class TractRemoteSharePublisher: NSObject {
     }
     
     func endPublishingSession(disconnectSocket: Bool) {
+        
+        tractRemoteShareChannel = nil
+        
+        removeObsevers()
         
         if disconnectSocket {
             webSocket.disconnect()
@@ -97,6 +108,8 @@ class TractRemoteSharePublisher: NSObject {
                 let channel = TractRemoteShareChannel(
                     subscriberChannelId: subscriberChannelId
                 )
+                
+                self?.tractRemoteShareChannel = channel
                 
                 self?.createNewPublisherBlock?(channel)
                 
