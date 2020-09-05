@@ -10,6 +10,11 @@ import UIKit
 
 class TractView: UIViewController {
         
+    enum RightNavbarPosition: Int {
+        case shareMenu = 0
+        case remoteShareActive = 1
+    }
+    
     private let viewModel: TractViewModelType
             
     private var remoteShareActiveNavItem: UIBarButtonItem?
@@ -65,6 +70,7 @@ class TractView: UIViewController {
         
         _ = addBarButtonItem(
             to: .right,
+            index: RightNavbarPosition.shareMenu.rawValue,
             image: ImageCatalog.navShare.image,
             color: viewModel.navBarAttributes.navBarControlColor,
             target: self,
@@ -193,18 +199,9 @@ class TractView: UIViewController {
         }
         else if !hidden && remoteShareActiveNavItem == nil {
             
-            let index: Int
-            
-            if rightItemsCount == 0 {
-                index = 0
-            }
-            else {
-                index = rightItemsCount + 1
-            }
-            
             remoteShareActiveNavItem = addBarButtonItem(
                 to: .right,
-                index: index,
+                index: RightNavbarPosition.remoteShareActive.rawValue,
                 image: ImageCatalog.shareToolRemoteSessionActive.image,
                 color: .white,
                 target: nil,
