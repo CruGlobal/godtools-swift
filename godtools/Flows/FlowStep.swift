@@ -51,7 +51,8 @@ enum FlowStep {
     case remoteShareToolTappedFromShareToolMenu
     case closeTappedFromShareToolScreenTutorial
     case shareLinkTappedFromShareToolScreenTutorial
-    case finishedLoadingToolRemoteSession(channel: TractRemoteShareChannel?)
+    case finishedLoadingToolRemoteSession(result: Result<TractRemoteShareChannel, TractRemoteSharePublisherError>)
+    case cancelledLoadingToolRemoteSession
     
     // tutorial
     case closeTappedFromTutorial

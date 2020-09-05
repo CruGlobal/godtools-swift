@@ -12,6 +12,8 @@ class LoadingView: UIViewController {
     
     private let viewModel: LoadingViewModelType
     
+    private var closeButton: UIBarButtonItem?
+    
     @IBOutlet weak private var overlayView: UIView!
     @IBOutlet weak private var logoImageView: UIImageView!
     @IBOutlet weak private var loadingView: UIActivityIndicatorView!
@@ -48,6 +50,36 @@ class LoadingView: UIViewController {
         
         viewModel.message.addObserver(self) { [weak self] (message: String) in
             self?.messageLabel.text = message
+        }
+        
+        setCloseButton(hidden: viewModel.hidesCloseButton)
+    }
+    
+    @objc func handleClose(barButtonItem: UIBarButtonItem) {
+        
+        viewModel.closeTapped()
+    }
+    
+    private func setCloseButton(hidden: Bool) {
+        
+        let position: ButtonItemPosition = .right
+        
+        if hidden, let closeButton = closeButton {
+            
+            removeBarButtonItem(item: closeButton, barPosition: .right)
+            
+            self.closeButton = nil
+        }
+        else if !hidden && closeButton == nil {
+            
+            closeButton = addBarButtonItem(
+                to: position,
+                index: 0,
+                image: ImageCatalog.navClose.image,
+                color: UIColor.black,
+                target: self,
+                action: #selector(handleClose(barButtonItem:))
+            )
         }
     }
 }

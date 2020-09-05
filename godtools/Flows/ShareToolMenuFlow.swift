@@ -74,7 +74,7 @@ class ShareToolMenuFlow: Flow {
             let numberOfTutorialViews: Int = shareToolScreenTutorialNumberOfViewsCache.getNumberOfViews(resource: resource)
             
             if tractRemoteSharePublisher.webSocketIsConnected, let channel = tractRemoteSharePublisher.tractRemoteShareChannel {
-                navigate(step: .finishedLoadingToolRemoteSession(channel: channel))
+                navigate(step: .finishedLoadingToolRemoteSession(result: .success(channel)))
             }
             else if numberOfTutorialViews >= 3 || (tractRemoteSharePublisher.webSocketIsConnected && tractRemoteSharePublisher.tractRemoteShareChannel != nil) {
                 navigateToLoadToolRemoteSession()
@@ -94,51 +94,62 @@ class ShareToolMenuFlow: Flow {
             
             navigateToLoadToolRemoteSession()
                         
-        case .finishedLoadingToolRemoteSession(let tractRemoteShareChannel):
+        case .finishedLoadingToolRemoteSession(let result):
             
             navigationController.dismiss(animated: true, completion: nil)
             
-            guard let channel = tractRemoteShareChannel else {
+            switch result {
                 
-                let viewModel = AlertMessageViewModel(
-                    title: "Error",
-                    message: "Failed to create remote share channel.",
-                    cancelTitle: nil,
-                    acceptTitle: "OK",
-                    acceptHandler: nil
+            case .success(let channel):
+                
+                let tractRemoteShareURLBuilder: TractRemoteShareURLBuilder = appDiContainer.tractRemoteShareURLBuilder
+                
+                guard let remoteShareUrl = tractRemoteShareURLBuilder.buildRemoteShareURL(resource: resource, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, subscriberChannelId: channel.subscriberChannelId) else {
+                    
+                    let viewModel = AlertMessageViewModel(
+                        title: "Error",
+                        message: "Failed to create remote share url.",
+                        cancelTitle: nil,
+                        acceptTitle: "OK",
+                        acceptHandler: nil
+                    )
+                    let view = AlertMessageView(viewModel: viewModel)
+                    
+                    navigationController.present(view.controller, animated: true, completion: nil)
+                    
+                    return
+                }
+                
+                let viewModel = ShareToolRemoteSessionURLViewModel(
+                    toolRemoteShareUrl: remoteShareUrl,
+                    localizationServices: appDiContainer.localizationServices,
+                    analytics: appDiContainer.analytics
                 )
-                let view = AlertMessageView(viewModel: viewModel)
+                let view = ShareToolRemoteSessionURLView(viewModel: viewModel)
                 
                 navigationController.present(view.controller, animated: true, completion: nil)
                 
-                return
+            case .failure(let error):
+                
+                switch error {
+                
+                case .timeOut:
+                    let viewModel = AlertMessageViewModel(
+                        title: "Timed Out",
+                        message: "Timed out creating remote share session.",
+                        cancelTitle: nil,
+                        acceptTitle: "OK",
+                        acceptHandler: nil
+                    )
+                    let view = AlertMessageView(viewModel: viewModel)
+                    
+                    navigationController.present(view.controller, animated: true, completion: nil)
+                }
             }
             
-            let tractRemoteShareURLBuilder: TractRemoteShareURLBuilder = appDiContainer.tractRemoteShareURLBuilder
-            guard let remoteShareUrl = tractRemoteShareURLBuilder.buildRemoteShareURL(resource: resource, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, subscriberChannelId: channel.subscriberChannelId) else {
-                
-                let viewModel = AlertMessageViewModel(
-                    title: "Error",
-                    message: "Failed to create remote share url.",
-                    cancelTitle: nil,
-                    acceptTitle: "OK",
-                    acceptHandler: nil
-                )
-                let view = AlertMessageView(viewModel: viewModel)
-                
-                navigationController.present(view.controller, animated: true, completion: nil)
-                
-                return
-            }
+        case .cancelledLoadingToolRemoteSession:
             
-            let viewModel = ShareToolRemoteSessionURLViewModel(
-                toolRemoteShareUrl: remoteShareUrl,
-                localizationServices: appDiContainer.localizationServices,
-                analytics: appDiContainer.analytics
-            )
-            let view = ShareToolRemoteSessionURLView(viewModel: viewModel)
-            
-            navigationController.present(view.controller, animated: true, completion: nil)
+            navigationController.dismiss(animated: true, completion: nil)
             
         default:
             break
@@ -176,6 +187,8 @@ class ShareToolMenuFlow: Flow {
         )
         let view = LoadingView(viewModel: viewModel)
         
-        navigationController.present(view, animated: true, completion: nil)
+        let modal = ModalNavigationController(rootView: view)
+        
+        navigationController.present(modal, animated: true, completion: nil)
     }
 }

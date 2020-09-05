@@ -490,6 +490,7 @@
 		45A6E6C724E5C8E900AE5673 /* TractRemoteSharePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A6E6C624E5C8E900AE5673 /* TractRemoteSharePublisher.swift */; };
 		45A6E6C924E5CD8700AE5673 /* ActionCableChannelPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A6E6C824E5CD8700AE5673 /* ActionCableChannelPublisher.swift */; };
 		45A6E6CB24E5CDA100AE5673 /* WebSocketChannelPublisherType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A6E6CA24E5CDA100AE5673 /* WebSocketChannelPublisherType.swift */; };
+		45A7273925042F6E008E6F0F /* TractRemoteSharePublisherError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A7273825042F6E008E6F0F /* TractRemoteSharePublisherError.swift */; };
 		45A97C7B24A3A5C2008D782E /* TranslationDownloaderErrorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A97C7A24A3A5C2008D782E /* TranslationDownloaderErrorViewModel.swift */; };
 		45ABE320240D51A500E05AE2 /* GlobalActivityResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ABE31F240D51A500E05AE2 /* GlobalActivityResults.swift */; };
 		45ACBD05247DB0C700514E75 /* ToolsMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ACBD04247DB0C700514E75 /* ToolsMenuView.swift */; };
@@ -1168,6 +1169,7 @@
 		45A6E6C624E5C8E900AE5673 /* TractRemoteSharePublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractRemoteSharePublisher.swift; sourceTree = "<group>"; };
 		45A6E6C824E5CD8700AE5673 /* ActionCableChannelPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionCableChannelPublisher.swift; sourceTree = "<group>"; };
 		45A6E6CA24E5CDA100AE5673 /* WebSocketChannelPublisherType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketChannelPublisherType.swift; sourceTree = "<group>"; };
+		45A7273825042F6E008E6F0F /* TractRemoteSharePublisherError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractRemoteSharePublisherError.swift; sourceTree = "<group>"; };
 		45A97C7A24A3A5C2008D782E /* TranslationDownloaderErrorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationDownloaderErrorViewModel.swift; sourceTree = "<group>"; };
 		45ABE31F240D51A500E05AE2 /* GlobalActivityResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalActivityResults.swift; sourceTree = "<group>"; };
 		45ACBD04247DB0C700514E75 /* ToolsMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsMenuView.swift; sourceTree = "<group>"; };
@@ -2642,6 +2644,7 @@
 			children = (
 				4539F33224EADA6300B30DF9 /* TractRemoteShareChannel.swift */,
 				45A6E6C624E5C8E900AE5673 /* TractRemoteSharePublisher.swift */,
+				45A7273825042F6E008E6F0F /* TractRemoteSharePublisherError.swift */,
 				4539F33424EADDBC00B30DF9 /* TractRemoteShareURLBuilder.swift */,
 			);
 			path = TractRemoteSharePublisher;
@@ -4119,6 +4122,7 @@
 				4579169C24E84DAB00C0CF49 /* LoadingViewModelType.swift in Sources */,
 				454315A824A1510B00B5C37B /* LoadingToolViewModel.swift in Sources */,
 				452AB58F24464D8500445050 /* AboutView.swift in Sources */,
+				45A7273925042F6E008E6F0F /* TractRemoteSharePublisherError.swift in Sources */,
 				45E3748E24B75943001E8DF9 /* ToolCell.swift in Sources */,
 				45A97C7B24A3A5C2008D782E /* TranslationDownloaderErrorViewModel.swift in Sources */,
 				450E21B52491887700D489A1 /* ResourcesApiType.swift in Sources */,

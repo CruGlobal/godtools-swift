@@ -11,5 +11,8 @@ import Foundation
 protocol LoadingViewModelType {
     
     var message: ObservableValue<String> { get }
+    var hidesCloseButton: Bool { get }
+    
+    func closeTapped()
 }
 

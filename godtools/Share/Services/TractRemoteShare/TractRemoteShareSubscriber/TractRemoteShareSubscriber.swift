@@ -10,7 +10,7 @@ import Foundation
 
 class TractRemoteShareSubscriber: NSObject {
             
-    static let timeoutIntervalSeconds: TimeInterval = 10
+    private static let timeoutIntervalSeconds: TimeInterval = 10
     
     private let remoteUrl: URL
     private let webSocket: WebSocketType
