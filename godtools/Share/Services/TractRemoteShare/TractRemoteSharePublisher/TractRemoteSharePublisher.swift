@@ -96,6 +96,13 @@ class TractRemoteSharePublisher: NSObject {
                                                 
         webSocketChannelPublisher.sendMessage(data: stringData)
         
+        if loggingEnabled {
+            print("\n TractRemoteSharePublisher: sendNavigationEvent()")
+            print("  card: \(String(describing: card))")
+            print("  locale: \(String(describing: locale))")
+            print("  page: \(String(describing: page))")
+            print("  tool: \(String(describing: tool))")
+        }
     }
     
     // MARK: - Observers

@@ -146,6 +146,9 @@ class TractViewModel: NSObject, TractViewModelType {
         tractRemoteSharePublisher.didCreateNewSubscriberChannelIdForPublish.addObserver(self) { [weak self] (channel: TractRemoteShareChannel) in
             DispatchQueue.main.async { [weak self] in
                 self?.reloadRemoteShareIsActive()
+                if let tractPage = self?.tractPage {
+                   self?.sendRemoteShareNavigationEventForPage(page: tractPage)
+                }
             }
         }
         
