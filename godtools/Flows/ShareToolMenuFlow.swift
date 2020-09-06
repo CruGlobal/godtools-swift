@@ -22,7 +22,7 @@ class ShareToolMenuFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, navigationController: UINavigationController, tractRemoteSharePublisher: TractRemoteSharePublisher, resource: ResourceModel, selectedLanguage: LanguageModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, pageNumber: Int) {
+    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, navigationController: UINavigationController, tractRemoteSharePublisher: TractRemoteSharePublisher, resource: ResourceModel, selectedLanguage: LanguageModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, pageNumber: Int, hidesRemoteShareToolAction: Bool) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -39,7 +39,8 @@ class ShareToolMenuFlow: Flow {
             localizationServices: appDiContainer.localizationServices,
             resource: resource,
             language: primaryLanguage,
-            pageNumber: pageNumber
+            pageNumber: pageNumber,
+            hidesRemoteShareToolAction: hidesRemoteShareToolAction
         )
         let view = ShareToolMenuView(viewModel: viewModel)
         

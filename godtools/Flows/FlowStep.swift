@@ -43,7 +43,7 @@ enum FlowStep {
         
     // tract
     case homeTappedFromTract(isScreenSharing: Bool)
-    case shareMenuTappedFromTract(tractRemoteSharePublisher: TractRemoteSharePublisher, resource: ResourceModel, selectedLanguage: LanguageModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, pageNumber: Int)
+    case shareMenuTappedFromTract(tractRemoteShareSubscriber: TractRemoteShareSubscriber, tractRemoteSharePublisher: TractRemoteSharePublisher, resource: ResourceModel, selectedLanguage: LanguageModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, pageNumber: Int)
     case sendEmailTappedFromTract(subject: String, message: String, isHtml: Bool)
     
     // share tool menu

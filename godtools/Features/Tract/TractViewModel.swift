@@ -284,7 +284,7 @@ class TractViewModel: NSObject, TractViewModelType {
     }
     
     func shareTapped() {
-        flowDelegate?.navigate(step: .shareMenuTappedFromTract(tractRemoteSharePublisher: tractRemoteSharePublisher, resource: resource, selectedLanguage: selectedTractLanguage.value.language, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, pageNumber: tractPage))
+        flowDelegate?.navigate(step: .shareMenuTappedFromTract(tractRemoteShareSubscriber: tractRemoteShareSubscriber, tractRemoteSharePublisher: tractRemoteSharePublisher, resource: resource, selectedLanguage: selectedTractLanguage.value.language, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, pageNumber: tractPage))
     }
     
     func primaryLanguageTapped() {

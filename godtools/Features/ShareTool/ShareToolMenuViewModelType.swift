@@ -13,6 +13,7 @@ protocol ShareToolMenuViewModelType {
     var shareToolTitle: String { get }
     var remoteShareToolTitle: String { get }
     var cancelTitle: String { get }
+    var hidesRemoteShareToolAction: Bool { get }
     
     func shareToolTapped()
     func remoteShareToolTapped()
