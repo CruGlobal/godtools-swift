@@ -10,6 +10,8 @@ import UIKit
 
 class ToolsTableView: UIView, NibBased {
     
+    private let refreshControl: UIRefreshControl = UIRefreshControl()
+    
     private var viewModel: ToolsViewModelType!
     
     @IBOutlet weak private var tableView: UITableView!
@@ -31,6 +33,13 @@ class ToolsTableView: UIView, NibBased {
         
         tableView.delegate = self
         tableView.dataSource = self
+        
+        tableView.addSubview(refreshControl)
+        refreshControl.addTarget(
+            self,
+            action: #selector(handleRefreshTools),
+            for: .valueChanged
+        )
     }
     
     func configure(viewModel: ToolsViewModelType) {
@@ -57,6 +66,8 @@ class ToolsTableView: UIView, NibBased {
     private func setupBinding() {
         
         viewModel.tools.addObserver(self) { [weak self] (tools: [ResourceModel]) in
+
+            self?.refreshControl.endRefreshing()
             self?.tableView.reloadData()
             self?.animateToolsTableAlpha(alpha: tools.isEmpty ? 0 : 1)
         }
@@ -91,6 +102,10 @@ class ToolsTableView: UIView, NibBased {
         viewModel.toolListIsEditing.addObserver(self) { [weak self] (isEditing: Bool) in
             self?.tableView.isEditing = isEditing
         }
+    }
+    
+    @objc func handleRefreshTools() {
+        viewModel.refreshTools()
     }
     
     @objc func handleLongPressForToolListEditing(gestureReconizer: UILongPressGestureRecognizer) {
