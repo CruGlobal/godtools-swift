@@ -10,26 +10,26 @@ import Foundation
 
 class IsNewUserDefaultsCache: IsNewUserCacheType {
     
-    required init() {
+    private let sharedUserDefaultsCache: SharedUserDefaultsCache
+    
+    required init(sharedUserDefaultsCache: SharedUserDefaultsCache) {
+    
+        self.sharedUserDefaultsCache = sharedUserDefaultsCache
     }
     
     private var keyIsNewUser: String {
         return "key.newUsersDefaultCache.isNewUser"
     }
     
-    private var defaults: UserDefaults {
-        return UserDefaults.standard
-    }
-    
     var isNewUser: Bool {
-        if let newUserValue = defaults.object(forKey: keyIsNewUser) as? Bool {
+        if let newUserValue = sharedUserDefaultsCache.getValue(key: keyIsNewUser) as? Bool {
             return newUserValue
         }
         return false
     }
     
     func cacheIsNewUser(isNewUser: Bool) {
-        defaults.setValue(isNewUser, forKey: keyIsNewUser)
-        defaults.synchronize()
+        sharedUserDefaultsCache.cache(value: isNewUser, forKey: keyIsNewUser)
+        sharedUserDefaultsCache.commitChanges()
     }
 }

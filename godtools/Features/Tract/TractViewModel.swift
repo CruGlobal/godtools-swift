@@ -15,10 +15,11 @@ class TractViewModel: NSObject, TractViewModelType {
     private let resource: ResourceModel
     private let primaryLanguage: LanguageModel
     private let parallelLanguage: LanguageModel?
-    private let translateLanguageNameViewModel: TranslateLanguageNameViewModel
     private let tractManager: TractManager // TODO: Eventually would like to remove this class. ~Levi
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
     private let tractRemoteShareSubscriber: TractRemoteShareSubscriber
+    private let isNewUserService: IsNewUserService
+    private let cardJumpService: CardJumpService
     private let followUpsService: FollowUpsService
     private let viewsService: ViewsService
     private let analytics: AnalyticsContainer
@@ -43,16 +44,17 @@ class TractViewModel: NSObject, TractViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, languageSettingsService: LanguageSettingsService, tractManager: TractManager, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, followUpsService: FollowUpsService, viewsService: ViewsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, tractPage: Int?) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, languageSettingsService: LanguageSettingsService, tractManager: TractManager, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, isNewUserService: IsNewUserService, cardJumpService: CardJumpService, followUpsService: FollowUpsService, viewsService: ViewsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, tractPage: Int?) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.primaryLanguage = primaryLanguage
         self.parallelLanguage = parallelLanguage?.code != primaryLanguage.code ? parallelLanguage : nil
-        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(localizationServices: localizationServices)
         self.tractManager = tractManager
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
         self.tractRemoteShareSubscriber = tractRemoteShareSubscriber
+        self.isNewUserService = isNewUserService
+        self.cardJumpService = cardJumpService
         self.followUpsService = followUpsService
         self.viewsService = viewsService
         self.analytics = analytics
@@ -75,11 +77,11 @@ class TractViewModel: NSObject, TractViewModelType {
         
         hidesChooseLanguageControl = parallelLanguage == nil || primaryLanguage.id == parallelLanguage?.id
         
-        chooseLanguageControlPrimaryLanguageTitle = primaryLanguage.translatedName(translateLanguageNameViewModel: translateLanguageNameViewModel)
+        chooseLanguageControlPrimaryLanguageTitle = LanguageViewModel(language: primaryLanguage, localizationServices: localizationServices).translatedLanguageName
         
         let parallelLocalizedName: String
         if let parallelLanguage = parallelLanguage {
-            parallelLocalizedName = parallelLanguage.translatedName(translateLanguageNameViewModel: translateLanguageNameViewModel)
+            parallelLocalizedName = LanguageViewModel(language: parallelLanguage, localizationServices: localizationServices).translatedLanguageName
         }
         else {
             parallelLocalizedName = ""
@@ -144,6 +146,9 @@ class TractViewModel: NSObject, TractViewModelType {
         tractRemoteSharePublisher.didCreateNewSubscriberChannelIdForPublish.addObserver(self) { [weak self] (channel: TractRemoteShareChannel) in
             DispatchQueue.main.async { [weak self] in
                 self?.reloadRemoteShareIsActive()
+                if let tractPage = self?.tractPage {
+                   self?.sendRemoteShareNavigationEventForPage(page: tractPage)
+                }
             }
         }
         
@@ -261,7 +266,7 @@ class TractViewModel: NSObject, TractViewModelType {
     }
     
     var isRightToLeftLanguage: Bool {
-        switch LanguageDirection.direction(language: primaryLanguage) {
+        switch primaryLanguage.languageDirection {
         case .leftToRight:
             return false
         case .rightToLeft:
@@ -282,7 +287,7 @@ class TractViewModel: NSObject, TractViewModelType {
     }
     
     func shareTapped() {
-        flowDelegate?.navigate(step: .shareMenuTappedFromTract(tractRemoteSharePublisher: tractRemoteSharePublisher, resource: resource, selectedLanguage: selectedTractLanguage.value.language, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, pageNumber: tractPage))
+        flowDelegate?.navigate(step: .shareMenuTappedFromTract(tractRemoteShareSubscriber: tractRemoteShareSubscriber, tractRemoteSharePublisher: tractRemoteSharePublisher, resource: resource, selectedLanguage: selectedTractLanguage.value.language, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, pageNumber: tractPage))
     }
     
     func primaryLanguageTapped() {
@@ -348,6 +353,8 @@ class TractViewModel: NSObject, TractViewModelType {
     func tractPageDidAppear(page: Int) {
                       
         self.tractPage = page
+        
+        getTractPageItem(page: page).tractPage?.viewDidAppearOnTract()
                         
         analytics.pageViewedAnalytics.trackPageView(
             screenName: resource.abbreviation + "-" + String(page),
@@ -487,11 +494,6 @@ class TractViewModel: NSObject, TractViewModelType {
     
     private func buildTractPage(page: Int, language: LanguageModel, tractXmlResource: TractXmlResource, tractManifest: ManifestProperties, parallelTractPage: TractPage?) -> TractPage? {
         
-        let dependencyContainer = BaseTractElementDiContainer(
-            followUpsService: followUpsService,
-            analytics: analytics
-        )
-        
         let pages: [XMLPage] = tractXmlResource.pages
         
         if page >= 0 && page < pages.count {
@@ -499,10 +501,19 @@ class TractViewModel: NSObject, TractViewModelType {
             let xmlPage: XMLPage = pages[page]
             
             let config = TractConfigurations()
+            
             config.defaultTextAlignment = .left
             config.pagination = xmlPage.pagination
             config.language = language
             config.resource = resource
+            
+            let dependencyContainer = BaseTractElementDiContainer(
+                config: config,
+                isNewUserService: isNewUserService,
+                cardJumpService: cardJumpService,
+                followUpsService: followUpsService,
+                analytics: analytics
+            )
             
             let tractPage = TractPage(
                 startWithData: xmlPage.pageContent(),

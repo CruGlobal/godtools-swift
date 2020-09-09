@@ -8,11 +8,11 @@
 
 import Foundation
 
-struct DetermineNewUserIfPrimaryLanguageSet: DetermineIfNewUserType {
+class DetermineNewUserIfPrimaryLanguageSet: DetermineIfNewUserType {
     
     let isNewUser: Bool
     
-    init(languageSettingsCache: LanguageSettingsCacheType) {
-        isNewUser = languageSettingsCache.primaryLanguageId.value == nil
+    required init(languageSettingsCache: LanguageSettingsCacheType) {
+        self.isNewUser = languageSettingsCache.primaryLanguageId.value == nil
     }
 }

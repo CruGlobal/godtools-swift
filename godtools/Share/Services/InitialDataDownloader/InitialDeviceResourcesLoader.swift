@@ -17,11 +17,11 @@ class InitialDeviceResourcesLoader {
     private let translationsFileCache: TranslationsFileCache
     private let realmResourcesCache: RealmResourcesCache
     private let favoritedResourcesCache: FavoritedResourcesCache
-    private let languagesCache: LanguagesCache
+    private let languagesCache: RealmLanguagesCache
     private let deviceLanguage: DeviceLanguageType
     private let languageSettingsCache: LanguageSettingsCacheType
         
-    required init(realmDatabase: RealmDatabase, legacyRealmMigration: LegacyRealmMigration, attachmentsFileCache: AttachmentsFileCache, translationsFileCache: TranslationsFileCache, realmResourcesCache: RealmResourcesCache, favoritedResourcesCache: FavoritedResourcesCache, languagesCache: LanguagesCache, deviceLanguage: DeviceLanguageType, languageSettingsCache: LanguageSettingsCacheType) {
+    required init(realmDatabase: RealmDatabase, legacyRealmMigration: LegacyRealmMigration, attachmentsFileCache: AttachmentsFileCache, translationsFileCache: TranslationsFileCache, realmResourcesCache: RealmResourcesCache, favoritedResourcesCache: FavoritedResourcesCache, languagesCache: RealmLanguagesCache, deviceLanguage: DeviceLanguageType, languageSettingsCache: LanguageSettingsCacheType) {
         
         self.realmDatabase = realmDatabase
         self.legacyRealmMigration = legacyRealmMigration
@@ -276,8 +276,8 @@ class InitialDeviceResourcesLoader {
         var deviceLanguage: LanguageModel?
         
         for languageCode in preferredDeviceLanguageCodes {
-            if let language = languagesCache.getLanguage(realm: realm, code: languageCode) {
-                deviceLanguage = language
+            if let cachedLanguage = languagesCache.getLanguage(realm: realm, code: languageCode) {
+                deviceLanguage = LanguageModel(model: cachedLanguage)
                 break
             }
         }
@@ -287,8 +287,8 @@ class InitialDeviceResourcesLoader {
         if let deviceLanguage = deviceLanguage {
             primaryLanguage = deviceLanguage
         }
-        else if let englishLanguage = languagesCache.getLanguage(realm: realm, code: "en") {
-            primaryLanguage = englishLanguage
+        else if let cachedEnglishLanguage = languagesCache.getLanguage(realm: realm, code: "en") {
+            primaryLanguage = LanguageModel(model: cachedEnglishLanguage)
         }
         else {
             primaryLanguage = nil

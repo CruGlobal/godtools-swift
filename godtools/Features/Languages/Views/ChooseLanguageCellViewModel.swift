@@ -15,10 +15,10 @@ class ChooseLanguageCellViewModel: ChooseLanguageCellViewModelType {
     let hidesSelected: Bool
     let hidesSeparator: Bool
     
-    required init(language: LanguageModel, translateLanguageNameViewModel: TranslateLanguageNameViewModel, downloadedLanguagesCache: DownloadedLanguagesCache, hidesDownloadButton: Bool, hidesSelected: Bool) {
-        
-        self.languageName = language.translatedName(translateLanguageNameViewModel: translateLanguageNameViewModel)
-        self.languageIsDownloaded = downloadedLanguagesCache.isDownloaded(languageId: language.id)
+    required init(languageViewModel: LanguageViewModel, languageIsDownloaded: Bool, hidesSelected: Bool) {
+                
+        self.languageName = languageViewModel.translatedLanguageName
+        self.languageIsDownloaded = languageIsDownloaded
         self.hidesSelected = hidesSelected
         self.hidesSeparator = !hidesSelected
     }

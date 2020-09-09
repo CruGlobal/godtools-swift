@@ -20,14 +20,16 @@ class ShareToolMenuViewModel: ShareToolMenuViewModelType {
     let shareToolTitle: String
     let remoteShareToolTitle: String
     let cancelTitle: String
+    let hidesRemoteShareToolAction: Bool
     
-    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, resource: ResourceModel, language: LanguageModel, pageNumber: Int) {
+    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, resource: ResourceModel, language: LanguageModel, pageNumber: Int, hidesRemoteShareToolAction: Bool) {
         
         self.flowDelegate = flowDelegate
         self.localizationServices = localizationServices
         self.resource = resource
         self.language = language
         self.pageNumber = pageNumber
+        self.hidesRemoteShareToolAction = hidesRemoteShareToolAction
         
         shareToolTitle = localizationServices.stringForMainBundle(key: "share_tool_menu.send_tool")
         remoteShareToolTitle = localizationServices.stringForMainBundle(key: "share_tool_menu.remote_share_tool")

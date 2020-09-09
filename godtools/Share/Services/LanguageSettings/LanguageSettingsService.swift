@@ -47,12 +47,12 @@ class LanguageSettingsService: NSObject {
     }
     
     private func reloadPrimaryLanguage() {
-        let language: LanguageModel? = dataDownloader.languagesCache.getLanguage(id: languageSettingsCache.primaryLanguageId.value ?? "")
+        let language: LanguageModel? = dataDownloader.getStoredLanguage(id: languageSettingsCache.primaryLanguageId.value ?? "")
         primaryLanguage.accept(value: language)
     }
     
     private func reloadParallelLanguage() {
-        let language: LanguageModel? = dataDownloader.languagesCache.getLanguage(id: languageSettingsCache.parallelLanguageId.value ?? "")
+        let language: LanguageModel? = dataDownloader.getStoredLanguage(id: languageSettingsCache.parallelLanguageId.value ?? "")
         parallelLanguage.accept(value: language)
     }
 }

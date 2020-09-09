@@ -11,4 +11,6 @@ import Foundation
 protocol ShareToolRemoteSessionURLViewModelType {
     
     var shareMessage: String { get }
+    
+    func pageViewed()
 }

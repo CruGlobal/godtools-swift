@@ -23,7 +23,7 @@ class AppDiContainer {
     private let realmResourcesCache: RealmResourcesCache
     private let resourcesDownloader: ResourcesDownloader
     private let resourcesCache: ResourcesCache
-    private let languagesCache: LanguagesCache
+    private let languagesCache: RealmLanguagesCache
     private let attachmentsFileCache: AttachmentsFileCache
     private let attachmentsDownloader: AttachmentsDownloader
     private let failedFollowUpsCache: FailedFollowUpsCache
@@ -75,7 +75,7 @@ class AppDiContainer {
         
         resourcesCache = ResourcesCache(realmDatabase: realmDatabase)
         
-        languagesCache = LanguagesCache(realmDatabase: realmDatabase)
+        languagesCache = RealmLanguagesCache(realmDatabase: realmDatabase)
         
         translationsFileCache = TranslationsFileCache(realmDatabase: realmDatabase, sha256FileCache: resourcesSHA256FileCache)
                 
@@ -154,8 +154,11 @@ class AppDiContainer {
         
         articleAemImportDownloader = ArticleAemImportDownloader(realmDatabase: realmDatabase)
                 
-        isNewUserService = IsNewUserService(languageSettingsCache: languageSettingsCache)
-        
+        isNewUserService = IsNewUserService(
+            isNewUserCache: IsNewUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache),
+            determineNewUser: DetermineNewUserIfPrimaryLanguageSet(languageSettingsCache: languageSettingsCache)
+        )
+                
         loginClient = TheKeyOAuthClient.shared
                 
         analytics = AnalyticsContainer(
@@ -264,5 +267,9 @@ class AppDiContainer {
     
     var shareToolScreenTutorialNumberOfViewsCache: ShareToolScreenTutorialNumberOfViewsCache {
         return ShareToolScreenTutorialNumberOfViewsCache(sharedUserDefaultsCache: sharedUserDefaultsCache)
+    }
+    
+    var cardJumpService: CardJumpService {
+        return CardJumpService(cardJumpCache: CardJumpUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache))
     }
 }

@@ -11,9 +11,14 @@ import Foundation
 class LoadingViewModel: LoadingViewModelType {
     
     let message: ObservableValue<String> = ObservableValue(value: "")
+    let hidesCloseButton: Bool = true
     
     required init(message: String) {
             
         self.message.accept(value: message)
+    }
+    
+    func closeTapped() {
+        
     }
 }
