@@ -25,10 +25,13 @@ class ShareToolMenuView {
             viewModel.shareToolTapped()
         }))
         
-        controller.addAction(UIAlertAction(title: viewModel.remoteShareToolTitle, style: .default, handler: { (action: UIAlertAction) in
+        if !viewModel.hidesRemoteShareToolAction {
+            
+            controller.addAction(UIAlertAction(title: viewModel.remoteShareToolTitle, style: .default, handler: { (action: UIAlertAction) in
 
-            viewModel.remoteShareToolTapped()
-        }))
+                viewModel.remoteShareToolTapped()
+            }))
+        }
         
         controller.addAction(UIAlertAction(title: viewModel.cancelTitle, style: .cancel, handler: { (action: UIAlertAction) in
 
