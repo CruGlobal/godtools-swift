@@ -62,7 +62,6 @@ class InitialDataDownloader: NSObject {
     func downloadInitialData() {
         
         if downloadResourcesOperation != nil {
-            assertionFailure("InitialDataDownloader: resourcesDownloader is already running and only ever needs to run once on startup.")
             return
         }
                         

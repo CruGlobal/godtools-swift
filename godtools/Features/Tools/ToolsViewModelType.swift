@@ -29,6 +29,7 @@ protocol ToolsViewModelType {
     func openToolTapped(resource: ResourceModel)
     func favoriteToolTapped(resource: ResourceModel)
     func didEditToolList(movedResource: ResourceModel, movedSourceIndexPath: IndexPath, toDestinationIndexPath: IndexPath)
+    func refreshTools()
 }
 
 extension ToolsViewModelType {
@@ -89,5 +90,9 @@ extension ToolsViewModelType {
     
     func trackOpenToolButtonAnalytics() {
         analytics.trackActionAnalytics.trackAction(screenName: analyticsScreenName, actionName: "Tool Open Button", data: ["cru.tool_open_button": 1])
+    }
+    
+    func refreshTools() {
+        dataDownloader.downloadInitialData()
     }
 }
