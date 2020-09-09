@@ -160,7 +160,7 @@ class AppDiContainer {
         )
                 
         loginClient = TheKeyOAuthClient.shared
-        
+            
         analytics = AnalyticsContainer(
             adobeAnalytics: AdobeAnalytics(config: config, keyAuthClient: loginClient, languageSettingsService: languageSettingsService, loggingEnabled: false),
             appsFlyer: AppsFlyer(config: config, loggingEnabled: false),

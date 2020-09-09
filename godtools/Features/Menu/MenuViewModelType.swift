@@ -12,7 +12,6 @@ import TheKeyOAuthSwift
 protocol MenuViewModelType {
     
     var loginClient: TheKeyOAuthClient { get }
-    var analytics: AnalyticsContainer { get }
     var navTitle: ObservableValue<String> { get }
     var navDoneButtonTitle: String { get }
     var menuDataSource: ObservableValue<MenuDataSource> { get }

@@ -19,11 +19,11 @@ class MenuViewModel: NSObject, MenuViewModelType {
     private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     private let supportedLanguageCodesForAccountCreation: [String] = ["en"]
     private let localizationServices: LocalizationServices
+    private let analytics: AnalyticsContainer
     
     private weak var flowDelegate: FlowDelegate?
     
     let loginClient: TheKeyOAuthClient
-    let analytics: AnalyticsContainer
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
     let navDoneButtonTitle: String
     let menuDataSource: ObservableValue<MenuDataSource> = ObservableValue(value: MenuDataSource.emptyData)

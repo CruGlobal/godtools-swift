@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var currentAuthorizationFlow: OIDAuthorizationFlowSession?
     let loginClient = TheKeyOAuthClient.shared
     fileprivate let kClientID = "5337397229970887848"
-    fileprivate let kRedirectURI = "https://godtoolsapp.com/auth/beta"
+    fileprivate let kRedirectURI = "https://godtoolsapp.com/auth"
     fileprivate let kAppAuthExampleAuthStateKey = "authState"
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -129,7 +129,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if let host = url.host, host.contains("godtoolsapp") {
             if let authorizationFlow = self.currentAuthorizationFlow, authorizationFlow.resumeAuthorizationFlow(with: url) {
-                //on login, sync Adobe Analytics auth state
                 
                 self.currentAuthorizationFlow = nil
                 return true

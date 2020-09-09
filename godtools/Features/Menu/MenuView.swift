@@ -268,7 +268,6 @@ extension MenuView {
 
 extension MenuView: OIDAuthStateChangeDelegate {
     func didChange(_ state: OIDAuthState) {
-        print("authState: \(state.isAuthorized)")
         viewModel.analytics.adobeAnalytics.syncVisitorId()
         handleEmailRegistration()
         DispatchQueue.main.async { [weak self] in
