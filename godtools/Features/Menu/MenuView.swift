@@ -268,9 +268,13 @@ extension MenuView {
 
 extension MenuView: OIDAuthStateChangeDelegate {
     func didChange(_ state: OIDAuthState) {
-        viewModel.analytics.adobeAnalytics.syncVisitorId()
         handleEmailRegistration()
         DispatchQueue.main.async { [weak self] in
+            self?.viewModel.loginClient.fetchAttributes() { (_,_) in
+                self?.viewModel.analytics.adobeAnalytics.syncVisitorId()
+
+            }
+            
             self?.viewModel.reloadMenuDataSource()
         }
     }

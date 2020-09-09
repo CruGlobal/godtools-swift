@@ -142,17 +142,16 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
         DispatchQueue.global().async { [weak self] in
             self?.assertFailureIfNotConfigured()
             
-            self?.keyAuthClient.fetchAttributes() { (attributes, _) in
-                let isLoggedIn: Bool = self?.keyAuthClient.isAuthenticated() ?? false
-                let grMasterPersonID: String? = isLoggedIn ? self?.keyAuthClient.grMasterPersonId : nil
-                let ssoguid: String? = isLoggedIn ? self?.keyAuthClient.guid : nil
+            let isLoggedIn: Bool = self?.keyAuthClient.isAuthenticated() ?? false
+            
+            let grMasterPersonID: String? = isLoggedIn ? self?.keyAuthClient.grMasterPersonId : nil
+            let ssoguid: String? = isLoggedIn ? self?.keyAuthClient.guid : nil
                     
-                let visitorId: String? = grMasterPersonID ?? ssoguid ?? self?.visitorMarketingCloudID
+            let visitorId: String? = grMasterPersonID ?? ssoguid ?? self?.visitorMarketingCloudID
                     
-                let authState: ADBMobileVisitorAuthenticationState = ((grMasterPersonID ?? ssoguid) == nil) ? ADBMobileVisitorAuthenticationState.unknown : (isLoggedIn ? ADBMobileVisitorAuthenticationState.authenticated : ADBMobileVisitorAuthenticationState.loggedOut)
-                
-                ADBMobile.visitorSyncIdentifier(withType: "cru_visitor_id", identifier: visitorId, authenticationState: authState)
-            }
+            let authState: ADBMobileVisitorAuthenticationState = ((grMasterPersonID ?? ssoguid) == nil) ? ADBMobileVisitorAuthenticationState.unknown : (isLoggedIn ? ADBMobileVisitorAuthenticationState.authenticated : ADBMobileVisitorAuthenticationState.loggedOut)
+            
+            ADBMobile.visitorSyncIdentifier(withType: "cru_visitor_id", identifier: visitorId, authenticationState: authState)
         }
     }
     
