@@ -26,6 +26,7 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     let toolListIsEditable: Bool = false
     let toolListIsEditing: ObservableValue<Bool> = ObservableValue(value: false)
+    let didEndRefreshing: Signal = Signal()
     
     required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, deviceAttachmentBanners: DeviceAttachmentBanners, analytics: AnalyticsContainer) {
         
@@ -67,6 +68,7 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
         
         dataDownloader.resourcesUpdatedFromRemoteDatabase.addObserver(self) { [weak self] (error: InitialDataDownloaderError?) in
             DispatchQueue.main.async { [weak self] in
+                self?.didEndRefreshing.accept()
                 if error == nil {
                     self?.reloadResourcesFromCache()
                 }
