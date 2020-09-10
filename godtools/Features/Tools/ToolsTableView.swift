@@ -102,6 +102,10 @@ class ToolsTableView: UIView, NibBased {
         viewModel.toolListIsEditing.addObserver(self) { [weak self] (isEditing: Bool) in
             self?.tableView.isEditing = isEditing
         }
+        
+        viewModel.didEndRefreshing.addObserver(self) { [weak self] in
+            self?.refreshControl.endRefreshing()
+        }
     }
     
     @objc func handleRefreshTools() {
