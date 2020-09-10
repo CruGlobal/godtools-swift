@@ -27,6 +27,7 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     let findToolsTitle: String = "Find Tools"
     let hidesFindToolsView: ObservableValue<Bool> = ObservableValue(value: true)
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
+    let didEndRefreshing: Signal = Signal()
     
     required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, deviceAttachmentBanners: DeviceAttachmentBanners, analytics: AnalyticsContainer) {
         
@@ -75,6 +76,7 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
         
         dataDownloader.resourcesUpdatedFromRemoteDatabase.addObserver(self) { [weak self] (error: InitialDataDownloaderError?) in
             DispatchQueue.main.async { [weak self] in
+                self?.didEndRefreshing.accept()
                 if error == nil {
                     self?.reloadFavoritedResourcesFromCache()
                 }

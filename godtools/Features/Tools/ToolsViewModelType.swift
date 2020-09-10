@@ -23,6 +23,7 @@ protocol ToolsViewModelType {
     var toolListIsEditable: Bool { get }
     var toolListIsEditing: ObservableValue<Bool> { get }
     var analyticsScreenName: String { get }
+    var didEndRefreshing: Signal { get }
     
     func toolTapped(resource: ResourceModel)
     func aboutToolTapped(resource: ResourceModel)
