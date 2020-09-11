@@ -143,14 +143,14 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
             self?.assertFailureIfNotConfigured()
             
             let isLoggedIn: Bool = self?.keyAuthClient.isAuthenticated() ?? false
-            
+            print("isLoggedIn: \(isLoggedIn)")
             let grMasterPersonID: String? = isLoggedIn ? self?.keyAuthClient.grMasterPersonId : nil
             let ssoguid: String? = isLoggedIn ? self?.keyAuthClient.guid : nil
                     
             let visitorId: String? = grMasterPersonID ?? ssoguid ?? self?.visitorMarketingCloudID
                     
             let authState: ADBMobileVisitorAuthenticationState = ((grMasterPersonID ?? ssoguid) == nil) ? ADBMobileVisitorAuthenticationState.unknown : (isLoggedIn ? ADBMobileVisitorAuthenticationState.authenticated : ADBMobileVisitorAuthenticationState.loggedOut)
-            
+            print("authState: \(authState.rawValue)")
             ADBMobile.visitorSyncIdentifier(withType: "cru_visitor_id", identifier: visitorId, authenticationState: authState)
         }
     }
@@ -205,6 +205,24 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
             if let data = data {
                 print("  data: \(data)")
             }
+        }
+    }
+}
+
+// MARK: - OIDAuthStateChangeDelegate
+
+extension AdobeAnalytics: OIDAuthStateChangeDelegate {
+    func didChange(_ state: OIDAuthState) {
+        print("did change")
+        if (state.isAuthorized) {
+            print("isAuthorized")
+            self.keyAuthClient.fetchAttributes() { (_, _) in
+                print("fetchAttributes returned")
+                self.syncVisitorId()
+            }
+        } else {
+            print("not isAuthorized")
+            self.syncVisitorId()
         }
     }
 }
