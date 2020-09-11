@@ -19,7 +19,6 @@ class TutorialCell: UICollectionViewCell {
     static let reuseIdentifier: String = "TutorialCellReuseIdentifier"
     
     private weak var delegate: TutorialCellDelegate?
-    private weak var tutorialCellViewModel: TutorialCellViewModel?
     private var youtubeVideoId: String?
     
     @IBOutlet weak private var titleLabel: UILabel!
@@ -44,7 +43,6 @@ class TutorialCell: UICollectionViewCell {
     
     func configure(viewModel: TutorialCellViewModel, delegate: TutorialCellDelegate?) {
         self.delegate = delegate
-        self.tutorialCellViewModel = viewModel
         self.youtubeVideoId = viewModel.youTubeVideoId
         
         titleLabel.text = viewModel.title
@@ -94,7 +92,6 @@ extension TutorialCell: WKYTPlayerViewDelegate {
     }
     
     func playerView(_ playerView: WKYTPlayerView, didChangeTo state: WKYTPlayerState) {
-        print(state.rawValue)
         delegate?.tutorialCellVideoPlayer(cell: self, didChangeTo: state)
         
         if state == WKYTPlayerState.ended {
