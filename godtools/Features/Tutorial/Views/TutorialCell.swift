@@ -20,6 +20,7 @@ class TutorialCell: UICollectionViewCell {
     
     private weak var delegate: TutorialCellDelegate?
     private weak var tutorialCellViewModel: TutorialCellViewModel?
+    private var youtubeVideoId: String?
     
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var messageLabel: UILabel!
@@ -42,9 +43,9 @@ class TutorialCell: UICollectionViewCell {
     }
     
     func configure(viewModel: TutorialCellViewModel, delegate: TutorialCellDelegate?) {
-        
         self.delegate = delegate
         self.tutorialCellViewModel = viewModel
+        self.youtubeVideoId = viewModel.youTubeVideoId
         
         titleLabel.text = viewModel.title
         messageLabel.text = viewModel.message
@@ -75,8 +76,7 @@ class TutorialCell: UICollectionViewCell {
     }
     
     func recueVideo() {
-        print("here")
-        youTubeVideoPlayer.cueVideo(byId: tutorialCellViewModel!.youTubeVideoId, startSeconds: 0.0, suggestedQuality: WKYTPlaybackQuality.auto)
+        youTubeVideoPlayer.cueVideo(byId: youtubeVideoId!, startSeconds: 0.0, suggestedQuality: WKYTPlaybackQuality.auto)
     }
 }
 
@@ -98,7 +98,6 @@ extension TutorialCell: WKYTPlayerViewDelegate {
         delegate?.tutorialCellVideoPlayer(cell: self, didChangeTo: state)
         
         if state == WKYTPlayerState.ended {
-            print("ended")
            recueVideo()
         }
     }
