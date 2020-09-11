@@ -32,7 +32,7 @@ class TractViewModel: NSObject, TractViewModelType {
     private var cachedTractRemoteShareNavigationEvents: [PageNumber: TractRemoteShareNavigationEvent] = Dictionary()
     private var tractPage: Int = 0
         
-    let navTitle: ObservableValue<String> = ObservableValue(value: "God Tools")
+    let navTitle: ObservableValue<String> = ObservableValue(value: "GodTools")
     let navBarAttributes: TractNavBarAttributes
     let hidesChooseLanguageControl: Bool
     let chooseLanguageControlPrimaryLanguageTitle: String
