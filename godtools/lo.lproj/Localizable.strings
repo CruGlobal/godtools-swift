@@ -6,6 +6,18 @@
 /* This phrase describes a category of tool that helps someone grow in their Christian faith */
 "tool_category_growth" = "ການເຕີບໃຫຍ່ຂອງຊາວຄຣິດ";
 
+"share_link" = "ແບ່ງປັນລິ້ງ";
+"share_tool_menu.remote_share_tool" = "ແບ່ງປັນໜ້າຈໍຂອງທ່ານ";
+"share_tool_menu.send_tool" = "ສົ່ງເຄື່ອງມືນີ້";
+"share_tool_screen_tutorial.share_your_screen.message" = "ຕົວເລືອກນີ້ຈະສົ່ງລິ້ງໄປຫາເຄື່ອງມືນີ້ເພື່ອໄປຫາໝູ່. ເມື່ອລິ້ງຖຶກເປີດ ມັນກໍຈະເລີ່ມເຊດຊັນແບ່ງປັນໜ້າຈໍ.";
+"share_tool_screen_tutorial.mirrored_experience.title" = "ປະສົບການທີ່ຖືກສະທ້ອນກັບ";
+"share_tool_screen_tutorial.mirrored_experience.message" = "ໃນຂະນະທີ່ທ່ານເລື່ອນເຄື່ອງມືຢູ່ໂທລະສັບຂອງທ່ານ, ໜ້າຈໍຂອງໝູ່ຂອງທ່ານກໍຈະຕອບສະໜອງໃນທາງດຽວກັນ. ສິ່ງນີ້ເຮັດໃຫ້ທ່ານເບິ່ງຜ່ານເຄື່ອງມືພ້ອມກັນຢູ່ອຸປະກອນ 2 ເຄື່ອງໃນເວລາດຽວກັນ.";
+"share_tool_screen_tutorial.get_started.title" = "ເລີ່ມເລີຍ";
+"share_tool_screen_tutorial.get_started.message" = "ສົ່ງລິ້ງໄປຫາໜຶ່ງຄົນ ຫຼື ຫຼາຍກວ່າໜຶ່ງຄົນເພື່ອເລີ່ມເຊດຊັນແບ່ງປັນທາງໄກດຽວນີ້. ຄົນເຂົ້າຮ່ວມທຸກຄົນຕ້ອງໄດ້ດາວໂຫຼດແອັບ GodTools ໃສ່ອຸປະກອນຂອງພວກເຂົາເພື່ອໄດ້ຮັບປະສົບການໃນປັດຈຸບັນນີ້.";
+"share_tool_remote_link_message" = "ສະບາຍດີ, ຕິດຕາມຂ້ອຍໃນ GodTools ຜ່ານການແບ່ງປັນໜ້າຈໍ. ນີ້ແມ່ນລິ້ງ: %@ ຖ້າທ່ານບໍ່ໄດ້ຮັບຂໍ້ຄວາມນີ້ຈົນຮອດພາຍຫຼັງ, ລິ້ງອາດຈະຍັງໃຊ້ບໍ່ໄດ້. ພວກເຮົາສາມາດລອງໃໝ່ອີກຄັ້ງໃນເວລາອື່ນ.";
+"exit_tract_remote_share_session.message" = "ອອກຈາກເຊດຊັນແບ່ງປັນທາງໄກດຽວນີ້ບໍ?";
+"load_tool_remote_session.message" = "ເລີ່ມແບ່ງປັນໜ້າຈໍ...";
+
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "ການຝຶກອົບຮົມ";
 

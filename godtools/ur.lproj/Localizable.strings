@@ -6,6 +6,18 @@
 /* This phrase describes a category of tool that helps someone grow in their Christian faith */
 "tool_category_growth" = "مسیحی ترقی";
 
+"share_link" = "ایک لنک شیئر کریں";
+"share_tool_menu.remote_share_tool" = "اپنی اسکرین کا اشتراک کریں";
+"share_tool_menu.send_tool" = "یہ ٹول ارسال کریں";
+"share_tool_screen_tutorial.share_your_screen.message" = "یہ اختیار اس ٹول کا ربط ایک دوست کو ارسال کرے گا۔ جب ربط کو کھولا گیا تو یہ ایک سکرین شیئرنگ سیشن شروع کرے گا۔";
+"share_tool_screen_tutorial.mirrored_experience.title" = "عکسی تجربہ";
+"share_tool_screen_tutorial.mirrored_experience.message" = "جب آپ اپنے فون پر ٹول کو سکرول کرتے ہیں تو آپ کے دوست کی سکرین بھی اسی طرح ردعمل ظاہر کرے گی۔ یہ آپ کو ایک ہی وقت میں 2 آلات پر ایک ٹول میں سے اکٹھے گزرنے کی سہولت دیتا ہے۔";
+"share_tool_screen_tutorial.get_started.title" = "شروع کریں";
+"share_tool_screen_tutorial.get_started.message" = "ابھی سکرین شیئرنگ سیشن شروع کرنے کے لیے ایک یا زیادہ افراد کو ربط ارسال کریں۔ اس وقت اس تجربے کے لیے ضروری ہے کہ تمام شرکاء کے پاس اپنے آلے میں GodTools ایپ ڈاؤن لوڈ کی گئی ہو۔";
+"share_tool_remote_link_message" = "ہیلو، GodTools میں سکرین شیئرنگ کے ذریعے میری پیروی کریں۔ ربط یہ رہا: %@ اگر آپ کو دیر تک یہ پیغام موصول نہیں ہوتا تو شاید ربط بھی کام نہ کرتا ہو۔ ہم کسی اور وقت دوبارہ کوشش کر سکتے ہیں۔";
+"exit_tract_remote_share_session.message" = "ابھی ریموٹ سکرین شیئرنگ سیشن سے نکلیں؟";
+"load_tool_remote_session.message" = "سکرین شیئرنگ شروع ہو رہی ہے۔۔۔";
+
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "تربیت";
 

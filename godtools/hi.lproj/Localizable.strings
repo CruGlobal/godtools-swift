@@ -6,6 +6,10 @@
 /* This phrase describes a category of tool that helps someone grow in their Christian faith */
 "tool_category_growth" = "मसीही विकास";
 
+"share_link" = "लिंक साझा करें";
+"share_tool_menu.remote_share_tool" = "अपनी स्क्रीन साझा करें";
+"share_tool_screen_tutorial.get_started.title" = "शुरू हो जाएं";
+
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "प्रशिक्षण";
 

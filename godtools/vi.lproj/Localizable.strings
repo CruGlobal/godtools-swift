@@ -6,6 +6,18 @@
 /* This phrase describes a category of tool that helps someone grow in their Christian faith */
 "tool_category_growth" = "Tốc độ phát triển của Cơ đốc Nhân";
 
+"share_link" = "Chia sẻ một liên kết";
+"share_tool_menu.remote_share_tool" = "Chia sẻ màn hình của bạn";
+"share_tool_menu.send_tool" = "Gửi công cụ này";
+"share_tool_screen_tutorial.share_your_screen.message" = "Tùy chọn này sẽ gửi một liên kết đến công cụ này cho một người bạn. Khi liên kết được mở, nó sẽ bắt đầu một phiên chia sẻ màn hình.";
+"share_tool_screen_tutorial.mirrored_experience.title" = "Trải nghiệm nhân đôi";
+"share_tool_screen_tutorial.mirrored_experience.message" = "Khi bạn cuộn công cụ trên điện thoại, màn hình của bạn bè sẽ phản hồi theo cách tương tự. Điều này sẽ giúp bạn xem một công cụ cùng nhau trên 2 thiết bị cùng một lúc.";
+"share_tool_screen_tutorial.get_started.title" = "Bắt đầu";
+"share_tool_screen_tutorial.get_started.message" = "Gửi liên kết tới một hoặc nhiều người để bắt đầu phiên chia sẻ màn hình ngay bây giờ. Trải nghiệm này hiện yêu cầu tất cả người tham gia phải tải xuống ứng dụng GodTools trên thiết bị của họ.";
+"share_tool_remote_link_message" = "Xin chào, hãy theo dõi cùng tôi trong GodTools thông qua chia sẻ màn hình. Đây là liên kết: %@ Nếu bạn không nhận được thông báo này sau đó, liên kết có thể vẫn không hoạt động. Chúng ta có thể thử lại vào lúc khác.";
+"exit_tract_remote_share_session.message" = "Thoát khỏi phiên chia sẻ từ xa bây giờ?";
+"load_tool_remote_session.message" = "Bắt đầu chia sẻ màn hình…";
+
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Đào tạo";
 

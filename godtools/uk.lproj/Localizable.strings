@@ -6,6 +6,18 @@
 /* This phrase describes a category of tool that helps someone grow in their Christian faith */
 "tool_category_growth" = "Духовний ріст";
 
+"share_link" = "Поширте посилання";
+"share_tool_menu.remote_share_tool" = "Поділитися екраном";
+"share_tool_menu.send_tool" = "Відправити інструмент";
+"share_tool_screen_tutorial.share_your_screen.message" = "Ви можете надіслати другу чи подрузі посилання на цей інструмент. Коли він чи вона відкриє посилання, розпочнеться демонстрація екрану.";
+"share_tool_screen_tutorial.mirrored_experience.title" = "Функція віддзеркалення";
+"share_tool_screen_tutorial.mirrored_experience.message" = "На екрані вашого друга буде показуватися те, що ви переглядаєте в інструменті на вашому телефоні. Це дозволить зробити огляд інструменту одночасно на двох пристроях.";
+"share_tool_screen_tutorial.get_started.title" = "Початок";
+"share_tool_screen_tutorial.get_started.message" = "Відправте посилання людям, з якими ви хочете розпочати сеанс демонстрації екрану. Для участі в сеансі, необхідно, щоб в учасників була встановлена програма GodTools на їхніх пристроях.";
+"share_tool_remote_link_message" = "Вітаю! Зайдіть у програму GodTools, щоб бачити мій екран за посиланням: %@ Якщо ви пізно отримали це повідомлення, посилання може бути застарілим. Спробуймо іншим разом.";
+"exit_tract_remote_share_session.message" = "Закінчити віддалений сеанс демонстрації?";
+"load_tool_remote_session.message" = "Розпочинається демонстрація екрану...";
+
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Тренування";
 
