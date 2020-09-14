@@ -19,7 +19,7 @@ class TutorialCell: UICollectionViewCell {
     static let reuseIdentifier: String = "TutorialCellReuseIdentifier"
     
     private weak var delegate: TutorialCellDelegate?
-    private var youtubeVideoId: String?
+    private var viewModel: TutorialCellViewModel?
     
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var messageLabel: UILabel!
@@ -43,7 +43,7 @@ class TutorialCell: UICollectionViewCell {
     
     func configure(viewModel: TutorialCellViewModel, delegate: TutorialCellDelegate?) {
         self.delegate = delegate
-        self.youtubeVideoId = viewModel.youTubeVideoId
+        self.viewModel = viewModel
         
         titleLabel.text = viewModel.title
         messageLabel.text = viewModel.message
@@ -74,7 +74,7 @@ class TutorialCell: UICollectionViewCell {
     }
     
     func recueVideo() {
-        youTubeVideoPlayer.cueVideo(byId: youtubeVideoId!, startSeconds: 0.0, suggestedQuality: WKYTPlaybackQuality.auto)
+        youTubeVideoPlayer.cueVideo(byId: viewModel!.youTubeVideoId, startSeconds: 0.0, suggestedQuality: WKYTPlaybackQuality.auto)
     }
 }
 
