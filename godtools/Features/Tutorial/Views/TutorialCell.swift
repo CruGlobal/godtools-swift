@@ -33,6 +33,7 @@ class TutorialCell: UICollectionViewCell {
         super.prepareForReuse()
         stopVideo()
         mainImageView.image = nil
+        viewModel = nil
         for subview in customViewContainer.subviews {
             subview.removeFromSuperview()
         }
