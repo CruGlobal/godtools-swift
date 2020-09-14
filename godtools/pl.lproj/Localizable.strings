@@ -6,6 +6,18 @@
 /* This phrase describes a category of tool that helps someone grow in their Christian faith */
 "tool_category_growth" = "Rozwój Chrześcijanina";
 
+"share_link" = "Udostępnij link";
+"share_tool_menu.remote_share_tool" = "Udostępnij swój ekran";
+"share_tool_menu.send_tool" = "Wyślij to narzędzie";
+"share_tool_screen_tutorial.share_your_screen.message" = "Ta opcja wyśle link do tego narzędzia twojemu znajomemu. Po otwarciu linku osoba przyłączy się do sesji udostępniania ekranu.";
+"share_tool_screen_tutorial.mirrored_experience.title" = "Lustrzane odbicie";
+"share_tool_screen_tutorial.mirrored_experience.message" = "Przy przewijaniu tekstu w narzędziu, to samo będzie się działo na drugim telefonie. Pozwala to na wspólne korzystanie z narzędzia na dwóch urządzeniach jednocześnie.";
+"share_tool_screen_tutorial.get_started.title" = "Rozpocznij";
+"share_tool_screen_tutorial.get_started.message" = "Wyślij link do jednej lub więcej osób, aby rozpocząć sesję udostępniania ekranu. Do wzięcia udziału w sesji wszyscy uczestnicy będą musieli mieć zainstalowane GodTools na swoim urządzeniu.";
+"share_tool_remote_link_message" = "Witaj, obserwuj mnie w GodTools za pośrednictwem udostępniania ekranu. Oto link: %@ Jeżeli otrzymasz tę wiadomość po czasie, link może nie działać. W takim przypadku spróbujemy innym razem.";
+"exit_tract_remote_share_session.message" = "Opuścić zdalną sesję udostępniania?";
+"load_tool_remote_session.message" = "Rozpoczynanie udostępniania ekranu...";
+
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Szkolenie";
 

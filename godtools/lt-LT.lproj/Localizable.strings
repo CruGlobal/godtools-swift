@@ -6,6 +6,18 @@
 /* This phrase describes a category of tool that helps someone grow in their Christian faith */
 "tool_category_growth" = "Krikščionio augimas";
 
+"share_link" = "Bendrinti nuorodą";
+"share_tool_menu.remote_share_tool" = "Dalytis savo puslapiu";
+"share_tool_menu.send_tool" = "Siųsti šį įrankį";
+"share_tool_screen_tutorial.share_your_screen.message" = "Ši parinktis nusiųs nuorodą į šį įrankį jūsų draugui. Kai nuoroda bus atidaryta, bus įjungta ekranų bendrinimo sesija.";
+"share_tool_screen_tutorial.mirrored_experience.title" = "Veidrodinė patirtis";
+"share_tool_screen_tutorial.mirrored_experience.message" = "Jums slenkant įrankiu savo telefone, jūsų draugo ekranas reaguos taip pat. Šitaip galėsite kartu apžvelgti įrankį 2 įrenginiuose vienu metu.";
+"share_tool_screen_tutorial.get_started.title" = "Pradėti";
+"share_tool_screen_tutorial.get_started.message" = "Nusiųskite nuorodą vienam ar daugiau žmonių, kad pradėtumėte ekranų bedrinimo sesiją jau dabar. Šiuo metu šiai patirčiai reikalinga, kad visi dalyviai savo įrenginyje turėtų atsisiuntę programėlę „GodTools“.";
+"share_tool_remote_link_message" = "Sveiki, sekite kartu su manimi „GodTools“ su ekranų bendrinimu. Štai nuoroda: %@ Jei negausite šio pranešimo kurį laiką, nuoroda gali nebeveikti. Galime pabandyti dar kartą vėliau.";
+"exit_tract_remote_share_session.message" = "Ar išjungti nuotolinio bendrinimo sesiją dabar?";
+"load_tool_remote_session.message" = "Įjungiamas Ekranų bendrinimas...";
+
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Mokymas";
 

@@ -6,6 +6,18 @@
 /* This phrase describes a category of tool that helps someone grow in their Christian faith */
 "tool_category_growth" = "Creșterea în credință";
 
+"share_link" = "Partajează un link";
+"share_tool_menu.remote_share_tool" = "Partajează ecranul";
+"share_tool_menu.send_tool" = "Trimite acest instrument";
+"share_tool_screen_tutorial.share_your_screen.message" = "Această opțiune va trimite unui prieten un link către acest instrument. Când linkul este deschis, va începe o sesiune de partajare a ecranului.";
+"share_tool_screen_tutorial.mirrored_experience.title" = "Experiență în oglindă";
+"share_tool_screen_tutorial.mirrored_experience.message" = "Pe măsură ce derulezi instrumentul pe telefonul tău, ecranul prietenului tău va răspunde la fel. Acest lucru vă permite să folosiți un instrument împreună pe 2 dispozitive în același timp.";
+"share_tool_screen_tutorial.get_started.title" = "Să începem";
+"share_tool_screen_tutorial.get_started.message" = "Trimite linkul către una sau mai multe persoane pentru a începe o sesiune de partajare ecran acum. Această experiență impune ca toți participanții să aibă aplicația GodTools descărcată pe dispozitiv.";
+"share_tool_remote_link_message" = "Bună, urmează-mă în GodTools prin partajarea ecranului. Iată linkul: %@ Dacă nu primești acest mesaj până mai târziu, este posibil ca linkul să nu funcționeze. Poți încerca ulterior.";
+"exit_tract_remote_share_session.message" = "Părăsești sesiunea de partajare la distanță acum?";
+"load_tool_remote_session.message" = "Începe partajarea ecranului...";
+
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Instruire";
 

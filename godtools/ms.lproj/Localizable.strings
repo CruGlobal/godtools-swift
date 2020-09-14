@@ -7,6 +7,18 @@
 /* This phrase describes a category of tool that helps someone grow in their Christian faith */
 "tool_category_growth" = "Kemajuan Kristian";
 
+"share_link" = "Kongsi pautan";
+"share_tool_menu.remote_share_tool" = "Kongsi paparan anda";
+"share_tool_menu.send_tool" = "Hantar alat ini";
+"share_tool_screen_tutorial.share_your_screen.message" = "Pilihan ini akan menghantar pautan ke alat ini kepada rakan. Apabila pautan tersebut dibuka, ia akan memulakan sesi perkongsian skrin.";
+"share_tool_screen_tutorial.mirrored_experience.title" = "Pengalaman dicerminkan";
+"share_tool_screen_tutorial.mirrored_experience.message" = "Apabila anda menatal alat pada telefon anda, skrin rakan anda akan bertindak balas dengan cara yang sama. Ini membolehkan anda menggunakan alat bersama pada 2 peranti secara serentak.";
+"share_tool_screen_tutorial.get_started.title" = "Bermula";
+"share_tool_screen_tutorial.get_started.message" = "Hantar pautan kepada seorang atau lebih untuk memulakan sesi perkongsian skrin sekarang. Buat masa ini, pengalaman ini memerlukan semua peserta memuat turun aplikasi GodTools pada peranti mereka.";
+"share_tool_remote_link_message" = "Hai, ikut saya dalam GodTools melalui perkongsian skrin. Ini pautannya: %@ Jika selepas ini, anda tidak menerima mesej ini, pautan tersebut mungkin masih belum berfungsi. Kita boleh mencuba sekali lagi pada lain kali.";
+"exit_tract_remote_share_session.message" = "Keluar daripada sesi perkongsian jauh sekarang?";
+"load_tool_remote_session.message" = "Memulakan Perkongsian Skrin...";
+
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Latihan";
 

@@ -6,6 +6,18 @@
 /* This phrase describes a category of tool that helps someone grow in their Christian faith */
 "tool_category_growth" = "Kristīgā izaugsme";
 
+"share_link" = "Kopīgojiet saiti";
+"share_tool_menu.remote_share_tool" = "Kopīgojiet savu ekrānu";
+"share_tool_menu.send_tool" = "Nosūtīt šo rīku";
+"share_tool_screen_tutorial.share_your_screen.message" = "Šī opcija nosūtīs saiti uz šo rīku draugam. Ekrāna koplietošanas sesija tiks sakta pēc saites atvēršanas.";
+"share_tool_screen_tutorial.mirrored_experience.title" = "Kopīga pieredze";
+"share_tool_screen_tutorial.mirrored_experience.message" = "Ritinot rīku jūsu tālrunī, jūsu drauga ekrānā notiks tas pats. Šī funkcija ļauj jums vienlaicīgi izmantot vienu rīku 2 dažādās ierīcēs.";
+"share_tool_screen_tutorial.get_started.title" = "Sākt";
+"share_tool_screen_tutorial.get_started.message" = "Nosūtiet saiti vienam vai vairākiem cilvēkiem, lai sāktu ekrāna koplietošanas sesiju. Šīs funkcijas darbībai ir nepieciešams, lai visu dalībnieku ierīcēs būtu instalēta lietotne GodTools.";
+"share_tool_remote_link_message" = "Sveiki, pievienojies man lietotnē GodTools, izmantojot ekrāna koplietošanas funkciju. Lūk saite: %@ Ja saņēmi šo ziņojumu novēloti, iespējams, ka saite vairs nedarbojas. Mēs varam pamēģināt vēlreiz citreiz.";
+"exit_tract_remote_share_session.message" = "Iziet no attālinātās koplietošanas sesijas?";
+"load_tool_remote_session.message" = "Sāk ekrāna koplietošanu...";
+
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Apmācība";
 

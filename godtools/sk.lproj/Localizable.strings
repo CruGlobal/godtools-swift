@@ -6,6 +6,18 @@
 /* This phrase describes a category of tool that helps someone grow in their Christian faith */
 "tool_category_growth" = "Rozvoj kresťanstva";
 
+"share_link" = "Zdieľajte odkaz";
+"share_tool_menu.remote_share_tool" = "Zdieľať vašu obrazovku";
+"share_tool_menu.send_tool" = "Poslať nástroj";
+"share_tool_screen_tutorial.share_your_screen.message" = "Táto možnosť odošle odkaz na nástroj kamarátovi. Po otvorení odkazu sa začne relácia zdieľania obrazovky.";
+"share_tool_screen_tutorial.mirrored_experience.title" = "Zrkadlové zobrazenie";
+"share_tool_screen_tutorial.mirrored_experience.message" = "Počas prechádzania nástroja v telefóne bude kamarátov telefón reagovať rovnako. To vám umožní spoločne prechádzať nástrojom na 2 zariadeniach naraz.";
+"share_tool_screen_tutorial.get_started.title" = "Začíname";
+"share_tool_screen_tutorial.get_started.message" = "Pošli odkaz jednému alebo viacerým ľuďom a spusti reláciu zdieľania obrazovky. Všetci účastníci si na to musia do zariadenia stiahnuť aplikáciu GodTools.";
+"share_tool_remote_link_message" = "Ahoj, sleduj ma v GodTools cez zdieľanú obrazovku. Tu je odkaz: %@ Ak ti táto správa do určitého času nepríde, odkaz možno ešte nefunguje. Môžeme to znovu skúsiť inokedy.";
+"exit_tract_remote_share_session.message" = "Ukončiť reláciu zdieľania na diaľku?";
+"load_tool_remote_session.message" = "Začína sa zdieľanie obrazovky...";
+
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Tréning";
 

@@ -6,6 +6,18 @@
 /* This phrase describes a category of tool that helps someone grow in their Christian faith */
 "tool_category_growth" = "Areng kristlasena";
 
+"share_link" = "Jaga linki";
+"share_tool_menu.remote_share_tool" = "Jaga ekraani";
+"share_tool_menu.send_tool" = "Saada see tööriist";
+"share_tool_screen_tutorial.share_your_screen.message" = "Suvandi kasutamisel saadetakse see tööriist su sõbrale. Ekraanikuva jagamine algab lingi avamisel.";
+"share_tool_screen_tutorial.mirrored_experience.title" = "Peegeldatud kogemus";
+"share_tool_screen_tutorial.mirrored_experience.message" = "Kui kerid oma telefonis tööriista kuva, näeb seda ka su sõber. Nii saad tööriistaga tutvuda korraga 2 seadmel.";
+"share_tool_screen_tutorial.get_started.title" = "Alustamine";
+"share_tool_screen_tutorial.get_started.message" = "Saada link ühele või mitmele inimesele, et kohe ekraanikuva jagamist alustada.";
+"share_tool_remote_link_message" = "Hei! Jälgi mind rakenduses GoodTools, jagades minuga ekraanikuva. Kasuta seda linki: %@ Kui saad selle sõnumi hiljem, et pruugi link töötada. Sel juhul võime mõni teine kord uuesti proovida.";
+"exit_tract_remote_share_session.message" = "Kas lõpetada ekraanikuva kaugjagamine kohe?";
+"load_tool_remote_session.message" = "Ekraanikuva jagamise alustamine...";
+
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Ettevalmistus";
 
