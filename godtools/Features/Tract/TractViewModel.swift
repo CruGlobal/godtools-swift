@@ -169,9 +169,15 @@ class TractViewModel: NSObject, TractViewModelType {
                 
         tractRemoteShareSubscriber.subscribe(channelId: channelId) { [weak self] (error: TractRemoteShareSubscriberError?) in
             DispatchQueue.main.async { [weak self] in
+                self?.trackShareScreenOpened()
                 self?.reloadRemoteShareIsActive()
             }
         }
+    }
+    
+    private func trackShareScreenOpened() {
+        
+        analytics.trackActionAnalytics.trackAction(screenName: "", actionName: "Share Screen Opened", data: ["cru.share_screen_open": 1])
     }
     
     private func handleDidReceiveRemoteShareNavigationEvent(navigationEvent: TractRemoteShareNavigationEvent, animated: Bool = true) {
