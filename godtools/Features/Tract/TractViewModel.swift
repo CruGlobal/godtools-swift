@@ -303,6 +303,8 @@ class TractViewModel: NSObject, TractViewModelType {
         trackTappedLanguage(language: primaryLanguage)
                 
         selectedTractLanguage.accept(value: TractLanguage(languageType: .primary, language: primaryLanguage))
+        
+        sendRemoteShareNavigationEventForPage(page: tractPage)
     }
     
     func parallelLanguagedTapped() {
@@ -316,6 +318,8 @@ class TractViewModel: NSObject, TractViewModelType {
         trackTappedLanguage(language: parallelLanguage)
                 
         selectedTractLanguage.accept(value: TractLanguage(languageType: .parallel, language: parallelLanguage))
+        
+        sendRemoteShareNavigationEventForPage(page: tractPage)
     }
     
     private func trackTappedLanguage(language: LanguageModel) {
