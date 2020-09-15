@@ -20,7 +20,7 @@ class TutorialItemProvider: TutorialItemProviderType {
                 title: localizationServices.stringForMainBundle(key: "tutorial.tutorialItem.0.title"),
                 message: localizationServices.stringForMainBundle(key: "tutorial.tutorialItem.0.message"),
                 imageName: nil,
-                youTubeVideoId: "Us2psJs8izU",
+                youTubeVideoId: "ELRAmQxLqHE",
                 customViewId: nil
             ),
             TutorialItem(
