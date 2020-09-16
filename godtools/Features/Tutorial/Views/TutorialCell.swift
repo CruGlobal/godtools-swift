@@ -19,6 +19,7 @@ class TutorialCell: UICollectionViewCell {
     static let reuseIdentifier: String = "TutorialCellReuseIdentifier"
     
     private weak var delegate: TutorialCellDelegate?
+    private var viewModel: TutorialCellViewModel?
     
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var messageLabel: UILabel!
@@ -32,6 +33,7 @@ class TutorialCell: UICollectionViewCell {
         super.prepareForReuse()
         stopVideo()
         mainImageView.image = nil
+        viewModel = nil
         for subview in customViewContainer.subviews {
             subview.removeFromSuperview()
         }
@@ -41,8 +43,8 @@ class TutorialCell: UICollectionViewCell {
     }
     
     func configure(viewModel: TutorialCellViewModel, delegate: TutorialCellDelegate?) {
-        
         self.delegate = delegate
+        self.viewModel = viewModel
         
         titleLabel.text = viewModel.title
         messageLabel.text = viewModel.message
@@ -71,6 +73,12 @@ class TutorialCell: UICollectionViewCell {
     func stopVideo() {
         youTubeVideoPlayer.stopVideo()
     }
+    
+    func recueVideo() {
+        guard let youtubeVideoId = viewModel?.youTubeVideoId else { return }
+        
+        youTubeVideoPlayer.cueVideo(byId: youtubeVideoId, startSeconds: 0.0, suggestedQuality: WKYTPlaybackQuality.auto)
+    }
 }
 
 extension TutorialCell: WKYTPlayerViewDelegate {
@@ -88,6 +96,10 @@ extension TutorialCell: WKYTPlayerViewDelegate {
     
     func playerView(_ playerView: WKYTPlayerView, didChangeTo state: WKYTPlayerState) {
         delegate?.tutorialCellVideoPlayer(cell: self, didChangeTo: state)
+        
+        if state == WKYTPlayerState.ended {
+           recueVideo()
+        }
     }
     
     func playerView(_ playerView: WKYTPlayerView, didChangeTo quality: WKYTPlaybackQuality) {

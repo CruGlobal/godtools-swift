@@ -32,7 +32,7 @@ class TractViewModel: NSObject, TractViewModelType {
     private var cachedTractRemoteShareNavigationEvents: [PageNumber: TractRemoteShareNavigationEvent] = Dictionary()
     private var tractPage: Int = 0
         
-    let navTitle: ObservableValue<String> = ObservableValue(value: "God Tools")
+    let navTitle: ObservableValue<String> = ObservableValue(value: "GodTools")
     let navBarAttributes: TractNavBarAttributes
     let hidesChooseLanguageControl: Bool
     let chooseLanguageControlPrimaryLanguageTitle: String
@@ -169,9 +169,15 @@ class TractViewModel: NSObject, TractViewModelType {
                 
         tractRemoteShareSubscriber.subscribe(channelId: channelId) { [weak self] (error: TractRemoteShareSubscriberError?) in
             DispatchQueue.main.async { [weak self] in
+                self?.trackShareScreenOpened()
                 self?.reloadRemoteShareIsActive()
             }
         }
+    }
+    
+    private func trackShareScreenOpened() {
+        
+        analytics.trackActionAnalytics.trackAction(screenName: "", actionName: "Share Screen Opened", data: ["cru.share_screen_open": 1])
     }
     
     private func handleDidReceiveRemoteShareNavigationEvent(navigationEvent: TractRemoteShareNavigationEvent, animated: Bool = true) {
@@ -297,6 +303,8 @@ class TractViewModel: NSObject, TractViewModelType {
         trackTappedLanguage(language: primaryLanguage)
                 
         selectedTractLanguage.accept(value: TractLanguage(languageType: .primary, language: primaryLanguage))
+        
+        sendRemoteShareNavigationEventForPage(page: tractPage)
     }
     
     func parallelLanguagedTapped() {
@@ -310,6 +318,8 @@ class TractViewModel: NSObject, TractViewModelType {
         trackTappedLanguage(language: parallelLanguage)
                 
         selectedTractLanguage.accept(value: TractLanguage(languageType: .parallel, language: parallelLanguage))
+        
+        sendRemoteShareNavigationEventForPage(page: tractPage)
     }
     
     private func trackTappedLanguage(language: LanguageModel) {
