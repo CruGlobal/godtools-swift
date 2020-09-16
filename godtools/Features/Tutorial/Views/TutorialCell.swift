@@ -75,7 +75,9 @@ class TutorialCell: UICollectionViewCell {
     }
     
     func recueVideo() {
-        youTubeVideoPlayer.cueVideo(byId: viewModel!.youTubeVideoId, startSeconds: 0.0, suggestedQuality: WKYTPlaybackQuality.auto)
+        guard let youtubeVideoId = viewModel?.youTubeVideoId else { return }
+        
+        youTubeVideoPlayer.cueVideo(byId: youtubeVideoId, startSeconds: 0.0, suggestedQuality: WKYTPlaybackQuality.auto)
     }
 }
 
