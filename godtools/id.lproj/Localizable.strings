@@ -8,10 +8,10 @@
 
 "share_link" = "Bagikan tautan";
 "share_tool_menu.remote_share_tool" = "Bagikan layar Anda";
-"share_tool_menu.send_tool" = "Kirim alat ini";
-"share_tool_screen_tutorial.share_your_screen.message" = "Opsi ini akan mengirim tautan ke alat ini ke teman. Ketika tautan dibuka, maka akan memulai sesi berbagi layar.";
+"share_tool_menu.send_tool" = "Kirim sarana ini";
+"share_tool_screen_tutorial.share_your_screen.message" = "Opsi ini akan mengirim tautan ke sarana ini ke teman. Ketika tautan dibuka, maka akan memulai sesi berbagi layar.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "Pengalaman dicerminkan";
-"share_tool_screen_tutorial.mirrored_experience.message" = "Saat Anda menggulir alat di ponsel Anda, layar teman Anda akan merespons dengan cara yang sama. Ini memungkinkan Anda untuk berjalan melalui alat bersama di 2 perangkat sekaligus.";
+"share_tool_screen_tutorial.mirrored_experience.message" = "Saat Saudara menggulir sarana di ponsel Saudara, layar teman Saudara akan menanggapi dengan cara yang sama. Ini memungkinkan Saudara untuk berjalan melalui sarana bersama di 2 perangkat sekaligus.";
 "share_tool_screen_tutorial.get_started.title" = "Mari Mulai";
 "share_tool_screen_tutorial.get_started.message" = "Kirim tautan ke satu atau lebih orang untuk memulai sesi berbagi layar sekarang. Pengalaman ini saat ini mengharuskan semua peserta untuk mengunduh aplikasi GodTools di perangkat mereka.";
 "share_tool_remote_link_message" = "Hai, Ikut bersama saya di GodTools melalui berbagi layar. Inilah tautannya: %@ Jika Anda tidak menerima pesan ini hingga nanti, tautannya mungkin masih belum berfungsi. Kita dapat mencoba lagi di lain waktu.";
@@ -51,13 +51,13 @@
 "language_onboard" = "80+ Bahasa";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
-"no_more_tools" = "Anda sudah mengunduh semua tool yang tersedia.";
+"no_more_tools" = "Saudara sudah mengunduh semua tool yang tersedia.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "Favorit";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "Semua Alat";
+"find_tools" = "Semua Sarana";
 
 "unavailable" = "Tidak tersedia";
 
@@ -65,8 +65,8 @@
 "navigationBar.navigationItem.skip" = "Lewati";
 
 // Onboarding
-"add_new_tools" = "Tambah Alat Baru";
-"set_your_languages" = "Tetapkan Bahasa Anda";
+"add_new_tools" = "Tambah Sarana Baru";
+"set_your_languages" = "Tetapkan Bahasa Saudara";
 "okay" = "Oke";
 // Menu
 "menu_general" = "Umum";
