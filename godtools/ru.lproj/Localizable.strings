@@ -12,9 +12,11 @@
 "share_tool_screen_tutorial.share_your_screen.message" = "Данная опция позволит отправить ссылку на этот инструмент другу. При открытии ссылки запустится сеанс трансляции экрана.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "Зеркальный интерфейс";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Когда вы будете пролистывать инструмент на своем телефоне, на экране вашего друга будет происходить то же самое. Это позволит вам изучать инструмент вместе на 2 устройствах одновременно.";
-"share_tool_screen_tutorial.get_started.title" = "Начать работу";
+"share_tool_screen_tutorial.get_started.title" = "Начать";
 "share_tool_screen_tutorial.get_started.message" = "Отправьте ссылку хотя бы одному человеку, чтобы запустить сеанс трансляции экрана. Для данного интерфейса требуется, чтобы на устройствах всех участников было установлено приложение GodTools.";
-"share_tool_remote_link_message" = "Привет, пройди этот путь вместе со мной в GodTools с помощью трансляции экрана. Вот ссылка: %@ Если это сообщение придет слишком поздно, ссылка может уже не работать. Мы можем попробовать еще раз в другое время.";
+"share_tool_remote_link_message" = "Привет, чтобы запустилась функция трансляции экрана, пройдите по ссылке: %@
+
+Если это сообщение придет слишком поздно, ссылка может уже не работать. Мы можем попробовать еще раз в другое время.";
 "exit_tract_remote_share_session.message" = "Выйти из сеанса удаленной трансляции?";
 "load_tool_remote_session.message" = "Запуск трансляции экрана…";
 
@@ -82,7 +84,7 @@
 "menu_share" = "Поделиться";
 "menu_legal" = "Юридическая информация";
 "language_settings" = "Языковые настройки";
-"menu.tutorial" = "Обучение";
+"menu.tutorial" = "Руководство для использования";
 "menu.my_account" = "Учетная запись";
 
 // Login
@@ -167,8 +169,8 @@
 
 // About
 "general_about_1" = "GodTools помогает вам делиться своей верой простым и понятным способом.";
-"general_about_2" = "Эти инструменты помогут вам в доверительной манере объяснить людям, как они могут начать общение с Богом через Иисуса Христа, даже если вы раньше никогда не делились своей верой, а ваш собеседник разговаривает на другом языке.";
-"general_about_3" = "Выбирайте инструмент из всего разнообразия на основе ваших предпочтений и аудитории. Не все инструменты доступны на всех языках.";
+"general_about_2" = "Эти инструменты помогут вам объяснить вашим друзьям и знакомым, как они могут начать отношения с Богом через Иисуса Христа, даже если вы раньше никогда не делились своей верой, и даже если ваш собеседник говорит на другом языке.";
+"general_about_3" = "Выбирайте инструмент из всего разнообразия на основе ваших предпочтений и аудитории. В настоящий момент не все инструменты доступны на всех языках.";
 "general_about_4" = "Ссылки на другие ресурсы находятся в конце каждого инструмента.";
 "general_about_5" = "Для загрузки нового инструмента и/или языка требуется подключение к Интернету. После загрузки их можно будет использовать в автономном режиме.";
 "general_about_6" = "Возникли вопросы, предложения или просьбы? Напишите нам по адресу: support@godtoolsapp.com";
@@ -189,41 +191,42 @@
 
 // OnboardingWelcome
 "onboardingWelcome.titleLabel.welcome" = "Добро пожаловать";
-"onboardingWelcome.titleLabel.tagline" = "Помогаем делиться верой";
+"onboardingWelcome.titleLabel.tagline" = "Помогая вам говорить с другими о своей вере";
 "onboardingWelcome.beginButton" = "Начать";
 
 // OnboardingTutorial
-"onboardingTutorial.aboutAppItem.0.title" = "Поделиться с другими";
-"onboardingTutorial.aboutAppItem.0.message" = "Приложение GodTools создано для помощи в беседах о вашей вере";
+"onboardingTutorial.aboutAppItem.0.title" = "Поделитесь в другими";
+"onboardingTutorial.aboutAppItem.0.message" = "GodTools создан для того, чтобы помочь вам говорить с другими о своей вере";
 "onboardingTutorial.aboutAppItem.1.title" = "Выберите свои инструменты";
-"onboardingTutorial.aboutAppItem.1.message" = "GodTools помогает вам до духовной беседы, во время и после нее";
-"onboardingTutorial.aboutAppItem.2.title" = "Постоянная готовность";
-"onboardingTutorial.aboutAppItem.2.message" = "GodTools в полной готовности помочь вам, когда это необходимо";
-"onboardingTutorial.appUsageItem.0.message" = "Подготовьтесь к любой беседе";
-"onboardingTutorial.appUsageItem.1.message" = "Помогите ближнему разобраться в проповеди";
-"onboardingTutorial.appUsageItem.2.message" = "Просмотр двух языков одновременно";
-"onboardingTutorial.appUsageItem.3.message" = "Выбор из более чем 80 языков";
-"onboardingTutorial.appUsageItem.4.message" = "Помогите ближнему встать на путь христианина";
+"onboardingTutorial.aboutAppItem.1.message" = "GodTools поможет вам во время разговора с человеком о Боге, до и после";
+"onboardingTutorial.aboutAppItem.2.title" = "Всегда в доступе и готово помочь";
+"onboardingTutorial.aboutAppItem.2.message" = "Приложение GodTools готово помочь в любой момент, когда готовы вы";
+"onboardingTutorial.appUsageItem.0.message" = "Подготовьтесь к любому разговору";
+"onboardingTutorial.appUsageItem.1.message" = "Расскажите кому-то Евангелие";
+"onboardingTutorial.appUsageItem.2.message" = "Выбрать два параллельных языка для просмотра";
+"onboardingTutorial.appUsageItem.3.message" = "Выберите свой язык из 80+ представленных в приложении";
+"onboardingTutorial.appUsageItem.4.message" = "Помогите другим в их духовном росте";
 "onboardingTutorial.continueButton.title" = "Продолжить";
-"onboardingTutorial.showMoreButton.title" = "Показать больше";
+"onboardingTutorial.showMoreButton.title" = "Покажите еще";
 "onboardingTutorial.getStartedButton.title" = "Начать";
 
 // Tutorial
-"tutorial.tutorialItem.0.title" = "Смотрите";
-"tutorial.tutorialItem.0.message" = "Узнайте в демонстрационном видео, что предлагает GodTools
-(нажмите на видео для открытия настроек субтитров)";
-"tutorial.tutorialItem.1.title" = "Подготовьтесь";
-"tutorial.tutorialItem.1.message" = "Ознакомьтесь с некоторыми из инструментов. Полезно начать с инструмента «Научитесь делиться».
+"tutorial.tutorialItem.0.title" = "Посмотрите";
+"tutorial.tutorialItem.0.message" = "Посмотрите короткое видео, которое расскажет, что может наше приложение
 
-Чтобы изучить инструмент подробнее, нажмите на кнопку информации.";
-"tutorial.tutorialItem.2.title" = "Попробовать";
-"tutorial.tutorialItem.2.message" = "Каждый когда-то был новичком. Попробуйте использовать инструмент в беседе и узнайте, что вы изучаете.";
-"tutorial.tutorialItem.3.title" = "Эта инструкция доступна для повторного просмотра в меню";
+(Нажмите на видео, чтобы увидеть настройки для выбора функции субтитров)";
+"tutorial.tutorialItem.1.title" = "Подготовьтесь";
+"tutorial.tutorialItem.1.message" = "Познакомьтесь с инструментами. Лучше всего начать с инструмента: «Научите меня говорить с другими о Боге». 
+
+Нажмите на кнопку «о приложении», чтобы узнать больше.";
+"tutorial.tutorialItem.2.title" = "Попробуйте";
+"tutorial.tutorialItem.2.message" = "Все когда-то пробуют первый раз. Просто попробуйте этот инструмент в разговоре с кем-то из ваших друзей или знакомых.";
+"tutorial.tutorialItem.3.title" = "Это руководство будет доступно для повторного просмотра в меню";
 "tutorial.continueButton.title.continue" = "Продолжить";
-"tutorial.continueButton.title.startUsingGodTools" = "Начать использование GodTools";
+"tutorial.continueButton.title.startUsingGodTools" = "Начните использовать GodTools";
 
 // OpenTutorial
-"openTutorial.showTutorialLabel.text" = "Показать мне инструкцию";
+"openTutorial.showTutorialLabel.text" = "Покажите мне руководство по использованию";
 "openTutorial.openTutorialButton.title" = "Открыть инструкцию";
 
 // Account
