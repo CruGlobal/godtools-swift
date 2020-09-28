@@ -12,6 +12,7 @@ class ToolsFlow: Flow {
     
     private var articlesFlow: ArticlesFlow?
     private var shareToolMenuFlow: ShareToolMenuFlow?
+    private var learnToShareToolFlow: LearnToShareToolFlow?
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -159,6 +160,20 @@ class ToolsFlow: Flow {
         case .openToolTappedFromToolDetails(let resource):
             navigateToTool(resource: resource)
             
+        case .learnToShareToolTappedFromToolDetails:
+            
+            let learnToShareToolFlow = LearnToShareToolFlow(
+                flowDelegate: self,
+                appDiContainer: appDiContainer
+            )
+            
+            navigationController.present(learnToShareToolFlow.navigationController, animated: true, completion: nil)
+            
+            self.learnToShareToolFlow = learnToShareToolFlow
+            
+        case .closeTappedFromLearnToShareTool:
+            dismissLearnToShareToolFlow()
+            
         case .urlLinkTappedFromToolDetail(let url):
             if #available(iOS 10.0, *) {
                 UIApplication.shared.open(url)
@@ -169,6 +184,15 @@ class ToolsFlow: Flow {
         default:
             break
         }
+    }
+    
+    private func dismissLearnToShareToolFlow() {
+        
+        if learnToShareToolFlow != nil {
+            navigationController.dismiss(animated: true, completion: nil)
+        }
+        
+        self.learnToShareToolFlow = nil
     }
     
     private func navigateToToolDetail(resource: ResourceModel) {

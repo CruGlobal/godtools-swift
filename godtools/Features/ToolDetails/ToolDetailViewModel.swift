@@ -34,6 +34,8 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     let favoriteTitle: ObservableValue<String> = ObservableValue(value: "")
     let hidesUnfavoriteButton: ObservableValue<Bool> = ObservableValue(value: true)
     let hidesFavoriteButton: ObservableValue<Bool> = ObservableValue(value: false)
+    let learnToShareToolTitle: ObservableValue<String> = ObservableValue(value: "")
+    let hidesLearnToShareToolButton: ObservableValue<Bool> = ObservableValue(value: true)
     let toolDetailsControls: ObservableValue<[ToolDetailControl]> = ObservableValue(value: [])
     let selectedDetailControl: ObservableValue<ToolDetailControl?> = ObservableValue(value: nil)
     let aboutDetails: ObservableValue<String> = ObservableValue(value: "")
@@ -196,6 +198,10 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     
     func unfavoriteTapped() {
         favoritedResourcesCache.removeFromFavorites(resourceId: resource.id)
+    }
+    
+    func learnToShareToolTapped() {
+        flowDelegate?.navigate(step: .learnToShareToolTappedFromToolDetails)
     }
     
     func detailControlTapped(detailControl: ToolDetailControl) {

@@ -41,6 +41,7 @@ class ToolDetailView: UIViewController {
     @IBOutlet weak private var openToolButton: UIButton!
     @IBOutlet weak private var unfavoriteButton: UIButton!
     @IBOutlet weak private var favoriteButton: UIButton!
+    @IBOutlet weak private var learnToShareToolButton: UIButton!
     
     //constraints
     @IBOutlet weak private var detailsLabelsViewHeight: NSLayoutConstraint!
@@ -74,6 +75,7 @@ class ToolDetailView: UIViewController {
         openToolButton.addTarget(self, action: #selector(handleOpenTool(button:)), for: .touchUpInside)
         unfavoriteButton.addTarget(self, action: #selector(handleUnfavorite(button:)), for: .touchUpInside)
         favoriteButton.addTarget(self, action: #selector(handleFavorite(button:)), for: .touchUpInside)
+        learnToShareToolButton.addTarget(self, action: #selector(handleLearnToShareTool(button:)), for: .touchUpInside)
     }
     
     override func viewDidLayoutSubviews() {
@@ -117,6 +119,9 @@ class ToolDetailView: UIViewController {
         
         unfavoriteButton.layer.borderWidth = 1
         unfavoriteButton.layer.borderColor = unfavoriteButton.titleColor(for: .normal)?.cgColor
+        
+        //learnToShareToolButton
+        learnToShareToolButton.layer.cornerRadius = buttonCornerRadius
         
         // detailsView
         detailsView.backgroundColor = bottomView.backgroundColor
@@ -230,6 +235,10 @@ class ToolDetailView: UIViewController {
     
     @objc func handleFavorite(button: UIButton) {
         viewModel.favoriteTapped()
+    }
+    
+    @objc func handleLearnToShareTool(button: UIButton) {
+        viewModel.learnToShareToolTapped()
     }
     
     override func viewWillAppear(_ animated: Bool) {

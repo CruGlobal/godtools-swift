@@ -104,6 +104,7 @@ The app can be downloaded from https://godtoolsapp.com";
 "add_to_favorites" = "Add to Favorites";
 "remove_from_favorites" = "Remove from Favorites";
 "share_link" = "Share link";
+"start_training" = "Start Training";
 
 // Alerts
 "error" = "Error";

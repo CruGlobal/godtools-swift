@@ -39,7 +39,11 @@ enum FlowStep {
     
     // toolDetails
     case openToolTappedFromToolDetails(resource: ResourceModel)
+    case learnToShareToolTappedFromToolDetails
     case urlLinkTappedFromToolDetail(url: URL)
+    
+    // learnToShareTool
+    case closeTappedFromLearnToShareTool
         
     // tract
     case homeTappedFromTract(isScreenSharing: Bool)
