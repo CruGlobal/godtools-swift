@@ -143,15 +143,22 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
             self?.assertFailureIfNotConfigured()
             
             let isLoggedIn: Bool = self?.keyAuthClient.isAuthenticated() ?? false
+            let authState: ADBMobileVisitorAuthenticationState = isLoggedIn ? ADBMobileVisitorAuthenticationState.unknown : ADBMobileVisitorAuthenticationState.authenticated
             
-            let grMasterPersonID: String? = isLoggedIn ? self?.keyAuthClient.grMasterPersonId : nil
-            let ssoguid: String? = isLoggedIn ? self?.keyAuthClient.guid : nil
-                    
-            let visitorId: String? = grMasterPersonID ?? ssoguid ?? self?.visitorMarketingCloudID
-                    
-            let authState: ADBMobileVisitorAuthenticationState = ((grMasterPersonID ?? ssoguid) == nil) ? ADBMobileVisitorAuthenticationState.unknown : (isLoggedIn ? ADBMobileVisitorAuthenticationState.authenticated : ADBMobileVisitorAuthenticationState.loggedOut)
+            //grMasterPersonID
+            if let grMasterPersonID = isLoggedIn ? self?.keyAuthClient.grMasterPersonId : nil {
+               ADBMobile.visitorSyncIdentifier(withType: "grmpid", identifier: grMasterPersonID, authenticationState: authState)
+            }
             
-            ADBMobile.visitorSyncIdentifier(withType: "cru_visitor_id", identifier: visitorId, authenticationState: authState)
+            //ssoguid
+            if let ssoguid = isLoggedIn ? self?.keyAuthClient.guid : nil {
+                ADBMobile.visitorSyncIdentifier(withType: "ssoguid", identifier: ssoguid, authenticationState: authState)
+                }
+            
+            //ecid
+            if let ecid = self?.visitorMarketingCloudID {
+                ADBMobile.visitorSyncIdentifier(withType: "ecid", identifier: ecid, authenticationState: authState)
+            }
         }
     }
     
