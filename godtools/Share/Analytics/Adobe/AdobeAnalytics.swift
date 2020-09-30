@@ -143,22 +143,19 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
             self?.assertFailureIfNotConfigured()
             
             let isLoggedIn: Bool = self?.keyAuthClient.isAuthenticated() ?? false
-            let authState: ADBMobileVisitorAuthenticationState = isLoggedIn ? ADBMobileVisitorAuthenticationState.unknown : ADBMobileVisitorAuthenticationState.authenticated
-            
+            let authState: ADBMobileVisitorAuthenticationState = isLoggedIn ? ADBMobileVisitorAuthenticationState.authenticated : ADBMobileVisitorAuthenticationState.unknown
+                        
             //grMasterPersonID
-            if let grMasterPersonID = isLoggedIn ? self?.keyAuthClient.grMasterPersonId : nil {
-               ADBMobile.visitorSyncIdentifier(withType: "grmpid", identifier: grMasterPersonID, authenticationState: authState)
-            }
+            let grMasterPersonID = isLoggedIn ? self?.keyAuthClient.grMasterPersonId : nil
+            ADBMobile.visitorSyncIdentifier(withType: "grmpid", identifier: grMasterPersonID, authenticationState: authState)
             
             //ssoguid
-            if let ssoguid = isLoggedIn ? self?.keyAuthClient.guid : nil {
-                ADBMobile.visitorSyncIdentifier(withType: "ssoguid", identifier: ssoguid, authenticationState: authState)
-                }
+            let ssoguid = isLoggedIn ? self?.keyAuthClient.guid : nil
+            ADBMobile.visitorSyncIdentifier(withType: "ssoguid", identifier: ssoguid, authenticationState: authState)
             
             //ecid
-            if let ecid = self?.visitorMarketingCloudID {
-                ADBMobile.visitorSyncIdentifier(withType: "ecid", identifier: ecid, authenticationState: authState)
-            }
+            let ecid = self?.visitorMarketingCloudID
+            ADBMobile.visitorSyncIdentifier(withType: "ecid", identifier: ecid, authenticationState: authState)
         }
     }
     
@@ -220,12 +217,12 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
 
 extension AdobeAnalytics: OIDAuthStateChangeDelegate {
     func didChange(_ state: OIDAuthState) {
-        if (state.isAuthorized) {
-            self.keyAuthClient.fetchAttributes() { (_, _) in
-                self.syncVisitorId()
+        if state.isAuthorized {
+            keyAuthClient.fetchAttributes() { [weak self] (_, _) in
+                self?.syncVisitorId()
             }
         } else {
-            self.syncVisitorId()
+            syncVisitorId()
         }
     }
 }
