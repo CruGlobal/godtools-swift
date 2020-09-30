@@ -65,6 +65,7 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
                 forResource: config.isDebug ? "ADBMobileConfig_debug" : "ADBMobileConfig",
                 ofType: "json"
         ))
+       keyAuthClient.addStateChangeDelegate(delegate: self)
         
         isConfigured = true
                 
@@ -146,24 +147,22 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
     }
     
     func syncVisitorId() {
-        DispatchQueue.global().async { [weak self] in
-            self?.assertFailureIfNotConfigured()
+        assertFailureIfNotConfigured()
             
-            let isLoggedIn: Bool = self?.keyAuthClient.isAuthenticated() ?? false
-            let authState: ADBMobileVisitorAuthenticationState = isLoggedIn ? ADBMobileVisitorAuthenticationState.authenticated : ADBMobileVisitorAuthenticationState.unknown
+        let isLoggedIn: Bool = keyAuthClient.isAuthenticated()
+        let authState: ADBMobileVisitorAuthenticationState = isLoggedIn ? ADBMobileVisitorAuthenticationState.authenticated : ADBMobileVisitorAuthenticationState.unknown
                         
-            //grMasterPersonID
-            let grMasterPersonID = isLoggedIn ? self?.keyAuthClient.grMasterPersonId : nil
-            ADBMobile.visitorSyncIdentifier(withType: "grmpid", identifier: grMasterPersonID, authenticationState: authState)
+        //grMasterPersonID
+        let grMasterPersonID = isLoggedIn ? keyAuthClient.grMasterPersonId : nil
+        ADBMobile.visitorSyncIdentifier(withType: "grmpid", identifier: grMasterPersonID, authenticationState: authState)
             
             //ssoguid
-            let ssoguid = isLoggedIn ? self?.keyAuthClient.guid : nil
-            ADBMobile.visitorSyncIdentifier(withType: "ssoguid", identifier: ssoguid, authenticationState: authState)
+        let ssoguid = isLoggedIn ? keyAuthClient.guid : nil
+        ADBMobile.visitorSyncIdentifier(withType: "ssoguid", identifier: ssoguid, authenticationState: authState)
             
-            //ecid
-            let ecid = self?.visitorMarketingCloudID
-            ADBMobile.visitorSyncIdentifier(withType: "ecid", identifier: ecid, authenticationState: authState)
-        }
+        //ecid
+        let ecid = visitorMarketingCloudID
+        ADBMobile.visitorSyncIdentifier(withType: "ecid", identifier: ecid, authenticationState: authState)
     }
     
     private func createDefaultProperties(screenName: String?, siteSection: String?, siteSubSection: String?, previousScreenName: String?, complete: @escaping ((_ properties: AdobeAnalyticsProperties) -> Void)) {
