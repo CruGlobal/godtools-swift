@@ -17,6 +17,7 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
     private let languageSettingsService: LanguageSettingsService
     private let loggingEnabled: Bool
     
+    private var cachedVisitorMarketingCloudID: String?
     private var previousTrackedScreenName: String = ""
     private var isConfigured: Bool = false
         
@@ -37,14 +38,20 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
     // NOTE: When calling this field, call it from a non blocking UI thread.
     // From Adobe SDK: @note This method can cause a blocking network call and should not be used from a UI thread.
     var visitorMarketingCloudID: String {
+        
         assertFailureIfNotConfigured()
+        
+        if let cachedVisitorMarketingCloudID = cachedVisitorMarketingCloudID {
+            return cachedVisitorMarketingCloudID
+        }
+        
         if let visitorMarketingCloudID = ADBMobile.visitorMarketingCloudID() {
+            cachedVisitorMarketingCloudID = visitorMarketingCloudID
             return visitorMarketingCloudID
         }
-        else {
-            assertionFailure("AdobeAnalytics visitorMarketingCloudID is nil.  Make sure the Adobe SDK was configured properly.  Returning an empty string instead.")
-            return ""
-        }
+        
+        assertionFailure("AdobeAnalytics visitorMarketingCloudID is nil.  Make sure the Adobe SDK was configured properly.  Returning an empty string instead.")
+        return ""
     }
     
     func configure() {
