@@ -88,12 +88,18 @@ class ResourcesCache {
         return translation
     }
     
-    func getResourceLanguageTranslation(resourceId: String, languageCode: String) -> RealmTranslation? {
+    func getResourceLanguageTranslation(resourceId: String, languageCode: String) -> TranslationModel? {
         
         let realm: Realm = realmDatabase.mainThreadRealm
         let realmResource: RealmResource? = realm.object(ofType: RealmResource.self, forPrimaryKey: resourceId)
         let realmTranslation: RealmTranslation? = realmResource?.latestTranslations.filter(NSPredicate(format: "language.code".appending(" = [c] %@"), languageCode.lowercased())).first
-        
-        return realmTranslation
+        let translation: TranslationModel?
+        if let realmTranslation = realmTranslation {
+            translation = TranslationModel(realmTranslation: realmTranslation)
+        }
+        else {
+            translation = nil
+        }
+        return translation
     }
 }

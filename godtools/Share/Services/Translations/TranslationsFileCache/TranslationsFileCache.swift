@@ -64,10 +64,9 @@ class TranslationsFileCache {
     
     func getResourceLanguageTranslationManifest(realm: Realm, resourceId: String, languageId: String) -> Result<TranslationManifestData, TranslationsFileCacheError> {
         
-        let realmResource: RealmResource? = realm.object(ofType: RealmResource.self, forPrimaryKey: resourceId)
-        let realmTranslation: RealmTranslation? = realmResource?.latestTranslations.filter("language.id = '\(languageId)'").first
-
-        return getTranslationManifest(realm: realm, translationId: realmTranslation?.id ?? "")
+        let translation: TranslationModel? = resourcesCache.getResourceLanguageTranslation(resourceId: resourceId, languageId: languageId)
+        
+        return getTranslationManifest(realm: realm, translationId: translation?.id ?? "")
     }
     
     // MARK: - Get Translation Manifest By Translation Id
@@ -152,7 +151,25 @@ class TranslationsFileCache {
     }
     
     func cacheTranslationZipData(translationId: String, zipData: Data, complete: @escaping ((_ result: Result<TranslationManifestData, TranslationsFileCacheError>) -> Void)) {
-                
+              
+        realmDatabase.background { [weak self] (realm: Realm) in
+            
+            guard let translationsFileCache = self else {
+                return
+            }
+            
+            let result: Result<TranslationManifestData, TranslationsFileCacheError> = translationsFileCache.cacheTranslationZipData(
+                realm: realm,
+                translationId: translationId,
+                zipData: zipData
+            )
+            
+            complete(result)
+        }
+    }
+    
+    func cacheTranslationZipData(realm: Realm, translationId: String, zipData: Data) -> Result<TranslationManifestData, TranslationsFileCacheError> {
+        
         let sha256FileCache: SHA256FilesCache = self.sha256FileCache
         
         let result: Result<[SHA256FileLocation], Error> = sha256FileCache.decompressZipFileAndCacheSHA256FileContents(zipData: zipData)
@@ -161,89 +178,80 @@ class TranslationsFileCache {
         
         case .success(let cachedSHA256FileLocations):
                         
-            realmDatabase.background { (realm: Realm) in
-                
-                guard let translation = realm.object(ofType: RealmTranslation.self, forPrimaryKey: translationId) else {
-                    complete(.failure(.translationDoesNotExistInCache))
-                    return
-                }
-                                
-                // add translation references to realm sha256 files
-                var realmSHA256Files: [RealmSHA256File] = Array()
-                
-                do {
-                    try realm.write {
+            guard let translation = realm.object(ofType: RealmTranslation.self, forPrimaryKey: translationId) else {
+                return .failure(.translationDoesNotExistInCache)
+            }
+                            
+            // add translation references to realm sha256 files
+            var realmSHA256Files: [RealmSHA256File] = Array()
+            
+            do {
+                try realm.write {
 
-                        for location in cachedSHA256FileLocations {
-                                                
-                            if let existingRealmSHA256File = realm.object(ofType: RealmSHA256File.self, forPrimaryKey: location.sha256WithPathExtension) {
-                                
-                                if !existingRealmSHA256File.translations.contains(translation) {
-                                    existingRealmSHA256File.translations.append(translation)
-                                }
-                                realmSHA256Files.append(existingRealmSHA256File)
+                    for location in cachedSHA256FileLocations {
+                                            
+                        if let existingRealmSHA256File = realm.object(ofType: RealmSHA256File.self, forPrimaryKey: location.sha256WithPathExtension) {
+                            
+                            if !existingRealmSHA256File.translations.contains(translation) {
+                                existingRealmSHA256File.translations.append(translation)
                             }
-                            else {
-                                let newRealmSHA256File: RealmSHA256File = RealmSHA256File()
-                                newRealmSHA256File.sha256WithPathExtension = location.sha256WithPathExtension
-                                newRealmSHA256File.translations.append(translation)
-                                realm.add(newRealmSHA256File, update: .all)
-                                realmSHA256Files.append(newRealmSHA256File)
-                            }
-                        } // end add translation references to realm sha256 files
-                    }// end write
+                            realmSHA256Files.append(existingRealmSHA256File)
+                        }
+                        else {
+                            let newRealmSHA256File: RealmSHA256File = RealmSHA256File()
+                            newRealmSHA256File.sha256WithPathExtension = location.sha256WithPathExtension
+                            newRealmSHA256File.translations.append(translation)
+                            realm.add(newRealmSHA256File, update: .all)
+                            realmSHA256Files.append(newRealmSHA256File)
+                        }
+                    } // end add translation references to realm sha256 files
+                }// end write
+            }
+            catch let error {
+                return .failure(.cacheError(error: error))
+            }
+            
+            // add realmTranslationZipFile to realm to track cached translation.zip files
+            let realmTranslationZipFile = RealmTranslationZipFile()
+            realmTranslationZipFile.translationId = translationId
+            realmTranslationZipFile.resourceId = translation.resource?.id ?? ""
+            realmTranslationZipFile.languageId = translation.language?.id ?? ""
+            realmTranslationZipFile.languageCode = translation.language?.code ?? ""
+            realmTranslationZipFile.translationManifestFilename = translation.manifestName
+            realmTranslationZipFile.translationsVersion = translation.version
+            realmTranslationZipFile.sha256Files.append(objectsIn: realmSHA256Files)
+                                 
+            do {
+                try realm.write {
+                    realm.add(realmTranslationZipFile, update: .all)
                 }
-                catch let error {
-                    complete(.failure(.cacheError(error: error)))
-                    return
-                }
-                
-                // add realmTranslationZipFile to realm to track cached translation.zip files
-                let realmTranslationZipFile = RealmTranslationZipFile()
-                realmTranslationZipFile.translationId = translationId
-                realmTranslationZipFile.resourceId = translation.resource?.id ?? ""
-                realmTranslationZipFile.languageId = translation.language?.id ?? ""
-                realmTranslationZipFile.languageCode = translation.language?.code ?? ""
-                realmTranslationZipFile.translationManifestFilename = translation.manifestName
-                realmTranslationZipFile.translationsVersion = translation.version
-                realmTranslationZipFile.sha256Files.append(objectsIn: realmSHA256Files)
-                                     
-                do {
-                    try realm.write {
-                        realm.add(realmTranslationZipFile, update: .all)
-                    }
-                }
-                catch let error {
-                    complete(.failure(.cacheError(error: error)))
-                    return
-                }
-                
-                let translationZipFile = TranslationZipFileModel(realmTranslationZipFile: realmTranslationZipFile)
-                let manifestLocation = translationZipFile.manifestSHA256FileLocation
-                let getManifestXmlResult: Result<Data?, Error> = sha256FileCache.getData(location: manifestLocation)
-                var manifestXmlData: Data?
-                
-                switch getManifestXmlResult {
-                
-                case .success(let data):
-                    manifestXmlData = data
-                case .failure(let error):
-                    complete(.failure(.getManifestDataError(error: error)))
-                    return
-                }
-                
-                if let manifestXmlData = manifestXmlData {
-                    complete(.success(TranslationManifestData(translationZipFile: translationZipFile, manifestXmlData: manifestXmlData)))
-                }
-                else {
-                    complete(.failure(.translationManifestDoesNotExistInFileCache))
-                    return
-                }
-                
-            }// end realm background
+            }
+            catch let error {
+                return .failure(.cacheError(error: error))
+            }
+            
+            let translationZipFile = TranslationZipFileModel(realmTranslationZipFile: realmTranslationZipFile)
+            let manifestLocation = translationZipFile.manifestSHA256FileLocation
+            let getManifestXmlResult: Result<Data?, Error> = sha256FileCache.getData(location: manifestLocation)
+            var manifestXmlData: Data?
+            
+            switch getManifestXmlResult {
+            
+            case .success(let data):
+                manifestXmlData = data
+            case .failure(let error):
+                return .failure(.getManifestDataError(error: error))
+            }
+            
+            if let manifestXmlData = manifestXmlData {
+                return .success(TranslationManifestData(translationZipFile: translationZipFile, manifestXmlData: manifestXmlData))
+            }
+            else {
+                return .failure(.translationManifestDoesNotExistInFileCache)
+            }
                         
         case .failure(let error):
-            complete(.failure(.sha256FileCacheError(error: error)))
+            return .failure(.sha256FileCacheError(error: error))
         }
     }
     

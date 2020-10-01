@@ -187,37 +187,22 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     
     private func downloadResourceTranslation() {
         
+        let translationDownloader: TranslationDownloader = self.translationDownloader
+        
         let resourceId: String = resource.id
         let languageId: String = languageSettingsService.primaryLanguage.value?.id ?? ""
         
-        let translation: TranslationModel? = dataDownloader.resourcesCache.getResourceLanguageTranslation(
+        translationDownloader.fetchTranslationManifestAndDownloadIfNeeded(
             resourceId: resourceId,
-            languageId: languageId
-        )
-        
-        if let translation = translation {
-            
-            let cachedResult: Result<TranslationManifestData, TranslationsFileCacheError> = translationDownloader.translationsFileCache.getTranslationManifestOnMainThread(
-                translationId: translation.id
-            )
-            
-            let translationManifestIsCached: Bool
-            
-            switch cachedResult {
-            case .success(let manifestData):
-                translationManifestIsCached = true
-            case .failure(let error):
-                translationManifestIsCached = false
-            }
-            
-            if translationManifestIsCached {
-                hidesLearnToShareToolButton.accept(value: false)
-            }
-            else {
-                
-                let receipt: DownloadTranslationsReceipt? = translationDownloader.downloadTranslations(translationIds: [translation.id])
-            }
-        }
+            languageId: languageId,
+            cache: { (translationManifest: TranslationManifestData) in
+            print("MANIFEST IS CACHED")
+        },
+            downloadStarted: {
+               print("\n DOWNLOAD MANIFEST STARTED")
+        }, downloadComplete: { (result: Result<TranslationManifestData, TranslationDownloaderError>) in
+            print("\n DOWNLOAD MANIFEST COMPLETE")
+        })
     }
     
     func pageViewed() {
