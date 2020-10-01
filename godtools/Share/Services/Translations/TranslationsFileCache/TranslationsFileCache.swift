@@ -12,11 +12,13 @@ import RealmSwift
 class TranslationsFileCache {
     
     private let realmDatabase: RealmDatabase
+    private let resourcesCache: ResourcesCache
     private let sha256FileCache: ResourcesSHA256FileCache
     
-    required init(realmDatabase: RealmDatabase, sha256FileCache: ResourcesSHA256FileCache) {
+    required init(realmDatabase: RealmDatabase, resourcesCache: ResourcesCache, sha256FileCache: ResourcesSHA256FileCache) {
         
         self.realmDatabase = realmDatabase
+        self.resourcesCache = resourcesCache
         self.sha256FileCache = sha256FileCache
     }
     

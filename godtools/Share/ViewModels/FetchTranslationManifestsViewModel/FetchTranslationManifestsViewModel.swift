@@ -45,7 +45,7 @@ class FetchTranslationManifestsViewModel {
             primaryTranslation = primaryLanguageTranslation
         }
         else if let englishLanguageTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resourceId, languageCode: "en") {
-            primaryTranslation = englishLanguageTranslation
+            primaryTranslation = TranslationModel(realmTranslation: englishLanguageTranslation)
         }
         else {
             primaryTranslation = nil

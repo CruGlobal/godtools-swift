@@ -91,6 +91,10 @@ class ToolDetailView: UIViewController {
             viewModel.languageDetails.addObserver(self) { [weak self] (aboutDetails: String) in
                 self?.reloadDetailsTextViews()
             }
+            
+            viewModel.hidesLearnToShareToolButton.addObserver(self) { [weak self] (hidesLearnToShareToolButton: Bool) in
+                self?.setLearnToShareToolButton(hidden: hidesLearnToShareToolButton, animated: true)
+            }
         }
     }
     
@@ -125,6 +129,9 @@ class ToolDetailView: UIViewController {
         
         // detailsView
         detailsView.backgroundColor = bottomView.backgroundColor
+        
+        //learnToShareToolButton
+        setLearnToShareToolButton(hidden: true, animated: false)
     }
     
     private func setupBinding() {
@@ -266,6 +273,21 @@ class ToolDetailView: UIViewController {
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
                 self.bannerImageView.alpha = 1
             }, completion: nil)
+        }
+    }
+    
+    private func setLearnToShareToolButton(hidden: Bool, animated: Bool) {
+        
+        let alpha: CGFloat = hidden ? 0 : 1
+        
+        if animated {
+            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
+                //animations
+                self.learnToShareToolButton.alpha = alpha
+            }, completion: nil)
+        }
+        else {
+            learnToShareToolButton.alpha = alpha
         }
     }
      

@@ -16,6 +16,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
+    private let translationDownloader: TranslationDownloader
     private let analytics: AnalyticsContainer
     private let exitLinkAnalytics: ExitLinkAnalytics
     
@@ -41,7 +42,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     let aboutDetails: ObservableValue<String> = ObservableValue(value: "")
     let languageDetails: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, exitLinkAnalytics: ExitLinkAnalytics) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, translationDownloader: TranslationDownloader, analytics: AnalyticsContainer, exitLinkAnalytics: ExitLinkAnalytics) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -49,6 +50,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         self.favoritedResourcesCache = favoritedResourcesCache
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
+        self.translationDownloader = translationDownloader
         self.analytics = analytics
         self.exitLinkAnalytics = exitLinkAnalytics
                 
@@ -66,6 +68,8 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         
         let toolDetailImage: UIImage? = dataDownloader.attachmentsFileCache.getAttachmentBanner(attachmentId: resource.attrBannerAbout)
         bannerImage.accept(value: toolDetailImage)
+        
+        downloadResourceTranslation()
         
         reloadFavorited()
         reloadToolDetails()
@@ -179,6 +183,41 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     
     private var siteSubSection: String {
         return ""
+    }
+    
+    private func downloadResourceTranslation() {
+        
+        let resourceId: String = resource.id
+        let languageId: String = languageSettingsService.primaryLanguage.value?.id ?? ""
+        
+        let translation: TranslationModel? = dataDownloader.resourcesCache.getResourceLanguageTranslation(
+            resourceId: resourceId,
+            languageId: languageId
+        )
+        
+        if let translation = translation {
+            
+            let cachedResult: Result<TranslationManifestData, TranslationsFileCacheError> = translationDownloader.translationsFileCache.getTranslationManifestOnMainThread(
+                translationId: translation.id
+            )
+            
+            let translationManifestIsCached: Bool
+            
+            switch cachedResult {
+            case .success(let manifestData):
+                translationManifestIsCached = true
+            case .failure(let error):
+                translationManifestIsCached = false
+            }
+            
+            if translationManifestIsCached {
+                hidesLearnToShareToolButton.accept(value: false)
+            }
+            else {
+                
+                let receipt: DownloadTranslationsReceipt? = translationDownloader.downloadTranslations(translationIds: [translation.id])
+            }
+        }
     }
     
     func pageViewed() {
