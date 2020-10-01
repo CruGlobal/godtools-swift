@@ -6,11 +6,12 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol AppsFlyerType {
     
     func configure(adobeAnalytics: AdobeAnalyticsType)
     func trackAppLaunch()
     func trackEvent(eventName: String, data: [AnyHashable: Any]?)
+    func handleOpenUrl(url: URL, options: [UIApplication.OpenURLOptionsKey : Any])
 }

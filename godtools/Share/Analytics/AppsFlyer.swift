@@ -6,7 +6,7 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import AppsFlyerLib
 
 class AppsFlyer: NSObject, AppsFlyerType {
@@ -71,6 +71,10 @@ class AppsFlyer: NSObject, AppsFlyerType {
             
             self?.log(method: "trackEvent()", label: "eventName", labelValue: eventName, data: data)
         }
+    }
+    
+    func handleOpenUrl(url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) {
+        AppsFlyerLib.shared().handleOpen(url, options: options)
     }
     
     private func assertFailureIfNotConfigured() {
