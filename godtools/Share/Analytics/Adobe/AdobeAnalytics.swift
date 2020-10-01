@@ -165,6 +165,20 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
         ADBMobile.visitorSyncIdentifier(withType: "ecid", identifier: ecid, authenticationState: authState)
     }
     
+    func fetchAttributesThenSyncIds() {
+        assertFailureIfNotConfigured()
+
+        let isLoggedIn: Bool = keyAuthClient.isAuthenticated()
+
+        if isLoggedIn {
+            keyAuthClient.fetchAttributes() { [weak self] (_, _) in
+                self?.syncVisitorId()
+            }
+        } else {
+            syncVisitorId()
+        }
+    }
+    
     private func createDefaultProperties(screenName: String?, siteSection: String?, siteSubSection: String?, previousScreenName: String?, complete: @escaping ((_ properties: AdobeAnalyticsProperties) -> Void)) {
         let isLoggedIn: Bool = keyAuthClient.isAuthenticated()
         
@@ -223,12 +237,6 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
 
 extension AdobeAnalytics: OIDAuthStateChangeDelegate {
     func didChange(_ state: OIDAuthState) {
-        if state.isAuthorized {
-            keyAuthClient.fetchAttributes() { [weak self] (_, _) in
-                self?.syncVisitorId()
-            }
-        } else {
-            syncVisitorId()
-        }
+        fetchAttributesThenSyncIds()
     }
 }

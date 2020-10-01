@@ -90,7 +90,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appFlow?.applicationDidBecomeActive(application)
         appDiContainer.analytics.appsFlyer.trackAppLaunch()
         //on app launch, sync Adobe Analytics auth state
-        appDiContainer.analytics.adobeAnalytics.syncVisitorId()
+        appDiContainer.analytics.adobeAnalytics.fetchAttributesThenSyncIds()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
