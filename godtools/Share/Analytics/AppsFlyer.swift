@@ -34,10 +34,9 @@ class AppsFlyer: NSObject, AppsFlyerType {
         
         isConfiguring = true
         
-        let sharedAppsFlyer: AppsFlyerTracker = AppsFlyerTracker.shared()
+        let sharedAppsFlyer: AppsFlyerLib = AppsFlyerLib.shared()
         sharedAppsFlyer.appsFlyerDevKey = config.appsFlyerDevKey
         sharedAppsFlyer.appleAppID = config.appleAppId
-        sharedAppsFlyer.delegate = self
         
         serialQueue.async { [weak self] in
                         
@@ -55,8 +54,8 @@ class AppsFlyer: NSObject, AppsFlyerType {
         serialQueue.async { [weak self] in
             
             self?.assertFailureIfNotConfigured()
-            
-            AppsFlyerTracker.shared().trackAppLaunch()
+        
+            AppsFlyerLib.shared().start()
             
             self?.log(method: "trackAppLaunch()", label: nil, labelValue: nil, data: nil)
         }
@@ -68,7 +67,7 @@ class AppsFlyer: NSObject, AppsFlyerType {
             
             self?.assertFailureIfNotConfigured()
             
-            AppsFlyerTracker.shared().trackEvent(eventName, withValues: data)
+            AppsFlyerLib.shared().logEvent(eventName, withValues: data)
             
             self?.log(method: "trackEvent()", label: "eventName", labelValue: eventName, data: data)
         }
@@ -90,20 +89,9 @@ class AppsFlyer: NSObject, AppsFlyerType {
             if let data = data {
                 print("  data: \(data)")
             }
-            if let customData = AppsFlyerTracker.shared().customData {
+            if let customData = AppsFlyerLib.shared().customData {
                 print("  customData: \(customData)")
             }
         }
-    }
-}
-
-extension AppsFlyer: AppsFlyerTrackerDelegate {
-    
-    func onConversionDataSuccess(_ conversionInfo: [AnyHashable : Any]) {
-        
-    }
-    
-    func onConversionDataFail(_ error: Error) {
-        
     }
 }
