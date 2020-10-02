@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Lottie
 
 class OnboardingWelcomeView: UIViewController {
     
@@ -37,6 +38,21 @@ class OnboardingWelcomeView: UIViewController {
         setupBinding()
         
         beginButton.addTarget(self, action: #selector(handleBegin(button:)), for: .touchUpInside)
+        
+        if let filePath = Bundle.main.path(forResource: "remote_share", ofType: "json") {
+            let animation = Animation.filepath(filePath)
+            let animationView = AnimationView()
+            animationView.animation = animation
+                   
+            animationView.frame = CGRect(x: 0, y: 0, width: 400, height: 400)
+            animationView.center = self.view.center
+            animationView.contentMode = .scaleAspectFill
+            animationView.loopMode = .loop
+                          
+            view.addSubview(animationView)
+                      
+            animationView.play()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
