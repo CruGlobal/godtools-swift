@@ -146,23 +146,21 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
         }
     }
     
-    func syncVisitorId() {
+    private func syncVisitorId() {
         assertFailureIfNotConfigured()
             
         let isLoggedIn: Bool = keyAuthClient.isAuthenticated()
         let authState: ADBMobileVisitorAuthenticationState = isLoggedIn ? ADBMobileVisitorAuthenticationState.authenticated : ADBMobileVisitorAuthenticationState.unknown
-                        
-        //grMasterPersonID
+        
         let grMasterPersonID = isLoggedIn ? keyAuthClient.grMasterPersonId : nil
-        ADBMobile.visitorSyncIdentifier(withType: "grmpid", identifier: grMasterPersonID, authenticationState: authState)
-            
-            //ssoguid
         let ssoguid = isLoggedIn ? keyAuthClient.guid : nil
-        ADBMobile.visitorSyncIdentifier(withType: "ssoguid", identifier: ssoguid, authenticationState: authState)
-            
-        //ecid
         let ecid = visitorMarketingCloudID
-        ADBMobile.visitorSyncIdentifier(withType: "ecid", identifier: ecid, authenticationState: authState)
+
+        DispatchQueue.main.async { [weak self] in
+            ADBMobile.visitorSyncIdentifier(withType: "grmpid", identifier: grMasterPersonID, authenticationState: authState)
+            ADBMobile.visitorSyncIdentifier(withType: "ssoguid", identifier: ssoguid, authenticationState: authState)
+            ADBMobile.visitorSyncIdentifier(withType: "ecid", identifier: ecid, authenticationState: authState)
+        }
     }
     
     func fetchAttributesThenSyncIds() {
