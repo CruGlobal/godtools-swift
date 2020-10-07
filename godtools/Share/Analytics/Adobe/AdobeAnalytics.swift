@@ -17,6 +17,7 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
     private let languageSettingsService: LanguageSettingsService
     private let loggingEnabled: Bool
     
+    private var cachedVisitorMarketingCloudID: String?
     private var previousTrackedScreenName: String = ""
     private var isConfigured: Bool = false
         
@@ -37,14 +38,20 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
     // NOTE: When calling this field, call it from a non blocking UI thread.
     // From Adobe SDK: @note This method can cause a blocking network call and should not be used from a UI thread.
     var visitorMarketingCloudID: String {
+        
         assertFailureIfNotConfigured()
+        
+        if let cachedVisitorMarketingCloudID = cachedVisitorMarketingCloudID {
+            return cachedVisitorMarketingCloudID
+        }
+        
         if let visitorMarketingCloudID = ADBMobile.visitorMarketingCloudID() {
+            cachedVisitorMarketingCloudID = visitorMarketingCloudID
             return visitorMarketingCloudID
         }
-        else {
-            assertionFailure("AdobeAnalytics visitorMarketingCloudID is nil.  Make sure the Adobe SDK was configured properly.  Returning an empty string instead.")
-            return ""
-        }
+        
+        assertionFailure("AdobeAnalytics visitorMarketingCloudID is nil.  Make sure the Adobe SDK was configured properly.  Returning an empty string instead.")
+        return ""
     }
     
     func configure() {
@@ -58,6 +65,7 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
                 forResource: config.isDebug ? "ADBMobileConfig_debug" : "ADBMobileConfig",
                 ofType: "json"
         ))
+       keyAuthClient.addStateChangeDelegate(delegate: self)
         
         isConfigured = true
                 
@@ -138,20 +146,34 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
         }
     }
     
-    func syncVisitorId() {
-        DispatchQueue.global().async { [weak self] in
-            self?.assertFailureIfNotConfigured()
-
-            let isLoggedIn: Bool = self?.keyAuthClient.isAuthenticated() ?? false
-
-            let grMasterPersonID: String? = isLoggedIn ? self?.keyAuthClient.grMasterPersonId : nil
-            let ssoguid: String? = isLoggedIn ? self?.keyAuthClient.guid : nil
+    private func syncVisitorId() {
+        assertFailureIfNotConfigured()
             
-            let visitorId: String? = grMasterPersonID ?? ssoguid ?? self?.visitorMarketingCloudID
-            
-            let authState: ADBMobileVisitorAuthenticationState = ((grMasterPersonID ?? ssoguid) == nil) ? ADBMobileVisitorAuthenticationState.unknown : (isLoggedIn ? ADBMobileVisitorAuthenticationState.authenticated : ADBMobileVisitorAuthenticationState.loggedOut)
+        let isLoggedIn: Bool = keyAuthClient.isAuthenticated()
+        let authState: ADBMobileVisitorAuthenticationState = isLoggedIn ? ADBMobileVisitorAuthenticationState.authenticated : ADBMobileVisitorAuthenticationState.unknown
+        
+        let grMasterPersonID = isLoggedIn ? keyAuthClient.grMasterPersonId : nil
+        let ssoguid = isLoggedIn ? keyAuthClient.guid : nil
+        let ecid = visitorMarketingCloudID
 
-            ADBMobile.visitorSyncIdentifier(withType: "cru_visitor_id", identifier: visitorId, authenticationState: authState)
+        DispatchQueue.main.async { [weak self] in
+            ADBMobile.visitorSyncIdentifier(withType: "grmpid", identifier: grMasterPersonID, authenticationState: authState)
+            ADBMobile.visitorSyncIdentifier(withType: "ssoguid", identifier: ssoguid, authenticationState: authState)
+            ADBMobile.visitorSyncIdentifier(withType: "ecid", identifier: ecid, authenticationState: authState)
+        }
+    }
+    
+    func fetchAttributesThenSyncIds() {
+        assertFailureIfNotConfigured()
+
+        let isLoggedIn: Bool = keyAuthClient.isAuthenticated()
+
+        if isLoggedIn {
+            keyAuthClient.fetchAttributes() { [weak self] (_, _) in
+                self?.syncVisitorId()
+            }
+        } else {
+            syncVisitorId()
         }
     }
     
@@ -206,5 +228,13 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
                 print("  data: \(data)")
             }
         }
+    }
+}
+
+// MARK: - OIDAuthStateChangeDelegate
+
+extension AdobeAnalytics: OIDAuthStateChangeDelegate {
+    func didChange(_ state: OIDAuthState) {
+        fetchAttributesThenSyncIds()
     }
 }
