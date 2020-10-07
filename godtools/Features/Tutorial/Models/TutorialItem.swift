@@ -13,6 +13,7 @@ struct TutorialItem {
     let title: String
     let message: String
     let imageName: String?
+    let animationName: String?
     let youTubeVideoId: String?
     let customViewId: String?
 }

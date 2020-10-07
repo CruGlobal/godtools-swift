@@ -8,6 +8,7 @@
 
 import UIKit
 import YoutubePlayer_in_WKWebView
+import Lottie
 
 protocol TutorialCellDelegate: class {
     func tutorialCellVideoPlayer(cell: TutorialCell, didChangeTo state: WKYTPlayerState)
@@ -28,6 +29,7 @@ class TutorialCell: UICollectionViewCell {
     @IBOutlet weak private var youTubeVideoPlayer: WKYTPlayerView!
     @IBOutlet weak private var youTubeVideoPlayerLoadingView: UIView!
     @IBOutlet weak private var youTubeVideoPlayerActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var animationView: AnimationView!
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -53,6 +55,7 @@ class TutorialCell: UICollectionViewCell {
         youTubeVideoPlayer.isHidden = viewModel.hidesYouTubeVideoPlayer
         youTubeVideoPlayerLoadingView.isHidden = viewModel.hidesYouTubeVideoPlayer
         customViewContainer.isHidden = viewModel.hidesCustomView
+        animationView.isHidden = viewModel.hidesAnimationView
         
         if !viewModel.hidesMainImage {
             mainImageView.image = viewModel.mainImage
@@ -67,6 +70,12 @@ class TutorialCell: UICollectionViewCell {
         if !viewModel.hidesCustomView {
             customViewContainer.addSubview(viewModel.customView)
             viewModel.customView.constrainEdgesToSuperview()
+        }
+        
+        if !viewModel.hidesAnimationView {
+            let animation = Animation.named(viewModel.animationName)
+            animationView.animation = animation
+            animationView.play()
         }
     }
     
