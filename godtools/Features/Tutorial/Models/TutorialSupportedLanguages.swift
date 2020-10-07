@@ -8,16 +8,19 @@
 
 import Foundation
 
-struct TutorialSupportedLanguages: SupportedLanguagesType {
+class TutorialSupportedLanguages: SupportedLanguagesType {
     
     let languages: [Locale]
         
-    init() {
+    required init() {
         
         languages = [
             Locale(identifier: "en"),
             Locale(identifier: "es"),
-            Locale(identifier: "zh-Hans")
+            Locale(identifier: "zh-Hans"),
+            Locale(identifier: "ru"),
+            Locale(identifier: "id"),
+            Locale(identifier: "fr")
         ]
     }
 }

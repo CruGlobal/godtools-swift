@@ -10,7 +10,10 @@ import Foundation
 
 protocol DeviceLanguageType {
     
+    var locale: Locale { get }
     var languageCode: String? { get }
+    var preferredLocalizationLocale: Locale? { get }
+    var preferredLocalizationLocaleIdentifier: String? { get }
     var isEnglish: Bool { get }
     
     func possibleLocaleCodes(locale: Locale) -> [String]

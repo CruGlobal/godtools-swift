@@ -9,9 +9,24 @@
 import Foundation
 
 class DeviceLanguage: DeviceLanguageType {
-        
+    
+    var locale: Locale {
+        return Locale.current
+    }
+    
     var languageCode: String? {
         return Locale.current.languageCode
+    }
+    
+    var preferredLocalizationLocale: Locale? {
+        if let localeIdentifier = Bundle.main.preferredLocalizations.first {
+            return Locale(identifier: localeIdentifier)
+        }
+        return nil
+    }
+    
+    var preferredLocalizationLocaleIdentifier: String? {
+        return Bundle.main.preferredLocalizations.first
     }
     
     var isEnglish: Bool {
