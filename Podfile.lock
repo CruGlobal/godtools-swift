@@ -4,7 +4,7 @@ PODS:
   - AdobeMobileSDK/iOS (4.19.0)
   - Alamofire (4.9.1)
   - AppAuth (0.92.0)
-  - AppsFlyerFramework (5.1.0)
+  - AppsFlyerFramework (6.0.4)
   - Crashlytics (3.14.0):
     - Fabric (~> 1.10.2)
   - Fabric (1.10.2)
@@ -144,7 +144,7 @@ PODS:
 DEPENDENCIES:
   - AdobeMobileSDK (~> 4.19)
   - Alamofire (~> 4.8)
-  - AppsFlyerFramework (= 5.1.0)
+  - AppsFlyerFramework (~> 6.0.0)
   - Crashlytics
   - Fabric
   - FacebookCore
@@ -214,7 +214,7 @@ SPEC CHECKSUMS:
   AdobeMobileSDK: 5bd937b6baadb8c4cb095f4633062220f8f4a4d9
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   AppAuth: 3f4f1d6d85ad631d0bbf15ffcdc10c447face97a
-  AppsFlyerFramework: b5e6d0d1718c445eeb151769e97246c00ae4628d
+  AppsFlyerFramework: acc30e47ea49a058f4bb9b43cf00e976fd80d1ed
   Crashlytics: 9220f5bc89e7a618df411b4f639389dbfb0e03d2
   Fabric: ea977e3cd9c20425516d3dafd3bf8c941c51223f
   FacebookCore: ba86524b66cfa86d0f8e65d08faa8504a9f732dd
@@ -252,6 +252,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   YoutubePlayer-in-WKWebView: af2f5929fc78882d94bfdfeea999b661b78d9717
 
-PODFILE CHECKSUM: ffc2df7240ff90ce4fc2e87e749a0f6b1d6752eb
+PODFILE CHECKSUM: 1e31bbe5ea19eb22b11822853c62e8c0204c0b12
 
 COCOAPODS: 1.9.1

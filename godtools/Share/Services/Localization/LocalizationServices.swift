@@ -11,9 +11,7 @@ import Foundation
 class LocalizationServices {
     
     private static let EnglishLocalizableStringsFile: String = "Base"
-    
-    private static var cachedEnglishBundle: Bundle?
-    
+        
     let bundleLoader: LocalizationBundleLoader = LocalizationBundleLoader()
                  
     required init() {
