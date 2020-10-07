@@ -187,17 +187,17 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
         if let primaryLanguage = languageSettingsService.primaryLanguage.value, let primaryTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageId: primaryLanguage.id) {
             
             toolName = primaryTranslation.translatedName
-            languageBundle = localizationServices.bundleForResource(resourceName: primaryLanguage.code) ?? Bundle.main
+            languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.code) ?? Bundle.main
         }
         else if let englishTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageCode: "en") {
             
             toolName = englishTranslation.translatedName
-            languageBundle = localizationServices.englishBundle ?? Bundle.main
+            languageBundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
         }
         else {
             
             toolName = resource.name
-            languageBundle = localizationServices.englishBundle ?? Bundle.main
+            languageBundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
         }
         
         title.accept(value: toolName)

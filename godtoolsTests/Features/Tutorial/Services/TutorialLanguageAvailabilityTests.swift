@@ -201,19 +201,30 @@ class TutorialLanguageAvailabilityTests: XCTestCase {
             Locale(identifier: "zh-Hant-MO")
         ]
         
-        let supportedLangauges = MockSupportedLanguages(
+        let supportedLanguages = MockSupportedLanguages(
             languages: [
                 Locale(identifier: "zh-HK")
             ]
         )
         
-        let tutorialLanuageAvailability = TutorialLanguageAvailability(supportedLanguages: supportedLangauges)
+        let tutorialLanuageAvailability = TutorialLanguageAvailability(supportedLanguages: supportedLanguages)
         
         for chineseLanguage in chineseLocales {
             
             let tutorialShouldBeAvailable: Bool = false
                         
             XCTAssertEqual(tutorialLanuageAvailability.isAvailableInLanguage(locale: chineseLanguage), tutorialShouldBeAvailable, "Chinese language \(chineseLanguage) should not be available in the supported Chinese language in Hong Kong region.")
+        }
+    }
+    
+    func testThatSupportedTutorialLanguagesAreAvailable() {
+        
+        let supportedLanguages: TutorialSupportedLanguages = TutorialSupportedLanguages()
+        let tutorialLanuageAvailability = TutorialLanguageAvailability(supportedLanguages: supportedLanguages)
+        
+        for locale in supportedLanguages.languages {
+            
+            XCTAssert(tutorialLanuageAvailability.isAvailableInLanguage(locale: locale), "Locale should be available: \(locale.identifier)")
         }
     }
 }
