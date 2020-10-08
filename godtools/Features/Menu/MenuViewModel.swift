@@ -177,7 +177,7 @@ class MenuViewModel: NSObject, MenuViewModelType {
             self?.loginClient.logout()
             self?.reloadMenuDataSource()
             //on logout, sync Adobe Analytics auth state
-            self?.analytics.adobeAnalytics.syncVisitorId()
+            self?.analytics.adobeAnalytics.fetchAttributesThenSyncIds()
         }
         
         flowDelegate?.navigate(step: .logoutTappedFromMenu(logoutHandler: loggedOutHandler))

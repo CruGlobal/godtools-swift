@@ -127,19 +127,19 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
             
             toolName = primaryTranslation.translatedName
             toolAboutDetails = primaryTranslation.translatedDescription
-            languageBundle = localizationServices.bundleForResource(resourceName: primaryLanguage.code) ?? Bundle.main
+            languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.code) ?? Bundle.main
         }
         else if let englishTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageCode: "en") {
             
             toolName = englishTranslation.translatedName
             toolAboutDetails = englishTranslation.translatedDescription
-            languageBundle = localizationServices.englishBundle ?? Bundle.main
+            languageBundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
         }
         else {
             
             toolName = resource.name
             toolAboutDetails = resource.resourceDescription
-            languageBundle = localizationServices.englishBundle ?? Bundle.main
+            languageBundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
         }
         
         let languages: [LanguageModel] =  dataDownloader.resourcesCache.getResourceLanguages(resourceId: resource.id)

@@ -171,7 +171,7 @@ class AppDiContainer {
         godToolsAnalytics = GodToolsAnaltyics(analytics: analytics)
                                                   
         openTutorialCalloutCache = OpenTutorialCalloutUserDefaultsCache()
-                                
+                           
         fetchTranslationManifestsViewModel = FetchTranslationManifestsViewModel(
             realmDatabase: realmDatabase,
             resourcesCache: initialDataDownloader.resourcesCache,
@@ -234,7 +234,7 @@ class AppDiContainer {
     }
     
     var tutorialAvailability: TutorialAvailabilityType {
-        return TutorialAvailability(tutorialSupportedLanguages: tutorialSupportedLanguages)
+        return TutorialAvailability(deviceLanguage: deviceLanguage, tutorialSupportedLanguages: tutorialSupportedLanguages)
     }
     
     var tractRemoteShareSubscriber: TractRemoteShareSubscriber {
