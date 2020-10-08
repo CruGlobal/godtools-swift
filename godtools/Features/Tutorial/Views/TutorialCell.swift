@@ -75,6 +75,7 @@ class TutorialCell: UICollectionViewCell {
         if !viewModel.hidesAnimationView {
             let animation = Animation.named(viewModel.animationName)
             animationView.animation = animation
+            animationView.loopMode = .loop
             animationView.play()
         }
     }

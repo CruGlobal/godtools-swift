@@ -63,7 +63,7 @@
                             <constraint firstItem="hcn-Dj-jfP" firstAttribute="centerY" secondItem="oOH-p9-IJ4" secondAttribute="centerY" id="t0P-bH-swc"/>
                         </constraints>
                     </view>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E4n-cX-zEr" userLabel="animationView" customClass="AnimationView">
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E4n-cX-zEr" userLabel="animationView" customClass="AnimationView" customModule="Lottie">
                         <rect key="frame" x="30" y="339" width="329" height="239"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>

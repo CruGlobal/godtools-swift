@@ -19,16 +19,16 @@ class ShareToolScreenTutorialItemProvider: TutorialItemProviderType {
             TutorialItem(
                 title: localizationServices.stringForMainBundle(key: "share_tool_screen_tutorial.share_your_screen.title"),
                 message: localizationServices.stringForMainBundle(key: "share_tool_screen_tutorial.share_your_screen.message"),
-                imageName: nil,
-                animationName: "remote_share",
+                imageName: "share_tool_tutorial_people",
+                animationName: nil,
                 youTubeVideoId: nil,
                 customViewId: nil
             ),
             TutorialItem(
                 title: localizationServices.stringForMainBundle(key: "share_tool_screen_tutorial.mirrored_experience.title"),
                 message: localizationServices.stringForMainBundle(key: "share_tool_screen_tutorial.mirrored_experience.message"),
-                imageName: "share_tool_tutorial_mirrored",
-                animationName: nil,
+                imageName: nil,
+                animationName: "share_tool_tutorial_mirrored",
                 youTubeVideoId: nil,
                 customViewId: nil
             ),
