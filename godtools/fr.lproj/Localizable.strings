@@ -211,8 +211,7 @@ Colossiens 4:6";
 
 // Tutorial
 "tutorial.tutorialItem.0.title" = "Regarder";
-"tutorial.tutorialItem.0.message" = "Découvrez ce que GodTools peut vous offrir grâce à notre vidéo de démo
-(Touchez la vidéo pour afficher les paramètres des sous-titres)";
+"tutorial.tutorialItem.0.message" = "Découvrez ce que GodTools peut vous offrir grâce à notre vidéo de démo";
 "tutorial.tutorialItem.1.title" = "Préparez-vous";
 "tutorial.tutorialItem.1.message" = "Familiarisez-vous avez certains de vos outils. L'outil « M'apprendre à partager » est parfait pour débuter.
 

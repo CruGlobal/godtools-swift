@@ -4580,7 +4580,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 770;
+				CURRENT_PROJECT_VERSION = 786;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				DISPLAY_NAME = "GodTools-Stage";
 				INFOPLIST_FILE = godtools/Info.plist;
@@ -4745,7 +4745,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 770;
+				CURRENT_PROJECT_VERSION = 786;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				DISPLAY_NAME = "GodTools-Stage";
 				INFOPLIST_FILE = godtools/Info.plist;
@@ -4910,7 +4910,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 770;
+				CURRENT_PROJECT_VERSION = 786;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				DISPLAY_NAME = GodTools;
 				INFOPLIST_FILE = godtools/Info.plist;
@@ -5098,7 +5098,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 770;
+				CURRENT_PROJECT_VERSION = 786;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				DISPLAY_NAME = GodTools;
 				INFOPLIST_FILE = godtools/Info.plist;
