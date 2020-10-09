@@ -27,11 +27,11 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QTh-vy-oTR" userLabel="tutorialPagesView" customClass="PageNavigationCollectionView" customModule="godtools" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="780"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="702"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7EH-YG-4MN" userLabel="continueButton" customClass="OnboardPrimaryButton" customModule="godtools" customModuleProvider="target">
-                    <rect key="frame" x="50" y="780" width="314" height="50"/>
+                    <rect key="frame" x="50" y="746" width="314" height="50"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="7PG-P2-hH7"/>
                     </constraints>
@@ -41,7 +41,7 @@
                     </state>
                 </button>
                 <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="4" translatesAutoresizingMaskIntoConstraints="NO" id="Qqq-O9-MWg" userLabel="pageControl">
-                    <rect key="frame" x="30" y="849" width="354" height="37"/>
+                    <rect key="frame" x="30" y="815" width="354" height="37"/>
                     <color key="pageIndicatorTintColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <color key="currentPageIndicatorTintColor" red="0.23137254900000001" green="0.64313725489999995" blue="0.85882352939999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </pageControl>
