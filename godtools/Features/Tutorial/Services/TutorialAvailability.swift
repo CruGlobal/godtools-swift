@@ -8,16 +8,19 @@
 
 import Foundation
 
-struct TutorialAvailability: TutorialAvailabilityType {
+class TutorialAvailability: TutorialAvailabilityType {
         
+    private let deviceLanguage: DeviceLanguageType
     private let tutorialLanguageAvailability: TutorialLanguageAvailability
     
-    init(tutorialSupportedLanguages: SupportedLanguagesType) {
+    required init(deviceLanguage: DeviceLanguageType, tutorialSupportedLanguages: SupportedLanguagesType) {
         
-        tutorialLanguageAvailability = TutorialLanguageAvailability(supportedLanguages: tutorialSupportedLanguages)
+        self.deviceLanguage = deviceLanguage
+        self.tutorialLanguageAvailability = TutorialLanguageAvailability(supportedLanguages: tutorialSupportedLanguages)
     }
     
-    var tutorialIsAvailable: Bool {        
-        return tutorialLanguageAvailability.isAvailableInLanguage(locale: Locale.current)
+    var tutorialIsAvailable: Bool {
+        
+        return tutorialLanguageAvailability.isAvailableInLanguage(locale: deviceLanguage.preferredLocalizationLocale ?? deviceLanguage.locale)
     }
 }

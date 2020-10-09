@@ -21,7 +21,7 @@ target 'godtools' do
     pod 'Firebase/Analytics', '6.16.0'
     
     pod 'AdobeMobileSDK', '~> 4.19'
-    pod 'AppsFlyerFramework', '5.1.0'
+    pod 'AppsFlyerFramework', '~> 6.0.0'
     pod 'Crashlytics'
     pod 'GoogleConversionTracking', '~> 3.4.0'
     pod 'Fabric'

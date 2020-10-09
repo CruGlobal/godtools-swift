@@ -90,7 +90,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appFlow?.applicationDidBecomeActive(application)
         appDiContainer.analytics.appsFlyer.trackAppLaunch()
         //on app launch, sync Adobe Analytics auth state
-        appDiContainer.analytics.adobeAnalytics.syncVisitorId()
+        appDiContainer.analytics.adobeAnalytics.fetchAttributesThenSyncIds()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -98,7 +98,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-
+        
+        appDiContainer.analytics.appsFlyer.handleOpenUrl(url: url, options: options)
+        
         return ApplicationDelegate.shared.application(app, open: url, options: options)
     }
     
@@ -129,8 +131,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if let host = url.host, host.contains("godtoolsapp") {
             if let authorizationFlow = self.currentAuthorizationFlow, authorizationFlow.resumeAuthorizationFlow(with: url) {
-                //on login, sync Adobe Analytics auth state
-                appDiContainer.analytics.adobeAnalytics.syncVisitorId()
                 
                 self.currentAuthorizationFlow = nil
                 return true
