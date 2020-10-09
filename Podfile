@@ -27,6 +27,7 @@ target 'godtools' do
     pod 'Fabric'
     pod 'FacebookCore'
     pod 'Fuzi'
+    pod 'lottie-ios'
     pod 'RealmSwift'
     pod 'SnowplowTracker', '~> 1.3'
     pod 'SSZipArchive'
