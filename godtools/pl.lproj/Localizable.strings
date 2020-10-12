@@ -9,6 +9,7 @@
 "share_link" = "Udostępnij link";
 "share_tool_menu.remote_share_tool" = "Udostępnij swój ekran";
 "share_tool_menu.send_tool" = "Wyślij to narzędzie";
+"share_tool_screen_tutorial.share_your_screen.title" = "Udostępnij swój ekran";
 "share_tool_screen_tutorial.share_your_screen.message" = "Ta opcja wyśle link do tego narzędzia twojemu znajomemu. Po otwarciu linku osoba przyłączy się do sesji udostępniania ekranu.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "Lustrzane odbicie";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Przy przewijaniu tekstu w narzędziu, to samo będzie się działo na drugim telefonie. Pozwala to na wspólne korzystanie z narzędzia na dwóch urządzeniach jednocześnie.";

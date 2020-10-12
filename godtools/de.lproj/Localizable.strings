@@ -9,6 +9,7 @@
 "share_link" = "Einen Link teilen";
 "share_tool_menu.remote_share_tool" = "Teile deinen Bildschirm";
 "share_tool_menu.send_tool" = "Tool senden";
+"share_tool_screen_tutorial.share_your_screen.title" = "Teile deinen Bildschirm";
 "share_tool_screen_tutorial.share_your_screen.message" = "Über diese Option wird ein Link zu diesem Tool an einen Freund gesendet. Sobald der Link geöffnet wird, wird eine Bildschirmfreigabe-Sitzung gestartet.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "Bildschirm spiegeln";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Wenn du das Tool auf deinem Telefon scrollst, reagiert der Bildschirm deines Freundes auf die gleiche Weise. So könnt ihr 1 Tool auf 2 Geräten gleichzeitig durchgehen.";

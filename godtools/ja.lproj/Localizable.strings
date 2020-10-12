@@ -9,6 +9,7 @@
 "share_link" = "リンクをシェア";
 "share_tool_menu.remote_share_tool" = "画面を共有する";
 "share_tool_menu.send_tool" = "ツールを送信する";
+"share_tool_screen_tutorial.share_your_screen.title" = "画面を共有する";
 "share_tool_screen_tutorial.share_your_screen.message" = "このオプションは、このツールへのリンクを友達に送信します。リンクが開かれると、画面共有セッションが開始します。";
 "share_tool_screen_tutorial.mirrored_experience.title" = "ミラーリング機能";
 "share_tool_screen_tutorial.mirrored_experience.message" = "お使いのスマートフォンでツールをスクロールすると、お友達の画面も同様に動作します。これにより、2つのデバイス上で同時にツールの使い方を見せることができます。";

@@ -9,6 +9,7 @@
 "share_link" = "Поширте посилання";
 "share_tool_menu.remote_share_tool" = "Поділитися екраном";
 "share_tool_menu.send_tool" = "Відправити інструмент";
+"share_tool_screen_tutorial.share_your_screen.title" = "Поділитися екраном";
 "share_tool_screen_tutorial.share_your_screen.message" = "Ви можете надіслати другу чи подрузі посилання на цей інструмент. Коли він чи вона відкриє посилання, розпочнеться демонстрація екрану.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "Функція віддзеркалення";
 "share_tool_screen_tutorial.mirrored_experience.message" = "На екрані вашого друга буде показуватися те, що ви переглядаєте в інструменті на вашому телефоні. Це дозволить зробити огляд інструменту одночасно на двох пристроях.";

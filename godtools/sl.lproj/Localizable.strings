@@ -9,6 +9,7 @@
 "share_link" = "Deli povezavo";
 "share_tool_menu.remote_share_tool" = "Deli svoj zaslon";
 "share_tool_menu.send_tool" = "Pošlji to orodje";
+"share_tool_screen_tutorial.share_your_screen.title" = "Deli svoj zaslon";
 "share_tool_screen_tutorial.share_your_screen.message" = "S to možnostjo pošljete povezavo za to orodje prijatelju. Ko odpre povezavo, se začne seja deljenja zaslona.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "Zrcaljena izkušnja";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Ko se pomikate po orodju na vašem telefonu, se bo telefon prijatelja odzival enako. Tako se lahko sprehodite po orodju na 2 napravah naenkrat.";
