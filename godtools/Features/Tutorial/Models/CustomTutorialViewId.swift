@@ -10,6 +10,5 @@ import Foundation
 
 enum CustomTutorialViewId: String {
     
-    case tutorialTools = "tutorial_tools"
-    case tutorialInMenu = "tutorial_in_menu"
+    case none
 }

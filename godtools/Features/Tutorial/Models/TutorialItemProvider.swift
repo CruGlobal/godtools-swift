@@ -12,7 +12,7 @@ class TutorialItemProvider: TutorialItemProviderType {
     
     let tutorialItems: [TutorialItem]
     
-    required init(localizationServices: LocalizationServices) {
+    required init(localizationServices: LocalizationServices, deviceLanguage: DeviceLanguageType) {
         
         tutorialItems = [
             
@@ -20,29 +20,33 @@ class TutorialItemProvider: TutorialItemProviderType {
                 title: localizationServices.stringForMainBundle(key: "tutorial.tutorialItem.0.title"),
                 message: localizationServices.stringForMainBundle(key: "tutorial.tutorialItem.0.message"),
                 imageName: nil,
+                animationName: nil,
                 youTubeVideoId: "ELRAmQxLqHE",
                 customViewId: nil
             ),
             TutorialItem(
                 title: localizationServices.stringForMainBundle(key: "tutorial.tutorialItem.1.title"),
                 message: localizationServices.stringForMainBundle(key: "tutorial.tutorialItem.1.message"),
-                imageName: nil,
+                imageName: deviceLanguage.isEnglish ? ImageCatalog.tutorialToolEnglish.name : ImageCatalog.tutorialToolNonEnglish.name,
+                animationName: nil,
                 youTubeVideoId: nil,
-                customViewId: "tutorial_tools"
+                customViewId: nil
             ),
             TutorialItem(
                 title: localizationServices.stringForMainBundle(key: "tutorial.tutorialItem.2.title"),
                 message: localizationServices.stringForMainBundle(key: "tutorial.tutorialItem.2.message"),
                 imageName: "tutorial_people",
+                animationName: nil,
                 youTubeVideoId: nil,
                 customViewId: nil
             ),
             TutorialItem(
                 title: localizationServices.stringForMainBundle(key: "tutorial.tutorialItem.3.title"),
                 message: "",
-                imageName: nil,
+                imageName: deviceLanguage.isEnglish ? ImageCatalog.tutorialInMenuEnglish.name : ImageCatalog.tutorialInMenuNonEnglish.name,
+                animationName: nil,
                 youTubeVideoId: nil,
-                customViewId: "tutorial_in_menu"
+                customViewId: nil
             )
         ]
     }
