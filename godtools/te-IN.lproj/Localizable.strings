@@ -9,6 +9,7 @@
 "share_link" = "లింకును పంచండి";
 "share_tool_menu.remote_share_tool" = "మీ స్క్రీన్ పంచుకోండి";
 "share_tool_menu.send_tool" = "ఈ పరికరంను పంపండి";
+"share_tool_screen_tutorial.share_your_screen.title" = "మీ స్క్రీన్ పంచుకోండి";
 "share_tool_screen_tutorial.share_your_screen.message" = "ఈ పరికరానికి లింక్‌ను స్నేహితుడికి ఈ ఐచ్చికము పంపుతుంది. లింకు తెరవబడినప్పుడు అది స్క్రీన్ పంచుకునే సెషన్‌ను ప్రారంభిస్తుంది.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "ప్రతిబింబించిన అనుభవం";
 "share_tool_screen_tutorial.mirrored_experience.message" = "మీ ఫోనుపై పరికరంను మీరు స్క్రోల్ చేసినప్పుడు, మీ స్నేహితుని స్క్రీన్ అదే విధంగా ప్రతిస్పందిస్తుంది. ఒకే సమయంలో 2 పరికరాలపై కలిసి పరికరం గుండా నిడిచేందుకు ఇది మీకు అనుమతిస్తుంది.";

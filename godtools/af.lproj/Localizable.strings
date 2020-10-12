@@ -9,6 +9,7 @@
 "share_link" = "Deel 'n skakel";
 "share_tool_menu.remote_share_tool" = "Deel jou skerm";
 "share_tool_menu.send_tool" = "Stuur hierdie werkstuk";
+"share_tool_screen_tutorial.share_your_screen.title" = "Deel jou skerm";
 "share_tool_screen_tutorial.share_your_screen.message" = "Hierdie opsie sal 'n skakel van hierdie werkstuk na 'n vriend stuur. Wanneer die skakel oopgemaak word, sal die skermdelingsessie begin.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "Weerkaatsde ondervinding";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Terwyl jy die werkstuk op jou foon blaai, sal jou vriend se foon op dieselfde manier reageer. Dit laat jou toe om die werkstuk saam op 2 toestelle op dieselfde tyd te verken.";

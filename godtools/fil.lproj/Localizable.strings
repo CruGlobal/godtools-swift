@@ -9,6 +9,7 @@
 "share_link" = "Magbahagi ng link";
 "share_tool_menu.remote_share_tool" = "Ibahagi ang iyong screen";
 "share_tool_menu.send_tool" = "Ipadala ang tool na ito";
+"share_tool_screen_tutorial.share_your_screen.title" = "Ibahagi ang iyong screen";
 "share_tool_screen_tutorial.share_your_screen.message" = "Ang opsyong ito ay magpapadala sa isang kaibigan ng link sa tool na ito. Kapag binuksan ang link, magsisimula ito ng session ng pagbabahagi ng screen.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "Parehong karanasan";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Habang ini-scroll mo ang tool sa iyong telepono, tutugon ang screen ng kaibigan mo sa parehong paraan. Bibigyang-daan ka nito para sabay ninyong masiyasat ang tool sa 2 device.";

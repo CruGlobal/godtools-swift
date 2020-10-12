@@ -9,6 +9,7 @@
 "share_link" = "Jaga linki";
 "share_tool_menu.remote_share_tool" = "Jaga ekraani";
 "share_tool_menu.send_tool" = "Saada see tööriist";
+"share_tool_screen_tutorial.share_your_screen.title" = "Jaga ekraani";
 "share_tool_screen_tutorial.share_your_screen.message" = "Suvandi kasutamisel saadetakse see tööriist su sõbrale. Ekraanikuva jagamine algab lingi avamisel.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "Peegeldatud kogemus";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Kui kerid oma telefonis tööriista kuva, näeb seda ka su sõber. Nii saad tööriistaga tutvuda korraga 2 seadmel.";

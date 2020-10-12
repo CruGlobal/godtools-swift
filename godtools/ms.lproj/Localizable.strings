@@ -10,6 +10,7 @@
 "share_link" = "Kongsi pautan";
 "share_tool_menu.remote_share_tool" = "Kongsi paparan anda";
 "share_tool_menu.send_tool" = "Hantar alat ini";
+"share_tool_screen_tutorial.share_your_screen.title" = "Kongsi paparan anda";
 "share_tool_screen_tutorial.share_your_screen.message" = "Pilihan ini akan menghantar pautan ke alat ini kepada rakan. Apabila pautan tersebut dibuka, ia akan memulakan sesi perkongsian skrin.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "Pengalaman dicerminkan";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Apabila anda menatal alat pada telefon anda, skrin rakan anda akan bertindak balas dengan cara yang sama. Ini membolehkan anda menggunakan alat bersama pada 2 peranti secara serentak.";

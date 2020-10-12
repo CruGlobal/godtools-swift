@@ -9,6 +9,7 @@
 "share_link" = "Bendrinti nuorodą";
 "share_tool_menu.remote_share_tool" = "Dalytis savo puslapiu";
 "share_tool_menu.send_tool" = "Siųsti šį įrankį";
+"share_tool_screen_tutorial.share_your_screen.title" = "Dalytis savo puslapiu";
 "share_tool_screen_tutorial.share_your_screen.message" = "Ši parinktis nusiųs nuorodą į šį įrankį jūsų draugui. Kai nuoroda bus atidaryta, bus įjungta ekranų bendrinimo sesija.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "Veidrodinė patirtis";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Jums slenkant įrankiu savo telefone, jūsų draugo ekranas reaguos taip pat. Šitaip galėsite kartu apžvelgti įrankį 2 įrenginiuose vienu metu.";

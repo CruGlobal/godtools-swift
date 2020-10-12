@@ -9,6 +9,7 @@
 "share_link" = "ແບ່ງປັນລິ້ງ";
 "share_tool_menu.remote_share_tool" = "ແບ່ງປັນໜ້າຈໍຂອງທ່ານ";
 "share_tool_menu.send_tool" = "ສົ່ງເຄື່ອງມືນີ້";
+"share_tool_screen_tutorial.share_your_screen.title" = "ແບ່ງປັນໜ້າຈໍຂອງທ່ານ";
 "share_tool_screen_tutorial.share_your_screen.message" = "ຕົວເລືອກນີ້ຈະສົ່ງລິ້ງໄປຫາເຄື່ອງມືນີ້ເພື່ອໄປຫາໝູ່. ເມື່ອລິ້ງຖຶກເປີດ ມັນກໍຈະເລີ່ມເຊດຊັນແບ່ງປັນໜ້າຈໍ.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "ປະສົບການທີ່ຖືກສະທ້ອນກັບ";
 "share_tool_screen_tutorial.mirrored_experience.message" = "ໃນຂະນະທີ່ທ່ານເລື່ອນເຄື່ອງມືຢູ່ໂທລະສັບຂອງທ່ານ, ໜ້າຈໍຂອງໝູ່ຂອງທ່ານກໍຈະຕອບສະໜອງໃນທາງດຽວກັນ. ສິ່ງນີ້ເຮັດໃຫ້ທ່ານເບິ່ງຜ່ານເຄື່ອງມືພ້ອມກັນຢູ່ອຸປະກອນ 2 ເຄື່ອງໃນເວລາດຽວກັນ.";

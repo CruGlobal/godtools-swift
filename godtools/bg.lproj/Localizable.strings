@@ -9,6 +9,7 @@
 "share_link" = "Споделете връзка";
 "share_tool_menu.remote_share_tool" = "Сподели екрана си";
 "share_tool_menu.send_tool" = "Изпратете този инструмент";
+"share_tool_screen_tutorial.share_your_screen.title" = "Сподели екрана си";
 "share_tool_screen_tutorial.share_your_screen.message" = "Тази опция е за изпращане на връзка към този инструмент на приятел. При отваряне на връзката ще започне сесия за отдалечено споделяне на екран.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "Огледално преживяване";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Когато превърташ екрана на приложението на смартфона си, същото ще се случва и на екрана на другия човек. Това позволява да използваш приложение на 2 устройства едновременно.";

@@ -9,6 +9,7 @@
 "share_link" = "Chia sẻ một liên kết";
 "share_tool_menu.remote_share_tool" = "Chia sẻ màn hình của bạn";
 "share_tool_menu.send_tool" = "Gửi công cụ này";
+"share_tool_screen_tutorial.share_your_screen.title" = "Chia sẻ màn hình của bạn";
 "share_tool_screen_tutorial.share_your_screen.message" = "Tùy chọn này sẽ gửi một liên kết đến công cụ này cho một người bạn. Khi liên kết được mở, nó sẽ bắt đầu một phiên chia sẻ màn hình.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "Trải nghiệm nhân đôi";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Khi bạn cuộn công cụ trên điện thoại, màn hình của bạn bè sẽ phản hồi theo cách tương tự. Điều này sẽ giúp bạn xem một công cụ cùng nhau trên 2 thiết bị cùng một lúc.";

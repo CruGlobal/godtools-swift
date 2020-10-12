@@ -9,6 +9,7 @@
 "share_link" = "Comparte un enlace";
 "share_tool_menu.remote_share_tool" = "Comparte tu pantalla";
 "share_tool_menu.send_tool" = "Enviar esta herramienta";
+"share_tool_screen_tutorial.share_your_screen.title" = "Comparte tu pantalla";
 "share_tool_screen_tutorial.share_your_screen.message" = "Esta opción envía un enlace de esta herramienta a un amigo. Cuando se abre el enlace se inicia una sesión de pantalla compartida.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "Experiencia duplicada";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Cuando desplaces la herramienta por tu teléfono, la pantalla de tu amigo responderá de la misma manera. De ese modo podréis recorrer una herramienta juntos en 2 dispositivos a la vez.";
@@ -214,9 +215,7 @@ La aplicación se puede descargar en https://godtoolsapp.com";
 
 (Toca el vídeo para que aparezca la configuración de subtítulos)";
 "tutorial.tutorialItem.1.title" = "Prepárate";
-"tutorial.tutorialItem.1.message" = "Familiarízate con algunas de nuestras herramientas. La herramienta \"Enséñame a compartir\" es un buen punto de partida. 
-
-Pulsa el botón de información en cualquier herramienta para obtener más información.";
+"tutorial.tutorialItem.1.message" = "Familiarízate con algunas de nuestras herramientas. La herramienta \"Enséñame a compartir\" es un buen punto de partida.";
 "tutorial.tutorialItem.2.title" = "Pruébate";
 "tutorial.tutorialItem.2.message" = "Todo el mundo empieza como principiante. Prueba a usar una herramienta en una conversación y observa lo que aprendes.";
 "tutorial.tutorialItem.3.title" = "Este tutorial está disponible para volver a verlo en el menú.";

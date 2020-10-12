@@ -9,6 +9,7 @@
 "share_link" = "Condividi un link";
 "share_tool_menu.remote_share_tool" = "Condividi il tuo schermo";
 "share_tool_menu.send_tool" = "Invia questo strumento";
+"share_tool_screen_tutorial.share_your_screen.title" = "Condividi il tuo schermo";
 "share_tool_screen_tutorial.share_your_screen.message" = "L'opzione invierà al tuo amico un link a questo strumento. Una volta aperto il link, avrà inizio la sessione di condivisione di schermo.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "Esperienza di mirroring";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Se fai scorrere lo schermo del tuo telefono, la stessa cosa succederà sullo schermo del tuo amico. Ciò consente di esaminare uno strumento su 2 dispositivi alla volta.";

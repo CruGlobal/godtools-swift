@@ -8,6 +8,7 @@
 
 import UIKit
 import YoutubePlayer_in_WKWebView
+import Lottie
 
 protocol TutorialCellDelegate: class {
     func tutorialCellVideoPlayer(cell: TutorialCell, didChangeTo state: WKYTPlayerState)
@@ -20,54 +21,221 @@ class TutorialCell: UICollectionViewCell {
     
     private weak var delegate: TutorialCellDelegate?
     private var viewModel: TutorialCellViewModel?
+    private var mainImage: UIImage?
+    private var mainImageView: UIImageView?
+    private var customView: UIView?
+    private var initialTopSpaceForMessageLabel: CGFloat = 16
     
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var messageLabel: UILabel!
-    @IBOutlet weak private var customViewContainer: UIView!
-    @IBOutlet weak private var mainImageView: UIImageView!
+    @IBOutlet weak private var dynamicMediaView: UIView!
     @IBOutlet weak private var youTubeVideoPlayer: WKYTPlayerView!
     @IBOutlet weak private var youTubeVideoPlayerLoadingView: UIView!
     @IBOutlet weak private var youTubeVideoPlayerActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak private var animationView: AnimationView!
+    
+    @IBOutlet weak private var messageLabelTop: NSLayoutConstraint!
+    @IBOutlet weak private var dynamicMediaHeight: NSLayoutConstraint!
+    
+    override func awakeFromNib() {
+        
+        super.awakeFromNib()
+        
+        initialTopSpaceForMessageLabel = messageLabelTop.constant
+    }
     
     override func prepareForReuse() {
-        super.prepareForReuse()
-        stopVideo()
-        mainImageView.image = nil
-        viewModel = nil
-        for subview in customViewContainer.subviews {
-            subview.removeFromSuperview()
-        }
-        youTubeVideoPlayerLoadingView.alpha = 1
         
+        super.prepareForReuse()
+        
+        titleLabel.text = nil
+        setMessageLabelHidden(hidden: false)
+        mainImageView?.removeFromSuperview()
+        mainImage = nil
+        mainImageView = nil
+        stopVideo()
+        youTubeVideoPlayerLoadingView.alpha = 1
+        animationView.stop()
+        animationView.animation = nil
+        customView?.removeFromSuperview()
+        customView = nil
+        viewModel = nil
         delegate = nil
     }
     
+    override func layoutSubviews() {
+        
+        super.layoutSubviews()
+
+        renderMainImageIfNeeded()
+        renderCustomViewIfNeeded()
+        recalculateDynamicMediaHeight()
+    }
+    
     func configure(viewModel: TutorialCellViewModel, delegate: TutorialCellDelegate?) {
+        
         self.delegate = delegate
         self.viewModel = viewModel
         
+        // titleLabel
         titleLabel.text = viewModel.title
+        
+        // messageLabel
         messageLabel.text = viewModel.message
         messageLabel.setLineSpacing(lineSpacing: 2)
-        mainImageView.isHidden = viewModel.hidesMainImage
-        youTubeVideoPlayer.isHidden = viewModel.hidesYouTubeVideoPlayer
-        youTubeVideoPlayerLoadingView.isHidden = viewModel.hidesYouTubeVideoPlayer
-        customViewContainer.isHidden = viewModel.hidesCustomView
+        setMessageLabelHidden(hidden: viewModel.message.isEmpty)
         
-        if !viewModel.hidesMainImage {
-            mainImageView.image = viewModel.mainImage
+        // mainImage
+        if let mainImageName = viewModel.mainImageName, !mainImageName.isEmpty, let mainImage = UIImage(named: mainImageName) {
+            self.mainImage = mainImage
+            renderMainImage(mainImage: mainImage, mainImageView: nil)
+        }
+        else {
+            mainImageView?.removeFromSuperview()
+            mainImageView = nil
+            mainImage = nil
         }
         
-        if !viewModel.hidesYouTubeVideoPlayer {
+        // youTubeVideo
+        let hidesYouTubeVideoPlayer: Bool
+        if let youTubVideoId = viewModel.youTubeVideoId, !youTubVideoId.isEmpty {
+            hidesYouTubeVideoPlayer = false
             youTubeVideoPlayerActivityIndicator.startAnimating()
             youTubeVideoPlayer.delegate = self
-            youTubeVideoPlayer.load(withVideoId: viewModel.youTubeVideoId, playerVars: ["playsinline": 0])
+            youTubeVideoPlayer.load(withVideoId: youTubVideoId, playerVars: ["playsinline": 0])
+        }
+        else {
+            hidesYouTubeVideoPlayer = true
+            youTubeVideoPlayer.stopVideo()
+            youTubeVideoPlayer.delegate = nil
+            youTubeVideoPlayerActivityIndicator.stopAnimating()
+        }
+
+        youTubeVideoPlayer.isHidden = hidesYouTubeVideoPlayer
+        youTubeVideoPlayerLoadingView.isHidden = hidesYouTubeVideoPlayer
+        
+        // animation
+        if let animationName = viewModel.animationName, !animationName.isEmpty {
+            let animation = Animation.named(animationName)
+            animationView.animation = animation
+            animationView.loopMode = .loop
+            animationView.play()
+            animationView.isHidden = false
+        }
+        else {
+            animationView.stop()
+            animationView.isHidden = true
         }
         
-        if !viewModel.hidesCustomView {
-            customViewContainer.addSubview(viewModel.customView)
-            viewModel.customView.constrainEdgesToSuperview()
+        // customView
+        if let customView = viewModel.customView {
+            self.customView = customView
+            dynamicMediaView.addSubview(customView)
         }
+        else {
+            customView?.removeFromSuperview()
+            self.customView = nil
+        }
+    }
+    
+    private func setMessageLabelHidden(hidden: Bool) {
+
+        messageLabel.isHidden = hidden
+        messageLabelTop.constant = hidden ? 0 : initialTopSpaceForMessageLabel
+        contentView.layoutIfNeeded()
+    }
+
+    private func renderMainImageIfNeeded() {
+
+        if let mainImage = self.mainImage {
+            renderMainImage(mainImage: mainImage, mainImageView: mainImageView)
+        }
+    }
+    
+    private func renderMainImage(mainImage: UIImage, mainImageView: UIImageView?) {
+
+        let imageView: UIImageView = mainImageView ?? UIImageView()
+        
+        self.mainImage = mainImage
+        self.mainImageView = imageView
+        
+        imageView.image = mainImage
+        
+        renderMedia(
+            view: imageView,
+            originalViewSize: mainImage.size
+        )
+    }
+    
+    private func renderCustomViewIfNeeded() {
+        
+        if let customView = self.customView {
+            renderCustomView(customView: customView)
+        }
+    }
+    
+    private func renderCustomView(customView: UIView) {
+        
+        self.customView = customView
+        
+        renderMedia(
+            view: customView,
+            originalViewSize: customView.frame.size
+        )
+    }
+    
+    private func renderMedia(view: UIView, originalViewSize: CGSize) {
+        
+        contentView.layoutIfNeeded()
+        
+        let parentView: UIView = dynamicMediaView
+        let parentWidth: CGFloat = parentView.bounds.size.width
+        let scaleOfMaxWidthToParentWidth: CGFloat = 0.9
+        let maxAllowedWidth: CGFloat = parentWidth * scaleOfMaxWidthToParentWidth
+
+        let scale: CGFloat = maxAllowedWidth / originalViewSize.width
+
+        let scaledViewSize: CGSize = CGSize(
+            width: floor(maxAllowedWidth),
+            height: floor(originalViewSize.height * scale)
+        )
+        
+        let viewFrame: CGRect = CGRect(
+            x: parentWidth / 2 - scaledViewSize.width / 2,
+            y: 0,
+            width: scaledViewSize.width,
+            height: scaledViewSize.height
+        )
+        
+        view.frame = viewFrame
+        
+        if view.superview == nil {
+            parentView.addSubview(view)
+        }
+        
+        if let imageView = view as? UIImageView {
+            imageView.contentMode = .scaleAspectFill
+            imageView.clipsToBounds = true
+        }
+    }
+    
+    private func recalculateDynamicMediaHeight() {
+        
+        contentView.layoutIfNeeded()
+        
+        var maxSubviewHeight: CGFloat = 20
+        
+        for subview in dynamicMediaView.subviews {
+            
+            let subviewIsHidden: Bool = subview.isHidden || subview.alpha == 0
+            
+            if !subviewIsHidden && subview.frame.size.height > maxSubviewHeight {
+                maxSubviewHeight = subview.frame.size.height
+            }
+        }
+        
+        dynamicMediaHeight.constant = maxSubviewHeight
+        contentView.layoutIfNeeded()
     }
     
     func stopVideo() {

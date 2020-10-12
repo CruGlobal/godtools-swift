@@ -9,6 +9,7 @@
 "share_link" = "Share link";
 "share_tool_menu.remote_share_tool" = "Share your screen";
 "share_tool_menu.send_tool" = "Send this tool";
+"share_tool_screen_tutorial.share_your_screen.title" = "Share your screen";
 "share_tool_screen_tutorial.share_your_screen.message" = "This option will send a link to this tool to a friend. When the link is opened it will start a screen sharing session.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "Mirrored experience";
 "share_tool_screen_tutorial.mirrored_experience.message" = "As you scroll the tool on your phone, your friend's screen will respond in the same way. This allows you to walk through a tool together on 2 devices at the same time.";
@@ -223,7 +224,7 @@ The app can be downloaded from https://godtoolsapp.com";
 "tutorial.tutorialItem.1.title" = "Prepare";
 "tutorial.tutorialItem.1.message" = "Get familiar with some of your tools. The \"Teach Me to Share\" tool is a good place to start.
 
-Press the information button on any tool for more info.";
+Press the About button on any tool for more info.";
 "tutorial.tutorialItem.2.title" = "Try";
 "tutorial.tutorialItem.2.message" = "Everyone starts as a beginner. Try using a tool in a conversation and see what you learn.";
 "tutorial.tutorialItem.3.title" = "This tutorial is available to see again in the menu";

@@ -9,6 +9,7 @@
 "share_link" = "Partajează un link";
 "share_tool_menu.remote_share_tool" = "Partajează ecranul";
 "share_tool_menu.send_tool" = "Trimite acest instrument";
+"share_tool_screen_tutorial.share_your_screen.title" = "Partajează ecranul";
 "share_tool_screen_tutorial.share_your_screen.message" = "Această opțiune va trimite unui prieten un link către acest instrument. Când linkul este deschis, va începe o sesiune de partajare a ecranului.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "Experiență în oglindă";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Pe măsură ce derulezi instrumentul pe telefonul tău, ecranul prietenului tău va răspunde la fel. Acest lucru vă permite să folosiți un instrument împreună pe 2 dispozitive în același timp.";

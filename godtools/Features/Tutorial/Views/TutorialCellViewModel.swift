@@ -12,54 +12,24 @@ class TutorialCellViewModel {
         
     let title: String
     let message: String
-    let mainImage: UIImage?
-    let youTubeVideoId: String
-    let customView: UIView
-    let hidesCustomView: Bool
-    let hidesYouTubeVideoPlayer: Bool
-    let hidesMainImage: Bool
+    let mainImageName: String?
+    let youTubeVideoId: String?
+    let animationName: String?
+    let customView: UIView?
     
     required init(item: TutorialItem, customViewBuilder: CustomViewBuilderType) {
         
         title = item.title
         message = item.message
-        if let imageName = item.imageName, !imageName.isEmpty {
-            mainImage = UIImage(named: imageName)
-        }
-        else {
-            mainImage = nil
-        }
-        youTubeVideoId = item.youTubeVideoId ?? ""
+        mainImageName = item.imageName
+        youTubeVideoId = item.youTubeVideoId
+        animationName = item.animationName
         
-        let didBuildCustomView: Bool
         if let customViewId = item.customViewId, !customViewId.isEmpty, let builtCustomView = customViewBuilder.buildCustomView(customViewId: customViewId) {
             customView = builtCustomView
-            didBuildCustomView = true
         }
         else {
-            customView = UIView(frame: .zero)
-            didBuildCustomView = false
-        }
-        
-        if mainImage != nil {
-            hidesMainImage = false
-            hidesYouTubeVideoPlayer = true
-            hidesCustomView = true
-        }
-        else if !youTubeVideoId.isEmpty {
-            hidesMainImage = true
-            hidesYouTubeVideoPlayer = false
-            hidesCustomView = true
-        }
-        else if didBuildCustomView {
-            hidesMainImage = true
-            hidesYouTubeVideoPlayer = true
-            hidesCustomView = false
-        }
-        else {
-            hidesMainImage = false
-            hidesYouTubeVideoPlayer = true
-            hidesCustomView = true
+            customView = nil
         }
     }
 }
