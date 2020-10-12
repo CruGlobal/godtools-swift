@@ -272,4 +272,8 @@ class AppDiContainer {
     var cardJumpService: CardJumpService {
         return CardJumpService(cardJumpCache: CardJumpUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache))
     }
+    
+    var tutorialItemsProvider: TutorialItemProviderType {
+        return TutorialItemProvider(localizationServices: localizationServices, deviceLanguage: deviceLanguage)
+    }
 }
