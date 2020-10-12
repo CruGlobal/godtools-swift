@@ -9,6 +9,7 @@
 "share_link" = "Partilhar uma ligação";
 "share_tool_menu.remote_share_tool" = "Partilha o teu ecrã";
 "share_tool_menu.send_tool" = "Enviar esta ferramenta";
+"share_tool_screen_tutorial.share_your_screen.title" = "Partilha o teu ecrã";
 "share_tool_screen_tutorial.share_your_screen.message" = "Esta opção irá enviar a um amigo uma ligação para esta ferramenta. Quando a ligação for aberta, irá iniciar uma sessão de partilha de ecrã.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "Experiência espelhada";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Quando navegas na ferramenta no teu telemóvel, o ecrã do teu amigo fará o mesmo. Isto permite que naveguem na ferramenta juntos, em dois dispositivos em simultâneo.";

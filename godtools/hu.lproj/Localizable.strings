@@ -9,6 +9,7 @@
 "share_link" = "Hivatkozás megosztása";
 "share_tool_menu.remote_share_tool" = "Képernyő megosztása";
 "share_tool_menu.send_tool" = "Küldd el ezt az eszközt";
+"share_tool_screen_tutorial.share_your_screen.title" = "Képernyő megosztása";
 "share_tool_screen_tutorial.share_your_screen.message" = "Ezzel az opció az eszközhöz egy link küldhető egy ismerősnek. A hivatkozás megnyitása egy képernyőmegosztó munkamenetet indít el.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "Mirrored-élmény";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Miközben az eszközt görgeted a telefonodon, az ismerősöd ugyanilyen módon reagál. Ez lehetővé teszi, hogy 2 készüléken egyidejűleg közösen végigjárjátok az eszközt.";

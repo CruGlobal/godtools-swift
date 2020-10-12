@@ -9,6 +9,7 @@
 "share_link" = "แชร์ลิงค์";
 "share_tool_menu.remote_share_tool" = "แชร์หน้าจอของคุณ";
 "share_tool_menu.send_tool" = "ส่งเครื่องมือนี้";
+"share_tool_screen_tutorial.share_your_screen.title" = "แชร์หน้าจอของคุณ";
 "share_tool_screen_tutorial.share_your_screen.message" = "ตัวเลือกนี้จะส่งลิงก์ไปยังเครื่องมือนี้ให้กับเพื่อน เมื่อเปิดลิงก์ขึ้นมาจะเริ่มเซสชันการแชร์หน้าจอ";
 "share_tool_screen_tutorial.mirrored_experience.title" = "การสะท้อนหน้าจอ (Mirror)";
 "share_tool_screen_tutorial.mirrored_experience.message" = "เมื่อคุณเลื่อนเครื่องมือขึ้นลงบนโทรศัพท์ หน้าจอของเพื่อนจะตอบสนองในลักษณะเดียวกัน สิ่งนี้ช่วยให้คุณสามารถดูเครื่องมือพร้อมกันบนอุปกรณ์ 2 เครื่องในเวลาเดียวกัน";

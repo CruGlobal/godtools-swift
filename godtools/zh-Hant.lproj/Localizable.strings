@@ -9,6 +9,7 @@
 "share_link" = "分享連結";
 "share_tool_menu.remote_share_tool" = "分享你的螢幕";
 "share_tool_menu.send_tool" = "傳送此工具";
+"share_tool_screen_tutorial.share_your_screen.title" = "分享你的螢幕";
 "share_tool_screen_tutorial.share_your_screen.message" = "此選項會將此工具的連結傳送給一名好友。開啟連結後螢幕分享會將隨即開始。";
 "share_tool_screen_tutorial.mirrored_experience.title" = "鏡像體驗";
 "share_tool_screen_tutorial.mirrored_experience.message" = "當你在手機上捲動工具時，好友的螢幕畫面也會隨之捲動。因此，你們可以同時在 2 個裝置上一起瀏覽工具。";

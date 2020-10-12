@@ -9,6 +9,7 @@
 "share_link" = "Del en kobling";
 "share_tool_menu.remote_share_tool" = "Del skjermen din";
 "share_tool_menu.send_tool" = "Send dette verktøyet";
+"share_tool_screen_tutorial.share_your_screen.title" = "Del skjermen din";
 "share_tool_screen_tutorial.share_your_screen.message" = "Velger du dette alternativet, sendes en lenke til dette verktøyet til en venn. Når lenken åpnes starer skjermdelingsøkten.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "Speilet opplevelse";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Når du blar gjennom verktøyet på telefonen din, vil skjermen til vennen reagere på samme måte. Dette lar deg gå gjennom et verktøy sammen på 2 enheter samtidig.";

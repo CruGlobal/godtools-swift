@@ -9,6 +9,7 @@
 "share_link" = "شارك رابطاً";
 "share_tool_menu.remote_share_tool" = "مشاركة الشاشة";
 "share_tool_menu.send_tool" = "أرسل هذه الأداة";
+"share_tool_screen_tutorial.share_your_screen.title" = "مشاركة الشاشة";
 "share_tool_screen_tutorial.share_your_screen.message" = "سيؤدي هذا الخيار إلى إرسال رابط هذه الأداة إلى صديق. عند فتح الرابط، ستبدأ جلسة مشاركة الشاشة.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "استخدام جهازين بالتزامن";
 "share_tool_screen_tutorial.mirrored_experience.message" = "أثناء تمرير الأداة على هاتفك، ستستجيب شاشة صديقك بنفس الطريقة. هذا يتيح لك بالتنقل عبر الأداة معاً على جهازين في نفس الوقت.";

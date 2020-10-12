@@ -9,6 +9,7 @@
 "share_link" = "Keçidi paylaş";
 "share_tool_menu.remote_share_tool" = "Ekranınızı paylaşın";
 "share_tool_menu.send_tool" = "Bu aləti göndər";
+"share_tool_screen_tutorial.share_your_screen.title" = "Ekranınızı paylaşın";
 "share_tool_screen_tutorial.share_your_screen.message" = "Bu seçim bu alətə keçidi dosta göndərəcək. Keçid açıldıqda ekran paylaşma sessiyası başladılacaq.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "Əks olunan təcrübə";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Aləti telefonunuzda sürüşdürdükdə dostunuzum ekranı da eyni reaksiyanı verəcək. Bu, sizə eyni vaxtda iki cihazda aləti birgə nəzərdən keçirməyə imkan verir.";

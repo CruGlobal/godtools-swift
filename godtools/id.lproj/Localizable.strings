@@ -1,4 +1,4 @@
-"tool_offline_favorite_message" = "Jadikan alat tersedia secara offline dengan mengetuk ikon hati yang menambahkannya ke favorit Anda.";
+"tool_offline_favorite_message" = "Jadikan sarana tersedia secara offline dengan mengetuk ikon hati yang menambahkannya ke favorit Saudara.";
 
 /* This is a category description of a tool that helps you start a conversation */
 "tool_category_conversation_starter" = "Permulaan Percakapan";
@@ -9,9 +9,10 @@
 "share_link" = "Bagikan tautan";
 "share_tool_menu.remote_share_tool" = "Bagikan layar Saudara";
 "share_tool_menu.send_tool" = "Kirim sarana ini";
+"share_tool_screen_tutorial.share_your_screen.title" = "Bagikan layar Saudara";
 "share_tool_screen_tutorial.share_your_screen.message" = "Opsi ini akan mengirim tautan ke sarana ini ke teman. Ketika tautan dibuka, maka akan memulai sesi berbagi layar.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "Pengalaman yang dicerminkan";
-"share_tool_screen_tutorial.mirrored_experience.message" = "Saat Saudara menggulir sarana di ponsel Saudara, layar teman Saudara akan menanggapi dengan cara yang sama. Ini memungkinkan Saudara untuk berjalan melalui sarana bersama di 2 perangkat sekaligus.";
+"share_tool_screen_tutorial.mirrored_experience.message" = "Saat Saudara scrool sarana di ponsel Saudara, layar teman Saudara akan menanggapi dengan cara yang sama. Ini memungkinkan Saudara untuk berjalan melalui sarana bersama di 2 perangkat sekaligus.";
 "share_tool_screen_tutorial.get_started.title" = "Mari Mulai";
 "share_tool_screen_tutorial.get_started.message" = "Kirim tautan ke satu atau lebih orang untuk memulai sesi berbagi layar sekarang. Pengalaman ini saat ini mengharuskan semua peserta untuk mengunduh aplikasi GodTools di perangkat mereka.";
 "share_tool_remote_link_message" = "Hai, Ikut bersama saya di GodTools melalui berbagi layar. Inilah tautannya: %@ Jika Anda tidak menerima pesan ini hingga nanti, tautannya mungkin masih belum berfungsi. Kita dapat mencoba lagi di lain waktu.";
@@ -31,7 +32,7 @@
 "remove_from_favorites" = "Hapus dari Favorit";
 
 /* This is a loading screen */
-"loading_unfavorited_tool" = "Alat sedang mengunduh. Untuk menghindari menunggu di masa depan, favorit alat ini sehingga akan tersedia offline.
+"loading_unfavorited_tool" = "Sarana sedang mengunduh. Untuk menghindari menunggu di masa depan, favorit sarana ini sehingga akan tersedia offline.
 ";
 
 /* This is a loading screen */
@@ -41,7 +42,7 @@
 "remove_from_favorites_title" = "Hapus dari Favorit? ";
 
 /* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
-"remove_from_favorites_message" = "Apakah Anda yakin ingin menghapus %@ dari Favorit Anda? ";
+"remove_from_favorites_message" = "Apakah Saudara yakin ingin menghapus %@ dari Favorit Saudara? ";
 
 /* Gospel indicates the gospel of Jesus Christ */
 "tool_category_gospel" = "Undangan Injil";
@@ -204,7 +205,7 @@ Kolose 4:6";
 "onboardingTutorial.appUsageItem.3.message" = "Pilih dari lebih dari 80 bahasa";
 "onboardingTutorial.appUsageItem.4.message" = "Membantu seseorang memulai sebagai seorang Kristen";
 "onboardingTutorial.continueButton.title" = "Lanjutkan";
-"onboardingTutorial.showMoreButton.title" = "Tunjukkan Lebih Banyak";
+"onboardingTutorial.showMoreButton.title" = "Lebih";
 "onboardingTutorial.getStartedButton.title" = "Mari Mulai";
 
 // Tutorial

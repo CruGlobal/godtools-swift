@@ -9,6 +9,7 @@
 "share_link" = "Kopīgojiet saiti";
 "share_tool_menu.remote_share_tool" = "Kopīgojiet savu ekrānu";
 "share_tool_menu.send_tool" = "Nosūtīt šo rīku";
+"share_tool_screen_tutorial.share_your_screen.title" = "Kopīgojiet savu ekrānu";
 "share_tool_screen_tutorial.share_your_screen.message" = "Šī opcija nosūtīs saiti uz šo rīku draugam. Ekrāna koplietošanas sesija tiks sakta pēc saites atvēršanas.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "Kopīga pieredze";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Ritinot rīku jūsu tālrunī, jūsu drauga ekrānā notiks tas pats. Šī funkcija ļauj jums vienlaicīgi izmantot vienu rīku 2 dažādās ierīcēs.";

@@ -9,6 +9,7 @@
 "share_link" = "Поделитесь ссылкой";
 "share_tool_menu.remote_share_tool" = "Покажите свой экран";
 "share_tool_menu.send_tool" = "Отправить этот инструмент";
+"share_tool_screen_tutorial.share_your_screen.title" = "Покажите свой экран";
 "share_tool_screen_tutorial.share_your_screen.message" = "Данная опция позволит отправить ссылку на этот инструмент другу. При открытии ссылки запустится сеанс трансляции экрана.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "Зеркальный интерфейс";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Когда вы будете пролистывать инструмент на своем телефоне, на экране вашего друга будет происходить то же самое. Это позволит вам изучать инструмент вместе на 2 устройствах одновременно.";
@@ -215,8 +216,7 @@
 "tutorial.tutorialItem.0.message" = "Посмотрите короткое видео, которое расскажет, что может наше приложение";
 "tutorial.tutorialItem.1.title" = "Подготовьтесь";
 "tutorial.tutorialItem.1.message" = "Познакомьтесь с инструментами. Лучше всего начать с инструмента: «Научите меня говорить с другими о Боге». 
-
-Нажмите на кнопку «о приложении», чтобы узнать больше.";
+";
 "tutorial.tutorialItem.2.title" = "Попробуйте";
 "tutorial.tutorialItem.2.message" = "Все когда-то пробуют первый раз. Просто попробуйте этот инструмент в разговоре с кем-то из ваших друзей или знакомых.";
 "tutorial.tutorialItem.3.title" = "Это руководство будет доступно для повторного просмотра в меню";

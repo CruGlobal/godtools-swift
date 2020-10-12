@@ -9,6 +9,7 @@
 "share_link" = "Een koppeling delen";
 "share_tool_menu.remote_share_tool" = "Deel je scherm";
 "share_tool_menu.send_tool" = "Dit hulpprogramma versturen";
+"share_tool_screen_tutorial.share_your_screen.title" = "Deel je scherm";
 "share_tool_screen_tutorial.share_your_screen.message" = "Deze optie verstuurt een koppeling naar dit hulpprogramma naar een vriend. Wanneer de koppeling wordt geopend, begint het delen van het scherm.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "Gespiegelde ervaring";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Terwijl je met het hulpprogramma door je telefoon scrolt, reageert het scherm van je vriend op dezelfde manier. Op deze manier kun je op 2 apparaten tegelijkertijd door het programma gaan.";
