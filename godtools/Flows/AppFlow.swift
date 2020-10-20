@@ -9,8 +9,6 @@
 import UIKit
 import MessageUI
 
-import RealmSwift
-
 class AppFlow: NSObject, FlowDelegate {
     
     private let dataDownloader: InitialDataDownloader

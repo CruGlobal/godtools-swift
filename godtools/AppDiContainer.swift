@@ -201,6 +201,12 @@ class AppDiContainer {
         LanguagesManager.shared.setup(languageSettingsService: languageSettingsService)
     }
     
+    func getToolTrainingTipsOnboardingViews() -> ToolTrainingTipsOnboardingViewsService {
+        return ToolTrainingTipsOnboardingViewsService(
+            cache: ToolTrainingTipsOnboardingViewsUserDefaultsCache(userDefaultsCache: sharedUserDefaultsCache)
+        )
+    }
+    
     var firebaseConfiguration: FirebaseConfiguration {
         return FirebaseConfiguration(config: config)
     }

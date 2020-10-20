@@ -33,6 +33,7 @@
                 <outlet property="languageDetailsTextView" destination="jfi-f9-xPg" id="rS4-Eb-OBP"/>
                 <outlet property="languageDetailsTextViewLeading" destination="chB-Z5-euc" id="leb-Mu-tFC"/>
                 <outlet property="learnToShareToolButton" destination="bxH-x1-TPV" id="4BQ-iY-JDf"/>
+                <outlet property="learnToShareToolButtonTop" destination="ZKW-R9-CJc" id="bvD-Fj-178"/>
                 <outlet property="nameLabel" destination="4yT-fU-eB8" id="R3a-zw-HHR"/>
                 <outlet property="openToolButton" destination="So6-Cj-qdp" id="lFQ-Pw-FPf"/>
                 <outlet property="scrollView" destination="5dK-hz-acy" id="dqH-vs-1wr"/>

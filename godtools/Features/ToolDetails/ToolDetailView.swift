@@ -14,6 +14,7 @@ class ToolDetailView: UIViewController {
     
     private let viewModel: ToolDetailViewModelType
     
+    private var learnToShareToolButtonStartingTop: CGFloat = 0
     private var didLayoutSubviews: Bool = false
     
     //topMediaView
@@ -48,6 +49,7 @@ class ToolDetailView: UIViewController {
     @IBOutlet weak private var aboutDetailsTextViewLeading: NSLayoutConstraint!
     @IBOutlet weak private var languageDetailsTextViewLeading: NSLayoutConstraint!
     @IBOutlet weak private var translationDownloadProgressWidth: NSLayoutConstraint!
+    @IBOutlet weak private var learnToShareToolButtonTop: NSLayoutConstraint!
                 
     required init(viewModel: ToolDetailViewModelType) {
         self.viewModel = viewModel
@@ -84,6 +86,8 @@ class ToolDetailView: UIViewController {
         if !didLayoutSubviews {
             didLayoutSubviews = true
             
+            setLearnToShareToolButton(hidden: true, animated: false)
+            
             viewModel.aboutDetails.addObserver(self) { [weak self] (aboutDetails: String) in
                 self?.reloadDetailsTextViews()
             }
@@ -99,6 +103,8 @@ class ToolDetailView: UIViewController {
     }
     
     private func setupLayout() {
+        
+        learnToShareToolButtonStartingTop = learnToShareToolButtonTop.constant
         
         // youTubeLoadingView
         youTubeLoadingView.backgroundColor = topMediaView.backgroundColor
@@ -129,9 +135,6 @@ class ToolDetailView: UIViewController {
         
         // detailsView
         detailsView.backgroundColor = bottomView.backgroundColor
-        
-        //learnToShareToolButton
-        setLearnToShareToolButton(hidden: true, animated: false)
     }
     
     private func setupBinding() {
@@ -280,14 +283,23 @@ class ToolDetailView: UIViewController {
         
         let alpha: CGFloat = hidden ? 0 : 1
         
+        if hidden {
+            learnToShareToolButtonTop.constant = learnToShareToolButton.frame.size.height * -1
+        }
+        else {
+            learnToShareToolButtonTop.constant = learnToShareToolButtonStartingTop
+        }
+        
         if animated {
             UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
                 //animations
                 self.learnToShareToolButton.alpha = alpha
+                self.view.layoutIfNeeded()
             }, completion: nil)
         }
         else {
             learnToShareToolButton.alpha = alpha
+            view.layoutIfNeeded()
         }
     }
      

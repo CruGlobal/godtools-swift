@@ -159,9 +159,7 @@ extension TractRemoteShareSubscriber {
         let data: Data? = text.data(using: .utf8)
         
         let object: TractRemoteShareNavigationEvent? = jsonServices.decodeObject(data: data)
-        
-        print("  OBJECT: \(object)")
-        
+                
         if let object = object, object.message?.data?.type == "navigation-event" {
             
             navigationEventSignal.accept(value: object)

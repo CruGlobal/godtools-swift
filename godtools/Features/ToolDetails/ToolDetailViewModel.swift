@@ -195,14 +195,35 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         translationDownloader.fetchTranslationManifestAndDownloadIfNeeded(
             resourceId: resourceId,
             languageId: languageId,
-            cache: { (translationManifest: TranslationManifestData) in
-            print("MANIFEST IS CACHED")
+            cache: { [weak self] (translationManifest: TranslationManifestData) in
+                self?.handleTranslationManifestDownloaded(result: .success(translationManifest))
         },
             downloadStarted: {
-               print("\n DOWNLOAD MANIFEST STARTED")
-        }, downloadComplete: { (result: Result<TranslationManifestData, TranslationDownloaderError>) in
-            print("\n DOWNLOAD MANIFEST COMPLETE")
+                // download started
+        }, downloadComplete: { [weak self] (result: Result<TranslationManifestData, TranslationDownloaderError>) in
+            self?.handleTranslationManifestDownloaded(result: result)
         })
+    }
+    
+    private func handleTranslationManifestDownloaded(result: Result<TranslationManifestData, TranslationDownloaderError>) {
+        
+        let hidesLearnToShareButton: Bool
+        
+        switch result {
+        
+        case .success(let translationManifest):
+            
+            let parserService: ToolRendererXmlParserService = ToolRendererXmlParserService(
+                translationManifest: translationManifest
+            )
+            
+            hidesLearnToShareButton = parserService.manifest.tips.isEmpty
+            
+        case .failure(let error):
+            hidesLearnToShareButton = true
+        }
+        
+        hidesLearnToShareToolButton.accept(value: hidesLearnToShareButton)
     }
     
     func pageViewed() {
