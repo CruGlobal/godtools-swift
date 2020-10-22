@@ -213,11 +213,9 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         
         case .success(let translationManifest):
             
-            let parserService: ToolRendererXmlParserService = ToolRendererXmlParserService(
-                translationManifest: translationManifest
-            )
+            let manifest: ToolRendererXmlManifest = ToolRendererXmlManifest(translationManifest: translationManifest)
             
-            hidesLearnToShareButton = parserService.manifest.tips.isEmpty
+            hidesLearnToShareButton = manifest.tips.isEmpty
             
         case .failure(let error):
             hidesLearnToShareButton = true
@@ -246,7 +244,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     }
     
     func learnToShareToolTapped() {
-        flowDelegate?.navigate(step: .learnToShareToolTappedFromToolDetails)
+        flowDelegate?.navigate(step: .learnToShareToolTappedFromToolDetails(resource: resource))
     }
     
     func detailControlTapped(detailControl: ToolDetailControl) {

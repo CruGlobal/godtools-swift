@@ -160,16 +160,29 @@ class ToolsFlow: Flow {
         case .openToolTappedFromToolDetails(let resource):
             navigateToTool(resource: resource)
             
-        case .learnToShareToolTappedFromToolDetails:
+        case .learnToShareToolTappedFromToolDetails(let resource):
             
-            let learnToShareToolFlow = LearnToShareToolFlow(
-                flowDelegate: self,
-                appDiContainer: appDiContainer
-            )
+            let toolTrainingTipsOnboardingViews: ToolTrainingTipsOnboardingViewsService = appDiContainer.getToolTrainingTipsOnboardingViews()
+                        
+            let toolTrainingTipReachedMaximumViews: Bool = toolTrainingTipsOnboardingViews.getToolTrainingTipReachedMaximumViews(resource: resource)
             
-            navigationController.present(learnToShareToolFlow.navigationController, animated: true, completion: nil)
-            
-            self.learnToShareToolFlow = learnToShareToolFlow
+            if !toolTrainingTipReachedMaximumViews {
+                
+                toolTrainingTipsOnboardingViews.storeToolTrainingTipViewed(resource: resource)
+                
+                let learnToShareToolFlow = LearnToShareToolFlow(
+                    flowDelegate: self,
+                    appDiContainer: appDiContainer
+                )
+                
+                navigationController.present(learnToShareToolFlow.navigationController, animated: true, completion: nil)
+                
+                self.learnToShareToolFlow = learnToShareToolFlow
+            }
+            else {
+                
+                navigateToTool(resource: resource)
+            }
             
         case .closeTappedFromLearnToShareTool:
             dismissLearnToShareToolFlow()

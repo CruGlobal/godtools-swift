@@ -10,12 +10,17 @@ import Foundation
 
 protocol ToolRendererManifestType {
     
+    typealias TipId = String
+    typealias ResourceFilename = String
+    
+    associatedtype ToolRendererManifestAttributes: ToolRendererManifestAttributesType
     associatedtype ToolRendererManifestPage: ToolRendererManifestPageType
     associatedtype ToolRendererManifestTip: ToolRendererManifestTipType
     associatedtype ToolRendererManifestResource: ToolRendererManifestResourceType
     
+    var attributes: ToolRendererManifestAttributes { get }
     var title: String? { get }
     var pages: [ToolRendererManifestPage] { get }
-    var tips: [ToolRendererManifestTip] { get }
-    var resources: [ToolRendererManifestResource] { get }
+    var tips: [TipId: ToolRendererManifestTip] { get }
+    var resources: [ResourceFilename: ToolRendererManifestResource] { get }
 }

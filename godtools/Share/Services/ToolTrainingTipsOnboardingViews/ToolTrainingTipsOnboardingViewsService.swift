@@ -17,6 +17,13 @@ class ToolTrainingTipsOnboardingViewsService {
         self.cache = cache
     }
     
+    func getToolTrainingTipReachedMaximumViews(resource: ResourceModel) -> Bool {
+        
+        let numberOfViews: Int = getNumberOfToolTrainingTipViews(resource: resource)
+        
+        return numberOfViews >= 3
+    }
+    
     func getNumberOfToolTrainingTipViews(resource: ResourceModel) -> Int {
         
         return cache.getNumberOfToolTrainingTipViews(resource: resource)
