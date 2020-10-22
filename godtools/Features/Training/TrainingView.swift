@@ -42,13 +42,31 @@ class TrainingView: UIViewController {
         setupBinding()
         
         tipPagesNavigationView.delegate = self
+        
+        overlayButton.addTarget(self, action: #selector(handleOverlay(button:)), for: .touchUpInside)
+        closeButton.addTarget(self, action: #selector(handleClose(button:)), for: .touchUpInside)
+        continueButton.addTarget(self, action: #selector(handleContinue(button:)), for: .touchUpInside)
     }
     
     private func setupLayout() {
         
+        tipPagesNavigationView.registerPageCell(
+            nib: UINib(nibName: TrainingTipView.nibName, bundle: nil),
+            cellReuseIdentifier: TrainingTipView.reuseIdentifier)
     }
     
     private func setupBinding() {
+        
+        viewModel.progress.addObserver(self) { [weak self] (animatableValue: AnimatableValue<CGFloat>) in
+            if animatableValue.animated {
+                UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
+                    self?.progressView.progress = animatableValue.value
+                }, completion: nil)
+            }
+            else {
+                self?.progressView.progress = animatableValue.value
+            }
+        }
         
         viewModel.icon.addObserver(self) { [weak self] (icon: UIImage?) in
             self?.iconImageView.image = icon
@@ -62,7 +80,21 @@ class TrainingView: UIViewController {
             self?.tipPagesNavigationView.reloadData()
         }
     }
+    
+    @objc func handleOverlay(button: UIButton) {
+        viewModel.overlayTapped()
+    }
+    
+    @objc func handleClose(button: UIButton) {
+        viewModel.closeTapped()
+    }
+    
+    @objc func handleContinue(button: UIButton) {
+        viewModel.continueTapped()
+    }
 }
+
+// MARK: - PageNavigationCollectionViewDelegate
 
 extension TrainingView: PageNavigationCollectionViewDelegate {
     
@@ -71,7 +103,12 @@ extension TrainingView: PageNavigationCollectionViewDelegate {
     }
     
     func pageNavigation(pageNavigation: PageNavigationCollectionView, cellForPageAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
+        
+        let cell: TrainingTipView = pageNavigation.getReusablePageCell(
+            cellReuseIdentifier: TrainingTipView.reuseIdentifier,
+            indexPath: indexPath) as! TrainingTipView
+        
+        return cell
     }
     
     func pageNavigationDidChangePage(pageNavigation: PageNavigationCollectionView, page: Int) {

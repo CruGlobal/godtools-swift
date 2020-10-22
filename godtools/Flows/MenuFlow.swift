@@ -220,9 +220,11 @@ class MenuFlow: Flow {
         
         case .playgroundTappedFromMenu:
             
-            let viewModel = PlaygroundViewModel()
-            
-            let view = PlaygroundView(viewModel: viewModel)
+            //let viewModel = PlaygroundViewModel()
+            //let view = PlaygroundView(viewModel: viewModel)
+    
+            let viewModel = TrainingViewModel()
+            let view = TrainingView(viewModel: viewModel)
             
             let modal = ModalNavigationController(rootView: view)
             

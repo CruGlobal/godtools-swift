@@ -10,7 +10,12 @@ import UIKit
 
 protocol TrainingViewModelType {
     
+    var progress: ObservableValue<AnimatableValue<CGFloat>> { get }
     var icon: ObservableValue<UIImage?> { get }
     var title: ObservableValue<String> { get }
     var numberOfTipPages: ObservableValue<Int> { get }
+    
+    func overlayTapped()
+    func closeTapped()
+    func continueTapped()
 }
