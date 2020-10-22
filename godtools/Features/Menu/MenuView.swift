@@ -224,6 +224,9 @@ extension MenuView: UITableViewDelegate {
             
         case .version:
             break
+            
+        case .playground:
+            viewModel.playgroundTapped()
         }
     }
     
