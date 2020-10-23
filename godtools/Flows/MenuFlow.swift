@@ -223,12 +223,26 @@ class MenuFlow: Flow {
             //let viewModel = PlaygroundViewModel()
             //let view = PlaygroundView(viewModel: viewModel)
     
-            let viewModel = TrainingViewModel()
-            let view = TrainingView(viewModel: viewModel)
+            // TODO: Remove. ~Levi
+                        
+            let translationDownloader = appDiContainer.translationDownloader
+            let location = SHA256FileLocation(sha256WithPathExtension: "8bd5fe81f37c7eddeb36f980a3330269a9ef4f66e0063fdfd4065d527d1827c0.xml")
             
-            let modal = ModalNavigationController(rootView: view)
+            var tipXml: Data!
             
-            navigationController.present(modal, animated: true, completion: nil)
+            switch translationDownloader.translationsFileCache.getData(location: location) {
+            case .success(let xmlData):
+                tipXml = xmlData!
+            case .failure(let error):
+                break
+            }
+            
+            //end remove
+            
+            let viewModel = ToolTrainingViewModel(tipXml: tipXml)
+            let view = ToolTrainingView(viewModel: viewModel)
+                        
+            navigationController.present(view, animated: true, completion: nil)
             
         default:
             break
