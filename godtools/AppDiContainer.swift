@@ -200,6 +200,14 @@ class AppDiContainer {
         // UIFont extension currently depends on the primary language for picking appropriate UIFont to display.
         LanguagesManager.shared.setup(languageSettingsService: languageSettingsService)
     }
+
+    func getRendererNodeIterator() -> RendererNodeIterator {
+        return RendererNodeIterator()
+    }
+    
+    func getRendererXmlIterator() -> RendererXmlIterator {
+        return RendererXmlIterator()
+    }
     
     func getToolTrainingTipsOnboardingViews() -> ToolTrainingTipsOnboardingViewsService {
         return ToolTrainingTipsOnboardingViewsService(

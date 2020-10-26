@@ -11,8 +11,10 @@ import UIKit
 class ToolTrainingViewModel: ToolTrainingViewModelType {
     
     private let tipXml: Data
-    private let xmlIterator: RendererXmlIterator = RendererXmlIterator()
+    private let rendererXmlIterator: RendererXmlIterator
+    private let rendererNodeIterator: RendererNodeIterator
     
+    private var tipNode: RendererTipNode?
     private var page: Int = 0
     
     let progress: ObservableValue<AnimatableValue<CGFloat>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
@@ -20,15 +22,21 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
     let title: ObservableValue<String> = ObservableValue(value: "")
     let numberOfTipPages: ObservableValue<Int> = ObservableValue(value: 0)
     
-    required init(tipXml: Data) {
+    required init(tipXml: Data, rendererXmlIterator: RendererXmlIterator, rendererNodeIterator: RendererNodeIterator) {
         
         self.tipXml = tipXml
+        self.rendererXmlIterator = rendererXmlIterator
+        self.rendererNodeIterator = rendererNodeIterator
         
-        if let tipsNode = xmlIterator.iterate(xmlData: tipXml, delegate: self) as? RendererTipNode {
-            numberOfTipPages.accept(value: tipsNode.childNodes.count)
+        rendererXmlIterator.asyncIterate(xmlData: tipXml) { [weak self] (rootNode: BaseRendererNode?) in
+            DispatchQueue.main.async {
+                if let tipNode = rootNode as? RendererTipNode {
+                    self?.tipNode = tipNode
+                    self?.numberOfTipPages.accept(value: tipNode.pages.count)
+                    self?.setPage(page: 0, animated: false)
+                }
+            }
         }
-        
-        setPage(page: 0, animated: false)
     }
     
     private func setPage(page: Int, animated: Bool) {
@@ -59,24 +67,23 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
         }
     }
     
-    func pageDidChange(page: Int) {
+    func tipPageWillAppear(page: Int) -> RendererPageViewModelType {
+        
+        let pageNodes: [RendererPageNode] = tipNode?.pages ?? []
+        
+        let pageNode: RendererPageNode = pageNodes[page]
+        
+        return RendererPageViewModel(
+            pageNode: pageNode,
+            rendererNodeIterator: rendererNodeIterator
+        )
+    }
+    
+    func tipPageDidChange(page: Int) {
         setPage(page: page, animated: true)
     }
     
-    func pageDidAppear(page: Int) {
+    func tipPageDidAppear(page: Int) {
         setPage(page: page, animated: true)
-    }
-}
-
-extension ToolTrainingViewModel: RendererIteratorDelegate {
-    
-    func rendererIteratorDidIterateNode(rendererIterator: RendererIteratorType, node: BaseRendererNode) {
-        
-        print("-> Render node: \(node.id)")
-        print("    parent: \(node.parentNode?.id)")
-    }
-    
-    func rendererIteratorError() {
-        
     }
 }

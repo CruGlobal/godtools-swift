@@ -239,7 +239,12 @@ class MenuFlow: Flow {
             
             //end remove
             
-            let viewModel = ToolTrainingViewModel(tipXml: tipXml)
+            let viewModel = ToolTrainingViewModel(
+                tipXml: tipXml,
+                rendererXmlIterator: appDiContainer.getRendererXmlIterator(),
+                rendererNodeIterator: appDiContainer.getRendererNodeIterator()
+            )
+            
             let view = ToolTrainingView(viewModel: viewModel)
                         
             navigationController.present(view, animated: true, completion: nil)

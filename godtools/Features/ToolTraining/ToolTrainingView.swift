@@ -188,16 +188,20 @@ extension ToolTrainingView: PageNavigationCollectionViewDelegate {
             cellReuseIdentifier: ToolTrainingTipView.reuseIdentifier,
             indexPath: indexPath) as! ToolTrainingTipView
         
+        let cellViewModel = viewModel.tipPageWillAppear(page: indexPath.row)
+        
+        cell.configure(viewModel: cellViewModel)
+        
         return cell
     }
     
     func pageNavigationDidChangePage(pageNavigation: PageNavigationCollectionView, page: Int) {
         handlePageDidChange(page: page)
-        viewModel.pageDidChange(page: page)
+        viewModel.tipPageDidChange(page: page)
     }
     
     func pageNavigationDidStopOnPage(pageNavigation: PageNavigationCollectionView, page: Int) {
-        viewModel.pageDidAppear(page: page)
+        viewModel.tipPageDidAppear(page: page)
     }
 }
 

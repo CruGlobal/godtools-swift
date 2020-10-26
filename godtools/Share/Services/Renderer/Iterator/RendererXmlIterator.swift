@@ -11,7 +11,7 @@ import SWXMLHash
 
 class RendererXmlIterator: RendererIteratorType {
     
-    private let factory: RendererNodeFactory = RendererNodeFactory()
+    private let rendererNodeFactory: RendererNodeFactory = RendererNodeFactory()
     
     private(set) weak var delegate: RendererIteratorDelegate?
         
@@ -19,19 +19,30 @@ class RendererXmlIterator: RendererIteratorType {
             
     }
     
+    func asyncIterate(xmlData: Data, complete: @escaping ((_ rootNode: BaseRendererNode?) -> Void)) {
+        
+        DispatchQueue.global().async { [weak self] in
+            
+            let rootNode: BaseRendererNode? = self?.createRootNode(xmlData: xmlData)
+            
+            complete(rootNode)
+        }
+    }
+    
     func iterate(xmlData: Data, delegate: RendererIteratorDelegate) -> BaseRendererNode? {
         
         self.delegate = delegate
-        
-        let xmlHash: XMLIndexer = SWXMLHash.parse(xmlData)
-        let rootNode: BaseRendererNode? = createRootNode(xmlHash: xmlHash)
+            
+        let rootNode: BaseRendererNode? = createRootNode(xmlData: xmlData)
         
         return rootNode
     }
     
-    private func createRootNode(xmlHash: XMLIndexer) -> BaseRendererNode? {
+    private func createRootNode(xmlData: Data) -> BaseRendererNode? {
         
-        if let rootXmlElement = xmlHash.element?.children.first as? XMLElement, let rootNode = factory.getRendererNode(id: rootXmlElement.name) {
+        let xmlHash: XMLIndexer = SWXMLHash.parse(xmlData)
+        
+        if let rootXmlElement = xmlHash.element?.children.first as? XMLElement, let rootNode = rendererNodeFactory.getRendererNode(xmlElement: rootXmlElement) {
             
             recurseXmlElementAndNode(
                 xmlElement: rootXmlElement,
@@ -54,8 +65,8 @@ class RendererXmlIterator: RendererIteratorType {
         
         for childElement in childElements {
             
-            if let childXmlElement = childElement as? XMLElement, let childNode = factory.getRendererNode(id: childXmlElement.name)  {
-                             
+            if let childXmlElement = childElement as? XMLElement, let childNode = rendererNodeFactory.getRendererNode(xmlElement: childXmlElement)  {
+            
                 node.addChild(node: childNode)
                 
                 recurseXmlElementAndNode(xmlElement: childXmlElement, node: childNode, nodeParent: node)

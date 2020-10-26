@@ -10,4 +10,10 @@ import Foundation
 
 class RendererTipNode: BaseRendererNode {
     
+    var pages: [RendererPageNode] {
+        if let pagesNode = childNodes.first as? RendererPagesNode, let pageNodes = pagesNode.childNodes as? [RendererPageNode] {
+            return pageNodes
+        }
+        return []
+    }
 }

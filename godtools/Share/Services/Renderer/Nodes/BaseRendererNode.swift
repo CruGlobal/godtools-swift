@@ -7,19 +7,18 @@
 //
 
 import Foundation
+import SWXMLHash
 
 class BaseRendererNode {
     
     private(set) weak var parentNode: BaseRendererNode?
     private(set) var childNodes: [BaseRendererNode] = Array()
     
-    let id: String
-    let nodeType: RendererNodeType
+    let name: String
     
-    required init(id: String, nodeType: RendererNodeType) {
+    required init(xmlElement: XMLElement) {
         
-        self.id = id
-        self.nodeType = nodeType
+        self.name = xmlElement.name
     }
     
     func addChild(node: BaseRendererNode) {

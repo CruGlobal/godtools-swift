@@ -530,6 +530,25 @@
 		45ACBD10247DBD3800514E75 /* ToolMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ACBD0F247DBD3800514E75 /* ToolMenuItem.swift */; };
 		45ACBD12247DBD5A00514E75 /* ToolMenuItemId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ACBD11247DBD5A00514E75 /* ToolMenuItemId.swift */; };
 		45ACBD16247DC7EF00514E75 /* AllToolsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ACBD15247DC7EF00514E75 /* AllToolsViewModel.swift */; };
+		45ACEDA6254705EA002BA378 /* RendererPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45ACEDA2254705E9002BA378 /* RendererPageView.xib */; };
+		45ACEDA7254705EA002BA378 /* RendererPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ACEDA3254705E9002BA378 /* RendererPageView.swift */; };
+		45ACEDA8254705EA002BA378 /* RendererPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ACEDA4254705E9002BA378 /* RendererPageViewModel.swift */; };
+		45ACEDA9254705EA002BA378 /* RendererPageViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ACEDA5254705E9002BA378 /* RendererPageViewModelType.swift */; };
+		45ACEDAD254713EA002BA378 /* RendererPageViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ACEDAC254713EA002BA378 /* RendererPageViewFactory.swift */; };
+		45ACEDB125471442002BA378 /* RendererContentParagraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ACEDB025471442002BA378 /* RendererContentParagraphView.swift */; };
+		45ACEDB525471C30002BA378 /* RendererContentParagraphViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ACEDB425471C30002BA378 /* RendererContentParagraphViewModel.swift */; };
+		45ACEDB725471FA9002BA378 /* RendererViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ACEDB625471FA9002BA378 /* RendererViewType.swift */; };
+		45ACEDB925472063002BA378 /* ContentParagraphRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ACEDB825472063002BA378 /* ContentParagraphRenderer.swift */; };
+		45ACEDBB2547220E002BA378 /* ContextTextRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ACEDBA2547220E002BA378 /* ContextTextRenderer.swift */; };
+		45ACEDF62547505D002BA378 /* RendererPageNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ACEDED2547505C002BA378 /* RendererPageNode.swift */; };
+		45ACEDF72547505D002BA378 /* RendererContentImageNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ACEDEE2547505D002BA378 /* RendererContentImageNode.swift */; };
+		45ACEDF82547505D002BA378 /* RendererPagesNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ACEDEF2547505D002BA378 /* RendererPagesNode.swift */; };
+		45ACEDF92547505D002BA378 /* RendererTrainingTipNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ACEDF02547505D002BA378 /* RendererTrainingTipNode.swift */; };
+		45ACEDFA2547505D002BA378 /* RendererHeadingNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ACEDF12547505D002BA378 /* RendererHeadingNode.swift */; };
+		45ACEDFB2547505D002BA378 /* RendererContentParagraphNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ACEDF22547505D002BA378 /* RendererContentParagraphNode.swift */; };
+		45ACEDFC2547505D002BA378 /* RendererHeroNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ACEDF32547505D002BA378 /* RendererHeroNode.swift */; };
+		45ACEDFD2547505D002BA378 /* RendererTipNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ACEDF42547505D002BA378 /* RendererTipNode.swift */; };
+		45ACEDFE2547505D002BA378 /* RendererContentTextNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ACEDF52547505D002BA378 /* RendererContentTextNode.swift */; };
 		45ADD0CC24549F2100E82DD8 /* WebArchiveOperationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ADD0CB24549F2100E82DD8 /* WebArchiveOperationResult.swift */; };
 		45B2AE3D24587BA000253BAD /* ShareArticleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B2AE3C24587BA000253BAD /* ShareArticleView.swift */; };
 		45B2AE3F24587BAB00253BAD /* ShareArticleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B2AE3E24587BAB00253BAD /* ShareArticleViewModel.swift */; };
@@ -591,8 +610,6 @@
 		45E2BED2254317E100C4D66C /* ToolTrainingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E2BEC9254317E100C4D66C /* ToolTrainingView.swift */; };
 		45E2BED3254317E100C4D66C /* ToolTrainingTipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E2BECB254317E100C4D66C /* ToolTrainingTipView.swift */; };
 		45E2BED4254317E100C4D66C /* ToolTrainingTipView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45E2BECC254317E100C4D66C /* ToolTrainingTipView.xib */; };
-		45E2BED5254317E100C4D66C /* ToolTrainingTipViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E2BECD254317E100C4D66C /* ToolTrainingTipViewModel.swift */; };
-		45E2BED6254317E100C4D66C /* ToolTrainingTipViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E2BECE254317E100C4D66C /* ToolTrainingTipViewModelType.swift */; };
 		45E2BED9254319F400C4D66C /* ToolTrainingAnimatedTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E2BED8254319F400C4D66C /* ToolTrainingAnimatedTransitioning.swift */; };
 		45E2BF04254354C400C4D66C /* RendererManifestPageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E2BEF9254354C400C4D66C /* RendererManifestPageType.swift */; };
 		45E2BF05254354C400C4D66C /* RendererManifestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E2BEFA254354C400C4D66C /* RendererManifestType.swift */; };
@@ -604,18 +621,7 @@
 		45E2BF0B254354C400C4D66C /* RendererXmlManifestAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E2BF01254354C400C4D66C /* RendererXmlManifestAttributes.swift */; };
 		45E2BF0C254354C400C4D66C /* RendererXmlManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E2BF02254354C400C4D66C /* RendererXmlManifest.swift */; };
 		45E2BF0D254354C400C4D66C /* RendererXmlManifestTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E2BF03254354C400C4D66C /* RendererXmlManifestTip.swift */; };
-		45E2BF17254355C600C4D66C /* RendererHeroNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E2BF16254355C600C4D66C /* RendererHeroNode.swift */; };
-		45E2BF19254355D700C4D66C /* RendererHeadingNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E2BF18254355D700C4D66C /* RendererHeadingNode.swift */; };
-		45E2BF1B2543561E00C4D66C /* RendererPageNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E2BF1A2543561E00C4D66C /* RendererPageNode.swift */; };
 		45E2BF2725435F3400C4D66C /* BaseRendererNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E2BF2625435F3400C4D66C /* BaseRendererNode.swift */; };
-		45E2BF29254361BD00C4D66C /* RendererContentParagraphNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E2BF28254361BD00C4D66C /* RendererContentParagraphNode.swift */; };
-		45E2BF2B254361E100C4D66C /* RendererContentImageNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E2BF2A254361E100C4D66C /* RendererContentImageNode.swift */; };
-		45E2BF2D254361F800C4D66C /* RendererContentTextNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E2BF2C254361F800C4D66C /* RendererContentTextNode.swift */; };
-		45E2BF2F254363C100C4D66C /* RendererTrainingTipNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E2BF2E254363C100C4D66C /* RendererTrainingTipNode.swift */; };
-		45E2BF31254364E900C4D66C /* RendererTipNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E2BF30254364E900C4D66C /* RendererTipNode.swift */; };
-		45E2BF362543728000C4D66C /* RendererPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E2BF352543728000C4D66C /* RendererPageView.swift */; };
-		45E2BF38254372A100C4D66C /* RendererPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45E2BF37254372A100C4D66C /* RendererPageView.xib */; };
-		45E2BF3A2543764E00C4D66C /* RendererPagesNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E2BF392543764E00C4D66C /* RendererPagesNode.swift */; };
 		45E2BF4725438C2D00C4D66C /* RendererNodeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E2BF4525438C2D00C4D66C /* RendererNodeFactory.swift */; };
 		45E2BF4825438C2D00C4D66C /* RendererNodeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E2BF4625438C2D00C4D66C /* RendererNodeType.swift */; };
 		45E2BF4E2543994C00C4D66C /* RendererXmlIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E2BF4A2543994C00C4D66C /* RendererXmlIterator.swift */; };
@@ -1269,6 +1275,25 @@
 		45ACBD0F247DBD3800514E75 /* ToolMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolMenuItem.swift; sourceTree = "<group>"; };
 		45ACBD11247DBD5A00514E75 /* ToolMenuItemId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolMenuItemId.swift; sourceTree = "<group>"; };
 		45ACBD15247DC7EF00514E75 /* AllToolsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllToolsViewModel.swift; sourceTree = "<group>"; };
+		45ACEDA2254705E9002BA378 /* RendererPageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RendererPageView.xib; sourceTree = "<group>"; };
+		45ACEDA3254705E9002BA378 /* RendererPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RendererPageView.swift; sourceTree = "<group>"; };
+		45ACEDA4254705E9002BA378 /* RendererPageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RendererPageViewModel.swift; sourceTree = "<group>"; };
+		45ACEDA5254705E9002BA378 /* RendererPageViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RendererPageViewModelType.swift; sourceTree = "<group>"; };
+		45ACEDAC254713EA002BA378 /* RendererPageViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererPageViewFactory.swift; sourceTree = "<group>"; };
+		45ACEDB025471442002BA378 /* RendererContentParagraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererContentParagraphView.swift; sourceTree = "<group>"; };
+		45ACEDB425471C30002BA378 /* RendererContentParagraphViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererContentParagraphViewModel.swift; sourceTree = "<group>"; };
+		45ACEDB625471FA9002BA378 /* RendererViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererViewType.swift; sourceTree = "<group>"; };
+		45ACEDB825472063002BA378 /* ContentParagraphRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentParagraphRenderer.swift; sourceTree = "<group>"; };
+		45ACEDBA2547220E002BA378 /* ContextTextRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextTextRenderer.swift; sourceTree = "<group>"; };
+		45ACEDED2547505C002BA378 /* RendererPageNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RendererPageNode.swift; sourceTree = "<group>"; };
+		45ACEDEE2547505D002BA378 /* RendererContentImageNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RendererContentImageNode.swift; sourceTree = "<group>"; };
+		45ACEDEF2547505D002BA378 /* RendererPagesNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RendererPagesNode.swift; sourceTree = "<group>"; };
+		45ACEDF02547505D002BA378 /* RendererTrainingTipNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RendererTrainingTipNode.swift; sourceTree = "<group>"; };
+		45ACEDF12547505D002BA378 /* RendererHeadingNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RendererHeadingNode.swift; sourceTree = "<group>"; };
+		45ACEDF22547505D002BA378 /* RendererContentParagraphNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RendererContentParagraphNode.swift; sourceTree = "<group>"; };
+		45ACEDF32547505D002BA378 /* RendererHeroNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RendererHeroNode.swift; sourceTree = "<group>"; };
+		45ACEDF42547505D002BA378 /* RendererTipNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RendererTipNode.swift; sourceTree = "<group>"; };
+		45ACEDF52547505D002BA378 /* RendererContentTextNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RendererContentTextNode.swift; sourceTree = "<group>"; };
 		45ADD0CB24549F2100E82DD8 /* WebArchiveOperationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebArchiveOperationResult.swift; sourceTree = "<group>"; };
 		45B2AE3C24587BA000253BAD /* ShareArticleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareArticleView.swift; sourceTree = "<group>"; };
 		45B2AE3E24587BAB00253BAD /* ShareArticleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareArticleViewModel.swift; sourceTree = "<group>"; };
@@ -1334,8 +1359,6 @@
 		45E2BEC9254317E100C4D66C /* ToolTrainingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolTrainingView.swift; sourceTree = "<group>"; };
 		45E2BECB254317E100C4D66C /* ToolTrainingTipView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolTrainingTipView.swift; sourceTree = "<group>"; };
 		45E2BECC254317E100C4D66C /* ToolTrainingTipView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToolTrainingTipView.xib; sourceTree = "<group>"; };
-		45E2BECD254317E100C4D66C /* ToolTrainingTipViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolTrainingTipViewModel.swift; sourceTree = "<group>"; };
-		45E2BECE254317E100C4D66C /* ToolTrainingTipViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolTrainingTipViewModelType.swift; sourceTree = "<group>"; };
 		45E2BED8254319F400C4D66C /* ToolTrainingAnimatedTransitioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolTrainingAnimatedTransitioning.swift; sourceTree = "<group>"; };
 		45E2BEF9254354C400C4D66C /* RendererManifestPageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RendererManifestPageType.swift; sourceTree = "<group>"; };
 		45E2BEFA254354C400C4D66C /* RendererManifestType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RendererManifestType.swift; sourceTree = "<group>"; };
@@ -1347,18 +1370,7 @@
 		45E2BF01254354C400C4D66C /* RendererXmlManifestAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RendererXmlManifestAttributes.swift; sourceTree = "<group>"; };
 		45E2BF02254354C400C4D66C /* RendererXmlManifest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RendererXmlManifest.swift; sourceTree = "<group>"; };
 		45E2BF03254354C400C4D66C /* RendererXmlManifestTip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RendererXmlManifestTip.swift; sourceTree = "<group>"; };
-		45E2BF16254355C600C4D66C /* RendererHeroNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererHeroNode.swift; sourceTree = "<group>"; };
-		45E2BF18254355D700C4D66C /* RendererHeadingNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererHeadingNode.swift; sourceTree = "<group>"; };
-		45E2BF1A2543561E00C4D66C /* RendererPageNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererPageNode.swift; sourceTree = "<group>"; };
 		45E2BF2625435F3400C4D66C /* BaseRendererNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRendererNode.swift; sourceTree = "<group>"; };
-		45E2BF28254361BD00C4D66C /* RendererContentParagraphNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererContentParagraphNode.swift; sourceTree = "<group>"; };
-		45E2BF2A254361E100C4D66C /* RendererContentImageNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererContentImageNode.swift; sourceTree = "<group>"; };
-		45E2BF2C254361F800C4D66C /* RendererContentTextNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererContentTextNode.swift; sourceTree = "<group>"; };
-		45E2BF2E254363C100C4D66C /* RendererTrainingTipNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererTrainingTipNode.swift; sourceTree = "<group>"; };
-		45E2BF30254364E900C4D66C /* RendererTipNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererTipNode.swift; sourceTree = "<group>"; };
-		45E2BF352543728000C4D66C /* RendererPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererPageView.swift; sourceTree = "<group>"; };
-		45E2BF37254372A100C4D66C /* RendererPageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RendererPageView.xib; sourceTree = "<group>"; };
-		45E2BF392543764E00C4D66C /* RendererPagesNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererPagesNode.swift; sourceTree = "<group>"; };
 		45E2BF4525438C2D00C4D66C /* RendererNodeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RendererNodeFactory.swift; sourceTree = "<group>"; };
 		45E2BF4625438C2D00C4D66C /* RendererNodeType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RendererNodeType.swift; sourceTree = "<group>"; };
 		45E2BF4A2543994C00C4D66C /* RendererXmlIterator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RendererXmlIterator.swift; sourceTree = "<group>"; };
@@ -2884,6 +2896,47 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		45ACEDA0254705E9002BA378 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				45ACEDB825472063002BA378 /* ContentParagraphRenderer.swift */,
+				45ACEDBA2547220E002BA378 /* ContextTextRenderer.swift */,
+				45ACEDB625471FA9002BA378 /* RendererViewType.swift */,
+				45ACEDA1254705E9002BA378 /* RendererPage */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		45ACEDA1254705E9002BA378 /* RendererPage */ = {
+			isa = PBXGroup;
+			children = (
+				45ACEDA3254705E9002BA378 /* RendererPageView.swift */,
+				45ACEDA2254705E9002BA378 /* RendererPageView.xib */,
+				45ACEDA4254705E9002BA378 /* RendererPageViewModel.swift */,
+				45ACEDA5254705E9002BA378 /* RendererPageViewModelType.swift */,
+				45ACEDAB254713AA002BA378 /* ViewFactory */,
+				45ACEDAA2547138A002BA378 /* Views */,
+			);
+			path = RendererPage;
+			sourceTree = "<group>";
+		};
+		45ACEDAA2547138A002BA378 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				45ACEDB025471442002BA378 /* RendererContentParagraphView.swift */,
+				45ACEDB425471C30002BA378 /* RendererContentParagraphViewModel.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		45ACEDAB254713AA002BA378 /* ViewFactory */ = {
+			isa = PBXGroup;
+			children = (
+				45ACEDAC254713EA002BA378 /* RendererPageViewFactory.swift */,
+			);
+			path = ViewFactory;
+			sourceTree = "<group>";
+		};
 		45B2AE42245886B100253BAD /* Mail */ = {
 			isa = PBXGroup;
 			children = (
@@ -3139,8 +3192,6 @@
 			children = (
 				45E2BECB254317E100C4D66C /* ToolTrainingTipView.swift */,
 				45E2BECC254317E100C4D66C /* ToolTrainingTipView.xib */,
-				45E2BECD254317E100C4D66C /* ToolTrainingTipViewModel.swift */,
-				45E2BECE254317E100C4D66C /* ToolTrainingTipViewModelType.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3160,7 +3211,7 @@
 				45E2BEF7254354C400C4D66C /* Manifest */,
 				45E2BF4425438C2D00C4D66C /* NodeFactory */,
 				45E2BF10254354E300C4D66C /* Nodes */,
-				45E2BF342543727400C4D66C /* RendererPage */,
+				45ACEDA0254705E9002BA378 /* Views */,
 			);
 			path = Renderer;
 			sourceTree = "<group>";
@@ -3202,26 +3253,17 @@
 			isa = PBXGroup;
 			children = (
 				45E2BF2625435F3400C4D66C /* BaseRendererNode.swift */,
-				45E2BF2A254361E100C4D66C /* RendererContentImageNode.swift */,
-				45E2BF28254361BD00C4D66C /* RendererContentParagraphNode.swift */,
-				45E2BF2C254361F800C4D66C /* RendererContentTextNode.swift */,
-				45E2BF18254355D700C4D66C /* RendererHeadingNode.swift */,
-				45E2BF16254355C600C4D66C /* RendererHeroNode.swift */,
-				45E2BF1A2543561E00C4D66C /* RendererPageNode.swift */,
-				45E2BF392543764E00C4D66C /* RendererPagesNode.swift */,
-				45E2BF30254364E900C4D66C /* RendererTipNode.swift */,
-				45E2BF2E254363C100C4D66C /* RendererTrainingTipNode.swift */,
+				45ACEDEE2547505D002BA378 /* RendererContentImageNode.swift */,
+				45ACEDF22547505D002BA378 /* RendererContentParagraphNode.swift */,
+				45ACEDF52547505D002BA378 /* RendererContentTextNode.swift */,
+				45ACEDF12547505D002BA378 /* RendererHeadingNode.swift */,
+				45ACEDF32547505D002BA378 /* RendererHeroNode.swift */,
+				45ACEDED2547505C002BA378 /* RendererPageNode.swift */,
+				45ACEDEF2547505D002BA378 /* RendererPagesNode.swift */,
+				45ACEDF42547505D002BA378 /* RendererTipNode.swift */,
+				45ACEDF02547505D002BA378 /* RendererTrainingTipNode.swift */,
 			);
 			path = Nodes;
-			sourceTree = "<group>";
-		};
-		45E2BF342543727400C4D66C /* RendererPage */ = {
-			isa = PBXGroup;
-			children = (
-				45E2BF352543728000C4D66C /* RendererPageView.swift */,
-				45E2BF37254372A100C4D66C /* RendererPageView.xib */,
-			);
-			path = RendererPage;
 			sourceTree = "<group>";
 		};
 		45E2BF4425438C2D00C4D66C /* NodeFactory */ = {
@@ -3890,7 +3932,7 @@
 				4556AED623E221FE002C15E8 /* NotoSansMyanmar-Regular.ttf in Resources */,
 				45F66CA523E4C3C20053CB5B /* MenuView.xib in Resources */,
 				4586C04724631C3900927A42 /* ADBMobileConfig_debug.json in Resources */,
-				45E2BF38254372A100C4D66C /* RendererPageView.xib in Resources */,
+				45ACEDA6254705EA002BA378 /* RendererPageView.xib in Resources */,
 				45668E7F23E0E1CC002728E7 /* OnboardingTutorialUsageListCell.xib in Resources */,
 				450EF834247EB3D300978926 /* SF-Pro-Text-Bold.otf in Resources */,
 				4586C04624631C3900927A42 /* ADBMobileConfig.json in Resources */,
@@ -4109,12 +4151,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45ACEDFC2547505D002BA378 /* RendererHeroNode.swift in Sources */,
 				45668E7023E0E1CC002728E7 /* MainOnboardingTutorialItem.swift in Sources */,
 				459A71E724C9CFAB00B77942 /* WebSocketChannelSubscriberType.swift in Sources */,
+				45ACEDAD254713EA002BA378 /* RendererPageViewFactory.swift in Sources */,
 				45E998E723FD9F110088DD0C /* AppBuild.swift in Sources */,
 				457719C323E8BAE50049D236 /* MenuDataProvider.swift in Sources */,
 				45E998D823FD7FE00088DD0C /* GlobalActivityHeaderView.swift in Sources */,
 				45FCFF89243D0C9200865501 /* TractView.swift in Sources */,
+				45ACEDFD2547505D002BA378 /* RendererTipNode.swift in Sources */,
 				4586D7E2246ECE350062D988 /* TractLink.swift in Sources */,
 				452DA14024FC4D5E001541BC /* RealmLanguagesCache.swift in Sources */,
 				451DB1C12461DDE400FB14BF /* TractFormProperties.swift in Sources */,
@@ -4149,7 +4194,6 @@
 				450EF817247E9C9600978926 /* ToolsTableView.swift in Sources */,
 				45922587242539B300D7ED22 /* LanguageAvailabilityType.swift in Sources */,
 				452C5776248E792F00B39C09 /* NoResponseSuccessType.swift in Sources */,
-				45E2BF362543728000C4D66C /* RendererPageView.swift in Sources */,
 				4595F43824A2A33500B3733E /* WebArchiveQueueResult.swift in Sources */,
 				45F75F2F24ED94EC0061BD91 /* TractRemoteShareNavigationEvent.swift in Sources */,
 				45732E7B24218A00006F0559 /* OnboardingTutorialAvailabilityType.swift in Sources */,
@@ -4157,10 +4201,10 @@
 				45249D1624ACC62B00E139AD /* RealmResourceView.swift in Sources */,
 				4508729024EEC7020047123E /* ShareToolScreenCustomTutorialViewBuilder.swift in Sources */,
 				451DB1A12461DC3100FB14BF /* TractNumber.swift in Sources */,
-				45E2BF2D254361F800C4D66C /* RendererContentTextNode.swift in Sources */,
 				451B9CE62475B812006ACD32 /* AppRootController.swift in Sources */,
 				4506DEE124B7A78700A1C50B /* Integer.swift in Sources */,
 				45E2BF4725438C2D00C4D66C /* RendererNodeFactory.swift in Sources */,
+				45ACEDB125471442002BA378 /* RendererContentParagraphView.swift in Sources */,
 				45249D2524AD085700E139AD /* ResourcesCleanUpError.swift in Sources */,
 				4556AEE023E23B19002C15E8 /* OnboardingTutorialBackgroundCell.swift in Sources */,
 				4549058B24AA75130038A1A8 /* ShortcutItemType.swift in Sources */,
@@ -4202,6 +4246,7 @@
 				45D3C92223DF998300ECF70E /* TutorialView.swift in Sources */,
 				45E998E323FD9E870088DD0C /* ConfigType.swift in Sources */,
 				4595F42724A294D200B3733E /* ArticleAemImportDataType.swift in Sources */,
+				45ACEDA9254705EA002BA378 /* RendererPageViewModelType.swift in Sources */,
 				452C5774248E791A00B39C09 /* NoClientApiErrorType.swift in Sources */,
 				451DB1392461DA4200FB14BF /* TractEmailsProperties.swift in Sources */,
 				4506DEE324B7A78700A1C50B /* AnalyticsRelay.swift in Sources */,
@@ -4209,6 +4254,7 @@
 				45E62FB1246C3C2B006F0CD5 /* TractNavBarAttributes.swift in Sources */,
 				451830EB246DB78F00DDF264 /* TractXmlPageItem.swift in Sources */,
 				45EC83812451E1EA00E8DE48 /* ArticleManifestXmlParser.swift in Sources */,
+				45ACEDB925472063002BA378 /* ContentParagraphRenderer.swift in Sources */,
 				45038D7424A25BB100345B42 /* TranslationZipFileModelType.swift in Sources */,
 				4530DCB324A3DE9A000DA516 /* ResourcesDownloaderResult.swift in Sources */,
 				4506DEE724B7A78700A1C50B /* String.swift in Sources */,
@@ -4232,7 +4278,6 @@
 				45C47E4A24C7483C00BC42BA /* OnboardingTutorialButtonState.swift in Sources */,
 				4517377D24A7FBD90097FB15 /* RealmDownloadedLanguage.swift in Sources */,
 				4506DE9C24B797F700A1C50B /* AboutTextCellViewModel.swift in Sources */,
-				45E2BF31254364E900C4D66C /* RendererTipNode.swift in Sources */,
 				45732E932421A798006F0559 /* TutorialAvailabilityType.swift in Sources */,
 				451B86A1252F43EF0061942B /* LearnToShareToolFlow.swift in Sources */,
 				45038D7624A25BB100345B42 /* RealmTranslationZipFile.swift in Sources */,
@@ -4242,7 +4287,6 @@
 				45F567AF24FD7D600078D539 /* CardJumpUserDefaultsCache.swift in Sources */,
 				45249D1524ACC62B00E139AD /* ResourceViewModel.swift in Sources */,
 				45647251244F782300CB202D /* ArticleCell.swift in Sources */,
-				45E2BF17254355C600C4D66C /* RendererHeroNode.swift in Sources */,
 				4575C26323FB45E600D3265B /* GlobalActivityServices.swift in Sources */,
 				45FCFF9D243D0F9F00865501 /* WebContentView.swift in Sources */,
 				4595F41424A27DB700B3733E /* RealmArticleJcrContent.swift in Sources */,
@@ -4260,7 +4304,6 @@
 				4564724F244F723E00CB202D /* ArticlesViewModelType.swift in Sources */,
 				45F66CAA23E4C5230053CB5B /* MenuViewModelType.swift in Sources */,
 				45F6E019249D44270077C7D9 /* LanguageModelType.swift in Sources */,
-				45E2BED5254317E100C4D66C /* ToolTrainingTipViewModel.swift in Sources */,
 				4586D7DE246ECDC90062D988 /* TractModal.swift in Sources */,
 				45FCFF3D243D07B800865501 /* FlowStep.swift in Sources */,
 				451DB1372461DA4200FB14BF /* TractParagraphProperties.swift in Sources */,
@@ -4281,6 +4324,7 @@
 				45E2BF0C254354C400C4D66C /* RendererXmlManifest.swift in Sources */,
 				452036CB24005AF0002B2453 /* RequestResponse+Log.swift in Sources */,
 				456A146124A7CFB80084D450 /* FavoritedResourcesCache.swift in Sources */,
+				45ACEDFA2547505D002BA378 /* RendererHeadingNode.swift in Sources */,
 				457551F624A585F70091652F /* Attachment.swift in Sources */,
 				45249D1E24AD051700E139AD /* RealmDatabase.swift in Sources */,
 				450E21C12491A4A200D489A1 /* AttachmentModel.swift in Sources */,
@@ -4321,7 +4365,6 @@
 				45D5694B24932492003E5798 /* TranslationsApi.swift in Sources */,
 				4575C25423FB332000D3265B /* AccountItemId.swift in Sources */,
 				458063C62499870C0070AA12 /* AttachmentModelType+SHA256FileLocation.swift in Sources */,
-				45E2BED6254317E100C4D66C /* ToolTrainingTipViewModelType.swift in Sources */,
 				454D59F524BF371F00B8528B /* OpenTutorialViewModel.swift in Sources */,
 				45B2AE47245886B100253BAD /* MailView.swift in Sources */,
 				452AB58B24464D0100445050 /* AboutViewModelType.swift in Sources */,
@@ -4336,10 +4379,9 @@
 				451DB1AF2461DC3100FB14BF /* TractTab.swift in Sources */,
 				45249D0D24ACB22A00E139AD /* FollowUpsService.swift in Sources */,
 				453AD7A723FF212700921D75 /* AccountItemViewType.swift in Sources */,
-				45E2BF3A2543764E00C4D66C /* RendererPagesNode.swift in Sources */,
-				45E2BF19254355D700C4D66C /* RendererHeadingNode.swift in Sources */,
 				454315A224A1464100B5C37B /* SHA256FileModelType.swift in Sources */,
 				45BFD71A23E4DF00004A097B /* MenuCellViewModel.swift in Sources */,
+				45ACEDB525471C30002BA378 /* RendererContentParagraphViewModel.swift in Sources */,
 				451DB0C92461D90000FB14BF /* TractAnalyticEvent.swift in Sources */,
 				452E3229240708F000DB41B7 /* SignalValue.swift in Sources */,
 				45EC83A42452494D00E8DE48 /* WebContent.swift in Sources */,
@@ -4381,6 +4423,7 @@
 				454526D4243E177000B84B29 /* HelpWebContent.swift in Sources */,
 				456A145F24A7CDBE0084D450 /* ResourcesCache.swift in Sources */,
 				453AD7A923FF231200921D75 /* AlertMessage.swift in Sources */,
+				45ACEDFB2547505D002BA378 /* RendererContentParagraphNode.swift in Sources */,
 				45668E7B23E0E1CC002728E7 /* MainOboardingTutorialCellViewModel.swift in Sources */,
 				45692F3C24E7854300A589FE /* ShareToolRemoteSessionURLViewModelType.swift in Sources */,
 				45668E8023E0E1CC002728E7 /* OnboardingTutorialUsageCell.swift in Sources */,
@@ -4388,6 +4431,7 @@
 				45E2BED1254317E100C4D66C /* ToolTrainingViewModelType.swift in Sources */,
 				45249D0B24ACB13300E139AD /* FollowUpModelType.swift in Sources */,
 				45EC83822451E1EA00E8DE48 /* ArticleCategory.swift in Sources */,
+				45ACEDA7254705EA002BA378 /* RendererPageView.swift in Sources */,
 				459A198A24E4C3DD00A59BBD /* TutorialItemViewBuilder.swift in Sources */,
 				454526D6243E17A400B84B29 /* ContactUsWebContent.swift in Sources */,
 				45E2BF0A254354C400C4D66C /* RendererXmlManifestResource.swift in Sources */,
@@ -4401,6 +4445,7 @@
 				452DA14B24FC4DF5001541BC /* RealmLanguage.swift in Sources */,
 				451DB10E2461D90000FB14BF /* BaseTractElement+StaticFunctions.swift in Sources */,
 				451B8695252F43D40061942B /* LearnToShareToolViewModel.swift in Sources */,
+				45ACEDA8254705EA002BA378 /* RendererPageViewModel.swift in Sources */,
 				451DB1942461DC3100FB14BF /* TractInput.swift in Sources */,
 				459AA42524A5296F00CAA69C /* DownloadedTranslationResult.swift in Sources */,
 				45732E912421A78F006F0559 /* TutorialAvailability.swift in Sources */,
@@ -4412,6 +4457,7 @@
 				4556AEDE23E22241002C15E8 /* ObservableValue.swift in Sources */,
 				450B671F249959AD00A54E50 /* FavoritedResourceModel.swift in Sources */,
 				45038D8824A2698E00345B42 /* NoTranslationZipData.swift in Sources */,
+				45ACEDFE2547505D002BA378 /* RendererContentTextNode.swift in Sources */,
 				451DB0C52461D90000FB14BF /* TractConfigurations.swift in Sources */,
 				4506DEE524B7A78700A1C50B /* UIColor.swift in Sources */,
 				451DB1B12461DCAE00FB14BF /* TractEmails.swift in Sources */,
@@ -4428,6 +4474,7 @@
 				45EDC53D249BAB970020DC62 /* ToolDetailViewModel.swift in Sources */,
 				451B8697252F43D40061942B /* LearnToShareToolItem.swift in Sources */,
 				451EE23A24ABC66200BB799F /* DeepLinkingType.swift in Sources */,
+				45ACEDF62547505D002BA378 /* RendererPageNode.swift in Sources */,
 				45FCFF85243D0C9200865501 /* TractViewModelType.swift in Sources */,
 				451DB1422461DA4200FB14BF /* TractTabsProperties.swift in Sources */,
 				4595F44424A2AF4200B3733E /* ArticlesCacheValidation.swift in Sources */,
@@ -4454,7 +4501,6 @@
 				4508729224EEC71A0047123E /* ShareToolScreenTutorialNumberOfViewsCache.swift in Sources */,
 				451F3F2424E4739900A25D11 /* ShareToolScreenTutorialViewModel.swift in Sources */,
 				45B2AE5E2458D98C00253BAD /* GoogleAdwordsAnalytics.swift in Sources */,
-				45E2BF29254361BD00C4D66C /* RendererContentParagraphNode.swift in Sources */,
 				45E2BF4E2543994C00C4D66C /* RendererXmlIterator.swift in Sources */,
 				452036C7240057F3002B2453 /* RequestOperation.swift in Sources */,
 				45B2AE3D24587BA000253BAD /* ShareArticleView.swift in Sources */,
@@ -4541,6 +4587,7 @@
 				45E2BF04254354C400C4D66C /* RendererManifestPageType.swift in Sources */,
 				451F3F1E24E458A000A25D11 /* ShareToolView.swift in Sources */,
 				4595F42F24A294EE00B3733E /* ArticleAemImportDataParser.swift in Sources */,
+				45ACEDB725471FA9002BA378 /* RendererViewType.swift in Sources */,
 				45249D1B24ACCD1400E139AD /* BaseTractElementDiContainer.swift in Sources */,
 				45ACBD0D247DB13E00514E75 /* ToolsFlow.swift in Sources */,
 				451DB0F32461D90000FB14BF /* BaseTractElement+Functions.swift in Sources */,
@@ -4565,6 +4612,7 @@
 				45F66CA623E4C3C20053CB5B /* MenuView.swift in Sources */,
 				450B6721249959D400A54E50 /* FavoritedResourceModelType.swift in Sources */,
 				4556AEDB23E2221E002C15E8 /* FontLibrary.swift in Sources */,
+				45ACEDF72547505D002BA378 /* RendererContentImageNode.swift in Sources */,
 				45038D7524A25BB100345B42 /* TranslationZipFileModel.swift in Sources */,
 				4575C24423FAF6DE00D3265B /* AccountActivityView.swift in Sources */,
 				45EC83832451E1EA00E8DE48 /* ArticleManifestAttributes.swift in Sources */,
@@ -4585,6 +4633,7 @@
 				4595F41C24A27DFB00B3733E /* ArticleAemImportDownloader.swift in Sources */,
 				455F4B9624527C2D00AE6007 /* WebArchive.swift in Sources */,
 				451F3F2024E458A000A25D11 /* ShareToolViewModelType.swift in Sources */,
+				45ACEDF82547505D002BA378 /* RendererPagesNode.swift in Sources */,
 				451DB0C72461D90000FB14BF /* TractPagination.swift in Sources */,
 				4564723D244F6F4F00CB202D /* ArticleCategoriesView.swift in Sources */,
 				45A1B5EA24A053AB009BA210 /* UIView+ProgressView.swift in Sources */,
@@ -4620,12 +4669,12 @@
 				4543159C24A103C300B5C37B /* ResourcesSHA256FileCache.swift in Sources */,
 				4508F7A72429669700ECA950 /* AdobeAnalyticsType.swift in Sources */,
 				45F6E018249D44270077C7D9 /* LanguageModel.swift in Sources */,
-				45E2BF2B254361E100C4D66C /* RendererContentImageNode.swift in Sources */,
 				4586D7DA246ECCE00062D988 /* TractParagraph.swift in Sources */,
 				45668E7123E0E1CC002728E7 /* OnboardingTutorialProvider.swift in Sources */,
 				4592B26024A512B100044435 /* UIColor+HexColor.swift in Sources */,
 				45249D0724ACAF2D00E139AD /* RealmFollowUp.swift in Sources */,
 				4556AEBE23E1EB78002C15E8 /* TutorialInMenuViewModel.swift in Sources */,
+				45ACEDF92547505D002BA378 /* RendererTrainingTipNode.swift in Sources */,
 				45D3C92B23DF9AC200ECF70E /* TutorialItem.swift in Sources */,
 				457551F424A585F70091652F /* Language.swift in Sources */,
 				4575C25023FAF7C200D3265B /* AccountItem.swift in Sources */,
@@ -4643,7 +4692,6 @@
 				4537455124857B3200F672A1 /* ResponseResult.swift in Sources */,
 				4575C28D23FC8E8500D3265B /* GlobalActivityAttribute.swift in Sources */,
 				4562B0DC23F1BC54006B53A9 /* AlertMessageViewModel.swift in Sources */,
-				45E2BF1B2543561E00C4D66C /* RendererPageNode.swift in Sources */,
 				4539F33324EADA6300B30DF9 /* TractRemoteShareChannel.swift in Sources */,
 				4506DEA924B79E2F00A1C50B /* MenuSectionHeaderViewModel.swift in Sources */,
 				451DB13A2461DA4200FB14BF /* TractTextContentProperties.swift in Sources */,
@@ -4693,11 +4741,11 @@
 				45B2AE4C2458886B00253BAD /* CallbackHandler.swift in Sources */,
 				452036C924005816002B2453 /* RequestResponse.swift in Sources */,
 				4506DEA524B79CD100A1C50B /* MenuSectionHeaderView.swift in Sources */,
+				45ACEDBB2547220E002BA378 /* ContextTextRenderer.swift in Sources */,
 				4579169F24E84F8500C0CF49 /* LoadToolRemoteSessionViewModel.swift in Sources */,
 				451DB1442461DA4200FB14BF /* TractCallToActionProperties.swift in Sources */,
 				451F3F1B24E458A000A25D11 /* ShareToolMenuViewModel.swift in Sources */,
 				45C2CFF32409B61000683A98 /* GlobalActivityAnalytics.swift in Sources */,
-				45E2BF2F254363C100C4D66C /* RendererTrainingTipNode.swift in Sources */,
 				4564724D244F723300CB202D /* ArticlesViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

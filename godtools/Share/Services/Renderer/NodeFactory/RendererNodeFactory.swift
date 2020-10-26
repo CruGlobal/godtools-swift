@@ -7,10 +7,11 @@
 //
 
 import Foundation
+import SWXMLHash
 
 class RendererNodeFactory {
     
-    let rendererNodeFactory: [RendererNodeType: BaseRendererNode.Type]
+    private let factory: [RendererNodeType: BaseRendererNode.Type]
     
     required init() {
         
@@ -23,23 +24,23 @@ class RendererNodeFactory {
             factory[nodeType] = RendererNodeFactory.getRendererNodeClass(nodeType: nodeType)
         }
         
-        self.rendererNodeFactory = factory
+        self.factory = factory
     }
     
-    func getRendererNode(id: String) -> BaseRendererNode? {
+    func getRendererNode(xmlElement: XMLElement) -> BaseRendererNode? {
         
-        guard let nodeType = RendererNodeType(rawValue: id) else {
+        guard let nodeType = RendererNodeType(rawValue: xmlElement.name) else {
             return nil
         }
         
-        guard let RendererNodeClass = rendererNodeFactory[nodeType] else {
+        guard let RendererNodeClass = factory[nodeType] else {
             return nil
         }
         
-        return RendererNodeClass.init(id: id, nodeType: nodeType)
+        return RendererNodeClass.init(xmlElement: xmlElement)
     }
     
-    static func getRendererNodeClass(nodeType: RendererNodeType) -> BaseRendererNode.Type {
+    private static func getRendererNodeClass(nodeType: RendererNodeType) -> BaseRendererNode.Type {
         
         switch nodeType {
             

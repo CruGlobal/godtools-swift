@@ -1,5 +1,5 @@
 //
-//  RendererNodeNameType.swift
+//  RendererNodeType.swift
 //  godtools
 //
 //  Created by Levi Eggert on 10/23/20.

@@ -18,6 +18,7 @@ protocol ToolTrainingViewModelType {
     func overlayTapped()
     func closeTapped()
     func continueTapped()
-    func pageDidChange(page: Int)
-    func pageDidAppear(page: Int)
+    func tipPageWillAppear(page: Int) -> RendererPageViewModelType
+    func tipPageDidChange(page: Int)
+    func tipPageDidAppear(page: Int)
 }
