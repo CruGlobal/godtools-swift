@@ -19,21 +19,24 @@ class OnboardingTutorialProvider: OnboardingTutorialProviderType {
             MainOnboardingTutorialItem(
                 backgroundImageName: "onboarding_tutorial_background_0",
                 backgroundCustomViewId: nil,
-                imageName: "onboarding_tutorial_cups",
+                imageName: nil,
+                animationName: "onboarding_tutorial_cups",
                 title: localizationServices.stringForMainBundle(key: "onboardingTutorial.aboutAppItem.0.title"),
                 message: localizationServices.stringForMainBundle(key: "onboardingTutorial.aboutAppItem.0.message")
             ),
             MainOnboardingTutorialItem(
                 backgroundImageName: "onboarding_tutorial_background_1",
                 backgroundCustomViewId: nil,
-                imageName: "onboarding_tutorial_knife",
+                imageName: nil,
+                animationName: "onboarding_tutorial_knife",
                 title: localizationServices.stringForMainBundle(key: "onboardingTutorial.aboutAppItem.1.title"),
                 message: localizationServices.stringForMainBundle(key: "onboardingTutorial.aboutAppItem.1.message")
             ),
             MainOnboardingTutorialItem(
                 backgroundImageName: "onboarding_tutorial_background_2",
                 backgroundCustomViewId: nil,
-                imageName: "onboarding_tutorial_rocket",
+                imageName: nil,
+                animationName: "onboarding_tutorial_rocket",
                 title: localizationServices.stringForMainBundle(key: "onboardingTutorial.aboutAppItem.2.title"),
                 message: localizationServices.stringForMainBundle(key: "onboardingTutorial.aboutAppItem.2.message")
             )
