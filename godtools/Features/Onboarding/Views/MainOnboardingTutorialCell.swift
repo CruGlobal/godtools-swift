@@ -32,19 +32,16 @@ class MainOnboardingTutorialCell: UICollectionViewCell {
         titleLabel.text = viewModel.title
         messageLabel.text = viewModel.message
         messageLabel.setLineSpacing(lineSpacing: 2)
-        setMessageLabelHidden(hidden: viewModel.message.isEmpty)
         
         // mainImage
         if let mainImageName = viewModel.mainImageName, !mainImageName.isEmpty, let mainImage = UIImage(named: mainImageName) {
             self.mainImage = mainImage
-            renderMainImage(mainImage: mainImage, mainImageView: nil)
-            mainImageView.isHidden = false
+            self.mainImageView.image = mainImage
         }
         else {
             mainImageView?.removeFromSuperview()
             mainImageView = nil
             mainImage = nil
-            mainImageView.isHidden = true
         }
         
         // animation
@@ -59,19 +56,5 @@ class MainOnboardingTutorialCell: UICollectionViewCell {
             animationView.stop()
             animationView.isHidden = true
         }
-    }
-    
-    private func renderMainImage(mainImage: UIImage, mainImageView: UIImageView?) {
-        let imageView: UIImageView = mainImageView ?? UIImageView()
-        
-        self.mainImage = mainImage
-        self.mainImageView = imageView
-        
-        imageView.image = mainImage
-        
-        renderMedia(
-            view: imageView,
-            originalViewSize: mainImage.size
-        )
     }
 }
