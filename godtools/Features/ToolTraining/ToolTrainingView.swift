@@ -188,10 +188,10 @@ extension ToolTrainingView: PageNavigationCollectionViewDelegate {
             cellReuseIdentifier: ToolTrainingTipView.reuseIdentifier,
             indexPath: indexPath) as! ToolTrainingTipView
         
-        let cellViewModel = viewModel.tipPageWillAppear(page: indexPath.row)
-        
-        cell.configure(viewModel: cellViewModel)
-        
+        if let tipView = viewModel.tipPageWillAppear(page: indexPath.row) {
+            cell.configure(tipView: tipView)
+        }
+                
         return cell
     }
     
