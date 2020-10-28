@@ -13,9 +13,7 @@ class MainOnboardingTutorialCell: UICollectionViewCell {
     
     static let nibName: String = "MainOnboardingTutorialCell"
     static let reuseIdentifier: String = "MainOnboardingTutorialCellReuseIdentifier"
-    
-    private var mainImage: UIImage?
-    
+        
     @IBOutlet weak private var mainImageView: UIImageView!
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var messageLabel: UILabel!
@@ -23,7 +21,6 @@ class MainOnboardingTutorialCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        mainImage = nil
         mainImageView.image = nil
         animationView.stop()
         animationView.animation = nil
@@ -36,12 +33,10 @@ class MainOnboardingTutorialCell: UICollectionViewCell {
         
         // mainImage
         if let mainImageName = viewModel.mainImageName, !mainImageName.isEmpty, let mainImage = UIImage(named: mainImageName) {
-            self.mainImage = mainImage
             mainImageView.image = mainImage
             mainImageView.isHidden = false
         }
         else {
-            mainImage = nil
             mainImageView.image = nil
             mainImageView.isHidden = true
         }
