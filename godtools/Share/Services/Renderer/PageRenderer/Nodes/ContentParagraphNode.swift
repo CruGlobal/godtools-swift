@@ -9,34 +9,15 @@
 import UIKit
 import SWXMLHash
 
-class ContentParagraphNode: PageXmlNode {
+class ContentParagraphNode: RendererXmlNode {
     
     let type: PageXmlNodeType
-    let rendererView: RendererNodeView?
-    let rendererModel: RendererNodeModel?
-    let renderer: NodeRendererType?
     
-    var parent: PageXmlNode?
-    var children: [PageXmlNode] = Array()
+    var parent: RendererXmlNode?
+    var children: [RendererXmlNode] = Array()
     
     required init(xmlElement: XMLElement, type: PageXmlNodeType) {
     
         self.type = type
-        
-        let model = ContentParagraphModel()
-        let viewModel = ContentParagraphViewModel(paragraphModel: model)
-        let view = ContentParagraphView(viewModel: viewModel)
-        
-        rendererModel = model
-        rendererView = view
-        renderer = VerticalStackRenderer(parent: view.contentView)
-    }
-    
-    var view: UIView {
-        return UIView()
-    }
-    
-    func addChildNodeViews(childNodes: [PageXmlNode]) {
-        
     }
 }

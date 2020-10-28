@@ -11,13 +11,13 @@ import SWXMLHash
 
 class PageXmlNodeFactory {
     
-    private let factory: [PageXmlNodeType: PageXmlNode.Type]
+    private let factory: [PageXmlNodeType: RendererXmlNode.Type]
     
     required init() {
         
         let allNodeTypes: [PageXmlNodeType] = PageXmlNodeType.allCases
         
-        var factory: [PageXmlNodeType: PageXmlNode.Type] = Dictionary()
+        var factory: [PageXmlNodeType: RendererXmlNode.Type] = Dictionary()
         
         for nodeType in allNodeTypes {
             
@@ -27,7 +27,7 @@ class PageXmlNodeFactory {
         self.factory = factory
     }
     
-    func getRendererNode(nodeType: PageXmlNodeType, xmlElement: XMLElement) -> PageXmlNode? {
+    func getRendererNode(nodeType: PageXmlNodeType, xmlElement: XMLElement) -> RendererXmlNode? {
         
         guard let RendererNodeClass = factory[nodeType] else {
             return nil
@@ -36,7 +36,7 @@ class PageXmlNodeFactory {
         return RendererNodeClass.init(xmlElement: xmlElement, type: nodeType)
     }
     
-    private static func getRendererNodeClass(nodeType: PageXmlNodeType) -> PageXmlNode.Type {
+    private static func getRendererNodeClass(nodeType: PageXmlNodeType) -> RendererXmlNode.Type {
         
         switch nodeType {
             

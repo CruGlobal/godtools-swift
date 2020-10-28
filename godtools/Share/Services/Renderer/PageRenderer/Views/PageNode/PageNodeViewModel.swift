@@ -1,5 +1,5 @@
 //
-//  ContentParagraphViewModel.swift
+//  PageNodeViewModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 10/27/20.
@@ -8,9 +8,9 @@
 
 import Foundation
 
-class ContentParagraphViewModel {
+class PageNodeViewModel {
     
-    required init(paragraphModel: ContentParagraphModel) {
+    required init() {
         
     }
 }

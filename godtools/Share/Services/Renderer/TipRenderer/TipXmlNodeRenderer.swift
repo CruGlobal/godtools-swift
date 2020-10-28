@@ -1,5 +1,5 @@
 //
-//  TipXmlRenderer.swift
+//  TipXmlNodeRenderer.swift
 //  godtools
 //
 //  Created by Levi Eggert on 10/27/20.
@@ -9,16 +9,16 @@
 import Foundation
 import SWXMLHash
 
-class TipXmlRenderer {
+class TipXmlNodeRenderer {
     
-    private let pageRenderer: PageXmlRenderer
+    private let pageRenderer: PageXmlNodeRenderer
     
-    required init(pageRenderer: PageXmlRenderer) {
+    required init(pageRenderer: PageXmlNodeRenderer) {
         
         self.pageRenderer = pageRenderer
     }
     
-    func render(tipXml: Data) -> [PageXmlNode] {
+    func render(tipXml: Data) -> [UIView] {
         
         let tipXmlHash: XMLIndexer = SWXMLHash.parse(tipXml)
         
@@ -31,17 +31,18 @@ class TipXmlRenderer {
             return []
         }
                 
-        var pageXmlNodes: [PageXmlNode] = Array()
+        var pages: [UIView] = Array()
         
         for child in pagesXmlElement.children {
             if let pageXmlElement = child as? XMLElement {
-                if let pageXmlNode = pageRenderer.renderPage(pageXmlElement: pageXmlElement) {
-                    pageXmlNodes.append(pageXmlNode)
+                if let pageNode = pageRenderer.renderPageXmlElement(pageXmlElement: pageXmlElement) {
+                    let view: UIView = pageRenderer.renderPageNode(page: pageNode)
+                    pages.append(view)
                 }
             }
         }
         
-        return pageXmlNodes
+        return pages
     }
     
     private func recurseForPagesXmlElement(xmlElement: XMLElement) -> XMLElement? {

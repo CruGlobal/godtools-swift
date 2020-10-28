@@ -11,8 +11,8 @@ import UIKit
 class ToolTrainingViewModel: ToolTrainingViewModelType {
     
     private let tipXml: Data
-    private let tipRenderer: TipXmlRenderer
-    private let pages: [PageXmlNode]
+    private let tipRenderer: TipXmlNodeRenderer
+    private let pages: [UIView]
     
     private var page: Int = 0
     
@@ -21,7 +21,7 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
     let title: ObservableValue<String> = ObservableValue(value: "")
     let numberOfTipPages: ObservableValue<Int> = ObservableValue(value: 0)
     
-    required init(tipXml: Data, tipRenderer: TipXmlRenderer) {
+    required init(tipXml: Data, tipRenderer: TipXmlNodeRenderer) {
         
         self.tipXml = tipXml
         self.tipRenderer = tipRenderer
@@ -61,11 +61,11 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
         }
     }
     
-    func tipPageWillAppear(page: Int) -> UIView? {
+    func tipPageWillAppear(page: Int) -> UIView {
         
-        let pageXmlNode: PageXmlNode = pages[page]
+        let pageView: UIView = pages[page]
         
-        return pageXmlNode.rendererView?.contentView
+        return pageView
     }
     
     func tipPageDidChange(page: Int) {

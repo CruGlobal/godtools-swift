@@ -9,33 +9,15 @@
 import UIKit
 import SWXMLHash
 
-class ContentImageNode: PageXmlNode {
+class ContentImageNode: RendererXmlNode {
     
     let type: PageXmlNodeType
-    let rendererView: RendererNodeView?
-    let rendererModel: RendererNodeModel?
-    let renderer: NodeRendererType? = nil
     
-    var parent: PageXmlNode?
-    var children: [PageXmlNode] = Array()
+    var parent: RendererXmlNode?
+    var children: [RendererXmlNode] = Array()
     
     required init(xmlElement: XMLElement, type: PageXmlNodeType) {
     
-        self.type = type
-        
-        let model = ContentImageModel()
-        let viewModel = ContentImageViewModel(imageModel: model)
-        let view = ContentImageView(viewModel: viewModel)
-        
-        rendererModel = model
-        rendererView = view
-    }
-    
-    var view: UIView {
-        return UIView()
-    }
-    
-    func addChildNodeViews(childNodes: [PageXmlNode]) {
-        
+        self.type = type        
     }
 }

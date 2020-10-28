@@ -241,7 +241,7 @@ class MenuFlow: Flow {
             
             let viewModel = ToolTrainingViewModel(
                 tipXml: tipXml,
-                tipRenderer: appDiContainer.getTipRenderer()
+                tipRenderer: appDiContainer.getTipNodeRenderer()
             )
             
             let view = ToolTrainingView(viewModel: viewModel)
