@@ -23,9 +23,8 @@ class MainOnboardingTutorialCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        mainImageView?.removeFromSuperview()
         mainImage = nil
-        mainImageView = nil
+        mainImageView.image = nil
         animationView.stop()
         animationView.animation = nil
     }
@@ -37,13 +36,14 @@ class MainOnboardingTutorialCell: UICollectionViewCell {
         
         // mainImage
         if let mainImageName = viewModel.mainImageName, !mainImageName.isEmpty, let mainImage = UIImage(named: mainImageName) {
-             self.mainImage = mainImage
-             renderMainImage(mainImage: mainImage, mainImageView: nil)
+            self.mainImage = mainImage
+            mainImageView.image = mainImage
+            mainImageView.isHidden = false
         }
         else {
-            mainImageView?.removeFromSuperview()
-            mainImageView = nil
             mainImage = nil
+            mainImageView.image = nil
+            mainImageView.isHidden = true
         }
         
         // animation
@@ -58,21 +58,5 @@ class MainOnboardingTutorialCell: UICollectionViewCell {
             animationView.stop()
             animationView.isHidden = true
         }
-    }
-    
-    private func renderMainImageIfNeeded() {
-        if let mainImage = self.mainImage {
-               renderMainImage(mainImage: mainImage, mainImageView: mainImageView)
-        }
-    }
-       
-    private func renderMainImage(mainImage: UIImage, mainImageView: UIImageView?) {
-
-        let imageView: UIImageView = mainImageView ?? UIImageView()
-           
-        self.mainImage = mainImage
-        self.mainImageView = imageView
-           
-        imageView.image = mainImage
     }
 }
