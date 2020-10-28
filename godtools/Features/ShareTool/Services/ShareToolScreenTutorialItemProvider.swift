@@ -35,8 +35,8 @@ class ShareToolScreenTutorialItemProvider: TutorialItemProviderType {
             TutorialItem(
                 title: localizationServices.stringForMainBundle(key: "share_tool_screen_tutorial.get_started.title"),
                 message: localizationServices.stringForMainBundle(key: "share_tool_screen_tutorial.get_started.message"),
-                imageName: "share_tool_tutorial_link",
-                animationName: /*"share_tool_tutorial_link"*/nil,
+                imageName: nil,
+                animationName: "share_tool_tutorial_link",
                 youTubeVideoId: nil,
                 customViewId: nil
             )
