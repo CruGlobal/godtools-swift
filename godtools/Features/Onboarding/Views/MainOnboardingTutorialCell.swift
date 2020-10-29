@@ -7,25 +7,51 @@
 //
 
 import UIKit
+import Lottie
 
 class MainOnboardingTutorialCell: UICollectionViewCell {
     
     static let nibName: String = "MainOnboardingTutorialCell"
     static let reuseIdentifier: String = "MainOnboardingTutorialCellReuseIdentifier"
-    
+        
     @IBOutlet weak private var mainImageView: UIImageView!
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var messageLabel: UILabel!
+    @IBOutlet weak private var animationView: AnimationView!
     
     override func prepareForReuse() {
         super.prepareForReuse()
         mainImageView.image = nil
+        animationView.stop()
+        animationView.animation = nil
     }
     
     func configure(viewModel: MainOnboardingTutorialCellViewModel) {
-        mainImageView.image = viewModel.mainImage
         titleLabel.text = viewModel.title
         messageLabel.text = viewModel.message
         messageLabel.setLineSpacing(lineSpacing: 2)
+        
+        // mainImage
+        if let mainImageName = viewModel.mainImageName, !mainImageName.isEmpty, let mainImage = UIImage(named: mainImageName) {
+            mainImageView.image = mainImage
+            mainImageView.isHidden = false
+        }
+        else {
+            mainImageView.image = nil
+            mainImageView.isHidden = true
+        }
+        
+        // animation
+        if let animationName = viewModel.animationName, !animationName.isEmpty {
+            let animation = Animation.named(animationName)
+            animationView.animation = animation
+            animationView.loopMode = .loop
+            animationView.play()
+            animationView.isHidden = false
+        }
+        else {
+            animationView.stop()
+            animationView.isHidden = true
+        }
     }
 }
