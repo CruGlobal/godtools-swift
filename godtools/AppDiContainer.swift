@@ -201,14 +201,8 @@ class AppDiContainer {
         LanguagesManager.shared.setup(languageSettingsService: languageSettingsService)
     }
     
-    func getPageNodeRenderer() -> PageXmlNodeRenderer {
-        return PageXmlNodeRenderer()
-    }
-    
-    func getTipNodeRenderer() -> TipXmlNodeRenderer {
-        return TipXmlNodeRenderer(
-            pageRenderer: getPageNodeRenderer()
-        )
+    func getMobileContentNodeParser() -> MobileContentXmlNodeParser {
+        return MobileContentXmlNodeParser()
     }
     
     func getToolTrainingTipsOnboardingViews() -> ToolTrainingTipsOnboardingViewsService {

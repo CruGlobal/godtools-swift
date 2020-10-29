@@ -223,8 +223,9 @@ class MenuFlow: Flow {
             //let viewModel = PlaygroundViewModel()
             //let view = PlaygroundView(viewModel: viewModel)
     
-            // TODO: Remove. ~Levi
                         
+            // TODO: Remove. ~Levi
+            
             let translationDownloader = appDiContainer.translationDownloader
             let location = SHA256FileLocation(sha256WithPathExtension: "8bd5fe81f37c7eddeb36f980a3330269a9ef4f66e0063fdfd4065d527d1827c0.xml")
             
@@ -241,7 +242,7 @@ class MenuFlow: Flow {
             
             let viewModel = ToolTrainingViewModel(
                 tipXml: tipXml,
-                tipRenderer: appDiContainer.getTipNodeRenderer()
+                mobileContentNodeParser: appDiContainer.getMobileContentNodeParser()
             )
             
             let view = ToolTrainingView(viewModel: viewModel)

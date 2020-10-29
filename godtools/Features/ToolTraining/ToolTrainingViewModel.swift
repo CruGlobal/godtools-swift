@@ -11,9 +11,9 @@ import UIKit
 class ToolTrainingViewModel: ToolTrainingViewModelType {
     
     private let tipXml: Data
-    private let tipRenderer: TipXmlNodeRenderer
-    private let pages: [UIView]
+    private let mobileContentNodeParser: MobileContentXmlNodeParser
     
+    private var pageNodes: [PageNode] = Array()
     private var page: Int = 0
     
     let progress: ObservableValue<AnimatableValue<CGFloat>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
@@ -21,16 +21,21 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
     let title: ObservableValue<String> = ObservableValue(value: "")
     let numberOfTipPages: ObservableValue<Int> = ObservableValue(value: 0)
     
-    required init(tipXml: Data, tipRenderer: TipXmlNodeRenderer) {
+    required init(tipXml: Data, mobileContentNodeParser: MobileContentXmlNodeParser) {
         
         self.tipXml = tipXml
-        self.tipRenderer = tipRenderer
+        self.mobileContentNodeParser = mobileContentNodeParser
         
-        pages = tipRenderer.render(tipXml: tipXml)
-        
-        numberOfTipPages.accept(value: pages.count)
-        
-        setPage(page: 0, animated: false)
+        mobileContentNodeParser.asyncParse(xml: tipXml) { [weak self] (node: MobileContentXmlNode?) in
+            guard let tipNode = node as? TipNode else {
+                return
+            }
+            
+            let pageNodes: [PageNode] = tipNode.pages?.pages ?? []
+            self?.pageNodes = pageNodes
+            self?.numberOfTipPages.accept(value: pageNodes.count)
+            self?.setPage(page: 0, animated: false)
+        }
     }
     
     private func setPage(page: Int, animated: Bool) {
@@ -63,9 +68,9 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
     
     func tipPageWillAppear(page: Int) -> UIView {
         
-        let pageView: UIView = pages[page]
+        //let pageView: UIView = pages[page]
         
-        return pageView
+        return UIView()
     }
     
     func tipPageDidChange(page: Int) {
