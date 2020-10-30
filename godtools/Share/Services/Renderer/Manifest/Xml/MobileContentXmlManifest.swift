@@ -1,5 +1,5 @@
 //
-//  RendererXmlManifest.swift
+//  MobileContentXmlManifest.swift
 //  godtools
 //
 //  Created by Levi Eggert on 10/20/20.
@@ -9,13 +9,13 @@
 import Foundation
 import SWXMLHash
 
-class RendererXmlManifest: RendererManifestType {
+class MobileContentXmlManifest: MobileContentManifestType {
       
-    let attributes: RendererXmlManifestAttributes
+    let attributes: MobileContentXmlManifestAttributes
     let title: String?
-    let pages: [RendererXmlManifestPage]
-    let tips: [TipId: RendererXmlManifestTip]
-    let resources: [ResourceFilename: RendererXmlManifestResource]
+    let pages: [MobileContentXmlManifestPage]
+    let tips: [TipId: MobileContentXmlManifestTip]
+    let resources: [ResourceFilename: MobileContentXmlManifestResource]
         
     required init(translationManifest: TranslationManifestData) {
            
@@ -23,30 +23,30 @@ class RendererXmlManifest: RendererManifestType {
         
         let manifest: XMLIndexer = xmlHash["manifest"]
 
-        attributes = RendererXmlManifestAttributes(manifest: manifest)
+        attributes = MobileContentXmlManifestAttributes(manifest: manifest)
         
         title = xmlHash["manifest"]["title"]["content:text"].element?.text
         
         let pagesIndexer: [XMLIndexer] = manifest["pages"]["page"].all
         pages = (pagesIndexer).map {
-            RendererXmlManifestPage(page: $0)
+            MobileContentXmlManifestPage(page: $0)
         }
         
         let tipsIndexer: [XMLIndexer] = manifest["tips"]["tip"].all
-        var tipsDictionary: [TipId: RendererManifestTip] = Dictionary()
+        var tipsDictionary: [TipId: MobileContentManifestTip] = Dictionary()
         
         for tipXml in tipsIndexer {
-            let tip = RendererManifestTip(tip: tipXml)
+            let tip = MobileContentManifestTip(tip: tipXml)
             tipsDictionary[tip.id] = tip
         }
         
         self.tips = tipsDictionary
         
         let resourcesIndexer: [XMLIndexer] = manifest["resources"]["resource"].all
-        var resourcesDictionary: [ResourceFilename: RendererXmlManifestResource] = Dictionary()
+        var resourcesDictionary: [ResourceFilename: MobileContentXmlManifestResource] = Dictionary()
         
         for resourceXml in resourcesIndexer {
-            let resource = RendererXmlManifestResource(resource: resourceXml)
+            let resource = MobileContentXmlManifestResource(resource: resourceXml)
             resourcesDictionary[resource.filename] = resource
         }
         

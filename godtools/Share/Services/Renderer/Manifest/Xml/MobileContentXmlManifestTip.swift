@@ -1,5 +1,5 @@
 //
-//  RendererXmlManifestTip.swift
+//  MobileContentXmlManifestTip.swift
 //  godtools
 //
 //  Created by Levi Eggert on 10/20/20.
@@ -9,7 +9,7 @@
 import Foundation
 import SWXMLHash
 
-struct RendererXmlManifestTip: RendererManifestTipType {
+struct MobileContentXmlManifestTip: MobileContentManifestTipType {
     
     let id: String
     let src: String

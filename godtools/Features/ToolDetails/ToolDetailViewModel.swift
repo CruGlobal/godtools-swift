@@ -213,7 +213,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         
         case .success(let translationManifest):
             
-            let manifest: RendererXmlManifest = RendererXmlManifest(translationManifest: translationManifest)
+            let manifest: MobileContentXmlManifest = MobileContentXmlManifest(translationManifest: translationManifest)
             
             hidesLearnToShareButton = manifest.tips.isEmpty
             

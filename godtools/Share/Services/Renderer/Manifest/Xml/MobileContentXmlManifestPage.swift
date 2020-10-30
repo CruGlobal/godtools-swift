@@ -1,5 +1,5 @@
 //
-//  RendererXmlManifestPage.swift
+//  MobileContentXmlManifestPage.swift
 //  godtools
 //
 //  Created by Levi Eggert on 10/20/20.
@@ -9,7 +9,7 @@
 import Foundation
 import SWXMLHash
 
-struct RendererXmlManifestPage: RendererManifestPageType {
+struct MobileContentXmlManifestPage: MobileContentManifestPageType {
     
     let filename: String
     let src: String

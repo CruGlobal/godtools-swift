@@ -1,5 +1,5 @@
 //
-//  RendererManifestAttributesType.swift
+//  MobileContentManifestAttributesType.swift
 //  godtools
 //
 //  Created by Levi Eggert on 10/22/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol RendererManifestAttributesType {
+protocol MobileContentManifestAttributesType {
     
     var backgroundColor: String { get }
     var backgroundImage: String? { get }

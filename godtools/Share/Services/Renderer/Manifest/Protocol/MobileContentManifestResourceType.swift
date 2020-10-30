@@ -1,5 +1,5 @@
 //
-//  RendererManifestTipType.swift
+//  MobileContentManifestResourceType.swift
 //  godtools
 //
 //  Created by Levi Eggert on 10/20/20.
@@ -8,8 +8,8 @@
 
 import Foundation
 
-protocol RendererManifestTipType {
+protocol MobileContentManifestResourceType {
     
-    var id: String { get }
+    var filename: String { get }
     var src: String { get }
 }

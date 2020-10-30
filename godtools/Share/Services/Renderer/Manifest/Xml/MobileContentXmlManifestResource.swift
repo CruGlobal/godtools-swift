@@ -1,5 +1,5 @@
 //
-//  RendererXmlManifestResource.swift
+//  MobileContentXmlManifestResource.swift
 //  godtools
 //
 //  Created by Levi Eggert on 10/20/20.
@@ -9,7 +9,7 @@
 import Foundation
 import SWXMLHash
 
-struct RendererXmlManifestResource: RendererManifestResourceType {
+struct MobileContentXmlManifestResource: MobileContentManifestResourceType {
     
     let filename: String
     let src: String

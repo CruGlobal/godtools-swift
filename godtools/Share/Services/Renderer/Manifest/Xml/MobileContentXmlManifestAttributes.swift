@@ -1,5 +1,5 @@
 //
-//  RendererXmlManifestAttributes.swift
+//  MobileContentXmlManifestAttributes.swift
 //  godtools
 //
 //  Created by Levi Eggert on 10/22/20.
@@ -9,7 +9,7 @@
 import Foundation
 import SWXMLHash
 
-struct RendererXmlManifestAttributes: RendererManifestAttributesType {
+struct MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
     
     let backgroundColor: String
     let backgroundImage: String?
