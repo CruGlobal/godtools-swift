@@ -12,7 +12,8 @@ struct MainOnboardingTutorialItem: OnboardingTutorialItem {
     
     let backgroundImageName: String?
     let backgroundCustomViewId: String?
-    let imageName: String
+    let imageName: String?
+    let animationName: String?
     let title: String
     let message: String
 }
