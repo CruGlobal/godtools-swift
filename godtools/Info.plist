@@ -46,7 +46,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>800</string>
+	<string>813</string>
 	<key>Configuration</key>
 	<string>$(CONFIGURATION)</string>
 	<key>Fabric</key>
