@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -31,6 +31,13 @@
                             <constraint firstAttribute="width" secondItem="ooA-c7-iEq" secondAttribute="height" multiplier="222:131" id="aBI-4R-2Go"/>
                         </constraints>
                     </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8LX-T6-KkJ" userLabel="animationView" customClass="AnimationView" customModule="Lottie">
+                        <rect key="frame" x="75" y="160" width="225" height="133"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="8LX-T6-KkJ" secondAttribute="height" multiplier="222:131" id="y9I-HT-nwl"/>
+                        </constraints>
+                    </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tutorial" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pzC-0l-klq" userLabel="titleLabel">
                         <rect key="frame" x="30" y="333" width="315" height="38.5"/>
                         <fontDescription key="fontDescription" name="SFProDisplay-Light" family="SF Pro Display" pointSize="32"/>
@@ -48,14 +55,17 @@
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstItem="pzC-0l-klq" firstAttribute="leading" secondItem="wNj-b6-6dr" secondAttribute="leading" constant="30" id="03o-AU-9Jl"/>
+                    <constraint firstItem="8LX-T6-KkJ" firstAttribute="top" secondItem="wNj-b6-6dr" secondAttribute="top" constant="160" id="5gw-9l-hFs"/>
                     <constraint firstAttribute="trailing" secondItem="pzC-0l-klq" secondAttribute="trailing" constant="30" id="8V4-BD-hbg"/>
                     <constraint firstItem="ooA-c7-iEq" firstAttribute="width" secondItem="wNj-b6-6dr" secondAttribute="width" multiplier="0.6" id="9jt-vm-RgQ"/>
+                    <constraint firstItem="8LX-T6-KkJ" firstAttribute="centerX" secondItem="wNj-b6-6dr" secondAttribute="centerX" id="AqZ-tR-svH"/>
                     <constraint firstItem="ooA-c7-iEq" firstAttribute="width" secondItem="ooA-c7-iEq" secondAttribute="height" multiplier="222:131" id="GO5-TA-z6f"/>
                     <constraint firstAttribute="trailing" secondItem="2Bv-UU-5ko" secondAttribute="trailing" constant="30" id="HlJ-OM-ktB"/>
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="2Bv-UU-5ko" secondAttribute="bottom" constant="20" id="MXf-Xq-0xC"/>
                     <constraint firstItem="ooA-c7-iEq" firstAttribute="top" secondItem="wNj-b6-6dr" secondAttribute="top" priority="500" constant="160" id="Mhe-ej-YdE"/>
                     <constraint firstItem="2Bv-UU-5ko" firstAttribute="leading" secondItem="wNj-b6-6dr" secondAttribute="leading" constant="30" id="dTm-A2-JVA"/>
                     <constraint firstItem="ooA-c7-iEq" firstAttribute="centerX" secondItem="wNj-b6-6dr" secondAttribute="centerX" id="hzb-jC-z75"/>
+                    <constraint firstItem="8LX-T6-KkJ" firstAttribute="width" secondItem="wNj-b6-6dr" secondAttribute="width" multiplier="0.6" id="lW7-Io-QLB"/>
                     <constraint firstItem="2Bv-UU-5ko" firstAttribute="top" secondItem="pzC-0l-klq" secondAttribute="bottom" constant="16" id="ufp-7m-bVw"/>
                     <constraint firstItem="pzC-0l-klq" firstAttribute="top" secondItem="ooA-c7-iEq" secondAttribute="bottom" constant="40" id="yg8-CS-rRL"/>
                 </constraints>
@@ -63,6 +73,7 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <size key="customSize" width="343" height="220"/>
             <connections>
+                <outlet property="animationView" destination="8LX-T6-KkJ" id="Iq2-QI-MEc"/>
                 <outlet property="mainImageView" destination="ooA-c7-iEq" id="hJ0-yF-Nbv"/>
                 <outlet property="messageLabel" destination="2Bv-UU-5ko" id="CyM-bQ-G6P"/>
                 <outlet property="titleLabel" destination="pzC-0l-klq" id="Suy-Zg-3Cn"/>

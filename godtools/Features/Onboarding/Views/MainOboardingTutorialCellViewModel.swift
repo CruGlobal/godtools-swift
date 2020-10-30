@@ -10,14 +10,15 @@ import UIKit
 
 class MainOnboardingTutorialCellViewModel {
     
-    let mainImage: UIImage?
     let title: String
     let message: String
-    
+    let mainImageName: String?
+    let animationName: String?
+   
     required init(item: MainOnboardingTutorialItem) {
-        
-        mainImage = UIImage(named: item.imageName)
         title = item.title
         message = item.message
+        mainImageName = item.imageName
+        animationName = item.animationName
     }
 }
