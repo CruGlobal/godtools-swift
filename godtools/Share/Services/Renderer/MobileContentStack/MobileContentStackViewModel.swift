@@ -32,7 +32,7 @@ class MobileContentStackViewModel {
             
             let view = MobileContentStackView(
                 viewModel: viewModel,
-                viewSpacing: 0,
+                viewSpacing: 20,
                 scrollIsEnabled: false
             )
             
@@ -60,9 +60,13 @@ class MobileContentStackViewModel {
         let label: UILabel = UILabel()
         label.backgroundColor = UIColor.clear
         label.text = text
+        label.textColor = UIColor.hexColor(hexValue: 0x5A5A5A)
+        label.font = UIFont(name: "Helvetica", size: 18)
         label.textAlignment = .left
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
+        
+        label.setLineSpacing(lineSpacing: 4)
         
         return label
     }

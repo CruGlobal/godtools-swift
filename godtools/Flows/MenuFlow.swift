@@ -227,7 +227,7 @@ class MenuFlow: Flow {
             // TODO: Remove. ~Levi
             
             let translationDownloader = appDiContainer.translationDownloader
-            let location = SHA256FileLocation(sha256WithPathExtension: "8bd5fe81f37c7eddeb36f980a3330269a9ef4f66e0063fdfd4065d527d1827c0.xml")
+            let location = SHA256FileLocation(sha256WithPathExtension: "bd1ca565c3404c72ffd1eaadf81810e3346030aed957a97c0bd6889db79f434e.xml")
             
             var tipXml: Data!
             
