@@ -11,10 +11,14 @@ import UIKit
 class ToolPageView: UIViewController {
     
     private let viewModel: ToolPageViewModelType
+    
+    private var contentStackView: MobileContentStackView?
+    private var heroView: MobileContentStackView?
             
     private var didLayoutSubviews: Bool = false
     
     @IBOutlet weak private var backgroundImageView: UIImageView!
+    @IBOutlet weak private var mobileContentStackContainerView: UIView!
     @IBOutlet weak private var headerView: UIView!
     @IBOutlet weak private var headerNumberLabel: UILabel!
     @IBOutlet weak private var headerTitleLabel: UILabel!
@@ -57,16 +61,9 @@ class ToolPageView: UIViewController {
         
         setHeaderHidden(hidden: viewModel.hidesHeader, animated: false)
         
-        let heroTopContentInset: CGFloat
-        if !viewModel.hidesHeader {
-            heroTopContentInset = headerView.frame.size.height + 20
-        }
-        else {
-            heroTopContentInset = 30
-        }
+        setCallToActionHidden(hidden: viewModel.hidesCallToAction, animated: false)
         
-        viewModel.heroView?.scrollView?.contentInset = UIEdgeInsets(top: heroTopContentInset, left: 0, bottom: 0, right: 0)
-        viewModel.heroView?.scrollView?.contentOffset = CGPoint(x: 0, y: heroTopContentInset * -1)
+        setHeroTopContentInset()
     }
     
     private func setupLayout() {
@@ -75,14 +72,45 @@ class ToolPageView: UIViewController {
     
     private func setupBinding() {
         
+        if let contentStackViewModel = viewModel.contentStack {
+            let mobileContentView = MobileContentStackView(viewModel: contentStackViewModel, viewSpacing: 10, scrollIsEnabled: true)
+            mobileContentStackContainerView.addSubview(mobileContentView)
+            mobileContentView.constrainEdgesToSuperview()
+            mobileContentStackContainerView.isHidden = false
+            self.contentStackView = mobileContentView
+        }
+        else {
+            mobileContentStackContainerView.isHidden = true
+        }
+                
         headerNumberLabel.text = viewModel.headerNumber
         headerTitleLabel.text = viewModel.headerTitle
         callToActionTitleLabel.text = viewModel.callToActionTitle
         
-        if let heroView = viewModel.heroView {
-            heroContainerView.addSubview(heroView)
-            heroView.constrainEdgesToSuperview()
+        if let heroViewModel = viewModel.hero {
+            let mobileContentView = MobileContentStackView(viewModel: heroViewModel, viewSpacing: 10, scrollIsEnabled: true)
+            heroContainerView.addSubview(mobileContentView)
+            mobileContentView.constrainEdgesToSuperview()
+            heroContainerView.isHidden = false
+            self.heroView = mobileContentView
         }
+        else {
+            heroContainerView.isHidden = true
+        }
+    }
+    
+    private func setHeroTopContentInset() {
+        
+        let heroTopContentInset: CGFloat
+        if !viewModel.hidesHeader {
+            heroTopContentInset = headerView.frame.size.height + 20
+        }
+        else {
+            heroTopContentInset = 30
+        }
+        
+        heroView?.scrollView?.contentInset = UIEdgeInsets(top: heroTopContentInset, left: 0, bottom: 0, right: 0)
+        heroView?.scrollView?.contentOffset = CGPoint(x: 0, y: heroTopContentInset * -1)
     }
     
     private func setHeaderHidden(hidden: Bool, animated: Bool) {
@@ -90,6 +118,22 @@ class ToolPageView: UIViewController {
         let topConstant: CGFloat = hidden ? headerView.frame.size.height * -1 : 0
         
         headerTop.constant = topConstant
+        
+        if animated {
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+                self.view.layoutIfNeeded()
+            }, completion: nil)
+        }
+        else {
+            view.layoutIfNeeded()
+        }
+    }
+    
+    private func setCallToActionHidden(hidden: Bool, animated: Bool) {
+        
+        let bottomConstant: CGFloat = hidden ? callToActionView.frame.size.height * -1 : 0
+        
+        callToActionBottom.constant = bottomConstant
         
         if animated {
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {

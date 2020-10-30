@@ -13,24 +13,24 @@ class ToolTrainingTipView: UICollectionViewCell {
     static let nibName: String = "ToolTrainingTipView"
     static let reuseIdentifier: String = "ToolTrainingTipViewReuseIdentifier"
     
-    private var tipView: UIView?
+    private var toolPage: ToolPageView?
+    private var viewModel: ToolPageViewModel?
     
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        tipView?.removeFromSuperview()
-        tipView = nil
+        viewModel = nil
+        toolPage = nil
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        tipView?.frame = contentView.bounds
-    }
-    
-    func configure(tipView: UIView) {
+    func configure(viewModel: ToolPageViewModel) {
         
-        self.tipView = tipView
+        let toolPage: ToolPageView = ToolPageView(viewModel: viewModel)
         
-        contentView.addSubview(tipView)
+        contentView.addSubview(toolPage.view)
+        toolPage.view.constrainEdgesToSuperview()
+        
+        self.toolPage = toolPage
+        self.viewModel = viewModel
     }
 }

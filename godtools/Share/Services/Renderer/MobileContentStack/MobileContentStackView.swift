@@ -10,14 +10,14 @@ import UIKit
 
 class MobileContentStackView: UIView {
     
-    private let node: MobileContentXmlNode
+    private let viewModel: MobileContentStackViewModel
     private let stackView: UIStackView = UIStackView()
     
     private(set) var scrollView: UIScrollView?
         
-    required init(node: MobileContentXmlNode, viewSpacing: CGFloat, scrollIsEnabled: Bool) {
-                     
-        self.node = node
+    required init(viewModel: MobileContentStackViewModel, viewSpacing: CGFloat, scrollIsEnabled: Bool) {
+                             
+        self.viewModel = viewModel
         
         super.init(frame: .zero)
         
@@ -32,6 +32,10 @@ class MobileContentStackView: UIView {
         stackView.spacing = viewSpacing
         
         scrollView?.backgroundColor = .clear
+        
+        viewModel.render { [weak self] (view: UIView) in
+            self?.addContentView(view: view)
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -53,6 +57,11 @@ class MobileContentStackView: UIView {
         
         stackView.addArrangedSubview(view)
     }
+}
+
+// MARK: - Constraints
+
+extension MobileContentStackView {
     
     private func setupConstraints(parentView: UIView, scrollIsEnabled: Bool) {
             
@@ -122,11 +131,6 @@ class MobileContentStackView: UIView {
         
         addHeightConstraintToView(view: stackView, height: 10, priority: 500)
     }
-}
-
-// MARK: - Constraints
-
-extension MobileContentStackView {
     
     private func addHeightConstraintToView(view: UIView, height: CGFloat, priority: Float) {
     

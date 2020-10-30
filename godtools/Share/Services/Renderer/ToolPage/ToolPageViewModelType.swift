@@ -10,11 +10,11 @@ import Foundation
 
 protocol ToolPageViewModelType {
     
+    var contentStack: MobileContentStackViewModel? { get }
     var headerNumber: String? { get }
     var headerTitle: String? { get }
     var hidesHeader: Bool { get }
-    var hidesHero: Bool { get }
-    var heroView: MobileContentStackView? { get }
+    var hero: MobileContentStackViewModel? { get }
     var callToActionTitle: String? { get }
     var hidesCallToAction: Bool { get }
 }

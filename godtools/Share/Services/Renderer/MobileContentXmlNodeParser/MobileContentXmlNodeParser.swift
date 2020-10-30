@@ -61,7 +61,7 @@ class MobileContentXmlNodeParser {
             return nil
         }
         
-        guard let node = nodeFactory.getNode(nodeType: nodeType, xmlElement: xmlElement) as? PageNode else {
+        guard let node = nodeFactory.getNode(nodeType: nodeType, xmlElement: xmlElement) else {
             return nil
         }
         

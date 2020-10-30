@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ToolPageView" customModule="GodTools_Renderer" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ToolPageView" customModule="godtools" customModuleProvider="target">
             <connections>
                 <outlet property="backgroundImageView" destination="Fq2-k9-BHr" id="v34-gp-zLk"/>
                 <outlet property="callToActionBottom" destination="dHS-ur-gJE" id="bTk-JU-QbK"/>
@@ -20,6 +20,7 @@
                 <outlet property="headerTop" destination="PD0-vu-VOs" id="nZx-Aw-M6I"/>
                 <outlet property="headerView" destination="fDq-Oz-qfu" id="CvZ-yX-v0w"/>
                 <outlet property="heroContainerView" destination="W0e-5d-5fy" id="6YC-0v-sQv"/>
+                <outlet property="mobileContentStackContainerView" destination="iQQ-dy-v0D" id="VYu-Nm-RR6"/>
                 <outlet property="view" destination="iN0-l3-epB" id="2CB-Lz-6to"/>
             </connections>
         </placeholder>
@@ -32,6 +33,10 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iQQ-dy-v0D" userLabel="mobileContentStackContainerView">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W0e-5d-5fy" userLabel="heroContainerView">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="500"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -102,11 +107,15 @@
                 <constraint firstItem="W0e-5d-5fy" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="7wH-UJ-zda"/>
                 <constraint firstItem="fDq-Oz-qfu" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="8zY-5g-jrY"/>
                 <constraint firstItem="W0e-5d-5fy" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="9td-eO-buQ"/>
+                <constraint firstItem="iQQ-dy-v0D" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="Dmf-LY-as3"/>
+                <constraint firstItem="iQQ-dy-v0D" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="ILL-lQ-WGd"/>
                 <constraint firstItem="fDq-Oz-qfu" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="JgR-bn-DyX"/>
                 <constraint firstItem="fDq-Oz-qfu" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="PD0-vu-VOs"/>
                 <constraint firstItem="W0e-5d-5fy" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="WM8-QF-Wff"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="vNO-5W-ee8" secondAttribute="bottom" id="dHS-ur-gJE"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="iQQ-dy-v0D" secondAttribute="bottom" id="eSr-8Z-o1H"/>
                 <constraint firstItem="vNO-5W-ee8" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="ikC-Ee-HXA"/>
+                <constraint firstItem="iQQ-dy-v0D" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="yYw-P2-cbN"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="vNO-5W-ee8" secondAttribute="trailing" id="yej-EY-Wf1"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>

@@ -66,11 +66,11 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
         }
     }
     
-    func tipPageWillAppear(page: Int) -> UIView {
+    func tipPageWillAppear(page: Int) -> ToolPageViewModel {
+            
+        let pageNode: PageNode = pageNodes[page]
         
-        //let pageView: UIView = pages[page]
-        
-        return UIView()
+        return ToolPageViewModel(pageNode: pageNode)
     }
     
     func tipPageDidChange(page: Int) {

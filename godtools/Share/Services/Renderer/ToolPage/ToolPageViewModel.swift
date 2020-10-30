@@ -10,11 +10,11 @@ import UIKit
 
 class ToolPageViewModel: ToolPageViewModelType {
         
+    let contentStack: MobileContentStackViewModel?
     let headerNumber: String?
     let headerTitle: String?
     let hidesHeader: Bool
-    let hidesHero: Bool
-    let heroView: MobileContentStackView?
+    let hero: MobileContentStackViewModel?
     let callToActionTitle: String?
     let hidesCallToAction: Bool
     
@@ -22,19 +22,28 @@ class ToolPageViewModel: ToolPageViewModelType {
         
         let pageHeaderNumber: String? = pageNode.header?.number
         let pageHeaderTitle: String? = pageNode.header?.title
+        let hidesHeader: Bool = pageHeaderNumber == nil && pageHeaderTitle == nil
+        
+        let firstNodeIsContentParagraph: Bool = pageNode.children.first is ContentParagraphNode
+        
+        if firstNodeIsContentParagraph {
+            contentStack = MobileContentStackViewModel(node: pageNode)
+        }
+        else {
+            contentStack = nil
+        }
         
         headerNumber = pageHeaderNumber
         headerTitle = pageHeaderTitle
-        hidesHeader = pageHeaderNumber == nil && pageHeaderTitle == nil
-        hidesHero = pageNode.hero == nil
+        self.hidesHeader = hidesHeader
         callToActionTitle = pageNode.callToAction?.text
         hidesCallToAction = pageNode.callToAction == nil
         
         if let heroNode = pageNode.hero {
-            heroView = nil
+            hero = MobileContentStackViewModel(node: heroNode)
         }
         else {
-            heroView = nil
+            hero = nil
         }
     }
 }
