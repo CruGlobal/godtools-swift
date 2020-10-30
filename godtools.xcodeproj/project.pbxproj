@@ -469,7 +469,6 @@
 		457D9839254B4F9F000B8159 /* ToolPageViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457D9821254B4F9F000B8159 /* ToolPageViewModelType.swift */; };
 		457D983A254B4F9F000B8159 /* ToolPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457D9822254B4F9F000B8159 /* ToolPageViewModel.swift */; };
 		457D983B254B4F9F000B8159 /* ToolPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 457D9823254B4F9F000B8159 /* ToolPageView.xib */; };
-		457D983C254B4F9F000B8159 /* MobileContentXmlNodeIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457D9825254B4F9F000B8159 /* MobileContentXmlNodeIterator.swift */; };
 		457D983E254B555B000B8159 /* PagesNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457D983D254B555B000B8159 /* PagesNode.swift */; };
 		457D9840254B5571000B8159 /* TipNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457D983F254B5571000B8159 /* TipNode.swift */; };
 		458063C62499870C0070AA12 /* AttachmentModelType+SHA256FileLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458063C52499870C0070AA12 /* AttachmentModelType+SHA256FileLocation.swift */; };
@@ -1226,7 +1225,6 @@
 		457D9821254B4F9F000B8159 /* ToolPageViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageViewModelType.swift; sourceTree = "<group>"; };
 		457D9822254B4F9F000B8159 /* ToolPageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageViewModel.swift; sourceTree = "<group>"; };
 		457D9823254B4F9F000B8159 /* ToolPageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToolPageView.xib; sourceTree = "<group>"; };
-		457D9825254B4F9F000B8159 /* MobileContentXmlNodeIterator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentXmlNodeIterator.swift; sourceTree = "<group>"; };
 		457D983D254B555B000B8159 /* PagesNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagesNode.swift; sourceTree = "<group>"; };
 		457D983F254B5571000B8159 /* TipNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipNode.swift; sourceTree = "<group>"; };
 		458063C52499870C0070AA12 /* AttachmentModelType+SHA256FileLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AttachmentModelType+SHA256FileLocation.swift"; sourceTree = "<group>"; };
@@ -2793,14 +2791,6 @@
 			path = ToolPage;
 			sourceTree = "<group>";
 		};
-		457D9824254B4F9F000B8159 /* MobileContentXmlNodeIterator */ = {
-			isa = PBXGroup;
-			children = (
-				457D9825254B4F9F000B8159 /* MobileContentXmlNodeIterator.swift */,
-			);
-			path = MobileContentXmlNodeIterator;
-			sourceTree = "<group>";
-		};
 		457F3FEC24C352E700D8F9B1 /* TractRemoteShare */ = {
 			isa = PBXGroup;
 			children = (
@@ -3259,7 +3249,6 @@
 			children = (
 				45E2BEF7254354C400C4D66C /* Manifest */,
 				457D980A254B4F9F000B8159 /* MobileContentStack */,
-				457D9824254B4F9F000B8159 /* MobileContentXmlNodeIterator */,
 				457D980C254B4F9F000B8159 /* MobileContentXmlNodeParser */,
 				457D981F254B4F9F000B8159 /* ToolPage */,
 			);
@@ -4237,7 +4226,6 @@
 				45F567A224FD78C80078D539 /* DetermineNewUserIfPrimaryLanguageSet.swift in Sources */,
 				45E2BF06254354C400C4D66C /* MobileContentManifestTipType.swift in Sources */,
 				450253472529319B0014D02D /* LocalizationServices.swift in Sources */,
-				457D983C254B4F9F000B8159 /* MobileContentXmlNodeIterator.swift in Sources */,
 				457551F824A585F70091652F /* ReferencedFile.swift in Sources */,
 				45B3EE4724C917840042CF7C /* TractRemoteShareSubscriberError.swift in Sources */,
 				45FA69672425198F0006878C /* SupportedLanguagesType.swift in Sources */,
