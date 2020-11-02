@@ -28,6 +28,14 @@ extension UIButton {
             imageEdgeInsets = UIEdgeInsets(top: 0, left: titleLeft + titleWidth + spacing, bottom: 0, right: 0)
         }
     }
+    
+    func setImageColor(color: UIColor) {
+        if let image = image(for: .normal) {
+            let newImage: UIImage = image.withRenderingMode(.alwaysTemplate)
+            setImage(newImage, for: .normal)
+            tintColor = color
+        }
+    }
 }
 
 extension UILabel {

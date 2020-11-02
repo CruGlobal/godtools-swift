@@ -1,5 +1,5 @@
 //
-//  MobileContentStackView.swift
+//  ToolPageContentStackView.swift
 //  godtools
 //
 //  Created by Levi Eggert on 10/27/20.
@@ -8,17 +8,14 @@
 
 import UIKit
 
-class MobileContentStackView: UIView {
+class ToolPageContentStackView: UIView {
     
-    private let viewModel: MobileContentStackViewModel
     private let stackView: UIStackView = UIStackView()
     
     private(set) var scrollView: UIScrollView?
         
-    required init(viewModel: MobileContentStackViewModel, viewSpacing: CGFloat, scrollIsEnabled: Bool) {
-                             
-        self.viewModel = viewModel
-        
+    required init(viewSpacing: CGFloat, scrollIsEnabled: Bool) {
+                                     
         super.init(frame: .zero)
         
         setupConstraints(
@@ -32,10 +29,6 @@ class MobileContentStackView: UIView {
         stackView.spacing = viewSpacing
         
         scrollView?.backgroundColor = .clear
-        
-        viewModel.render { [weak self] (view: UIView) in
-            self?.addContentView(view: view)
-        }
     }
     
     required init?(coder: NSCoder) {
@@ -44,7 +37,7 @@ class MobileContentStackView: UIView {
     
     func addContentView(view: UIView) {
                
-        if let verticalStack = view as? MobileContentStackView {
+        if let verticalStack = view as? ToolPageContentStackView {
             stackView.addArrangedSubview(verticalStack.stackView)
             return
         }
@@ -61,7 +54,7 @@ class MobileContentStackView: UIView {
 
 // MARK: - Constraints
 
-extension MobileContentStackView {
+extension ToolPageContentStackView {
     
     private func setupConstraints(parentView: UIView, scrollIsEnabled: Bool) {
             

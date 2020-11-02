@@ -27,6 +27,7 @@ class TractViewModel: NSObject, TractViewModelType {
     private let primaryTractXmlResource: TractXmlResource
     private let parallelTractXmlResource: TractXmlResource?
     
+    private var cachedPrimaryPageNodes: [PageNode] = Array()
     private var cachedPrimaryTractPages: [PageNumber: TractPage] = Dictionary()
     private var cachedParallelTractPages: [PageNumber: TractPage] = Dictionary()
     private var cachedTractRemoteShareNavigationEvents: [PageNumber: TractRemoteShareNavigationEvent] = Dictionary()

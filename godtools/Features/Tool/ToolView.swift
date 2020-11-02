@@ -23,6 +23,7 @@ class ToolView: UIViewController {
            
     private weak var languageControl: UISegmentedControl?
             
+    @IBOutlet weak private var toolPagesBackgroundView: PageNavigationCollectionView!
     @IBOutlet weak private var toolPagesView: PageNavigationCollectionView!
     
     required init(viewModel: ToolViewModelType) {
@@ -36,6 +37,7 @@ class ToolView: UIViewController {
     
     deinit {
         print("x deinit: \(type(of: self))")
+        UIApplication.shared.isIdleTimerDisabled = false
     }
     
     override func viewDidLoad() {
@@ -46,26 +48,11 @@ class ToolView: UIViewController {
         setupBinding()
         
         viewModel.viewLoaded()
-                        
-        //toolPagesView.delegate = self
         
-        _ = addBarButtonItem(
-            to: .left,
-            image: ImageCatalog.navHome.image,
-            color: viewModel.navBarAttributes.navBarControlColor,
-            target: self,
-            action: #selector(handleHome(barButtonItem:))
-        )
+        toolPagesBackgroundView.delegate = self
         
-        _ = addBarButtonItem(
-            to: .right,
-            index: RightNavbarPosition.shareMenu.rawValue,
-            image: ImageCatalog.navShare.image,
-            color: viewModel.navBarAttributes.navBarControlColor,
-            target: self,
-            action: #selector(handleShare(barButtonItem:))
-        )
-                
+        toolPagesView.delegate = self
+        
         languageControl?.addTarget(
             self,
             action: #selector(didChooseLanguage(segmentedControl:)),
@@ -75,12 +62,76 @@ class ToolView: UIViewController {
         UIApplication.shared.isIdleTimerDisabled = true
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        guard !didLayoutSubviews else {
+            return
+        }
+        didLayoutSubviews = true
+
+        viewModel.currentTractPage.addObserver(self) { [weak self] (animatableValue: AnimatableValue<Int>) in
+            self?.toolPagesView.scrollToPage(page: animatableValue.value, animated: animatableValue.animated)
+        }
+    }
+    
     private func setupLayout() {
         
+        // toolPagesBackgroundView
+        toolPagesBackgroundView.pageBackgroundColor = .clear
+        toolPagesBackgroundView.registerPageCell(
+            nib: UINib(nibName: ToolPageBackgroundCell.nibName, bundle: nil),
+            cellReuseIdentifier: ToolPageBackgroundCell.reuseIdentifier
+        )
+        toolPagesBackgroundView.pagesCollectionView.contentInset = UIEdgeInsets.zero
+        automaticallyAdjustsScrollViewInsets = false
+        if viewModel.isRightToLeftLanguage {
+            toolPagesBackgroundView.pagesCollectionView.semanticContentAttribute = .forceRightToLeft
+        }
+        
+        // toolPagesView
+        toolPagesView.pageBackgroundColor = .clear
+        toolPagesView.registerPageCell(
+            nib: UINib(nibName: ToolPageCell.nibName, bundle: nil),
+            cellReuseIdentifier: ToolPageCell.reuseIdentifier
+        )
+        toolPagesView.pagesCollectionView.contentInset = UIEdgeInsets.zero
+        automaticallyAdjustsScrollViewInsets = false
+        if viewModel.isRightToLeftLanguage {
+            toolPagesView.pagesCollectionView.semanticContentAttribute = .forceRightToLeft
+        }
     }
     
     private func setupBinding() {
-
+        
+        setViewBackgroundColor(color: viewModel.navBarViewModel.navBarColor)
+                
+        configureNavigationBar(toolNavBarViewModel: viewModel.navBarViewModel)
+        
+        viewModel.remoteShareIsActive.addObserver(self) { [weak self] (isActive: Bool) in
+            
+            self?.setRemoteShareActiveNavItem(hidden: !isActive)
+        }
+        
+        viewModel.selectedTractLanguage.addObserver(self) { [weak self] (tractLanguage: TractLanguage) in
+            
+            switch tractLanguage.languageType {
+            case .primary:
+                self?.languageControl?.selectedSegmentIndex = 0
+            case .parallel:
+                self?.languageControl?.selectedSegmentIndex = 1
+            }
+            
+            self?.toolPagesView.reloadData()
+        }
+        
+        viewModel.tractXmlPageItems.addObserver(self) { [weak self] (tractPageItems: [TractXmlPageItem]) in
+            self?.toolPagesView.reloadData()
+        }
+        
+        viewModel.numberOfToolPages.addObserver(self) { [weak self] (numberOfToolPages: Int) in
+            self?.toolPagesView.reloadData()
+        }
     }
     
     @objc func handleHome(barButtonItem: UIBarButtonItem) {
@@ -103,58 +154,59 @@ class ToolView: UIViewController {
         }
     }
     
-    private func setupNavigationBar() {
+    private func setViewBackgroundColor(color: UIColor) {
+        view.backgroundColor = .white
+        toolPagesBackgroundView.backgroundColor = color
+    }
+    
+    private func configureNavigationBar(toolNavBarViewModel: ToolNavBarViewModel) {
         
-        let navBarColor: UIColor = viewModel.navBarAttributes.navBarColor
-        let navBarControlColor: UIColor = viewModel.navBarAttributes.navBarControlColor
+        title = toolNavBarViewModel.navTitle
+        
+        let navBarColor: UIColor = toolNavBarViewModel.navBarColor
+        let navBarControlColor: UIColor = toolNavBarViewModel.navBarControlColor
                     
         navigationController?.navigationBar.barTintColor = .clear
+        navigationController?.navigationBar.tintColor = navBarControlColor
         navigationController?.navigationBar.setBackgroundImage(NavigationBarBackground.createFrom(navBarColor), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
+        navigationController?.view.backgroundColor = .clear
         navigationController?.navigationBar.titleTextAttributes = [
             NSAttributedString.Key.foregroundColor: navBarControlColor,
             NSAttributedString.Key.font: UIFont.gtSemiBold(size: 17.0)
         ]
         
-        navigationController?.navigationBar.tintColor = navBarControlColor
-    }
-    
-    private func setRemoteShareActiveNavItem(hidden: Bool) {
+        _ = addBarButtonItem(
+            to: .left,
+            image: ImageCatalog.navHome.image,
+            color: navBarControlColor,
+            target: self,
+            action: #selector(handleHome(barButtonItem:))
+        )
         
-        let position: ButtonItemPosition = .right
+        _ = addBarButtonItem(
+            to: .right,
+            index: RightNavbarPosition.shareMenu.rawValue,
+            image: ImageCatalog.navShare.image,
+            color: navBarControlColor,
+            target: self,
+            action: #selector(handleShare(barButtonItem:))
+        )
         
-        if hidden, let remoteShareActiveNavItem = remoteShareActiveNavItem {
-            removeBarButtonItem(item: remoteShareActiveNavItem, barPosition: position)
-            self.remoteShareActiveNavItem = nil
-        }
-        else if !hidden && remoteShareActiveNavItem == nil {
-            
-            remoteShareActiveNavItem = addBarButtonItem(
-                to: .right,
-                index: RightNavbarPosition.remoteShareActive.rawValue,
-                image: ImageCatalog.shareToolRemoteSessionActive.image,
-                color: .white,
-                target: nil,
-                action: nil
-            )
-        }
-    }
-    
-    private func setupChooseLanguageControl() {
-        
-        if !viewModel.hidesChooseLanguageControl && languageControl == nil {
+        if !toolNavBarViewModel.hidesChooseLanguageControl && languageControl == nil {
                 
-            let navBarColor: UIColor = viewModel.navBarAttributes.navBarColor
-            let navBarControlColor: UIColor = viewModel.navBarAttributes.navBarControlColor
+            let navBarColor: UIColor = navBarColor
+            let navBarControlColor: UIColor = navBarControlColor
             let chooseLanguageControl: UISegmentedControl = UISegmentedControl()
             
             chooseLanguageControl.insertSegment(
-                withTitle: viewModel.chooseLanguageControlPrimaryLanguageTitle,
+                withTitle: toolNavBarViewModel.chooseLanguageControlPrimaryLanguageTitle,
                 at: 0,
                 animated: false
             )
             chooseLanguageControl.insertSegment(
-                withTitle: viewModel.chooseLanguageControlParallelLanguageTitle,
+                withTitle: toolNavBarViewModel.chooseLanguageControlParallelLanguageTitle,
                 at: 1,
                 animated: false
             )
@@ -179,52 +231,86 @@ class ToolView: UIViewController {
             languageControl = chooseLanguageControl
         }
     }
+    
+    private func setRemoteShareActiveNavItem(hidden: Bool) {
+        
+        let position: ButtonItemPosition = .right
+        
+        if hidden, let remoteShareActiveNavItem = remoteShareActiveNavItem {
+            removeBarButtonItem(item: remoteShareActiveNavItem, barPosition: position)
+            self.remoteShareActiveNavItem = nil
+        }
+        else if !hidden && remoteShareActiveNavItem == nil {
+            
+            remoteShareActiveNavItem = addBarButtonItem(
+                to: .right,
+                index: RightNavbarPosition.remoteShareActive.rawValue,
+                image: ImageCatalog.shareToolRemoteSessionActive.image,
+                color: .white,
+                target: nil,
+                action: nil
+            )
+        }
+    }
 }
 
 // MARK: - PageNavigationCollectionViewDelegate
 
-/*
 extension ToolView: PageNavigationCollectionViewDelegate {
     
     func pageNavigationNumberOfPages(pageNavigation: PageNavigationCollectionView) -> Int {
-        return viewModel.tractXmlPageItems.value.count
+        return viewModel.numberOfToolPages.value
     }
     
     func pageNavigation(pageNavigation: PageNavigationCollectionView, cellForPageAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell: TractPageCell = tractPagesView.getReusablePageCell(
-            cellReuseIdentifier: TractPageCell.reuseIdentifier,
-            indexPath: indexPath) as! TractPageCell
-                
-        let tractPageItem: TractPageItem = viewModel.getTractPageItem(page: indexPath.item)
-                        
-        tractPageItem.tractPage?.setDelegate(self)
-
-        if let tractPage = tractPageItem.tractPage {
-            cell.setTractPage(tractPage: tractPage)
-            if let navigationEvent = tractPageItem.navigationEvent {
-                tractPage.setCard(card: navigationEvent.message?.data?.attributes?.card, animated: false)
-            }
+        if pageNavigation == toolPagesBackgroundView {
             
-            let tractCards: [TractCard] = tractPage.tractCardsArray
+            let cell: ToolPageBackgroundCell = toolPagesBackgroundView.getReusablePageCell(
+                cellReuseIdentifier: ToolPageBackgroundCell.reuseIdentifier,
+                indexPath: indexPath) as! ToolPageBackgroundCell
             
-            for tractCard in tractCards {
-                
-                tractCard.cardProperties().delegate = self
-            }
+            let cellViewModel: ToolBackgroundCellViewModel = viewModel.toolPageBackgroundWillAppear(page: indexPath.row)
+            
+            cell.configure(viewModel: cellViewModel)
+            
+            return cell
         }
-                                        
-        return cell
+        else if pageNavigation == toolPagesView {
+            
+            let cell: ToolPageCell = toolPagesView.getReusablePageCell(
+                cellReuseIdentifier: ToolPageCell.reuseIdentifier,
+                indexPath: indexPath) as! ToolPageCell
+            
+            let cellViewModel: ToolPageViewModelType? = viewModel.toolPageWillAppear(page: indexPath.row)
+            
+            if let cellViewModel = cellViewModel {
+                cell.configure(viewModel: cellViewModel)
+            }
+            
+            return cell
+        }
+        
+        return UICollectionViewCell()
     }
     
     func pageNavigationDidChangePage(pageNavigation: PageNavigationCollectionView, page: Int) {
         
-        viewModel.tractPageDidChange(page: page)
+        if pageNavigation == toolPagesView {
+            viewModel.toolPageDidChange(page: page)
+        }
     }
     
     func pageNavigationDidStopOnPage(pageNavigation: PageNavigationCollectionView, page: Int) {
         
-        viewModel.tractPageDidAppear(page: page)
+        if pageNavigation == toolPagesView {
+            viewModel.toolPageDidAppear(page: page)
+        }
+    }
+    
+    func pageNavigationDidScrollPage(pageNavigation: PageNavigationCollectionView) {
+        if pageNavigation == toolPagesView {
+            toolPagesBackgroundView.pagesCollectionView.setContentOffset(toolPagesView.pagesCollectionView.contentOffset, animated: false)
+        }
     }
 }
-*/

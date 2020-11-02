@@ -43,4 +43,26 @@ struct MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
         tool = attributes?["tool"]?.text
         type = attributes?["type"]?.text
     }
+    
+    func getNavBarColor() -> MobileContentRGBAColor? {
+        if let navBarColor = self.navbarColor {
+            return MobileContentRGBAColor(stringColor: navBarColor)
+        }
+        return nil
+    }
+    
+    func getNavBarControlColor() -> MobileContentRGBAColor? {
+        if let navbarControlColor = self.navbarControlColor {
+            return MobileContentRGBAColor(stringColor: navbarControlColor)
+        }
+        return nil
+    }
+    
+    func getPrimaryColor() -> MobileContentRGBAColor {
+        return MobileContentRGBAColor(stringColor: primaryColor)
+    }
+    
+    func getPrimaryTextColor() -> MobileContentRGBAColor {
+        return MobileContentRGBAColor(stringColor: primaryTextColor)
+    }
 }

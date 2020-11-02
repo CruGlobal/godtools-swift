@@ -23,4 +23,9 @@ protocol MobileContentManifestAttributesType {
     var textColor: String? { get }
     var tool: String? { get }
     var type: String? { get }
+    
+    func getNavBarColor() -> MobileContentRGBAColor?
+    func getNavBarControlColor() -> MobileContentRGBAColor?
+    func getPrimaryColor() -> MobileContentRGBAColor
+    func getPrimaryTextColor() -> MobileContentRGBAColor
 }

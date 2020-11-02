@@ -219,6 +219,7 @@ class MenuFlow: Flow {
             navigationController.present(view.controller, animated: true, completion: nil)
         
         case .playgroundTappedFromMenu:
+            break
             
             //let viewModel = PlaygroundViewModel()
             //let view = PlaygroundView(viewModel: viewModel)
@@ -226,6 +227,7 @@ class MenuFlow: Flow {
                         
             // TODO: Remove. ~Levi
             
+            /*
             let translationDownloader = appDiContainer.translationDownloader
             let location = SHA256FileLocation(sha256WithPathExtension: "bd1ca565c3404c72ffd1eaadf81810e3346030aed957a97c0bd6889db79f434e.xml")
             
@@ -242,12 +244,15 @@ class MenuFlow: Flow {
             
             let viewModel = ToolTrainingViewModel(
                 tipXml: tipXml,
-                mobileContentNodeParser: appDiContainer.getMobileContentNodeParser()
+                mobileContentNodeParser: appDiContainer.getMobileContentNodeParser(),
+                translationsFileCache: appDiContainer.translationsFileCache
             )
             
             let view = ToolTrainingView(viewModel: viewModel)
                         
             navigationController.present(view, animated: true, completion: nil)
+ 
+            */
             
         default:
             break

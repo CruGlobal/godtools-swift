@@ -6,15 +6,22 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol ToolPageViewModelType {
     
-    var contentStack: MobileContentStackViewModel? { get }
+    var backgroundImage: UIImage? { get }
+    var hidesBackgroundImage: Bool { get }
+    var contentStack: ObservableValue<ToolPageContentStackView?> { get }
     var headerNumber: String? { get }
     var headerTitle: String? { get }
     var hidesHeader: Bool { get }
-    var hero: MobileContentStackViewModel? { get }
+    var hero: ObservableValue<ToolPageContentStackView?> { get }
     var callToActionTitle: String? { get }
+    var callToActionTitleColor: UIColor { get }
+    var callToActionNextButtonColor: UIColor { get }
     var hidesCallToAction: Bool { get }
+    
+    func headerWillAppear() -> ToolPageHeaderViewModel
+    func callToActionWillAppear()
 }

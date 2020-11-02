@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ToolView" customModule="godtools" customModuleProvider="target">
             <connections>
+                <outlet property="toolPagesBackgroundView" destination="Fkv-uO-Uex" id="KcL-La-7qX"/>
                 <outlet property="toolPagesView" destination="nER-se-VAy" id="7ry-w4-MZg"/>
                 <outlet property="view" destination="iN0-l3-epB" id="QLu-Wo-nwf"/>
             </connections>
@@ -19,17 +20,25 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fkv-uO-Uex" userLabel="toolPagesBackgroundView" customClass="PageNavigationCollectionView" customModule="godtools" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nER-se-VAy" userLabel="toolPagesView" customClass="PageNavigationCollectionView" customModule="godtools" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
                 <constraint firstItem="nER-se-VAy" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="3li-3R-ejr"/>
-                <constraint firstItem="nER-se-VAy" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="646-QN-mFj"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="nER-se-VAy" secondAttribute="bottom" id="kVc-tR-Sdd"/>
+                <constraint firstAttribute="bottom" secondItem="Fkv-uO-Uex" secondAttribute="bottom" id="Bk6-f2-Hx5"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="nER-se-VAy" secondAttribute="bottom" id="KMG-1O-slI"/>
+                <constraint firstItem="nER-se-VAy" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="QN1-ND-12Z"/>
+                <constraint firstItem="Fkv-uO-Uex" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="gfZ-LD-n5z"/>
+                <constraint firstItem="Fkv-uO-Uex" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="jxw-C8-qZz"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="nER-se-VAy" secondAttribute="trailing" id="kgh-dy-lK6"/>
+                <constraint firstItem="Fkv-uO-Uex" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="rsp-oo-WKd"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="139" y="113"/>

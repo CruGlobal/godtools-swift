@@ -525,9 +525,11 @@ class ToolsFlow: Flow {
             flowDelegate: self,
             resource: resource,
             primaryLanguage: primaryLanguage,
-            primaryTranslationManifest: primaryTranslationManifest,
             parallelLanguage: parallelLanguage,
+            primaryTranslationManifestData: primaryTranslationManifest,
             parallelTranslationManifest: parallelTranslationManifest,
+            mobileContentNodeParser: appDiContainer.getMobileContentNodeParser(),
+            translationsFileCache: appDiContainer.translationsFileCache,
             languageSettingsService: appDiContainer.languageSettingsService,
             tractManager: appDiContainer.tractManager,
             tractRemoteSharePublisher: appDiContainer.tractRemoteSharePublisher,
@@ -540,7 +542,7 @@ class ToolsFlow: Flow {
             analytics: appDiContainer.analytics,
             toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics,
             liveShareStream: liveShareStream,
-            tractPage: page
+            toolPage: page
         )
         
         let view = ToolView(viewModel: viewModel)

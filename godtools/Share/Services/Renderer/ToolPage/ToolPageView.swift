@@ -12,13 +12,13 @@ class ToolPageView: UIViewController {
     
     private let viewModel: ToolPageViewModelType
     
-    private var contentStackView: MobileContentStackView?
-    private var heroView: MobileContentStackView?
+    private var contentStackView: ToolPageContentStackView?
+    private var heroView: ToolPageContentStackView?
             
     private var didLayoutSubviews: Bool = false
     
     @IBOutlet weak private var backgroundImageView: UIImageView!
-    @IBOutlet weak private var mobileContentStackContainerView: UIView!
+    @IBOutlet weak private var contentStackContainerView: UIView!
     @IBOutlet weak private var headerView: UIView!
     @IBOutlet weak private var headerNumberLabel: UILabel!
     @IBOutlet weak private var headerTitleLabel: UILabel!
@@ -59,6 +59,34 @@ class ToolPageView: UIViewController {
         }
         didLayoutSubviews = true
         
+        viewModel.contentStack.addObserver(self) { [weak self] (contentStack: ToolPageContentStackView?) in
+            
+            if let contentStackView = contentStack {
+                self?.contentStackContainerView.addSubview(contentStackView)
+                contentStackView.constrainEdgesToSuperview()
+                self?.contentStackContainerView.isHidden = false
+                self?.contentStackView = contentStackView
+                self?.view.layoutIfNeeded()
+            }
+            else {
+                self?.contentStackContainerView.isHidden = true
+            }
+        }
+        
+        viewModel.hero.addObserver(self) { [weak self] (hero: ToolPageContentStackView?) in
+            
+            if let heroView = hero {
+                self?.heroContainerView.addSubview(heroView)
+                heroView.constrainEdgesToSuperview()
+                self?.heroContainerView.isHidden = false
+                self?.heroView = heroView
+                self?.view.layoutIfNeeded()
+            }
+            else {
+                self?.heroContainerView.isHidden = true
+            }
+        }
+        
         setHeaderHidden(hidden: viewModel.hidesHeader, animated: false)
         
         setCallToActionHidden(hidden: viewModel.hidesCallToAction, animated: false)
@@ -72,31 +100,15 @@ class ToolPageView: UIViewController {
     
     private func setupBinding() {
         
-        if let contentStackViewModel = viewModel.contentStack {
-            let mobileContentView = MobileContentStackView(viewModel: contentStackViewModel, viewSpacing: 10, scrollIsEnabled: true)
-            mobileContentStackContainerView.addSubview(mobileContentView)
-            mobileContentView.constrainEdgesToSuperview()
-            mobileContentStackContainerView.isHidden = false
-            self.contentStackView = mobileContentView
-        }
-        else {
-            mobileContentStackContainerView.isHidden = true
-        }
-                
+        backgroundImageView.image = viewModel.backgroundImage
+        
+        backgroundImageView.isHidden = viewModel.hidesBackgroundImage
+        
         headerNumberLabel.text = viewModel.headerNumber
         headerTitleLabel.text = viewModel.headerTitle
         callToActionTitleLabel.text = viewModel.callToActionTitle
-        
-        if let heroViewModel = viewModel.hero {
-            let mobileContentView = MobileContentStackView(viewModel: heroViewModel, viewSpacing: 10, scrollIsEnabled: true)
-            heroContainerView.addSubview(mobileContentView)
-            mobileContentView.constrainEdgesToSuperview()
-            heroContainerView.isHidden = false
-            self.heroView = mobileContentView
-        }
-        else {
-            heroContainerView.isHidden = true
-        }
+        callToActionTitleLabel.textColor = viewModel.callToActionTitleColor
+        callToActionNextButton.setImageColor(color: viewModel.callToActionNextButtonColor)
     }
     
     private func setHeroTopContentInset() {

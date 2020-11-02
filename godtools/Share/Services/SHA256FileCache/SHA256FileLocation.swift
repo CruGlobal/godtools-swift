@@ -48,7 +48,6 @@ struct SHA256FileLocation {
             }
         }
         else {
-            assertionFailure("Invalid sha256WithPathExtension.")
             self.sha256 = ""
             self.pathExtension = ""
         }

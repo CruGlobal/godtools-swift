@@ -10,11 +10,7 @@ import Foundation
 
 protocol ToolViewModelType {
     
-    var navTitle: ObservableValue<String> { get }
-    var navBarAttributes: TractNavBarAttributes { get }
-    var hidesChooseLanguageControl: Bool { get }
-    var chooseLanguageControlPrimaryLanguageTitle: String { get }
-    var chooseLanguageControlParallelLanguageTitle: String { get }
+    var navBarViewModel: ToolNavBarViewModel { get }
     var selectedTractLanguage: ObservableValue<TractLanguage> { get }
     var primaryTractManifest: ManifestProperties { get }
     var primaryTractPages: [XMLPage] { get }
@@ -22,15 +18,18 @@ protocol ToolViewModelType {
     var currentTractPage: ObservableValue<AnimatableValue<Int>> { get }
     var isRightToLeftLanguage: Bool { get }
     var remoteShareIsActive: ObservableValue<Bool> { get }
+    var numberOfToolPages: ObservableValue<Int> { get }
     
     func navHomeTapped()
     func shareTapped()
     func primaryLanguageTapped()
     func parallelLanguagedTapped()
     func viewLoaded()
-    func tractPageDidChange(page: Int)
-    func tractPageDidAppear(page: Int)
-    func tractPageCardStateChanged(cardState: TractCardProperties.CardState)
-    func sendEmailTapped(subject: String?, message: String?, isHtml: Bool?)
-    func getTractPageItem(page: Int) -> TractPageItem
+    func toolPageBackgroundWillAppear(page: Int) -> ToolBackgroundCellViewModel
+    func toolPageWillAppear(page: Int) -> ToolPageViewModel?
+    func toolPageDidChange(page: Int)
+    func toolPageDidAppear(page: Int)
+    //func tractPageCardStateChanged(cardState: TractCardProperties.CardState)
+    //func sendEmailTapped(subject: String?, message: String?, isHtml: Bool?)
+    //func getTractPageItem(page: Int) -> TractPageItem
 }

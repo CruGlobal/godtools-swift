@@ -64,6 +64,9 @@ class MobileContentXmlNodeFactory {
         case .header:
             return HeaderNode.self
             
+        case .heading:
+            return HeadingNode.self
+            
         case .hero:
             return HeroNode.self
             
