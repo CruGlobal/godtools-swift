@@ -22,8 +22,8 @@ class CallToActionNode: MobileContentXmlNode {
         super.init(xmlElement: xmlElement)
     }
     
-    var text: String? {
-        return (children.first as? ContentTextNode)?.text
+    var textNode: ContentTextNode? {
+        return children.first as? ContentTextNode
     }
     
     func getControlColor() -> MobileContentRGBAColor? {

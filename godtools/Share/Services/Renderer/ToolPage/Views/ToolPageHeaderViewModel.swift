@@ -10,7 +10,22 @@ import UIKit
 
 class ToolPageHeaderViewModel {
     
-    required init() {
+    let headerNumber: String?
+    let headerTitle: String?
+    let hidesHeader: Bool
+    let backgroundColor: UIColor
+    let primaryTextColor: UIColor
+    
+    required init(pageNode: PageNode, backgroundColor: UIColor, primaryTextColor: UIColor) {
         
+        let pageHeaderNumber: String? = pageNode.headerNode?.number
+        let pageHeaderTitle: String? = pageNode.headerNode?.title
+        let hidesHeader: Bool = pageHeaderNumber == nil && pageHeaderTitle == nil
+        
+        headerNumber = pageHeaderNumber
+        headerTitle = pageHeaderTitle
+        self.hidesHeader = hidesHeader
+        self.backgroundColor = backgroundColor
+        self.primaryTextColor = primaryTextColor
     }
 }

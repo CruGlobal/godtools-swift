@@ -11,10 +11,10 @@ import SWXMLHash
 
 class PageNode: MobileContentXmlNode {
     
-    private(set) var header: HeaderNode?
-    private(set) var hero: HeroNode?
-    private(set) var cards: CardsNode?
-    private(set) var callToAction: CallToActionNode?
+    private(set) var headerNode: HeaderNode?
+    private(set) var heroNode: HeroNode?
+    private(set) var cardsNode: CardsNode?
+    private(set) var callToActionNode: CallToActionNode?
     
     let backgroundColor: String?
     let backgroundImage: String?
@@ -40,17 +40,17 @@ class PageNode: MobileContentXmlNode {
     override func addChild(childNode: MobileContentXmlNode) {
         super.addChild(childNode: childNode)
         
-        if let header = childNode as? HeaderNode {
-            self.header = header
+        if let headerNode = childNode as? HeaderNode {
+            self.headerNode = headerNode
         }
-        else if let hero = childNode as? HeroNode {
-            self.hero = hero
+        else if let heroNode = childNode as? HeroNode {
+            self.heroNode = heroNode
         }
-        else if let cards = childNode as? CardsNode {
-            self.cards = cards
+        else if let cardsNode = childNode as? CardsNode {
+            self.cardsNode = cardsNode
         }
-        else if let callToAction = childNode as? CallToActionNode {
-            self.callToAction = callToAction
+        else if let callToActionNode = childNode as? CallToActionNode {
+            self.callToActionNode = callToActionNode
         }
     }
     

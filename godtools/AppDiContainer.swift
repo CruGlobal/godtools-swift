@@ -201,6 +201,10 @@ class AppDiContainer {
         LanguagesManager.shared.setup(languageSettingsService: languageSettingsService)
     }
     
+    func getFontService() -> FontService {
+        return FontService(languageSettings: languageSettingsService)
+    }
+    
     func getMobileContentNodeParser() -> MobileContentXmlNodeParser {
         return MobileContentXmlNodeParser()
     }

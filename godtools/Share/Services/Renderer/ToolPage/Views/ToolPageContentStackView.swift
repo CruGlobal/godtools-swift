@@ -10,32 +10,39 @@ import UIKit
 
 class ToolPageContentStackView: UIView {
     
+    private let viewModel: ToolPageContentStackViewModel
     private let stackView: UIStackView = UIStackView()
     
     private(set) var scrollView: UIScrollView?
         
-    required init(viewSpacing: CGFloat, scrollIsEnabled: Bool) {
-                                     
+    required init(viewModel: ToolPageContentStackViewModel) {
+        
+        self.viewModel = viewModel
+        
         super.init(frame: .zero)
         
         setupConstraints(
             parentView: self,
-            scrollIsEnabled: scrollIsEnabled
+            scrollIsEnabled: viewModel.scrollIsEnabled
         )
         
         stackView.axis = .vertical
         stackView.alignment = .fill
         stackView.distribution = .fillProportionally
-        stackView.spacing = viewSpacing
+        stackView.spacing = viewModel.itemSpacing
         
         scrollView?.backgroundColor = .clear
+        
+        viewModel.render { [weak self] (view: UIView) in
+            self?.addContentView(view: view)
+        }
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func addContentView(view: UIView) {
+    private func addContentView(view: UIView) {
                
         if let verticalStack = view as? ToolPageContentStackView {
             stackView.addArrangedSubview(verticalStack.stackView)

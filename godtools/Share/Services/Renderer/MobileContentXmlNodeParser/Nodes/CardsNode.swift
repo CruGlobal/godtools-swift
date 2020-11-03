@@ -15,4 +15,8 @@ class CardsNode: MobileContentXmlNode {
     
         super.init(xmlElement: xmlElement)
     }
+    
+    var cards: [CardNode] {
+        return children as? [CardNode] ?? []
+    }
 }

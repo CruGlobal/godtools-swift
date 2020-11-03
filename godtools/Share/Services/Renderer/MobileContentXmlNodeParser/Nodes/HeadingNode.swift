@@ -23,4 +23,12 @@ class HeadingNode: MobileContentXmlNode {
         
         return nil
     }
+    
+    func getTextColor() -> MobileContentRGBAColor? {
+        if let textNode = children.first as? ContentTextNode {
+            return textNode.getTextColor()
+        }
+        
+        return nil
+    }
 }

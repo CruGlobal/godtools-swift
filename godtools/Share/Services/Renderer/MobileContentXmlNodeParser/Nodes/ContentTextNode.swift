@@ -12,9 +12,14 @@ import SWXMLHash
 class ContentTextNode: MobileContentXmlNode {
     
     let text: String?
+    let textColor: String?
     
     required init(xmlElement: XMLElement) {
     
+        let attributes: [String: XMLAttribute] = xmlElement.allAttributes
+        
+        textColor = attributes["text-color"]?.text
+        
         if let textChild = xmlElement.children.first as? TextElement {
             text = textChild.text
         }
@@ -23,5 +28,12 @@ class ContentTextNode: MobileContentXmlNode {
         }
         
         super.init(xmlElement: xmlElement)
+    }
+    
+    func getTextColor() -> MobileContentRGBAColor? {
+        if let stringColor = textColor {
+            return MobileContentRGBAColor(stringColor: stringColor)
+        }
+        return nil
     }
 }
