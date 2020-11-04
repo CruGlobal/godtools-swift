@@ -106,17 +106,21 @@ class ToolPageView: UIViewController {
         setHeroTopContentInset(hidesHeader: viewModel.headerViewModel.hidesHeader)
         
         //cards
-        addCardsAndCardsConstraints(cardsViewModels: viewModel.cardsViewModels)
-        cardsContainerView.layoutIfNeeded()
-        
-        setCardsState(cardsState: .starting, animated: false)
-        
-        viewModel.currentCard.addObserver(self) { [weak self] (cardPosition: Int?) in
-            if let cardPosition = cardPosition {
-                self?.setCardsState(cardsState: .showingCard(showingCardAtPosition: cardPosition), animated: true)
-            }
-            else {
-                self?.setCardsState(cardsState: .starting, animated: true)
+        if !viewModel.cardsViewModels.isEmpty {
+            
+            addCardsAndCardsConstraints(cardsViewModels: viewModel.cardsViewModels)
+            
+            cardsContainerView.layoutIfNeeded()
+            
+            setCardsState(cardsState: .starting, animated: false)
+            
+            viewModel.currentCard.addObserver(self) { [weak self] (cardPosition: Int?) in
+                if let cardPosition = cardPosition {
+                    self?.setCardsState(cardsState: .showingCard(showingCardAtPosition: cardPosition), animated: true)
+                }
+                else {
+                    self?.setCardsState(cardsState: .starting, animated: true)
+                }
             }
         }
     }
