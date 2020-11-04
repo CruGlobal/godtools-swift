@@ -22,6 +22,7 @@
                 <outlet property="headerTop" destination="PD0-vu-VOs" id="nZx-Aw-M6I"/>
                 <outlet property="headerView" destination="fDq-Oz-qfu" id="CvZ-yX-v0w"/>
                 <outlet property="heroContainerView" destination="W0e-5d-5fy" id="6YC-0v-sQv"/>
+                <outlet property="heroHeight" destination="AO1-mP-piB" id="co3-wO-Qhm"/>
                 <outlet property="view" destination="iN0-l3-epB" id="2CB-Lz-6to"/>
             </connections>
         </placeholder>
@@ -40,7 +41,7 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W0e-5d-5fy" userLabel="heroContainerView">
-                    <rect key="frame" x="30" y="0.0" width="354" height="500"/>
+                    <rect key="frame" x="30" y="44" width="354" height="500"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="500" id="AO1-mP-piB"/>
@@ -111,9 +112,9 @@
             <constraints>
                 <constraint firstItem="W0e-5d-5fy" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" constant="-30" id="7wH-UJ-zda"/>
                 <constraint firstItem="fDq-Oz-qfu" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="8zY-5g-jrY"/>
-                <constraint firstItem="W0e-5d-5fy" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="9td-eO-buQ"/>
                 <constraint firstItem="b47-gS-Gm5" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="AJ4-qa-8zZ"/>
                 <constraint firstItem="iQQ-dy-v0D" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" constant="-30" id="Dmf-LY-as3"/>
+                <constraint firstItem="W0e-5d-5fy" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="FSo-JD-Jfy"/>
                 <constraint firstItem="iQQ-dy-v0D" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="ILL-lQ-WGd"/>
                 <constraint firstItem="fDq-Oz-qfu" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="JgR-bn-DyX"/>
                 <constraint firstItem="fDq-Oz-qfu" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="PD0-vu-VOs"/>

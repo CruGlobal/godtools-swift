@@ -41,6 +41,7 @@ class ToolPageView: UIViewController {
     @IBOutlet weak private var callToActionNextButton: UIButton!
     
     @IBOutlet weak private var headerTop: NSLayoutConstraint!
+    @IBOutlet weak private var heroHeight: NSLayoutConstraint!
     @IBOutlet weak private var callToActionBottom: NSLayoutConstraint!
     
     required init(viewModel: ToolPageViewModelType) {
@@ -93,6 +94,7 @@ class ToolPageView: UIViewController {
             heroContainerView.addSubview(heroView)
             heroView.constrainEdgesToSuperview()
             heroContainerView.isHidden = false
+            heroHeight.constant = view.frame.size.height
             heroContainerView.layoutIfNeeded()
             self.heroView = heroView
             view.layoutIfNeeded()
@@ -138,8 +140,10 @@ class ToolPageView: UIViewController {
         // headerView
         let headerViewModel: ToolPageHeaderViewModel = viewModel.headerViewModel
         headerView.backgroundColor = headerViewModel.backgroundColor
+        headerNumberLabel.font = headerViewModel.headerNumberFont
         headerNumberLabel.text = headerViewModel.headerNumber
         headerNumberLabel.textColor = headerViewModel.primaryTextColor
+        headerTitleLabel.font = headerViewModel.headerTitleFont
         headerTitleLabel.text = headerViewModel.headerTitle
         headerTitleLabel.textColor = headerViewModel.primaryTextColor
         

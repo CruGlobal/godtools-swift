@@ -14,13 +14,13 @@ protocol MobileContentManifestAttributesType {
     var backgroundImage: String? { get }
     var backgroundImageAlign: String? { get }
     var backgroundImageScaleType: String? { get }
-    var categoryLabelColor: String { get }
+    var categoryLabelColor: String? { get }
     var locale: String? { get }
     var navbarColor: String? { get }
     var navbarControlColor: String? { get }
     var primaryColor: String { get }
     var primaryTextColor: String { get }
-    var textColor: String? { get }
+    var textColor: String { get }
     var tool: String? { get }
     var type: String? { get }
     

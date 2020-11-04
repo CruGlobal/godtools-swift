@@ -19,8 +19,10 @@ class ToolPageViewModel: ToolPageViewModelType {
     private let manifest: MobileContentXmlManifest
     private let translationsFileCache: TranslationsFileCache
     private let localizationServices: LocalizationServices
+    private let fontService: FontService
     private let primaryColor: UIColor
     private let primaryTextColor: UIColor
+    private let defaultTextColor: UIColor
         
     private(set) var cardsViewModels: [ToolPageCardViewModelType] = Array()
     
@@ -35,18 +37,21 @@ class ToolPageViewModel: ToolPageViewModelType {
     let currentCard: ObservableValue<Int?> = ObservableValue(value: nil)
     let callToActionViewModel: ToolPageCallToActionViewModel
     
-    required init(delegate: ToolPageViewModelDelegate, pageNode: PageNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, localizationServices: LocalizationServices, hidesBackgroundImage: Bool) {
+    required init(delegate: ToolPageViewModelDelegate, pageNode: PageNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, localizationServices: LocalizationServices, fontService: FontService, hidesBackgroundImage: Bool) {
         
         let primaryColor: UIColor = pageNode.getPrimaryColor()?.color ?? manifest.attributes.getPrimaryColor().color
         let primaryTextColor: UIColor = pageNode.getPrimaryTextColor()?.color ?? manifest.attributes.getPrimaryTextColor().color
+        let defaultTextColor: UIColor = pageNode.getTextColor()?.color ?? manifest.attributes.getTextColor().color
         
         self.delegate = delegate
         self.pageNode = pageNode
         self.manifest = manifest
         self.translationsFileCache = translationsFileCache
         self.localizationServices = localizationServices
+        self.fontService = fontService
         self.primaryColor = primaryColor
         self.primaryTextColor = primaryTextColor
+        self.defaultTextColor = defaultTextColor
         self.hidesBackgroundImage = hidesBackgroundImage
         
         // background image
@@ -68,8 +73,10 @@ class ToolPageViewModel: ToolPageViewModelType {
                 scrollIsEnabled: true,
                 defaultPrimaryColor: primaryColor,
                 defaultPrimaryTextColor: primaryTextColor,
+                defaultTextColor: defaultTextColor,
                 manifest: manifest,
-                translationsFileCache: translationsFileCache
+                translationsFileCache: translationsFileCache,
+                fontService: fontService
             )
         }
         else {
@@ -80,7 +87,8 @@ class ToolPageViewModel: ToolPageViewModelType {
         headerViewModel = ToolPageHeaderViewModel(
             pageNode: pageNode,
             backgroundColor: primaryColor,
-            primaryTextColor: primaryTextColor
+            primaryTextColor: primaryTextColor,
+            fontService: fontService
         )
         
         // hero
@@ -92,8 +100,10 @@ class ToolPageViewModel: ToolPageViewModelType {
                 scrollIsEnabled: true,
                 defaultPrimaryColor: primaryColor,
                 defaultPrimaryTextColor: primaryTextColor,
+                defaultTextColor: defaultTextColor,
                 manifest: manifest,
-                translationsFileCache: translationsFileCache
+                translationsFileCache: translationsFileCache,
+                fontService: fontService
             )
         }
         else {
@@ -123,7 +133,8 @@ class ToolPageViewModel: ToolPageViewModelType {
                 totalCards: cards.count,
                 manifest: manifest,
                 translationsFileCache: translationsFileCache,
-                localizationServices: localizationServices
+                localizationServices: localizationServices,
+                fontService: fontService
             )
             
             cardsViewModels.append(cardViewModel)

@@ -26,6 +26,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
     private let followUpsService: FollowUpsService
     private let viewsService: ViewsService
     private let localizationServices: LocalizationServices
+    private let fontService: FontService
     private let analytics: AnalyticsContainer
     private let toolOpenedAnalytics: ToolOpenedAnalytics
     private let primaryTractXmlResource: TractXmlResource
@@ -46,7 +47,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, primaryTranslationManifestData: TranslationManifestData, parallelTranslationManifest: TranslationManifestData?, mobileContentNodeParser: MobileContentXmlNodeParser, translationsFileCache: TranslationsFileCache, languageSettingsService: LanguageSettingsService, tractManager: TractManager, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, isNewUserService: IsNewUserService, cardJumpService: CardJumpService, followUpsService: FollowUpsService, viewsService: ViewsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, toolPage: Int?) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, primaryTranslationManifestData: TranslationManifestData, parallelTranslationManifest: TranslationManifestData?, mobileContentNodeParser: MobileContentXmlNodeParser, translationsFileCache: TranslationsFileCache, languageSettingsService: LanguageSettingsService, fontService: FontService, tractManager: TractManager, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, isNewUserService: IsNewUserService, cardJumpService: CardJumpService, followUpsService: FollowUpsService, viewsService: ViewsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, toolPage: Int?) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -63,6 +64,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
         self.followUpsService = followUpsService
         self.viewsService = viewsService
         self.localizationServices = localizationServices
+        self.fontService = fontService
         self.analytics = analytics
         self.toolOpenedAnalytics = toolOpenedAnalytics
         
@@ -433,6 +435,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
                 manifest: primaryTranslationManifest,
                 translationsFileCache: translationsFileCache,
                 localizationServices: localizationServices,
+                fontService: fontService,
                 hidesBackgroundImage: true
             )
         }

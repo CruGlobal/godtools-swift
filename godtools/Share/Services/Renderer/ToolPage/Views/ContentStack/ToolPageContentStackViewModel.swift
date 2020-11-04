@@ -10,24 +10,30 @@ import UIKit
 
 class ToolPageContentStackViewModel {
     
+    private static let numberFormatter: NumberFormatter = NumberFormatter()
+    
     private let node: MobileContentXmlNode
     private let manifest: MobileContentXmlManifest
     private let translationsFileCache: TranslationsFileCache
+    private let fontService: FontService
     
     let itemSpacing: CGFloat
     let scrollIsEnabled: Bool
     let defaultPrimaryColor: UIColor
     let defaultPrimaryTextColor: UIColor
+    let defaultTextColor: UIColor
     
-    required init(node: MobileContentXmlNode, itemSpacing: CGFloat, scrollIsEnabled: Bool, defaultPrimaryColor: UIColor, defaultPrimaryTextColor: UIColor, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache) {
+    required init(node: MobileContentXmlNode, itemSpacing: CGFloat, scrollIsEnabled: Bool, defaultPrimaryColor: UIColor, defaultPrimaryTextColor: UIColor, defaultTextColor: UIColor, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, fontService: FontService) {
         
         self.node = node
         self.itemSpacing = itemSpacing
         self.scrollIsEnabled = scrollIsEnabled
         self.defaultPrimaryColor = defaultPrimaryColor
         self.defaultPrimaryTextColor = defaultPrimaryTextColor
+        self.defaultTextColor = defaultTextColor
         self.manifest = manifest
         self.translationsFileCache = translationsFileCache
+        self.fontService = fontService
     }
     
     func render(didRenderView: ((_ view: UIView) -> Void)) {
@@ -49,8 +55,10 @@ class ToolPageContentStackViewModel {
                 scrollIsEnabled: false,
                 defaultPrimaryColor: defaultPrimaryColor,
                 defaultPrimaryTextColor: defaultPrimaryTextColor,
+                defaultTextColor: defaultTextColor,
                 manifest: manifest,
-                translationsFileCache: translationsFileCache
+                translationsFileCache: translationsFileCache,
+                fontService: fontService
             )
             
             let view = ToolPageContentStackView(viewModel: viewModel)
@@ -60,7 +68,7 @@ class ToolPageContentStackViewModel {
         else if let textNode = node as? ContentTextNode {
             
             let textLabel: UILabel = getLabel(text: textNode.text)
-            textLabel.textColor = textNode.getTextColor()?.color ?? defaultPrimaryColor
+            textLabel.textColor = textNode.getTextColor()?.color ?? defaultTextColor
             
             return textLabel
         }
@@ -88,8 +96,24 @@ class ToolPageContentStackViewModel {
         }
         else if let headingNode = node as? HeadingNode {
             
-            let headingLabel: UILabel = getLabel(text: headingNode.text)
-            headingLabel.textColor = headingNode.getTextColor()?.color ?? defaultPrimaryColor
+            let headingLabel: UILabel = getLabel(text: headingNode.textNode?.text)
+            let fontSize: CGFloat = 30
+            let fontWeight: UIFont.Weight = .regular
+            let fontScale: CGFloat
+            
+            if let textScaleString = headingNode.textNode?.textScale,
+                !textScaleString.isEmpty,
+                let number = ToolPageContentStackViewModel.numberFormatter.number(from: textScaleString) {
+                
+                fontScale = CGFloat(truncating: number)
+            }
+            else {
+                fontScale = 1
+            }
+            
+            headingLabel.font = fontService.getFont(size: fontSize * fontScale, weight: fontWeight)
+            
+            headingLabel.textColor = headingNode.textNode?.getTextColor()?.color ?? defaultPrimaryColor
             
             return headingLabel
         }

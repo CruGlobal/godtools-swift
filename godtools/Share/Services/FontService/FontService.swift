@@ -17,26 +17,38 @@ class FontService {
         self.languageSettings = languageSettings
     }
     
-    func getFont(size: CGFloat) -> UIFont {
-        
-        return getFont(size: size, weight: .regular)
-    }
-    
     func getFont(size: CGFloat, weight: UIFont.Weight) -> UIFont {
+        
+        guard let primaryLanguageCode: String = languageSettings.primaryLanguage.value?.code, !primaryLanguageCode.isEmpty else {
+            
+            return getDefaultFont(size: size, weight: weight)
+        }
         
         let font: UIFont?
         
-        if languageSettings.primaryLanguage.value?.code == "am" {
+        if primaryLanguageCode == "am" {
             if weight == UIFont.Weight.semibold || weight == UIFont.Weight.bold {
                 font = FontLibrary.notoSansEthiopicBold.font(size: size)
             } else {
                 font = FontLibrary.notoSansEthiopic.font(size: size)
             }
         }
+        else if primaryLanguageCode == "my" {
+            if weight == UIFont.Weight.semibold || weight == UIFont.Weight.bold {
+                font = FontLibrary.notoSansMyanmarBold.font(size: size)
+            } else {
+                font = FontLibrary.notoSansMyanmar.font(size: size)
+            }
+        }
         else {
             font = nil
         }
         
-        return font ?? UIFont.systemFont(ofSize: size, weight: UIFont.Weight.regular)
+        return font ?? getDefaultFont(size: size, weight: weight)
+    }
+    
+    private func getDefaultFont(size: CGFloat, weight: UIFont.Weight) -> UIFont {
+        
+        return UIFont.systemFont(ofSize: size, weight: weight)
     }
 }

@@ -23,10 +23,11 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     private let manifest: MobileContentXmlManifest
     private let translationsFileCache: TranslationsFileCache
     private let localizationServices: LocalizationServices
+    private let fontService: FontService
     
     private weak var delegate: ToolPageCardViewModelDelegate?
     
-    required init(delegate: ToolPageCardViewModelDelegate, cardNode: CardNode, cardPosition: Int, totalCards: Int, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, localizationServices: LocalizationServices) {
+    required init(delegate: ToolPageCardViewModelDelegate, cardNode: CardNode, cardPosition: Int, totalCards: Int, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, localizationServices: LocalizationServices, fontService: FontService) {
         
         self.delegate = delegate
         self.cardNode = cardNode
@@ -35,6 +36,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
         self.manifest = manifest
         self.translationsFileCache = translationsFileCache
         self.localizationServices = localizationServices
+        self.fontService = fontService
     }
     
     var title: String? {
@@ -62,8 +64,10 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
             scrollIsEnabled: true,
             defaultPrimaryColor: .red,
             defaultPrimaryTextColor: .magenta,
+            defaultTextColor: .blue,
             manifest: manifest,
-            translationsFileCache: translationsFileCache
+            translationsFileCache: translationsFileCache,
+            fontService: fontService
         )
     }
     

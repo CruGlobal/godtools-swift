@@ -16,19 +16,7 @@ class HeadingNode: MobileContentXmlNode {
         super.init(xmlElement: xmlElement)
     }
     
-    var text: String? {
-        if let textNode = children.first as? ContentTextNode {
-            return textNode.text
-        }
-        
-        return nil
-    }
-    
-    func getTextColor() -> MobileContentRGBAColor? {
-        if let textNode = children.first as? ContentTextNode {
-            return textNode.getTextColor()
-        }
-        
-        return nil
+    var textNode: ContentTextNode? {
+        return children.first as? ContentTextNode
     }
 }

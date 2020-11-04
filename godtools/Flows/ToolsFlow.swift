@@ -531,6 +531,7 @@ class ToolsFlow: Flow {
             mobileContentNodeParser: appDiContainer.getMobileContentNodeParser(),
             translationsFileCache: appDiContainer.translationsFileCache,
             languageSettingsService: appDiContainer.languageSettingsService,
+            fontService: appDiContainer.getFontService(),
             tractManager: appDiContainer.tractManager,
             tractRemoteSharePublisher: appDiContainer.tractRemoteSharePublisher,
             tractRemoteShareSubscriber: appDiContainer.tractRemoteShareSubscriber,
