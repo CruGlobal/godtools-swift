@@ -81,6 +81,14 @@ class ToolPageContentStackView: UIView {
             
             stackView.addConstraint(heightConstraint)
         }
+        else if let imageView = view as? UIImageView {
+            
+            let imageSize: CGSize = imageView.image?.size ?? CGSize(width: contentView.bounds.size.width, height: contentView.bounds.size.width)
+            
+            let aspectRatio: NSLayoutConstraint = NSLayoutConstraint(item: imageView, attribute: .height, relatedBy: .equal, toItem: imageView, attribute: .width, multiplier: imageSize.height / imageSize.width, constant: 0)
+            
+            imageView.addConstraint(aspectRatio)
+        }
         else if !viewIsIntrinsic {
             
             let heightConstraint: NSLayoutConstraint = NSLayoutConstraint(

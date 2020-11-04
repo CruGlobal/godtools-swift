@@ -410,7 +410,6 @@ class ToolViewModel: NSObject, ToolViewModelType {
                 
             case .success(let pageXmlData):
                 pageXml = pageXmlData
-                print(String(bytes: pageXmlData!, encoding: .utf8))
             case .failure(let error):
                 pageXml = nil
             }

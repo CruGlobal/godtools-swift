@@ -31,10 +31,9 @@ class ToolPageContentStackViewModel {
     }
     
     func render(didRenderView: ((_ view: UIView) -> Void)) {
+        
         for childNode in node.children {
-            let childView: UIView? = recurseAndRender(node: childNode)
-            if let renderedView = childView {
-                renderedView.drawBorder(color: .blue)
+            if let renderedView = recurseAndRender(node: childNode) {
                 didRenderView(renderedView)
             }
         }
@@ -115,8 +114,7 @@ class ToolPageContentStackViewModel {
         label.textAlignment = .left
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
-
-        //label.setLineSpacing(lineSpacing: 4)
+        label.setLineSpacing(lineSpacing: 2)
                 
         return label
     }

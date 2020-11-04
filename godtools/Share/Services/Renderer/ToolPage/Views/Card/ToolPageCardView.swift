@@ -57,6 +57,7 @@ class ToolPageCardView: UIView {
         
         let cardCornerRadius: CGFloat = 8
         
+        // shadow
         layer.cornerRadius = cardCornerRadius
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowRadius = 6.0
@@ -64,9 +65,22 @@ class ToolPageCardView: UIView {
         layer.shadowOpacity = 0.3
         clipsToBounds = false
         
+        // background corner radius
         let rootView: UIView? = subviews.first
         rootView?.layer.cornerRadius = cardCornerRadius
         rootView?.clipsToBounds = true
+        
+        // bottom gradient
+        bottomGradientView.isUserInteractionEnabled = false
+        bottomGradientView.backgroundColor = .clear
+        let bottomGradient = CAGradientLayer()
+        bottomGradient.frame = bottomGradientView.bounds
+        bottomGradient.colors = [
+            UIColor.white.withAlphaComponent(0).cgColor,
+            UIColor.white.withAlphaComponent(0.5).cgColor,
+            UIColor.white.cgColor
+        ]
+        bottomGradientView.layer.insertSublayer(bottomGradient, at: 0)
     }
     
     private func setupBinding() {
