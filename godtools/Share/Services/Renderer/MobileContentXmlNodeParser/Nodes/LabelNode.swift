@@ -15,4 +15,8 @@ class LabelNode: MobileContentXmlNode {
     
         super.init(xmlElement: xmlElement)
     }
+    
+    var textNode: ContentTextNode? {
+        return children.first as? ContentTextNode
+    }
 }

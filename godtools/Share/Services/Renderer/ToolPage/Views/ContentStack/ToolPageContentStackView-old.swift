@@ -12,7 +12,7 @@ class ToolPageContentStackView: UIView {
     
     private let viewModel: ToolPageContentStackViewModel
     private let stackView: UIStackView = UIStackView()
-    
+        
     private(set) var scrollView: UIScrollView?
         
     required init(viewModel: ToolPageContentStackViewModel) {
@@ -49,7 +49,7 @@ class ToolPageContentStackView: UIView {
             return
         }
         
-        let viewUsesIntrinsicContentSize: Bool = view is UILabel
+        let viewUsesIntrinsicContentSize: Bool = view is UILabel || view is UIImageView
         
         if !viewUsesIntrinsicContentSize {
             view.heightAnchor.constraint(equalToConstant: view.bounds.size.height).isActive = true

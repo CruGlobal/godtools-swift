@@ -27,8 +27,6 @@ class ToolPageView: UIViewController {
     private var heroView: ToolPageContentStackView?
     private var cards: [ToolPageCardView] = Array()
     private var cardTopConstraints: [NSLayoutConstraint] = Array()
-    private var headerNotRendererd: Bool = false
-            
     private var didLayoutSubviews: Bool = false
     
     @IBOutlet weak private var backgroundImageView: UIImageView!
@@ -74,45 +72,26 @@ class ToolPageView: UIViewController {
         }
         didLayoutSubviews = true
         
-        // headerView
-        let headerViewModel: ToolPageHeaderViewModel = viewModel.headerWillAppear()
-        headerView.backgroundColor = headerViewModel.backgroundColor
-        headerNumberLabel.text = headerViewModel.headerNumber
-        headerNumberLabel.textColor = headerViewModel.primaryTextColor
-        headerTitleLabel.text = headerViewModel.headerTitle
-        headerTitleLabel.textColor = headerViewModel.primaryTextColor
-        
-        headerNotRendererd = headerViewModel.hidesHeader
-        
-        setHeaderHidden(hidden: headerViewModel.hidesHeader, animated: false)
-        
-        // callToAction
-        let callToActionViewModel: ToolPageCallToActionViewModel = viewModel.callToActionWillAppear()
-        callToActionTitleLabel.text = callToActionViewModel.callToActionTitle
-        callToActionTitleLabel.textColor = callToActionViewModel.callToActionTitleColor
-        callToActionNextButton.setImageColor(color: callToActionViewModel.callToActionNextButtonColor)
-        
-        setCallToActionHidden(hidden: callToActionViewModel.hidesCallToAction, animated: false)
-        
         // contentStack
-        if let contentStackViewModel = viewModel.contentStackWillAppear() {
+        if let contentStackViewModel = viewModel.contentStackViewModel {
             let contentStackView: ToolPageContentStackView = ToolPageContentStackView(viewModel: contentStackViewModel)
             contentStackContainerView.addSubview(contentStackView)
             contentStackView.constrainEdgesToSuperview()
             contentStackContainerView.isHidden = false
+            contentStackContainerView.layoutIfNeeded()
             self.contentStackView = contentStackView
-            view.layoutIfNeeded()
         }
         else {
             contentStackContainerView.isHidden = true
         }
         
         // hero
-        if let heroViewModel = viewModel.heroWillAppear() {
+        if let heroViewModel = viewModel.heroViewModel {
             let heroView: ToolPageContentStackView = ToolPageContentStackView(viewModel: heroViewModel)
             heroContainerView.addSubview(heroView)
             heroView.constrainEdgesToSuperview()
             heroContainerView.isHidden = false
+            heroContainerView.layoutIfNeeded()
             self.heroView = heroView
             view.layoutIfNeeded()
         }
@@ -120,14 +99,24 @@ class ToolPageView: UIViewController {
             heroContainerView.isHidden = true
         }
         
-        setHeroTopContentInset(hidesHeader: headerViewModel.hidesHeader)
+        setHeaderHidden(hidden: viewModel.headerViewModel.hidesHeader, animated: false)
+        setCallToActionHidden(hidden: viewModel.callToActionViewModel.hidesCallToAction, animated: false)
+        setHeroTopContentInset(hidesHeader: viewModel.headerViewModel.hidesHeader)
         
-        // cards
-        cardsContainerView.isHidden = viewModel.hidesCards
-        let cardsViewModels: [ToolPageCardViewModel] = viewModel.cardsWillAppear()
-        addCardsAndCardsConstraints(cardsViewModels: cardsViewModels)
+        //cards
+        addCardsAndCardsConstraints(cardsViewModels: viewModel.cardsViewModels)
+        cardsContainerView.layoutIfNeeded()
         
         setCardsState(cardsState: .starting, animated: false)
+        
+        viewModel.currentCard.addObserver(self) { [weak self] (cardPosition: Int?) in
+            if let cardPosition = cardPosition {
+                self?.setCardsState(cardsState: .showingCard(showingCardAtPosition: cardPosition), animated: true)
+            }
+            else {
+                self?.setCardsState(cardsState: .starting, animated: true)
+            }
+        }
     }
     
     private func setupLayout() {
@@ -139,6 +128,23 @@ class ToolPageView: UIViewController {
         // backgroundImageView
         backgroundImageView.image = viewModel.backgroundImage
         backgroundImageView.isHidden = viewModel.hidesBackgroundImage
+        
+        // headerView
+        let headerViewModel: ToolPageHeaderViewModel = viewModel.headerViewModel
+        headerView.backgroundColor = headerViewModel.backgroundColor
+        headerNumberLabel.text = headerViewModel.headerNumber
+        headerNumberLabel.textColor = headerViewModel.primaryTextColor
+        headerTitleLabel.text = headerViewModel.headerTitle
+        headerTitleLabel.textColor = headerViewModel.primaryTextColor
+        
+        // cards
+        cardsContainerView.isHidden = viewModel.hidesCards
+        
+        // callToAction
+        let callToActionViewModel: ToolPageCallToActionViewModel = viewModel.callToActionViewModel
+        callToActionTitleLabel.text = callToActionViewModel.callToActionTitle
+        callToActionTitleLabel.textColor = callToActionViewModel.callToActionTitleColor
+        callToActionNextButton.setImageColor(color: callToActionViewModel.callToActionNextButtonColor)
     }
     
     private func setHeroTopContentInset(hidesHeader: Bool) {
@@ -150,14 +156,13 @@ class ToolPageView: UIViewController {
         else {
             heroTopContentInset = 30
         }
-        
-        heroView?.scrollView?.contentInset = UIEdgeInsets(top: heroTopContentInset, left: 0, bottom: 0, right: 0)
-        heroView?.scrollView?.contentOffset = CGPoint(x: 0, y: heroTopContentInset * -1)
+        heroView?.setContentInset(contentInset: UIEdgeInsets(top: heroTopContentInset, left: 0, bottom: 0, right: 0))
+        heroView?.setContentOffset(contentOffset: CGPoint(x: 0, y: heroTopContentInset * -1))
     }
     
     private func setHeaderHidden(hidden: Bool, animated: Bool) {
             
-        if headerNotRendererd && !hidden {
+        if viewModel.headerViewModel.hidesHeader && !hidden {
             return
         }
         
@@ -176,6 +181,10 @@ class ToolPageView: UIViewController {
     }
     
     private func setCallToActionHidden(hidden: Bool, animated: Bool) {
+        
+        if viewModel.callToActionViewModel.hidesCallToAction && !hidden {
+            return
+        }
         
         let bottomConstant: CGFloat = hidden ? callToActionView.frame.size.height * -1 : 0
         
@@ -228,7 +237,8 @@ extension ToolPageView {
         case .showing:
             return cardInsets.top
         case .hidden:
-            let cardTopVisibilityHeight: CGFloat = floor(cardTitleHeight * 0.5)
+            let cardTopVisibilityPercentage: CGFloat = 0.4
+            let cardTopVisibilityHeight: CGFloat = floor(cardTitleHeight * cardTopVisibilityPercentage)
             return cardsContainerHeight - (cardTopVisibilityHeight * (numberOfCards - CGFloat(cardPosition)))
         }
     }
@@ -240,6 +250,7 @@ extension ToolPageView {
         case .starting:
             
             setHeaderHidden(hidden: false, animated: animated)
+            setCallToActionHidden(hidden: true, animated: animated)
             
             for index in 0 ..< cardTopConstraints.count {
                 let topConstraint: NSLayoutConstraint = cardTopConstraints[index]
@@ -249,6 +260,9 @@ extension ToolPageView {
         case .showingCard(let showingCardAtPosition):
             
             setHeaderHidden(hidden: true, animated: animated)
+            
+            let isShowingLastCard: Bool = showingCardAtPosition >= cards.count - 1
+            setCallToActionHidden(hidden: !isShowingLastCard, animated: animated)
             
             for index in 0 ..< cardTopConstraints.count {
                 
@@ -268,10 +282,25 @@ extension ToolPageView {
             
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
                 self.view.layoutIfNeeded()
-            }, completion: nil)
+            }, completion: { (finished: Bool) in
+                self.handleCompletedSetCardState(cardsState: cardsState, animated: animated)
+            })
         }
         else {
             view.layoutIfNeeded()
+            handleCompletedSetCardState(cardsState: cardsState, animated: animated)
+        }
+    }
+    
+    private func handleCompletedSetCardState(cardsState: CardsState, animated: Bool) {
+        
+        switch cardsState {
+        case .starting:
+            break
+        case .showingCard(let showingCardAtPosition):
+            if showingCardAtPosition < 0 {
+                setCardsState(cardsState: .starting, animated: animated)
+            }
         }
     }
     
@@ -289,14 +318,14 @@ extension ToolPageView {
         }
     }
     
-    private func addCardsAndCardsConstraints(cardsViewModels: [ToolPageCardViewModel]) {
+    private func addCardsAndCardsConstraints(cardsViewModels: [ToolPageCardViewModelType]) {
         
         for cardViewModel in cardsViewModels {
             
             let cardView: ToolPageCardView = ToolPageCardView(viewModel: cardViewModel)
             
             cardsContainerView.addSubview(cardView)
-            
+
             cardView.translatesAutoresizingMaskIntoConstraints = false
             
             let top: NSLayoutConstraint = NSLayoutConstraint(

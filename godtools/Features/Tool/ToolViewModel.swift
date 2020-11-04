@@ -25,6 +25,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
     private let cardJumpService: CardJumpService
     private let followUpsService: FollowUpsService
     private let viewsService: ViewsService
+    private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
     private let toolOpenedAnalytics: ToolOpenedAnalytics
     private let primaryTractXmlResource: TractXmlResource
@@ -61,6 +62,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
         self.cardJumpService = cardJumpService
         self.followUpsService = followUpsService
         self.viewsService = viewsService
+        self.localizationServices = localizationServices
         self.analytics = analytics
         self.toolOpenedAnalytics = toolOpenedAnalytics
         
@@ -408,6 +410,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
                 
             case .success(let pageXmlData):
                 pageXml = pageXmlData
+                print(String(bytes: pageXmlData!, encoding: .utf8))
             case .failure(let error):
                 pageXml = nil
             }
@@ -429,6 +432,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
                 pageNode: pageNode,
                 manifest: primaryTranslationManifest,
                 translationsFileCache: translationsFileCache,
+                localizationServices: localizationServices,
                 hidesBackgroundImage: true
             )
         }

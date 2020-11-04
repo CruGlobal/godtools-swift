@@ -10,9 +10,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ToolPageCardView" customModule="godtools" customModuleProvider="target">
             <connections>
                 <outlet property="bottomGradientView" destination="65A-1Q-biF" id="UbD-n2-D3X"/>
+                <outlet property="cardPositionLabel" destination="UHR-SS-PKM" id="dza-ma-YqD"/>
                 <outlet property="contentStackContainer" destination="LKt-g0-yhC" id="PFe-s7-3Uw"/>
+                <outlet property="headerButton" destination="1dD-4I-w1p" id="Not-Iq-Za3"/>
                 <outlet property="nextButton" destination="Vbs-dr-uHK" id="CwD-at-hEd"/>
-                <outlet property="pageLabel" destination="UHR-SS-PKM" id="MJy-dz-Cev"/>
                 <outlet property="previousButton" destination="FiU-R3-9Ap" id="zcq-2g-V0v"/>
                 <outlet property="titleLabel" destination="lKs-as-Ac5" id="YYL-No-xG5"/>
                 <outlet property="titleSeparatorLine" destination="rZm-W3-Lwr" id="M61-96-AtS"/>
@@ -23,22 +24,25 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lKs-as-Ac5" userLabel="titleLabel">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lKs-as-Ac5" userLabel="titleLabel">
                     <rect key="frame" x="20" y="18" width="374" height="21.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rZm-W3-Lwr" userLabel="titleSeparatorLine">
+                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rZm-W3-Lwr" userLabel="titleSeparatorLine">
                     <rect key="frame" x="20" y="49.5" width="374" height="1"/>
                     <color key="backgroundColor" systemColor="systemGray4Color" red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="duQ-Yn-ev2"/>
                     </constraints>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1dD-4I-w1p" userLabel="headerButton">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="49.5"/>
+                </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LKt-g0-yhC" userLabel="contentStackContainer">
-                    <rect key="frame" x="15" y="50.5" width="384" height="739"/>
-                    <color key="backgroundColor" systemColor="systemGray6Color" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <rect key="frame" x="15" y="65.5" width="384" height="724"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="65A-1Q-biF" userLabel="bottomGradientView">
                     <rect key="frame" x="15" y="749.5" width="384" height="40"/>
@@ -47,7 +51,7 @@
                         <constraint firstAttribute="height" constant="40" id="8rX-Fv-rSQ"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 / 2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UHR-SS-PKM" userLabel="pageLabel">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 / 2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UHR-SS-PKM" userLabel="cardPositionLabel">
                     <rect key="frame" x="191" y="789.5" width="32" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
@@ -74,17 +78,19 @@
                     </state>
                 </button>
             </subviews>
-            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="rZm-W3-Lwr" firstAttribute="leading" secondItem="lKs-as-Ac5" secondAttribute="leading" id="0Rj-Qg-ika"/>
-                <constraint firstItem="LKt-g0-yhC" firstAttribute="top" secondItem="rZm-W3-Lwr" secondAttribute="bottom" id="5cO-3T-Q9R"/>
+                <constraint firstItem="LKt-g0-yhC" firstAttribute="top" secondItem="rZm-W3-Lwr" secondAttribute="bottom" constant="15" id="5cO-3T-Q9R"/>
                 <constraint firstItem="65A-1Q-biF" firstAttribute="leading" secondItem="LKt-g0-yhC" secondAttribute="leading" id="8aN-qv-PjE"/>
+                <constraint firstItem="rZm-W3-Lwr" firstAttribute="top" secondItem="1dD-4I-w1p" secondAttribute="bottom" id="9XW-us-f6P"/>
                 <constraint firstItem="rZm-W3-Lwr" firstAttribute="trailing" secondItem="lKs-as-Ac5" secondAttribute="trailing" id="AfZ-py-tyi"/>
                 <constraint firstItem="65A-1Q-biF" firstAttribute="trailing" secondItem="LKt-g0-yhC" secondAttribute="trailing" id="I25-F3-YNW"/>
                 <constraint firstItem="LKt-g0-yhC" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="JjR-qo-B9G"/>
                 <constraint firstAttribute="trailing" secondItem="Vbs-dr-uHK" secondAttribute="trailing" constant="20" id="ThV-Dd-fSL"/>
                 <constraint firstItem="UHR-SS-PKM" firstAttribute="top" secondItem="65A-1Q-biF" secondAttribute="bottom" id="Ttk-iS-pMA"/>
                 <constraint firstItem="rZm-W3-Lwr" firstAttribute="top" secondItem="lKs-as-Ac5" secondAttribute="bottom" constant="10" id="U8y-LP-oZ3"/>
+                <constraint firstAttribute="trailing" secondItem="1dD-4I-w1p" secondAttribute="trailing" id="UMN-qn-PB5"/>
                 <constraint firstItem="lKs-as-Ac5" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="18" id="UUY-DV-fPU"/>
                 <constraint firstItem="FiU-R3-9Ap" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="YQ8-hC-EZl"/>
                 <constraint firstAttribute="bottom" secondItem="FiU-R3-9Ap" secondAttribute="bottom" constant="20" id="a1H-uL-2ug"/>
@@ -94,6 +100,8 @@
                 <constraint firstAttribute="trailing" secondItem="lKs-as-Ac5" secondAttribute="trailing" constant="20" id="khR-i6-GRn"/>
                 <constraint firstAttribute="trailing" secondItem="LKt-g0-yhC" secondAttribute="trailing" constant="15" id="rzj-kM-Pkh"/>
                 <constraint firstItem="UHR-SS-PKM" firstAttribute="centerY" secondItem="FiU-R3-9Ap" secondAttribute="centerY" id="ym0-Op-Qln"/>
+                <constraint firstItem="1dD-4I-w1p" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="z50-pB-y34"/>
+                <constraint firstItem="1dD-4I-w1p" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="zbt-S5-eyp"/>
                 <constraint firstAttribute="bottom" secondItem="Vbs-dr-uHK" secondAttribute="bottom" constant="20" id="zoS-M7-7Mz"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>

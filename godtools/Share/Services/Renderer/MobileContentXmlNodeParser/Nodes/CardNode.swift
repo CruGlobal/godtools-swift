@@ -15,4 +15,8 @@ class CardNode: MobileContentXmlNode {
     
         super.init(xmlElement: xmlElement)
     }
+    
+    var labelNode: LabelNode? {
+        return children.first as? LabelNode
+    }
 }

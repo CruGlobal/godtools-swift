@@ -12,11 +12,11 @@ protocol ToolPageViewModelType {
     
     var backgroundImage: UIImage? { get }
     var hidesBackgroundImage: Bool { get }
+    var contentStackViewModel: ToolPageContentStackViewModel? { get }
+    var headerViewModel: ToolPageHeaderViewModel { get }
+    var heroViewModel: ToolPageContentStackViewModel? { get }
     var hidesCards: Bool { get }
-    
-    func contentStackWillAppear() -> ToolPageContentStackViewModel?
-    func headerWillAppear() -> ToolPageHeaderViewModel
-    func heroWillAppear() -> ToolPageContentStackViewModel?
-    func cardsWillAppear() -> [ToolPageCardViewModel]
-    func callToActionWillAppear() -> ToolPageCallToActionViewModel
+    var cardsViewModels: [ToolPageCardViewModelType] { get }
+    var currentCard: ObservableValue<Int?> { get }
+    var callToActionViewModel: ToolPageCallToActionViewModel { get }
 }

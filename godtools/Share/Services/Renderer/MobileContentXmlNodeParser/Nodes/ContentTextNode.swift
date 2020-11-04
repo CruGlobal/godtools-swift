@@ -19,9 +19,12 @@ class ContentTextNode: MobileContentXmlNode {
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
         textColor = attributes["text-color"]?.text
-        
-        if let textChild = xmlElement.children.first as? TextElement {
-            text = textChild.text
+                
+        if xmlElement.text.trimmingCharacters(in: .whitespaces) != "" {
+            text = xmlElement.text
+        }
+        else if let childElementText = (xmlElement.children.first as? TextElement)?.text, childElementText.trimmingCharacters(in: .whitespaces) != "" {
+            text = childElementText
         }
         else {
             text = nil
