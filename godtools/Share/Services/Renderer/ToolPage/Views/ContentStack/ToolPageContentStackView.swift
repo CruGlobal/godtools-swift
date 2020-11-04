@@ -46,6 +46,12 @@ class ToolPageContentStackView: UIView {
         scrollView?.contentOffset = contentOffset
     }
     
+    func setScollBarsHidden(hidden: Bool) {
+        
+        scrollView?.showsVerticalScrollIndicator = !hidden
+        scrollView?.showsHorizontalScrollIndicator = !hidden
+    }
+    
     func addContentView(view: UIView) {
                
         if let lastAddedBottomConstraint = self.lastAddedBottomConstraint {

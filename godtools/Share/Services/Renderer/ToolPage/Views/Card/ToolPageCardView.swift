@@ -105,6 +105,7 @@ class ToolPageCardView: UIView {
             bottom: bottomGradientView.frame.size.height,
             right: 0
         ))
+        contentStackView.setScollBarsHidden(hidden: true)
     }
     
     var titleHeight: CGFloat {

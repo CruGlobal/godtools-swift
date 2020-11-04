@@ -332,7 +332,6 @@
 		455A54C425505A140053C0FD /* ToolPageBackgroundCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 455A54C325505A140053C0FD /* ToolPageBackgroundCell.xib */; };
 		455A54C625505FE80053C0FD /* ToolBackgroundCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455A54C525505FE80053C0FD /* ToolBackgroundCellViewModel.swift */; };
 		455A54C82550756C0053C0FD /* HeadingNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455A54C72550756C0053C0FD /* HeadingNode.swift */; };
-		455A54D0255092190053C0FD /* ToolPageViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455A54CF255092190053C0FD /* ToolPageViewFactory.swift */; };
 		455BF70D23F6F643004A4854 /* GTSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455BF70823F6F643004A4854 /* GTSegment.swift */; };
 		455BF70E23F6F643004A4854 /* GTSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455BF70923F6F643004A4854 /* GTSegmentedControl.swift */; };
 		455BF70F23F6F643004A4854 /* GTSegmentedControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 455BF70A23F6F643004A4854 /* GTSegmentedControl.xib */; };
@@ -1104,7 +1103,6 @@
 		455A54C325505A140053C0FD /* ToolPageBackgroundCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToolPageBackgroundCell.xib; sourceTree = "<group>"; };
 		455A54C525505FE80053C0FD /* ToolBackgroundCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolBackgroundCellViewModel.swift; sourceTree = "<group>"; };
 		455A54C72550756C0053C0FD /* HeadingNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingNode.swift; sourceTree = "<group>"; };
-		455A54CF255092190053C0FD /* ToolPageViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolPageViewFactory.swift; sourceTree = "<group>"; };
 		455BF70823F6F643004A4854 /* GTSegment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTSegment.swift; sourceTree = "<group>"; };
 		455BF70923F6F643004A4854 /* GTSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTSegmentedControl.swift; sourceTree = "<group>"; };
 		455BF70A23F6F643004A4854 /* GTSegmentedControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GTSegmentedControl.xib; sourceTree = "<group>"; };
@@ -2470,14 +2468,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		455A54CE2550920D0053C0FD /* Factory */ = {
-			isa = PBXGroup;
-			children = (
-				455A54CF255092190053C0FD /* ToolPageViewFactory.swift */,
-			);
-			path = Factory;
-			sourceTree = "<group>";
-		};
 		455BF70523F6F643004A4854 /* GTSegmentControl */ = {
 			isa = PBXGroup;
 			children = (
@@ -2867,7 +2857,6 @@
 				457D9823254B4F9F000B8159 /* ToolPageView.xib */,
 				457D9822254B4F9F000B8159 /* ToolPageViewModel.swift */,
 				457D9821254B4F9F000B8159 /* ToolPageViewModelType.swift */,
-				455A54CE2550920D0053C0FD /* Factory */,
 				455A54C9255078D90053C0FD /* Views */,
 			);
 			path = ToolPage;
@@ -4303,7 +4292,6 @@
 				45038D6C24A251EE00345B42 /* UIViewController+AlertMessage.swift in Sources */,
 				454526DC243E19DA00B84B29 /* CopyrightInfoWebContent.swift in Sources */,
 				452DA14D24FC4E1D001541BC /* LanguageModel+Direction.swift in Sources */,
-				455A54D0255092190053C0FD /* ToolPageViewFactory.swift in Sources */,
 				459C8692247A2A240077AB7F /* DownloadArticlesErrorViewModel.swift in Sources */,
 				454D59FE24BF39C400B8528B /* FavoritingToolMessageViewModelType.swift in Sources */,
 				457D9835254B4F9F000B8159 /* MobileContentXmlNodeType.swift in Sources */,
