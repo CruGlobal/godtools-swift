@@ -20,9 +20,7 @@ class ToolPageViewModel: ToolPageViewModelType {
     private let translationsFileCache: TranslationsFileCache
     private let localizationServices: LocalizationServices
     private let fontService: FontService
-    private let primaryColor: UIColor
-    private let primaryTextColor: UIColor
-    private let defaultTextColor: UIColor
+    private let toolPageColors: ToolPageColorsViewModel
         
     private(set) var cardsViewModels: [ToolPageCardViewModelType] = Array()
     
@@ -38,20 +36,14 @@ class ToolPageViewModel: ToolPageViewModelType {
     let callToActionViewModel: ToolPageCallToActionViewModel
     
     required init(delegate: ToolPageViewModelDelegate, pageNode: PageNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, localizationServices: LocalizationServices, fontService: FontService, hidesBackgroundImage: Bool) {
-        
-        let primaryColor: UIColor = pageNode.getPrimaryColor()?.color ?? manifest.attributes.getPrimaryColor().color
-        let primaryTextColor: UIColor = pageNode.getPrimaryTextColor()?.color ?? manifest.attributes.getPrimaryTextColor().color
-        let defaultTextColor: UIColor = pageNode.getTextColor()?.color ?? manifest.attributes.getTextColor().color
-        
+                
         self.delegate = delegate
         self.pageNode = pageNode
         self.manifest = manifest
         self.translationsFileCache = translationsFileCache
         self.localizationServices = localizationServices
         self.fontService = fontService
-        self.primaryColor = primaryColor
-        self.primaryTextColor = primaryTextColor
-        self.defaultTextColor = defaultTextColor
+        self.toolPageColors = ToolPageColorsViewModel(pageNode: pageNode, manifest: manifest)
         self.hidesBackgroundImage = hidesBackgroundImage
         
         // background image
@@ -71,9 +63,7 @@ class ToolPageViewModel: ToolPageViewModelType {
                 node: pageNode,
                 itemSpacing: 20,
                 scrollIsEnabled: true,
-                defaultPrimaryColor: primaryColor,
-                defaultPrimaryTextColor: primaryTextColor,
-                defaultTextColor: defaultTextColor,
+                toolPageColors: toolPageColors,
                 manifest: manifest,
                 translationsFileCache: translationsFileCache,
                 fontService: fontService
@@ -86,8 +76,8 @@ class ToolPageViewModel: ToolPageViewModelType {
         // header
         headerViewModel = ToolPageHeaderViewModel(
             pageNode: pageNode,
-            backgroundColor: primaryColor,
-            primaryTextColor: primaryTextColor,
+            backgroundColor: toolPageColors.primaryColor,
+            primaryTextColor: toolPageColors.primaryTextColor,
             fontService: fontService
         )
         
@@ -98,9 +88,7 @@ class ToolPageViewModel: ToolPageViewModelType {
                 node: heroNode,
                 itemSpacing: 20,
                 scrollIsEnabled: true,
-                defaultPrimaryColor: primaryColor,
-                defaultPrimaryTextColor: primaryTextColor,
-                defaultTextColor: defaultTextColor,
+                toolPageColors: toolPageColors,
                 manifest: manifest,
                 translationsFileCache: translationsFileCache,
                 fontService: fontService
@@ -113,8 +101,7 @@ class ToolPageViewModel: ToolPageViewModelType {
         // call to action
         callToActionViewModel = ToolPageCallToActionViewModel(
             pageNode: pageNode,
-            primaryColor: primaryColor,
-            primaryTextColor: primaryTextColor
+            toolPageColors: toolPageColors
         )
         
         // cards
@@ -131,6 +118,7 @@ class ToolPageViewModel: ToolPageViewModelType {
                 cardNode: cardNode,
                 cardPosition: cardIndex,
                 totalCards: cards.count,
+                toolPageColors: toolPageColors,
                 manifest: manifest,
                 translationsFileCache: translationsFileCache,
                 localizationServices: localizationServices,

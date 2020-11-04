@@ -15,11 +15,11 @@ class ToolPageCallToActionViewModel {
     let callToActionNextButtonColor: UIColor
     let hidesCallToAction: Bool
     
-    required init(pageNode: PageNode, primaryColor: UIColor, primaryTextColor: UIColor) {
+    required init(pageNode: PageNode, toolPageColors: ToolPageColorsViewModel) {
         
         callToActionTitle = pageNode.callToActionNode?.textNode?.text
-        callToActionTitleColor = pageNode.callToActionNode?.textNode?.getTextColor()?.color ?? primaryTextColor
-        callToActionNextButtonColor = pageNode.callToActionNode?.getControlColor()?.color ?? primaryColor
+        callToActionTitleColor = pageNode.callToActionNode?.textNode?.getTextColor()?.color ?? toolPageColors.primaryTextColor
+        callToActionNextButtonColor = pageNode.callToActionNode?.getControlColor()?.color ?? toolPageColors.primaryColor
         hidesCallToAction = pageNode.callToActionNode == nil
     }
 }

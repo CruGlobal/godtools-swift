@@ -19,18 +19,14 @@ class ToolPageContentStackViewModel {
     
     let itemSpacing: CGFloat
     let scrollIsEnabled: Bool
-    let defaultPrimaryColor: UIColor
-    let defaultPrimaryTextColor: UIColor
-    let defaultTextColor: UIColor
+    let toolPageColors: ToolPageColorsViewModel
     
-    required init(node: MobileContentXmlNode, itemSpacing: CGFloat, scrollIsEnabled: Bool, defaultPrimaryColor: UIColor, defaultPrimaryTextColor: UIColor, defaultTextColor: UIColor, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, fontService: FontService) {
+    required init(node: MobileContentXmlNode, itemSpacing: CGFloat, scrollIsEnabled: Bool, toolPageColors: ToolPageColorsViewModel, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, fontService: FontService) {
         
         self.node = node
         self.itemSpacing = itemSpacing
         self.scrollIsEnabled = scrollIsEnabled
-        self.defaultPrimaryColor = defaultPrimaryColor
-        self.defaultPrimaryTextColor = defaultPrimaryTextColor
-        self.defaultTextColor = defaultTextColor
+        self.toolPageColors = toolPageColors
         self.manifest = manifest
         self.translationsFileCache = translationsFileCache
         self.fontService = fontService
@@ -53,9 +49,7 @@ class ToolPageContentStackViewModel {
                 node: paragraphNode,
                 itemSpacing: 5,
                 scrollIsEnabled: false,
-                defaultPrimaryColor: defaultPrimaryColor,
-                defaultPrimaryTextColor: defaultPrimaryTextColor,
-                defaultTextColor: defaultTextColor,
+                toolPageColors: toolPageColors,
                 manifest: manifest,
                 translationsFileCache: translationsFileCache,
                 fontService: fontService
@@ -68,7 +62,7 @@ class ToolPageContentStackViewModel {
         else if let textNode = node as? ContentTextNode {
             
             let textLabel: UILabel = getLabel(text: textNode.text)
-            textLabel.textColor = textNode.getTextColor()?.color ?? defaultTextColor
+            textLabel.textColor = textNode.getTextColor()?.color ?? toolPageColors.textColor
             
             return textLabel
         }
@@ -113,7 +107,7 @@ class ToolPageContentStackViewModel {
             
             headingLabel.font = fontService.getFont(size: fontSize * fontScale, weight: fontWeight)
             
-            headingLabel.textColor = headingNode.textNode?.getTextColor()?.color ?? defaultPrimaryColor
+            headingLabel.textColor = headingNode.textNode?.getTextColor()?.color ?? toolPageColors.primaryColor
             
             return headingLabel
         }
