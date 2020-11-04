@@ -77,6 +77,7 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
         let pageNode: PageNode = pageNodes[page]
         
         return ToolPageViewModel(
+            delegate: self,
             pageNode: pageNode,
             manifest: manifest,
             translationsFileCache: translationsFileCache,
@@ -91,5 +92,14 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
     
     func tipPageDidAppear(page: Int) {
         setPage(page: page, animated: true)
+    }
+}
+
+// MARK: - ToolPageViewModelDelegate
+
+extension ToolTrainingViewModel: ToolPageViewModelDelegate {
+    
+    func toolPageNextPageTapped() {
+        
     }
 }

@@ -40,7 +40,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
     let navBarViewModel: ToolNavBarViewModel
     let selectedTractLanguage: ObservableValue<TractLanguage>
     let tractXmlPageItems: ObservableValue<[TractXmlPageItem]> = ObservableValue(value: [])
-    let currentTractPage: ObservableValue<AnimatableValue<Int>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
+    let currentPage: ObservableValue<AnimatableValue<Int>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
     let remoteShareIsActive: ObservableValue<Bool> = ObservableValue(value: false)
     let numberOfToolPages: ObservableValue<Int> = ObservableValue(value: 0)
     
@@ -185,7 +185,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
         
         if let page = attributes?.page {
             cachedTractRemoteShareNavigationEvents[page] = navigationEvent
-            currentTractPage.accept(value: AnimatableValue(value: page, animated: animated))
+            currentPage.accept(value: AnimatableValue(value: page, animated: animated))
             if let cachedTractPage = getTractPageItem(page: page).tractPage {
                 cachedTractPage.setCard(card: attributes?.card, animated: animated)
             }
@@ -428,6 +428,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
             cachedPrimaryPageNodes[page] = pageNode
                     
             return ToolPageViewModel(
+                delegate: self,
                 pageNode: pageNode,
                 manifest: primaryTranslationManifest,
                 translationsFileCache: translationsFileCache,
@@ -467,6 +468,15 @@ class ToolViewModel: NSObject, ToolViewModelType {
             siteSection: resource.abbreviation,
             siteSubSection: ""
         )
+    }
+    
+    func gotoNextPage(animated: Bool) {
+        
+        let nextPage: Int = toolPage + 1
+        
+        if nextPage < numberOfToolPages.value {
+            currentPage.accept(value: AnimatableValue(value: nextPage, animated: animated))
+        }
     }
     
     func tractPageCardStateChanged(cardState: TractCardProperties.CardState) {
@@ -724,5 +734,14 @@ class ToolViewModel: NSObject, ToolViewModelType {
         }
         
         return TractPageItem(tractPage: tractPage, navigationEvent: navigationEvent)
+    }
+}
+
+// MARK: - ToolPageViewModelDelegate
+
+extension ToolViewModel: ToolPageViewModelDelegate {
+    
+    func toolPageNextPageTapped() {
+        gotoNextPage(animated: true)
     }
 }

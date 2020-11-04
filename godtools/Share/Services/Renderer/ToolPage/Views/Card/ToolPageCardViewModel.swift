@@ -43,7 +43,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     }
     
     var cardPositionLabel: String? {
-        return String(cardPosition) + "/" + String(totalCards)
+        return String(cardPosition+1) + "/" + String(totalCards)
     }
     
     var previousButtonTitle: String? {

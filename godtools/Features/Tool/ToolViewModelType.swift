@@ -15,7 +15,7 @@ protocol ToolViewModelType {
     var primaryTractManifest: ManifestProperties { get }
     var primaryTractPages: [XMLPage] { get }
     var tractXmlPageItems: ObservableValue<[TractXmlPageItem]> { get }
-    var currentTractPage: ObservableValue<AnimatableValue<Int>> { get }
+    var currentPage: ObservableValue<AnimatableValue<Int>> { get }
     var isRightToLeftLanguage: Bool { get }
     var remoteShareIsActive: ObservableValue<Bool> { get }
     var numberOfToolPages: ObservableValue<Int> { get }

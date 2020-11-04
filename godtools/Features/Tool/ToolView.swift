@@ -70,7 +70,7 @@ class ToolView: UIViewController {
         }
         didLayoutSubviews = true
 
-        viewModel.currentTractPage.addObserver(self) { [weak self] (animatableValue: AnimatableValue<Int>) in
+        viewModel.currentPage.addObserver(self) { [weak self] (animatableValue: AnimatableValue<Int>) in
             self?.toolPagesView.scrollToPage(page: animatableValue.value, animated: animatableValue.animated)
         }
     }

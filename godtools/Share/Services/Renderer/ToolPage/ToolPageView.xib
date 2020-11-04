@@ -73,6 +73,10 @@
                         <constraint firstAttribute="trailing" secondItem="6zT-2z-aAt" secondAttribute="trailing" constant="20" id="e5h-Ek-TKI"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b47-gS-Gm5" userLabel="cardsContainerView">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vNO-5W-ee8" userLabel="callToActionView">
                     <rect key="frame" x="0.0" y="762" width="414" height="100"/>
                     <subviews>
@@ -101,10 +105,6 @@
                         <constraint firstItem="fpS-7q-F2k" firstAttribute="leading" secondItem="vNO-5W-ee8" secondAttribute="leading" constant="20" id="jZe-t3-ByE"/>
                         <constraint firstAttribute="bottom" secondItem="6s8-qm-Baq" secondAttribute="bottom" constant="20" id="tAr-6J-QgU"/>
                     </constraints>
-                </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b47-gS-Gm5" userLabel="cardsContainerView">
-                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

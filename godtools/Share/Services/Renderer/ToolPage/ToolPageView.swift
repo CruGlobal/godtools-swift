@@ -62,6 +62,8 @@ class ToolPageView: UIViewController {
                 
         setupLayout()
         setupBinding()
+        
+        callToActionNextButton.addTarget(self, action: #selector(handleCallToActionNext(button:)), for: .touchUpInside)
     }
     
     override func viewDidLayoutSubviews() {
@@ -145,6 +147,10 @@ class ToolPageView: UIViewController {
         callToActionTitleLabel.text = callToActionViewModel.callToActionTitle
         callToActionTitleLabel.textColor = callToActionViewModel.callToActionTitleColor
         callToActionNextButton.setImageColor(color: callToActionViewModel.callToActionNextButtonColor)
+    }
+    
+    @objc func handleCallToActionNext(button: UIButton) {
+        viewModel.handleCallToActionNextButtonTapped()
     }
     
     private func setHeroTopContentInset(hidesHeader: Bool) {
@@ -262,6 +268,7 @@ extension ToolPageView {
             setHeaderHidden(hidden: true, animated: animated)
             
             let isShowingLastCard: Bool = showingCardAtPosition >= cards.count - 1
+            
             setCallToActionHidden(hidden: !isShowingLastCard, animated: animated)
             
             for index in 0 ..< cardTopConstraints.count {
@@ -301,20 +308,6 @@ extension ToolPageView {
             if showingCardAtPosition < 0 {
                 setCardsState(cardsState: .starting, animated: animated)
             }
-        }
-    }
-    
-    private func showCard(position: Int, animated: Bool) {
-        
-        if animated {
-            
-            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
-                //
-                self.view.layoutIfNeeded()
-            }, completion: nil)
-        }
-        else {
-            view.layoutIfNeeded()
         }
     }
     

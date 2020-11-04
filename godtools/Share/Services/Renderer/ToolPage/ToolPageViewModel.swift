@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol ToolPageViewModelDelegate: class {
+    
+    func toolPageNextPageTapped()
+}
+
 class ToolPageViewModel: ToolPageViewModelType {
         
     private let pageNode: PageNode
@@ -19,6 +24,8 @@ class ToolPageViewModel: ToolPageViewModelType {
         
     private(set) var cardsViewModels: [ToolPageCardViewModelType] = Array()
     
+    private weak var delegate: ToolPageViewModelDelegate?
+    
     let backgroundImage: UIImage?
     let hidesBackgroundImage: Bool
     let contentStackViewModel: ToolPageContentStackViewModel?
@@ -28,11 +35,12 @@ class ToolPageViewModel: ToolPageViewModelType {
     let currentCard: ObservableValue<Int?> = ObservableValue(value: nil)
     let callToActionViewModel: ToolPageCallToActionViewModel
     
-    required init(pageNode: PageNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, localizationServices: LocalizationServices, hidesBackgroundImage: Bool) {
+    required init(delegate: ToolPageViewModelDelegate, pageNode: PageNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, localizationServices: LocalizationServices, hidesBackgroundImage: Bool) {
         
         let primaryColor: UIColor = pageNode.getPrimaryColor()?.color ?? manifest.attributes.getPrimaryColor().color
         let primaryTextColor: UIColor = pageNode.getPrimaryTextColor()?.color ?? manifest.attributes.getPrimaryTextColor().color
         
+        self.delegate = delegate
         self.pageNode = pageNode
         self.manifest = manifest
         self.translationsFileCache = translationsFileCache
@@ -121,7 +129,13 @@ class ToolPageViewModel: ToolPageViewModelType {
             cardsViewModels.append(cardViewModel)
         }
     }
+    
+    func handleCallToActionNextButtonTapped() {
+        delegate?.toolPageNextPageTapped()
+    }
 }
+
+// MARK: - ToolPageCardViewModelDelegate
 
 extension ToolPageViewModel: ToolPageCardViewModelDelegate {
     
@@ -141,6 +155,11 @@ extension ToolPageViewModel: ToolPageCardViewModelDelegate {
         
         let nextCard: Int = cardPosition + 1
         
-        currentCard.accept(value: nextCard)
+        if nextCard <= cardsViewModels.count - 1 {
+            currentCard.accept(value: nextCard)
+        }
+        else {
+            delegate?.toolPageNextPageTapped()
+        }
     }
 }
