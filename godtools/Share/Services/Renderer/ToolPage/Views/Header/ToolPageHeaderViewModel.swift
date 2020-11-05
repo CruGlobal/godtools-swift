@@ -38,6 +38,6 @@ class ToolPageHeaderViewModel {
     }
     
     var headerTitleFont: UIFont {
-        return fontService.getFont(size: 18, weight: .regular)
+        return fontService.getFont(size: 19, weight: .regular)
     }
 }

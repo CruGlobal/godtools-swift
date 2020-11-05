@@ -146,6 +146,7 @@ class ToolPageView: UIViewController {
         headerTitleLabel.font = headerViewModel.headerTitleFont
         headerTitleLabel.text = headerViewModel.headerTitle
         headerTitleLabel.textColor = headerViewModel.primaryTextColor
+        headerTitleLabel.setLineSpacing(lineSpacing: 2)
         
         // cards
         cardsContainerView.isHidden = viewModel.hidesCards

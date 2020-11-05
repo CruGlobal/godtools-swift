@@ -6,7 +6,7 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol ToolPageCardViewModelDelegate: class {
     
@@ -28,6 +28,8 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     
     private weak var delegate: ToolPageCardViewModelDelegate?
     
+    let contentStackViewModel: ToolPageContentStackViewModel
+    
     required init(delegate: ToolPageCardViewModelDelegate, cardNode: CardNode, cardPosition: Int, totalCards: Int, toolPageColors: ToolPageColorsViewModel, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, localizationServices: LocalizationServices, fontService: FontService) {
         
         self.delegate = delegate
@@ -39,6 +41,17 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
         self.translationsFileCache = translationsFileCache
         self.localizationServices = localizationServices
         self.fontService = fontService
+        
+        contentStackViewModel = ToolPageContentStackViewModel(
+            node: cardNode,
+            itemSpacing: 20,
+            scrollIsEnabled: true,
+            toolPageColors: toolPageColors,
+            defaultTextNodeTextColor: toolPageColors.cardTextColor,
+            manifest: manifest,
+            translationsFileCache: translationsFileCache,
+            fontService: fontService
+        )
     }
     
     var title: String? {
@@ -46,29 +59,48 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
         return title
     }
     
+    var titleColor: UIColor {
+        return cardNode.labelNode?.textNode?.getTextColor()?.color ?? toolPageColors.primaryColor
+    }
+    
+    var titleFont: UIFont {
+        return fontService.getFont(size: 19, weight: .regular)
+    }
+    
     var cardPositionLabel: String? {
         return String(cardPosition+1) + "/" + String(totalCards)
+    }
+    
+    var cardPositionLabelTextColor: UIColor {
+        return .gray
+    }
+    
+    var cardPositionLabelFont: UIFont {
+        return fontService.getFont(size: 18, weight: .regular)
     }
     
     var previousButtonTitle: String? {
         return localizationServices.stringForMainBundle(key: "card_status1")
     }
     
+    var previousButtonTitleColor: UIColor {
+        return .gray
+    }
+    
+    var previousButtonTitleFont: UIFont {
+        return fontService.getFont(size: 18, weight: .regular)
+    }
+    
     var nextButtonTitle: String? {
         return localizationServices.stringForMainBundle(key: "card_status2")
     }
     
-    func contentStackWillAppear() -> ToolPageContentStackViewModel {
-        
-        return ToolPageContentStackViewModel(
-            node: cardNode,
-            itemSpacing: 20,
-            scrollIsEnabled: true,
-            toolPageColors: toolPageColors,
-            manifest: manifest,
-            translationsFileCache: translationsFileCache,
-            fontService: fontService
-        )
+    var nextButtonTitleColor: UIColor {
+        return .gray
+    }
+    
+    var nextButtonTitleFont: UIFont {
+        return fontService.getFont(size: 18, weight: .regular)
     }
     
     func headerTapped() {

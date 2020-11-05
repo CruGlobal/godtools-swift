@@ -11,11 +11,19 @@ import UIKit
 protocol ToolPageCardViewModelType {
     
     var title: String? { get }
+    var titleColor: UIColor { get }
+    var titleFont: UIFont { get }
+    var contentStackViewModel: ToolPageContentStackViewModel { get }
     var cardPositionLabel: String? { get }
+    var cardPositionLabelTextColor: UIColor { get }
+    var cardPositionLabelFont: UIFont { get }
     var previousButtonTitle: String? { get }
+    var previousButtonTitleColor: UIColor { get }
+    var previousButtonTitleFont: UIFont { get }
     var nextButtonTitle: String? { get }
+    var nextButtonTitleColor: UIColor { get }
+    var nextButtonTitleFont: UIFont { get }
     
-    func contentStackWillAppear() -> ToolPageContentStackViewModel
     func headerTapped()
     func previousTapped()
     func nextTapped()

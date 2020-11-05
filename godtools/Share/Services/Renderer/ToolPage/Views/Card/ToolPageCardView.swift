@@ -86,14 +86,20 @@ class ToolPageCardView: UIView {
     private func setupBinding() {
         
         titleLabel.text = viewModel.title
+        titleLabel.font = viewModel.titleFont
+        titleLabel.textColor = viewModel.titleColor
         
         cardPositionLabel.text = viewModel.cardPositionLabel
+        cardPositionLabel.textColor = viewModel.cardPositionLabelTextColor
+        cardPositionLabel.font = viewModel.cardPositionLabelFont
         
         previousButton.setTitle(viewModel.previousButtonTitle, for: .normal)
+        previousButton.setTitleColor(viewModel.previousButtonTitleColor, for: .normal)
         
         nextButton.setTitle(viewModel.nextButtonTitle, for: .normal)
+        nextButton.setTitleColor(viewModel.nextButtonTitleColor, for: .normal)
         
-        let contentStackViewModel: ToolPageContentStackViewModel = viewModel.contentStackWillAppear()
+        let contentStackViewModel: ToolPageContentStackViewModel = viewModel.contentStackViewModel
         let contentStackView: ToolPageContentStackView = ToolPageContentStackView(viewModel: contentStackViewModel)
         contentStackContainer.addSubview(contentStackView)
         contentStackView.constrainEdgesToSuperview()

@@ -10,12 +10,14 @@ import UIKit
 
 class ToolPageColorsViewModel {
     
+    let cardTextColor: UIColor?
     let primaryColor: UIColor
     let primaryTextColor: UIColor
     let textColor: UIColor
     
     required init(pageNode: PageNode, manifest: MobileContentXmlManifest) {
         
+        cardTextColor = pageNode.getCardTextColor()?.color
         primaryColor = pageNode.getPrimaryColor()?.color ?? manifest.attributes.getPrimaryColor().color
         primaryTextColor = pageNode.getPrimaryTextColor()?.color ?? manifest.attributes.getPrimaryTextColor().color
         textColor = pageNode.getTextColor()?.color ?? manifest.attributes.getTextColor().color

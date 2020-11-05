@@ -10,16 +10,34 @@ import UIKit
 
 class ToolPageCallToActionViewModel {
     
-    let callToActionTitle: String?
-    let callToActionTitleColor: UIColor
-    let callToActionNextButtonColor: UIColor
+    private let pageNode: PageNode
+    private let toolPageColors: ToolPageColorsViewModel
+    private let fontService: FontService
+
     let hidesCallToAction: Bool
     
-    required init(pageNode: PageNode, toolPageColors: ToolPageColorsViewModel) {
+    required init(pageNode: PageNode, toolPageColors: ToolPageColorsViewModel, fontService: FontService) {
         
-        callToActionTitle = pageNode.callToActionNode?.textNode?.text
-        callToActionTitleColor = pageNode.callToActionNode?.textNode?.getTextColor()?.color ?? toolPageColors.primaryTextColor
-        callToActionNextButtonColor = pageNode.callToActionNode?.getControlColor()?.color ?? toolPageColors.primaryColor
-        hidesCallToAction = pageNode.callToActionNode == nil
+        self.pageNode = pageNode
+        self.toolPageColors = toolPageColors
+        self.fontService = fontService
+        
+        hidesCallToAction = pageNode.callToActionNode == nil && pageNode.heroNode == nil
+    }
+    
+    var callToActionTitle: String? {
+        return pageNode.callToActionNode?.textNode?.text
+    }
+    
+    var callToActionTitleFont: UIFont {
+        return fontService.getFont(size: 18, weight: .regular)
+    }
+    
+    var callToActionTitleColor: UIColor {
+        return pageNode.callToActionNode?.textNode?.getTextColor()?.color ?? toolPageColors.textColor
+    }
+    
+    var callToActionNextButtonColor: UIColor {
+        return pageNode.callToActionNode?.getControlColor()?.color ?? toolPageColors.primaryColor
     }
 }

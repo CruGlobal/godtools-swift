@@ -547,6 +547,7 @@
 		45A1431624A62C1900892200 /* FetchTranslationManifestsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A1431524A62C1900892200 /* FetchTranslationManifestsViewModel.swift */; };
 		45A1432424A64DFA00892200 /* FetchTranslationManifestResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A1432324A64DFA00892200 /* FetchTranslationManifestResult.swift */; };
 		45A163552553473500ACFB3F /* ToolPageColorsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A163542553473500ACFB3F /* ToolPageColorsViewModel.swift */; };
+		45A163582553AA4600ACFB3F /* ToolPageViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A163572553AA4600ACFB3F /* ToolPageViewFactory.swift */; };
 		45A1B5E824A042B8009BA210 /* ResourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A1B5E724A042B8009BA210 /* ResourceType.swift */; };
 		45A1B5EA24A053AB009BA210 /* UIView+ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A1B5E924A053AB009BA210 /* UIView+ProgressView.swift */; };
 		45A1FF7425420AF600AA9A14 /* PlaygroundViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A1FF7125420AF600AA9A14 /* PlaygroundViewModel.swift */; };
@@ -1316,6 +1317,7 @@
 		45A1431524A62C1900892200 /* FetchTranslationManifestsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchTranslationManifestsViewModel.swift; sourceTree = "<group>"; };
 		45A1432324A64DFA00892200 /* FetchTranslationManifestResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchTranslationManifestResult.swift; sourceTree = "<group>"; };
 		45A163542553473500ACFB3F /* ToolPageColorsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolPageColorsViewModel.swift; sourceTree = "<group>"; };
+		45A163572553AA4600ACFB3F /* ToolPageViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolPageViewFactory.swift; sourceTree = "<group>"; };
 		45A1B5E724A042B8009BA210 /* ResourceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceType.swift; sourceTree = "<group>"; };
 		45A1B5E924A053AB009BA210 /* UIView+ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ProgressView.swift"; sourceTree = "<group>"; };
 		45A1FF7125420AF600AA9A14 /* PlaygroundViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaygroundViewModel.swift; sourceTree = "<group>"; };
@@ -2859,6 +2861,7 @@
 				457D9823254B4F9F000B8159 /* ToolPageView.xib */,
 				457D9822254B4F9F000B8159 /* ToolPageViewModel.swift */,
 				457D9821254B4F9F000B8159 /* ToolPageViewModelType.swift */,
+				45A163562553AA3A00ACFB3F /* Factory */,
 				455A54C9255078D90053C0FD /* Views */,
 				45A163532553472000ACFB3F /* ViewModels */,
 			);
@@ -3013,6 +3016,14 @@
 				45A163542553473500ACFB3F /* ToolPageColorsViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		45A163562553AA3A00ACFB3F /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+				45A163572553AA4600ACFB3F /* ToolPageViewFactory.swift */,
+			);
+			path = Factory;
 			sourceTree = "<group>";
 		};
 		45A1FF7025420AF600AA9A14 /* Playground */ = {
@@ -4426,6 +4437,7 @@
 				4595F42624A294D200B3733E /* ArticleAemImportData.swift in Sources */,
 				4532111524AA9C0900D07B49 /* InitialDataDownloader.swift in Sources */,
 				4564724F244F723E00CB202D /* ArticlesViewModelType.swift in Sources */,
+				45A163582553AA4600ACFB3F /* ToolPageViewFactory.swift in Sources */,
 				45F66CAA23E4C5230053CB5B /* MenuViewModelType.swift in Sources */,
 				45F6E019249D44270077C7D9 /* LanguageModelType.swift in Sources */,
 				4586D7DE246ECDC90062D988 /* TractModal.swift in Sources */,

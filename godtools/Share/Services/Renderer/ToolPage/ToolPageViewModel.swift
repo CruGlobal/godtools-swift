@@ -64,6 +64,7 @@ class ToolPageViewModel: ToolPageViewModelType {
                 itemSpacing: 20,
                 scrollIsEnabled: true,
                 toolPageColors: toolPageColors,
+                defaultTextNodeTextColor: nil,
                 manifest: manifest,
                 translationsFileCache: translationsFileCache,
                 fontService: fontService
@@ -89,6 +90,7 @@ class ToolPageViewModel: ToolPageViewModelType {
                 itemSpacing: 20,
                 scrollIsEnabled: true,
                 toolPageColors: toolPageColors,
+                defaultTextNodeTextColor: nil,
                 manifest: manifest,
                 translationsFileCache: translationsFileCache,
                 fontService: fontService
@@ -101,7 +103,8 @@ class ToolPageViewModel: ToolPageViewModelType {
         // call to action
         callToActionViewModel = ToolPageCallToActionViewModel(
             pageNode: pageNode,
-            toolPageColors: toolPageColors
+            toolPageColors: toolPageColors,
+            fontService: fontService
         )
         
         // cards

@@ -19,6 +19,7 @@ class PageNode: MobileContentXmlNode {
     let backgroundColor: String?
     let backgroundImage: String?
     let backgroundImageScaleType: String?
+    let cardTextColor: String?
     let primaryColor: String?
     let primaryTextColor: String?
     let textColor: String?
@@ -30,6 +31,7 @@ class PageNode: MobileContentXmlNode {
         backgroundColor = attributes["background-color"]?.text
         backgroundImage = attributes["background-image"]?.text
         backgroundImageScaleType = attributes["background-image-scale-type"]?.text
+        cardTextColor = attributes["card-text-color"]?.text
         primaryColor = attributes["primary-color"]?.text
         primaryTextColor = attributes["primary-text-color"]?.text
         textColor = attributes["text-color"]?.text
@@ -56,6 +58,13 @@ class PageNode: MobileContentXmlNode {
     
     func getBackgroundColor() -> MobileContentRGBAColor? {
         if let stringColor = backgroundColor {
+            return MobileContentRGBAColor(stringColor: stringColor)
+        }
+        return nil
+    }
+    
+    func getCardTextColor() -> MobileContentRGBAColor? {
+        if let stringColor = cardTextColor {
             return MobileContentRGBAColor(stringColor: stringColor)
         }
         return nil

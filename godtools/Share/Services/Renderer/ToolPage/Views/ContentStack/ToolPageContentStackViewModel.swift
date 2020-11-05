@@ -16,17 +16,19 @@ class ToolPageContentStackViewModel {
     private let manifest: MobileContentXmlManifest
     private let translationsFileCache: TranslationsFileCache
     private let fontService: FontService
+    private let defaultTextNodeTextColor: UIColor?
     
     let itemSpacing: CGFloat
     let scrollIsEnabled: Bool
     let toolPageColors: ToolPageColorsViewModel
     
-    required init(node: MobileContentXmlNode, itemSpacing: CGFloat, scrollIsEnabled: Bool, toolPageColors: ToolPageColorsViewModel, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, fontService: FontService) {
+    required init(node: MobileContentXmlNode, itemSpacing: CGFloat, scrollIsEnabled: Bool, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, fontService: FontService) {
         
         self.node = node
         self.itemSpacing = itemSpacing
         self.scrollIsEnabled = scrollIsEnabled
         self.toolPageColors = toolPageColors
+        self.defaultTextNodeTextColor = defaultTextNodeTextColor
         self.manifest = manifest
         self.translationsFileCache = translationsFileCache
         self.fontService = fontService
@@ -50,6 +52,7 @@ class ToolPageContentStackViewModel {
                 itemSpacing: 5,
                 scrollIsEnabled: false,
                 toolPageColors: toolPageColors,
+                defaultTextNodeTextColor: defaultTextNodeTextColor,
                 manifest: manifest,
                 translationsFileCache: translationsFileCache,
                 fontService: fontService
@@ -61,8 +64,12 @@ class ToolPageContentStackViewModel {
         }
         else if let textNode = node as? ContentTextNode {
             
-            let textLabel: UILabel = getLabel(text: textNode.text)
-            textLabel.textColor = textNode.getTextColor()?.color ?? toolPageColors.textColor
+            let textLabel: UILabel = getLabel(
+                textNode: textNode,
+                fontSize: 18,
+                fontWeight: .regular,
+                textColor: textNode.getTextColor()?.color ?? defaultTextNodeTextColor ?? toolPageColors.textColor
+            )
             
             return textLabel
         }
@@ -90,22 +97,12 @@ class ToolPageContentStackViewModel {
         }
         else if let headingNode = node as? HeadingNode {
             
-            let headingLabel: UILabel = getLabel(text: headingNode.textNode?.text)
-            let fontSize: CGFloat = 30
-            let fontWeight: UIFont.Weight = .regular
-            let fontScale: CGFloat
-            
-            if let textScaleString = headingNode.textNode?.textScale,
-                !textScaleString.isEmpty,
-                let number = ToolPageContentStackViewModel.numberFormatter.number(from: textScaleString) {
-                
-                fontScale = CGFloat(truncating: number)
-            }
-            else {
-                fontScale = 1
-            }
-            
-            headingLabel.font = fontService.getFont(size: fontSize * fontScale, weight: fontWeight)
+            let headingLabel: UILabel = getLabel(
+                textNode: headingNode.textNode,
+                fontSize: 30,
+                fontWeight: .regular,
+                textColor: headingNode.textNode?.getTextColor()?.color ?? toolPageColors.primaryColor
+            )
             
             headingLabel.textColor = headingNode.textNode?.getTextColor()?.color ?? toolPageColors.primaryColor
             
@@ -124,16 +121,32 @@ class ToolPageContentStackViewModel {
         return button
     }
     
-    private func getLabel(text: String?) -> UILabel {
+    private func getLabel(textNode: ContentTextNode?, fontSize: CGFloat, fontWeight: UIFont.Weight, textColor: UIColor) -> UILabel {
         
         let label: UILabel = UILabel()
         label.backgroundColor = UIColor.clear
-        label.text = text
-        label.textAlignment = .left
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
-        label.setLineSpacing(lineSpacing: 2)
                 
+        let fontScale: CGFloat
+        
+        if let textScaleString = textNode?.textScale,
+            !textScaleString.isEmpty,
+            let number = ToolPageContentStackViewModel.numberFormatter.number(from: textScaleString) {
+            
+            fontScale = CGFloat(truncating: number)
+        }
+        else {
+            fontScale = 1
+        }
+        
+        label.font = fontService.getFont(size: fontSize * fontScale, weight: fontWeight)
+        label.text = textNode?.text
+        label.textColor = textColor
+        label.textAlignment = .left
+        
+        label.setLineSpacing(lineSpacing: 2)
+        
         return label
     }
     

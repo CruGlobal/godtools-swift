@@ -41,24 +41,24 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="49.5"/>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LKt-g0-yhC" userLabel="contentStackContainer">
-                    <rect key="frame" x="15" y="65.5" width="384" height="724"/>
+                    <rect key="frame" x="15" y="65.5" width="384" height="729"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="65A-1Q-biF" userLabel="bottomGradientView">
-                    <rect key="frame" x="15" y="745.5" width="384" height="44"/>
+                    <rect key="frame" x="15" y="750.5" width="384" height="44"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="8rX-Fv-rSQ"/>
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 / 2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UHR-SS-PKM" userLabel="cardPositionLabel">
-                    <rect key="frame" x="191" y="789.5" width="32" height="21"/>
+                    <rect key="frame" x="191" y="794.5" width="32" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FiU-R3-9Ap" userLabel="previousButton">
-                    <rect key="frame" x="20" y="778" width="44" height="44"/>
+                    <rect key="frame" x="20" y="783" width="44" height="44"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="knX-iy-RMz"/>
                         <constraint firstAttribute="width" constant="44" id="qGL-E7-0lE"/>
@@ -68,7 +68,7 @@
                     </state>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vbs-dr-uHK" userLabel="nextButton">
-                    <rect key="frame" x="350" y="778" width="44" height="44"/>
+                    <rect key="frame" x="350" y="783" width="44" height="44"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="Mfm-dS-0mQ"/>
                         <constraint firstAttribute="width" constant="44" id="OZD-la-DRC"/>
@@ -93,7 +93,7 @@
                 <constraint firstAttribute="trailing" secondItem="1dD-4I-w1p" secondAttribute="trailing" id="UMN-qn-PB5"/>
                 <constraint firstItem="lKs-as-Ac5" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="18" id="UUY-DV-fPU"/>
                 <constraint firstItem="FiU-R3-9Ap" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="YQ8-hC-EZl"/>
-                <constraint firstAttribute="bottom" secondItem="FiU-R3-9Ap" secondAttribute="bottom" constant="20" id="a1H-uL-2ug"/>
+                <constraint firstAttribute="bottom" secondItem="FiU-R3-9Ap" secondAttribute="bottom" constant="15" id="a1H-uL-2ug"/>
                 <constraint firstItem="UHR-SS-PKM" firstAttribute="top" secondItem="LKt-g0-yhC" secondAttribute="bottom" id="agJ-r0-2RU"/>
                 <constraint firstItem="lKs-as-Ac5" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="cB8-fG-PzZ"/>
                 <constraint firstItem="UHR-SS-PKM" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="fJw-gF-SLP"/>
@@ -102,7 +102,7 @@
                 <constraint firstItem="UHR-SS-PKM" firstAttribute="centerY" secondItem="FiU-R3-9Ap" secondAttribute="centerY" id="ym0-Op-Qln"/>
                 <constraint firstItem="1dD-4I-w1p" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="z50-pB-y34"/>
                 <constraint firstItem="1dD-4I-w1p" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="zbt-S5-eyp"/>
-                <constraint firstAttribute="bottom" secondItem="Vbs-dr-uHK" secondAttribute="bottom" constant="20" id="zoS-M7-7Mz"/>
+                <constraint firstAttribute="bottom" secondItem="Vbs-dr-uHK" secondAttribute="bottom" constant="15" id="zoS-M7-7Mz"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
