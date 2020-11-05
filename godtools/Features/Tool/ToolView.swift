@@ -19,7 +19,6 @@ class ToolView: UIViewController {
     
     private var remoteShareActiveNavItem: UIBarButtonItem?
     private var didLayoutSubviews: Bool = false
-    private var didAddObservers: Bool = false
            
     private weak var languageControl: UISegmentedControl?
             
@@ -52,7 +51,7 @@ class ToolView: UIViewController {
         toolPagesBackgroundView.delegate = self
         
         toolPagesView.delegate = self
-        
+                
         languageControl?.addTarget(
             self,
             action: #selector(didChooseLanguage(segmentedControl:)),
