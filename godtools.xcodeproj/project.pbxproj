@@ -550,7 +550,6 @@
 		45A1636C2554602900ACFB3F /* ToolPageContentStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A163692554602900ACFB3F /* ToolPageContentStackView.swift */; };
 		45A1636F2554604D00ACFB3F /* ToolPageCardsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A1636E2554604D00ACFB3F /* ToolPageCardsState.swift */; };
 		45A16371255460E800ACFB3F /* ToolPageCardTopConstantState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A16370255460E800ACFB3F /* ToolPageCardTopConstantState.swift */; };
-		45A163732554625F00ACFB3F /* ToolPagePanningCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A163722554625F00ACFB3F /* ToolPagePanningCard.swift */; };
 		45A1B5E824A042B8009BA210 /* ResourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A1B5E724A042B8009BA210 /* ResourceType.swift */; };
 		45A1B5EA24A053AB009BA210 /* UIView+ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A1B5E924A053AB009BA210 /* UIView+ProgressView.swift */; };
 		45A1FF7425420AF600AA9A14 /* PlaygroundViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A1FF7125420AF600AA9A14 /* PlaygroundViewModel.swift */; };
@@ -1323,7 +1322,6 @@
 		45A163692554602900ACFB3F /* ToolPageContentStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageContentStackView.swift; sourceTree = "<group>"; };
 		45A1636E2554604D00ACFB3F /* ToolPageCardsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolPageCardsState.swift; sourceTree = "<group>"; };
 		45A16370255460E800ACFB3F /* ToolPageCardTopConstantState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolPageCardTopConstantState.swift; sourceTree = "<group>"; };
-		45A163722554625F00ACFB3F /* ToolPagePanningCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolPagePanningCard.swift; sourceTree = "<group>"; };
 		45A1B5E724A042B8009BA210 /* ResourceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceType.swift; sourceTree = "<group>"; };
 		45A1B5E924A053AB009BA210 /* UIView+ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ProgressView.swift"; sourceTree = "<group>"; };
 		45A1FF7125420AF600AA9A14 /* PlaygroundViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaygroundViewModel.swift; sourceTree = "<group>"; };
@@ -2993,7 +2991,6 @@
 			children = (
 				45A1636E2554604D00ACFB3F /* ToolPageCardsState.swift */,
 				45A16370255460E800ACFB3F /* ToolPageCardTopConstantState.swift */,
-				45A163722554625F00ACFB3F /* ToolPagePanningCard.swift */,
 				45A1635E2554601800ACFB3F /* Card */,
 			);
 			path = Cards;
@@ -4747,7 +4744,6 @@
 				4575C24023FAEBFF00D3265B /* AccountViewModelType.swift in Sources */,
 				450EF823247EA85F00978926 /* AllToolsViewModelType.swift in Sources */,
 				45EDC54A249BC2440020DC62 /* ToolDetailControl.swift in Sources */,
-				45A163732554625F00ACFB3F /* ToolPagePanningCard.swift in Sources */,
 				4506DEDA24B7A78700A1C50B /* XMLManager.swift in Sources */,
 				451B8698252F43D40061942B /* LearnToShareToolItemsProviderType.swift in Sources */,
 				45ACBD05247DB0C700514E75 /* ToolsMenuView.swift in Sources */,
