@@ -335,11 +335,9 @@
 		455BF70D23F6F643004A4854 /* GTSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455BF70823F6F643004A4854 /* GTSegment.swift */; };
 		455BF70E23F6F643004A4854 /* GTSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455BF70923F6F643004A4854 /* GTSegmentedControl.swift */; };
 		455BF70F23F6F643004A4854 /* GTSegmentedControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 455BF70A23F6F643004A4854 /* GTSegmentedControl.xib */; };
-		455F450D2551CEE100D86D44 /* ToolPageHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455F45032551CEE000D86D44 /* ToolPageHeaderViewModel.swift */; };
 		455F450E2551CEE100D86D44 /* ToolPageCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455F45052551CEE000D86D44 /* ToolPageCardViewModel.swift */; };
 		455F450F2551CEE100D86D44 /* ToolPageCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455F45062551CEE000D86D44 /* ToolPageCardView.swift */; };
 		455F45102551CEE100D86D44 /* ToolPageCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 455F45072551CEE000D86D44 /* ToolPageCardView.xib */; };
-		455F45112551CEE100D86D44 /* ToolPageCallToActionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455F45092551CEE000D86D44 /* ToolPageCallToActionViewModel.swift */; };
 		455F45122551CEE100D86D44 /* ToolPageContentStackViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455F450B2551CEE100D86D44 /* ToolPageContentStackViewModel.swift */; };
 		455F45132551CEE100D86D44 /* ToolPageContentStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455F450C2551CEE100D86D44 /* ToolPageContentStackView.swift */; };
 		455F45152551CF9300D86D44 /* ToolPageCardViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455F45142551CF9300D86D44 /* ToolPageCardViewModelType.swift */; };
@@ -548,6 +546,8 @@
 		45A1432424A64DFA00892200 /* FetchTranslationManifestResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A1432324A64DFA00892200 /* FetchTranslationManifestResult.swift */; };
 		45A163552553473500ACFB3F /* ToolPageColorsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A163542553473500ACFB3F /* ToolPageColorsViewModel.swift */; };
 		45A163582553AA4600ACFB3F /* ToolPageViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A163572553AA4600ACFB3F /* ToolPageViewFactory.swift */; };
+		45A1635B255446E700ACFB3F /* ToolPageHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A16359255446E600ACFB3F /* ToolPageHeaderViewModel.swift */; };
+		45A1635C255446E700ACFB3F /* ToolPageCallToActionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A1635A255446E700ACFB3F /* ToolPageCallToActionViewModel.swift */; };
 		45A1B5E824A042B8009BA210 /* ResourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A1B5E724A042B8009BA210 /* ResourceType.swift */; };
 		45A1B5EA24A053AB009BA210 /* UIView+ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A1B5E924A053AB009BA210 /* UIView+ProgressView.swift */; };
 		45A1FF7425420AF600AA9A14 /* PlaygroundViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A1FF7125420AF600AA9A14 /* PlaygroundViewModel.swift */; };
@@ -1108,11 +1108,9 @@
 		455BF70823F6F643004A4854 /* GTSegment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTSegment.swift; sourceTree = "<group>"; };
 		455BF70923F6F643004A4854 /* GTSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTSegmentedControl.swift; sourceTree = "<group>"; };
 		455BF70A23F6F643004A4854 /* GTSegmentedControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GTSegmentedControl.xib; sourceTree = "<group>"; };
-		455F45032551CEE000D86D44 /* ToolPageHeaderViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageHeaderViewModel.swift; sourceTree = "<group>"; };
 		455F45052551CEE000D86D44 /* ToolPageCardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageCardViewModel.swift; sourceTree = "<group>"; };
 		455F45062551CEE000D86D44 /* ToolPageCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageCardView.swift; sourceTree = "<group>"; };
 		455F45072551CEE000D86D44 /* ToolPageCardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToolPageCardView.xib; sourceTree = "<group>"; };
-		455F45092551CEE000D86D44 /* ToolPageCallToActionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageCallToActionViewModel.swift; sourceTree = "<group>"; };
 		455F450B2551CEE100D86D44 /* ToolPageContentStackViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageContentStackViewModel.swift; sourceTree = "<group>"; };
 		455F450C2551CEE100D86D44 /* ToolPageContentStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageContentStackView.swift; sourceTree = "<group>"; };
 		455F45142551CF9300D86D44 /* ToolPageCardViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolPageCardViewModelType.swift; sourceTree = "<group>"; };
@@ -1318,6 +1316,8 @@
 		45A1432324A64DFA00892200 /* FetchTranslationManifestResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchTranslationManifestResult.swift; sourceTree = "<group>"; };
 		45A163542553473500ACFB3F /* ToolPageColorsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolPageColorsViewModel.swift; sourceTree = "<group>"; };
 		45A163572553AA4600ACFB3F /* ToolPageViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolPageViewFactory.swift; sourceTree = "<group>"; };
+		45A16359255446E600ACFB3F /* ToolPageHeaderViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageHeaderViewModel.swift; sourceTree = "<group>"; };
+		45A1635A255446E700ACFB3F /* ToolPageCallToActionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageCallToActionViewModel.swift; sourceTree = "<group>"; };
 		45A1B5E724A042B8009BA210 /* ResourceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceType.swift; sourceTree = "<group>"; };
 		45A1B5E924A053AB009BA210 /* UIView+ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ProgressView.swift"; sourceTree = "<group>"; };
 		45A1FF7125420AF600AA9A14 /* PlaygroundViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaygroundViewModel.swift; sourceTree = "<group>"; };
@@ -2464,10 +2464,8 @@
 		455A54C9255078D90053C0FD /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				455F45082551CEE000D86D44 /* CallToAction */,
 				455F45042551CEE000D86D44 /* Card */,
 				455F450A2551CEE100D86D44 /* ContentStack */,
-				455F45022551CEE000D86D44 /* Header */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2511,14 +2509,6 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		455F45022551CEE000D86D44 /* Header */ = {
-			isa = PBXGroup;
-			children = (
-				455F45032551CEE000D86D44 /* ToolPageHeaderViewModel.swift */,
-			);
-			path = Header;
-			sourceTree = "<group>";
-		};
 		455F45042551CEE000D86D44 /* Card */ = {
 			isa = PBXGroup;
 			children = (
@@ -2528,14 +2518,6 @@
 				455F45142551CF9300D86D44 /* ToolPageCardViewModelType.swift */,
 			);
 			path = Card;
-			sourceTree = "<group>";
-		};
-		455F45082551CEE000D86D44 /* CallToAction */ = {
-			isa = PBXGroup;
-			children = (
-				455F45092551CEE000D86D44 /* ToolPageCallToActionViewModel.swift */,
-			);
-			path = CallToAction;
 			sourceTree = "<group>";
 		};
 		455F450A2551CEE100D86D44 /* ContentStack */ = {
@@ -3013,7 +2995,9 @@
 		45A163532553472000ACFB3F /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				45A1635A255446E700ACFB3F /* ToolPageCallToActionViewModel.swift */,
 				45A163542553473500ACFB3F /* ToolPageColorsViewModel.swift */,
+				45A16359255446E600ACFB3F /* ToolPageHeaderViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -4758,8 +4742,8 @@
 				451B8698252F43D40061942B /* LearnToShareToolItemsProviderType.swift in Sources */,
 				45ACBD05247DB0C700514E75 /* ToolsMenuView.swift in Sources */,
 				451DB1452461DA4200FB14BF /* TractEventProperties.swift in Sources */,
+				45A1635B255446E700ACFB3F /* ToolPageHeaderViewModel.swift in Sources */,
 				4593FF4A24B35F44001CEC5A /* DeviceAttachmentBanners.swift in Sources */,
-				455F450D2551CEE100D86D44 /* ToolPageHeaderViewModel.swift in Sources */,
 				45732E7724218997006F0559 /* OnboardingTutorialViewedCacheType.swift in Sources */,
 				45F66CA623E4C3C20053CB5B /* MenuView.swift in Sources */,
 				450B6721249959D400A54E50 /* FavoritedResourceModelType.swift in Sources */,
@@ -4845,6 +4829,7 @@
 				4506DEA924B79E2F00A1C50B /* MenuSectionHeaderViewModel.swift in Sources */,
 				451DB13A2461DA4200FB14BF /* TractTextContentProperties.swift in Sources */,
 				451B869B252F43D40061942B /* LearnToShareToolCell.swift in Sources */,
+				45A1635C255446E700ACFB3F /* ToolPageCallToActionViewModel.swift in Sources */,
 				45732E982421A984006F0559 /* OpenTutorialCalloutCacheType.swift in Sources */,
 				45B881E5249AACED004DC491 /* RealmTranslation.swift in Sources */,
 				455A54C2255059E90053C0FD /* ToolPageBackgroundCell.swift in Sources */,
@@ -4897,7 +4882,6 @@
 				451DB1442461DA4200FB14BF /* TractCallToActionProperties.swift in Sources */,
 				451F3F1B24E458A000A25D11 /* ShareToolMenuViewModel.swift in Sources */,
 				45C2CFF32409B61000683A98 /* GlobalActivityAnalytics.swift in Sources */,
-				455F45112551CEE100D86D44 /* ToolPageCallToActionViewModel.swift in Sources */,
 				4564724D244F723300CB202D /* ArticlesViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
