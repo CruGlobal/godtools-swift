@@ -141,20 +141,38 @@ class ToolPageViewModel: ToolPageViewModelType {
 
 extension ToolPageViewModel: ToolPageCardViewModelDelegate {
     
-    func headerTappedFromCard(cardPosition: Int) {
+    private func gotoPreviousCardFromCard(cardPosition: Int) {
         
-        currentCard.accept(value: cardPosition)
+        let previousCard: Int = cardPosition - 1
+        
+        if previousCard >= 0 {
+            currentCard.accept(value: previousCard)
+        }
+        else {
+            currentCard.accept(value: nil)
+        }
+    }
+    
+    func headerTappedFromCard(cardPosition: Int) {
+                
+        let isShowingCard: Bool = cardPosition == currentCard.value
+        
+        if !isShowingCard {
+            currentCard.accept(value: cardPosition)
+        }
+        else {
+            
+            gotoPreviousCardFromCard(cardPosition: cardPosition)
+        }
     }
     
     func previousTappedFromCard(cardPosition: Int) {
         
-        let previousCard: Int = cardPosition - 1
-        
-        currentCard.accept(value: previousCard)
+        gotoPreviousCardFromCard(cardPosition: cardPosition)
     }
     
     func nextTappedFromCard(cardPosition: Int) {
-        
+                
         let nextCard: Int = cardPosition + 1
         
         if nextCard <= cardsViewModels.count - 1 {
