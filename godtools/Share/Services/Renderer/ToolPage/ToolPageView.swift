@@ -21,12 +21,26 @@ class ToolPageView: UIViewController {
         case hidden
     }
     
+    class PanningCard {
+        let card: ToolPageCardView
+        let cardPosition: Int
+        required init(card: ToolPageCardView, cardPosition: Int) {
+            self.card = card
+            self.cardPosition = cardPosition
+        }
+    }
+    
     private let viewModel: ToolPageViewModelType
+    private let cardPanGesture: UIPanGestureRecognizer = UIPanGestureRecognizer()
     
     private var contentStackView: ToolPageContentStackView?
     private var heroView: ToolPageContentStackView?
     private var cards: [ToolPageCardView] = Array()
     private var cardTopConstraints: [NSLayoutConstraint] = Array()
+    private var panningCard: PanningCard?
+    private var panningPoint: CGPoint = CGPoint.zero
+    private var lastPanningPoint: CGPoint = CGPoint.zero
+    private var panVelocity: CGPoint = CGPoint.zero
     private var didLayoutSubviews: Bool = false
     
     @IBOutlet weak private var backgroundImageView: UIImageView!
@@ -109,6 +123,10 @@ class ToolPageView: UIViewController {
         
         //cards
         if !viewModel.cardsViewModels.isEmpty {
+            
+            cardPanGesture.addTarget(self, action: #selector(handleCardPanGesture))
+            view.addGestureRecognizer(cardPanGesture)
+            cardPanGesture.delegate = self
             
             addCardsAndCardsConstraints(cardsViewModels: viewModel.cardsViewModels)
             
@@ -216,7 +234,7 @@ class ToolPageView: UIViewController {
     }
 }
 
-// MARK: - Cards
+// MARK: - Cards Constraints and State
 
 extension ToolPageView {
     
@@ -379,5 +397,143 @@ extension ToolPageView {
             cards.append(cardView)
             cardTopConstraints.append(top)
         }
+    }
+}
+
+// MARK: - Card Panning
+
+extension ToolPageView {
+    
+    private func getCardForPanningAtTouchPoint(touchPoint: CGPoint) -> PanningCard? {
+        
+        var topMostCard: ToolPageCardView?
+        var topMostCardPosition: Int?
+        
+        for index in 0 ..< cards.count {
+            
+            let card: ToolPageCardView = cards[index]
+
+            if card.frame.contains(touchPoint) {
+                topMostCard = card
+                topMostCardPosition = index
+            }
+        }
+        
+        if let card = topMostCard, let cardPosition = topMostCardPosition {
+            return PanningCard(card: card, cardPosition: cardPosition)
+        }
+        
+        return nil
+    }
+    
+    private func handleCardPanningEnded() {
+        
+        panningCard = nil
+        panningPoint = CGPoint.zero
+        lastPanningPoint = CGPoint.zero
+        panVelocity = CGPoint.zero
+    }
+    
+    @objc func handleCardPanGesture() {
+        
+        let touchPoint: CGPoint = cardPanGesture.location(in: view)
+        
+        panningPoint = cardPanGesture.translation(in: view)
+        panVelocity = cardPanGesture.velocity(in: view)
+        
+        print("\n HANDLE CARD PAN GESTURE")
+        print("  cardPanGesture.state: \(cardPanGesture.state)")
+        print("   touchPoint: \(touchPoint)")
+        print("   panningPoint: \(panningPoint)")
+        print("   panVelocity: \(panVelocity)")
+        
+        switch cardPanGesture.state {
+            
+        case .possible:
+            break
+            
+        case .began:
+            
+            lastPanningPoint = panningPoint
+            panningCard = getCardForPanningAtTouchPoint(touchPoint: touchPoint)
+            
+        case .changed:
+            guard let panningCard = self.panningCard, let cardTopConstraint = getCardTopConstraint(cardPosition: panningCard.cardPosition) else {
+                return
+            }
+            
+            let translateY: CGFloat = panningPoint.y - lastPanningPoint.y
+            
+            print("  translate y: \(translateY)")
+            
+            cardTopConstraint.constant += translateY
+                
+            UIView.animate(withDuration: 0.05, delay: 0, options: .curveEaseOut, animations: {
+                self.view.layoutIfNeeded()
+            }, completion: nil)
+                        
+            lastPanningPoint = panningPoint
+            
+        case .ended:
+            handleCardPanningEnded()
+            
+        case .cancelled:
+            handleCardPanningEnded()
+            
+        case .failed:
+            handleCardPanningEnded()
+        }
+    }
+}
+
+extension ToolPageView: UIGestureRecognizerDelegate {
+    
+    var shouldDecreaseToolPageCollectionViewPanningSensitivity: Bool {
+        return true
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        
+        if gestureRecognizer == cardPanGesture {
+                
+            print("\n Pan Gesture")
+            print("  otherView: \(otherGestureRecognizer.view)")
+            print("  otherGestureRecognizer: \(otherGestureRecognizer)")
+            
+            if let otherView = otherGestureRecognizer.view, otherView is UICollectionView, let toolPanGesture = otherGestureRecognizer as? UIPanGestureRecognizer {
+                
+                let velocity: CGPoint = toolPanGesture.velocity(in: view)
+                        
+                let angleRadians: CGFloat = atan2(velocity.y, velocity.x)
+                var angleDegrees: CGFloat = angleRadians * 57.2958
+                if angleDegrees < 0 {
+                    angleDegrees *= -1
+                }
+                let rightToLeftDegrees: CGFloat = 180
+                let leftToRightDegrees: CGFloat = 0
+                let allowedPanOffsetDegrees: CGFloat = 20
+                                    
+                let shouldRecognizeToolPanning: Bool
+                
+                if angleDegrees >= rightToLeftDegrees - allowedPanOffsetDegrees && angleDegrees <= rightToLeftDegrees + allowedPanOffsetDegrees {
+                    shouldRecognizeToolPanning = true
+                }
+                else if angleDegrees >= leftToRightDegrees - allowedPanOffsetDegrees && angleDegrees <= leftToRightDegrees + allowedPanOffsetDegrees {
+                    shouldRecognizeToolPanning = true
+                }
+                else {
+                    shouldRecognizeToolPanning = false
+                }
+                
+                return shouldRecognizeToolPanning
+            }
+            else {
+
+                // Allow simultaneous gestures whenever the tool card pan gesture is active against any gesture that is not the tool collection view pan gesture.
+                return true
+            }
+        }
+        
+        return false
     }
 }
