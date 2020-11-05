@@ -209,6 +209,12 @@ class AppDiContainer {
         return MobileContentXmlNodeParser()
     }
     
+    func getToolPageViewFactory() -> ToolPageViewFactory {
+        return ToolPageViewFactory(
+            fontService: getFontService()
+        )
+    }
+    
     func getToolTrainingTipsOnboardingViews() -> ToolTrainingTipsOnboardingViewsService {
         return ToolTrainingTipsOnboardingViewsService(
             cache: ToolTrainingTipsOnboardingViewsUserDefaultsCache(userDefaultsCache: sharedUserDefaultsCache)

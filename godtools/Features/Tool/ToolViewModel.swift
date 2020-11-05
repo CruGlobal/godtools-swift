@@ -18,6 +18,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
     private let primaryTranslationManifest: MobileContentXmlManifest
     private let mobileContentNodeParser: MobileContentXmlNodeParser
     private let translationsFileCache: TranslationsFileCache
+    private let toolPageViewFactory: ToolPageViewFactory
     private let tractManager: TractManager // TODO: Eventually would like to remove this class. ~Levi
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
     private let tractRemoteShareSubscriber: TractRemoteShareSubscriber
@@ -47,7 +48,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, primaryTranslationManifestData: TranslationManifestData, parallelTranslationManifest: TranslationManifestData?, mobileContentNodeParser: MobileContentXmlNodeParser, translationsFileCache: TranslationsFileCache, languageSettingsService: LanguageSettingsService, fontService: FontService, tractManager: TractManager, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, isNewUserService: IsNewUserService, cardJumpService: CardJumpService, followUpsService: FollowUpsService, viewsService: ViewsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, toolPage: Int?) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, primaryTranslationManifestData: TranslationManifestData, parallelTranslationManifest: TranslationManifestData?, mobileContentNodeParser: MobileContentXmlNodeParser, translationsFileCache: TranslationsFileCache, toolPageViewFactory: ToolPageViewFactory, languageSettingsService: LanguageSettingsService, fontService: FontService, tractManager: TractManager, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, isNewUserService: IsNewUserService, cardJumpService: CardJumpService, followUpsService: FollowUpsService, viewsService: ViewsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, toolPage: Int?) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -56,6 +57,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
         self.primaryTranslationManifest = MobileContentXmlManifest(translationManifest: primaryTranslationManifestData)
         self.mobileContentNodeParser = mobileContentNodeParser
         self.translationsFileCache = translationsFileCache
+        self.toolPageViewFactory = toolPageViewFactory
         self.tractManager = tractManager
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
         self.tractRemoteShareSubscriber = tractRemoteShareSubscriber
@@ -434,6 +436,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
                 pageNode: pageNode,
                 manifest: primaryTranslationManifest,
                 translationsFileCache: translationsFileCache,
+                toolPageViewFactory: toolPageViewFactory,
                 localizationServices: localizationServices,
                 fontService: fontService,
                 hidesBackgroundImage: true

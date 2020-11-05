@@ -15,6 +15,7 @@ class ToolPageContentStackViewModel {
     private let node: MobileContentXmlNode
     private let manifest: MobileContentXmlManifest
     private let translationsFileCache: TranslationsFileCache
+    private let toolPageViewFactory: ToolPageViewFactory
     private let fontService: FontService
     private let defaultTextNodeTextColor: UIColor?
     
@@ -22,7 +23,7 @@ class ToolPageContentStackViewModel {
     let scrollIsEnabled: Bool
     let toolPageColors: ToolPageColorsViewModel
     
-    required init(node: MobileContentXmlNode, itemSpacing: CGFloat, scrollIsEnabled: Bool, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, fontService: FontService) {
+    required init(node: MobileContentXmlNode, itemSpacing: CGFloat, scrollIsEnabled: Bool, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, toolPageViewFactory: ToolPageViewFactory, fontService: FontService) {
         
         self.node = node
         self.itemSpacing = itemSpacing
@@ -31,6 +32,7 @@ class ToolPageContentStackViewModel {
         self.defaultTextNodeTextColor = defaultTextNodeTextColor
         self.manifest = manifest
         self.translationsFileCache = translationsFileCache
+        self.toolPageViewFactory = toolPageViewFactory
         self.fontService = fontService
     }
     
@@ -55,6 +57,7 @@ class ToolPageContentStackViewModel {
                 defaultTextNodeTextColor: defaultTextNodeTextColor,
                 manifest: manifest,
                 translationsFileCache: translationsFileCache,
+                toolPageViewFactory: toolPageViewFactory,
                 fontService: fontService
             )
             
@@ -64,97 +67,43 @@ class ToolPageContentStackViewModel {
         }
         else if let textNode = node as? ContentTextNode {
             
-            let textLabel: UILabel = getLabel(
+            return toolPageViewFactory.getContentTextNodeLabel(
                 textNode: textNode,
                 fontSize: 18,
                 fontWeight: .regular,
                 textColor: textNode.getTextColor()?.color ?? defaultTextNodeTextColor ?? toolPageColors.textColor
             )
-            
-            return textLabel
         }
         else if let imageNode = node as? ContentImageNode {
             
-            guard imageNode.restrictToType == .mobile || imageNode.restrictToType == .noRestriction else {
-                return nil
-            }
-            
-            guard let resource = imageNode.resource else {
-                return nil
-            }
-            
-            guard let resourceSrc = manifest.resources[resource]?.src else {
-                return nil
-            }
-            
-            guard let resourceImage = translationsFileCache.getImage(location: SHA256FileLocation(sha256WithPathExtension: resourceSrc)) else {
-                return nil
-            }
-            
-            let imageView: UIImageView = getImageView(image: resourceImage)
-            
-            return imageView
+            return toolPageViewFactory.getContentImageNodeImage(
+                imageNode: imageNode,
+                manifest: manifest,
+                translationsFileCache: translationsFileCache
+            )
         }
-        else if let headingNode = node as? HeadingNode {
+        else if let buttonNode = node as? ContentButtonNode {
             
-            let headingLabel: UILabel = getLabel(
-                textNode: headingNode.textNode,
+            let button: UIButton = toolPageViewFactory.getContentButtonNodeButton(
+                buttonNode: buttonNode,
+                fontSize: 18,
+                fontWeight: .regular,
+                buttonColor: toolPageColors.primaryColor,
+                titleColor: buttonNode.textNode?.getTextColor()?.color ?? toolPageColors.primaryTextColor
+            )
+            
+            return button
+        }
+        else if let headingNode = node as? HeadingNode, let headingTextNode = headingNode.textNode {
+            
+            return toolPageViewFactory.getContentTextNodeLabel(
+                textNode: headingTextNode,
                 fontSize: 30,
                 fontWeight: .regular,
                 textColor: headingNode.textNode?.getTextColor()?.color ?? toolPageColors.primaryColor
             )
-            
-            headingLabel.textColor = headingNode.textNode?.getTextColor()?.color ?? toolPageColors.primaryColor
-            
-            return headingLabel
         }
         
         return nil
-    }
-    
-    private func getButton(title: String?) -> UIButton {
-        
-        let button: UIButton = UIButton(type: .custom)
-        button.backgroundColor = .clear
-        button.setTitle(title, for: .normal)
-        
-        return button
-    }
-    
-    private func getLabel(textNode: ContentTextNode?, fontSize: CGFloat, fontWeight: UIFont.Weight, textColor: UIColor) -> UILabel {
-        
-        let label: UILabel = UILabel()
-        label.backgroundColor = UIColor.clear
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-                
-        let fontScale: CGFloat
-        
-        if let textScaleString = textNode?.textScale,
-            !textScaleString.isEmpty,
-            let number = ToolPageContentStackViewModel.numberFormatter.number(from: textScaleString) {
-            
-            fontScale = CGFloat(truncating: number)
-        }
-        else {
-            fontScale = 1
-        }
-        
-        label.font = fontService.getFont(size: fontSize * fontScale, weight: fontWeight)
-        label.text = textNode?.text
-        label.textColor = textColor
-        label.textAlignment = .left
-        
-        label.setLineSpacing(lineSpacing: 2)
-        
-        return label
-    }
-    
-    private func getImageView(image: UIImage) -> UIImageView {
-        
-        let imageView: UIImageView = UIImageView()
-        imageView.image = image
-        
-        return imageView
     }
 }

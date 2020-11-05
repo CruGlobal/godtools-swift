@@ -11,8 +11,18 @@ import SWXMLHash
 
 class CardNode: MobileContentXmlNode {
         
+    let dismissListeners: String?
+    let hidden: String?
+    let listeners: String?
+    
     required init(xmlElement: XMLElement) {
     
+        let attributes: [String: XMLAttribute] = xmlElement.allAttributes
+        
+        dismissListeners = attributes["dismiss-listeners"]?.text
+        hidden = attributes["hidden"]?.text
+        listeners = attributes["listeners"]?.text
+        
         super.init(xmlElement: xmlElement)
     }
     

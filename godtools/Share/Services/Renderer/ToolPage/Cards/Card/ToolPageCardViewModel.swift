@@ -25,6 +25,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     private let toolPageColors: ToolPageColorsViewModel
     private let manifest: MobileContentXmlManifest
     private let translationsFileCache: TranslationsFileCache
+    private let toolPageViewFactory: ToolPageViewFactory
     private let localizationServices: LocalizationServices
     private let fontService: FontService
     
@@ -32,7 +33,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     
     let contentStackViewModel: ToolPageContentStackViewModel
     
-    required init(delegate: ToolPageCardViewModelDelegate, cardNode: CardNode, cardPosition: Int, totalCards: Int, toolPageColors: ToolPageColorsViewModel, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, localizationServices: LocalizationServices, fontService: FontService) {
+    required init(delegate: ToolPageCardViewModelDelegate, cardNode: CardNode, cardPosition: Int, totalCards: Int, toolPageColors: ToolPageColorsViewModel, manifest: MobileContentXmlManifest, toolPageViewFactory: ToolPageViewFactory, translationsFileCache: TranslationsFileCache, localizationServices: LocalizationServices, fontService: FontService) {
         
         self.delegate = delegate
         self.cardNode = cardNode
@@ -41,6 +42,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
         self.toolPageColors = toolPageColors
         self.manifest = manifest
         self.translationsFileCache = translationsFileCache
+        self.toolPageViewFactory = toolPageViewFactory
         self.localizationServices = localizationServices
         self.fontService = fontService
         
@@ -52,6 +54,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
             defaultTextNodeTextColor: toolPageColors.cardTextColor,
             manifest: manifest,
             translationsFileCache: translationsFileCache,
+            toolPageViewFactory: toolPageViewFactory,
             fontService: fontService
         )
     }

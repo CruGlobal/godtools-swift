@@ -530,6 +530,7 @@ class ToolsFlow: Flow {
             parallelTranslationManifest: parallelTranslationManifest,
             mobileContentNodeParser: appDiContainer.getMobileContentNodeParser(),
             translationsFileCache: appDiContainer.translationsFileCache,
+            toolPageViewFactory: appDiContainer.getToolPageViewFactory(),
             languageSettingsService: appDiContainer.languageSettingsService,
             fontService: appDiContainer.getFontService(),
             tractManager: appDiContainer.tractManager,

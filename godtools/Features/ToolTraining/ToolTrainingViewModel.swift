@@ -14,6 +14,7 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
     private let mobileContentNodeParser: MobileContentXmlNodeParser
     private let manifest: MobileContentXmlManifest
     private let translationsFileCache: TranslationsFileCache
+    private let toolPageViewFactory: ToolPageViewFactory
     private let localizationServices: LocalizationServices
     private let fontService: FontService
     
@@ -25,12 +26,13 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
     let title: ObservableValue<String> = ObservableValue(value: "")
     let numberOfTipPages: ObservableValue<Int> = ObservableValue(value: 0)
     
-    required init(tipXml: Data, mobileContentNodeParser: MobileContentXmlNodeParser, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, localizationServices: LocalizationServices, fontService: FontService) {
+    required init(tipXml: Data, mobileContentNodeParser: MobileContentXmlNodeParser, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, toolPageViewFactory: ToolPageViewFactory, localizationServices: LocalizationServices, fontService: FontService) {
         
         self.tipXml = tipXml
         self.mobileContentNodeParser = mobileContentNodeParser
         self.manifest = manifest
         self.translationsFileCache = translationsFileCache
+        self.toolPageViewFactory = toolPageViewFactory
         self.localizationServices = localizationServices
         self.fontService = fontService
         
@@ -83,6 +85,7 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
             pageNode: pageNode,
             manifest: manifest,
             translationsFileCache: translationsFileCache,
+            toolPageViewFactory: toolPageViewFactory,
             localizationServices: localizationServices,
             fontService: fontService,
             hidesBackgroundImage: false

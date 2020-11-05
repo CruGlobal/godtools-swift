@@ -18,6 +18,7 @@ class ToolPageViewModel: ToolPageViewModelType {
     private let pageNode: PageNode
     private let manifest: MobileContentXmlManifest
     private let translationsFileCache: TranslationsFileCache
+    private let toolPageViewFactory: ToolPageViewFactory
     private let localizationServices: LocalizationServices
     private let fontService: FontService
     private let toolPageColors: ToolPageColorsViewModel
@@ -35,12 +36,13 @@ class ToolPageViewModel: ToolPageViewModelType {
     let currentCard: ObservableValue<Int?> = ObservableValue(value: nil)
     let callToActionViewModel: ToolPageCallToActionViewModel
     
-    required init(delegate: ToolPageViewModelDelegate, pageNode: PageNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, localizationServices: LocalizationServices, fontService: FontService, hidesBackgroundImage: Bool) {
+    required init(delegate: ToolPageViewModelDelegate, pageNode: PageNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, toolPageViewFactory: ToolPageViewFactory, localizationServices: LocalizationServices, fontService: FontService, hidesBackgroundImage: Bool) {
                 
         self.delegate = delegate
         self.pageNode = pageNode
         self.manifest = manifest
         self.translationsFileCache = translationsFileCache
+        self.toolPageViewFactory = toolPageViewFactory
         self.localizationServices = localizationServices
         self.fontService = fontService
         self.toolPageColors = ToolPageColorsViewModel(pageNode: pageNode, manifest: manifest)
@@ -67,6 +69,7 @@ class ToolPageViewModel: ToolPageViewModelType {
                 defaultTextNodeTextColor: nil,
                 manifest: manifest,
                 translationsFileCache: translationsFileCache,
+                toolPageViewFactory: toolPageViewFactory,
                 fontService: fontService
             )
         }
@@ -93,6 +96,7 @@ class ToolPageViewModel: ToolPageViewModelType {
                 defaultTextNodeTextColor: nil,
                 manifest: manifest,
                 translationsFileCache: translationsFileCache,
+                toolPageViewFactory: toolPageViewFactory,
                 fontService: fontService
             )
         }
@@ -123,6 +127,7 @@ class ToolPageViewModel: ToolPageViewModelType {
                 totalCards: cards.count,
                 toolPageColors: toolPageColors,
                 manifest: manifest,
+                toolPageViewFactory: toolPageViewFactory,
                 translationsFileCache: translationsFileCache,
                 localizationServices: localizationServices,
                 fontService: fontService

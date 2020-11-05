@@ -2820,6 +2820,7 @@
 				457D9821254B4F9F000B8159 /* ToolPageViewModelType.swift */,
 				45A1635D25545FFC00ACFB3F /* Cards */,
 				45A163672554602900ACFB3F /* ContentStack */,
+				45A1637425549DC400ACFB3F /* Events */,
 				45A163562553AA3A00ACFB3F /* Factory */,
 				45A163532553472000ACFB3F /* ViewModels */,
 			);
@@ -3014,6 +3015,13 @@
 				45A163682554602900ACFB3F /* ToolPageContentStackViewModel.swift */,
 			);
 			path = ContentStack;
+			sourceTree = "<group>";
+		};
+		45A1637425549DC400ACFB3F /* Events */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Events;
 			sourceTree = "<group>";
 		};
 		45A1FF7025420AF600AA9A14 /* Playground */ = {
