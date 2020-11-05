@@ -52,6 +52,13 @@ class ToolPageContentStackView: UIView {
         scrollView?.showsHorizontalScrollIndicator = !hidden
     }
     
+    func contentScrollViewIsEqualTo(otherScrollView: UIScrollView) -> Bool {
+        if let contentScrollView = self.scrollView {
+            return contentScrollView == otherScrollView
+        }
+        return false
+    }
+    
     func addContentView(view: UIView) {
                
         if let lastAddedBottomConstraint = self.lastAddedBottomConstraint {

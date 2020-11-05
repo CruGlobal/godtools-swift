@@ -11,6 +11,7 @@ import UIKit
 class ToolPageView: UIViewController {
     
     private let viewModel: ToolPageViewModelType
+    private let panGestureToControlPageCollectionViewPanningSensitivity: UIPanGestureRecognizer = UIPanGestureRecognizer()
     
     private var contentStackView: ToolPageContentStackView?
     private var heroView: ToolPageContentStackView?
@@ -55,6 +56,9 @@ class ToolPageView: UIViewController {
         setupBinding()
         
         callToActionNextButton.addTarget(self, action: #selector(handleCallToActionNext(button:)), for: .touchUpInside)
+        
+        view.addGestureRecognizer(panGestureToControlPageCollectionViewPanningSensitivity)
+        panGestureToControlPageCollectionViewPanningSensitivity.delegate = self
     }
     
     override func viewDidLayoutSubviews() {
@@ -391,5 +395,51 @@ extension ToolPageView {
             cards.append(cardView)
             cardTopConstraints.append(top)
         }
+    }
+}
+
+// MARK: - UIGestureRecognizerDelegate
+
+extension ToolPageView: UIGestureRecognizerDelegate {
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+                
+        if gestureRecognizer == panGestureToControlPageCollectionViewPanningSensitivity {
+                        
+            if let otherView = otherGestureRecognizer.view, otherView is UICollectionView, let collectionViewPanGesture = otherGestureRecognizer as? UIPanGestureRecognizer {
+                
+                let velocity: CGPoint = collectionViewPanGesture.velocity(in: view)
+                        
+                let angleRadians: CGFloat = atan2(velocity.y, velocity.x)
+                var angleDegrees: CGFloat = angleRadians * 57.2958
+                if angleDegrees < 0 {
+                    angleDegrees *= -1
+                }
+                let rightToLeftDegrees: CGFloat = 180
+                let leftToRightDegrees: CGFloat = 0
+                let allowedPanOffsetDegrees: CGFloat = 20
+                                    
+                let shouldRecognizeTractPanning: Bool
+                
+                if angleDegrees >= rightToLeftDegrees - allowedPanOffsetDegrees && angleDegrees <= rightToLeftDegrees + allowedPanOffsetDegrees {
+                    shouldRecognizeTractPanning = true
+                }
+                else if angleDegrees >= leftToRightDegrees - allowedPanOffsetDegrees && angleDegrees <= leftToRightDegrees + allowedPanOffsetDegrees {
+                    shouldRecognizeTractPanning = true
+                }
+                else {
+                    shouldRecognizeTractPanning = false
+                }
+                
+                return shouldRecognizeTractPanning
+            }
+            else {
+                
+                // Allow simultaneous gestures whenever the pan gesture is active against any gesture that is not a collectionview.
+                return true
+            }
+        }
+        
+        return true
     }
 }

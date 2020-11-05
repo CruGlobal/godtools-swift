@@ -182,4 +182,30 @@ extension ToolPageViewModel: ToolPageCardViewModelDelegate {
             delegate?.toolPageNextPageTapped()
         }
     }
+    
+    func cardSwipedUpFromCard(cardPosition: Int) {
+        
+        let isShowingCard: Bool = currentCard.value == cardPosition
+        
+        if isShowingCard {
+            
+            let nextCard: Int = cardPosition + 1
+            
+            if nextCard <= cardsViewModels.count - 1 {
+                currentCard.accept(value: nextCard)
+            }
+        }
+        else {
+            currentCard.accept(value: cardPosition)
+        }
+    }
+    
+    func cardSwipedDownFromCard(cardPosition: Int) {
+        
+        let isShowingCard: Bool = currentCard.value == cardPosition
+        
+        if isShowingCard {
+            gotoPreviousCardFromCard(cardPosition: cardPosition)
+        }
+    }
 }

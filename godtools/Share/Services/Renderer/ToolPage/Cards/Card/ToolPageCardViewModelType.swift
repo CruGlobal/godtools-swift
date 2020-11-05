@@ -27,4 +27,6 @@ protocol ToolPageCardViewModelType {
     func headerTapped()
     func previousTapped()
     func nextTapped()
+    func didSwipeCardUp()
+    func didSwipeCardDown()
 }

@@ -13,7 +13,7 @@ class ToolPageCardView: UIView {
     private let viewModel: ToolPageCardViewModelType
     
     private var contentStackView: ToolPageContentStackView?
-        
+            
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var titleSeparatorLine: UIView!
     @IBOutlet weak private var headerButton: UIButton!
@@ -36,6 +36,16 @@ class ToolPageCardView: UIView {
         headerButton.addTarget(self, action: #selector(handleHeader(button:)), for: .touchUpInside)
         previousButton.addTarget(self, action: #selector(handlePrevious(button:)), for: .touchUpInside)
         nextButton.addTarget(self, action: #selector(handleNext(button:)), for: .touchUpInside)
+        
+        let swipeUpGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture))
+        swipeUpGesture.delegate = self
+        swipeUpGesture.direction = .up
+        addGestureRecognizer(swipeUpGesture)
+        
+        let swipeDownGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture))
+        swipeDownGesture.delegate = self
+        swipeDownGesture.direction = .down
+        addGestureRecognizer(swipeDownGesture)
     }
     
     required init?(coder: NSCoder) {
@@ -128,5 +138,41 @@ class ToolPageCardView: UIView {
     
     @objc func handleNext(button: UIButton) {
         viewModel.nextTapped()
+    }
+    
+    @objc func handleSwipeGesture(swipeGesture: UISwipeGestureRecognizer) {
+        if swipeGesture.direction == .up {
+            viewModel.didSwipeCardUp()
+        } else if swipeGesture.direction == .down {
+            viewModel.didSwipeCardDown()
+        }
+    }
+}
+
+// MARK: - UIGestureRecognizerDelegate
+
+extension ToolPageCardView: UIGestureRecognizerDelegate {
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+                
+        guard let contentStackView = self.contentStackView else {
+            return false
+        }
+        
+        if let otherScrollView = otherGestureRecognizer.view as? UIScrollView, contentStackView.contentScrollViewIsEqualTo(otherScrollView: otherScrollView) {
+            
+            let scrollViewFrameHeight: CGFloat = otherScrollView.frame.size.height - otherScrollView.contentInset.top - otherScrollView.contentInset.bottom
+                                    
+            if otherScrollView.contentOffset.y <= 0 {
+                return true
+            }
+            else if otherScrollView.contentOffset.y + scrollViewFrameHeight >= otherScrollView.contentSize.height {
+                return true
+            }
+            
+            return false
+        }
+        
+        return false
     }
 }

@@ -13,6 +13,8 @@ protocol ToolPageCardViewModelDelegate: class {
     func headerTappedFromCard(cardPosition: Int)
     func previousTappedFromCard(cardPosition: Int)
     func nextTappedFromCard(cardPosition: Int)
+    func cardSwipedUpFromCard(cardPosition: Int)
+    func cardSwipedDownFromCard(cardPosition: Int)
 }
 
 class ToolPageCardViewModel: ToolPageCardViewModelType {
@@ -113,5 +115,13 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     
     func nextTapped() {
         delegate?.nextTappedFromCard(cardPosition: cardPosition)
+    }
+    
+    func didSwipeCardUp() {
+        delegate?.cardSwipedUpFromCard(cardPosition: cardPosition)
+    }
+    
+    func didSwipeCardDown() {
+        delegate?.cardSwipedDownFromCard(cardPosition: cardPosition)
     }
 }
