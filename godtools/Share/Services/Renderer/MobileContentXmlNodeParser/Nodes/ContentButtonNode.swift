@@ -11,7 +11,7 @@ import SWXMLHash
 
 class ContentButtonNode: MobileContentXmlNode {
     
-    let events: String?
+    let events: [String]
     let type: String?
     let url: String?
     
@@ -19,8 +19,10 @@ class ContentButtonNode: MobileContentXmlNode {
     
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
-        events = attributes["events"]?.text
+        events = attributes["events"]?.text.components(separatedBy: " ") ?? []
+        
         type = attributes["type"]?.text
+        
         if var urlString = attributes["url"]?.text {
             if !urlString.contains("https://") || !urlString.contains("http://") {
                 urlString = "http://" + urlString

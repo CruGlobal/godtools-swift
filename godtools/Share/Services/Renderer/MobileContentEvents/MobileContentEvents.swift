@@ -10,9 +10,14 @@ import Foundation
 
 class MobileContentEvents {
         
-    let urlButtonTappedSignal: SignalValue<String> = SignalValue()
+    let eventButtonTappedSignal: SignalValue<ButtonEvent> = SignalValue()
+    let urlButtonTappedSignal: SignalValue<UrlButtonEvent> = SignalValue()
     
-    func urlButtonTapped(url: String) {
-        urlButtonTappedSignal.accept(value: url)
+    func eventButtonTapped(eventButton: ButtonEvent) {
+        eventButtonTappedSignal.accept(value: eventButton)
+    }
+    
+    func urlButtonTapped(urlButtonEvent: UrlButtonEvent) {
+        urlButtonTappedSignal.accept(value: urlButtonEvent)
     }
 }

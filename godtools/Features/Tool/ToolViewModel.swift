@@ -131,8 +131,8 @@ class ToolViewModel: NSObject, ToolViewModelType {
     
     func addEventListeners() {
         
-        mobileContentEvents.urlButtonTappedSignal.addObserver(self) { [weak self] (urlString: String) in
-            guard let url = URL(string: urlString) else {
+        mobileContentEvents.urlButtonTappedSignal.addObserver(self) { [weak self] (urlButtonEvent: UrlButtonEvent) in
+            guard let url = URL(string: urlButtonEvent.url) else {
                 return
             }
             self?.flowDelegate?.navigate(step: .urlLinkTappedFromTool(url: url))

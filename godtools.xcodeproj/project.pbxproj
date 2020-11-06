@@ -276,6 +276,8 @@
 		454091352555EC22005BBDB7 /* ToolPageContentTabsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454091342555EC22005BBDB7 /* ToolPageContentTabsViewModel.swift */; };
 		454091372555EC34005BBDB7 /* ToolPageContentTabsViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454091362555EC34005BBDB7 /* ToolPageContentTabsViewModelType.swift */; };
 		454091392555F21C005BBDB7 /* ContentLabelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454091382555F21C005BBDB7 /* ContentLabelNode.swift */; };
+		4540913C25561081005BBDB7 /* UrlButtonEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4540913B25561081005BBDB7 /* UrlButtonEvent.swift */; };
+		4540913E255610D6005BBDB7 /* ButtonEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4540913D255610D6005BBDB7 /* ButtonEvent.swift */; };
 		4543159A24A1033B00B5C37B /* RealmSHA256File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543159924A1033B00B5C37B /* RealmSHA256File.swift */; };
 		4543159C24A103C300B5C37B /* ResourcesSHA256FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543159B24A103C300B5C37B /* ResourcesSHA256FileCache.swift */; };
 		454315A024A1463000B5C37B /* SHA256FileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543159F24A1463000B5C37B /* SHA256FileModel.swift */; };
@@ -1060,6 +1062,8 @@
 		454091342555EC22005BBDB7 /* ToolPageContentTabsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolPageContentTabsViewModel.swift; sourceTree = "<group>"; };
 		454091362555EC34005BBDB7 /* ToolPageContentTabsViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolPageContentTabsViewModelType.swift; sourceTree = "<group>"; };
 		454091382555F21C005BBDB7 /* ContentLabelNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentLabelNode.swift; sourceTree = "<group>"; };
+		4540913B25561081005BBDB7 /* UrlButtonEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlButtonEvent.swift; sourceTree = "<group>"; };
+		4540913D255610D6005BBDB7 /* ButtonEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonEvent.swift; sourceTree = "<group>"; };
 		4543159924A1033B00B5C37B /* RealmSHA256File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmSHA256File.swift; sourceTree = "<group>"; };
 		4543159B24A103C300B5C37B /* ResourcesSHA256FileCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourcesSHA256FileCache.swift; sourceTree = "<group>"; };
 		4543159F24A1463000B5C37B /* SHA256FileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHA256FileModel.swift; sourceTree = "<group>"; };
@@ -2290,6 +2294,7 @@
 			isa = PBXGroup;
 			children = (
 				454091292555B87E005BBDB7 /* MobileContentEvents.swift */,
+				4540913A25561064005BBDB7 /* Models */,
 			);
 			path = MobileContentEvents;
 			sourceTree = "<group>";
@@ -2303,6 +2308,15 @@
 				454091362555EC34005BBDB7 /* ToolPageContentTabsViewModelType.swift */,
 			);
 			path = ContentTabs;
+			sourceTree = "<group>";
+		};
+		4540913A25561064005BBDB7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4540913D255610D6005BBDB7 /* ButtonEvent.swift */,
+				4540913B25561081005BBDB7 /* UrlButtonEvent.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		4543159824A1033B00B5C37B /* ResourcesSHA256FileCache */ = {
@@ -4507,6 +4521,7 @@
 				45E89F5623FDE8CE00C9D2F3 /* BlockBasedTimer.swift in Sources */,
 				4595F44624A2B6FD00B3733E /* ArticleAemImportDownloaderReceipt.swift in Sources */,
 				451DB1412461DA4200FB14BF /* TractNumberProperties.swift in Sources */,
+				4540913E255610D6005BBDB7 /* ButtonEvent.swift in Sources */,
 				4586D7DC246ECD810062D988 /* TractCard.swift in Sources */,
 				45A6E6C724E5C8E900AE5673 /* TractRemoteSharePublisher.swift in Sources */,
 				451DB13E2461DA4200FB14BF /* TractHeadingProperties.swift in Sources */,
@@ -4616,6 +4631,7 @@
 				452E3227240706FD00DB41B7 /* Signal.swift in Sources */,
 				457D9838254B4F9F000B8159 /* ToolPageView.swift in Sources */,
 				45A1FF7625420AF600AA9A14 /* PlaygroundView.swift in Sources */,
+				4540913C25561081005BBDB7 /* UrlButtonEvent.swift in Sources */,
 				457D9829254B4F9F000B8159 /* PageNode.swift in Sources */,
 				451830ED246DC14C00DDF264 /* TractLanguageType.swift in Sources */,
 				4556AEDE23E22241002C15E8 /* ObservableValue.swift in Sources */,
