@@ -20,43 +20,47 @@ protocol ToolPageCardViewModelDelegate: class {
 class ToolPageCardViewModel: ToolPageCardViewModelType {
     
     private let cardNode: CardNode
+    private let manifest: MobileContentXmlManifest
+    private let translationsFileCache: TranslationsFileCache
+    private let mobileContentEvents: MobileContentEvents
+    private let fontService: FontService
+    private let localizationServices: LocalizationServices
     private let cardPosition: Int
     private let totalCards: Int
     private let toolPageColors: ToolPageColorsViewModel
-    private let manifest: MobileContentXmlManifest
-    private let translationsFileCache: TranslationsFileCache
-    private let toolPageViewFactory: ToolPageViewFactory
-    private let localizationServices: LocalizationServices
-    private let fontService: FontService
     
     private weak var delegate: ToolPageCardViewModelDelegate?
     
     let contentStackViewModel: ToolPageContentStackViewModel
     
-    required init(delegate: ToolPageCardViewModelDelegate, cardNode: CardNode, cardPosition: Int, totalCards: Int, toolPageColors: ToolPageColorsViewModel, manifest: MobileContentXmlManifest, toolPageViewFactory: ToolPageViewFactory, translationsFileCache: TranslationsFileCache, localizationServices: LocalizationServices, fontService: FontService) {
+    required init(delegate: ToolPageCardViewModelDelegate, cardNode: CardNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentEvents: MobileContentEvents, fontService: FontService, localizationServices: LocalizationServices, cardPosition: Int, totalCards: Int, toolPageColors: ToolPageColorsViewModel) {
         
         self.delegate = delegate
         self.cardNode = cardNode
+        self.manifest = manifest
+        self.translationsFileCache = translationsFileCache
+        self.mobileContentEvents = mobileContentEvents
+        self.fontService = fontService
+        self.localizationServices = localizationServices
         self.cardPosition = cardPosition
         self.totalCards = totalCards
         self.toolPageColors = toolPageColors
-        self.manifest = manifest
-        self.translationsFileCache = translationsFileCache
-        self.toolPageViewFactory = toolPageViewFactory
-        self.localizationServices = localizationServices
-        self.fontService = fontService
         
         contentStackViewModel = ToolPageContentStackViewModel(
             node: cardNode,
+            manifest: manifest,
+            translationsFileCache: translationsFileCache,
+            mobileContentEvents: mobileContentEvents,
+            fontService: fontService,
             itemSpacing: 20,
             scrollIsEnabled: true,
             toolPageColors: toolPageColors,
-            defaultTextNodeTextColor: toolPageColors.cardTextColor,
-            manifest: manifest,
-            translationsFileCache: translationsFileCache,
-            toolPageViewFactory: toolPageViewFactory,
-            fontService: fontService
+            defaultTextNodeTextColor: toolPageColors.cardTextColor
         )
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
     
     var title: String? {

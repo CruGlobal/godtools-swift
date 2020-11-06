@@ -17,8 +17,8 @@ class ToolViewModel: NSObject, ToolViewModelType {
     private let parallelLanguage: LanguageModel?
     private let primaryTranslationManifest: MobileContentXmlManifest
     private let mobileContentNodeParser: MobileContentXmlNodeParser
+    private let mobileContentEvents: MobileContentEvents
     private let translationsFileCache: TranslationsFileCache
-    private let toolPageViewFactory: ToolPageViewFactory
     private let tractManager: TractManager // TODO: Eventually would like to remove this class. ~Levi
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
     private let tractRemoteShareSubscriber: TractRemoteShareSubscriber
@@ -48,7 +48,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, primaryTranslationManifestData: TranslationManifestData, parallelTranslationManifest: TranslationManifestData?, mobileContentNodeParser: MobileContentXmlNodeParser, translationsFileCache: TranslationsFileCache, toolPageViewFactory: ToolPageViewFactory, languageSettingsService: LanguageSettingsService, fontService: FontService, tractManager: TractManager, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, isNewUserService: IsNewUserService, cardJumpService: CardJumpService, followUpsService: FollowUpsService, viewsService: ViewsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, toolPage: Int?) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, primaryTranslationManifestData: TranslationManifestData, parallelTranslationManifest: TranslationManifestData?, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentEvents: MobileContentEvents, translationsFileCache: TranslationsFileCache, languageSettingsService: LanguageSettingsService, fontService: FontService, tractManager: TractManager, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, isNewUserService: IsNewUserService, cardJumpService: CardJumpService, followUpsService: FollowUpsService, viewsService: ViewsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, toolPage: Int?) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -56,8 +56,8 @@ class ToolViewModel: NSObject, ToolViewModelType {
         self.parallelLanguage = parallelLanguage?.code != primaryLanguage.code ? parallelLanguage : nil
         self.primaryTranslationManifest = MobileContentXmlManifest(translationManifest: primaryTranslationManifestData)
         self.mobileContentNodeParser = mobileContentNodeParser
+        self.mobileContentEvents = mobileContentEvents
         self.translationsFileCache = translationsFileCache
-        self.toolPageViewFactory = toolPageViewFactory
         self.tractManager = tractManager
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
         self.tractRemoteShareSubscriber = tractRemoteShareSubscriber
@@ -115,15 +115,33 @@ class ToolViewModel: NSObject, ToolViewModelType {
         subscribeToLiveShareStream(liveShareStream: liveShareStream)
         
         reloadRemoteShareIsActive()
+        
+        addEventListeners()
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+        removeEventListeners()
         tractRemoteSharePublisher.didCreateNewSubscriberChannelIdForPublish.removeObserver(self)
         tractRemoteSharePublisher.endPublishingSession(disconnectSocket: true)
         tractRemoteShareSubscriber.navigationEventSignal.removeObserver(self)
         tractRemoteShareSubscriber.unsubscribe(disconnectSocket: true)
         destroyTractPages()
+    }
+    
+    func addEventListeners() {
+        
+        mobileContentEvents.urlButtonTappedSignal.addObserver(self) { [weak self] (urlString: String) in
+            guard let url = URL(string: urlString) else {
+                return
+            }
+            self?.flowDelegate?.navigate(step: .urlLinkTappedFromTool(url: url))
+        }
+    }
+    
+    func removeEventListeners() {
+        
+        mobileContentEvents.urlButtonTappedSignal.removeObserver(self)
     }
     
     private func destroyTractPages() {
@@ -292,11 +310,11 @@ class ToolViewModel: NSObject, ToolViewModelType {
     }
     
     func navHomeTapped() {
-        flowDelegate?.navigate(step: .homeTappedFromTract(isScreenSharing: remoteShareIsActive.value))
+        flowDelegate?.navigate(step: .homeTappedFromTool(isScreenSharing: remoteShareIsActive.value))
     }
     
     func shareTapped() {
-        flowDelegate?.navigate(step: .shareMenuTappedFromTract(tractRemoteShareSubscriber: tractRemoteShareSubscriber, tractRemoteSharePublisher: tractRemoteSharePublisher, resource: resource, selectedLanguage: selectedTractLanguage.value.language, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, pageNumber: toolPage))
+        flowDelegate?.navigate(step: .shareMenuTappedFromTool(tractRemoteShareSubscriber: tractRemoteShareSubscriber, tractRemoteSharePublisher: tractRemoteSharePublisher, resource: resource, selectedLanguage: selectedTractLanguage.value.language, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, pageNumber: toolPage))
     }
     
     func primaryLanguageTapped() {
@@ -395,13 +413,11 @@ class ToolViewModel: NSObject, ToolViewModelType {
     
     func toolPageWillAppear(page: Int) -> ToolPageViewModel? {
         
+        // TODO: Need to add better error handling. ~Levi
+        
         let manifestPage: MobileContentXmlManifestPage = primaryTranslationManifest.pages[page]
         let pageXmlCacheLocation: SHA256FileLocation = SHA256FileLocation(sha256WithPathExtension: manifestPage.src)
-        
-        print("\n PAGE WILL APPEAR")
-        print("  page: \(page)")
-        print("  manifestPage.src: \(manifestPage.src)")
-        
+                
         let pageXml: Data?
         let pageNode: PageNode?
         
@@ -417,9 +433,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
             case .failure(let error):
                 pageXml = nil
             }
-            
-            // TODO: Would it be better to return page xml and have tool pages build themselves as nodes are built? ~Levi
-            
+                        
             guard let pageXmlData = pageXml else {
                 return nil
             }
@@ -430,17 +444,19 @@ class ToolViewModel: NSObject, ToolViewModelType {
         if let pageNode = pageNode {
             
             cachedPrimaryPageNodes[page] = pageNode
-                    
-            return ToolPageViewModel(
+                                
+            let viewModel = ToolPageViewModel(
                 delegate: self,
                 pageNode: pageNode,
                 manifest: primaryTranslationManifest,
                 translationsFileCache: translationsFileCache,
-                toolPageViewFactory: toolPageViewFactory,
-                localizationServices: localizationServices,
+                mobileContentEvents: mobileContentEvents,
                 fontService: fontService,
+                localizationServices: localizationServices,
                 hidesBackgroundImage: true
             )
+            
+            return viewModel
         }
         
         return nil
@@ -494,7 +510,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
     }
     
     func sendEmailTapped(subject: String?, message: String?, isHtml: Bool?) {
-        flowDelegate?.navigate(step: .sendEmailTappedFromTract(subject: subject ?? "", message: message ?? "", isHtml: isHtml ?? false))
+        flowDelegate?.navigate(step: .sendEmailTappedFromTool(subject: subject ?? "", message: message ?? "", isHtml: isHtml ?? false))
     }
     
     // MARK: - Switching Between Primary and Parallel Tract Pages
@@ -748,6 +764,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
 extension ToolViewModel: ToolPageViewModelDelegate {
     
     func toolPageNextPageTapped() {
+        
         gotoNextPage(animated: true)
     }
 }

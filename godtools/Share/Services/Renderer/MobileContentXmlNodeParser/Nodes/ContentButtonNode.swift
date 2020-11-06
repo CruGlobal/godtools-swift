@@ -21,7 +21,15 @@ class ContentButtonNode: MobileContentXmlNode {
         
         events = attributes["events"]?.text
         type = attributes["type"]?.text
-        url = attributes["url"]?.text
+        if var urlString = attributes["url"]?.text {
+            if !urlString.contains("https://") || !urlString.contains("http://") {
+                urlString = "http://" + urlString
+            }
+            url  = urlString
+        }
+        else {
+            url = nil
+        }
         
         super.init(xmlElement: xmlElement)
     }

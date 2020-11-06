@@ -134,10 +134,10 @@ class ToolsFlow: Flow {
         case .aboutToolTappedFromAllTools(let resource):
             navigateToToolDetail(resource: resource)
             
-        case .homeTappedFromTract(let isScreenSharing):
-            flowDelegate?.navigate(step: .homeTappedFromTract(isScreenSharing: isScreenSharing))
+        case .homeTappedFromTool(let isScreenSharing):
+            flowDelegate?.navigate(step: .homeTappedFromTool(isScreenSharing: isScreenSharing))
             
-        case .shareMenuTappedFromTract(let tractRemoteShareSubscriber, let tractRemoteSharePublisher, let resource, let selectedLanguage, let primaryLanguage, let parallelLanguage, let pageNumber):
+        case .shareMenuTappedFromTool(let tractRemoteShareSubscriber, let tractRemoteSharePublisher, let resource, let selectedLanguage, let primaryLanguage, let parallelLanguage, let pageNumber):
             
             let shareToolMenuFlow = ShareToolMenuFlow(
                 flowDelegate: self,
@@ -153,6 +153,9 @@ class ToolsFlow: Flow {
             )
             
             self.shareToolMenuFlow = shareToolMenuFlow
+            
+        case .urlLinkTappedFromTool(let url):
+            navigateToURL(url: url)
             
         case .closeTappedFromShareToolScreenTutorial:
             self.shareToolMenuFlow = nil
@@ -188,11 +191,7 @@ class ToolsFlow: Flow {
             dismissLearnToShareToolFlow()
             
         case .urlLinkTappedFromToolDetail(let url):
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(url)
-            } else {
-                UIApplication.shared.openURL(url)
-            }
+            navigateToURL(url: url)
             
         default:
             break
@@ -206,6 +205,14 @@ class ToolsFlow: Flow {
         }
         
         self.learnToShareToolFlow = nil
+    }
+    
+    private func navigateToURL(url: URL) {
+        if #available(iOS 10.0, *) {
+            UIApplication.shared.open(url)
+        } else {
+            UIApplication.shared.openURL(url)
+        }
     }
     
     private func navigateToToolDetail(resource: ResourceModel) {
@@ -529,8 +536,8 @@ class ToolsFlow: Flow {
             primaryTranslationManifestData: primaryTranslationManifest,
             parallelTranslationManifest: parallelTranslationManifest,
             mobileContentNodeParser: appDiContainer.getMobileContentNodeParser(),
+            mobileContentEvents: appDiContainer.getMobileContentEvents(),
             translationsFileCache: appDiContainer.translationsFileCache,
-            toolPageViewFactory: appDiContainer.getToolPageViewFactory(),
             languageSettingsService: appDiContainer.languageSettingsService,
             fontService: appDiContainer.getFontService(),
             tractManager: appDiContainer.tractManager,

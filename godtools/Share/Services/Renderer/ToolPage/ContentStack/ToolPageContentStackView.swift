@@ -36,6 +36,10 @@ class ToolPageContentStackView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     func setContentInset(contentInset: UIEdgeInsets) {
         
         scrollView?.contentInset = contentInset

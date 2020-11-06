@@ -216,7 +216,7 @@ class AppFlow: NSObject, FlowDelegate {
             
             self.languageSettingsFlow = languageSettingsFlow
                    
-        case .homeTappedFromTract(let isScreenSharing):
+        case .homeTappedFromTool(let isScreenSharing):
             
             if isScreenSharing {
                 
@@ -243,7 +243,7 @@ class AppFlow: NSObject, FlowDelegate {
                 closeTract()
             }
             
-        case .sendEmailTappedFromTract(let subject, let message, let isHtml):
+        case .sendEmailTappedFromTool(let subject, let message, let isHtml):
             
             if MFMailComposeViewController.canSendMail() {
                 

@@ -205,14 +205,12 @@ class AppDiContainer {
         return FontService(languageSettings: languageSettingsService)
     }
     
-    func getMobileContentNodeParser() -> MobileContentXmlNodeParser {
-        return MobileContentXmlNodeParser()
+    func getMobileContentEvents() -> MobileContentEvents {
+        return MobileContentEvents()
     }
     
-    func getToolPageViewFactory() -> ToolPageViewFactory {
-        return ToolPageViewFactory(
-            fontService: getFontService()
-        )
+    func getMobileContentNodeParser() -> MobileContentXmlNodeParser {
+        return MobileContentXmlNodeParser()
     }
     
     func getToolTrainingTipsOnboardingViews() -> ToolTrainingTipsOnboardingViewsService {

@@ -12,11 +12,6 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
     
     private let tipXml: Data
     private let mobileContentNodeParser: MobileContentXmlNodeParser
-    private let manifest: MobileContentXmlManifest
-    private let translationsFileCache: TranslationsFileCache
-    private let toolPageViewFactory: ToolPageViewFactory
-    private let localizationServices: LocalizationServices
-    private let fontService: FontService
     
     private var pageNodes: [PageNode] = Array()
     private var page: Int = 0
@@ -26,15 +21,10 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
     let title: ObservableValue<String> = ObservableValue(value: "")
     let numberOfTipPages: ObservableValue<Int> = ObservableValue(value: 0)
     
-    required init(tipXml: Data, mobileContentNodeParser: MobileContentXmlNodeParser, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, toolPageViewFactory: ToolPageViewFactory, localizationServices: LocalizationServices, fontService: FontService) {
+    required init(tipXml: Data, mobileContentNodeParser: MobileContentXmlNodeParser) {
         
         self.tipXml = tipXml
         self.mobileContentNodeParser = mobileContentNodeParser
-        self.manifest = manifest
-        self.translationsFileCache = translationsFileCache
-        self.toolPageViewFactory = toolPageViewFactory
-        self.localizationServices = localizationServices
-        self.fontService = fontService
         
         mobileContentNodeParser.asyncParse(xml: tipXml) { [weak self] (node: MobileContentXmlNode?) in
             guard let tipNode = node as? TipNode else {
@@ -76,20 +66,19 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
         }
     }
     
-    func tipPageWillAppear(page: Int) -> ToolPageViewModel {
+    func tipPageWillAppear(page: Int) -> ToolPageViewModel? {
             
         let pageNode: PageNode = pageNodes[page]
         
+        /*
         return ToolPageViewModel(
             delegate: self,
             pageNode: pageNode,
-            manifest: manifest,
-            translationsFileCache: translationsFileCache,
-            toolPageViewFactory: toolPageViewFactory,
-            localizationServices: localizationServices,
-            fontService: fontService,
+            toolRenderer: toolRenderer,
             hidesBackgroundImage: false
-        )
+        )*/
+        
+        return nil
     }
     
     func tipPageDidChange(page: Int) {
@@ -104,6 +93,10 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
 // MARK: - ToolPageViewModelDelegate
 
 extension ToolTrainingViewModel: ToolPageViewModelDelegate {
+    
+    func toolPageUrlButtonTapped(url: String) {
+        
+    }
     
     func toolPageNextPageTapped() {
         

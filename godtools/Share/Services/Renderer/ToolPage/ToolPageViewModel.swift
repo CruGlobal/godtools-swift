@@ -13,14 +13,14 @@ protocol ToolPageViewModelDelegate: class {
     func toolPageNextPageTapped()
 }
 
-class ToolPageViewModel: ToolPageViewModelType {
+class ToolPageViewModel: NSObject, ToolPageViewModelType {
         
     private let pageNode: PageNode
     private let manifest: MobileContentXmlManifest
     private let translationsFileCache: TranslationsFileCache
-    private let toolPageViewFactory: ToolPageViewFactory
-    private let localizationServices: LocalizationServices
+    private let mobileContentEvents: MobileContentEvents
     private let fontService: FontService
+    private let localizationServices: LocalizationServices
     private let toolPageColors: ToolPageColorsViewModel
         
     private(set) var cardsViewModels: [ToolPageCardViewModelType] = Array()
@@ -36,20 +36,21 @@ class ToolPageViewModel: ToolPageViewModelType {
     let currentCard: ObservableValue<Int?> = ObservableValue(value: nil)
     let callToActionViewModel: ToolPageCallToActionViewModel
     
-    required init(delegate: ToolPageViewModelDelegate, pageNode: PageNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, toolPageViewFactory: ToolPageViewFactory, localizationServices: LocalizationServices, fontService: FontService, hidesBackgroundImage: Bool) {
+    required init(delegate: ToolPageViewModelDelegate, pageNode: PageNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentEvents: MobileContentEvents, fontService: FontService, localizationServices: LocalizationServices, hidesBackgroundImage: Bool) {
                 
         self.delegate = delegate
         self.pageNode = pageNode
         self.manifest = manifest
         self.translationsFileCache = translationsFileCache
-        self.toolPageViewFactory = toolPageViewFactory
-        self.localizationServices = localizationServices
+        self.mobileContentEvents = mobileContentEvents
         self.fontService = fontService
+        self.localizationServices = localizationServices
         self.toolPageColors = ToolPageColorsViewModel(pageNode: pageNode, manifest: manifest)
         self.hidesBackgroundImage = hidesBackgroundImage
         
         // background image
-        if !hidesBackgroundImage, let backgroundSrc = manifest.resources[pageNode.backgroundImage ?? ""]?.src {
+        if !hidesBackgroundImage, let backgroundResource = pageNode.backgroundImage, let backgroundSrc = manifest.resources[backgroundResource]?.src {
+            
             backgroundImage = translationsFileCache.getImage(location: SHA256FileLocation(sha256WithPathExtension: backgroundSrc))
         }
         else {
@@ -63,14 +64,14 @@ class ToolPageViewModel: ToolPageViewModelType {
             
             contentStackViewModel = ToolPageContentStackViewModel(
                 node: pageNode,
+                manifest: manifest,
+                translationsFileCache: translationsFileCache,
+                mobileContentEvents: mobileContentEvents,
+                fontService: fontService,
                 itemSpacing: 20,
                 scrollIsEnabled: true,
                 toolPageColors: toolPageColors,
-                defaultTextNodeTextColor: nil,
-                manifest: manifest,
-                translationsFileCache: translationsFileCache,
-                toolPageViewFactory: toolPageViewFactory,
-                fontService: fontService
+                defaultTextNodeTextColor: nil
             )
         }
         else {
@@ -90,14 +91,14 @@ class ToolPageViewModel: ToolPageViewModelType {
             
             heroViewModel = ToolPageContentStackViewModel(
                 node: heroNode,
+                manifest: manifest,
+                translationsFileCache: translationsFileCache,
+                mobileContentEvents: mobileContentEvents,
+                fontService: fontService,
                 itemSpacing: 20,
                 scrollIsEnabled: true,
                 toolPageColors: toolPageColors,
-                defaultTextNodeTextColor: nil,
-                manifest: manifest,
-                translationsFileCache: translationsFileCache,
-                toolPageViewFactory: toolPageViewFactory,
-                fontService: fontService
+                defaultTextNodeTextColor: nil
             )
         }
         else {
@@ -114,6 +115,8 @@ class ToolPageViewModel: ToolPageViewModelType {
         // cards
         hidesCards = pageNode.cardsNode?.cards.isEmpty ?? true
         
+        super.init()
+        
         let cards: [CardNode] = pageNode.cardsNode?.cards ?? []
         
         for cardIndex in 0 ..< cards.count {
@@ -123,18 +126,22 @@ class ToolPageViewModel: ToolPageViewModelType {
             let cardViewModel = ToolPageCardViewModel(
                 delegate: self,
                 cardNode: cardNode,
+                manifest: manifest,
+                translationsFileCache: translationsFileCache,
+                mobileContentEvents: mobileContentEvents,
+                fontService: fontService,
+                localizationServices: localizationServices,
                 cardPosition: cardIndex,
                 totalCards: cards.count,
-                toolPageColors: toolPageColors,
-                manifest: manifest,
-                toolPageViewFactory: toolPageViewFactory,
-                translationsFileCache: translationsFileCache,
-                localizationServices: localizationServices,
-                fontService: fontService
+                toolPageColors: toolPageColors
             )
             
             cardsViewModels.append(cardViewModel)
         }
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
     
     func handleCallToActionNextButtonTapped() {

@@ -281,10 +281,8 @@ extension ToolView: PageNavigationCollectionViewDelegate {
                 cellReuseIdentifier: ToolPageCell.reuseIdentifier,
                 indexPath: indexPath) as! ToolPageCell
             
-            let cellViewModel: ToolPageViewModelType? = viewModel.toolPageWillAppear(page: indexPath.row)
-            
-            if let cellViewModel = cellViewModel {
-                cell.configure(viewModel: cellViewModel)
+            if let toolPageViewModel = viewModel.toolPageWillAppear(page: indexPath.row) {
+                cell.configure(viewModel: toolPageViewModel)
             }
             
             return cell
