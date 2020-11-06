@@ -240,7 +240,7 @@ extension ToolPageView {
             return cardsContainerHeight - (cardTitleHeight * (numberOfCards - CGFloat(cardPosition)))
         case .showing:
             return cardInsets.top
-        case .hidden:
+        case .collapsed:
             let cardTopVisibilityPercentage: CGFloat = 0.4
             let cardTopVisibilityHeight: CGFloat = floor(cardTitleHeight * cardTopVisibilityPercentage)
             return cardsContainerHeight - (cardTopVisibilityHeight * (numberOfCards - CGFloat(cardPosition)))
@@ -287,7 +287,7 @@ extension ToolPageView {
                     topConstraint.constant = getCardTopConstant(state: .showing, cardPosition: index)
                 }
                 else {
-                    topConstraint.constant = getCardTopConstant(state: .hidden, cardPosition: index)
+                    topConstraint.constant = getCardTopConstant(state: .collapsed, cardPosition: index)
                 }
             }
             
@@ -296,7 +296,7 @@ extension ToolPageView {
             for index in 0 ..< cardTopConstraints.count {
                 
                 let topConstraint: NSLayoutConstraint = cardTopConstraints[index]
-                topConstraint.constant = getCardTopConstant(state: .hidden, cardPosition: index)
+                topConstraint.constant = getCardTopConstant(state: .collapsed, cardPosition: index)
             }
             
         case .initialized:

@@ -12,5 +12,5 @@ enum ToolPageCardTopConstantState {
     
     case starting
     case showing
-    case hidden
+    case collapsed
 }
