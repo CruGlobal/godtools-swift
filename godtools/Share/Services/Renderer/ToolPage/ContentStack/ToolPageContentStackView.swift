@@ -75,6 +75,7 @@ class ToolPageContentStackView: UIView {
         
         view.translatesAutoresizingMaskIntoConstraints = false
         
+        let viewIsCustomIntrinsicView: Bool = view is ToolPageContentTabsView
         let viewIsIntrinsic: Bool = view is UILabel
         
         if let stackView = view as? ToolPageContentStackView {
@@ -105,6 +106,22 @@ class ToolPageContentStackView: UIView {
             let aspectRatio: NSLayoutConstraint = NSLayoutConstraint(item: imageView, attribute: .height, relatedBy: .equal, toItem: imageView, attribute: .width, multiplier: imageSize.height / imageSize.width, constant: 0)
             
             imageView.addConstraint(aspectRatio)
+        }
+        else if viewIsCustomIntrinsicView {
+            
+            let heightConstraint: NSLayoutConstraint = NSLayoutConstraint(
+                item: view,
+                attribute: .height,
+                relatedBy: .equal,
+                toItem: nil,
+                attribute: .notAnAttribute,
+                multiplier: 1,
+                constant: 20
+            )
+            
+            heightConstraint.priority = UILayoutPriority(500)
+            
+            view.addConstraint(heightConstraint)
         }
         else if !viewIsIntrinsic {
             

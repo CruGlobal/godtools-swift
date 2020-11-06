@@ -52,6 +52,15 @@ class MobileContentXmlNodeFactory {
         case .contentImage:
             return ContentImageNode.self
             
+        case .contentLabel:
+            return ContentLabelNode.self
+            
+        case .contentTab:
+            return ContentTabNode.self
+            
+        case .contentTabs:
+            return ContentTabsNode.self
+            
         case .title:
             return TitleNode.self
             

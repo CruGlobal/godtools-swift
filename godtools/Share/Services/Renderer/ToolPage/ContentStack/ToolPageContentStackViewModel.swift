@@ -105,6 +105,10 @@ class ToolPageContentStackViewModel {
                 textColor: headingNode.textNode?.getTextColor()?.color ?? toolPageColors.primaryColor
             )
         }
+        else if let tabsNode = node as? ContentTabsNode {
+            
+            return getContentTabs(tabsNode: tabsNode)
+        }
         
         return nil
     }
@@ -177,6 +181,23 @@ class ToolPageContentStackViewModel {
         label.setLineSpacing(lineSpacing: 2)
         
         return label
+    }
+    
+    private func getContentTabs(tabsNode: ContentTabsNode) -> ToolPageContentTabsView {
+        
+        let viewModel = ToolPageContentTabsViewModel(
+            tabsNode: tabsNode,
+            manifest: manifest,
+            translationsFileCache: translationsFileCache,
+            mobileContentEvents: mobileContentEvents,
+            fontService: fontService,
+            toolPageColors: toolPageColors,
+            defaultTextNodeTextColor: defaultTextNodeTextColor
+        )
+        
+        let view = ToolPageContentTabsView(viewModel: viewModel)
+        
+        return view
     }
     
     private func addButtonEvent(button: UIButton, buttonNode: ContentButtonNode) {
