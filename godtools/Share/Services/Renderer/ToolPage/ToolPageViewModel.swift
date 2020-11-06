@@ -117,11 +117,11 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         
         super.init()
         
-        let cards: [CardNode] = pageNode.cardsNode?.cards ?? []
+        let visibleCards: [CardNode] = (pageNode.cardsNode?.cards ?? []).filter({$0.hidden != "true"})
         
-        for cardIndex in 0 ..< cards.count {
+        for cardIndex in 0 ..< visibleCards.count {
             
-            let cardNode: CardNode = cards[cardIndex]
+            let cardNode: CardNode = visibleCards[cardIndex]
             
             let cardViewModel = ToolPageCardViewModel(
                 delegate: self,
@@ -132,7 +132,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
                 fontService: fontService,
                 localizationServices: localizationServices,
                 cardPosition: cardIndex,
-                totalCards: cards.count,
+                totalCards: visibleCards.count,
                 toolPageColors: toolPageColors
             )
             
