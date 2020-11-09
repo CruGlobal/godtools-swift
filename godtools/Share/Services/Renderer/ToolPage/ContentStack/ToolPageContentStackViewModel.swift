@@ -240,5 +240,9 @@ class ToolPageContentStackViewModel {
         else if buttonNode.type == "url", let url = buttonNode.url {
             mobileContentEvents.urlButtonTapped(urlButtonEvent: UrlButtonEvent(url: url))
         }
+        
+        if let analyticsEventsNode = buttonNode.analyticsEventsNode {
+            mobileContentAnalytics.trackEvents(events: analyticsEventsNode)
+        }
     }
 }

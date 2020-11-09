@@ -11,6 +11,9 @@ import SWXMLHash
 
 class ContentButtonNode: MobileContentXmlNode {
     
+    private(set) var textNode: ContentTextNode?
+    private(set) var analyticsEventsNode: AnalyticsEventsNode?
+    
     let events: [String]
     let type: String?
     let url: String?
@@ -36,7 +39,15 @@ class ContentButtonNode: MobileContentXmlNode {
         super.init(xmlElement: xmlElement)
     }
     
-    var textNode: ContentTextNode? {
-        return children.first as? ContentTextNode
+    override func addChild(childNode: MobileContentXmlNode) {
+        
+        if let textNode = childNode as? ContentTextNode, self.textNode == nil {
+            self.textNode = textNode
+        }
+        else if let analyticsEventsNode = childNode as? AnalyticsEventsNode {
+            self.analyticsEventsNode = analyticsEventsNode
+        }
+        
+        super.addChild(childNode: childNode)
     }
 }

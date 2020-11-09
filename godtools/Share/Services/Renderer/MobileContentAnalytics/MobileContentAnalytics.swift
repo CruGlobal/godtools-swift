@@ -44,6 +44,7 @@ class MobileContentAnalytics {
             for system in event.systems {
                 
                 if system == "adobe" {
+                    // TODO: Do we need to track screen name? ~Levi
                     analytics.adobeAnalytics.trackAction(screenName: nil, actionName: action, data: data)
                 }
             }
