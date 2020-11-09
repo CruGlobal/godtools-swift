@@ -15,6 +15,7 @@ class ToolPageContentStackViewModel {
     private let node: MobileContentXmlNode
     private let manifest: MobileContentXmlManifest
     private let translationsFileCache: TranslationsFileCache
+    private let mobileContentAnalytics: MobileContentAnalytics
     private let mobileContentEvents: MobileContentEvents
     private let fontService: FontService
     private let defaultTextNodeTextColor: UIColor?
@@ -25,11 +26,12 @@ class ToolPageContentStackViewModel {
     let scrollIsEnabled: Bool
     let toolPageColors: ToolPageColorsViewModel
     
-    required init(node: MobileContentXmlNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentEvents: MobileContentEvents, fontService: FontService, itemSpacing: CGFloat, scrollIsEnabled: Bool, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
+    required init(node: MobileContentXmlNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, itemSpacing: CGFloat, scrollIsEnabled: Bool, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
         
         self.node = node
         self.manifest = manifest
         self.translationsFileCache = translationsFileCache
+        self.mobileContentAnalytics = mobileContentAnalytics
         self.mobileContentEvents = mobileContentEvents
         self.fontService = fontService
         self.itemSpacing = itemSpacing
@@ -59,6 +61,7 @@ class ToolPageContentStackViewModel {
                 node: paragraphNode,
                 manifest: manifest,
                 translationsFileCache: translationsFileCache,
+                mobileContentAnalytics: mobileContentAnalytics,
                 mobileContentEvents: mobileContentEvents,
                 fontService: fontService,
                 itemSpacing: 5,
@@ -189,6 +192,7 @@ class ToolPageContentStackViewModel {
             tabsNode: tabsNode,
             manifest: manifest,
             translationsFileCache: translationsFileCache,
+            mobileContentAnalytics: mobileContentAnalytics,
             mobileContentEvents: mobileContentEvents,
             fontService: fontService,
             toolPageColors: toolPageColors,

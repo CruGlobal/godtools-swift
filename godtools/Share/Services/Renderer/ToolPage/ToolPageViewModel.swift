@@ -18,6 +18,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     private let pageNode: PageNode
     private let manifest: MobileContentXmlManifest
     private let translationsFileCache: TranslationsFileCache
+    private let mobileContentAnalytics: MobileContentAnalytics
     private let mobileContentEvents: MobileContentEvents
     private let fontService: FontService
     private let localizationServices: LocalizationServices
@@ -36,12 +37,13 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     let currentCard: ObservableValue<Int?> = ObservableValue(value: nil)
     let callToActionViewModel: ToolPageCallToActionViewModel
     
-    required init(delegate: ToolPageViewModelDelegate, pageNode: PageNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentEvents: MobileContentEvents, fontService: FontService, localizationServices: LocalizationServices, hidesBackgroundImage: Bool) {
+    required init(delegate: ToolPageViewModelDelegate, pageNode: PageNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, localizationServices: LocalizationServices, hidesBackgroundImage: Bool) {
                 
         self.delegate = delegate
         self.pageNode = pageNode
         self.manifest = manifest
         self.translationsFileCache = translationsFileCache
+        self.mobileContentAnalytics = mobileContentAnalytics
         self.mobileContentEvents = mobileContentEvents
         self.fontService = fontService
         self.localizationServices = localizationServices
@@ -66,6 +68,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
                 node: pageNode,
                 manifest: manifest,
                 translationsFileCache: translationsFileCache,
+                mobileContentAnalytics: mobileContentAnalytics,
                 mobileContentEvents: mobileContentEvents,
                 fontService: fontService,
                 itemSpacing: 20,
@@ -93,6 +96,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
                 node: heroNode,
                 manifest: manifest,
                 translationsFileCache: translationsFileCache,
+                mobileContentAnalytics: mobileContentAnalytics,
                 mobileContentEvents: mobileContentEvents,
                 fontService: fontService,
                 itemSpacing: 20,
@@ -128,6 +132,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
                 cardNode: cardNode,
                 manifest: manifest,
                 translationsFileCache: translationsFileCache,
+                mobileContentAnalytics: mobileContentAnalytics,
                 mobileContentEvents: mobileContentEvents,
                 fontService: fontService,
                 localizationServices: localizationServices,

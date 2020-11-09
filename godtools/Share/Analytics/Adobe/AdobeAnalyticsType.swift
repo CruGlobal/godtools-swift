@@ -15,7 +15,7 @@ protocol AdobeAnalyticsType {
     func configure()
     func collectLifecycleData()
     func trackScreenView(screenName: String, siteSection: String, siteSubSection: String)
-    func trackAction(screenName: String?, actionName: String, data: [AnyHashable: Any])
+    func trackAction(screenName: String?, actionName: String, data: [AnyHashable: Any]?)
     func trackExitLink(screenName: String, siteSection: String, siteSubSection: String, url: URL)
     func fetchAttributesThenSyncIds()
 }

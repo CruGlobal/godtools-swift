@@ -22,6 +22,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     private let cardNode: CardNode
     private let manifest: MobileContentXmlManifest
     private let translationsFileCache: TranslationsFileCache
+    private let mobileContentAnalytics: MobileContentAnalytics
     private let mobileContentEvents: MobileContentEvents
     private let fontService: FontService
     private let localizationServices: LocalizationServices
@@ -33,12 +34,13 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     
     let contentStackViewModel: ToolPageContentStackViewModel
     
-    required init(delegate: ToolPageCardViewModelDelegate, cardNode: CardNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentEvents: MobileContentEvents, fontService: FontService, localizationServices: LocalizationServices, cardPosition: Int, totalCards: Int, toolPageColors: ToolPageColorsViewModel) {
+    required init(delegate: ToolPageCardViewModelDelegate, cardNode: CardNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, localizationServices: LocalizationServices, cardPosition: Int, totalCards: Int, toolPageColors: ToolPageColorsViewModel) {
         
         self.delegate = delegate
         self.cardNode = cardNode
         self.manifest = manifest
         self.translationsFileCache = translationsFileCache
+        self.mobileContentAnalytics = mobileContentAnalytics
         self.mobileContentEvents = mobileContentEvents
         self.fontService = fontService
         self.localizationServices = localizationServices
@@ -50,6 +52,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
             node: cardNode,
             manifest: manifest,
             translationsFileCache: translationsFileCache,
+            mobileContentAnalytics: mobileContentAnalytics,
             mobileContentEvents: mobileContentEvents,
             fontService: fontService,
             itemSpacing: 20,

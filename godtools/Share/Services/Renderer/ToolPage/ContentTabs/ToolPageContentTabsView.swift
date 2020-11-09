@@ -19,14 +19,13 @@ class ToolPageContentTabsView: UIView {
         
         self.viewModel = viewModel
         
-        super.init(frame: .zero)
+        super.init(frame: UIScreen.main.bounds)
         
         initializeNib()
         setupLayout()
         setupBinding()
         
         tabsControl.addTarget(self, action: #selector(handleTabChanged), for: .valueChanged)
-
     }
     
     required init?(coder: NSCoder) {
@@ -44,6 +43,7 @@ class ToolPageContentTabsView: UIView {
         if let rootNibView = (contents as? [UIView])?.first {
             addSubview(rootNibView)
             rootNibView.frame = bounds
+            rootNibView.translatesAutoresizingMaskIntoConstraints = false
             rootNibView.constrainEdgesToSuperview()
         }
     }
@@ -84,8 +84,12 @@ class ToolPageContentTabsView: UIView {
         }
         
         let contentView = ToolPageContentStackView(viewModel: contentViewModel)
+        
         tabContentContainerView.addSubview(contentView)
+        
+        contentView.translatesAutoresizingMaskIntoConstraints = false
         contentView.constrainEdgesToSuperview()
+        
         layoutIfNeeded()
     }
 }

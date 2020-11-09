@@ -17,6 +17,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
     private let parallelLanguage: LanguageModel?
     private let primaryTranslationManifest: MobileContentXmlManifest
     private let mobileContentNodeParser: MobileContentXmlNodeParser
+    private let mobileContentAnalytics: MobileContentAnalytics
     private let mobileContentEvents: MobileContentEvents
     private let translationsFileCache: TranslationsFileCache
     private let tractManager: TractManager // TODO: Eventually would like to remove this class. ~Levi
@@ -48,7 +49,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, primaryTranslationManifestData: TranslationManifestData, parallelTranslationManifest: TranslationManifestData?, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentEvents: MobileContentEvents, translationsFileCache: TranslationsFileCache, languageSettingsService: LanguageSettingsService, fontService: FontService, tractManager: TractManager, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, isNewUserService: IsNewUserService, cardJumpService: CardJumpService, followUpsService: FollowUpsService, viewsService: ViewsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, toolPage: Int?) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, primaryTranslationManifestData: TranslationManifestData, parallelTranslationManifest: TranslationManifestData?, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, translationsFileCache: TranslationsFileCache, languageSettingsService: LanguageSettingsService, fontService: FontService, tractManager: TractManager, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, isNewUserService: IsNewUserService, cardJumpService: CardJumpService, followUpsService: FollowUpsService, viewsService: ViewsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, toolPage: Int?) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -56,6 +57,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
         self.parallelLanguage = parallelLanguage?.code != primaryLanguage.code ? parallelLanguage : nil
         self.primaryTranslationManifest = MobileContentXmlManifest(translationManifest: primaryTranslationManifestData)
         self.mobileContentNodeParser = mobileContentNodeParser
+        self.mobileContentAnalytics = mobileContentAnalytics
         self.mobileContentEvents = mobileContentEvents
         self.translationsFileCache = translationsFileCache
         self.tractManager = tractManager
@@ -450,6 +452,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
                 pageNode: pageNode,
                 manifest: primaryTranslationManifest,
                 translationsFileCache: translationsFileCache,
+                mobileContentAnalytics: mobileContentAnalytics,
                 mobileContentEvents: mobileContentEvents,
                 fontService: fontService,
                 localizationServices: localizationServices,

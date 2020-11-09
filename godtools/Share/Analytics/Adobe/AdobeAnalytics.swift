@@ -108,7 +108,7 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
         }
     }
     
-    func trackAction(screenName: String?, actionName: String, data: [AnyHashable : Any]) {
+    func trackAction(screenName: String?, actionName: String, data: [AnyHashable : Any]?) {
         
         assertFailureIfNotConfigured()
         
@@ -116,8 +116,10 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
             
             var trackingData: [AnyHashable: Any] = JsonServices().encode(object: defaultProperties)
             
-            for (key, value) in data {
-                trackingData[key] = value
+            if let data = data {
+                for (key, value) in data {
+                    trackingData[key] = value
+                }
             }
             
             ADBMobile.trackAction(actionName, data: trackingData)

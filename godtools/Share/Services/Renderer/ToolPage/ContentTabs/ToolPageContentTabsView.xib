@@ -15,20 +15,26 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="405"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="90"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="QMf-eE-RsY" userLabel="tabsControl">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="32"/>
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="41"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="eYm-X2-Tc5"/>
+                    </constraints>
                     <segments>
                         <segment title="First"/>
                         <segment title="Second"/>
                     </segments>
                 </segmentedControl>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NF4-fw-did" userLabel="tabContentContainerView">
-                    <rect key="frame" x="15" y="46" width="384" height="344"/>
+                    <rect key="frame" x="15" y="55" width="384" height="20"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" priority="500" constant="20" id="2im-vs-76H"/>
+                    </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -42,7 +48,7 @@
                 <constraint firstItem="NF4-fw-did" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="nBV-vY-McB"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="137.68115942028987" y="55.245535714285715"/>
+            <point key="canvasLocation" x="137.68115942028987" y="-51.897321428571423"/>
         </view>
     </objects>
 </document>

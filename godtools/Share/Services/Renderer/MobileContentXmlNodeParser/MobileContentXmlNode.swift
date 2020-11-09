@@ -21,6 +21,10 @@ class MobileContentXmlNode {
         name = xmlElement.name
     }
     
+    init(name: String) {
+        self.name = name
+    }
+    
     func addChild(childNode: MobileContentXmlNode) {
         
         children.append(childNode)

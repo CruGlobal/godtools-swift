@@ -13,6 +13,7 @@ class ToolPageContentTabsViewModel: ToolPageContentTabsViewModelType {
     private let tabsNode: ContentTabsNode
     private let manifest: MobileContentXmlManifest
     private let translationsFileCache: TranslationsFileCache
+    private let mobileContentAnalytics: MobileContentAnalytics
     private let mobileContentEvents: MobileContentEvents
     private let fontService: FontService
     private let toolPageColors: ToolPageColorsViewModel
@@ -23,11 +24,12 @@ class ToolPageContentTabsViewModel: ToolPageContentTabsViewModelType {
     let selectedTab: ObservableValue<Int> = ObservableValue(value: 0)
     let tabContent: ObservableValue<ToolPageContentStackViewModel?> = ObservableValue(value: nil)
     
-    required init(tabsNode: ContentTabsNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentEvents: MobileContentEvents, fontService: FontService, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
+    required init(tabsNode: ContentTabsNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
         
         self.tabsNode = tabsNode
         self.manifest = manifest
         self.translationsFileCache = translationsFileCache
+        self.mobileContentAnalytics = mobileContentAnalytics
         self.mobileContentEvents = mobileContentEvents
         self.fontService = fontService
         self.toolPageColors = toolPageColors
@@ -45,16 +47,34 @@ class ToolPageContentTabsViewModel: ToolPageContentTabsViewModelType {
         
         selectedTab.setValue(value: tab)
         tabContent.accept(value: getTabContent(tab: tab))
+        
+        let tabNode: ContentTabNode = tabNodes[tab]
+        
+        if let analyticsEventsNode = tabNode.analyticsEventsNode {
+            mobileContentAnalytics.trackEvents(events: analyticsEventsNode)
+        }
     }
     
     private func getTabContent(tab: Int) -> ToolPageContentStackViewModel {
         
         let tabNode: ContentTabNode = tabNodes[tab]
         
+        let tabNodeChildrenToRender: MobileContentXmlNode = MobileContentXmlNode(name: "")
+        
+        for childNode in tabNode.children {
+            
+            let shouldRenderChild: Bool = !(childNode is ContentLabelNode) && !(childNode is AnalyticsEventsNode)
+            
+            if shouldRenderChild {
+                tabNodeChildrenToRender.addChild(childNode: childNode)
+            }
+        }
+        
         return ToolPageContentStackViewModel(
-            node: tabNode,
+            node: tabNodeChildrenToRender,
             manifest: manifest,
             translationsFileCache: translationsFileCache,
+            mobileContentAnalytics: mobileContentAnalytics,
             mobileContentEvents: mobileContentEvents,
             fontService: fontService,
             itemSpacing: 10,

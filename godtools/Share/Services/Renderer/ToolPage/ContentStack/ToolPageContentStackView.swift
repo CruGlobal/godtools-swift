@@ -69,8 +69,6 @@ class ToolPageContentStackView: UIView {
             contentView.removeConstraint(lastAddedBottomConstraint)
         }
         
-        let lastView: UIView = lastAddedView ?? contentView
-
         contentView.addSubview(view)
         
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -103,7 +101,15 @@ class ToolPageContentStackView: UIView {
             
             let imageSize: CGSize = imageView.image?.size ?? CGSize(width: contentView.bounds.size.width, height: contentView.bounds.size.width)
             
-            let aspectRatio: NSLayoutConstraint = NSLayoutConstraint(item: imageView, attribute: .height, relatedBy: .equal, toItem: imageView, attribute: .width, multiplier: imageSize.height / imageSize.width, constant: 0)
+            let aspectRatio: NSLayoutConstraint = NSLayoutConstraint(
+                item: imageView,
+                attribute: .height,
+                relatedBy: .equal,
+                toItem: imageView,
+                attribute: .width,
+                multiplier: imageSize.height / imageSize.width,
+                constant: 0
+            )
             
             imageView.addConstraint(aspectRatio)
         }
@@ -170,7 +176,7 @@ class ToolPageContentStackView: UIView {
         
         let top: NSLayoutConstraint
         
-        if lastView != contentView {
+        if let lastView = lastAddedView {
             
             top = NSLayoutConstraint(
                 item: view,

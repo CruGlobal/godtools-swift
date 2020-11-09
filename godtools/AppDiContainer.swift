@@ -205,6 +205,10 @@ class AppDiContainer {
         return FontService(languageSettings: languageSettingsService)
     }
     
+    func getMobileContentAnalytics() -> MobileContentAnalytics {
+        return MobileContentAnalytics(analytics: analytics)
+    }
+    
     func getMobileContentEvents() -> MobileContentEvents {
         return MobileContentEvents()
     }

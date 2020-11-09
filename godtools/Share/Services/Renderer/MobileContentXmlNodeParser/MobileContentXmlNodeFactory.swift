@@ -39,6 +39,15 @@ class MobileContentXmlNodeFactory {
     private static func getNodeClass(nodeType: MobileContentXmlNodeType) -> MobileContentXmlNode.Type {
         
         switch nodeType {
+           
+        case .analyticsAttribute:
+            return AnalyticsAttributeNode.self
+            
+        case .analyticsEvent:
+            return AnalyticsEventNode.self
+            
+        case .analyticsEvents:
+            return AnalyticsEventsNode.self
             
         case .contentParagraph:
             return ContentParagraphNode.self

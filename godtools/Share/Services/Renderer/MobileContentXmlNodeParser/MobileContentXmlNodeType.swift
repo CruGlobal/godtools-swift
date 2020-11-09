@@ -10,6 +10,9 @@ import Foundation
 
 enum MobileContentXmlNodeType: String, CaseIterable {
     
+    case analyticsAttribute = "analytics:attribute"
+    case analyticsEvent = "analytics:event"
+    case analyticsEvents = "analytics:events"
     case contentParagraph = "content:paragraph"
     case contentText = "content:text"
     case contentButton = "content:button"
