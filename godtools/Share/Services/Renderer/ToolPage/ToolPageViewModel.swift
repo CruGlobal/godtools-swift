@@ -30,6 +30,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     
     private weak var delegate: ToolPageViewModelDelegate?
     
+    let backgroundColor: UIColor
     let backgroundImage: UIImage?
     let hidesBackgroundImage: Bool
     let contentStackViewModel: ToolPageContentStackViewModel?
@@ -52,6 +53,8 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         self.localizationServices = localizationServices
         self.toolPageColors = ToolPageColorsViewModel(pageNode: pageNode, manifest: manifest)
         self.hidesBackgroundImage = hidesBackgroundImage
+        
+        backgroundColor = toolPageColors.backgroundColor
         
         // background image
         if !hidesBackgroundImage, let backgroundResource = pageNode.backgroundImage, let backgroundSrc = manifest.resources[backgroundResource]?.src {

@@ -134,6 +134,10 @@ class ToolPageView: UIViewController {
     
     private func setupBinding() {
         
+        // TODO: Set background color. ~Levi
+        //view.backgroundColor = viewModel.backgroundColor
+        //view.backgroundColor = .magenta
+        
         // backgroundImageView
         backgroundImageView.image = viewModel.backgroundImage
         backgroundImageView.isHidden = viewModel.hidesBackgroundImage

@@ -10,6 +10,7 @@ import UIKit
 
 class ToolPageColorsViewModel {
     
+    let backgroundColor: UIColor
     let cardTextColor: UIColor?
     let primaryColor: UIColor
     let primaryTextColor: UIColor
@@ -17,6 +18,7 @@ class ToolPageColorsViewModel {
     
     required init(pageNode: PageNode, manifest: MobileContentXmlManifest) {
         
+        backgroundColor = pageNode.getBackgroundColor()?.color ?? manifest.attributes.getBackgroundColor().color
         cardTextColor = pageNode.getCardTextColor()?.color
         primaryColor = pageNode.getPrimaryColor()?.color ?? manifest.attributes.getPrimaryColor().color
         primaryTextColor = pageNode.getPrimaryTextColor()?.color ?? manifest.attributes.getPrimaryTextColor().color

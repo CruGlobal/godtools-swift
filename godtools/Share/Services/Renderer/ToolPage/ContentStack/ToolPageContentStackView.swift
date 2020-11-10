@@ -25,6 +25,8 @@ class ToolPageContentStackView: UIView {
         
         setupConstraints(scrollIsEnabled: viewModel.scrollIsEnabled)
                 
+        backgroundColor = .clear
+        contentView.backgroundColor = .clear
         scrollView?.backgroundColor = .clear
         
         viewModel.render { [weak self] (view: UIView) in

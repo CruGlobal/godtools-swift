@@ -10,6 +10,7 @@ import UIKit
 
 protocol ToolPageViewModelType {
     
+    var backgroundColor: UIColor { get }
     var backgroundImage: UIImage? { get }
     var hidesBackgroundImage: Bool { get }
     var contentStackViewModel: ToolPageContentStackViewModel? { get }

@@ -39,9 +39,7 @@ class ToolPageCell: UICollectionViewCell {
         let toolPage: ToolPageView = ToolPageView(viewModel: viewModel)
         contentView.addSubview(toolPage.view)
         toolPage.view.constrainEdgesToSuperview()
-        
-        toolPage.view.backgroundColor = .clear
-        
+                
         self.toolPage = toolPage
         self.viewModel = viewModel
     }
