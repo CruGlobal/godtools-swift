@@ -72,11 +72,11 @@ class ToolPageContentStackView: UIView {
         contentView.addSubview(view)
         
         view.translatesAutoresizingMaskIntoConstraints = false
-        
-        let viewIsCustomIntrinsicView: Bool = view is ToolPageContentTabsView
-        let viewIsIntrinsic: Bool = view is UILabel
-        
-        if let stackView = view as? ToolPageContentStackView {
+                
+        if view is UILabel {
+             // Do nothing because view is instrinsic and we use the intrinsic content size.
+        }
+        else if let stackView = view as? ToolPageContentStackView {
             
             let scrollIsEnabled: Bool = stackView.scrollView?.isScrollEnabled ?? false
             if scrollIsEnabled {
@@ -113,7 +113,11 @@ class ToolPageContentStackView: UIView {
             
             imageView.addConstraint(aspectRatio)
         }
-        else if viewIsCustomIntrinsicView {
+        else if view is ToolPageContentTabsView || view is ToolPageContentInputView || view is ToolPageContentFormView || view is ToolPageModalView {
+            
+            // TODO: ~Levi
+            //  Maybe we can replace the passed in UIView with a protocol that defines how the view is added to the content stack.
+            //  We wouldn't need to check against types because the protocol would provide it.
             
             let heightConstraint: NSLayoutConstraint = NSLayoutConstraint(
                 item: view,
@@ -129,7 +133,7 @@ class ToolPageContentStackView: UIView {
             
             view.addConstraint(heightConstraint)
         }
-        else if !viewIsIntrinsic {
+        else {
             
             let heightConstraint: NSLayoutConstraint = NSLayoutConstraint(
                 item: view,
@@ -140,6 +144,8 @@ class ToolPageContentStackView: UIView {
                 multiplier: 1,
                 constant: view.frame.size.height
             )
+            
+            heightConstraint.priority = UILayoutPriority(1000)
             
             view.addConstraint(heightConstraint)
         }

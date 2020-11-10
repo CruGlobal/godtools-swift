@@ -58,11 +58,23 @@ class MobileContentXmlNodeFactory {
         case .contentButton:
             return ContentButtonNode.self
             
+        case .contentForm:
+            return ContentFormNode.self
+            
         case .contentImage:
             return ContentImageNode.self
             
+        case .contentInput:
+            return ContentInputNode.self
+            
         case .contentLabel:
             return ContentLabelNode.self
+            
+        case .contentLink:
+            return ContentLinkNode.self
+            
+        case .contentPlaceholder:
+            return ContentPlaceholderNode.self
             
         case .contentTab:
             return ContentTabNode.self
@@ -72,6 +84,12 @@ class MobileContentXmlNodeFactory {
             
         case .title:
             return TitleNode.self
+            
+        case .modal:
+            return ModalNode.self
+            
+        case .modals:
+            return ModalsNode.self
             
         case .number:
             return NumberNode.self

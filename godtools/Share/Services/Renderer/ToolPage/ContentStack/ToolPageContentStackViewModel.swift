@@ -18,13 +18,14 @@ class ToolPageContentStackViewModel {
     private let mobileContentAnalytics: MobileContentAnalytics
     private let mobileContentEvents: MobileContentEvents
     private let fontService: FontService
+    private let toolPageColors: ToolPageColorsViewModel
     private let defaultTextNodeTextColor: UIColor?
     
     private var buttonEvents: [UIButton: ContentButtonNode] = Dictionary()
+    private var linkEvents: [UIButton: ContentLinkNode] = Dictionary()
             
     let itemSpacing: CGFloat
     let scrollIsEnabled: Bool
-    let toolPageColors: ToolPageColorsViewModel
     
     required init(node: MobileContentXmlNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, itemSpacing: CGFloat, scrollIsEnabled: Bool, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
         
@@ -57,22 +58,7 @@ class ToolPageContentStackViewModel {
         
         if let paragraphNode = node as? ContentParagraphNode {
             
-            let viewModel = ToolPageContentStackViewModel(
-                node: paragraphNode,
-                manifest: manifest,
-                translationsFileCache: translationsFileCache,
-                mobileContentAnalytics: mobileContentAnalytics,
-                mobileContentEvents: mobileContentEvents,
-                fontService: fontService,
-                itemSpacing: 5,
-                scrollIsEnabled: false,
-                toolPageColors: toolPageColors,
-                defaultTextNodeTextColor: defaultTextNodeTextColor
-            )
-            
-            let view = ToolPageContentStackView(viewModel: viewModel)
-            
-            return view
+            return getContentParagraph(paragraphNode: paragraphNode)
         }
         else if let textNode = node as? ContentTextNode {
             
@@ -96,6 +82,21 @@ class ToolPageContentStackViewModel {
                 buttonColor: toolPageColors.primaryColor,
                 titleColor: buttonNode.textNode?.getTextColor()?.color ?? toolPageColors.primaryTextColor
             )
+            
+            addButtonEvent(button: button, buttonNode: buttonNode)
+                        
+            return button
+        }
+        else if let linkNode = node as? ContentLinkNode {
+            
+            let button: UIButton = getContentLink(
+                linkNode: linkNode,
+                fontSize: 18,
+                fontWeight: .regular,
+                titleColor: linkNode.textNode?.getTextColor()?.color ?? toolPageColors.primaryColor
+            )
+            
+            addLinkEvent(button: button, linkNode: linkNode)
                         
             return button
         }
@@ -112,8 +113,38 @@ class ToolPageContentStackViewModel {
             
             return getContentTabs(tabsNode: tabsNode)
         }
+        else if let inputNode = node as? ContentInputNode {
+            
+            return getContentInput(inputNode: inputNode)
+        }
+        else if let formNode = node as? ContentFormNode {
+            
+            return getContentForm(formNode: formNode)
+        }
         
         return nil
+    }
+    
+    // MARK: - Content Views
+    
+    private func getContentParagraph(paragraphNode: ContentParagraphNode) -> ToolPageContentStackView {
+        
+        let viewModel = ToolPageContentStackViewModel(
+            node: paragraphNode,
+            manifest: manifest,
+            translationsFileCache: translationsFileCache,
+            mobileContentAnalytics: mobileContentAnalytics,
+            mobileContentEvents: mobileContentEvents,
+            fontService: fontService,
+            itemSpacing: 5,
+            scrollIsEnabled: false,
+            toolPageColors: toolPageColors,
+            defaultTextNodeTextColor: defaultTextNodeTextColor
+        )
+        
+        let view = ToolPageContentStackView(viewModel: viewModel)
+        
+        return view
     }
         
     private func getContentButton(buttonNode: ContentButtonNode, fontSize: CGFloat, fontWeight: UIFont.Weight, buttonColor: UIColor, titleColor: UIColor) -> UIButton {
@@ -126,8 +157,20 @@ class ToolPageContentStackViewModel {
         button.titleLabel?.font = fontService.getFont(size: fontSize, weight: fontWeight)
         button.setTitleColor(titleColor, for: .normal)
         button.setTitle(buttonNode.textNode?.text, for: .normal)
-
-        addButtonEvent(button: button, buttonNode: buttonNode)
+        
+        return button
+    }
+    
+    private func getContentLink(linkNode: ContentLinkNode, fontSize: CGFloat, fontWeight: UIFont.Weight, titleColor: UIColor) -> UIButton {
+        
+        let button: UIButton = UIButton(type: .custom)
+        
+        button.backgroundColor = .clear
+        button.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width * 0.9, height: 50)
+        button.layer.cornerRadius = 5
+        button.titleLabel?.font = fontService.getFont(size: fontSize, weight: fontWeight)
+        button.setTitleColor(titleColor, for: .normal)
+        button.setTitle(linkNode.textNode?.text, for: .normal)
         
         return button
     }
@@ -204,6 +247,40 @@ class ToolPageContentStackViewModel {
         return view
     }
     
+    private func getContentInput(inputNode: ContentInputNode) -> ToolPageContentInputView {
+        
+        let viewModel = ToolPageContentInputViewModel(
+            inputNode: inputNode,
+            fontService: fontService,
+            toolPageColors: toolPageColors,
+            defaultTextNodeTextColor: defaultTextNodeTextColor
+        )
+        
+        let view = ToolPageContentInputView(viewModel: viewModel)
+        
+        return view
+    }
+    
+    private func getContentForm(formNode: ContentFormNode) -> ToolPageContentFormView {
+        
+        let viewModel = ToolPageContentFormViewModel(
+            formNode: formNode,
+            manifest: manifest,
+            translationsFileCache: translationsFileCache,
+            mobileContentAnalytics: mobileContentAnalytics,
+            mobileContentEvents: mobileContentEvents,
+            fontService: fontService,
+            toolPageColors: toolPageColors,
+            defaultTextNodeTextColor: defaultTextNodeTextColor
+        )
+        
+        let view = ToolPageContentFormView(viewModel: viewModel)
+        
+        return view
+    }
+    
+    // MARK: - Events
+    
     private func addButtonEvent(button: UIButton, buttonNode: ContentButtonNode) {
         
         guard buttonEvents[button] == nil else {
@@ -242,6 +319,43 @@ class ToolPageContentStackViewModel {
         }
         
         if let analyticsEventsNode = buttonNode.analyticsEventsNode {
+            mobileContentAnalytics.trackEvents(events: analyticsEventsNode)
+        }
+    }
+    
+    private func addLinkEvent(button: UIButton, linkNode: ContentLinkNode) {
+        
+        guard linkEvents[button] == nil else {
+            return
+        }
+        
+        linkEvents[button] = linkNode
+        
+        button.addTarget(self, action: #selector(handleLinkTapped(button:)), for: .touchUpInside)
+    }
+    
+    private func removeLinkEvent(button: UIButton) {
+        
+        guard linkEvents[button] != nil else {
+            return
+        }
+        
+        linkEvents[button] = nil
+        
+        button.removeTarget(self, action: #selector(handleLinkTapped(button:)), for: .touchUpInside)
+    }
+    
+    @objc func handleLinkTapped(button: UIButton) {
+        
+        guard let linkNode = linkEvents[button] else {
+            return
+        }
+        
+        for event in linkNode.events {
+            mobileContentEvents.eventButtonTapped(eventButton: ButtonEvent(event: event))
+        }
+        
+        if let analyticsEventsNode = linkNode.analyticsEventsNode {
             mobileContentAnalytics.trackEvents(events: analyticsEventsNode)
         }
     }

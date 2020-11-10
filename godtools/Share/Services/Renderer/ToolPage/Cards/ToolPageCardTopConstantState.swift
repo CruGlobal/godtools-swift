@@ -10,7 +10,8 @@ import Foundation
 
 enum ToolPageCardTopConstantState {
     
-    case starting
+    case starting(cardPosition: Int)
     case showing
-    case collapsed
+    case collapsed(cardPosition: Int)
+    case hidden
 }

@@ -59,7 +59,7 @@ class ToolPageContentTabsViewModel: ToolPageContentTabsViewModelType {
         
         let tabNode: ContentTabNode = tabNodes[tab]
         
-        let tabNodeChildrenToRender: MobileContentXmlNode = MobileContentXmlNode(name: "")
+        let tabNodeChildrenToRender: MobileContentXmlNode = MobileContentXmlNode(xmlElementName: tabNode.xmlElementName)
         
         for childNode in tabNode.children {
             

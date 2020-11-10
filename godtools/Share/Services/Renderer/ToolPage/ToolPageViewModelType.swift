@@ -18,6 +18,7 @@ protocol ToolPageViewModelType {
     var hidesCards: Bool { get }
     var cardsViewModels: [ToolPageCardViewModelType] { get }
     var currentCard: ObservableValue<Int?> { get }
+    var hiddenCard: ObservableValue<ToolPageCardViewModel?> { get }
     var callToActionViewModel: ToolPageCallToActionViewModel { get }
     
     func handleCallToActionNextButtonTapped()

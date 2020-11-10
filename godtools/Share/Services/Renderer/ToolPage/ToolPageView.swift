@@ -17,6 +17,8 @@ class ToolPageView: UIViewController {
     private var heroView: ToolPageContentStackView?
     private var cards: [ToolPageCardView] = Array()
     private var cardTopConstraints: [NSLayoutConstraint] = Array()
+    private var hiddenCard: ToolPageCardView?
+    private var hiddenCardTopConstraint: NSLayoutConstraint?
     private var currentCardState: ToolPageCardsState = .initialized
     private var didLayoutSubviews: Bool = false
     
@@ -112,6 +114,16 @@ class ToolPageView: UIViewController {
             
             viewModel.currentCard.addObserver(self) { [weak self] (cardPosition: Int?) in
                 self?.setCardsState(cardsState: .showingCard(showingCardAtPosition: cardPosition), animated: true)
+            }
+        }
+        
+        // hiddenCard
+        viewModel.hiddenCard.addObserver(self) { [weak self] (cardViewModel: ToolPageCardViewModel?) in
+            if let cardViewModel = cardViewModel {
+                self?.showHiddenCard(cardViewModel: cardViewModel, animated: true)
+            }
+            else {
+                self?.hideHiddenCard(animated: true)
             }
         }
     }
@@ -224,7 +236,7 @@ extension ToolPageView {
         return nil
     }
     
-    private func getCardTopConstant(state: ToolPageCardTopConstantState, cardPosition: Int) -> CGFloat {
+    private func getCardTopConstant(state: ToolPageCardTopConstantState) -> CGFloat {
         
         guard let cardView = cards.first else {
             return UIScreen.main.bounds.size.height
@@ -236,14 +248,19 @@ extension ToolPageView {
         
         switch state {
             
-        case .starting:
+        case .starting(let cardPosition):
             return cardsContainerHeight - (cardTitleHeight * (numberOfCards - CGFloat(cardPosition)))
+        
         case .showing:
             return cardInsets.top
-        case .collapsed:
+        
+        case .collapsed(let cardPosition):
             let cardTopVisibilityPercentage: CGFloat = 0.4
             let cardTopVisibilityHeight: CGFloat = floor(cardTitleHeight * cardTopVisibilityPercentage)
             return cardsContainerHeight - (cardTopVisibilityHeight * (numberOfCards - CGFloat(cardPosition)))
+        
+        case .hidden:
+            return cardsContainerHeight
         }
     }
     
@@ -258,7 +275,7 @@ extension ToolPageView {
             
             for index in 0 ..< cardTopConstraints.count {
                 let topConstraint: NSLayoutConstraint = cardTopConstraints[index]
-                topConstraint.constant = getCardTopConstant(state: .starting, cardPosition: index)
+                topConstraint.constant = getCardTopConstant(state: .starting(cardPosition: index))
             }
             
         case .showingCard(let showingCardAtPosition):
@@ -284,19 +301,19 @@ extension ToolPageView {
                 let shouldShowCard: Bool = index <= showCardAtPosition
                 
                 if shouldShowCard {
-                    topConstraint.constant = getCardTopConstant(state: .showing, cardPosition: index)
+                    topConstraint.constant = getCardTopConstant(state: .showing)
                 }
                 else {
-                    topConstraint.constant = getCardTopConstant(state: .collapsed, cardPosition: index)
+                    topConstraint.constant = getCardTopConstant(state: .collapsed(cardPosition: index))
                 }
             }
-            
+                        
         case .collapseAllCards:
             
             for index in 0 ..< cardTopConstraints.count {
                 
                 let topConstraint: NSLayoutConstraint = cardTopConstraints[index]
-                topConstraint.constant = getCardTopConstant(state: .collapsed, cardPosition: index)
+                topConstraint.constant = getCardTopConstant(state: .collapsed(cardPosition: index))
             }
             
         case .initialized:
@@ -325,15 +342,114 @@ extension ToolPageView {
         
         case .starting:
             break
+            
         case .showingCard(let showingCardAtPosition):
             break
-            
+                        
         case .collapseAllCards:
             setCardsState(cardsState: .starting, animated: animated)
             
         case .initialized:
             break
         }
+    }
+    
+    private func showHiddenCard(cardViewModel: ToolPageCardViewModel, animated: Bool) {
+        
+        guard hiddenCard == nil else {
+            return
+        }
+        
+        let cardView: ToolPageCardView = ToolPageCardView(viewModel: cardViewModel)
+        
+        cardsContainerView.addSubview(cardView)
+        
+        cardView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let top: NSLayoutConstraint = NSLayoutConstraint(
+            item: cardView,
+            attribute: .top,
+            relatedBy: .equal,
+            toItem: cardsContainerView,
+            attribute: .top,
+            multiplier: 1,
+            constant: cardInsets.top
+        )
+        
+        let leading: NSLayoutConstraint = NSLayoutConstraint(
+            item: cardView,
+            attribute: .leading,
+            relatedBy: .equal,
+            toItem: cardsContainerView,
+            attribute: .leading,
+            multiplier: 1,
+            constant: cardInsets.left
+        )
+        
+        let trailing: NSLayoutConstraint = NSLayoutConstraint(
+            item: cardView,
+            attribute: .trailing,
+            relatedBy: .equal,
+            toItem: cardsContainerView,
+            attribute: .trailing,
+            multiplier: 1,
+            constant: cardInsets.right * -1
+        )
+        
+        cardsContainerView.addConstraint(top)
+        cardsContainerView.addConstraint(leading)
+        cardsContainerView.addConstraint(trailing)
+        
+        let heightConstraint: NSLayoutConstraint = NSLayoutConstraint(
+            item: cardView,
+            attribute: .height,
+            relatedBy: .equal,
+            toItem: nil,
+            attribute: .notAnAttribute,
+            multiplier: 1,
+            constant: cardHeight
+        )
+        
+        cardView.addConstraint(heightConstraint)
+        
+        hiddenCard = cardView
+        hiddenCardTopConstraint = top
+        
+        hiddenCardTopConstraint?.constant = getCardTopConstant(state: .hidden)
+        view.layoutIfNeeded()
+        
+        hiddenCardTopConstraint?.constant = getCardTopConstant(state: .showing)
+        if animated {
+            UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseOut, animations: {
+                self.view.layoutIfNeeded()
+            }, completion: nil)
+        }
+        else {
+            view.layoutIfNeeded()
+        }
+    }
+    
+    private func hideHiddenCard(animated: Bool) {
+        
+        hiddenCardTopConstraint?.constant = getCardTopConstant(state: .hidden)
+        
+        if animated {
+            UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseOut, animations: {
+                self.view.layoutIfNeeded()
+            }, completion: { (finished: Bool) in
+                self.handleHiddenCardHidden()
+            })
+        }
+        else {
+            view.layoutIfNeeded()
+            handleHiddenCardHidden()
+        }
+    }
+    
+    private func handleHiddenCardHidden() {
+        hiddenCard?.removeFromSuperview()
+        hiddenCard = nil
+        hiddenCardTopConstraint = nil
     }
     
     private func addCardsAndCardsConstraints(cardsViewModels: [ToolPageCardViewModelType]) {

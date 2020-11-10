@@ -10,12 +10,12 @@ import UIKit
 
 class ToolPageContentTabsView: UIView {
     
-    private let viewModel: ToolPageContentTabsViewModel
+    private let viewModel: ToolPageContentTabsViewModelType
     
     @IBOutlet weak private var tabsControl: UISegmentedControl!
     @IBOutlet weak private var tabContentContainerView: UIView!
     
-    required init(viewModel: ToolPageContentTabsViewModel) {
+    required init(viewModel: ToolPageContentTabsViewModelType) {
         
         self.viewModel = viewModel
         

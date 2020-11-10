@@ -24,6 +24,8 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     private let localizationServices: LocalizationServices
     private let toolPageColors: ToolPageColorsViewModel
         
+    private var hiddenCardsViewModels: [ToolPageCardViewModel] = Array()
+    
     private(set) var cardsViewModels: [ToolPageCardViewModelType] = Array()
     
     private weak var delegate: ToolPageViewModelDelegate?
@@ -35,6 +37,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     let heroViewModel: ToolPageContentStackViewModel?
     let hidesCards: Bool
     let currentCard: ObservableValue<Int?> = ObservableValue(value: nil)
+    let hiddenCard: ObservableValue<ToolPageCardViewModel?> = ObservableValue(value: nil)
     let callToActionViewModel: ToolPageCallToActionViewModel
     
     required init(delegate: ToolPageViewModelDelegate, pageNode: PageNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, localizationServices: LocalizationServices, hidesBackgroundImage: Bool) {
@@ -121,27 +124,61 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         
         super.init()
         
-        let visibleCards: [CardNode] = (pageNode.cardsNode?.cards ?? []).filter({$0.hidden != "true"})
+        let cardNodes: [CardNode] = pageNode.cardsNode?.cards ?? []
         
-        for cardIndex in 0 ..< visibleCards.count {
+        var visibleCards: [CardNode] = Array()
+        var hiddenCards: [CardNode] = Array()
+        
+        for cardNode in cardNodes {
             
-            let cardNode: CardNode = visibleCards[cardIndex]
+            if cardNode.hidden != "true" {
+                visibleCards.append(cardNode)
+            }
+            else {
+                hiddenCards.append(cardNode)
+            }
+        }
+                
+        for visibleCardIndex in 0 ..< visibleCards.count {
+            
+            let visibleCardNode: CardNode = visibleCards[visibleCardIndex]
             
             let cardViewModel = ToolPageCardViewModel(
                 delegate: self,
-                cardNode: cardNode,
+                cardNode: visibleCardNode,
                 manifest: manifest,
                 translationsFileCache: translationsFileCache,
                 mobileContentAnalytics: mobileContentAnalytics,
                 mobileContentEvents: mobileContentEvents,
                 fontService: fontService,
                 localizationServices: localizationServices,
-                cardPosition: cardIndex,
+                cardPosition: visibleCardIndex,
                 totalCards: visibleCards.count,
                 toolPageColors: toolPageColors
             )
             
             cardsViewModels.append(cardViewModel)
+        }
+        
+        for hiddenCardIndex in 0 ..< hiddenCards.count {
+            
+            let hiddenCardNode: CardNode = hiddenCards[hiddenCardIndex]
+            
+            let cardViewModel = ToolPageCardViewModel(
+                delegate: self,
+                cardNode: hiddenCardNode,
+                manifest: manifest,
+                translationsFileCache: translationsFileCache,
+                mobileContentAnalytics: mobileContentAnalytics,
+                mobileContentEvents: mobileContentEvents,
+                fontService: fontService,
+                localizationServices: localizationServices,
+                cardPosition: hiddenCardIndex,
+                totalCards: hiddenCards.count,
+                toolPageColors: toolPageColors
+            )
+            
+            hiddenCardsViewModels.append(cardViewModel)
         }
     }
     
@@ -170,25 +207,31 @@ extension ToolPageViewModel: ToolPageCardViewModelDelegate {
         }
     }
     
-    func headerTappedFromCard(cardPosition: Int) {
+    func headerTappedFromCard(cardViewModel: ToolPageCardViewModel, cardPosition: Int) {
+             
+        if !cardViewModel.isHiddenCard {
+            
+            let isShowingCard: Bool = cardPosition == currentCard.value
+            
+            if !isShowingCard {
+                currentCard.accept(value: cardPosition)
+            }
+            else {
                 
-        let isShowingCard: Bool = cardPosition == currentCard.value
-        
-        if !isShowingCard {
-            currentCard.accept(value: cardPosition)
+                gotoPreviousCardFromCard(cardPosition: cardPosition)
+            }
         }
         else {
-            
-            gotoPreviousCardFromCard(cardPosition: cardPosition)
+            hiddenCard.accept(value: nil)
         }
     }
     
-    func previousTappedFromCard(cardPosition: Int) {
+    func previousTappedFromCard(cardViewModel: ToolPageCardViewModel, cardPosition: Int) {
         
         gotoPreviousCardFromCard(cardPosition: cardPosition)
     }
     
-    func nextTappedFromCard(cardPosition: Int) {
+    func nextTappedFromCard(cardViewModel: ToolPageCardViewModel, cardPosition: Int) {
                 
         let nextCard: Int = cardPosition + 1
         
@@ -200,7 +243,11 @@ extension ToolPageViewModel: ToolPageCardViewModelDelegate {
         }
     }
     
-    func cardSwipedUpFromCard(cardPosition: Int) {
+    func cardSwipedUpFromCard(cardViewModel: ToolPageCardViewModel, cardPosition: Int) {
+        
+        guard !cardViewModel.isHiddenCard else {
+            return
+        }
         
         let isShowingCard: Bool = currentCard.value == cardPosition
         
@@ -217,12 +264,38 @@ extension ToolPageViewModel: ToolPageCardViewModelDelegate {
         }
     }
     
-    func cardSwipedDownFromCard(cardPosition: Int) {
+    func cardSwipedDownFromCard(cardViewModel: ToolPageCardViewModel, cardPosition: Int) {
         
-        let isShowingCard: Bool = currentCard.value == cardPosition
+        if !cardViewModel.isHiddenCard {
+            
+            let isShowingCard: Bool = currentCard.value == cardPosition
+            
+            if isShowingCard {
+                gotoPreviousCardFromCard(cardPosition: cardPosition)
+            }
+        }
+        else {
+            hiddenCard.accept(value: nil)
+        }
+    }
+    
+    func presentCardListener(cardViewModel: ToolPageCardViewModel, cardPosition: Int) {
         
-        if isShowingCard {
+        if !cardViewModel.isHiddenCard {
+            currentCard.accept(value: cardPosition)
+        }
+        else if cardViewModel.isHiddenCard {
+            hiddenCard.accept(value: cardViewModel)
+        }
+    }
+    
+    func dismissCardListener(cardViewModel: ToolPageCardViewModel, cardPosition: Int) {
+        
+        if !cardViewModel.isHiddenCard {
             gotoPreviousCardFromCard(cardPosition: cardPosition)
+        }
+        else {
+            hiddenCard.accept(value: nil)
         }
     }
 }

@@ -14,15 +14,15 @@ class MobileContentXmlNode {
     private(set) weak var parent: MobileContentXmlNode?
     private(set) var children: [MobileContentXmlNode] = Array()
     
-    let name: String
+    let xmlElementName: String
     
     required init(xmlElement: XMLElement) {
         
-        name = xmlElement.name
+        xmlElementName = xmlElement.name
     }
     
-    init(name: String) {
-        self.name = name
+    init(xmlElementName: String) {
+        self.xmlElementName = xmlElementName
     }
     
     func addChild(childNode: MobileContentXmlNode) {

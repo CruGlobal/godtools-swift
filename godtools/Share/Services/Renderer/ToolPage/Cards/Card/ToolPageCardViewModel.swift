@@ -10,14 +10,16 @@ import UIKit
 
 protocol ToolPageCardViewModelDelegate: class {
     
-    func headerTappedFromCard(cardPosition: Int)
-    func previousTappedFromCard(cardPosition: Int)
-    func nextTappedFromCard(cardPosition: Int)
-    func cardSwipedUpFromCard(cardPosition: Int)
-    func cardSwipedDownFromCard(cardPosition: Int)
+    func headerTappedFromCard(cardViewModel: ToolPageCardViewModel, cardPosition: Int)
+    func previousTappedFromCard(cardViewModel: ToolPageCardViewModel, cardPosition: Int)
+    func nextTappedFromCard(cardViewModel: ToolPageCardViewModel, cardPosition: Int)
+    func cardSwipedUpFromCard(cardViewModel: ToolPageCardViewModel, cardPosition: Int)
+    func cardSwipedDownFromCard(cardViewModel: ToolPageCardViewModel, cardPosition: Int)
+    func presentCardListener(cardViewModel: ToolPageCardViewModel, cardPosition: Int)
+    func dismissCardListener(cardViewModel: ToolPageCardViewModel, cardPosition: Int)
 }
 
-class ToolPageCardViewModel: ToolPageCardViewModelType {
+class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     
     private let cardNode: CardNode
     private let manifest: MobileContentXmlManifest
@@ -33,8 +35,12 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     private weak var delegate: ToolPageCardViewModelDelegate?
     
     let contentStackViewModel: ToolPageContentStackViewModel
+    let isHiddenCard: Bool
+    let hidesCardNavigation: Bool
     
     required init(delegate: ToolPageCardViewModelDelegate, cardNode: CardNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, localizationServices: LocalizationServices, cardPosition: Int, totalCards: Int, toolPageColors: ToolPageColorsViewModel) {
+        
+        let isHiddenCard: Bool = cardNode.hidden == "true"
         
         self.delegate = delegate
         self.cardNode = cardNode
@@ -60,10 +66,38 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
             toolPageColors: toolPageColors,
             defaultTextNodeTextColor: toolPageColors.cardTextColor
         )
+        
+        self.isHiddenCard = isHiddenCard
+        hidesCardNavigation = isHiddenCard
+        
+        super.init()
+        
+        addListeners()
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+        removeListeners()
+    }
+    
+    private func addListeners() {
+        
+        mobileContentEvents.eventButtonTappedSignal.addObserver(self) { [weak self] (buttonEvent: ButtonEvent) in
+            guard let viewModel = self else {
+                return
+            }
+            if viewModel.cardNode.listeners.contains(buttonEvent.event) {
+                self?.delegate?.presentCardListener(cardViewModel: viewModel, cardPosition: viewModel.cardPosition)
+            }
+            else if viewModel.cardNode.dismissListeners.contains(buttonEvent.event) {
+                self?.delegate?.dismissCardListener(cardViewModel: viewModel, cardPosition: viewModel.cardPosition)
+            }
+        }
+    }
+    
+    private func removeListeners() {
+        
+        mobileContentEvents.eventButtonTappedSignal.removeObserver(self)
     }
     
     var title: String? {
@@ -116,22 +150,22 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     }
     
     func headerTapped() {
-        delegate?.headerTappedFromCard(cardPosition: cardPosition)
+        delegate?.headerTappedFromCard(cardViewModel: self, cardPosition: cardPosition)
     }
     
     func previousTapped() {
-        delegate?.previousTappedFromCard(cardPosition: cardPosition)
+        delegate?.previousTappedFromCard(cardViewModel: self, cardPosition: cardPosition)
     }
     
     func nextTapped() {
-        delegate?.nextTappedFromCard(cardPosition: cardPosition)
+        delegate?.nextTappedFromCard(cardViewModel: self, cardPosition: cardPosition)
     }
     
     func didSwipeCardUp() {
-        delegate?.cardSwipedUpFromCard(cardPosition: cardPosition)
+        delegate?.cardSwipedUpFromCard(cardViewModel: self, cardPosition: cardPosition)
     }
     
     func didSwipeCardDown() {
-        delegate?.cardSwipedDownFromCard(cardPosition: cardPosition)
+        delegate?.cardSwipedDownFromCard(cardViewModel: self, cardPosition: cardPosition)
     }
 }

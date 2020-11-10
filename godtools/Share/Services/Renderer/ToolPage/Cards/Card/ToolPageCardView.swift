@@ -98,7 +98,7 @@ class ToolPageCardView: UIView {
     }
     
     private func setupBinding() {
-        
+                
         titleLabel.text = viewModel.title
         titleLabel.font = viewModel.titleFont
         titleLabel.textColor = viewModel.titleColor
@@ -106,12 +106,15 @@ class ToolPageCardView: UIView {
         cardPositionLabel.text = viewModel.cardPositionLabel
         cardPositionLabel.textColor = viewModel.cardPositionLabelTextColor
         cardPositionLabel.font = viewModel.cardPositionLabelFont
+        cardPositionLabel.isHidden = viewModel.hidesCardNavigation
         
         previousButton.setTitle(viewModel.previousButtonTitle, for: .normal)
         previousButton.setTitleColor(viewModel.previousButtonTitleColor, for: .normal)
+        previousButton.isHidden = viewModel.hidesCardNavigation
         
         nextButton.setTitle(viewModel.nextButtonTitle, for: .normal)
         nextButton.setTitleColor(viewModel.nextButtonTitleColor, for: .normal)
+        nextButton.isHidden = viewModel.hidesCardNavigation
         
         let contentStackViewModel: ToolPageContentStackViewModel = viewModel.contentStackViewModel
         let contentStackView: ToolPageContentStackView = ToolPageContentStackView(viewModel: contentStackViewModel)

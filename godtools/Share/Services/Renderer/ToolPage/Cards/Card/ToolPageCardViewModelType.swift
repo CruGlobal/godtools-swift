@@ -23,6 +23,7 @@ protocol ToolPageCardViewModelType {
     var nextButtonTitle: String? { get }
     var nextButtonTitleColor: UIColor { get }
     var nextButtonTitleFont: UIFont { get }
+    var hidesCardNavigation: Bool { get }
     
     func headerTapped()
     func previousTapped()
