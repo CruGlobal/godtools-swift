@@ -29,7 +29,6 @@ class ToolPageView: UIViewController {
     @IBOutlet weak private var headerNumberLabel: UILabel!
     @IBOutlet weak private var headerTitleLabel: UILabel!
     @IBOutlet weak private var heroContainerView: UIView!
-    @IBOutlet weak private var cardsContainerView: UIView!
     @IBOutlet weak private var callToActionView: UIView!
     @IBOutlet weak private var callToActionTitleLabel: UILabel!
     @IBOutlet weak private var callToActionNextButton: UIButton!
@@ -101,7 +100,7 @@ class ToolPageView: UIViewController {
                         
             addCardsAndCardsConstraints(cardsViewModels: viewModel.cardsViewModels)
             
-            cardsContainerView.layoutIfNeeded()
+            view.layoutIfNeeded()
             
             setCardsState(cardsState: .starting, animated: false)
             
@@ -124,7 +123,7 @@ class ToolPageView: UIViewController {
         if let heroViewModel = viewModel.heroViewModel {
             
             let topInset: CGFloat = 15
-            let bottomInset: CGFloat = 15
+            let bottomInset: CGFloat = 0
             let screenHeight: CGFloat = UIScreen.main.bounds.size.height
             let headerHeight: CGFloat = hidesHeader ? 0 : headerView.frame.size.height
             let maximumHeight: CGFloat = screenHeight - safeAreaInsets.top - safeAreaInsets.bottom - headerHeight - topInset - bottomInset
@@ -163,11 +162,6 @@ class ToolPageView: UIViewController {
         
         topInsetTopConstraint.constant = safeAreaInsets.top
         bottomInsetBottomConstraint.constant = safeAreaInsets.bottom
-        
-        headerView.drawBorder(color: .systemPink)
-        heroContainerView.drawBorder(color: .green)
-        contentStackContainerView.drawBorder(color: .white)
-        cardsContainerView.drawBorder(color: .brown)
     }
     
     private func setupBinding() {
@@ -188,10 +182,7 @@ class ToolPageView: UIViewController {
         headerTitleLabel.text = headerViewModel.headerTitle
         headerTitleLabel.textColor = headerViewModel.primaryTextColor
         headerTitleLabel.setLineSpacing(lineSpacing: 2)
-        
-        // cards
-        cardsContainerView.isHidden = viewModel.hidesCards
-        
+                
         // callToAction
         let callToActionViewModel: ToolPageCallToActionViewModel = viewModel.callToActionViewModel
         callToActionTitleLabel.text = callToActionViewModel.callToActionTitle
@@ -273,19 +264,32 @@ extension ToolPageView {
         return UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
     }
     
+    private var cardsContainerFrameRelativeToScreen: CGRect {
+        let screenSize: CGSize = UIScreen.main.bounds.size
+        let top: CGFloat = safeAreaInsets.top
+        let height: CGFloat = screenSize.height - top - safeAreaInsets.bottom
+        return CGRect(x: 0, y: top, width: screenSize.width, height: height)
+    }
+    
     private var cardCollapsedVisibilityPercentage: CGFloat {
         return 0.4
     }
     
+    private var cardsTopRelativeToCardsContainerFrameBottom: CGFloat {
+        return cardsContainerFrameRelativeToScreen.origin.y + cardsContainerFrameRelativeToScreen.size.height
+    }
+    
+    private var cardsContainerHeight: CGFloat {
+        return cardsContainerFrameRelativeToScreen.size.height
+    }
+    
     private var cardHeight: CGFloat {
-        
+                
         guard let cardView = cards.first else {
             assertionFailure("Cards should be initialized before cardHeight is accessed.")
-            return cardsContainerView.frame.size.height - callToActionView.frame.size.height - cardInsets.top - cardInsets.bottom
+            return cardsContainerHeight - callToActionView.frame.size.height - cardInsets.top - cardInsets.bottom
         }
-        
-        let cardContainerHeight: CGFloat = cardsContainerView.frame.size.height
-        
+                
         let numberOfCards: CGFloat = CGFloat(viewModel.cardsViewModels.count)
         let cardTitleHeight: CGFloat = cardView.titleHeight
         let cardTopVisibilityHeight: CGFloat = floor(cardTitleHeight * cardCollapsedVisibilityPercentage)
@@ -295,7 +299,7 @@ extension ToolPageView {
         
         let maxFooterAreaHeight: CGFloat = (collapsedCardsHeight > callToActionHeight) ? collapsedCardsHeight : callToActionHeight
         
-        let cardHeight: CGFloat = cardContainerHeight - cardInsets.top - cardInsets.bottom - maxFooterAreaHeight
+        let cardHeight: CGFloat = cardsContainerHeight - cardInsets.top - cardInsets.bottom - maxFooterAreaHeight
         
         return cardHeight
     }
@@ -313,24 +317,23 @@ extension ToolPageView {
             return UIScreen.main.bounds.size.height
         }
         
-        let cardsContainerHeight: CGFloat = cardsContainerView.frame.size.height
         let numberOfCards: CGFloat = CGFloat(viewModel.cardsViewModels.count)
         let cardTitleHeight: CGFloat = cardView.titleHeight
         
         switch state {
             
         case .starting(let cardPosition):
-            return cardsContainerHeight - (cardTitleHeight * (numberOfCards - CGFloat(cardPosition)))
+            return cardsTopRelativeToCardsContainerFrameBottom - (cardTitleHeight * (numberOfCards - CGFloat(cardPosition)))
         
         case .showing:
-            return cardInsets.top
+            return cardsContainerFrameRelativeToScreen.origin.y + cardInsets.top
         
         case .collapsed(let cardPosition):
             let cardTopVisibilityHeight: CGFloat = floor(cardTitleHeight * cardCollapsedVisibilityPercentage)
-            return cardsContainerHeight - (cardTopVisibilityHeight * (numberOfCards - CGFloat(cardPosition)))
+            return cardsTopRelativeToCardsContainerFrameBottom - (cardTopVisibilityHeight * (numberOfCards - CGFloat(cardPosition)))
         
         case .hidden:
-            return cardsContainerHeight
+            return cardsTopRelativeToCardsContainerFrameBottom
         }
     }
     
@@ -432,7 +435,7 @@ extension ToolPageView {
         
         let cardView: ToolPageCardView = ToolPageCardView(viewModel: cardViewModel)
         
-        cardsContainerView.addSubview(cardView)
+        view.addSubview(cardView)
         
         cardView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -440,7 +443,7 @@ extension ToolPageView {
             item: cardView,
             attribute: .top,
             relatedBy: .equal,
-            toItem: cardsContainerView,
+            toItem: view,
             attribute: .top,
             multiplier: 1,
             constant: cardInsets.top
@@ -450,7 +453,7 @@ extension ToolPageView {
             item: cardView,
             attribute: .leading,
             relatedBy: .equal,
-            toItem: cardsContainerView,
+            toItem: view,
             attribute: .leading,
             multiplier: 1,
             constant: cardInsets.left
@@ -460,15 +463,15 @@ extension ToolPageView {
             item: cardView,
             attribute: .trailing,
             relatedBy: .equal,
-            toItem: cardsContainerView,
+            toItem: view,
             attribute: .trailing,
             multiplier: 1,
             constant: cardInsets.right * -1
         )
         
-        cardsContainerView.addConstraint(top)
-        cardsContainerView.addConstraint(leading)
-        cardsContainerView.addConstraint(trailing)
+        view.addConstraint(top)
+        view.addConstraint(leading)
+        view.addConstraint(trailing)
         
         let heightConstraint: NSLayoutConstraint = NSLayoutConstraint(
             item: cardView,
@@ -530,7 +533,7 @@ extension ToolPageView {
             
             cards.append(cardView)
             
-            cardsContainerView.addSubview(cardView)
+            view.addSubview(cardView)
 
             cardView.translatesAutoresizingMaskIntoConstraints = false
             
@@ -538,7 +541,7 @@ extension ToolPageView {
                 item: cardView,
                 attribute: .top,
                 relatedBy: .equal,
-                toItem: cardsContainerView,
+                toItem: view,
                 attribute: .top,
                 multiplier: 1,
                 constant: cardInsets.top
@@ -548,7 +551,7 @@ extension ToolPageView {
                 item: cardView,
                 attribute: .leading,
                 relatedBy: .equal,
-                toItem: cardsContainerView,
+                toItem: view,
                 attribute: .leading,
                 multiplier: 1,
                 constant: cardInsets.left
@@ -558,15 +561,15 @@ extension ToolPageView {
                 item: cardView,
                 attribute: .trailing,
                 relatedBy: .equal,
-                toItem: cardsContainerView,
+                toItem: view,
                 attribute: .trailing,
                 multiplier: 1,
                 constant: cardInsets.right * -1
             )
             
-            cardsContainerView.addConstraint(top)
-            cardsContainerView.addConstraint(leading)
-            cardsContainerView.addConstraint(trailing)
+            view.addConstraint(top)
+            view.addConstraint(leading)
+            view.addConstraint(trailing)
             
             let heightConstraint: NSLayoutConstraint = NSLayoutConstraint(
                 item: cardView,
