@@ -11,34 +11,36 @@ import UIKit
 class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
     
     private let formNode: ContentFormNode
-    private let manifest: MobileContentXmlManifest
-    private let translationsFileCache: TranslationsFileCache
+    private let language: LanguageModel
     private let mobileContentAnalytics: MobileContentAnalytics
     private let mobileContentEvents: MobileContentEvents
     private let fontService: FontService
+    private let followUpsService: FollowUpsService
     private let toolPageColors: ToolPageColorsViewModel
     private let defaultTextNodeTextColor: UIColor?
     
     let contentViewModel: ToolPageContentStackViewModel
     
-    required init(formNode: ContentFormNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
+    required init(formNode: ContentFormNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, followUpsService: FollowUpsService, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
         
         self.formNode = formNode
-        self.manifest = manifest
-        self.translationsFileCache = translationsFileCache
+        self.language = language
         self.mobileContentAnalytics = mobileContentAnalytics
         self.mobileContentEvents = mobileContentEvents
         self.fontService = fontService
+        self.followUpsService = followUpsService
         self.toolPageColors = toolPageColors
         self.defaultTextNodeTextColor = defaultTextNodeTextColor
         
         contentViewModel = ToolPageContentStackViewModel(
             node: formNode,
             manifest: manifest,
+            language: language,
             translationsFileCache: translationsFileCache,
             mobileContentAnalytics: mobileContentAnalytics,
             mobileContentEvents: mobileContentEvents,
             fontService: fontService,
+            followUpsService: followUpsService,
             itemSpacing: 15,
             scrollIsEnabled: false,
             toolPageColors: toolPageColors,
@@ -68,6 +70,57 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
     }
     
     private func sendFollowUps() {
+        
         print("\n SEND FOLLOW UPS")
+        
+        var inputData: [AnyHashable: Any] = Dictionary()
+        
+        for hiddenInputNode in contentViewModel.hiddenInputNodes {
+            
+            let name: String? = hiddenInputNode.name
+            let value: String? = hiddenInputNode.value
+            
+            if let name = name, let value = value {
+                inputData[name] = value
+            }
+        }
+        
+        for inputViewModel in contentViewModel.inputViewModels {
+            
+            let name: String? = inputViewModel.inputNode.name
+            let value: String? = inputViewModel.inputValue
+            let inputIsRequired: Bool = inputViewModel.inputNode.required == "true"
+            let inputValueIsMissing: Bool = (inputViewModel.inputValue?.isEmpty) ?? true
+            
+            if let name = name, let value = value {
+                inputData[name] = value
+            }
+            
+            if inputIsRequired && inputValueIsMissing {
+                
+            }
+        }
+        
+        let name: String? = inputData["name"] as? String
+        let email: String? = inputData["email"] as? String
+        let destinationId: Int? = Int(inputData["destination_id"] as? String ?? "")
+        let languageId: Int? = Int(language.id)
+        
+        if let name = name, let email = email, let destinationId = destinationId, let languageId = languageId {
+            
+            let followUpModel = FollowUpModel(
+                name: name,
+                email: email,
+                destinationId: destinationId,
+                languageId: languageId
+            )
+            
+            followUpsService.postNewFollowUp(followUp: followUpModel)
+        }
+        else {
+            
+        }
+        
+        print("DONE")
     }
 }

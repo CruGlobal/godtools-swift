@@ -23,7 +23,9 @@ class ToolPageContentInputView: UIView {
         
         initializeNib()
         setupLayout()
-        setupBinding()        
+        setupBinding()
+        
+        inputTextField.addTarget(self, action: #selector(handleInputChanged(textField:)), for: .editingChanged)
     }
     
     required init?(coder: NSCoder) {
@@ -57,5 +59,9 @@ class ToolPageContentInputView: UIView {
         
         // inputTextField
         inputTextField.placeholder = viewModel.placeholder
+    }
+    
+    @objc func handleInputChanged(textField: UITextField) {
+        viewModel.inputChanged(text: textField.text)
     }
 }

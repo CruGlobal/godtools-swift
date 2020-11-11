@@ -12,10 +12,12 @@ class ToolPageContentTabsViewModel: ToolPageContentTabsViewModelType {
     
     private let tabsNode: ContentTabsNode
     private let manifest: MobileContentXmlManifest
+    private let language: LanguageModel
     private let translationsFileCache: TranslationsFileCache
     private let mobileContentAnalytics: MobileContentAnalytics
     private let mobileContentEvents: MobileContentEvents
     private let fontService: FontService
+    private let followUpsService: FollowUpsService
     private let toolPageColors: ToolPageColorsViewModel
     private let defaultTextNodeTextColor: UIColor?
     private let tabNodes: [ContentTabNode]
@@ -24,14 +26,16 @@ class ToolPageContentTabsViewModel: ToolPageContentTabsViewModelType {
     let selectedTab: ObservableValue<Int> = ObservableValue(value: 0)
     let tabContent: ObservableValue<ToolPageContentStackViewModel?> = ObservableValue(value: nil)
     
-    required init(tabsNode: ContentTabsNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
+    required init(tabsNode: ContentTabsNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, followUpsService: FollowUpsService, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
         
         self.tabsNode = tabsNode
         self.manifest = manifest
+        self.language = language
         self.translationsFileCache = translationsFileCache
         self.mobileContentAnalytics = mobileContentAnalytics
         self.mobileContentEvents = mobileContentEvents
         self.fontService = fontService
+        self.followUpsService = followUpsService
         self.toolPageColors = toolPageColors
         self.defaultTextNodeTextColor = defaultTextNodeTextColor
         self.tabNodes = tabsNode.children as? [ContentTabNode] ?? []
@@ -73,10 +77,12 @@ class ToolPageContentTabsViewModel: ToolPageContentTabsViewModelType {
         return ToolPageContentStackViewModel(
             node: tabNodeChildrenToRender,
             manifest: manifest,
+            language: language,
             translationsFileCache: translationsFileCache,
             mobileContentAnalytics: mobileContentAnalytics,
             mobileContentEvents: mobileContentEvents,
             fontService: fontService,
+            followUpsService: followUpsService,
             itemSpacing: 10,
             scrollIsEnabled: false,
             toolPageColors: toolPageColors,

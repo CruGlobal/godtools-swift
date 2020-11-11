@@ -17,10 +17,12 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         
     private let pageNode: PageNode
     private let manifest: MobileContentXmlManifest
+    private let language: LanguageModel
     private let translationsFileCache: TranslationsFileCache
     private let mobileContentAnalytics: MobileContentAnalytics
     private let mobileContentEvents: MobileContentEvents
     private let fontService: FontService
+    private let followUpsService: FollowUpsService
     private let localizationServices: LocalizationServices
     private let toolPageColors: ToolPageColorsViewModel
         
@@ -40,17 +42,19 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     let hiddenCard: ObservableValue<ToolPageCardViewModel?> = ObservableValue(value: nil)
     let callToActionViewModel: ToolPageCallToActionViewModel
     
-    required init(delegate: ToolPageViewModelDelegate, pageNode: PageNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, localizationServices: LocalizationServices, page: Int) {
+    required init(delegate: ToolPageViewModelDelegate, pageNode: PageNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, page: Int) {
                 
         let isLastPage: Bool = page >= manifest.pages.count - 1
         
         self.delegate = delegate
         self.pageNode = pageNode
         self.manifest = manifest
+        self.language = language
         self.translationsFileCache = translationsFileCache
         self.mobileContentAnalytics = mobileContentAnalytics
         self.mobileContentEvents = mobileContentEvents
         self.fontService = fontService
+        self.followUpsService = followUpsService
         self.localizationServices = localizationServices
         self.toolPageColors = ToolPageColorsViewModel(pageNode: pageNode, manifest: manifest)
         
@@ -72,10 +76,12 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
             contentStackViewModel = ToolPageContentStackViewModel(
                 node: pageNode,
                 manifest: manifest,
+                language: language,
                 translationsFileCache: translationsFileCache,
                 mobileContentAnalytics: mobileContentAnalytics,
                 mobileContentEvents: mobileContentEvents,
                 fontService: fontService,
+                followUpsService: followUpsService,
                 itemSpacing: 20,
                 scrollIsEnabled: true,
                 toolPageColors: toolPageColors,
@@ -100,10 +106,12 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
             heroViewModel = ToolPageContentStackViewModel(
                 node: heroNode,
                 manifest: manifest,
+                language: language,
                 translationsFileCache: translationsFileCache,
                 mobileContentAnalytics: mobileContentAnalytics,
                 mobileContentEvents: mobileContentEvents,
                 fontService: fontService,
+                followUpsService: followUpsService,
                 itemSpacing: 20,
                 scrollIsEnabled: true,
                 toolPageColors: toolPageColors,
@@ -150,10 +158,12 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
                 delegate: self,
                 cardNode: visibleCardNode,
                 manifest: manifest,
+                language: language,
                 translationsFileCache: translationsFileCache,
                 mobileContentAnalytics: mobileContentAnalytics,
                 mobileContentEvents: mobileContentEvents,
                 fontService: fontService,
+                followUpsService: followUpsService,
                 localizationServices: localizationServices,
                 cardPosition: visibleCardIndex,
                 totalCards: visibleCards.count,
@@ -171,10 +181,12 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
                 delegate: self,
                 cardNode: hiddenCardNode,
                 manifest: manifest,
+                language: language,
                 translationsFileCache: translationsFileCache,
                 mobileContentAnalytics: mobileContentAnalytics,
                 mobileContentEvents: mobileContentEvents,
                 fontService: fontService,
+                followUpsService: followUpsService,
                 localizationServices: localizationServices,
                 cardPosition: hiddenCardIndex,
                 totalCards: hiddenCards.count,

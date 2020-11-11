@@ -10,11 +10,13 @@ import UIKit
 
 class ToolPageContentInputViewModel: ToolPageContentInputViewModelType {
     
-    private let inputNode: ContentInputNode
     private let fontService: FontService
     private let toolPageColors: ToolPageColorsViewModel
     private let defaultTextNodeTextColor: UIColor?
     
+    private(set) var inputValue: String?
+    
+    let inputNode: ContentInputNode
     let inputLabel: String?
     let placeholder: String?
     
@@ -27,5 +29,9 @@ class ToolPageContentInputViewModel: ToolPageContentInputViewModelType {
         
         inputLabel = inputNode.labelNode?.textNode?.text
         placeholder = inputNode.placeholderNode?.textNode?.text
+    }
+    
+    func inputChanged(text: String?) {
+        inputValue = text
     }
 }

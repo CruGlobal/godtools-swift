@@ -10,6 +10,10 @@ import UIKit
 
 protocol ToolPageContentInputViewModelType {
     
+    var inputNode: ContentInputNode { get }
     var inputLabel: String? { get }
     var placeholder: String? { get }
+    var inputValue: String? { get }
+    
+    func inputChanged(text: String?)
 }

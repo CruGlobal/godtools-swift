@@ -22,9 +22,6 @@ protocol ToolPageCardViewModelDelegate: class {
 class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     
     private let cardNode: CardNode
-    private let manifest: MobileContentXmlManifest
-    private let translationsFileCache: TranslationsFileCache
-    private let mobileContentAnalytics: MobileContentAnalytics
     private let mobileContentEvents: MobileContentEvents
     private let fontService: FontService
     private let localizationServices: LocalizationServices
@@ -38,15 +35,12 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     let isHiddenCard: Bool
     let hidesCardNavigation: Bool
     
-    required init(delegate: ToolPageCardViewModelDelegate, cardNode: CardNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, localizationServices: LocalizationServices, cardPosition: Int, totalCards: Int, toolPageColors: ToolPageColorsViewModel) {
+    required init(delegate: ToolPageCardViewModelDelegate, cardNode: CardNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, cardPosition: Int, totalCards: Int, toolPageColors: ToolPageColorsViewModel) {
         
         let isHiddenCard: Bool = cardNode.hidden == "true"
         
         self.delegate = delegate
         self.cardNode = cardNode
-        self.manifest = manifest
-        self.translationsFileCache = translationsFileCache
-        self.mobileContentAnalytics = mobileContentAnalytics
         self.mobileContentEvents = mobileContentEvents
         self.fontService = fontService
         self.localizationServices = localizationServices
@@ -57,10 +51,12 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
         contentStackViewModel = ToolPageContentStackViewModel(
             node: cardNode,
             manifest: manifest,
+            language: language,
             translationsFileCache: translationsFileCache,
             mobileContentAnalytics: mobileContentAnalytics,
             mobileContentEvents: mobileContentEvents,
             fontService: fontService,
+            followUpsService: followUpsService,
             itemSpacing: 20,
             scrollIsEnabled: true,
             toolPageColors: toolPageColors,

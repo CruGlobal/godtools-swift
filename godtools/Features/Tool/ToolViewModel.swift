@@ -451,10 +451,12 @@ class ToolViewModel: NSObject, ToolViewModelType {
                 delegate: self,
                 pageNode: pageNode,
                 manifest: primaryTranslationManifest,
+                language: primaryLanguage,
                 translationsFileCache: translationsFileCache,
                 mobileContentAnalytics: mobileContentAnalytics,
                 mobileContentEvents: mobileContentEvents,
                 fontService: fontService,
+                followUpsService: followUpsService,
                 localizationServices: localizationServices,
                 page: page
             )

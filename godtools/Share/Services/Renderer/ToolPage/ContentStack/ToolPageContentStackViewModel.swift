@@ -14,27 +14,34 @@ class ToolPageContentStackViewModel {
     
     private let node: MobileContentXmlNode
     private let manifest: MobileContentXmlManifest
+    private let language: LanguageModel
     private let translationsFileCache: TranslationsFileCache
     private let mobileContentAnalytics: MobileContentAnalytics
     private let mobileContentEvents: MobileContentEvents
     private let fontService: FontService
+    private let followUpsService: FollowUpsService
     private let toolPageColors: ToolPageColorsViewModel
     private let defaultTextNodeTextColor: UIColor?
     
     private var buttonEvents: [UIButton: ContentButtonNode] = Dictionary()
     private var linkEvents: [UIButton: ContentLinkNode] = Dictionary()
+    
+    private(set) var hiddenInputNodes: [ContentInputNode] = Array()
+    private(set) var inputViewModels: [ToolPageContentInputViewModelType] = Array()
             
     let itemSpacing: CGFloat
     let scrollIsEnabled: Bool
     
-    required init(node: MobileContentXmlNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, itemSpacing: CGFloat, scrollIsEnabled: Bool, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
+    required init(node: MobileContentXmlNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, followUpsService: FollowUpsService, itemSpacing: CGFloat, scrollIsEnabled: Bool, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
         
         self.node = node
         self.manifest = manifest
+        self.language = language
         self.translationsFileCache = translationsFileCache
         self.mobileContentAnalytics = mobileContentAnalytics
         self.mobileContentEvents = mobileContentEvents
         self.fontService = fontService
+        self.followUpsService = followUpsService
         self.itemSpacing = itemSpacing
         self.scrollIsEnabled = scrollIsEnabled
         self.toolPageColors = toolPageColors
@@ -132,6 +139,7 @@ class ToolPageContentStackViewModel {
         else if let inputNode = node as? ContentInputNode {
             
             guard inputNode.type != "hidden" else {
+                hiddenInputNodes.append(inputNode)
                 return nil
             }
             
@@ -156,10 +164,12 @@ class ToolPageContentStackViewModel {
         let viewModel = ToolPageContentStackViewModel(
             node: paragraphNode,
             manifest: manifest,
+            language: language,
             translationsFileCache: translationsFileCache,
             mobileContentAnalytics: mobileContentAnalytics,
             mobileContentEvents: mobileContentEvents,
             fontService: fontService,
+            followUpsService: followUpsService,
             itemSpacing: 5,
             scrollIsEnabled: false,
             toolPageColors: toolPageColors,
@@ -258,10 +268,12 @@ class ToolPageContentStackViewModel {
         let viewModel = ToolPageContentTabsViewModel(
             tabsNode: tabsNode,
             manifest: manifest,
+            language: language,
             translationsFileCache: translationsFileCache,
             mobileContentAnalytics: mobileContentAnalytics,
             mobileContentEvents: mobileContentEvents,
             fontService: fontService,
+            followUpsService: followUpsService,
             toolPageColors: toolPageColors,
             defaultTextNodeTextColor: defaultTextNodeTextColor
         )
@@ -280,6 +292,8 @@ class ToolPageContentStackViewModel {
             defaultTextNodeTextColor: defaultTextNodeTextColor
         )
         
+        inputViewModels.append(viewModel)
+        
         let view = ToolPageContentInputView(viewModel: viewModel)
         
         return view
@@ -290,10 +304,12 @@ class ToolPageContentStackViewModel {
         let viewModel = ToolPageContentFormViewModel(
             formNode: formNode,
             manifest: manifest,
+            language: language,
             translationsFileCache: translationsFileCache,
             mobileContentAnalytics: mobileContentAnalytics,
             mobileContentEvents: mobileContentEvents,
             fontService: fontService,
+            followUpsService: followUpsService,
             toolPageColors: toolPageColors,
             defaultTextNodeTextColor: defaultTextNodeTextColor
         )

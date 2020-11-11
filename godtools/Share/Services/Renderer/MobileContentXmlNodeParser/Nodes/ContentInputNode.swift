@@ -15,6 +15,7 @@ class ContentInputNode: MobileContentXmlNode {
     private(set) var placeholderNode: ContentPlaceholderNode?
     
     let name: String?
+    let required: String?
     let type: String?
     let value: String?
     
@@ -23,6 +24,7 @@ class ContentInputNode: MobileContentXmlNode {
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
         name = attributes["name"]?.text
+        required = attributes["required"]?.text
         type = attributes["type"]?.text
         value = attributes["value"]?.text
         
