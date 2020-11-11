@@ -6,8 +6,10 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol ToolPageContentInputViewModelType {
     
+    var inputLabel: String? { get }
+    var placeholder: String? { get }
 }

@@ -150,8 +150,6 @@ class ToolPageView: UIViewController {
             
             heroContainerView.layoutIfNeeded()
             view.layoutIfNeeded()
-            
-            heroView.log()
         }
         else {
             heroContainerView.isHidden = true

@@ -45,22 +45,24 @@ class ToolPageContentStackViewModel {
         print("x deinit: \(type(of: self))")
     }
     
-    func render(didRenderView: ((_ view: UIView) -> Void)) {
+    func render(didRenderView: ((_ mobileContentView: MobileContentView) -> Void)) {
         
         for childNode in node.children {
-            if let renderedView = recurseAndRender(node: childNode) {
-                didRenderView(renderedView)
+            if let renderedMobileContentView = recurseAndRender(node: childNode) {
+                didRenderView(renderedMobileContentView)
             }
         }
     }
     
-    private func recurseAndRender(node: MobileContentXmlNode) -> UIView? {
+    private func recurseAndRender(node: MobileContentXmlNode) -> MobileContentView? {
         
         if let paragraphNode = node as? ContentParagraphNode {
             
-            let contentStackView: ToolPageContentStackView = getContentParagraph(paragraphNode: paragraphNode)
+            let contentStackView: ToolPageContentStackView = getContentParagraph(
+                paragraphNode: paragraphNode
+            )
                         
-            return contentStackView
+            return MobileContentView(view: contentStackView, heightConstraintType: .constrainedToChildren)
         }
         else if let textNode = node as? ContentTextNode {
             
@@ -71,13 +73,17 @@ class ToolPageContentStackViewModel {
                 textColor: textNode.getTextColor()?.color ?? defaultTextNodeTextColor ?? toolPageColors.textColor
             )
                         
-            return textLabel
+            return MobileContentView(view: textLabel, heightConstraintType: .intrinsic)
         }
         else if let imageNode = node as? ContentImageNode {
             
             let imageView: UIImageView? = getContentImage(imageNode: imageNode)
             
-            return imageView
+            guard let view = imageView, let imageSize = imageView?.image?.size else {
+                return nil
+            }
+            
+            return MobileContentView(view: view, heightConstraintType: .setToAspectRatioOfProvidedSize(size: imageSize))
         }
         else if let buttonNode = node as? ContentButtonNode {
             
@@ -91,7 +97,7 @@ class ToolPageContentStackViewModel {
             
             addButtonEvent(button: button, buttonNode: buttonNode)
                         
-            return button
+            return MobileContentView(view: button, heightConstraintType: .equalToFrame)
         }
         else if let linkNode = node as? ContentLinkNode {
             
@@ -104,7 +110,7 @@ class ToolPageContentStackViewModel {
             
             addLinkEvent(button: button, linkNode: linkNode)
                         
-            return button
+            return MobileContentView(view: button, heightConstraintType: .equalToFrame)
         }
         else if let headingNode = node as? HeadingNode, let headingTextNode = headingNode.textNode {
             
@@ -115,19 +121,29 @@ class ToolPageContentStackViewModel {
                 textColor: headingNode.textNode?.getTextColor()?.color ?? toolPageColors.primaryColor
             )
                         
-            return textLabel
+            return MobileContentView(view: textLabel, heightConstraintType: .intrinsic)
         }
         else if let tabsNode = node as? ContentTabsNode {
             
-            return getContentTabs(tabsNode: tabsNode)
+            let tabs: ToolPageContentTabsView = getContentTabs(tabsNode: tabsNode)
+            
+            return MobileContentView(view: tabs, heightConstraintType: .constrainedToChildren)
         }
         else if let inputNode = node as? ContentInputNode {
             
-            return getContentInput(inputNode: inputNode)
+            guard inputNode.type != "hidden" else {
+                return nil
+            }
+            
+            let input: ToolPageContentInputView = getContentInput(inputNode: inputNode)
+            
+            return MobileContentView(view: input, heightConstraintType: .constrainedToChildren)
         }
         else if let formNode = node as? ContentFormNode {
             
-            return getContentForm(formNode: formNode)
+            let form: ToolPageContentFormView = getContentForm(formNode: formNode)
+            
+            return MobileContentView(view: form, heightConstraintType: .constrainedToChildren)
         }
         
         return nil

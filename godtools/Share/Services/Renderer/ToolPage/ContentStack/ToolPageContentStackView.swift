@@ -29,8 +29,8 @@ class ToolPageContentStackView: UIView {
         contentView.backgroundColor = .clear
         scrollView?.backgroundColor = .clear
         
-        viewModel.render { [weak self] (view: UIView) in
-            self?.addContentView(view: view)
+        viewModel.render { [weak self] (mobileContentView: MobileContentView) in
+            self?.addContentView(mobileContentView: mobileContentView)
         }
     }
     
@@ -40,25 +40,6 @@ class ToolPageContentStackView: UIView {
     
     deinit {
         print("x deinit: \(type(of: self))")
-    }
-    
-    func log() {
-        
-        print("\nToolPageContentStackView: log()")
-        print("  bounds: \(bounds)")
-        print("  frame: \(frame)")
-        print("  scrollView.bounds: \(String(describing: scrollView?.bounds))")
-        print("  scrollView.frame: \(String(describing: scrollView?.frame))")
-        print("  contentView.bounds: \(contentView.bounds)")
-        print("  contentView.frame: \(contentView.frame)")
-        print("    content views: ")
-        var index: Int = 0
-        for subview in contentView.subviews {
-            print("    position: \(index)")
-            print("      subview.bounds: \(subview.bounds)")
-            print("      subview.frame: \(subview.frame)")
-            index += 1
-        }
     }
     
     var isEmpty: Bool {
@@ -88,64 +69,29 @@ class ToolPageContentStackView: UIView {
         return false
     }
     
-    func addContentView(view: UIView) {
+    func addContentView(mobileContentView: MobileContentView) {
              
-        if let lastAddedBottomConstraint = self.lastAddedBottomConstraint {
-            contentView.removeConstraint(lastAddedBottomConstraint)
-        }
-        
-        contentView.addSubview(view)
-        
-        view.translatesAutoresizingMaskIntoConstraints = false
-                
-        if view is UILabel {
-             // Do nothing because view is instrinsic and we use the intrinsic content size.
-        }
-        else if let stackView = view as? ToolPageContentStackView {
-            
+        if let stackView = mobileContentView.view as? ToolPageContentStackView {
             let scrollIsEnabled: Bool = stackView.scrollView?.isScrollEnabled ?? false
             if scrollIsEnabled {
                 assertionFailure("\n ToolPageContentStackView: addContentView() Failed to add stackView because scrollIsEnabled is set to true.  Adding stackViews within stackViews scrolling should not be enabled on child stackViews.")
             }
-                        
-            let heightConstraint: NSLayoutConstraint = NSLayoutConstraint(
-                item: stackView,
-                attribute: .height,
-                relatedBy: .equal,
-                toItem: nil,
-                attribute: .notAnAttribute,
-                multiplier: 1,
-                constant: view.frame.size.height
-            )
-            
-            heightConstraint.priority = UILayoutPriority(500)
-            
-            stackView.addConstraint(heightConstraint)
         }
-        else if let imageView = view as? UIImageView {
-            
-            let imageSize: CGSize = imageView.image?.size ?? CGSize(width: contentView.bounds.size.width, height: contentView.bounds.size.width)
-            
-            let aspectRatio: NSLayoutConstraint = NSLayoutConstraint(
-                item: imageView,
-                attribute: .height,
-                relatedBy: .equal,
-                toItem: imageView,
-                attribute: .width,
-                multiplier: imageSize.height / imageSize.width,
-                constant: 0
-            )
-            
-            imageView.addConstraint(aspectRatio)
+        
+        if let lastAddedBottomConstraint = self.lastAddedBottomConstraint {
+            contentView.removeConstraint(lastAddedBottomConstraint)
         }
-        else if view is ToolPageContentTabsView || view is ToolPageContentInputView || view is ToolPageContentFormView || view is ToolPageModalView {
+                
+        contentView.addSubview(mobileContentView.view)
+        
+        mobileContentView.view.translatesAutoresizingMaskIntoConstraints = false
+           
+        switch mobileContentView.heightConstraintType {
             
-            // TODO: ~Levi
-            //  Maybe we can replace the passed in UIView with a protocol that defines how the view is added to the content stack.
-            //  We wouldn't need to check against types because the protocol would provide it.
+        case .constrainedToChildren:
             
             let heightConstraint: NSLayoutConstraint = NSLayoutConstraint(
-                item: view,
+                item: mobileContentView.view,
                 attribute: .height,
                 relatedBy: .equal,
                 toItem: nil,
@@ -156,27 +102,45 @@ class ToolPageContentStackView: UIView {
             
             heightConstraint.priority = UILayoutPriority(500)
             
-            view.addConstraint(heightConstraint)
-        }
-        else {
+            mobileContentView.view.addConstraint(heightConstraint)
+            
+        case .equalToFrame:
             
             let heightConstraint: NSLayoutConstraint = NSLayoutConstraint(
-                item: view,
+                item: mobileContentView.view,
                 attribute: .height,
                 relatedBy: .equal,
                 toItem: nil,
                 attribute: .notAnAttribute,
                 multiplier: 1,
-                constant: view.frame.size.height
+                constant: mobileContentView.view.frame.size.height
             )
             
             heightConstraint.priority = UILayoutPriority(1000)
             
-            view.addConstraint(heightConstraint)
+            mobileContentView.view.addConstraint(heightConstraint)
+            
+        case .intrinsic:
+            // Do nothing because view is instrinsic and we use the intrinsic content size.
+            break
+            
+        case .setToAspectRatioOfProvidedSize(let size):
+                        
+            let aspectRatio: NSLayoutConstraint = NSLayoutConstraint(
+                item: mobileContentView.view,
+                attribute: .height,
+                relatedBy: .equal,
+                toItem: mobileContentView.view,
+                attribute: .width,
+                multiplier: size.height / size.width,
+                constant: 0
+            )
+            
+            mobileContentView.view.addConstraint(aspectRatio)
         }
         
         let leading: NSLayoutConstraint = NSLayoutConstraint(
-            item: view,
+            item: mobileContentView.view,
             attribute: .leading,
             relatedBy: .equal,
             toItem: contentView,
@@ -186,7 +150,7 @@ class ToolPageContentStackView: UIView {
         )
         
         let trailing: NSLayoutConstraint = NSLayoutConstraint(
-            item: view,
+            item: mobileContentView.view,
             attribute: .trailing,
             relatedBy: .equal,
             toItem: contentView,
@@ -196,7 +160,7 @@ class ToolPageContentStackView: UIView {
         )
         
         let bottom: NSLayoutConstraint = NSLayoutConstraint(
-            item: view,
+            item: mobileContentView.view,
             attribute: .bottom,
             relatedBy: .equal,
             toItem: contentView,
@@ -210,7 +174,7 @@ class ToolPageContentStackView: UIView {
         if let lastView = lastAddedView {
             
             top = NSLayoutConstraint(
-                item: view,
+                item: mobileContentView.view,
                 attribute: .top,
                 relatedBy: .equal,
                 toItem: lastView,
@@ -222,7 +186,7 @@ class ToolPageContentStackView: UIView {
         else {
             
             top = NSLayoutConstraint(
-                item: view,
+                item: mobileContentView.view,
                 attribute: .top,
                 relatedBy: .equal,
                 toItem: contentView,
@@ -237,7 +201,7 @@ class ToolPageContentStackView: UIView {
         contentView.addConstraint(bottom)
         contentView.addConstraint(top)
         
-        lastAddedView = view
+        lastAddedView = mobileContentView.view
         lastAddedBottomConstraint = bottom
     }
 }

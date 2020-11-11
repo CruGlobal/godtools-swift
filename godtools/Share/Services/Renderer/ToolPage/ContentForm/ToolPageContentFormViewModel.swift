@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ToolPageContentFormViewModel: ToolPageContentFormViewModelType {
+class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
     
     private let formNode: ContentFormNode
     private let manifest: MobileContentXmlManifest
@@ -44,5 +44,30 @@ class ToolPageContentFormViewModel: ToolPageContentFormViewModelType {
             toolPageColors: toolPageColors,
             defaultTextNodeTextColor: defaultTextNodeTextColor
         )
+        
+        super.init()
+        
+        addObservers()
+    }
+    
+    deinit {
+        removeObservers()
+    }
+    
+    private func addObservers() {
+        
+        mobileContentEvents.eventButtonTappedSignal.addObserver(self) { [weak self] (buttonEvent: ButtonEvent) in
+            if buttonEvent.event == "followup:send" {
+                self?.sendFollowUps()
+            }
+        }
+    }
+    
+    private func removeObservers() {
+        mobileContentEvents.eventButtonTappedSignal.removeObserver(self)
+    }
+    
+    private func sendFollowUps() {
+        print("\n SEND FOLLOW UPS")
     }
 }

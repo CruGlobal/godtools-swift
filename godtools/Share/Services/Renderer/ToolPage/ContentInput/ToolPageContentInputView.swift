@@ -52,5 +52,10 @@ class ToolPageContentInputView: UIView {
     
     private func setupBinding() {
         
+        // inputLabel
+        inputLabel.text = viewModel.inputLabel
+        
+        // inputTextField
+        inputTextField.placeholder = viewModel.placeholder
     }
 }

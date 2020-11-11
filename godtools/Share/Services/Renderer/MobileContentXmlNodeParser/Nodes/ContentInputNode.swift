@@ -11,6 +11,9 @@ import SWXMLHash
 
 class ContentInputNode: MobileContentXmlNode {
         
+    private(set) var labelNode: ContentLabelNode?
+    private(set) var placeholderNode: ContentPlaceholderNode?
+    
     let name: String?
     let type: String?
     let value: String?
@@ -24,5 +27,17 @@ class ContentInputNode: MobileContentXmlNode {
         value = attributes["value"]?.text
         
         super.init(xmlElement: xmlElement)
+    }
+    
+    override func addChild(childNode: MobileContentXmlNode) {
+        
+        if let labelNode = childNode as? ContentLabelNode {
+            self.labelNode = labelNode
+        }
+        else if let placeholderNode = childNode as? ContentPlaceholderNode {
+            self.placeholderNode = placeholderNode
+        }
+        
+        super.addChild(childNode: childNode)
     }
 }
