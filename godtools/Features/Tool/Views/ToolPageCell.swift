@@ -34,9 +34,9 @@ class ToolPageCell: UICollectionViewCell {
         toolPage = nil
     }
     
-    func configure(viewModel: ToolPageViewModelType) {
+    func configure(viewModel: ToolPageViewModelType, safeAreaInsets: UIEdgeInsets) {
         
-        let toolPage: ToolPageView = ToolPageView(viewModel: viewModel)
+        let toolPage: ToolPageView = ToolPageView(viewModel: viewModel, safeAreaInsets: safeAreaInsets)
         contentView.addSubview(toolPage.view)
         toolPage.view.constrainEdgesToSuperview()
                 

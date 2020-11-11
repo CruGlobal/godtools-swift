@@ -21,7 +21,7 @@ class ToolPageContentStackView: UIView {
                 
         self.viewModel = viewModel
         
-        super.init(frame: .zero)
+        super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: viewModel.itemSpacing))
         
         setupConstraints(scrollIsEnabled: viewModel.scrollIsEnabled)
                 
@@ -40,6 +40,29 @@ class ToolPageContentStackView: UIView {
     
     deinit {
         print("x deinit: \(type(of: self))")
+    }
+    
+    func log() {
+        
+        print("\nToolPageContentStackView: log()")
+        print("  bounds: \(bounds)")
+        print("  frame: \(frame)")
+        print("  scrollView.bounds: \(String(describing: scrollView?.bounds))")
+        print("  scrollView.frame: \(String(describing: scrollView?.frame))")
+        print("  contentView.bounds: \(contentView.bounds)")
+        print("  contentView.frame: \(contentView.frame)")
+        print("    content views: ")
+        var index: Int = 0
+        for subview in contentView.subviews {
+            print("    position: \(index)")
+            print("      subview.bounds: \(subview.bounds)")
+            print("      subview.frame: \(subview.frame)")
+            index += 1
+        }
+    }
+    
+    var isEmpty: Bool {
+        return contentView.subviews.isEmpty
     }
     
     func setContentInset(contentInset: UIEdgeInsets) {
@@ -66,7 +89,7 @@ class ToolPageContentStackView: UIView {
     }
     
     func addContentView(view: UIView) {
-               
+             
         if let lastAddedBottomConstraint = self.lastAddedBottomConstraint {
             contentView.removeConstraint(lastAddedBottomConstraint)
         }
@@ -84,7 +107,7 @@ class ToolPageContentStackView: UIView {
             if scrollIsEnabled {
                 assertionFailure("\n ToolPageContentStackView: addContentView() Failed to add stackView because scrollIsEnabled is set to true.  Adding stackViews within stackViews scrolling should not be enabled on child stackViews.")
             }
-            
+                        
             let heightConstraint: NSLayoutConstraint = NSLayoutConstraint(
                 item: stackView,
                 attribute: .height,

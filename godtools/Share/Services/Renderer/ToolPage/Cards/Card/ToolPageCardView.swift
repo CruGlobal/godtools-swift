@@ -132,7 +132,7 @@ class ToolPageCardView: UIView {
     }
     
     var titleHeight: CGFloat {
-        return titleSeparatorLine.frame.origin.y
+        return 50//titleSeparatorLine.frame.origin.y
     }
     
     @objc func handleHeader(button: UIButton) {

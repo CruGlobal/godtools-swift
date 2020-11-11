@@ -32,7 +32,6 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     
     let backgroundColor: UIColor
     let backgroundImage: UIImage?
-    let hidesBackgroundImage: Bool
     let contentStackViewModel: ToolPageContentStackViewModel?
     let headerViewModel: ToolPageHeaderViewModel
     let heroViewModel: ToolPageContentStackViewModel?
@@ -41,8 +40,10 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     let hiddenCard: ObservableValue<ToolPageCardViewModel?> = ObservableValue(value: nil)
     let callToActionViewModel: ToolPageCallToActionViewModel
     
-    required init(delegate: ToolPageViewModelDelegate, pageNode: PageNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, localizationServices: LocalizationServices, hidesBackgroundImage: Bool) {
+    required init(delegate: ToolPageViewModelDelegate, pageNode: PageNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, localizationServices: LocalizationServices, page: Int) {
                 
+        let isLastPage: Bool = page >= manifest.pages.count - 1
+        
         self.delegate = delegate
         self.pageNode = pageNode
         self.manifest = manifest
@@ -52,13 +53,11 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         self.fontService = fontService
         self.localizationServices = localizationServices
         self.toolPageColors = ToolPageColorsViewModel(pageNode: pageNode, manifest: manifest)
-        self.hidesBackgroundImage = hidesBackgroundImage
         
         backgroundColor = toolPageColors.backgroundColor
         
         // background image
-        if !hidesBackgroundImage, let backgroundResource = pageNode.backgroundImage, let backgroundSrc = manifest.resources[backgroundResource]?.src {
-            
+        if let backgroundResource = pageNode.backgroundImage, let backgroundSrc = manifest.resources[backgroundResource]?.src {
             backgroundImage = translationsFileCache.getImage(location: SHA256FileLocation(sha256WithPathExtension: backgroundSrc))
         }
         else {
@@ -119,7 +118,8 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         callToActionViewModel = ToolPageCallToActionViewModel(
             pageNode: pageNode,
             toolPageColors: toolPageColors,
-            fontService: fontService
+            fontService: fontService,
+            isLastPage: isLastPage
         )
         
         // cards

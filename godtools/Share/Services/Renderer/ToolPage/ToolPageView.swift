@@ -11,6 +11,7 @@ import UIKit
 class ToolPageView: UIViewController {
     
     private let viewModel: ToolPageViewModelType
+    private let safeAreaInsets: UIEdgeInsets
     private let panGestureToControlPageCollectionViewPanningSensitivity: UIPanGestureRecognizer = UIPanGestureRecognizer()
     
     private var contentStackView: ToolPageContentStackView?
@@ -33,12 +34,16 @@ class ToolPageView: UIViewController {
     @IBOutlet weak private var callToActionTitleLabel: UILabel!
     @IBOutlet weak private var callToActionNextButton: UIButton!
     
+    @IBOutlet weak private var topInsetTopConstraint: NSLayoutConstraint!
     @IBOutlet weak private var headerTop: NSLayoutConstraint!
+    @IBOutlet weak private var heroTop: NSLayoutConstraint!
     @IBOutlet weak private var heroHeight: NSLayoutConstraint!
     @IBOutlet weak private var callToActionBottom: NSLayoutConstraint!
+    @IBOutlet weak private var bottomInsetBottomConstraint: NSLayoutConstraint!
     
-    required init(viewModel: ToolPageViewModelType) {
+    required init(viewModel: ToolPageViewModelType, safeAreaInsets: UIEdgeInsets) {
         self.viewModel = viewModel
+        self.safeAreaInsets = safeAreaInsets
         super.init(nibName: String(describing: ToolPageView.self), bundle: nil)
     }
     
@@ -53,7 +58,7 @@ class ToolPageView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print("view didload: \(type(of: self))")
-                
+        
         setupLayout()
         setupBinding()
         
@@ -71,6 +76,10 @@ class ToolPageView: UIViewController {
         }
         didLayoutSubviews = true
         
+        let hidesHeader: Bool = viewModel.headerViewModel.hidesHeader
+        let hidesCards: Bool = viewModel.cardsViewModels.isEmpty
+        let hidesCallToAction: Bool = viewModel.callToActionViewModel.hidesCallToAction
+        
         // contentStack
         if let contentStackViewModel = viewModel.contentStackViewModel {
             let contentStackView: ToolPageContentStackView = ToolPageContentStackView(viewModel: contentStackViewModel)
@@ -84,25 +93,9 @@ class ToolPageView: UIViewController {
             contentStackContainerView.isHidden = true
         }
         
-        // hero
-        if let heroViewModel = viewModel.heroViewModel {
-            let heroView: ToolPageContentStackView = ToolPageContentStackView(viewModel: heroViewModel)
-            heroContainerView.addSubview(heroView)
-            heroView.constrainEdgesToSuperview()
-            heroContainerView.isHidden = false
-            heroHeight.constant = view.frame.size.height
-            heroContainerView.layoutIfNeeded()
-            self.heroView = heroView
-            view.layoutIfNeeded()
-        }
-        else {
-            heroContainerView.isHidden = true
-        }
-        
-        setHeaderHidden(hidden: viewModel.headerViewModel.hidesHeader, animated: false)
-        setCallToActionHidden(hidden: viewModel.callToActionViewModel.hidesCallToAction, animated: false)
-        setHeroTopContentInset(hidesHeader: viewModel.headerViewModel.hidesHeader)
-        
+        setHeaderHidden(hidden: hidesHeader, animated: false)
+        setCallToActionHidden(hidden: hidesCallToAction, animated: false)
+                
         //cards
         if !viewModel.cardsViewModels.isEmpty {
                         
@@ -126,21 +119,64 @@ class ToolPageView: UIViewController {
                 self?.hideHiddenCard(animated: true)
             }
         }
+        
+        // hero top and height
+        if let heroViewModel = viewModel.heroViewModel {
+            
+            let topInset: CGFloat = 15
+            let bottomInset: CGFloat = 15
+            let screenHeight: CGFloat = UIScreen.main.bounds.size.height
+            let headerHeight: CGFloat = hidesHeader ? 0 : headerView.frame.size.height
+            let maximumHeight: CGFloat = screenHeight - safeAreaInsets.top - safeAreaInsets.bottom - headerHeight - topInset - bottomInset
+            
+            if hidesCards && hidesCallToAction {
+                heroHeight.constant = maximumHeight
+            }
+            else if hidesCards && !hidesCallToAction {
+                heroHeight.constant = maximumHeight - callToActionView.frame.size.height
+            }
+            else if !hidesCards {
+                let cardCount: CGFloat =  CGFloat(viewModel.cardsViewModels.count)
+                let cardTitleHeight: CGFloat = cards.first?.titleHeight ?? 50
+                heroHeight.constant = maximumHeight - (cardCount * cardTitleHeight)
+            }
+                         
+            heroTop.constant = headerHeight + topInset
+                                    
+            let heroView: ToolPageContentStackView = ToolPageContentStackView(viewModel: heroViewModel)
+            heroContainerView.addSubview(heroView)
+            heroView.constrainEdgesToSuperview()
+            heroContainerView.isHidden = false
+            self.heroView = heroView
+            
+            heroContainerView.layoutIfNeeded()
+            view.layoutIfNeeded()
+            
+            heroView.log()
+        }
+        else {
+            heroContainerView.isHidden = true
+        }
     }
     
     private func setupLayout() {
         
+        topInsetTopConstraint.constant = safeAreaInsets.top
+        bottomInsetBottomConstraint.constant = safeAreaInsets.bottom
+        
+        headerView.drawBorder(color: .systemPink)
+        heroContainerView.drawBorder(color: .green)
+        contentStackContainerView.drawBorder(color: .white)
+        cardsContainerView.drawBorder(color: .brown)
     }
     
     private func setupBinding() {
         
-        // TODO: Set background color. ~Levi
-        //view.backgroundColor = viewModel.backgroundColor
-        //view.backgroundColor = .magenta
+        view.backgroundColor = viewModel.backgroundColor
         
         // backgroundImageView
         backgroundImageView.image = viewModel.backgroundImage
-        backgroundImageView.isHidden = viewModel.hidesBackgroundImage
+        backgroundImageView.isHidden = viewModel.backgroundImage == nil
         
         // headerView
         let headerViewModel: ToolPageHeaderViewModel = viewModel.headerViewModel
@@ -167,15 +203,17 @@ class ToolPageView: UIViewController {
         viewModel.handleCallToActionNextButtonTapped()
     }
     
-    private func setHeroTopContentInset(hidesHeader: Bool) {
+    private func setHeroContentInsets(hidesHeader: Bool) {
         
         let heroTopContentInset: CGFloat
+        
         if !hidesHeader {
             heroTopContentInset = headerView.frame.size.height + 20
         }
         else {
             heroTopContentInset = 30
         }
+        
         heroView?.setContentInset(contentInset: UIEdgeInsets(top: heroTopContentInset, left: 0, bottom: 0, right: 0))
         heroView?.setContentOffset(contentOffset: CGPoint(x: 0, y: heroTopContentInset * -1))
     }
@@ -187,16 +225,19 @@ class ToolPageView: UIViewController {
         }
         
         let topConstant: CGFloat = hidden ? headerView.frame.size.height * -1 : 0
+        let headerAlpha: CGFloat = hidden ? 0 : 1
         
         headerTop.constant = topConstant
         
         if animated {
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
                 self.view.layoutIfNeeded()
+                self.headerView.alpha = headerAlpha
             }, completion: nil)
         }
         else {
             view.layoutIfNeeded()
+            headerView.alpha = headerAlpha
         }
     }
     
@@ -206,17 +247,20 @@ class ToolPageView: UIViewController {
             return
         }
         
-        let bottomConstant: CGFloat = hidden ? callToActionView.frame.size.height * -1 : 0
+        let bottomConstant: CGFloat = hidden ? callToActionView.frame.size.height : 0
+        let callToActionAlpha: CGFloat = hidden ? 0 : 1
         
         callToActionBottom.constant = bottomConstant
         
         if animated {
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
                 self.view.layoutIfNeeded()
+                self.callToActionView.alpha = callToActionAlpha
             }, completion: nil)
         }
         else {
             view.layoutIfNeeded()
+            callToActionView.alpha = callToActionAlpha
         }
     }
 }
@@ -229,8 +273,31 @@ extension ToolPageView {
         return UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
     }
     
+    private var cardCollapsedVisibilityPercentage: CGFloat {
+        return 0.4
+    }
+    
     private var cardHeight: CGFloat {
-        return cardsContainerView.frame.size.height - callToActionView.frame.size.height - cardInsets.top - cardInsets.bottom
+        
+        guard let cardView = cards.first else {
+            assertionFailure("Cards should be initialized before cardHeight is accessed.")
+            return cardsContainerView.frame.size.height - callToActionView.frame.size.height - cardInsets.top - cardInsets.bottom
+        }
+        
+        let cardContainerHeight: CGFloat = cardsContainerView.frame.size.height
+        
+        let numberOfCards: CGFloat = CGFloat(viewModel.cardsViewModels.count)
+        let cardTitleHeight: CGFloat = cardView.titleHeight
+        let cardTopVisibilityHeight: CGFloat = floor(cardTitleHeight * cardCollapsedVisibilityPercentage)
+        let collapsedCardsHeight: CGFloat = (cardTopVisibilityHeight * (numberOfCards - 1))
+        
+        let callToActionHeight: CGFloat = callToActionView.frame.size.height
+        
+        let maxFooterAreaHeight: CGFloat = (collapsedCardsHeight > callToActionHeight) ? collapsedCardsHeight : callToActionHeight
+        
+        let cardHeight: CGFloat = cardContainerHeight - cardInsets.top - cardInsets.bottom - maxFooterAreaHeight
+        
+        return cardHeight
     }
     
     private func getCardTopConstraint(cardPosition: Int) -> NSLayoutConstraint? {
@@ -247,7 +314,7 @@ extension ToolPageView {
         }
         
         let cardsContainerHeight: CGFloat = cardsContainerView.frame.size.height
-        let numberOfCards: CGFloat = CGFloat(cards.count)
+        let numberOfCards: CGFloat = CGFloat(viewModel.cardsViewModels.count)
         let cardTitleHeight: CGFloat = cardView.titleHeight
         
         switch state {
@@ -259,8 +326,7 @@ extension ToolPageView {
             return cardInsets.top
         
         case .collapsed(let cardPosition):
-            let cardTopVisibilityPercentage: CGFloat = 0.4
-            let cardTopVisibilityHeight: CGFloat = floor(cardTitleHeight * cardTopVisibilityPercentage)
+            let cardTopVisibilityHeight: CGFloat = floor(cardTitleHeight * cardCollapsedVisibilityPercentage)
             return cardsContainerHeight - (cardTopVisibilityHeight * (numberOfCards - CGFloat(cardPosition)))
         
         case .hidden:
@@ -462,6 +528,8 @@ extension ToolPageView {
             
             let cardView: ToolPageCardView = ToolPageCardView(viewModel: cardViewModel)
             
+            cards.append(cardView)
+            
             cardsContainerView.addSubview(cardView)
 
             cardView.translatesAutoresizingMaskIntoConstraints = false
@@ -512,7 +580,6 @@ extension ToolPageView {
             
             cardView.addConstraint(heightConstraint)
             
-            cards.append(cardView)
             cardTopConstraints.append(top)
         }
     }
@@ -539,19 +606,19 @@ extension ToolPageView: UIGestureRecognizerDelegate {
                 let leftToRightDegrees: CGFloat = 0
                 let allowedPanOffsetDegrees: CGFloat = 20
                                     
-                let shouldRecognizeTractPanning: Bool
+                let shouldRecognizeToolPanning: Bool
                 
                 if angleDegrees >= rightToLeftDegrees - allowedPanOffsetDegrees && angleDegrees <= rightToLeftDegrees + allowedPanOffsetDegrees {
-                    shouldRecognizeTractPanning = true
+                    shouldRecognizeToolPanning = true
                 }
                 else if angleDegrees >= leftToRightDegrees - allowedPanOffsetDegrees && angleDegrees <= leftToRightDegrees + allowedPanOffsetDegrees {
-                    shouldRecognizeTractPanning = true
+                    shouldRecognizeToolPanning = true
                 }
                 else {
-                    shouldRecognizeTractPanning = false
+                    shouldRecognizeToolPanning = false
                 }
                 
-                return shouldRecognizeTractPanning
+                return shouldRecognizeToolPanning
             }
             else {
                 

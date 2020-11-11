@@ -58,20 +58,30 @@ class ToolPageContentStackViewModel {
         
         if let paragraphNode = node as? ContentParagraphNode {
             
-            return getContentParagraph(paragraphNode: paragraphNode)
+            let contentStackView: ToolPageContentStackView = getContentParagraph(paragraphNode: paragraphNode)
+            
+            contentStackView.drawBorder(color: .blue)
+            
+            return contentStackView
         }
         else if let textNode = node as? ContentTextNode {
             
-            return getContentText(
+            let textLabel: UILabel = getContentText(
                 textNode: textNode,
                 fontSize: 18,
                 fontWeight: .regular,
                 textColor: textNode.getTextColor()?.color ?? defaultTextNodeTextColor ?? toolPageColors.textColor
             )
+            
+            textLabel.drawBorder(color: .red)
+            
+            return textLabel
         }
         else if let imageNode = node as? ContentImageNode {
             
-            return getContentImage(imageNode: imageNode)
+            let imageView: UIImageView? = getContentImage(imageNode: imageNode)
+            
+            return imageView
         }
         else if let buttonNode = node as? ContentButtonNode {
             
@@ -102,12 +112,16 @@ class ToolPageContentStackViewModel {
         }
         else if let headingNode = node as? HeadingNode, let headingTextNode = headingNode.textNode {
             
-            return getContentText(
+            let textLabel: UILabel = getContentText(
                 textNode: headingTextNode,
                 fontSize: 30,
                 fontWeight: .regular,
                 textColor: headingNode.textNode?.getTextColor()?.color ?? toolPageColors.primaryColor
             )
+            
+            textLabel.drawBorder(color: .red)
+            
+            return textLabel
         }
         else if let tabsNode = node as? ContentTabsNode {
             

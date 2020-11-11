@@ -25,12 +25,12 @@ class ToolTrainingTipView: UICollectionViewCell {
     
     func configure(viewModel: ToolPageViewModel) {
         
-        let toolPage: ToolPageView = ToolPageView(viewModel: viewModel)
+        //let toolPage: ToolPageView = ToolPageView(viewModel: viewModel)
         
-        contentView.addSubview(toolPage.view)
-        toolPage.view.constrainEdgesToSuperview()
+        //contentView.addSubview(toolPage.view)
+        //toolPage.view.constrainEdgesToSuperview()
         
-        self.toolPage = toolPage
+        //self.toolPage = toolPage
         self.viewModel = viewModel
     }
 }

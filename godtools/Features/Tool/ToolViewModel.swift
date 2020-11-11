@@ -456,7 +456,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
                 mobileContentEvents: mobileContentEvents,
                 fontService: fontService,
                 localizationServices: localizationServices,
-                hidesBackgroundImage: true
+                page: page
             )
             
             return viewModel

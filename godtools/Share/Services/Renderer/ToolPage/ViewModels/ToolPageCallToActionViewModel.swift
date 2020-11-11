@@ -16,13 +16,13 @@ class ToolPageCallToActionViewModel {
 
     let hidesCallToAction: Bool
     
-    required init(pageNode: PageNode, toolPageColors: ToolPageColorsViewModel, fontService: FontService) {
+    required init(pageNode: PageNode, toolPageColors: ToolPageColorsViewModel, fontService: FontService, isLastPage: Bool) {
         
         self.pageNode = pageNode
         self.toolPageColors = toolPageColors
         self.fontService = fontService
         
-        hidesCallToAction = pageNode.callToActionNode == nil && pageNode.heroNode == nil
+        hidesCallToAction = (pageNode.callToActionNode == nil && pageNode.heroNode == nil) || isLastPage
     }
     
     var callToActionTitle: String? {

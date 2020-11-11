@@ -18,11 +18,11 @@ class ToolView: UIViewController {
     private let viewModel: ToolViewModelType
     
     private var remoteShareActiveNavItem: UIBarButtonItem?
+    private var safeAreaInsets: UIEdgeInsets?
     private var didLayoutSubviews: Bool = false
            
     private weak var languageControl: UISegmentedControl?
             
-    @IBOutlet weak private var toolPagesBackgroundView: PageNavigationCollectionView!
     @IBOutlet weak private var toolPagesView: PageNavigationCollectionView!
     
     required init(viewModel: ToolViewModelType) {
@@ -47,9 +47,7 @@ class ToolView: UIViewController {
         setupBinding()
         
         viewModel.viewLoaded()
-        
-        toolPagesBackgroundView.delegate = self
-        
+                
         toolPagesView.delegate = self
                 
         languageControl?.addTarget(
@@ -72,22 +70,25 @@ class ToolView: UIViewController {
         viewModel.currentPage.addObserver(self) { [weak self] (animatableValue: AnimatableValue<Int>) in
             self?.toolPagesView.scrollToPage(page: animatableValue.value, animated: animatableValue.animated)
         }
+        
+        let safeAreaTopInset: CGFloat
+        let safeAreaBottomInset: CGFloat
+        
+        if #available(iOS 11.0, *) {
+            safeAreaTopInset = view.safeAreaInsets.top
+            safeAreaBottomInset = view.safeAreaInsets.bottom
+        } else {
+            safeAreaTopInset = topLayoutGuide.length
+            safeAreaBottomInset = bottomLayoutGuide.length
+        }
+        
+        safeAreaInsets = UIEdgeInsets(top: safeAreaTopInset, left: 0, bottom: safeAreaBottomInset, right: 0)
+        
+        toolPagesView.reloadData()
     }
     
     private func setupLayout() {
-        
-        // toolPagesBackgroundView
-        toolPagesBackgroundView.pageBackgroundColor = .clear
-        toolPagesBackgroundView.registerPageCell(
-            nib: UINib(nibName: ToolPageBackgroundCell.nibName, bundle: nil),
-            cellReuseIdentifier: ToolPageBackgroundCell.reuseIdentifier
-        )
-        toolPagesBackgroundView.pagesCollectionView.contentInset = UIEdgeInsets.zero
-        automaticallyAdjustsScrollViewInsets = false
-        if viewModel.isRightToLeftLanguage {
-            toolPagesBackgroundView.pagesCollectionView.semanticContentAttribute = .forceRightToLeft
-        }
-        
+                
         // toolPagesView
         toolPagesView.pageBackgroundColor = .clear
         toolPagesView.registerPageCell(
@@ -95,9 +96,15 @@ class ToolView: UIViewController {
             cellReuseIdentifier: ToolPageCell.reuseIdentifier
         )
         toolPagesView.pagesCollectionView.contentInset = UIEdgeInsets.zero
-        automaticallyAdjustsScrollViewInsets = false
+        
         if viewModel.isRightToLeftLanguage {
             toolPagesView.pagesCollectionView.semanticContentAttribute = .forceRightToLeft
+        }
+        
+        if #available(iOS 11.0, *) {
+            toolPagesView.pagesCollectionView.contentInsetAdjustmentBehavior = .never
+        } else {
+            automaticallyAdjustsScrollViewInsets = false
         }
     }
     
@@ -108,7 +115,6 @@ class ToolView: UIViewController {
         configureNavigationBar(toolNavBarViewModel: viewModel.navBarViewModel)
         
         viewModel.remoteShareIsActive.addObserver(self) { [weak self] (isActive: Bool) in
-            
             self?.setRemoteShareActiveNavItem(hidden: !isActive)
         }
         
@@ -155,7 +161,6 @@ class ToolView: UIViewController {
     
     private func setViewBackgroundColor(color: UIColor) {
         view.backgroundColor = .white
-        toolPagesBackgroundView.backgroundColor = color
     }
     
     private func configureNavigationBar(toolNavBarViewModel: ToolNavBarViewModel) {
@@ -258,56 +263,34 @@ class ToolView: UIViewController {
 extension ToolView: PageNavigationCollectionViewDelegate {
     
     func pageNavigationNumberOfPages(pageNavigation: PageNavigationCollectionView) -> Int {
+        
         return viewModel.numberOfToolPages.value
     }
     
     func pageNavigation(pageNavigation: PageNavigationCollectionView, cellForPageAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        if pageNavigation == toolPagesBackgroundView {
+        let cell: ToolPageCell = toolPagesView.getReusablePageCell(
+            cellReuseIdentifier: ToolPageCell.reuseIdentifier,
+            indexPath: indexPath) as! ToolPageCell
+        
+        if let toolPageViewModel = viewModel.toolPageWillAppear(page: indexPath.row), let safeAreaInsets = self.safeAreaInsets {
             
-            let cell: ToolPageBackgroundCell = toolPagesBackgroundView.getReusablePageCell(
-                cellReuseIdentifier: ToolPageBackgroundCell.reuseIdentifier,
-                indexPath: indexPath) as! ToolPageBackgroundCell
-            
-            let cellViewModel: ToolBackgroundCellViewModel = viewModel.toolPageBackgroundWillAppear(page: indexPath.row)
-            
-            cell.configure(viewModel: cellViewModel)
-            
-            return cell
-        }
-        else if pageNavigation == toolPagesView {
-            
-            let cell: ToolPageCell = toolPagesView.getReusablePageCell(
-                cellReuseIdentifier: ToolPageCell.reuseIdentifier,
-                indexPath: indexPath) as! ToolPageCell
-            
-            if let toolPageViewModel = viewModel.toolPageWillAppear(page: indexPath.row) {
-                cell.configure(viewModel: toolPageViewModel)
-            }
-            
-            return cell
+            cell.configure(
+                viewModel: toolPageViewModel,
+                safeAreaInsets: safeAreaInsets
+            )
         }
         
-        return UICollectionViewCell()
+        return cell
     }
     
     func pageNavigationDidChangePage(pageNavigation: PageNavigationCollectionView, page: Int) {
         
-        if pageNavigation == toolPagesView {
-            viewModel.toolPageDidChange(page: page)
-        }
+        viewModel.toolPageDidChange(page: page)
     }
     
     func pageNavigationDidStopOnPage(pageNavigation: PageNavigationCollectionView, page: Int) {
         
-        if pageNavigation == toolPagesView {
-            viewModel.toolPageDidAppear(page: page)
-        }
-    }
-    
-    func pageNavigationDidScrollPage(pageNavigation: PageNavigationCollectionView) {
-        if pageNavigation == toolPagesView {
-            toolPagesBackgroundView.pagesCollectionView.setContentOffset(toolPagesView.pagesCollectionView.contentOffset, animated: false)
-        }
+        viewModel.toolPageDidAppear(page: page)
     }
 }
