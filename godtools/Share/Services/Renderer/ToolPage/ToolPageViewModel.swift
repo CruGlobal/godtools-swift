@@ -10,6 +10,7 @@ import UIKit
 
 protocol ToolPageViewModelDelegate: class {
     
+    func toolPagePresented(viewModel: ToolPageViewModel, page: Int)
     func toolPageNextPageTapped()
     func toolPageError(error: ContentEventError)
 }
@@ -26,6 +27,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     private let followUpsService: FollowUpsService
     private let localizationServices: LocalizationServices
     private let toolPageColors: ToolPageColorsViewModel
+    private let page: Int
         
     private var hiddenCardsViewModels: [ToolPageCardViewModel] = Array()
     
@@ -60,6 +62,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         self.followUpsService = followUpsService
         self.localizationServices = localizationServices
         self.toolPageColors = ToolPageColorsViewModel(pageNode: pageNode, manifest: manifest)
+        self.page = page
         
         backgroundColor = toolPageColors.backgroundColor
         
@@ -234,12 +237,23 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     }
     
     private func addObservers() {
+        
+        mobileContentEvents.eventButtonTappedSignal.addObserver(self) { [weak self] (buttonEvent: ButtonEvent) in
+            guard let viewModel = self else {
+                return
+            }
+            if viewModel.pageNode.listeners.contains(buttonEvent.event) {
+                viewModel.delegate?.toolPagePresented(viewModel: viewModel, page: viewModel.page)
+            }
+        }
+        
         mobileContentEvents.contentErrorSignal.addObserver(self) { [weak self] (error: ContentEventError) in
             self?.delegate?.toolPageError(error: error)
         }
     }
     
     private func removeObservers() {
+        mobileContentEvents.eventButtonTappedSignal.removeObserver(self)
         mobileContentEvents.contentErrorSignal.removeObserver(self)
     }
     

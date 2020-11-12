@@ -768,6 +768,10 @@ class ToolViewModel: NSObject, ToolViewModelType {
 
 extension ToolViewModel: ToolPageViewModelDelegate {
     
+    func toolPagePresented(viewModel: ToolPageViewModel, page: Int) {
+        currentPage.accept(value: AnimatableValue(value: page, animated: true))
+    }
+    
     func toolPageNextPageTapped() {
         
         gotoNextPage(animated: true)

@@ -21,6 +21,7 @@ class PageNode: MobileContentXmlNode {
     let backgroundImage: String?
     let backgroundImageScaleType: String?
     let cardTextColor: String?
+    let listeners: [String]
     let primaryColor: String?
     let primaryTextColor: String?
     let textColor: String?
@@ -33,6 +34,7 @@ class PageNode: MobileContentXmlNode {
         backgroundImage = attributes["background-image"]?.text
         backgroundImageScaleType = attributes["background-image-scale-type"]?.text
         cardTextColor = attributes["card-text-color"]?.text
+        listeners = attributes["listeners"]?.text.components(separatedBy: " ") ?? []
         primaryColor = attributes["primary-color"]?.text
         primaryTextColor = attributes["primary-text-color"]?.text
         textColor = attributes["text-color"]?.text

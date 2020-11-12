@@ -94,6 +94,10 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
 
 extension ToolTrainingViewModel: ToolPageViewModelDelegate {
     
+    func toolPagePresented(viewModel: ToolPageViewModel, page: Int) {
+        
+    }
+    
     func toolPageNextPageTapped() {
         
     }
