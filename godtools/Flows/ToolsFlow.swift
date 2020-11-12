@@ -548,7 +548,7 @@ class ToolsFlow: Flow {
             primaryLanguage: primaryLanguage,
             parallelLanguage: parallelLanguage,
             primaryTranslationManifestData: primaryTranslationManifest,
-            parallelTranslationManifest: parallelTranslationManifest,
+            parallelTranslationManifestData: parallelTranslationManifest,
             mobileContentNodeParser: appDiContainer.getMobileContentNodeParser(),
             mobileContentAnalytics: appDiContainer.getMobileContentAnalytics(),
             mobileContentEvents: appDiContainer.getMobileContentEvents(),
