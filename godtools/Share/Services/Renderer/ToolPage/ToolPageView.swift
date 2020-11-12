@@ -281,10 +281,7 @@ extension ToolPageView {
         
         windowViewController.view.addSubview(toolModal)
         toolModal.frame = windowViewController.view.bounds
-        
-        //toolModal.constrainEdgesToSuperview()
-        //view.layoutIfNeeded()
-                
+                        
         self.toolModal = toolModal
         
         if animated {
