@@ -6,9 +6,10 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol ToolPageModalViewModelType {
     
+    var backgroundColor: UIColor { get }
     var contentViewModel: ToolPageContentStackViewModel { get }
 }

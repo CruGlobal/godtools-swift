@@ -23,6 +23,7 @@ class ToolPageContentStackViewModel {
     private let followUpsService: FollowUpsService
     private let toolPageColors: ToolPageColorsViewModel
     private let defaultTextNodeTextColor: UIColor?
+    private let defaultButtonBorderColor: UIColor?
     
     private var buttonEvents: [UIButton: ContentButtonNode] = Dictionary()
     private var linkEvents: [UIButton: ContentLinkNode] = Dictionary()
@@ -33,7 +34,7 @@ class ToolPageContentStackViewModel {
     let itemSpacing: CGFloat
     let scrollIsEnabled: Bool
     
-    required init(node: MobileContentXmlNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, localizationServices: LocalizationServices, followUpsService: FollowUpsService, itemSpacing: CGFloat, scrollIsEnabled: Bool, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
+    required init(node: MobileContentXmlNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, localizationServices: LocalizationServices, followUpsService: FollowUpsService, itemSpacing: CGFloat, scrollIsEnabled: Bool, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?, defaultButtonBorderColor: UIColor?) {
         
         self.node = node
         self.manifest = manifest
@@ -48,6 +49,7 @@ class ToolPageContentStackViewModel {
         self.scrollIsEnabled = scrollIsEnabled
         self.toolPageColors = toolPageColors
         self.defaultTextNodeTextColor = defaultTextNodeTextColor
+        self.defaultButtonBorderColor = defaultButtonBorderColor
     }
     
     deinit {
@@ -70,7 +72,7 @@ class ToolPageContentStackViewModel {
             let contentStackView: ToolPageContentStackView = getContentParagraph(
                 paragraphNode: paragraphNode
             )
-                        
+                                    
             return MobileContentView(view: contentStackView, heightConstraintType: .constrainedToChildren)
         }
         else if let textNode = node as? ContentTextNode {
@@ -78,7 +80,8 @@ class ToolPageContentStackViewModel {
             let textLabel: UILabel = getContentText(
                 textNode: textNode,
                 fontSize: 18,
-                fontWeight: .regular,
+                defaultFontWeight: .regular,
+                defaultTextAlignment: .left,
                 textColor: textNode.getTextColor()?.color ?? defaultTextNodeTextColor ?? toolPageColors.textColor
             )
                         
@@ -101,6 +104,7 @@ class ToolPageContentStackViewModel {
                 fontSize: 18,
                 fontWeight: .regular,
                 buttonColor: toolPageColors.primaryColor,
+                borderColor: defaultButtonBorderColor,
                 titleColor: buttonNode.textNode?.getTextColor()?.color ?? toolPageColors.primaryTextColor
             )
             
@@ -121,12 +125,25 @@ class ToolPageContentStackViewModel {
                         
             return MobileContentView(view: button, heightConstraintType: .equalToFrame)
         }
+        else if let titleNode = node as? TitleNode, let titleTextNode = titleNode.textNode {
+            
+            let textLabel: UILabel = getContentText(
+                textNode: titleTextNode,
+                fontSize: 44,
+                defaultFontWeight: .regular,
+                defaultTextAlignment: .center,
+                textColor: titleTextNode.getTextColor()?.color ?? toolPageColors.primaryTextColor
+            )
+                                    
+            return MobileContentView(view: textLabel, heightConstraintType: .intrinsic)
+        }
         else if let headingNode = node as? HeadingNode, let headingTextNode = headingNode.textNode {
             
             let textLabel: UILabel = getContentText(
                 textNode: headingTextNode,
                 fontSize: 30,
-                fontWeight: .regular,
+                defaultFontWeight: .regular,
+                defaultTextAlignment: .left,
                 textColor: headingNode.textNode?.getTextColor()?.color ?? toolPageColors.primaryColor
             )
                         
@@ -176,7 +193,8 @@ class ToolPageContentStackViewModel {
             itemSpacing: 5,
             scrollIsEnabled: false,
             toolPageColors: toolPageColors,
-            defaultTextNodeTextColor: defaultTextNodeTextColor
+            defaultTextNodeTextColor: defaultTextNodeTextColor,
+            defaultButtonBorderColor: defaultButtonBorderColor
         )
         
         let view = ToolPageContentStackView(viewModel: viewModel)
@@ -184,11 +202,15 @@ class ToolPageContentStackViewModel {
         return view
     }
         
-    private func getContentButton(buttonNode: ContentButtonNode, fontSize: CGFloat, fontWeight: UIFont.Weight, buttonColor: UIColor, titleColor: UIColor) -> UIButton {
+    private func getContentButton(buttonNode: ContentButtonNode, fontSize: CGFloat, fontWeight: UIFont.Weight, buttonColor: UIColor, borderColor: UIColor?, titleColor: UIColor) -> UIButton {
         
         let button: UIButton = UIButton(type: .custom)
         
         button.backgroundColor = buttonColor
+        if let borderColor = borderColor {
+            button.layer.borderColor = borderColor.cgColor
+            button.layer.borderWidth = 1
+        }
         button.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width * 0.9, height: 50)
         button.layer.cornerRadius = 5
         button.titleLabel?.font = fontService.getFont(size: fontSize, weight: fontWeight)
@@ -236,7 +258,7 @@ class ToolPageContentStackViewModel {
         return imageView
     }
         
-    private func getContentText(textNode: ContentTextNode, fontSize: CGFloat, fontWeight: UIFont.Weight, textColor: UIColor) -> UILabel {
+    private func getContentText(textNode: ContentTextNode, fontSize: CGFloat, defaultFontWeight: UIFont.Weight, defaultTextAlignment: NSTextAlignment, textColor: UIColor) -> UILabel {
         
         let label: UILabel = UILabel()
         
@@ -256,10 +278,50 @@ class ToolPageContentStackViewModel {
             fontScale = 1
         }
         
+        let textAlignment: NSTextAlignment
+        
+        if let textAlign = textNode.textAlign, !textAlign.isEmpty {
+            if textAlign == "left" {
+                textAlignment = .left
+            }
+            else if textAlign == "center" {
+                textAlignment = .center
+            }
+            else if textAlign == "end" {
+                textAlignment = .right
+            }
+            else {
+                textAlignment = defaultTextAlignment
+            }
+        }
+        else {
+            textAlignment = defaultTextAlignment
+        }
+        
+        let fontWeight: UIFont.Weight
+        
+        if let textStyle = textNode.textStyle, !textStyle.isEmpty {
+            if textStyle == "bold" {
+                fontWeight = .bold
+            }
+            else if textStyle == "italic" {
+                fontWeight = defaultFontWeight
+            }
+            else if textStyle == "underline" {
+                fontWeight = defaultFontWeight
+            }
+            else {
+                fontWeight = defaultFontWeight
+            }
+        }
+        else {
+            fontWeight = defaultFontWeight
+        }
+        
         label.font = fontService.getFont(size: fontSize * fontScale, weight: fontWeight)
         label.text = textNode.text
         label.textColor = textColor
-        label.textAlignment = .left
+        label.textAlignment = textAlignment
         
         label.setLineSpacing(lineSpacing: 2)
         

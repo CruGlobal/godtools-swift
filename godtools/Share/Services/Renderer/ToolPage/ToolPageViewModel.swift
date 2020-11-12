@@ -30,6 +30,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     private var hiddenCardsViewModels: [ToolPageCardViewModel] = Array()
     
     private(set) var cardsViewModels: [ToolPageCardViewModelType] = Array()
+    private(set) var modalViewModels: [ToolPageModalViewModel] = Array()
     
     private weak var delegate: ToolPageViewModelDelegate?
     
@@ -42,6 +43,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     let currentCard: ObservableValue<Int?> = ObservableValue(value: nil)
     let hiddenCard: ObservableValue<ToolPageCardViewModel?> = ObservableValue(value: nil)
     let callToActionViewModel: ToolPageCallToActionViewModel
+    let modal: ObservableValue<ToolPageModalViewModel?> = ObservableValue(value: nil)
     
     required init(delegate: ToolPageViewModelDelegate, pageNode: PageNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, page: Int) {
                 
@@ -87,7 +89,8 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
                 itemSpacing: 20,
                 scrollIsEnabled: true,
                 toolPageColors: toolPageColors,
-                defaultTextNodeTextColor: nil
+                defaultTextNodeTextColor: nil,
+                defaultButtonBorderColor: nil
             )
         }
         else {
@@ -97,8 +100,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         // header
         headerViewModel = ToolPageHeaderViewModel(
             pageNode: pageNode,
-            backgroundColor: toolPageColors.primaryColor,
-            primaryTextColor: toolPageColors.primaryTextColor,
+            toolPageColors: toolPageColors,
             fontService: fontService
         )
         
@@ -118,7 +120,8 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
                 itemSpacing: 20,
                 scrollIsEnabled: true,
                 toolPageColors: toolPageColors,
-                defaultTextNodeTextColor: nil
+                defaultTextNodeTextColor: nil,
+                defaultButtonBorderColor: nil
             )
         }
         else {
@@ -132,7 +135,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
             fontService: fontService,
             isLastPage: isLastPage
         )
-        
+                
         // cards
         hidesCards = pageNode.cardsNode?.cards.isEmpty ?? true
         
@@ -197,6 +200,29 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
             )
             
             hiddenCardsViewModels.append(cardViewModel)
+        }
+        
+        // modals
+        let modalNodes: [ModalNode] = pageNode.modalsNode?.modals ?? []
+        
+        for modalNode in modalNodes {
+            
+            let modalViewModel = ToolPageModalViewModel(
+                delegate: self,
+                modalNode: modalNode,
+                manifest: manifest,
+                language: language,
+                translationsFileCache: translationsFileCache,
+                mobileContentAnalytics: mobileContentAnalytics,
+                mobileContentEvents: mobileContentEvents,
+                fontService: fontService,
+                localizationServices: localizationServices,
+                followUpsService: followUpsService,
+                toolPageColors: toolPageColors,
+                defaultTextNodeTextColor: toolPageColors.primaryTextColor
+            )
+            
+            modalViewModels.append(modalViewModel)
         }
         
         addObservers()
@@ -328,5 +354,18 @@ extension ToolPageViewModel: ToolPageCardViewModelDelegate {
         else {
             hiddenCard.accept(value: nil)
         }
+    }
+}
+
+// MARK: - ToolPageModalViewModelDelegate
+
+extension ToolPageViewModel: ToolPageModalViewModelDelegate {
+    
+    func presentModal(modalViewModel: ToolPageModalViewModel) {
+        modal.accept(value: modalViewModel)
+    }
+    
+    func dismissModal(modalViewModel: ToolPageModalViewModel) {
+        modal.accept(value: nil)
     }
 }

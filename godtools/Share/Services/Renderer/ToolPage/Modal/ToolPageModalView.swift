@@ -35,10 +35,11 @@ class ToolPageModalView: UIView {
     
     private func initializeNib() {
         
-        let nib: UINib = UINib(nibName: String(describing: ToolPageContentFormView.self), bundle: nil)
+        let nib: UINib = UINib(nibName: String(describing: ToolPageModalView.self), bundle: nil)
         let contents: [Any]? = nib.instantiate(withOwner: self, options: nil)
         if let rootNibView = (contents as? [UIView])?.first {
             addSubview(rootNibView)
+            rootNibView.backgroundColor = .clear
             rootNibView.frame = bounds
             rootNibView.translatesAutoresizingMaskIntoConstraints = false
             rootNibView.constrainEdgesToSuperview()
@@ -51,9 +52,27 @@ class ToolPageModalView: UIView {
     
     private func setupBinding() {
         
-        let contentStackView = ToolPageContentStackView(viewModel: viewModel.contentViewModel)
-        contentContainerView.addSubview(contentStackView)
-        contentStackView.translatesAutoresizingMaskIntoConstraints = false
+        backgroundColor = viewModel.backgroundColor
+        
+        addContentView(viewModel: viewModel.contentViewModel)
+    }
+    
+    private func addContentView(viewModel: ToolPageContentStackViewModel) {
+        
+        let contentParentView: UIView = contentContainerView
+        let contentStackView = ToolPageContentStackView(viewModel: viewModel)
+        
+        contentParentView.addSubview(contentStackView)
+        
         contentStackView.constrainEdgesToSuperview()
+        layoutIfNeeded()
+        
+        let modalContentSize: CGSize = contentStackView.contentSize
+        let shouldCenterVertically: Bool = modalContentSize.height < frame.size.height
+        
+        if shouldCenterVertically {
+            let difference: CGFloat = frame.size.height - modalContentSize.height
+            contentStackView.setContentInset(contentInset: UIEdgeInsets(top: difference / 2, left: 0, bottom: 0, right: 0))
+        }
     }
 }

@@ -28,7 +28,7 @@ class HeaderNode: MobileContentXmlNode {
         }
         
         if let titleNode = children.last as? TitleNode {
-            title = titleNode.text
+            title = titleNode.textNode?.text
         }
     }
 }

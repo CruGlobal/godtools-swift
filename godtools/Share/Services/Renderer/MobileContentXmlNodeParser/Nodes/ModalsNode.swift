@@ -10,9 +10,13 @@ import Foundation
 import SWXMLHash
 
 class ModalsNode: MobileContentXmlNode {
-        
+    
     required init(xmlElement: XMLElement) {
     
         super.init(xmlElement: xmlElement)
+    }
+    
+    var modals: [ModalNode] {
+        return children as? [ModalNode] ?? []
     }
 }

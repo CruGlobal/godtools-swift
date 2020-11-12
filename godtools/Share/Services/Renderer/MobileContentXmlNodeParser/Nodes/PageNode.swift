@@ -15,6 +15,7 @@ class PageNode: MobileContentXmlNode {
     private(set) var heroNode: HeroNode?
     private(set) var cardsNode: CardsNode?
     private(set) var callToActionNode: CallToActionNode?
+    private(set) var modalsNode: ModalsNode?
     
     let backgroundColor: String?
     let backgroundImage: String?
@@ -53,6 +54,9 @@ class PageNode: MobileContentXmlNode {
         }
         else if let callToActionNode = childNode as? CallToActionNode {
             self.callToActionNode = callToActionNode
+        }
+        else if let modalsNode = childNode as? ModalsNode {
+            self.modalsNode = modalsNode
         }
     }
     

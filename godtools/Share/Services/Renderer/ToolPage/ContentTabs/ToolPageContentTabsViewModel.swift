@@ -89,7 +89,8 @@ class ToolPageContentTabsViewModel: ToolPageContentTabsViewModelType {
             itemSpacing: 10,
             scrollIsEnabled: false,
             toolPageColors: toolPageColors,
-            defaultTextNodeTextColor: defaultTextNodeTextColor
+            defaultTextNodeTextColor: defaultTextNodeTextColor,
+            defaultButtonBorderColor: nil
         )
     }
 }

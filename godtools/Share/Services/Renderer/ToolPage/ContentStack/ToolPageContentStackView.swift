@@ -46,6 +46,10 @@ class ToolPageContentStackView: UIView {
         return contentView.subviews.isEmpty
     }
     
+    var contentSize: CGSize {
+        return scrollView?.contentSize ?? contentView.frame.size
+    }
+    
     func setContentInset(contentInset: UIEdgeInsets) {
         
         scrollView?.contentInset = contentInset

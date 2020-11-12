@@ -11,16 +11,16 @@ import UIKit
 class ToolPageHeaderViewModel {
     
     private let fontService: FontService
+    private let toolPageColors: ToolPageColorsViewModel
     
     let headerNumber: String?
     let headerTitle: String?
     let hidesHeader: Bool
-    let backgroundColor: UIColor
-    let primaryTextColor: UIColor
     
-    required init(pageNode: PageNode, backgroundColor: UIColor, primaryTextColor: UIColor, fontService: FontService) {
+    required init(pageNode: PageNode, toolPageColors: ToolPageColorsViewModel, fontService: FontService) {
         
         self.fontService = fontService
+        self.toolPageColors = toolPageColors
         
         let pageHeaderNumber: String? = pageNode.headerNode?.number
         let pageHeaderTitle: String? = pageNode.headerNode?.title
@@ -29,15 +29,25 @@ class ToolPageHeaderViewModel {
         headerNumber = pageHeaderNumber
         headerTitle = pageHeaderTitle
         self.hidesHeader = hidesHeader
-        self.backgroundColor = backgroundColor
-        self.primaryTextColor = primaryTextColor
+    }
+    
+    var backgroundColor: UIColor {
+        return toolPageColors.primaryColor
     }
     
     var headerNumberFont: UIFont {
         return fontService.getFont(size: 54, weight: .regular)
     }
     
+    var headerNumberColor: UIColor {
+        return toolPageColors.primaryTextColor
+    }
+    
     var headerTitleFont: UIFont {
         return fontService.getFont(size: 19, weight: .regular)
+    }
+    
+    var headerTitleColor: UIColor {
+        return toolPageColors.primaryTextColor
     }
 }

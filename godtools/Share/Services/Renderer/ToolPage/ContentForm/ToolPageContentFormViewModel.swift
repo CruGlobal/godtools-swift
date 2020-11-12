@@ -47,7 +47,8 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
             itemSpacing: 15,
             scrollIsEnabled: false,
             toolPageColors: toolPageColors,
-            defaultTextNodeTextColor: defaultTextNodeTextColor
+            defaultTextNodeTextColor: defaultTextNodeTextColor,
+            defaultButtonBorderColor: nil
         )
         
         super.init()

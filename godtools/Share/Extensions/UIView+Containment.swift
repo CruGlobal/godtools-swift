@@ -23,7 +23,8 @@ extension UIView {
                 toItem: superview,
                 attribute: .leading,
                 multiplier: 1,
-                constant: 0)
+                constant: 0
+            )
             
             let trailing: NSLayoutConstraint = NSLayoutConstraint(
                 item: self,
@@ -32,7 +33,8 @@ extension UIView {
                 toItem: superview,
                 attribute: .trailing,
                 multiplier: 1,
-                constant: 0)
+                constant: 0
+            )
             
             let top: NSLayoutConstraint = NSLayoutConstraint(
                 item: self,
@@ -41,7 +43,8 @@ extension UIView {
                 toItem: superview,
                 attribute: .top,
                 multiplier: 1,
-                constant: 0)
+                constant: 0
+            )
             
             let bottom: NSLayoutConstraint = NSLayoutConstraint(
                 item: self,
@@ -50,7 +53,8 @@ extension UIView {
                 toItem: superview,
                 attribute: .bottom,
                 multiplier: 1,
-                constant: 0)
+                constant: 0
+            )
             
             superview.addConstraint(leading)
             superview.addConstraint(trailing)

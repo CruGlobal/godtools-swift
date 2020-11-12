@@ -277,6 +277,7 @@ extension ToolView: PageNavigationCollectionViewDelegate {
             
             cell.configure(
                 viewModel: toolPageViewModel,
+                windowViewController: navigationController ?? self,
                 safeAreaInsets: safeAreaInsets
             )
         }

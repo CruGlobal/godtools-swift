@@ -20,6 +20,7 @@ protocol ToolPageViewModelType {
     var currentCard: ObservableValue<Int?> { get }
     var hiddenCard: ObservableValue<ToolPageCardViewModel?> { get }
     var callToActionViewModel: ToolPageCallToActionViewModel { get }
+    var modal: ObservableValue<ToolPageModalViewModel?> { get }
     
     func handleCallToActionNextButtonTapped()
 }

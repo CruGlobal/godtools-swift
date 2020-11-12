@@ -11,8 +11,16 @@ import SWXMLHash
 
 class ModalNode: MobileContentXmlNode {
         
+    let dismissListeners: [String]
+    let listeners: [String]
+    
     required init(xmlElement: XMLElement) {
     
+        let attributes: [String: XMLAttribute] = xmlElement.allAttributes
+        
+        dismissListeners = attributes["dismiss-listeners"]?.text.components(separatedBy: " ") ?? []
+        listeners = attributes["listeners"]?.text.components(separatedBy: " ") ?? []
+        
         super.init(xmlElement: xmlElement)
     }
 }

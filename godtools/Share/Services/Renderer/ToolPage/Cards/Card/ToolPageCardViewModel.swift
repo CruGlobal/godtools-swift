@@ -61,7 +61,8 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
             itemSpacing: 20,
             scrollIsEnabled: true,
             toolPageColors: toolPageColors,
-            defaultTextNodeTextColor: toolPageColors.cardTextColor
+            defaultTextNodeTextColor: toolPageColors.cardTextColor,
+            defaultButtonBorderColor: nil
         )
         
         self.isHiddenCard = isHiddenCard

@@ -11,6 +11,7 @@ import UIKit
 class ToolPageView: UIViewController {
     
     private let viewModel: ToolPageViewModelType
+    private let windowViewController: UIViewController
     private let safeAreaInsets: UIEdgeInsets
     private let panGestureToControlPageCollectionViewPanningSensitivity: UIPanGestureRecognizer = UIPanGestureRecognizer()
     
@@ -21,6 +22,7 @@ class ToolPageView: UIViewController {
     private var hiddenCard: ToolPageCardView?
     private var hiddenCardTopConstraint: NSLayoutConstraint?
     private var currentCardState: ToolPageCardsState = .initialized
+    private var toolModal: ToolPageModalView?
     private var didLayoutSubviews: Bool = false
     
     @IBOutlet weak private var backgroundImageView: UIImageView!
@@ -40,8 +42,9 @@ class ToolPageView: UIViewController {
     @IBOutlet weak private var callToActionBottom: NSLayoutConstraint!
     @IBOutlet weak private var bottomInsetBottomConstraint: NSLayoutConstraint!
     
-    required init(viewModel: ToolPageViewModelType, safeAreaInsets: UIEdgeInsets) {
+    required init(viewModel: ToolPageViewModelType, windowViewController: UIViewController, safeAreaInsets: UIEdgeInsets) {
         self.viewModel = viewModel
+        self.windowViewController = windowViewController
         self.safeAreaInsets = safeAreaInsets
         super.init(nibName: String(describing: ToolPageView.self), bundle: nil)
     }
@@ -175,10 +178,10 @@ class ToolPageView: UIViewController {
         headerView.backgroundColor = headerViewModel.backgroundColor
         headerNumberLabel.font = headerViewModel.headerNumberFont
         headerNumberLabel.text = headerViewModel.headerNumber
-        headerNumberLabel.textColor = headerViewModel.primaryTextColor
+        headerNumberLabel.textColor = headerViewModel.headerNumberColor
         headerTitleLabel.font = headerViewModel.headerTitleFont
         headerTitleLabel.text = headerViewModel.headerTitle
-        headerTitleLabel.textColor = headerViewModel.primaryTextColor
+        headerTitleLabel.textColor = headerViewModel.headerTitleColor
         headerTitleLabel.setLineSpacing(lineSpacing: 2)
                 
         // callToAction
@@ -186,6 +189,16 @@ class ToolPageView: UIViewController {
         callToActionTitleLabel.text = callToActionViewModel.callToActionTitle
         callToActionTitleLabel.textColor = callToActionViewModel.callToActionTitleColor
         callToActionNextButton.setImageColor(color: callToActionViewModel.callToActionNextButtonColor)
+        
+        // toolModal
+        viewModel.modal.addObserver(self) { [weak self] (viewModel: ToolPageModalViewModel?) in
+            if let viewModel = viewModel {
+                self?.presentModal(viewModel: viewModel, animated: true)
+            }
+            else {
+                self?.dismissModalIfNeeded(animated: true, completion: nil)
+            }
+        }
     }
     
     @objc func handleCallToActionNext(button: UIButton) {
@@ -250,6 +263,57 @@ class ToolPageView: UIViewController {
         else {
             view.layoutIfNeeded()
             callToActionView.alpha = callToActionAlpha
+        }
+    }
+}
+
+// MARK: - Modal
+
+extension ToolPageView {
+    
+    private func presentModal(viewModel: ToolPageModalViewModel, animated: Bool) {
+        
+        guard toolModal == nil else {
+            return
+        }
+        
+        let toolModal: ToolPageModalView = ToolPageModalView(viewModel: viewModel)
+        
+        windowViewController.view.addSubview(toolModal)
+        toolModal.frame = windowViewController.view.bounds
+        
+        //toolModal.constrainEdgesToSuperview()
+        //view.layoutIfNeeded()
+                
+        self.toolModal = toolModal
+        
+        if animated {
+            toolModal.alpha = 0
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+                toolModal.alpha = 1
+            }, completion: nil)
+        }
+    }
+    
+    private func dismissModalIfNeeded(animated: Bool, completion: (() -> Void)?) {
+        
+        guard let toolModalView = self.toolModal else {
+            completion?()
+            return
+        }
+        
+        if animated {
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+                toolModalView.alpha = 0
+            }) { (finished: Bool) in
+                toolModalView.removeFromSuperview()
+                completion?()
+            }
+        }
+        else {
+            toolModalView.alpha = 0
+            toolModalView.removeFromSuperview()
+            completion?()
         }
     }
 }
