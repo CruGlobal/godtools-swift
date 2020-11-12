@@ -118,7 +118,7 @@ class ToolView: UIViewController {
             self?.setRemoteShareActiveNavItem(hidden: !isActive)
         }
         
-        viewModel.selectedTractLanguage.addObserver(self) { [weak self] (tractLanguage: TractLanguage) in
+        viewModel.selectedToolLanguage.addObserver(self) { [weak self] (tractLanguage: TractLanguage) in
             
             switch tractLanguage.languageType {
             case .primary:
@@ -127,10 +127,6 @@ class ToolView: UIViewController {
                 self?.languageControl?.selectedSegmentIndex = 1
             }
             
-            self?.toolPagesView.reloadData()
-        }
-        
-        viewModel.tractXmlPageItems.addObserver(self) { [weak self] (tractPageItems: [TractXmlPageItem]) in
             self?.toolPagesView.reloadData()
         }
         

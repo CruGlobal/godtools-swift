@@ -11,10 +11,7 @@ import Foundation
 protocol ToolViewModelType {
     
     var navBarViewModel: ToolNavBarViewModel { get }
-    var selectedTractLanguage: ObservableValue<TractLanguage> { get }
-    var primaryTractManifest: ManifestProperties { get }
-    var primaryTractPages: [XMLPage] { get }
-    var tractXmlPageItems: ObservableValue<[TractXmlPageItem]> { get }
+    var selectedToolLanguage: ObservableValue<TractLanguage> { get }
     var currentPage: ObservableValue<AnimatableValue<Int>> { get }
     var isRightToLeftLanguage: Bool { get }
     var remoteShareIsActive: ObservableValue<Bool> { get }
@@ -25,7 +22,6 @@ protocol ToolViewModelType {
     func primaryLanguageTapped()
     func parallelLanguagedTapped()
     func viewLoaded()
-    func toolPageBackgroundWillAppear(page: Int) -> ToolBackgroundCellViewModel
     func toolPageWillAppear(page: Int) -> ToolPageViewModel?
     func toolPageDidChange(page: Int)
     func toolPageDidAppear(page: Int)

@@ -555,7 +555,6 @@ class ToolsFlow: Flow {
             translationsFileCache: appDiContainer.translationsFileCache,
             languageSettingsService: appDiContainer.languageSettingsService,
             fontService: appDiContainer.getFontService(),
-            tractManager: appDiContainer.tractManager,
             tractRemoteSharePublisher: appDiContainer.tractRemoteSharePublisher,
             tractRemoteShareSubscriber: appDiContainer.tractRemoteShareSubscriber,
             isNewUserService: appDiContainer.isNewUserService,
