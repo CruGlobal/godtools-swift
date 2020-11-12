@@ -417,8 +417,20 @@ class ToolPageContentStackViewModel {
         }
         
         if buttonNode.type == "event" {
-            for event in buttonNode.events {
-                mobileContentEvents.eventButtonTapped(eventButton: ButtonEvent(event: event))
+            
+            let followUpSendEventName: String = "followup:send"
+            
+            if buttonNode.events.contains(followUpSendEventName) {
+                var triggerEvents: [String] = buttonNode.events
+                if let index = triggerEvents.firstIndex(of: followUpSendEventName) {
+                    triggerEvents.remove(at: index)
+                }
+                mobileContentEvents.followUpEventButtonTapped(followUpEventButton: FollowUpButtonEvent(triggerEventsOnFollowUpSent: triggerEvents))
+            }
+            else {
+                for event in buttonNode.events {
+                    mobileContentEvents.eventButtonTapped(eventButton: ButtonEvent(event: event))
+                }
             }
         }
         else if buttonNode.type == "url", let url = buttonNode.url {

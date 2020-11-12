@@ -62,18 +62,17 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
     
     private func addObservers() {
         
-        mobileContentEvents.eventButtonTappedSignal.addObserver(self) { [weak self] (buttonEvent: ButtonEvent) in
-            if buttonEvent.event == "followup:send" {
-                self?.sendFollowUps()
-            }
+        mobileContentEvents.followUpEventButtonTappedSignal.addObserver(self) { [weak self] (followUpButtonEvent: FollowUpButtonEvent) in
+            self?.sendFollowUps(followUpButtonEvent: followUpButtonEvent)
         }
     }
     
     private func removeObservers() {
+        mobileContentEvents.followUpEventButtonTappedSignal.removeObserver(self)
         mobileContentEvents.eventButtonTappedSignal.removeObserver(self)
     }
     
-    private func sendFollowUps() {
+    private func sendFollowUps(followUpButtonEvent: FollowUpButtonEvent) {
         
         print("\n SEND FOLLOW UPS")
         
@@ -126,6 +125,10 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
             )
             
             followUpsService.postNewFollowUp(followUp: followUpModel)
+            
+            for event in followUpButtonEvent.triggerEventsOnFollowUpSent {
+                mobileContentEvents.eventButtonTapped(eventButton: ButtonEvent(event: event))
+            }
         }
         else {
             
