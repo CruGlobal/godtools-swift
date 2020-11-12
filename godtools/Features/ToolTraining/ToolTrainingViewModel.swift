@@ -94,11 +94,11 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
 
 extension ToolTrainingViewModel: ToolPageViewModelDelegate {
     
-    func toolPageUrlButtonTapped(url: String) {
+    func toolPageNextPageTapped() {
         
     }
     
-    func toolPageNextPageTapped() {
+    func toolPageError(error: ContentEventError) {
         
     }
 }

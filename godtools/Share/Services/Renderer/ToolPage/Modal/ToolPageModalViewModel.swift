@@ -21,7 +21,7 @@ class ToolPageModalViewModel: ToolPageModalViewModelType {
     
     let contentViewModel: ToolPageContentStackViewModel
     
-    required init(modalNode: ModalNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, followUpsService: FollowUpsService, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
+    required init(modalNode: ModalNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, localizationServices: LocalizationServices, followUpsService: FollowUpsService, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
         
         self.modalNode = modalNode
         self.manifest = manifest
@@ -40,6 +40,7 @@ class ToolPageModalViewModel: ToolPageModalViewModelType {
             mobileContentAnalytics: mobileContentAnalytics,
             mobileContentEvents: mobileContentEvents,
             fontService: fontService,
+            localizationServices: localizationServices,
             followUpsService: followUpsService,
             itemSpacing: 15,
             scrollIsEnabled: false,

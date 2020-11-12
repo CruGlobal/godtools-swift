@@ -56,6 +56,7 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
             mobileContentAnalytics: mobileContentAnalytics,
             mobileContentEvents: mobileContentEvents,
             fontService: fontService,
+            localizationServices: localizationServices,
             followUpsService: followUpsService,
             itemSpacing: 20,
             scrollIsEnabled: true,

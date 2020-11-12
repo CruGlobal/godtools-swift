@@ -11,6 +11,7 @@ import UIKit
 protocol ToolPageViewModelDelegate: class {
     
     func toolPageNextPageTapped()
+    func toolPageError(error: ContentEventError)
 }
 
 class ToolPageViewModel: NSObject, ToolPageViewModelType {
@@ -81,6 +82,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
                 mobileContentAnalytics: mobileContentAnalytics,
                 mobileContentEvents: mobileContentEvents,
                 fontService: fontService,
+                localizationServices: localizationServices,
                 followUpsService: followUpsService,
                 itemSpacing: 20,
                 scrollIsEnabled: true,
@@ -111,6 +113,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
                 mobileContentAnalytics: mobileContentAnalytics,
                 mobileContentEvents: mobileContentEvents,
                 fontService: fontService,
+                localizationServices: localizationServices,
                 followUpsService: followUpsService,
                 itemSpacing: 20,
                 scrollIsEnabled: true,
@@ -195,10 +198,23 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
             
             hiddenCardsViewModels.append(cardViewModel)
         }
+        
+        addObservers()
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+        removeObservers()
+    }
+    
+    private func addObservers() {
+        mobileContentEvents.contentErrorSignal.addObserver(self) { [weak self] (error: ContentEventError) in
+            self?.delegate?.toolPageError(error: error)
+        }
+    }
+    
+    private func removeObservers() {
+        mobileContentEvents.contentErrorSignal.removeObserver(self)
     }
     
     func handleCallToActionNextButtonTapped() {

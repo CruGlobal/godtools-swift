@@ -50,6 +50,7 @@ enum FlowStep {
     case shareMenuTappedFromTool(tractRemoteShareSubscriber: TractRemoteShareSubscriber, tractRemoteSharePublisher: TractRemoteSharePublisher, resource: ResourceModel, selectedLanguage: LanguageModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, pageNumber: Int)
     case sendEmailTappedFromTool(subject: String, message: String, isHtml: Bool)
     case urlLinkTappedFromTool(url: URL)
+    case toolDidEncounterErrorFromTool(error: ContentEventError)
     
     // share tool menu
     case shareToolTappedFromShareToolMenu(resource: ResourceModel, language: LanguageModel, pageNumber: Int)

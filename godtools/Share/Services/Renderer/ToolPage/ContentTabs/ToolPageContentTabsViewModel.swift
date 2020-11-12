@@ -17,6 +17,7 @@ class ToolPageContentTabsViewModel: ToolPageContentTabsViewModelType {
     private let mobileContentAnalytics: MobileContentAnalytics
     private let mobileContentEvents: MobileContentEvents
     private let fontService: FontService
+    private let localizationServices: LocalizationServices
     private let followUpsService: FollowUpsService
     private let toolPageColors: ToolPageColorsViewModel
     private let defaultTextNodeTextColor: UIColor?
@@ -26,7 +27,7 @@ class ToolPageContentTabsViewModel: ToolPageContentTabsViewModelType {
     let selectedTab: ObservableValue<Int> = ObservableValue(value: 0)
     let tabContent: ObservableValue<ToolPageContentStackViewModel?> = ObservableValue(value: nil)
     
-    required init(tabsNode: ContentTabsNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, followUpsService: FollowUpsService, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
+    required init(tabsNode: ContentTabsNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, localizationServices: LocalizationServices, followUpsService: FollowUpsService, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
         
         self.tabsNode = tabsNode
         self.manifest = manifest
@@ -35,6 +36,7 @@ class ToolPageContentTabsViewModel: ToolPageContentTabsViewModelType {
         self.mobileContentAnalytics = mobileContentAnalytics
         self.mobileContentEvents = mobileContentEvents
         self.fontService = fontService
+        self.localizationServices = localizationServices
         self.followUpsService = followUpsService
         self.toolPageColors = toolPageColors
         self.defaultTextNodeTextColor = defaultTextNodeTextColor
@@ -82,6 +84,7 @@ class ToolPageContentTabsViewModel: ToolPageContentTabsViewModelType {
             mobileContentAnalytics: mobileContentAnalytics,
             mobileContentEvents: mobileContentEvents,
             fontService: fontService,
+            localizationServices: localizationServices,
             followUpsService: followUpsService,
             itemSpacing: 10,
             scrollIsEnabled: false,

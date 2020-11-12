@@ -772,4 +772,9 @@ extension ToolViewModel: ToolPageViewModelDelegate {
         
         gotoNextPage(animated: true)
     }
+    
+    func toolPageError(error: ContentEventError) {
+        
+        flowDelegate?.navigate(step: .toolDidEncounterErrorFromTool(error: error))
+    }
 }

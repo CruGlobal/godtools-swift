@@ -157,6 +157,20 @@ class ToolsFlow: Flow {
         case .urlLinkTappedFromTool(let url):
             navigateToURL(url: url)
             
+        case .toolDidEncounterErrorFromTool(let error):
+            
+            let viewModel = AlertMessageViewModel(
+                title: error.title,
+                message: error.message,
+                cancelTitle: nil,
+                acceptTitle: appDiContainer.localizationServices.stringForMainBundle(key: "OK"),
+                acceptHandler: nil
+            )
+            
+            let view = AlertMessageView(viewModel: viewModel)
+            
+            navigationController.present(view.controller, animated: true, completion: nil)
+            
         case .closeTappedFromShareToolScreenTutorial:
             self.shareToolMenuFlow = nil
                         

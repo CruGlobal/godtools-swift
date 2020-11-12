@@ -19,6 +19,7 @@ class ToolPageContentStackViewModel {
     private let mobileContentAnalytics: MobileContentAnalytics
     private let mobileContentEvents: MobileContentEvents
     private let fontService: FontService
+    private let localizationServices: LocalizationServices
     private let followUpsService: FollowUpsService
     private let toolPageColors: ToolPageColorsViewModel
     private let defaultTextNodeTextColor: UIColor?
@@ -32,7 +33,7 @@ class ToolPageContentStackViewModel {
     let itemSpacing: CGFloat
     let scrollIsEnabled: Bool
     
-    required init(node: MobileContentXmlNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, followUpsService: FollowUpsService, itemSpacing: CGFloat, scrollIsEnabled: Bool, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
+    required init(node: MobileContentXmlNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, localizationServices: LocalizationServices, followUpsService: FollowUpsService, itemSpacing: CGFloat, scrollIsEnabled: Bool, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
         
         self.node = node
         self.manifest = manifest
@@ -41,6 +42,7 @@ class ToolPageContentStackViewModel {
         self.mobileContentAnalytics = mobileContentAnalytics
         self.mobileContentEvents = mobileContentEvents
         self.fontService = fontService
+        self.localizationServices = localizationServices
         self.followUpsService = followUpsService
         self.itemSpacing = itemSpacing
         self.scrollIsEnabled = scrollIsEnabled
@@ -169,6 +171,7 @@ class ToolPageContentStackViewModel {
             mobileContentAnalytics: mobileContentAnalytics,
             mobileContentEvents: mobileContentEvents,
             fontService: fontService,
+            localizationServices: localizationServices,
             followUpsService: followUpsService,
             itemSpacing: 5,
             scrollIsEnabled: false,
@@ -273,6 +276,7 @@ class ToolPageContentStackViewModel {
             mobileContentAnalytics: mobileContentAnalytics,
             mobileContentEvents: mobileContentEvents,
             fontService: fontService,
+            localizationServices: localizationServices,
             followUpsService: followUpsService,
             toolPageColors: toolPageColors,
             defaultTextNodeTextColor: defaultTextNodeTextColor
@@ -309,6 +313,7 @@ class ToolPageContentStackViewModel {
             mobileContentAnalytics: mobileContentAnalytics,
             mobileContentEvents: mobileContentEvents,
             fontService: fontService,
+            localizationServices: localizationServices,
             followUpsService: followUpsService,
             toolPageColors: toolPageColors,
             defaultTextNodeTextColor: defaultTextNodeTextColor
