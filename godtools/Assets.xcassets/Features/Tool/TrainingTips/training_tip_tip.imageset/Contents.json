@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "training_tip_light_bulb.png",
+      "filename" : "training_tip_tip.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "training_tip_light_bulb@2x.png",
+      "filename" : "training_tip_tip@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "training_tip_light_bulb@3x.png",
+      "filename" : "training_tip_tip@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
