@@ -29,7 +29,7 @@ class ToolPageModalViewModel: NSObject, ToolPageModalViewModelType {
     
     let contentViewModel: ToolPageContentStackViewModel
     
-    required init(delegate: ToolPageModalViewModelDelegate, modalNode: ModalNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, localizationServices: LocalizationServices, followUpsService: FollowUpsService, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
+    required init(delegate: ToolPageModalViewModelDelegate, modalNode: ModalNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, localizationServices: LocalizationServices, followUpsService: FollowUpsService, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
         
         self.delegate = delegate
         self.modalNode = modalNode
@@ -46,6 +46,7 @@ class ToolPageModalViewModel: NSObject, ToolPageModalViewModelType {
             manifest: manifest,
             language: language,
             translationsFileCache: translationsFileCache,
+            mobileContentNodeParser: mobileContentNodeParser,
             mobileContentAnalytics: mobileContentAnalytics,
             mobileContentEvents: mobileContentEvents,
             fontService: fontService,

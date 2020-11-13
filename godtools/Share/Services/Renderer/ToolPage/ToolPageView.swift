@@ -141,8 +141,14 @@ class ToolPageView: UIViewController {
                 heroHeight.constant = maximumHeight - callToActionView.frame.size.height
             }
             else if !hidesCards {
+                
+                guard let cardView = cards.first else {
+                    assertionFailure("Cards should be initialized and added at this point.")
+                    return
+                }
+                
                 let cardCount: CGFloat =  CGFloat(viewModel.cardsViewModels.count)
-                let cardTitleHeight: CGFloat = cards.first?.titleHeight ?? 50
+                let cardTitleHeight: CGFloat = cardView.cardHeaderHeight
                 heroHeight.constant = maximumHeight - (cardCount * cardTitleHeight)
             }
                          
@@ -374,7 +380,7 @@ extension ToolPageView {
         }
                 
         let numberOfCards: CGFloat = CGFloat(viewModel.cardsViewModels.count)
-        let cardTitleHeight: CGFloat = cardView.titleHeight
+        let cardTitleHeight: CGFloat = cardView.cardHeaderHeight
         let cardTopVisibilityHeight: CGFloat = floor(cardTitleHeight * cardCollapsedVisibilityPercentage)
         let collapsedCardsHeight: CGFloat = (cardTopVisibilityHeight * (numberOfCards - 1))
         
@@ -401,7 +407,7 @@ extension ToolPageView {
         }
         
         let numberOfCards: CGFloat = CGFloat(viewModel.cardsViewModels.count)
-        let cardTitleHeight: CGFloat = cardView.titleHeight
+        let cardTitleHeight: CGFloat = cardView.cardHeaderHeight
         
         switch state {
             

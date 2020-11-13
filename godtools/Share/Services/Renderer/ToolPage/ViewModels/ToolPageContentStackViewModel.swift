@@ -16,6 +16,7 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
     private let manifest: MobileContentXmlManifest
     private let language: LanguageModel
     private let translationsFileCache: TranslationsFileCache
+    private let mobileContentNodeParser: MobileContentXmlNodeParser
     private let mobileContentAnalytics: MobileContentAnalytics
     private let mobileContentEvents: MobileContentEvents
     private let fontService: FontService
@@ -31,12 +32,13 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
     private(set) var hiddenInputNodes: [ContentInputNode] = Array()
     private(set) var inputViewModels: [ToolPageContentInputViewModelType] = Array()
                 
-    required init(node: MobileContentXmlNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, localizationServices: LocalizationServices, followUpsService: FollowUpsService, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?, defaultButtonBorderColor: UIColor?) {
+    required init(node: MobileContentXmlNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, localizationServices: LocalizationServices, followUpsService: FollowUpsService, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?, defaultButtonBorderColor: UIColor?) {
         
         self.node = node
         self.manifest = manifest
         self.language = language
         self.translationsFileCache = translationsFileCache
+        self.mobileContentNodeParser = mobileContentNodeParser
         self.mobileContentAnalytics = mobileContentAnalytics
         self.mobileContentEvents = mobileContentEvents
         self.fontService = fontService
@@ -92,6 +94,22 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
             
             return MobileContentView(view: view, heightConstraintType: .setToAspectRatioOfProvidedSize(size: imageSize))
         }
+        else if let trainingTipNode = node as? TrainingTipNode, let trainingTipId = trainingTipNode.id {
+            
+            let viewModel = TrainingTipViewModel(
+                trainingTipId: trainingTipId,
+                manifest: manifest,
+                translationsFileCache: translationsFileCache,
+                mobileContentNodeParser: mobileContentNodeParser,
+                mobileContentEvents: mobileContentEvents
+            )
+            
+            let view = TrainingTipView(viewModel: viewModel, viewType: .rounded)
+            
+            let tipSize: CGFloat = 50
+            
+            return MobileContentView(view: view, heightConstraintType: .equalToSize(size: CGSize(width: tipSize, height: tipSize)))
+        }
         else if let buttonNode = node as? ContentButtonNode {
             
             let button: UIButton = getContentButton(
@@ -105,7 +123,7 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
             
             addButtonEvent(button: button, buttonNode: buttonNode)
                         
-            return MobileContentView(view: button, heightConstraintType: .equalToFrame)
+            return MobileContentView(view: button, heightConstraintType: .equalToHeight(height: button.frame.size.height))
         }
         else if let linkNode = node as? ContentLinkNode {
             
@@ -118,7 +136,7 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
             
             addLinkEvent(button: button, linkNode: linkNode)
                         
-            return MobileContentView(view: button, heightConstraintType: .equalToFrame)
+            return MobileContentView(view: button, heightConstraintType: .equalToHeight(height: button.frame.size.height))
         }
         else if let titleNode = node as? TitleNode, let titleTextNode = titleNode.textNode {
             
@@ -180,6 +198,7 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
             manifest: manifest,
             language: language,
             translationsFileCache: translationsFileCache,
+            mobileContentNodeParser: mobileContentNodeParser,
             mobileContentAnalytics: mobileContentAnalytics,
             mobileContentEvents: mobileContentEvents,
             fontService: fontService,
@@ -328,6 +347,7 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
             manifest: manifest,
             language: language,
             translationsFileCache: translationsFileCache,
+            mobileContentNodeParser: mobileContentNodeParser,
             mobileContentAnalytics: mobileContentAnalytics,
             mobileContentEvents: mobileContentEvents,
             fontService: fontService,
@@ -365,6 +385,7 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
             manifest: manifest,
             language: language,
             translationsFileCache: translationsFileCache,
+            mobileContentNodeParser: mobileContentNodeParser,
             mobileContentAnalytics: mobileContentAnalytics,
             mobileContentEvents: mobileContentEvents,
             fontService: fontService,

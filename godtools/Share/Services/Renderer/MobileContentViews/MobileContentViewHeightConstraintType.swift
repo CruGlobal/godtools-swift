@@ -11,7 +11,8 @@ import UIKit
 enum MobileContentViewHeightConstraintType {
     
     case constrainedToChildren
-    case equalToFrame
+    case equalToHeight(height: CGFloat)
+    case equalToSize(size: CGSize)
     case intrinsic
     case setToAspectRatioOfProvidedSize(size: CGSize)
 }

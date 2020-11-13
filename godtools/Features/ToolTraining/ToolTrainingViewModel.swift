@@ -90,6 +90,7 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
             manifest: manifest,
             language: language,
             translationsFileCache: translationsFileCache,
+            mobileContentNodeParser: mobileContentNodeParser,
             mobileContentAnalytics: mobileContentAnalytics,
             mobileContentEvents: mobileContentEvents,
             fontService: fontService,

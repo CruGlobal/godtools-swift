@@ -35,7 +35,7 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     let isHiddenCard: Bool
     let hidesCardNavigation: Bool
     
-    required init(delegate: ToolPageCardViewModelDelegate, cardNode: CardNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, cardPosition: Int, totalCards: Int, toolPageColors: ToolPageColorsViewModel) {
+    required init(delegate: ToolPageCardViewModelDelegate, cardNode: CardNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, cardPosition: Int, totalCards: Int, toolPageColors: ToolPageColorsViewModel) {
         
         let isHiddenCard: Bool = cardNode.hidden == "true"
         
@@ -53,6 +53,7 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
             manifest: manifest,
             language: language,
             translationsFileCache: translationsFileCache,
+            mobileContentNodeParser: mobileContentNodeParser,
             mobileContentAnalytics: mobileContentAnalytics,
             mobileContentEvents: mobileContentEvents,
             fontService: fontService,

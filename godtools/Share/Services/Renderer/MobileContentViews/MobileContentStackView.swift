@@ -85,9 +85,15 @@ class MobileContentStackView: UIView {
         
         mobileContentView.view.translatesAutoresizingMaskIntoConstraints = false
            
+        let constrainLeadingToSuperviewLeading: Bool
+        let constrainTrailingToSuperviewTrailing: Bool
+        
         switch mobileContentView.heightConstraintType {
             
         case .constrainedToChildren:
+            
+            constrainLeadingToSuperviewLeading = true
+            constrainTrailingToSuperviewTrailing = true
             
             let heightConstraint: NSLayoutConstraint = NSLayoutConstraint(
                 item: mobileContentView.view,
@@ -103,7 +109,10 @@ class MobileContentStackView: UIView {
             
             mobileContentView.view.addConstraint(heightConstraint)
             
-        case .equalToFrame:
+        case .equalToHeight(let height):
+            
+            constrainLeadingToSuperviewLeading = true
+            constrainTrailingToSuperviewTrailing = true
             
             let heightConstraint: NSLayoutConstraint = NSLayoutConstraint(
                 item: mobileContentView.view,
@@ -112,7 +121,40 @@ class MobileContentStackView: UIView {
                 toItem: nil,
                 attribute: .notAnAttribute,
                 multiplier: 1,
-                constant: mobileContentView.view.frame.size.height
+                constant: height
+            )
+            
+            heightConstraint.priority = UILayoutPriority(1000)
+            
+            mobileContentView.view.addConstraint(heightConstraint)
+            
+        case .equalToSize(let size):
+            
+            constrainLeadingToSuperviewLeading = true
+            constrainTrailingToSuperviewTrailing = false
+            
+            let widthConstraint: NSLayoutConstraint = NSLayoutConstraint(
+                item: mobileContentView.view,
+                attribute: .width,
+                relatedBy: .equal,
+                toItem: nil,
+                attribute: .notAnAttribute,
+                multiplier: 1,
+                constant: size.width
+            )
+            
+            widthConstraint.priority = UILayoutPriority(1000)
+            
+            mobileContentView.view.addConstraint(widthConstraint)
+            
+            let heightConstraint: NSLayoutConstraint = NSLayoutConstraint(
+                item: mobileContentView.view,
+                attribute: .height,
+                relatedBy: .equal,
+                toItem: nil,
+                attribute: .notAnAttribute,
+                multiplier: 1,
+                constant: size.height
             )
             
             heightConstraint.priority = UILayoutPriority(1000)
@@ -120,11 +162,16 @@ class MobileContentStackView: UIView {
             mobileContentView.view.addConstraint(heightConstraint)
             
         case .intrinsic:
+            constrainLeadingToSuperviewLeading = true
+            constrainTrailingToSuperviewTrailing = true
             // Do nothing because view is instrinsic and we use the intrinsic content size.
             break
             
         case .setToAspectRatioOfProvidedSize(let size):
-                        
+                   
+            constrainLeadingToSuperviewLeading = true
+            constrainTrailingToSuperviewTrailing = true
+            
             let aspectRatio: NSLayoutConstraint = NSLayoutConstraint(
                 item: mobileContentView.view,
                 attribute: .height,
@@ -138,25 +185,35 @@ class MobileContentStackView: UIView {
             mobileContentView.view.addConstraint(aspectRatio)
         }
         
-        let leading: NSLayoutConstraint = NSLayoutConstraint(
-            item: mobileContentView.view,
-            attribute: .leading,
-            relatedBy: .equal,
-            toItem: contentView,
-            attribute: .leading,
-            multiplier: 1,
-            constant: 0
-        )
+        if constrainLeadingToSuperviewLeading {
+            
+            let leading: NSLayoutConstraint = NSLayoutConstraint(
+                item: mobileContentView.view,
+                attribute: .leading,
+                relatedBy: .equal,
+                toItem: contentView,
+                attribute: .leading,
+                multiplier: 1,
+                constant: 0
+            )
+            
+            contentView.addConstraint(leading)
+        }
         
-        let trailing: NSLayoutConstraint = NSLayoutConstraint(
-            item: mobileContentView.view,
-            attribute: .trailing,
-            relatedBy: .equal,
-            toItem: contentView,
-            attribute: .trailing,
-            multiplier: 1,
-            constant: 0
-        )
+        if constrainTrailingToSuperviewTrailing {
+            
+            let trailing: NSLayoutConstraint = NSLayoutConstraint(
+                item: mobileContentView.view,
+                attribute: .trailing,
+                relatedBy: .equal,
+                toItem: contentView,
+                attribute: .trailing,
+                multiplier: 1,
+                constant: 0
+            )
+            
+            contentView.addConstraint(trailing)
+        }
         
         let bottom: NSLayoutConstraint = NSLayoutConstraint(
             item: mobileContentView.view,
@@ -167,6 +224,8 @@ class MobileContentStackView: UIView {
             multiplier: 1,
             constant: 0
         )
+        
+        contentView.addConstraint(bottom)
         
         let top: NSLayoutConstraint
         
@@ -195,9 +254,6 @@ class MobileContentStackView: UIView {
             )
         }
         
-        contentView.addConstraint(leading)
-        contentView.addConstraint(trailing)
-        contentView.addConstraint(bottom)
         contentView.addConstraint(top)
         
         lastAddedView = mobileContentView.view

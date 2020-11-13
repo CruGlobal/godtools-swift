@@ -22,7 +22,7 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
     
     let contentViewModel: ToolPageContentStackViewModel
     
-    required init(formNode: ContentFormNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, localizationServices: LocalizationServices, followUpsService: FollowUpsService, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
+    required init(formNode: ContentFormNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, localizationServices: LocalizationServices, followUpsService: FollowUpsService, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
         
         self.formNode = formNode
         self.language = language
@@ -39,6 +39,7 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
             manifest: manifest,
             language: language,
             translationsFileCache: translationsFileCache,
+            mobileContentNodeParser: mobileContentNodeParser,
             mobileContentAnalytics: mobileContentAnalytics,
             mobileContentEvents: mobileContentEvents,
             fontService: fontService,

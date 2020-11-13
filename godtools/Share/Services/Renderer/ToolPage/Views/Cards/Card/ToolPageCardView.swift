@@ -15,6 +15,7 @@ class ToolPageCardView: UIView {
     private var contentStackView: MobileContentStackView?
             
     @IBOutlet weak private var titleLabel: UILabel!
+    @IBOutlet weak private var headerTrainingTipImageView: UIImageView!
     @IBOutlet weak private var titleSeparatorLine: UIView!
     @IBOutlet weak private var headerButton: UIButton!
     @IBOutlet weak private var contentStackContainer: UIView!
@@ -131,8 +132,8 @@ class ToolPageCardView: UIView {
         contentStackView.setScollBarsHidden(hidden: true)
     }
     
-    var titleHeight: CGFloat {
-        return 50//titleSeparatorLine.frame.origin.y
+    var cardHeaderHeight: CGFloat {
+        return 50
     }
     
     @objc func handleHeader(button: UIButton) {
