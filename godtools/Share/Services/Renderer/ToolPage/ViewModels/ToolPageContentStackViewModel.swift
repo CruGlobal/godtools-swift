@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ToolPageContentStackViewModel {
+class ToolPageContentStackViewModel: MobileContentViewModelType {
     
     private static let numberFormatter: NumberFormatter = NumberFormatter()
     
@@ -30,11 +30,8 @@ class ToolPageContentStackViewModel {
     
     private(set) var hiddenInputNodes: [ContentInputNode] = Array()
     private(set) var inputViewModels: [ToolPageContentInputViewModelType] = Array()
-            
-    let itemSpacing: CGFloat
-    let scrollIsEnabled: Bool
-    
-    required init(node: MobileContentXmlNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, localizationServices: LocalizationServices, followUpsService: FollowUpsService, itemSpacing: CGFloat, scrollIsEnabled: Bool, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?, defaultButtonBorderColor: UIColor?) {
+                
+    required init(node: MobileContentXmlNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, localizationServices: LocalizationServices, followUpsService: FollowUpsService, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?, defaultButtonBorderColor: UIColor?) {
         
         self.node = node
         self.manifest = manifest
@@ -45,8 +42,6 @@ class ToolPageContentStackViewModel {
         self.fontService = fontService
         self.localizationServices = localizationServices
         self.followUpsService = followUpsService
-        self.itemSpacing = itemSpacing
-        self.scrollIsEnabled = scrollIsEnabled
         self.toolPageColors = toolPageColors
         self.defaultTextNodeTextColor = defaultTextNodeTextColor
         self.defaultButtonBorderColor = defaultButtonBorderColor
@@ -69,7 +64,7 @@ class ToolPageContentStackViewModel {
         
         if let paragraphNode = node as? ContentParagraphNode {
             
-            let contentStackView: ToolPageContentStackView = getContentParagraph(
+            let contentStackView: MobileContentStackView = getContentParagraph(
                 paragraphNode: paragraphNode
             )
                                     
@@ -178,7 +173,7 @@ class ToolPageContentStackViewModel {
     
     // MARK: - Content Views
     
-    private func getContentParagraph(paragraphNode: ContentParagraphNode) -> ToolPageContentStackView {
+    private func getContentParagraph(paragraphNode: ContentParagraphNode) -> MobileContentStackView {
         
         let viewModel = ToolPageContentStackViewModel(
             node: paragraphNode,
@@ -190,14 +185,12 @@ class ToolPageContentStackViewModel {
             fontService: fontService,
             localizationServices: localizationServices,
             followUpsService: followUpsService,
-            itemSpacing: 5,
-            scrollIsEnabled: false,
             toolPageColors: toolPageColors,
             defaultTextNodeTextColor: defaultTextNodeTextColor,
             defaultButtonBorderColor: defaultButtonBorderColor
         )
         
-        let view = ToolPageContentStackView(viewModel: viewModel)
+        let view = MobileContentStackView(viewModel: viewModel, itemSpacing: 5, scrollIsEnabled: false)
         
         return view
     }

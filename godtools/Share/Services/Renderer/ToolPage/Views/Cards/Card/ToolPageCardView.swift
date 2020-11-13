@@ -12,7 +12,7 @@ class ToolPageCardView: UIView {
     
     private let viewModel: ToolPageCardViewModelType
     
-    private var contentStackView: ToolPageContentStackView?
+    private var contentStackView: MobileContentStackView?
             
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var titleSeparatorLine: UIView!
@@ -117,7 +117,7 @@ class ToolPageCardView: UIView {
         nextButton.isHidden = viewModel.hidesCardNavigation
         
         let contentStackViewModel: ToolPageContentStackViewModel = viewModel.contentStackViewModel
-        let contentStackView: ToolPageContentStackView = ToolPageContentStackView(viewModel: contentStackViewModel)
+        let contentStackView: MobileContentStackView = MobileContentStackView(viewModel: contentStackViewModel, itemSpacing: 20, scrollIsEnabled: true)
         contentStackContainer.addSubview(contentStackView)
         contentStackView.constrainEdgesToSuperview()
         layoutIfNeeded()

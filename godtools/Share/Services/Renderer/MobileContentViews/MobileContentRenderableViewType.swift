@@ -1,5 +1,5 @@
 //
-//  MobileContentViewType.swift
+//  MobileContentRenderableViewType.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/11/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol MobileContentViewType {
+protocol MobileContentRenderableViewType {
     
     var view: UIView { get }
     var heightConstraintType: MobileContentViewHeightConstraintType { get }

@@ -11,13 +11,30 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ToolTrainingTipViewReuseIdentifier" id="wwp-FX-iA2" userLabel="TrainingTipView" customClass="ToolTrainingTipView" customModule="godtools" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="454" height="346"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="MWb-3b-9pZ">
-                <rect key="frame" x="0.0" y="0.0" width="454" height="346"/>
+                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZLR-do-R0q" userLabel="contentStackContainerView">
+                        <rect key="frame" x="30" y="0.0" width="354" height="896"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="ZLR-do-R0q" secondAttribute="bottom" id="Pz3-32-E5a"/>
+                    <constraint firstAttribute="trailing" secondItem="ZLR-do-R0q" secondAttribute="trailing" constant="30" id="oM3-R5-FDj"/>
+                    <constraint firstItem="ZLR-do-R0q" firstAttribute="top" secondItem="MWb-3b-9pZ" secondAttribute="top" id="sug-Ey-gf7"/>
+                    <constraint firstItem="ZLR-do-R0q" firstAttribute="leading" secondItem="MWb-3b-9pZ" secondAttribute="leading" constant="30" id="wZP-e7-SAU"/>
+                </constraints>
             </collectionViewCellContentView>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <size key="customSize" width="454" height="346"/>
+            <connections>
+                <outlet property="contentStackContainerView" destination="ZLR-do-R0q" id="BQp-By-SaS"/>
+            </connections>
             <point key="canvasLocation" x="-128.98550724637681" y="64.285714285714278"/>
         </collectionViewCell>
     </objects>

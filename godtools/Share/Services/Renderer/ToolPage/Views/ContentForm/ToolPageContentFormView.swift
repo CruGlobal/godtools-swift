@@ -51,7 +51,7 @@ class ToolPageContentFormView: UIView {
     
     private func setupBinding() {
         
-        let contentStackView = ToolPageContentStackView(viewModel: viewModel.contentViewModel)
+        let contentStackView = MobileContentStackView(viewModel: viewModel.contentViewModel, itemSpacing: 15, scrollIsEnabled: false)
         contentContainerView.addSubview(contentStackView)
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
         contentStackView.constrainEdgesToSuperview()

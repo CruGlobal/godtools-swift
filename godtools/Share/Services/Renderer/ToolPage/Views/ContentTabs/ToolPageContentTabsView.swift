@@ -83,7 +83,7 @@ class ToolPageContentTabsView: UIView {
             view.removeFromSuperview()
         }
         
-        let contentView = ToolPageContentStackView(viewModel: contentViewModel)
+        let contentView = MobileContentStackView(viewModel: contentViewModel, itemSpacing: 10, scrollIsEnabled: false)
         
         tabContentContainerView.addSubview(contentView)
         

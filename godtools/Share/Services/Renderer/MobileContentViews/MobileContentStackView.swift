@@ -1,5 +1,5 @@
 //
-//  ToolPageContentStackView.swift
+//  MobileContentStackView.swift
 //  godtools
 //
 //  Created by Levi Eggert on 10/27/20.
@@ -8,28 +8,30 @@
 
 import UIKit
 
-class ToolPageContentStackView: UIView {
+class MobileContentStackView: UIView {
     
-    private let viewModel: ToolPageContentStackViewModel
+    private let viewModel: MobileContentViewModelType
     private let contentView: UIView = UIView()
+    private let itemSpacing: CGFloat
     
     private var scrollView: UIScrollView?
     private var lastAddedView: UIView?
     private var lastAddedBottomConstraint: NSLayoutConstraint?
         
-    required init(viewModel: ToolPageContentStackViewModel) {
+    required init(viewModel: MobileContentViewModelType, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
                 
         self.viewModel = viewModel
+        self.itemSpacing = itemSpacing
         
-        super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: viewModel.itemSpacing))
+        super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: itemSpacing))
         
-        setupConstraints(scrollIsEnabled: viewModel.scrollIsEnabled)
+        setupConstraints(scrollIsEnabled: scrollIsEnabled)
                 
         backgroundColor = .clear
         contentView.backgroundColor = .clear
         scrollView?.backgroundColor = .clear
         
-        viewModel.render { [weak self] (mobileContentView: MobileContentView) in
+        viewModel.render { [weak self] (mobileContentView: MobileContentRenderableViewType) in
             self?.addContentView(mobileContentView: mobileContentView)
         }
     }
@@ -73,15 +75,8 @@ class ToolPageContentStackView: UIView {
         return false
     }
     
-    func addContentView(mobileContentView: MobileContentView) {
+    private func addContentView(mobileContentView: MobileContentRenderableViewType) {
              
-        if let stackView = mobileContentView.view as? ToolPageContentStackView {
-            let scrollIsEnabled: Bool = stackView.scrollView?.isScrollEnabled ?? false
-            if scrollIsEnabled {
-                assertionFailure("\n ToolPageContentStackView: addContentView() Failed to add stackView because scrollIsEnabled is set to true.  Adding stackViews within stackViews scrolling should not be enabled on child stackViews.")
-            }
-        }
-        
         if let lastAddedBottomConstraint = self.lastAddedBottomConstraint {
             contentView.removeConstraint(lastAddedBottomConstraint)
         }
@@ -184,7 +179,7 @@ class ToolPageContentStackView: UIView {
                 toItem: lastView,
                 attribute: .bottom,
                 multiplier: 1,
-                constant: viewModel.itemSpacing
+                constant: itemSpacing
             )
         }
         else {
@@ -212,7 +207,7 @@ class ToolPageContentStackView: UIView {
 
 // MARK: - Constraints
 
-extension ToolPageContentStackView {
+extension MobileContentStackView {
     
     private func setupConstraints(scrollIsEnabled: Bool) {
             

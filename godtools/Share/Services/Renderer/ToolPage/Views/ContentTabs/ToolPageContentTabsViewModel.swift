@@ -86,8 +86,6 @@ class ToolPageContentTabsViewModel: ToolPageContentTabsViewModelType {
             fontService: fontService,
             localizationServices: localizationServices,
             followUpsService: followUpsService,
-            itemSpacing: 10,
-            scrollIsEnabled: false,
             toolPageColors: toolPageColors,
             defaultTextNodeTextColor: defaultTextNodeTextColor,
             defaultButtonBorderColor: nil

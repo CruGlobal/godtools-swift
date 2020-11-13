@@ -14,8 +14,8 @@ class ToolPageView: UIViewController {
     private let safeAreaInsets: UIEdgeInsets
     private let panGestureToControlPageCollectionViewPanningSensitivity: UIPanGestureRecognizer = UIPanGestureRecognizer()
     
-    private var contentStackView: ToolPageContentStackView?
-    private var heroView: ToolPageContentStackView?
+    private var contentStackView: MobileContentStackView?
+    private var heroView: MobileContentStackView?
     private var cards: [ToolPageCardView] = Array()
     private var cardTopConstraints: [NSLayoutConstraint] = Array()
     private var hiddenCard: ToolPageCardView?
@@ -87,7 +87,7 @@ class ToolPageView: UIViewController {
         
         // contentStack
         if let contentStackViewModel = viewModel.contentStackViewModel {
-            let contentStackView: ToolPageContentStackView = ToolPageContentStackView(viewModel: contentStackViewModel)
+            let contentStackView: MobileContentStackView = MobileContentStackView(viewModel: contentStackViewModel, itemSpacing: 20, scrollIsEnabled: true)
             contentStackContainerView.addSubview(contentStackView)
             contentStackView.constrainEdgesToSuperview()
             contentStackContainerView.isHidden = false
@@ -148,7 +148,7 @@ class ToolPageView: UIViewController {
                          
             heroTop.constant = headerHeight + topInset
                                     
-            let heroView: ToolPageContentStackView = ToolPageContentStackView(viewModel: heroViewModel)
+            let heroView: MobileContentStackView = MobileContentStackView(viewModel: heroViewModel, itemSpacing: 20, scrollIsEnabled: true)
             heroContainerView.addSubview(heroView)
             heroView.constrainEdgesToSuperview()
             heroContainerView.isHidden = false

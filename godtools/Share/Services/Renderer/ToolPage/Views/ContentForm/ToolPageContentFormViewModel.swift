@@ -44,8 +44,6 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
             fontService: fontService,
             localizationServices: localizationServices,
             followUpsService: followUpsService,
-            itemSpacing: 15,
-            scrollIsEnabled: false,
             toolPageColors: toolPageColors,
             defaultTextNodeTextColor: defaultTextNodeTextColor,
             defaultButtonBorderColor: nil

@@ -51,8 +51,6 @@ class ToolPageModalViewModel: NSObject, ToolPageModalViewModelType {
             fontService: fontService,
             localizationServices: localizationServices,
             followUpsService: followUpsService,
-            itemSpacing: 15,
-            scrollIsEnabled: true,
             toolPageColors: toolPageColors,
             defaultTextNodeTextColor: nil,
             defaultButtonBorderColor: UIColor.white

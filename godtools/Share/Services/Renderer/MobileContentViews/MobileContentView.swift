@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MobileContentView {
+class MobileContentView: MobileContentRenderableViewType {
     
     let view: UIView
     let heightConstraintType: MobileContentViewHeightConstraintType

@@ -13,7 +13,9 @@ class ToolTrainingTipView: UICollectionViewCell {
     static let nibName: String = "ToolTrainingTipView"
     static let reuseIdentifier: String = "ToolTrainingTipViewReuseIdentifier"
     
-    private var tipContentStackView: ToolPageContentStackView?
+    private var tipContentStackView: MobileContentStackView?
+    
+    @IBOutlet weak private var contentStackContainerView: UIView!
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -23,8 +25,8 @@ class ToolTrainingTipView: UICollectionViewCell {
     
     func configure(viewModel: ToolPageContentStackViewModel) {
                 
-        let tipContentStackView = ToolPageContentStackView(viewModel: viewModel)
-        contentView.addSubview(tipContentStackView)
+        let tipContentStackView = MobileContentStackView(viewModel: viewModel, itemSpacing: 15, scrollIsEnabled: true)
+        contentStackContainerView.addSubview(tipContentStackView)
         tipContentStackView.constrainEdgesToSuperview()
                 
         self.tipContentStackView = tipContentStackView

@@ -99,8 +99,6 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
             fontService: fontService,
             localizationServices: localizationServices,
             followUpsService: followUpsService,
-            itemSpacing: 15,
-            scrollIsEnabled: true,
             toolPageColors: ToolPageColorsViewModel(pageNode: pageNode, manifest: manifest),
             defaultTextNodeTextColor: nil,
             defaultButtonBorderColor: nil

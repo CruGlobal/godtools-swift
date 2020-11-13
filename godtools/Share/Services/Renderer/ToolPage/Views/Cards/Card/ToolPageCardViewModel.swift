@@ -58,8 +58,6 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
             fontService: fontService,
             localizationServices: localizationServices,
             followUpsService: followUpsService,
-            itemSpacing: 20,
-            scrollIsEnabled: true,
             toolPageColors: toolPageColors,
             defaultTextNodeTextColor: toolPageColors.cardTextColor,
             defaultButtonBorderColor: nil

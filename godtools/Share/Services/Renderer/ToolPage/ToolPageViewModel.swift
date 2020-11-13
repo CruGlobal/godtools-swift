@@ -80,8 +80,6 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
                 fontService: fontService,
                 localizationServices: localizationServices,
                 followUpsService: followUpsService,
-                itemSpacing: 20,
-                scrollIsEnabled: true,
                 toolPageColors: toolPageColors,
                 defaultTextNodeTextColor: nil,
                 defaultButtonBorderColor: nil
@@ -111,8 +109,6 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
                 fontService: fontService,
                 localizationServices: localizationServices,
                 followUpsService: followUpsService,
-                itemSpacing: 20,
-                scrollIsEnabled: true,
                 toolPageColors: toolPageColors,
                 defaultTextNodeTextColor: nil,
                 defaultButtonBorderColor: nil
