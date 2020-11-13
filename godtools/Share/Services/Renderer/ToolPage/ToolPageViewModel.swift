@@ -11,6 +11,7 @@ import UIKit
 protocol ToolPageViewModelDelegate: class {
     
     func toolPagePresented(viewModel: ToolPageViewModel, page: Int)
+    func toolPageTrainingTipTapped(trainingTipId: String)
     func toolPageNextPageTapped()
     func toolPageError(error: ContentEventError)
 }
@@ -243,6 +244,10 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         }
     }
     
+    var hidesTrainingTip: Bool {
+        return pageNode.headerNode?.trainingTip?.isEmpty ?? true
+    }
+    
     private func addObservers() {
         
         mobileContentEvents.eventButtonTappedSignal.addObserver(self) { [weak self] (buttonEvent: ButtonEvent) in
@@ -268,7 +273,14 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         return ToolPageInitialPositions(page: page, card: currentCard.value.value)
     }
     
-    func handleCallToActionNextButtonTapped() {
+    func headerTrainingTipTapped() {
+        guard let trainingTipId = pageNode.headerNode?.trainingTip, !trainingTipId.isEmpty else {
+            return
+        }
+        delegate?.toolPageTrainingTipTapped(trainingTipId: trainingTipId)
+    }
+    
+    func callToActionNextButtonTapped() {
         delegate?.toolPageNextPageTapped()
     }
     

@@ -14,8 +14,14 @@ class HeaderNode: MobileContentXmlNode {
     private(set) var number: String?
     private(set) var title: String?
     
+    let trainingTip: String?
+    
     required init(xmlElement: XMLElement) {
     
+        let attributes: [String: XMLAttribute] = xmlElement.allAttributes
+        
+        trainingTip = attributes["training:tip"]?.text
+        
         super.init(xmlElement: xmlElement)
     }
     

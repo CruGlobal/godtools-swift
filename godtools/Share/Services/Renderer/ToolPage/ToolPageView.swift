@@ -11,7 +11,6 @@ import UIKit
 class ToolPageView: UIViewController {
     
     private let viewModel: ToolPageViewModelType
-    private let windowViewController: UIViewController
     private let safeAreaInsets: UIEdgeInsets
     private let panGestureToControlPageCollectionViewPanningSensitivity: UIPanGestureRecognizer = UIPanGestureRecognizer()
     
@@ -24,6 +23,8 @@ class ToolPageView: UIViewController {
     private var currentCardState: ToolPageCardsState = .initialized
     private var toolModal: ToolPageModalView?
     private var didLayoutSubviews: Bool = false
+    
+    private weak var windowViewController: UIViewController?
     
     @IBOutlet weak private var backgroundImageView: UIImageView!
     @IBOutlet weak private var contentStackContainerView: UIView!
@@ -65,6 +66,7 @@ class ToolPageView: UIViewController {
         setupLayout()
         setupBinding()
         
+        headerTrainingTipButton.addTarget(self, action: #selector(handleHeaderTrainingTip(button:)), for: .touchUpInside)
         callToActionNextButton.addTarget(self, action: #selector(handleCallToActionNext(button:)), for: .touchUpInside)
         
         view.addGestureRecognizer(panGestureToControlPageCollectionViewPanningSensitivity)
@@ -186,7 +188,7 @@ class ToolPageView: UIViewController {
         headerTitleLabel.setLineSpacing(lineSpacing: 2)
         
         // headerTrainingTipButton
-    
+        headerTrainingTipButton.isHidden = viewModel.hidesTrainingTip
         headerTrainingTipButton.imageView?.contentMode = .scaleAspectFit
             
         // callToAction
@@ -210,8 +212,12 @@ class ToolPageView: UIViewController {
         return viewModel.getCurrentPositions()
     }
     
+    @objc func handleHeaderTrainingTip(button: UIButton) {
+        viewModel.headerTrainingTipTapped()
+    }
+    
     @objc func handleCallToActionNext(button: UIButton) {
-        viewModel.handleCallToActionNextButtonTapped()
+        viewModel.callToActionNextButtonTapped()
     }
     
     private func setHeroContentInsets(hidesHeader: Bool) {
@@ -284,14 +290,14 @@ extension ToolPageView {
     
     private func presentModal(viewModel: ToolPageModalViewModel, animated: Bool) {
         
-        guard toolModal == nil else {
+        guard toolModal == nil, let window = self.windowViewController else {
             return
         }
         
         let toolModal: ToolPageModalView = ToolPageModalView(viewModel: viewModel)
         
-        windowViewController.view.addSubview(toolModal)
-        toolModal.frame = windowViewController.view.bounds
+        window.view.addSubview(toolModal)
+        toolModal.frame = window.view.bounds
                         
         self.toolModal = toolModal
         

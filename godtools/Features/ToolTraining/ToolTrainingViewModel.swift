@@ -10,21 +10,40 @@ import UIKit
 
 class ToolTrainingViewModel: ToolTrainingViewModelType {
     
+    private let language: LanguageModel
     private let tipXml: Data
+    private let manifest: MobileContentXmlManifest
+    private let translationsFileCache: TranslationsFileCache
     private let mobileContentNodeParser: MobileContentXmlNodeParser
+    private let mobileContentAnalytics: MobileContentAnalytics
+    private let mobileContentEvents: MobileContentEvents
+    private let fontService: FontService
+    private let followUpsService: FollowUpsService
+    private let localizationServices: LocalizationServices
     
     private var pageNodes: [PageNode] = Array()
     private var page: Int = 0
+    
+    private weak var flowDelegate: FlowDelegate?
     
     let progress: ObservableValue<AnimatableValue<CGFloat>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
     let icon: ObservableValue<UIImage?> = ObservableValue(value: nil)
     let title: ObservableValue<String> = ObservableValue(value: "")
     let numberOfTipPages: ObservableValue<Int> = ObservableValue(value: 0)
     
-    required init(tipXml: Data, mobileContentNodeParser: MobileContentXmlNodeParser) {
+    required init(flowDelegate: FlowDelegate, language: LanguageModel, tipXml: Data, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices) {
         
+        self.flowDelegate = flowDelegate
+        self.language = language
         self.tipXml = tipXml
+        self.manifest = manifest
+        self.translationsFileCache = translationsFileCache
         self.mobileContentNodeParser = mobileContentNodeParser
+        self.mobileContentAnalytics = mobileContentAnalytics
+        self.mobileContentEvents = mobileContentEvents
+        self.fontService = fontService
+        self.followUpsService = followUpsService
+        self.localizationServices = localizationServices
         
         mobileContentNodeParser.asyncParse(xml: tipXml) { [weak self] (node: MobileContentXmlNode?) in
             guard let tipNode = node as? TipNode else {
@@ -49,11 +68,11 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
     }
     
     func overlayTapped() {
-        
+        flowDelegate?.navigate(step: .closeTappedFromToolTraining)
     }
     
     func closeTapped() {
-        
+        flowDelegate?.navigate(step: .closeTappedFromToolTraining)
     }
     
     func continueTapped() {
@@ -66,19 +85,26 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
         }
     }
     
-    func tipPageWillAppear(page: Int) -> ToolPageViewModel? {
+    func tipPageWillAppear(page: Int) -> ToolPageContentStackViewModel {
             
         let pageNode: PageNode = pageNodes[page]
         
-        /*
-        return ToolPageViewModel(
-            delegate: self,
-            pageNode: pageNode,
-            toolRenderer: toolRenderer,
-            hidesBackgroundImage: false
-        )*/
-        
-        return nil
+        return ToolPageContentStackViewModel(
+            node: pageNode,
+            manifest: manifest,
+            language: language,
+            translationsFileCache: translationsFileCache,
+            mobileContentAnalytics: mobileContentAnalytics,
+            mobileContentEvents: mobileContentEvents,
+            fontService: fontService,
+            localizationServices: localizationServices,
+            followUpsService: followUpsService,
+            itemSpacing: 15,
+            scrollIsEnabled: true,
+            toolPageColors: ToolPageColorsViewModel(pageNode: pageNode, manifest: manifest),
+            defaultTextNodeTextColor: nil,
+            defaultButtonBorderColor: nil
+        )
     }
     
     func tipPageDidChange(page: Int) {
@@ -95,6 +121,10 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
 extension ToolTrainingViewModel: ToolPageViewModelDelegate {
     
     func toolPagePresented(viewModel: ToolPageViewModel, page: Int) {
+        
+    }
+    
+    func toolPageTrainingTipTapped(trainingTipId: String) {
         
     }
     

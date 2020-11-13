@@ -16,7 +16,7 @@ protocol ToolViewModelType {
     var isRightToLeftLanguage: Bool { get }
     var remoteShareIsActive: ObservableValue<Bool> { get }
     var numberOfToolPages: ObservableValue<Int> { get }
-    
+
     func navHomeTapped()
     func shareTapped()
     func primaryLanguageTapped(currentToolPagePositions: ToolPageInitialPositions?)

@@ -171,6 +171,52 @@ class ToolsFlow: Flow {
             
             navigationController.present(view.controller, animated: true, completion: nil)
             
+        case .toolTrainingTipTappedFromTool(let manifest, let trainingTipId, let language):
+            
+            let manifestTip: MobileContentXmlManifestTip? = manifest.tips[trainingTipId]
+            
+            guard let manifestTipSrc = manifestTip?.src else {
+                return
+            }
+            
+            let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
+            let location: SHA256FileLocation = SHA256FileLocation(sha256WithPathExtension: manifestTipSrc)
+            
+            switch translationsFileCache.getData(location: location) {
+                
+            case .success(let xmlData):
+                
+                guard let tipXmlData = xmlData else {
+                    return
+                }
+                
+                let viewModel = ToolTrainingViewModel(
+                    flowDelegate: self,
+                    language: language,
+                    tipXml: tipXmlData,
+                    manifest: manifest,
+                    translationsFileCache: translationsFileCache,
+                    mobileContentNodeParser: appDiContainer.getMobileContentNodeParser(),
+                    mobileContentAnalytics: appDiContainer.getMobileContentAnalytics(),
+                    mobileContentEvents: appDiContainer.getMobileContentEvents(),
+                    fontService: appDiContainer.getFontService(),
+                    followUpsService: appDiContainer.followUpsService,
+                    localizationServices: appDiContainer.localizationServices
+                )
+                
+                let view = ToolTrainingView(viewModel: viewModel)
+                
+                navigationController.present(view, animated: true, completion: nil)
+            
+            case .failure(let error):
+                // TODO: Report error that tips xml couldn't be loaded. ~Levi
+                break
+            }
+            
+        case .closeTappedFromToolTraining:
+            
+            navigationController.dismiss(animated: true, completion: nil)
+            
         case .closeTappedFromShareToolScreenTutorial:
             self.shareToolMenuFlow = nil
                         

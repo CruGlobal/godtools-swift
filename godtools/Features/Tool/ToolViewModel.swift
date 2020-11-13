@@ -446,6 +446,29 @@ extension ToolViewModel: ToolPageViewModelDelegate {
         currentPage.accept(value: AnimatableValue(value: page, animated: true))
     }
     
+    func toolPageTrainingTipTapped(trainingTipId: String) {
+        
+        let manifest: MobileContentXmlManifest?
+        let language: LanguageModel?
+        
+        if primaryLanguageIsSelected {
+            manifest = primaryTranslationManifest
+            language = primaryLanguage
+        }
+        else if parallelLanguageIsSelected, let parallelTranslationManifest = self.parallelTranslationManifest {
+            manifest = parallelTranslationManifest
+            language = parallelLanguage
+        }
+        else {
+            manifest = nil
+            language = nil
+        }
+        
+        if let manifest = manifest, let language = language {
+            flowDelegate?.navigate(step: .toolTrainingTipTappedFromTool(manifest: manifest, trainingTipId: trainingTipId, language: language))
+        }
+    }
+    
     func toolPageNextPageTapped() {
         
         gotoNextPage(animated: true)
