@@ -572,6 +572,10 @@
 		459698D4255DE0820085755A /* FollowUpButtonEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459698D3255DE0820085755A /* FollowUpButtonEvent.swift */; };
 		459698D7255E03EB0085755A /* ToolPageInitialPositions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459698D6255E03EB0085755A /* ToolPageInitialPositions.swift */; };
 		459698D9255E1FBA0085755A /* TrainingTipNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459698D8255E1FBA0085755A /* TrainingTipNode.swift */; };
+		459698DC255E233D0085755A /* TrainingTipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459698DB255E233D0085755A /* TrainingTipView.swift */; };
+		459698DE255E23560085755A /* TrainingTipView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 459698DD255E23560085755A /* TrainingTipView.xib */; };
+		459698E0255E23EC0085755A /* TrainingTipViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459698DF255E23EC0085755A /* TrainingTipViewModel.swift */; };
+		459698E2255E23F90085755A /* TrainingTipViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459698E1255E23F90085755A /* TrainingTipViewModelType.swift */; };
 		459A198624E4C34500A59BBD /* CustomViewBuilderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459A198524E4C34500A59BBD /* CustomViewBuilderType.swift */; };
 		459A198A24E4C3DD00A59BBD /* TutorialItemViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459A198924E4C3DD00A59BBD /* TutorialItemViewBuilder.swift */; };
 		459A198C24E4C44800A59BBD /* CustomTutorialViewId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459A198B24E4C44800A59BBD /* CustomTutorialViewId.swift */; };
@@ -1380,6 +1384,10 @@
 		459698D3255DE0820085755A /* FollowUpButtonEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowUpButtonEvent.swift; sourceTree = "<group>"; };
 		459698D6255E03EB0085755A /* ToolPageInitialPositions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolPageInitialPositions.swift; sourceTree = "<group>"; };
 		459698D8255E1FBA0085755A /* TrainingTipNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingTipNode.swift; sourceTree = "<group>"; };
+		459698DB255E233D0085755A /* TrainingTipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingTipView.swift; sourceTree = "<group>"; };
+		459698DD255E23560085755A /* TrainingTipView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrainingTipView.xib; sourceTree = "<group>"; };
+		459698DF255E23EC0085755A /* TrainingTipViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingTipViewModel.swift; sourceTree = "<group>"; };
+		459698E1255E23F90085755A /* TrainingTipViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingTipViewModelType.swift; sourceTree = "<group>"; };
 		459A198524E4C34500A59BBD /* CustomViewBuilderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewBuilderType.swift; sourceTree = "<group>"; };
 		459A198924E4C3DD00A59BBD /* TutorialItemViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialItemViewBuilder.swift; sourceTree = "<group>"; };
 		459A198B24E4C44800A59BBD /* CustomTutorialViewId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTutorialViewId.swift; sourceTree = "<group>"; };
@@ -3057,6 +3065,7 @@
 				45969889255DCFFF0085755A /* ContentStack */,
 				45969884255DCFFF0085755A /* ContentTabs */,
 				45969899255DCFFF0085755A /* Modal */,
+				459698DA255E22F50085755A /* TrainingTip */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3161,6 +3170,17 @@
 				459698D6255E03EB0085755A /* ToolPageInitialPositions.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		459698DA255E22F50085755A /* TrainingTip */ = {
+			isa = PBXGroup;
+			children = (
+				459698DB255E233D0085755A /* TrainingTipView.swift */,
+				459698DD255E23560085755A /* TrainingTipView.xib */,
+				459698DF255E23EC0085755A /* TrainingTipViewModel.swift */,
+				459698E1255E23F90085755A /* TrainingTipViewModelType.swift */,
+			);
+			path = TrainingTip;
 			sourceTree = "<group>";
 		};
 		459A71DF24C9C4F500B77942 /* WebSocket */ = {
@@ -4309,6 +4329,7 @@
 				451EBE3D24AD968B00C4D6DD /* e961f409d06308e87deb9ed9166264c7c732d9dc24e70f886944636308810d6e.png in Resources */,
 				45EDC53E249BAB970020DC62 /* ToolDetailView.xib in Resources */,
 				452AB5822446058300445050 /* ChooseLanguageView.xib in Resources */,
+				459698DE255E23560085755A /* TrainingTipView.xib in Resources */,
 				4506DE9A24B7974900A1C50B /* AboutTextCell.xib in Resources */,
 				4556AED523E221FE002C15E8 /* AbyssinicaSIL-R.ttf in Resources */,
 				45FCFF79243D0BE000865501 /* LanguageSettingsView.xib in Resources */,
@@ -4885,6 +4906,7 @@
 				45BEE3FE24EC76AA003AA7A2 /* ActionCableEventType.swift in Sources */,
 				45732229244548A800D653FF /* ChooseLanguageCellViewModelType.swift in Sources */,
 				4585623E2550E56C0081CC28 /* FontService.swift in Sources */,
+				459698E2255E23F90085755A /* TrainingTipViewModelType.swift in Sources */,
 				4530DCA824A3D4BD000DA516 /* JsonServicesType.swift in Sources */,
 				45249D2724AD0B1800E139AD /* ResourcesCacheResult.swift in Sources */,
 				4596989F255DCFFF0085755A /* ToolPageContentFormViewModel.swift in Sources */,
@@ -5119,6 +5141,7 @@
 				459C3FE024C5F296006E81CA /* TractRemoteShareSubscriber.swift in Sources */,
 				45D5693524931E0F003E5798 /* RequestReceipt.swift in Sources */,
 				4586D7E8246ECEE90062D988 /* TractButton.swift in Sources */,
+				459698E0255E23EC0085755A /* TrainingTipViewModel.swift in Sources */,
 				450E21BF24919E5500D489A1 /* ResourcesPlusLatestTranslationsAndAttachmentsModel.swift in Sources */,
 				45B2AE49245886B100253BAD /* MailViewModel.swift in Sources */,
 				45EE3326246E237B003CC641 /* TractPageCache.swift in Sources */,
@@ -5135,6 +5158,7 @@
 				4506DEA524B79CD100A1C50B /* MenuSectionHeaderView.swift in Sources */,
 				45A163552553473500ACFB3F /* ToolPageColorsViewModel.swift in Sources */,
 				4579169F24E84F8500C0CF49 /* LoadToolRemoteSessionViewModel.swift in Sources */,
+				459698DC255E233D0085755A /* TrainingTipView.swift in Sources */,
 				451DB1442461DA4200FB14BF /* TractCallToActionProperties.swift in Sources */,
 				451F3F1B24E458A000A25D11 /* ShareToolMenuViewModel.swift in Sources */,
 				45C2CFF32409B61000683A98 /* GlobalActivityAnalytics.swift in Sources */,

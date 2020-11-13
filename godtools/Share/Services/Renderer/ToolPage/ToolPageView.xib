@@ -19,6 +19,7 @@
                 <outlet property="headerNumberLabel" destination="tvf-5i-lnH" id="4W5-tO-hNh"/>
                 <outlet property="headerTitleLabel" destination="6zT-2z-aAt" id="45f-eY-ao5"/>
                 <outlet property="headerTop" destination="xz2-vR-tNc" id="LhA-3s-y9Z"/>
+                <outlet property="headerTrainingTipButton" destination="CBv-tQ-LRW" id="5Yu-1d-q58"/>
                 <outlet property="headerView" destination="fDq-Oz-qfu" id="CvZ-yX-v0w"/>
                 <outlet property="heroContainerView" destination="W0e-5d-5fy" id="6YC-0v-sQv"/>
                 <outlet property="heroHeight" destination="5Mo-BB-qCH" id="MRf-tP-x8Z"/>
@@ -81,6 +82,15 @@
                         <constraint firstAttribute="trailing" secondItem="6zT-2z-aAt" secondAttribute="trailing" constant="20" id="e5h-Ek-TKI"/>
                     </constraints>
                 </view>
+                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CBv-tQ-LRW" userLabel="headerTrainingTipButton">
+                    <rect key="frame" x="58" y="57" width="50" height="50"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="CZs-jS-y40"/>
+                        <constraint firstAttribute="width" constant="50" id="G1x-XO-1eF"/>
+                    </constraints>
+                    <state key="normal" image="training_tip_light_bulb"/>
+                </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vNO-5W-ee8" userLabel="callToActionView">
                     <rect key="frame" x="0.0" y="811.5" width="414" height="84.5"/>
                     <subviews>
@@ -120,6 +130,7 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="CBv-tQ-LRW" firstAttribute="top" secondItem="fDq-Oz-qfu" secondAttribute="bottom" constant="-14" id="3bM-Xk-mvu"/>
                 <constraint firstItem="W0e-5d-5fy" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" constant="-30" id="7wH-UJ-zda"/>
                 <constraint firstItem="fDq-Oz-qfu" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="8zY-5g-jrY"/>
                 <constraint firstItem="iQQ-dy-v0D" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" constant="-30" id="Dmf-LY-as3"/>
@@ -131,6 +142,7 @@
                 <constraint firstItem="iQQ-dy-v0D" firstAttribute="bottom" secondItem="6RN-4u-szb" secondAttribute="bottom" id="bA1-Wv-U79"/>
                 <constraint firstItem="Fq2-k9-BHr" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="fvY-K0-EeF"/>
                 <constraint firstItem="hSb-LO-Zv1" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="gG0-L9-mIR"/>
+                <constraint firstItem="CBv-tQ-LRW" firstAttribute="leading" secondItem="6zT-2z-aAt" secondAttribute="leading" constant="-20" id="gc0-r6-POB"/>
                 <constraint firstItem="vNO-5W-ee8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="ikC-Ee-HXA"/>
                 <constraint firstItem="Fq2-k9-BHr" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="jd8-tY-Fzw"/>
                 <constraint firstAttribute="trailing" secondItem="Fq2-k9-BHr" secondAttribute="trailing" id="mw5-SD-YSH"/>
@@ -149,5 +161,6 @@
     </objects>
     <resources>
         <image name="right_arrow_blue" width="22" height="22"/>
+        <image name="training_tip_light_bulb" width="55" height="63"/>
     </resources>
 </document>

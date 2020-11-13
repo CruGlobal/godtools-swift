@@ -28,6 +28,7 @@ class ToolPageView: UIViewController {
     @IBOutlet weak private var backgroundImageView: UIImageView!
     @IBOutlet weak private var contentStackContainerView: UIView!
     @IBOutlet weak private var headerView: UIView!
+    @IBOutlet weak private var headerTrainingTipButton: UIButton!
     @IBOutlet weak private var headerNumberLabel: UILabel!
     @IBOutlet weak private var headerTitleLabel: UILabel!
     @IBOutlet weak private var heroContainerView: UIView!
@@ -183,7 +184,11 @@ class ToolPageView: UIViewController {
         headerTitleLabel.text = headerViewModel.headerTitle
         headerTitleLabel.textColor = headerViewModel.headerTitleColor
         headerTitleLabel.setLineSpacing(lineSpacing: 2)
-                
+        
+        // headerTrainingTipButton
+    
+        headerTrainingTipButton.imageView?.contentMode = .scaleAspectFit
+            
         // callToAction
         let callToActionViewModel: ToolPageCallToActionViewModel = viewModel.callToActionViewModel
         callToActionTitleLabel.text = callToActionViewModel.callToActionTitle
@@ -239,11 +244,13 @@ class ToolPageView: UIViewController {
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
                 self.view.layoutIfNeeded()
                 self.headerView.alpha = headerAlpha
+                self.headerTrainingTipButton.alpha = headerAlpha
             }, completion: nil)
         }
         else {
             view.layoutIfNeeded()
             headerView.alpha = headerAlpha
+            headerTrainingTipButton.alpha = headerAlpha
         }
     }
     
