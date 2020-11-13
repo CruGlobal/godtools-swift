@@ -570,6 +570,7 @@
 		459698D1255DE0280085755A /* ButtonEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459698CD255DE0280085755A /* ButtonEvent.swift */; };
 		459698D2255DE0280085755A /* ContentEventError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459698CE255DE0280085755A /* ContentEventError.swift */; };
 		459698D4255DE0820085755A /* FollowUpButtonEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459698D3255DE0820085755A /* FollowUpButtonEvent.swift */; };
+		459698D7255E03EB0085755A /* ToolPageInitialPositions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459698D6255E03EB0085755A /* ToolPageInitialPositions.swift */; };
 		459A198624E4C34500A59BBD /* CustomViewBuilderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459A198524E4C34500A59BBD /* CustomViewBuilderType.swift */; };
 		459A198A24E4C3DD00A59BBD /* TutorialItemViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459A198924E4C3DD00A59BBD /* TutorialItemViewBuilder.swift */; };
 		459A198C24E4C44800A59BBD /* CustomTutorialViewId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459A198B24E4C44800A59BBD /* CustomTutorialViewId.swift */; };
@@ -1376,6 +1377,7 @@
 		459698CD255DE0280085755A /* ButtonEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonEvent.swift; sourceTree = "<group>"; };
 		459698CE255DE0280085755A /* ContentEventError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentEventError.swift; sourceTree = "<group>"; };
 		459698D3255DE0820085755A /* FollowUpButtonEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowUpButtonEvent.swift; sourceTree = "<group>"; };
+		459698D6255E03EB0085755A /* ToolPageInitialPositions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolPageInitialPositions.swift; sourceTree = "<group>"; };
 		459A198524E4C34500A59BBD /* CustomViewBuilderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewBuilderType.swift; sourceTree = "<group>"; };
 		459A198924E4C3DD00A59BBD /* TutorialItemViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialItemViewBuilder.swift; sourceTree = "<group>"; };
 		459A198B24E4C44800A59BBD /* CustomTutorialViewId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTutorialViewId.swift; sourceTree = "<group>"; };
@@ -2942,6 +2944,7 @@
 				457D9823254B4F9F000B8159 /* ToolPageView.xib */,
 				457D9822254B4F9F000B8159 /* ToolPageViewModel.swift */,
 				457D9821254B4F9F000B8159 /* ToolPageViewModelType.swift */,
+				459698D5255E03CA0085755A /* Models */,
 				4596987E255DCFFF0085755A /* Views */,
 				45A163532553472000ACFB3F /* ViewModels */,
 			);
@@ -3145,6 +3148,14 @@
 				459698CE255DE0280085755A /* ContentEventError.swift */,
 				459698D3255DE0820085755A /* FollowUpButtonEvent.swift */,
 				459698CC255DE0280085755A /* UrlButtonEvent.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		459698D5255E03CA0085755A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				459698D6255E03EB0085755A /* ToolPageInitialPositions.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -4722,6 +4733,7 @@
 				45249D0D24ACB22A00E139AD /* FollowUpsService.swift in Sources */,
 				453AD7A723FF212700921D75 /* AccountItemViewType.swift in Sources */,
 				454315A224A1464100B5C37B /* SHA256FileModelType.swift in Sources */,
+				459698D7255E03EB0085755A /* ToolPageInitialPositions.swift in Sources */,
 				45BFD71A23E4DF00004A097B /* MenuCellViewModel.swift in Sources */,
 				459698AF255DCFFF0085755A /* ToolPageContentInputViewModelType.swift in Sources */,
 				451DB0C92461D90000FB14BF /* TractAnalyticEvent.swift in Sources */,

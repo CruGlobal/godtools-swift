@@ -10,7 +10,6 @@ import UIKit
 
 class ToolPageView: UIViewController {
     
-    private let viewModel: ToolPageViewModelType
     private let windowViewController: UIViewController
     private let safeAreaInsets: UIEdgeInsets
     private let panGestureToControlPageCollectionViewPanningSensitivity: UIPanGestureRecognizer = UIPanGestureRecognizer()
@@ -24,6 +23,8 @@ class ToolPageView: UIViewController {
     private var currentCardState: ToolPageCardsState = .initialized
     private var toolModal: ToolPageModalView?
     private var didLayoutSubviews: Bool = false
+    
+    let viewModel: ToolPageViewModelType
     
     @IBOutlet weak private var backgroundImageView: UIImageView!
     @IBOutlet weak private var contentStackContainerView: UIView!
@@ -107,8 +108,8 @@ class ToolPageView: UIViewController {
             
             setCardsState(cardsState: .starting, animated: false)
             
-            viewModel.currentCard.addObserver(self) { [weak self] (cardPosition: Int?) in
-                self?.setCardsState(cardsState: .showingCard(showingCardAtPosition: cardPosition), animated: true)
+            viewModel.currentCard.addObserver(self) { [weak self] (cardPositionAnimatable: AnimatableValue<Int?>) in
+                self?.setCardsState(cardsState: .showingCard(showingCardAtPosition: cardPositionAnimatable.value), animated: cardPositionAnimatable.animated)
             }
         }
         
