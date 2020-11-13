@@ -37,14 +37,12 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     
     private weak var delegate: ToolPageViewModelDelegate?
     
-    let backgroundColor: UIColor
-    let backgroundImage: UIImage?
     let contentStackViewModel: ToolPageContentStackViewModel?
     let headerViewModel: ToolPageHeaderViewModel
     let heroViewModel: ToolPageContentStackViewModel?
     let hidesCards: Bool
     let currentCard: ObservableValue<AnimatableValue<Int?>> = ObservableValue(value: AnimatableValue(value: nil, animated: false))
-    let hiddenCard: ObservableValue<ToolPageCardViewModel?> = ObservableValue(value: nil)
+    let hiddenCard: ObservableValue<AnimatableValue<Int?>> = ObservableValue(value: AnimatableValue(value: nil, animated: false))
     let callToActionViewModel: ToolPageCallToActionViewModel
     let modal: ObservableValue<ToolPageModalViewModel?> = ObservableValue(value: nil)
     
@@ -65,17 +63,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         self.toolPageColors = ToolPageColorsViewModel(pageNode: pageNode, manifest: manifest)
         self.page = page
         self.initialPositions = initialPositions
-        
-        backgroundColor = toolPageColors.backgroundColor
-        
-        // background image
-        if let backgroundResource = pageNode.backgroundImage, let backgroundSrc = manifest.resources[backgroundResource]?.src {
-            backgroundImage = translationsFileCache.getImage(location: SHA256FileLocation(sha256WithPathExtension: backgroundSrc))
-        }
-        else {
-            backgroundImage = nil
-        }
-        
+                
         // content stack
         let firstNodeIsContentParagraph: Bool = pageNode.children.first is ContentParagraphNode
         
@@ -242,6 +230,19 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         removeObservers()
     }
     
+    var backgroundColor: UIColor {
+        return toolPageColors.backgroundColor
+    }
+    
+    var backgroundImage: UIImage? {
+        if let backgroundResource = pageNode.backgroundImage, let backgroundSrc = manifest.resources[backgroundResource]?.src {
+            return translationsFileCache.getImage(location: SHA256FileLocation(sha256WithPathExtension: backgroundSrc))
+        }
+        else {
+            return nil
+        }
+    }
+    
     private func addObservers() {
         
         mobileContentEvents.eventButtonTappedSignal.addObserver(self) { [weak self] (buttonEvent: ButtonEvent) in
@@ -264,15 +265,27 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     }
     
     func getCurrentPositions() -> ToolPageInitialPositions {
-        return ToolPageInitialPositions(card: currentCard.value.value)
+        return ToolPageInitialPositions(page: page, card: currentCard.value.value)
     }
     
     func handleCallToActionNextButtonTapped() {
         delegate?.toolPageNextPageTapped()
     }
     
+    func hiddenCardWillAppear(cardPosition: Int) -> ToolPageCardViewModelType {
+        return hiddenCardsViewModels[cardPosition]
+    }
+    
     private func setCardPosition(cardPosition: Int?, animated: Bool) {
         currentCard.accept(value: AnimatableValue(value: cardPosition, animated: animated))
+    }
+    
+    private func showHiddenCard(cardPosition: Int, animated: Bool) {
+        hiddenCard.accept(value: AnimatableValue(value: cardPosition, animated: animated))
+    }
+    
+    private func hideHiddenCard(animated: Bool) {
+        hiddenCard.accept(value: AnimatableValue(value: nil, animated: animated))
     }
 }
 
@@ -307,7 +320,7 @@ extension ToolPageViewModel: ToolPageCardViewModelDelegate {
             }
         }
         else {
-            hiddenCard.accept(value: nil)
+            hideHiddenCard(animated: true)
         }
     }
     
@@ -360,7 +373,7 @@ extension ToolPageViewModel: ToolPageCardViewModelDelegate {
             }
         }
         else {
-            hiddenCard.accept(value: nil)
+            hideHiddenCard(animated: true)
         }
     }
     
@@ -370,7 +383,7 @@ extension ToolPageViewModel: ToolPageCardViewModelDelegate {
             setCardPosition(cardPosition: cardPosition, animated: true)
         }
         else if cardViewModel.isHiddenCard {
-            hiddenCard.accept(value: cardViewModel)
+            showHiddenCard(cardPosition: cardPosition, animated: true)
         }
     }
     
@@ -380,7 +393,7 @@ extension ToolPageViewModel: ToolPageCardViewModelDelegate {
             gotoPreviousCardFromCard(cardPosition: cardPosition)
         }
         else {
-            hiddenCard.accept(value: nil)
+            hideHiddenCard(animated: true)
         }
     }
 }

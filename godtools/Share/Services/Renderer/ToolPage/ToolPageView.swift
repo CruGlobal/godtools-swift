@@ -10,6 +10,7 @@ import UIKit
 
 class ToolPageView: UIViewController {
     
+    private let viewModel: ToolPageViewModelType
     private let windowViewController: UIViewController
     private let safeAreaInsets: UIEdgeInsets
     private let panGestureToControlPageCollectionViewPanningSensitivity: UIPanGestureRecognizer = UIPanGestureRecognizer()
@@ -23,8 +24,6 @@ class ToolPageView: UIViewController {
     private var currentCardState: ToolPageCardsState = .initialized
     private var toolModal: ToolPageModalView?
     private var didLayoutSubviews: Bool = false
-    
-    let viewModel: ToolPageViewModelType
     
     @IBOutlet weak private var backgroundImageView: UIImageView!
     @IBOutlet weak private var contentStackContainerView: UIView!
@@ -114,12 +113,12 @@ class ToolPageView: UIViewController {
         }
         
         // hiddenCard
-        viewModel.hiddenCard.addObserver(self) { [weak self] (cardViewModel: ToolPageCardViewModel?) in
-            if let cardViewModel = cardViewModel {
-                self?.showHiddenCard(cardViewModel: cardViewModel, animated: true)
+        viewModel.hiddenCard.addObserver(self) { [weak self] (hiddenCardAnimatable: AnimatableValue<Int?>) in
+            if let cardPosition = hiddenCardAnimatable.value, let cardViewModel = self?.viewModel.hiddenCardWillAppear(cardPosition: cardPosition) {
+                self?.showHiddenCard(cardViewModel: cardViewModel, animated: hiddenCardAnimatable.animated)
             }
             else {
-                self?.hideHiddenCard(animated: true)
+                self?.hideHiddenCard(animated: hiddenCardAnimatable.animated)
             }
         }
         
@@ -200,6 +199,10 @@ class ToolPageView: UIViewController {
                 self?.dismissModalIfNeeded(animated: true, completion: nil)
             }
         }
+    }
+    
+    func getCurrentPositions() -> ToolPageInitialPositions? {
+        return viewModel.getCurrentPositions()
     }
     
     @objc func handleCallToActionNext(button: UIButton) {
@@ -487,7 +490,7 @@ extension ToolPageView {
         }
     }
     
-    private func showHiddenCard(cardViewModel: ToolPageCardViewModel, animated: Bool) {
+    private func showHiddenCard(cardViewModel: ToolPageCardViewModelType, animated: Bool) {
         
         guard hiddenCard == nil else {
             return

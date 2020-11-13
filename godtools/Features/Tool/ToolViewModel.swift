@@ -34,8 +34,8 @@ class ToolViewModel: NSObject, ToolViewModelType {
     
     private var primaryPageNodeCache: [PageNumber: PageNode] = Dictionary()
     private var parallelPageNodeCache: [PageNumber: PageNode] = Dictionary()
+    private var lastToolPagePositionsForLanguageChange: ToolPageInitialPositions?
     private var cachedTractRemoteShareNavigationEvents: [PageNumber: TractRemoteShareNavigationEvent] = Dictionary()
-    private var toolPage: Int = 0
         
     let navBarViewModel: ToolNavBarViewModel
     let selectedToolLanguage: ObservableValue<TractLanguage>
@@ -269,8 +269,10 @@ extension ToolViewModel {
         return selectedToolLanguage.value.language.id == parallelLanguage.id
     }
     
-    func primaryLanguageTapped() {
-                     
+    func primaryLanguageTapped(currentToolPagePositions: ToolPageInitialPositions?) {
+                           
+        lastToolPagePositionsForLanguageChange = currentToolPagePositions
+        
         trackTappedLanguage(language: primaryLanguage)
                 
         selectedToolLanguage.accept(value: TractLanguage(languageType: .primary, language: primaryLanguage))
@@ -278,11 +280,13 @@ extension ToolViewModel {
         sendRemoteShareNavigationEventForPage(page: toolPage)
     }
     
-    func parallelLanguagedTapped() {
-        
+    func parallelLanguagedTapped(currentToolPagePositions: ToolPageInitialPositions?) {
+                
         guard let parallelLanguage = parallelLanguage else {
             return
         }
+        
+        lastToolPagePositionsForLanguageChange = currentToolPagePositions
                                         
         trackTappedLanguage(language: parallelLanguage)
                 
@@ -311,10 +315,29 @@ extension ToolViewModel {
 
 extension ToolViewModel {
     
+    private var toolPage: Int {
+        get {
+            return currentPage.value.value
+        }
+        set(newValue) {
+            currentPage.setValue(value: AnimatableValue(value: newValue, animated: false))
+        }
+    }
+    
     func toolPageWillAppear(page: Int) -> ToolPageViewModel? {
         
         if let pageNode = getToolPageNodeForCurrentSelectedLanguage(page: page) {
-                                        
+                      
+            let initialPositions: ToolPageInitialPositions?
+            
+            if let lastToolPagePositionsForLanguageChange = self.lastToolPagePositionsForLanguageChange, lastToolPagePositionsForLanguageChange.page == page {
+                initialPositions = lastToolPagePositionsForLanguageChange
+                self.lastToolPagePositionsForLanguageChange = nil
+            }
+            else {
+                initialPositions = nil
+            }
+            
             let viewModel = ToolPageViewModel(
                 delegate: self,
                 pageNode: pageNode,
@@ -327,10 +350,14 @@ extension ToolViewModel {
                 followUpsService: followUpsService,
                 localizationServices: localizationServices,
                 page: page,
-                initialPositions: nil
+                initialPositions: initialPositions
             )
                         
             return viewModel
+        }
+        
+        if page == lastToolPagePositionsForLanguageChange?.page {
+            self.lastToolPagePositionsForLanguageChange = nil
         }
                 
         return nil
@@ -339,7 +366,7 @@ extension ToolViewModel {
     func toolPageDidChange(page: Int) {
         
         self.toolPage = page
-        
+                
         sendRemoteShareNavigationEventForPage(page: page)
     }
     

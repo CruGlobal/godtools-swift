@@ -19,8 +19,8 @@ protocol ToolViewModelType {
     
     func navHomeTapped()
     func shareTapped()
-    func primaryLanguageTapped()
-    func parallelLanguagedTapped()
+    func primaryLanguageTapped(currentToolPagePositions: ToolPageInitialPositions?)
+    func parallelLanguagedTapped(currentToolPagePositions: ToolPageInitialPositions?)
     func viewLoaded()
     func toolPageWillAppear(page: Int) -> ToolPageViewModel?
     func toolPageDidChange(page: Int)

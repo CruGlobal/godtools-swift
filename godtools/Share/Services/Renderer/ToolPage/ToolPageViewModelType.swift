@@ -18,10 +18,11 @@ protocol ToolPageViewModelType {
     var hidesCards: Bool { get }
     var cardsViewModels: [ToolPageCardViewModelType] { get }
     var currentCard: ObservableValue<AnimatableValue<Int?>> { get }
-    var hiddenCard: ObservableValue<ToolPageCardViewModel?> { get }
+    var hiddenCard: ObservableValue<AnimatableValue<Int?>> { get }
     var callToActionViewModel: ToolPageCallToActionViewModel { get }
     var modal: ObservableValue<ToolPageModalViewModel?> { get }
     
     func getCurrentPositions() -> ToolPageInitialPositions
     func handleCallToActionNextButtonTapped()
+    func hiddenCardWillAppear(cardPosition: Int) -> ToolPageCardViewModelType
 }

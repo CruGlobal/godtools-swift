@@ -10,6 +10,7 @@ import UIKit
 
 struct ToolPageInitialPositions {
     
+    let page: Int
     let card: Int?
     //let cardScrollPosition: CGFloat
 }
