@@ -51,7 +51,7 @@ enum FlowStep {
     case sendEmailTappedFromTool(subject: String, message: String, isHtml: Bool)
     case urlLinkTappedFromTool(url: URL)
     case toolDidEncounterErrorFromTool(error: ContentEventError)
-    case toolTrainingTipTappedFromTool(manifest: MobileContentXmlManifest, trainingTipId: String, language: LanguageModel)
+    case toolTrainingTipTappedFromTool(manifest: MobileContentXmlManifest, trainingTipId: String, tipNode: TipNode, language: LanguageModel)
     
     // tool training
     case closeTappedFromToolTraining

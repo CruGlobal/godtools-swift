@@ -11,7 +11,7 @@ import UIKit
 protocol ToolPageViewModelDelegate: class {
     
     func toolPagePresented(viewModel: ToolPageViewModel, page: Int)
-    func toolPageTrainingTipTapped(trainingTipId: String)
+    func toolPageTrainingTipTapped(trainingTipId: String, tipNode: TipNode)
     func toolPageNextPageTapped()
     func toolPageError(error: ContentEventError)
 }
@@ -40,6 +40,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     
     let contentStackViewModel: ToolPageContentStackViewModel?
     let headerViewModel: ToolPageHeaderViewModel
+    let headerTrainingTipViewModel: TrainingTipViewModelType?
     let heroViewModel: ToolPageContentStackViewModel?
     let hidesCards: Bool
     let currentCard: ObservableValue<AnimatableValue<Int?>> = ObservableValue(value: AnimatableValue(value: nil, animated: false))
@@ -47,7 +48,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     let callToActionViewModel: ToolPageCallToActionViewModel
     let modal: ObservableValue<ToolPageModalViewModel?> = ObservableValue(value: nil)
     
-    required init(delegate: ToolPageViewModelDelegate, pageNode: PageNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, page: Int, initialPositions: ToolPageInitialPositions?) {
+    required init(delegate: ToolPageViewModelDelegate, pageNode: PageNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, page: Int, initialPositions: ToolPageInitialPositions?) {
                 
         let isLastPage: Bool = page >= manifest.pages.count - 1
         
@@ -95,6 +96,22 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
             toolPageColors: toolPageColors,
             fontService: fontService
         )
+        
+        // headerTrainingTipViewModel
+        if let trainingTipId = pageNode.headerNode?.trainingTip, !trainingTipId.isEmpty {
+            
+            headerTrainingTipViewModel = TrainingTipViewModel(
+                trainingTipId: trainingTipId,
+                manifest: manifest,
+                translationsFileCache: translationsFileCache,
+                mobileContentNodeParser: mobileContentNodeParser,
+                mobileContentEvents: mobileContentEvents
+            )
+        }
+        else {
+            headerTrainingTipViewModel = nil
+        }
+        
         
         // hero
         if let heroNode = pageNode.heroNode {
@@ -258,22 +275,20 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         mobileContentEvents.contentErrorSignal.addObserver(self) { [weak self] (error: ContentEventError) in
             self?.delegate?.toolPageError(error: error)
         }
+        
+        mobileContentEvents.trainingTipTappedSignal.addObserver(self) { [weak self] (trainingTipEvent: TrainingTipEvent) in
+            self?.delegate?.toolPageTrainingTipTapped(trainingTipId: trainingTipEvent.trainingTipId, tipNode: trainingTipEvent.tipNode)
+        }
     }
     
     private func removeObservers() {
         mobileContentEvents.eventButtonTappedSignal.removeObserver(self)
         mobileContentEvents.contentErrorSignal.removeObserver(self)
+        mobileContentEvents.trainingTipTappedSignal.removeObserver(self)
     }
     
     func getCurrentPositions() -> ToolPageInitialPositions {
         return ToolPageInitialPositions(page: page, card: currentCard.value.value)
-    }
-    
-    func headerTrainingTipTapped() {
-        guard let trainingTipId = pageNode.headerNode?.trainingTip, !trainingTipId.isEmpty else {
-            return
-        }
-        delegate?.toolPageTrainingTipTapped(trainingTipId: trainingTipId)
     }
     
     func callToActionNextButtonTapped() {

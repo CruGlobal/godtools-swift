@@ -14,6 +14,7 @@ class MobileContentEvents {
     let urlButtonTappedSignal: SignalValue<UrlButtonEvent> = SignalValue()
     let contentErrorSignal: SignalValue<ContentEventError> = SignalValue()
     let followUpEventButtonTappedSignal: SignalValue<FollowUpButtonEvent> = SignalValue()
+    let trainingTipTappedSignal: SignalValue<TrainingTipEvent> = SignalValue()
     
     func eventButtonTapped(eventButton: ButtonEvent) {
         eventButtonTappedSignal.accept(value: eventButton)
@@ -29,5 +30,9 @@ class MobileContentEvents {
     
     func followUpEventButtonTapped(followUpEventButton: FollowUpButtonEvent) {
         followUpEventButtonTappedSignal.accept(value: followUpEventButton)
+    }
+    
+    func trainingTipTapped(trainingTipEvent: TrainingTipEvent) {
+        trainingTipTappedSignal.accept(value: trainingTipEvent)
     }
 }

@@ -29,9 +29,10 @@ class ToolPageView: UIViewController {
     @IBOutlet weak private var backgroundImageView: UIImageView!
     @IBOutlet weak private var contentStackContainerView: UIView!
     @IBOutlet weak private var headerView: UIView!
-    @IBOutlet weak private var headerTrainingTipButton: UIButton!
+    
     @IBOutlet weak private var headerNumberLabel: UILabel!
     @IBOutlet weak private var headerTitleLabel: UILabel!
+    @IBOutlet weak private var headerTrainingTipView: UIView!
     @IBOutlet weak private var heroContainerView: UIView!
     @IBOutlet weak private var callToActionView: UIView!
     @IBOutlet weak private var callToActionTitleLabel: UILabel!
@@ -66,7 +67,6 @@ class ToolPageView: UIViewController {
         setupLayout()
         setupBinding()
         
-        headerTrainingTipButton.addTarget(self, action: #selector(handleHeaderTrainingTip(button:)), for: .touchUpInside)
         callToActionNextButton.addTarget(self, action: #selector(handleCallToActionNext(button:)), for: .touchUpInside)
         
         view.addGestureRecognizer(panGestureToControlPageCollectionViewPanningSensitivity)
@@ -187,9 +187,20 @@ class ToolPageView: UIViewController {
         headerTitleLabel.textColor = headerViewModel.headerTitleColor
         headerTitleLabel.setLineSpacing(lineSpacing: 2)
         
-        // headerTrainingTipButton
-        headerTrainingTipButton.isHidden = viewModel.hidesTrainingTip
-        headerTrainingTipButton.imageView?.contentMode = .scaleAspectFit
+        // headerTrainingTipView
+        headerTrainingTipView.isHidden = viewModel.hidesTrainingTip
+        headerTrainingTipView.backgroundColor = .clear
+        
+        if let headerTrainingTipViewModel = viewModel.headerTrainingTipViewModel {
+            
+            let trainingTipView = TrainingTipView(
+                viewModel: headerTrainingTipViewModel,
+                viewType: .upArrow
+            )
+            
+            headerTrainingTipView.addSubview(trainingTipView)
+            trainingTipView.constrainEdgesToSuperview()
+        }
             
         // callToAction
         let callToActionViewModel: ToolPageCallToActionViewModel = viewModel.callToActionViewModel
@@ -210,10 +221,6 @@ class ToolPageView: UIViewController {
     
     func getCurrentPositions() -> ToolPageInitialPositions? {
         return viewModel.getCurrentPositions()
-    }
-    
-    @objc func handleHeaderTrainingTip(button: UIButton) {
-        viewModel.headerTrainingTipTapped()
     }
     
     @objc func handleCallToActionNext(button: UIButton) {
@@ -250,13 +257,13 @@ class ToolPageView: UIViewController {
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
                 self.view.layoutIfNeeded()
                 self.headerView.alpha = headerAlpha
-                self.headerTrainingTipButton.alpha = headerAlpha
+                self.headerTrainingTipView.alpha = headerAlpha
             }, completion: nil)
         }
         else {
             view.layoutIfNeeded()
             headerView.alpha = headerAlpha
-            headerTrainingTipButton.alpha = headerAlpha
+            headerTrainingTipView.alpha = headerAlpha
         }
     }
     

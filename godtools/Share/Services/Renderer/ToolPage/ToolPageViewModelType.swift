@@ -14,6 +14,7 @@ protocol ToolPageViewModelType {
     var backgroundImage: UIImage? { get }
     var contentStackViewModel: ToolPageContentStackViewModel? { get }
     var headerViewModel: ToolPageHeaderViewModel { get }
+    var headerTrainingTipViewModel: TrainingTipViewModelType? { get }
     var heroViewModel: ToolPageContentStackViewModel? { get }
     var hidesCards: Bool { get }
     var cardsViewModels: [ToolPageCardViewModelType] { get }
@@ -24,7 +25,6 @@ protocol ToolPageViewModelType {
     var hidesTrainingTip: Bool { get }
     
     func getCurrentPositions() -> ToolPageInitialPositions
-    func headerTrainingTipTapped()
     func callToActionNextButtonTapped()
     func hiddenCardWillAppear(cardPosition: Int) -> ToolPageCardViewModelType
 }

@@ -11,19 +11,22 @@ import UIKit
 class TrainingTipView: UIView {
     
     private let viewModel: TrainingTipViewModelType
+    private let viewType: TrainingTipViewType
     
-    @IBOutlet weak private var tipIconImageView: UIImageView!
     @IBOutlet weak private var tipButton: UIButton!
     
-    required init(viewModel: TrainingTipViewModelType) {
+    required init(viewModel: TrainingTipViewModelType, viewType: TrainingTipViewType) {
         
         self.viewModel = viewModel
+        self.viewType = viewType
         
         super.init(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         
         initializeNib()
         setupLayout()
         setupBinding()
+        
+        tipButton.addTarget(self, action: #selector(handleTip(button:)), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
@@ -43,6 +46,7 @@ class TrainingTipView: UIView {
             rootNibView.frame = bounds
             rootNibView.translatesAutoresizingMaskIntoConstraints = false
             rootNibView.constrainEdgesToSuperview()
+            rootNibView.backgroundColor = .clear
         }
     }
     
@@ -52,6 +56,10 @@ class TrainingTipView: UIView {
     
     private func setupBinding() {
         
-        tipIconImageView.image = viewModel.tipImage
+        //tipIconImageView.image = viewModel.tipImage
+    }
+    
+    @objc func handleTip(button: UIButton) {
+        viewModel.tipTapped()
     }
 }

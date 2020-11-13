@@ -11,7 +11,8 @@ import UIKit
 class ToolTrainingViewModel: ToolTrainingViewModelType {
     
     private let language: LanguageModel
-    private let tipXml: Data
+    private let trainingTipId: String
+    private let tipNode: TipNode
     private let manifest: MobileContentXmlManifest
     private let translationsFileCache: TranslationsFileCache
     private let mobileContentNodeParser: MobileContentXmlNodeParser
@@ -31,11 +32,12 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
     let title: ObservableValue<String> = ObservableValue(value: "")
     let numberOfTipPages: ObservableValue<Int> = ObservableValue(value: 0)
     
-    required init(flowDelegate: FlowDelegate, language: LanguageModel, tipXml: Data, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices) {
+    required init(flowDelegate: FlowDelegate, language: LanguageModel, trainingTipId: String, tipNode: TipNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices) {
         
         self.flowDelegate = flowDelegate
         self.language = language
-        self.tipXml = tipXml
+        self.trainingTipId = trainingTipId
+        self.tipNode = tipNode
         self.manifest = manifest
         self.translationsFileCache = translationsFileCache
         self.mobileContentNodeParser = mobileContentNodeParser
@@ -45,16 +47,10 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
         self.followUpsService = followUpsService
         self.localizationServices = localizationServices
         
-        mobileContentNodeParser.asyncParse(xml: tipXml) { [weak self] (node: MobileContentXmlNode?) in
-            guard let tipNode = node as? TipNode else {
-                return
-            }
-            
-            let pageNodes: [PageNode] = tipNode.pages?.pages ?? []
-            self?.pageNodes = pageNodes
-            self?.numberOfTipPages.accept(value: pageNodes.count)
-            self?.setPage(page: 0, animated: false)
-        }
+        let pageNodes: [PageNode] = tipNode.pages?.pages ?? []
+        self.pageNodes = pageNodes
+        numberOfTipPages.accept(value: pageNodes.count)
+        setPage(page: 0, animated: false)
     }
     
     private func setPage(page: Int, animated: Bool) {
@@ -122,7 +118,7 @@ extension ToolTrainingViewModel: ToolPageViewModelDelegate {
         
     }
     
-    func toolPageTrainingTipTapped(trainingTipId: String) {
+    func toolPageTrainingTipTapped(trainingTipId: String, tipNode: TipNode) {
         
     }
     

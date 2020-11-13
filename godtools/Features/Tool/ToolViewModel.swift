@@ -344,6 +344,7 @@ extension ToolViewModel {
                 manifest: primaryTranslationManifest,
                 language: primaryLanguage,
                 translationsFileCache: translationsFileCache,
+                mobileContentNodeParser: mobileContentNodeParser,
                 mobileContentAnalytics: mobileContentAnalytics,
                 mobileContentEvents: mobileContentEvents,
                 fontService: fontService,
@@ -446,7 +447,7 @@ extension ToolViewModel: ToolPageViewModelDelegate {
         currentPage.accept(value: AnimatableValue(value: page, animated: true))
     }
     
-    func toolPageTrainingTipTapped(trainingTipId: String) {
+    func toolPageTrainingTipTapped(trainingTipId: String, tipNode: TipNode) {
         
         let manifest: MobileContentXmlManifest?
         let language: LanguageModel?
@@ -465,7 +466,7 @@ extension ToolViewModel: ToolPageViewModelDelegate {
         }
         
         if let manifest = manifest, let language = language {
-            flowDelegate?.navigate(step: .toolTrainingTipTappedFromTool(manifest: manifest, trainingTipId: trainingTipId, language: language))
+            flowDelegate?.navigate(step: .toolTrainingTipTappedFromTool(manifest: manifest, trainingTipId: trainingTipId, tipNode: tipNode, language: language))
         }
     }
     

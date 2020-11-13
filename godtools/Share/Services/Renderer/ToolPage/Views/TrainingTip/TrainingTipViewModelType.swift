@@ -11,4 +11,6 @@ import UIKit
 protocol TrainingTipViewModelType {
     
     var tipImage: UIImage? { get }
+    
+    func tipTapped()
 }
