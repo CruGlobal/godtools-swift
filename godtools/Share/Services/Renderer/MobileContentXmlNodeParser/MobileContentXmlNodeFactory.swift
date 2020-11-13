@@ -49,11 +49,14 @@ class MobileContentXmlNodeFactory {
         case .analyticsEvents:
             return AnalyticsEventsNode.self
             
-        case .contentParagraph:
-            return ContentParagraphNode.self
-        
-        case .contentText:
-            return ContentTextNode.self
+        case .callToAction:
+            return CallToActionNode.self
+            
+        case .card:
+                return CardNode.self
+                
+        case .cards:
+                return CardsNode.self
             
         case .contentButton:
             return ContentButtonNode.self
@@ -62,40 +65,31 @@ class MobileContentXmlNodeFactory {
             return ContentFormNode.self
             
         case .contentImage:
-            return ContentImageNode.self
-            
+                return ContentImageNode.self
+                
         case .contentInput:
-            return ContentInputNode.self
-            
+                return ContentInputNode.self
+                
         case .contentLabel:
-            return ContentLabelNode.self
-            
+                return ContentLabelNode.self
+                
         case .contentLink:
-            return ContentLinkNode.self
+                return ContentLinkNode.self
+            
+        case .contentParagraph:
+            return ContentParagraphNode.self
             
         case .contentPlaceholder:
             return ContentPlaceholderNode.self
             
         case .contentTab:
-            return ContentTabNode.self
-            
+                return ContentTabNode.self
+                
         case .contentTabs:
-            return ContentTabsNode.self
-            
-        case .title:
-            return TitleNode.self
-            
-        case .modal:
-            return ModalNode.self
-            
-        case .modals:
-            return ModalsNode.self
-            
-        case .number:
-            return NumberNode.self
-            
-        case .label:
-            return LabelNode.self
+                return ContentTabsNode.self
+        
+        case .contentText:
+            return ContentTextNode.self
             
         case .header:
             return HeaderNode.self
@@ -106,14 +100,17 @@ class MobileContentXmlNodeFactory {
         case .hero:
             return HeroNode.self
             
-        case .card:
-            return CardNode.self
+        case .label:
+            return LabelNode.self
             
-        case .cards:
-            return CardsNode.self
+        case .modal:
+            return ModalNode.self
             
-        case .callToAction:
-            return CallToActionNode.self
+        case .modals:
+            return ModalsNode.self
+            
+        case .number:
+            return NumberNode.self
             
         case .page:
             return PageNode.self
@@ -123,6 +120,12 @@ class MobileContentXmlNodeFactory {
             
         case .tip:
             return TipNode.self
+            
+        case .title:
+            return TitleNode.self
+            
+        case .trainingTip:
+            return TrainingTipNode.self
         }
     }
 }
