@@ -106,6 +106,10 @@ class ToolTrainingView: UIViewController {
             self?.tipTitleLabel.text = title
         }
         
+        viewModel.continueButtonTitle.addObserver(self) { [weak self] (continueButtonTitle: String) in
+            self?.continueButton.setTitle(continueButtonTitle, for: .normal)
+        }
+        
         viewModel.numberOfTipPages.addObserver(self) { [weak self] (numberOfTipPages: Int) in
             self?.tipPagesNavigationView.reloadData()
         }
@@ -174,10 +178,6 @@ class ToolTrainingView: UIViewController {
             completion?(true)
         }
     }
-    
-    private func handlePageDidChange(page: Int) {
-        
-    }
 }
 
 // MARK: - PageNavigationCollectionViewDelegate
@@ -202,7 +202,6 @@ extension ToolTrainingView: PageNavigationCollectionViewDelegate {
     }
     
     func pageNavigationDidChangePage(pageNavigation: PageNavigationCollectionView, page: Int) {
-        handlePageDidChange(page: page)
         viewModel.tipPageDidChange(page: page)
     }
     

@@ -31,6 +31,7 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
     let trainingTipBackgroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     let trainingTipForegroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     let title: ObservableValue<String> = ObservableValue(value: "")
+    let continueButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     let numberOfTipPages: ObservableValue<Int> = ObservableValue(value: 0)
     
     required init(flowDelegate: FlowDelegate, language: LanguageModel, trainingTipId: String, tipNode: TipNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices) {
@@ -59,6 +60,15 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
     private func setPage(page: Int, animated: Bool) {
         
         self.page = page
+        
+        let continueTitle: String
+        if page < (numberOfTipPages.value - 1) {
+            continueTitle = localizationServices.stringForMainBundle(key: "card_status2")
+        }
+        else {
+            continueTitle = localizationServices.stringForMainBundle(key: "close")
+        }
+        continueButtonTitle.accept(value: continueTitle)
 
         if numberOfTipPages.value > 0 {
             let trainingProgress: CGFloat = CGFloat(page + 1) / CGFloat(numberOfTipPages.value)
@@ -112,7 +122,7 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
         let reachedEnd: Bool = nextPage >= numberOfTipPages.value
         
         if reachedEnd {
-            //flowDelegate?.navigate(step: .)
+            flowDelegate?.navigate(step: .closeTappedFromToolTraining)
         }
     }
     

@@ -14,6 +14,7 @@ protocol ToolTrainingViewModelType {
     var trainingTipBackgroundImage: ObservableValue<UIImage?> { get }
     var trainingTipForegroundImage: ObservableValue<UIImage?> { get }
     var title: ObservableValue<String> { get }
+    var continueButtonTitle: ObservableValue<String> { get }
     var numberOfTipPages: ObservableValue<Int> { get }
     
     func overlayTapped()
