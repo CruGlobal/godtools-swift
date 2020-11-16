@@ -32,7 +32,8 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
     
     private(set) var hiddenInputNodes: [ContentInputNode] = Array()
     private(set) var inputViewModels: [ToolPageContentInputViewModelType] = Array()
-    private(set) var containsTips: ObservableValue<Bool> = ObservableValue(value: false)
+    
+    let containsTips: ObservableValue<Bool> = ObservableValue(value: false)
                 
     required init(node: MobileContentXmlNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, localizationServices: LocalizationServices, followUpsService: FollowUpsService, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?, defaultButtonBorderColor: UIColor?, rootContentStack: ToolPageContentStackViewModel?) {
         
