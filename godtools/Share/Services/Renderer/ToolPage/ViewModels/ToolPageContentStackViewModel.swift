@@ -28,11 +28,13 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
     
     private var buttonEvents: [UIButton: ContentButtonNode] = Dictionary()
     private var linkEvents: [UIButton: ContentLinkNode] = Dictionary()
+    private weak var rootContentStack: ToolPageContentStackViewModel?
     
     private(set) var hiddenInputNodes: [ContentInputNode] = Array()
     private(set) var inputViewModels: [ToolPageContentInputViewModelType] = Array()
+    private(set) var containsTips: ObservableValue<Bool> = ObservableValue(value: false)
                 
-    required init(node: MobileContentXmlNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, localizationServices: LocalizationServices, followUpsService: FollowUpsService, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?, defaultButtonBorderColor: UIColor?) {
+    required init(node: MobileContentXmlNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, localizationServices: LocalizationServices, followUpsService: FollowUpsService, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?, defaultButtonBorderColor: UIColor?, rootContentStack: ToolPageContentStackViewModel?) {
         
         self.node = node
         self.manifest = manifest
@@ -47,6 +49,7 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
         self.toolPageColors = toolPageColors
         self.defaultTextNodeTextColor = defaultTextNodeTextColor
         self.defaultButtonBorderColor = defaultButtonBorderColor
+        self.rootContentStack = rootContentStack
     }
     
     deinit {
@@ -56,21 +59,36 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
     func render(didRenderView: ((_ mobileContentView: MobileContentView) -> Void)) {
         
         for childNode in node.children {
-            if let renderedMobileContentView = recurseAndRender(node: childNode) {
+            if let renderedMobileContentView = recurseAndRender(node: childNode, rootContentStack: rootContentStack ?? self) {
                 didRenderView(renderedMobileContentView)
             }
         }
     }
     
-    private func recurseAndRender(node: MobileContentXmlNode) -> MobileContentView? {
+    private func recurseAndRender(node: MobileContentXmlNode, rootContentStack: ToolPageContentStackViewModel) -> MobileContentView? {
         
         if let paragraphNode = node as? ContentParagraphNode {
-            
-            let contentStackView: MobileContentStackView = getContentParagraph(
-                paragraphNode: paragraphNode
+        
+            let viewModel = ToolPageContentStackViewModel(
+                node: paragraphNode,
+                manifest: manifest,
+                language: language,
+                translationsFileCache: translationsFileCache,
+                mobileContentNodeParser: mobileContentNodeParser,
+                mobileContentAnalytics: mobileContentAnalytics,
+                mobileContentEvents: mobileContentEvents,
+                fontService: fontService,
+                localizationServices: localizationServices,
+                followUpsService: followUpsService,
+                toolPageColors: toolPageColors,
+                defaultTextNodeTextColor: defaultTextNodeTextColor,
+                defaultButtonBorderColor: defaultButtonBorderColor,
+                rootContentStack: rootContentStack
             )
-                                    
-            return MobileContentView(view: contentStackView, heightConstraintType: .constrainedToChildren)
+            
+            let view = MobileContentStackView(viewModel: viewModel, itemSpacing: 5, scrollIsEnabled: false)
+                                                
+            return MobileContentView(view: view, heightConstraintType: .constrainedToChildren)
         }
         else if let textNode = node as? ContentTextNode {
             
@@ -95,6 +113,8 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
             return MobileContentView(view: view, heightConstraintType: .setToAspectRatioOfProvidedSize(size: imageSize))
         }
         else if let trainingTipNode = node as? TrainingTipNode, let trainingTipId = trainingTipNode.id {
+            
+            rootContentStack.containsTips.accept(value: true)
             
             let viewModel = TrainingTipViewModel(
                 trainingTipId: trainingTipId,
@@ -190,29 +210,6 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
     }
     
     // MARK: - Content Views
-    
-    private func getContentParagraph(paragraphNode: ContentParagraphNode) -> MobileContentStackView {
-        
-        let viewModel = ToolPageContentStackViewModel(
-            node: paragraphNode,
-            manifest: manifest,
-            language: language,
-            translationsFileCache: translationsFileCache,
-            mobileContentNodeParser: mobileContentNodeParser,
-            mobileContentAnalytics: mobileContentAnalytics,
-            mobileContentEvents: mobileContentEvents,
-            fontService: fontService,
-            localizationServices: localizationServices,
-            followUpsService: followUpsService,
-            toolPageColors: toolPageColors,
-            defaultTextNodeTextColor: defaultTextNodeTextColor,
-            defaultButtonBorderColor: defaultButtonBorderColor
-        )
-        
-        let view = MobileContentStackView(viewModel: viewModel, itemSpacing: 5, scrollIsEnabled: false)
-        
-        return view
-    }
         
     private func getContentButton(buttonNode: ContentButtonNode, fontSize: CGFloat, fontWeight: UIFont.Weight, buttonColor: UIColor, borderColor: UIColor?, titleColor: UIColor) -> UIButton {
         

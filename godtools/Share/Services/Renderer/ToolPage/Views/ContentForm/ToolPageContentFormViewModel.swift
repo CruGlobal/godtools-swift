@@ -47,7 +47,8 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
             followUpsService: followUpsService,
             toolPageColors: toolPageColors,
             defaultTextNodeTextColor: defaultTextNodeTextColor,
-            defaultButtonBorderColor: nil
+            defaultButtonBorderColor: nil,
+            rootContentStack: nil
         )
         
         super.init()

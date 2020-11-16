@@ -84,7 +84,8 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
                 followUpsService: followUpsService,
                 toolPageColors: toolPageColors,
                 defaultTextNodeTextColor: nil,
-                defaultButtonBorderColor: nil
+                defaultButtonBorderColor: nil,
+                rootContentStack: nil
             )
         }
         else {
@@ -130,7 +131,8 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
                 followUpsService: followUpsService,
                 toolPageColors: toolPageColors,
                 defaultTextNodeTextColor: nil,
-                defaultButtonBorderColor: nil
+                defaultButtonBorderColor: nil,
+                rootContentStack: nil
             )
         }
         else {

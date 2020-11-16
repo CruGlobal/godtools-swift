@@ -91,7 +91,8 @@ class ToolPageContentTabsViewModel: ToolPageContentTabsViewModelType {
             followUpsService: followUpsService,
             toolPageColors: toolPageColors,
             defaultTextNodeTextColor: defaultTextNodeTextColor,
-            defaultButtonBorderColor: nil
+            defaultButtonBorderColor: nil,
+            rootContentStack: nil
         )
     }
 }

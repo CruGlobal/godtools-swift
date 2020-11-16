@@ -61,7 +61,8 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
             followUpsService: followUpsService,
             toolPageColors: toolPageColors,
             defaultTextNodeTextColor: toolPageColors.cardTextColor,
-            defaultButtonBorderColor: nil
+            defaultButtonBorderColor: nil,
+            rootContentStack: nil
         )
         
         self.isHiddenCard = isHiddenCard

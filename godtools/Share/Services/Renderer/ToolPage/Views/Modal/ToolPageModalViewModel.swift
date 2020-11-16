@@ -54,7 +54,8 @@ class ToolPageModalViewModel: NSObject, ToolPageModalViewModelType {
             followUpsService: followUpsService,
             toolPageColors: toolPageColors,
             defaultTextNodeTextColor: nil,
-            defaultButtonBorderColor: UIColor.white
+            defaultButtonBorderColor: UIColor.white,
+            rootContentStack: nil
         )
         
         super.init()

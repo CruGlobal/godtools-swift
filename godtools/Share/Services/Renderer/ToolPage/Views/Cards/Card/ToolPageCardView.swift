@@ -130,6 +130,10 @@ class ToolPageCardView: UIView {
             right: 0
         ))
         contentStackView.setScollBarsHidden(hidden: true)
+        
+        contentStackViewModel.containsTips.addObserver(self) { [weak self] (containsTips: Bool) in
+            self?.headerTrainingTipImageView.isHidden = !containsTips
+        }
     }
     
     var cardHeaderHeight: CGFloat {

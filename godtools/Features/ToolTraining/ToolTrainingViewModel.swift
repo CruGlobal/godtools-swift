@@ -98,7 +98,8 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
             followUpsService: followUpsService,
             toolPageColors: ToolPageColorsViewModel(pageNode: pageNode, manifest: manifest),
             defaultTextNodeTextColor: nil,
-            defaultButtonBorderColor: nil
+            defaultButtonBorderColor: nil,
+            rootContentStack: nil
         )
     }
     
