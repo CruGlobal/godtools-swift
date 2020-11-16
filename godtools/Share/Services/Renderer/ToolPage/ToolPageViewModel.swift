@@ -216,10 +216,6 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
             hiddenCardsViewModels.append(cardViewModel)
         }
         
-        if let initialPositions = self.initialPositions, visibleCards.count > 0 {
-            currentCard.accept(value: AnimatableValue(value: initialPositions.card, animated: false))
-        }
-        
         // modals
         let modalNodes: [ModalNode] = pageNode.modalsNode?.modals ?? []
         
@@ -244,6 +240,17 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
             modalViewModels.append(modalViewModel)
         }
         
+        // initialPositions
+        if let initialPositions = self.initialPositions {
+            if visibleCards.count > 0 {
+                currentCard.accept(value: AnimatableValue(value: initialPositions.card, animated: false))
+            }
+            if let hiddenCardPosition = initialPositions.hiddenCard {
+                hiddenCard.accept(value: AnimatableValue(value: hiddenCardPosition, animated: false))
+            }
+        }
+        
+        // addObservers
         addObservers()
     }
     
@@ -296,7 +303,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     }
     
     func getCurrentPositions() -> ToolPageInitialPositions {
-        return ToolPageInitialPositions(page: page, card: currentCard.value.value)
+        return ToolPageInitialPositions(page: page, card: currentCard.value.value, hiddenCard: hiddenCard.value.value)
     }
     
     func callToActionNextButtonTapped() {

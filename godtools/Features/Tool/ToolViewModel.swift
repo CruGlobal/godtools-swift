@@ -95,7 +95,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
         toolPageDidChange(page: startingToolPage)
         toolPageDidAppear(page: startingToolPage)
         
-        subscribeToLiveShareStream(liveShareStream: liveShareStream)
+        subscribeToLiveShareStreamIfNeeded(liveShareStream: liveShareStream)
         
         reloadRemoteShareIsActive()
         
@@ -154,7 +154,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
         }
     }
     
-    private func subscribeToLiveShareStream(liveShareStream: String?) {
+    private func subscribeToLiveShareStreamIfNeeded(liveShareStream: String?) {
         
         guard let channelId = liveShareStream, !channelId.isEmpty else {
             return
