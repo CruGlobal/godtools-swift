@@ -10,7 +10,8 @@ import UIKit
 
 protocol TrainingTipViewModelType {
     
-    var tipImage: UIImage? { get }
+    var trainingTipBackgroundImage: ObservableValue<UIImage?> { get }
+    var trainingTipForegroundImage: ObservableValue<UIImage?> { get }
     
     func tipTapped()
 }

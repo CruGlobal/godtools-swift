@@ -11,14 +11,13 @@ import UIKit
 class TrainingTipView: UIView {
     
     private let viewModel: TrainingTipViewModelType
-    private let viewType: TrainingTipViewType
     
     @IBOutlet weak private var tipButton: UIButton!
+    @IBOutlet weak private var tipImage: UIImageView!
     
-    required init(viewModel: TrainingTipViewModelType, viewType: TrainingTipViewType) {
+    required init(viewModel: TrainingTipViewModelType) {
         
         self.viewModel = viewModel
-        self.viewType = viewType
         
         super.init(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         
@@ -56,7 +55,13 @@ class TrainingTipView: UIView {
     
     private func setupBinding() {
         
-        //tipIconImageView.image = viewModel.tipImage
+        viewModel.trainingTipBackgroundImage.addObserver(self) { [weak self] (backgroundImage: UIImage?) in
+            self?.tipButton.setBackgroundImage(backgroundImage, for: .normal)
+        }
+        
+        viewModel.trainingTipForegroundImage.addObserver(self) { [weak self] (foregroundImage: UIImage?) in
+            self?.tipImage.image = foregroundImage
+        }
     }
     
     @objc func handleTip(button: UIButton) {

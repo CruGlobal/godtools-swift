@@ -14,7 +14,10 @@ class TrainingTipViewModel: TrainingTipViewModelType {
     private let mobileContentEvents: MobileContentEvents
     private let tipNode: TipNode?
     
-    required init(trainingTipId: String, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentEvents: MobileContentEvents) {
+    let trainingTipBackgroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
+    let trainingTipForegroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
+    
+    required init(trainingTipId: String, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentEvents: MobileContentEvents, viewType: TrainingTipViewType) {
         
         self.trainingTipId = trainingTipId
         self.mobileContentEvents = mobileContentEvents
@@ -40,10 +43,40 @@ class TrainingTipViewModel: TrainingTipViewModelType {
             // TODO: Report error that tips xml couldn't be loaded. ~Levi
             self.tipNode = nil
         }
+        
+        if let tipNode = self.tipNode {
+            reloadTipIcon(tipNode: tipNode, viewType: viewType)
+        }
     }
     
-    var tipImage: UIImage? {
-        return nil
+    private func reloadTipIcon(tipNode: TipNode, viewType: TrainingTipViewType) {
+        
+        if let tipTypeValue = tipNode.tipType, let trainingTipType = TrainingTipType(rawValue: tipTypeValue) {
+            
+            let backgroundImageName: String
+            switch viewType {
+            case .upArrow:
+                backgroundImageName = "training_tip_arrow_up_bg"
+            case .rounded:
+                backgroundImageName = "training_tip_square_bg"
+            }
+            trainingTipBackgroundImage.accept(value: UIImage(named: backgroundImageName))
+            
+            let imageName: String
+            switch trainingTipType {
+            case .ask:
+                imageName = "training_tip_ask"
+            case .consider:
+                imageName = "training_tip_consider"
+            case .prepare:
+                imageName = "training_tip_prepare"
+            case .quote:
+                imageName = "training_tip_quote"
+            case .tip:
+                imageName = "training_tip_tip"
+            }
+            trainingTipForegroundImage.accept(value: UIImage(named: imageName))
+        }
     }
     
     func tipTapped() {

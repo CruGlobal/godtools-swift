@@ -200,8 +200,7 @@ class ToolPageView: UIViewController {
         if let headerTrainingTipViewModel = viewModel.headerTrainingTipViewModel {
             
             let trainingTipView = TrainingTipView(
-                viewModel: headerTrainingTipViewModel,
-                viewType: .upArrow
+                viewModel: headerTrainingTipViewModel
             )
             
             headerTrainingTipView.addSubview(trainingTipView)

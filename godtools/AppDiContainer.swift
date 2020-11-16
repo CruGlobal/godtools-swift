@@ -217,10 +217,6 @@ class AppDiContainer {
         return MobileContentXmlNodeParser()
     }
     
-    func getToolTrainingTipImagesProvider() -> ToolTrainingTipImagesProvider {
-        return ToolTrainingTipImagesProvider()
-    }
-    
     func getToolTrainingTipsOnboardingViews() -> ToolTrainingTipsOnboardingViewsService {
         return ToolTrainingTipsOnboardingViewsService(
             cache: ToolTrainingTipsOnboardingViewsUserDefaultsCache(userDefaultsCache: sharedUserDefaultsCache)

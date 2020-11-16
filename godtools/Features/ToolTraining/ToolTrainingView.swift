@@ -22,8 +22,10 @@ class ToolTrainingView: UIViewController {
     @IBOutlet weak private var tipPagesNavigationView: PageNavigationCollectionView!
     @IBOutlet weak private var closeButton: UIButton!
     @IBOutlet weak private var progressView: ProgressView!
-    @IBOutlet weak private var iconImageView: UIImageView!
-    @IBOutlet weak private var titleLabel: UILabel!
+    @IBOutlet weak private var tipIconContainerView: UIView!
+    @IBOutlet weak private var tipBackgroundImageView: UIImageView!
+    @IBOutlet weak private var tipForegroundImageView: UIImageView!
+    @IBOutlet weak private var tipTitleLabel: UILabel!
     @IBOutlet weak private var continueButton: UIButton!
     
     @IBOutlet weak private var contentViewBottom: NSLayoutConstraint!
@@ -92,12 +94,16 @@ class ToolTrainingView: UIViewController {
             }
         }
         
-        viewModel.icon.addObserver(self) { [weak self] (icon: UIImage?) in
-            self?.iconImageView.image = icon
+        viewModel.trainingTipBackgroundImage.addObserver(self) { [weak self] (backgroundImage: UIImage?) in
+            self?.tipBackgroundImageView.image = backgroundImage
+        }
+        
+        viewModel.trainingTipForegroundImage.addObserver(self) { [weak self] (foregroundImage: UIImage?) in
+            self?.tipForegroundImageView.image = foregroundImage
         }
         
         viewModel.title.addObserver(self) { [weak self] (title: String) in
-            self?.titleLabel.text = title
+            self?.tipTitleLabel.text = title
         }
         
         viewModel.numberOfTipPages.addObserver(self) { [weak self] (numberOfTipPages: Int) in

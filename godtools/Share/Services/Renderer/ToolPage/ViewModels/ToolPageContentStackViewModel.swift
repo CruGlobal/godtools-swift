@@ -122,10 +122,11 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
                 manifest: manifest,
                 translationsFileCache: translationsFileCache,
                 mobileContentNodeParser: mobileContentNodeParser,
-                mobileContentEvents: mobileContentEvents
+                mobileContentEvents: mobileContentEvents,
+                viewType: .rounded
             )
             
-            let view = TrainingTipView(viewModel: viewModel, viewType: .rounded)
+            let view = TrainingTipView(viewModel: viewModel)
             
             let tipSize: CGFloat = 50
             

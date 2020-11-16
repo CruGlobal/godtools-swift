@@ -21,7 +21,6 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
     private let fontService: FontService
     private let followUpsService: FollowUpsService
     private let localizationServices: LocalizationServices
-    private let trainingTipImagesProvider: ToolTrainingTipImagesProvider
     
     private var pageNodes: [PageNode] = Array()
     private var page: Int = 0
@@ -29,11 +28,12 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
     private weak var flowDelegate: FlowDelegate?
     
     let progress: ObservableValue<AnimatableValue<CGFloat>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
-    let icon: ObservableValue<UIImage?> = ObservableValue(value: nil)
+    let trainingTipBackgroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
+    let trainingTipForegroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     let title: ObservableValue<String> = ObservableValue(value: "")
     let numberOfTipPages: ObservableValue<Int> = ObservableValue(value: 0)
     
-    required init(flowDelegate: FlowDelegate, language: LanguageModel, trainingTipId: String, tipNode: TipNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, trainingTipImagesProvider: ToolTrainingTipImagesProvider) {
+    required init(flowDelegate: FlowDelegate, language: LanguageModel, trainingTipId: String, tipNode: TipNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices) {
         
         self.flowDelegate = flowDelegate
         self.language = language
@@ -47,16 +47,13 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
         self.fontService = fontService
         self.followUpsService = followUpsService
         self.localizationServices = localizationServices
-        self.trainingTipImagesProvider = trainingTipImagesProvider
         
         let pageNodes: [PageNode] = tipNode.pages?.pages ?? []
         self.pageNodes = pageNodes
         numberOfTipPages.accept(value: pageNodes.count)
         setPage(page: 0, animated: false)
         
-        if let tipTypeValue = tipNode.tipType, let trainingTipType = TrainingTipType(rawValue: tipTypeValue) {
-            icon.accept(value: trainingTipImagesProvider.getTrainingTipImage(trainingTipType: trainingTipType))
-        }
+        reloadTitleAndTipIcon(tipNode: tipNode)
     }
     
     private func setPage(page: Int, animated: Bool) {
@@ -66,6 +63,38 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
         if numberOfTipPages.value > 0 {
             let trainingProgress: CGFloat = CGFloat(page + 1) / CGFloat(numberOfTipPages.value)
             progress.accept(value: AnimatableValue(value: trainingProgress, animated: animated))
+        }
+    }
+    
+    private func reloadTitleAndTipIcon(tipNode: TipNode) {
+        
+        if let tipTypeValue = tipNode.tipType, let trainingTipType = TrainingTipType(rawValue: tipTypeValue) {
+            
+            trainingTipBackgroundImage.accept(value: UIImage(named: "training_tip_red_square_bg"))
+            
+            let imageName: String
+            let trainingTipTitle: String
+            
+            switch trainingTipType {
+            case .ask:
+                imageName = "training_tip_ask_filled_red"
+                trainingTipTitle = "Ask"
+            case .consider:
+                imageName = "training_tip_consider_filled_red"
+                trainingTipTitle = "Consider"
+            case .prepare:
+                imageName = "training_tip_prepare_filled_red"
+                trainingTipTitle = "Prepare"
+            case .quote:
+                imageName = "training_tip_quote_filled_red"
+                trainingTipTitle = "Quote"
+            case .tip:
+                imageName = "training_tip_tip_filled_red"
+                trainingTipTitle = "Tip"
+            }
+            
+            trainingTipForegroundImage.accept(value: UIImage(named: imageName))
+            title.accept(value: trainingTipTitle)
         }
     }
     

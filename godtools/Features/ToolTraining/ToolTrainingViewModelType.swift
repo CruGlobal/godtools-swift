@@ -11,7 +11,8 @@ import UIKit
 protocol ToolTrainingViewModelType {
     
     var progress: ObservableValue<AnimatableValue<CGFloat>> { get }
-    var icon: ObservableValue<UIImage?> { get }
+    var trainingTipBackgroundImage: ObservableValue<UIImage?> { get }
+    var trainingTipForegroundImage: ObservableValue<UIImage?> { get }
     var title: ObservableValue<String> { get }
     var numberOfTipPages: ObservableValue<Int> { get }
     

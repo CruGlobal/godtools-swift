@@ -107,7 +107,8 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
                 manifest: manifest,
                 translationsFileCache: translationsFileCache,
                 mobileContentNodeParser: mobileContentNodeParser,
-                mobileContentEvents: mobileContentEvents
+                mobileContentEvents: mobileContentEvents,
+                viewType: .upArrow
             )
         }
         else {
