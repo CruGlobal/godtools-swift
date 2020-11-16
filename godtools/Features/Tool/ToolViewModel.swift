@@ -35,7 +35,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
     private var primaryPageNodeCache: [PageNumber: PageNode] = Dictionary()
     private var parallelPageNodeCache: [PageNumber: PageNode] = Dictionary()
     private var lastToolPagePositionsForLanguageChange: ToolPageInitialPositions?
-    private var cachedTractRemoteShareNavigationEvents: [PageNumber: TractRemoteShareNavigationEvent] = Dictionary()
+    private var cachedToolRemoteShareNavigationEvents: [PageNumber: TractRemoteShareNavigationEvent] = Dictionary()
         
     let navBarViewModel: ToolNavBarViewModel
     let selectedToolLanguage: ObservableValue<TractLanguage>
@@ -86,8 +86,6 @@ class ToolViewModel: NSObject, ToolViewModelType {
         
         setupBinding()
         
-        _ = viewsService.postNewResourceView(resourceId: resource.id)
-                
         let startingToolPage: Int = toolPage ?? 0
                 
         numberOfToolPages.accept(value: primaryTranslationManifest.pages.count)
@@ -98,13 +96,11 @@ class ToolViewModel: NSObject, ToolViewModelType {
         subscribeToLiveShareStreamIfNeeded(liveShareStream: liveShareStream)
         
         reloadRemoteShareIsActive()
-        
-        addEventListeners()
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
-        removeEventListeners()
+        mobileContentEvents.urlButtonTappedSignal.removeObserver(self)
         tractRemoteSharePublisher.didCreateNewSubscriberChannelIdForPublish.removeObserver(self)
         tractRemoteSharePublisher.endPublishingSession(disconnectSocket: true)
         tractRemoteShareSubscriber.navigationEventSignal.removeObserver(self)
@@ -113,11 +109,13 @@ class ToolViewModel: NSObject, ToolViewModelType {
     
     func viewLoaded() {
         
+        _ = viewsService.postNewResourceView(resourceId: resource.id)
+        
         toolOpenedAnalytics.trackFirstToolOpenedIfNeeded()
         toolOpenedAnalytics.trackToolOpened()
     }
     
-    func addEventListeners() {
+    private func setupBinding() {
         
         mobileContentEvents.urlButtonTappedSignal.addObserver(self) { [weak self] (urlButtonEvent: UrlButtonEvent) in
             guard let url = URL(string: urlButtonEvent.url) else {
@@ -125,14 +123,6 @@ class ToolViewModel: NSObject, ToolViewModelType {
             }
             self?.flowDelegate?.navigate(step: .urlLinkTappedFromTool(url: url))
         }
-    }
-    
-    func removeEventListeners() {
-        
-        mobileContentEvents.urlButtonTappedSignal.removeObserver(self)
-    }
-        
-    private func setupBinding() {
         
         var isFirstRemoteShareNavigationEvent: Bool = true
         
@@ -175,17 +165,23 @@ class ToolViewModel: NSObject, ToolViewModelType {
     
     private func handleDidReceiveRemoteShareNavigationEvent(navigationEvent: TractRemoteShareNavigationEvent, animated: Bool = true) {
         
-        /*
         let attributes = navigationEvent.message?.data?.attributes
         
         if let page = attributes?.page {
-            cachedTractRemoteShareNavigationEvents[page] = navigationEvent
+            
             currentPage.accept(value: AnimatableValue(value: page, animated: animated))
+            
+            
+            //cachedToolRemoteShareNavigationEvents[page] = navigationEvent
+            
+            
+            /*
             if let cachedTractPage = getTractPageItem(page: page).tractPage {
                 cachedTractPage.setCard(card: attributes?.card, animated: animated)
-            }
+            }*/
         }
         
+        /*
         if let locale = attributes?.locale, !locale.isEmpty {
             
             let currentTractLanguage: TractLanguage = selectedTractLanguage.value
@@ -205,15 +201,18 @@ class ToolViewModel: NSObject, ToolViewModelType {
     private func sendRemoteShareNavigationEventForPage(page: Int) {
         
         if tractRemoteSharePublisher.isSubscriberChannelIdCreatedForPublish {
-            /*
-            let tractPageItem: TractPageItem = getTractPageItem(page: page)
             
-            tractRemoteSharePublisher.sendNavigationEvent(
+            // TODO: Need to get tool page card position.
+            
+            /*
+            let event = TractRemoteSharePublisherNavigationEvent(
                 card: tractPageItem.tractPage?.openedCard,
-                locale: selectedTractLanguage.value.language.code,
+                locale: selectedToolLanguage.value.language.code,
                 page: page,
                 tool: resource.abbreviation
-            )*/
+            )
+            
+            tractRemoteSharePublisher.sendNavigationEvent(event: event)*/
         }
     }
     

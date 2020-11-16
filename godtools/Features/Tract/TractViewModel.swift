@@ -215,12 +215,14 @@ class TractViewModel: NSObject, TractViewModelType {
             
             let tractPageItem: TractPageItem = getTractPageItem(page: page)
             
-            tractRemoteSharePublisher.sendNavigationEvent(
+            let event = TractRemoteSharePublisherNavigationEvent(
                 card: tractPageItem.tractPage?.openedCard,
                 locale: selectedTractLanguage.value.language.code,
                 page: page,
                 tool: resource.abbreviation
             )
+            
+            tractRemoteSharePublisher.sendNavigationEvent(event: event)
         }
     }
     

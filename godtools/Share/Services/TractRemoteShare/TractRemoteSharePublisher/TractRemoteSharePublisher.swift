@@ -78,9 +78,9 @@ class TractRemoteSharePublisher: NSObject {
         }
     }
     
-    func sendNavigationEvent(card: Int?, locale: String?, page: Int?, tool: String?) {
+    func sendNavigationEvent(event: TractRemoteSharePublisherNavigationEvent) {
                 
-        let navigationAttributes = TractRemoteShareNavigationEvent.Attributes(card: card, locale: locale, page: page, tool: tool)
+        let navigationAttributes = TractRemoteShareNavigationEvent.Attributes(card: event.card, locale: event.locale, page: event.page, tool: event.tool)
         let navigationData = TractRemoteShareNavigationEvent.Data(attributes: navigationAttributes)
         let navigationMessage = TractRemoteShareNavigationEvent.Message(data: navigationData)
         
@@ -98,10 +98,10 @@ class TractRemoteSharePublisher: NSObject {
         
         if loggingEnabled {
             print("\n TractRemoteSharePublisher: sendNavigationEvent()")
-            print("  card: \(String(describing: card))")
-            print("  locale: \(String(describing: locale))")
-            print("  page: \(String(describing: page))")
-            print("  tool: \(String(describing: tool))")
+            print("  card: \(String(describing: event.card))")
+            print("  locale: \(String(describing: event.locale))")
+            print("  page: \(String(describing: event.page))")
+            print("  tool: \(String(describing: event.tool))")
         }
     }
     
