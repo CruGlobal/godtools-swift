@@ -72,29 +72,29 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
             
             trainingTipBackgroundImage.accept(value: UIImage(named: "training_tip_red_square_bg"))
             
-            let imageName: String
-            let trainingTipTitle: String
+            let tipImageName: String
+            let tipTitle: String
             
             switch trainingTipType {
             case .ask:
-                imageName = "training_tip_ask_filled_red"
-                trainingTipTitle = "Ask"
+                tipImageName = "training_tip_ask_filled_red"
+                tipTitle = "Ask"
             case .consider:
-                imageName = "training_tip_consider_filled_red"
-                trainingTipTitle = "Consider"
+                tipImageName = "training_tip_consider_filled_red"
+                tipTitle = "Consider"
             case .prepare:
-                imageName = "training_tip_prepare_filled_red"
-                trainingTipTitle = "Prepare"
+                tipImageName = "training_tip_prepare_filled_red"
+                tipTitle = "Prepare"
             case .quote:
-                imageName = "training_tip_quote_filled_red"
-                trainingTipTitle = "Quote"
+                tipImageName = "training_tip_quote_filled_red"
+                tipTitle = "Quote"
             case .tip:
-                imageName = "training_tip_tip_filled_red"
-                trainingTipTitle = "Tip"
+                tipImageName = "training_tip_tip_filled_red"
+                tipTitle = "Tip"
             }
             
-            trainingTipForegroundImage.accept(value: UIImage(named: imageName))
-            title.accept(value: trainingTipTitle)
+            trainingTipForegroundImage.accept(value: UIImage(named: tipImageName))
+            title.accept(value: tipTitle)
         }
     }
     
