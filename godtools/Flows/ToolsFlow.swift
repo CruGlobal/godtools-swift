@@ -185,7 +185,8 @@ class ToolsFlow: Flow {
                 mobileContentEvents: appDiContainer.getMobileContentEvents(),
                 fontService: appDiContainer.getFontService(),
                 followUpsService: appDiContainer.followUpsService,
-                localizationServices: appDiContainer.localizationServices
+                localizationServices: appDiContainer.localizationServices,
+                trainingTipImagesProvider: appDiContainer.getToolTrainingTipImagesProvider()
             )
             
             let view = ToolTrainingView(viewModel: viewModel)

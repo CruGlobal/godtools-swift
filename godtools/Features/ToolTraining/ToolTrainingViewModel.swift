@@ -21,6 +21,7 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
     private let fontService: FontService
     private let followUpsService: FollowUpsService
     private let localizationServices: LocalizationServices
+    private let trainingTipImagesProvider: ToolTrainingTipImagesProvider
     
     private var pageNodes: [PageNode] = Array()
     private var page: Int = 0
@@ -32,7 +33,7 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
     let title: ObservableValue<String> = ObservableValue(value: "")
     let numberOfTipPages: ObservableValue<Int> = ObservableValue(value: 0)
     
-    required init(flowDelegate: FlowDelegate, language: LanguageModel, trainingTipId: String, tipNode: TipNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices) {
+    required init(flowDelegate: FlowDelegate, language: LanguageModel, trainingTipId: String, tipNode: TipNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, trainingTipImagesProvider: ToolTrainingTipImagesProvider) {
         
         self.flowDelegate = flowDelegate
         self.language = language
@@ -46,11 +47,16 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
         self.fontService = fontService
         self.followUpsService = followUpsService
         self.localizationServices = localizationServices
+        self.trainingTipImagesProvider = trainingTipImagesProvider
         
         let pageNodes: [PageNode] = tipNode.pages?.pages ?? []
         self.pageNodes = pageNodes
         numberOfTipPages.accept(value: pageNodes.count)
         setPage(page: 0, animated: false)
+        
+        if let tipTypeValue = tipNode.tipType, let trainingTipType = TrainingTipType(rawValue: tipTypeValue) {
+            icon.accept(value: trainingTipImagesProvider.getTrainingTipImage(trainingTipType: trainingTipType))
+        }
     }
     
     private func setPage(page: Int, animated: Bool) {
