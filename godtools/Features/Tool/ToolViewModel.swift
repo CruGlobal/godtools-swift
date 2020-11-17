@@ -259,10 +259,6 @@ class ToolViewModel: NSObject, ToolViewModelType {
             sendRemoteShareNavigationEventForPage(page: currentToolPage)
         }
     }
-    
-    func sendEmailTapped(subject: String?, message: String?, isHtml: Bool?) {
-        flowDelegate?.navigate(step: .sendEmailTappedFromTool(subject: subject ?? "", message: message ?? "", isHtml: isHtml ?? false))
-    }
 }
 
 // MARK: - Tool Pages
@@ -379,8 +375,8 @@ extension ToolViewModel: ToolNavBarViewModelDelegate {
     }
     
     func languageTapped(navBar: ToolNavBarViewModelType, language: LanguageModel) {
-        
-        //let languageIndex: Int = navBar.selectedLanguage.value
+            
+        reloadTool()
         
         sendRemoteShareNavigationEventForPage(page: currentToolPage)
     }

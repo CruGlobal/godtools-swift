@@ -385,7 +385,7 @@ class TractViewModel: NSObject, TractViewModelType {
     }
     
     func sendEmailTapped(subject: String?, message: String?, isHtml: Bool?) {
-        flowDelegate?.navigate(step: .sendEmailTappedFromTool(subject: subject ?? "", message: message ?? "", isHtml: isHtml ?? false))
+
     }
     
     // MARK: - Switching Between Primary and Parallel Tract Pages

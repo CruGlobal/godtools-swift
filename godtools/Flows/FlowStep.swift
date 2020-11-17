@@ -48,7 +48,6 @@ enum FlowStep {
     // tool
     case homeTappedFromTool(isScreenSharing: Bool)
     case shareMenuTappedFromTool(tractRemoteShareSubscriber: TractRemoteShareSubscriber, tractRemoteSharePublisher: TractRemoteSharePublisher, resource: ResourceModel, selectedLanguage: LanguageModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, pageNumber: Int)
-    case sendEmailTappedFromTool(subject: String, message: String, isHtml: Bool)
     case urlLinkTappedFromTool(url: URL)
     case toolDidEncounterErrorFromTool(error: ContentEventError)
     case toolTrainingTipTappedFromTool(manifest: MobileContentXmlManifest, trainingTipId: String, tipNode: TipNode, language: LanguageModel)

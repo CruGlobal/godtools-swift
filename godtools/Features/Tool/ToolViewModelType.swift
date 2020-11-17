@@ -20,7 +20,4 @@ protocol ToolViewModelType {
     func toolPageWillAppear(page: Int) -> ToolPageViewModel?
     func toolPageDidChange(page: Int)
     func toolPageDidAppear(page: Int)
-    //func tractPageCardStateChanged(cardState: TractCardProperties.CardState)
-    //func sendEmailTapped(subject: String?, message: String?, isHtml: Bool?)
-    //func getTractPageItem(page: Int) -> TractPageItem
 }
