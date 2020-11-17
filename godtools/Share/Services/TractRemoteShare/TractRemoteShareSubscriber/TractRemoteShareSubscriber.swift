@@ -23,6 +23,7 @@ class TractRemoteShareSubscriber: NSObject {
     private var isObservingSignals: Bool = false
         
     let navigationEventSignal: SignalValue<TractRemoteShareNavigationEvent> = SignalValue()
+    let subscribedToChannelObserver: ObservableValue<Bool> = ObservableValue(value: false)
     
     required init(config: ConfigType, webSocket: WebSocketType, webSocketChannelSubscriber: WebSocketChannelSubscriberType, loggingEnabled: Bool) {
         
@@ -64,6 +65,7 @@ class TractRemoteShareSubscriber: NSObject {
         removeObsevers()
         stopTimeoutTimer()
         didSubscribeToChannelClosure = nil
+        subscribedToChannelObserver.accept(value: false)
         
         if disconnectSocket {
             webSocket.disconnect()
@@ -77,6 +79,7 @@ class TractRemoteShareSubscriber: NSObject {
         stopTimeoutTimer()
         didSubscribeToChannelClosure?(error)
         didSubscribeToChannelClosure = nil
+        subscribedToChannelObserver.accept(value: isSubscribedToChannel)
     }
     
     // MARK: - Observers

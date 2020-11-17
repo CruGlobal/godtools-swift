@@ -6,21 +6,16 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol ToolViewModelType {
     
-    var navBarViewModel: ToolNavBarViewModel { get }
-    var selectedToolLanguage: ObservableValue<TractLanguage> { get }
-    var currentPage: ObservableValue<AnimatableValue<Int>> { get }
+    var backgroundColor: UIColor { get }
     var isRightToLeftLanguage: Bool { get }
-    var remoteShareIsActive: ObservableValue<Bool> { get }
+    var currentPage: ObservableValue<AnimatableValue<Int>> { get }
     var numberOfToolPages: ObservableValue<Int> { get }
-
-    func navHomeTapped()
-    func shareTapped()
-    func primaryLanguageTapped(currentToolPagePositions: ToolPageInitialPositions?)
-    func parallelLanguagedTapped(currentToolPagePositions: ToolPageInitialPositions?)
+    
+    func navBarWillAppear() -> ToolNavBarViewModelType
     func viewLoaded()
     func toolPageWillAppear(page: Int) -> ToolPageViewModel?
     func toolPageDidChange(page: Int)

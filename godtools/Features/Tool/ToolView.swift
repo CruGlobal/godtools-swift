@@ -10,18 +10,11 @@ import UIKit
 
 class ToolView: UIViewController {
     
-    enum RightNavbarPosition: Int {
-        case shareMenu = 0
-        case remoteShareActive = 1
-    }
-    
     private let viewModel: ToolViewModelType
+    private let navBarView: ToolNavBarView = ToolNavBarView()
     
-    private var remoteShareActiveNavItem: UIBarButtonItem?
     private var safeAreaInsets: UIEdgeInsets?
     private var didLayoutSubviews: Bool = false
-           
-    private weak var languageControl: UISegmentedControl?
             
     @IBOutlet weak private var toolPagesView: PageNavigationCollectionView!
     
@@ -49,12 +42,6 @@ class ToolView: UIViewController {
         viewModel.viewLoaded()
                 
         toolPagesView.delegate = self
-                
-        languageControl?.addTarget(
-            self,
-            action: #selector(didChooseLanguage(segmentedControl:)),
-            for: .valueChanged
-        )
         
         UIApplication.shared.isIdleTimerDisabled = true
     }
@@ -110,147 +97,17 @@ class ToolView: UIViewController {
     
     private func setupBinding() {
         
-        setViewBackgroundColor(color: viewModel.navBarViewModel.navBarColor)
+        setViewBackgroundColor(color: viewModel.backgroundColor)
                 
-        configureNavigationBar(toolNavBarViewModel: viewModel.navBarViewModel)
-        
-        viewModel.remoteShareIsActive.addObserver(self) { [weak self] (isActive: Bool) in
-            self?.setRemoteShareActiveNavItem(hidden: !isActive)
-        }
-        
-        viewModel.selectedToolLanguage.addObserver(self) { [weak self] (tractLanguage: TractLanguage) in
-            
-            switch tractLanguage.languageType {
-            case .primary:
-                self?.languageControl?.selectedSegmentIndex = 0
-            case .parallel:
-                self?.languageControl?.selectedSegmentIndex = 1
-            }
-            
-            self?.toolPagesView.reloadData()
-        }
+        navBarView.configure(parentViewController: self, viewModel: viewModel.navBarWillAppear())
         
         viewModel.numberOfToolPages.addObserver(self) { [weak self] (numberOfToolPages: Int) in
             self?.toolPagesView.reloadData()
         }
     }
     
-    @objc func handleHome(barButtonItem: UIBarButtonItem) {
-        viewModel.navHomeTapped()
-    }
-    
-    @objc func handleShare(barButtonItem: UIBarButtonItem) {
-        viewModel.shareTapped()
-    }
-    
-    @objc func didChooseLanguage(segmentedControl: UISegmentedControl) {
-        
-        let segmentIndex: Int = segmentedControl.selectedSegmentIndex
-        
-        if segmentIndex == 0 {
-            viewModel.primaryLanguageTapped(currentToolPagePositions: getCurrentPagePositions())
-        }
-        else if segmentIndex == 1 {
-            viewModel.parallelLanguagedTapped(currentToolPagePositions: getCurrentPagePositions())
-        }
-    }
-    
     private func setViewBackgroundColor(color: UIColor) {
         view.backgroundColor = .white
-    }
-    
-    private func configureNavigationBar(toolNavBarViewModel: ToolNavBarViewModel) {
-        
-        title = toolNavBarViewModel.navTitle
-        
-        let navBarColor: UIColor = toolNavBarViewModel.navBarColor
-        let navBarControlColor: UIColor = toolNavBarViewModel.navBarControlColor
-                    
-        navigationController?.navigationBar.barTintColor = .clear
-        navigationController?.navigationBar.tintColor = navBarControlColor
-        navigationController?.navigationBar.setBackgroundImage(NavigationBarBackground.createFrom(navBarColor), for: .default)
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.view.backgroundColor = .clear
-        navigationController?.navigationBar.titleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: navBarControlColor,
-            NSAttributedString.Key.font: UIFont.gtSemiBold(size: 17.0)
-        ]
-        
-        _ = addBarButtonItem(
-            to: .left,
-            image: ImageCatalog.navHome.image,
-            color: navBarControlColor,
-            target: self,
-            action: #selector(handleHome(barButtonItem:))
-        )
-        
-        _ = addBarButtonItem(
-            to: .right,
-            index: RightNavbarPosition.shareMenu.rawValue,
-            image: ImageCatalog.navShare.image,
-            color: navBarControlColor,
-            target: self,
-            action: #selector(handleShare(barButtonItem:))
-        )
-        
-        if !toolNavBarViewModel.hidesChooseLanguageControl && languageControl == nil {
-                
-            let navBarColor: UIColor = navBarColor
-            let navBarControlColor: UIColor = navBarControlColor
-            let chooseLanguageControl: UISegmentedControl = UISegmentedControl()
-            
-            chooseLanguageControl.insertSegment(
-                withTitle: toolNavBarViewModel.chooseLanguageControlPrimaryLanguageTitle,
-                at: 0,
-                animated: false
-            )
-            chooseLanguageControl.insertSegment(
-                withTitle: toolNavBarViewModel.chooseLanguageControlParallelLanguageTitle,
-                at: 1,
-                animated: false
-            )
-            
-            chooseLanguageControl.selectedSegmentIndex = 0
-
-            let font = UIFont.defaultFont(size: 14, weight: nil)
-            if #available(iOS 13.0, *) {
-                chooseLanguageControl.selectedSegmentTintColor = navBarControlColor
-                chooseLanguageControl.layer.borderColor = navBarControlColor.cgColor
-                chooseLanguageControl.layer.borderWidth = 1
-                chooseLanguageControl.backgroundColor = .clear
-            } else {
-                // Fallback on earlier versions
-            }
-            
-            chooseLanguageControl.setTitleTextAttributes([.font: font, .foregroundColor: navBarControlColor], for: .normal)
-            chooseLanguageControl.setTitleTextAttributes([.font: font, .foregroundColor: navBarColor.withAlphaComponent(1)], for: .selected)
-            
-            navigationItem.titleView = chooseLanguageControl
-            
-            languageControl = chooseLanguageControl
-        }
-    }
-    
-    private func setRemoteShareActiveNavItem(hidden: Bool) {
-        
-        let position: ButtonItemPosition = .right
-        
-        if hidden, let remoteShareActiveNavItem = remoteShareActiveNavItem {
-            removeBarButtonItem(item: remoteShareActiveNavItem, barPosition: position)
-            self.remoteShareActiveNavItem = nil
-        }
-        else if !hidden && remoteShareActiveNavItem == nil {
-            
-            remoteShareActiveNavItem = addBarButtonItem(
-                to: .right,
-                index: RightNavbarPosition.remoteShareActive.rawValue,
-                image: ImageCatalog.shareToolRemoteSessionActive.image,
-                color: .white,
-                target: nil,
-                action: nil
-            )
-        }
     }
     
     private func getCurrentPagePositions() -> ToolPageInitialPositions? {

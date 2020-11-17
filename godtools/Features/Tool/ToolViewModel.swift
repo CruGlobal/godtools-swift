@@ -13,10 +13,9 @@ class ToolViewModel: NSObject, ToolViewModelType {
     typealias PageNumber = Int
     
     private let resource: ResourceModel
-    private let primaryLanguage: LanguageModel
-    private let parallelLanguage: LanguageModel?
-    private let primaryTranslationManifest: MobileContentXmlManifest
-    private let parallelTranslationManifest: MobileContentXmlManifest?
+    private let primaryLanguageTranslationModel: ToolLanguageTranslationModel
+    private let parallelLanguageTranslationModel: ToolLanguageTranslationModel?
+    private let languageTranslationModels: [ToolLanguageTranslationModel]
     private let mobileContentNodeParser: MobileContentXmlNodeParser
     private let mobileContentAnalytics: MobileContentAnalytics
     private let mobileContentEvents: MobileContentEvents
@@ -32,32 +31,19 @@ class ToolViewModel: NSObject, ToolViewModelType {
     private let analytics: AnalyticsContainer
     private let toolOpenedAnalytics: ToolOpenedAnalytics
     
-    private var primaryPageNodeCache: [PageNumber: PageNode] = Dictionary()
-    private var parallelPageNodeCache: [PageNumber: PageNode] = Dictionary()
+    private var navBarViewModel: ToolNavBarViewModelType?
     private var lastToolPagePositionsForLanguageChange: ToolPageInitialPositions?
     private var cachedToolRemoteShareNavigationEvents: [PageNumber: TractRemoteShareNavigationEvent] = Dictionary()
         
-    let navBarViewModel: ToolNavBarViewModel
-    let selectedToolLanguage: ObservableValue<TractLanguage>
     let currentPage: ObservableValue<AnimatableValue<Int>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
-    let remoteShareIsActive: ObservableValue<Bool> = ObservableValue(value: false)
     let numberOfToolPages: ObservableValue<Int> = ObservableValue(value: 0)
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, primaryTranslationManifestData: TranslationManifestData, parallelTranslationManifestData: TranslationManifestData?, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, translationsFileCache: TranslationsFileCache, languageSettingsService: LanguageSettingsService, fontService: FontService, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, isNewUserService: IsNewUserService, cardJumpService: CardJumpService, followUpsService: FollowUpsService, viewsService: ViewsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, toolPage: Int?) {
-        
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, primaryTranslationManifestData: TranslationManifestData, parallelTranslationManifestData: TranslationManifestData?, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, translationsFileCache: TranslationsFileCache, languageSettingsService: LanguageSettingsService, fontService: FontService, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, isNewUserService: IsNewUserService, cardJumpService: CardJumpService, followUpsService: FollowUpsService, viewsService: ViewsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, page: Int?) {
+                
         self.flowDelegate = flowDelegate
         self.resource = resource
-        self.primaryLanguage = primaryLanguage
-        self.parallelLanguage = parallelLanguage?.code != primaryLanguage.code ? parallelLanguage : nil
-        self.primaryTranslationManifest = MobileContentXmlManifest(translationManifest: primaryTranslationManifestData)
-        if let parallelTranslationManifestData = parallelTranslationManifestData {
-            self.parallelTranslationManifest = MobileContentXmlManifest(translationManifest: parallelTranslationManifestData)
-        }
-        else {
-            self.parallelTranslationManifest = nil
-        }
         self.mobileContentNodeParser = mobileContentNodeParser
         self.mobileContentAnalytics = mobileContentAnalytics
         self.mobileContentEvents = mobileContentEvents
@@ -73,29 +59,47 @@ class ToolViewModel: NSObject, ToolViewModelType {
         self.analytics = analytics
         self.toolOpenedAnalytics = toolOpenedAnalytics
         
-        self.navBarViewModel = ToolNavBarViewModel(
-            manifestAttributes: primaryTranslationManifest.attributes,
-            primaryLanguage: primaryLanguage,
-            parallelLanguage: parallelLanguage,
-            localizationServices: localizationServices
+        let primaryLanguageTranslationModel = ToolLanguageTranslationModel(
+            language: primaryLanguage,
+            translationManifestData: primaryTranslationManifestData,
+            translationsFileCache: translationsFileCache,
+            mobileContentNodeParser: mobileContentNodeParser
         )
-                                        
-        selectedToolLanguage = ObservableValue(value: TractLanguage(languageType: .primary, language: primaryLanguage))
         
+        self.primaryLanguageTranslationModel = primaryLanguageTranslationModel
+        
+        if let parallelLanguage = parallelLanguage, let parallelTranslationManifestData = parallelTranslationManifestData {
+            
+            let parallelLanguageTranslationModel = ToolLanguageTranslationModel(
+                language: parallelLanguage,
+                translationManifestData: parallelTranslationManifestData,
+                translationsFileCache: translationsFileCache,
+                mobileContentNodeParser: mobileContentNodeParser
+            )
+            
+            self.parallelLanguageTranslationModel = parallelLanguageTranslationModel
+                        
+            languageTranslationModels = [primaryLanguageTranslationModel, parallelLanguageTranslationModel]
+        }
+        else {
+            
+            self.parallelLanguageTranslationModel = nil
+            
+            languageTranslationModels = [primaryLanguageTranslationModel]
+        }
+                                                        
         super.init()
         
         setupBinding()
-        
-        let startingToolPage: Int = toolPage ?? 0
                 
-        numberOfToolPages.accept(value: primaryTranslationManifest.pages.count)
-        
+        let startingToolPage: Int = page ?? 0
+                
         toolPageDidChange(page: startingToolPage)
         toolPageDidAppear(page: startingToolPage)
         
         subscribeToLiveShareStreamIfNeeded(liveShareStream: liveShareStream)
         
-        reloadRemoteShareIsActive()
+        reloadTool()
     }
     
     deinit {
@@ -105,14 +109,6 @@ class ToolViewModel: NSObject, ToolViewModelType {
         tractRemoteSharePublisher.endPublishingSession(disconnectSocket: true)
         tractRemoteShareSubscriber.navigationEventSignal.removeObserver(self)
         tractRemoteShareSubscriber.unsubscribe(disconnectSocket: true)
-    }
-    
-    func viewLoaded() {
-        
-        _ = viewsService.postNewResourceView(resourceId: resource.id)
-        
-        toolOpenedAnalytics.trackFirstToolOpenedIfNeeded()
-        toolOpenedAnalytics.trackToolOpened()
     }
     
     private func setupBinding() {
@@ -128,9 +124,8 @@ class ToolViewModel: NSObject, ToolViewModelType {
         
         tractRemoteSharePublisher.didCreateNewSubscriberChannelIdForPublish.addObserver(self) { [weak self] (channel: TractRemoteShareChannel) in
             DispatchQueue.main.async { [weak self] in
-                self?.reloadRemoteShareIsActive()
-                if let toolPage = self?.toolPage {
-                   self?.sendRemoteShareNavigationEventForPage(page: toolPage)
+                if let currentToolPage = self?.currentToolPage {
+                   self?.sendRemoteShareNavigationEventForPage(page: currentToolPage)
                 }
             }
         }
@@ -153,7 +148,6 @@ class ToolViewModel: NSObject, ToolViewModelType {
         tractRemoteShareSubscriber.subscribe(channelId: channelId) { [weak self] (error: TractRemoteShareSubscriberError?) in
             DispatchQueue.main.async { [weak self] in
                 self?.trackShareScreenOpened()
-                self?.reloadRemoteShareIsActive()
             }
         }
     }
@@ -216,26 +210,53 @@ class ToolViewModel: NSObject, ToolViewModelType {
         }
     }
     
-    private func reloadRemoteShareIsActive() {
-        
-        let isActive: Bool = tractRemoteSharePublisher.isSubscriberChannelIdCreatedForPublish || tractRemoteShareSubscriber.isSubscribedToChannel
-        
-        remoteShareIsActive.accept(value: isActive)
+    var backgroundColor: UIColor {
+        let manifestAttributes: MobileContentManifestAttributesType = primaryLanguageTranslationModel.manifest.attributes
+        return manifestAttributes.getNavBarColor()?.color ?? manifestAttributes.getPrimaryColor().color
     }
     
-    func navHomeTapped() {
-        flowDelegate?.navigate(step: .homeTappedFromTool(isScreenSharing: remoteShareIsActive.value))
+    var isRightToLeftLanguage: Bool {
+        switch primaryLanguageTranslationModel.language.languageDirection {
+        case .leftToRight:
+            return false
+        case .rightToLeft:
+            return true
+        }
     }
     
-    func shareTapped() {
-        flowDelegate?.navigate(step: .shareMenuTappedFromTool(tractRemoteShareSubscriber: tractRemoteShareSubscriber, tractRemoteSharePublisher: tractRemoteSharePublisher, resource: resource, selectedLanguage: selectedToolLanguage.value.language, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, pageNumber: toolPage))
+    func viewLoaded() {
+        
+        _ = viewsService.postNewResourceView(resourceId: resource.id)
+        
+        toolOpenedAnalytics.trackFirstToolOpenedIfNeeded()
+        toolOpenedAnalytics.trackToolOpened()
+    }
+    
+    func navBarWillAppear() -> ToolNavBarViewModelType {
+        
+        let languages: [LanguageModel] = languageTranslationModels.map({$0.language})
+        
+        let navBarViewModel = ToolNavBarViewModel(
+            delegate: self,
+            resource: resource,
+            manifestAttributes: languageTranslationModels[0].manifest.attributes,
+            languages: languages,
+            tractRemoteSharePublisher: tractRemoteSharePublisher,
+            tractRemoteShareSubscriber: tractRemoteShareSubscriber,
+            localizationServices: localizationServices,
+            analytics: analytics
+        )
+        
+        self.navBarViewModel = navBarViewModel
+        
+        return navBarViewModel
     }
     
     func tractPageCardStateChanged(cardState: TractCardProperties.CardState) {
         
         if cardState == .open || cardState == .close {
             
-            sendRemoteShareNavigationEventForPage(page: toolPage)
+            sendRemoteShareNavigationEventForPage(page: currentToolPage)
         }
     }
     
@@ -244,77 +265,20 @@ class ToolViewModel: NSObject, ToolViewModelType {
     }
 }
 
-// MARK: - Languages
-
-extension ToolViewModel {
-    
-    var isRightToLeftLanguage: Bool {
-        switch primaryLanguage.languageDirection {
-        case .leftToRight:
-            return false
-        case .rightToLeft:
-            return true
-        }
-    }
-    
-    private var primaryLanguageIsSelected: Bool {
-        return selectedToolLanguage.value.language.id == primaryLanguage.id
-    }
-    
-    private var parallelLanguageIsSelected: Bool {
-        guard let parallelLanguage = self.parallelLanguage else {
-            return false
-        }
-        return selectedToolLanguage.value.language.id == parallelLanguage.id
-    }
-    
-    func primaryLanguageTapped(currentToolPagePositions: ToolPageInitialPositions?) {
-                           
-        lastToolPagePositionsForLanguageChange = currentToolPagePositions
-        
-        trackTappedLanguage(language: primaryLanguage)
-                
-        selectedToolLanguage.accept(value: TractLanguage(languageType: .primary, language: primaryLanguage))
-        
-        sendRemoteShareNavigationEventForPage(page: toolPage)
-    }
-    
-    func parallelLanguagedTapped(currentToolPagePositions: ToolPageInitialPositions?) {
-                
-        guard let parallelLanguage = parallelLanguage else {
-            return
-        }
-        
-        lastToolPagePositionsForLanguageChange = currentToolPagePositions
-                                        
-        trackTappedLanguage(language: parallelLanguage)
-                
-        selectedToolLanguage.accept(value: TractLanguage(languageType: .parallel, language: parallelLanguage))
-        
-        sendRemoteShareNavigationEventForPage(page: toolPage)
-    }
-    
-    private func trackTappedLanguage(language: LanguageModel) {
-        
-        let data: [AnyHashable: String] = [
-            AdobeAnalyticsConstants.Keys.parallelLanguageToggle: "",
-            AdobeAnalyticsProperties.CodingKeys.contentLanguageSecondary.rawValue: language.code,
-            AdobeAnalyticsProperties.CodingKeys.siteSection.rawValue: resource.abbreviation
-        ]
-        
-        analytics.trackActionAnalytics.trackAction(
-            screenName: nil,
-            actionName: AdobeAnalyticsConstants.Values.parallelLanguageToggle,
-            data: data
-        )
-    }
-}
-
 // MARK: - Tool Pages
 
 extension ToolViewModel {
     
-    private var toolPage: Int {
+    private func reloadTool() {
+        let languageTranslationModel: ToolLanguageTranslationModel = languageTranslationModels[currentLanguage]
+        numberOfToolPages.accept(value: languageTranslationModel.manifest.pages.count)
+    }
+    
+    private var currentLanguage: Int {
+        return navBarViewModel?.selectedLanguage.value ?? 0
+    }
+    
+    private var currentToolPage: Int {
         get {
             return currentPage.value.value
         }
@@ -325,7 +289,9 @@ extension ToolViewModel {
     
     func toolPageWillAppear(page: Int) -> ToolPageViewModel? {
         
-        if let pageNode = getToolPageNodeForCurrentSelectedLanguage(page: page) {
+        let languageTranslationModel: ToolLanguageTranslationModel = languageTranslationModels[currentLanguage]
+        
+        if let pageNode = languageTranslationModel.getToolPageNode(page: page) {
                       
             let initialPositions: ToolPageInitialPositions?
             
@@ -337,11 +303,14 @@ extension ToolViewModel {
                 initialPositions = nil
             }
             
+            // TODO: Should primary manifest and primary language always be passed here? ~Levi
+            // or should we pass parallel for parallel pages.
+            
             let viewModel = ToolPageViewModel(
                 delegate: self,
                 pageNode: pageNode,
-                manifest: primaryTranslationManifest,
-                language: primaryLanguage,
+                manifest: languageTranslationModel.manifest,
+                language: languageTranslationModel.language,
                 translationsFileCache: translationsFileCache,
                 mobileContentNodeParser: mobileContentNodeParser,
                 mobileContentAnalytics: mobileContentAnalytics,
@@ -365,14 +334,14 @@ extension ToolViewModel {
     
     func toolPageDidChange(page: Int) {
         
-        self.toolPage = page
+        self.currentToolPage = page
                 
         sendRemoteShareNavigationEventForPage(page: page)
     }
     
     func toolPageDidAppear(page: Int) {
                       
-        self.toolPage = page
+        self.currentToolPage = page
                                 
         analytics.pageViewedAnalytics.trackPageView(
             screenName: resource.abbreviation + "-" + String(page),
@@ -383,58 +352,37 @@ extension ToolViewModel {
     
     func gotoNextPage(animated: Bool) {
         
-        let nextPage: Int = toolPage + 1
+        let nextPage: Int = currentToolPage + 1
         
         if nextPage < numberOfToolPages.value {
             currentPage.accept(value: AnimatableValue(value: nextPage, animated: animated))
         }
     }
+}
+
+// MARK: - ToolNavBarViewModelDelegate
+
+extension ToolViewModel: ToolNavBarViewModelDelegate {
     
-    private func getToolPageNodeForCurrentSelectedLanguage(page: Int) -> PageNode? {
-        
-        if primaryLanguageIsSelected {
-            return getToolPageNode(manifest: primaryTranslationManifest, pageNodeCache: &primaryPageNodeCache, page: page)
-        }
-        else if parallelLanguageIsSelected, let parallelTranslationManifest = self.parallelTranslationManifest {
-            return getToolPageNode(manifest: parallelTranslationManifest, pageNodeCache: &parallelPageNodeCache, page: page)
-        }
-        
-        return nil
+    func navHomeTapped(navBar: ToolNavBarViewModelType) {
+        flowDelegate?.navigate(step: .homeTappedFromTool(isScreenSharing: navBar.remoteShareIsActive.value))
     }
     
-    private func getToolPageNode(manifest: MobileContentXmlManifest, pageNodeCache: inout [PageNumber: PageNode], page: Int) -> PageNode? {
-        
-        let manifestPage: MobileContentXmlManifestPage = manifest.pages[page]
-        let pageXmlCacheLocation: SHA256FileLocation = SHA256FileLocation(sha256WithPathExtension: manifestPage.src)
-        
-        let pageXml: Data?
-        let pageNode: PageNode?
-        
-        if let cachedPageNode = pageNodeCache[page] {
-            pageNode = cachedPageNode
-        }
-        else {
+    func shareTapped(navBar: ToolNavBarViewModelType) {
 
-            switch translationsFileCache.getData(location: pageXmlCacheLocation) {
-                
-            case .success(let pageXmlData):
-                pageXml = pageXmlData
-            case .failure(let error):
-                pageXml = nil
-            }
+        let pageNumber: Int = currentPage.value.value
+        let selectedLanguage: LanguageModel = navBar.language
+        let primaryLanguage: LanguageModel = primaryLanguageTranslationModel.language
+        let parallelLanguage: LanguageModel? = parallelLanguageTranslationModel?.language
             
-            // TODO: Would it be better to return page xml and have tool pages build themselves as nodes are built? ~Levi
-            
-            guard let pageXmlData = pageXml else {
-                return nil
-            }
-            
-            pageNode = mobileContentNodeParser.parse(xml: pageXmlData, delegate: nil) as? PageNode
-            
-            pageNodeCache[page] = pageNode
-        }
+        flowDelegate?.navigate(step: .shareMenuTappedFromTool(tractRemoteShareSubscriber: tractRemoteShareSubscriber, tractRemoteSharePublisher: tractRemoteSharePublisher, resource: resource, selectedLanguage: selectedLanguage, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, pageNumber: pageNumber))
+    }
+    
+    func languageTapped(navBar: ToolNavBarViewModelType, language: LanguageModel) {
         
-        return pageNode
+        //let languageIndex: Int = navBar.selectedLanguage.value
+        
+        sendRemoteShareNavigationEventForPage(page: currentToolPage)
     }
 }
 
@@ -448,25 +396,9 @@ extension ToolViewModel: ToolPageViewModelDelegate {
     
     func toolPageTrainingTipTapped(trainingTipId: String, tipNode: TipNode) {
         
-        let manifest: MobileContentXmlManifest?
-        let language: LanguageModel?
+        let languageTranslationModel: ToolLanguageTranslationModel = languageTranslationModels[currentLanguage]
         
-        if primaryLanguageIsSelected {
-            manifest = primaryTranslationManifest
-            language = primaryLanguage
-        }
-        else if parallelLanguageIsSelected, let parallelTranslationManifest = self.parallelTranslationManifest {
-            manifest = parallelTranslationManifest
-            language = parallelLanguage
-        }
-        else {
-            manifest = nil
-            language = nil
-        }
-        
-        if let manifest = manifest, let language = language {
-            flowDelegate?.navigate(step: .toolTrainingTipTappedFromTool(manifest: manifest, trainingTipId: trainingTipId, tipNode: tipNode, language: language))
-        }
+        flowDelegate?.navigate(step: .toolTrainingTipTappedFromTool(manifest: languageTranslationModel.manifest, trainingTipId: trainingTipId, tipNode: tipNode, language: languageTranslationModel.language))
     }
     
     func toolPageNextPageTapped() {

@@ -590,7 +590,7 @@ class ToolsFlow: Flow {
             analytics: appDiContainer.analytics,
             toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics,
             liveShareStream: liveShareStream,
-            toolPage: page
+            page: page
         )
         
         let view = ToolView(viewModel: viewModel)
