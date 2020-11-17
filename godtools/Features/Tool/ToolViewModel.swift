@@ -89,8 +89,6 @@ class ToolViewModel: NSObject, ToolViewModelType {
         }
                                                         
         super.init()
-        
-        setupBinding()
                 
         let startingToolPage: Int = page ?? 0
                 
@@ -100,6 +98,8 @@ class ToolViewModel: NSObject, ToolViewModelType {
         subscribeToLiveShareStreamIfNeeded(liveShareStream: liveShareStream)
         
         reloadTool()
+        
+        setupBinding()
     }
     
     deinit {
@@ -163,8 +163,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
         
         if let page = attributes?.page {
             
-            currentPage.accept(value: AnimatableValue(value: page, animated: animated))
-            
+            currentPage.accept(value: AnimatableValue(value: page, animated: animated))            
             
             //cachedToolRemoteShareNavigationEvents[page] = navigationEvent
             
@@ -317,7 +316,7 @@ extension ToolViewModel {
                 page: page,
                 initialPositions: initialPositions
             )
-                        
+                       
             return viewModel
         }
         

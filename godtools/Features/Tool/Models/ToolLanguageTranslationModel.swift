@@ -10,10 +10,12 @@ import Foundation
 
 class ToolLanguageTranslationModel {
         
+    typealias PageNumber = Int
+    
     private let translationsFileCache: TranslationsFileCache
     private let mobileContentNodeParser: MobileContentXmlNodeParser
     
-    private var pageNodeCache: [Int: PageNode] = Dictionary()
+    private var pageNodeCache: [PageNumber: PageNode] = Dictionary()
     
     let language: LanguageModel
     let manifest: MobileContentXmlManifest

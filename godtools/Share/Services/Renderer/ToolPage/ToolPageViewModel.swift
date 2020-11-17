@@ -250,33 +250,17 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
             }
         }
         
-        // addObservers
-        addObservers()
+        setupBinding()
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
-        removeObservers()
+        mobileContentEvents.eventButtonTappedSignal.removeObserver(self)
+        mobileContentEvents.contentErrorSignal.removeObserver(self)
+        mobileContentEvents.trainingTipTappedSignal.removeObserver(self)
     }
     
-    var backgroundColor: UIColor {
-        return toolPageColors.backgroundColor
-    }
-    
-    var backgroundImage: UIImage? {
-        if let backgroundResource = pageNode.backgroundImage, let backgroundSrc = manifest.resources[backgroundResource]?.src {
-            return translationsFileCache.getImage(location: SHA256FileLocation(sha256WithPathExtension: backgroundSrc))
-        }
-        else {
-            return nil
-        }
-    }
-    
-    var hidesTrainingTip: Bool {
-        return pageNode.headerNode?.trainingTip?.isEmpty ?? true
-    }
-    
-    private func addObservers() {
+    private func setupBinding() {
         
         mobileContentEvents.eventButtonTappedSignal.addObserver(self) { [weak self] (buttonEvent: ButtonEvent) in
             guard let viewModel = self else {
@@ -296,10 +280,21 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         }
     }
     
-    private func removeObservers() {
-        mobileContentEvents.eventButtonTappedSignal.removeObserver(self)
-        mobileContentEvents.contentErrorSignal.removeObserver(self)
-        mobileContentEvents.trainingTipTappedSignal.removeObserver(self)
+    var backgroundColor: UIColor {
+        return toolPageColors.backgroundColor
+    }
+    
+    var backgroundImage: UIImage? {
+        if let backgroundResource = pageNode.backgroundImage, let backgroundSrc = manifest.resources[backgroundResource]?.src {
+            return translationsFileCache.getImage(location: SHA256FileLocation(sha256WithPathExtension: backgroundSrc))
+        }
+        else {
+            return nil
+        }
+    }
+    
+    var hidesTrainingTip: Bool {
+        return pageNode.headerNode?.trainingTip?.isEmpty ?? true
     }
     
     func getCurrentPositions() -> ToolPageInitialPositions {
