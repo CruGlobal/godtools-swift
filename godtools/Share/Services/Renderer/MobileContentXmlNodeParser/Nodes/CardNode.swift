@@ -11,6 +11,8 @@ import SWXMLHash
 
 class CardNode: MobileContentXmlNode {
         
+    let backgroundImage: String?
+    let backgroundImageAlign: String?
     let dismissListeners: [String]
     let hidden: String?
     let listeners: [String]
@@ -19,6 +21,8 @@ class CardNode: MobileContentXmlNode {
     
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
+        backgroundImage = attributes["background-image"]?.text
+        backgroundImageAlign = attributes["background-image-align"]?.text
         dismissListeners = attributes["dismiss-listeners"]?.text.components(separatedBy: " ") ?? []
         hidden = attributes["hidden"]?.text
         listeners = attributes["listeners"]?.text.components(separatedBy: " ") ?? []

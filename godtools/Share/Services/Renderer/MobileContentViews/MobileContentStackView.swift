@@ -30,6 +30,8 @@ class MobileContentStackView: UIView {
         backgroundColor = .clear
         contentView.backgroundColor = .clear
         scrollView?.backgroundColor = .clear
+        scrollView?.showsVerticalScrollIndicator = false
+        scrollView?.showsHorizontalScrollIndicator = false
         
         viewModel.render { [weak self] (mobileContentView: MobileContentRenderableViewType) in
             self?.addContentView(mobileContentView: mobileContentView)

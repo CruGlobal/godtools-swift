@@ -130,8 +130,7 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
             
         let pageNode: PageNode = pageNodes[page]
         
-        return ToolPageContentStackViewModel(
-            node: pageNode,
+        let toolPageDiContainer = ToolPageDiContainer(
             manifest: manifest,
             language: language,
             translationsFileCache: translationsFileCache,
@@ -139,8 +138,13 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
             mobileContentAnalytics: mobileContentAnalytics,
             mobileContentEvents: mobileContentEvents,
             fontService: fontService,
-            localizationServices: localizationServices,
             followUpsService: followUpsService,
+            localizationServices: localizationServices
+        )
+        
+        return ToolPageContentStackViewModel(
+            node: pageNode,
+            diContainer: toolPageDiContainer,
             toolPageColors: ToolPageColorsViewModel(pageNode: pageNode, manifest: manifest),
             defaultTextNodeTextColor: nil,
             defaultButtonBorderColor: nil,

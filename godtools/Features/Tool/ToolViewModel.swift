@@ -330,9 +330,7 @@ extension ToolViewModel {
             // TODO: Should primary manifest and primary language always be passed here? ~Levi
             // or should we pass parallel for parallel pages.
                         
-            let viewModel = ToolPageViewModel(
-                delegate: self,
-                pageNode: pageNode,
+            let toolPageDiContainer = ToolPageDiContainer(
                 manifest: languageTranslationModel.manifest,
                 language: languageTranslationModel.language,
                 translationsFileCache: translationsFileCache,
@@ -341,7 +339,13 @@ extension ToolViewModel {
                 mobileContentEvents: mobileContentEvents,
                 fontService: fontService,
                 followUpsService: followUpsService,
-                localizationServices: localizationServices,
+                localizationServices: localizationServices
+            )
+            
+            let viewModel = ToolPageViewModel(
+                delegate: self,
+                pageNode: pageNode,
+                diContainer: toolPageDiContainer,
                 page: page,
                 initialPositions: initialPositions
             )

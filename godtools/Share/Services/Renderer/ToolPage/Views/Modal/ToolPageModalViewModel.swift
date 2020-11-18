@@ -17,11 +17,7 @@ protocol ToolPageModalViewModelDelegate: class {
 class ToolPageModalViewModel: NSObject, ToolPageModalViewModelType {
     
     private let modalNode: ModalNode
-    private let manifest: MobileContentXmlManifest
-    private let translationsFileCache: TranslationsFileCache
-    private let mobileContentAnalytics: MobileContentAnalytics
-    private let mobileContentEvents: MobileContentEvents
-    private let fontService: FontService
+    private let diContainer: ToolPageDiContainer
     private let toolPageColors: ToolPageColorsViewModel
     private let defaultTextNodeTextColor: UIColor?
     
@@ -29,29 +25,17 @@ class ToolPageModalViewModel: NSObject, ToolPageModalViewModelType {
     
     let contentViewModel: ToolPageContentStackViewModel
     
-    required init(delegate: ToolPageModalViewModelDelegate, modalNode: ModalNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, localizationServices: LocalizationServices, followUpsService: FollowUpsService, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
+    required init(delegate: ToolPageModalViewModelDelegate, modalNode: ModalNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
         
         self.delegate = delegate
         self.modalNode = modalNode
-        self.manifest = manifest
-        self.translationsFileCache = translationsFileCache
-        self.mobileContentAnalytics = mobileContentAnalytics
-        self.mobileContentEvents = mobileContentEvents
-        self.fontService = fontService
+        self.diContainer = diContainer
         self.toolPageColors = toolPageColors
         self.defaultTextNodeTextColor = defaultTextNodeTextColor
         
         contentViewModel = ToolPageContentStackViewModel(
             node: modalNode,
-            manifest: manifest,
-            language: language,
-            translationsFileCache: translationsFileCache,
-            mobileContentNodeParser: mobileContentNodeParser,
-            mobileContentAnalytics: mobileContentAnalytics,
-            mobileContentEvents: mobileContentEvents,
-            fontService: fontService,
-            localizationServices: localizationServices,
-            followUpsService: followUpsService,
+            diContainer: diContainer,
             toolPageColors: toolPageColors,
             defaultTextNodeTextColor: nil,
             defaultButtonBorderColor: UIColor.white,
@@ -70,7 +54,7 @@ class ToolPageModalViewModel: NSObject, ToolPageModalViewModelType {
     
     private func addObservers() {
         
-        mobileContentEvents.eventButtonTappedSignal.addObserver(self) { [weak self] (buttonEvent: ButtonEvent) in
+        diContainer.mobileContentEvents.eventButtonTappedSignal.addObserver(self) { [weak self] (buttonEvent: ButtonEvent) in
             guard let viewModel = self else {
                 return
             }
@@ -85,7 +69,7 @@ class ToolPageModalViewModel: NSObject, ToolPageModalViewModelType {
     }
     
     private func removeObservers() {
-        mobileContentEvents.eventButtonTappedSignal.removeObserver(self)
+        diContainer.mobileContentEvents.eventButtonTappedSignal.removeObserver(self)
     }
     
     var backgroundColor: UIColor {

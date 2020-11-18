@@ -129,7 +129,6 @@ class ToolPageCardView: UIView {
             bottom: bottomGradientView.frame.size.height,
             right: 0
         ))
-        contentStackView.setScollBarsHidden(hidden: true)
         
         contentStackViewModel.containsTips.addObserver(self) { [weak self] (containsTips: Bool) in
             self?.headerTrainingTipImageView.isHidden = !containsTips

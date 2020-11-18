@@ -11,15 +11,7 @@ import UIKit
 class ToolPageContentTabsViewModel: ToolPageContentTabsViewModelType {
     
     private let tabsNode: ContentTabsNode
-    private let manifest: MobileContentXmlManifest
-    private let language: LanguageModel
-    private let translationsFileCache: TranslationsFileCache
-    private let mobileContentNodeParser: MobileContentXmlNodeParser
-    private let mobileContentAnalytics: MobileContentAnalytics
-    private let mobileContentEvents: MobileContentEvents
-    private let fontService: FontService
-    private let localizationServices: LocalizationServices
-    private let followUpsService: FollowUpsService
+    private let diContainer: ToolPageDiContainer
     private let toolPageColors: ToolPageColorsViewModel
     private let defaultTextNodeTextColor: UIColor?
     private let tabNodes: [ContentTabNode]
@@ -28,18 +20,10 @@ class ToolPageContentTabsViewModel: ToolPageContentTabsViewModelType {
     let selectedTab: ObservableValue<Int> = ObservableValue(value: 0)
     let tabContent: ObservableValue<ToolPageContentStackViewModel?> = ObservableValue(value: nil)
     
-    required init(tabsNode: ContentTabsNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, localizationServices: LocalizationServices, followUpsService: FollowUpsService, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
+    required init(tabsNode: ContentTabsNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
         
         self.tabsNode = tabsNode
-        self.manifest = manifest
-        self.language = language
-        self.translationsFileCache = translationsFileCache
-        self.mobileContentNodeParser = mobileContentNodeParser
-        self.mobileContentAnalytics = mobileContentAnalytics
-        self.mobileContentEvents = mobileContentEvents
-        self.fontService = fontService
-        self.localizationServices = localizationServices
-        self.followUpsService = followUpsService
+        self.diContainer = diContainer
         self.toolPageColors = toolPageColors
         self.defaultTextNodeTextColor = defaultTextNodeTextColor
         self.tabNodes = tabsNode.children as? [ContentTabNode] ?? []
@@ -59,7 +43,7 @@ class ToolPageContentTabsViewModel: ToolPageContentTabsViewModelType {
         let tabNode: ContentTabNode = tabNodes[tab]
         
         if let analyticsEventsNode = tabNode.analyticsEventsNode {
-            mobileContentAnalytics.trackEvents(events: analyticsEventsNode)
+            diContainer.mobileContentAnalytics.trackEvents(events: analyticsEventsNode)
         }
     }
     
@@ -80,15 +64,7 @@ class ToolPageContentTabsViewModel: ToolPageContentTabsViewModelType {
         
         return ToolPageContentStackViewModel(
             node: tabNodeChildrenToRender,
-            manifest: manifest,
-            language: language,
-            translationsFileCache: translationsFileCache,
-            mobileContentNodeParser: mobileContentNodeParser,
-            mobileContentAnalytics: mobileContentAnalytics,
-            mobileContentEvents: mobileContentEvents,
-            fontService: fontService,
-            localizationServices: localizationServices,
-            followUpsService: followUpsService,
+            diContainer: diContainer,
             toolPageColors: toolPageColors,
             defaultTextNodeTextColor: defaultTextNodeTextColor,
             defaultButtonBorderColor: nil,

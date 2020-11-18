@@ -11,14 +11,7 @@ import UIKit
 class ToolPageViewModel: NSObject, ToolPageViewModelType {
         
     private let pageNode: PageNode
-    private let manifest: MobileContentXmlManifest
-    private let language: LanguageModel
-    private let translationsFileCache: TranslationsFileCache
-    private let mobileContentAnalytics: MobileContentAnalytics
-    private let mobileContentEvents: MobileContentEvents
-    private let fontService: FontService
-    private let followUpsService: FollowUpsService
-    private let localizationServices: LocalizationServices
+    private let diContainer: ToolPageDiContainer
     private let toolPageColors: ToolPageColorsViewModel
     private let page: Int
     private let initialPositions: ToolPageInitialPositions?
@@ -40,21 +33,14 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     let callToActionViewModel: ToolPageCallToActionViewModel
     let modal: ObservableValue<ToolPageModalViewModel?> = ObservableValue(value: nil)
     
-    required init(delegate: ToolPageViewModelTypeDelegate, pageNode: PageNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, page: Int, initialPositions: ToolPageInitialPositions?) {
+    required init(delegate: ToolPageViewModelTypeDelegate, pageNode: PageNode, diContainer: ToolPageDiContainer, page: Int, initialPositions: ToolPageInitialPositions?) {
                 
-        let isLastPage: Bool = page >= manifest.pages.count - 1
+        let isLastPage: Bool = page >= diContainer.manifest.pages.count - 1
         
         self.delegate = delegate
         self.pageNode = pageNode
-        self.manifest = manifest
-        self.language = language
-        self.translationsFileCache = translationsFileCache
-        self.mobileContentAnalytics = mobileContentAnalytics
-        self.mobileContentEvents = mobileContentEvents
-        self.fontService = fontService
-        self.followUpsService = followUpsService
-        self.localizationServices = localizationServices
-        self.toolPageColors = ToolPageColorsViewModel(pageNode: pageNode, manifest: manifest)
+        self.diContainer = diContainer
+        self.toolPageColors = ToolPageColorsViewModel(pageNode: pageNode, manifest: diContainer.manifest)
         self.page = page
         self.initialPositions = initialPositions
                 
@@ -65,15 +51,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
             
             contentStackViewModel = ToolPageContentStackViewModel(
                 node: pageNode,
-                manifest: manifest,
-                language: language,
-                translationsFileCache: translationsFileCache,
-                mobileContentNodeParser: mobileContentNodeParser,
-                mobileContentAnalytics: mobileContentAnalytics,
-                mobileContentEvents: mobileContentEvents,
-                fontService: fontService,
-                localizationServices: localizationServices,
-                followUpsService: followUpsService,
+                diContainer: diContainer,
                 toolPageColors: toolPageColors,
                 defaultTextNodeTextColor: nil,
                 defaultButtonBorderColor: nil,
@@ -88,7 +66,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         headerViewModel = ToolPageHeaderViewModel(
             pageNode: pageNode,
             toolPageColors: toolPageColors,
-            fontService: fontService
+            fontService: diContainer.fontService
         )
         
         // headerTrainingTipViewModel
@@ -96,10 +74,10 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
             
             headerTrainingTipViewModel = TrainingTipViewModel(
                 trainingTipId: trainingTipId,
-                manifest: manifest,
-                translationsFileCache: translationsFileCache,
-                mobileContentNodeParser: mobileContentNodeParser,
-                mobileContentEvents: mobileContentEvents,
+                manifest: diContainer.manifest,
+                translationsFileCache: diContainer.translationsFileCache,
+                mobileContentNodeParser: diContainer.mobileContentNodeParser,
+                mobileContentEvents: diContainer.mobileContentEvents,
                 viewType: .upArrow
             )
         }
@@ -113,15 +91,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
             
             heroViewModel = ToolPageContentStackViewModel(
                 node: heroNode,
-                manifest: manifest,
-                language: language,
-                translationsFileCache: translationsFileCache,
-                mobileContentNodeParser: mobileContentNodeParser,
-                mobileContentAnalytics: mobileContentAnalytics,
-                mobileContentEvents: mobileContentEvents,
-                fontService: fontService,
-                localizationServices: localizationServices,
-                followUpsService: followUpsService,
+                diContainer: diContainer,
                 toolPageColors: toolPageColors,
                 defaultTextNodeTextColor: nil,
                 defaultButtonBorderColor: nil,
@@ -136,7 +106,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         callToActionViewModel = ToolPageCallToActionViewModel(
             pageNode: pageNode,
             toolPageColors: toolPageColors,
-            fontService: fontService,
+            fontService: diContainer.fontService,
             isLastPage: isLastPage
         )
                 
@@ -167,15 +137,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
             let cardViewModel = ToolPageCardViewModel(
                 delegate: self,
                 cardNode: visibleCardNode,
-                manifest: manifest,
-                language: language,
-                translationsFileCache: translationsFileCache,
-                mobileContentNodeParser: mobileContentNodeParser,
-                mobileContentAnalytics: mobileContentAnalytics,
-                mobileContentEvents: mobileContentEvents,
-                fontService: fontService,
-                followUpsService: followUpsService,
-                localizationServices: localizationServices,
+                diContainer: diContainer,
                 cardPosition: allCardsViewModels.count,
                 visibleCardPosition: visibleCardIndex,
                 hiddenCardPosition: nil,
@@ -194,15 +156,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
             let cardViewModel = ToolPageCardViewModel(
                 delegate: self,
                 cardNode: hiddenCardNode,
-                manifest: manifest,
-                language: language,
-                translationsFileCache: translationsFileCache,
-                mobileContentNodeParser: mobileContentNodeParser,
-                mobileContentAnalytics: mobileContentAnalytics,
-                mobileContentEvents: mobileContentEvents,
-                fontService: fontService,
-                followUpsService: followUpsService,
-                localizationServices: localizationServices,
+                diContainer: diContainer,
                 cardPosition: allCardsViewModels.count,
                 visibleCardPosition: nil,
                 hiddenCardPosition: hiddenCardIndex,
@@ -222,15 +176,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
             let modalViewModel = ToolPageModalViewModel(
                 delegate: self,
                 modalNode: modalNode,
-                manifest: manifest,
-                language: language,
-                translationsFileCache: translationsFileCache,
-                mobileContentNodeParser: mobileContentNodeParser,
-                mobileContentAnalytics: mobileContentAnalytics,
-                mobileContentEvents: mobileContentEvents,
-                fontService: fontService,
-                localizationServices: localizationServices,
-                followUpsService: followUpsService,
+                diContainer: diContainer,
                 toolPageColors: toolPageColors,
                 defaultTextNodeTextColor: toolPageColors.primaryTextColor
             )
@@ -250,14 +196,14 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     
     deinit {
         print("x deinit: \(type(of: self))")
-        mobileContentEvents.eventButtonTappedSignal.removeObserver(self)
-        mobileContentEvents.contentErrorSignal.removeObserver(self)
-        mobileContentEvents.trainingTipTappedSignal.removeObserver(self)
+        diContainer.mobileContentEvents.eventButtonTappedSignal.removeObserver(self)
+        diContainer.mobileContentEvents.contentErrorSignal.removeObserver(self)
+        diContainer.mobileContentEvents.trainingTipTappedSignal.removeObserver(self)
     }
     
     private func setupBinding() {
         
-        mobileContentEvents.eventButtonTappedSignal.addObserver(self) { [weak self] (buttonEvent: ButtonEvent) in
+        diContainer.mobileContentEvents.eventButtonTappedSignal.addObserver(self) { [weak self] (buttonEvent: ButtonEvent) in
             guard let viewModel = self else {
                 return
             }
@@ -266,11 +212,11 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
             }
         }
         
-        mobileContentEvents.contentErrorSignal.addObserver(self) { [weak self] (error: ContentEventError) in
+        diContainer.mobileContentEvents.contentErrorSignal.addObserver(self) { [weak self] (error: ContentEventError) in
             self?.delegate?.toolPageError(error: error)
         }
         
-        mobileContentEvents.trainingTipTappedSignal.addObserver(self) { [weak self] (trainingTipEvent: TrainingTipEvent) in
+        diContainer.mobileContentEvents.trainingTipTappedSignal.addObserver(self) { [weak self] (trainingTipEvent: TrainingTipEvent) in
             self?.delegate?.toolPageTrainingTipTapped(trainingTipId: trainingTipEvent.trainingTipId, tipNode: trainingTipEvent.tipNode)
         }
     }
@@ -280,8 +226,8 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     }
     
     var backgroundImage: UIImage? {
-        if let backgroundResource = pageNode.backgroundImage, let backgroundSrc = manifest.resources[backgroundResource]?.src {
-            return translationsFileCache.getImage(location: SHA256FileLocation(sha256WithPathExtension: backgroundSrc))
+        if let backgroundResource = pageNode.backgroundImage, let backgroundSrc = diContainer.manifest.resources[backgroundResource]?.src {
+            return diContainer.translationsFileCache.getImage(location: SHA256FileLocation(sha256WithPathExtension: backgroundSrc))
         }
         else {
             return nil

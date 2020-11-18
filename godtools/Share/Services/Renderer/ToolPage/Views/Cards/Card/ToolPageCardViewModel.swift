@@ -11,9 +11,7 @@ import UIKit
 class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     
     private let cardNode: CardNode
-    private let mobileContentEvents: MobileContentEvents
-    private let fontService: FontService
-    private let localizationServices: LocalizationServices
+    private let diContainer: ToolPageDiContainer
     private let cardPosition: Int
     private let visibleCardPosition: Int?
     private let hiddenCardPosition: Int?
@@ -26,15 +24,13 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     let isHiddenCard: Bool
     let hidesCardNavigation: Bool
     
-    required init(delegate: ToolPageCardViewModelTypeDelegate, cardNode: CardNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, cardPosition: Int, visibleCardPosition: Int?, hiddenCardPosition: Int?, numberOfCards: Int, toolPageColors: ToolPageColorsViewModel) {
+    required init(delegate: ToolPageCardViewModelTypeDelegate, cardNode: CardNode, diContainer: ToolPageDiContainer, cardPosition: Int, visibleCardPosition: Int?, hiddenCardPosition: Int?, numberOfCards: Int, toolPageColors: ToolPageColorsViewModel) {
         
         let isHiddenCard: Bool = cardNode.hidden == "true"
         
         self.delegate = delegate
         self.cardNode = cardNode
-        self.mobileContentEvents = mobileContentEvents
-        self.fontService = fontService
-        self.localizationServices = localizationServices
+        self.diContainer = diContainer
         self.cardPosition = cardPosition
         self.visibleCardPosition = visibleCardPosition
         self.hiddenCardPosition = hiddenCardPosition
@@ -43,15 +39,7 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
         
         contentStackViewModel = ToolPageContentStackViewModel(
             node: cardNode,
-            manifest: manifest,
-            language: language,
-            translationsFileCache: translationsFileCache,
-            mobileContentNodeParser: mobileContentNodeParser,
-            mobileContentAnalytics: mobileContentAnalytics,
-            mobileContentEvents: mobileContentEvents,
-            fontService: fontService,
-            localizationServices: localizationServices,
-            followUpsService: followUpsService,
+            diContainer: diContainer,
             toolPageColors: toolPageColors,
             defaultTextNodeTextColor: toolPageColors.cardTextColor,
             defaultButtonBorderColor: nil,
@@ -73,7 +61,7 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     
     private func addListeners() {
         
-        mobileContentEvents.eventButtonTappedSignal.addObserver(self) { [weak self] (buttonEvent: ButtonEvent) in
+        diContainer.mobileContentEvents.eventButtonTappedSignal.addObserver(self) { [weak self] (buttonEvent: ButtonEvent) in
             guard let viewModel = self else {
                 return
             }
@@ -88,7 +76,7 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     
     private func removeListeners() {
         
-        mobileContentEvents.eventButtonTappedSignal.removeObserver(self)
+        diContainer.mobileContentEvents.eventButtonTappedSignal.removeObserver(self)
     }
     
     var title: String? {
@@ -101,7 +89,7 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     }
     
     var titleFont: UIFont {
-        return fontService.getFont(size: 19, weight: .regular)
+        return diContainer.fontService.getFont(size: 19, weight: .regular)
     }
     
     var cardPositionLabel: String? {
@@ -114,11 +102,11 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     }
     
     var cardPositionLabelFont: UIFont {
-        return fontService.getFont(size: 18, weight: .regular)
+        return diContainer.fontService.getFont(size: 18, weight: .regular)
     }
     
     var previousButtonTitle: String? {
-        return localizationServices.stringForMainBundle(key: "card_status1")
+        return diContainer.localizationServices.stringForMainBundle(key: "card_status1")
     }
     
     var previousButtonTitleColor: UIColor {
@@ -126,11 +114,11 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     }
     
     var previousButtonTitleFont: UIFont {
-        return fontService.getFont(size: 18, weight: .regular)
+        return diContainer.fontService.getFont(size: 18, weight: .regular)
     }
     
     var nextButtonTitle: String? {
-        return localizationServices.stringForMainBundle(key: "card_status2")
+        return diContainer.localizationServices.stringForMainBundle(key: "card_status2")
     }
     
     var nextButtonTitleColor: UIColor {
@@ -138,7 +126,7 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     }
     
     var nextButtonTitleFont: UIFont {
-        return fontService.getFont(size: 18, weight: .regular)
+        return diContainer.fontService.getFont(size: 18, weight: .regular)
     }
     
     func headerTapped() {

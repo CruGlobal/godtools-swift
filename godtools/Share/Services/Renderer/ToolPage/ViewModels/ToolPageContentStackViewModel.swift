@@ -13,15 +13,7 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
     private static let numberFormatter: NumberFormatter = NumberFormatter()
     
     private let node: MobileContentXmlNode
-    private let manifest: MobileContentXmlManifest
-    private let language: LanguageModel
-    private let translationsFileCache: TranslationsFileCache
-    private let mobileContentNodeParser: MobileContentXmlNodeParser
-    private let mobileContentAnalytics: MobileContentAnalytics
-    private let mobileContentEvents: MobileContentEvents
-    private let fontService: FontService
-    private let localizationServices: LocalizationServices
-    private let followUpsService: FollowUpsService
+    private let diContainer: ToolPageDiContainer
     private let toolPageColors: ToolPageColorsViewModel
     private let defaultTextNodeTextColor: UIColor?
     private let defaultButtonBorderColor: UIColor?
@@ -35,18 +27,10 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
     
     let containsTips: ObservableValue<Bool> = ObservableValue(value: false)
                 
-    required init(node: MobileContentXmlNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, localizationServices: LocalizationServices, followUpsService: FollowUpsService, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?, defaultButtonBorderColor: UIColor?, rootContentStack: ToolPageContentStackViewModel?) {
+    required init(node: MobileContentXmlNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?, defaultButtonBorderColor: UIColor?, rootContentStack: ToolPageContentStackViewModel?) {
         
         self.node = node
-        self.manifest = manifest
-        self.language = language
-        self.translationsFileCache = translationsFileCache
-        self.mobileContentNodeParser = mobileContentNodeParser
-        self.mobileContentAnalytics = mobileContentAnalytics
-        self.mobileContentEvents = mobileContentEvents
-        self.fontService = fontService
-        self.localizationServices = localizationServices
-        self.followUpsService = followUpsService
+        self.diContainer = diContainer
         self.toolPageColors = toolPageColors
         self.defaultTextNodeTextColor = defaultTextNodeTextColor
         self.defaultButtonBorderColor = defaultButtonBorderColor
@@ -72,15 +56,7 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
         
             let viewModel = ToolPageContentStackViewModel(
                 node: paragraphNode,
-                manifest: manifest,
-                language: language,
-                translationsFileCache: translationsFileCache,
-                mobileContentNodeParser: mobileContentNodeParser,
-                mobileContentAnalytics: mobileContentAnalytics,
-                mobileContentEvents: mobileContentEvents,
-                fontService: fontService,
-                localizationServices: localizationServices,
-                followUpsService: followUpsService,
+                diContainer: diContainer,
                 toolPageColors: toolPageColors,
                 defaultTextNodeTextColor: defaultTextNodeTextColor,
                 defaultButtonBorderColor: defaultButtonBorderColor,
@@ -119,10 +95,10 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
             
             let viewModel = TrainingTipViewModel(
                 trainingTipId: trainingTipId,
-                manifest: manifest,
-                translationsFileCache: translationsFileCache,
-                mobileContentNodeParser: mobileContentNodeParser,
-                mobileContentEvents: mobileContentEvents,
+                manifest: diContainer.manifest,
+                translationsFileCache: diContainer.translationsFileCache,
+                mobileContentNodeParser: diContainer.mobileContentNodeParser,
+                mobileContentEvents: diContainer.mobileContentEvents,
                 viewType: .rounded
             )
             
@@ -224,7 +200,7 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
         }
         button.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width * 0.9, height: 50)
         button.layer.cornerRadius = 5
-        button.titleLabel?.font = fontService.getFont(size: fontSize, weight: fontWeight)
+        button.titleLabel?.font = diContainer.fontService.getFont(size: fontSize, weight: fontWeight)
         button.setTitleColor(titleColor, for: .normal)
         button.setTitle(buttonNode.textNode?.text, for: .normal)
         
@@ -238,7 +214,7 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
         button.backgroundColor = .clear
         button.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width * 0.9, height: 50)
         button.layer.cornerRadius = 5
-        button.titleLabel?.font = fontService.getFont(size: fontSize, weight: fontWeight)
+        button.titleLabel?.font = diContainer.fontService.getFont(size: fontSize, weight: fontWeight)
         button.setTitleColor(titleColor, for: .normal)
         button.setTitle(linkNode.textNode?.text, for: .normal)
         
@@ -255,11 +231,11 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
             return nil
         }
         
-        guard let resourceSrc = manifest.resources[resource]?.src else {
+        guard let resourceSrc = diContainer.manifest.resources[resource]?.src else {
             return nil
         }
         
-        guard let resourceImage = translationsFileCache.getImage(location: SHA256FileLocation(sha256WithPathExtension: resourceSrc)) else {
+        guard let resourceImage = diContainer.translationsFileCache.getImage(location: SHA256FileLocation(sha256WithPathExtension: resourceSrc)) else {
             return nil
         }
         
@@ -329,7 +305,7 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
             fontWeight = defaultFontWeight
         }
         
-        label.font = fontService.getFont(size: fontSize * fontScale, weight: fontWeight)
+        label.font = diContainer.fontService.getFont(size: fontSize * fontScale, weight: fontWeight)
         label.text = textNode.text
         label.textColor = textColor
         label.textAlignment = textAlignment
@@ -343,15 +319,7 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
         
         let viewModel = ToolPageContentTabsViewModel(
             tabsNode: tabsNode,
-            manifest: manifest,
-            language: language,
-            translationsFileCache: translationsFileCache,
-            mobileContentNodeParser: mobileContentNodeParser,
-            mobileContentAnalytics: mobileContentAnalytics,
-            mobileContentEvents: mobileContentEvents,
-            fontService: fontService,
-            localizationServices: localizationServices,
-            followUpsService: followUpsService,
+            diContainer: diContainer,
             toolPageColors: toolPageColors,
             defaultTextNodeTextColor: defaultTextNodeTextColor
         )
@@ -365,7 +333,7 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
         
         let viewModel = ToolPageContentInputViewModel(
             inputNode: inputNode,
-            fontService: fontService,
+            fontService: diContainer.fontService,
             toolPageColors: toolPageColors,
             defaultTextNodeTextColor: defaultTextNodeTextColor
         )
@@ -381,15 +349,7 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
         
         let viewModel = ToolPageContentFormViewModel(
             formNode: formNode,
-            manifest: manifest,
-            language: language,
-            translationsFileCache: translationsFileCache,
-            mobileContentNodeParser: mobileContentNodeParser,
-            mobileContentAnalytics: mobileContentAnalytics,
-            mobileContentEvents: mobileContentEvents,
-            fontService: fontService,
-            localizationServices: localizationServices,
-            followUpsService: followUpsService,
+            diContainer: diContainer,
             toolPageColors: toolPageColors,
             defaultTextNodeTextColor: defaultTextNodeTextColor
         )
@@ -438,20 +398,20 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
                 if let index = triggerEvents.firstIndex(of: followUpSendEventName) {
                     triggerEvents.remove(at: index)
                 }
-                mobileContentEvents.followUpEventButtonTapped(followUpEventButton: FollowUpButtonEvent(triggerEventsOnFollowUpSent: triggerEvents))
+                diContainer.mobileContentEvents.followUpEventButtonTapped(followUpEventButton: FollowUpButtonEvent(triggerEventsOnFollowUpSent: triggerEvents))
             }
             else {
                 for event in buttonNode.events {
-                    mobileContentEvents.eventButtonTapped(eventButton: ButtonEvent(event: event))
+                    diContainer.mobileContentEvents.eventButtonTapped(eventButton: ButtonEvent(event: event))
                 }
             }
         }
         else if buttonNode.type == "url", let url = buttonNode.url {
-            mobileContentEvents.urlButtonTapped(urlButtonEvent: UrlButtonEvent(url: url))
+            diContainer.mobileContentEvents.urlButtonTapped(urlButtonEvent: UrlButtonEvent(url: url))
         }
         
         if let analyticsEventsNode = buttonNode.analyticsEventsNode {
-            mobileContentAnalytics.trackEvents(events: analyticsEventsNode)
+            diContainer.mobileContentAnalytics.trackEvents(events: analyticsEventsNode)
         }
     }
     
@@ -484,11 +444,11 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
         }
         
         for event in linkNode.events {
-            mobileContentEvents.eventButtonTapped(eventButton: ButtonEvent(event: event))
+            diContainer.mobileContentEvents.eventButtonTapped(eventButton: ButtonEvent(event: event))
         }
         
         if let analyticsEventsNode = linkNode.analyticsEventsNode {
-            mobileContentAnalytics.trackEvents(events: analyticsEventsNode)
+            diContainer.mobileContentAnalytics.trackEvents(events: analyticsEventsNode)
         }
     }
 }

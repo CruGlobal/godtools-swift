@@ -11,40 +11,22 @@ import UIKit
 class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
     
     private let formNode: ContentFormNode
-    private let language: LanguageModel
-    private let mobileContentAnalytics: MobileContentAnalytics
-    private let mobileContentEvents: MobileContentEvents
-    private let fontService: FontService
-    private let localizationServices: LocalizationServices
-    private let followUpsService: FollowUpsService
+    private let diContainer: ToolPageDiContainer
     private let toolPageColors: ToolPageColorsViewModel
     private let defaultTextNodeTextColor: UIColor?
     
     let contentViewModel: ToolPageContentStackViewModel
     
-    required init(formNode: ContentFormNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, localizationServices: LocalizationServices, followUpsService: FollowUpsService, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
+    required init(formNode: ContentFormNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
         
         self.formNode = formNode
-        self.language = language
-        self.mobileContentAnalytics = mobileContentAnalytics
-        self.mobileContentEvents = mobileContentEvents
-        self.fontService = fontService
-        self.localizationServices = localizationServices
-        self.followUpsService = followUpsService
+        self.diContainer = diContainer
         self.toolPageColors = toolPageColors
         self.defaultTextNodeTextColor = defaultTextNodeTextColor
         
         contentViewModel = ToolPageContentStackViewModel(
             node: formNode,
-            manifest: manifest,
-            language: language,
-            translationsFileCache: translationsFileCache,
-            mobileContentNodeParser: mobileContentNodeParser,
-            mobileContentAnalytics: mobileContentAnalytics,
-            mobileContentEvents: mobileContentEvents,
-            fontService: fontService,
-            localizationServices: localizationServices,
-            followUpsService: followUpsService,
+            diContainer: diContainer,
             toolPageColors: toolPageColors,
             defaultTextNodeTextColor: defaultTextNodeTextColor,
             defaultButtonBorderColor: nil,
@@ -62,14 +44,14 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
     
     private func addObservers() {
         
-        mobileContentEvents.followUpEventButtonTappedSignal.addObserver(self) { [weak self] (followUpButtonEvent: FollowUpButtonEvent) in
+        diContainer.mobileContentEvents.followUpEventButtonTappedSignal.addObserver(self) { [weak self] (followUpButtonEvent: FollowUpButtonEvent) in
             self?.sendFollowUps(followUpButtonEvent: followUpButtonEvent)
         }
     }
     
     private func removeObservers() {
-        mobileContentEvents.followUpEventButtonTappedSignal.removeObserver(self)
-        mobileContentEvents.eventButtonTappedSignal.removeObserver(self)
+        diContainer.mobileContentEvents.followUpEventButtonTappedSignal.removeObserver(self)
+        diContainer.mobileContentEvents.eventButtonTappedSignal.removeObserver(self)
     }
     
     private func sendFollowUps(followUpButtonEvent: FollowUpButtonEvent) {
@@ -113,7 +95,7 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
         let name: String? = inputData["name"] as? String
         let email: String? = inputData["email"] as? String
         let destinationId: Int? = Int(inputData["destination_id"] as? String ?? "")
-        let languageId: Int? = Int(language.id)
+        let languageId: Int? = Int(diContainer.language.id)
         
         if let name = name, let email = email, let destinationId = destinationId, let languageId = languageId {
             
@@ -124,10 +106,10 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
                 languageId: languageId
             )
             
-            followUpsService.postNewFollowUp(followUp: followUpModel)
+            diContainer.followUpsService.postNewFollowUp(followUp: followUpModel)
             
             for event in followUpButtonEvent.triggerEventsOnFollowUpSent {
-                mobileContentEvents.eventButtonTapped(eventButton: ButtonEvent(event: event))
+                diContainer.mobileContentEvents.eventButtonTapped(eventButton: ButtonEvent(event: event))
             }
         }
         else {
@@ -135,7 +117,7 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
             let errorTitle: String = "Internal Error"
             let errorMessage: String = "Failed to fetch data for follow ups (name, email, destinationId, languageId)."
             
-            mobileContentEvents.contentError(error: ContentEventError(title: errorTitle, message: errorMessage))
+            diContainer.mobileContentEvents.contentError(error: ContentEventError(title: errorTitle, message: errorMessage))
         }
         
         print("DONE")
@@ -143,7 +125,7 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
     
     private func notifiyFollowUpsMissingFieldsError(missingFieldsNames: [String]) {
         
-        let errorTitle: String = localizationServices.stringForMainBundle(key: "error")
+        let errorTitle: String = diContainer.localizationServices.stringForMainBundle(key: "error")
         var errorMessage: String = ""
         
         for index in 0 ..< missingFieldsNames.count {
@@ -153,9 +135,9 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
                 errorMessage += "\n"
             }
             
-            errorMessage += String(format: localizationServices.stringForMainBundle(key: "required_field_missing"), name.localizedCapitalized)
+            errorMessage += String(format: diContainer.localizationServices.stringForMainBundle(key: "required_field_missing"), name.localizedCapitalized)
         }
         
-        mobileContentEvents.contentError(error: ContentEventError(title: errorTitle, message: errorMessage))
+        diContainer.mobileContentEvents.contentError(error: ContentEventError(title: errorTitle, message: errorMessage))
     }
 }

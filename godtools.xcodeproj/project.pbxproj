@@ -622,6 +622,9 @@
 		45ACBD12247DBD5A00514E75 /* ToolMenuItemId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ACBD11247DBD5A00514E75 /* ToolMenuItemId.swift */; };
 		45ACBD16247DC7EF00514E75 /* AllToolsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ACBD15247DC7EF00514E75 /* AllToolsViewModel.swift */; };
 		45ADD0CC24549F2100E82DD8 /* WebArchiveOperationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ADD0CB24549F2100E82DD8 /* WebArchiveOperationResult.swift */; };
+		45AF6DC72565A280008B8E50 /* MobileContentBackgroundImageAlignType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AF6DC62565A280008B8E50 /* MobileContentBackgroundImageAlignType.swift */; };
+		45AF6DC92565A2BE008B8E50 /* MobileContentBackgroundImageScaleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AF6DC82565A2BE008B8E50 /* MobileContentBackgroundImageScaleType.swift */; };
+		45AF6DCB2565A442008B8E50 /* ToolPageDiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AF6DCA2565A442008B8E50 /* ToolPageDiContainer.swift */; };
 		45B2AE3D24587BA000253BAD /* ShareArticleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B2AE3C24587BA000253BAD /* ShareArticleView.swift */; };
 		45B2AE3F24587BAB00253BAD /* ShareArticleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B2AE3E24587BAB00253BAD /* ShareArticleViewModel.swift */; };
 		45B2AE4124587BB500253BAD /* ShareArticleViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B2AE4024587BB500253BAD /* ShareArticleViewModelType.swift */; };
@@ -1443,6 +1446,9 @@
 		45ACBD11247DBD5A00514E75 /* ToolMenuItemId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolMenuItemId.swift; sourceTree = "<group>"; };
 		45ACBD15247DC7EF00514E75 /* AllToolsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllToolsViewModel.swift; sourceTree = "<group>"; };
 		45ADD0CB24549F2100E82DD8 /* WebArchiveOperationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebArchiveOperationResult.swift; sourceTree = "<group>"; };
+		45AF6DC62565A280008B8E50 /* MobileContentBackgroundImageAlignType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentBackgroundImageAlignType.swift; sourceTree = "<group>"; };
+		45AF6DC82565A2BE008B8E50 /* MobileContentBackgroundImageScaleType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentBackgroundImageScaleType.swift; sourceTree = "<group>"; };
+		45AF6DCA2565A442008B8E50 /* ToolPageDiContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolPageDiContainer.swift; sourceTree = "<group>"; };
 		45B2AE3C24587BA000253BAD /* ShareArticleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareArticleView.swift; sourceTree = "<group>"; };
 		45B2AE3E24587BAB00253BAD /* ShareArticleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareArticleViewModel.swift; sourceTree = "<group>"; };
 		45B2AE4024587BB500253BAD /* ShareArticleViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareArticleViewModelType.swift; sourceTree = "<group>"; };
@@ -3008,6 +3014,7 @@
 		457D981F254B4F9F000B8159 /* ToolPage */ = {
 			isa = PBXGroup;
 			children = (
+				45AF6DCA2565A442008B8E50 /* ToolPageDiContainer.swift */,
 				457D9820254B4F9F000B8159 /* ToolPageView.swift */,
 				457D9823254B4F9F000B8159 /* ToolPageView.xib */,
 				457D9822254B4F9F000B8159 /* ToolPageViewModel.swift */,
@@ -3338,6 +3345,15 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		45AF6DC52565A243008B8E50 /* BackgroundImage */ = {
+			isa = PBXGroup;
+			children = (
+				45AF6DC62565A280008B8E50 /* MobileContentBackgroundImageAlignType.swift */,
+				45AF6DC82565A2BE008B8E50 /* MobileContentBackgroundImageScaleType.swift */,
+			);
+			path = BackgroundImage;
+			sourceTree = "<group>";
+		};
 		45B2AE42245886B100253BAD /* Mail */ = {
 			isa = PBXGroup;
 			children = (
@@ -3593,6 +3609,7 @@
 		45D9F698255C56CE00CFB81E /* MobileContentViews */ = {
 			isa = PBXGroup;
 			children = (
+				45AF6DC52565A243008B8E50 /* BackgroundImage */,
 				45D9F6A0255C5FA400CFB81E /* MobileContentRenderableViewType.swift */,
 				45DFBF20255EC73B00E6B591 /* MobileContentStackView.swift */,
 				45DFBF22255EC79C00E6B591 /* MobileContentViewModelType.swift */,
@@ -5133,6 +5150,7 @@
 				4508728F24EEC7020047123E /* ShareToolScreenTutorialItemProvider.swift in Sources */,
 				45732227244548A000D653FF /* ChooseLanguageCellViewModel.swift in Sources */,
 				45FCFF76243D0BE000865501 /* LanguageSettingsView.swift in Sources */,
+				45AF6DCB2565A442008B8E50 /* ToolPageDiContainer.swift in Sources */,
 				45038D8724A2698E00345B42 /* TranslationDownloaderError.swift in Sources */,
 				459A71ED24CA207B00B77942 /* TractPageItem.swift in Sources */,
 				45647245244F6FAB00CB202D /* ArticleCategoryCellViewModel.swift in Sources */,
@@ -5235,12 +5253,14 @@
 				45F567A124FD78C80078D539 /* DetermineIfNewUserType.swift in Sources */,
 				45B2AE4C2458886B00253BAD /* CallbackHandler.swift in Sources */,
 				452036C924005816002B2453 /* RequestResponse.swift in Sources */,
+				45AF6DC72565A280008B8E50 /* MobileContentBackgroundImageAlignType.swift in Sources */,
 				4506DEA524B79CD100A1C50B /* MenuSectionHeaderView.swift in Sources */,
 				45A163552553473500ACFB3F /* ToolPageColorsViewModel.swift in Sources */,
 				4579169F24E84F8500C0CF49 /* LoadToolRemoteSessionViewModel.swift in Sources */,
 				459698DC255E233D0085755A /* TrainingTipView.swift in Sources */,
 				451DB1442461DA4200FB14BF /* TractCallToActionProperties.swift in Sources */,
 				451F3F1B24E458A000A25D11 /* ShareToolMenuViewModel.swift in Sources */,
+				45AF6DC92565A2BE008B8E50 /* MobileContentBackgroundImageScaleType.swift in Sources */,
 				45C2CFF32409B61000683A98 /* GlobalActivityAnalytics.swift in Sources */,
 				4564724D244F723300CB202D /* ArticlesViewModel.swift in Sources */,
 			);
