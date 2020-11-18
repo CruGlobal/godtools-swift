@@ -82,7 +82,7 @@ class ToolPageView: UIViewController {
         didLayoutSubviews = true
         
         let hidesHeader: Bool = viewModel.headerViewModel.hidesHeader
-        let hidesCards: Bool = viewModel.numberOfCards == 0
+        let hidesCards: Bool = viewModel.numberOfVisibleCards == 0
         let hidesCallToAction: Bool = viewModel.callToActionViewModel.hidesCallToAction
         
         // contentStack
@@ -101,22 +101,22 @@ class ToolPageView: UIViewController {
         setHeaderHidden(hidden: hidesHeader, animated: false)
         setCallToActionHidden(hidden: hidesCallToAction, animated: false)
                 
-        //cards
-        if viewModel.numberOfCards > 0 {
+        //visible cards
+        if viewModel.numberOfVisibleCards > 0 {
                         
-            addCardsAndCardsConstraints(cardsViewModels: viewModel.cardsStackWillAppear())
+            addCardsAndCardsConstraints(cardsViewModels: viewModel.visibleCardsStackWillAppear())
             
             view.layoutIfNeeded()
             
             setCardsState(cardsState: .starting, animated: false)
             
-            viewModel.currentCard.addObserver(self) { [weak self] (cardPositionAnimatable: AnimatableValue<Int?>) in
+            viewModel.currentCardInVisibleCardStack.addObserver(self) { [weak self] (cardPositionAnimatable: AnimatableValue<Int?>) in
                 self?.setCardsState(cardsState: .showingCard(showingCardAtPosition: cardPositionAnimatable.value), animated: cardPositionAnimatable.animated)
             }
         }
         
         // hiddenCard
-        viewModel.hiddenCard.addObserver(self) { [weak self] (hiddenCardAnimatable: AnimatableValue<Int?>) in
+        viewModel.hiddenCardInHiddenCardStack.addObserver(self) { [weak self] (hiddenCardAnimatable: AnimatableValue<Int?>) in
             if let cardPosition = hiddenCardAnimatable.value, let cardViewModel = self?.viewModel.hiddenCardWillAppear(cardPosition: cardPosition) {
                 self?.showHiddenCard(cardViewModel: cardViewModel, animated: hiddenCardAnimatable.animated)
             }
@@ -147,9 +147,9 @@ class ToolPageView: UIViewController {
                     return
                 }
                 
-                let numberOfCards: CGFloat =  CGFloat(viewModel.numberOfCards)
+                let numberOfVisibleCards: CGFloat =  CGFloat(viewModel.numberOfVisibleCards)
                 let cardTitleHeight: CGFloat = cardView.cardHeaderHeight
-                heroHeight.constant = maximumHeight - (numberOfCards * cardTitleHeight)
+                heroHeight.constant = maximumHeight - (numberOfVisibleCards * cardTitleHeight)
             }
                          
             heroTop.constant = headerHeight + topInset
@@ -374,10 +374,10 @@ extension ToolPageView {
             return cardsContainerHeight - callToActionView.frame.size.height - cardInsets.top - cardInsets.bottom
         }
                 
-        let numberOfCards: CGFloat = CGFloat(viewModel.numberOfCards)
+        let numberOfVisibleCards: CGFloat = CGFloat(viewModel.numberOfVisibleCards)
         let cardTitleHeight: CGFloat = cardView.cardHeaderHeight
         let cardTopVisibilityHeight: CGFloat = floor(cardTitleHeight * cardCollapsedVisibilityPercentage)
-        let collapsedCardsHeight: CGFloat = (cardTopVisibilityHeight * (numberOfCards - 1))
+        let collapsedCardsHeight: CGFloat = (cardTopVisibilityHeight * (numberOfVisibleCards - 1))
         
         let callToActionHeight: CGFloat = callToActionView.frame.size.height
         
@@ -401,20 +401,20 @@ extension ToolPageView {
             return UIScreen.main.bounds.size.height
         }
         
-        let numberOfCards: CGFloat = CGFloat(viewModel.numberOfCards)
+        let numberOfVisibleCards: CGFloat = CGFloat(viewModel.numberOfVisibleCards)
         let cardTitleHeight: CGFloat = cardView.cardHeaderHeight
         
         switch state {
             
         case .starting(let cardPosition):
-            return cardsTopRelativeToCardsContainerFrameBottom - (cardTitleHeight * (numberOfCards - CGFloat(cardPosition)))
+            return cardsTopRelativeToCardsContainerFrameBottom - (cardTitleHeight * (numberOfVisibleCards - CGFloat(cardPosition)))
         
         case .showing:
             return cardsContainerFrameRelativeToScreen.origin.y + cardInsets.top
         
         case .collapsed(let cardPosition):
             let cardTopVisibilityHeight: CGFloat = floor(cardTitleHeight * cardCollapsedVisibilityPercentage)
-            return cardsTopRelativeToCardsContainerFrameBottom - (cardTopVisibilityHeight * (numberOfCards - CGFloat(cardPosition)))
+            return cardsTopRelativeToCardsContainerFrameBottom - (cardTopVisibilityHeight * (numberOfVisibleCards - CGFloat(cardPosition)))
         
         case .hidden:
             return cardsTopRelativeToCardsContainerFrameBottom

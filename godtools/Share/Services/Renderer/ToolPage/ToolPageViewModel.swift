@@ -36,8 +36,8 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     let headerTrainingTipViewModel: TrainingTipViewModelType?
     let heroViewModel: ToolPageContentStackViewModel?
     let hidesCards: Bool
-    let currentCard: ObservableValue<AnimatableValue<Int?>> = ObservableValue(value: AnimatableValue(value: nil, animated: false))
-    let hiddenCard: ObservableValue<AnimatableValue<Int?>> = ObservableValue(value: AnimatableValue(value: nil, animated: false))
+    let currentCardInVisibleCardStack: ObservableValue<AnimatableValue<Int?>> = ObservableValue(value: AnimatableValue(value: nil, animated: false))
+    let hiddenCardInHiddenCardStack: ObservableValue<AnimatableValue<Int?>> = ObservableValue(value: AnimatableValue(value: nil, animated: false))
     let callToActionViewModel: ToolPageCallToActionViewModel
     let modal: ObservableValue<ToolPageModalViewModel?> = ObservableValue(value: nil)
     
@@ -293,11 +293,11 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         return pageNode.headerNode?.trainingTip?.isEmpty ?? true
     }
     
-    var numberOfCards: Int {
+    var numberOfVisibleCards: Int {
         return visibleCardsViewModels.count
     }
     
-    func cardsStackWillAppear() -> [ToolPageCardViewModelType] {
+    func visibleCardsStackWillAppear() -> [ToolPageCardViewModelType] {
         return visibleCardsViewModels
     }
     
@@ -305,10 +305,10 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         
         let card: Int?
         
-        if let hiddenCardValue = hiddenCard.value.value {
+        if let hiddenCardValue = hiddenCardInHiddenCardStack.value.value {
             card = visibleCardsViewModels.count + hiddenCardValue
         }
-        else if let currentCardValue = currentCard.value.value {
+        else if let currentCardValue = currentCardInVisibleCardStack.value.value {
             card = currentCardValue
         }
         else {
@@ -336,29 +336,22 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
             let cardViewModel: ToolPageCardViewModelType = allCardsViewModels[cardPosition]
             if cardViewModel.isHiddenCard {
                 let hiddenCardIndex: Int = cardPosition - visibleCardsViewModels.count
-                hiddenCard.accept(value: AnimatableValue(value: hiddenCardIndex, animated: animated))
+                hiddenCardInHiddenCardStack.accept(value: AnimatableValue(value: hiddenCardIndex, animated: animated))
             }
             else {
-                hiddenCard.accept(value: AnimatableValue(value: nil, animated: animated))
-                currentCard.accept(value: AnimatableValue(value: cardPosition, animated: animated))
+                hiddenCardInHiddenCardStack.accept(value: AnimatableValue(value: nil, animated: animated))
+                currentCardInVisibleCardStack.accept(value: AnimatableValue(value: cardPosition, animated: animated))
             }
         }
         else {
-            currentCard.accept(value: AnimatableValue(value: nil, animated: animated))
-            hiddenCard.accept(value: AnimatableValue(value: nil, animated: animated))
+            currentCardInVisibleCardStack.accept(value: AnimatableValue(value: nil, animated: animated))
+            hiddenCardInHiddenCardStack.accept(value: AnimatableValue(value: nil, animated: animated))
         }
     }
     
-    private func setCardPosition(cardPosition: Int?, animated: Bool) {
-        currentCard.accept(value: AnimatableValue(value: cardPosition, animated: animated))
-    }
-    
-    private func showHiddenCard(cardPosition: Int, animated: Bool) {
-        hiddenCard.accept(value: AnimatableValue(value: cardPosition, animated: animated))
-    }
-    
-    private func hideHiddenCard(animated: Bool) {
-        hiddenCard.accept(value: AnimatableValue(value: nil, animated: animated))
+    private func hideHiddenCard(cardPosition: Int, animated: Bool) {
+        let previousCardPosition: Int = cardPosition - 1
+        setCardOrHiddenCard(cardPosition: previousCardPosition, animated: animated)
     }
 }
 
@@ -371,29 +364,26 @@ extension ToolPageViewModel: ToolPageCardViewModelTypeDelegate {
         let previousCard: Int = cardPosition - 1
         
         if previousCard >= 0 {
-            setCardPosition(cardPosition: previousCard, animated: true)
+            setCardOrHiddenCard(cardPosition: previousCard, animated: true)
         }
         else {
-            setCardPosition(cardPosition: nil, animated: true)
+            setCardOrHiddenCard(cardPosition: nil, animated: true)
         }
     }
     
     func headerTappedFromCard(cardViewModel: ToolPageCardViewModelType, cardPosition: Int) {
-             
-        if !cardViewModel.isHiddenCard {
-            
-            let isShowingCard: Bool = cardPosition == currentCard.value.value
-            
-            if !isShowingCard {
-                setCardPosition(cardPosition: cardPosition, animated: true)
-            }
-            else {
-                
-                gotoPreviousCardFromCard(cardPosition: cardPosition)
-            }
+        
+        let isVisibleCard: Bool = cardPosition < visibleCardsViewModels.count
+        let isCurrentVisibleCard: Bool = currentCardInVisibleCardStack.value.value == cardPosition
+        
+        if isVisibleCard && isCurrentVisibleCard {
+            gotoPreviousCardFromCard(cardPosition: cardPosition)
+        }
+        else if isVisibleCard {
+            setCardOrHiddenCard(cardPosition: cardPosition, animated: true)
         }
         else {
-            hideHiddenCard(animated: true)
+            hideHiddenCard(cardPosition: cardPosition, animated: true)
         }
     }
     
@@ -407,7 +397,7 @@ extension ToolPageViewModel: ToolPageCardViewModelTypeDelegate {
         let nextCard: Int = cardPosition + 1
         
         if nextCard <= visibleCardsViewModels.count - 1 {
-            setCardPosition(cardPosition: nextCard, animated: true)
+            setCardOrHiddenCard(cardPosition: nextCard, animated: true)
         }
         else {
             delegate?.toolPageNextPageTapped()
@@ -420,18 +410,18 @@ extension ToolPageViewModel: ToolPageCardViewModelTypeDelegate {
             return
         }
         
-        let isShowingCard: Bool = currentCard.value.value == cardPosition
+        let isShowingCard: Bool = currentCardInVisibleCardStack.value.value == cardPosition
         
         if isShowingCard {
             
             let nextCard: Int = cardPosition + 1
             
             if nextCard <= visibleCardsViewModels.count - 1 {
-                setCardPosition(cardPosition: nextCard, animated: true)
+                setCardOrHiddenCard(cardPosition: nextCard, animated: true)
             }
         }
         else {
-            setCardPosition(cardPosition: cardPosition, animated: true)
+            setCardOrHiddenCard(cardPosition: cardPosition, animated: true)
         }
     }
     
@@ -439,25 +429,20 @@ extension ToolPageViewModel: ToolPageCardViewModelTypeDelegate {
         
         if !cardViewModel.isHiddenCard {
             
-            let isShowingCard: Bool = currentCard.value.value == cardPosition
+            let isShowingCard: Bool = currentCardInVisibleCardStack.value.value == cardPosition
             
             if isShowingCard {
                 gotoPreviousCardFromCard(cardPosition: cardPosition)
             }
         }
         else {
-            hideHiddenCard(animated: true)
+            hideHiddenCard(cardPosition: cardPosition, animated: true)
         }
     }
     
     func presentCardListener(cardViewModel: ToolPageCardViewModelType, cardPosition: Int) {
         
-        if !cardViewModel.isHiddenCard {
-            setCardPosition(cardPosition: cardPosition, animated: true)
-        }
-        else if cardViewModel.isHiddenCard {
-            showHiddenCard(cardPosition: cardPosition, animated: true)
-        }
+        setCardOrHiddenCard(cardPosition: cardPosition, animated: true)
     }
     
     func dismissCardListener(cardViewModel: ToolPageCardViewModelType, cardPosition: Int) {
@@ -466,7 +451,7 @@ extension ToolPageViewModel: ToolPageCardViewModelTypeDelegate {
             gotoPreviousCardFromCard(cardPosition: cardPosition)
         }
         else {
-            hideHiddenCard(animated: true)
+            hideHiddenCard(cardPosition: cardPosition, animated: true)
         }
     }
 }
