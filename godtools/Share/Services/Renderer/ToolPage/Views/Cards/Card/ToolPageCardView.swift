@@ -11,6 +11,7 @@ import UIKit
 class ToolPageCardView: UIView {
     
     private let viewModel: ToolPageCardViewModelType
+    private let backgroundImageView: MobileContentBackgroundImageView = MobileContentBackgroundImageView()
     
     private var contentStackView: MobileContentStackView?
             
@@ -100,7 +101,9 @@ class ToolPageCardView: UIView {
     }
     
     private func setupBinding() {
-                
+              
+        backgroundImageView.configure(viewModel: viewModel.backgroundImageWillAppear(), parentView: cardBackgroundImageContainer)
+        
         titleLabel.text = viewModel.title
         titleLabel.font = viewModel.titleFont
         titleLabel.textColor = viewModel.titleColor

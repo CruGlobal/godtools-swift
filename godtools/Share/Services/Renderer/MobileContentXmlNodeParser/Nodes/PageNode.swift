@@ -9,7 +9,7 @@
 import Foundation
 import SWXMLHash
 
-class PageNode: MobileContentXmlNode {
+class PageNode: MobileContentXmlNode, BackgroundImageNodeType {
     
     private(set) var headerNode: HeaderNode?
     private(set) var heroNode: HeroNode?
@@ -19,7 +19,8 @@ class PageNode: MobileContentXmlNode {
     
     let backgroundColor: String?
     let backgroundImage: String?
-    let backgroundImageScaleType: String?
+    let backgroundImageAlign: String
+    let backgroundImageScaleType: String
     let cardTextColor: String?
     let listeners: [String]
     let primaryColor: String?
@@ -32,7 +33,8 @@ class PageNode: MobileContentXmlNode {
         
         backgroundColor = attributes["background-color"]?.text
         backgroundImage = attributes["background-image"]?.text
-        backgroundImageScaleType = attributes["background-image-scale-type"]?.text
+        backgroundImageAlign = attributes["background-image-align"]?.text ?? "center"
+        backgroundImageScaleType = attributes["background-image-scale-type"]?.text ?? "fill-x"
         cardTextColor = attributes["card-text-color"]?.text
         listeners = attributes["listeners"]?.text.components(separatedBy: " ") ?? []
         primaryColor = attributes["primary-color"]?.text

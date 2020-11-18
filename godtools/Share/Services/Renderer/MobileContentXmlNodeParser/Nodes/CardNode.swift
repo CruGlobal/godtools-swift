@@ -9,10 +9,11 @@
 import Foundation
 import SWXMLHash
 
-class CardNode: MobileContentXmlNode {
+class CardNode: MobileContentXmlNode, BackgroundImageNodeType {
         
     let backgroundImage: String?
-    let backgroundImageAlign: String?
+    let backgroundImageAlign: String
+    let backgroundImageScaleType: String
     let dismissListeners: [String]
     let hidden: String?
     let listeners: [String]
@@ -22,7 +23,8 @@ class CardNode: MobileContentXmlNode {
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
         backgroundImage = attributes["background-image"]?.text
-        backgroundImageAlign = attributes["background-image-align"]?.text
+        backgroundImageAlign = attributes["background-image-align"]?.text ?? "center"
+        backgroundImageScaleType = attributes["background-image-scale-type"]?.text ?? "fill-x"
         dismissListeners = attributes["dismiss-listeners"]?.text.components(separatedBy: " ") ?? []
         hidden = attributes["hidden"]?.text
         listeners = attributes["listeners"]?.text.components(separatedBy: " ") ?? []

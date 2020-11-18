@@ -129,6 +129,10 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
         return diContainer.fontService.getFont(size: 18, weight: .regular)
     }
     
+    func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel {
+        return MobileContentBackgroundImageViewModel(backgroundImageNode: cardNode, manifestResourcesCache: diContainer.manifestResourcesCache)
+    }
+    
     func headerTapped() {
         delegate?.headerTappedFromCard(cardViewModel: self, cardPosition: cardPosition)
     }

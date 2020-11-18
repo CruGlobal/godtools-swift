@@ -37,6 +37,7 @@ protocol ToolPageCardViewModelType: NSObject {
     var nextButtonTitleFont: UIFont { get }
     var hidesCardNavigation: Bool { get }
     
+    func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel
     func headerTapped()
     func previousTapped()
     func nextTapped()
