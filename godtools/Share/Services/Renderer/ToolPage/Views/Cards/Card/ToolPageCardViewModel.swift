@@ -8,17 +8,6 @@
 
 import UIKit
 
-protocol ToolPageCardViewModelDelegate: class {
-    
-    func headerTappedFromCard(cardViewModel: ToolPageCardViewModel, cardPosition: Int)
-    func previousTappedFromCard(cardViewModel: ToolPageCardViewModel, cardPosition: Int)
-    func nextTappedFromCard(cardViewModel: ToolPageCardViewModel, cardPosition: Int)
-    func cardSwipedUpFromCard(cardViewModel: ToolPageCardViewModel, cardPosition: Int)
-    func cardSwipedDownFromCard(cardViewModel: ToolPageCardViewModel, cardPosition: Int)
-    func presentCardListener(cardViewModel: ToolPageCardViewModel, cardPosition: Int)
-    func dismissCardListener(cardViewModel: ToolPageCardViewModel, cardPosition: Int)
-}
-
 class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     
     private let cardNode: CardNode
@@ -29,13 +18,13 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     private let totalCards: Int
     private let toolPageColors: ToolPageColorsViewModel
     
-    private weak var delegate: ToolPageCardViewModelDelegate?
+    private weak var delegate: ToolPageCardViewModelTypeDelegate?
     
     let contentStackViewModel: ToolPageContentStackViewModel
     let isHiddenCard: Bool
     let hidesCardNavigation: Bool
     
-    required init(delegate: ToolPageCardViewModelDelegate, cardNode: CardNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, cardPosition: Int, totalCards: Int, toolPageColors: ToolPageColorsViewModel) {
+    required init(delegate: ToolPageCardViewModelTypeDelegate, cardNode: CardNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, cardPosition: Int, totalCards: Int, toolPageColors: ToolPageColorsViewModel) {
         
         let isHiddenCard: Bool = cardNode.hidden == "true"
         

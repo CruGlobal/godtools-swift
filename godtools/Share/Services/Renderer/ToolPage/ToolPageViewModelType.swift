@@ -8,7 +8,15 @@
 
 import UIKit
 
-protocol ToolPageViewModelType {
+protocol ToolPageViewModelTypeDelegate: class {
+    
+    func toolPagePresented(viewModel: ToolPageViewModelType, page: Int)
+    func toolPageTrainingTipTapped(trainingTipId: String, tipNode: TipNode)
+    func toolPageNextPageTapped()
+    func toolPageError(error: ContentEventError)
+}
+
+protocol ToolPageViewModelType: NSObject {
     
     var backgroundColor: UIColor { get }
     var backgroundImage: UIImage? { get }

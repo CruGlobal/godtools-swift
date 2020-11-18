@@ -417,11 +417,11 @@ extension ToolViewModel: ToolNavBarViewModelDelegate {
     }
 }
 
-// MARK: - ToolPageViewModelDelegate
+// MARK: - ToolPageViewModelTypeDelegate
 
-extension ToolViewModel: ToolPageViewModelDelegate {
+extension ToolViewModel: ToolPageViewModelTypeDelegate {
     
-    func toolPagePresented(viewModel: ToolPageViewModel, page: Int) {
+    func toolPagePresented(viewModel: ToolPageViewModelType, page: Int) {
         
         currentPage.accept(value: AnimatableValue(value: page, animated: true))
     }

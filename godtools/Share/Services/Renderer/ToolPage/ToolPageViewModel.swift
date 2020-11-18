@@ -8,14 +8,6 @@
 
 import UIKit
 
-protocol ToolPageViewModelDelegate: class {
-    
-    func toolPagePresented(viewModel: ToolPageViewModel, page: Int)
-    func toolPageTrainingTipTapped(trainingTipId: String, tipNode: TipNode)
-    func toolPageNextPageTapped()
-    func toolPageError(error: ContentEventError)
-}
-
 class ToolPageViewModel: NSObject, ToolPageViewModelType {
         
     private let pageNode: PageNode
@@ -37,7 +29,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     private(set) var cardsViewModels: [ToolPageCardViewModelType] = Array()
     private(set) var modalViewModels: [ToolPageModalViewModel] = Array()
     
-    private weak var delegate: ToolPageViewModelDelegate?
+    private weak var delegate: ToolPageViewModelTypeDelegate?
     
     let contentStackViewModel: ToolPageContentStackViewModel?
     let headerViewModel: ToolPageHeaderViewModel
@@ -49,7 +41,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     let callToActionViewModel: ToolPageCallToActionViewModel
     let modal: ObservableValue<ToolPageModalViewModel?> = ObservableValue(value: nil)
     
-    required init(delegate: ToolPageViewModelDelegate, pageNode: PageNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, page: Int, initialPositions: ToolPageInitialPositions?) {
+    required init(delegate: ToolPageViewModelTypeDelegate, pageNode: PageNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, page: Int, initialPositions: ToolPageInitialPositions?) {
                 
         let isLastPage: Bool = page >= manifest.pages.count - 1
         
@@ -360,7 +352,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
 
 // MARK: - ToolPageCardViewModelDelegate
 
-extension ToolPageViewModel: ToolPageCardViewModelDelegate {
+extension ToolPageViewModel: ToolPageCardViewModelTypeDelegate {
     
     private func gotoPreviousCardFromCard(cardPosition: Int) {
         
@@ -374,7 +366,7 @@ extension ToolPageViewModel: ToolPageCardViewModelDelegate {
         }
     }
     
-    func headerTappedFromCard(cardViewModel: ToolPageCardViewModel, cardPosition: Int) {
+    func headerTappedFromCard(cardViewModel: ToolPageCardViewModelType, cardPosition: Int) {
              
         if !cardViewModel.isHiddenCard {
             
@@ -393,12 +385,12 @@ extension ToolPageViewModel: ToolPageCardViewModelDelegate {
         }
     }
     
-    func previousTappedFromCard(cardViewModel: ToolPageCardViewModel, cardPosition: Int) {
+    func previousTappedFromCard(cardViewModel: ToolPageCardViewModelType, cardPosition: Int) {
         
         gotoPreviousCardFromCard(cardPosition: cardPosition)
     }
     
-    func nextTappedFromCard(cardViewModel: ToolPageCardViewModel, cardPosition: Int) {
+    func nextTappedFromCard(cardViewModel: ToolPageCardViewModelType, cardPosition: Int) {
                 
         let nextCard: Int = cardPosition + 1
         
@@ -410,7 +402,7 @@ extension ToolPageViewModel: ToolPageCardViewModelDelegate {
         }
     }
     
-    func cardSwipedUpFromCard(cardViewModel: ToolPageCardViewModel, cardPosition: Int) {
+    func cardSwipedUpFromCard(cardViewModel: ToolPageCardViewModelType, cardPosition: Int) {
         
         guard !cardViewModel.isHiddenCard else {
             return
@@ -431,7 +423,7 @@ extension ToolPageViewModel: ToolPageCardViewModelDelegate {
         }
     }
     
-    func cardSwipedDownFromCard(cardViewModel: ToolPageCardViewModel, cardPosition: Int) {
+    func cardSwipedDownFromCard(cardViewModel: ToolPageCardViewModelType, cardPosition: Int) {
         
         if !cardViewModel.isHiddenCard {
             
@@ -446,7 +438,7 @@ extension ToolPageViewModel: ToolPageCardViewModelDelegate {
         }
     }
     
-    func presentCardListener(cardViewModel: ToolPageCardViewModel, cardPosition: Int) {
+    func presentCardListener(cardViewModel: ToolPageCardViewModelType, cardPosition: Int) {
         
         if !cardViewModel.isHiddenCard {
             setCardPosition(cardPosition: cardPosition, animated: true)
@@ -456,7 +448,7 @@ extension ToolPageViewModel: ToolPageCardViewModelDelegate {
         }
     }
     
-    func dismissCardListener(cardViewModel: ToolPageCardViewModel, cardPosition: Int) {
+    func dismissCardListener(cardViewModel: ToolPageCardViewModelType, cardPosition: Int) {
         
         if !cardViewModel.isHiddenCard {
             gotoPreviousCardFromCard(cardPosition: cardPosition)

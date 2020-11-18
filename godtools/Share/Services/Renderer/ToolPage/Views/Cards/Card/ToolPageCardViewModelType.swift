@@ -8,7 +8,18 @@
 
 import UIKit
 
-protocol ToolPageCardViewModelType {
+protocol ToolPageCardViewModelTypeDelegate: class {
+    
+    func headerTappedFromCard(cardViewModel: ToolPageCardViewModelType, cardPosition: Int)
+    func previousTappedFromCard(cardViewModel: ToolPageCardViewModelType, cardPosition: Int)
+    func nextTappedFromCard(cardViewModel: ToolPageCardViewModelType, cardPosition: Int)
+    func cardSwipedUpFromCard(cardViewModel: ToolPageCardViewModelType, cardPosition: Int)
+    func cardSwipedDownFromCard(cardViewModel: ToolPageCardViewModelType, cardPosition: Int)
+    func presentCardListener(cardViewModel: ToolPageCardViewModelType, cardPosition: Int)
+    func dismissCardListener(cardViewModel: ToolPageCardViewModelType, cardPosition: Int)
+}
+
+protocol ToolPageCardViewModelType: NSObject {
     
     var title: String? { get }
     var titleColor: UIColor { get }

@@ -157,11 +157,11 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
     }
 }
 
-// MARK: - ToolPageViewModelDelegate
+// MARK: - ToolPageViewModelTypeDelegate
 
-extension ToolTrainingViewModel: ToolPageViewModelDelegate {
+extension ToolTrainingViewModel: ToolPageViewModelTypeDelegate {
     
-    func toolPagePresented(viewModel: ToolPageViewModel, page: Int) {
+    func toolPagePresented(viewModel: ToolPageViewModelType, page: Int) {
         
     }
     
