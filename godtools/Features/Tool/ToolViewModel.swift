@@ -157,6 +157,43 @@ class ToolViewModel: NSObject, ToolViewModelType {
         }
     }
     
+    private func trackShareScreenOpened() {
+        
+        analytics.trackActionAnalytics.trackAction(screenName: "", actionName: "Share Screen Opened", data: ["cru.share_screen_open": 1])
+    }
+    
+    var backgroundColor: UIColor {
+        let manifestAttributes: MobileContentManifestAttributesType = primaryLanguageTranslationModel.manifest.attributes
+        return manifestAttributes.getNavBarColor()?.color ?? manifestAttributes.getPrimaryColor().color
+    }
+    
+    var isRightToLeftLanguage: Bool {
+        switch primaryLanguageTranslationModel.language.languageDirection {
+        case .leftToRight:
+            return false
+        case .rightToLeft:
+            return true
+        }
+    }
+    
+    func viewLoaded() {
+        
+        _ = viewsService.postNewResourceView(resourceId: resource.id)
+        
+        toolOpenedAnalytics.trackFirstToolOpenedIfNeeded()
+        toolOpenedAnalytics.trackToolOpened()
+    }
+    
+    func navBarWillAppear() -> ToolNavBarViewModelType {
+                      
+        return navBarViewModel
+    }
+}
+
+// MARK: - Remote Share Subscriber / Publisher
+
+extension ToolViewModel {
+    
     private func subscribeToLiveShareStreamIfNeeded(liveShareStream: String?) {
         
         guard let channelId = liveShareStream, !channelId.isEmpty else {
@@ -168,11 +205,6 @@ class ToolViewModel: NSObject, ToolViewModelType {
                 self?.trackShareScreenOpened()
             }
         }
-    }
-    
-    private func trackShareScreenOpened() {
-        
-        analytics.trackActionAnalytics.trackAction(screenName: "", actionName: "Share Screen Opened", data: ["cru.share_screen_open": 1])
     }
     
     private func handleDidReceiveRemoteShareNavigationEvent(navigationEvent: TractRemoteShareNavigationEvent, animated: Bool = true) {
@@ -216,33 +248,6 @@ class ToolViewModel: NSObject, ToolViewModelType {
         )
         
         tractRemoteSharePublisher.sendNavigationEvent(event: event)
-    }
-    
-    var backgroundColor: UIColor {
-        let manifestAttributes: MobileContentManifestAttributesType = primaryLanguageTranslationModel.manifest.attributes
-        return manifestAttributes.getNavBarColor()?.color ?? manifestAttributes.getPrimaryColor().color
-    }
-    
-    var isRightToLeftLanguage: Bool {
-        switch primaryLanguageTranslationModel.language.languageDirection {
-        case .leftToRight:
-            return false
-        case .rightToLeft:
-            return true
-        }
-    }
-    
-    func viewLoaded() {
-        
-        _ = viewsService.postNewResourceView(resourceId: resource.id)
-        
-        toolOpenedAnalytics.trackFirstToolOpenedIfNeeded()
-        toolOpenedAnalytics.trackToolOpened()
-    }
-    
-    func navBarWillAppear() -> ToolNavBarViewModelType {
-                      
-        return navBarViewModel
     }
 }
 
@@ -421,7 +426,7 @@ extension ToolViewModel: ToolNavBarViewModelDelegate {
 
 extension ToolViewModel: ToolPageViewModelTypeDelegate {
     
-    func toolPagePresented(viewModel: ToolPageViewModelType, page: Int) {
+    func toolPagePresentedListener(viewModel: ToolPageViewModelType, page: Int) {
         
         currentPage.accept(value: AnimatableValue(value: page, animated: true))
     }
@@ -431,6 +436,11 @@ extension ToolViewModel: ToolPageViewModelTypeDelegate {
         let languageTranslationModel: ToolLanguageTranslationModel = languageTranslationModels[currentToolLanguage]
         
         flowDelegate?.navigate(step: .toolTrainingTipTappedFromTool(manifest: languageTranslationModel.manifest, trainingTipId: trainingTipId, tipNode: tipNode, language: languageTranslationModel.language))
+    }
+    
+    func toolPageCardChanged(cardPosition: Int?) {
+        
+        sendRemoteShareNavigationEventForPage(page: currentToolPage)
     }
     
     func toolPageNextPageTapped() {

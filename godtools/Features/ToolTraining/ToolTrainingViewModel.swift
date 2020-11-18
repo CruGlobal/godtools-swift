@@ -161,11 +161,15 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
 
 extension ToolTrainingViewModel: ToolPageViewModelTypeDelegate {
     
-    func toolPagePresented(viewModel: ToolPageViewModelType, page: Int) {
+    func toolPagePresentedListener(viewModel: ToolPageViewModelType, page: Int) {
         
     }
     
     func toolPageTrainingTipTapped(trainingTipId: String, tipNode: TipNode) {
+        
+    }
+    
+    func toolPageCardChanged(cardPosition: Int?) {
         
     }
     

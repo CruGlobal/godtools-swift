@@ -262,7 +262,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
                 return
             }
             if viewModel.pageNode.listeners.contains(buttonEvent.event) {
-                viewModel.delegate?.toolPagePresented(viewModel: viewModel, page: viewModel.page)
+                viewModel.delegate?.toolPagePresentedListener(viewModel: viewModel, page: viewModel.page)
             }
         }
         
@@ -332,6 +332,8 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         else {
             currentCard.accept(value: AnimatableValue(value: nil, animated: animated))
         }
+        
+        delegate?.toolPageCardChanged(cardPosition: cardPosition)
     }
 }
 
