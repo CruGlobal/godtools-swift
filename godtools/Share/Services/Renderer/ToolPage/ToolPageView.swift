@@ -82,7 +82,7 @@ class ToolPageView: UIViewController {
         didLayoutSubviews = true
         
         let hidesHeader: Bool = viewModel.headerViewModel.hidesHeader
-        let hidesCards: Bool = viewModel.cardsViewModels.isEmpty
+        let hidesCards: Bool = viewModel.numberOfCards == 0
         let hidesCallToAction: Bool = viewModel.callToActionViewModel.hidesCallToAction
         
         // contentStack
@@ -102,9 +102,9 @@ class ToolPageView: UIViewController {
         setCallToActionHidden(hidden: hidesCallToAction, animated: false)
                 
         //cards
-        if !viewModel.cardsViewModels.isEmpty {
+        if viewModel.numberOfCards > 0 {
                         
-            addCardsAndCardsConstraints(cardsViewModels: viewModel.cardsViewModels)
+            addCardsAndCardsConstraints(cardsViewModels: viewModel.cardsStackWillAppear())
             
             view.layoutIfNeeded()
             
@@ -147,9 +147,9 @@ class ToolPageView: UIViewController {
                     return
                 }
                 
-                let cardCount: CGFloat =  CGFloat(viewModel.cardsViewModels.count)
+                let numberOfCards: CGFloat =  CGFloat(viewModel.numberOfCards)
                 let cardTitleHeight: CGFloat = cardView.cardHeaderHeight
-                heroHeight.constant = maximumHeight - (cardCount * cardTitleHeight)
+                heroHeight.constant = maximumHeight - (numberOfCards * cardTitleHeight)
             }
                          
             heroTop.constant = headerHeight + topInset
@@ -374,7 +374,7 @@ extension ToolPageView {
             return cardsContainerHeight - callToActionView.frame.size.height - cardInsets.top - cardInsets.bottom
         }
                 
-        let numberOfCards: CGFloat = CGFloat(viewModel.cardsViewModels.count)
+        let numberOfCards: CGFloat = CGFloat(viewModel.numberOfCards)
         let cardTitleHeight: CGFloat = cardView.cardHeaderHeight
         let cardTopVisibilityHeight: CGFloat = floor(cardTitleHeight * cardCollapsedVisibilityPercentage)
         let collapsedCardsHeight: CGFloat = (cardTopVisibilityHeight * (numberOfCards - 1))
@@ -401,7 +401,7 @@ extension ToolPageView {
             return UIScreen.main.bounds.size.height
         }
         
-        let numberOfCards: CGFloat = CGFloat(viewModel.cardsViewModels.count)
+        let numberOfCards: CGFloat = CGFloat(viewModel.numberOfCards)
         let cardTitleHeight: CGFloat = cardView.cardHeaderHeight
         
         switch state {
