@@ -48,13 +48,25 @@ class MobileContentStackView: UIView {
         return contentView.subviews.isEmpty
     }
     
+    var scrollViewFrame: CGRect? {
+        return scrollView?.frame
+    }
+    
     var contentSize: CGSize {
         return scrollView?.contentSize ?? contentView.frame.size
+    }
+    
+    func getContentInset() -> UIEdgeInsets? {
+        return scrollView?.contentInset
     }
     
     func setContentInset(contentInset: UIEdgeInsets) {
         
         scrollView?.contentInset = contentInset
+    }
+    
+    func getContentOffset() -> CGPoint? {
+        return scrollView?.contentOffset
     }
     
     func setContentOffset(contentOffset: CGPoint) {

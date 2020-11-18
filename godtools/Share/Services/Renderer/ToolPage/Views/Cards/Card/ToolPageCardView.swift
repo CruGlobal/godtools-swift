@@ -153,9 +153,18 @@ class ToolPageCardView: UIView {
     }
     
     @objc func handleSwipeGesture(swipeGesture: UISwipeGestureRecognizer) {
-        if swipeGesture.direction == .up {
+        
+        guard let contentStackView = self.contentStackView else {
+            return
+        }
+        
+        guard let offset = contentStackView.getContentOffset(), let inset = contentStackView.getContentInset(), let scrollFrame = contentStackView.scrollViewFrame else {
+            return
+        }
+                
+        if swipeGesture.direction == .up && offset.y + scrollFrame.size.height >= contentStackView.contentSize.height - inset.top - inset.bottom {
             viewModel.didSwipeCardUp()
-        } else if swipeGesture.direction == .down {
+        } else if swipeGesture.direction == .down && offset.y <= 0 {
             viewModel.didSwipeCardDown()
         }
     }
