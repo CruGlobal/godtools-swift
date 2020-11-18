@@ -225,14 +225,6 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         return toolPageColors.backgroundColor
     }
     
-    var backgroundImage: UIImage? {
-        guard let backgroundResource = pageNode.backgroundImage else {
-            return nil
-        }
-        
-        return diContainer.manifestResourcesCache.getImage(resource: backgroundResource)
-    }
-    
     var hidesTrainingTip: Bool {
         return pageNode.headerNode?.trainingTip?.isEmpty ?? true
     }
@@ -251,6 +243,18 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     
     var cardsViewModels: [ToolPageCardViewModelType] {
         return allCardsViewModels
+    }
+    
+    func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel {
+        
+        // NOTE: Override page node because we want page background to always fill the device. ~Levi
+        let backgroundImageNode = MobileContentBackgroundImageNode(
+            backgroundImage: pageNode.backgroundImage,
+            backgroundImageAlign: "center",
+            backgroundImageScaleType: "fill"
+        )
+        
+        return MobileContentBackgroundImageViewModel(backgroundImageNode: backgroundImageNode, manifestResourcesCache: diContainer.manifestResourcesCache)
     }
     
     func getCurrentPositions() -> ToolPageInitialPositions {

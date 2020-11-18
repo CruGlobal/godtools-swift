@@ -34,6 +34,7 @@ class MobileContentBackgroundImageView {
         let imageView: UIImageView = UIImageView()
         imageView.backgroundColor = .clear
         imageView.image = backgroundImage
+        imageView.contentMode = .scaleAspectFit
         
         let imageSize: CGSize = backgroundImage.size
         
@@ -59,6 +60,7 @@ class MobileContentBackgroundImageView {
             
         case .fillHorizontally:
             
+            imageView.contentMode = .scaleAspectFit
             addEdgeConstraintsToImageView(imageView: imageView, parentView: parentView, leading: true, trailing: true)
             addAspectRatioToImageView(imageView: imageView, imageSize: imageSize)
             
@@ -80,6 +82,7 @@ class MobileContentBackgroundImageView {
             
         case .fillVertically:
             
+            imageView.contentMode = .scaleAspectFit
             addEdgeConstraintsToImageView(imageView: imageView, parentView: parentView, top: true, bottom: true)
             addAspectRatioToImageView(imageView: imageView, imageSize: imageSize)
             

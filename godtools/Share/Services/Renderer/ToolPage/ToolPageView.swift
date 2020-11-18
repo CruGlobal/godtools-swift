@@ -13,6 +13,7 @@ class ToolPageView: UIViewController {
     private let viewModel: ToolPageViewModelType
     private let safeAreaInsets: UIEdgeInsets
     private let panGestureToControlPageCollectionViewPanningSensitivity: UIPanGestureRecognizer = UIPanGestureRecognizer()
+    private let backgroundImageView: MobileContentBackgroundImageView = MobileContentBackgroundImageView()
     
     private var contentStackView: MobileContentStackView?
     private var heroView: MobileContentStackView?
@@ -24,7 +25,7 @@ class ToolPageView: UIViewController {
     
     private weak var windowViewController: UIViewController?
     
-    @IBOutlet weak private var backgroundImageView: UIImageView!
+    @IBOutlet weak private var backgroundImageContainer: UIView!
     @IBOutlet weak private var contentStackContainerView: UIView!
     @IBOutlet weak private var headerView: UIView!
     
@@ -167,8 +168,7 @@ class ToolPageView: UIViewController {
         view.backgroundColor = viewModel.backgroundColor
         
         // backgroundImageView
-        backgroundImageView.image = viewModel.backgroundImage
-        backgroundImageView.isHidden = viewModel.backgroundImage == nil
+        backgroundImageView.configure(viewModel: viewModel.backgroundImageWillAppear(), parentView: backgroundImageContainer)
         
         // headerView
         let headerViewModel: ToolPageHeaderViewModel = viewModel.headerViewModel

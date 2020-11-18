@@ -20,7 +20,6 @@ protocol ToolPageViewModelTypeDelegate: class {
 protocol ToolPageViewModelType: NSObject {
     
     var backgroundColor: UIColor { get }
-    var backgroundImage: UIImage? { get }
     var contentStackViewModel: ToolPageContentStackViewModel? { get }
     var headerViewModel: ToolPageHeaderViewModel { get }
     var headerTrainingTipViewModel: TrainingTipViewModelType? { get }
@@ -35,6 +34,7 @@ protocol ToolPageViewModelType: NSObject {
     var numberOfVisibleCards: Int { get }
     var numberOfHiddenCards: Int { get }
     
+    func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel
     func getCurrentPositions() -> ToolPageInitialPositions
     func callToActionNextButtonTapped()
     func hiddenCardWillAppear(cardPosition: Int) -> ToolPageCardViewModelType?
