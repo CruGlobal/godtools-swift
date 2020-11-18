@@ -36,7 +36,6 @@ class ToolViewModel: NSObject, ToolViewModelType {
     
     private var navBarViewModel: ToolNavBarViewModel!
     private var lastToolPagePositionsForLanguageChange: ToolPageInitialPositions?
-    private var cachedToolRemoteShareNavigationEvents: [PageNumber: TractRemoteShareNavigationEvent] = Dictionary()
         
     let currentPage: ObservableValue<AnimatableValue<Int>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
     let numberOfToolPages: ObservableValue<Int> = ObservableValue(value: 0)
@@ -202,20 +201,21 @@ class ToolViewModel: NSObject, ToolViewModelType {
     
     private func sendRemoteShareNavigationEventForPage(page: Int) {
         
-        if tractRemoteSharePublisher.isSubscriberChannelIdCreatedForPublish {
-            
-            // TODO: Need to get tool page card position.
-            
-            /*
-            let event = TractRemoteSharePublisherNavigationEvent(
-                card: tractPageItem.tractPage?.openedCard,
-                locale: selectedToolLanguage.value.language.code,
-                page: page,
-                tool: resource.abbreviation
-            )
-            
-            tractRemoteSharePublisher.sendNavigationEvent(event: event)*/
+        guard tractRemoteSharePublisher.isSubscriberChannelIdCreatedForPublish else {
+            return
         }
+        
+        let currentToolPagePositions: ToolPageInitialPositions? = currentPagesViewModelsCache.getPage(page: page)?.getCurrentPositions()
+        let language: LanguageModel = languages[currentToolLanguage]
+        
+        let event = TractRemoteSharePublisherNavigationEvent(
+            card: currentToolPagePositions?.card,
+            locale: language.code,
+            page: page,
+            tool: resource.abbreviation
+        )
+        
+        tractRemoteSharePublisher.sendNavigationEvent(event: event)
     }
     
     var backgroundColor: UIColor {
@@ -243,14 +243,6 @@ class ToolViewModel: NSObject, ToolViewModelType {
     func navBarWillAppear() -> ToolNavBarViewModelType {
                       
         return navBarViewModel
-    }
-    
-    func tractPageCardStateChanged(cardState: TractCardProperties.CardState) {
-        
-        if cardState == .open || cardState == .close {
-            
-            sendRemoteShareNavigationEventForPage(page: currentToolPage)
-        }
     }
 }
 
