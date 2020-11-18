@@ -15,7 +15,9 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     private let fontService: FontService
     private let localizationServices: LocalizationServices
     private let cardPosition: Int
-    private let totalCards: Int
+    private let visibleCardPosition: Int?
+    private let hiddenCardPosition: Int?
+    private let numberOfCards: Int
     private let toolPageColors: ToolPageColorsViewModel
     
     private weak var delegate: ToolPageCardViewModelTypeDelegate?
@@ -24,7 +26,7 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     let isHiddenCard: Bool
     let hidesCardNavigation: Bool
     
-    required init(delegate: ToolPageCardViewModelTypeDelegate, cardNode: CardNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, cardPosition: Int, totalCards: Int, toolPageColors: ToolPageColorsViewModel) {
+    required init(delegate: ToolPageCardViewModelTypeDelegate, cardNode: CardNode, manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, cardPosition: Int, visibleCardPosition: Int?, hiddenCardPosition: Int?, numberOfCards: Int, toolPageColors: ToolPageColorsViewModel) {
         
         let isHiddenCard: Bool = cardNode.hidden == "true"
         
@@ -34,7 +36,9 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
         self.fontService = fontService
         self.localizationServices = localizationServices
         self.cardPosition = cardPosition
-        self.totalCards = totalCards
+        self.visibleCardPosition = visibleCardPosition
+        self.hiddenCardPosition = hiddenCardPosition
+        self.numberOfCards = numberOfCards
         self.toolPageColors = toolPageColors
         
         contentStackViewModel = ToolPageContentStackViewModel(
@@ -101,7 +105,8 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     }
     
     var cardPositionLabel: String? {
-        return String(cardPosition+1) + "/" + String(totalCards)
+        let cardPosition: Int = visibleCardPosition ?? 0
+        return String(cardPosition+1) + "/" + String(numberOfCards)
     }
     
     var cardPositionLabelTextColor: UIColor {

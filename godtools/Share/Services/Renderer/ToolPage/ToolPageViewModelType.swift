@@ -36,5 +36,5 @@ protocol ToolPageViewModelType: NSObject {
     func getCurrentPositions() -> ToolPageInitialPositions
     func callToActionNextButtonTapped()
     func hiddenCardWillAppear(cardPosition: Int) -> ToolPageCardViewModelType?
-    func setCardOrHiddenCard(card: Int?, animated: Bool)
+    func setCardOrHiddenCard(cardPosition: Int?, animated: Bool)
 }

@@ -296,7 +296,7 @@ extension ToolViewModel {
             pageViewModel = getAndCacheToolPageViewModel(page: page, language: currentToolLanguage, initialPositions: ToolPageInitialPositions(page: page, card: card))
         }
         
-        pageViewModel?.setCardOrHiddenCard(card: card, animated: animated)
+        pageViewModel?.setCardOrHiddenCard(cardPosition: card, animated: animated)
         
         if page != currentToolPage {
             currentPage.accept(value: AnimatableValue(value: page, animated: animated))

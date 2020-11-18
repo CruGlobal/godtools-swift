@@ -177,8 +177,10 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
                 fontService: fontService,
                 followUpsService: followUpsService,
                 localizationServices: localizationServices,
-                cardPosition: visibleCardIndex,
-                totalCards: visibleCards.count,
+                cardPosition: allCardsViewModels.count,
+                visibleCardPosition: visibleCardIndex,
+                hiddenCardPosition: nil,
+                numberOfCards: visibleCards.count,
                 toolPageColors: toolPageColors
             )
             
@@ -202,8 +204,10 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
                 fontService: fontService,
                 followUpsService: followUpsService,
                 localizationServices: localizationServices,
-                cardPosition: hiddenCardIndex,
-                totalCards: hiddenCards.count,
+                cardPosition: allCardsViewModels.count,
+                visibleCardPosition: nil,
+                hiddenCardPosition: hiddenCardIndex,
+                numberOfCards: hiddenCards.count,
                 toolPageColors: toolPageColors
             )
             
@@ -237,8 +241,8 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         
         // initialPositions
         if let initialPositions = self.initialPositions {
-            if let card = initialPositions.card, allCardsViewModels.count > 0 {
-                setCardOrHiddenCard(card: card, animated: false)
+            if let cardPosition = initialPositions.card, allCardsViewModels.count > 0 {
+                setCardOrHiddenCard(cardPosition: cardPosition, animated: false)
             }
         }
         
@@ -325,18 +329,18 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         return nil
     }
     
-    func setCardOrHiddenCard(card: Int?, animated: Bool) {
+    func setCardOrHiddenCard(cardPosition: Int?, animated: Bool) {
         
-        if let card = card, card >= 0 && card < allCardsViewModels.count {
+        if let cardPosition = cardPosition, cardPosition >= 0 && cardPosition < allCardsViewModels.count {
             
-            let cardViewModel: ToolPageCardViewModelType = allCardsViewModels[card]
+            let cardViewModel: ToolPageCardViewModelType = allCardsViewModels[cardPosition]
             if cardViewModel.isHiddenCard {
-                let hiddenCardIndex: Int = card - visibleCardsViewModels.count
+                let hiddenCardIndex: Int = cardPosition - visibleCardsViewModels.count
                 hiddenCard.accept(value: AnimatableValue(value: hiddenCardIndex, animated: animated))
             }
             else {
                 hiddenCard.accept(value: AnimatableValue(value: nil, animated: animated))
-                currentCard.accept(value: AnimatableValue(value: card, animated: animated))
+                currentCard.accept(value: AnimatableValue(value: cardPosition, animated: animated))
             }
         }
         else {
