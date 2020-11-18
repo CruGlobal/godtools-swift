@@ -231,15 +231,12 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
             return nil
         }
         
-        guard let resourceSrc = diContainer.manifest.resources[resource]?.src else {
-            return nil
-        }
-        
-        guard let resourceImage = diContainer.translationsFileCache.getImage(location: SHA256FileLocation(sha256WithPathExtension: resourceSrc)) else {
+        guard let resourceImage = diContainer.manifestResourcesCache.getImage(resource: resource) else {
             return nil
         }
         
         let imageView: UIImageView = UIImageView()
+        imageView.backgroundColor = .clear
         imageView.image = resourceImage
         
         return imageView

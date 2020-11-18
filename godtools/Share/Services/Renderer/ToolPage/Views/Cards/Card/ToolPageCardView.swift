@@ -18,6 +18,7 @@ class ToolPageCardView: UIView {
     @IBOutlet weak private var headerTrainingTipImageView: UIImageView!
     @IBOutlet weak private var titleSeparatorLine: UIView!
     @IBOutlet weak private var headerButton: UIButton!
+    @IBOutlet weak private var cardBackgroundImageContainer: UIView!
     @IBOutlet weak private var contentStackContainer: UIView!
     @IBOutlet weak private var bottomGradientView: UIView!
     @IBOutlet weak private var cardPositionLabel: UILabel!

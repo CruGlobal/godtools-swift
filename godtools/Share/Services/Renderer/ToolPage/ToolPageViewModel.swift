@@ -226,12 +226,11 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     }
     
     var backgroundImage: UIImage? {
-        if let backgroundResource = pageNode.backgroundImage, let backgroundSrc = diContainer.manifest.resources[backgroundResource]?.src {
-            return diContainer.translationsFileCache.getImage(location: SHA256FileLocation(sha256WithPathExtension: backgroundSrc))
-        }
-        else {
+        guard let backgroundResource = pageNode.backgroundImage else {
             return nil
         }
+        
+        return diContainer.manifestResourcesCache.getImage(resource: backgroundResource)
     }
     
     var hidesTrainingTip: Bool {

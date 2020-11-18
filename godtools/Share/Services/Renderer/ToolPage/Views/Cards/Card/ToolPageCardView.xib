@@ -10,6 +10,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ToolPageCardView" customModule="godtools" customModuleProvider="target">
             <connections>
                 <outlet property="bottomGradientView" destination="65A-1Q-biF" id="UbD-n2-D3X"/>
+                <outlet property="cardBackgroundImageContainer" destination="1mf-U2-uc8" id="kaq-Ui-zfJ"/>
                 <outlet property="cardPositionLabel" destination="UHR-SS-PKM" id="dza-ma-YqD"/>
                 <outlet property="contentStackContainer" destination="LKt-g0-yhC" id="PFe-s7-3Uw"/>
                 <outlet property="headerButton" destination="1dD-4I-w1p" id="Not-Iq-Za3"/>
@@ -48,6 +49,10 @@
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1dD-4I-w1p" userLabel="headerButton">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="49.5"/>
                 </button>
+                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1mf-U2-uc8" userLabel="cardBackgroundImageContainer">
+                    <rect key="frame" x="15" y="65.5" width="384" height="729"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LKt-g0-yhC" userLabel="contentStackContainer">
                     <rect key="frame" x="15" y="65.5" width="384" height="729"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -89,7 +94,10 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="rZm-W3-Lwr" firstAttribute="leading" secondItem="lKs-as-Ac5" secondAttribute="leading" id="0Rj-Qg-ika"/>
+                <constraint firstItem="1mf-U2-uc8" firstAttribute="bottom" secondItem="LKt-g0-yhC" secondAttribute="bottom" id="1Z2-dN-chb"/>
+                <constraint firstItem="1mf-U2-uc8" firstAttribute="leading" secondItem="LKt-g0-yhC" secondAttribute="leading" id="3pQ-Cz-8IV"/>
                 <constraint firstItem="LKt-g0-yhC" firstAttribute="top" secondItem="rZm-W3-Lwr" secondAttribute="bottom" constant="15" id="5cO-3T-Q9R"/>
+                <constraint firstItem="1mf-U2-uc8" firstAttribute="trailing" secondItem="LKt-g0-yhC" secondAttribute="trailing" id="8FN-mZ-bDX"/>
                 <constraint firstItem="65A-1Q-biF" firstAttribute="leading" secondItem="LKt-g0-yhC" secondAttribute="leading" id="8aN-qv-PjE"/>
                 <constraint firstItem="rZm-W3-Lwr" firstAttribute="top" secondItem="1dD-4I-w1p" secondAttribute="bottom" id="9XW-us-f6P"/>
                 <constraint firstItem="rZm-W3-Lwr" firstAttribute="trailing" secondItem="lKs-as-Ac5" secondAttribute="trailing" id="AfZ-py-tyi"/>
@@ -105,6 +113,7 @@
                 <constraint firstAttribute="bottom" secondItem="FiU-R3-9Ap" secondAttribute="bottom" constant="15" id="a1H-uL-2ug"/>
                 <constraint firstItem="UHR-SS-PKM" firstAttribute="top" secondItem="LKt-g0-yhC" secondAttribute="bottom" id="agJ-r0-2RU"/>
                 <constraint firstItem="lKs-as-Ac5" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="cB8-fG-PzZ"/>
+                <constraint firstItem="1mf-U2-uc8" firstAttribute="top" secondItem="LKt-g0-yhC" secondAttribute="top" id="dRI-FU-080"/>
                 <constraint firstItem="UHR-SS-PKM" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="fJw-gF-SLP"/>
                 <constraint firstAttribute="trailing" secondItem="lKs-as-Ac5" secondAttribute="trailing" constant="20" id="khR-i6-GRn"/>
                 <constraint firstAttribute="trailing" secondItem="tof-tC-XrA" secondAttribute="trailing" constant="20" id="nq2-89-fM2"/>

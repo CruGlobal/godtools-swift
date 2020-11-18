@@ -11,6 +11,7 @@ import Foundation
 class ToolPageDiContainer {
     
     let manifest: MobileContentXmlManifest
+    let manifestResourcesCache: ManifestResourcesCache
     let language: LanguageModel
     let translationsFileCache: TranslationsFileCache
     let mobileContentNodeParser: MobileContentXmlNodeParser
@@ -23,6 +24,7 @@ class ToolPageDiContainer {
     required init(manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices) {
         
         self.manifest = manifest
+        self.manifestResourcesCache = ManifestResourcesCache(manifest: manifest, translationsFileCache: translationsFileCache)
         self.language = language
         self.translationsFileCache = translationsFileCache
         self.mobileContentNodeParser = mobileContentNodeParser
