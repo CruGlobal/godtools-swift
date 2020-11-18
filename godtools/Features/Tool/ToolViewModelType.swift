@@ -17,7 +17,7 @@ protocol ToolViewModelType {
     
     func navBarWillAppear() -> ToolNavBarViewModelType
     func viewLoaded()
-    func toolPageWillAppear(page: Int) -> ToolPageViewModel?
+    func toolPageWillAppear(page: Int) -> ToolPageViewModelType?
     func toolPageDidChange(page: Int)
     func toolPageDidAppear(page: Int)
 }

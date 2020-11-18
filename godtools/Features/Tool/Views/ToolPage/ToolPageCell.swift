@@ -34,10 +34,6 @@ class ToolPageCell: UICollectionViewCell {
         toolPage = nil
     }
     
-    func getToolPageCurrentPositions() -> ToolPageInitialPositions? {
-        return toolPage?.getCurrentPositions()
-    }
-    
     func configure(viewModel: ToolPageViewModelType, windowViewController: UIViewController, safeAreaInsets: UIEdgeInsets) {
         
         let toolPage: ToolPageView = ToolPageView(

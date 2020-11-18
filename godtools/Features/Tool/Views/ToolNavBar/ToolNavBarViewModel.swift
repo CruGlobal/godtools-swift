@@ -12,7 +12,7 @@ protocol ToolNavBarViewModelDelegate: class {
     
     func navHomeTapped(navBar: ToolNavBarViewModelType)
     func shareTapped(navBar: ToolNavBarViewModelType)
-    func languageTapped(navBar: ToolNavBarViewModelType, language: LanguageModel)
+    func languageTapped(navBar: ToolNavBarViewModelType, previousLanguage: Int, newLanguage: Int)
 }
 
 class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
@@ -109,6 +109,8 @@ class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
     
     func languageTapped(index: Int) {
         
+        let previousLanguage: Int = selectedLanguage.value
+        
         selectedLanguage.setValue(value: index)
         
         let language: LanguageModel = languages[index]
@@ -125,6 +127,6 @@ class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
             data: data
         )
         
-        delegate?.languageTapped(navBar: self, language: language)
+        delegate?.languageTapped(navBar: self, previousLanguage: previousLanguage, newLanguage: index)
     }
 }

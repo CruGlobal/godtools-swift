@@ -411,6 +411,7 @@
 		456A146124A7CFB80084D450 /* FavoritedResourcesCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456A146024A7CFB80084D450 /* FavoritedResourcesCache.swift */; };
 		456AE95A2563F83B0028510C /* ToolNavBarViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456AE9592563F83B0028510C /* ToolNavBarViewModelType.swift */; };
 		456AE95D2564127D0028510C /* ToolLanguageTranslationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456AE95C2564127D0028510C /* ToolLanguageTranslationModel.swift */; };
+		456AE96125645A500028510C /* ToolPageViewModelsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456AE96025645A500028510C /* ToolPageViewModelsCache.swift */; };
 		456B9C4A25635C5C008FC3F4 /* ToolPageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456B9C4425635C5C008FC3F4 /* ToolPageCell.swift */; };
 		456B9C4B25635C5C008FC3F4 /* ToolPageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 456B9C4525635C5C008FC3F4 /* ToolPageCell.xib */; };
 		456B9C4C25635C5C008FC3F4 /* ToolLanguageSegmentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456B9C4825635C5C008FC3F4 /* ToolLanguageSegmentViewModel.swift */; };
@@ -1235,6 +1236,7 @@
 		456A146024A7CFB80084D450 /* FavoritedResourcesCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritedResourcesCache.swift; sourceTree = "<group>"; };
 		456AE9592563F83B0028510C /* ToolNavBarViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolNavBarViewModelType.swift; sourceTree = "<group>"; };
 		456AE95C2564127D0028510C /* ToolLanguageTranslationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolLanguageTranslationModel.swift; sourceTree = "<group>"; };
+		456AE96025645A500028510C /* ToolPageViewModelsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolPageViewModelsCache.swift; sourceTree = "<group>"; };
 		456B9C4425635C5C008FC3F4 /* ToolPageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageCell.swift; sourceTree = "<group>"; };
 		456B9C4525635C5C008FC3F4 /* ToolPageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToolPageCell.xib; sourceTree = "<group>"; };
 		456B9C4825635C5C008FC3F4 /* ToolLanguageSegmentViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolLanguageSegmentViewModel.swift; sourceTree = "<group>"; };
@@ -2782,6 +2784,7 @@
 			isa = PBXGroup;
 			children = (
 				456AE95C2564127D0028510C /* ToolLanguageTranslationModel.swift */,
+				456AE96025645A500028510C /* ToolPageViewModelsCache.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -5140,6 +5143,7 @@
 				459698D2255DE0280085755A /* ContentEventError.swift in Sources */,
 				456AE95D2564127D0028510C /* ToolLanguageTranslationModel.swift in Sources */,
 				454526DA243E19C300B84B29 /* PrivacyPolicyWebContent.swift in Sources */,
+				456AE96125645A500028510C /* ToolPageViewModelsCache.swift in Sources */,
 				454D59F424BF371F00B8528B /* OpenTutorialView.swift in Sources */,
 				4573221A2445469100D653FF /* ChooseLanguageViewModel.swift in Sources */,
 				45668E7223E0E1CC002728E7 /* OnboardingTutorialUsageListItem.swift in Sources */,

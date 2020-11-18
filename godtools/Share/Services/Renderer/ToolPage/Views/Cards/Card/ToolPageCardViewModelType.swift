@@ -14,6 +14,7 @@ protocol ToolPageCardViewModelType {
     var titleColor: UIColor { get }
     var titleFont: UIFont { get }
     var contentStackViewModel: ToolPageContentStackViewModel { get }
+    var isHiddenCard: Bool { get }
     var cardPositionLabel: String? { get }
     var cardPositionLabelTextColor: UIColor { get }
     var cardPositionLabelFont: UIFont { get }

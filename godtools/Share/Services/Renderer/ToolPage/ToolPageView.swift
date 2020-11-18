@@ -224,10 +224,6 @@ class ToolPageView: UIViewController {
         }
     }
     
-    func getCurrentPositions() -> ToolPageInitialPositions? {
-        return viewModel.getCurrentPositions()
-    }
-    
     @objc func handleCallToActionNext(button: UIButton) {
         viewModel.callToActionNextButtonTapped()
     }

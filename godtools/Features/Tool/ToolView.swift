@@ -109,17 +109,6 @@ class ToolView: UIViewController {
     private func setViewBackgroundColor(color: UIColor) {
         view.backgroundColor = .white
     }
-    
-    private func getCurrentPagePositions() -> ToolPageInitialPositions? {
-        let page: Int = viewModel.currentPage.value.value
-        let indexPath: IndexPath = IndexPath(item: page, section: 0)
-        if let cell = toolPagesView.pagesCollectionView.cellForItem(at: indexPath) as? ToolPageCell {
-            let currentPositions: ToolPageInitialPositions? = cell.getToolPageCurrentPositions()
-            return currentPositions
-        }
-        
-        return nil
-    }
 }
 
 // MARK: - PageNavigationCollectionViewDelegate

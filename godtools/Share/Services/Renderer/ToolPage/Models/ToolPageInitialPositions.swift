@@ -12,5 +12,4 @@ struct ToolPageInitialPositions {
     
     let page: Int
     let card: Int?
-    let hiddenCard: Int?
 }
