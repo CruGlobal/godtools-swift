@@ -25,16 +25,17 @@ protocol ToolPageViewModelType: NSObject {
     var headerTrainingTipViewModel: TrainingTipViewModelType? { get }
     var heroViewModel: ToolPageContentStackViewModel? { get }
     var hidesCards: Bool { get }
-    var currentCardInVisibleCardStack: ObservableValue<AnimatableValue<Int?>> { get }
-    var hiddenCardInHiddenCardStack: ObservableValue<AnimatableValue<Int?>> { get }
+    var currentCard: ObservableValue<AnimatableValue<Int?>> { get }
     var callToActionViewModel: ToolPageCallToActionViewModel { get }
+    var cardsViewModels: [ToolPageCardViewModelType] { get }
     var modal: ObservableValue<ToolPageModalViewModel?> { get }
     var hidesTrainingTip: Bool { get }
+    var numberOfCards: Int { get }
     var numberOfVisibleCards: Int { get }
+    var numberOfHiddenCards: Int { get }
     
-    func visibleCardsStackWillAppear() -> [ToolPageCardViewModelType]
     func getCurrentPositions() -> ToolPageInitialPositions
     func callToActionNextButtonTapped()
     func hiddenCardWillAppear(cardPosition: Int) -> ToolPageCardViewModelType?
-    func setCardOrHiddenCard(cardPosition: Int?, animated: Bool)
+    func setCard(cardPosition: Int?, animated: Bool)
 }

@@ -18,8 +18,6 @@ class ToolPageView: UIViewController {
     private var heroView: MobileContentStackView?
     private var cards: [ToolPageCardView] = Array()
     private var cardTopConstraints: [NSLayoutConstraint] = Array()
-    private var hiddenCard: ToolPageCardView?
-    private var hiddenCardTopConstraint: NSLayoutConstraint?
     private var currentCardState: ToolPageCardsState = .initialized
     private var toolModal: ToolPageModalView?
     private var didLayoutSubviews: Bool = false
@@ -101,27 +99,17 @@ class ToolPageView: UIViewController {
         setHeaderHidden(hidden: hidesHeader, animated: false)
         setCallToActionHidden(hidden: hidesCallToAction, animated: false)
                 
-        //visible cards
-        if viewModel.numberOfVisibleCards > 0 {
+        //cards
+        if viewModel.numberOfCards > 0 {
                         
-            addCardsAndCardsConstraints(cardsViewModels: viewModel.visibleCardsStackWillAppear())
+            addCardsAndCardsConstraints(cardsViewModels: viewModel.cardsViewModels)
             
             view.layoutIfNeeded()
             
             setCardsState(cardsState: .starting, animated: false)
             
-            viewModel.currentCardInVisibleCardStack.addObserver(self) { [weak self] (cardPositionAnimatable: AnimatableValue<Int?>) in
+            viewModel.currentCard.addObserver(self) { [weak self] (cardPositionAnimatable: AnimatableValue<Int?>) in
                 self?.setCardsState(cardsState: .showingCard(showingCardAtPosition: cardPositionAnimatable.value), animated: cardPositionAnimatable.animated)
-            }
-        }
-        
-        // hiddenCard
-        viewModel.hiddenCardInHiddenCardStack.addObserver(self) { [weak self] (hiddenCardAnimatable: AnimatableValue<Int?>) in
-            if let cardPosition = hiddenCardAnimatable.value, let cardViewModel = self?.viewModel.hiddenCardWillAppear(cardPosition: cardPosition) {
-                self?.showHiddenCard(cardViewModel: cardViewModel, animated: hiddenCardAnimatable.animated)
-            }
-            else {
-                self?.hideHiddenCard(animated: hiddenCardAnimatable.animated)
             }
         }
         
@@ -417,7 +405,7 @@ extension ToolPageView {
             return cardsTopRelativeToCardsContainerFrameBottom - (cardTopVisibilityHeight * (numberOfVisibleCards - CGFloat(cardPosition)))
         
         case .hidden:
-            return cardsTopRelativeToCardsContainerFrameBottom
+            return UIScreen.main.bounds.size.height
         }
     }
     
@@ -430,13 +418,25 @@ extension ToolPageView {
             setHeaderHidden(hidden: false, animated: animated)
             setCallToActionHidden(hidden: true, animated: animated)
             
-            for index in 0 ..< cardTopConstraints.count {
-                let topConstraint: NSLayoutConstraint = cardTopConstraints[index]
-                topConstraint.constant = getCardTopConstant(state: .starting(cardPosition: index))
+            var visibleCardPosition: Int = 0
+            
+            for cardPosition in 0 ..< cards.count {
+                
+                let cardViewModel: ToolPageCardViewModelType = viewModel.cardsViewModels[cardPosition]
+                let cardTopConstraint: NSLayoutConstraint = cardTopConstraints[cardPosition]
+                
+                if !cardViewModel.isHiddenCard {
+                    cardTopConstraint.constant = getCardTopConstant(state: .starting(cardPosition: visibleCardPosition))
+                    visibleCardPosition += 1
+                }
+                else {
+                    cardTopConstraint.constant = getCardTopConstant(state: .hidden)
+                }
             }
             
         case .showingCard(let showingCardAtPosition):
             
+            // nothing to show if the card is nil and we are at the cards starting positions state
             if showingCardAtPosition == nil && currentCardState == .starting {
                 return
             }
@@ -448,29 +448,51 @@ extension ToolPageView {
             
             setHeaderHidden(hidden: true, animated: animated)
             
-            let isShowingLastCard: Bool = showCardAtPosition >= cards.count - 1
+            let isShowingLastVisibleCard: Bool = showCardAtPosition >= viewModel.numberOfVisibleCards - 1
             
-            setCallToActionHidden(hidden: !isShowingLastCard, animated: animated)
+            setCallToActionHidden(hidden: !isShowingLastVisibleCard, animated: animated)
             
-            for index in 0 ..< cardTopConstraints.count {
+            var visibleCardPosition: Int = 0
+            
+            for cardPosition in 0 ..< cards.count {
                 
-                let topConstraint: NSLayoutConstraint = cardTopConstraints[index]
-                let shouldShowCard: Bool = index <= showCardAtPosition
+                let cardViewModel: ToolPageCardViewModelType = viewModel.cardsViewModels[cardPosition]
+                let cardTopConstraint: NSLayoutConstraint = cardTopConstraints[cardPosition]
+                let shouldShowCard: Bool = cardPosition <= showCardAtPosition
                 
                 if shouldShowCard {
-                    topConstraint.constant = getCardTopConstant(state: .showing)
+                    cardTopConstraint.constant = getCardTopConstant(state: .showing)
                 }
                 else {
-                    topConstraint.constant = getCardTopConstant(state: .collapsed(cardPosition: index))
+                    if !cardViewModel.isHiddenCard {
+                        cardTopConstraint.constant = getCardTopConstant(state: .collapsed(cardPosition: visibleCardPosition))
+                    }
+                    else {
+                        cardTopConstraint.constant = getCardTopConstant(state: .hidden)
+                    }
+                }
+                
+                if !cardViewModel.isHiddenCard {
+                    visibleCardPosition += 1
                 }
             }
                         
         case .collapseAllCards:
             
-            for index in 0 ..< cardTopConstraints.count {
+            var visibleCardPosition: Int = 0
+            
+            for cardPosition in 0 ..< cards.count {
                 
-                let topConstraint: NSLayoutConstraint = cardTopConstraints[index]
-                topConstraint.constant = getCardTopConstant(state: .collapsed(cardPosition: index))
+                let cardViewModel: ToolPageCardViewModelType = viewModel.cardsViewModels[cardPosition]
+                let cardTopConstraint: NSLayoutConstraint = cardTopConstraints[cardPosition]
+                
+                if !cardViewModel.isHiddenCard {
+                    cardTopConstraint.constant = getCardTopConstant(state: .collapsed(cardPosition: visibleCardPosition))
+                    visibleCardPosition += 1
+                }
+                else {
+                    cardTopConstraint.constant = getCardTopConstant(state: .hidden)
+                }
             }
             
         case .initialized:
@@ -509,104 +531,6 @@ extension ToolPageView {
         case .initialized:
             break
         }
-    }
-    
-    private func showHiddenCard(cardViewModel: ToolPageCardViewModelType, animated: Bool) {
-        
-        guard hiddenCard == nil else {
-            return
-        }
-        
-        let cardView: ToolPageCardView = ToolPageCardView(viewModel: cardViewModel)
-        
-        view.addSubview(cardView)
-        
-        cardView.translatesAutoresizingMaskIntoConstraints = false
-        
-        let top: NSLayoutConstraint = NSLayoutConstraint(
-            item: cardView,
-            attribute: .top,
-            relatedBy: .equal,
-            toItem: view,
-            attribute: .top,
-            multiplier: 1,
-            constant: cardInsets.top
-        )
-        
-        let leading: NSLayoutConstraint = NSLayoutConstraint(
-            item: cardView,
-            attribute: .leading,
-            relatedBy: .equal,
-            toItem: view,
-            attribute: .leading,
-            multiplier: 1,
-            constant: cardInsets.left
-        )
-        
-        let trailing: NSLayoutConstraint = NSLayoutConstraint(
-            item: cardView,
-            attribute: .trailing,
-            relatedBy: .equal,
-            toItem: view,
-            attribute: .trailing,
-            multiplier: 1,
-            constant: cardInsets.right * -1
-        )
-        
-        view.addConstraint(top)
-        view.addConstraint(leading)
-        view.addConstraint(trailing)
-        
-        let heightConstraint: NSLayoutConstraint = NSLayoutConstraint(
-            item: cardView,
-            attribute: .height,
-            relatedBy: .equal,
-            toItem: nil,
-            attribute: .notAnAttribute,
-            multiplier: 1,
-            constant: cardHeight
-        )
-        
-        cardView.addConstraint(heightConstraint)
-        
-        hiddenCard = cardView
-        hiddenCardTopConstraint = top
-        
-        hiddenCardTopConstraint?.constant = getCardTopConstant(state: .hidden)
-        view.layoutIfNeeded()
-        
-        hiddenCardTopConstraint?.constant = getCardTopConstant(state: .showing)
-        if animated {
-            UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseOut, animations: {
-                self.view.layoutIfNeeded()
-            }, completion: nil)
-        }
-        else {
-            view.layoutIfNeeded()
-        }
-    }
-    
-    private func hideHiddenCard(animated: Bool) {
-        
-        hiddenCardTopConstraint?.constant = getCardTopConstant(state: .hidden)
-        
-        if animated {
-            UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseOut, animations: {
-                self.view.layoutIfNeeded()
-            }, completion: { (finished: Bool) in
-                self.handleHiddenCardHidden()
-            })
-        }
-        else {
-            view.layoutIfNeeded()
-            handleHiddenCardHidden()
-        }
-    }
-    
-    private func handleHiddenCardHidden() {
-        hiddenCard?.removeFromSuperview()
-        hiddenCard = nil
-        hiddenCardTopConstraint = nil
     }
     
     private func addCardsAndCardsConstraints(cardsViewModels: [ToolPageCardViewModelType]) {
