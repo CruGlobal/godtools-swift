@@ -248,12 +248,15 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel {
         
         // NOTE: Override page node because we want page background to always fill the device. ~Levi
+        
+        let backgroundImage: String? = pageNode.backgroundImage ?? diContainer.manifest.attributes.backgroundImage
+        
         let backgroundImageNode = MobileContentBackgroundImageNode(
-            backgroundImage: pageNode.backgroundImage,
+            backgroundImage: backgroundImage,
             backgroundImageAlign: "center",
             backgroundImageScaleType: "fill"
         )
-        
+                
         return MobileContentBackgroundImageViewModel(backgroundImageNode: backgroundImageNode, manifestResourcesCache: diContainer.manifestResourcesCache)
     }
     
