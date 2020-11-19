@@ -14,6 +14,7 @@ class ContentButtonNode: MobileContentXmlNode {
     private(set) var textNode: ContentTextNode?
     private(set) var analyticsEventsNode: AnalyticsEventsNode?
     
+    let color: String?
     let events: [String]
     let type: String?
     let url: String?
@@ -22,12 +23,14 @@ class ContentButtonNode: MobileContentXmlNode {
     
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
+        color = attributes["color"]?.text
         events = attributes["events"]?.text.components(separatedBy: " ") ?? []
-        
         type = attributes["type"]?.text
         
         if var urlString = attributes["url"]?.text {
-            if !urlString.contains("https://") || !urlString.contains("http://") {
+            let urlIsHttps: Bool = urlString.contains("https://")
+            let urlIsHttp: Bool = urlString.contains("http://")
+            if !urlIsHttps && !urlIsHttp {
                 urlString = "http://" + urlString
             }
             url  = urlString
@@ -49,5 +52,12 @@ class ContentButtonNode: MobileContentXmlNode {
         }
         
         super.addChild(childNode: childNode)
+    }
+    
+    func getColor() -> MobileContentRGBAColor? {
+        if let stringColor = color {
+            return MobileContentRGBAColor(stringColor: stringColor)
+        }
+        return nil
     }
 }

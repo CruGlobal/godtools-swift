@@ -114,7 +114,7 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
                 buttonNode: buttonNode,
                 fontSize: 18,
                 fontWeight: .regular,
-                buttonColor: toolPageColors.primaryColor,
+                buttonColor: buttonNode.getColor()?.color ?? toolPageColors.primaryColor,
                 borderColor: defaultButtonBorderColor,
                 titleColor: buttonNode.textNode?.getTextColor()?.color ?? toolPageColors.primaryTextColor
             )
