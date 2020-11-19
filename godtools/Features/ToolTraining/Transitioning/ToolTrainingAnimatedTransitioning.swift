@@ -52,6 +52,7 @@ class ToolTrainingAnimatedTransitioning: NSObject, UIViewControllerAnimatedTrans
             
             if toolTrainingView.view.superview == nil {
                 transitionContext.containerView.addSubview(toolTrainingView.view)
+                toolTrainingView.view.constrainEdgesToSuperview()
             }
             
             toolTrainingView.setViewState(viewState: .visible, animationDuration: animationDuration) { (finished: Bool) in

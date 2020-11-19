@@ -16,6 +16,7 @@ class ToolTrainingView: UIViewController {
     }
     
     private let viewModel: ToolTrainingViewModelType
+    private let overlayAlpha: CGFloat = 0.7
             
     @IBOutlet weak private var overlayButton: UIButton!
     @IBOutlet weak private var contentView: UIView!
@@ -147,7 +148,7 @@ class ToolTrainingView: UIViewController {
         
         case .visible:
             contentViewBottomConstant = 0
-            overlayButtonAlpha = 0.3
+            overlayButtonAlpha = overlayAlpha
             
             if layoutIfNeeded {
                 view.layoutIfNeeded()
