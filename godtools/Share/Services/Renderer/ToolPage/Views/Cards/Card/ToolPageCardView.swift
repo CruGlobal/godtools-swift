@@ -95,6 +95,7 @@ class ToolPageCardView: UIView {
         bottomGradient.colors = [
             UIColor.white.withAlphaComponent(0).cgColor,
             UIColor.white.withAlphaComponent(0.5).cgColor,
+            UIColor.white.withAlphaComponent(0.75).cgColor,
             UIColor.white.cgColor
         ]
         bottomGradientView.layer.insertSublayer(bottomGradient, at: 0)

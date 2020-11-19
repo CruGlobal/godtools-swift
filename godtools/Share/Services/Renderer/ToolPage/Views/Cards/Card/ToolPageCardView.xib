@@ -50,7 +50,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="49.5"/>
                 </button>
                 <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1mf-U2-uc8" userLabel="cardBackgroundImageContainer">
-                    <rect key="frame" x="15" y="65.5" width="384" height="729"/>
+                    <rect key="frame" x="15" y="65.5" width="384" height="699"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LKt-g0-yhC" userLabel="contentStackContainer">
@@ -58,10 +58,10 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="65A-1Q-biF" userLabel="bottomGradientView">
-                    <rect key="frame" x="15" y="750.5" width="384" height="44"/>
+                    <rect key="frame" x="15" y="764.5" width="384" height="30"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="44" id="8rX-Fv-rSQ"/>
+                        <constraint firstAttribute="height" constant="30" id="8rX-Fv-rSQ"/>
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 / 2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UHR-SS-PKM" userLabel="cardPositionLabel">
@@ -94,7 +94,7 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="rZm-W3-Lwr" firstAttribute="leading" secondItem="lKs-as-Ac5" secondAttribute="leading" id="0Rj-Qg-ika"/>
-                <constraint firstItem="1mf-U2-uc8" firstAttribute="bottom" secondItem="LKt-g0-yhC" secondAttribute="bottom" id="1Z2-dN-chb"/>
+                <constraint firstItem="65A-1Q-biF" firstAttribute="top" secondItem="1mf-U2-uc8" secondAttribute="bottom" id="1VQ-se-xfC"/>
                 <constraint firstItem="1mf-U2-uc8" firstAttribute="leading" secondItem="LKt-g0-yhC" secondAttribute="leading" id="3pQ-Cz-8IV"/>
                 <constraint firstItem="LKt-g0-yhC" firstAttribute="top" secondItem="rZm-W3-Lwr" secondAttribute="bottom" constant="15" id="5cO-3T-Q9R"/>
                 <constraint firstItem="1mf-U2-uc8" firstAttribute="trailing" secondItem="LKt-g0-yhC" secondAttribute="trailing" id="8FN-mZ-bDX"/>
