@@ -14,6 +14,7 @@ class ToolPageCardView: UIView {
     private let backgroundImageView: MobileContentBackgroundImageView = MobileContentBackgroundImageView()
     
     private var contentStackView: MobileContentStackView?
+    private var startingHeaderTrainingTipIconTrailing: CGFloat = 20
             
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var headerTrainingTipImageView: UIImageView!
@@ -25,6 +26,8 @@ class ToolPageCardView: UIView {
     @IBOutlet weak private var cardPositionLabel: UILabel!
     @IBOutlet weak private var previousButton: UIButton!
     @IBOutlet weak private var nextButton: UIButton!
+    
+    @IBOutlet weak private var headerTrainingTipTrailing: NSLayoutConstraint!
     
     required init(viewModel: ToolPageCardViewModelType) {
         
@@ -73,6 +76,8 @@ class ToolPageCardView: UIView {
     private func setupLayout() {
         
         let cardCornerRadius: CGFloat = 8
+        
+        startingHeaderTrainingTipIconTrailing = headerTrainingTipTrailing.constant
         
         // shadow
         layer.cornerRadius = cardCornerRadius
@@ -136,7 +141,8 @@ class ToolPageCardView: UIView {
         ))
         
         contentStackViewModel.containsTips.addObserver(self) { [weak self] (containsTips: Bool) in
-            self?.headerTrainingTipImageView.isHidden = !containsTips
+            let hidden: Bool = !containsTips
+            self?.setHeaderTrainingTipIconHidden(hidden: hidden)
         }
     }
     
@@ -171,6 +177,20 @@ class ToolPageCardView: UIView {
         } else if swipeGesture.direction == .down && offset.y <= 0 {
             viewModel.didSwipeCardDown()
         }
+    }
+    
+    private func setHeaderTrainingTipIconHidden(hidden: Bool) {
+        
+        headerTrainingTipImageView.isHidden = hidden
+        
+        if hidden {
+            headerTrainingTipTrailing.constant = headerTrainingTipImageView.frame.size.width * -1
+        }
+        else {
+            headerTrainingTipTrailing.constant = startingHeaderTrainingTipIconTrailing
+        }
+        
+        layoutIfNeeded()
     }
 }
 

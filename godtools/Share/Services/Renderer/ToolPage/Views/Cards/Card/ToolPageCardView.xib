@@ -15,6 +15,7 @@
                 <outlet property="contentStackContainer" destination="LKt-g0-yhC" id="PFe-s7-3Uw"/>
                 <outlet property="headerButton" destination="1dD-4I-w1p" id="Not-Iq-Za3"/>
                 <outlet property="headerTrainingTipImageView" destination="tof-tC-XrA" id="w4M-wv-DRb"/>
+                <outlet property="headerTrainingTipTrailing" destination="nq2-89-fM2" id="E4j-Is-sXg"/>
                 <outlet property="nextButton" destination="Vbs-dr-uHK" id="CwD-at-hEd"/>
                 <outlet property="previousButton" destination="FiU-R3-9Ap" id="zcq-2g-V0v"/>
                 <outlet property="titleLabel" destination="lKs-as-Ac5" id="YYL-No-xG5"/>
@@ -27,7 +28,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card Title" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lKs-as-Ac5" userLabel="titleLabel">
-                    <rect key="frame" x="20" y="18" width="374" height="21.5"/>
+                    <rect key="frame" x="20" y="18" width="330" height="21.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -40,7 +41,7 @@
                     </constraints>
                 </imageView>
                 <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rZm-W3-Lwr" userLabel="titleSeparatorLine">
-                    <rect key="frame" x="20" y="49.5" width="374" height="1"/>
+                    <rect key="frame" x="20" y="49.5" width="330" height="1"/>
                     <color key="backgroundColor" systemColor="systemGray4Color" red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="duQ-Yn-ev2"/>
@@ -115,9 +116,9 @@
                 <constraint firstItem="lKs-as-Ac5" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="cB8-fG-PzZ"/>
                 <constraint firstItem="1mf-U2-uc8" firstAttribute="top" secondItem="LKt-g0-yhC" secondAttribute="top" id="dRI-FU-080"/>
                 <constraint firstItem="UHR-SS-PKM" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="fJw-gF-SLP"/>
-                <constraint firstAttribute="trailing" secondItem="lKs-as-Ac5" secondAttribute="trailing" constant="20" id="khR-i6-GRn"/>
                 <constraint firstAttribute="trailing" secondItem="tof-tC-XrA" secondAttribute="trailing" constant="20" id="nq2-89-fM2"/>
                 <constraint firstAttribute="trailing" secondItem="LKt-g0-yhC" secondAttribute="trailing" constant="15" id="rzj-kM-Pkh"/>
+                <constraint firstItem="tof-tC-XrA" firstAttribute="leading" secondItem="lKs-as-Ac5" secondAttribute="trailing" constant="20" id="tNv-Nc-2hU"/>
                 <constraint firstItem="UHR-SS-PKM" firstAttribute="centerY" secondItem="FiU-R3-9Ap" secondAttribute="centerY" id="ym0-Op-Qln"/>
                 <constraint firstItem="1dD-4I-w1p" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="z50-pB-y34"/>
                 <constraint firstItem="1dD-4I-w1p" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="zbt-S5-eyp"/>
