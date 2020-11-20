@@ -98,7 +98,7 @@ class ToolsFlow: Flow {
             flowDelegate?.navigate(step: .openTutorialTapped)
             
         case .toolTappedFromFavoritedTools(let resource):
-            navigateToTool(resource: resource)
+            navigateToTool(resource: resource, trainingTipsEnabled: false)
             
         case .aboutToolTappedFromFavoritedTools(let resource):
             navigateToToolDetail(resource: resource)
@@ -129,7 +129,7 @@ class ToolsFlow: Flow {
             navigationController.present(view.controller, animated: true, completion: nil)
             
         case .toolTappedFromAllTools(let resource):
-            navigateToTool(resource: resource)
+            navigateToTool(resource: resource, trainingTipsEnabled: false)
             
         case .aboutToolTappedFromAllTools(let resource):
             navigateToToolDetail(resource: resource)
@@ -200,7 +200,7 @@ class ToolsFlow: Flow {
             self.shareToolMenuFlow = nil
                         
         case .openToolTappedFromToolDetails(let resource):
-            navigateToTool(resource: resource)
+            navigateToTool(resource: resource, trainingTipsEnabled: false)
             
         case .learnToShareToolTappedFromToolDetails(let resource):
             
@@ -223,7 +223,7 @@ class ToolsFlow: Flow {
             }
             else {
                 
-                navigateToTool(resource: resource)
+                navigateToTool(resource: resource, trainingTipsEnabled: true)
             }
             
         case .closeTappedFromLearnToShareTool:
@@ -317,7 +317,7 @@ class ToolsFlow: Flow {
         })
     }
     
-    func navigateToTool(resource: ResourceModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, liveShareStream: String?, page: Int?) {
+    func navigateToTool(resource: ResourceModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
         
         let dataDownloader: InitialDataDownloader = appDiContainer.initialDataDownloader
         let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
@@ -378,12 +378,13 @@ class ToolsFlow: Flow {
                 parallelTranslation: parallelTranslation,
                 parallelTranslationManifest: parallelTranslationManifest,
                 liveShareStream: liveShareStream,
+                trainingTipsEnabled: trainingTipsEnabled,
                 page: page
             )
         }
     }
     
-    private func navigateToTool(resource: ResourceModel) {
+    private func navigateToTool(resource: ResourceModel, trainingTipsEnabled: Bool) {
         
         let fetchTranslationManifestsViewModel: FetchTranslationManifestsViewModel = appDiContainer.fetchTranslationManifestsViewModel
         
@@ -405,12 +406,13 @@ class ToolsFlow: Flow {
                 parallelTranslation: parallelTranslation,
                 parallelTranslationManifest: parallelTranslationManifest,
                 liveShareStream: nil,
+                trainingTipsEnabled: trainingTipsEnabled,
                 page: 0
             )
         }
     }
     
-    private func navigateToToolFromFetchedCachedResources(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslation: TranslationModel, primaryTranslationManifest: TranslationManifestData?, parallelLanguage: LanguageModel?, parallelTranslation: TranslationModel?, parallelTranslationManifest: TranslationManifestData?, liveShareStream: String?, page: Int?) {
+    private func navigateToToolFromFetchedCachedResources(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslation: TranslationModel, primaryTranslationManifest: TranslationManifestData?, parallelLanguage: LanguageModel?, parallelTranslation: TranslationModel?, parallelTranslationManifest: TranslationManifestData?, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
         
         let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
         
@@ -475,6 +477,7 @@ class ToolsFlow: Flow {
                     parallelLanguage: parallelLanguage,
                     parallelTranslationManifest: parallelTranslationManifest ?? downloadedParallelTranslation,
                     liveShareStream: liveShareStream,
+                    trainingTipsEnabled: trainingTipsEnabled,
                     page: page
                 )
                 
@@ -495,12 +498,13 @@ class ToolsFlow: Flow {
                 parallelLanguage: parallelLanguage,
                 parallelTranslationManifest: parallelTranslationManifest,
                 liveShareStream: liveShareStream,
+                trainingTipsEnabled: trainingTipsEnabled,
                 page: page
             )
         }
     }
     
-    private func navigateToTool(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, liveShareStream: String?, page: Int?) {
+    private func navigateToTool(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
         
         let resourceType: ResourceType = ResourceType.resourceType(resource: resource)
         
@@ -520,6 +524,7 @@ class ToolsFlow: Flow {
                 parallelLanguage: parallelLanguage,
                 parallelTranslationManifest: parallelTranslationManifest,
                 liveShareStream: liveShareStream,
+                trainingTipsEnabled: trainingTipsEnabled,
                 page: page
             )
             
@@ -541,7 +546,7 @@ class ToolsFlow: Flow {
         self.articlesFlow = articlesFlow
     }
     
-    private func navigateToTract(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, liveShareStream: String?, page: Int?) {
+    private func navigateToTract(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
         
         /*
         let viewModel = TractViewModel(
@@ -590,6 +595,7 @@ class ToolsFlow: Flow {
             analytics: appDiContainer.analytics,
             toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics,
             liveShareStream: liveShareStream,
+            trainingTipsEnabled: trainingTipsEnabled,
             page: page
         )
         

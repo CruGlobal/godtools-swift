@@ -29,7 +29,7 @@ protocol ToolPageViewModelType: NSObject {
     var callToActionViewModel: ToolPageCallToActionViewModel { get }
     var cardsViewModels: [ToolPageCardViewModelType] { get }
     var modal: ObservableValue<ToolPageModalViewModel?> { get }
-    var hidesTrainingTip: Bool { get }
+    var hidesHeaderTrainingTip: ObservableValue<Bool> { get }
     var numberOfCards: Int { get }
     var numberOfVisibleCards: Int { get }
     var numberOfHiddenCards: Int { get }

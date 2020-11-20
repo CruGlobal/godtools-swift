@@ -182,7 +182,9 @@ class ToolPageView: UIViewController {
         headerTitleLabel.setLineSpacing(lineSpacing: 2)
         
         // headerTrainingTipView
-        headerTrainingTipView.isHidden = viewModel.hidesTrainingTip
+        viewModel.hidesHeaderTrainingTip.addObserver(self) { [weak self] (hidesHeaderTrainingTip: Bool) in
+            self?.headerTrainingTipView.isHidden = hidesHeaderTrainingTip
+        }
         headerTrainingTipView.backgroundColor = .clear
         
         if let headerTrainingTipViewModel = viewModel.headerTrainingTipViewModel {

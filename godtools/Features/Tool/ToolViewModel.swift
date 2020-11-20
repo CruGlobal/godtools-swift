@@ -33,6 +33,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
     private let fontService: FontService
     private let analytics: AnalyticsContainer
     private let toolOpenedAnalytics: ToolOpenedAnalytics
+    private let trainingTipsEnabled: Bool
     
     private var navBarViewModel: ToolNavBarViewModel!
     private var lastToolPagePositionsForLanguageChange: ToolPageInitialPositions?
@@ -42,7 +43,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, primaryTranslationManifestData: TranslationManifestData, parallelTranslationManifestData: TranslationManifestData?, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, translationsFileCache: TranslationsFileCache, languageSettingsService: LanguageSettingsService, fontService: FontService, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, isNewUserService: IsNewUserService, cardJumpService: CardJumpService, followUpsService: FollowUpsService, viewsService: ViewsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, page: Int?) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, primaryTranslationManifestData: TranslationManifestData, parallelTranslationManifestData: TranslationManifestData?, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, translationsFileCache: TranslationsFileCache, languageSettingsService: LanguageSettingsService, fontService: FontService, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, isNewUserService: IsNewUserService, cardJumpService: CardJumpService, followUpsService: FollowUpsService, viewsService: ViewsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
                 
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -60,6 +61,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
         self.fontService = fontService
         self.analytics = analytics
         self.toolOpenedAnalytics = toolOpenedAnalytics
+        self.trainingTipsEnabled = trainingTipsEnabled
         
         let primaryLanguageTranslationModel = ToolLanguageTranslationModel(
             language: primaryLanguage,
@@ -339,7 +341,8 @@ extension ToolViewModel {
                 mobileContentEvents: mobileContentEvents,
                 fontService: fontService,
                 followUpsService: followUpsService,
-                localizationServices: localizationServices
+                localizationServices: localizationServices,
+                trainingTipsEnabled: trainingTipsEnabled
             )
             
             let viewModel = ToolPageViewModel(

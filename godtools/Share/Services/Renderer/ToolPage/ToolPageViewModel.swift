@@ -32,6 +32,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     let currentCard: ObservableValue<AnimatableValue<Int?>> = ObservableValue(value: AnimatableValue(value: nil, animated: false))
     let callToActionViewModel: ToolPageCallToActionViewModel
     let modal: ObservableValue<ToolPageModalViewModel?> = ObservableValue(value: nil)
+    let hidesHeaderTrainingTip: ObservableValue<Bool> = ObservableValue(value: true)
     
     required init(delegate: ToolPageViewModelTypeDelegate, pageNode: PageNode, diContainer: ToolPageDiContainer, page: Int, initialPositions: ToolPageInitialPositions?) {
                 
@@ -191,6 +192,8 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
             }
         }
         
+        reloadTrainingTipsEnabled(trainingTipsEnabled: diContainer.trainingTipsEnabled)
+        
         setupBinding()
     }
     
@@ -221,12 +224,26 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         }
     }
     
-    var backgroundColor: UIColor {
-        return toolPageColors.backgroundColor
+    private func reloadTrainingTipsEnabled(trainingTipsEnabled: Bool) {
+                
+        hidesHeaderTrainingTip.accept(value: getHidesHeaderTrainingTip(trainingTipsEnabled: trainingTipsEnabled))
     }
     
-    var hidesTrainingTip: Bool {
-        return pageNode.headerNode?.trainingTip?.isEmpty ?? true
+    private func getHidesHeaderTrainingTip(trainingTipsEnabled: Bool) -> Bool {
+        guard trainingTipsEnabled else {
+            return true
+        }
+        guard let pageHeaderTrainingTip = pageNode.headerNode?.trainingTip else {
+            return true
+        }
+        guard !pageHeaderTrainingTip.isEmpty else {
+            return true
+        }
+        return false
+    }
+    
+    var backgroundColor: UIColor {
+        return toolPageColors.backgroundColor
     }
     
     var numberOfCards: Int {

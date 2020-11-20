@@ -20,6 +20,7 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     
     private weak var delegate: ToolPageCardViewModelTypeDelegate?
     
+    let hidesHeaderTrainingTip: ObservableValue<Bool> = ObservableValue(value: true)
     let contentStackViewModel: ToolPageContentStackViewModel
     let isHiddenCard: Bool
     let hidesCardNavigation: Bool
@@ -51,15 +52,16 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
         
         super.init()
         
-        addListeners()
+        setupBinding()
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
-        removeListeners()
+        diContainer.mobileContentEvents.eventButtonTappedSignal.removeObserver(self)
+        contentStackViewModel.containsTips.removeObserver(self)
     }
     
-    private func addListeners() {
+    private func setupBinding() {
         
         diContainer.mobileContentEvents.eventButtonTappedSignal.addObserver(self) { [weak self] (buttonEvent: ButtonEvent) in
             guard let viewModel = self else {
@@ -72,11 +74,12 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
                 self?.delegate?.dismissCardListener(cardViewModel: viewModel, cardPosition: viewModel.cardPosition)
             }
         }
-    }
-    
-    private func removeListeners() {
         
-        diContainer.mobileContentEvents.eventButtonTappedSignal.removeObserver(self)
+        contentStackViewModel.containsTips.addObserver(self) { [weak self] (containsTips: Bool) in
+            let trainingTipsEnabled: Bool = self?.diContainer.trainingTipsEnabled ?? false
+            let showsHeaderTrainingTip: Bool = trainingTipsEnabled && containsTips
+            self?.hidesHeaderTrainingTip.accept(value: !showsHeaderTrainingTip)
+        }
     }
     
     var title: String? {

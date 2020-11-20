@@ -114,6 +114,10 @@ class ToolPageCardView: UIView {
         titleLabel.font = viewModel.titleFont
         titleLabel.textColor = viewModel.titleColor
         
+        viewModel.hidesHeaderTrainingTip.addObserver(self) { [weak self] (hidesHeaderTrainingTip: Bool) in
+            self?.setHeaderTrainingTipIconHidden(hidden: hidesHeaderTrainingTip)
+        }
+        
         cardPositionLabel.text = viewModel.cardPositionLabel
         cardPositionLabel.textColor = viewModel.cardPositionLabelTextColor
         cardPositionLabel.font = viewModel.cardPositionLabelFont
@@ -139,11 +143,6 @@ class ToolPageCardView: UIView {
             bottom: bottomGradientView.frame.size.height,
             right: 0
         ))
-        
-        contentStackViewModel.containsTips.addObserver(self) { [weak self] (containsTips: Bool) in
-            let hidden: Bool = !containsTips
-            self?.setHeaderTrainingTipIconHidden(hidden: hidden)
-        }
     }
     
     var cardHeaderHeight: CGFloat {

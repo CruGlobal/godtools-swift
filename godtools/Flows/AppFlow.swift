@@ -110,6 +110,7 @@ class AppFlow: NSObject, FlowDelegate {
                                 primaryLanguage: primaryLanguage,
                                 parallelLanguage: parallelLanguage,
                                 liveShareStream: liveShareStream,
+                                trainingTipsEnabled: false,
                                 page: page
                             )
                         }

@@ -89,7 +89,7 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
             
             return MobileContentView(view: view, heightConstraintType: .setToAspectRatioOfProvidedSize(size: imageSize))
         }
-        else if let trainingTipNode = node as? TrainingTipNode, let trainingTipId = trainingTipNode.id {
+        else if let trainingTipNode = node as? TrainingTipNode, let trainingTipId = trainingTipNode.id, diContainer.trainingTipsEnabled {
             
             rootContentStack.containsTips.accept(value: true)
             

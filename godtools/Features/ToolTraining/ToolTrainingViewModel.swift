@@ -139,7 +139,8 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
             mobileContentEvents: mobileContentEvents,
             fontService: fontService,
             followUpsService: followUpsService,
-            localizationServices: localizationServices
+            localizationServices: localizationServices,
+            trainingTipsEnabled: true
         )
         
         return ToolPageContentStackViewModel(
