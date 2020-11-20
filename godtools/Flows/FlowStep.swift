@@ -44,6 +44,7 @@ enum FlowStep {
     
     // learnToShareTool
     case closeTappedFromLearnToShareTool
+    case continueTappedFromLearnToShareTool(resource: ResourceModel)
         
     // tool
     case homeTappedFromTool(isScreenSharing: Bool)

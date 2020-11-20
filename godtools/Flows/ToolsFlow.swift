@@ -214,7 +214,8 @@ class ToolsFlow: Flow {
                 
                 let learnToShareToolFlow = LearnToShareToolFlow(
                     flowDelegate: self,
-                    appDiContainer: appDiContainer
+                    appDiContainer: appDiContainer,
+                    resource: resource
                 )
                 
                 navigationController.present(learnToShareToolFlow.navigationController, animated: true, completion: nil)
@@ -225,6 +226,10 @@ class ToolsFlow: Flow {
                 
                 navigateToTool(resource: resource, trainingTipsEnabled: true)
             }
+            
+        case .continueTappedFromLearnToShareTool(let resource):
+            navigateToTool(resource: resource, trainingTipsEnabled: true)
+            dismissLearnToShareToolFlow()
             
         case .closeTappedFromLearnToShareTool:
             dismissLearnToShareToolFlow()

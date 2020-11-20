@@ -15,7 +15,7 @@ class LearnToShareToolFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer) {
+    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, resource: ResourceModel) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -29,6 +29,7 @@ class LearnToShareToolFlow: Flow {
         
         let viewModel = LearnToShareToolViewModel(
             flowDelegate: self,
+            resource: resource,
             learnToShareToolItemsProvider: appDiContainer.learnToShareToolItemsProvider,
             localizationServices: appDiContainer.localizationServices
         )
@@ -39,6 +40,9 @@ class LearnToShareToolFlow: Flow {
     func navigate(step: FlowStep) {
         
         switch step {
+            
+        case .continueTappedFromLearnToShareTool(let resource):
+            flowDelegate?.navigate(step: .continueTappedFromLearnToShareTool(resource: resource))
             
         case .closeTappedFromLearnToShareTool:
             flowDelegate?.navigate(step: .closeTappedFromLearnToShareTool)

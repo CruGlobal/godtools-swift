@@ -10,7 +10,10 @@ import Foundation
 
 class LearnToShareToolViewModel: NSObject, LearnToShareToolViewModelType {
     
+    private let resource: ResourceModel
     private let learnToShareToolItemsProvider: LearnToShareToolItemsProviderType
+    
+    private var currentPage: Int = 0
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -18,9 +21,10 @@ class LearnToShareToolViewModel: NSObject, LearnToShareToolViewModelType {
     let startTrainingTitle: String
     let numberOfLearnToShareToolItems: ObservableValue<Int> = ObservableValue(value: 0)
     
-    required init(flowDelegate: FlowDelegate, learnToShareToolItemsProvider: LearnToShareToolItemsProviderType, localizationServices: LocalizationServices) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, learnToShareToolItemsProvider: LearnToShareToolItemsProviderType, localizationServices: LocalizationServices) {
         
         self.flowDelegate = flowDelegate
+        self.resource = resource
         self.learnToShareToolItemsProvider = learnToShareToolItemsProvider
         self.continueTitle = localizationServices.stringForMainBundle(key: "tutorial.continueButton.title.continue")
         self.startTrainingTitle = localizationServices.stringForMainBundle(key: "start_training")
@@ -46,15 +50,18 @@ class LearnToShareToolViewModel: NSObject, LearnToShareToolViewModelType {
     }
     
     func pageDidChange(page: Int) {
-        
+        currentPage = page
     }
     
     func pageDidAppear(page: Int) {
-        
+        currentPage = page
     }
     
     func continueTapped() {
-        print("continue tapped")
+        let isOnLastPage: Bool = currentPage >= numberOfLearnToShareToolItems.value - 1
+        if isOnLastPage {
+            flowDelegate?.navigate(step: .continueTappedFromLearnToShareTool(resource: resource))
+        }
     }
     
     func willDisplayLearnToShareToolPage(index: Int) -> LearnToShareToolCellViewModelType {
