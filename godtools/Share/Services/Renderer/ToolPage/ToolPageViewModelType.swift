@@ -33,6 +33,7 @@ protocol ToolPageViewModelType: NSObject {
     var numberOfCards: Int { get }
     var numberOfVisibleCards: Int { get }
     var numberOfHiddenCards: Int { get }
+    var hidesCardJump: ObservableValue<Bool> { get }
     
     func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel
     func getCurrentPositions() -> ToolPageInitialPositions

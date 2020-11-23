@@ -20,9 +20,10 @@ class ToolPageDiContainer {
     let fontService: FontService
     let followUpsService: FollowUpsService
     let localizationServices: LocalizationServices
+    let cardJumpService: CardJumpService
     let trainingTipsEnabled: Bool
     
-    required init(manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, trainingTipsEnabled: Bool) {
+    required init(manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, trainingTipsEnabled: Bool) {
         
         self.manifest = manifest
         self.manifestResourcesCache = ManifestResourcesCache(manifest: manifest, translationsFileCache: translationsFileCache)
@@ -34,6 +35,7 @@ class ToolPageDiContainer {
         self.fontService = fontService
         self.followUpsService = followUpsService
         self.localizationServices = localizationServices
+        self.cardJumpService = cardJumpService
         self.trainingTipsEnabled = trainingTipsEnabled
     }
 }

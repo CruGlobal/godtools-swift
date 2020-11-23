@@ -185,7 +185,8 @@ class ToolsFlow: Flow {
                 mobileContentEvents: appDiContainer.getMobileContentEvents(),
                 fontService: appDiContainer.getFontService(),
                 followUpsService: appDiContainer.followUpsService,
-                localizationServices: appDiContainer.localizationServices
+                localizationServices: appDiContainer.localizationServices,
+                cardJumpService: appDiContainer.getCardJumpService()
             )
             
             let view = ToolTrainingView(viewModel: viewModel)
@@ -593,7 +594,7 @@ class ToolsFlow: Flow {
             tractRemoteSharePublisher: appDiContainer.tractRemoteSharePublisher,
             tractRemoteShareSubscriber: appDiContainer.tractRemoteShareSubscriber,
             isNewUserService: appDiContainer.isNewUserService,
-            cardJumpService: appDiContainer.cardJumpService,
+            cardJumpService: appDiContainer.getCardJumpService(),
             followUpsService: appDiContainer.followUpsService,
             viewsService: appDiContainer.viewsService,
             localizationServices: appDiContainer.localizationServices,

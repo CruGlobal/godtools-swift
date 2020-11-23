@@ -342,6 +342,7 @@ extension ToolViewModel {
                 fontService: fontService,
                 followUpsService: followUpsService,
                 localizationServices: localizationServices,
+                cardJumpService: cardJumpService,
                 trainingTipsEnabled: trainingTipsEnabled
             )
             

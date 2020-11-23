@@ -21,6 +21,7 @@ class ToolPageView: UIViewController {
     private var cardTopConstraints: [NSLayoutConstraint] = Array()
     private var currentCardState: ToolPageCardsState = .initialized
     private var toolModal: ToolPageModalView?
+    private var cardBounceAnimation: ToolPageCardBounceAnimation?
     private var didLayoutSubviews: Bool = false
     
     private weak var windowViewController: UIViewController?
@@ -111,6 +112,27 @@ class ToolPageView: UIViewController {
             
             viewModel.currentCard.addObserver(self) { [weak self] (cardPositionAnimatable: AnimatableValue<Int?>) in
                 self?.setCardsState(cardsState: .showingCard(showingCardAtPosition: cardPositionAnimatable.value), animated: cardPositionAnimatable.animated)
+            }
+            
+            viewModel.hidesCardJump.addObserver(self) { [weak self] (hidesCardJump: Bool) in
+                guard let toolPage = self else {
+                    return
+                }
+                
+                if hidesCardJump, let cardBounceAnimation = self?.cardBounceAnimation {
+                    cardBounceAnimation.stopAnimation(forceStop: true)
+                }
+                else if !hidesCardJump, let firstCard = self?.cards.first, let firstContraint = self?.cardTopConstraints.first {
+                    
+                    let cardBounceAnimation = ToolPageCardBounceAnimation(
+                        card: firstCard,
+                        cardTopConstraint: firstContraint,
+                        cardStartingTopConstant: toolPage.getCardTopConstant(state: .starting(cardPosition: 0)),
+                        layoutView: toolPage.view
+                    )
+                    cardBounceAnimation.startAnimation()
+                    self?.cardBounceAnimation = cardBounceAnimation
+                }
             }
         }
         

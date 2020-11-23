@@ -33,6 +33,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     let callToActionViewModel: ToolPageCallToActionViewModel
     let modal: ObservableValue<ToolPageModalViewModel?> = ObservableValue(value: nil)
     let hidesHeaderTrainingTip: ObservableValue<Bool> = ObservableValue(value: true)
+    let hidesCardJump: ObservableValue<Bool> = ObservableValue(value: true)
     
     required init(delegate: ToolPageViewModelTypeDelegate, pageNode: PageNode, diContainer: ToolPageDiContainer, page: Int, initialPositions: ToolPageInitialPositions?) {
                 
@@ -195,6 +196,8 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         reloadTrainingTipsEnabled(trainingTipsEnabled: diContainer.trainingTipsEnabled)
         
         setupBinding()
+        
+        hidesCardJump.accept(value: diContainer.cardJumpService.didShowCardJump)
     }
     
     deinit {
@@ -202,6 +205,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         diContainer.mobileContentEvents.eventButtonTappedSignal.removeObserver(self)
         diContainer.mobileContentEvents.contentErrorSignal.removeObserver(self)
         diContainer.mobileContentEvents.trainingTipTappedSignal.removeObserver(self)
+        diContainer.cardJumpService.didSaveCardJumpShownSignal.removeObserver(self)
     }
     
     private func setupBinding() {
@@ -221,6 +225,10 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         
         diContainer.mobileContentEvents.trainingTipTappedSignal.addObserver(self) { [weak self] (trainingTipEvent: TrainingTipEvent) in
             self?.delegate?.toolPageTrainingTipTapped(trainingTipId: trainingTipEvent.trainingTipId, tipNode: trainingTipEvent.tipNode)
+        }
+        
+        diContainer.cardJumpService.didSaveCardJumpShownSignal.addObserver(self) { [weak self] in
+            self?.hidesCardJump.accept(value: true)
         }
     }
     
@@ -323,6 +331,8 @@ extension ToolPageViewModel: ToolPageCardViewModelTypeDelegate {
     }
     
     func headerTappedFromCard(cardViewModel: ToolPageCardViewModelType, cardPosition: Int) {
+           
+        diContainer.cardJumpService.saveDidShowCardJump()
         
         guard let currentCardPosition: Int = currentCard.value.value else {
             setCard(cardPosition: cardPosition, animated: true)
@@ -357,6 +367,8 @@ extension ToolPageViewModel: ToolPageCardViewModelTypeDelegate {
     }
     
     func cardSwipedUpFromCard(cardViewModel: ToolPageCardViewModelType, cardPosition: Int) {
+        
+        diContainer.cardJumpService.saveDidShowCardJump()
         
         let swipedUpOnCardInVisibleCardStack: Bool = cardPosition < numberOfVisibleCards
         

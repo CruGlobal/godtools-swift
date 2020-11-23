@@ -201,6 +201,10 @@ class AppDiContainer {
         LanguagesManager.shared.setup(languageSettingsService: languageSettingsService)
     }
     
+    func getCardJumpService() -> CardJumpService {
+        return CardJumpService(cardJumpCache: CardJumpUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache))
+    }
+    
     func getFontService() -> FontService {
         return FontService(languageSettings: languageSettingsService)
     }
@@ -289,10 +293,6 @@ class AppDiContainer {
     
     var shareToolScreenTutorialNumberOfViewsCache: ShareToolScreenTutorialNumberOfViewsCache {
         return ShareToolScreenTutorialNumberOfViewsCache(sharedUserDefaultsCache: sharedUserDefaultsCache)
-    }
-    
-    var cardJumpService: CardJumpService {
-        return CardJumpService(cardJumpCache: CardJumpUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache))
     }
     
     var learnToShareToolItemsProvider: LearnToShareToolItemsProviderType {
