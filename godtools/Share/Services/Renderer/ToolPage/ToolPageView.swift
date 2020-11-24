@@ -14,6 +14,7 @@ class ToolPageView: UIViewController {
     private let safeAreaInsets: UIEdgeInsets
     private let panGestureToControlPageCollectionViewPanningSensitivity: UIPanGestureRecognizer = UIPanGestureRecognizer()
     private let backgroundImageView: MobileContentBackgroundImageView = MobileContentBackgroundImageView()
+    private let keyboardObserver: KeyboardObserverType = KeyboardNotificationObserver(loggingEnabled: false)
     
     private var contentStackView: MobileContentStackView?
     private var heroView: MobileContentStackView?
@@ -58,6 +59,9 @@ class ToolPageView: UIViewController {
     
     deinit {
         print("x deinit: \(type(of: self))")
+        keyboardObserver.stopObservingKeyboardChanges()
+        keyboardObserver.keyboardStateDidChangeSignal.removeObserver(self)
+        keyboardObserver.keyboardHeightDidChangeSignal.removeObserver(self)
     }
     
     override func viewDidLoad() {
@@ -71,6 +75,7 @@ class ToolPageView: UIViewController {
         
         view.addGestureRecognizer(panGestureToControlPageCollectionViewPanningSensitivity)
         panGestureToControlPageCollectionViewPanningSensitivity.delegate = self
+        keyboardObserver.startObservingKeyboardChanges()
     }
     
     override func viewDidLayoutSubviews() {
@@ -233,6 +238,11 @@ class ToolPageView: UIViewController {
             else {
                 self?.dismissModalIfNeeded(animated: true, completion: nil)
             }
+        }
+        
+        // keyboard
+        keyboardObserver.keyboardStateDidChangeSignal.addObserver(self) { [weak self] (keyboardStateChange: KeyboardStateChange) in
+            self?.handleKeyboardStateChange(keyboardStateChange: keyboardStateChange)
         }
     }
     
@@ -424,6 +434,9 @@ extension ToolPageView {
         case .showing:
             return cardsContainerFrameRelativeToScreen.origin.y + cardInsets.top
         
+        case .showingKeyboard:
+            return cardsContainerFrameRelativeToScreen.origin.y + cardInsets.top
+            
         case .collapsed(let cardPosition):
             let cardTopVisibilityHeight: CGFloat = floor(cardTitleHeight * cardCollapsedVisibilityPercentage)
             return cardsTopRelativeToCardsContainerFrameBottom - (cardTopVisibilityHeight * (numberOfVisibleCards - CGFloat(cardPosition)))
@@ -500,6 +513,17 @@ extension ToolPageView {
                     visibleCardPosition += 1
                 }
             }
+            
+        case .showingKeyboard(let showingCardAtPosition):
+            
+            for cardPosition in 0 ..< cards.count {
+                
+                let cardTopConstraint: NSLayoutConstraint = cardTopConstraints[cardPosition]
+                
+                if cardPosition <= showingCardAtPosition {
+                    cardTopConstraint.constant = getCardTopConstant(state: .showingKeyboard)
+                }
+            }
                         
         case .collapseAllCards:
             
@@ -547,6 +571,9 @@ extension ToolPageView {
             break
             
         case .showingCard(let showingCardAtPosition):
+            break
+            
+        case .showingKeyboard:
             break
                         
         case .collapseAllCards:
@@ -617,6 +644,38 @@ extension ToolPageView {
             
             cardTopConstraints.append(top)
         }
+    }
+}
+
+// MARK: - Keyboard
+
+extension ToolPageView {
+    
+    func handleKeyboardStateChange(keyboardStateChange: KeyboardStateChange) {
+        
+        guard let currentCardPosition = viewModel.currentCard.value.value else {
+            return
+        }
+        
+        guard currentCardPosition >= 0 && currentCardPosition < cards.count else {
+            return
+        }
+        
+        switch keyboardStateChange.keyboardState {
+
+        case .willShow:
+            setCardsState(cardsState: .showingKeyboard(showingCardAtPosition: currentCardPosition), animated: true)
+        case .willHide:
+            setCardsState(cardsState: .showingCard(showingCardAtPosition: currentCardPosition), animated: true)
+        case .didShow:
+            break
+        case .didHide:
+            break
+        }
+    }
+    
+    func handleKeyboardHeightChanged(keyboardHeight: Double) {
+        
     }
 }
 

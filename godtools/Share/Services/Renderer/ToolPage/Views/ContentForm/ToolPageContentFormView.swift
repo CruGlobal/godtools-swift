@@ -11,7 +11,10 @@ import UIKit
 class ToolPageContentFormView: UIView {
     
     private let viewModel: ToolPageContentFormViewModelType
-        
+    
+    private var inputs: [ToolPageContentInputView] = Array()
+    private var currentEditedTextField: UITextField?
+            
     @IBOutlet weak private var contentContainerView: UIView!
     
     required init(viewModel: ToolPageContentFormViewModelType) {
@@ -51,9 +54,39 @@ class ToolPageContentFormView: UIView {
     
     private func setupBinding() {
         
-        let contentStackView = MobileContentStackView(viewModel: viewModel.contentViewModel, itemSpacing: 15, scrollIsEnabled: false)
+        let contentViewModel: ToolPageContentStackViewModel = viewModel.contentViewModel
+        
+        contentViewModel.didRenderContentInputSignal.addObserver(self) { [weak self] (contentInput: ToolPageContentInputView) in
+            self?.handleDidRenderContentInput(contentInput: contentInput)
+        }
+        
+        let contentStackView = MobileContentStackView(viewModel: contentViewModel, itemSpacing: 15, scrollIsEnabled: false)
         contentContainerView.addSubview(contentStackView)
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
         contentStackView.constrainEdgesToSuperview()
+    }
+    
+    private func handleDidRenderContentInput(contentInput: ToolPageContentInputView) {
+        contentInput.setInputDelegate(delegate: self)
+        inputs.append(contentInput)
+    }
+    
+    func resignCurrentEditedTextField() {
+        currentEditedTextField?.resignFirstResponder()
+        currentEditedTextField = nil
+    }
+}
+
+// MARK: - UITextFieldDelegate
+
+extension ToolPageContentFormView: UITextFieldDelegate {
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        currentEditedTextField = textField
+        return true
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        currentEditedTextField = textField
     }
 }

@@ -64,4 +64,8 @@ class ToolPageContentInputView: UIView {
     @objc func handleInputChanged(textField: UITextField) {
         viewModel.inputChanged(text: textField.text)
     }
+    
+    func setInputDelegate(delegate: UITextFieldDelegate) {
+        inputTextField.delegate = delegate
+    }
 }

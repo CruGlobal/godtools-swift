@@ -26,6 +26,8 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
     private(set) var inputViewModels: [ToolPageContentInputViewModelType] = Array()
     
     let containsTips: ObservableValue<Bool> = ObservableValue(value: false)
+    let didRenderContentFormSignal: SignalValue<ToolPageContentFormView> = SignalValue()
+    let didRenderContentInputSignal: SignalValue<ToolPageContentInputView> = SignalValue()
                 
     required init(node: MobileContentXmlNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?, defaultButtonBorderColor: UIColor?, rootContentStack: ToolPageContentStackViewModel?) {
         
@@ -175,11 +177,15 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
             
             let input: ToolPageContentInputView = getContentInput(inputNode: inputNode)
             
+            didRenderContentInputSignal.accept(value: input)
+            
             return MobileContentView(view: input, heightConstraintType: .constrainedToChildren)
         }
         else if let formNode = node as? ContentFormNode {
             
             let form: ToolPageContentFormView = getContentForm(formNode: formNode)
+            
+            didRenderContentFormSignal.accept(value: form)
             
             return MobileContentView(view: form, heightConstraintType: .constrainedToChildren)
         }

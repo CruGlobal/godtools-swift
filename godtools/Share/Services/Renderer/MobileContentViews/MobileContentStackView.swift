@@ -58,6 +58,10 @@ class MobileContentStackView: UIView {
         return scrollView?.contentSize ?? contentView.frame.size
     }
     
+    func setContentSize(size: CGSize) {
+        scrollView?.contentSize = size
+    }
+    
     func getContentInset() -> UIEdgeInsets? {
         return scrollView?.contentInset
     }

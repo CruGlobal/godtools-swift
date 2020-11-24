@@ -93,6 +93,10 @@
 		450EF829247EAD6C00978926 /* FavoritedToolsViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EF828247EAD6C00978926 /* FavoritedToolsViewModelType.swift */; };
 		450EF834247EB3D300978926 /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 450EF833247EB3D300978926 /* SF-Pro-Text-Bold.otf */; };
 		450F1291256BFC3D00ED69D4 /* ToolPageCardBounceAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450F1290256BFC3D00ED69D4 /* ToolPageCardBounceAnimation.swift */; };
+		450F1294256C165900ED69D4 /* KeyboardNotificationObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450F1293256C165900ED69D4 /* KeyboardNotificationObserver.swift */; };
+		450F1296256C169000ED69D4 /* KeyboardObserverType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450F1295256C169000ED69D4 /* KeyboardObserverType.swift */; };
+		450F1298256C16AE00ED69D4 /* KeyboardState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450F1297256C16AE00ED69D4 /* KeyboardState.swift */; };
+		450F129A256C16C300ED69D4 /* KeyboardStateChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450F1299256C16C300ED69D4 /* KeyboardStateChange.swift */; };
 		4515D49624AB7CCA007C1FA3 /* LegacyRealmMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4515D49524AB7CCA007C1FA3 /* LegacyRealmMigration.swift */; };
 		4517377924A7F55F0097FB15 /* DownloadedLanguagesCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4517377824A7F55F0097FB15 /* DownloadedLanguagesCache.swift */; };
 		4517377B24A7F56A0097FB15 /* DownloadedLanguageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4517377A24A7F56A0097FB15 /* DownloadedLanguageModel.swift */; };
@@ -926,6 +930,10 @@
 		450EF828247EAD6C00978926 /* FavoritedToolsViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritedToolsViewModelType.swift; sourceTree = "<group>"; };
 		450EF833247EB3D300978926 /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
 		450F1290256BFC3D00ED69D4 /* ToolPageCardBounceAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolPageCardBounceAnimation.swift; sourceTree = "<group>"; };
+		450F1293256C165900ED69D4 /* KeyboardNotificationObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardNotificationObserver.swift; sourceTree = "<group>"; };
+		450F1295256C169000ED69D4 /* KeyboardObserverType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardObserverType.swift; sourceTree = "<group>"; };
+		450F1297256C16AE00ED69D4 /* KeyboardState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardState.swift; sourceTree = "<group>"; };
+		450F1299256C16C300ED69D4 /* KeyboardStateChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardStateChange.swift; sourceTree = "<group>"; };
 		4515D49524AB7CCA007C1FA3 /* LegacyRealmMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyRealmMigration.swift; sourceTree = "<group>"; };
 		4517377824A7F55F0097FB15 /* DownloadedLanguagesCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadedLanguagesCache.swift; sourceTree = "<group>"; };
 		4517377A24A7F56A0097FB15 /* DownloadedLanguageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadedLanguageModel.swift; sourceTree = "<group>"; };
@@ -1973,6 +1981,17 @@
 			path = Animations;
 			sourceTree = "<group>";
 		};
+		450F1292256C165300ED69D4 /* KeyboardObserver */ = {
+			isa = PBXGroup;
+			children = (
+				450F1293256C165900ED69D4 /* KeyboardNotificationObserver.swift */,
+				450F1295256C169000ED69D4 /* KeyboardObserverType.swift */,
+				450F1297256C16AE00ED69D4 /* KeyboardState.swift */,
+				450F1299256C16C300ED69D4 /* KeyboardStateChange.swift */,
+			);
+			path = KeyboardObserver;
+			sourceTree = "<group>";
+		};
 		4517377724A7F55F0097FB15 /* DownloadedLanguagesCache */ = {
 			isa = PBXGroup;
 			children = (
@@ -2580,6 +2599,7 @@
 		4556AEDC23E22241002C15E8 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				450F1292256C165300ED69D4 /* KeyboardObserver */,
 				45EC83A12452438500E8DE48 /* AnimatableValue.swift */,
 				45E89F5523FDE8CE00C9D2F3 /* BlockBasedTimer.swift */,
 				45B2AE4B2458886B00253BAD /* CallbackHandler.swift */,
@@ -4671,6 +4691,7 @@
 				4530DCB724A3DF45000DA516 /* ResourcesDownloader.swift in Sources */,
 				450EF820247EA7A300978926 /* AllToolsView.swift in Sources */,
 				454D59F224BF371F00B8528B /* OpenTutorialViewModelType.swift in Sources */,
+				450F1294256C165900ED69D4 /* KeyboardNotificationObserver.swift in Sources */,
 				45B2AE652458DC4600253BAD /* ExitLinkAnalytics.swift in Sources */,
 				4586D7CE246ECB530062D988 /* TractPage.swift in Sources */,
 				45ABE320240D51A500E05AE2 /* GlobalActivityResults.swift in Sources */,
@@ -4872,6 +4893,7 @@
 				4561AC21255989E300841D9A /* AnalyticsEventNode.swift in Sources */,
 				4506DED524B7A78700A1C50B /* GTAppDefaultStyle.swift in Sources */,
 				45C2CFF12409B3CB00683A98 /* GlobalActivityAnalyticsApiType.swift in Sources */,
+				450F1296256C169000ED69D4 /* KeyboardObserverType.swift in Sources */,
 				45E2BF0B254354C400C4D66C /* MobileContentXmlManifestAttributes.swift in Sources */,
 				454526DE243E1A9100B84B29 /* ShareAStoryWithUsWebContent.swift in Sources */,
 				451DB13C2461DA4200FB14BF /* TractCardProperties.swift in Sources */,
@@ -4951,6 +4973,7 @@
 				45E2BF0A254354C400C4D66C /* MobileContentXmlManifestResource.swift in Sources */,
 				459FDB832562C53B002D74D3 /* TrainingTipType.swift in Sources */,
 				455F4B9C2452806D00AE6007 /* ArticleWebView.swift in Sources */,
+				450F129A256C16C300ED69D4 /* KeyboardStateChange.swift in Sources */,
 				4556AEC023E1EBD4002C15E8 /* TutorialInMenuView.swift in Sources */,
 				4573221624453EC100D653FF /* LanguageSettingsViewModelType.swift in Sources */,
 				4595F41624A27DB700B3733E /* ArticleAemWebArchiveFileCacheLocation.swift in Sources */,
@@ -5115,6 +5138,7 @@
 				459698B5255DCFFF0085755A /* ToolPageModalViewModel.swift in Sources */,
 				45DED956247826CF00B0A71D /* HTMLDocumentData.swift in Sources */,
 				45E2BF04254354C400C4D66C /* MobileContentManifestPageType.swift in Sources */,
+				450F1298256C16AE00ED69D4 /* KeyboardState.swift in Sources */,
 				451F3F1E24E458A000A25D11 /* ShareToolView.swift in Sources */,
 				4595F42F24A294EE00B3733E /* ArticleAemImportDataParser.swift in Sources */,
 				457D9840254B5571000B8159 /* TipNode.swift in Sources */,

@@ -55,9 +55,7 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
     }
     
     private func sendFollowUps(followUpButtonEvent: FollowUpButtonEvent) {
-        
-        print("\n SEND FOLLOW UPS")
-        
+                
         var inputData: [AnyHashable: Any] = Dictionary()
         var missingFieldsNames: [String] = Array()
         

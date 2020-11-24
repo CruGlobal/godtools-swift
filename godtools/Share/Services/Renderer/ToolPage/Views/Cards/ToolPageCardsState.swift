@@ -12,6 +12,7 @@ enum ToolPageCardsState: Equatable {
     
     case starting
     case showingCard(showingCardAtPosition: Int?)
+    case showingKeyboard(showingCardAtPosition: Int)
     case collapseAllCards
     case initialized
 }

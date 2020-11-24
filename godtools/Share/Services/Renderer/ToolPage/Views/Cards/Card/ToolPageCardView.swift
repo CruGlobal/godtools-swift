@@ -13,8 +13,13 @@ class ToolPageCardView: UIView {
     private let viewModel: ToolPageCardViewModelType
     private let backgroundImageView: MobileContentBackgroundImageView = MobileContentBackgroundImageView()
     
+    private lazy var keyboardObserver: KeyboardObserverType = KeyboardNotificationObserver(loggingEnabled: false)
+    
     private var contentStackView: MobileContentStackView?
+    private var contentFormView: ToolPageContentFormView?
     private var startingHeaderTrainingTipIconTrailing: CGFloat = 20
+    private var keyboardHeightForAddedContentSize: Double?
+    private var didAddKeyboardHeightToContentSize: Bool = false
             
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var headerTrainingTipImageView: UIImageView!
@@ -60,6 +65,9 @@ class ToolPageCardView: UIView {
     
     deinit {
         print("x deinit: \(type(of: self))")
+        keyboardObserver.stopObservingKeyboardChanges()
+        keyboardObserver.keyboardStateDidChangeSignal.removeObserver(self)
+        keyboardObserver.keyboardHeightDidChangeSignal.removeObserver(self)
     }
     
     private func initializeNib() {
@@ -132,6 +140,11 @@ class ToolPageCardView: UIView {
         nextButton.isHidden = viewModel.hidesCardNavigation
         
         let contentStackViewModel: ToolPageContentStackViewModel = viewModel.contentStackViewModel
+        
+        contentStackViewModel.didRenderContentFormSignal.addObserver(self) { [weak self] (contentForm: ToolPageContentFormView) in
+            self?.handleDidRenderContentForm(form: contentForm)
+        }
+        
         let contentStackView: MobileContentStackView = MobileContentStackView(viewModel: contentStackViewModel, itemSpacing: 20, scrollIsEnabled: true)
         contentStackContainer.addSubview(contentStackView)
         contentStackView.constrainEdgesToSuperview()
@@ -150,14 +163,17 @@ class ToolPageCardView: UIView {
     }
     
     @objc func handleHeader(button: UIButton) {
+        contentFormView?.resignCurrentEditedTextField()
         viewModel.headerTapped()
     }
     
     @objc func handlePrevious(button: UIButton) {
+        contentFormView?.resignCurrentEditedTextField()
         viewModel.previousTapped()
     }
     
     @objc func handleNext(button: UIButton) {
+        contentFormView?.resignCurrentEditedTextField()
         viewModel.nextTapped()
     }
     
@@ -170,6 +186,8 @@ class ToolPageCardView: UIView {
         guard let offset = contentStackView.getContentOffset(), let inset = contentStackView.getContentInset(), let scrollFrame = contentStackView.scrollViewFrame else {
             return
         }
+        
+        contentFormView?.resignCurrentEditedTextField()
                 
         if swipeGesture.direction == .up && offset.y + scrollFrame.size.height >= contentStackView.contentSize.height - inset.top - inset.bottom {
             viewModel.didSwipeCardUp()
@@ -190,6 +208,100 @@ class ToolPageCardView: UIView {
         }
         
         layoutIfNeeded()
+    }
+    
+    private func handleDidRenderContentForm(form: ToolPageContentFormView) {
+        
+        guard self.contentFormView == nil else {
+            return
+        }
+        
+        self.contentFormView = form
+        
+        keyboardObserver.startObservingKeyboardChanges()
+        keyboardObserver.keyboardStateDidChangeSignal.addObserver(self) { [weak self] (keyboardStateChange: KeyboardStateChange) in
+            self?.handleKeyboardStateChange(keyboardStateChange: keyboardStateChange)
+        }
+        
+        keyboardObserver.keyboardHeightDidChangeSignal.addObserver(self) { [weak self] (height: Double) in
+            self?.handleKeyboardHeightChange(height: height)
+        }
+    }
+    
+    private func handleKeyboardStateChange(keyboardStateChange: KeyboardStateChange) {
+        
+        switch keyboardStateChange.keyboardState {
+            
+        case .willShow:
+            keyboardHeightForAddedContentSize = keyboardStateChange.keyboardHeight
+            
+        case .willHide:
+            break
+            
+        case .didShow:
+            
+            guard let keyboardHeight = keyboardHeightForAddedContentSize else {
+                return
+            }
+            
+            addKeyboardHeightToContentSize(keyboardHeight: CGFloat(keyboardHeight))
+            
+        case .didHide:
+            
+            removeKeyboardHeightFromContentSize()
+        }
+    }
+    
+    private func handleKeyboardHeightChange(height: Double) {
+
+    }
+    
+    private func addKeyboardHeightToContentSize(keyboardHeight: CGFloat) {
+        
+        guard let scrollContentSize = contentStackView?.contentSize else {
+            return
+        }
+        
+        guard !didAddKeyboardHeightToContentSize else {
+            return
+        }
+        
+        didAddKeyboardHeightToContentSize = true
+        
+        let contentHeight: CGFloat = scrollContentSize.height + keyboardHeight
+        
+        let contentSize: CGSize = CGSize(
+            width: scrollContentSize.width,
+            height: contentHeight
+        )
+        
+        contentStackView?.setContentSize(size: contentSize)
+    }
+    
+    private func removeKeyboardHeightFromContentSize() {
+        
+        guard let scrollContentSize = contentStackView?.contentSize else {
+            return
+        }
+        
+        guard let keyboardHeight = keyboardHeightForAddedContentSize else {
+            return
+        }
+        
+        guard didAddKeyboardHeightToContentSize else {
+            return
+        }
+        
+        didAddKeyboardHeightToContentSize = false
+        
+        let contentHeight: CGFloat = scrollContentSize.height - CGFloat(keyboardHeight)
+        
+        let contentSize: CGSize = CGSize(
+            width: scrollContentSize.width,
+            height: contentHeight
+        )
+        
+        contentStackView?.setContentSize(size: contentSize)
     }
 }
 

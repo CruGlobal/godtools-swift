@@ -12,6 +12,7 @@ enum ToolPageCardTopConstantState {
     
     case starting(cardPosition: Int)
     case showing
+    case showingKeyboard
     case collapsed(cardPosition: Int)
     case hidden
 }

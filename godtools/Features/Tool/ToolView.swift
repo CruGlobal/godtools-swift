@@ -140,6 +140,8 @@ extension ToolView: PageNavigationCollectionViewDelegate {
     
     func pageNavigationDidChangePage(pageNavigation: PageNavigationCollectionView, page: Int) {
         
+        view.endEditing(true)
+        
         viewModel.toolPageDidChange(page: page)
     }
     
