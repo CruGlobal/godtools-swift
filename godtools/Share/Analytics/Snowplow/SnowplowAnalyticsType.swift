@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol SnowplowAnalyticsType {
+protocol SnowplowAnalyticsType: MobileContentAnalyticsSystem {
 
     func configure(adobeAnalytics: AdobeAnalyticsType)
     func trackScreenView(screenName: String)

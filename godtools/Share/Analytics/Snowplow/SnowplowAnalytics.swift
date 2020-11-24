@@ -108,7 +108,7 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
             snowplow.tracker.trackScreenViewEvent(event)
         }
     }
-
+    
     func trackAction(action: String) {
         
         serialQueue.asyncAfter(deadline: .now() + 1) { [weak self] in
@@ -176,5 +176,13 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
                 print("  data: \(data)")
             }
         }
+    }
+}
+
+// MARK: - MobileContentAnalyticsSystem
+
+extension SnowplowAnalytics: MobileContentAnalyticsSystem {
+    func trackAction(action: String, data: [AnyHashable : Any]?) {
+        trackAction(action: action)
     }
 }

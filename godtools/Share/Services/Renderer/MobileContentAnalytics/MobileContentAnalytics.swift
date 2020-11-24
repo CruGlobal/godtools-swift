@@ -10,11 +10,18 @@ import Foundation
 
 class MobileContentAnalytics {
     
-    private let analytics: AnalyticsContainer
+    private let analyticsSystems: [String: MobileContentAnalyticsSystem]
     
     required init(analytics: AnalyticsContainer) {
+                
+        let analyticsSystems = [
+            "adobe": analytics.adobeAnalytics,
+            "appsflyer": analytics.appsFlyer,
+            "firebase": analytics.firebaseAnalytics,
+            "snowplow": analytics.snowplowAnalytics
+        ]
         
-        self.analytics = analytics
+        self.analyticsSystems = analyticsSystems
     }
     
     func trackEvents(events: AnalyticsEventsNode) {
@@ -43,10 +50,7 @@ class MobileContentAnalytics {
             
             for system in event.systems {
                 
-                if system == "adobe" {
-                    // TODO: Do we need to track screen name? ~Levi
-                    analytics.adobeAnalytics.trackAction(screenName: nil, actionName: action, data: data)
-                }
+                analyticsSystems[system]?.trackAction(action: action, data: data)
             }
         }
     }

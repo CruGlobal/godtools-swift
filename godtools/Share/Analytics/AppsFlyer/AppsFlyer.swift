@@ -99,3 +99,11 @@ class AppsFlyer: NSObject, AppsFlyerType {
         }
     }
 }
+
+// MARK: - MobileContentAnalyticsSystem
+
+extension AppsFlyer: MobileContentAnalyticsSystem {
+    func trackAction(action: String, data: [AnyHashable : Any]?) {
+        trackEvent(eventName: action, data: data)
+    }
+}

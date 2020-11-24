@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol FirebaseAnalyticsType {
+protocol FirebaseAnalyticsType: MobileContentAnalyticsSystem {
     
     func trackScreenView(screenName: String)
 }

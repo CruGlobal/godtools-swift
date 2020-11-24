@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol AdobeAnalyticsType {
+protocol AdobeAnalyticsType: MobileContentAnalyticsSystem {
     
     var visitorMarketingCloudID: String { get }
     

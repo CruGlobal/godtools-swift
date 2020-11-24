@@ -19,3 +19,11 @@ class FirebaseAnalytics: FirebaseAnalyticsType {
         Analytics.setScreenName(screenName, screenClass: nil)
     }
 }
+
+// MARK: - MobileContentAnalyticsSystem
+
+extension FirebaseAnalytics: MobileContentAnalyticsSystem {
+    func trackAction(action: String, data: [AnyHashable : Any]?) {
+        // TODO: Implement action event tracking for firebase. ~Levi
+    }
+}

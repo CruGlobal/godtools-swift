@@ -100,6 +100,7 @@
 		450F129E256D635400ED69D4 /* ToolPageCardAnalyticsScreenName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450F129D256D635400ED69D4 /* ToolPageCardAnalyticsScreenName.swift */; };
 		450F12A5256D6EEE00ED69D4 /* LanguageDirectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450F12A4256D6EEE00ED69D4 /* LanguageDirectionService.swift */; };
 		450F12A7256D88B000ED69D4 /* LanguageDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450F12A6256D88B000ED69D4 /* LanguageDirection.swift */; };
+		450F12A9256D9B7200ED69D4 /* MobileContentAnalyticsSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450F12A8256D9B7200ED69D4 /* MobileContentAnalyticsSystem.swift */; };
 		4515D49624AB7CCA007C1FA3 /* LegacyRealmMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4515D49524AB7CCA007C1FA3 /* LegacyRealmMigration.swift */; };
 		4517377924A7F55F0097FB15 /* DownloadedLanguagesCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4517377824A7F55F0097FB15 /* DownloadedLanguagesCache.swift */; };
 		4517377B24A7F56A0097FB15 /* DownloadedLanguageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4517377A24A7F56A0097FB15 /* DownloadedLanguageModel.swift */; };
@@ -356,7 +357,6 @@
 		4561AC3025598BA300841D9A /* AppsFlyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4561AC2A25598BA300841D9A /* AppsFlyer.swift */; };
 		4561AC3325598D9A00841D9A /* MobileContentAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4561AC3225598D9A00841D9A /* MobileContentAnalytics.swift */; };
 		4561AC3525598E6D00841D9A /* AnalyticsAttributeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4561AC3425598E6D00841D9A /* AnalyticsAttributeNode.swift */; };
-		4561AC3725599F0700841D9A /* AnalyticsTrackActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4561AC3625599F0700841D9A /* AnalyticsTrackActionType.swift */; };
 		4561AC3A25599FAC00841D9A /* GoogleAdwordsAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4561AC3925599FAC00841D9A /* GoogleAdwordsAnalytics.swift */; };
 		4561AC3C2559B52700841D9A /* ContentLinkNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4561AC3B2559B52700841D9A /* ContentLinkNode.swift */; };
 		4561AC3E2559E7E100841D9A /* ContentFormNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4561AC3D2559E7E100841D9A /* ContentFormNode.swift */; };
@@ -940,6 +940,7 @@
 		450F129D256D635400ED69D4 /* ToolPageCardAnalyticsScreenName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolPageCardAnalyticsScreenName.swift; sourceTree = "<group>"; };
 		450F12A4256D6EEE00ED69D4 /* LanguageDirectionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageDirectionService.swift; sourceTree = "<group>"; };
 		450F12A6256D88B000ED69D4 /* LanguageDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageDirection.swift; sourceTree = "<group>"; };
+		450F12A8256D9B7200ED69D4 /* MobileContentAnalyticsSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAnalyticsSystem.swift; sourceTree = "<group>"; };
 		4515D49524AB7CCA007C1FA3 /* LegacyRealmMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyRealmMigration.swift; sourceTree = "<group>"; };
 		4517377824A7F55F0097FB15 /* DownloadedLanguagesCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadedLanguagesCache.swift; sourceTree = "<group>"; };
 		4517377A24A7F56A0097FB15 /* DownloadedLanguageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadedLanguageModel.swift; sourceTree = "<group>"; };
@@ -1197,7 +1198,6 @@
 		4561AC2A25598BA300841D9A /* AppsFlyer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsFlyer.swift; sourceTree = "<group>"; };
 		4561AC3225598D9A00841D9A /* MobileContentAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAnalytics.swift; sourceTree = "<group>"; };
 		4561AC3425598E6D00841D9A /* AnalyticsAttributeNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsAttributeNode.swift; sourceTree = "<group>"; };
-		4561AC3625599F0700841D9A /* AnalyticsTrackActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsTrackActionType.swift; sourceTree = "<group>"; };
 		4561AC3925599FAC00841D9A /* GoogleAdwordsAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleAdwordsAnalytics.swift; sourceTree = "<group>"; };
 		4561AC3B2559B52700841D9A /* ContentLinkNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentLinkNode.swift; sourceTree = "<group>"; };
 		4561AC3D2559E7E100841D9A /* ContentFormNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentFormNode.swift; sourceTree = "<group>"; };
@@ -2729,6 +2729,7 @@
 			isa = PBXGroup;
 			children = (
 				4561AC3225598D9A00841D9A /* MobileContentAnalytics.swift */,
+				450F12A8256D9B7200ED69D4 /* MobileContentAnalyticsSystem.swift */,
 			);
 			path = MobileContentAnalytics;
 			sourceTree = "<group>";
@@ -3701,7 +3702,6 @@
 			isa = PBXGroup;
 			children = (
 				454526CC243E138B00B84B29 /* AnalyticsContainer.swift */,
-				4561AC3625599F0700841D9A /* AnalyticsTrackActionType.swift */,
 				4508F7A12429669700ECA950 /* Adobe */,
 				45B2AE612458DC4600253BAD /* AnalyticsTracking */,
 				4561AC2825598BA300841D9A /* AppsFlyer */,
@@ -4823,6 +4823,7 @@
 				45F6E01A249D44270077C7D9 /* LanguagesApiType.swift in Sources */,
 				45AF6DD02565B83F008B8E50 /* ManifestResourcesCache.swift in Sources */,
 				45F567AF24FD7D600078D539 /* CardJumpUserDefaultsCache.swift in Sources */,
+				450F12A9256D9B7200ED69D4 /* MobileContentAnalyticsSystem.swift in Sources */,
 				45DFBF28255EE4BA00E6B591 /* TrainingTipViewType.swift in Sources */,
 				45249D1524ACC62B00E139AD /* ResourceViewModel.swift in Sources */,
 				45647251244F782300CB202D /* ArticleCell.swift in Sources */,
@@ -4970,7 +4971,6 @@
 				4575C23A23FAEBE300D3265B /* AccountView.swift in Sources */,
 				451DB1C62461DDFA00FB14BF /* TractPageContainer.swift in Sources */,
 				451B8699252F43D40061942B /* LearnToShareToolView.swift in Sources */,
-				4561AC3725599F0700841D9A /* AnalyticsTrackActionType.swift in Sources */,
 				459698AE255DCFFF0085755A /* ToolPageContentInputViewModel.swift in Sources */,
 				4508F7AA2429669700ECA950 /* AdobeAnalytics.swift in Sources */,
 				452DA14824FC4D95001541BC /* LanguageSettingType.swift in Sources */,

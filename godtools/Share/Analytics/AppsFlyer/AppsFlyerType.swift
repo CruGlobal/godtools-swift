@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol AppsFlyerType {
+protocol AppsFlyerType: MobileContentAnalyticsSystem {
     
     func configure(adobeAnalytics: AdobeAnalyticsType)
     func trackAppLaunch()
