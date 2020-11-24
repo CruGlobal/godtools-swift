@@ -40,6 +40,7 @@ class AppDiContainer {
     let favoritedResourceTranslationDownloader: FavoritedResourceTranslationDownloader
     let initialDataDownloader: InitialDataDownloader
     let languageSettingsService: LanguageSettingsService
+    let languageDirectionService: LanguageDirectionService
     let languageTranslationsDownloader: LanguageTranslationsDownloader
     let articleAemImportDownloader: ArticleAemImportDownloader
     let isNewUserService: IsNewUserService
@@ -143,6 +144,8 @@ class AppDiContainer {
             dataDownloader: initialDataDownloader,
             languageSettingsCache: languageSettingsCache
         )
+        
+        languageDirectionService = LanguageDirectionService(languageSettings: languageSettingsService)
         
         languageTranslationsDownloader = LanguageTranslationsDownloader(
             realmDatabase: realmDatabase,

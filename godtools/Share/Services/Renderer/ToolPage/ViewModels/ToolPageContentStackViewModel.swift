@@ -71,11 +71,13 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
         }
         else if let textNode = node as? ContentTextNode {
             
+            let defaultTextAlignment: NSTextAlignment = diContainer.language.languageDirection == .leftToRight ? .left : .right
+            
             let textLabel: UILabel = getContentText(
                 textNode: textNode,
                 fontSize: 18,
                 defaultFontWeight: .regular,
-                defaultTextAlignment: .left,
+                defaultTextAlignment: defaultTextAlignment,
                 textColor: textNode.getTextColor()?.color ?? defaultTextNodeTextColor ?? toolPageColors.textColor
             )
                         

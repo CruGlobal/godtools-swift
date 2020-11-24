@@ -84,10 +84,6 @@ class ToolView: UIViewController {
         )
         toolPagesView.pagesCollectionView.contentInset = UIEdgeInsets.zero
         
-        if viewModel.isRightToLeftLanguage {
-            toolPagesView.pagesCollectionView.semanticContentAttribute = .forceRightToLeft
-        }
-        
         if #available(iOS 11.0, *) {
             toolPagesView.pagesCollectionView.contentInsetAdjustmentBehavior = .never
         } else {
