@@ -154,6 +154,7 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
             diContainer: toolPageDiContainer,
             toolPageColors: ToolPageColorsViewModel(pageNode: pageNode, manifest: manifest),
             defaultTextNodeTextColor: nil,
+            defaultTextNodeTextAlignment: nil,
             defaultButtonBorderColor: nil,
             rootContentStack: nil
         )

@@ -10,17 +10,19 @@ import UIKit
 
 class ToolPageHeaderViewModel {
     
-    private let fontService: FontService
     private let toolPageColors: ToolPageColorsViewModel
+    private let fontService: FontService
+    private let language: LanguageModel
     
     let headerNumber: String?
     let headerTitle: String?
     let hidesHeader: Bool
     
-    required init(pageNode: PageNode, toolPageColors: ToolPageColorsViewModel, fontService: FontService) {
+    required init(pageNode: PageNode, toolPageColors: ToolPageColorsViewModel, fontService: FontService, language: LanguageModel) {
         
-        self.fontService = fontService
         self.toolPageColors = toolPageColors
+        self.fontService = fontService
+        self.language = language
         
         let pageHeaderNumber: String? = pageNode.headerNode?.number
         let pageHeaderTitle: String? = pageNode.headerNode?.title
@@ -43,11 +45,19 @@ class ToolPageHeaderViewModel {
         return toolPageColors.primaryTextColor
     }
     
+    var headerNumberAlignment: NSTextAlignment {
+        return language.languageDirection == .leftToRight ? .left : .right
+    }
+    
     var headerTitleFont: UIFont {
         return fontService.getFont(size: 19, weight: .regular)
     }
     
     var headerTitleColor: UIColor {
         return toolPageColors.primaryTextColor
+    }
+    
+    var headerTitleAlignment: NSTextAlignment {
+        return language.languageDirection == .leftToRight ? .left : .right
     }
 }

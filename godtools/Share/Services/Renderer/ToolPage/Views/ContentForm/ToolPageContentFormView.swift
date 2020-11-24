@@ -54,6 +54,10 @@ class ToolPageContentFormView: UIView {
     
     private func setupBinding() {
         
+        viewModel.resignCurrentInputSignal.addObserver(self) { [weak self] in
+            self?.resignCurrentEditedTextField()
+        }
+        
         let contentViewModel: ToolPageContentStackViewModel = viewModel.contentViewModel
         
         contentViewModel.didRenderContentInputSignal.addObserver(self) { [weak self] (contentInput: ToolPageContentInputView) in

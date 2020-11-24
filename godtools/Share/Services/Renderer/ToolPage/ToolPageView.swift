@@ -199,14 +199,19 @@ class ToolPageView: UIViewController {
         
         // headerView
         let headerViewModel: ToolPageHeaderViewModel = viewModel.headerViewModel
+        
         headerView.backgroundColor = headerViewModel.backgroundColor
+        
         headerNumberLabel.font = headerViewModel.headerNumberFont
         headerNumberLabel.text = headerViewModel.headerNumber
         headerNumberLabel.textColor = headerViewModel.headerNumberColor
+        headerNumberLabel.textAlignment = headerViewModel.headerNumberAlignment
+        
         headerTitleLabel.font = headerViewModel.headerTitleFont
         headerTitleLabel.text = headerViewModel.headerTitle
         headerTitleLabel.textColor = headerViewModel.headerTitleColor
         headerTitleLabel.setLineSpacing(lineSpacing: 2)
+        headerTitleLabel.textAlignment = headerViewModel.headerTitleAlignment
         
         // headerTrainingTipView
         viewModel.hidesHeaderTrainingTip.addObserver(self) { [weak self] (hidesHeaderTrainingTip: Bool) in
@@ -228,6 +233,7 @@ class ToolPageView: UIViewController {
         let callToActionViewModel: ToolPageCallToActionViewModel = viewModel.callToActionViewModel
         callToActionTitleLabel.text = callToActionViewModel.callToActionTitle
         callToActionTitleLabel.textColor = callToActionViewModel.callToActionTitleColor
+        callToActionNextButton.setImage(callToActionViewModel.callToActionButtonImage, for: .normal)
         callToActionNextButton.setImageColor(color: callToActionViewModel.callToActionNextButtonColor)
         
         // toolModal

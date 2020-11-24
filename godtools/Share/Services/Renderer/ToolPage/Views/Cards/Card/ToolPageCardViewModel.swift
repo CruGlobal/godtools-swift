@@ -43,6 +43,7 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
             diContainer: diContainer,
             toolPageColors: toolPageColors,
             defaultTextNodeTextColor: toolPageColors.cardTextColor,
+            defaultTextNodeTextAlignment: nil,
             defaultButtonBorderColor: nil,
             rootContentStack: nil
         )
@@ -93,6 +94,10 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     
     var titleFont: UIFont {
         return diContainer.fontService.getFont(size: 19, weight: .regular)
+    }
+    
+    var titleAlignment: NSTextAlignment {
+        return diContainer.language.languageDirection == .leftToRight ? .left : .right
     }
     
     var cardPositionLabel: String? {

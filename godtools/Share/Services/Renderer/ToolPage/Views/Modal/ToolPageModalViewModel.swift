@@ -38,6 +38,7 @@ class ToolPageModalViewModel: NSObject, ToolPageModalViewModelType {
             diContainer: diContainer,
             toolPageColors: toolPageColors,
             defaultTextNodeTextColor: nil,
+            defaultTextNodeTextAlignment: .center,
             defaultButtonBorderColor: UIColor.white,
             rootContentStack: nil
         )

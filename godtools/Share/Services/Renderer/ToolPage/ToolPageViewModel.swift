@@ -56,6 +56,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
                 diContainer: diContainer,
                 toolPageColors: toolPageColors,
                 defaultTextNodeTextColor: nil,
+                defaultTextNodeTextAlignment: nil,
                 defaultButtonBorderColor: nil,
                 rootContentStack: nil
             )
@@ -68,7 +69,8 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         headerViewModel = ToolPageHeaderViewModel(
             pageNode: pageNode,
             toolPageColors: toolPageColors,
-            fontService: diContainer.fontService
+            fontService: diContainer.fontService,
+            language: diContainer.language
         )
         
         // headerTrainingTipViewModel
@@ -96,6 +98,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
                 diContainer: diContainer,
                 toolPageColors: toolPageColors,
                 defaultTextNodeTextColor: nil,
+                defaultTextNodeTextAlignment: nil,
                 defaultButtonBorderColor: nil,
                 rootContentStack: nil
             )
@@ -109,6 +112,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
             pageNode: pageNode,
             toolPageColors: toolPageColors,
             fontService: diContainer.fontService,
+            language: diContainer.language,
             isLastPage: isLastPage
         )
                 

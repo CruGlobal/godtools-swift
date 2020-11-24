@@ -67,6 +67,7 @@ class ToolPageContentTabsViewModel: ToolPageContentTabsViewModelType {
             diContainer: diContainer,
             toolPageColors: toolPageColors,
             defaultTextNodeTextColor: defaultTextNodeTextColor,
+            defaultTextNodeTextAlignment: nil,
             defaultButtonBorderColor: nil,
             rootContentStack: nil
         )

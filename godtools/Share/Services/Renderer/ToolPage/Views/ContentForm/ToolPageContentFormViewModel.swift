@@ -15,6 +15,7 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
     private let toolPageColors: ToolPageColorsViewModel
     private let defaultTextNodeTextColor: UIColor?
     
+    let resignCurrentInputSignal: Signal = Signal()
     let contentViewModel: ToolPageContentStackViewModel
     
     required init(formNode: ContentFormNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
@@ -29,6 +30,7 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
             diContainer: diContainer,
             toolPageColors: toolPageColors,
             defaultTextNodeTextColor: defaultTextNodeTextColor,
+            defaultTextNodeTextAlignment: nil,
             defaultButtonBorderColor: nil,
             rootContentStack: nil
         )
@@ -55,7 +57,9 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
     }
     
     private func sendFollowUps(followUpButtonEvent: FollowUpButtonEvent) {
-                
+            
+        resignCurrentInputSignal.accept()
+        
         var inputData: [AnyHashable: Any] = Dictionary()
         var missingFieldsNames: [String] = Array()
         
@@ -117,8 +121,6 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
             
             diContainer.mobileContentEvents.contentError(error: ContentEventError(title: errorTitle, message: errorMessage))
         }
-        
-        print("DONE")
     }
     
     private func notifiyFollowUpsMissingFieldsError(missingFieldsNames: [String]) {

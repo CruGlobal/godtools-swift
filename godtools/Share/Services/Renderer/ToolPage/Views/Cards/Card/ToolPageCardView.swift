@@ -121,6 +121,7 @@ class ToolPageCardView: UIView {
         titleLabel.text = viewModel.title
         titleLabel.font = viewModel.titleFont
         titleLabel.textColor = viewModel.titleColor
+        titleLabel.textAlignment = viewModel.titleAlignment
         
         viewModel.hidesHeaderTrainingTip.addObserver(self) { [weak self] (hidesHeaderTrainingTip: Bool) in
             self?.setHeaderTrainingTipIconHidden(hidden: hidesHeaderTrainingTip)

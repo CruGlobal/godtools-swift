@@ -24,6 +24,7 @@ protocol ToolPageCardViewModelType: NSObject {
     var title: String? { get }
     var titleColor: UIColor { get }
     var titleFont: UIFont { get }
+    var titleAlignment: NSTextAlignment { get }
     var hidesHeaderTrainingTip: ObservableValue<Bool> { get }
     var contentStackViewModel: ToolPageContentStackViewModel { get }
     var isHiddenCard: Bool { get }
