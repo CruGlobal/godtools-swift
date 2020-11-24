@@ -183,6 +183,7 @@ class ToolsFlow: Flow {
                 mobileContentNodeParser: appDiContainer.getMobileContentNodeParser(),
                 mobileContentAnalytics: appDiContainer.getMobileContentAnalytics(),
                 mobileContentEvents: appDiContainer.getMobileContentEvents(),
+                analytics: appDiContainer.analytics,
                 fontService: appDiContainer.getFontService(),
                 followUpsService: appDiContainer.followUpsService,
                 localizationServices: appDiContainer.localizationServices,

@@ -18,6 +18,7 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
     private let mobileContentNodeParser: MobileContentXmlNodeParser
     private let mobileContentAnalytics: MobileContentAnalytics
     private let mobileContentEvents: MobileContentEvents
+    private let analytics: AnalyticsContainer
     private let fontService: FontService
     private let followUpsService: FollowUpsService
     private let localizationServices: LocalizationServices
@@ -35,7 +36,7 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
     let continueButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     let numberOfTipPages: ObservableValue<Int> = ObservableValue(value: 0)
     
-    required init(flowDelegate: FlowDelegate, language: LanguageModel, trainingTipId: String, tipNode: TipNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, cardJumpService: CardJumpService) {
+    required init(flowDelegate: FlowDelegate, language: LanguageModel, trainingTipId: String, tipNode: TipNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, analytics: AnalyticsContainer, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, cardJumpService: CardJumpService) {
         
         self.flowDelegate = flowDelegate
         self.language = language
@@ -46,6 +47,7 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
         self.mobileContentNodeParser = mobileContentNodeParser
         self.mobileContentAnalytics = mobileContentAnalytics
         self.mobileContentEvents = mobileContentEvents
+        self.analytics = analytics
         self.fontService = fontService
         self.followUpsService = followUpsService
         self.localizationServices = localizationServices
@@ -139,6 +141,7 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
             mobileContentNodeParser: mobileContentNodeParser,
             mobileContentAnalytics: mobileContentAnalytics,
             mobileContentEvents: mobileContentEvents,
+            analytics: analytics,
             fontService: fontService,
             followUpsService: followUpsService,
             localizationServices: localizationServices,

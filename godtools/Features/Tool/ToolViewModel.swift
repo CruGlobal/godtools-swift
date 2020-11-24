@@ -339,6 +339,7 @@ extension ToolViewModel {
                 mobileContentNodeParser: mobileContentNodeParser,
                 mobileContentAnalytics: mobileContentAnalytics,
                 mobileContentEvents: mobileContentEvents,
+                analytics: analytics,
                 fontService: fontService,
                 followUpsService: followUpsService,
                 localizationServices: localizationServices,

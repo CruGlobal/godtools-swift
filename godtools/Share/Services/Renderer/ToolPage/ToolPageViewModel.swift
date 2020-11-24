@@ -311,6 +311,16 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         }
         
         delegate?.toolPageCardChanged(cardPosition: cardPosition)
+        
+        if let cardPosition = cardPosition {
+            trackCardAnalytics(cardPosition: cardPosition)
+        }
+    }
+    
+    private func trackCardAnalytics(cardPosition: Int) {
+        
+        let screenName: String = ToolPageCardAnalyticsScreenName(cardPosition: cardPosition).screenName
+        diContainer.analytics.pageViewedAnalytics.trackPageView(screenName: screenName, siteSection: "", siteSubSection: "")
     }
 }
 
