@@ -134,6 +134,11 @@ extension ToolView: PageNavigationCollectionViewDelegate {
         return cell
     }
     
+    func pageNavigation(pageNavigation: PageNavigationCollectionView, didEndDisplaying pageCell: UICollectionViewCell, forPageAt indexPath: IndexPath) {
+        
+        viewModel.toolPageDidDisappear(page: indexPath.row)
+    }
+    
     func pageNavigationDidChangePage(pageNavigation: PageNavigationCollectionView, page: Int) {
         
         view.endEditing(true)

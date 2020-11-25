@@ -33,25 +33,26 @@ class MobileContentAnalytics {
         }
     }
     
-    private func trackEvent(event: AnalyticsEventNode) {
+    func trackEvent(event: AnalyticsEventNode) {
         
-        if let action = event.action, !action.isEmpty {
-            
-            let attribute: AnalyticsAttributeNode? = event.children.first as? AnalyticsAttributeNode
-           
-            let data: [AnyHashable: Any]?
-            
-            if let key = attribute?.key, let value = attribute?.value {
-                data = [key: value]
-            }
-            else {
-                data = nil
-            }
-            
-            for system in event.systems {
-                
-                analyticsSystems[system]?.trackAction(action: action, data: data)
-            }
+        guard let action = event.action, !action.isEmpty else {
+            return
         }
+        
+        let attribute: AnalyticsAttributeNode? = event.children.first as? AnalyticsAttributeNode
+        
+         let data: [AnyHashable: Any]?
+         
+         if let key = attribute?.key, let value = attribute?.value {
+             data = [key: value]
+         }
+         else {
+             data = nil
+         }
+         
+         for system in event.systems {
+             
+             analyticsSystems[system]?.trackAction(action: action, data: data)
+         }
     }
 }

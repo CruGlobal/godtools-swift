@@ -89,7 +89,6 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
             headerTrainingTipViewModel = nil
         }
         
-        
         // hero
         if let heroNode = pageNode.heroNode {
             
@@ -319,6 +318,14 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         if let cardPosition = cardPosition {
             trackCardAnalytics(cardPosition: cardPosition)
         }
+    }
+    
+    func pageDidAppear() {
+
+    }
+    
+    func pageDidDisappear() {
+
     }
     
     private func trackCardAnalytics(cardPosition: Int) {

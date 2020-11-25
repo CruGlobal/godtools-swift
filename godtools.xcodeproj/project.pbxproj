@@ -101,6 +101,9 @@
 		450F12A5256D6EEE00ED69D4 /* LanguageDirectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450F12A4256D6EEE00ED69D4 /* LanguageDirectionService.swift */; };
 		450F12A7256D88B000ED69D4 /* LanguageDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450F12A6256D88B000ED69D4 /* LanguageDirection.swift */; };
 		450F12A9256D9B7200ED69D4 /* MobileContentAnalyticsSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450F12A8256D9B7200ED69D4 /* MobileContentAnalyticsSystem.swift */; };
+		450F12AB256E9C7900ED69D4 /* AnalyticsEventNodeTrigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450F12AA256E9C7900ED69D4 /* AnalyticsEventNodeTrigger.swift */; };
+		450F12AD256E9CE100ED69D4 /* AnalyticsAttributeNode+Trigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450F12AC256E9CE100ED69D4 /* AnalyticsAttributeNode+Trigger.swift */; };
+		450F12AF256E9E7800ED69D4 /* MobileContentAnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450F12AE256E9E7800ED69D4 /* MobileContentAnalyticsEvent.swift */; };
 		4515D49624AB7CCA007C1FA3 /* LegacyRealmMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4515D49524AB7CCA007C1FA3 /* LegacyRealmMigration.swift */; };
 		4517377924A7F55F0097FB15 /* DownloadedLanguagesCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4517377824A7F55F0097FB15 /* DownloadedLanguagesCache.swift */; };
 		4517377B24A7F56A0097FB15 /* DownloadedLanguageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4517377A24A7F56A0097FB15 /* DownloadedLanguageModel.swift */; };
@@ -941,6 +944,9 @@
 		450F12A4256D6EEE00ED69D4 /* LanguageDirectionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageDirectionService.swift; sourceTree = "<group>"; };
 		450F12A6256D88B000ED69D4 /* LanguageDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageDirection.swift; sourceTree = "<group>"; };
 		450F12A8256D9B7200ED69D4 /* MobileContentAnalyticsSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAnalyticsSystem.swift; sourceTree = "<group>"; };
+		450F12AA256E9C7900ED69D4 /* AnalyticsEventNodeTrigger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsEventNodeTrigger.swift; sourceTree = "<group>"; };
+		450F12AC256E9CE100ED69D4 /* AnalyticsAttributeNode+Trigger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnalyticsAttributeNode+Trigger.swift"; sourceTree = "<group>"; };
+		450F12AE256E9E7800ED69D4 /* MobileContentAnalyticsEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAnalyticsEvent.swift; sourceTree = "<group>"; };
 		4515D49524AB7CCA007C1FA3 /* LegacyRealmMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyRealmMigration.swift; sourceTree = "<group>"; };
 		4517377824A7F55F0097FB15 /* DownloadedLanguagesCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadedLanguagesCache.swift; sourceTree = "<group>"; };
 		4517377A24A7F56A0097FB15 /* DownloadedLanguageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadedLanguageModel.swift; sourceTree = "<group>"; };
@@ -2729,6 +2735,7 @@
 			isa = PBXGroup;
 			children = (
 				4561AC3225598D9A00841D9A /* MobileContentAnalytics.swift */,
+				450F12AE256E9E7800ED69D4 /* MobileContentAnalyticsEvent.swift */,
 				450F12A8256D9B7200ED69D4 /* MobileContentAnalyticsSystem.swift */,
 			);
 			path = MobileContentAnalytics;
@@ -3458,6 +3465,8 @@
 		45B3F7DB255596BC00141A62 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				450F12AA256E9C7900ED69D4 /* AnalyticsEventNodeTrigger.swift */,
+				450F12AC256E9CE100ED69D4 /* AnalyticsAttributeNode+Trigger.swift */,
 				45B3F7DC255596BC00141A62 /* MobileContentRGBAColor.swift */,
 			);
 			path = Models;
@@ -4683,6 +4692,7 @@
 				459A71E724C9CFAB00B77942 /* WebSocketChannelSubscriberType.swift in Sources */,
 				4540912C2555D6D7005BBDB7 /* ContentTabsNode.swift in Sources */,
 				45E998E723FD9F110088DD0C /* AppBuild.swift in Sources */,
+				450F12AD256E9CE100ED69D4 /* AnalyticsAttributeNode+Trigger.swift in Sources */,
 				457719C323E8BAE50049D236 /* MenuDataProvider.swift in Sources */,
 				45E998D823FD7FE00088DD0C /* GlobalActivityHeaderView.swift in Sources */,
 				45FCFF89243D0C9200865501 /* TractView.swift in Sources */,
@@ -4830,6 +4840,7 @@
 				4575C26323FB45E600D3265B /* GlobalActivityServices.swift in Sources */,
 				45FCFF9D243D0F9F00865501 /* WebContentView.swift in Sources */,
 				4595F41424A27DB700B3733E /* RealmArticleJcrContent.swift in Sources */,
+				450F12AB256E9C7900ED69D4 /* AnalyticsEventNodeTrigger.swift in Sources */,
 				45F66CA823E4C51B0053CB5B /* MenuViewModel.swift in Sources */,
 				451DB1432461DA4200FB14BF /* TractHeroProperties.swift in Sources */,
 				453DBA792474854C0000BA85 /* ArticlesErrorMessageView.swift in Sources */,
@@ -5167,6 +5178,7 @@
 				45E2BF04254354C400C4D66C /* MobileContentManifestPageType.swift in Sources */,
 				450F1298256C16AE00ED69D4 /* KeyboardState.swift in Sources */,
 				451F3F1E24E458A000A25D11 /* ShareToolView.swift in Sources */,
+				450F12AF256E9E7800ED69D4 /* MobileContentAnalyticsEvent.swift in Sources */,
 				4595F42F24A294EE00B3733E /* ArticleAemImportDataParser.swift in Sources */,
 				457D9840254B5571000B8159 /* TipNode.swift in Sources */,
 				45249D1B24ACCD1400E139AD /* BaseTractElementDiContainer.swift in Sources */,
