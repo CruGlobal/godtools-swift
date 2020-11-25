@@ -48,7 +48,8 @@ class ToolPageContentStackViewModel: MobileContentViewModelType {
     func render(didRenderView: ((_ mobileContentView: MobileContentView) -> Void)) {
         
         // TODO: Need to move rendering into a Class that will return a single Object of results of all rendered contents because
-        // If render is called again here we may end up with extra added objects in buttonEvents, etc. ~Levi
+        // If render is called again here we may end up with extra added objects in buttonEvents, etc.
+        // Or need to reset objects in this class. ~Levi
         
         for childNode in node.children {
             if let renderedMobileContentView = recurseAndRender(node: childNode, rootContentStack: rootContentStack ?? self) {
