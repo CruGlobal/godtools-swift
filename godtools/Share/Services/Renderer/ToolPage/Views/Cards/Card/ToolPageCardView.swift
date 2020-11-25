@@ -142,11 +142,9 @@ class ToolPageCardView: UIView {
         
         let contentStackViewModel: ToolPageCardContentViewModel = viewModel.contentStackViewModel
         
-        // TODO: Implement. ~Levi
-        /*
-        contentStackViewModel.didRenderContentFormSignal.addObserver(self) { [weak self] (contentForm: ToolPageContentFormView) in
+        contentStackViewModel.contentRenderer.didRenderContentFormSignal.addObserver(self) { [weak self] (contentForm: ToolPageContentFormView) in
             self?.handleDidRenderContentForm(form: contentForm)
-        }*/
+        }
         
         let contentStackView: MobileContentStackView = MobileContentStackView(viewModel: contentStackViewModel, itemSpacing: 20, scrollIsEnabled: true)
         contentStackContainer.addSubview(contentStackView)

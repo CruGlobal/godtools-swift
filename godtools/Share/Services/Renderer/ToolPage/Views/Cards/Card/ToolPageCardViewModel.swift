@@ -59,8 +59,7 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
         print("x deinit: \(type(of: self))")
         diContainer.mobileContentEvents.eventButtonTappedSignal.removeObserver(self)
         
-        // TODO: Implement. ~Levi
-        //contentStackViewModel.renderedContent?.containsTips.removeObserver(self)
+        contentStackViewModel.contentRenderer.didRenderTrainingTipsSignal.removeObserver(self)
     }
     
     private func setupBinding() {
@@ -77,13 +76,11 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
             }
         }
         
-        // TODO: Implement. ~Levi
-        /*
-        contentStackViewModel.renderedContent?.containsTips.addObserver(self) { [weak self] (containsTips: Bool) in
+        contentStackViewModel.contentRenderer.didRenderTrainingTipsSignal.addObserver(self) { [weak self] in
             let trainingTipsEnabled: Bool = self?.diContainer.trainingTipsEnabled ?? false
-            let showsHeaderTrainingTip: Bool = trainingTipsEnabled && containsTips
+            let showsHeaderTrainingTip: Bool = trainingTipsEnabled
             self?.hidesHeaderTrainingTip.accept(value: !showsHeaderTrainingTip)
-        }*/
+        }
     }
     
     var title: String? {

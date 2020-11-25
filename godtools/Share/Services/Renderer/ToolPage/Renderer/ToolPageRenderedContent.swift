@@ -17,13 +17,21 @@ class ToolPageRenderedContent {
     private(set) var linkEvents: [UIButton: ContentLinkNode] = Dictionary()
     private(set) var hiddenInputNodes: [ContentInputNode] = Array()
     private(set) var inputViewModels: [ToolPageContentInputViewModelType] = Array()
-    
-    let containsTips: ObservableValue<Bool> = ObservableValue(value: false)
-        
+            
     required init(mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents) {
         
         self.mobileContentAnalytics = mobileContentAnalytics
         self.mobileContentEvents = mobileContentEvents
+    }
+    
+    func addHiddenInputNode(inputNode: ContentInputNode) {
+        
+        hiddenInputNodes.append(inputNode)
+    }
+    
+    func addInputViewModel(viewModel: ToolPageContentInputViewModel) {
+        
+        inputViewModels.append(viewModel)
     }
     
     // MARK: - Button Events

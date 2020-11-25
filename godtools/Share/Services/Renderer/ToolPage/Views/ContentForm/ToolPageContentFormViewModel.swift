@@ -62,9 +62,10 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
         var inputData: [AnyHashable: Any] = Dictionary()
         var missingFieldsNames: [String] = Array()
         
-        // TODO: Implement. ~Levi
-        /*
-        for hiddenInputNode in contentViewModel.hiddenInputNodes {
+        let hiddenInputNodes: [ContentInputNode] = contentViewModel.content?.hiddenInputNodes ?? []
+        let inputViewModels: [ToolPageContentInputViewModelType] = contentViewModel.content?.inputViewModels ?? []
+        
+        for hiddenInputNode in hiddenInputNodes {
             
             let name: String? = hiddenInputNode.name
             let value: String? = hiddenInputNode.value
@@ -74,7 +75,7 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
             }
         }
         
-        for inputViewModel in contentViewModel.inputViewModels {
+        for inputViewModel in inputViewModels {
             
             let name: String? = inputViewModel.inputNode.name
             let value: String? = inputViewModel.inputValue
@@ -88,7 +89,7 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
             if inputIsRequired && inputValueIsMissing, let name = name {
                 missingFieldsNames.append(name)
             }
-        }*/
+        }
         
         guard missingFieldsNames.isEmpty else {
             notifiyFollowUpsMissingFieldsError(missingFieldsNames: missingFieldsNames)

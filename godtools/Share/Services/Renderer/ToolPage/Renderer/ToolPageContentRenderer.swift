@@ -20,6 +20,7 @@ class ToolPageContentRenderer {
         
     let didRenderContentFormSignal: SignalValue<ToolPageContentFormView> = SignalValue()
     let didRenderContentInputSignal: SignalValue<ToolPageContentInputView> = SignalValue()
+    let didRenderTrainingTipsSignal: Signal = Signal()
     
     required init(diContainer: ToolPageDiContainer, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?, defaultTextNodeTextAlignment: NSTextAlignment?, defaultButtonBorderColor: UIColor?) {
         
@@ -99,7 +100,7 @@ class ToolPageContentRenderer {
             
             if let view = renderTrainingTip(trainingTipNode: trainingTipNode) {
                                           
-                renderedContent.containsTips.accept(value: true)
+                rootContentRenderer.didRenderTrainingTipsSignal.accept()
                 
                 let tipSize: CGFloat = 50
                 
@@ -178,8 +179,7 @@ class ToolPageContentRenderer {
         else if let inputNode = node as? ContentInputNode {
             
             guard inputNode.type != "hidden" else {
-                // TODO: Implement. ~Levi
-                //hiddenInputNodes.append(inputNode)
+                renderedContent.addHiddenInputNode(inputNode: inputNode)
                 return nil
             }
             
@@ -190,10 +190,11 @@ class ToolPageContentRenderer {
                 defaultTextNodeTextColor: defaultTextNodeTextColor
             )
             
-            // TODO: Implement. ~Levi
-            //inputViewModels.append(viewModel)
+            renderedContent.addInputViewModel(viewModel: viewModel)
             
             let view = ToolPageContentInputView(viewModel: viewModel)
+            
+            rootContentRenderer.didRenderContentInputSignal.accept(value: view)
             
             return MobileContentView(view: view, heightConstraintType: .constrainedToChildren)
         }
@@ -208,7 +209,7 @@ class ToolPageContentRenderer {
             
             let view = ToolPageContentFormView(viewModel: viewModel)
                         
-            didRenderContentFormSignal.accept(value: view)
+            rootContentRenderer.didRenderContentFormSignal.accept(value: view)
             
             return MobileContentView(view: view, heightConstraintType: .constrainedToChildren)
         }

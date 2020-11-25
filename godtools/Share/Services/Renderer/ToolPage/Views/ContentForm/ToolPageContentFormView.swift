@@ -60,11 +60,9 @@ class ToolPageContentFormView: UIView {
         
         let contentViewModel: ToolPageContentStackContainerViewModel = viewModel.contentViewModel
         
-        // TODO: Implement. ~Levi
-        /*
-        contentViewModel.didRenderContentInputSignal.addObserver(self) { [weak self] (contentInput: ToolPageContentInputView) in
+        contentViewModel.contentRenderer.didRenderContentInputSignal.addObserver(self) { [weak self] (contentInput: ToolPageContentInputView) in
             self?.handleDidRenderContentInput(contentInput: contentInput)
-        }*/
+        }
         
         let contentStackView = MobileContentStackView(viewModel: contentViewModel, itemSpacing: 15, scrollIsEnabled: false)
         contentContainerView.addSubview(contentStackView)
