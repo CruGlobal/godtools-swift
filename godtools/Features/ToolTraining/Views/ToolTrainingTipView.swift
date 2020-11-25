@@ -46,7 +46,7 @@ class ToolTrainingTipView: UICollectionViewCell {
         tipContentStackView?.setContentInset(contentInset: UIEdgeInsets(top: 0, left: 0, bottom: bottomGradientView.frame.size.height, right: 0))
     }
     
-    func configure(viewModel: ToolPageContentStackViewModel) {
+    func configure(viewModel: ToolPageContentStackContainerViewModel) {
                 
         let tipContentStackView = MobileContentStackView(viewModel: viewModel, itemSpacing: 15, scrollIsEnabled: true)
         contentStackContainerView.addSubview(tipContentStackView)

@@ -12,7 +12,7 @@ protocol ToolPageContentTabsViewModelType {
     
     var tabLabels: [String] { get }
     var selectedTab: ObservableValue<Int> { get }
-    var tabContent: ObservableValue<ToolPageContentStackViewModel?> { get }
+    var tabContent: ObservableValue<ToolPageContentStackContainerViewModel?> { get }
     
     func tabTapped(tab: Int)
 }

@@ -20,7 +20,7 @@ protocol ToolTrainingViewModelType {
     func overlayTapped()
     func closeTapped()
     func continueTapped()
-    func tipPageWillAppear(page: Int) -> ToolPageContentStackViewModel
+    func tipPageWillAppear(page: Int) -> ToolPageContentStackContainerViewModel
     func tipPageDidChange(page: Int)
     func tipPageDidAppear(page: Int)
 }

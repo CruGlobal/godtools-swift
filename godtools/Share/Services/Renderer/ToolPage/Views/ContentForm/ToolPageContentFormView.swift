@@ -58,7 +58,7 @@ class ToolPageContentFormView: UIView {
             self?.resignCurrentEditedTextField()
         }
         
-        let contentViewModel: ToolPageContentStackViewModel = viewModel.contentViewModel
+        let contentViewModel: ToolPageContentStackContainerViewModel = viewModel.contentViewModel
         
         // TODO: Implement. ~Levi
         /*

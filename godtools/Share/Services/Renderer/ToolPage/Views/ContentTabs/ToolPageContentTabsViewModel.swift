@@ -18,7 +18,7 @@ class ToolPageContentTabsViewModel: ToolPageContentTabsViewModelType {
     
     let tabLabels: [String]
     let selectedTab: ObservableValue<Int> = ObservableValue(value: 0)
-    let tabContent: ObservableValue<ToolPageContentStackViewModel?> = ObservableValue(value: nil)
+    let tabContent: ObservableValue<ToolPageContentStackContainerViewModel?> = ObservableValue(value: nil)
     
     required init(tabsNode: ContentTabsNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
         
@@ -47,7 +47,7 @@ class ToolPageContentTabsViewModel: ToolPageContentTabsViewModelType {
         }
     }
     
-    private func getTabContent(tab: Int) -> ToolPageContentStackViewModel {
+    private func getTabContent(tab: Int) -> ToolPageContentStackContainerViewModel {
         
         let tabNode: ContentTabNode = tabNodes[tab]
         
@@ -62,7 +62,7 @@ class ToolPageContentTabsViewModel: ToolPageContentTabsViewModelType {
             }
         }
         
-        return ToolPageContentStackViewModel(
+        return ToolPageContentStackContainerViewModel(
             node: tabNodeChildrenToRender,
             diContainer: diContainer,
             toolPageColors: toolPageColors,

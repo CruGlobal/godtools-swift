@@ -23,7 +23,7 @@ class ToolPageModalViewModel: NSObject, ToolPageModalViewModelType {
     
     private weak var delegate: ToolPageModalViewModelDelegate?
     
-    let contentViewModel: ToolPageContentStackViewModel
+    let contentViewModel: ToolPageContentStackContainerViewModel
     
     required init(delegate: ToolPageModalViewModelDelegate, modalNode: ModalNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
         
@@ -33,7 +33,7 @@ class ToolPageModalViewModel: NSObject, ToolPageModalViewModelType {
         self.toolPageColors = toolPageColors
         self.defaultTextNodeTextColor = defaultTextNodeTextColor
         
-        contentViewModel = ToolPageContentStackViewModel(
+        contentViewModel = ToolPageContentStackContainerViewModel(
             node: modalNode,
             diContainer: diContainer,
             toolPageColors: toolPageColors,

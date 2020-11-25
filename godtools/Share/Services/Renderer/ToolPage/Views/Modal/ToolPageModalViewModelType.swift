@@ -11,5 +11,5 @@ import UIKit
 protocol ToolPageModalViewModelType {
     
     var backgroundColor: UIColor { get }
-    var contentViewModel: ToolPageContentStackViewModel { get }
+    var contentViewModel: ToolPageContentStackContainerViewModel { get }
 }

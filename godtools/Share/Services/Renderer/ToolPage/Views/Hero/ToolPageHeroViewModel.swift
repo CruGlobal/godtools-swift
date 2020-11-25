@@ -8,13 +8,14 @@
 
 import UIKit
 
-class ToolPageHeroViewModel: MobileContentViewModelType {
+class ToolPageHeroViewModel: ToolPageContentStackContainerViewModelType {
     
     private let node: MobileContentXmlNode
-    private let contentRenderer: ToolPageContentRenderer
     
-    private var content: ToolPageRenderedContent?
+    private(set) var content: ToolPageRenderedContent?
         
+    let contentRenderer: ToolPageContentRenderer
+    
     required init(node: MobileContentXmlNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?, defaultTextNodeTextAlignment: NSTextAlignment?, defaultButtonBorderColor: UIColor?) {
         
         self.node = node

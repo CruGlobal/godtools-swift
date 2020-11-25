@@ -130,7 +130,7 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
         }
     }
     
-    func tipPageWillAppear(page: Int) -> ToolPageContentStackViewModel {
+    func tipPageWillAppear(page: Int) -> ToolPageContentStackContainerViewModel {
             
         let pageNode: PageNode = pageNodes[page]
         
@@ -149,7 +149,7 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
             trainingTipsEnabled: true
         )
         
-        return ToolPageContentStackViewModel(
+        return ToolPageContentStackContainerViewModel(
             node: pageNode,
             diContainer: toolPageDiContainer,
             toolPageColors: ToolPageColorsViewModel(pageNode: pageNode, manifest: manifest),

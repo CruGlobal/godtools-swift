@@ -1,5 +1,5 @@
 //
-//  ToolPageContentStackViewModel.swift
+//  ToolPageContentStackContainerViewModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 10/30/20.
@@ -8,12 +8,13 @@
 
 import UIKit
 
-class ToolPageContentStackViewModel: MobileContentViewModelType {
+class ToolPageContentStackContainerViewModel: ToolPageContentStackContainerViewModelType {
                 
     private let node: MobileContentXmlNode
-    private let contentRenderer: ToolPageContentRenderer
     
-    private var content: ToolPageRenderedContent?
+    private(set) var content: ToolPageRenderedContent?
+    
+    let contentRenderer: ToolPageContentRenderer
     
     required init(node: MobileContentXmlNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?, defaultTextNodeTextAlignment: NSTextAlignment?, defaultButtonBorderColor: UIColor?) {
         

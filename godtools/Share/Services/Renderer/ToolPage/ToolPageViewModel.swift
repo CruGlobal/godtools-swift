@@ -24,7 +24,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     
     private weak var delegate: ToolPageViewModelTypeDelegate?
     
-    let contentStackViewModel: ToolPageContentStackViewModel?
+    let contentStackViewModel: ToolPageContentStackContainerViewModel?
     let headerViewModel: ToolPageHeaderViewModel
     let headerTrainingTipViewModel: TrainingTipViewModelType?
     let heroViewModel: ToolPageHeroViewModel?
@@ -51,7 +51,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         
         if firstNodeIsContentParagraph {
             
-            contentStackViewModel = ToolPageContentStackViewModel(
+            contentStackViewModel = ToolPageContentStackContainerViewModel(
                 node: pageNode,
                 diContainer: diContainer,
                 toolPageColors: toolPageColors,

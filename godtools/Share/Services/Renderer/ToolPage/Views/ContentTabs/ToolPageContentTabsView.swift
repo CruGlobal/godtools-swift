@@ -65,7 +65,7 @@ class ToolPageContentTabsView: UIView {
             self?.tabsControl.selectedSegmentIndex = selectedTab
         }
         
-        viewModel.tabContent.addObserver(self) { [weak self] (tabContentViewModel: ToolPageContentStackViewModel?) in
+        viewModel.tabContent.addObserver(self) { [weak self] (tabContentViewModel: ToolPageContentStackContainerViewModel?) in
             guard let contentViewModel = tabContentViewModel else {
                 return
             }
@@ -77,7 +77,7 @@ class ToolPageContentTabsView: UIView {
         viewModel.tabTapped(tab: tabsControl.selectedSegmentIndex)
     }
     
-    private func setContentView(contentViewModel: ToolPageContentStackViewModel) {
+    private func setContentView(contentViewModel: ToolPageContentStackContainerViewModel) {
         
         for view in tabContentContainerView.subviews {
             view.removeFromSuperview()

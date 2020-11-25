@@ -57,7 +57,7 @@ class ToolPageModalView: UIView {
         addContentView(viewModel: viewModel.contentViewModel)
     }
     
-    private func addContentView(viewModel: ToolPageContentStackViewModel) {
+    private func addContentView(viewModel: ToolPageContentStackContainerViewModel) {
         
         let contentParentView: UIView = contentContainerView
         let contentStackView = MobileContentStackView(viewModel: viewModel, itemSpacing: 15, scrollIsEnabled: true)

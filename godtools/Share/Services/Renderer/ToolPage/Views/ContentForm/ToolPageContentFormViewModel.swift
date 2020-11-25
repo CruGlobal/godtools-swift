@@ -16,7 +16,7 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
     private let defaultTextNodeTextColor: UIColor?
     
     let resignCurrentInputSignal: Signal = Signal()
-    let contentViewModel: ToolPageContentStackViewModel
+    let contentViewModel: ToolPageContentStackContainerViewModel
     
     required init(formNode: ContentFormNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
         
@@ -25,7 +25,7 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
         self.toolPageColors = toolPageColors
         self.defaultTextNodeTextColor = defaultTextNodeTextColor
         
-        contentViewModel = ToolPageContentStackViewModel(
+        contentViewModel = ToolPageContentStackContainerViewModel(
             node: formNode,
             diContainer: diContainer,
             toolPageColors: toolPageColors,

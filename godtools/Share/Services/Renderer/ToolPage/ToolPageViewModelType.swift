@@ -20,7 +20,7 @@ protocol ToolPageViewModelTypeDelegate: class {
 protocol ToolPageViewModelType: NSObject {
     
     var backgroundColor: UIColor { get }
-    var contentStackViewModel: ToolPageContentStackViewModel? { get }
+    var contentStackViewModel: ToolPageContentStackContainerViewModel? { get }
     var headerViewModel: ToolPageHeaderViewModel { get }
     var headerTrainingTipViewModel: TrainingTipViewModelType? { get }
     var heroViewModel: ToolPageHeroViewModel? { get }
