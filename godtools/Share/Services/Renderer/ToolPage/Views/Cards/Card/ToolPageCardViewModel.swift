@@ -21,7 +21,7 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     private weak var delegate: ToolPageCardViewModelTypeDelegate?
     
     let hidesHeaderTrainingTip: ObservableValue<Bool> = ObservableValue(value: true)
-    let contentStackViewModel: ToolPageContentStackViewModel
+    let contentStackViewModel: ToolPageCardContentViewModel
     let isHiddenCard: Bool
     let hidesCardNavigation: Bool
     
@@ -38,14 +38,13 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
         self.numberOfCards = numberOfCards
         self.toolPageColors = toolPageColors
         
-        contentStackViewModel = ToolPageContentStackViewModel(
+        contentStackViewModel = ToolPageCardContentViewModel(
             node: cardNode,
             diContainer: diContainer,
             toolPageColors: toolPageColors,
             defaultTextNodeTextColor: toolPageColors.cardTextColor,
             defaultTextNodeTextAlignment: nil,
-            defaultButtonBorderColor: nil,
-            rootContentStack: nil
+            defaultButtonBorderColor: nil
         )
         
         self.isHiddenCard = isHiddenCard
@@ -59,7 +58,9 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     deinit {
         print("x deinit: \(type(of: self))")
         diContainer.mobileContentEvents.eventButtonTappedSignal.removeObserver(self)
-        contentStackViewModel.containsTips.removeObserver(self)
+        
+        // TODO: Implement. ~Levi
+        //contentStackViewModel.renderedContent?.containsTips.removeObserver(self)
     }
     
     private func setupBinding() {
@@ -76,11 +77,13 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
             }
         }
         
-        contentStackViewModel.containsTips.addObserver(self) { [weak self] (containsTips: Bool) in
+        // TODO: Implement. ~Levi
+        /*
+        contentStackViewModel.renderedContent?.containsTips.addObserver(self) { [weak self] (containsTips: Bool) in
             let trainingTipsEnabled: Bool = self?.diContainer.trainingTipsEnabled ?? false
             let showsHeaderTrainingTip: Bool = trainingTipsEnabled && containsTips
             self?.hidesHeaderTrainingTip.accept(value: !showsHeaderTrainingTip)
-        }
+        }*/
     }
     
     var title: String? {

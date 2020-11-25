@@ -27,7 +27,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     let contentStackViewModel: ToolPageContentStackViewModel?
     let headerViewModel: ToolPageHeaderViewModel
     let headerTrainingTipViewModel: TrainingTipViewModelType?
-    let heroViewModel: ToolPageContentStackViewModel?
+    let heroViewModel: ToolPageHeroViewModel?
     let hidesCards: Bool
     let currentCard: ObservableValue<AnimatableValue<Int?>> = ObservableValue(value: AnimatableValue(value: nil, animated: false))
     let callToActionViewModel: ToolPageCallToActionViewModel
@@ -57,8 +57,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
                 toolPageColors: toolPageColors,
                 defaultTextNodeTextColor: nil,
                 defaultTextNodeTextAlignment: nil,
-                defaultButtonBorderColor: nil,
-                rootContentStack: nil
+                defaultButtonBorderColor: nil
             )
         }
         else {
@@ -92,14 +91,13 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         // hero
         if let heroNode = pageNode.heroNode {
             
-            heroViewModel = ToolPageContentStackViewModel(
+            heroViewModel = ToolPageHeroViewModel(
                 node: heroNode,
                 diContainer: diContainer,
                 toolPageColors: toolPageColors,
                 defaultTextNodeTextColor: nil,
                 defaultTextNodeTextAlignment: nil,
-                defaultButtonBorderColor: nil,
-                rootContentStack: nil
+                defaultButtonBorderColor: nil
             )
         }
         else {

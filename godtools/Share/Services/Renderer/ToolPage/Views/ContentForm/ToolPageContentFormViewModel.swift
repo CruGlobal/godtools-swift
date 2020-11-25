@@ -31,8 +31,7 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
             toolPageColors: toolPageColors,
             defaultTextNodeTextColor: defaultTextNodeTextColor,
             defaultTextNodeTextAlignment: nil,
-            defaultButtonBorderColor: nil,
-            rootContentStack: nil
+            defaultButtonBorderColor: nil
         )
         
         super.init()
@@ -63,6 +62,8 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
         var inputData: [AnyHashable: Any] = Dictionary()
         var missingFieldsNames: [String] = Array()
         
+        // TODO: Implement. ~Levi
+        /*
         for hiddenInputNode in contentViewModel.hiddenInputNodes {
             
             let name: String? = hiddenInputNode.name
@@ -87,7 +88,7 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
             if inputIsRequired && inputValueIsMissing, let name = name {
                 missingFieldsNames.append(name)
             }
-        }
+        }*/
         
         guard missingFieldsNames.isEmpty else {
             notifiyFollowUpsMissingFieldsError(missingFieldsNames: missingFieldsNames)
