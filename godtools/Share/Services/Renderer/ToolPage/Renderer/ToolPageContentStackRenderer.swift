@@ -19,8 +19,8 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
     private let defaultTextNodeTextAlignment: NSTextAlignment
     private let defaultButtonBorderColor: UIColor?
     
-    private(set) var buttonEvents: [UIButton: ContentButtonNode] = Dictionary()
-    private(set) var linkEvents: [UIButton: ContentLinkNode] = Dictionary()
+    private var buttonEvents: [UIButton: ContentButtonNode] = Dictionary()
+    private var linkEvents: [UIButton: ContentLinkNode] = Dictionary()
     
     private weak var rootContentStackRenderer: ToolPageContentStackRenderer?
         
@@ -44,12 +44,14 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
         print("x deinit: \(type(of: self))")
     }
     
-    func render(didRenderView: ((_ renderedView: MobileContentStackRenderedView) -> Void)) {
-        
-        // TODO: Would it be better for the MobileContentView to add button and link button targets to itself and then call some re-usable Class to handle the logic for those? ~Levi
-        
+    private func resetForNewRender() {
         removeAllButtonEvents()
         removeAllLinkEvents()
+    }
+    
+    func render(didRenderView: ((_ renderedView: MobileContentStackRenderedView) -> Void)) {
+                
+        resetForNewRender()
         
         for childNode in node.children {
             
