@@ -23,7 +23,7 @@ protocol ToolPageViewModelType: NSObject {
     var contentStackViewModel: ToolPageContentStackContainerViewModel? { get }
     var headerViewModel: ToolPageHeaderViewModel { get }
     var headerTrainingTipViewModel: TrainingTipViewModelType? { get }
-    var heroViewModel: ToolPageHeroViewModel? { get }
+    var heroViewModel: ToolPageContentStackContainerViewModel? { get }
     var hidesCards: Bool { get }
     var currentCard: ObservableValue<AnimatableValue<Int?>> { get }
     var callToActionViewModel: ToolPageCallToActionViewModel { get }

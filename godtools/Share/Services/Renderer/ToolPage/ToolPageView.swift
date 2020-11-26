@@ -92,7 +92,7 @@ class ToolPageView: UIViewController {
         
         // contentStack
         if let contentStackViewModel = viewModel.contentStackViewModel {
-            let contentStackView: MobileContentStackView = MobileContentStackView(viewModel: contentStackViewModel, itemSpacing: 20, scrollIsEnabled: true)
+            let contentStackView: MobileContentStackView = MobileContentStackView(viewRenderer: contentStackViewModel.contentStackRenderer, itemSpacing: 20, scrollIsEnabled: true)
             contentStackContainerView.addSubview(contentStackView)
             contentStackView.constrainEdgesToSuperview()
             contentStackContainerView.isHidden = false
@@ -170,7 +170,7 @@ class ToolPageView: UIViewController {
                          
             heroTop.constant = headerHeight + topInset
                                     
-            let heroView: MobileContentStackView = MobileContentStackView(viewModel: heroViewModel, itemSpacing: 20, scrollIsEnabled: true)
+            let heroView: MobileContentStackView = MobileContentStackView(viewRenderer: heroViewModel.contentStackRenderer, itemSpacing: 20, scrollIsEnabled: true)
             heroContainerView.addSubview(heroView)
             heroView.constrainEdgesToSuperview()
             heroContainerView.isHidden = false

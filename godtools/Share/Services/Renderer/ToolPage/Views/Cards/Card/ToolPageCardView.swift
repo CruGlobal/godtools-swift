@@ -140,13 +140,13 @@ class ToolPageCardView: UIView {
         nextButton.setTitleColor(viewModel.nextButtonTitleColor, for: .normal)
         nextButton.isHidden = viewModel.hidesCardNavigation
         
-        let contentStackViewModel: ToolPageCardContentViewModel = viewModel.contentStackViewModel
+        let contentStackViewModel: ToolPageContentStackContainerViewModel = viewModel.contentStackViewModel
         
-        contentStackViewModel.contentRenderer.didRenderContentFormSignal.addObserver(self) { [weak self] (contentForm: ToolPageContentFormView) in
+        contentStackViewModel.contentStackRenderer.didRenderContentFormSignal.addObserver(self) { [weak self] (contentForm: ToolPageContentFormView) in
             self?.handleDidRenderContentForm(form: contentForm)
         }
         
-        let contentStackView: MobileContentStackView = MobileContentStackView(viewModel: contentStackViewModel, itemSpacing: 20, scrollIsEnabled: true)
+        let contentStackView: MobileContentStackView = MobileContentStackView(viewRenderer: contentStackViewModel.contentStackRenderer, itemSpacing: 20, scrollIsEnabled: true)
         contentStackContainer.addSubview(contentStackView)
         contentStackView.constrainEdgesToSuperview()
         layoutIfNeeded()

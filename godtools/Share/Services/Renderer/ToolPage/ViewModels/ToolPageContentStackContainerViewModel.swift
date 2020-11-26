@@ -11,16 +11,16 @@ import UIKit
 class ToolPageContentStackContainerViewModel: ToolPageContentStackContainerViewModelType {
                 
     private let node: MobileContentXmlNode
-    
-    private(set) var content: ToolPageRenderedContent?
-    
-    let contentRenderer: ToolPageContentRenderer
+        
+    let contentStackRenderer: ToolPageContentStackRenderer
     
     required init(node: MobileContentXmlNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?, defaultTextNodeTextAlignment: NSTextAlignment?, defaultButtonBorderColor: UIColor?) {
         
         self.node = node
-        self.contentRenderer = ToolPageContentRenderer(
+        self.contentStackRenderer = ToolPageContentStackRenderer(
+            rootContentStackRenderer: nil,
             diContainer: diContainer,
+            node: node,
             toolPageColors: toolPageColors,
             defaultTextNodeTextColor: defaultTextNodeTextColor,
             defaultTextNodeTextAlignment: defaultTextNodeTextAlignment,
@@ -30,14 +30,5 @@ class ToolPageContentStackContainerViewModel: ToolPageContentStackContainerViewM
     
     deinit {
         print("x deinit: \(type(of: self))")
-    }
-    
-    func render(didRenderView: ((_ mobileContentView: MobileContentView) -> Void)) {
-        
-        self.content = contentRenderer.renderContent(
-            node: node,
-            rootContentRenderer: contentRenderer,
-            didRenderView: didRenderView
-        )
     }
 }

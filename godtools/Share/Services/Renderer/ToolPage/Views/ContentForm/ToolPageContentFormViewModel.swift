@@ -15,6 +15,9 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
     private let toolPageColors: ToolPageColorsViewModel
     private let defaultTextNodeTextColor: UIColor?
     
+    private var hiddenInputNodes: [ContentInputNode] = Array()
+    private var inputViewModels: [ToolPageContentInputViewModelType] = Array()
+    
     let resignCurrentInputSignal: Signal = Signal()
     let contentViewModel: ToolPageContentStackContainerViewModel
     
@@ -48,11 +51,21 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
         diContainer.mobileContentEvents.followUpEventButtonTappedSignal.addObserver(self) { [weak self] (followUpButtonEvent: FollowUpButtonEvent) in
             self?.sendFollowUps(followUpButtonEvent: followUpButtonEvent)
         }
+        
+        contentViewModel.contentStackRenderer.didRenderHiddenContentInputSignal.addObserver(self) { [weak self] (hiddenInputNode: ContentInputNode) in
+            self?.hiddenInputNodes.append(hiddenInputNode)
+        }
+        
+        contentViewModel.contentStackRenderer.didRenderContentInputSignal.addObserver(self) { [weak self] (renderedInput: ToolPageRenderedContentInput) in
+            self?.inputViewModels.append(renderedInput.visibleInputViewModel)
+        }
     }
     
     private func removeObservers() {
         diContainer.mobileContentEvents.followUpEventButtonTappedSignal.removeObserver(self)
         diContainer.mobileContentEvents.eventButtonTappedSignal.removeObserver(self)
+        contentViewModel.contentStackRenderer.didRenderHiddenContentInputSignal.removeObserver(self)
+        contentViewModel.contentStackRenderer.didRenderContentInputSignal.removeObserver(self)
     }
     
     private func sendFollowUps(followUpButtonEvent: FollowUpButtonEvent) {
@@ -61,10 +74,7 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
         
         var inputData: [AnyHashable: Any] = Dictionary()
         var missingFieldsNames: [String] = Array()
-        
-        let hiddenInputNodes: [ContentInputNode] = contentViewModel.content?.hiddenInputNodes ?? []
-        let inputViewModels: [ToolPageContentInputViewModelType] = contentViewModel.content?.inputViewModels ?? []
-        
+                
         for hiddenInputNode in hiddenInputNodes {
             
             let name: String? = hiddenInputNode.name

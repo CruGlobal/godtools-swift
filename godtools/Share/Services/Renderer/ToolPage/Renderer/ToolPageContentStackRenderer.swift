@@ -1,30 +1,39 @@
 //
-//  ToolPageContentRenderer.swift
+//  ToolPageContentStackRenderer.swift
 //  godtools
 //
-//  Created by Levi Eggert on 11/25/20.
+//  Created by Levi Eggert on 11/26/20.
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
 import UIKit
 
-class ToolPageContentRenderer {
+class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
     
     private static let numberFormatter: NumberFormatter = NumberFormatter()
     
     private let diContainer: ToolPageDiContainer
+    private let node: MobileContentXmlNode
     private let toolPageColors: ToolPageColorsViewModel
     private let defaultTextNodeTextColor: UIColor?
     private let defaultTextNodeTextAlignment: NSTextAlignment
     private let defaultButtonBorderColor: UIColor?
+    
+    private(set) var buttonEvents: [UIButton: ContentButtonNode] = Dictionary()
+    private(set) var linkEvents: [UIButton: ContentLinkNode] = Dictionary()
+    
+    private weak var rootContentStackRenderer: ToolPageContentStackRenderer?
         
     let didRenderContentFormSignal: SignalValue<ToolPageContentFormView> = SignalValue()
-    let didRenderContentInputSignal: SignalValue<ToolPageContentInputView> = SignalValue()
+    let didRenderHiddenContentInputSignal: SignalValue<ContentInputNode> = SignalValue()
+    let didRenderContentInputSignal: SignalValue<ToolPageRenderedContentInput> = SignalValue()
     let didRenderTrainingTipsSignal: Signal = Signal()
     
-    required init(diContainer: ToolPageDiContainer, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?, defaultTextNodeTextAlignment: NSTextAlignment?, defaultButtonBorderColor: UIColor?) {
+    required init(rootContentStackRenderer: ToolPageContentStackRenderer?, diContainer: ToolPageDiContainer, node: MobileContentXmlNode, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?, defaultTextNodeTextAlignment: NSTextAlignment?, defaultButtonBorderColor: UIColor?) {
         
+        self.rootContentStackRenderer = rootContentStackRenderer
         self.diContainer = diContainer
+        self.node = node
         self.toolPageColors = toolPageColors
         self.defaultTextNodeTextColor = defaultTextNodeTextColor
         self.defaultTextNodeTextAlignment = defaultTextNodeTextAlignment ?? (diContainer.language.languageDirection == .leftToRight ? .left : .right)
@@ -35,19 +44,18 @@ class ToolPageContentRenderer {
         print("x deinit: \(type(of: self))")
     }
     
-    func renderContent(node: MobileContentXmlNode, rootContentRenderer: ToolPageContentRenderer?, didRenderView: ((_ mobileContentView: MobileContentView) -> Void)) -> ToolPageRenderedContent {
-                
-        let renderedContent: ToolPageRenderedContent = ToolPageRenderedContent(
-            mobileContentAnalytics: diContainer.mobileContentAnalytics,
-            mobileContentEvents: diContainer.mobileContentEvents
-        )
+    func render(didRenderView: ((_ renderedView: MobileContentStackRenderedView) -> Void)) {
+        
+        // TODO: Would it be better for the MobileContentView to add button and link button targets to itself and then call some re-usable Class to handle the logic for those? ~Levi
+        
+        removeAllButtonEvents()
+        removeAllLinkEvents()
         
         for childNode in node.children {
             
-            let renderedView: MobileContentView? = recurseAndRender(
+            let renderedView: MobileContentStackRenderedView? = recurseAndRender(
                 node: childNode,
-                rootContentRenderer: rootContentRenderer ?? self,
-                renderedContent: renderedContent
+                rootContentStackRenderer: rootContentStackRenderer ?? self
             )
             
             if let renderedView = renderedView {
@@ -55,26 +63,29 @@ class ToolPageContentRenderer {
                 didRenderView(renderedView)
             }
         }
-        
-        return renderedContent
     }
     
-    private func recurseAndRender(node: MobileContentXmlNode, rootContentRenderer: ToolPageContentRenderer, renderedContent: ToolPageRenderedContent) -> MobileContentView? {
+    private func recurseAndRender(node: MobileContentXmlNode, rootContentStackRenderer: ToolPageContentStackRenderer) -> MobileContentStackRenderedView? {
         
         if let paragraphNode = node as? ContentParagraphNode {
         
-            let viewModel = ContentParagraphViewModel(
+            let paragraphRenderer = ToolPageContentStackRenderer(
+                rootContentStackRenderer: rootContentStackRenderer,
+                diContainer: diContainer,
                 node: paragraphNode,
-                rootContentRenderer: rootContentRenderer
+                toolPageColors: toolPageColors,
+                defaultTextNodeTextColor: defaultTextNodeTextColor,
+                defaultTextNodeTextAlignment: defaultTextNodeTextAlignment,
+                defaultButtonBorderColor: defaultButtonBorderColor
             )
             
             let view = MobileContentStackView(
-                viewModel: viewModel,
+                viewRenderer: paragraphRenderer,
                 itemSpacing: 5,
                 scrollIsEnabled: false
             )
                                                          
-            return MobileContentView(view: view, heightConstraintType: .constrainedToChildren)
+            return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)
         }
         else if let textNode = node as? ContentTextNode {
                       
@@ -85,7 +96,7 @@ class ToolPageContentRenderer {
                 textNode: textNode
             )
                         
-            return MobileContentView(view: label, heightConstraintType: .intrinsic)
+            return MobileContentStackRenderedView(view: label, heightConstraintType: .intrinsic)
         }
         else if let imageNode = node as? ContentImageNode {
             
@@ -93,18 +104,18 @@ class ToolPageContentRenderer {
             
             if renderContentImage(imageView: imageView, imageNode: imageNode), let imageSize = imageView.image?.size {
                 
-                return MobileContentView(view: imageView, heightConstraintType: .setToAspectRatioOfProvidedSize(size: imageSize))
+                return MobileContentStackRenderedView(view: imageView, heightConstraintType: .setToAspectRatioOfProvidedSize(size: imageSize))
             }
         }
         else if let trainingTipNode = node as? TrainingTipNode {
             
             if let view = renderTrainingTip(trainingTipNode: trainingTipNode) {
                                           
-                rootContentRenderer.didRenderTrainingTipsSignal.accept()
+                rootContentStackRenderer.didRenderTrainingTipsSignal.accept()
                 
                 let tipSize: CGFloat = 50
                 
-                return MobileContentView(view: view, heightConstraintType: .equalToSize(size: CGSize(width: tipSize, height: tipSize)))
+                return MobileContentStackRenderedView(view: view, heightConstraintType: .equalToSize(size: CGSize(width: tipSize, height: tipSize)))
             }
         }
         else if let buttonNode = node as? ContentButtonNode {
@@ -121,9 +132,9 @@ class ToolPageContentRenderer {
                 titleColor: buttonNode.textNode?.getTextColor()?.color ?? toolPageColors.primaryTextColor
             )
                           
-            renderedContent.addButtonEvent(button: button, buttonNode: buttonNode)
+            rootContentStackRenderer.addButtonEvent(button: button, buttonNode: buttonNode)
             
-            return MobileContentView(view: button, heightConstraintType: .equalToHeight(height: button.frame.size.height))
+            return MobileContentStackRenderedView(view: button, heightConstraintType: .equalToHeight(height: button.frame.size.height))
         }
         else if let linkNode = node as? ContentLinkNode {
             
@@ -137,9 +148,9 @@ class ToolPageContentRenderer {
                 titleColor: linkNode.textNode?.getTextColor()?.color ?? toolPageColors.primaryColor
             )
             
-            renderedContent.addLinkEvent(button: button, linkNode: linkNode)
+            rootContentStackRenderer.addLinkEvent(button: button, linkNode: linkNode)
                                     
-            return MobileContentView(view: button, heightConstraintType: .equalToHeight(height: button.frame.size.height))
+            return MobileContentStackRenderedView(view: button, heightConstraintType: .equalToHeight(height: button.frame.size.height))
         }
         else if let titleNode = node as? TitleNode {
                   
@@ -150,7 +161,7 @@ class ToolPageContentRenderer {
                 titleNode: titleNode
             )
                                     
-            return MobileContentView(view: label, heightConstraintType: .intrinsic)
+            return MobileContentStackRenderedView(view: label, heightConstraintType: .intrinsic)
         }
         else if let headingNode = node as? HeadingNode {
               
@@ -161,7 +172,7 @@ class ToolPageContentRenderer {
                 headingNode: headingNode
             )
                       
-            return MobileContentView(view: label, heightConstraintType: .intrinsic)
+            return MobileContentStackRenderedView(view: label, heightConstraintType: .intrinsic)
         }
         else if let tabsNode = node as? ContentTabsNode {
 
@@ -174,12 +185,12 @@ class ToolPageContentRenderer {
             
             let view = ToolPageContentTabsView(viewModel: viewModel)
                                     
-            return MobileContentView(view: view, heightConstraintType: .constrainedToChildren)
+            return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)
         }
         else if let inputNode = node as? ContentInputNode {
             
             guard inputNode.type != "hidden" else {
-                renderedContent.addHiddenInputNode(inputNode: inputNode)
+                rootContentStackRenderer.didRenderHiddenContentInputSignal.accept(value: inputNode)
                 return nil
             }
             
@@ -190,13 +201,13 @@ class ToolPageContentRenderer {
                 defaultTextNodeTextColor: defaultTextNodeTextColor
             )
             
-            renderedContent.addInputViewModel(viewModel: viewModel)
-            
             let view = ToolPageContentInputView(viewModel: viewModel)
             
-            rootContentRenderer.didRenderContentInputSignal.accept(value: view)
+            let renderedInput = ToolPageRenderedContentInput(visibleInputViewModel: viewModel, visibleInputView: view)
             
-            return MobileContentView(view: view, heightConstraintType: .constrainedToChildren)
+            rootContentStackRenderer.didRenderContentInputSignal.accept(value: renderedInput)
+            
+            return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)
         }
         else if let formNode = node as? ContentFormNode {
             
@@ -209,9 +220,9 @@ class ToolPageContentRenderer {
             
             let view = ToolPageContentFormView(viewModel: viewModel)
                         
-            rootContentRenderer.didRenderContentFormSignal.accept(value: view)
+            rootContentStackRenderer.didRenderContentFormSignal.accept(value: view)
             
-            return MobileContentView(view: view, heightConstraintType: .constrainedToChildren)
+            return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)
         }
         
         return nil
@@ -286,7 +297,7 @@ class ToolPageContentRenderer {
         
         if let textScaleString = textNode.textScale,
             !textScaleString.isEmpty,
-            let number = ToolPageContentRenderer.numberFormatter.number(from: textScaleString) {
+            let number = ToolPageContentStackRenderer.numberFormatter.number(from: textScaleString) {
             
             fontScale = CGFloat(truncating: number)
         }
@@ -392,5 +403,122 @@ class ToolPageContentRenderer {
         let view = TrainingTipView(viewModel: viewModel)
         
         return view
+    }
+    
+    // MARK: - Button Events
+    
+    private func removeAllButtonEvents() {
+        
+        let buttons: [UIButton] = Array(buttonEvents.keys)
+        
+        for button in buttons {
+            button.removeTarget(self, action: #selector(handleButtonTapped(button:)), for: .touchUpInside)
+        }
+        
+        buttonEvents.removeAll()
+    }
+    
+    private func addButtonEvent(button: UIButton, buttonNode: ContentButtonNode) {
+        
+        guard buttonEvents[button] == nil else {
+            return
+        }
+        
+        buttonEvents[button] = buttonNode
+        
+        button.addTarget(self, action: #selector(handleButtonTapped(button:)), for: .touchUpInside)
+    }
+    
+    private func removeButtonEvent(button: UIButton) {
+        
+        guard buttonEvents[button] != nil else {
+            return
+        }
+        
+        buttonEvents[button] = nil
+        
+        button.removeTarget(self, action: #selector(handleButtonTapped(button:)), for: .touchUpInside)
+    }
+    
+    @objc func handleButtonTapped(button: UIButton) {
+        
+        guard let buttonNode = buttonEvents[button] else {
+            return
+        }
+        
+        if buttonNode.type == "event" {
+            
+            let followUpSendEventName: String = "followup:send"
+            
+            if buttonNode.events.contains(followUpSendEventName) {
+                var triggerEvents: [String] = buttonNode.events
+                if let index = triggerEvents.firstIndex(of: followUpSendEventName) {
+                    triggerEvents.remove(at: index)
+                }
+                diContainer.mobileContentEvents.followUpEventButtonTapped(followUpEventButton: FollowUpButtonEvent(triggerEventsOnFollowUpSent: triggerEvents))
+            }
+            else {
+                for event in buttonNode.events {
+                    diContainer.mobileContentEvents.eventButtonTapped(eventButton: ButtonEvent(event: event))
+                }
+            }
+        }
+        else if buttonNode.type == "url", let url = buttonNode.url {
+            diContainer.mobileContentEvents.urlButtonTapped(urlButtonEvent: UrlButtonEvent(url: url))
+        }
+        
+        if let analyticsEventsNode = buttonNode.analyticsEventsNode {
+            diContainer.mobileContentAnalytics.trackEvents(events: analyticsEventsNode)
+        }
+    }
+    
+    // MARK: - Link Events
+    
+    private func removeAllLinkEvents() {
+        
+        let linkButtons: [UIButton] = Array(linkEvents.keys)
+        
+        for linkButton in linkButtons {
+            linkButton.removeTarget(self, action: #selector(handleLinkTapped(button:)), for: .touchUpInside)
+        }
+        
+        linkEvents.removeAll()
+    }
+    
+    private func addLinkEvent(button: UIButton, linkNode: ContentLinkNode) {
+        
+        guard linkEvents[button] == nil else {
+            return
+        }
+        
+        linkEvents[button] = linkNode
+        
+        button.addTarget(self, action: #selector(handleLinkTapped(button:)), for: .touchUpInside)
+    }
+    
+    private func removeLinkEvent(button: UIButton) {
+        
+        guard linkEvents[button] != nil else {
+            return
+        }
+        
+        linkEvents[button] = nil
+        
+        button.removeTarget(self, action: #selector(handleLinkTapped(button:)), for: .touchUpInside)
+    }
+    
+    @objc func handleLinkTapped(button: UIButton) {
+        
+        guard let linkNode = linkEvents[button] else {
+            return
+        }
+        
+        for event in linkNode.events {
+            diContainer.mobileContentEvents.eventButtonTapped(eventButton: ButtonEvent(event: event))
+        }
+        
+        if let analyticsEventsNode = linkNode.analyticsEventsNode {
+            diContainer.mobileContentAnalytics.trackEvents(events: analyticsEventsNode)
+        }
     }
 }

@@ -27,7 +27,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     let contentStackViewModel: ToolPageContentStackContainerViewModel?
     let headerViewModel: ToolPageHeaderViewModel
     let headerTrainingTipViewModel: TrainingTipViewModelType?
-    let heroViewModel: ToolPageHeroViewModel?
+    let heroViewModel: ToolPageContentStackContainerViewModel?
     let hidesCards: Bool
     let currentCard: ObservableValue<AnimatableValue<Int?>> = ObservableValue(value: AnimatableValue(value: nil, animated: false))
     let callToActionViewModel: ToolPageCallToActionViewModel
@@ -91,7 +91,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         // hero
         if let heroNode = pageNode.heroNode {
             
-            heroViewModel = ToolPageHeroViewModel(
+            heroViewModel = ToolPageContentStackContainerViewModel(
                 node: heroNode,
                 diContainer: diContainer,
                 toolPageColors: toolPageColors,

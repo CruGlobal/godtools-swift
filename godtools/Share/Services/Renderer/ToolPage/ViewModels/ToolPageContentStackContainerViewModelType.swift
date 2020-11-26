@@ -8,10 +8,9 @@
 
 import UIKit
 
-protocol ToolPageContentStackContainerViewModelType: MobileContentViewModelType {
+protocol ToolPageContentStackContainerViewModelType {
     
-    var contentRenderer: ToolPageContentRenderer { get }
-    var content: ToolPageRenderedContent? { get }
+    var contentStackRenderer: ToolPageContentStackRenderer { get }
     
     init(node: MobileContentXmlNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?, defaultTextNodeTextAlignment: NSTextAlignment?, defaultButtonBorderColor: UIColor?)
 }

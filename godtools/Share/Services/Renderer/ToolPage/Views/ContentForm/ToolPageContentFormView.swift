@@ -60,11 +60,11 @@ class ToolPageContentFormView: UIView {
         
         let contentViewModel: ToolPageContentStackContainerViewModel = viewModel.contentViewModel
         
-        contentViewModel.contentRenderer.didRenderContentInputSignal.addObserver(self) { [weak self] (contentInput: ToolPageContentInputView) in
-            self?.handleDidRenderContentInput(contentInput: contentInput)
+        contentViewModel.contentStackRenderer.didRenderContentInputSignal.addObserver(self) { [weak self] (renderedInput: ToolPageRenderedContentInput) in
+            self?.handleDidRenderContentInput(contentInput: renderedInput.visibleInputView)
         }
         
-        let contentStackView = MobileContentStackView(viewModel: contentViewModel, itemSpacing: 15, scrollIsEnabled: false)
+        let contentStackView = MobileContentStackView(viewRenderer: contentViewModel.contentStackRenderer, itemSpacing: 15, scrollIsEnabled: false)
         contentContainerView.addSubview(contentStackView)
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
         contentStackView.constrainEdgesToSuperview()

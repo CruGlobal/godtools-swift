@@ -48,7 +48,7 @@ class ToolTrainingTipView: UICollectionViewCell {
     
     func configure(viewModel: ToolPageContentStackContainerViewModel) {
                 
-        let tipContentStackView = MobileContentStackView(viewModel: viewModel, itemSpacing: 15, scrollIsEnabled: true)
+        let tipContentStackView = MobileContentStackView(viewRenderer: viewModel.contentStackRenderer, itemSpacing: 15, scrollIsEnabled: true)
         contentStackContainerView.addSubview(tipContentStackView)
         tipContentStackView.constrainEdgesToSuperview()
                 
