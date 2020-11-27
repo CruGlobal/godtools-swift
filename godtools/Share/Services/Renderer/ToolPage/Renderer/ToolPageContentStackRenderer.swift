@@ -28,10 +28,7 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
     let didRenderHiddenContentInputSignal: SignalValue<ContentInputNode> = SignalValue()
     let didRenderContentInputSignal: SignalValue<ToolPageRenderedContentInput> = SignalValue()
     let didRenderTrainingTipsSignal: Signal = Signal()
-    
-    // TODO: Could inject a ToolPageViewRenderer into this class that encapsulates toolPageColors, defaultTextNodeColor, .etc.
-    // and does rendering of views to reuse tool page content view rendering logic elsewhere. ~Levi
-    
+        
     required init(rootContentStackRenderer: ToolPageContentStackRenderer?, diContainer: ToolPageDiContainer, node: MobileContentXmlNode, toolPageColors: ToolPageColors, defaultTextNodeTextColor: UIColor?, defaultTextNodeTextAlignment: NSTextAlignment?, defaultButtonBorderColor: UIColor?) {
         
         self.rootContentStackRenderer = rootContentStackRenderer
