@@ -14,7 +14,7 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
     
     private let diContainer: ToolPageDiContainer
     private let node: MobileContentXmlNode
-    private let toolPageColors: ToolPageColorsViewModel
+    private let toolPageColors: ToolPageColors
     private let defaultTextNodeTextColor: UIColor?
     private let defaultTextNodeTextAlignment: NSTextAlignment
     private let defaultButtonBorderColor: UIColor?
@@ -32,7 +32,7 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
     // TODO: Could inject a ToolPageViewRenderer into this class that encapsulates toolPageColors, defaultTextNodeColor, .etc.
     // and does rendering of views to reuse tool page content view rendering logic elsewhere. ~Levi
     
-    required init(rootContentStackRenderer: ToolPageContentStackRenderer?, diContainer: ToolPageDiContainer, node: MobileContentXmlNode, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?, defaultTextNodeTextAlignment: NSTextAlignment?, defaultButtonBorderColor: UIColor?) {
+    required init(rootContentStackRenderer: ToolPageContentStackRenderer?, diContainer: ToolPageDiContainer, node: MobileContentXmlNode, toolPageColors: ToolPageColors, defaultTextNodeTextColor: UIColor?, defaultTextNodeTextAlignment: NSTextAlignment?, defaultButtonBorderColor: UIColor?) {
         
         self.rootContentStackRenderer = rootContentStackRenderer
         self.diContainer = diContainer

@@ -12,5 +12,5 @@ protocol ToolPageContentStackContainerViewModelType {
     
     var contentStackRenderer: ToolPageContentStackRenderer { get }
     
-    init(node: MobileContentXmlNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?, defaultTextNodeTextAlignment: NSTextAlignment?, defaultButtonBorderColor: UIColor?)
+    init(node: MobileContentXmlNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColors, defaultTextNodeTextColor: UIColor?, defaultTextNodeTextAlignment: NSTextAlignment?, defaultButtonBorderColor: UIColor?)
 }

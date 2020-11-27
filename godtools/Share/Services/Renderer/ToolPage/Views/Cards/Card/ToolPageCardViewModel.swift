@@ -16,7 +16,8 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     private let visibleCardPosition: Int?
     private let hiddenCardPosition: Int?
     private let numberOfCards: Int
-    private let toolPageColors: ToolPageColorsViewModel
+    private let toolPageColors: ToolPageColors
+    private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
     
     private weak var delegate: ToolPageCardViewModelTypeDelegate?
     
@@ -25,7 +26,7 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     let isHiddenCard: Bool
     let hidesCardNavigation: Bool
     
-    required init(delegate: ToolPageCardViewModelTypeDelegate, cardNode: CardNode, diContainer: ToolPageDiContainer, cardPosition: Int, visibleCardPosition: Int?, hiddenCardPosition: Int?, numberOfCards: Int, toolPageColors: ToolPageColorsViewModel) {
+    required init(delegate: ToolPageCardViewModelTypeDelegate, cardNode: CardNode, diContainer: ToolPageDiContainer, cardPosition: Int, visibleCardPosition: Int?, hiddenCardPosition: Int?, numberOfCards: Int, toolPageColors: ToolPageColors) {
         
         let isHiddenCard: Bool = cardNode.hidden == "true"
         
@@ -49,6 +50,13 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
         
         self.isHiddenCard = isHiddenCard
         hidesCardNavigation = isHiddenCard
+        
+        if let analyticsEventsNode = cardNode.analyticsEventsNode {
+            analyticsEventsObjects = MobileContentAnalyticsEvent.initEvents(eventsNode: analyticsEventsNode, mobileContentAnalytics: diContainer.mobileContentAnalytics)
+        }
+        else {
+            analyticsEventsObjects = []
+        }
         
         super.init()
         
@@ -159,5 +167,26 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     
     func didSwipeCardDown() {
         delegate?.cardSwipedDownFromCard(cardViewModel: self, cardPosition: cardPosition)
+    }
+    
+    func cardWillAppear() {
+        mobileContentViewDidAppear()
+    }
+    
+    func cardWillDisappear() {
+        mobileContentViewDidDisappear()
+    }
+}
+
+// MARK: - MobileContentViewModel
+
+extension ToolPageCardViewModel: MobileContentViewModel {
+    
+    var analyticsEvents: [MobileContentAnalyticsEvent] {
+        return analyticsEventsObjects
+    }
+    
+    var defaultAnalyticsEventsTrigger: AnalyticsEventNodeTrigger {
+        return .visible
     }
 }

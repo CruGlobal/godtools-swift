@@ -12,7 +12,7 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
     
     private let formNode: ContentFormNode
     private let diContainer: ToolPageDiContainer
-    private let toolPageColors: ToolPageColorsViewModel
+    private let toolPageColors: ToolPageColors
     private let defaultTextNodeTextColor: UIColor?
     
     private var hiddenInputNodes: [ContentInputNode] = Array()
@@ -21,7 +21,7 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
     let resignCurrentInputSignal: Signal = Signal()
     let contentViewModel: ToolPageContentStackContainerViewModel
     
-    required init(formNode: ContentFormNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
+    required init(formNode: ContentFormNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColors, defaultTextNodeTextColor: UIColor?) {
         
         self.formNode = formNode
         self.diContainer = diContainer

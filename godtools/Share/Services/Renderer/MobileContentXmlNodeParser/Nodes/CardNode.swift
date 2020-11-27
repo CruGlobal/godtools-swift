@@ -11,6 +11,9 @@ import SWXMLHash
 
 class CardNode: MobileContentXmlNode, BackgroundImageNodeType {
         
+    private(set) var labelNode: LabelNode?
+    private(set) var analyticsEventsNode: AnalyticsEventsNode?
+    
     let backgroundImage: String?
     let backgroundImageAlign: String
     let backgroundImageScaleType: String
@@ -32,7 +35,15 @@ class CardNode: MobileContentXmlNode, BackgroundImageNodeType {
         super.init(xmlElement: xmlElement)
     }
     
-    var labelNode: LabelNode? {
-        return children.first as? LabelNode
+    override func addChild(childNode: MobileContentXmlNode) {
+        
+        if let labelNode = childNode as? LabelNode {
+            self.labelNode = labelNode
+        }
+        else if let analyticsEventsNode = childNode as? AnalyticsEventsNode {
+            self.analyticsEventsNode = analyticsEventsNode
+        }
+        
+        super.addChild(childNode: childNode)
     }
 }

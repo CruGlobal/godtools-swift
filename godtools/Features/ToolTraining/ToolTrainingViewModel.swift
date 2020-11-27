@@ -152,7 +152,7 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
         return ToolPageContentStackContainerViewModel(
             node: pageNode,
             diContainer: toolPageDiContainer,
-            toolPageColors: ToolPageColorsViewModel(pageNode: pageNode, manifest: manifest),
+            toolPageColors: ToolPageColors(pageNode: pageNode, manifest: manifest),
             defaultTextNodeTextColor: nil,
             defaultTextNodeTextAlignment: nil,
             defaultButtonBorderColor: nil

@@ -12,7 +12,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         
     private let pageNode: PageNode
     private let diContainer: ToolPageDiContainer
-    private let toolPageColors: ToolPageColorsViewModel
+    private let toolPageColors: ToolPageColors
     private let page: Int
     private let initialPositions: ToolPageInitialPositions?
         
@@ -42,7 +42,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         self.delegate = delegate
         self.pageNode = pageNode
         self.diContainer = diContainer
-        self.toolPageColors = ToolPageColorsViewModel(pageNode: pageNode, manifest: diContainer.manifest)
+        self.toolPageColors = ToolPageColors(pageNode: pageNode, manifest: diContainer.manifest)
         self.page = page
         self.initialPositions = initialPositions
                 
@@ -303,6 +303,14 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     }
     
     func setCard(cardPosition: Int?, animated: Bool) {
+        
+        if let currentCardPosition = currentCard.value.value, currentCardPosition != cardPosition {
+            allCardsViewModels[currentCardPosition].cardWillDisappear()
+        }
+        
+        if let newCardPosition = cardPosition, newCardPosition != currentCard.value.value {
+            allCardsViewModels[newCardPosition].cardWillAppear()
+        }
         
         if let cardPosition = cardPosition, cardPosition >= 0 && cardPosition < allCardsViewModels.count {
             currentCard.accept(value: AnimatableValue(value: cardPosition, animated: animated))

@@ -12,7 +12,7 @@ class ToolPageContentTabsViewModel: ToolPageContentTabsViewModelType {
     
     private let tabsNode: ContentTabsNode
     private let diContainer: ToolPageDiContainer
-    private let toolPageColors: ToolPageColorsViewModel
+    private let toolPageColors: ToolPageColors
     private let defaultTextNodeTextColor: UIColor?
     private let tabNodes: [ContentTabNode]
     
@@ -20,7 +20,7 @@ class ToolPageContentTabsViewModel: ToolPageContentTabsViewModelType {
     let selectedTab: ObservableValue<Int> = ObservableValue(value: 0)
     let tabContent: ObservableValue<ToolPageContentStackContainerViewModel?> = ObservableValue(value: nil)
     
-    required init(tabsNode: ContentTabsNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
+    required init(tabsNode: ContentTabsNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColors, defaultTextNodeTextColor: UIColor?) {
         
         self.tabsNode = tabsNode
         self.diContainer = diContainer

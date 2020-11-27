@@ -45,4 +45,6 @@ protocol ToolPageCardViewModelType: NSObject {
     func nextTapped()
     func didSwipeCardUp()
     func didSwipeCardDown()
+    func cardWillAppear()
+    func cardWillDisappear()
 }

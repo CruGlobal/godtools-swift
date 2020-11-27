@@ -11,13 +11,13 @@ import UIKit
 class ToolPageCallToActionViewModel {
     
     private let pageNode: PageNode
-    private let toolPageColors: ToolPageColorsViewModel
+    private let toolPageColors: ToolPageColors
     private let fontService: FontService
     private let language: LanguageModel
 
     let hidesCallToAction: Bool
     
-    required init(pageNode: PageNode, toolPageColors: ToolPageColorsViewModel, fontService: FontService, language: LanguageModel, isLastPage: Bool) {
+    required init(pageNode: PageNode, toolPageColors: ToolPageColors, fontService: FontService, language: LanguageModel, isLastPage: Bool) {
         
         self.pageNode = pageNode
         self.toolPageColors = toolPageColors

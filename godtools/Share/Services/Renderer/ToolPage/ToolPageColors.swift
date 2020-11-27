@@ -1,14 +1,14 @@
 //
-//  ToolPageColorsViewModel.swift
+//  ToolPageColors.swift
 //  godtools
 //
-//  Created by Levi Eggert on 11/4/20.
+//  Created by Levi Eggert on 11/27/20.
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
 import UIKit
 
-class ToolPageColorsViewModel {
+class ToolPageColors {
     
     let backgroundColor: UIColor
     let cardTextColor: UIColor?

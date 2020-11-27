@@ -8,26 +8,29 @@
 
 import Foundation
 
-protocol MobileContentAnalyticsEventDelegate: class {
-    
-    func mobileContentEventTrackEvent(event: MobileContentAnalyticsEvent, eventNode: AnalyticsEventNode)
-}
-
 class MobileContentAnalyticsEvent: NSObject {
-    
-    private let eventNode: AnalyticsEventNode
     
     private var delayTimer: Timer?
     private var triggered: Bool = false
     
-    private weak var delegate: MobileContentAnalyticsEventDelegate?
+    let eventNode: AnalyticsEventNode
     
-    required init(eventNode: AnalyticsEventNode, delegate: MobileContentAnalyticsEventDelegate) {
+    private weak var mobileContentAnalytics: MobileContentAnalytics?
+    
+    required init(eventNode: AnalyticsEventNode, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.eventNode = eventNode
-        self.delegate = delegate
+        self.mobileContentAnalytics = mobileContentAnalytics
         
         super.init()
+    }
+    
+    static func initEvents(eventsNode: AnalyticsEventsNode, mobileContentAnalytics: MobileContentAnalytics) -> [MobileContentAnalyticsEvent] {
+        
+        let eventNodes: [AnalyticsEventNode] = eventsNode.children as? [AnalyticsEventNode] ?? []
+        let events: [MobileContentAnalyticsEvent] = eventNodes.map({MobileContentAnalyticsEvent(eventNode: $0, mobileContentAnalytics: mobileContentAnalytics)})
+        
+        return events
     }
     
     deinit {
@@ -54,7 +57,7 @@ class MobileContentAnalyticsEvent: NSObject {
         
         stopDelayTimer()
         
-        delegate?.mobileContentEventTrackEvent(event: self, eventNode: eventNode)
+        mobileContentAnalytics?.trackEvent(event: eventNode)
         
         endTrigger()
     }

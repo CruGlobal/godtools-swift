@@ -11,7 +11,7 @@ import UIKit
 class ToolPageContentInputViewModel: ToolPageContentInputViewModelType {
     
     private let fontService: FontService
-    private let toolPageColors: ToolPageColorsViewModel
+    private let toolPageColors: ToolPageColors
     private let defaultTextNodeTextColor: UIColor?
     
     private(set) var inputValue: String?
@@ -20,7 +20,7 @@ class ToolPageContentInputViewModel: ToolPageContentInputViewModelType {
     let inputLabel: String?
     let placeholder: String?
     
-    required init(inputNode: ContentInputNode, fontService: FontService, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
+    required init(inputNode: ContentInputNode, fontService: FontService, toolPageColors: ToolPageColors, defaultTextNodeTextColor: UIColor?) {
         
         self.inputNode = inputNode
         self.fontService = fontService

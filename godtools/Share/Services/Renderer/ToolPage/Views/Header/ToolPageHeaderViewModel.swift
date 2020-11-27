@@ -10,7 +10,7 @@ import UIKit
 
 class ToolPageHeaderViewModel {
     
-    private let toolPageColors: ToolPageColorsViewModel
+    private let toolPageColors: ToolPageColors
     private let fontService: FontService
     private let language: LanguageModel
     
@@ -18,7 +18,7 @@ class ToolPageHeaderViewModel {
     let headerTitle: String?
     let hidesHeader: Bool
     
-    required init(pageNode: PageNode, toolPageColors: ToolPageColorsViewModel, fontService: FontService, language: LanguageModel) {
+    required init(pageNode: PageNode, toolPageColors: ToolPageColors, fontService: FontService, language: LanguageModel) {
         
         self.toolPageColors = toolPageColors
         self.fontService = fontService

@@ -18,14 +18,14 @@ class ToolPageModalViewModel: NSObject, ToolPageModalViewModelType {
     
     private let modalNode: ModalNode
     private let diContainer: ToolPageDiContainer
-    private let toolPageColors: ToolPageColorsViewModel
+    private let toolPageColors: ToolPageColors
     private let defaultTextNodeTextColor: UIColor?
     
     private weak var delegate: ToolPageModalViewModelDelegate?
     
     let contentViewModel: ToolPageContentStackContainerViewModel
     
-    required init(delegate: ToolPageModalViewModelDelegate, modalNode: ModalNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?) {
+    required init(delegate: ToolPageModalViewModelDelegate, modalNode: ModalNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColors, defaultTextNodeTextColor: UIColor?) {
         
         self.delegate = delegate
         self.modalNode = modalNode

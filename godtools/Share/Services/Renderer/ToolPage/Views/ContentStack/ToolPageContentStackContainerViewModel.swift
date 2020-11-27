@@ -14,7 +14,7 @@ class ToolPageContentStackContainerViewModel: ToolPageContentStackContainerViewM
         
     let contentStackRenderer: ToolPageContentStackRenderer
     
-    required init(node: MobileContentXmlNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColorsViewModel, defaultTextNodeTextColor: UIColor?, defaultTextNodeTextAlignment: NSTextAlignment?, defaultButtonBorderColor: UIColor?) {
+    required init(node: MobileContentXmlNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColors, defaultTextNodeTextColor: UIColor?, defaultTextNodeTextAlignment: NSTextAlignment?, defaultButtonBorderColor: UIColor?) {
         
         self.node = node
         self.contentStackRenderer = ToolPageContentStackRenderer(
