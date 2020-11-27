@@ -57,7 +57,7 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
         }
         
         contentViewModel.contentStackRenderer.didRenderContentInputSignal.addObserver(self) { [weak self] (renderedInput: ToolPageRenderedContentInput) in
-            self?.inputViewModels.append(renderedInput.visibleInputViewModel)
+            self?.inputViewModels.append(renderedInput.viewModel)
         }
     }
     
