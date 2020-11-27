@@ -170,11 +170,11 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     }
     
     func cardWillAppear() {
-        mobileContentViewDidAppear()
+        mobileContentDidAppear()
     }
     
     func cardWillDisappear() {
-        mobileContentViewDidDisappear()
+        mobileContentDidDisappear()
     }
 }
 

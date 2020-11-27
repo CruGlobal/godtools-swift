@@ -11,9 +11,20 @@ import SWXMLHash
 
 class HeroNode: MobileContentXmlNode {
         
+    private(set) var analyticsEventsNode: AnalyticsEventsNode?
+    
     required init(xmlElement: XMLElement) {
     
         super.init(xmlElement: xmlElement)
+    }
+    
+    override func addChild(childNode: MobileContentXmlNode) {
+        
+        if let analyticsEventsNode = childNode as? AnalyticsEventsNode {
+            self.analyticsEventsNode = analyticsEventsNode
+        }
+        
+        super.addChild(childNode: childNode)
     }
 }
 

@@ -92,7 +92,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         if let heroNode = pageNode.heroNode {
             
             heroViewModel = ToolPageHeroViewModel(
-                node: heroNode,
+                heroNode: heroNode,
                 diContainer: diContainer,
                 toolPageColors: toolPageColors
             )
@@ -324,11 +324,11 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     }
     
     func pageDidAppear() {
-
+        heroViewModel?.heroDidAppear()
     }
     
     func pageDidDisappear() {
-
+        heroViewModel?.heroDidDisappear()
     }
     
     private func trackCardAnalytics(cardPosition: Int) {

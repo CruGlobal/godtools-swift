@@ -13,14 +13,13 @@ protocol MobileContentViewModel {
     var analyticsEvents: [MobileContentAnalyticsEvent] { get }
     var defaultAnalyticsEventsTrigger: AnalyticsEventNodeTrigger { get }
     
-    func mobileContentViewDidAppear()
-    func mobileContentViewDidDisappear()
+    func mobileContentDidAppear()
+    func mobileContentDidDisappear()
 }
 
 extension MobileContentViewModel {
     
-    
-    func mobileContentViewDidAppear() {
+    func mobileContentDidAppear() {
         
         for event in analyticsEvents {
             let eventTrigger: AnalyticsEventNodeTrigger = event.eventNode.getTrigger()
@@ -30,7 +29,7 @@ extension MobileContentViewModel {
         }
     }
     
-    func mobileContentViewDidDisappear() {
+    func mobileContentDidDisappear() {
         
         for event in analyticsEvents {
             let eventTrigger: AnalyticsEventNodeTrigger = event.eventNode.getTrigger()
