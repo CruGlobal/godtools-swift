@@ -18,9 +18,8 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
     private let defaultTextNodeTextColor: UIColor?
     private let defaultTextNodeTextAlignment: NSTextAlignment
     private let defaultButtonBorderColor: UIColor?
-    
-    private var buttonEvents: [UIButton: ContentButtonNode] = Dictionary()
-    private var linkEvents: [UIButton: ContentLinkNode] = Dictionary()
+    private let buttonEvents: ToolPageContentButtonEvents
+    private let linkEvents: ToolPageContentLinkEvents
     
     private weak var rootContentStackRenderer: ToolPageContentStackRenderer?
         
@@ -38,6 +37,8 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
         self.defaultTextNodeTextColor = defaultTextNodeTextColor
         self.defaultTextNodeTextAlignment = defaultTextNodeTextAlignment ?? (diContainer.language.languageDirection == .leftToRight ? .left : .right)
         self.defaultButtonBorderColor = defaultButtonBorderColor
+        self.buttonEvents = ToolPageContentButtonEvents(mobileContentEvents: diContainer.mobileContentEvents, mobileContentAnalytics: diContainer.mobileContentAnalytics)
+        self.linkEvents = ToolPageContentLinkEvents(mobileContentEvents: diContainer.mobileContentEvents, mobileContentAnalytics: diContainer.mobileContentAnalytics)
     }
     
     deinit {
@@ -45,8 +46,8 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
     }
     
     private func resetForNewRender() {
-        removeAllButtonEvents()
-        removeAllLinkEvents()
+        buttonEvents.removeAllButtonEvents()
+        linkEvents.removeAllLinkEvents()
     }
     
     func render(didRenderView: ((_ renderedView: MobileContentStackRenderedView) -> Void)) {
@@ -133,8 +134,8 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
                 borderColor: defaultButtonBorderColor,
                 titleColor: buttonNode.textNode?.getTextColor()?.color ?? toolPageColors.primaryTextColor
             )
-                          
-            rootContentStackRenderer.addButtonEvent(button: button, buttonNode: buttonNode)
+               
+            rootContentStackRenderer.buttonEvents.addButtonEvent(button: button, buttonNode: buttonNode)
             
             return MobileContentStackRenderedView(view: button, heightConstraintType: .equalToHeight(height: button.frame.size.height))
         }
@@ -150,7 +151,7 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
                 titleColor: linkNode.textNode?.getTextColor()?.color ?? toolPageColors.primaryColor
             )
             
-            rootContentStackRenderer.addLinkEvent(button: button, linkNode: linkNode)
+            rootContentStackRenderer.linkEvents.addLinkEvent(button: button, linkNode: linkNode)
                                     
             return MobileContentStackRenderedView(view: button, heightConstraintType: .equalToHeight(height: button.frame.size.height))
         }
@@ -405,122 +406,5 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
         let view = TrainingTipView(viewModel: viewModel)
         
         return view
-    }
-    
-    // MARK: - Button Events
-    
-    private func removeAllButtonEvents() {
-        
-        let buttons: [UIButton] = Array(buttonEvents.keys)
-        
-        for button in buttons {
-            button.removeTarget(self, action: #selector(handleButtonTapped(button:)), for: .touchUpInside)
-        }
-        
-        buttonEvents.removeAll()
-    }
-    
-    private func addButtonEvent(button: UIButton, buttonNode: ContentButtonNode) {
-        
-        guard buttonEvents[button] == nil else {
-            return
-        }
-        
-        buttonEvents[button] = buttonNode
-        
-        button.addTarget(self, action: #selector(handleButtonTapped(button:)), for: .touchUpInside)
-    }
-    
-    private func removeButtonEvent(button: UIButton) {
-        
-        guard buttonEvents[button] != nil else {
-            return
-        }
-        
-        buttonEvents[button] = nil
-        
-        button.removeTarget(self, action: #selector(handleButtonTapped(button:)), for: .touchUpInside)
-    }
-    
-    @objc func handleButtonTapped(button: UIButton) {
-        
-        guard let buttonNode = buttonEvents[button] else {
-            return
-        }
-        
-        if buttonNode.type == "event" {
-            
-            let followUpSendEventName: String = "followup:send"
-            
-            if buttonNode.events.contains(followUpSendEventName) {
-                var triggerEvents: [String] = buttonNode.events
-                if let index = triggerEvents.firstIndex(of: followUpSendEventName) {
-                    triggerEvents.remove(at: index)
-                }
-                diContainer.mobileContentEvents.followUpEventButtonTapped(followUpEventButton: FollowUpButtonEvent(triggerEventsOnFollowUpSent: triggerEvents))
-            }
-            else {
-                for event in buttonNode.events {
-                    diContainer.mobileContentEvents.eventButtonTapped(eventButton: ButtonEvent(event: event))
-                }
-            }
-        }
-        else if buttonNode.type == "url", let url = buttonNode.url {
-            diContainer.mobileContentEvents.urlButtonTapped(urlButtonEvent: UrlButtonEvent(url: url))
-        }
-        
-        if let analyticsEventsNode = buttonNode.analyticsEventsNode {
-            diContainer.mobileContentAnalytics.trackEvents(events: analyticsEventsNode)
-        }
-    }
-    
-    // MARK: - Link Events
-    
-    private func removeAllLinkEvents() {
-        
-        let linkButtons: [UIButton] = Array(linkEvents.keys)
-        
-        for linkButton in linkButtons {
-            linkButton.removeTarget(self, action: #selector(handleLinkTapped(button:)), for: .touchUpInside)
-        }
-        
-        linkEvents.removeAll()
-    }
-    
-    private func addLinkEvent(button: UIButton, linkNode: ContentLinkNode) {
-        
-        guard linkEvents[button] == nil else {
-            return
-        }
-        
-        linkEvents[button] = linkNode
-        
-        button.addTarget(self, action: #selector(handleLinkTapped(button:)), for: .touchUpInside)
-    }
-    
-    private func removeLinkEvent(button: UIButton) {
-        
-        guard linkEvents[button] != nil else {
-            return
-        }
-        
-        linkEvents[button] = nil
-        
-        button.removeTarget(self, action: #selector(handleLinkTapped(button:)), for: .touchUpInside)
-    }
-    
-    @objc func handleLinkTapped(button: UIButton) {
-        
-        guard let linkNode = linkEvents[button] else {
-            return
-        }
-        
-        for event in linkNode.events {
-            diContainer.mobileContentEvents.eventButtonTapped(eventButton: ButtonEvent(event: event))
-        }
-        
-        if let analyticsEventsNode = linkNode.analyticsEventsNode {
-            diContainer.mobileContentAnalytics.trackEvents(events: analyticsEventsNode)
-        }
     }
 }

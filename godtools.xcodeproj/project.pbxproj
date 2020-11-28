@@ -268,6 +268,8 @@
 		4530DCB924A3E159000DA516 /* AttachmentFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4530DCB824A3E159000DA516 /* AttachmentFile.swift */; };
 		4532111524AA9C0900D07B49 /* InitialDataDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4532111324AA9C0900D07B49 /* InitialDataDownloader.swift */; };
 		4532111624AA9C0900D07B49 /* InitialDeviceResourcesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4532111424AA9C0900D07B49 /* InitialDeviceResourcesLoader.swift */; };
+		4532E5AF2572AEC9006FCDE8 /* ToolPageContentLinkEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4532E5AD2572AEC9006FCDE8 /* ToolPageContentLinkEvents.swift */; };
+		4532E5B02572AEC9006FCDE8 /* ToolPageContentButtonEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4532E5AE2572AEC9006FCDE8 /* ToolPageContentButtonEvents.swift */; };
 		4537455024857B3200F672A1 /* RequestResponse+ResponseResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452036CE24005B2B002B2453 /* RequestResponse+ResponseResult.swift */; };
 		4537455124857B3200F672A1 /* ResponseResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452036CC24005B1E002B2453 /* ResponseResult.swift */; };
 		4539F33324EADA6300B30DF9 /* TractRemoteShareChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4539F33224EADA6300B30DF9 /* TractRemoteShareChannel.swift */; };
@@ -1116,6 +1118,8 @@
 		4530DCB824A3E159000DA516 /* AttachmentFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttachmentFile.swift; sourceTree = "<group>"; };
 		4532111324AA9C0900D07B49 /* InitialDataDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialDataDownloader.swift; sourceTree = "<group>"; };
 		4532111424AA9C0900D07B49 /* InitialDeviceResourcesLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialDeviceResourcesLoader.swift; sourceTree = "<group>"; };
+		4532E5AD2572AEC9006FCDE8 /* ToolPageContentLinkEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageContentLinkEvents.swift; sourceTree = "<group>"; };
+		4532E5AE2572AEC9006FCDE8 /* ToolPageContentButtonEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageContentButtonEvents.swift; sourceTree = "<group>"; };
 		4539F33224EADA6300B30DF9 /* TractRemoteShareChannel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractRemoteShareChannel.swift; sourceTree = "<group>"; };
 		4539F33424EADDBC00B30DF9 /* TractRemoteShareURLBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractRemoteShareURLBuilder.swift; sourceTree = "<group>"; };
 		453A61B7248E802B00DD3C27 /* ResponseErrorAlertMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseErrorAlertMessage.swift; sourceTree = "<group>"; };
@@ -2030,6 +2034,8 @@
 		450F12B6256EB6DC00ED69D4 /* Renderer */ = {
 			isa = PBXGroup;
 			children = (
+				4532E5AE2572AEC9006FCDE8 /* ToolPageContentButtonEvents.swift */,
+				4532E5AD2572AEC9006FCDE8 /* ToolPageContentLinkEvents.swift */,
 				450F12D9256FFCBC00ED69D4 /* ToolPageContentStackRenderer.swift */,
 				450F12CF256FDD2F00ED69D4 /* Models */,
 			);
@@ -4759,6 +4765,7 @@
 				453F1EEE253F864700DA48EA /* ToolTrainingTipsOnboardingViewsService.swift in Sources */,
 				45869EE42453419400733B0C /* HTMLDocument+ResourceUrls.swift in Sources */,
 				451DB1382461DA4200FB14BF /* TractEmailProperties.swift in Sources */,
+				4532E5B02572AEC9006FCDE8 /* ToolPageContentButtonEvents.swift in Sources */,
 				4530DCAD24A3D598000DA516 /* AttachmentsFileCache.swift in Sources */,
 				45E7E1B824AE198100238419 /* DownloadedAttachmentResult.swift in Sources */,
 				457551F524A585F70091652F /* Translation.swift in Sources */,
@@ -4855,6 +4862,7 @@
 				451DB1392461DA4200FB14BF /* TractEmailsProperties.swift in Sources */,
 				4506DEE324B7A78700A1C50B /* AnalyticsRelay.swift in Sources */,
 				45ACBD07247DB0D600514E75 /* ToolsMenuViewModel.swift in Sources */,
+				4532E5AF2572AEC9006FCDE8 /* ToolPageContentLinkEvents.swift in Sources */,
 				45E62FB1246C3C2B006F0CD5 /* TractNavBarAttributes.swift in Sources */,
 				451830EB246DB78F00DDF264 /* TractXmlPageItem.swift in Sources */,
 				45EC83812451E1EA00E8DE48 /* ArticleManifestXmlParser.swift in Sources */,
