@@ -142,7 +142,8 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
                 visibleCardPosition: visibleCardIndex,
                 hiddenCardPosition: nil,
                 numberOfCards: visibleCards.count,
-                toolPageColors: toolPageColors
+                toolPageColors: toolPageColors,
+                isLastPage: isLastPage
             )
             
             visibleCardsViewModels.append(cardViewModel)
@@ -161,7 +162,8 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
                 visibleCardPosition: nil,
                 hiddenCardPosition: hiddenCardIndex,
                 numberOfCards: hiddenCards.count,
-                toolPageColors: toolPageColors
+                toolPageColors: toolPageColors,
+                isLastPage: isLastPage
             )
             
             hiddenCardsViewModels.append(cardViewModel)

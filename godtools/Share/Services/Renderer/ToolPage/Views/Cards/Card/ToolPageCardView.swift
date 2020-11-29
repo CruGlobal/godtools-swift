@@ -130,15 +130,15 @@ class ToolPageCardView: UIView {
         cardPositionLabel.text = viewModel.cardPositionLabel
         cardPositionLabel.textColor = viewModel.cardPositionLabelTextColor
         cardPositionLabel.font = viewModel.cardPositionLabelFont
-        cardPositionLabel.isHidden = viewModel.hidesCardNavigation
+        cardPositionLabel.isHidden = viewModel.hidesCardPositionLabel
         
         previousButton.setTitle(viewModel.previousButtonTitle, for: .normal)
         previousButton.setTitleColor(viewModel.previousButtonTitleColor, for: .normal)
-        previousButton.isHidden = viewModel.hidesCardNavigation
+        previousButton.isHidden = viewModel.hidesPreviousButton
         
         nextButton.setTitle(viewModel.nextButtonTitle, for: .normal)
         nextButton.setTitleColor(viewModel.nextButtonTitleColor, for: .normal)
-        nextButton.isHidden = viewModel.hidesCardNavigation
+        nextButton.isHidden = viewModel.hidesNextButton
         
         let contentStackViewModel: ToolPageContentStackContainerViewModel = viewModel.contentStackViewModel
         

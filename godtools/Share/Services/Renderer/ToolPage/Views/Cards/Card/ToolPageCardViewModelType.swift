@@ -31,13 +31,15 @@ protocol ToolPageCardViewModelType: NSObject {
     var cardPositionLabel: String? { get }
     var cardPositionLabelTextColor: UIColor { get }
     var cardPositionLabelFont: UIFont { get }
+    var hidesCardPositionLabel: Bool { get }
     var previousButtonTitle: String? { get }
     var previousButtonTitleColor: UIColor { get }
     var previousButtonTitleFont: UIFont { get }
+    var hidesPreviousButton: Bool { get }
     var nextButtonTitle: String? { get }
     var nextButtonTitleColor: UIColor { get }
     var nextButtonTitleFont: UIFont { get }
-    var hidesCardNavigation: Bool { get }
+    var hidesNextButton: Bool { get }
     
     func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel
     func headerTapped()

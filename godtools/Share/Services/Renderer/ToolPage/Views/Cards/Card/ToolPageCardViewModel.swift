@@ -17,6 +17,7 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     private let hiddenCardPosition: Int?
     private let numberOfCards: Int
     private let toolPageColors: ToolPageColors
+    private let isLastPage: Bool
     private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
     
     private weak var delegate: ToolPageCardViewModelTypeDelegate?
@@ -24,9 +25,11 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     let hidesHeaderTrainingTip: ObservableValue<Bool> = ObservableValue(value: true)
     let contentStackViewModel: ToolPageContentStackContainerViewModel
     let isHiddenCard: Bool
-    let hidesCardNavigation: Bool
+    let hidesCardPositionLabel: Bool
+    let hidesPreviousButton: Bool
+    let hidesNextButton: Bool
     
-    required init(delegate: ToolPageCardViewModelTypeDelegate, cardNode: CardNode, diContainer: ToolPageDiContainer, cardPosition: Int, visibleCardPosition: Int?, hiddenCardPosition: Int?, numberOfCards: Int, toolPageColors: ToolPageColors) {
+    required init(delegate: ToolPageCardViewModelTypeDelegate, cardNode: CardNode, diContainer: ToolPageDiContainer, cardPosition: Int, visibleCardPosition: Int?, hiddenCardPosition: Int?, numberOfCards: Int, toolPageColors: ToolPageColors, isLastPage: Bool) {
         
         let isHiddenCard: Bool = cardNode.hidden == "true"
         
@@ -38,6 +41,7 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
         self.hiddenCardPosition = hiddenCardPosition
         self.numberOfCards = numberOfCards
         self.toolPageColors = toolPageColors
+        self.isLastPage = isLastPage
         
         contentStackViewModel = ToolPageContentStackContainerViewModel(
             node: cardNode,
@@ -49,7 +53,17 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
         )
         
         self.isHiddenCard = isHiddenCard
-        hidesCardNavigation = isHiddenCard
+        
+        if isHiddenCard {
+            hidesCardPositionLabel = true
+            hidesPreviousButton = true
+            hidesNextButton = true
+        }
+        else {
+            hidesCardPositionLabel = false
+            hidesPreviousButton = false
+            hidesNextButton = isLastPage ? true : false
+        }
         
         if let analyticsEventsNode = cardNode.analyticsEventsNode {
             analyticsEventsObjects = MobileContentAnalyticsEvent.initEvents(eventsNode: analyticsEventsNode, mobileContentAnalytics: diContainer.mobileContentAnalytics)
