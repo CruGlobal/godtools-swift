@@ -164,20 +164,6 @@ class ToolViewModel: NSObject, ToolViewModelType {
         analytics.trackActionAnalytics.trackAction(screenName: "", actionName: "Share Screen Opened", data: ["cru.share_screen_open": 1])
     }
     
-    var backgroundColor: UIColor {
-        let manifestAttributes: MobileContentManifestAttributesType = primaryLanguageTranslationModel.manifest.attributes
-        return manifestAttributes.getNavBarColor()?.color ?? manifestAttributes.getPrimaryColor().color
-    }
-    
-    var isRightToLeftLanguage: Bool {
-        switch primaryLanguageTranslationModel.language.languageDirection {
-        case .leftToRight:
-            return false
-        case .rightToLeft:
-            return true
-        }
-    }
-    
     func viewLoaded() {
         
         _ = viewsService.postNewResourceView(resourceId: resource.id)

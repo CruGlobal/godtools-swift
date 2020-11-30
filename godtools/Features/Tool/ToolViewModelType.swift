@@ -10,8 +10,6 @@ import UIKit
 
 protocol ToolViewModelType {
     
-    var backgroundColor: UIColor { get }
-    var isRightToLeftLanguage: Bool { get }
     var currentPage: ObservableValue<AnimatableValue<Int>> { get }
     var numberOfToolPages: ObservableValue<Int> { get }
     

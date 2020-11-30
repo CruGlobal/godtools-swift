@@ -92,18 +92,12 @@ class ToolView: UIViewController {
     }
     
     private func setupBinding() {
-        
-        setViewBackgroundColor(color: viewModel.backgroundColor)
-                
+                        
         navBarView.configure(parentViewController: self, viewModel: viewModel.navBarWillAppear())
         
         viewModel.numberOfToolPages.addObserver(self) { [weak self] (numberOfToolPages: Int) in
             self?.toolPagesView.reloadData()
         }
-    }
-    
-    private func setViewBackgroundColor(color: UIColor) {
-        view.backgroundColor = .white
     }
 }
 
