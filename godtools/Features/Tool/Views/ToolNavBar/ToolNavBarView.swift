@@ -68,14 +68,17 @@ class ToolNavBarView: NSObject {
             action: #selector(handleHome(barButtonItem:))
         )
         
-        _ = parentViewController.addBarButtonItem(
-            to: .right,
-            index: RightNavbarPosition.shareMenu.rawValue,
-            image: ImageCatalog.navShare.image,
-            color: navBarControlColor,
-            target: self,
-            action: #selector(handleShare(barButtonItem:))
-        )
+        if !viewModel.hidesShareButton {
+            
+            _ = parentViewController.addBarButtonItem(
+                to: .right,
+                index: RightNavbarPosition.shareMenu.rawValue,
+                image: ImageCatalog.navShare.image,
+                color: navBarControlColor,
+                target: self,
+                action: #selector(handleShare(barButtonItem:))
+            )
+        }
         
         if !viewModel.hidesChooseLanguageControl {
                 

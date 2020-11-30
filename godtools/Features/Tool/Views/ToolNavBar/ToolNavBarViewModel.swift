@@ -31,8 +31,9 @@ class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
     let hidesChooseLanguageControl: Bool
     let remoteShareIsActive: ObservableValue<Bool> = ObservableValue(value: false)
     let selectedLanguage: ObservableValue<Int> = ObservableValue(value: 0)
+    let hidesShareButton: Bool
     
-    required init(delegate: ToolNavBarViewModelDelegate, resource: ResourceModel, manifestAttributes: MobileContentManifestAttributesType, languages: [LanguageModel], tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
+    required init(delegate: ToolNavBarViewModelDelegate, resource: ResourceModel, manifestAttributes: MobileContentManifestAttributesType, languages: [LanguageModel], tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, localizationServices: LocalizationServices, analytics: AnalyticsContainer, hidesShareButton: Bool) {
         
         self.delegate = delegate
         self.resource = resource
@@ -41,6 +42,7 @@ class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
         self.tractRemoteShareSubscriber = tractRemoteShareSubscriber
         self.localizationServices = localizationServices
         self.analytics = analytics
+        self.hidesShareButton = hidesShareButton
         
         navBarColor = manifestAttributes.getNavBarColor()?.color ?? manifestAttributes.getPrimaryColor().color
         navBarControlColor = manifestAttributes.getNavBarControlColor()?.color ?? manifestAttributes.getPrimaryTextColor().color

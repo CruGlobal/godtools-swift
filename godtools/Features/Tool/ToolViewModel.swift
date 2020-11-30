@@ -106,7 +106,8 @@ class ToolViewModel: NSObject, ToolViewModelType {
             tractRemoteSharePublisher: tractRemoteSharePublisher,
             tractRemoteShareSubscriber: tractRemoteShareSubscriber,
             localizationServices: localizationServices,
-            analytics: analytics
+            analytics: analytics,
+            hidesShareButton: trainingTipsEnabled
         )
                                                         
         setupBinding()

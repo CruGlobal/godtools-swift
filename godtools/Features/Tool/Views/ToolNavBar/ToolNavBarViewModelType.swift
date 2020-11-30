@@ -18,6 +18,7 @@ protocol ToolNavBarViewModelType {
     var remoteShareIsActive: ObservableValue<Bool> { get }
     var selectedLanguage: ObservableValue<Int> { get }
     var language: LanguageModel { get }
+    var hidesShareButton: Bool { get }
     
     func navHomeTapped()
     func shareTapped()
