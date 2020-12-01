@@ -12,6 +12,8 @@ class CardJumpService {
     
     private let cardJumpCache: CardJumpUserDefaultsCache
     
+    let didSaveCardJumpShownSignal: Signal = Signal()
+    
     required init(cardJumpCache: CardJumpUserDefaultsCache) {
         
         self.cardJumpCache = cardJumpCache
@@ -24,6 +26,7 @@ class CardJumpService {
     func saveDidShowCardJump() {
         if !didShowCardJump {
             cardJumpCache.cacheDidShowCardJump()
+            didSaveCardJumpShownSignal.accept()
         }
     }
 }

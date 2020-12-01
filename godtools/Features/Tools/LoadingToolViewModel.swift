@@ -104,7 +104,7 @@ class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
         )
         
         let translationIds: [String] = translations.map({$0.id})
-        let downloadReceipt: DownloadTranslationsReceipt? = translationDownloader.downloadTranslations(translationIds: translationIds)
+        let downloadReceipt: DownloadTranslationsReceipt? = translationDownloader.downloadAndCacheTranslationManifests(translationIds: translationIds)
         
         guard let receipt = downloadReceipt else {
             handleProgressTimerAndDownloadRequestCompleted()

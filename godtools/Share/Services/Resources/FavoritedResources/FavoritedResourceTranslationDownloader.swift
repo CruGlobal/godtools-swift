@@ -90,6 +90,6 @@ class FavoritedResourceTranslationDownloader: NSObject {
             return nil
         }
         
-        return translationDownloader.downloadTranslations(realm: realm, translationIds: translationIdsToDownload)
+        return translationDownloader.downloadAndCacheTranslationManifests(realm: realm, translationIds: translationIdsToDownload)
     }
 }

@@ -76,6 +76,6 @@ class LanguageTranslationsDownloader: NSObject {
             }
         }
         
-        _ = translationDownloader.downloadTranslations(realm: realm, translationIds: translationIdsToDownload)
+        _ = translationDownloader.downloadAndCacheTranslationManifests(realm: realm, translationIds: translationIdsToDownload)
     }
 }

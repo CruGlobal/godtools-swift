@@ -9,28 +9,101 @@
 import Foundation
 import RealmSwift
 
-class TranslationDownloader {
+class TranslationDownloader: NSObject {
     
     typealias TranslationId = String
     
     private let realmDatabase: RealmDatabase
+    private let resourcesCache: ResourcesCache
     private let translationsApi: TranslationsApiType
         
     let translationsFileCache: TranslationsFileCache
     
-    required init(realmDatabase: RealmDatabase, translationsApi: TranslationsApiType, translationsFileCache: TranslationsFileCache) {
+    required init(realmDatabase: RealmDatabase, resourcesCache: ResourcesCache, translationsApi: TranslationsApiType, translationsFileCache: TranslationsFileCache) {
         
         self.realmDatabase = realmDatabase
+        self.resourcesCache = resourcesCache
         self.translationsApi = translationsApi
         self.translationsFileCache = translationsFileCache
-    }
-    
-    func downloadTranslations(translationIds: [String]) -> DownloadTranslationsReceipt? {
         
-        return downloadTranslations(realm: realmDatabase.mainThreadRealm, translationIds: translationIds)
+        super.init()
     }
     
-    func downloadTranslations(realm: Realm, translationIds: [String]) -> DownloadTranslationsReceipt? {
+    func fetchTranslationManifestAndDownloadIfNeeded(resourceId: String, languageId: String, cache: @escaping ((_ translationManifest: TranslationManifestData) -> Void), downloadStarted: @escaping (() -> Void), downloadComplete: @escaping ((_ result: Result<TranslationManifestData, TranslationDownloaderError>) -> Void)) {
+        
+        let translation: TranslationModel? = resourcesCache.getResourceLanguageTranslation(
+            resourceId: resourceId,
+            languageId: languageId
+        )
+        
+        if let translation = translation {
+            fetchTranslationManifestAndDownloadIfNeeded(
+                translationId: translation.id,
+                cache: cache,
+                downloadStarted: downloadStarted,
+                downloadComplete: downloadComplete
+            )
+        }
+        else {
+            downloadComplete(.failure(.noTranslationZipData(missingTranslationZipData: NoTranslationZipData(translationId: translation?.id ?? ""))))
+        }
+    }
+    
+    func fetchTranslationManifestAndDownloadIfNeeded(translationId: String, cache: @escaping ((_ translationManifest: TranslationManifestData) -> Void), downloadStarted: @escaping (() -> Void), downloadComplete: @escaping ((_ result: Result<TranslationManifestData, TranslationDownloaderError>) -> Void)) {
+        
+        let cachedResult: Result<TranslationManifestData, TranslationsFileCacheError> = translationsFileCache.getTranslationManifestOnMainThread(
+            translationId: translationId
+        )
+                
+        switch cachedResult {
+        
+        case .success(let manifestData):
+            
+            cache(manifestData)
+        
+        case .failure( _):
+            
+            downloadStarted()
+            
+            let receipt: DownloadTranslationsReceipt? = downloadAndCacheTranslationManifests(translationIds: [translationId])
+            
+            receipt?.translationDownloadedSignal.addObserver(self, onObserve: { [weak self] (translationResult: DownloadedTranslationResult) in
+                
+                guard let downloader = self else {
+                    return
+                }
+                
+                receipt?.translationDownloadedSignal.removeObserver(downloader)
+                
+                DispatchQueue.main.async {
+                    
+                    if let downloadError = translationResult.downloadError {
+                        downloadComplete(.failure(downloadError))
+                    }
+                    else {
+                        
+                        let cachedResult: Result<TranslationManifestData, TranslationsFileCacheError> = downloader.translationsFileCache.getTranslationManifestOnMainThread(
+                            translationId: translationId
+                        )
+                                            
+                        switch cachedResult {
+                        case .success(let manifestData):
+                            downloadComplete(.success(manifestData))
+                        case .failure( _):
+                            downloadComplete(.failure(.noTranslationZipData(missingTranslationZipData: NoTranslationZipData(translationId: translationId))))
+                        }
+                    }
+                }
+            })
+        }
+    }
+    
+    func downloadAndCacheTranslationManifests(translationIds: [String]) -> DownloadTranslationsReceipt? {
+        
+        return downloadAndCacheTranslationManifests(realm: realmDatabase.mainThreadRealm, translationIds: translationIds)
+    }
+    
+    func downloadAndCacheTranslationManifests(realm: Realm, translationIds: [String]) -> DownloadTranslationsReceipt? {
         
         guard !translationIds.isEmpty else {
             return nil

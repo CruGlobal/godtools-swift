@@ -9,8 +9,6 @@
 import UIKit
 import MessageUI
 
-import RealmSwift
-
 class AppFlow: NSObject, FlowDelegate {
     
     private let dataDownloader: InitialDataDownloader
@@ -112,6 +110,7 @@ class AppFlow: NSObject, FlowDelegate {
                                 primaryLanguage: primaryLanguage,
                                 parallelLanguage: parallelLanguage,
                                 liveShareStream: liveShareStream,
+                                trainingTipsEnabled: false,
                                 page: page
                             )
                         }
@@ -218,7 +217,7 @@ class AppFlow: NSObject, FlowDelegate {
             
             self.languageSettingsFlow = languageSettingsFlow
                    
-        case .homeTappedFromTract(let isScreenSharing):
+        case .homeTappedFromTool(let isScreenSharing):
             
             if isScreenSharing {
                 
@@ -243,50 +242,6 @@ class AppFlow: NSObject, FlowDelegate {
             else {
                 
                 closeTract()
-            }
-            
-        case .sendEmailTappedFromTract(let subject, let message, let isHtml):
-            
-            if MFMailComposeViewController.canSendMail() {
-                
-                let finishedSendingMail = CallbackHandler { [weak self] in
-                    self?.navigationController.dismiss(animated: true, completion: nil)
-                }
-                
-                let viewModel = MailViewModel(
-                    toRecipients: [],
-                    subject: subject,
-                    message: message,
-                    isHtml: isHtml,
-                    finishedSendingMailHandler: finishedSendingMail
-                )
-                
-                let view = MailView(viewModel: viewModel)
-                
-                navigationController.present(view, animated: true, completion: nil)
-            }
-            else {
-                
-                let handler = CallbackHandler { [weak self] in
-                    self?.navigationController.dismiss(animated: true, completion: nil)
-                }
-                
-                let localizationServices: LocalizationServices = appDiContainer.localizationServices
-                let title: String = "GodTools"
-                let message: String = localizationServices.stringForMainBundle(key: "error_can_not_send_email")
-                let acceptedTitle: String = localizationServices.stringForMainBundle(key: "ok")
-                
-                let viewModel = AlertMessageViewModel(
-                    title: title,
-                    message: message,
-                    cancelTitle: nil,
-                    acceptTitle: acceptedTitle,
-                    acceptHandler: handler
-                )
-                
-                let view = AlertMessageView(viewModel: viewModel)
-                
-                navigationController.present(view.controller, animated: true, completion: nil)
             }
             
         default:
