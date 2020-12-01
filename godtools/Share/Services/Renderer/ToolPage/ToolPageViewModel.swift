@@ -77,11 +77,14 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
             
             headerTrainingTipViewModel = TrainingTipViewModel(
                 trainingTipId: trainingTipId,
+                resource: diContainer.resource,
+                language: diContainer.language,
                 manifest: diContainer.manifest,
                 translationsFileCache: diContainer.translationsFileCache,
                 mobileContentNodeParser: diContainer.mobileContentNodeParser,
                 mobileContentEvents: diContainer.mobileContentEvents,
-                viewType: .upArrow
+                viewType: .upArrow,
+                viewedTrainingTips: diContainer.viewedTrainingTips
             )
         }
         else {

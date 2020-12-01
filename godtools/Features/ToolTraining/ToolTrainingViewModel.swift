@@ -10,6 +10,7 @@ import UIKit
 
 class ToolTrainingViewModel: ToolTrainingViewModelType {
     
+    private let resource: ResourceModel
     private let language: LanguageModel
     private let trainingTipId: String
     private let tipNode: TipNode
@@ -23,6 +24,7 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
     private let followUpsService: FollowUpsService
     private let localizationServices: LocalizationServices
     private let cardJumpService: CardJumpService
+    private let viewedTrainingTips: ViewedTrainingTipsService
     
     private var pageNodes: [PageNode] = Array()
     private var page: Int = 0
@@ -36,9 +38,10 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
     let continueButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     let numberOfTipPages: ObservableValue<Int> = ObservableValue(value: 0)
     
-    required init(flowDelegate: FlowDelegate, language: LanguageModel, trainingTipId: String, tipNode: TipNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, analytics: AnalyticsContainer, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, cardJumpService: CardJumpService) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageModel, trainingTipId: String, tipNode: TipNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, analytics: AnalyticsContainer, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, viewedTrainingTips: ViewedTrainingTipsService) {
         
         self.flowDelegate = flowDelegate
+        self.resource = resource
         self.language = language
         self.trainingTipId = trainingTipId
         self.tipNode = tipNode
@@ -52,13 +55,17 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
         self.followUpsService = followUpsService
         self.localizationServices = localizationServices
         self.cardJumpService = cardJumpService
+        self.viewedTrainingTips = viewedTrainingTips
         
         let pageNodes: [PageNode] = tipNode.pages?.pages ?? []
         self.pageNodes = pageNodes
         numberOfTipPages.accept(value: pageNodes.count)
         setPage(page: 0, animated: false)
         
-        reloadTitleAndTipIcon(tipNode: tipNode)
+        reloadTitleAndTipIcon(
+            tipNode: tipNode,
+            trainingTipViewed: viewedTrainingTips.containsViewedTrainingTip(viewedTrainingTip: ViewedTrainingTip(trainingTipId: trainingTipId, resourceId: resource.id, languageId: language.id))
+        )
     }
     
     private func setPage(page: Int, animated: Bool) {
@@ -80,38 +87,42 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
         }
     }
     
-    private func reloadTitleAndTipIcon(tipNode: TipNode) {
+    private func reloadTitleAndTipIcon(tipNode: TipNode, trainingTipViewed: Bool) {
         
         if let tipTypeValue = tipNode.tipType, let trainingTipType = TrainingTipType(rawValue: tipTypeValue) {
-            
-            trainingTipBackgroundImage.accept(value: UIImage(named: "training_tip_red_square_bg"))
-            
+        
+            let tipBackgroundImageName: String = trainingTipViewed ? "training_tip_red_square_bg" : "training_tip_square_bg"
             let tipImageName: String
             let localizedTipTitle: String
             
             switch trainingTipType {
             case .ask:
-                tipImageName = "training_tip_ask_filled_red"
+                tipImageName = trainingTipViewed ? "training_tip_ask_filled_red" : "training_tip_ask"
                 localizedTipTitle = "training_tip_ask"
             case .consider:
-                tipImageName = "training_tip_consider_filled_red"
+                tipImageName = trainingTipViewed ? "training_tip_consider_filled_red" : "training_tip_consider"
                 localizedTipTitle = "training_tip_consider"
             case .prepare:
-                tipImageName = "training_tip_prepare_filled_red"
+                tipImageName = trainingTipViewed ? "training_tip_prepare_filled_red" : "training_tip_prepare"
                 localizedTipTitle = "training_tip_prepare"
             case .quote:
-                tipImageName = "training_tip_quote_filled_red"
+                tipImageName = trainingTipViewed ? "training_tip_quote_filled_red" : "training_tip_quote"
                 localizedTipTitle = "training_tip_quote"
             case .tip:
-                tipImageName = "training_tip_tip_filled_red"
+                tipImageName = trainingTipViewed ? "training_tip_tip_filled_red" : "training_tip_tip"
                 localizedTipTitle = "training_tip_tip"
             }
             
             let tipTitle: String = localizationServices.stringForMainBundle(key: localizedTipTitle)
             
+            trainingTipBackgroundImage.accept(value: UIImage(named: tipBackgroundImageName))
             trainingTipForegroundImage.accept(value: UIImage(named: tipImageName))
             title.accept(value: tipTitle)
         }
+    }
+    
+    func viewLoaded() {
+        viewedTrainingTips.storeViewedTrainingTip(viewedTrainingTip: ViewedTrainingTip(trainingTipId: trainingTipId, resourceId: resource.id, languageId: language.id))
     }
     
     func overlayTapped() {
@@ -138,6 +149,7 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
         
         let toolPageDiContainer = ToolPageDiContainer(
             manifest: manifest,
+            resource: resource,
             language: language,
             translationsFileCache: translationsFileCache,
             mobileContentNodeParser: mobileContentNodeParser,
@@ -148,6 +160,7 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
             followUpsService: followUpsService,
             localizationServices: localizationServices,
             cardJumpService: cardJumpService,
+            viewedTrainingTips: viewedTrainingTips,
             trainingTipsEnabled: true
         )
         

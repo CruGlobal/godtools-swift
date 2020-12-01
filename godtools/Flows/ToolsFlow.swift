@@ -171,10 +171,11 @@ class ToolsFlow: Flow {
             
             navigationController.present(view.controller, animated: true, completion: nil)
             
-        case .toolTrainingTipTappedFromTool(let manifest, let trainingTipId, let tipNode, let language):
+        case .toolTrainingTipTappedFromTool(let resource, let manifest, let trainingTipId, let tipNode, let language):
             
             let viewModel = ToolTrainingViewModel(
                 flowDelegate: self,
+                resource: resource,
                 language: language,
                 trainingTipId: trainingTipId,
                 tipNode: tipNode,
@@ -187,7 +188,8 @@ class ToolsFlow: Flow {
                 fontService: appDiContainer.getFontService(),
                 followUpsService: appDiContainer.followUpsService,
                 localizationServices: appDiContainer.localizationServices,
-                cardJumpService: appDiContainer.getCardJumpService()
+                cardJumpService: appDiContainer.getCardJumpService(),
+                viewedTrainingTips: appDiContainer.getViewedTrainingTipsService()
             )
             
             let view = ToolTrainingView(viewModel: viewModel)
@@ -602,6 +604,7 @@ class ToolsFlow: Flow {
             analytics: appDiContainer.analytics,
             toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics,
             liveShareStream: liveShareStream,
+            viewedTrainingTips: appDiContainer.getViewedTrainingTipsService(),
             trainingTipsEnabled: trainingTipsEnabled,
             page: page
         )

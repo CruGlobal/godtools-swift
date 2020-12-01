@@ -61,6 +61,8 @@ class ToolTrainingView: UIViewController {
         setupLayout()
         setupBinding()
         
+        viewModel.viewLoaded()
+        
         tipPagesNavigationView.delegate = self
         
         overlayButton.addTarget(self, action: #selector(handleOverlay(button:)), for: .touchUpInside)

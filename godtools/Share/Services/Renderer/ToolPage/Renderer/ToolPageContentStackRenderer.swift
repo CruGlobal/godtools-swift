@@ -396,11 +396,14 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
         
         let viewModel = TrainingTipViewModel(
             trainingTipId: trainingTipId,
+            resource: diContainer.resource,
+            language: diContainer.language,
             manifest: diContainer.manifest,
             translationsFileCache: diContainer.translationsFileCache,
             mobileContentNodeParser: diContainer.mobileContentNodeParser,
             mobileContentEvents: diContainer.mobileContentEvents,
-            viewType: .rounded
+            viewType: .rounded,
+            viewedTrainingTips: diContainer.viewedTrainingTips
         )
         
         let view = TrainingTipView(viewModel: viewModel)
