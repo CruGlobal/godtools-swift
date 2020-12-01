@@ -234,3 +234,10 @@ The app can be downloaded from https://godtoolsapp.com";
 "learn_to_share_tool.tips_light_the_way.message" = "On select screens of this training, you'll see one of the icons above. Press the icon to reveal a tip that will help you talk about the content of the screen. If a screen has no icon, then the tip is to just read through the content and discuss as needed.";
 "learn_to_share_tool.light_up_the_tips.title" = "Light up the tips";
 "learn_to_share_tool.light_up_the_tips.message" = "When a tip lights up, you’ve completed that piece of training. Practice using as many tips as you need to feel confident explaining the tool.";
+
+// Training Tips
+"training_tip_ask" = "Ask";
+"training_tip_consider" = "Consider";
+"training_tip_prepare" = "Prepare";
+"training_tip_quote" = "Quote";
+"training_tip_tip" = "Tip";

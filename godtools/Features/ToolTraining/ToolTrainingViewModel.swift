@@ -87,25 +87,27 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
             trainingTipBackgroundImage.accept(value: UIImage(named: "training_tip_red_square_bg"))
             
             let tipImageName: String
-            let tipTitle: String
+            let localizedTipTitle: String
             
             switch trainingTipType {
             case .ask:
                 tipImageName = "training_tip_ask_filled_red"
-                tipTitle = "Ask"
+                localizedTipTitle = "training_tip_ask"
             case .consider:
                 tipImageName = "training_tip_consider_filled_red"
-                tipTitle = "Consider"
+                localizedTipTitle = "training_tip_consider"
             case .prepare:
                 tipImageName = "training_tip_prepare_filled_red"
-                tipTitle = "Prepare"
+                localizedTipTitle = "training_tip_prepare"
             case .quote:
                 tipImageName = "training_tip_quote_filled_red"
-                tipTitle = "Quote"
+                localizedTipTitle = "training_tip_quote"
             case .tip:
                 tipImageName = "training_tip_tip_filled_red"
-                tipTitle = "Tip"
+                localizedTipTitle = "training_tip_tip"
             }
+            
+            let tipTitle: String = localizationServices.stringForMainBundle(key: localizedTipTitle)
             
             trainingTipForegroundImage.accept(value: UIImage(named: tipImageName))
             title.accept(value: tipTitle)
