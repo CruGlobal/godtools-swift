@@ -299,7 +299,7 @@ class AppDiContainer {
     }
     
     var learnToShareToolItemsProvider: LearnToShareToolItemsProviderType {
-        return InMemoryLearnToShareToolItems()
+        return InMemoryLearnToShareToolItems(localization: localizationServices)
     }
     
     var tutorialItemsProvider: TutorialItemProviderType {
