@@ -11,12 +11,14 @@ import Foundation
 class LearnToShareToolCellViewModel: LearnToShareToolCellViewModelType {
     
     let imageName: String?
+    let animationName: String?
     let title: String
     let message: String
     
     required init(learnToShareToolItem: LearnToShareToolItem) {
         
         imageName = learnToShareToolItem.imageName
+        animationName = learnToShareToolItem.animationName
         title = learnToShareToolItem.title
         message = learnToShareToolItem.message
     }

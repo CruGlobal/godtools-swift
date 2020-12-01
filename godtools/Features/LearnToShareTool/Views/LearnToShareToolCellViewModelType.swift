@@ -11,6 +11,7 @@ import Foundation
 protocol LearnToShareToolCellViewModelType {
     
     var imageName: String? { get }
+    var animationName: String? { get }
     var title: String { get }
     var message: String { get }
 }

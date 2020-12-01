@@ -11,6 +11,7 @@ import Foundation
 struct LearnToShareToolItem {
     
     let imageName: String?
+    let animationName: String?
     let title: String
     let message: String
 }
