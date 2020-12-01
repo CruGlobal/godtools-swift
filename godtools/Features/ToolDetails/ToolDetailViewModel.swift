@@ -16,6 +16,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
+    private let translationDownloader: TranslationDownloader
     private let analytics: AnalyticsContainer
     private let exitLinkAnalytics: ExitLinkAnalytics
     
@@ -34,12 +35,14 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     let favoriteTitle: ObservableValue<String> = ObservableValue(value: "")
     let hidesUnfavoriteButton: ObservableValue<Bool> = ObservableValue(value: true)
     let hidesFavoriteButton: ObservableValue<Bool> = ObservableValue(value: false)
+    let learnToShareToolTitle: ObservableValue<String> = ObservableValue(value: "")
+    let hidesLearnToShareToolButton: ObservableValue<Bool> = ObservableValue(value: true)
     let toolDetailsControls: ObservableValue<[ToolDetailControl]> = ObservableValue(value: [])
     let selectedDetailControl: ObservableValue<ToolDetailControl?> = ObservableValue(value: nil)
     let aboutDetails: ObservableValue<String> = ObservableValue(value: "")
     let languageDetails: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, exitLinkAnalytics: ExitLinkAnalytics) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, translationDownloader: TranslationDownloader, analytics: AnalyticsContainer, exitLinkAnalytics: ExitLinkAnalytics) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -47,6 +50,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         self.favoritedResourcesCache = favoritedResourcesCache
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
+        self.translationDownloader = translationDownloader
         self.analytics = analytics
         self.exitLinkAnalytics = exitLinkAnalytics
                 
@@ -64,6 +68,8 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         
         let toolDetailImage: UIImage? = dataDownloader.attachmentsFileCache.getAttachmentBanner(attachmentId: resource.attrBannerAbout)
         bannerImage.accept(value: toolDetailImage)
+        
+        downloadResourceTranslation()
         
         reloadFavorited()
         reloadToolDetails()
@@ -179,6 +185,45 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         return ""
     }
     
+    private func downloadResourceTranslation() {
+        
+        let translationDownloader: TranslationDownloader = self.translationDownloader
+        
+        let resourceId: String = resource.id
+        let languageId: String = languageSettingsService.primaryLanguage.value?.id ?? ""
+        
+        translationDownloader.fetchTranslationManifestAndDownloadIfNeeded(
+            resourceId: resourceId,
+            languageId: languageId,
+            cache: { [weak self] (translationManifest: TranslationManifestData) in
+                self?.handleTranslationManifestDownloaded(result: .success(translationManifest))
+        },
+            downloadStarted: {
+                // download started
+        }, downloadComplete: { [weak self] (result: Result<TranslationManifestData, TranslationDownloaderError>) in
+            self?.handleTranslationManifestDownloaded(result: result)
+        })
+    }
+    
+    private func handleTranslationManifestDownloaded(result: Result<TranslationManifestData, TranslationDownloaderError>) {
+        
+        let hidesLearnToShareButton: Bool
+        
+        switch result {
+        
+        case .success(let translationManifest):
+            
+            let manifest: MobileContentXmlManifest = MobileContentXmlManifest(translationManifest: translationManifest)
+            
+            hidesLearnToShareButton = manifest.tips.isEmpty
+            
+        case .failure(let error):
+            hidesLearnToShareButton = true
+        }
+        
+        hidesLearnToShareToolButton.accept(value: hidesLearnToShareButton)
+    }
+    
     func pageViewed() {
         
         analytics.pageViewedAnalytics.trackPageView(screenName: analyticsScreenName, siteSection: siteSection, siteSubSection: siteSubSection)
@@ -196,6 +241,10 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     
     func unfavoriteTapped() {
         favoritedResourcesCache.removeFromFavorites(resourceId: resource.id)
+    }
+    
+    func learnToShareToolTapped() {
+        flowDelegate?.navigate(step: .learnToShareToolTappedFromToolDetails(resource: resource))
     }
     
     func detailControlTapped(detailControl: ToolDetailControl) {

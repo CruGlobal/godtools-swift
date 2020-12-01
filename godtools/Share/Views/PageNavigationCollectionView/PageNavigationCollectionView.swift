@@ -53,6 +53,7 @@ class PageNavigationCollectionView: UIView, NibBased {
         collectionView.isScrollEnabled = true
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
+        collectionView.contentInset = .zero
     }
     
     override func layoutSubviews() {

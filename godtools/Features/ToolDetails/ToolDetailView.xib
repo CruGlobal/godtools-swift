@@ -32,6 +32,8 @@
                 <outlet property="favoriteButton" destination="Fcg-c5-BEe" id="z65-oZ-jal"/>
                 <outlet property="languageDetailsTextView" destination="jfi-f9-xPg" id="rS4-Eb-OBP"/>
                 <outlet property="languageDetailsTextViewLeading" destination="chB-Z5-euc" id="leb-Mu-tFC"/>
+                <outlet property="learnToShareToolButton" destination="bxH-x1-TPV" id="4BQ-iY-JDf"/>
+                <outlet property="learnToShareToolButtonTop" destination="ZKW-R9-CJc" id="bvD-Fj-178"/>
                 <outlet property="nameLabel" destination="4yT-fU-eB8" id="R3a-zw-HHR"/>
                 <outlet property="openToolButton" destination="So6-Cj-qdp" id="lFQ-Pw-FPf"/>
                 <outlet property="scrollView" destination="5dK-hz-acy" id="dqH-vs-1wr"/>
@@ -114,10 +116,10 @@
                     <rect key="frame" x="0.0" y="286" width="414" height="610"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DYc-AD-3c6" userLabel="contentView">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="540.5"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="611.5"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aoj-58-Xtm" userLabel="detailsView">
-                                    <rect key="frame" x="0.0" y="332.5" width="414" height="208"/>
+                                    <rect key="frame" x="0.0" y="403.5" width="414" height="208"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yVd-Gz-A8r" userLabel="detailsLabelsView">
                                             <rect key="frame" x="40" y="44" width="334" height="120"/>
@@ -158,15 +160,15 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7SW-QC-dbO" userLabel="detailsShadow">
-                                    <rect key="frame" x="0.0" y="288.5" width="414" height="44"/>
+                                    <rect key="frame" x="0.0" y="359.5" width="414" height="44"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d8D-pv-wIq" userLabel="clipTopDetailsShadow">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="288.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="359.5"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="USz-Dm-Yeg" userLabel="detailsControl" customClass="GTSegmentedControl" customModule="godtools" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="288.5" width="414" height="44"/>
+                                    <rect key="frame" x="0.0" y="359.5" width="414" height="44"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="44" id="hCv-Qw-Rgm"/>
@@ -227,6 +229,15 @@
                                         <color key="titleColor" red="0.23137254900000001" green="0.64313725489999995" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>
                                 </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bxH-x1-TPV" userLabel="learnToShareToolButton">
+                                    <rect key="frame" x="40" y="264.5" width="334" height="55"/>
+                                    <color key="backgroundColor" red="0.23137254901960785" green="0.64313725490196072" blue="0.85882352941176465" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="55" id="Lq4-uZ-D1S"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
+                                    <state key="normal" title="Learn To Share This Tool"/>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
@@ -237,6 +248,7 @@
                                 <constraint firstItem="UBH-gg-xA6" firstAttribute="trailing" secondItem="Fcg-c5-BEe" secondAttribute="trailing" id="AHr-FV-m5l"/>
                                 <constraint firstItem="4yT-fU-eB8" firstAttribute="leading" secondItem="DYc-AD-3c6" secondAttribute="leading" constant="40" id="AXG-Mv-2BL"/>
                                 <constraint firstItem="6uD-7a-LcV" firstAttribute="trailing" secondItem="4yT-fU-eB8" secondAttribute="trailing" id="AZE-BL-w54"/>
+                                <constraint firstItem="bxH-x1-TPV" firstAttribute="trailing" secondItem="4yT-fU-eB8" secondAttribute="trailing" id="DZR-1A-mwy"/>
                                 <constraint firstItem="7SW-QC-dbO" firstAttribute="top" secondItem="USz-Dm-Yeg" secondAttribute="top" id="EOq-36-pCH"/>
                                 <constraint firstItem="7SW-QC-dbO" firstAttribute="bottom" secondItem="USz-Dm-Yeg" secondAttribute="bottom" id="Fwb-a5-gxJ"/>
                                 <constraint firstItem="7SW-QC-dbO" firstAttribute="top" secondItem="d8D-pv-wIq" secondAttribute="bottom" id="GSG-Dn-rLV"/>
@@ -244,6 +256,7 @@
                                 <constraint firstItem="UBH-gg-xA6" firstAttribute="top" secondItem="Fcg-c5-BEe" secondAttribute="top" id="Gk2-CZ-1DG"/>
                                 <constraint firstItem="7SW-QC-dbO" firstAttribute="leading" secondItem="USz-Dm-Yeg" secondAttribute="leading" id="HPi-vk-JUc"/>
                                 <constraint firstItem="USz-Dm-Yeg" firstAttribute="leading" secondItem="DYc-AD-3c6" secondAttribute="leading" id="Ita-T7-TAK"/>
+                                <constraint firstItem="bxH-x1-TPV" firstAttribute="leading" secondItem="So6-Cj-qdp" secondAttribute="leading" id="Jyj-Rf-g9c"/>
                                 <constraint firstAttribute="trailing" secondItem="d8D-pv-wIq" secondAttribute="trailing" id="KHm-2a-BaZ"/>
                                 <constraint firstItem="aoj-58-Xtm" firstAttribute="leading" secondItem="DYc-AD-3c6" secondAttribute="leading" id="M5h-1G-luV"/>
                                 <constraint firstAttribute="trailing" secondItem="aoj-58-Xtm" secondAttribute="trailing" id="MmW-9x-LWl"/>
@@ -254,11 +267,12 @@
                                 <constraint firstItem="yVd-Gz-A8r" firstAttribute="leading" secondItem="4yT-fU-eB8" secondAttribute="leading" id="SHR-n5-wk1"/>
                                 <constraint firstItem="6uD-7a-LcV" firstAttribute="top" secondItem="4yT-fU-eB8" secondAttribute="bottom" constant="10" id="TsR-ht-jDE"/>
                                 <constraint firstItem="d8D-pv-wIq" firstAttribute="top" secondItem="DYc-AD-3c6" secondAttribute="top" id="ZHT-gc-XfC"/>
+                                <constraint firstItem="bxH-x1-TPV" firstAttribute="top" secondItem="Fcg-c5-BEe" secondAttribute="bottom" constant="16" id="ZKW-R9-CJc"/>
                                 <constraint firstItem="6uD-7a-LcV" firstAttribute="leading" secondItem="4yT-fU-eB8" secondAttribute="leading" id="b1c-5d-LHW"/>
+                                <constraint firstItem="USz-Dm-Yeg" firstAttribute="top" secondItem="bxH-x1-TPV" secondAttribute="bottom" constant="40" id="bkC-do-kcc"/>
                                 <constraint firstAttribute="trailing" secondItem="USz-Dm-Yeg" secondAttribute="trailing" id="doY-w3-6uf"/>
                                 <constraint firstItem="So6-Cj-qdp" firstAttribute="leading" secondItem="4yT-fU-eB8" secondAttribute="leading" id="fke-KC-FHE"/>
                                 <constraint firstItem="Fcg-c5-BEe" firstAttribute="trailing" secondItem="So6-Cj-qdp" secondAttribute="trailing" id="ghV-m9-rT5"/>
-                                <constraint firstItem="USz-Dm-Yeg" firstAttribute="top" secondItem="Fcg-c5-BEe" secondAttribute="bottom" constant="40" id="kBB-DC-0s0"/>
                                 <constraint firstItem="sgo-TD-B6f" firstAttribute="top" secondItem="DYc-AD-3c6" secondAttribute="top" id="lC4-aU-4fZ"/>
                                 <constraint firstItem="aoj-58-Xtm" firstAttribute="top" secondItem="USz-Dm-Yeg" secondAttribute="bottom" id="mXn-yn-H11"/>
                                 <constraint firstItem="So6-Cj-qdp" firstAttribute="trailing" secondItem="4yT-fU-eB8" secondAttribute="trailing" id="n2J-eo-5Xu"/>

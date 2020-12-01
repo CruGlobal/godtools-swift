@@ -126,7 +126,12 @@ class MenuViewModel: NSObject, MenuViewModelType {
                     title: config.versionLabel
                 )
                 
-                items = [versionMenuItem]
+                if config.isDebug {
+                    items = [versionMenuItem, menuDataProvider.getMenuItem(id: .playground)]
+                }
+                else {
+                    items = [versionMenuItem]
+                }
             }
             
             itemsDictionary[section.id] = items
@@ -213,5 +218,9 @@ class MenuViewModel: NSObject, MenuViewModelType {
     
     func copyrightInfoTapped() {
         flowDelegate?.navigate(step: .copyrightInfoTappedFromMenu)
+    }
+    
+    func playgroundTapped() {
+        flowDelegate?.navigate(step: .playgroundTappedFromMenu)
     }
 }

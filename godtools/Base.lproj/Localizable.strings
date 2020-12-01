@@ -104,6 +104,8 @@ The app can be downloaded from https://godtoolsapp.com";
 "add_to_favorites" = "Add to Favorites";
 "remove_from_favorites" = "Remove from Favorites";
 "share_link" = "Share link";
+"start_training" = "Start Training";
+"close" = "Close";
 
 // Alerts
 "error" = "Error";
@@ -224,3 +226,18 @@ The app can be downloaded from https://godtoolsapp.com";
 
 // Loading Tool Remote Share Session
 "load_tool_remote_session.message" = "Starting Screen Sharing...";
+
+// Learn To Share Tool
+"learn_to_share_tool.learn_to_share.title" = "Learn to share this tool with anyone.";
+"learn_to_share_tool.learn_to_share.message" = "This tool helps guide a conversation about how someone begins a relationship with God.  Practice sharing the content using the tips provided, so you feel ready to talk to someone else.";
+"learn_to_share_tool.tips_light_the_way.title" = "Tips to light the way";
+"learn_to_share_tool.tips_light_the_way.message" = "On select screens of this training, you'll see one of the icons above. Press the icon to reveal a tip that will help you talk about the content of the screen. If a screen has no icon, then the tip is to just read through the content and discuss as needed.";
+"learn_to_share_tool.light_up_the_tips.title" = "Light up the tips";
+"learn_to_share_tool.light_up_the_tips.message" = "When a tip lights up, you’ve completed that piece of training. Practice using as many tips as you need to feel confident explaining the tool.";
+
+// Training Tips
+"training_tip_ask" = "Ask";
+"training_tip_consider" = "Consider";
+"training_tip_prepare" = "Prepare";
+"training_tip_quote" = "Quote";
+"training_tip_tip" = "Tip";

@@ -217,6 +217,9 @@ class MenuFlow: Flow {
             let view = AlertMessageView(viewModel: viewModel)
             
             navigationController.present(view.controller, animated: true, completion: nil)
+        
+        case .playgroundTappedFromMenu:
+            break
             
         default:
             break

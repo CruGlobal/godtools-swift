@@ -146,6 +146,12 @@ class MenuDataProvider: MenuDataProviderType {
                 id: id,
                 title: ""
             )
+            
+        case .playground:
+            return MenuItem(
+                id: .playground,
+                title: "Playground"
+            )
         }
     }
 }

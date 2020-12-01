@@ -28,6 +28,14 @@ extension UIButton {
             imageEdgeInsets = UIEdgeInsets(top: 0, left: titleLeft + titleWidth + spacing, bottom: 0, right: 0)
         }
     }
+    
+    func setImageColor(color: UIColor) {
+        if let image = image(for: .normal) {
+            let newImage: UIImage = image.withRenderingMode(.alwaysTemplate)
+            setImage(newImage, for: .normal)
+            tintColor = color
+        }
+    }
 }
 
 extension UILabel {
@@ -94,54 +102,5 @@ extension UIView {
     func drawBorder(color: UIColor = UIColor.red) {
         layer.borderWidth = 1
         layer.borderColor = color.cgColor
-    }
-    
-     func constrainEdgesToSuperview() {
-        
-        if let superview = superview {
-            
-            translatesAutoresizingMaskIntoConstraints = false
-            
-            let leading: NSLayoutConstraint = NSLayoutConstraint(
-                item: self,
-                attribute: .leading,
-                relatedBy: .equal,
-                toItem: superview,
-                attribute: .leading,
-                multiplier: 1,
-                constant: 0)
-            
-            let trailing: NSLayoutConstraint = NSLayoutConstraint(
-                item: self,
-                attribute: .trailing,
-                relatedBy: .equal,
-                toItem: superview,
-                attribute: .trailing,
-                multiplier: 1,
-                constant: 0)
-            
-            let top: NSLayoutConstraint = NSLayoutConstraint(
-                item: self,
-                attribute: .top,
-                relatedBy: .equal,
-                toItem: superview,
-                attribute: .top,
-                multiplier: 1,
-                constant: 0)
-            
-            let bottom: NSLayoutConstraint = NSLayoutConstraint(
-                item: self,
-                attribute: .bottom,
-                relatedBy: .equal,
-                toItem: superview,
-                attribute: .bottom,
-                multiplier: 1,
-                constant: 0)
-            
-            superview.addConstraint(leading)
-            superview.addConstraint(trailing)
-            superview.addConstraint(top)
-            superview.addConstraint(bottom)
-        }
     }
 }

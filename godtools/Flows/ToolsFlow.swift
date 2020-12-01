@@ -12,6 +12,7 @@ class ToolsFlow: Flow {
     
     private var articlesFlow: ArticlesFlow?
     private var shareToolMenuFlow: ShareToolMenuFlow?
+    private var learnToShareToolFlow: LearnToShareToolFlow?
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -97,7 +98,7 @@ class ToolsFlow: Flow {
             flowDelegate?.navigate(step: .openTutorialTapped)
             
         case .toolTappedFromFavoritedTools(let resource):
-            navigateToTool(resource: resource)
+            navigateToTool(resource: resource, trainingTipsEnabled: false)
             
         case .aboutToolTappedFromFavoritedTools(let resource):
             navigateToToolDetail(resource: resource)
@@ -128,15 +129,15 @@ class ToolsFlow: Flow {
             navigationController.present(view.controller, animated: true, completion: nil)
             
         case .toolTappedFromAllTools(let resource):
-            navigateToTool(resource: resource)
+            navigateToTool(resource: resource, trainingTipsEnabled: false)
             
         case .aboutToolTappedFromAllTools(let resource):
             navigateToToolDetail(resource: resource)
             
-        case .homeTappedFromTract(let isScreenSharing):
-            flowDelegate?.navigate(step: .homeTappedFromTract(isScreenSharing: isScreenSharing))
+        case .homeTappedFromTool(let isScreenSharing):
+            flowDelegate?.navigate(step: .homeTappedFromTool(isScreenSharing: isScreenSharing))
             
-        case .shareMenuTappedFromTract(let tractRemoteShareSubscriber, let tractRemoteSharePublisher, let resource, let selectedLanguage, let primaryLanguage, let parallelLanguage, let pageNumber):
+        case .shareMenuTappedFromTool(let tractRemoteShareSubscriber, let tractRemoteSharePublisher, let resource, let selectedLanguage, let primaryLanguage, let parallelLanguage, let pageNumber):
             
             let shareToolMenuFlow = ShareToolMenuFlow(
                 flowDelegate: self,
@@ -153,21 +154,110 @@ class ToolsFlow: Flow {
             
             self.shareToolMenuFlow = shareToolMenuFlow
             
+        case .urlLinkTappedFromTool(let url):
+            navigateToURL(url: url)
+            
+        case .toolDidEncounterErrorFromTool(let error):
+            
+            let viewModel = AlertMessageViewModel(
+                title: error.title,
+                message: error.message,
+                cancelTitle: nil,
+                acceptTitle: appDiContainer.localizationServices.stringForMainBundle(key: "OK"),
+                acceptHandler: nil
+            )
+            
+            let view = AlertMessageView(viewModel: viewModel)
+            
+            navigationController.present(view.controller, animated: true, completion: nil)
+            
+        case .toolTrainingTipTappedFromTool(let manifest, let trainingTipId, let tipNode, let language):
+            
+            let viewModel = ToolTrainingViewModel(
+                flowDelegate: self,
+                language: language,
+                trainingTipId: trainingTipId,
+                tipNode: tipNode,
+                manifest: manifest,
+                translationsFileCache: appDiContainer.translationsFileCache,
+                mobileContentNodeParser: appDiContainer.getMobileContentNodeParser(),
+                mobileContentAnalytics: appDiContainer.getMobileContentAnalytics(),
+                mobileContentEvents: appDiContainer.getMobileContentEvents(),
+                analytics: appDiContainer.analytics,
+                fontService: appDiContainer.getFontService(),
+                followUpsService: appDiContainer.followUpsService,
+                localizationServices: appDiContainer.localizationServices,
+                cardJumpService: appDiContainer.getCardJumpService()
+            )
+            
+            let view = ToolTrainingView(viewModel: viewModel)
+            
+            navigationController.present(view, animated: true, completion: nil)
+            
+        case .closeTappedFromToolTraining:
+            
+            navigationController.dismiss(animated: true, completion: nil)
+            
         case .closeTappedFromShareToolScreenTutorial:
             self.shareToolMenuFlow = nil
                         
         case .openToolTappedFromToolDetails(let resource):
-            navigateToTool(resource: resource)
+            navigateToTool(resource: resource, trainingTipsEnabled: false)
+            
+        case .learnToShareToolTappedFromToolDetails(let resource):
+            
+            let toolTrainingTipsOnboardingViews: ToolTrainingTipsOnboardingViewsService = appDiContainer.getToolTrainingTipsOnboardingViews()
+                        
+            let toolTrainingTipReachedMaximumViews: Bool = toolTrainingTipsOnboardingViews.getToolTrainingTipReachedMaximumViews(resource: resource)
+            
+            if !toolTrainingTipReachedMaximumViews {
+                
+                toolTrainingTipsOnboardingViews.storeToolTrainingTipViewed(resource: resource)
+                
+                let learnToShareToolFlow = LearnToShareToolFlow(
+                    flowDelegate: self,
+                    appDiContainer: appDiContainer,
+                    resource: resource
+                )
+                
+                navigationController.present(learnToShareToolFlow.navigationController, animated: true, completion: nil)
+                
+                self.learnToShareToolFlow = learnToShareToolFlow
+            }
+            else {
+                
+                navigateToTool(resource: resource, trainingTipsEnabled: true)
+            }
+            
+        case .continueTappedFromLearnToShareTool(let resource):
+            navigateToTool(resource: resource, trainingTipsEnabled: true)
+            dismissLearnToShareToolFlow()
+            
+        case .closeTappedFromLearnToShareTool:
+            dismissLearnToShareToolFlow()
             
         case .urlLinkTappedFromToolDetail(let url):
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(url)
-            } else {
-                UIApplication.shared.openURL(url)
-            }
+            navigateToURL(url: url)
             
         default:
             break
+        }
+    }
+    
+    private func dismissLearnToShareToolFlow() {
+        
+        if learnToShareToolFlow != nil {
+            navigationController.dismiss(animated: true, completion: nil)
+        }
+        
+        self.learnToShareToolFlow = nil
+    }
+    
+    private func navigateToURL(url: URL) {
+        if #available(iOS 10.0, *) {
+            UIApplication.shared.open(url)
+        } else {
+            UIApplication.shared.openURL(url)
         }
     }
     
@@ -180,6 +270,7 @@ class ToolsFlow: Flow {
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
+            translationDownloader: appDiContainer.translationDownloader,
             analytics: appDiContainer.analytics,
             exitLinkAnalytics: appDiContainer.exitLinkAnalytics
         )
@@ -233,7 +324,7 @@ class ToolsFlow: Flow {
         })
     }
     
-    func navigateToTool(resource: ResourceModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, liveShareStream: String?, page: Int?) {
+    func navigateToTool(resource: ResourceModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
         
         let dataDownloader: InitialDataDownloader = appDiContainer.initialDataDownloader
         let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
@@ -294,12 +385,13 @@ class ToolsFlow: Flow {
                 parallelTranslation: parallelTranslation,
                 parallelTranslationManifest: parallelTranslationManifest,
                 liveShareStream: liveShareStream,
+                trainingTipsEnabled: trainingTipsEnabled,
                 page: page
             )
         }
     }
     
-    private func navigateToTool(resource: ResourceModel) {
+    private func navigateToTool(resource: ResourceModel, trainingTipsEnabled: Bool) {
         
         let fetchTranslationManifestsViewModel: FetchTranslationManifestsViewModel = appDiContainer.fetchTranslationManifestsViewModel
         
@@ -321,12 +413,13 @@ class ToolsFlow: Flow {
                 parallelTranslation: parallelTranslation,
                 parallelTranslationManifest: parallelTranslationManifest,
                 liveShareStream: nil,
+                trainingTipsEnabled: trainingTipsEnabled,
                 page: 0
             )
         }
     }
     
-    private func navigateToToolFromFetchedCachedResources(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslation: TranslationModel, primaryTranslationManifest: TranslationManifestData?, parallelLanguage: LanguageModel?, parallelTranslation: TranslationModel?, parallelTranslationManifest: TranslationManifestData?, liveShareStream: String?, page: Int?) {
+    private func navigateToToolFromFetchedCachedResources(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslation: TranslationModel, primaryTranslationManifest: TranslationManifestData?, parallelLanguage: LanguageModel?, parallelTranslation: TranslationModel?, parallelTranslationManifest: TranslationManifestData?, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
         
         let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
         
@@ -391,6 +484,7 @@ class ToolsFlow: Flow {
                     parallelLanguage: parallelLanguage,
                     parallelTranslationManifest: parallelTranslationManifest ?? downloadedParallelTranslation,
                     liveShareStream: liveShareStream,
+                    trainingTipsEnabled: trainingTipsEnabled,
                     page: page
                 )
                 
@@ -411,12 +505,13 @@ class ToolsFlow: Flow {
                 parallelLanguage: parallelLanguage,
                 parallelTranslationManifest: parallelTranslationManifest,
                 liveShareStream: liveShareStream,
+                trainingTipsEnabled: trainingTipsEnabled,
                 page: page
             )
         }
     }
     
-    private func navigateToTool(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, liveShareStream: String?, page: Int?) {
+    private func navigateToTool(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
         
         let resourceType: ResourceType = ResourceType.resourceType(resource: resource)
         
@@ -436,6 +531,7 @@ class ToolsFlow: Flow {
                 parallelLanguage: parallelLanguage,
                 parallelTranslationManifest: parallelTranslationManifest,
                 liveShareStream: liveShareStream,
+                trainingTipsEnabled: trainingTipsEnabled,
                 page: page
             )
             
@@ -457,8 +553,9 @@ class ToolsFlow: Flow {
         self.articlesFlow = articlesFlow
     }
     
-    private func navigateToTract(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, liveShareStream: String?, page: Int?) {
+    private func navigateToTract(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
         
+        /*
         let viewModel = TractViewModel(
             flowDelegate: self,
             resource: resource,
@@ -480,7 +577,48 @@ class ToolsFlow: Flow {
             liveShareStream: liveShareStream,
             tractPage: page
         )
-        let view = TractView(viewModel: viewModel)
+        let view = TractView(viewModel: viewModel)*/
+        
+        let viewModel = ToolViewModel(
+            flowDelegate: self,
+            resource: resource,
+            primaryLanguage: primaryLanguage,
+            parallelLanguage: parallelLanguage,
+            primaryTranslationManifestData: primaryTranslationManifest,
+            parallelTranslationManifestData: parallelTranslationManifest,
+            mobileContentNodeParser: appDiContainer.getMobileContentNodeParser(),
+            mobileContentAnalytics: appDiContainer.getMobileContentAnalytics(),
+            mobileContentEvents: appDiContainer.getMobileContentEvents(),
+            translationsFileCache: appDiContainer.translationsFileCache,
+            languageSettingsService: appDiContainer.languageSettingsService,
+            fontService: appDiContainer.getFontService(),
+            tractRemoteSharePublisher: appDiContainer.tractRemoteSharePublisher,
+            tractRemoteShareSubscriber: appDiContainer.tractRemoteShareSubscriber,
+            isNewUserService: appDiContainer.isNewUserService,
+            cardJumpService: appDiContainer.getCardJumpService(),
+            followUpsService: appDiContainer.followUpsService,
+            viewsService: appDiContainer.viewsService,
+            localizationServices: appDiContainer.localizationServices,
+            analytics: appDiContainer.analytics,
+            toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics,
+            liveShareStream: liveShareStream,
+            trainingTipsEnabled: trainingTipsEnabled,
+            page: page
+        )
+        
+        let languageDirectionSemanticContentAttribute: UISemanticContentAttribute
+        
+        switch appDiContainer.languageDirectionService.primaryLanguageDirection.value {
+            
+        case .leftToRight:
+            languageDirectionSemanticContentAttribute = .forceLeftToRight
+        case .rightToLeft:
+            languageDirectionSemanticContentAttribute = .forceRightToLeft
+        }
+        
+        UIView.appearance(whenContainedInInstancesOf: [ToolView.self]).semanticContentAttribute = languageDirectionSemanticContentAttribute
+            
+        let view = ToolView(viewModel: viewModel)
 
         navigationController.pushViewController(view, animated: true)
     }

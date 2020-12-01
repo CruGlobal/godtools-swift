@@ -10,13 +10,12 @@ import Foundation
 
 extension LanguageModel {
     
-    enum LanguageDirection: String {
+    var languageDirection: LanguageDirection {
         
-        case leftToRight = "ltr"
-        case rightToLeft = "rtl"
-    }
-    
-    var languageDirection: LanguageModel.LanguageDirection {
-        return LanguageDirection(rawValue: direction) ?? .leftToRight
+        if direction == "rtl" {
+            return .rightToLeft
+        }
+        
+        return .leftToRight
     }
 }

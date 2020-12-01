@@ -98,7 +98,7 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
         
         previousTrackedScreenName = screenName
                 
-        createDefaultProperties(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: previousScreenName) { [weak self] (defaultProperties: AdobeAnalyticsProperties) in
+        createDefaultPropertiesOnConcurrentQueue(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: previousScreenName) { [weak self] (defaultProperties: AdobeAnalyticsProperties) in
             
             let data: [AnyHashable: Any] = JsonServices().encode(object: defaultProperties)
             
@@ -108,16 +108,18 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
         }
     }
     
-    func trackAction(screenName: String?, actionName: String, data: [AnyHashable : Any]) {
+    func trackAction(screenName: String?, actionName: String, data: [AnyHashable : Any]?) {
         
         assertFailureIfNotConfigured()
         
-        createDefaultProperties(screenName: screenName, siteSection: nil, siteSubSection: nil, previousScreenName: previousTrackedScreenName) { [weak self] (defaultProperties: AdobeAnalyticsProperties) in
+        createDefaultPropertiesOnConcurrentQueue(screenName: screenName, siteSection: nil, siteSubSection: nil, previousScreenName: previousTrackedScreenName) { [weak self] (defaultProperties: AdobeAnalyticsProperties) in
             
             var trackingData: [AnyHashable: Any] = JsonServices().encode(object: defaultProperties)
             
-            for (key, value) in data {
-                trackingData[key] = value
+            if let data = data {
+                for (key, value) in data {
+                    trackingData[key] = value
+                }
             }
             
             ADBMobile.trackAction(actionName, data: trackingData)
@@ -130,7 +132,7 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
            
         assertFailureIfNotConfigured()
         
-        createDefaultProperties(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: previousTrackedScreenName) { [weak self] (defaultProperties: AdobeAnalyticsProperties) in
+        createDefaultPropertiesOnConcurrentQueue(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: previousTrackedScreenName) { [weak self] (defaultProperties: AdobeAnalyticsProperties) in
             
             var properties = defaultProperties
             
@@ -177,7 +179,7 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
         }
     }
     
-    private func createDefaultProperties(screenName: String?, siteSection: String?, siteSubSection: String?, previousScreenName: String?, complete: @escaping ((_ properties: AdobeAnalyticsProperties) -> Void)) {
+    private func createDefaultPropertiesOnConcurrentQueue(screenName: String?, siteSection: String?, siteSubSection: String?, previousScreenName: String?, complete: @escaping ((_ properties: AdobeAnalyticsProperties) -> Void)) {
         let isLoggedIn: Bool = keyAuthClient.isAuthenticated()
         
         let appName: String = self.appName
@@ -236,5 +238,13 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
 extension AdobeAnalytics: OIDAuthStateChangeDelegate {
     func didChange(_ state: OIDAuthState) {
         fetchAttributesThenSyncIds()
+    }
+}
+
+// MARK: - MobileContentAnalyticsSystem
+
+extension AdobeAnalytics: MobileContentAnalyticsSystem {
+    func trackAction(action: String, data: [AnyHashable : Any]?) {
+        trackAction(screenName: nil, actionName: action, data: data)
     }
 }

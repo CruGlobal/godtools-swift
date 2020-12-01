@@ -39,12 +39,22 @@ enum FlowStep {
     
     // toolDetails
     case openToolTappedFromToolDetails(resource: ResourceModel)
+    case learnToShareToolTappedFromToolDetails(resource: ResourceModel)
     case urlLinkTappedFromToolDetail(url: URL)
+    
+    // learnToShareTool
+    case closeTappedFromLearnToShareTool
+    case continueTappedFromLearnToShareTool(resource: ResourceModel)
         
-    // tract
-    case homeTappedFromTract(isScreenSharing: Bool)
-    case shareMenuTappedFromTract(tractRemoteShareSubscriber: TractRemoteShareSubscriber, tractRemoteSharePublisher: TractRemoteSharePublisher, resource: ResourceModel, selectedLanguage: LanguageModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, pageNumber: Int)
-    case sendEmailTappedFromTract(subject: String, message: String, isHtml: Bool)
+    // tool
+    case homeTappedFromTool(isScreenSharing: Bool)
+    case shareMenuTappedFromTool(tractRemoteShareSubscriber: TractRemoteShareSubscriber, tractRemoteSharePublisher: TractRemoteSharePublisher, resource: ResourceModel, selectedLanguage: LanguageModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, pageNumber: Int)
+    case urlLinkTappedFromTool(url: URL)
+    case toolDidEncounterErrorFromTool(error: ContentEventError)
+    case toolTrainingTipTappedFromTool(manifest: MobileContentXmlManifest, trainingTipId: String, tipNode: TipNode, language: LanguageModel)
+    
+    // tool training
+    case closeTappedFromToolTraining
     
     // share tool menu
     case shareToolTappedFromShareToolMenu(resource: ResourceModel, language: LanguageModel, pageNumber: Int)
@@ -72,6 +82,7 @@ enum FlowStep {
     case privacyPolicyTappedFromMenu
     case copyrightInfoTappedFromMenu
     case logoutTappedFromMenu(logoutHandler: CallbackHandler)
+    case playgroundTappedFromMenu
     
     // language settings
     case choosePrimaryLanguageTappedFromLanguageSettings

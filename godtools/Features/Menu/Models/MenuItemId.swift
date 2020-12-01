@@ -25,4 +25,5 @@ enum MenuItemId {
     case copyrightInfo
     case tutorial
     case version
+    case playground
 }

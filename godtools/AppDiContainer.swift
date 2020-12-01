@@ -40,6 +40,7 @@ class AppDiContainer {
     let favoritedResourceTranslationDownloader: FavoritedResourceTranslationDownloader
     let initialDataDownloader: InitialDataDownloader
     let languageSettingsService: LanguageSettingsService
+    let languageDirectionService: LanguageDirectionService
     let languageTranslationsDownloader: LanguageTranslationsDownloader
     let articleAemImportDownloader: ArticleAemImportDownloader
     let isNewUserService: IsNewUserService
@@ -77,9 +78,9 @@ class AppDiContainer {
         
         languagesCache = RealmLanguagesCache(realmDatabase: realmDatabase)
         
-        translationsFileCache = TranslationsFileCache(realmDatabase: realmDatabase, sha256FileCache: resourcesSHA256FileCache)
+        translationsFileCache = TranslationsFileCache(realmDatabase: realmDatabase, resourcesCache: resourcesCache, sha256FileCache: resourcesSHA256FileCache)
                 
-        translationDownloader = TranslationDownloader(realmDatabase: realmDatabase, translationsApi: translationsApi, translationsFileCache: translationsFileCache)
+        translationDownloader = TranslationDownloader(realmDatabase: realmDatabase, resourcesCache: resourcesCache, translationsApi: translationsApi, translationsFileCache: translationsFileCache)
         
         attachmentsFileCache = AttachmentsFileCache(realmDatabase: realmDatabase, sha256FileCache: resourcesSHA256FileCache)
         
@@ -144,6 +145,8 @@ class AppDiContainer {
             languageSettingsCache: languageSettingsCache
         )
         
+        languageDirectionService = LanguageDirectionService(languageSettings: languageSettingsService)
+        
         languageTranslationsDownloader = LanguageTranslationsDownloader(
             realmDatabase: realmDatabase,
             favoritedResourcesCache: favoritedResourcesCache,
@@ -162,10 +165,10 @@ class AppDiContainer {
         loginClient = TheKeyOAuthClient.shared
                 
         analytics = AnalyticsContainer(
-            adobeAnalytics: AdobeAnalytics(config: config, keyAuthClient: loginClient, languageSettingsService: languageSettingsService, loggingEnabled: false),
-            appsFlyer: AppsFlyer(config: config, loggingEnabled: false),
+            adobeAnalytics: AdobeAnalytics(config: config, keyAuthClient: loginClient, languageSettingsService: languageSettingsService, loggingEnabled: true),
+            appsFlyer: AppsFlyer(config: config, loggingEnabled: true),
             firebaseAnalytics: FirebaseAnalytics(),
-            snowplowAnalytics: SnowplowAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: false)
+            snowplowAnalytics: SnowplowAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: true)
         )
         
         godToolsAnalytics = GodToolsAnaltyics(analytics: analytics)
@@ -199,6 +202,32 @@ class AppDiContainer {
         // TODO: Need to remove this singleton once UIFont extension is properly refactored. ~Levi
         // UIFont extension currently depends on the primary language for picking appropriate UIFont to display.
         LanguagesManager.shared.setup(languageSettingsService: languageSettingsService)
+    }
+    
+    func getCardJumpService() -> CardJumpService {
+        return CardJumpService(cardJumpCache: CardJumpUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache))
+    }
+    
+    func getFontService() -> FontService {
+        return FontService(languageSettings: languageSettingsService)
+    }
+    
+    func getMobileContentAnalytics() -> MobileContentAnalytics {
+        return MobileContentAnalytics(analytics: analytics)
+    }
+    
+    func getMobileContentEvents() -> MobileContentEvents {
+        return MobileContentEvents()
+    }
+    
+    func getMobileContentNodeParser() -> MobileContentXmlNodeParser {
+        return MobileContentXmlNodeParser()
+    }
+    
+    func getToolTrainingTipsOnboardingViews() -> ToolTrainingTipsOnboardingViewsService {
+        return ToolTrainingTipsOnboardingViewsService(
+            cache: ToolTrainingTipsOnboardingViewsUserDefaultsCache(userDefaultsCache: sharedUserDefaultsCache)
+        )
     }
     
     var firebaseConfiguration: FirebaseConfiguration {
@@ -269,8 +298,8 @@ class AppDiContainer {
         return ShareToolScreenTutorialNumberOfViewsCache(sharedUserDefaultsCache: sharedUserDefaultsCache)
     }
     
-    var cardJumpService: CardJumpService {
-        return CardJumpService(cardJumpCache: CardJumpUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache))
+    var learnToShareToolItemsProvider: LearnToShareToolItemsProviderType {
+        return InMemoryLearnToShareToolItems(localization: localizationServices)
     }
     
     var tutorialItemsProvider: TutorialItemProviderType {

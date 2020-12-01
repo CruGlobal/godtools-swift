@@ -27,6 +27,7 @@ class TractViewModel: NSObject, TractViewModelType {
     private let primaryTractXmlResource: TractXmlResource
     private let parallelTractXmlResource: TractXmlResource?
     
+    private var cachedPrimaryPageNodes: [PageNode] = Array()
     private var cachedPrimaryTractPages: [PageNumber: TractPage] = Dictionary()
     private var cachedParallelTractPages: [PageNumber: TractPage] = Dictionary()
     private var cachedTractRemoteShareNavigationEvents: [PageNumber: TractRemoteShareNavigationEvent] = Dictionary()
@@ -214,12 +215,14 @@ class TractViewModel: NSObject, TractViewModelType {
             
             let tractPageItem: TractPageItem = getTractPageItem(page: page)
             
-            tractRemoteSharePublisher.sendNavigationEvent(
+            let event = TractRemoteSharePublisherNavigationEvent(
                 card: tractPageItem.tractPage?.openedCard,
                 locale: selectedTractLanguage.value.language.code,
                 page: page,
                 tool: resource.abbreviation
             )
+            
+            tractRemoteSharePublisher.sendNavigationEvent(event: event)
         }
     }
     
@@ -289,11 +292,11 @@ class TractViewModel: NSObject, TractViewModelType {
     }
     
     func navHomeTapped() {
-        flowDelegate?.navigate(step: .homeTappedFromTract(isScreenSharing: remoteShareIsActive.value))
+        flowDelegate?.navigate(step: .homeTappedFromTool(isScreenSharing: remoteShareIsActive.value))
     }
     
     func shareTapped() {
-        flowDelegate?.navigate(step: .shareMenuTappedFromTract(tractRemoteShareSubscriber: tractRemoteShareSubscriber, tractRemoteSharePublisher: tractRemoteSharePublisher, resource: resource, selectedLanguage: selectedTractLanguage.value.language, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, pageNumber: tractPage))
+        flowDelegate?.navigate(step: .shareMenuTappedFromTool(tractRemoteShareSubscriber: tractRemoteShareSubscriber, tractRemoteSharePublisher: tractRemoteSharePublisher, resource: resource, selectedLanguage: selectedTractLanguage.value.language, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, pageNumber: tractPage))
     }
     
     func primaryLanguageTapped() {
@@ -382,7 +385,7 @@ class TractViewModel: NSObject, TractViewModelType {
     }
     
     func sendEmailTapped(subject: String?, message: String?, isHtml: Bool?) {
-        flowDelegate?.navigate(step: .sendEmailTappedFromTract(subject: subject ?? "", message: message ?? "", isHtml: isHtml ?? false))
+
     }
     
     // MARK: - Switching Between Primary and Parallel Tract Pages
