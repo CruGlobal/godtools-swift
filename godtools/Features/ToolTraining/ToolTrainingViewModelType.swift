@@ -17,6 +17,7 @@ protocol ToolTrainingViewModelType {
     var continueButtonTitle: ObservableValue<String> { get }
     var numberOfTipPages: ObservableValue<Int> { get }
     
+    func viewLoaded()
     func overlayTapped()
     func closeTapped()
     func continueTapped()

@@ -709,6 +709,11 @@
 		45DED956247826CF00B0A71D /* HTMLDocumentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DED955247826CF00B0A71D /* HTMLDocumentData.swift */; };
 		45DED9582478401700B0A71D /* WebArchiveOperationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DED9572478401700B0A71D /* WebArchiveOperationError.swift */; };
 		45DEF22E2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json in Resources */ = {isa = PBXBuildFile; fileRef = 45DEF22D2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json */; };
+		45DEF2312576AE6C0007AC64 /* ViewedTrainingTipsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DEF2302576AE6C0007AC64 /* ViewedTrainingTipsService.swift */; };
+		45DEF2332576AE800007AC64 /* ViewedTrainingTipsCacheType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DEF2322576AE800007AC64 /* ViewedTrainingTipsCacheType.swift */; };
+		45DEF2352576AE8C0007AC64 /* ViewedTrainingTipsUserDefaultsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DEF2342576AE8C0007AC64 /* ViewedTrainingTipsUserDefaultsCache.swift */; };
+		45DEF2382576C2050007AC64 /* ViewedTrainingTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DEF2372576C2050007AC64 /* ViewedTrainingTip.swift */; };
+		45DEF23A2576C2180007AC64 /* ViewedTrainingTipType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DEF2392576C2180007AC64 /* ViewedTrainingTipType.swift */; };
 		45DFBF28255EE4BA00E6B591 /* TrainingTipViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DFBF27255EE4BA00E6B591 /* TrainingTipViewType.swift */; };
 		45DFBF3B255EFD6900E6B591 /* TrainingTipEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DFBF3A255EFD6900E6B591 /* TrainingTipEvent.swift */; };
 		45E2BECF254317E100C4D66C /* ToolTrainingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45E2BEC6254317E100C4D66C /* ToolTrainingView.xib */; };
@@ -1555,6 +1560,11 @@
 		45DED955247826CF00B0A71D /* HTMLDocumentData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLDocumentData.swift; sourceTree = "<group>"; };
 		45DED9572478401700B0A71D /* WebArchiveOperationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebArchiveOperationError.swift; sourceTree = "<group>"; };
 		45DEF22D2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = learn_to_share_tool_with_anyone.json; sourceTree = "<group>"; };
+		45DEF2302576AE6C0007AC64 /* ViewedTrainingTipsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewedTrainingTipsService.swift; sourceTree = "<group>"; };
+		45DEF2322576AE800007AC64 /* ViewedTrainingTipsCacheType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewedTrainingTipsCacheType.swift; sourceTree = "<group>"; };
+		45DEF2342576AE8C0007AC64 /* ViewedTrainingTipsUserDefaultsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewedTrainingTipsUserDefaultsCache.swift; sourceTree = "<group>"; };
+		45DEF2372576C2050007AC64 /* ViewedTrainingTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewedTrainingTip.swift; sourceTree = "<group>"; };
+		45DEF2392576C2180007AC64 /* ViewedTrainingTipType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewedTrainingTipType.swift; sourceTree = "<group>"; };
 		45DEF4B724DEF35E00996695 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		45DEF4B824DEF4E100996695 /* lv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = lv; path = lv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		45DEF4BB24DEF6E700996695 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -2622,6 +2632,7 @@
 				452036BB240057B2002B2453 /* URLRequestServices */,
 				451EE23B24ABF6D200BB799F /* URLSession */,
 				454D5A0024BF550400B8528B /* UserDefaultsCache */,
+				45DEF22F2576AD510007AC64 /* ViewedTrainingTips */,
 				456BF68F248F17010094C6F8 /* Views */,
 				455F4B8D24527C2D00AE6007 /* WebArchiver */,
 				459A71DF24C9C4F500B77942 /* WebSocket */,
@@ -3784,6 +3795,26 @@
 				4561AC2525598BA300841D9A /* Snowplow */,
 			);
 			path = Analytics;
+			sourceTree = "<group>";
+		};
+		45DEF22F2576AD510007AC64 /* ViewedTrainingTips */ = {
+			isa = PBXGroup;
+			children = (
+				45DEF2362576C1FB0007AC64 /* Models */,
+				45DEF2302576AE6C0007AC64 /* ViewedTrainingTipsService.swift */,
+				45DEF2322576AE800007AC64 /* ViewedTrainingTipsCacheType.swift */,
+				45DEF2342576AE8C0007AC64 /* ViewedTrainingTipsUserDefaultsCache.swift */,
+			);
+			path = ViewedTrainingTips;
+			sourceTree = "<group>";
+		};
+		45DEF2362576C1FB0007AC64 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				45DEF2372576C2050007AC64 /* ViewedTrainingTip.swift */,
+				45DEF2392576C2180007AC64 /* ViewedTrainingTipType.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		45DFBF26255EE49A00E6B591 /* Models */ = {
@@ -4958,6 +4989,7 @@
 				45668E8223E0E1CC002728E7 /* OnboardingWelcomeViewModel.swift in Sources */,
 				45D3C92623DF999600ECF70E /* TutorialViewModelType.swift in Sources */,
 				456B9C4F25635C74008FC3F4 /* ToolNavBarView.swift in Sources */,
+				45DEF2332576AE800007AC64 /* ViewedTrainingTipsCacheType.swift in Sources */,
 				451DB0CA2461D90000FB14BF /* TractElementFrame.swift in Sources */,
 				45668E7A23E0E1CC002728E7 /* OnboardingTutorialUsageListCell.swift in Sources */,
 				4586D7E1246ECE350062D988 /* TractLabel.swift in Sources */,
@@ -4970,6 +5002,7 @@
 				4506DEDB24B7A78700A1C50B /* XMLNode.swift in Sources */,
 				457719A623E862D20049D236 /* MenuItemId.swift in Sources */,
 				45E2BED9254319F400C4D66C /* ToolTrainingAnimatedTransitioning.swift in Sources */,
+				45DEF23A2576C2180007AC64 /* ViewedTrainingTipType.swift in Sources */,
 				455A54C82550756C0053C0FD /* HeadingNode.swift in Sources */,
 				45CF88EA257137CD00093462 /* MobileContentViewModel.swift in Sources */,
 				4530DCB924A3E159000DA516 /* AttachmentFile.swift in Sources */,
@@ -5119,6 +5152,7 @@
 				4506DED324B7A78700A1C50B /* GTButton.swift in Sources */,
 				45FCFF42243D07B800865501 /* OnboardingFlow.swift in Sources */,
 				455BF70D23F6F643004A4854 /* GTSegment.swift in Sources */,
+				45DEF2382576C2050007AC64 /* ViewedTrainingTip.swift in Sources */,
 				45E2BF07254354C400C4D66C /* MobileContentManifestAttributesType.swift in Sources */,
 				45EDC53D249BAB970020DC62 /* ToolDetailViewModel.swift in Sources */,
 				451B8697252F43D40061942B /* LearnToShareToolItem.swift in Sources */,
@@ -5184,6 +5218,7 @@
 				457719C423E8BAE50049D236 /* MenuDataProviderType.swift in Sources */,
 				4506DEA324B7991600A1C50B /* AboutTextProviderType.swift in Sources */,
 				45647244244F6FAB00CB202D /* ArticleCategoryCell.swift in Sources */,
+				45DEF2352576AE8C0007AC64 /* ViewedTrainingTipsUserDefaultsCache.swift in Sources */,
 				455953DE24041259002330ED /* ImageCatalog.swift in Sources */,
 				4561AC2B25598BA300841D9A /* FirebaseAnalyticsType.swift in Sources */,
 				45ADD0CC24549F2100E82DD8 /* WebArchiveOperationResult.swift in Sources */,
@@ -5191,6 +5226,7 @@
 				457D982C254B4F9F000B8159 /* HeroNode.swift in Sources */,
 				45E7E1BA24AE253500238419 /* DownloadResourceTranslationsReceipts.swift in Sources */,
 				4595F43124A294EE00B3733E /* ArticleAemImportOperationError.swift in Sources */,
+				45DEF2312576AE6C0007AC64 /* ViewedTrainingTipsService.swift in Sources */,
 				D1B68BBF24785580001A2894 /* TrackActionAnalytics.swift in Sources */,
 				450E21BD2491891200D489A1 /* ResourceModelType.swift in Sources */,
 				45A1432424A64DFA00892200 /* FetchTranslationManifestResult.swift in Sources */,
