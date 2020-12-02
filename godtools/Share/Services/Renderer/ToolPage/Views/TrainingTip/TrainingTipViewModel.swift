@@ -61,7 +61,7 @@ class TrainingTipViewModel: TrainingTipViewModelType {
             let backgroundImageName: String
             switch viewType {
             case .upArrow:
-                backgroundImageName = trainingTipViewed ? "training_tip_red_arrow_up_bg" : "training_tip_arrow_up_bg" // TODO: Need to add training_tip_red_arrow_up_bg. ~Levi
+                backgroundImageName = trainingTipViewed ? "training_tip_red_arrow_up_bg" : "training_tip_arrow_up_bg"
             case .rounded:
                 backgroundImageName = trainingTipViewed ? "training_tip_red_square_bg" : "training_tip_square_bg"
             }
