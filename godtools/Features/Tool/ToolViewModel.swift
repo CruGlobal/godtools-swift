@@ -33,6 +33,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
     private let fontService: FontService
     private let analytics: AnalyticsContainer
     private let toolOpenedAnalytics: ToolOpenedAnalytics
+    private let viewedTrainingTips: ViewedTrainingTipsService
     private let trainingTipsEnabled: Bool
     
     private var navBarViewModel: ToolNavBarViewModel!
@@ -43,7 +44,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, primaryTranslationManifestData: TranslationManifestData, parallelTranslationManifestData: TranslationManifestData?, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, translationsFileCache: TranslationsFileCache, languageSettingsService: LanguageSettingsService, fontService: FontService, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, isNewUserService: IsNewUserService, cardJumpService: CardJumpService, followUpsService: FollowUpsService, viewsService: ViewsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, primaryTranslationManifestData: TranslationManifestData, parallelTranslationManifestData: TranslationManifestData?, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, translationsFileCache: TranslationsFileCache, languageSettingsService: LanguageSettingsService, fontService: FontService, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, isNewUserService: IsNewUserService, cardJumpService: CardJumpService, followUpsService: FollowUpsService, viewsService: ViewsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, viewedTrainingTips: ViewedTrainingTipsService, trainingTipsEnabled: Bool, page: Int?) {
                 
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -61,6 +62,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
         self.fontService = fontService
         self.analytics = analytics
         self.toolOpenedAnalytics = toolOpenedAnalytics
+        self.viewedTrainingTips = viewedTrainingTips
         self.trainingTipsEnabled = trainingTipsEnabled
         
         let primaryLanguageTranslationModel = ToolLanguageTranslationModel(
@@ -321,6 +323,7 @@ extension ToolViewModel {
                         
             let toolPageDiContainer = ToolPageDiContainer(
                 manifest: languageTranslationModel.manifest,
+                resource: resource,
                 language: languageTranslationModel.language,
                 translationsFileCache: translationsFileCache,
                 mobileContentNodeParser: mobileContentNodeParser,
@@ -331,6 +334,7 @@ extension ToolViewModel {
                 followUpsService: followUpsService,
                 localizationServices: localizationServices,
                 cardJumpService: cardJumpService,
+                viewedTrainingTips: viewedTrainingTips,
                 trainingTipsEnabled: trainingTipsEnabled
             )
             
@@ -438,7 +442,7 @@ extension ToolViewModel: ToolPageViewModelTypeDelegate {
         
         let languageTranslationModel: ToolLanguageTranslationModel = languageTranslationModels[currentToolLanguage]
         
-        flowDelegate?.navigate(step: .toolTrainingTipTappedFromTool(manifest: languageTranslationModel.manifest, trainingTipId: trainingTipId, tipNode: tipNode, language: languageTranslationModel.language))
+        flowDelegate?.navigate(step: .toolTrainingTipTappedFromTool(resource: resource, manifest: languageTranslationModel.manifest, trainingTipId: trainingTipId, tipNode: tipNode, language: languageTranslationModel.language))
     }
     
     func toolPageCardChanged(cardPosition: Int?) {

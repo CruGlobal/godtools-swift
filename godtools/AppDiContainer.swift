@@ -230,6 +230,12 @@ class AppDiContainer {
         )
     }
     
+    func getViewedTrainingTipsService() -> ViewedTrainingTipsService {
+        return ViewedTrainingTipsService(
+            cache: ViewedTrainingTipsUserDefaultsCache(sharedUserDefaults: sharedUserDefaultsCache)
+        )
+    }
+    
     var firebaseConfiguration: FirebaseConfiguration {
         return FirebaseConfiguration(config: config)
     }

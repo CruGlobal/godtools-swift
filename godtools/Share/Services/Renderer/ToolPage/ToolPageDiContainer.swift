@@ -12,6 +12,7 @@ class ToolPageDiContainer {
     
     let manifest: MobileContentXmlManifest
     let manifestResourcesCache: ManifestResourcesCache
+    let resource: ResourceModel
     let language: LanguageModel
     let translationsFileCache: TranslationsFileCache
     let mobileContentNodeParser: MobileContentXmlNodeParser
@@ -22,12 +23,14 @@ class ToolPageDiContainer {
     let followUpsService: FollowUpsService
     let localizationServices: LocalizationServices
     let cardJumpService: CardJumpService
+    let viewedTrainingTips: ViewedTrainingTipsService
     let trainingTipsEnabled: Bool
     
-    required init(manifest: MobileContentXmlManifest, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, analytics: AnalyticsContainer, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, trainingTipsEnabled: Bool) {
+    required init(manifest: MobileContentXmlManifest, resource: ResourceModel, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, analytics: AnalyticsContainer, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, viewedTrainingTips: ViewedTrainingTipsService, trainingTipsEnabled: Bool) {
         
         self.manifest = manifest
         self.manifestResourcesCache = ManifestResourcesCache(manifest: manifest, translationsFileCache: translationsFileCache)
+        self.resource = resource
         self.language = language
         self.translationsFileCache = translationsFileCache
         self.mobileContentNodeParser = mobileContentNodeParser
@@ -38,6 +41,7 @@ class ToolPageDiContainer {
         self.followUpsService = followUpsService
         self.localizationServices = localizationServices
         self.cardJumpService = cardJumpService
+        self.viewedTrainingTips = viewedTrainingTips
         self.trainingTipsEnabled = trainingTipsEnabled
     }
 }
