@@ -60,9 +60,10 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
             hidesNextButton = true
         }
         else {
+            let isLastCard: Bool = cardPosition >= numberOfCards - 1
             hidesCardPositionLabel = false
             hidesPreviousButton = false
-            hidesNextButton = isLastPage ? true : false
+            hidesNextButton = (isLastPage || isLastCard) ? true : false
         }
         
         if let analyticsEventsNode = cardNode.analyticsEventsNode {
