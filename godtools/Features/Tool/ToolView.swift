@@ -13,7 +13,7 @@ class ToolView: UIViewController {
     private let viewModel: ToolViewModelType
     private let navBarView: ToolNavBarView = ToolNavBarView()
     
-    private var safeAreaInsets: UIEdgeInsets?
+    private var safeArea: UIEdgeInsets?
     private var didLayoutSubviews: Bool = false
             
     @IBOutlet weak private var toolPagesView: PageNavigationCollectionView!
@@ -69,7 +69,7 @@ class ToolView: UIViewController {
             safeAreaBottomInset = bottomLayoutGuide.length
         }
         
-        safeAreaInsets = UIEdgeInsets(top: safeAreaTopInset, left: 0, bottom: safeAreaBottomInset, right: 0)
+        safeArea = UIEdgeInsets(top: safeAreaTopInset, left: 0, bottom: safeAreaBottomInset, right: 0)
         
         toolPagesView.reloadData()
     }
@@ -116,12 +116,12 @@ extension ToolView: PageNavigationCollectionViewDelegate {
             cellReuseIdentifier: ToolPageCell.reuseIdentifier,
             indexPath: indexPath) as! ToolPageCell
         
-        if let toolPageViewModel = viewModel.toolPageWillAppear(page: indexPath.row), let safeAreaInsets = self.safeAreaInsets {
+        if let toolPageViewModel = viewModel.toolPageWillAppear(page: indexPath.row), let safeArea = self.safeArea {
             
             cell.configure(
                 viewModel: toolPageViewModel,
                 windowViewController: navigationController ?? self,
-                safeAreaInsets: safeAreaInsets
+                safeArea: safeArea
             )
         }
         

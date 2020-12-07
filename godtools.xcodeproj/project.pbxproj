@@ -620,6 +620,8 @@
 		45A1FF7625420AF600AA9A14 /* PlaygroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A1FF7325420AF600AA9A14 /* PlaygroundView.swift */; };
 		45A6DC8E257EB80D0077280E /* ImageMemoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A6DC8D257EB80D0077280E /* ImageMemoryCache.swift */; };
 		45A6DC90257EB8200077280E /* ImageCacheObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A6DC8F257EB8200077280E /* ImageCacheObject.swift */; };
+		45A6DC93257EEBD40077280E /* ViewObjectPoolType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A6DC92257EEBD40077280E /* ViewObjectPoolType.swift */; };
+		45A6DC95257EEBEC0077280E /* ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A6DC94257EEBEC0077280E /* ReusableView.swift */; };
 		45A6E6C724E5C8E900AE5673 /* TractRemoteSharePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A6E6C624E5C8E900AE5673 /* TractRemoteSharePublisher.swift */; };
 		45A6E6C924E5CD8700AE5673 /* ActionCableChannelPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A6E6C824E5CD8700AE5673 /* ActionCableChannelPublisher.swift */; };
 		45A6E6CB24E5CDA100AE5673 /* WebSocketChannelPublisherType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A6E6CA24E5CDA100AE5673 /* WebSocketChannelPublisherType.swift */; };
@@ -1474,6 +1476,8 @@
 		45A1FF7325420AF600AA9A14 /* PlaygroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaygroundView.swift; sourceTree = "<group>"; };
 		45A6DC8D257EB80D0077280E /* ImageMemoryCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMemoryCache.swift; sourceTree = "<group>"; };
 		45A6DC8F257EB8200077280E /* ImageCacheObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheObject.swift; sourceTree = "<group>"; };
+		45A6DC92257EEBD40077280E /* ViewObjectPoolType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewObjectPoolType.swift; sourceTree = "<group>"; };
+		45A6DC94257EEBEC0077280E /* ReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableView.swift; sourceTree = "<group>"; };
 		45A6E6C624E5C8E900AE5673 /* TractRemoteSharePublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractRemoteSharePublisher.swift; sourceTree = "<group>"; };
 		45A6E6C824E5CD8700AE5673 /* ActionCableChannelPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionCableChannelPublisher.swift; sourceTree = "<group>"; };
 		45A6E6CA24E5CDA100AE5673 /* WebSocketChannelPublisherType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketChannelPublisherType.swift; sourceTree = "<group>"; };
@@ -3451,6 +3455,15 @@
 			path = ImageMemoryCache;
 			sourceTree = "<group>";
 		};
+		45A6DC91257EEBBD0077280E /* ViewObjectPool */ = {
+			isa = PBXGroup;
+			children = (
+				45A6DC94257EEBEC0077280E /* ReusableView.swift */,
+				45A6DC92257EEBD40077280E /* ViewObjectPoolType.swift */,
+			);
+			path = ViewObjectPool;
+			sourceTree = "<group>";
+		};
 		45A6E6C524E5C8D800AE5673 /* TractRemoteSharePublisher */ = {
 			isa = PBXGroup;
 			children = (
@@ -3880,6 +3893,7 @@
 				45D9F698255C56CE00CFB81E /* MobileContentViews */,
 				457D980C254B4F9F000B8159 /* MobileContentXmlNodeParser */,
 				457D981F254B4F9F000B8159 /* ToolPage */,
+				45A6DC91257EEBBD0077280E /* ViewObjectPool */,
 			);
 			path = Renderer;
 			sourceTree = "<group>";
@@ -5038,6 +5052,7 @@
 				45647246244F6FAB00CB202D /* ArticleCategoryCellViewModelType.swift in Sources */,
 				4586D7D5246ECC5E0062D988 /* TractForm.swift in Sources */,
 				4517377924A7F55F0097FB15 /* DownloadedLanguagesCache.swift in Sources */,
+				45A6DC95257EEBEC0077280E /* ReusableView.swift in Sources */,
 				4561AC3325598D9A00841D9A /* MobileContentAnalytics.swift in Sources */,
 				45038D7A24A25C0000345B42 /* TranslationsFileCache.swift in Sources */,
 				451DB1492461DA4200FB14BF /* TractHeaderProperties.swift in Sources */,
@@ -5238,6 +5253,7 @@
 				4561AC2B25598BA300841D9A /* FirebaseAnalyticsType.swift in Sources */,
 				45ADD0CC24549F2100E82DD8 /* WebArchiveOperationResult.swift in Sources */,
 				457D9828254B4F9F000B8159 /* LabelNode.swift in Sources */,
+				45A6DC93257EEBD40077280E /* ViewObjectPoolType.swift in Sources */,
 				457D982C254B4F9F000B8159 /* HeroNode.swift in Sources */,
 				45E7E1BA24AE253500238419 /* DownloadResourceTranslationsReceipts.swift in Sources */,
 				4595F43124A294EE00B3733E /* ArticleAemImportOperationError.swift in Sources */,

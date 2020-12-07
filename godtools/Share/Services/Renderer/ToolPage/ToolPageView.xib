@@ -25,7 +25,6 @@
                 <outlet property="heroHeight" destination="5Mo-BB-qCH" id="MRf-tP-x8Z"/>
                 <outlet property="heroTop" destination="OSS-mG-R5s" id="IhX-uP-Uvr"/>
                 <outlet property="topInsetTopConstraint" destination="tAn-z9-LpH" id="7hu-vZ-Omb"/>
-                <outlet property="view" destination="iN0-l3-epB" id="2CB-Lz-6to"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
