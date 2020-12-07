@@ -351,6 +351,10 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
 
 extension ToolPageViewModel: ToolPageCardViewModelTypeDelegate {
     
+    private func collapseAllCards(animated: Bool) {
+        setCard(cardPosition: nil, animated: animated)
+    }
+    
     private func gotoPreviousCardFromCard(cardPosition: Int) {
         
         let previousCard: Int = cardPosition - 1
@@ -375,7 +379,7 @@ extension ToolPageViewModel: ToolPageCardViewModelTypeDelegate {
         let isShowingCard: Bool = cardPosition <= currentCardPosition
         
         if isShowingCard {
-            gotoPreviousCardFromCard(cardPosition: cardPosition)
+            collapseAllCards(animated: true)
         }
         else {
             setCard(cardPosition: cardPosition, animated: true)
