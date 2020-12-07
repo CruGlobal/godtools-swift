@@ -13,16 +13,16 @@ class ToolPageCallToActionViewModel {
     private let pageNode: PageNode
     private let toolPageColors: ToolPageColors
     private let fontService: FontService
-    private let language: LanguageModel
+    private let languageDirection: LanguageDirection
 
     let hidesCallToAction: Bool
     
-    required init(pageNode: PageNode, toolPageColors: ToolPageColors, fontService: FontService, language: LanguageModel, isLastPage: Bool) {
+    required init(pageNode: PageNode, toolPageColors: ToolPageColors, fontService: FontService, languageDirection: LanguageDirection, isLastPage: Bool) {
         
         self.pageNode = pageNode
         self.toolPageColors = toolPageColors
         self.fontService = fontService
-        self.language = language
+        self.languageDirection = languageDirection
         
         hidesCallToAction = (pageNode.callToActionNode == nil && pageNode.heroNode == nil) || isLastPage
     }
@@ -48,7 +48,7 @@ class ToolPageCallToActionViewModel {
             return nil
         }
         
-        if language.languageDirection == .leftToRight {
+        if languageDirection == .leftToRight {
             return buttonImage
         }
         

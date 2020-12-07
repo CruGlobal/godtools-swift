@@ -109,7 +109,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
             pageNode: pageNode,
             toolPageColors: toolPageColors,
             fontService: diContainer.fontService,
-            language: diContainer.language,
+            languageDirection: diContainer.primaryLanguage.languageDirection,
             isLastPage: isLastPage
         )
                 

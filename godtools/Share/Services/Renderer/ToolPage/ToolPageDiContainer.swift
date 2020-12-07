@@ -14,6 +14,7 @@ class ToolPageDiContainer {
     let manifestResourcesCache: ManifestResourcesCache
     let resource: ResourceModel
     let language: LanguageModel
+    let primaryLanguage: LanguageModel
     let translationsFileCache: TranslationsFileCache
     let mobileContentNodeParser: MobileContentXmlNodeParser
     let mobileContentAnalytics: MobileContentAnalytics
@@ -26,12 +27,13 @@ class ToolPageDiContainer {
     let viewedTrainingTips: ViewedTrainingTipsService
     let trainingTipsEnabled: Bool
     
-    required init(manifest: MobileContentXmlManifest, resource: ResourceModel, language: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, analytics: AnalyticsContainer, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, viewedTrainingTips: ViewedTrainingTipsService, trainingTipsEnabled: Bool) {
+    required init(manifest: MobileContentXmlManifest, resource: ResourceModel, language: LanguageModel, primaryLanguage: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, analytics: AnalyticsContainer, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, viewedTrainingTips: ViewedTrainingTipsService, trainingTipsEnabled: Bool) {
         
         self.manifest = manifest
         self.manifestResourcesCache = ManifestResourcesCache(manifest: manifest, translationsFileCache: translationsFileCache)
         self.resource = resource
         self.language = language
+        self.primaryLanguage = primaryLanguage
         self.translationsFileCache = translationsFileCache
         self.mobileContentNodeParser = mobileContentNodeParser
         self.mobileContentAnalytics = mobileContentAnalytics

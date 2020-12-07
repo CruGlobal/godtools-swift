@@ -12,6 +12,7 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
     
     private let resource: ResourceModel
     private let language: LanguageModel
+    private let primaryLanguage: LanguageModel
     private let trainingTipId: String
     private let tipNode: TipNode
     private let manifest: MobileContentXmlManifest
@@ -38,11 +39,12 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
     let continueButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     let numberOfTipPages: ObservableValue<Int> = ObservableValue(value: 0)
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageModel, trainingTipId: String, tipNode: TipNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, analytics: AnalyticsContainer, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, viewedTrainingTips: ViewedTrainingTipsService) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageModel, primaryLanguage: LanguageModel, trainingTipId: String, tipNode: TipNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, analytics: AnalyticsContainer, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, viewedTrainingTips: ViewedTrainingTipsService) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.language = language
+        self.primaryLanguage = primaryLanguage
         self.trainingTipId = trainingTipId
         self.tipNode = tipNode
         self.manifest = manifest
@@ -151,6 +153,7 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
             manifest: manifest,
             resource: resource,
             language: language,
+            primaryLanguage: primaryLanguage,
             translationsFileCache: translationsFileCache,
             mobileContentNodeParser: mobileContentNodeParser,
             mobileContentAnalytics: mobileContentAnalytics,

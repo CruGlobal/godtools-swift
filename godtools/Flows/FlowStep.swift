@@ -51,7 +51,7 @@ enum FlowStep {
     case shareMenuTappedFromTool(tractRemoteShareSubscriber: TractRemoteShareSubscriber, tractRemoteSharePublisher: TractRemoteSharePublisher, resource: ResourceModel, selectedLanguage: LanguageModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, pageNumber: Int)
     case urlLinkTappedFromTool(url: URL)
     case toolDidEncounterErrorFromTool(error: ContentEventError)
-    case toolTrainingTipTappedFromTool(resource: ResourceModel, manifest: MobileContentXmlManifest, trainingTipId: String, tipNode: TipNode, language: LanguageModel)
+    case toolTrainingTipTappedFromTool(resource: ResourceModel, manifest: MobileContentXmlManifest, trainingTipId: String, tipNode: TipNode, language: LanguageModel, primaryLanguage: LanguageModel)
     
     // tool training
     case closeTappedFromToolTraining

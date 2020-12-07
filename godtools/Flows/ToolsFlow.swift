@@ -171,12 +171,13 @@ class ToolsFlow: Flow {
             
             navigationController.present(view.controller, animated: true, completion: nil)
             
-        case .toolTrainingTipTappedFromTool(let resource, let manifest, let trainingTipId, let tipNode, let language):
+        case .toolTrainingTipTappedFromTool(let resource, let manifest, let trainingTipId, let tipNode, let language, let primaryLanguage):
             
             let viewModel = ToolTrainingViewModel(
                 flowDelegate: self,
                 resource: resource,
                 language: language,
+                primaryLanguage: primaryLanguage,
                 trainingTipId: trainingTipId,
                 tipNode: tipNode,
                 manifest: manifest,

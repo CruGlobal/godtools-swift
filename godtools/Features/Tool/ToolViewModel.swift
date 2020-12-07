@@ -317,14 +317,12 @@ extension ToolViewModel {
         let languageTranslationModel: ToolLanguageTranslationModel = languageTranslationModels[language]
         
         if let pageNode = languageTranslationModel.getToolPageNode(page: page) {
-                                     
-            // TODO: Should primary manifest and primary language always be passed here? ~Levi
-            // or should we pass parallel for parallel pages.
-                        
+                                                             
             let toolPageDiContainer = ToolPageDiContainer(
                 manifest: languageTranslationModel.manifest,
                 resource: resource,
                 language: languageTranslationModel.language,
+                primaryLanguage: primaryLanguageTranslationModel.language,
                 translationsFileCache: translationsFileCache,
                 mobileContentNodeParser: mobileContentNodeParser,
                 mobileContentAnalytics: mobileContentAnalytics,
@@ -442,7 +440,7 @@ extension ToolViewModel: ToolPageViewModelTypeDelegate {
         
         let languageTranslationModel: ToolLanguageTranslationModel = languageTranslationModels[currentToolLanguage]
         
-        flowDelegate?.navigate(step: .toolTrainingTipTappedFromTool(resource: resource, manifest: languageTranslationModel.manifest, trainingTipId: trainingTipId, tipNode: tipNode, language: languageTranslationModel.language))
+        flowDelegate?.navigate(step: .toolTrainingTipTappedFromTool(resource: resource, manifest: languageTranslationModel.manifest, trainingTipId: trainingTipId, tipNode: tipNode, language: languageTranslationModel.language, primaryLanguage: primaryLanguageTranslationModel.language))
     }
     
     func toolPageCardChanged(cardPosition: Int?) {
