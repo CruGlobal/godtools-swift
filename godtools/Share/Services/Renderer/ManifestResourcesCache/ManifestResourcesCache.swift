@@ -30,7 +30,6 @@ class ManifestResourcesCache {
         let imageCacheKey: String = resourceSrc
         
         if let cachedImageData = imageMemoryCache?.getImageData(key: imageCacheKey) {
-            print("\n FETCHING IMAGE FROM CACHE!!!!")
             return UIImage(data: cachedImageData)
         }
         else {
@@ -48,9 +47,7 @@ class ManifestResourcesCache {
             }
             
             if let imageData = imageData, let image = UIImage(data: imageData) {
-                
-                print("\n ******** FETCHING NEW IMAGE *********")
-                
+                                
                 imageMemoryCache?.cacheImageDataForKey(key: imageCacheKey, imageData: imageData)
                 
                 return image
