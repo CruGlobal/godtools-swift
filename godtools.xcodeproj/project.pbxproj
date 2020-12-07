@@ -829,6 +829,8 @@
 		D129DE6B2543669C00841733 /* onboarding_tutorial_knife.json in Resources */ = {isa = PBXBuildFile; fileRef = D129DE682543669C00841733 /* onboarding_tutorial_knife.json */; };
 		D163EA96254A00BE00BA4EA9 /* share_tool_tutorial_link.json in Resources */ = {isa = PBXBuildFile; fileRef = D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */; };
 		D1838479257E86B3004F5674 /* container in Resources */ = {isa = PBXBuildFile; fileRef = D1838478257E86B3004F5674 /* container */; };
+		D183847B257E9019004F5674 /* FirebaseAnalyticsProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D183847A257E9019004F5674 /* FirebaseAnalyticsProperties.swift */; };
+		D183847D257E9774004F5674 /* FirebaseAnalyticsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D183847C257E9774004F5674 /* FirebaseAnalyticsConstants.swift */; };
 		D1B68BBF24785580001A2894 /* TrackActionAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B68BBE24785580001A2894 /* TrackActionAnalytics.swift */; };
 /* End PBXBuildFile section */
 
@@ -1735,6 +1737,8 @@
 		D129DE682543669C00841733 /* onboarding_tutorial_knife.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding_tutorial_knife.json; sourceTree = "<group>"; };
 		D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = share_tool_tutorial_link.json; sourceTree = "<group>"; };
 		D1838478257E86B3004F5674 /* container */ = {isa = PBXFileReference; lastKnownFileType = folder; path = container; sourceTree = "<group>"; };
+		D183847A257E9019004F5674 /* FirebaseAnalyticsProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAnalyticsProperties.swift; sourceTree = "<group>"; };
+		D183847C257E9774004F5674 /* FirebaseAnalyticsConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAnalyticsConstants.swift; sourceTree = "<group>"; };
 		D1B68BBE24785580001A2894 /* TrackActionAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackActionAnalytics.swift; sourceTree = "<group>"; };
 		D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtoolsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D61FF360D11F854476B6E206 /* Pods_godtools.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtools.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2763,6 +2767,8 @@
 			children = (
 				4561AC2425598BA300841D9A /* FirebaseAnalytics.swift */,
 				4561AC2325598BA300841D9A /* FirebaseAnalyticsType.swift */,
+				D183847A257E9019004F5674 /* FirebaseAnalyticsProperties.swift */,
+				D183847C257E9774004F5674 /* FirebaseAnalyticsConstants.swift */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -4690,10 +4696,12 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-godtools/Pods-godtools-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseInAppMessaging/InAppMessagingDisplayResources.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/GoogleTagManager/TagManagerResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/InAppMessagingDisplayResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TagManagerResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -4831,6 +4839,7 @@
 				450EF820247EA7A300978926 /* AllToolsView.swift in Sources */,
 				454D59F224BF371F00B8528B /* OpenTutorialViewModelType.swift in Sources */,
 				450F1294256C165900ED69D4 /* KeyboardNotificationObserver.swift in Sources */,
+				D183847D257E9774004F5674 /* FirebaseAnalyticsConstants.swift in Sources */,
 				45B2AE652458DC4600253BAD /* ExitLinkAnalytics.swift in Sources */,
 				4586D7CE246ECB530062D988 /* TractPage.swift in Sources */,
 				45ABE320240D51A500E05AE2 /* GlobalActivityResults.swift in Sources */,
@@ -5457,6 +5466,7 @@
 				4586D7E8246ECEE90062D988 /* TractButton.swift in Sources */,
 				459698E0255E23EC0085755A /* TrainingTipViewModel.swift in Sources */,
 				450E21BF24919E5500D489A1 /* ResourcesPlusLatestTranslationsAndAttachmentsModel.swift in Sources */,
+				D183847B257E9019004F5674 /* FirebaseAnalyticsProperties.swift in Sources */,
 				45B2AE49245886B100253BAD /* MailViewModel.swift in Sources */,
 				45EE3326246E237B003CC641 /* TractPageCache.swift in Sources */,
 				45668E7523E0E1CC002728E7 /* OnboardingTutorialUsageItem.swift in Sources */,

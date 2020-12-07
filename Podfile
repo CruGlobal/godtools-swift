@@ -24,7 +24,7 @@ target 'godtools' do
     pod 'AppsFlyerFramework', '~> 6.0.0'
     pod 'Crashlytics'
     pod 'GoogleConversionTracking', '~> 3.4.0'
-    pod 'GoogleTagManager', '~> 6.0'
+    pod 'GoogleTagManager'
     pod 'Fabric'
     pod 'FacebookCore'
     pod 'Fuzi'
