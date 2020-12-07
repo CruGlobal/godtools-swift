@@ -150,6 +150,7 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
         let pageNode: PageNode = pageNodes[page]
         
         let toolPageDiContainer = ToolPageDiContainer(
+            imageMemoryCache: nil,
             manifest: manifest,
             resource: resource,
             language: language,

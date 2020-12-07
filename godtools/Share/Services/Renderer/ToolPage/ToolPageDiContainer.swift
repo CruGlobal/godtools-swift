@@ -27,10 +27,10 @@ class ToolPageDiContainer {
     let viewedTrainingTips: ViewedTrainingTipsService
     let trainingTipsEnabled: Bool
     
-    required init(manifest: MobileContentXmlManifest, resource: ResourceModel, language: LanguageModel, primaryLanguage: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, analytics: AnalyticsContainer, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, viewedTrainingTips: ViewedTrainingTipsService, trainingTipsEnabled: Bool) {
+    required init(imageMemoryCache: ImageMemoryCache?, manifest: MobileContentXmlManifest, resource: ResourceModel, language: LanguageModel, primaryLanguage: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, analytics: AnalyticsContainer, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, viewedTrainingTips: ViewedTrainingTipsService, trainingTipsEnabled: Bool) {
         
         self.manifest = manifest
-        self.manifestResourcesCache = ManifestResourcesCache(manifest: manifest, translationsFileCache: translationsFileCache)
+        self.manifestResourcesCache = ManifestResourcesCache(manifest: manifest, translationsFileCache: translationsFileCache, imageMemoryCache: imageMemoryCache)
         self.resource = resource
         self.language = language
         self.primaryLanguage = primaryLanguage
