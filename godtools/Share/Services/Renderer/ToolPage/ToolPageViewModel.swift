@@ -336,6 +336,10 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         heroViewModel?.heroDidDisappear()
     }
     
+    func cardBounceAnimationFinished() {
+        diContainer.cardJumpService.saveDidShowCardJump()
+    }
+    
     private func trackCardAnalytics(cardPosition: Int) {
         
         let screenName: String = ToolPageCardAnalyticsScreenName(cardPosition: cardPosition).screenName

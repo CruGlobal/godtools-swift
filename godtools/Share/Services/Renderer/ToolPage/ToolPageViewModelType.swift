@@ -42,4 +42,5 @@ protocol ToolPageViewModelType: NSObject {
     func setCard(cardPosition: Int?, animated: Bool)
     func pageDidAppear()
     func pageDidDisappear()
+    func cardBounceAnimationFinished()
 }

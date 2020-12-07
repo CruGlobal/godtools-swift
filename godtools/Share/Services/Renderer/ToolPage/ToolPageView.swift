@@ -133,7 +133,8 @@ class ToolPageView: UIViewController {
                         card: firstCard,
                         cardTopConstraint: firstContraint,
                         cardStartingTopConstant: toolPage.getCardTopConstant(state: .starting(cardPosition: 0)),
-                        layoutView: toolPage.view
+                        layoutView: toolPage.view,
+                        delegate: toolPage
                     )
                     cardBounceAnimation.startAnimation()
                     self?.cardBounceAnimation = cardBounceAnimation
@@ -317,6 +318,14 @@ class ToolPageView: UIViewController {
             view.layoutIfNeeded()
             callToActionView.alpha = callToActionAlpha
         }
+    }
+}
+
+// MARK: - ToolPageCardBounceAnimationDelegate
+
+extension ToolPageView: ToolPageCardBounceAnimationDelegate {
+    func toolPageCardBounceAnimationDidFinish(cardBounceAnimation: ToolPageCardBounceAnimation, forceStopped: Bool) {
+        viewModel.cardBounceAnimationFinished()
     }
 }
 
