@@ -236,7 +236,8 @@ class ToolsFlow: Flow {
             navigateToTool(resource: resource, trainingTipsEnabled: true)
             dismissLearnToShareToolFlow()
             
-        case .closeTappedFromLearnToShareTool:
+        case .closeTappedFromLearnToShareTool(let resource):
+            navigateToTool(resource: resource, trainingTipsEnabled: true)
             dismissLearnToShareToolFlow()
             
         case .urlLinkTappedFromToolDetail(let url):
