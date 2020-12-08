@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MobileContentBackgroundImageView {
+class MobileContentBackgroundImageView: ReusableView {
     
     private var viewModel: MobileContentBackgroundImageViewModel?
     private var imageView: UIImageView?
@@ -18,11 +18,13 @@ class MobileContentBackgroundImageView {
         
     }
     
-    func reset() {
+    func resetView() {
         imageView?.removeFromSuperview()
     }
     
     func configure(viewModel: MobileContentBackgroundImageViewModel, parentView: UIView) {
+        
+        resetView()
         
         guard let backgroundImage = viewModel.backgroundImage else {
             return

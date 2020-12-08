@@ -118,6 +118,8 @@ class ToolPageCardView: UIView {
     
     func configure(viewModel: ToolPageCardViewModelType) {
         
+        self.viewModel = viewModel
+        
         backgroundImageView.configure(viewModel: viewModel.backgroundImageWillAppear(), parentView: cardBackgroundImageContainer)
         
         titleLabel.text = viewModel.title
