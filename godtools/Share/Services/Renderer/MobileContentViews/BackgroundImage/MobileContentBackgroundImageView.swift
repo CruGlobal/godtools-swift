@@ -34,6 +34,7 @@ class MobileContentBackgroundImageView: ReusableView {
         self.parentView = parentView
         
         let imageView: UIImageView = UIImageView()
+        self.imageView = imageView
         imageView.backgroundColor = .clear
         imageView.image = backgroundImage
         imageView.contentMode = .scaleAspectFit

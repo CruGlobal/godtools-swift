@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ToolPageCardView: UIView {
+class ToolPageCardView: UIView, ReusableView {
         
     private let backgroundImageView: MobileContentBackgroundImageView = MobileContentBackgroundImageView()
     private let swipeUpGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer()
@@ -23,6 +23,7 @@ class ToolPageCardView: UIView {
     private var keyboardHeightForAddedContentSize: Double?
     private var didAddKeyboardHeightToContentSize: Bool = false
     private var cardSwipingIsEnabled: Bool = false
+    private var isObservingKeyboard: Bool = false
             
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var headerTrainingTipImageView: UIImageView!
@@ -67,9 +68,7 @@ class ToolPageCardView: UIView {
     
     deinit {
         print("x deinit: \(type(of: self))")
-        keyboardObserver.stopObservingKeyboardChanges()
-        keyboardObserver.keyboardStateDidChangeSignal.removeObserver(self)
-        keyboardObserver.keyboardHeightDidChangeSignal.removeObserver(self)
+        disableKeyboardObserving()
     }
     
     private func initializeNib() {
@@ -114,6 +113,18 @@ class ToolPageCardView: UIView {
             UIColor.white.cgColor
         ]
         bottomGradientView.layer.insertSublayer(bottomGradient, at: 0)
+    }
+    
+    func resetView() {
+        
+        setCardSwipingEnabled(enabled: true)
+        removeKeyboardHeightFromContentSize()
+        backgroundImageView.resetView()
+        contentStackContainer.removeAllSubviews()
+        contentStackView?.removeFromSuperview()
+        contentStackView = nil
+        contentFormView = nil
+        viewModel = nil
     }
     
     func configure(viewModel: ToolPageCardViewModelType) {
@@ -224,6 +235,17 @@ class ToolPageCardView: UIView {
         
         self.contentFormView = form
         
+        enableKeyboardObserving()
+    }
+    
+    private func enableKeyboardObserving() {
+        
+        guard !isObservingKeyboard else {
+            return
+        }
+        
+        isObservingKeyboard = true
+        
         keyboardObserver.startObservingKeyboardChanges()
         keyboardObserver.keyboardStateDidChangeSignal.addObserver(self) { [weak self] (keyboardStateChange: KeyboardStateChange) in
             self?.handleKeyboardStateChange(keyboardStateChange: keyboardStateChange)
@@ -232,6 +254,19 @@ class ToolPageCardView: UIView {
         keyboardObserver.keyboardHeightDidChangeSignal.addObserver(self) { [weak self] (height: Double) in
             self?.handleKeyboardHeightChange(height: height)
         }
+    }
+    
+    private func disableKeyboardObserving() {
+        
+        guard isObservingKeyboard else {
+            return
+        }
+        
+        isObservingKeyboard = false
+        
+        keyboardObserver.stopObservingKeyboardChanges()
+        keyboardObserver.keyboardStateDidChangeSignal.removeObserver(self)
+        keyboardObserver.keyboardHeightDidChangeSignal.removeObserver(self)
     }
     
     private func handleKeyboardStateChange(keyboardStateChange: KeyboardStateChange) {

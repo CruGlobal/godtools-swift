@@ -13,7 +13,7 @@ protocol ToolPageCardsViewDelegate: class {
     func toolPageCardsStateDidChange(toolPageCards: ToolPageCardsView, viewModel: ToolPageViewModelType, cardsState: ToolPageCardsState, animated: Bool)
 }
 
-class ToolPageCardsView: NSObject {
+class ToolPageCardsView: NSObject, ReusableView {
     
     private let keyboardObserver: KeyboardObserverType = KeyboardNotificationObserver(loggingEnabled: false)
     
@@ -21,6 +21,7 @@ class ToolPageCardsView: NSObject {
     private var safeArea: UIEdgeInsets = .zero
     private var cards: [ToolPageCardView] = Array()
     private var cardTopConstraints: [NSLayoutConstraint] = Array()
+    private var cardHeightConstraints: [NSLayoutConstraint] = Array()
     private var currentCardState: ToolPageCardsState = .initialized
     private var cardBounceAnimation: ToolPageCardBounceAnimation?
     
@@ -28,7 +29,7 @@ class ToolPageCardsView: NSObject {
     private weak var callToActionView: UIView?
     private weak var delegate: ToolPageCardsViewDelegate?
     
-    override init() {
+    required override init() {
         
         super.init()
         
@@ -48,8 +49,29 @@ class ToolPageCardsView: NSObject {
     }
     
     func resetView() {
-        
+           
+        currentCardState = .initialized
+        resetCards()
         self.viewModel = nil
+    }
+    
+    private func resetCards() {
+        
+        guard !cards.isEmpty else {
+            return
+        }
+        
+        let screenHeight: CGFloat = UIScreen.main.bounds.size.height
+        
+        for index in 0 ..< cards.count {
+            
+            let cardView: ToolPageCardView = cards[index]
+            let cardTopConstraint: NSLayoutConstraint = cardTopConstraints[index]
+            cardView.resetView()
+            cardView.isHidden = true
+            cardTopConstraint.constant = screenHeight
+        }
+        parentView?.layoutIfNeeded()
     }
     
     func configure(parentView: UIView, viewModel: ToolPageViewModelType, safeArea: UIEdgeInsets, callToActionView: UIView, delegate: ToolPageCardsViewDelegate) {
@@ -64,7 +86,10 @@ class ToolPageCardsView: NSObject {
             return
         }
         
-        addCardsAndCardsConstraints(parentView: parentView, cardsViewModels: viewModel.cardsViewModels)
+        addCardsAndCardsConstraints(
+            parentView: parentView,
+            cardsViewModels: viewModel.cardsViewModels
+        )
                 
         setCardsState(viewModel: viewModel, cardsState: .starting, animated: false)
         
@@ -93,6 +118,10 @@ class ToolPageCardsView: NSObject {
                 cardsView.cardBounceAnimation?.startAnimation()
             }
         }
+    }
+    
+    var numberOfCards: Int {
+        return viewModel?.numberOfCards ?? 0
     }
     
     func getFirstCard() -> ToolPageCardView? {
@@ -126,7 +155,7 @@ extension ToolPageCardsView {
             return
         }
         
-        guard currentCardPosition >= 0 && currentCardPosition < cards.count else {
+        guard currentCardPosition >= 0 && currentCardPosition < numberOfCards else {
             return
         }
         
@@ -244,7 +273,7 @@ extension ToolPageCardsView {
                         
             var visibleCardPosition: Int = 0
             
-            for cardPosition in 0 ..< cards.count {
+            for cardPosition in 0 ..< numberOfCards {
                 
                 let cardViewModel: ToolPageCardViewModelType = viewModel.cardsViewModels[cardPosition]
                 let cardTopConstraint: NSLayoutConstraint = cardTopConstraints[cardPosition]
@@ -269,10 +298,14 @@ extension ToolPageCardsView {
                 setCardsState(viewModel: viewModel, cardsState: .collapseAllCards, animated: animated)
                 return
             }
+            
+            guard showCardAtPosition >= 0 && showCardAtPosition < numberOfCards else {
+                return
+            }
                         
             var visibleCardPosition: Int = 0
             
-            for cardPosition in 0 ..< cards.count {
+            for cardPosition in 0 ..< numberOfCards {
                 
                 let cardViewModel: ToolPageCardViewModelType = viewModel.cardsViewModels[cardPosition]
                 let cardTopConstraint: NSLayoutConstraint = cardTopConstraints[cardPosition]
@@ -297,7 +330,7 @@ extension ToolPageCardsView {
             
         case .showingKeyboard(let showingCardAtPosition):
             
-            for cardPosition in 0 ..< cards.count {
+            for cardPosition in 0 ..< numberOfCards {
                 
                 let cardTopConstraint: NSLayoutConstraint = cardTopConstraints[cardPosition]
                 
@@ -310,7 +343,7 @@ extension ToolPageCardsView {
             
             var visibleCardPosition: Int = 0
             
-            for cardPosition in 0 ..< cards.count {
+            for cardPosition in 0 ..< numberOfCards {
                 
                 let cardViewModel: ToolPageCardViewModelType = viewModel.cardsViewModels[cardPosition]
                 let cardTopConstraint: NSLayoutConstraint = cardTopConstraints[cardPosition]
@@ -367,64 +400,86 @@ extension ToolPageCardsView {
     
     private func addCardsAndCardsConstraints(parentView: UIView, cardsViewModels: [ToolPageCardViewModelType]) {
         
-        for cardViewModel in cardsViewModels {
+        for index in 0 ..< cardsViewModels.count {
             
-            let cardView: ToolPageCardView = ToolPageCardView()
-            cardView.configure(viewModel: cardViewModel)
+            let cardViewModel: ToolPageCardViewModelType = cardsViewModels[index]
             
-            cards.append(cardView)
-            
-            parentView.addSubview(cardView)
-
-            cardView.translatesAutoresizingMaskIntoConstraints = false
-            
-            let top: NSLayoutConstraint = NSLayoutConstraint(
-                item: cardView,
-                attribute: .top,
-                relatedBy: .equal,
-                toItem: parentView,
-                attribute: .top,
-                multiplier: 1,
-                constant: cardInsets.top
-            )
-            
-            let leading: NSLayoutConstraint = NSLayoutConstraint(
-                item: cardView,
-                attribute: .leading,
-                relatedBy: .equal,
-                toItem: parentView,
-                attribute: .leading,
-                multiplier: 1,
-                constant: cardInsets.left
-            )
-            
-            let trailing: NSLayoutConstraint = NSLayoutConstraint(
-                item: cardView,
-                attribute: .trailing,
-                relatedBy: .equal,
-                toItem: parentView,
-                attribute: .trailing,
-                multiplier: 1,
-                constant: cardInsets.right * -1
-            )
-            
-            parentView.addConstraint(top)
-            parentView.addConstraint(leading)
-            parentView.addConstraint(trailing)
-            
-            let heightConstraint: NSLayoutConstraint = NSLayoutConstraint(
-                item: cardView,
-                attribute: .height,
-                relatedBy: .equal,
-                toItem: nil,
-                attribute: .notAnAttribute,
-                multiplier: 1,
-                constant: cardHeight
-            )
-            
-            cardView.addConstraint(heightConstraint)
-            
-            cardTopConstraints.append(top)
+            if index >= 0 && index < cards.count {
+                
+                let cardView: ToolPageCardView = cards[index]
+                
+                cardView.configure(viewModel: cardViewModel)
+                cardView.isHidden = false
+                cardHeightConstraints[index].constant = cardHeight
+            }
+            else {
+                
+                instatiateAndAddNewCard(parentView: parentView, cardViewModel: cardViewModel)
+            }
         }
+        
+        parentView.layoutIfNeeded()
+    }
+    
+    private func instatiateAndAddNewCard(parentView: UIView, cardViewModel: ToolPageCardViewModelType) {
+        
+        let cardView: ToolPageCardView = ToolPageCardView()
+        
+        cardView.configure(viewModel: cardViewModel)
+        
+        cards.append(cardView)
+        
+        parentView.addSubview(cardView)
+
+        cardView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let top: NSLayoutConstraint = NSLayoutConstraint(
+            item: cardView,
+            attribute: .top,
+            relatedBy: .equal,
+            toItem: parentView,
+            attribute: .top,
+            multiplier: 1,
+            constant: cardInsets.top
+        )
+        
+        let leading: NSLayoutConstraint = NSLayoutConstraint(
+            item: cardView,
+            attribute: .leading,
+            relatedBy: .equal,
+            toItem: parentView,
+            attribute: .leading,
+            multiplier: 1,
+            constant: cardInsets.left
+        )
+        
+        let trailing: NSLayoutConstraint = NSLayoutConstraint(
+            item: cardView,
+            attribute: .trailing,
+            relatedBy: .equal,
+            toItem: parentView,
+            attribute: .trailing,
+            multiplier: 1,
+            constant: cardInsets.right * -1
+        )
+        
+        parentView.addConstraint(top)
+        parentView.addConstraint(leading)
+        parentView.addConstraint(trailing)
+        
+        let heightConstraint: NSLayoutConstraint = NSLayoutConstraint(
+            item: cardView,
+            attribute: .height,
+            relatedBy: .equal,
+            toItem: nil,
+            attribute: .notAnAttribute,
+            multiplier: 1,
+            constant: cardHeight
+        )
+        
+        cardView.addConstraint(heightConstraint)
+        
+        cardTopConstraints.append(top)
+        cardHeightConstraints.append(heightConstraint)
     }
 }

@@ -43,11 +43,19 @@ class ToolPageCallToActionViewModel {
         return pageNode.callToActionNode?.getControlColor()?.color ?? toolPageColors.primaryColor
     }
     
+    var semanticContentAttribute: UISemanticContentAttribute {
+        if languageDirection == .rightToLeft {
+            return .forceRightToLeft
+        }
+        return .forceLeftToRight
+    }
+    
     var callToActionButtonImage: UIImage? {
+        
         guard let buttonImage = UIImage(named: "right_arrow_blue") else {
             return nil
         }
-        
+                
         if languageDirection == .leftToRight {
             return buttonImage
         }

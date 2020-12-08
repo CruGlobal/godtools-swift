@@ -307,11 +307,15 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     func setCard(cardPosition: Int?, animated: Bool) {
         
         if let currentCardPosition = currentCard.value.value, currentCardPosition != cardPosition {
-            allCardsViewModels[currentCardPosition].cardWillDisappear()
+            if currentCardPosition >= 0 && currentCardPosition < allCardsViewModels.count {
+                allCardsViewModels[currentCardPosition].cardWillDisappear()
+            }
         }
         
         if let newCardPosition = cardPosition, newCardPosition != currentCard.value.value {
-            allCardsViewModels[newCardPosition].cardWillAppear()
+            if newCardPosition >= 0 && newCardPosition < allCardsViewModels.count {
+                allCardsViewModels[newCardPosition].cardWillAppear()
+            }
         }
         
         if let cardPosition = cardPosition, cardPosition >= 0 && cardPosition < allCardsViewModels.count {

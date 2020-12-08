@@ -117,16 +117,12 @@ extension ToolView: PageNavigationCollectionViewDelegate {
             indexPath: indexPath) as! ToolPageCell
         
         if let toolPageViewModel = viewModel.toolPageWillAppear(page: indexPath.row), let safeArea = self.safeArea {
-            
-            let toolPage = ToolPageView()
-            
-            toolPage.configure(
+                        
+            cell.configure(
                 viewModel: toolPageViewModel,
                 windowViewController: navigationController ?? self,
                 safeArea: safeArea
-            )
-            
-            cell.configure(toolPage: toolPage)
+            )            
         }
         
         return cell

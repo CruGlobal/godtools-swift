@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ToolPageView: UIView {
+class ToolPageView: UIView, ReusableView {
     
     private let panGestureToControlPageCollectionViewPanningSensitivity: UIPanGestureRecognizer = UIPanGestureRecognizer()
     private let backgroundImageView: MobileContentBackgroundImageView = MobileContentBackgroundImageView()
@@ -136,6 +136,7 @@ class ToolPageView: UIView {
         let callToActionViewModel: ToolPageCallToActionViewModel = viewModel.callToActionViewModel
         callToActionTitleLabel.text = callToActionViewModel.callToActionTitle
         callToActionTitleLabel.textColor = callToActionViewModel.callToActionTitleColor
+        callToActionNextButton.semanticContentAttribute = callToActionViewModel.semanticContentAttribute
         callToActionNextButton.setImage(callToActionViewModel.callToActionButtonImage, for: .normal)
         callToActionNextButton.setImageColor(color: callToActionViewModel.callToActionNextButtonColor)
         
@@ -151,7 +152,6 @@ class ToolPageView: UIView {
         
         //
         let hidesHeader: Bool = viewModel.headerViewModel.hidesHeader
-        let hidesCards: Bool = viewModel.numberOfVisibleCards == 0
         let hidesCallToAction: Bool = viewModel.callToActionViewModel.hidesCallToAction
         
         // contentStack
@@ -181,6 +181,7 @@ class ToolPageView: UIView {
         // hero top and height
         if let heroViewModel = viewModel.heroViewModel {
             
+            let hidesCards: Bool = viewModel.numberOfVisibleCards == 0
             let topInset: CGFloat = 15
             let bottomInset: CGFloat = 0
             let screenHeight: CGFloat = UIScreen.main.bounds.size.height

@@ -74,7 +74,15 @@ class ToolViewModel: NSObject, ToolViewModelType {
         
         self.primaryLanguageTranslationModel = primaryLanguageTranslationModel
                 
-        if let parallelLanguage = parallelLanguage, let parallelTranslationManifestData = parallelTranslationManifestData {
+        let parallelLanguageIsEqualToPrimaryLanguage: Bool
+        if let parallelLanguage = parallelLanguage {
+            parallelLanguageIsEqualToPrimaryLanguage = parallelLanguage.code.lowercased() == primaryLanguage.code.lowercased()
+        }
+        else {
+            parallelLanguageIsEqualToPrimaryLanguage = false
+        }
+        
+        if !parallelLanguageIsEqualToPrimaryLanguage, let parallelLanguage = parallelLanguage, let parallelTranslationManifestData = parallelTranslationManifestData {
             
             let parallelLanguageTranslationModel = ToolLanguageTranslationModel(
                 language: parallelLanguage,

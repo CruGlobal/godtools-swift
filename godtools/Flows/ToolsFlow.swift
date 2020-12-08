@@ -613,7 +613,7 @@ class ToolsFlow: Flow {
         
         let languageDirectionSemanticContentAttribute: UISemanticContentAttribute
         
-        switch appDiContainer.languageDirectionService.primaryLanguageDirection.value {
+        switch primaryLanguage.languageDirection {
             
         case .leftToRight:
             languageDirectionSemanticContentAttribute = .forceLeftToRight

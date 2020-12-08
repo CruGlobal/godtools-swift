@@ -10,5 +10,6 @@ import Foundation
 
 protocol ReusableView {
     
+    init()
     func resetView()
 }
