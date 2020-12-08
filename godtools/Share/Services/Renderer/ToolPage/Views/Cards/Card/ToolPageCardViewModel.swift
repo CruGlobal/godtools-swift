@@ -79,7 +79,7 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     }
     
     deinit {
-        print("x deinit: \(type(of: self))")
+        //print("x deinit: \(type(of: self))")
         diContainer.mobileContentEvents.eventButtonTappedSignal.removeObserver(self)
         
         contentStackViewModel.contentStackRenderer.didRenderTrainingTipsSignal.removeObserver(self)

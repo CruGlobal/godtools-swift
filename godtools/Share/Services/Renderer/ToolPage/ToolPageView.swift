@@ -5,7 +5,6 @@
 //  Created by Levi Eggert on 10/27/20.
 //  Copyright © 2020 Cru. All rights reserved.
 //
-
 import UIKit
 
 class ToolPageView: UIView {
@@ -14,9 +13,16 @@ class ToolPageView: UIView {
     private let safeArea: UIEdgeInsets
     private let panGestureToControlPageCollectionViewPanningSensitivity: UIPanGestureRecognizer = UIPanGestureRecognizer()
     private let backgroundImageView: MobileContentBackgroundImageView = MobileContentBackgroundImageView()
+    private let keyboardObserver: KeyboardObserverType = KeyboardNotificationObserver(loggingEnabled: false)
     
-    private var cardsView: ToolPageCardsView?
+    private var contentStackView: MobileContentStackView?
+    private var heroView: MobileContentStackView?
+    private var cards: [ToolPageCardView] = Array()
+    private var cardTopConstraints: [NSLayoutConstraint] = Array()
+    private var currentCardState: ToolPageCardsState = .initialized
     private var toolModal: ToolPageModalView?
+    private var cardBounceAnimation: ToolPageCardBounceAnimation?
+    private var didLayoutSubviews: Bool = false
     
     private weak var windowViewController: UIViewController?
     
@@ -63,6 +69,9 @@ class ToolPageView: UIView {
     
     deinit {
         print("x deinit: \(type(of: self))")
+        keyboardObserver.stopObservingKeyboardChanges()
+        keyboardObserver.keyboardStateDidChangeSignal.removeObserver(self)
+        keyboardObserver.keyboardHeightDidChangeSignal.removeObserver(self)
     }
     
     private func initializeNib() {
@@ -127,7 +136,6 @@ class ToolPageView: UIView {
         let callToActionViewModel: ToolPageCallToActionViewModel = viewModel.callToActionViewModel
         callToActionTitleLabel.text = callToActionViewModel.callToActionTitle
         callToActionTitleLabel.textColor = callToActionViewModel.callToActionTitleColor
-        callToActionNextButton.semanticContentAttribute = callToActionViewModel.semanticContentAttribute
         callToActionNextButton.setImage(callToActionViewModel.callToActionButtonImage, for: .normal)
         callToActionNextButton.setImageColor(color: callToActionViewModel.callToActionNextButtonColor)
         
@@ -141,8 +149,13 @@ class ToolPageView: UIView {
             }
         }
         
-        //
+        // keyboard
+        keyboardObserver.keyboardStateDidChangeSignal.addObserver(self) { [weak self] (keyboardStateChange: KeyboardStateChange) in
+            self?.handleKeyboardStateChange(keyboardStateChange: keyboardStateChange)
+        }
+        
         let hidesHeader: Bool = viewModel.headerViewModel.hidesHeader
+        let hidesCards: Bool = viewModel.numberOfVisibleCards == 0
         let hidesCallToAction: Bool = viewModel.callToActionViewModel.hidesCallToAction
         
         // contentStack
@@ -152,28 +165,53 @@ class ToolPageView: UIView {
             contentStackView.constrainEdgesToSuperview()
             contentStackContainerView.isHidden = false
             contentStackContainerView.layoutIfNeeded()
+            self.contentStackView = contentStackView
         }
         else {
             contentStackContainerView.isHidden = true
         }
         
-        setHeaderHidden(headerViewModel: viewModel.headerViewModel, hidden: hidesHeader, animated: false)
-        setCallToActionHidden(callToActionViewModel: viewModel.callToActionViewModel, hidden: hidesCallToAction, animated: false)
-        
+        setHeaderHidden(hidden: hidesHeader, animated: false)
+        setCallToActionHidden(hidden: hidesCallToAction, animated: false)
+                
+        //cards
         if viewModel.numberOfCards > 0 {
-            cardsView = ToolPageCardsView(
-                parentView: self,
-                viewModel: viewModel,
-                safeArea: safeArea,
-                callToActionView: callToActionView,
-                delegate: self
-            )
+                        
+            addCardsAndCardsConstraints(parentView: self, cardsViewModels: viewModel.cardsViewModels)
+                        
+            setCardsState(cardsState: .starting, animated: false)
+            
+            viewModel.currentCard.addObserver(self) { [weak self] (cardPositionAnimatable: AnimatableValue<Int?>) in
+                self?.setCardsState(cardsState: .showingCard(showingCardAtPosition: cardPositionAnimatable.value), animated: cardPositionAnimatable.animated)
+            }
+            
+            viewModel.hidesCardJump.addObserver(self) { [weak self] (hidesCardJump: Bool) in
+                
+                guard let toolPage = self else {
+                    return
+                }
+                
+                if hidesCardJump, let cardBounceAnimation = self?.cardBounceAnimation {
+                    cardBounceAnimation.stopAnimation(forceStop: true)
+                }
+                else if !hidesCardJump, let firstCard = self?.cards.first, let firstContraint = self?.cardTopConstraints.first {
+                    
+                    let cardBounceAnimation = ToolPageCardBounceAnimation(
+                        card: firstCard,
+                        cardTopConstraint: firstContraint,
+                        cardStartingTopConstant: toolPage.getCardTopConstant(state: .starting(cardPosition: 0)),
+                        layoutView: toolPage,
+                        delegate: toolPage
+                    )
+                    cardBounceAnimation.startAnimation()
+                    self?.cardBounceAnimation = cardBounceAnimation
+                }
+            }
         }
         
         // hero top and height
         if let heroViewModel = viewModel.heroViewModel {
             
-            let hidesCards: Bool = viewModel.numberOfCards == 0
             let topInset: CGFloat = 15
             let bottomInset: CGFloat = 0
             let screenHeight: CGFloat = UIScreen.main.bounds.size.height
@@ -188,7 +226,7 @@ class ToolPageView: UIView {
             }
             else if !hidesCards {
                 
-                guard let cardView = cardsView?.getFirstCard() else {
+                guard let cardView = cards.first else {
                     assertionFailure("Cards should be initialized and added at this point.")
                     return
                 }
@@ -204,9 +242,9 @@ class ToolPageView: UIView {
             heroContainerView.addSubview(heroView)
             heroView.constrainEdgesToSuperview()
             heroContainerView.isHidden = false
+            self.heroView = heroView
             
             heroContainerView.layoutIfNeeded()
-            layoutIfNeeded()
         }
         else {
             heroContainerView.isHidden = true
@@ -234,10 +272,14 @@ class ToolPageView: UIView {
         //heroView?.setContentOffset(contentOffset: CGPoint(x: 0, y: heroTopContentInset * -1))
     }
     
-    private func setHeaderHidden(headerViewModel: ToolPageHeaderViewModel, hidden: Bool, animated: Bool) {
+    private var numberOfCards: Int {
+        return viewModel.numberOfCards
+    }
+    
+    private func setHeaderHidden(hidden: Bool, animated: Bool) {
              
         let attemptingToShowHeader: Bool = !hidden
-        if attemptingToShowHeader && headerViewModel.hidesHeader {
+        if attemptingToShowHeader && viewModel.headerViewModel.hidesHeader {
             return
         }
         
@@ -260,10 +302,10 @@ class ToolPageView: UIView {
         }
     }
     
-    private func setCallToActionHidden(callToActionViewModel: ToolPageCallToActionViewModel, hidden: Bool, animated: Bool) {
+    private func setCallToActionHidden(hidden: Bool, animated: Bool) {
         
         let attemptingToShowCallToAction: Bool = !hidden
-        if attemptingToShowCallToAction && callToActionViewModel.hidesCallToAction {
+        if attemptingToShowCallToAction && viewModel.callToActionViewModel.hidesCallToAction {
             return
         }
         
@@ -285,43 +327,15 @@ class ToolPageView: UIView {
     }
 }
 
-// MARK: - ToolPageCardsViewDelegate
+// MARK: - ToolPageCardBounceAnimationDelegate
 
-extension ToolPageView: ToolPageCardsViewDelegate {
-    
-    func toolPageCardsStateDidChange(toolPageCards: ToolPageCardsView, viewModel: ToolPageViewModelType, cardsState: ToolPageCardsState, animated: Bool) {
-        
-        switch cardsState {
-            
-        case .starting:
-            
-            setHeaderHidden(headerViewModel: viewModel.headerViewModel, hidden: false, animated: animated)
-            setCallToActionHidden(callToActionViewModel: viewModel.callToActionViewModel, hidden: true, animated: animated)
-            
-        case .showingCard(let showingCardAtPosition):
-            
-            guard let showCardAtPosition = showingCardAtPosition else {
-                return
-            }
-            
-            setHeaderHidden(headerViewModel: viewModel.headerViewModel, hidden: true, animated: animated)
-            let isShowingLastVisibleCard: Bool = showCardAtPosition >= viewModel.numberOfVisibleCards - 1
-            setCallToActionHidden(callToActionViewModel: viewModel.callToActionViewModel, hidden: !isShowingLastVisibleCard, animated: animated)
-            
-        case .showingKeyboard(let showingCardAtPosition):
-            break
-            
-        case .collapseAllCards:
-            break
-            
-        case .initialized:
-            break
-        }
+extension ToolPageView: ToolPageCardBounceAnimationDelegate {
+    func toolPageCardBounceAnimationDidFinish(cardBounceAnimation: ToolPageCardBounceAnimation, forceStopped: Bool) {
+        viewModel.cardBounceAnimationFinished()
     }
 }
 
 // MARK: - Modal
-
 extension ToolPageView {
     
     private func presentModal(viewModel: ToolPageModalViewModel, animated: Bool) {
@@ -368,12 +382,330 @@ extension ToolPageView {
     }
 }
 
-// MARK: - UIGestureRecognizerDelegate
+// MARK: - Cards Constraints and State
+extension ToolPageView {
+    
+    private var cardInsets: UIEdgeInsets {
+        return UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
+    }
+    
+    private var cardsContainerFrameRelativeToScreen: CGRect {
+        let screenSize: CGSize = UIScreen.main.bounds.size
+        let height: CGFloat = screenSize.height - safeArea.top - safeArea.bottom
+        return CGRect(x: 0, y: safeArea.top, width: screenSize.width, height: height)
+    }
+    
+    private var cardCollapsedVisibilityPercentage: CGFloat {
+        return 0.4
+    }
+    
+    private var cardsTopRelativeToCardsContainerFrameBottom: CGFloat {
+        return cardsContainerFrameRelativeToScreen.origin.y + cardsContainerFrameRelativeToScreen.size.height
+    }
+    
+    private var cardsContainerHeight: CGFloat {
+        return cardsContainerFrameRelativeToScreen.size.height
+    }
+    
+    private var cardHeight: CGFloat {
+                
+        guard let cardView = cards.first else {
+            assertionFailure("Cards should be initialized before cardHeight is accessed.")
+            return cardsContainerHeight - callToActionView.frame.size.height - cardInsets.top - cardInsets.bottom
+        }
+                
+        let numberOfVisibleCards: CGFloat = CGFloat(viewModel.numberOfVisibleCards)
+        let cardTitleHeight: CGFloat = cardView.cardHeaderHeight
+        let cardTopVisibilityHeight: CGFloat = floor(cardTitleHeight * cardCollapsedVisibilityPercentage)
+        let collapsedCardsHeight: CGFloat = (cardTopVisibilityHeight * (numberOfVisibleCards - 1))
+        
+        let callToActionHeight: CGFloat = callToActionView.frame.size.height
+        
+        let maxFooterAreaHeight: CGFloat = (collapsedCardsHeight > callToActionHeight) ? collapsedCardsHeight : callToActionHeight
+        
+        let cardHeight: CGFloat = cardsContainerHeight - cardInsets.top - cardInsets.bottom - maxFooterAreaHeight
+        
+        return cardHeight
+    }
+    
+    private func getCardTopConstraint(cardPosition: Int) -> NSLayoutConstraint? {
+        if cardPosition >= 0 && cardPosition < cardTopConstraints.count {
+            return cardTopConstraints[cardPosition]
+        }
+        return nil
+    }
+    
+    private func getCardTopConstant(state: ToolPageCardTopConstantState) -> CGFloat {
+        
+        guard let cardView = cards.first else {
+            return UIScreen.main.bounds.size.height
+        }
+        
+        let numberOfVisibleCards: CGFloat = CGFloat(viewModel.numberOfVisibleCards)
+        let cardTitleHeight: CGFloat = cardView.cardHeaderHeight
+        
+        switch state {
+            
+        case .starting(let cardPosition):
+            return cardsTopRelativeToCardsContainerFrameBottom - (cardTitleHeight * (numberOfVisibleCards - CGFloat(cardPosition)))
+        
+        case .showing:
+            return cardsContainerFrameRelativeToScreen.origin.y + cardInsets.top
+        
+        case .showingKeyboard:
+            return cardsContainerFrameRelativeToScreen.origin.y + cardInsets.top
+            
+        case .collapsed(let cardPosition):
+            let cardTopVisibilityHeight: CGFloat = floor(cardTitleHeight * cardCollapsedVisibilityPercentage)
+            return cardsTopRelativeToCardsContainerFrameBottom - (cardTopVisibilityHeight * (numberOfVisibleCards - CGFloat(cardPosition)))
+        
+        case .hidden:
+            return UIScreen.main.bounds.size.height
+        }
+    }
+    
+    private func setCardsState(cardsState: ToolPageCardsState, animated: Bool) {
+        
+        switch cardsState {
+            
+        case .starting:
+            
+            setHeaderHidden(hidden: false, animated: animated)
+            setCallToActionHidden(hidden: true, animated: animated)
+            
+            var visibleCardPosition: Int = 0
+            
+            for cardPosition in 0 ..< numberOfCards {
+                
+                let cardViewModel: ToolPageCardViewModelType = viewModel.cardsViewModels[cardPosition]
+                let cardTopConstraint: NSLayoutConstraint = cardTopConstraints[cardPosition]
+                
+                if !cardViewModel.isHiddenCard {
+                    cardTopConstraint.constant = getCardTopConstant(state: .starting(cardPosition: visibleCardPosition))
+                    visibleCardPosition += 1
+                }
+                else {
+                    cardTopConstraint.constant = getCardTopConstant(state: .hidden)
+                }
+            }
+            
+        case .showingCard(let showingCardAtPosition):
+            
+            // nothing to show if the card is nil and we are at the cards starting positions state
+            if showingCardAtPosition == nil && currentCardState == .starting {
+                return
+            }
+            
+            guard let showCardAtPosition = showingCardAtPosition else {
+                setCardsState(cardsState: .collapseAllCards, animated: animated)
+                return
+            }
+            
+            setHeaderHidden(hidden: true, animated: animated)
+            
+            let isShowingLastVisibleCard: Bool = showCardAtPosition >= viewModel.numberOfVisibleCards - 1
+            
+            setCallToActionHidden(hidden: !isShowingLastVisibleCard, animated: animated)
+            
+            var visibleCardPosition: Int = 0
+            
+            for cardPosition in 0 ..< numberOfCards {
+                
+                let cardViewModel: ToolPageCardViewModelType = viewModel.cardsViewModels[cardPosition]
+                let cardTopConstraint: NSLayoutConstraint = cardTopConstraints[cardPosition]
+                let shouldShowCard: Bool = cardPosition <= showCardAtPosition
+                
+                if shouldShowCard {
+                    cardTopConstraint.constant = getCardTopConstant(state: .showing)
+                }
+                else {
+                    if !cardViewModel.isHiddenCard {
+                        cardTopConstraint.constant = getCardTopConstant(state: .collapsed(cardPosition: visibleCardPosition))
+                    }
+                    else {
+                        cardTopConstraint.constant = getCardTopConstant(state: .hidden)
+                    }
+                }
+                
+                if !cardViewModel.isHiddenCard {
+                    visibleCardPosition += 1
+                }
+            }
+            
+        case .showingKeyboard(let showingCardAtPosition):
+            
+            for cardPosition in 0 ..< numberOfCards {
+                
+                let cardTopConstraint: NSLayoutConstraint = cardTopConstraints[cardPosition]
+                
+                if cardPosition <= showingCardAtPosition {
+                    cardTopConstraint.constant = getCardTopConstant(state: .showingKeyboard)
+                }
+            }
+                        
+        case .collapseAllCards:
+            
+            var visibleCardPosition: Int = 0
+            
+            for cardPosition in 0 ..< numberOfCards {
+                
+                let cardViewModel: ToolPageCardViewModelType = viewModel.cardsViewModels[cardPosition]
+                let cardTopConstraint: NSLayoutConstraint = cardTopConstraints[cardPosition]
+                
+                if !cardViewModel.isHiddenCard {
+                    cardTopConstraint.constant = getCardTopConstant(state: .collapsed(cardPosition: visibleCardPosition))
+                    visibleCardPosition += 1
+                }
+                else {
+                    cardTopConstraint.constant = getCardTopConstant(state: .hidden)
+                }
+            }
+            
+        case .initialized:
+            break
+        }
+        
+        if animated {
+            
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+                self.layoutIfNeeded()
+            }, completion: { (finished: Bool) in
+                self.handleCompletedSetCardState(cardsState: cardsState, animated: animated)
+            })
+        }
+        else {
+            layoutIfNeeded()
+            handleCompletedSetCardState(cardsState: cardsState, animated: animated)
+        }
+        
+        currentCardState = cardsState
+    }
+    
+    private func handleCompletedSetCardState(cardsState: ToolPageCardsState, animated: Bool) {
+        
+        switch cardsState {
+        
+        case .starting:
+            break
+            
+        case .showingCard(let showingCardAtPosition):
+            break
+            
+        case .showingKeyboard:
+            break
+                        
+        case .collapseAllCards:
+            setCardsState(cardsState: .starting, animated: animated)
+            
+        case .initialized:
+            break
+        }
+    }
+    
+    private func addCardsAndCardsConstraints(parentView: UIView, cardsViewModels: [ToolPageCardViewModelType]) {
+        
+        for cardViewModel in cardsViewModels {
+            
+            instatiateAndAddNewCard(parentView: parentView, cardViewModel: cardViewModel)
+        }
+    }
+    
+    private func instatiateAndAddNewCard(parentView: UIView, cardViewModel: ToolPageCardViewModelType) {
+        
+        let cardView: ToolPageCardView = ToolPageCardView(viewModel: cardViewModel)
+                
+        cards.append(cardView)
+        
+        parentView.addSubview(cardView)
 
+        cardView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let top: NSLayoutConstraint = NSLayoutConstraint(
+            item: cardView,
+            attribute: .top,
+            relatedBy: .equal,
+            toItem: parentView,
+            attribute: .top,
+            multiplier: 1,
+            constant: cardInsets.top
+        )
+        
+        let leading: NSLayoutConstraint = NSLayoutConstraint(
+            item: cardView,
+            attribute: .leading,
+            relatedBy: .equal,
+            toItem: parentView,
+            attribute: .leading,
+            multiplier: 1,
+            constant: cardInsets.left
+        )
+        
+        let trailing: NSLayoutConstraint = NSLayoutConstraint(
+            item: cardView,
+            attribute: .trailing,
+            relatedBy: .equal,
+            toItem: parentView,
+            attribute: .trailing,
+            multiplier: 1,
+            constant: cardInsets.right * -1
+        )
+        
+        parentView.addConstraint(top)
+        parentView.addConstraint(leading)
+        parentView.addConstraint(trailing)
+        
+        let heightConstraint: NSLayoutConstraint = NSLayoutConstraint(
+            item: cardView,
+            attribute: .height,
+            relatedBy: .equal,
+            toItem: nil,
+            attribute: .notAnAttribute,
+            multiplier: 1,
+            constant: cardHeight
+        )
+        
+        cardView.addConstraint(heightConstraint)
+        
+        cardTopConstraints.append(top)
+    }
+}
+
+// MARK: - Keyboard
+extension ToolPageView {
+    
+    func handleKeyboardStateChange(keyboardStateChange: KeyboardStateChange) {
+        
+        guard let currentCardPosition = viewModel.currentCard.value.value else {
+            return
+        }
+        
+        guard currentCardPosition >= 0 && currentCardPosition < numberOfCards else {
+            return
+        }
+        
+        switch keyboardStateChange.keyboardState {
+
+        case .willShow:
+            setCardsState(cardsState: .showingKeyboard(showingCardAtPosition: currentCardPosition), animated: true)
+        case .willHide:
+            setCardsState(cardsState: .showingCard(showingCardAtPosition: currentCardPosition), animated: true)
+        case .didShow:
+            break
+        case .didHide:
+            break
+        }
+    }
+    
+    func handleKeyboardHeightChanged(keyboardHeight: Double) {
+        
+    }
+}
+
+// MARK: - UIGestureRecognizerDelegate
 extension ToolPageView: UIGestureRecognizerDelegate {
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-           
+                
         if gestureRecognizer == panGestureToControlPageCollectionViewPanningSensitivity {
                         
             if let otherView = otherGestureRecognizer.view, otherView is UICollectionView, let collectionViewPanGesture = otherGestureRecognizer as? UIPanGestureRecognizer {
@@ -388,7 +720,7 @@ extension ToolPageView: UIGestureRecognizerDelegate {
                 let rightToLeftDegrees: CGFloat = 180
                 let leftToRightDegrees: CGFloat = 0
                 let allowedPanOffsetDegrees: CGFloat = 40
-                                                    
+                                    
                 let shouldRecognizeToolPanning: Bool
                 
                 if angleDegrees >= rightToLeftDegrees - allowedPanOffsetDegrees && angleDegrees <= rightToLeftDegrees + allowedPanOffsetDegrees {

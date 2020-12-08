@@ -29,6 +29,6 @@ class ToolPageContentStackContainerViewModel: ToolPageContentStackContainerViewM
     }
     
     deinit {
-        print("x deinit: \(type(of: self))")
+
     }
 }

@@ -16,6 +16,10 @@ class MobileContentEvents {
     let followUpEventButtonTappedSignal: SignalValue<FollowUpButtonEvent> = SignalValue()
     let trainingTipTappedSignal: SignalValue<TrainingTipEvent> = SignalValue()
     
+    deinit {
+        print("x deinit: \(type(of: self)) ***")
+    }
+    
     func eventButtonTapped(eventButton: ButtonEvent) {
         eventButtonTappedSignal.accept(value: eventButton)
     }
