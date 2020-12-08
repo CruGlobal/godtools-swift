@@ -41,6 +41,10 @@ class ObservableValue<T> {
     func removeObserver(_ observer: NSObject) {
         observers[observer.description] = nil
     }
+    
+    func removeAllObservers() {
+        observers.removeAll()
+    }
 
     private func notifyAllObservers() {
         observers.forEach({ $0.value(value) })
