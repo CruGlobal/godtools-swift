@@ -8,15 +8,15 @@
 
 import UIKit
 
-class ToolPageCardView: UIView, ReusableView {
+class ToolPageCardView: UIView {
         
+    private let viewModel: ToolPageCardViewModelType
     private let backgroundImageView: MobileContentBackgroundImageView = MobileContentBackgroundImageView()
     private let swipeUpGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer()
     private let swipeDownGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer()
     
     private lazy var keyboardObserver: KeyboardObserverType = KeyboardNotificationObserver(loggingEnabled: false)
     
-    private var viewModel: ToolPageCardViewModelType?
     private var contentStackView: MobileContentStackView?
     private var contentFormView: ToolPageContentFormView?
     private var startingHeaderTrainingTipIconTrailing: CGFloat = 20
@@ -38,12 +38,15 @@ class ToolPageCardView: UIView, ReusableView {
     
     @IBOutlet weak private var headerTrainingTipTrailing: NSLayoutConstraint!
     
-    required init() {
+    required init(viewModel: ToolPageCardViewModelType) {
                 
+        self.viewModel = viewModel
+        
         super.init(frame: UIScreen.main.bounds)
         
         initializeNib()
         setupLayout()
+        setupBinding()
         
         headerButton.addTarget(self, action: #selector(handleHeader(button:)), for: .touchUpInside)
         previousButton.addTarget(self, action: #selector(handlePrevious(button:)), for: .touchUpInside)
@@ -115,24 +118,8 @@ class ToolPageCardView: UIView, ReusableView {
         bottomGradientView.layer.insertSublayer(bottomGradient, at: 0)
     }
     
-    func resetView() {
-        
-        viewModel?.contentStackViewModel.contentStackRenderer.didRenderContentFormSignal.removeObserver(self)
-        viewModel?.hidesHeaderTrainingTip.removeObserver(self)
-        setCardSwipingEnabled(enabled: true)
-        removeKeyboardHeightFromContentSize()
-        backgroundImageView.resetView()
-        contentStackContainer.removeAllSubviews()
-        contentStackView?.removeFromSuperview()
-        contentStackView = nil
-        contentFormView = nil
-        viewModel = nil
-    }
-    
-    func configure(viewModel: ToolPageCardViewModelType) {
-        
-        self.viewModel = viewModel
-        
+    private func setupBinding() {
+                
         backgroundImageView.configure(viewModel: viewModel.backgroundImageWillAppear(), parentView: cardBackgroundImageContainer)
         
         titleLabel.text = viewModel.title
@@ -183,17 +170,17 @@ class ToolPageCardView: UIView, ReusableView {
     
     @objc func handleHeader(button: UIButton) {
         contentFormView?.resignCurrentEditedTextField()
-        viewModel?.headerTapped()
+        viewModel.headerTapped()
     }
     
     @objc func handlePrevious(button: UIButton) {
         contentFormView?.resignCurrentEditedTextField()
-        viewModel?.previousTapped()
+        viewModel.previousTapped()
     }
     
     @objc func handleNext(button: UIButton) {
         contentFormView?.resignCurrentEditedTextField()
-        viewModel?.nextTapped()
+        viewModel.nextTapped()
     }
     
     @objc func handleSwipeGesture(swipeGesture: UISwipeGestureRecognizer) {
@@ -209,9 +196,9 @@ class ToolPageCardView: UIView, ReusableView {
         contentFormView?.resignCurrentEditedTextField()
                 
         if swipeGesture.direction == .up && offset.y + scrollFrame.size.height >= contentStackView.contentSize.height - inset.top - inset.bottom {
-            viewModel?.didSwipeCardUp()
+            viewModel.didSwipeCardUp()
         } else if swipeGesture.direction == .down && offset.y <= 0 {
-            viewModel?.didSwipeCardDown()
+            viewModel.didSwipeCardDown()
         }
     }
     

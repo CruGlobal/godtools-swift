@@ -8,14 +8,14 @@
 
 import UIKit
 
-class ToolPageView: UIView, ReusableView {
+class ToolPageView: UIView {
     
+    private let viewModel: ToolPageViewModelType
+    private let safeArea: UIEdgeInsets
     private let panGestureToControlPageCollectionViewPanningSensitivity: UIPanGestureRecognizer = UIPanGestureRecognizer()
     private let backgroundImageView: MobileContentBackgroundImageView = MobileContentBackgroundImageView()
     
-    private var viewModel: ToolPageViewModelType?
-    private var safeArea: UIEdgeInsets = .zero
-    private var cardsView: ToolPageCardsView = ToolPageCardsView()
+    private var cardsView: ToolPageCardsView?
     private var toolModal: ToolPageModalView?
     
     private weak var windowViewController: UIViewController?
@@ -39,12 +39,17 @@ class ToolPageView: UIView, ReusableView {
     @IBOutlet weak private var callToActionBottom: NSLayoutConstraint!
     @IBOutlet weak private var bottomInsetBottomConstraint: NSLayoutConstraint!
     
-    required init() {
+    required init(viewModel: ToolPageViewModelType, windowViewController: UIViewController, safeArea: UIEdgeInsets) {
+        
+        self.viewModel = viewModel
+        self.windowViewController = windowViewController
+        self.safeArea = safeArea
         
         super.init(frame: UIScreen.main.bounds)
         
         initializeNib()
         setupLayout()
+        setupBinding()
         
         callToActionNextButton.addTarget(self, action: #selector(handleCallToActionNext(button:)), for: .touchUpInside)
         
@@ -77,23 +82,7 @@ class ToolPageView: UIView, ReusableView {
         headerTrainingTipView.backgroundColor = .clear
     }
     
-    func resetView() {
-        
-        contentStackContainerView.removeAllSubviews()
-        headerTrainingTipView.removeAllSubviews()
-        heroContainerView.removeAllSubviews()
-        dismissModalIfNeeded(animated: false, completion: nil)
-        cardsView.resetView()
-        viewModel?.hidesHeaderTrainingTip.removeObserver(self)
-        viewModel?.modal.removeObserver(self)
-        viewModel = nil
-    }
-    
-    func configure(viewModel: ToolPageViewModelType, windowViewController: UIViewController, safeArea: UIEdgeInsets) {
-        
-        self.viewModel = viewModel
-        self.windowViewController = windowViewController
-        self.safeArea = safeArea
+    private func setupBinding() {
         
         topInsetTopConstraint.constant = safeArea.top
         bottomInsetBottomConstraint.constant = safeArea.bottom
@@ -170,20 +159,21 @@ class ToolPageView: UIView, ReusableView {
         
         setHeaderHidden(headerViewModel: viewModel.headerViewModel, hidden: hidesHeader, animated: false)
         setCallToActionHidden(callToActionViewModel: viewModel.callToActionViewModel, hidden: hidesCallToAction, animated: false)
-                
-        //cards
-        cardsView.configure(
-            parentView: self,
-            viewModel: viewModel,
-            safeArea: safeArea,
-            callToActionView: callToActionView,
-            delegate: self
-        )
+        
+        if viewModel.numberOfCards > 0 {
+            cardsView = ToolPageCardsView(
+                parentView: self,
+                viewModel: viewModel,
+                safeArea: safeArea,
+                callToActionView: callToActionView,
+                delegate: self
+            )
+        }
         
         // hero top and height
         if let heroViewModel = viewModel.heroViewModel {
             
-            let hidesCards: Bool = viewModel.numberOfVisibleCards == 0
+            let hidesCards: Bool = viewModel.numberOfCards == 0
             let topInset: CGFloat = 15
             let bottomInset: CGFloat = 0
             let screenHeight: CGFloat = UIScreen.main.bounds.size.height
@@ -198,7 +188,7 @@ class ToolPageView: UIView, ReusableView {
             }
             else if !hidesCards {
                 
-                guard let cardView = cardsView.getFirstCard() else {
+                guard let cardView = cardsView?.getFirstCard() else {
                     assertionFailure("Cards should be initialized and added at this point.")
                     return
                 }
@@ -224,7 +214,7 @@ class ToolPageView: UIView, ReusableView {
     }
     
     @objc func handleCallToActionNext(button: UIButton) {
-        viewModel?.callToActionNextButtonTapped()
+        viewModel.callToActionNextButtonTapped()
     }
     
     private func setHeroContentInsets(hidesHeader: Bool) {

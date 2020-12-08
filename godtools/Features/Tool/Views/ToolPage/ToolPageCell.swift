@@ -13,7 +13,7 @@ class ToolPageCell: UICollectionViewCell {
     static let nibName: String = "ToolPageCell"
     static let reuseIdentifier: String = "ToolPageCellReuseIdentifier"
      
-    private let toolPage: ToolPageView = ToolPageView()
+    private var toolPage: ToolPageView?
     
     deinit {
         print("x deinit: \(type(of: self))")
@@ -23,22 +23,25 @@ class ToolPageCell: UICollectionViewCell {
         super.awakeFromNib()
         backgroundColor = .clear
         contentView.backgroundColor = .clear
-        
-        contentView.addSubview(toolPage)
-        toolPage.constrainEdgesToSuperview()
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        toolPage.resetView()
+        toolPage?.removeFromSuperview()
+        toolPage = nil
     }
     
     func configure(viewModel: ToolPageViewModelType, windowViewController: UIViewController, safeArea: UIEdgeInsets) {
         
-        toolPage.configure(
+        let toolPage = ToolPageView(
             viewModel: viewModel,
             windowViewController: windowViewController,
             safeArea: safeArea
         )
+        
+        contentView.addSubview(toolPage)
+        toolPage.constrainEdgesToSuperview()
+        
+        self.toolPage = toolPage
     }
 }

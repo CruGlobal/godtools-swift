@@ -13,12 +13,11 @@ protocol ToolPageCardsViewDelegate: class {
     func toolPageCardsStateDidChange(toolPageCards: ToolPageCardsView, viewModel: ToolPageViewModelType, cardsState: ToolPageCardsState, animated: Bool)
 }
 
-class ToolPageCardsView: NSObject, ReusableView {
+class ToolPageCardsView: NSObject {
     
+    private let safeArea: UIEdgeInsets
     private let keyboardObserver: KeyboardObserverType = KeyboardNotificationObserver(loggingEnabled: false)
     
-    private var viewModel: ToolPageViewModelType?
-    private var safeArea: UIEdgeInsets = .zero
     private var cards: [ToolPageCardView] = Array()
     private var cardTopConstraints: [NSLayoutConstraint] = Array()
     private var cardHeightConstraints: [NSLayoutConstraint] = Array()
@@ -26,61 +25,40 @@ class ToolPageCardsView: NSObject, ReusableView {
     private var cardBounceAnimation: ToolPageCardBounceAnimation?
     
     private weak var parentView: UIView?
+    private weak var viewModel: ToolPageViewModelType?
     private weak var callToActionView: UIView?
     private weak var delegate: ToolPageCardsViewDelegate?
     
-    required override init() {
-        
-        super.init()
-        
-        keyboardObserver.startObservingKeyboardChanges()
-        
-        // keyboard
-        keyboardObserver.keyboardStateDidChangeSignal.addObserver(self) { [weak self] (keyboardStateChange: KeyboardStateChange) in
-            self?.handleKeyboardStateChange(keyboardStateChange: keyboardStateChange)
-        }
-    }
-    
-    deinit {
-        
-        keyboardObserver.stopObservingKeyboardChanges()
-        keyboardObserver.keyboardStateDidChangeSignal.removeObserver(self)
-        keyboardObserver.keyboardHeightDidChangeSignal.removeObserver(self)
-    }
-    
-    func resetView() {
-           
-        currentCardState = .initialized
-        resetCards()
-        self.viewModel = nil
-    }
-    
-    private func resetCards() {
-        
-        guard !cards.isEmpty else {
-            return
-        }
-        
-        let screenHeight: CGFloat = UIScreen.main.bounds.size.height
-        
-        for index in 0 ..< cards.count {
-            
-            let cardView: ToolPageCardView = cards[index]
-            let cardTopConstraint: NSLayoutConstraint = cardTopConstraints[index]
-            cardView.resetView()
-            cardView.isHidden = true
-            cardTopConstraint.constant = screenHeight
-        }
-        parentView?.layoutIfNeeded()
-    }
-    
-    func configure(parentView: UIView, viewModel: ToolPageViewModelType, safeArea: UIEdgeInsets, callToActionView: UIView, delegate: ToolPageCardsViewDelegate) {
+    required init(parentView: UIView, viewModel: ToolPageViewModelType, safeArea: UIEdgeInsets, callToActionView: UIView, delegate: ToolPageCardsViewDelegate) {
         
         self.parentView = parentView
         self.viewModel = viewModel
         self.safeArea = safeArea
         self.callToActionView = callToActionView
         self.delegate = delegate
+        
+        super.init()
+        
+        setupBinding(parentView: parentView, viewModel: viewModel)
+        
+        //keyboardObserver.startObservingKeyboardChanges()
+        
+        // keyboard
+//        keyboardObserver.keyboardStateDidChangeSignal.addObserver(self) { [weak self] (keyboardStateChange: KeyboardStateChange) in
+//            self?.handleKeyboardStateChange(viewModel: viewModel, keyboardStateChange: keyboardStateChange)
+//        }
+    }
+    
+    deinit {
+        
+        viewModel?.currentCard.removeObserver(self)
+        viewModel?.hidesCardJump.removeObserver(self)
+        keyboardObserver.stopObservingKeyboardChanges()
+        keyboardObserver.keyboardStateDidChangeSignal.removeObserver(self)
+        keyboardObserver.keyboardHeightDidChangeSignal.removeObserver(self)
+    }
+    
+    private func setupBinding(parentView: UIView, viewModel: ToolPageViewModelType) {
         
         guard viewModel.numberOfCards > 0 else {
             return
@@ -119,7 +97,7 @@ class ToolPageCardsView: NSObject, ReusableView {
             }
         }
     }
-    
+
     var numberOfCards: Int {
         return viewModel?.numberOfCards ?? 0
     }
@@ -145,11 +123,7 @@ extension ToolPageCardsView: ToolPageCardBounceAnimationDelegate {
 
 extension ToolPageCardsView {
     
-    func handleKeyboardStateChange(keyboardStateChange: KeyboardStateChange) {
-        
-        guard let viewModel = self.viewModel else {
-            return
-        }
+    func handleKeyboardStateChange(viewModel: ToolPageViewModelType, keyboardStateChange: KeyboardStateChange) {
         
         guard let currentCardPosition = viewModel.currentCard.value.value else {
             return
@@ -400,33 +374,16 @@ extension ToolPageCardsView {
     
     private func addCardsAndCardsConstraints(parentView: UIView, cardsViewModels: [ToolPageCardViewModelType]) {
         
-        for index in 0 ..< cardsViewModels.count {
+        for cardViewModel in cardsViewModels {
             
-            let cardViewModel: ToolPageCardViewModelType = cardsViewModels[index]
-            
-            if index >= 0 && index < cards.count {
-                
-                let cardView: ToolPageCardView = cards[index]
-                
-                cardView.configure(viewModel: cardViewModel)
-                cardView.isHidden = false
-                cardHeightConstraints[index].constant = cardHeight
-            }
-            else {
-                
-                instatiateAndAddNewCard(parentView: parentView, cardViewModel: cardViewModel)
-            }
+            instatiateAndAddNewCard(parentView: parentView, cardViewModel: cardViewModel)
         }
-        
-        parentView.layoutIfNeeded()
     }
     
     private func instatiateAndAddNewCard(parentView: UIView, cardViewModel: ToolPageCardViewModelType) {
         
-        let cardView: ToolPageCardView = ToolPageCardView()
-        
-        cardView.configure(viewModel: cardViewModel)
-        
+        let cardView: ToolPageCardView = ToolPageCardView(viewModel: cardViewModel)
+                
         cards.append(cardView)
         
         parentView.addSubview(cardView)

@@ -280,8 +280,6 @@
 		453AD7A723FF212700921D75 /* AccountItemViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453AD7A623FF212700921D75 /* AccountItemViewType.swift */; };
 		453AD7A923FF231200921D75 /* AlertMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453AD7A823FF231200921D75 /* AlertMessage.swift */; };
 		453C8CF4257FC45900E60CAE /* UIView+RemoveAllSubviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453C8CF3257FC45900E60CAE /* UIView+RemoveAllSubviews.swift */; };
-		453C8CF7257FC8EC00E60CAE /* ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453C8CF6257FC8EC00E60CAE /* ReusableView.swift */; };
-		453C8CF9257FC8F900E60CAE /* ReusableViewObjectPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453C8CF8257FC8F900E60CAE /* ReusableViewObjectPool.swift */; };
 		453D866A24E08461004EA89F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 453D866824E08461004EA89F /* Localizable.strings */; };
 		453DBA782474854C0000BA85 /* ArticlesErrorMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453DBA752474854B0000BA85 /* ArticlesErrorMessageViewModel.swift */; };
 		453DBA792474854C0000BA85 /* ArticlesErrorMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453DBA762474854C0000BA85 /* ArticlesErrorMessageView.swift */; };
@@ -1138,8 +1136,6 @@
 		453AD7A623FF212700921D75 /* AccountItemViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountItemViewType.swift; sourceTree = "<group>"; };
 		453AD7A823FF231200921D75 /* AlertMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertMessage.swift; sourceTree = "<group>"; };
 		453C8CF3257FC45900E60CAE /* UIView+RemoveAllSubviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+RemoveAllSubviews.swift"; sourceTree = "<group>"; };
-		453C8CF6257FC8EC00E60CAE /* ReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReusableView.swift; sourceTree = "<group>"; };
-		453C8CF8257FC8F900E60CAE /* ReusableViewObjectPool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableViewObjectPool.swift; sourceTree = "<group>"; };
 		453D866324E08310004EA89F /* mn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = mn; path = mn.lproj/Localizable.strings; sourceTree = "<group>"; };
 		453D866424E08347004EA89F /* tpi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tpi; path = tpi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		453D866524E08389004EA89F /* ru-143 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ru-143"; path = "ru-143.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -2470,15 +2466,6 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
-		453C8CF5257FC8EC00E60CAE /* ReusableViewObjectPool */ = {
-			isa = PBXGroup;
-			children = (
-				453C8CF6257FC8EC00E60CAE /* ReusableView.swift */,
-				453C8CF8257FC8F900E60CAE /* ReusableViewObjectPool.swift */,
-			);
-			path = ReusableViewObjectPool;
-			sourceTree = "<group>";
-		};
 		453D866624E08454004EA89F /* MissingLocalizations */ = {
 			isa = PBXGroup;
 			children = (
@@ -2699,7 +2686,6 @@
 			isa = PBXGroup;
 			children = (
 				450F1292256C165300ED69D4 /* KeyboardObserver */,
-				453C8CF5257FC8EC00E60CAE /* ReusableViewObjectPool */,
 				45EC83A12452438500E8DE48 /* AnimatableValue.swift */,
 				45E89F5523FDE8CE00C9D2F3 /* BlockBasedTimer.swift */,
 				45B2AE4B2458886B00253BAD /* CallbackHandler.swift */,
@@ -4985,7 +4971,6 @@
 				4586D7DE246ECDC90062D988 /* TractModal.swift in Sources */,
 				45FCFF3D243D07B800865501 /* FlowStep.swift in Sources */,
 				451DB1372461DA4200FB14BF /* TractParagraphProperties.swift in Sources */,
-				453C8CF7257FC8EC00E60CAE /* ReusableView.swift in Sources */,
 				45FCFF40243D07B800865501 /* MenuFlow.swift in Sources */,
 				45D5694A24932492003E5798 /* TranslationsApiType.swift in Sources */,
 				457D982F254B4F9F000B8159 /* CardNode.swift in Sources */,
@@ -5015,7 +5000,6 @@
 				45DEF2332576AE800007AC64 /* ViewedTrainingTipsCacheType.swift in Sources */,
 				451DB0CA2461D90000FB14BF /* TractElementFrame.swift in Sources */,
 				45668E7A23E0E1CC002728E7 /* OnboardingTutorialUsageListCell.swift in Sources */,
-				453C8CF9257FC8F900E60CAE /* ReusableViewObjectPool.swift in Sources */,
 				4586D7E1246ECE350062D988 /* TractLabel.swift in Sources */,
 				4515D49624AB7CCA007C1FA3 /* LegacyRealmMigration.swift in Sources */,
 				454CECC724A41D8B008014CC /* NoAttachmentData.swift in Sources */,
