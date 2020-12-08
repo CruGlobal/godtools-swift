@@ -41,12 +41,12 @@ class ToolPageCardsView: NSObject {
         
         setupBinding(parentView: parentView, viewModel: viewModel)
         
-        //keyboardObserver.startObservingKeyboardChanges()
+        keyboardObserver.startObservingKeyboardChanges()
         
         // keyboard
-//        keyboardObserver.keyboardStateDidChangeSignal.addObserver(self) { [weak self] (keyboardStateChange: KeyboardStateChange) in
-//            self?.handleKeyboardStateChange(viewModel: viewModel, keyboardStateChange: keyboardStateChange)
-//        }
+        keyboardObserver.keyboardStateDidChangeSignal.addObserver(self) { [weak self] (keyboardStateChange: KeyboardStateChange) in
+            self?.handleKeyboardStateChange(viewModel: viewModel, keyboardStateChange: keyboardStateChange)
+        }
     }
     
     deinit {
