@@ -34,6 +34,7 @@ class AnalyticsContainer {
         )
         self.trackActionAnalytics = TrackActionAnalytics(
             adobeAnalytics: adobeAnalytics,
+            firebaseAnalytics: firebaseAnalytics,
             snowplowAnalytics: snowplowAnalytics
         )
 

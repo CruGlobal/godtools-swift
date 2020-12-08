@@ -167,7 +167,7 @@ class AppDiContainer {
         analytics = AnalyticsContainer(
             adobeAnalytics: AdobeAnalytics(config: config, keyAuthClient: loginClient, languageSettingsService: languageSettingsService, loggingEnabled: true),
             appsFlyer: AppsFlyer(config: config, loggingEnabled: true),
-            firebaseAnalytics: FirebaseAnalytics(),
+            firebaseAnalytics: FirebaseAnalytics(keyAuthClient: loginClient, languageSettingsService: languageSettingsService, loggingEnabled: true),
             snowplowAnalytics: SnowplowAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: true)
         )
         
@@ -249,7 +249,7 @@ class AppDiContainer {
     }
     
     var exitLinkAnalytics: ExitLinkAnalytics {
-        return ExitLinkAnalytics(adobeAnalytics: analytics.adobeAnalytics)
+        return ExitLinkAnalytics(adobeAnalytics: analytics.adobeAnalytics, firebaseAnalytics: analytics.firebaseAnalytics)
     }
     
     var onboardingTutorialAvailability: OnboardingTutorialAvailabilityType {

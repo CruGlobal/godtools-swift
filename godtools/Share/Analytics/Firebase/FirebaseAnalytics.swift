@@ -11,7 +11,7 @@ import FirebaseAnalytics
 import TheKeyOAuthSwift
 import GTMAppAuth
 
-class FirebaseAnalytics: FirebaseAnalyticsType {
+class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
     private let keyAuthClient: TheKeyOAuthClient
     private let languageSettingsService: LanguageSettingsService
     private let loggingEnabled: Bool
@@ -35,18 +35,27 @@ class FirebaseAnalytics: FirebaseAnalyticsType {
         
         let previousScreenName: String = self.previousTrackedScreenName
         
-        Analytics.setScreenName(screenName, screenClass: siteSection)
+        previousTrackedScreenName = screenName
         
-        self.log(method: "trackScreenView()", label: "screenName", labelValue: screenName, data: trackingData)
+        createDefaultPropertiesOnConcurrentQueue(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: previousScreenName) { [weak self] (defaultProperties: FirebaseAnalyticsProperties) in
+        
+            let data: [String: Any] = JsonServices().encode(object: defaultProperties)
+                       
+            Analytics.logEvent(AnalyticsEventScreenView, parameters: data)
+            
+            self?.log(method: "trackScreenView()", label: "screenName", labelValue: screenName, data: data)
+        }
     }
     
     func trackAction(screenName: String?, actionName: String, data: [AnyHashable : Any]?) {
+        let actionData: [String: Any]? = data as? [String: Any] ?? nil
+        
         createDefaultPropertiesOnConcurrentQueue(screenName: screenName, siteSection: nil, siteSubSection: nil, previousScreenName: previousTrackedScreenName) { [weak self] (defaultProperties: FirebaseAnalyticsProperties) in
             
-            var trackingData: [AnyHashable: Any] = JsonServices().encode(object: defaultProperties)
+            var trackingData: [String: Any] = JsonServices().encode(object: defaultProperties)
             
-            if let data = data {
-                for (key, value) in data {
+            if let actionData = actionData {
+                for (key, value) in actionData {
                     trackingData[key] = value
                 }
             }
@@ -58,7 +67,7 @@ class FirebaseAnalytics: FirebaseAnalyticsType {
     }
     
     func trackExitLink(screenName: String, siteSection: String, siteSubSection: String, url: URL) {
-        createDefaultPropertiesOnConcurrentQueue(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: previousTrackedScreenName) { [weak self] (defaultProperties: AdobeAnalyticsProperties) in
+        createDefaultPropertiesOnConcurrentQueue(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: previousTrackedScreenName) { [weak self] (defaultProperties: FirebaseAnalyticsProperties) in
             
             var properties = defaultProperties
             
@@ -66,7 +75,7 @@ class FirebaseAnalytics: FirebaseAnalyticsType {
             
             let actionName: String = "Exit Link Engaged"
             
-            let data: [AnyHashable: Any] = JsonServices().encode(object: properties)
+            let data: [String: Any] = JsonServices().encode(object: properties)
             
             Analytics.logEvent(actionName, parameters: data)
             
@@ -123,6 +132,14 @@ class FirebaseAnalytics: FirebaseAnalyticsType {
                 print("  data: \(data)")
             }
         }
+    }
+}
+
+// MARK: - OIDAuthStateChangeDelegate
+
+extension FirebaseAnalytics: OIDAuthStateChangeDelegate {
+    func didChange(_ state: OIDAuthState) {
+        //fetchAttributesThenSyncIds()
     }
 }
 
