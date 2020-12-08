@@ -10,13 +10,13 @@ import UIKit
 
 class ToolPageCardView: UIView {
         
-    private let viewModel: ToolPageCardViewModelType
     private let backgroundImageView: MobileContentBackgroundImageView = MobileContentBackgroundImageView()
     private let swipeUpGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer()
     private let swipeDownGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer()
     
     private lazy var keyboardObserver: KeyboardObserverType = KeyboardNotificationObserver(loggingEnabled: false)
     
+    private var viewModel: ToolPageCardViewModelType?
     private var contentStackView: MobileContentStackView?
     private var contentFormView: ToolPageContentFormView?
     private var startingHeaderTrainingTipIconTrailing: CGFloat = 20
@@ -37,15 +37,12 @@ class ToolPageCardView: UIView {
     
     @IBOutlet weak private var headerTrainingTipTrailing: NSLayoutConstraint!
     
-    required init(viewModel: ToolPageCardViewModelType) {
-        
-        self.viewModel = viewModel
-        
+    required init() {
+                
         super.init(frame: UIScreen.main.bounds)
         
         initializeNib()
         setupLayout()
-        setupBinding()
         
         headerButton.addTarget(self, action: #selector(handleHeader(button:)), for: .touchUpInside)
         previousButton.addTarget(self, action: #selector(handlePrevious(button:)), for: .touchUpInside)
@@ -119,8 +116,8 @@ class ToolPageCardView: UIView {
         bottomGradientView.layer.insertSublayer(bottomGradient, at: 0)
     }
     
-    private func setupBinding() {
-              
+    func configure(viewModel: ToolPageCardViewModelType) {
+        
         backgroundImageView.configure(viewModel: viewModel.backgroundImageWillAppear(), parentView: cardBackgroundImageContainer)
         
         titleLabel.text = viewModel.title
@@ -164,24 +161,24 @@ class ToolPageCardView: UIView {
         ))
         contentStackView.setScrollViewDelegate(delegate: self)
     }
-    
+
     var cardHeaderHeight: CGFloat {
         return 50
     }
     
     @objc func handleHeader(button: UIButton) {
         contentFormView?.resignCurrentEditedTextField()
-        viewModel.headerTapped()
+        viewModel?.headerTapped()
     }
     
     @objc func handlePrevious(button: UIButton) {
         contentFormView?.resignCurrentEditedTextField()
-        viewModel.previousTapped()
+        viewModel?.previousTapped()
     }
     
     @objc func handleNext(button: UIButton) {
         contentFormView?.resignCurrentEditedTextField()
-        viewModel.nextTapped()
+        viewModel?.nextTapped()
     }
     
     @objc func handleSwipeGesture(swipeGesture: UISwipeGestureRecognizer) {
@@ -197,9 +194,9 @@ class ToolPageCardView: UIView {
         contentFormView?.resignCurrentEditedTextField()
                 
         if swipeGesture.direction == .up && offset.y + scrollFrame.size.height >= contentStackView.contentSize.height - inset.top - inset.bottom {
-            viewModel.didSwipeCardUp()
+            viewModel?.didSwipeCardUp()
         } else if swipeGesture.direction == .down && offset.y <= 0 {
-            viewModel.didSwipeCardDown()
+            viewModel?.didSwipeCardDown()
         }
     }
     

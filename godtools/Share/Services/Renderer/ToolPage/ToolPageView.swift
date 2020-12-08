@@ -604,7 +604,8 @@ extension ToolPageView {
         
         for cardViewModel in cardsViewModels {
             
-            let cardView: ToolPageCardView = ToolPageCardView(viewModel: cardViewModel)
+            let cardView: ToolPageCardView = ToolPageCardView()
+            cardView.configure(viewModel: cardViewModel)
             
             cards.append(cardView)
             
