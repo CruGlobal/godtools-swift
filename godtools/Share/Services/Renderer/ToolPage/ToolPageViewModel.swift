@@ -109,7 +109,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
             pageNode: pageNode,
             toolPageColors: toolPageColors,
             fontService: diContainer.fontService,
-            languageDirection: diContainer.primaryLanguage.languageDirection,
+            languageDirectionSemanticContentAttribute: diContainer.languageDirectionSemanticContentAttribute,
             isLastPage: isLastPage
         )
                 
@@ -251,6 +251,10 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
             return true
         }
         return false
+    }
+    
+    var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
+        return diContainer.languageDirectionSemanticContentAttribute
     }
     
     var backgroundColor: UIColor {

@@ -83,6 +83,7 @@ class ToolView: UIViewController {
             cellReuseIdentifier: ToolPageCell.reuseIdentifier
         )
         toolPagesView.pagesCollectionView.contentInset = UIEdgeInsets.zero
+        toolPagesView.pagesCollectionView.semanticContentAttribute = viewModel.languageDirectionSemanticContentAttribute
         
         if #available(iOS 11.0, *) {
             toolPagesView.pagesCollectionView.contentInsetAdjustmentBehavior = .never

@@ -13,6 +13,7 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
     private let resource: ResourceModel
     private let language: LanguageModel
     private let primaryLanguage: LanguageModel
+    private let languageDirectionSemanticContentAttribute: UISemanticContentAttribute
     private let trainingTipId: String
     private let tipNode: TipNode
     private let manifest: MobileContentXmlManifest
@@ -58,6 +59,13 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
         self.localizationServices = localizationServices
         self.cardJumpService = cardJumpService
         self.viewedTrainingTips = viewedTrainingTips
+        
+        switch primaryLanguage.languageDirection {
+        case .leftToRight:
+            languageDirectionSemanticContentAttribute = .forceLeftToRight
+        case .rightToLeft:
+            languageDirectionSemanticContentAttribute = .forceRightToLeft
+        }
         
         let pageNodes: [PageNode] = tipNode.pages?.pages ?? []
         self.pageNodes = pageNodes
@@ -154,6 +162,7 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
             resource: resource,
             language: language,
             primaryLanguage: primaryLanguage,
+            languageDirectionSemanticContentAttribute: languageDirectionSemanticContentAttribute,
             translationsFileCache: translationsFileCache,
             mobileContentNodeParser: mobileContentNodeParser,
             mobileContentAnalytics: mobileContentAnalytics,

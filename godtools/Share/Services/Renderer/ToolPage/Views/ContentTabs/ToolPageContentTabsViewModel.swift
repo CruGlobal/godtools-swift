@@ -35,6 +35,10 @@ class ToolPageContentTabsViewModel: ToolPageContentTabsViewModelType {
         tabContent.accept(value: getTabContent(tab: startingTab))
     }
     
+    var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
+        return diContainer.languageDirectionSemanticContentAttribute
+    }
+    
     func tabTapped(tab: Int) {
         
         selectedTab.setValue(value: tab)

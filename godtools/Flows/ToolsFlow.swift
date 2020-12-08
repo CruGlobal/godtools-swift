@@ -558,31 +558,7 @@ class ToolsFlow: Flow {
     }
     
     private func navigateToTract(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
-        
-        /*
-        let viewModel = TractViewModel(
-            flowDelegate: self,
-            resource: resource,
-            primaryLanguage: primaryLanguage,
-            primaryTranslationManifest: primaryTranslationManifest,
-            parallelLanguage: parallelLanguage,
-            parallelTranslationManifest: parallelTranslationManifest,
-            languageSettingsService: appDiContainer.languageSettingsService,
-            tractManager: appDiContainer.tractManager,
-            tractRemoteSharePublisher: appDiContainer.tractRemoteSharePublisher,
-            tractRemoteShareSubscriber: appDiContainer.tractRemoteShareSubscriber,
-            isNewUserService: appDiContainer.isNewUserService,
-            cardJumpService: appDiContainer.cardJumpService,
-            followUpsService: appDiContainer.followUpsService,
-            viewsService: appDiContainer.viewsService,
-            localizationServices: appDiContainer.localizationServices,
-            analytics: appDiContainer.analytics,
-            toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics,
-            liveShareStream: liveShareStream,
-            tractPage: page
-        )
-        let view = TractView(viewModel: viewModel)*/
-        
+                
         let viewModel = ToolViewModel(
             flowDelegate: self,
             resource: resource,
@@ -610,19 +586,7 @@ class ToolsFlow: Flow {
             trainingTipsEnabled: trainingTipsEnabled,
             page: page
         )
-        
-        let languageDirectionSemanticContentAttribute: UISemanticContentAttribute
-        
-        switch primaryLanguage.languageDirection {
-            
-        case .leftToRight:
-            languageDirectionSemanticContentAttribute = .forceLeftToRight
-        case .rightToLeft:
-            languageDirectionSemanticContentAttribute = .forceRightToLeft
-        }
-        
-        UIView.appearance(whenContainedInInstancesOf: [ToolView.self]).semanticContentAttribute = languageDirectionSemanticContentAttribute
-            
+                    
         let view = ToolView(viewModel: viewModel)
 
         navigationController.pushViewController(view, animated: true)

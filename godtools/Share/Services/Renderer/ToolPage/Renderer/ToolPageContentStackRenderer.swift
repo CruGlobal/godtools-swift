@@ -105,7 +105,7 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
             
             let imageView: UIImageView = UIImageView()
             
-            if renderContentImage(imageView: imageView, imageNode: imageNode, primaryLanguage: diContainer.primaryLanguage), let imageSize = imageView.image?.size {
+            if renderContentImage(imageView: imageView, imageNode: imageNode, languageDirectionSemanticContentAttribute: diContainer.languageDirectionSemanticContentAttribute), let imageSize = imageView.image?.size {
                 
                 return MobileContentStackRenderedView(view: imageView, heightConstraintType: .setToAspectRatioOfProvidedSize(size: imageSize))
             }
@@ -257,7 +257,7 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
         button.setTitle(linkNode.textNode?.text, for: .normal)
     }
     
-    func renderContentImage(imageView: UIImageView, imageNode: ContentImageNode, primaryLanguage: LanguageModel) -> Bool {
+    func renderContentImage(imageView: UIImageView, imageNode: ContentImageNode, languageDirectionSemanticContentAttribute: UISemanticContentAttribute) -> Bool {
         
         imageView.backgroundColor = .clear
         
@@ -273,7 +273,7 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
             return false
         }
         
-        if primaryLanguage.languageDirection == .rightToLeft {
+        if languageDirectionSemanticContentAttribute == .forceRightToLeft {
             imageView.semanticContentAttribute = .forceRightToLeft
             imageView.image = resourceImage.imageFlippedForRightToLeftLayoutDirection()
         }

@@ -160,6 +160,10 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
         return diContainer.fontService.getFont(size: 18, weight: .regular)
     }
     
+    var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
+        return diContainer.languageDirectionSemanticContentAttribute
+    }
+    
     func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel {
         return MobileContentBackgroundImageViewModel(backgroundImageNode: cardNode, manifestResourcesCache: diContainer.manifestResourcesCache)
     }

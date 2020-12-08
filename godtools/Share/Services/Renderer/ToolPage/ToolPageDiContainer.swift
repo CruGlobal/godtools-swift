@@ -6,7 +6,7 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class ToolPageDiContainer {
     
@@ -15,6 +15,7 @@ class ToolPageDiContainer {
     let resource: ResourceModel
     let language: LanguageModel
     let primaryLanguage: LanguageModel
+    let languageDirectionSemanticContentAttribute: UISemanticContentAttribute
     let translationsFileCache: TranslationsFileCache
     let mobileContentNodeParser: MobileContentXmlNodeParser
     let mobileContentAnalytics: MobileContentAnalytics
@@ -27,13 +28,14 @@ class ToolPageDiContainer {
     let viewedTrainingTips: ViewedTrainingTipsService
     let trainingTipsEnabled: Bool
     
-    required init(manifest: MobileContentXmlManifest, resource: ResourceModel, language: LanguageModel, primaryLanguage: LanguageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, analytics: AnalyticsContainer, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, viewedTrainingTips: ViewedTrainingTipsService, trainingTipsEnabled: Bool) {
+    required init(manifest: MobileContentXmlManifest, resource: ResourceModel, language: LanguageModel, primaryLanguage: LanguageModel, languageDirectionSemanticContentAttribute: UISemanticContentAttribute, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, analytics: AnalyticsContainer, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, viewedTrainingTips: ViewedTrainingTipsService, trainingTipsEnabled: Bool) {
         
         self.manifest = manifest
         self.manifestResourcesCache = ManifestResourcesCache(manifest: manifest, translationsFileCache: translationsFileCache)
         self.resource = resource
         self.language = language
         self.primaryLanguage = primaryLanguage
+        self.languageDirectionSemanticContentAttribute = languageDirectionSemanticContentAttribute
         self.translationsFileCache = translationsFileCache
         self.mobileContentNodeParser = mobileContentNodeParser
         self.mobileContentAnalytics = mobileContentAnalytics

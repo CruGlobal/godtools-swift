@@ -6,13 +6,14 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol ToolPageContentTabsViewModelType {
     
     var tabLabels: [String] { get }
     var selectedTab: ObservableValue<Int> { get }
     var tabContent: ObservableValue<ToolPageContentStackContainerViewModel?> { get }
+    var languageDirectionSemanticContentAttribute: UISemanticContentAttribute { get }
     
     func tabTapped(tab: Int)
 }

@@ -104,6 +104,7 @@ class ToolPageView: UIView {
         // headerView
         let headerViewModel: ToolPageHeaderViewModel = viewModel.headerViewModel
         
+        headerView.semanticContentAttribute = viewModel.languageDirectionSemanticContentAttribute
         headerView.backgroundColor = headerViewModel.backgroundColor
         
         headerNumberLabel.font = headerViewModel.headerNumberFont
@@ -134,8 +135,10 @@ class ToolPageView: UIView {
             
         // callToAction
         let callToActionViewModel: ToolPageCallToActionViewModel = viewModel.callToActionViewModel
+        callToActionView.semanticContentAttribute = viewModel.languageDirectionSemanticContentAttribute
         callToActionTitleLabel.text = callToActionViewModel.callToActionTitle
         callToActionTitleLabel.textColor = callToActionViewModel.callToActionTitleColor
+        callToActionNextButton.semanticContentAttribute = viewModel.languageDirectionSemanticContentAttribute
         callToActionNextButton.setImage(callToActionViewModel.callToActionButtonImage, for: .normal)
         callToActionNextButton.setImageColor(color: callToActionViewModel.callToActionNextButtonColor)
         
@@ -408,19 +411,19 @@ extension ToolPageView {
     }
     
     private var cardHeight: CGFloat {
-                
+               
+        let callToActionHeight: CGFloat = callToActionView.frame.size.height
+        
         guard let cardView = cards.first else {
             assertionFailure("Cards should be initialized before cardHeight is accessed.")
-            return cardsContainerHeight - callToActionView.frame.size.height - cardInsets.top - cardInsets.bottom
+            return cardsContainerHeight - callToActionHeight - cardInsets.top - cardInsets.bottom
         }
                 
         let numberOfVisibleCards: CGFloat = CGFloat(viewModel.numberOfVisibleCards)
         let cardTitleHeight: CGFloat = cardView.cardHeaderHeight
         let cardTopVisibilityHeight: CGFloat = floor(cardTitleHeight * cardCollapsedVisibilityPercentage)
         let collapsedCardsHeight: CGFloat = (cardTopVisibilityHeight * (numberOfVisibleCards - 1))
-        
-        let callToActionHeight: CGFloat = callToActionView.frame.size.height
-        
+                
         let maxFooterAreaHeight: CGFloat = (collapsedCardsHeight > callToActionHeight) ? collapsedCardsHeight : callToActionHeight
         
         let cardHeight: CGFloat = cardsContainerHeight - cardInsets.top - cardInsets.bottom - maxFooterAreaHeight

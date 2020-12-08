@@ -43,7 +43,7 @@ class ToolPageCardView: UIView {
         self.viewModel = viewModel
         
         super.init(frame: UIScreen.main.bounds)
-        
+                
         initializeNib()
         setupLayout()
         setupBinding()
@@ -79,6 +79,7 @@ class ToolPageCardView: UIView {
         let nib: UINib = UINib(nibName: String(describing: ToolPageCardView.self), bundle: nil)
         let contents: [Any]? = nib.instantiate(withOwner: self, options: nil)
         if let rootNibView = (contents as? [UIView])?.first {
+            rootNibView.semanticContentAttribute = viewModel.languageDirectionSemanticContentAttribute
             addSubview(rootNibView)
             rootNibView.frame = bounds
             rootNibView.constrainEdgesToSuperview()

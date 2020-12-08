@@ -13,16 +13,16 @@ class ToolPageCallToActionViewModel {
     private let pageNode: PageNode
     private let toolPageColors: ToolPageColors
     private let fontService: FontService
-    private let languageDirection: LanguageDirection
+    private let languageDirectionSemanticContentAttribute: UISemanticContentAttribute
 
     let hidesCallToAction: Bool
     
-    required init(pageNode: PageNode, toolPageColors: ToolPageColors, fontService: FontService, languageDirection: LanguageDirection, isLastPage: Bool) {
+    required init(pageNode: PageNode, toolPageColors: ToolPageColors, fontService: FontService, languageDirectionSemanticContentAttribute: UISemanticContentAttribute, isLastPage: Bool) {
         
         self.pageNode = pageNode
         self.toolPageColors = toolPageColors
         self.fontService = fontService
-        self.languageDirection = languageDirection
+        self.languageDirectionSemanticContentAttribute = languageDirectionSemanticContentAttribute
         
         hidesCallToAction = (pageNode.callToActionNode == nil && pageNode.heroNode == nil) || isLastPage
     }
@@ -43,20 +43,13 @@ class ToolPageCallToActionViewModel {
         return pageNode.callToActionNode?.getControlColor()?.color ?? toolPageColors.primaryColor
     }
     
-    var semanticContentAttribute: UISemanticContentAttribute {
-        if languageDirection == .rightToLeft {
-            return .forceRightToLeft
-        }
-        return .forceLeftToRight
-    }
-    
     var callToActionButtonImage: UIImage? {
         
         guard let buttonImage = UIImage(named: "right_arrow_blue") else {
             return nil
         }
-                
-        if languageDirection == .leftToRight {
+                        
+        if languageDirectionSemanticContentAttribute == .forceLeftToRight {
             return buttonImage
         }
         
