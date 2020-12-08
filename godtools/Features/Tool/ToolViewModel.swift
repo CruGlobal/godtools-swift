@@ -13,7 +13,6 @@ class ToolViewModel: NSObject, ToolViewModelType {
     typealias PageNumber = Int
     typealias LanguageCode = String
     
-    private let sharedImageMemoryCache: ImageMemoryCache = ImageMemoryCache(maxCacheSizeInMegabytes: 1)
     private let resource: ResourceModel
     private let languages: [LanguageModel]
     private let primaryLanguageTranslationModel: ToolLanguageTranslationModel
@@ -320,7 +319,6 @@ extension ToolViewModel {
         if let pageNode = languageTranslationModel.getToolPageNode(page: page) {
                                                              
             let toolPageDiContainer = ToolPageDiContainer(
-                imageMemoryCache: sharedImageMemoryCache,
                 manifest: languageTranslationModel.manifest,
                 resource: resource,
                 language: languageTranslationModel.language,

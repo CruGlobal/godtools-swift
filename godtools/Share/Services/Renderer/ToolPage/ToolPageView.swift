@@ -701,12 +701,11 @@ extension ToolPageView: UIGestureRecognizerDelegate {
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
            
-        /*
         if gestureRecognizer == panGestureToControlPageCollectionViewPanningSensitivity {
                         
             if let otherView = otherGestureRecognizer.view, otherView is UICollectionView, let collectionViewPanGesture = otherGestureRecognizer as? UIPanGestureRecognizer {
                 
-                let velocity: CGPoint = collectionViewPanGesture.velocity(in: view)
+                let velocity: CGPoint = collectionViewPanGesture.velocity(in: self)
                         
                 let angleRadians: CGFloat = atan2(velocity.y, velocity.x)
                 var angleDegrees: CGFloat = angleRadians * 57.2958
@@ -715,8 +714,8 @@ extension ToolPageView: UIGestureRecognizerDelegate {
                 }
                 let rightToLeftDegrees: CGFloat = 180
                 let leftToRightDegrees: CGFloat = 0
-                let allowedPanOffsetDegrees: CGFloat = 20
-                                    
+                let allowedPanOffsetDegrees: CGFloat = 40
+                                                    
                 let shouldRecognizeToolPanning: Bool
                 
                 if angleDegrees >= rightToLeftDegrees - allowedPanOffsetDegrees && angleDegrees <= rightToLeftDegrees + allowedPanOffsetDegrees {
@@ -736,7 +735,7 @@ extension ToolPageView: UIGestureRecognizerDelegate {
                 // Allow simultaneous gestures whenever the pan gesture is active against any gesture that is not a collectionview.
                 return true
             }
-        }*/
+        }
         
         return true
     }

@@ -14,7 +14,6 @@ class ToolPageCell: UICollectionViewCell {
     static let reuseIdentifier: String = "ToolPageCellReuseIdentifier"
      
     private var toolPage: ToolPageView?
-    private var viewModel: ToolPageViewModelType?
     
     deinit {
         print("x deinit: \(type(of: self))")
@@ -29,22 +28,17 @@ class ToolPageCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        viewModel = nil
         toolPage?.removeFromSuperview()
         toolPage = nil
     }
     
-    func configure(viewModel: ToolPageViewModelType, windowViewController: UIViewController, safeArea: UIEdgeInsets) {
+    func configure(toolPage: ToolPageView) {
         
-        let toolPage: ToolPageView = ToolPageView(
-            viewModel: viewModel,
-            windowViewController: windowViewController,
-            safeArea: safeArea
-        )
+        self.toolPage?.removeFromSuperview()
+        
         contentView.addSubview(toolPage)
         toolPage.constrainEdgesToSuperview()
                 
         self.toolPage = toolPage
-        self.viewModel = viewModel
     }
 }

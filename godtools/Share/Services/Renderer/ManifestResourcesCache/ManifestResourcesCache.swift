@@ -12,13 +12,11 @@ class ManifestResourcesCache {
     
     private let manifest: MobileContentXmlManifest
     private let translationsFileCache: TranslationsFileCache
-    private let imageMemoryCache: ImageMemoryCache?
     
-    required init(manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, imageMemoryCache: ImageMemoryCache?) {
+    required init(manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache) {
         
         self.manifest = manifest
         self.translationsFileCache = translationsFileCache
-        self.imageMemoryCache = imageMemoryCache
     }
     
     func getImage(resource: String) -> UIImage? {
@@ -27,31 +25,21 @@ class ManifestResourcesCache {
             return nil
         }
         
-        let imageCacheKey: String = resourceSrc
+        let location: SHA256FileLocation = SHA256FileLocation(sha256WithPathExtension: resourceSrc)
         
-        if let cachedImageData = imageMemoryCache?.getImageData(key: imageCacheKey) {
-            return UIImage(data: cachedImageData)
+        let imageData: Data?
+        
+        switch translationsFileCache.getData(location: location) {
+            
+        case .success(let data):
+            imageData = data
+        case .failure( _):
+            imageData = nil
         }
-        else {
-            
-            let location: SHA256FileLocation = SHA256FileLocation(sha256WithPathExtension: resourceSrc)
-            
-            let imageData: Data?
-            
-            switch translationsFileCache.getData(location: location) {
-                
-            case .success(let data):
-                imageData = data
-            case .failure( _):
-                imageData = nil
-            }
-            
-            if let imageData = imageData, let image = UIImage(data: imageData) {
-                                
-                imageMemoryCache?.cacheImageDataForKey(key: imageCacheKey, imageData: imageData)
-                
-                return image
-            }
+        
+        if let imageData = imageData, let image = UIImage(data: imageData) {
+                                        
+            return image
         }
         
         return nil
