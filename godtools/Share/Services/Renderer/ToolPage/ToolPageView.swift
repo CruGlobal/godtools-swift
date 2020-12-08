@@ -84,7 +84,9 @@ class ToolPageView: UIView, ReusableView {
         heroContainerView.removeAllSubviews()
         dismissModalIfNeeded(animated: false, completion: nil)
         cardsView.resetView()
-        self.viewModel = nil
+        viewModel?.hidesHeaderTrainingTip.removeObserver(self)
+        viewModel?.modal.removeObserver(self)
+        viewModel = nil
     }
     
     func configure(viewModel: ToolPageViewModelType, windowViewController: UIViewController, safeArea: UIEdgeInsets) {

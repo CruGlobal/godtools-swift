@@ -117,6 +117,8 @@ class ToolPageCardView: UIView, ReusableView {
     
     func resetView() {
         
+        viewModel?.contentStackViewModel.contentStackRenderer.didRenderContentFormSignal.removeObserver(self)
+        viewModel?.hidesHeaderTrainingTip.removeObserver(self)
         setCardSwipingEnabled(enabled: true)
         removeKeyboardHeightFromContentSize()
         backgroundImageView.resetView()
