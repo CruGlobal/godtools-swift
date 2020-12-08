@@ -129,6 +129,7 @@
 		451B869E252F43D40061942B /* LearnToShareToolCellViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451B8693252F43D40061942B /* LearnToShareToolCellViewModelType.swift */; };
 		451B869F252F43D40061942B /* LearnToShareToolViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451B8694252F43D40061942B /* LearnToShareToolViewModelType.swift */; };
 		451B86A1252F43EF0061942B /* LearnToShareToolFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451B86A0252F43EE0061942B /* LearnToShareToolFlow.swift */; };
+		451B9AAA257FB43A00B6EE1B /* ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451B9AA9257FB43A00B6EE1B /* ReusableView.swift */; };
 		451B9CE22475AEE6006ACD32 /* AppFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451B9CE12475AEE6006ACD32 /* AppFlow.swift */; };
 		451B9CE42475B6D0006ACD32 /* UIViewController+Containment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451B9CE32475B6D0006ACD32 /* UIViewController+Containment.swift */; };
 		451B9CE62475B812006ACD32 /* AppRootController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451B9CE52475B812006ACD32 /* AppRootController.swift */; };
@@ -983,6 +984,7 @@
 		451B8693252F43D40061942B /* LearnToShareToolCellViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LearnToShareToolCellViewModelType.swift; sourceTree = "<group>"; };
 		451B8694252F43D40061942B /* LearnToShareToolViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LearnToShareToolViewModelType.swift; sourceTree = "<group>"; };
 		451B86A0252F43EE0061942B /* LearnToShareToolFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LearnToShareToolFlow.swift; sourceTree = "<group>"; };
+		451B9AA9257FB43A00B6EE1B /* ReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableView.swift; sourceTree = "<group>"; };
 		451B9CE12475AEE6006ACD32 /* AppFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlow.swift; sourceTree = "<group>"; };
 		451B9CE32475B6D0006ACD32 /* UIViewController+Containment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Containment.swift"; sourceTree = "<group>"; };
 		451B9CE52475B812006ACD32 /* AppRootController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootController.swift; sourceTree = "<group>"; };
@@ -4058,6 +4060,7 @@
 			children = (
 				459A198524E4C34500A59BBD /* CustomViewBuilderType.swift */,
 				45FCFF32243D06C000865501 /* NibBased.swift */,
+				451B9AA9257FB43A00B6EE1B /* ReusableView.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -5287,6 +5290,7 @@
 				45E2BF04254354C400C4D66C /* MobileContentManifestPageType.swift in Sources */,
 				450F1298256C16AE00ED69D4 /* KeyboardState.swift in Sources */,
 				451F3F1E24E458A000A25D11 /* ShareToolView.swift in Sources */,
+				451B9AAA257FB43A00B6EE1B /* ReusableView.swift in Sources */,
 				450F12AF256E9E7800ED69D4 /* MobileContentAnalyticsEvent.swift in Sources */,
 				4595F42F24A294EE00B3733E /* ArticleAemImportDataParser.swift in Sources */,
 				457D9840254B5571000B8159 /* TipNode.swift in Sources */,

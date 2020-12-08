@@ -10,12 +10,12 @@ import UIKit
 
 class ToolPageView: UIView {
     
-    private let viewModel: ToolPageViewModelType
-    private let safeArea: UIEdgeInsets
     private let panGestureToControlPageCollectionViewPanningSensitivity: UIPanGestureRecognizer = UIPanGestureRecognizer()
     private let backgroundImageView: MobileContentBackgroundImageView = MobileContentBackgroundImageView()
     private let keyboardObserver: KeyboardObserverType = KeyboardNotificationObserver(loggingEnabled: false)
     
+    private var viewModel: ToolPageViewModelType?
+    private var safeArea: UIEdgeInsets = .zero
     private var contentStackView: MobileContentStackView?
     private var heroView: MobileContentStackView?
     private var cards: [ToolPageCardView] = Array()
@@ -45,17 +45,11 @@ class ToolPageView: UIView {
     @IBOutlet weak private var callToActionBottom: NSLayoutConstraint!
     @IBOutlet weak private var bottomInsetBottomConstraint: NSLayoutConstraint!
     
-    required init(viewModel: ToolPageViewModelType, windowViewController: UIViewController, safeArea: UIEdgeInsets) {
-        
-        self.viewModel = viewModel
-        self.windowViewController = windowViewController
-        self.safeArea = safeArea
+    required init() {
         
         super.init(frame: UIScreen.main.bounds)
         
         initializeNib()
-        setupLayout()
-        setupBinding()
         
         callToActionNextButton.addTarget(self, action: #selector(handleCallToActionNext(button:)), for: .touchUpInside)
         
@@ -87,13 +81,19 @@ class ToolPageView: UIView {
         }
     }
     
-    private func setupLayout() {
+    func resetView() {
+        
+        self.viewModel = nil
+    }
+    
+    func configure(viewModel: ToolPageViewModelType, windowViewController: UIViewController, safeArea: UIEdgeInsets) {
+        
+        self.viewModel = viewModel
+        self.windowViewController = windowViewController
+        self.safeArea = safeArea
         
         topInsetTopConstraint.constant = safeArea.top
         bottomInsetBottomConstraint.constant = safeArea.bottom
-    }
-    
-    private func setupBinding() {
         
         backgroundColor = viewModel.backgroundColor
         
@@ -151,7 +151,7 @@ class ToolPageView: UIView {
         
         // keyboard
         keyboardObserver.keyboardStateDidChangeSignal.addObserver(self) { [weak self] (keyboardStateChange: KeyboardStateChange) in
-            self?.handleKeyboardStateChange(keyboardStateChange: keyboardStateChange)
+            self?.handleKeyboardStateChange(viewModel: viewModel, keyboardStateChange: keyboardStateChange)
         }
         
         //
@@ -172,8 +172,8 @@ class ToolPageView: UIView {
             contentStackContainerView.isHidden = true
         }
         
-        setHeaderHidden(hidden: hidesHeader, animated: false)
-        setCallToActionHidden(hidden: hidesCallToAction, animated: false)
+        setHeaderHidden(headerViewModel: viewModel.headerViewModel, hidden: hidesHeader, animated: false)
+        setCallToActionHidden(callToActionViewModel: viewModel.callToActionViewModel, hidden: hidesCallToAction, animated: false)
                 
         //cards
         if viewModel.numberOfCards > 0 {
@@ -182,10 +182,10 @@ class ToolPageView: UIView {
             
             layoutIfNeeded()
             
-            setCardsState(cardsState: .starting, animated: false)
+            setCardsState(viewModel: viewModel, cardsState: .starting, animated: false)
             
             viewModel.currentCard.addObserver(self) { [weak self] (cardPositionAnimatable: AnimatableValue<Int?>) in
-                self?.setCardsState(cardsState: .showingCard(showingCardAtPosition: cardPositionAnimatable.value), animated: cardPositionAnimatable.animated)
+                self?.setCardsState(viewModel: viewModel, cardsState: .showingCard(showingCardAtPosition: cardPositionAnimatable.value), animated: cardPositionAnimatable.animated)
             }
             
             viewModel.hidesCardJump.addObserver(self) { [weak self] (hidesCardJump: Bool) in
@@ -255,7 +255,7 @@ class ToolPageView: UIView {
     }
     
     @objc func handleCallToActionNext(button: UIButton) {
-        viewModel.callToActionNextButtonTapped()
+        viewModel?.callToActionNextButtonTapped()
     }
     
     private func setHeroContentInsets(hidesHeader: Bool) {
@@ -273,9 +273,9 @@ class ToolPageView: UIView {
         heroView?.setContentOffset(contentOffset: CGPoint(x: 0, y: heroTopContentInset * -1))
     }
     
-    private func setHeaderHidden(hidden: Bool, animated: Bool) {
-            
-        if viewModel.headerViewModel.hidesHeader && !hidden {
+    private func setHeaderHidden(headerViewModel: ToolPageHeaderViewModel, hidden: Bool, animated: Bool) {
+                    
+        if headerViewModel.hidesHeader && !hidden {
             return
         }
         
@@ -298,9 +298,9 @@ class ToolPageView: UIView {
         }
     }
     
-    private func setCallToActionHidden(hidden: Bool, animated: Bool) {
+    private func setCallToActionHidden(callToActionViewModel: ToolPageCallToActionViewModel, hidden: Bool, animated: Bool) {
         
-        if viewModel.callToActionViewModel.hidesCallToAction && !hidden {
+        if callToActionViewModel.hidesCallToAction && !hidden {
             return
         }
         
@@ -326,7 +326,7 @@ class ToolPageView: UIView {
 
 extension ToolPageView: ToolPageCardBounceAnimationDelegate {
     func toolPageCardBounceAnimationDidFinish(cardBounceAnimation: ToolPageCardBounceAnimation, forceStopped: Bool) {
-        viewModel.cardBounceAnimationFinished()
+        viewModel?.cardBounceAnimationFinished()
     }
 }
 
@@ -412,7 +412,7 @@ extension ToolPageView {
             return cardsContainerHeight - callToActionView.frame.size.height - cardInsets.top - cardInsets.bottom
         }
                 
-        let numberOfVisibleCards: CGFloat = CGFloat(viewModel.numberOfVisibleCards)
+        let numberOfVisibleCards: CGFloat = CGFloat(viewModel?.numberOfVisibleCards ?? 0)
         let cardTitleHeight: CGFloat = cardView.cardHeaderHeight
         let cardTopVisibilityHeight: CGFloat = floor(cardTitleHeight * cardCollapsedVisibilityPercentage)
         let collapsedCardsHeight: CGFloat = (cardTopVisibilityHeight * (numberOfVisibleCards - 1))
@@ -439,7 +439,7 @@ extension ToolPageView {
             return UIScreen.main.bounds.size.height
         }
         
-        let numberOfVisibleCards: CGFloat = CGFloat(viewModel.numberOfVisibleCards)
+        let numberOfVisibleCards: CGFloat = CGFloat(viewModel?.numberOfVisibleCards ?? 0)
         let cardTitleHeight: CGFloat = cardView.cardHeaderHeight
         
         switch state {
@@ -462,14 +462,14 @@ extension ToolPageView {
         }
     }
     
-    private func setCardsState(cardsState: ToolPageCardsState, animated: Bool) {
+    private func setCardsState(viewModel: ToolPageViewModelType, cardsState: ToolPageCardsState, animated: Bool) {
         
         switch cardsState {
             
         case .starting:
             
-            setHeaderHidden(hidden: false, animated: animated)
-            setCallToActionHidden(hidden: true, animated: animated)
+            setHeaderHidden(headerViewModel: viewModel.headerViewModel, hidden: false, animated: animated)
+            setCallToActionHidden(callToActionViewModel: viewModel.callToActionViewModel, hidden: true, animated: animated)
             
             var visibleCardPosition: Int = 0
             
@@ -495,15 +495,15 @@ extension ToolPageView {
             }
             
             guard let showCardAtPosition = showingCardAtPosition else {
-                setCardsState(cardsState: .collapseAllCards, animated: animated)
+                setCardsState(viewModel: viewModel, cardsState: .collapseAllCards, animated: animated)
                 return
             }
             
-            setHeaderHidden(hidden: true, animated: animated)
+            setHeaderHidden(headerViewModel: viewModel.headerViewModel, hidden: true, animated: animated)
             
             let isShowingLastVisibleCard: Bool = showCardAtPosition >= viewModel.numberOfVisibleCards - 1
             
-            setCallToActionHidden(hidden: !isShowingLastVisibleCard, animated: animated)
+            setCallToActionHidden(callToActionViewModel: viewModel.callToActionViewModel, hidden: !isShowingLastVisibleCard, animated: animated)
             
             var visibleCardPosition: Int = 0
             
@@ -568,18 +568,18 @@ extension ToolPageView {
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
                 self.layoutIfNeeded()
             }, completion: { (finished: Bool) in
-                self.handleCompletedSetCardState(cardsState: cardsState, animated: animated)
+                self.handleCompletedSetCardState(viewModel: viewModel, cardsState: cardsState, animated: animated)
             })
         }
         else {
             layoutIfNeeded()
-            handleCompletedSetCardState(cardsState: cardsState, animated: animated)
+            handleCompletedSetCardState(viewModel: viewModel, cardsState: cardsState, animated: animated)
         }
         
         currentCardState = cardsState
     }
     
-    private func handleCompletedSetCardState(cardsState: ToolPageCardsState, animated: Bool) {
+    private func handleCompletedSetCardState(viewModel: ToolPageViewModelType, cardsState: ToolPageCardsState, animated: Bool) {
         
         switch cardsState {
         
@@ -593,7 +593,7 @@ extension ToolPageView {
             break
                         
         case .collapseAllCards:
-            setCardsState(cardsState: .starting, animated: animated)
+            setCardsState(viewModel: viewModel, cardsState: .starting, animated: animated)
             
         case .initialized:
             break
@@ -667,7 +667,7 @@ extension ToolPageView {
 
 extension ToolPageView {
     
-    func handleKeyboardStateChange(keyboardStateChange: KeyboardStateChange) {
+    func handleKeyboardStateChange(viewModel: ToolPageViewModelType, keyboardStateChange: KeyboardStateChange) {
         
         guard let currentCardPosition = viewModel.currentCard.value.value else {
             return
@@ -680,9 +680,9 @@ extension ToolPageView {
         switch keyboardStateChange.keyboardState {
 
         case .willShow:
-            setCardsState(cardsState: .showingKeyboard(showingCardAtPosition: currentCardPosition), animated: true)
+            setCardsState(viewModel: viewModel, cardsState: .showingKeyboard(showingCardAtPosition: currentCardPosition), animated: true)
         case .willHide:
-            setCardsState(cardsState: .showingCard(showingCardAtPosition: currentCardPosition), animated: true)
+            setCardsState(viewModel: viewModel, cardsState: .showingCard(showingCardAtPosition: currentCardPosition), animated: true)
         case .didShow:
             break
         case .didHide:
