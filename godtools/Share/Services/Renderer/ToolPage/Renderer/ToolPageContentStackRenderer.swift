@@ -42,7 +42,7 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
     }
     
     deinit {
-        print("x deinit: \(type(of: self))")
+
     }
     
     private func resetForNewRender() {

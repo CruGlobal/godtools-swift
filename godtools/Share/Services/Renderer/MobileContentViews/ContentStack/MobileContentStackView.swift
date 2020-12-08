@@ -43,7 +43,7 @@ class MobileContentStackView: UIView {
     }
     
     deinit {
-        print("x deinit: \(type(of: self))")
+
     }
     
     var isEmpty: Bool {
