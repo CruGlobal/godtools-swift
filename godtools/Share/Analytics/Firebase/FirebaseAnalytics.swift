@@ -51,56 +51,51 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         
         previousTrackedScreenName = screenName
         
-        createDefaultPropertiesOnConcurrentQueue(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: previousScreenName) { [weak self] (defaultProperties: FirebaseAnalyticsProperties) in
+       let properties = createBaseProperties(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: previousScreenName)
         
-            let data: [String: Any] = JsonServices().encode(object: defaultProperties)
-                       
-            Analytics.logEvent(AnalyticsEventScreenView, parameters: data)
-            
-            self?.log(method: "trackScreenView()", label: "screenName", labelValue: screenName, data: data)
-        }
+        let data: [String: Any] = JsonServices().encode(object: properties)
+        
+        Analytics.logEvent(AnalyticsEventScreenView, parameters: data)
+        
+        log(method: "trackScreenView()", label: "screenName", labelValue: screenName, data: data)
     }
     
     func trackAction(screenName: String?, actionName: String, data: [AnyHashable : Any]?) {
         assertFailureIfNotConfigured()
 
-        let modifiedActionName = actionName.replacingOccurrences(of: "(-|\\.|\\ )", with: "_", options: .regularExpression)
+        let modifiedActionName = prepPropertyForFirebase(key: actionName)
         
         let actionData: [String: Any]? = data as? [String: Any] ?? nil
         
-        createDefaultPropertiesOnConcurrentQueue(screenName: screenName, siteSection: nil, siteSubSection: nil, previousScreenName: previousTrackedScreenName) { [weak self] (defaultProperties: FirebaseAnalyticsProperties) in
+        let properties = createBaseProperties(screenName: screenName, siteSection: nil, siteSubSection: nil, previousScreenName: previousTrackedScreenName)
+        
+        var trackingData: [String: Any] = JsonServices().encode(object: properties)
             
-            var trackingData: [String: Any] = JsonServices().encode(object: defaultProperties)
-            
-            if let actionData = actionData {
-                for (key, value) in actionData {
-                    trackingData[key] = value
-                }
+        if let actionData = actionData {
+            for (key, value) in actionData {
+                trackingData[key] = value
             }
-            
-            Analytics.logEvent(modifiedActionName, parameters: trackingData)
-                        
-            self?.log(method: "trackAction()", label: "actionName", labelValue: modifiedActionName, data: trackingData)
         }
+            
+        Analytics.logEvent(modifiedActionName, parameters: trackingData)
+                        
+        log(method: "trackAction()", label: "actionName", labelValue: modifiedActionName, data: trackingData)
     }
     
     func trackExitLink(screenName: String, siteSection: String, siteSubSection: String, url: URL) {
         assertFailureIfNotConfigured()
         
-        createDefaultPropertiesOnConcurrentQueue(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: previousTrackedScreenName) { [weak self] (defaultProperties: FirebaseAnalyticsProperties) in
+        var properties = createBaseProperties(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: previousTrackedScreenName)
+                        
+        properties[AnalyticsConstants.Keys.exitLink] = url.absoluteString
             
-            var properties = defaultProperties
+        let actionName = prepPropertyForFirebase(key: AnalyticsConstants.Values.exitLink)
             
-            properties.exitLink = url.absoluteString
+        let data: [String: Any] = JsonServices().encode(object: properties)
             
-            let actionName = AdobeAnalyticsConstants.Values.exitLink.replacingOccurrences(of: "(-|\\.|\\ )", with: "_", options: .regularExpression)
+        Analytics.logEvent(actionName, parameters: data)
             
-            let data: [String: Any] = JsonServices().encode(object: properties)
-            
-            Analytics.logEvent(actionName, parameters: data)
-            
-            self?.log(method: "trackExitLink()", label: actionName, labelValue: actionName, data: data)
-        }
+        log(method: "trackExitLink()", label: actionName, labelValue: actionName, data: data)
     }
     
     func fetchAttributesThenSetUserId() {
@@ -125,6 +120,10 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         }
     }
     
+    private func prepPropertyForFirebase(key: String) -> String {
+        return key.replacingOccurrences(of: "(-|\\.|\\ )", with: "_", options: .regularExpression)
+    }
+    
     private func setUserId() {
         assertFailureIfNotConfigured()
                
@@ -138,32 +137,25 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         Analytics.setUserID(userId)
     }
     
-    private func createDefaultPropertiesOnConcurrentQueue(screenName: String?, siteSection: String?, siteSubSection: String?, previousScreenName: String?, complete: @escaping ((_ properties: FirebaseAnalyticsProperties) -> Void)) {
+    private func createBaseProperties(screenName: String?, siteSection: String?, siteSubSection: String?, previousScreenName: String?) -> [String: String?] {
+        assertFailureIfNotConfigured()
+        
+        var properties: [String: String?] = [:]
+        
         let isLoggedIn: Bool = keyAuthClient.isAuthenticated()
         
-        let appName: String = self.appName
-        let contentLanguage: String? = languageSettingsService.primaryLanguage.value?.code
-        let contentLanguageSecondary: String? = languageSettingsService.parallelLanguage.value?.code
-        let grMasterPersonID: String? = keyAuthClient.isAuthenticated() ? keyAuthClient.grMasterPersonId : nil
-        let loggedInStatus: String = self.loggedInStatus
-        let ssoguid: String? = isLoggedIn ? keyAuthClient.guid : nil
-                
-        DispatchQueue.global().async { [] in
-            let defaultProperties = FirebaseAnalyticsProperties(
-                appName: appName,
-                contentLanguage: contentLanguage,
-                contentLanguageSecondary: contentLanguageSecondary,
-                grMasterPersonID: grMasterPersonID,
-                loggedInStatus: loggedInStatus,
-                previousScreenName: previousScreenName,
-                screenName: screenName,
-                siteSection: siteSection,
-                siteSubSection: siteSubSection,
-                ssoguid: ssoguid
-            )
-                        
-            complete(defaultProperties)
-        }
+        properties[AnalyticsConstants.Keys.appName] = AnalyticsConstants.Values.godTools
+        properties[AnalyticsConstants.Keys.contentLanguage] = languageSettingsService.primaryLanguage.value?.code
+        properties[AnalyticsConstants.Keys.contentLanguageSecondary] = languageSettingsService.parallelLanguage.value?.code
+        properties[AnalyticsConstants.Keys.grMasterPersonID] = keyAuthClient.isAuthenticated() ? keyAuthClient.grMasterPersonId : nil
+        properties[AnalyticsConstants.Keys.loggedInStatus] = isLoggedIn ? AnalyticsConstants.Values.isLoggedIn : AnalyticsConstants.Values.notLoggedIn
+        properties[AnalyticsConstants.Keys.previousScreenName] = previousScreenName
+        properties[AnalyticsConstants.Keys.screenName] = screenName
+        properties[AnalyticsConstants.Keys.siteSection] = siteSection
+        properties[AnalyticsConstants.Keys.siteSubSection] = siteSubSection
+        properties[AnalyticsConstants.Keys.ssoguid] = isLoggedIn ? keyAuthClient.guid : nil
+        
+        return properties
     }
     
     private var appName: String {
