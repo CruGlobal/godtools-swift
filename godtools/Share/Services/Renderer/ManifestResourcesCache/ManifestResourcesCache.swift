@@ -25,10 +25,23 @@ class ManifestResourcesCache {
             return nil
         }
         
-        guard let resourceImage = translationsFileCache.getImage(location: SHA256FileLocation(sha256WithPathExtension: resourceSrc)) else {
-            return nil
+        let location: SHA256FileLocation = SHA256FileLocation(sha256WithPathExtension: resourceSrc)
+        
+        let imageData: Data?
+        
+        switch translationsFileCache.getData(location: location) {
+            
+        case .success(let data):
+            imageData = data
+        case .failure( _):
+            imageData = nil
         }
         
-        return resourceImage
+        if let imageData = imageData, let image = UIImage(data: imageData) {
+                                        
+            return image
+        }
+        
+        return nil
     }
 }

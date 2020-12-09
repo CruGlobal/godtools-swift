@@ -34,6 +34,10 @@ class Signal {
         observers[observer.description] = nil
     }
     
+    func removeAllObservers() {
+        observers.removeAll()
+    }
+    
     private func notifyAllObservers() {
         for (_, onObserve) in observers {
             onObserve()

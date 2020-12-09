@@ -55,6 +55,7 @@ class ToolPageContentTabsView: UIView {
     private func setupBinding() {
         
         // tabsControl
+        tabsControl.semanticContentAttribute = viewModel.languageDirectionSemanticContentAttribute
         tabsControl.removeAllSegments()
         for index in 0 ..< viewModel.tabLabels.count {
             let tabLabel: String = viewModel.tabLabels[index]

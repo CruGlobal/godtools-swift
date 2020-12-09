@@ -41,6 +41,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
         
     let currentPage: ObservableValue<AnimatableValue<Int>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
     let numberOfToolPages: ObservableValue<Int> = ObservableValue(value: 0)
+    let languageDirectionSemanticContentAttribute: UISemanticContentAttribute
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -74,7 +75,15 @@ class ToolViewModel: NSObject, ToolViewModelType {
         
         self.primaryLanguageTranslationModel = primaryLanguageTranslationModel
                 
-        if let parallelLanguage = parallelLanguage, let parallelTranslationManifestData = parallelTranslationManifestData {
+        let parallelLanguageIsEqualToPrimaryLanguage: Bool
+        if let parallelLanguage = parallelLanguage {
+            parallelLanguageIsEqualToPrimaryLanguage = parallelLanguage.code.lowercased() == primaryLanguage.code.lowercased()
+        }
+        else {
+            parallelLanguageIsEqualToPrimaryLanguage = false
+        }
+        
+        if !parallelLanguageIsEqualToPrimaryLanguage, let parallelLanguage = parallelLanguage, let parallelTranslationManifestData = parallelTranslationManifestData {
             
             let parallelLanguageTranslationModel = ToolLanguageTranslationModel(
                 language: parallelLanguage,
@@ -96,6 +105,13 @@ class ToolViewModel: NSObject, ToolViewModelType {
             languageTranslationModels = [primaryLanguageTranslationModel]
             
             languages = [primaryLanguage]
+        }
+        
+        switch primaryLanguage.languageDirection {
+        case .leftToRight:
+            languageDirectionSemanticContentAttribute = .forceLeftToRight
+        case .rightToLeft:
+            languageDirectionSemanticContentAttribute = .forceRightToLeft
         }
         
         super.init()
@@ -317,14 +333,13 @@ extension ToolViewModel {
         let languageTranslationModel: ToolLanguageTranslationModel = languageTranslationModels[language]
         
         if let pageNode = languageTranslationModel.getToolPageNode(page: page) {
-                                     
-            // TODO: Should primary manifest and primary language always be passed here? ~Levi
-            // or should we pass parallel for parallel pages.
-                        
+                                                             
             let toolPageDiContainer = ToolPageDiContainer(
                 manifest: languageTranslationModel.manifest,
                 resource: resource,
                 language: languageTranslationModel.language,
+                primaryLanguage: primaryLanguageTranslationModel.language,
+                languageDirectionSemanticContentAttribute: languageDirectionSemanticContentAttribute,
                 translationsFileCache: translationsFileCache,
                 mobileContentNodeParser: mobileContentNodeParser,
                 mobileContentAnalytics: mobileContentAnalytics,
@@ -435,27 +450,49 @@ extension ToolViewModel: ToolPageViewModelTypeDelegate {
     
     func toolPagePresentedListener(viewModel: ToolPageViewModelType, page: Int) {
         
+        guard page == self.currentToolPage else {
+            return
+        }
+        
         currentPage.accept(value: AnimatableValue(value: page, animated: true))
     }
     
-    func toolPageTrainingTipTapped(trainingTipId: String, tipNode: TipNode) {
-        
+    func toolPageTrainingTipTapped(viewModel: ToolPageViewModelType, page: Int, trainingTipId: String, tipNode: TipNode) {
+
+        guard page == self.currentToolPage else {
+            return
+        }
+                
         let languageTranslationModel: ToolLanguageTranslationModel = languageTranslationModels[currentToolLanguage]
         
-        flowDelegate?.navigate(step: .toolTrainingTipTappedFromTool(resource: resource, manifest: languageTranslationModel.manifest, trainingTipId: trainingTipId, tipNode: tipNode, language: languageTranslationModel.language))
+        let toolPage: Int = currentPage.value.value
+        
+        flowDelegate?.navigate(step: .toolTrainingTipTappedFromTool(resource: resource, manifest: languageTranslationModel.manifest, trainingTipId: trainingTipId, tipNode: tipNode, language: languageTranslationModel.language, primaryLanguage: primaryLanguageTranslationModel.language, toolPage: toolPage))
     }
     
-    func toolPageCardChanged(cardPosition: Int?) {
+    func toolPageCardChanged(viewModel: ToolPageViewModelType, page: Int, cardPosition: Int?) {
+        
+        guard page == self.currentToolPage else {
+            return
+        }
         
         sendRemoteShareNavigationEventForPage(page: currentToolPage)
     }
     
-    func toolPageNextPageTapped() {
+    func toolPageNextPageTapped(viewModel: ToolPageViewModelType, page: Int) {
+        
+        guard page == self.currentToolPage else {
+            return
+        }
         
         gotoNextPage(animated: true)
     }
     
-    func toolPageError(error: ContentEventError) {
+    func toolPageError(viewModel: ToolPageViewModelType, page: Int, error: ContentEventError) {
+        
+        guard page == self.currentToolPage else {
+            return
+        }
         
         flowDelegate?.navigate(step: .toolDidEncounterErrorFromTool(error: error))
     }

@@ -37,7 +37,7 @@ class ToolPageHeroViewModel: ToolPageContentStackContainerViewModelType {
     }
     
     deinit {
-        print("x deinit: \(type(of: self))")
+
     }
     
     func heroDidAppear() {
