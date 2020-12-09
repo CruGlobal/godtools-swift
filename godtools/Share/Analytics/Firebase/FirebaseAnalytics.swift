@@ -17,6 +17,7 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
     private let loggingEnabled: Bool
     
     private var previousTrackedScreenName: String = ""
+    private var isConfigured: Bool = false
     
     required init(keyAuthClient: TheKeyOAuthClient, languageSettingsService: LanguageSettingsService, loggingEnabled: Bool) {
         self.keyAuthClient = keyAuthClient
@@ -28,10 +29,23 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         keyAuthClient.addStateChangeDelegate(delegate: self)
     }
     
+    func configure() {
+        
+        if isConfigured {
+            return
+        }
+                
+        keyAuthClient.addStateChangeDelegate(delegate: self)
+        
+        isConfigured = true
+                
+        log(method: "configure()", label: nil, labelValue: nil, data: nil)
+    }
     
     //MARK: - Public
     
     func trackScreenView(screenName: String, siteSection: String, siteSubSection: String) {
+        assertFailureIfNotConfigured()
         
         let previousScreenName: String = self.previousTrackedScreenName
         
@@ -48,6 +62,10 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
     }
     
     func trackAction(screenName: String?, actionName: String, data: [AnyHashable : Any]?) {
+        assertFailureIfNotConfigured()
+
+        let modifiedActionName = actionName.replacingOccurrences(of: "(-|\\.|\\ )", with: "_", options: .regularExpression)
+        
         let actionData: [String: Any]? = data as? [String: Any] ?? nil
         
         createDefaultPropertiesOnConcurrentQueue(screenName: screenName, siteSection: nil, siteSubSection: nil, previousScreenName: previousTrackedScreenName) { [weak self] (defaultProperties: FirebaseAnalyticsProperties) in
@@ -60,20 +78,22 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
                 }
             }
             
-            Analytics.logEvent(actionName, parameters: trackingData)
+            Analytics.logEvent(modifiedActionName, parameters: trackingData)
                         
-            self?.log(method: "trackAction()", label: "actionName", labelValue: actionName, data: trackingData)
+            self?.log(method: "trackAction()", label: "actionName", labelValue: modifiedActionName, data: trackingData)
         }
     }
     
     func trackExitLink(screenName: String, siteSection: String, siteSubSection: String, url: URL) {
+        assertFailureIfNotConfigured()
+        
         createDefaultPropertiesOnConcurrentQueue(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: previousTrackedScreenName) { [weak self] (defaultProperties: FirebaseAnalyticsProperties) in
             
             var properties = defaultProperties
             
             properties.exitLink = url.absoluteString
             
-            let actionName: String = "Exit Link Engaged"
+            let actionName = AdobeAnalyticsConstants.Values.exitLink.replacingOccurrences(of: "(-|\\.|\\ )", with: "_", options: .regularExpression)
             
             let data: [String: Any] = JsonServices().encode(object: properties)
             
@@ -83,7 +103,40 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         }
     }
     
+    func fetchAttributesThenSetUserId() {
+        assertFailureIfNotConfigured()
+        
+        let isLoggedIn: Bool = keyAuthClient.isAuthenticated()
+
+        if isLoggedIn {
+            keyAuthClient.fetchAttributes() { [weak self] (_, _) in
+                self?.setUserId()
+            }
+        } else {
+            setUserId()
+        }
+    }
+    
     //MARK: - Private
+    
+    private func assertFailureIfNotConfigured() {
+        if !isConfigured {
+            assertionFailure("AdobeAnalytics has not been configured.  Call configure() on application didFinishLaunching.")
+        }
+    }
+    
+    private func setUserId() {
+        assertFailureIfNotConfigured()
+               
+        let isLoggedIn: Bool = keyAuthClient.isAuthenticated()
+           
+        let grMasterPersonID = isLoggedIn ? keyAuthClient.grMasterPersonId : nil
+        let ssoguid = isLoggedIn ? keyAuthClient.guid : nil
+
+        let userId = grMasterPersonID ?? ssoguid
+        
+        Analytics.setUserID(userId)
+    }
     
     private func createDefaultPropertiesOnConcurrentQueue(screenName: String?, siteSection: String?, siteSubSection: String?, previousScreenName: String?, complete: @escaping ((_ properties: FirebaseAnalyticsProperties) -> Void)) {
         let isLoggedIn: Bool = keyAuthClient.isAuthenticated()
@@ -95,7 +148,7 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         let loggedInStatus: String = self.loggedInStatus
         let ssoguid: String? = isLoggedIn ? keyAuthClient.guid : nil
                 
-        DispatchQueue.global().async { [weak self] in
+        DispatchQueue.global().async { [] in
             let defaultProperties = FirebaseAnalyticsProperties(
                 appName: appName,
                 contentLanguage: contentLanguage,
@@ -114,11 +167,11 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
     }
     
     private var appName: String {
-        return FirebaseAnalyticsConstants.Values.godTools
+        return AdobeAnalyticsConstants.Values.godTools
     }
        
     private var loggedInStatus: String {
-        return keyAuthClient.isAuthenticated() ? FirebaseAnalyticsConstants.Values.isLoggedIn : FirebaseAnalyticsConstants.Values.notLoggedIn
+        return keyAuthClient.isAuthenticated() ? AdobeAnalyticsConstants.Values.isLoggedIn : AdobeAnalyticsConstants.Values.notLoggedIn
     }
     
     private func log(method: String, label: String?, labelValue: String?, data: [AnyHashable: Any]?) {
@@ -139,7 +192,7 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
 
 extension FirebaseAnalytics: OIDAuthStateChangeDelegate {
     func didChange(_ state: OIDAuthState) {
-        //fetchAttributesThenSyncIds()
+        fetchAttributesThenSetUserId()
     }
 }
 

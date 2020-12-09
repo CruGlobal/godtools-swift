@@ -21,11 +21,13 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>CFBundleURLName</key>
 			<string>org.cru.godtools</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>GodTools</string>
+				<string>tagmanager.c.org.cru.godtools</string>
 			</array>
 		</dict>
 		<dict>

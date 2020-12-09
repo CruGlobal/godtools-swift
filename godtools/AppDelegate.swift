@@ -49,6 +49,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appDiContainer.analytics.adobeAnalytics.configure()
         appDiContainer.analytics.adobeAnalytics.collectLifecycleData()
         
+        appDiContainer.analytics.firebaseAnalytics.configure()
+        
         appDiContainer.analytics.appsFlyer.configure(adobeAnalytics: appDiContainer.analytics.adobeAnalytics)
         
         appDiContainer.googleAdwordsAnalytics.recordAdwordsConversion()
@@ -91,6 +93,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appDiContainer.analytics.appsFlyer.trackAppLaunch()
         //on app launch, sync Adobe Analytics auth state
         appDiContainer.analytics.adobeAnalytics.fetchAttributesThenSyncIds()
+        appDiContainer.analytics.firebaseAnalytics.fetchAttributesThenSetUserId()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
