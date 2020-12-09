@@ -27,6 +27,7 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
     private let localizationServices: LocalizationServices
     private let cardJumpService: CardJumpService
     private let viewedTrainingTips: ViewedTrainingTipsService
+    private let toolPage: Int
     
     private var pageNodes: [PageNode] = Array()
     private var page: Int = 0
@@ -40,7 +41,7 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
     let continueButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     let numberOfTipPages: ObservableValue<Int> = ObservableValue(value: 0)
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageModel, primaryLanguage: LanguageModel, trainingTipId: String, tipNode: TipNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, analytics: AnalyticsContainer, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, viewedTrainingTips: ViewedTrainingTipsService) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageModel, primaryLanguage: LanguageModel, trainingTipId: String, tipNode: TipNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, analytics: AnalyticsContainer, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, viewedTrainingTips: ViewedTrainingTipsService, toolPage: Int) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -59,6 +60,7 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
         self.localizationServices = localizationServices
         self.cardJumpService = cardJumpService
         self.viewedTrainingTips = viewedTrainingTips
+        self.toolPage = toolPage
         
         switch primaryLanguage.languageDirection {
         case .leftToRight:
@@ -67,10 +69,13 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
             languageDirectionSemanticContentAttribute = .forceRightToLeft
         }
         
+        let startingPage: Int = 0
         let pageNodes: [PageNode] = tipNode.pages?.pages ?? []
         self.pageNodes = pageNodes
         numberOfTipPages.accept(value: pageNodes.count)
-        setPage(page: 0, animated: false)
+        setPage(page: startingPage, animated: false)
+        tipPageDidChange(page: startingPage)
+        tipPageDidAppear(page: startingPage)
         
         reloadTitleAndTipIcon(
             tipNode: tipNode,
@@ -192,6 +197,9 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
     
     func tipPageDidAppear(page: Int) {
         setPage(page: page, animated: true)
+        
+        let analyticsScreenName: String = "\(resource.abbreviation)-tip-\(trainingTipId)-\(toolPage)"
+        analytics.pageViewedAnalytics.trackPageView(screenName: analyticsScreenName, siteSection: "", siteSubSection: "")
     }
 }
 
@@ -203,19 +211,19 @@ extension ToolTrainingViewModel: ToolPageViewModelTypeDelegate {
         
     }
     
-    func toolPageTrainingTipTapped(trainingTipId: String, tipNode: TipNode) {
+    func toolPageTrainingTipTapped(viewModel: ToolPageViewModelType, page: Int, trainingTipId: String, tipNode: TipNode) {
         
     }
     
-    func toolPageCardChanged(cardPosition: Int?) {
+    func toolPageCardChanged(viewModel: ToolPageViewModelType, page: Int, cardPosition: Int?) {
         
     }
     
-    func toolPageNextPageTapped() {
+    func toolPageNextPageTapped(viewModel: ToolPageViewModelType, page: Int) {
         
     }
     
-    func toolPageError(error: ContentEventError) {
+    func toolPageError(viewModel: ToolPageViewModelType, page: Int, error: ContentEventError) {
         
     }
 }

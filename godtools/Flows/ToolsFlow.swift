@@ -171,7 +171,7 @@ class ToolsFlow: Flow {
             
             navigationController.present(view.controller, animated: true, completion: nil)
             
-        case .toolTrainingTipTappedFromTool(let resource, let manifest, let trainingTipId, let tipNode, let language, let primaryLanguage):
+        case .toolTrainingTipTappedFromTool(let resource, let manifest, let trainingTipId, let tipNode, let language, let primaryLanguage, let toolPage):
             
             let viewModel = ToolTrainingViewModel(
                 flowDelegate: self,
@@ -190,7 +190,8 @@ class ToolsFlow: Flow {
                 followUpsService: appDiContainer.followUpsService,
                 localizationServices: appDiContainer.localizationServices,
                 cardJumpService: appDiContainer.getCardJumpService(),
-                viewedTrainingTips: appDiContainer.getViewedTrainingTipsService()
+                viewedTrainingTips: appDiContainer.getViewedTrainingTipsService(),
+                toolPage: toolPage
             )
             
             let view = ToolTrainingView(viewModel: viewModel)

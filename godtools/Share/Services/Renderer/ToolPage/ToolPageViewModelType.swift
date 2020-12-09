@@ -11,10 +11,10 @@ import UIKit
 protocol ToolPageViewModelTypeDelegate: class {
     
     func toolPagePresentedListener(viewModel: ToolPageViewModelType, page: Int)
-    func toolPageTrainingTipTapped(trainingTipId: String, tipNode: TipNode)
-    func toolPageCardChanged(cardPosition: Int?)
-    func toolPageNextPageTapped()
-    func toolPageError(error: ContentEventError)
+    func toolPageTrainingTipTapped(viewModel: ToolPageViewModelType, page: Int, trainingTipId: String, tipNode: TipNode)
+    func toolPageCardChanged(viewModel: ToolPageViewModelType, page: Int, cardPosition: Int?)
+    func toolPageNextPageTapped(viewModel: ToolPageViewModelType, page: Int)
+    func toolPageError(viewModel: ToolPageViewModelType, page: Int, error: ContentEventError)
 }
 
 protocol ToolPageViewModelType: NSObject {

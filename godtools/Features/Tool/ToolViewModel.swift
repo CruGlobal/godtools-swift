@@ -450,27 +450,49 @@ extension ToolViewModel: ToolPageViewModelTypeDelegate {
     
     func toolPagePresentedListener(viewModel: ToolPageViewModelType, page: Int) {
         
+        guard page == self.currentToolPage else {
+            return
+        }
+        
         currentPage.accept(value: AnimatableValue(value: page, animated: true))
     }
     
-    func toolPageTrainingTipTapped(trainingTipId: String, tipNode: TipNode) {
-        
+    func toolPageTrainingTipTapped(viewModel: ToolPageViewModelType, page: Int, trainingTipId: String, tipNode: TipNode) {
+
+        guard page == self.currentToolPage else {
+            return
+        }
+                
         let languageTranslationModel: ToolLanguageTranslationModel = languageTranslationModels[currentToolLanguage]
         
-        flowDelegate?.navigate(step: .toolTrainingTipTappedFromTool(resource: resource, manifest: languageTranslationModel.manifest, trainingTipId: trainingTipId, tipNode: tipNode, language: languageTranslationModel.language, primaryLanguage: primaryLanguageTranslationModel.language))
+        let toolPage: Int = currentPage.value.value
+        
+        flowDelegate?.navigate(step: .toolTrainingTipTappedFromTool(resource: resource, manifest: languageTranslationModel.manifest, trainingTipId: trainingTipId, tipNode: tipNode, language: languageTranslationModel.language, primaryLanguage: primaryLanguageTranslationModel.language, toolPage: toolPage))
     }
     
-    func toolPageCardChanged(cardPosition: Int?) {
+    func toolPageCardChanged(viewModel: ToolPageViewModelType, page: Int, cardPosition: Int?) {
+        
+        guard page == self.currentToolPage else {
+            return
+        }
         
         sendRemoteShareNavigationEventForPage(page: currentToolPage)
     }
     
-    func toolPageNextPageTapped() {
+    func toolPageNextPageTapped(viewModel: ToolPageViewModelType, page: Int) {
+        
+        guard page == self.currentToolPage else {
+            return
+        }
         
         gotoNextPage(animated: true)
     }
     
-    func toolPageError(error: ContentEventError) {
+    func toolPageError(viewModel: ToolPageViewModelType, page: Int, error: ContentEventError) {
+        
+        guard page == self.currentToolPage else {
+            return
+        }
         
         flowDelegate?.navigate(step: .toolDidEncounterErrorFromTool(error: error))
     }

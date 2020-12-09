@@ -223,11 +223,17 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         }
         
         diContainer.mobileContentEvents.contentErrorSignal.addObserver(self) { [weak self] (error: ContentEventError) in
-            self?.delegate?.toolPageError(error: error)
+            guard let viewModel = self else {
+                return
+            }
+            self?.delegate?.toolPageError(viewModel: viewModel, page: viewModel.page, error: error)
         }
         
         diContainer.mobileContentEvents.trainingTipTappedSignal.addObserver(self) { [weak self] (trainingTipEvent: TrainingTipEvent) in
-            self?.delegate?.toolPageTrainingTipTapped(trainingTipId: trainingTipEvent.trainingTipId, tipNode: trainingTipEvent.tipNode)
+            guard let viewModel = self else {
+                return
+            }
+            self?.delegate?.toolPageTrainingTipTapped(viewModel: viewModel, page: viewModel.page, trainingTipId: trainingTipEvent.trainingTipId, tipNode: trainingTipEvent.tipNode)
         }
         
         diContainer.cardJumpService.didSaveCardJumpShownSignal.addObserver(self) { [weak self] in
@@ -306,7 +312,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     }
     
     func callToActionNextButtonTapped() {
-        delegate?.toolPageNextPageTapped()
+        delegate?.toolPageNextPageTapped(viewModel: self, page: page)
     }
     
     func hiddenCardWillAppear(cardPosition: Int) -> ToolPageCardViewModelType? {
@@ -337,7 +343,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
             currentCard.accept(value: AnimatableValue(value: nil, animated: animated))
         }
         
-        delegate?.toolPageCardChanged(cardPosition: cardPosition)
+        delegate?.toolPageCardChanged(viewModel: self, page: page, cardPosition: cardPosition)
         
         if let cardPosition = cardPosition {
             trackCardAnalytics(cardPosition: cardPosition)
@@ -415,7 +421,7 @@ extension ToolPageViewModel: ToolPageCardViewModelTypeDelegate {
             setCard(cardPosition: nextCard, animated: true)
         }
         else {
-            delegate?.toolPageNextPageTapped()
+            delegate?.toolPageNextPageTapped(viewModel: self, page: page)
         }
     }
     
