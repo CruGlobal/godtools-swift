@@ -8,27 +8,36 @@
 
 import UIKit
 
+protocol ToolPageCardBounceAnimationDelegate: class {
+    
+    func toolPageCardBounceAnimationDidFinish(cardBounceAnimation: ToolPageCardBounceAnimation, forceStopped: Bool)
+}
+
 class ToolPageCardBounceAnimation {
     
     private let animationOptions: UIView.AnimationOptions = [.curveEaseOut, .allowUserInteraction]
     private let bounceDuration: Double = 0.15
     private let largeBounceTransformation: CGFloat = -44
     private let maxNumberOfMiniBounces: Int = 3
+    private let maxNumberOfLargeBouncesToPlay: Int = 3
     private let cardStartingTopConstant: CGFloat
     
-    private var numberOfMiniBounces: Int = 0
+    private var currentNumberOfMiniBounces: Int = 0
+    private var currentNumberOfLargeBounces: Int = 0
     private var isRunning: Bool = false
     
     private weak var card: ToolPageCardView?
     private weak var cardTopConstraint: NSLayoutConstraint?
     private weak var layoutView: UIView?
+    private weak var delegate: ToolPageCardBounceAnimationDelegate?
     
-    required init(card: ToolPageCardView, cardTopConstraint: NSLayoutConstraint, cardStartingTopConstant: CGFloat, layoutView: UIView) {
+    required init(card: ToolPageCardView, cardTopConstraint: NSLayoutConstraint, cardStartingTopConstant: CGFloat, layoutView: UIView, delegate: ToolPageCardBounceAnimationDelegate) {
         
         self.card = card
         self.cardTopConstraint = cardTopConstraint
         self.cardStartingTopConstant = cardStartingTopConstant
         self.layoutView = layoutView
+        self.delegate = delegate
     }
     
     func startAnimation() {
@@ -39,7 +48,7 @@ class ToolPageCardBounceAnimation {
         
         isRunning = true
         
-        playLargeBounceAnimation(delay: 0)
+        playLargeBounceAnimation(delay: 1.5)
     }
     
     func stopAnimation(forceStop: Bool) {
@@ -51,11 +60,20 @@ class ToolPageCardBounceAnimation {
         isRunning = false
         
         playToStartingPositionAnimation(forceStop: forceStop)
+        
+        delegate?.toolPageCardBounceAnimationDidFinish(cardBounceAnimation: self, forceStopped: forceStop)
     }
     
     private func playLargeBounceAnimation(delay: Double) {
         
-        numberOfMiniBounces = 0
+        guard currentNumberOfLargeBounces < maxNumberOfLargeBouncesToPlay else {
+            stopAnimation(forceStop: false)
+            return
+        }
+        
+        currentNumberOfMiniBounces = 0
+        
+        currentNumberOfLargeBounces += 1
         
         cardTopConstraint?.constant = cardStartingTopConstant + largeBounceTransformation
         
@@ -75,7 +93,7 @@ class ToolPageCardBounceAnimation {
     
     private func playMiniBounceAnimation() {
         
-        numberOfMiniBounces += 1
+        currentNumberOfMiniBounces += 1
         
         cardTopConstraint?.constant = cardStartingTopConstant + largeBounceTransformation * 0.2
         
@@ -113,7 +131,7 @@ class ToolPageCardBounceAnimation {
                 return
             }
             
-            if self.numberOfMiniBounces < self.maxNumberOfMiniBounces {
+            if self.currentNumberOfMiniBounces < self.maxNumberOfMiniBounces {
                 self.playMiniBounceAnimation()
             }
             else {

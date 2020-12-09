@@ -30,6 +30,10 @@ class ToolLanguageTranslationModel {
     
     func getToolPageNode(page: Int) -> PageNode? {
         
+        guard page >= 0 && page < manifest.pages.count else {
+            return nil
+        }
+        
         let manifestPage: MobileContentXmlManifestPage = manifest.pages[page]
         let pageXmlCacheLocation: SHA256FileLocation = SHA256FileLocation(sha256WithPathExtension: manifestPage.src)
         

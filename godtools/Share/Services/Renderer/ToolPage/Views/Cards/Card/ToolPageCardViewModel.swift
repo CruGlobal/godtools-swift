@@ -60,9 +60,10 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
             hidesNextButton = true
         }
         else {
+            let isLastCard: Bool = cardPosition >= numberOfCards - 1
             hidesCardPositionLabel = false
             hidesPreviousButton = false
-            hidesNextButton = isLastPage ? true : false
+            hidesNextButton = (isLastPage || isLastCard) ? true : false
         }
         
         if let analyticsEventsNode = cardNode.analyticsEventsNode {
@@ -78,7 +79,7 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     }
     
     deinit {
-        print("x deinit: \(type(of: self))")
+        //print("x deinit: \(type(of: self))")
         diContainer.mobileContentEvents.eventButtonTappedSignal.removeObserver(self)
         
         contentStackViewModel.contentStackRenderer.didRenderTrainingTipsSignal.removeObserver(self)
@@ -157,6 +158,10 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     
     var nextButtonTitleFont: UIFont {
         return diContainer.fontService.getFont(size: 18, weight: .regular)
+    }
+    
+    var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
+        return diContainer.languageDirectionSemanticContentAttribute
     }
     
     func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel {

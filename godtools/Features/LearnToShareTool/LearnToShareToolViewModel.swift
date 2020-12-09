@@ -46,7 +46,7 @@ class LearnToShareToolViewModel: NSObject, LearnToShareToolViewModelType {
     }
     
     func closeTapped() {
-        flowDelegate?.navigate(step: .closeTappedFromLearnToShareTool)
+        flowDelegate?.navigate(step: .closeTappedFromLearnToShareTool(resource: resource))
     }
     
     func pageDidChange(page: Int) {
