@@ -198,7 +198,8 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
     func tipPageDidAppear(page: Int) {
         setPage(page: page, animated: true)
         
-        let analyticsScreenName: String = "\(resource.abbreviation)-tip-\(trainingTipId)-\(toolPage)"
+        let tipPage: Int = page
+        let analyticsScreenName: String = "\(resource.abbreviation)-tip-\(trainingTipId)-\(tipPage)"
         analytics.pageViewedAnalytics.trackPageView(screenName: analyticsScreenName, siteSection: "", siteSubSection: "")
     }
 }
