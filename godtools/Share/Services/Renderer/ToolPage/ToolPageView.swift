@@ -22,6 +22,7 @@ class ToolPageView: UIView {
     private var currentCardState: ToolPageCardsState = .initialized
     private var toolModal: ToolPageModalView?
     private var cardBounceAnimation: ToolPageCardBounceAnimation?
+    private var bottomView: UIView?
     private var didLayoutSubviews: Bool = false
     
     private weak var windowViewController: UIViewController?
@@ -252,6 +253,8 @@ class ToolPageView: UIView {
         else {
             heroContainerView.isHidden = true
         }
+        
+        addBottomView()
     }
     
     @objc func handleCallToActionNext(button: UIButton) {
@@ -746,5 +749,82 @@ extension ToolPageView: UIGestureRecognizerDelegate {
         }
         
         return true
+    }
+}
+
+// MARK: - BottomView
+
+extension ToolPageView {
+    
+    func addBottomView() {
+        
+        guard safeArea.bottom > 0 else {
+            return
+        }
+        
+        if let bottomView = self.bottomView {
+            bottomView.removeFromSuperview()
+            self.bottomView = nil
+        }
+        
+        let bottomView = UIView()
+        self.bottomView = bottomView
+        bottomView.frame = CGRect(x: 0, y: 0, width: bounds.size.width, height: safeArea.bottom)
+        addSubview(bottomView)
+        
+        bottomView.translatesAutoresizingMaskIntoConstraints = false
+                
+        let leading: NSLayoutConstraint = NSLayoutConstraint(
+            item: bottomView,
+            attribute: .leading,
+            relatedBy: .equal,
+            toItem: self,
+            attribute: .leading,
+            multiplier: 1,
+            constant: 0
+        )
+        
+        let trailing: NSLayoutConstraint = NSLayoutConstraint(
+            item: bottomView,
+            attribute: .trailing,
+            relatedBy: .equal,
+            toItem: self,
+            attribute: .trailing,
+            multiplier: 1,
+            constant: 0
+        )
+        
+        let bottom: NSLayoutConstraint = NSLayoutConstraint(
+            item: bottomView,
+            attribute: .bottom,
+            relatedBy: .equal,
+            toItem: self,
+            attribute: .bottom,
+            multiplier: 1,
+            constant: 0
+        )
+        
+        addConstraint(leading)
+        addConstraint(trailing)
+        addConstraint(bottom)
+        
+        let heightConstraint: NSLayoutConstraint = NSLayoutConstraint(
+            item: bottomView,
+            attribute: .height,
+            relatedBy: .equal,
+            toItem: nil,
+            attribute: .notAnAttribute,
+            multiplier: 1,
+            constant: safeArea.bottom
+        )
+        
+        bottomView.addConstraint(heightConstraint)
+        
+        bottomView.layoutIfNeeded()
+        let blurEffect = UIBlurEffect(style: .light)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        bottomView.addSubview(blurEffectView)
+        bottomView.backgroundColor = viewModel.bottomViewColor
+        blurEffectView.frame = bottomView.bounds
     }
 }

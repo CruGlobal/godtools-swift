@@ -277,6 +277,14 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         return allCardsViewModels
     }
     
+    var bottomViewColor: UIColor {
+        
+        let manifestAttributes: MobileContentXmlManifestAttributes = diContainer.manifest.attributes
+        let color: UIColor = manifestAttributes.getNavBarColor()?.color ?? manifestAttributes.getPrimaryColor().color
+        
+        return color.withAlphaComponent(0.1)
+    }
+    
     func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel {
         
         // NOTE: Override page node because we want page background to always fill the device. ~Levi
