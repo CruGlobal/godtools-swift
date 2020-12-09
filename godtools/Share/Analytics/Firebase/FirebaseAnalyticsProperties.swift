@@ -16,7 +16,6 @@ struct FirebaseAnalyticsProperties: Encodable {
     var exitLink: String?
     var grMasterPersonID: String?
     var loggedInStatus: String?
-    //var marketingCloudID: String?
     var previousScreenName: String?
     var screenName: String?
     var siteSection: String?
@@ -31,7 +30,6 @@ struct FirebaseAnalyticsProperties: Encodable {
         case exitLink = "cru_mobileexitlink"
         case grMasterPersonID = "cru_grmpid"
         case loggedInStatus = "cru_loggedinstatus"
-        //case marketingCloudID = "cru_mcid"
         case previousScreenName = "cru_previousscreenname"
         case screenName = "cru_screenname"
         case siteSection = "cru_siteSection"
