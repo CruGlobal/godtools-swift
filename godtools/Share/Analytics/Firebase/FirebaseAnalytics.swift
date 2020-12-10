@@ -23,6 +23,8 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         self.keyAuthClient = keyAuthClient
         self.languageSettingsService = languageSettingsService
         self.loggingEnabled = loggingEnabled
+        
+        super.init()
     }
     
     func configure() {
@@ -47,51 +49,56 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         
         previousTrackedScreenName = screenName
         
-       let properties = createBaseProperties(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: previousScreenName)
         
-        let data: [String: Any] = JsonServices().encode(object: properties)
-        
-        Analytics.logEvent(AnalyticsEventScreenView, parameters: data)
-        
-        log(method: "trackScreenView()", label: "screenName", labelValue: screenName, data: data)
+        DispatchQueue.global().async { [weak self] in
+            let parameters = createBaseProperties(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: previousScreenName)
+                    
+            Analytics.logEvent(AnalyticsEventScreenView, parameters: parameters)
+            
+            log(method: "trackScreenView()", label: "screenName", labelValue: screenName, data: data)
+        }
     }
     
     func trackAction(screenName: String?, actionName: String, data: [AnyHashable : Any]?) {
         assertFailureIfNotConfigured()
 
-        let modifiedActionName = prepPropertyForFirebase(key: actionName)
-        
-        let actionData: [String: Any]? = data as? [String: Any] ?? nil
-        
-        let properties = createBaseProperties(screenName: screenName, siteSection: nil, siteSubSection: nil, previousScreenName: previousTrackedScreenName)
-        
-        var trackingData: [String: Any] = JsonServices().encode(object: properties)
+        DispatchQueue.global().async { [weak self] in
+            let modifiedActionName = prepPropertyForFirebase(key: actionName)
             
-        if let actionData = actionData {
-            for (key, value) in actionData {
-                trackingData[key] = value
+            let actionData: [String: Any]? = data as? [String: Any] ?? nil
+            
+            let baseParameters = createBaseProperties(screenName: screenName, siteSection: nil, siteSubSection: nil, previousScreenName: previousTrackedScreenName)
+            
+            var parameters: [String: Any] = baseParameters
+            
+            if let actionData = actionData {
+                for (key, value) in actionData {
+                    parameters[key] = value
+                }
             }
-        }
             
-        Analytics.logEvent(modifiedActionName, parameters: trackingData)
-                        
-        log(method: "trackAction()", label: "actionName", labelValue: modifiedActionName, data: trackingData)
+            Analytics.logEvent(modifiedActionName, parameters: parameters)
+            
+            log(method: "trackAction()", label: "actionName", labelValue: modifiedActionName, data: trackingData)
+        }
     }
     
     func trackExitLink(screenName: String, siteSection: String, siteSubSection: String, url: URL) {
         assertFailureIfNotConfigured()
         
-        var properties = createBaseProperties(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: previousTrackedScreenName)
-                        
-        properties[AnalyticsConstants.Keys.exitLink] = url.absoluteString
+        DispatchQueue.global().async { [weak self] in
+            let baseParameters = createBaseProperties(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: previousTrackedScreenName)
+              
+            var parameters: [String: Any] = baseParameters
             
-        let actionName = prepPropertyForFirebase(key: AnalyticsConstants.Values.exitLink)
+            properties[AnalyticsConstants.Keys.exitLink] = url.absoluteString
+                
+            let actionName = prepPropertyForFirebase(key: AnalyticsConstants.Values.exitLink)
             
-        let data: [String: Any] = JsonServices().encode(object: properties)
-            
-        Analytics.logEvent(actionName, parameters: data)
-            
-        log(method: "trackExitLink()", label: actionName, labelValue: actionName, data: data)
+            Analytics.logEvent(actionName, parameters: parameters)
+                
+            log(method: "trackExitLink()", label: actionName, labelValue: actionName, data: data)
+        }
     }
     
     func fetchAttributesThenSetUserId() {
@@ -112,7 +119,7 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
     
     private func assertFailureIfNotConfigured() {
         if !isConfigured {
-            assertionFailure("AdobeAnalytics has not been configured.  Call configure() on application didFinishLaunching.")
+            assertionFailure("FirebaseAnalytics has not been configured.  Call configure() on application didFinishLaunching.")
         }
     }
     
@@ -133,10 +140,10 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         Analytics.setUserID(userId)
     }
     
-    private func createBaseProperties(screenName: String?, siteSection: String?, siteSubSection: String?, previousScreenName: String?) -> [String: String?] {
+    private func createBaseProperties(screenName: String?, siteSection: String?, siteSubSection: String?, previousScreenName: String?) -> [String: Any] {
         assertFailureIfNotConfigured()
         
-        var properties: [String: String?] = [:]
+        var properties: [String: Any] = [:]
         
         let isLoggedIn: Bool = keyAuthClient.isAuthenticated()
         

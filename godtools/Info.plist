@@ -27,7 +27,7 @@
 			<string>org.cru.godtools</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>tagmanager.c.org.cru.godtools</string>
+				<string>GodTools</string>
 			</array>
 		</dict>
 		<dict>
