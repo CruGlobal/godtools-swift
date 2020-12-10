@@ -109,7 +109,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
             pageNode: pageNode,
             toolPageColors: toolPageColors,
             fontService: diContainer.fontService,
-            language: diContainer.language,
+            languageDirectionSemanticContentAttribute: diContainer.languageDirectionSemanticContentAttribute,
             isLastPage: isLastPage
         )
                 
@@ -223,11 +223,17 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         }
         
         diContainer.mobileContentEvents.contentErrorSignal.addObserver(self) { [weak self] (error: ContentEventError) in
-            self?.delegate?.toolPageError(error: error)
+            guard let viewModel = self else {
+                return
+            }
+            self?.delegate?.toolPageError(viewModel: viewModel, page: viewModel.page, error: error)
         }
         
         diContainer.mobileContentEvents.trainingTipTappedSignal.addObserver(self) { [weak self] (trainingTipEvent: TrainingTipEvent) in
-            self?.delegate?.toolPageTrainingTipTapped(trainingTipId: trainingTipEvent.trainingTipId, tipNode: trainingTipEvent.tipNode)
+            guard let viewModel = self else {
+                return
+            }
+            self?.delegate?.toolPageTrainingTipTapped(viewModel: viewModel, page: viewModel.page, trainingTipId: trainingTipEvent.trainingTipId, tipNode: trainingTipEvent.tipNode)
         }
         
         diContainer.cardJumpService.didSaveCardJumpShownSignal.addObserver(self) { [weak self] in
@@ -253,6 +259,10 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         return false
     }
     
+    var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
+        return diContainer.languageDirectionSemanticContentAttribute
+    }
+    
     var backgroundColor: UIColor {
         return toolPageColors.backgroundColor
     }
@@ -271,6 +281,14 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     
     var cardsViewModels: [ToolPageCardViewModelType] {
         return allCardsViewModels
+    }
+    
+    var bottomViewColor: UIColor {
+        
+        let manifestAttributes: MobileContentXmlManifestAttributes = diContainer.manifest.attributes
+        let color: UIColor = manifestAttributes.getNavBarColor()?.color ?? manifestAttributes.getPrimaryColor().color
+        
+        return color.withAlphaComponent(0.1)
     }
     
     func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel {
@@ -294,7 +312,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     }
     
     func callToActionNextButtonTapped() {
-        delegate?.toolPageNextPageTapped()
+        delegate?.toolPageNextPageTapped(viewModel: self, page: page)
     }
     
     func hiddenCardWillAppear(cardPosition: Int) -> ToolPageCardViewModelType? {
@@ -307,11 +325,15 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     func setCard(cardPosition: Int?, animated: Bool) {
         
         if let currentCardPosition = currentCard.value.value, currentCardPosition != cardPosition {
-            allCardsViewModels[currentCardPosition].cardWillDisappear()
+            if currentCardPosition >= 0 && currentCardPosition < allCardsViewModels.count {
+                allCardsViewModels[currentCardPosition].cardWillDisappear()
+            }
         }
         
         if let newCardPosition = cardPosition, newCardPosition != currentCard.value.value {
-            allCardsViewModels[newCardPosition].cardWillAppear()
+            if newCardPosition >= 0 && newCardPosition < allCardsViewModels.count {
+                allCardsViewModels[newCardPosition].cardWillAppear()
+            }
         }
         
         if let cardPosition = cardPosition, cardPosition >= 0 && cardPosition < allCardsViewModels.count {
@@ -321,7 +343,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
             currentCard.accept(value: AnimatableValue(value: nil, animated: animated))
         }
         
-        delegate?.toolPageCardChanged(cardPosition: cardPosition)
+        delegate?.toolPageCardChanged(viewModel: self, page: page, cardPosition: cardPosition)
         
         if let cardPosition = cardPosition {
             trackCardAnalytics(cardPosition: cardPosition)
@@ -336,6 +358,10 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         heroViewModel?.heroDidDisappear()
     }
     
+    func cardBounceAnimationFinished() {
+        diContainer.cardJumpService.saveDidShowCardJump()
+    }
+    
     private func trackCardAnalytics(cardPosition: Int) {
         
         let screenName: String = ToolPageCardAnalyticsScreenName(cardPosition: cardPosition).screenName
@@ -346,6 +372,10 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
 // MARK: - ToolPageCardViewModelDelegate
 
 extension ToolPageViewModel: ToolPageCardViewModelTypeDelegate {
+    
+    private func collapseAllCards(animated: Bool) {
+        setCard(cardPosition: nil, animated: animated)
+    }
     
     private func gotoPreviousCardFromCard(cardPosition: Int) {
         
@@ -371,7 +401,7 @@ extension ToolPageViewModel: ToolPageCardViewModelTypeDelegate {
         let isShowingCard: Bool = cardPosition <= currentCardPosition
         
         if isShowingCard {
-            gotoPreviousCardFromCard(cardPosition: cardPosition)
+            collapseAllCards(animated: true)
         }
         else {
             setCard(cardPosition: cardPosition, animated: true)
@@ -391,7 +421,7 @@ extension ToolPageViewModel: ToolPageCardViewModelTypeDelegate {
             setCard(cardPosition: nextCard, animated: true)
         }
         else {
-            delegate?.toolPageNextPageTapped()
+            delegate?.toolPageNextPageTapped(viewModel: self, page: page)
         }
     }
     

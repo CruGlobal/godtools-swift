@@ -40,6 +40,7 @@ protocol ToolPageCardViewModelType: NSObject {
     var nextButtonTitleColor: UIColor { get }
     var nextButtonTitleFont: UIFont { get }
     var hidesNextButton: Bool { get }
+    var languageDirectionSemanticContentAttribute: UISemanticContentAttribute { get }
     
     func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel
     func headerTapped()

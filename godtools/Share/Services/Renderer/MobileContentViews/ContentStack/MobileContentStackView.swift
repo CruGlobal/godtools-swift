@@ -17,7 +17,7 @@ class MobileContentStackView: UIView {
     private var scrollView: UIScrollView?
     private var lastAddedView: UIView?
     private var lastAddedBottomConstraint: NSLayoutConstraint?
-        
+            
     required init(viewRenderer: MobileContentStackViewRendererType, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
                 
         self.viewRenderer = viewRenderer
@@ -43,7 +43,7 @@ class MobileContentStackView: UIView {
     }
     
     deinit {
-        print("x deinit: \(type(of: self))")
+
     }
     
     var isEmpty: Bool {
@@ -84,6 +84,10 @@ class MobileContentStackView: UIView {
         
         scrollView?.showsVerticalScrollIndicator = !hidden
         scrollView?.showsHorizontalScrollIndicator = !hidden
+    }
+    
+    func setScrollViewDelegate(delegate: UIScrollViewDelegate) {
+        scrollView?.delegate = delegate
     }
     
     func contentScrollViewIsEqualTo(otherScrollView: UIScrollView) -> Bool {

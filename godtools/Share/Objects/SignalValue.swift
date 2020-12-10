@@ -34,6 +34,10 @@ class SignalValue<T> {
         observers[observer.description] = nil
     }
     
+    func removeAllObservers() {
+        observers.removeAll()
+    }
+    
     private func notifyAllObservers(value: T) {
         for (_, onObserve) in observers {
             onObserve(value)

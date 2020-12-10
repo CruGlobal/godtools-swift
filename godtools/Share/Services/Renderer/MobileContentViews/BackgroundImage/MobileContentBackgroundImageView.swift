@@ -12,19 +12,18 @@ class MobileContentBackgroundImageView {
     
     private var viewModel: MobileContentBackgroundImageViewModel?
     private var imageView: UIImageView?
+    
     private weak var parentView: UIView?
     
     required init() {
         
     }
     
-    func reset() {
-        imageView?.removeFromSuperview()
-    }
-    
     func configure(viewModel: MobileContentBackgroundImageViewModel, parentView: UIView) {
         
         guard let backgroundImage = viewModel.backgroundImage else {
+            imageView?.image = nil
+            imageView?.removeFromSuperview()
             return
         }
         
@@ -32,6 +31,7 @@ class MobileContentBackgroundImageView {
         self.parentView = parentView
         
         let imageView: UIImageView = UIImageView()
+        self.imageView = imageView
         imageView.backgroundColor = .clear
         imageView.image = backgroundImage
         imageView.contentMode = .scaleAspectFit

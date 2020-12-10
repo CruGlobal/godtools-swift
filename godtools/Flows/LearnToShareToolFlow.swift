@@ -44,8 +44,8 @@ class LearnToShareToolFlow: Flow {
         case .continueTappedFromLearnToShareTool(let resource):
             flowDelegate?.navigate(step: .continueTappedFromLearnToShareTool(resource: resource))
             
-        case .closeTappedFromLearnToShareTool:
-            flowDelegate?.navigate(step: .closeTappedFromLearnToShareTool)
+        case .closeTappedFromLearnToShareTool(let resource):
+            flowDelegate?.navigate(step: .closeTappedFromLearnToShareTool(resource: resource))
             
         default:
             break

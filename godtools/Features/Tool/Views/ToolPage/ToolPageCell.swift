@@ -28,22 +28,22 @@ class ToolPageCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        
         viewModel = nil
-        toolPage?.view.removeFromSuperview()
+        toolPage?.removeFromSuperview()
         toolPage = nil
     }
     
-    func configure(viewModel: ToolPageViewModelType, windowViewController: UIViewController, safeAreaInsets: UIEdgeInsets) {
+    func configure(viewModel: ToolPageViewModelType, windowViewController: UIViewController, safeArea: UIEdgeInsets) {
         
-        let toolPage: ToolPageView = ToolPageView(
+        let toolPage = ToolPageView(
             viewModel: viewModel,
             windowViewController: windowViewController,
-            safeAreaInsets: safeAreaInsets
+            safeArea: safeArea
         )
-        contentView.addSubview(toolPage.view)
-        toolPage.view.constrainEdgesToSuperview()
-                
+        
+        contentView.addSubview(toolPage)
+        toolPage.constrainEdgesToSuperview()
+        
         self.toolPage = toolPage
         self.viewModel = viewModel
     }
