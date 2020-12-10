@@ -23,10 +23,6 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         self.keyAuthClient = keyAuthClient
         self.languageSettingsService = languageSettingsService
         self.loggingEnabled = loggingEnabled
-        
-        super.init()
-        
-        keyAuthClient.addStateChangeDelegate(delegate: self)
     }
     
     func configure() {
