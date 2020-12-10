@@ -139,6 +139,12 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         let userId = grMasterPersonID ?? ssoguid
         
         Analytics.setUserID(userId)
+        
+        #if DEBUG
+            Analytics.setUserProperty(AnalyticsConstants.Values.debugIsTrue, forName: AnalyticsConstants.Keys.debug)
+        #else
+         Analytics.setUserProperty(AnalyticsConstants.Values.debugIsTrue, forName: AnalyticsConstants.Keys.debug)
+        #endif
     }
     
     private func createBaseProperties(screenName: String?, siteSection: String?, siteSubSection: String?, previousScreenName: String?) -> [String: Any] {

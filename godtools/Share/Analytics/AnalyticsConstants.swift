@@ -16,11 +16,12 @@ struct AnalyticsConstants {
         static let exitLink = "cru.mobileexitlink"
         static let grMasterPersonID = "cru.grmpid"
         static let loggedInStatus = "cru.loggedinstatus"
-        static let previousScreenName = "cru_previousscreenname"
-        static let screenName = "cru_screenname"
-        static let siteSection = "cru_siteSection"
-        static let siteSubSection = "cru_siteSubSection"
-        static let ssoguid = "cru_ssoguid"
+        static let previousScreenName = "cru.previousscreenname"
+        static let screenName = "cru.screenname"
+        static let siteSection = "cru.siteSection"
+        static let siteSubSection = "cru.siteSubSection"
+        static let ssoguid = "cru.ssoguid"
+        static let debug = "debug"
     }
     
     struct Values {
@@ -44,6 +45,8 @@ struct AnalyticsConstants {
         static let kgpEmailSignUp = "KGP Email Sign Up"
         static let fourLawsEmailSignUp = "FourLaws Email Sign Up"
         static let parallelLanguageToggle = "Parallel Language Toggled"
+        static let debugIsTrue = "true"
+        static let debugIsFalse = "false"
     }
     
     struct ActionNames {
