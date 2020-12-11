@@ -21,13 +21,14 @@ struct AnalyticsConstants {
         static let siteSection = "cru.siteSection"
         static let siteSubSection = "cru.siteSubSection"
         static let ssoguid = "cru.ssoguid"
+        static let snowplowid = "cru.snowplowid"
         static let debug = "debug"
     }
     
     struct Values {
         static let godTools = "GodTools"
-        static let isLoggedIn = "is logged in"
-        static let notLoggedIn = "not logged in"
+        static let isLoggedIn = "true"
+        static let notLoggedIn = "false"
         static let share = "Share Icon Engaged"
         static let exitLink = "Exit Link Engaged"
         static let kgpUSCircleToggled = "KGP-US Circle Toggled"

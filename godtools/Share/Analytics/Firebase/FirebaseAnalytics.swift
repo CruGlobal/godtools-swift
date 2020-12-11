@@ -36,6 +36,12 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         keyAuthClient.addStateChangeDelegate(delegate: self)
         
         isConfigured = true
+        
+        #if DEBUG
+            Analytics.setUserProperty(AnalyticsConstants.Values.debugIsTrue, forName: AnalyticsConstants.Keys.debug)
+        #else
+            Analytics.setUserProperty(AnalyticsConstants.Values.debugIsTrue, forName: AnalyticsConstants.Keys.debug)
+        #endif
                 
         log(method: "configure()", label: nil, labelValue: nil, data: nil)
     }
@@ -63,7 +69,7 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
 
         DispatchQueue.global().async { [weak self] in
             
-            let modifiedActionName = self?.prepPropertyForFirebase(key: actionName) ?? ""
+            let modifiedActionName = self?.prepPropertyForFirebase(actionName) ?? ""
             
             let actionData: [String: Any]? = data as? [String: Any] ?? nil
             
@@ -73,7 +79,7 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
             
             if let actionData = actionData {
                 for (key, value) in actionData {
-                    parameters[key] = value
+                    parameters[self?.prepPropertyForFirebase(key) ?? key] = value
                 }
             }
             
@@ -88,15 +94,14 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
                 
         DispatchQueue.global().async { [weak self] in
             
-            let actionName = self?.prepPropertyForFirebase(key: AnalyticsConstants.Values.exitLink) ?? ""
+            let actionName = self?.prepPropertyForFirebase(AnalyticsConstants.Values.exitLink) ?? AnalyticsConstants.Values.exitLink
             
             let baseParameters: [String: Any] = self?.createBaseProperties(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: self?.previousTrackedScreenName) ?? [:]
               
             var parameters: [String: Any] = baseParameters
             
-            parameters[AnalyticsConstants.Keys.exitLink] = url.absoluteString
+            parameters[self?.prepPropertyForFirebase(AnalyticsConstants.Keys.exitLink) ?? AnalyticsConstants.Keys.exitLink] = url.absoluteString
                 
-            
             Analytics.logEvent(actionName, parameters: parameters)
                 
             self?.log(method: "trackExitLink()", label: actionName, labelValue: actionName, data: parameters)
@@ -110,10 +115,10 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
 
         if isLoggedIn {
             keyAuthClient.fetchAttributes() { [weak self] (_, _) in
-                self?.setUserId()
+                self?.setUserProperties()
             }
         } else {
-            setUserId()
+            setUserProperties()
         }
     }
     
@@ -125,14 +130,16 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         }
     }
     
-    private func prepPropertyForFirebase(key: String) -> String {
+    private func prepPropertyForFirebase(_ key: String) -> String {
         return key.replacingOccurrences(of: "(-|\\.|\\ )", with: "_", options: .regularExpression)
     }
     
-    private func setUserId() {
+    private func setUserProperties() {
         assertFailureIfNotConfigured()
                
         let isLoggedIn: Bool = keyAuthClient.isAuthenticated()
+        
+        let loggedInStatus = isLoggedIn ? AnalyticsConstants.Values.isLoggedIn : AnalyticsConstants.Values.notLoggedIn
            
         let grMasterPersonID = isLoggedIn ? keyAuthClient.grMasterPersonId : nil
         let ssoguid = isLoggedIn ? keyAuthClient.guid : nil
@@ -140,41 +147,25 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         let userId = grMasterPersonID ?? ssoguid
         
         Analytics.setUserID(userId)
-        
-        #if DEBUG
-            Analytics.setUserProperty(AnalyticsConstants.Values.debugIsTrue, forName: AnalyticsConstants.Keys.debug)
-        #else
-         Analytics.setUserProperty(AnalyticsConstants.Values.debugIsTrue, forName: AnalyticsConstants.Keys.debug)
-        #endif
+        Analytics.setUserProperty(loggedInStatus, forName: prepPropertyForFirebase(AnalyticsConstants.Keys.loggedInStatus))
+        Analytics.setUserProperty(grMasterPersonID, forName: prepPropertyForFirebase(AnalyticsConstants.Keys.grMasterPersonID))
+        Analytics.setUserProperty(ssoguid, forName: prepPropertyForFirebase(AnalyticsConstants.Keys.ssoguid))
     }
     
     private func createBaseProperties(screenName: String?, siteSection: String?, siteSubSection: String?, previousScreenName: String?) -> [String: Any] {
         assertFailureIfNotConfigured()
         
         var properties: [String: Any] = [:]
-        
-        let isLoggedIn: Bool = keyAuthClient.isAuthenticated()
-        
-        properties[AnalyticsConstants.Keys.appName] = AnalyticsConstants.Values.godTools
-        properties[AnalyticsConstants.Keys.contentLanguage] = languageSettingsService.primaryLanguage.value?.code
-        properties[AnalyticsConstants.Keys.contentLanguageSecondary] = languageSettingsService.parallelLanguage.value?.code
-        properties[AnalyticsConstants.Keys.grMasterPersonID] = keyAuthClient.isAuthenticated() ? keyAuthClient.grMasterPersonId : nil
-        properties[AnalyticsConstants.Keys.loggedInStatus] = isLoggedIn ? AnalyticsConstants.Values.isLoggedIn : AnalyticsConstants.Values.notLoggedIn
-        properties[AnalyticsConstants.Keys.previousScreenName] = previousScreenName
-        properties[AnalyticsConstants.Keys.screenName] = screenName
-        properties[AnalyticsConstants.Keys.siteSection] = siteSection
-        properties[AnalyticsConstants.Keys.siteSubSection] = siteSubSection
-        properties[AnalyticsConstants.Keys.ssoguid] = isLoggedIn ? keyAuthClient.guid : nil
+                
+        properties[prepPropertyForFirebase(AnalyticsConstants.Keys.appName)] = AnalyticsConstants.Values.godTools
+        properties[prepPropertyForFirebase(AnalyticsConstants.Keys.contentLanguage)] = languageSettingsService.primaryLanguage.value?.code
+        properties[prepPropertyForFirebase(AnalyticsConstants.Keys.contentLanguageSecondary)] = languageSettingsService.parallelLanguage.value?.code
+        properties[prepPropertyForFirebase(AnalyticsConstants.Keys.previousScreenName)] = previousScreenName
+        properties[prepPropertyForFirebase(AnalyticsConstants.Keys.screenName)] = screenName
+        properties[prepPropertyForFirebase(AnalyticsConstants.Keys.siteSection)] = siteSection
+        properties[prepPropertyForFirebase(AnalyticsConstants.Keys.siteSubSection)] = siteSubSection
         
         return properties
-    }
-    
-    private var appName: String {
-        return AdobeAnalyticsConstants.Values.godTools
-    }
-       
-    private var loggedInStatus: String {
-        return keyAuthClient.isAuthenticated() ? AdobeAnalyticsConstants.Values.isLoggedIn : AdobeAnalyticsConstants.Values.notLoggedIn
     }
     
     private func log(method: String, label: String?, labelValue: String?, data: [AnyHashable: Any]?) {
