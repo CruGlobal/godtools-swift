@@ -60,10 +60,10 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
     
     func trackAction(screenName: String?, actionName: String, data: [AnyHashable : Any]?) {
         assertFailureIfNotConfigured()
-        
-        let modifiedActionName = prepPropertyForFirebase(key: actionName)
 
         DispatchQueue.global().async { [weak self] in
+            
+            let modifiedActionName = self?.prepPropertyForFirebase(key: actionName) ?? ""
             
             let actionData: [String: Any]? = data as? [String: Any] ?? nil
             
@@ -85,10 +85,11 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
     
     func trackExitLink(screenName: String, siteSection: String, siteSubSection: String, url: URL) {
         assertFailureIfNotConfigured()
-        
-        let actionName = prepPropertyForFirebase(key: AnalyticsConstants.Values.exitLink)
-        
+                
         DispatchQueue.global().async { [weak self] in
+            
+            let actionName = self?.prepPropertyForFirebase(key: AnalyticsConstants.Values.exitLink) ?? ""
+            
             let baseParameters: [String: Any] = self?.createBaseProperties(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: self?.previousTrackedScreenName) ?? [:]
               
             var parameters: [String: Any] = baseParameters
