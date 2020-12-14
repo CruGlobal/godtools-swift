@@ -83,7 +83,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
             parallelLanguageIsEqualToPrimaryLanguage = false
         }
         
-        if !parallelLanguageIsEqualToPrimaryLanguage, let parallelLanguage = parallelLanguage, let parallelTranslationManifestData = parallelTranslationManifestData {
+        if !trainingTipsEnabled && !parallelLanguageIsEqualToPrimaryLanguage, let parallelLanguage = parallelLanguage, let parallelTranslationManifestData = parallelTranslationManifestData {
             
             let parallelLanguageTranslationModel = ToolLanguageTranslationModel(
                 language: parallelLanguage,
