@@ -15,6 +15,7 @@ class MobileContentEvents {
     let contentErrorSignal: SignalValue<ContentEventError> = SignalValue()
     let followUpEventButtonTappedSignal: SignalValue<FollowUpButtonEvent> = SignalValue()
     let trainingTipTappedSignal: SignalValue<TrainingTipEvent> = SignalValue()
+    let eventImageTappedSignal: SignalValue<ImageEvent> = SignalValue()
     
     deinit {
         print("x deinit: \(type(of: self)) ***")
@@ -38,5 +39,9 @@ class MobileContentEvents {
     
     func trainingTipTapped(trainingTipEvent: TrainingTipEvent) {
         trainingTipTappedSignal.accept(value: trainingTipEvent)
+    }
+    
+    func eventImageTapped(eventImage: ImageEvent) {
+        eventImageTappedSignal.accept(value: eventImage)
     }
 }
