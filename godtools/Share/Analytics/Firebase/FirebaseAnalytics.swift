@@ -72,17 +72,17 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         DispatchQueue.global().async { [weak self] in
             guard let firebaseAnalytics = self else { return }
             
-            let modifiedActionName = firebaseAnalytics.prepPropertyForFirebase(actionName) ?? ""
+            let modifiedActionName = firebaseAnalytics.prepPropertyForFirebase(actionName)
             
             let actionData: [String: Any]? = data as? [String: Any] ?? nil
             
-            let baseParameters: [String: Any] = firebaseAnalytics.createBaseProperties(screenName: screenName, siteSection: nil, siteSubSection: nil, previousScreenName: self?.previousTrackedScreenName) ?? [:]
+            let baseParameters: [String: Any] = firebaseAnalytics.createBaseProperties(screenName: screenName, siteSection: nil, siteSubSection: nil, previousScreenName: self?.previousTrackedScreenName)
             
             var parameters: [String: Any] = baseParameters
             
             if let actionData = actionData {
                 for (key, value) in actionData {
-                    parameters[firebaseAnalytics.prepPropertyForFirebase(key) ?? key] = value
+                    parameters[firebaseAnalytics.prepPropertyForFirebase(key)] = value
                 }
             }
             
@@ -98,13 +98,13 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         DispatchQueue.global().async { [weak self] in
             guard let firebaseAnalytics = self else { return }
             
-            let actionName = firebaseAnalytics.prepPropertyForFirebase(AnalyticsConstants.Values.exitLink) ?? AnalyticsConstants.Values.exitLink
+            let actionName = firebaseAnalytics.prepPropertyForFirebase(AnalyticsConstants.Values.exitLink)
             
-            let baseParameters: [String: Any] = firebaseAnalytics.createBaseProperties(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: firebaseAnalytics.previousTrackedScreenName) ?? [:]
+            let baseParameters: [String: Any] = firebaseAnalytics.createBaseProperties(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: firebaseAnalytics.previousTrackedScreenName)
               
             var parameters: [String: Any] = baseParameters
             
-            parameters[firebaseAnalytics.prepPropertyForFirebase(AnalyticsConstants.Keys.exitLink) ?? AnalyticsConstants.Keys.exitLink] = url.absoluteString
+            parameters[firebaseAnalytics.prepPropertyForFirebase(AnalyticsConstants.Keys.exitLink)] = url.absoluteString
                 
             Analytics.logEvent(actionName, parameters: parameters)
                 
