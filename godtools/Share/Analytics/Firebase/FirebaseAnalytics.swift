@@ -56,11 +56,13 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         previousTrackedScreenName = screenName
         
         DispatchQueue.global().async { [weak self] in
-            let parameters = self?.createBaseProperties(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: previousScreenName)
+            guard let firebaseAnalytics = self else { return }
+            
+            let parameters = firebaseAnalytics.createBaseProperties(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: previousScreenName)
                     
             Analytics.logEvent(AnalyticsEventScreenView, parameters: parameters)
             
-            self?.log(method: "trackScreenView()", label: "screenName", labelValue: screenName, data: parameters)
+            firebaseAnalytics.log(method: "trackScreenView()", label: "screenName", labelValue: screenName, data: parameters)
         }
     }
     
@@ -68,24 +70,25 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         assertFailureIfNotConfigured()
 
         DispatchQueue.global().async { [weak self] in
+            guard let firebaseAnalytics = self else { return }
             
-            let modifiedActionName = self?.prepPropertyForFirebase(actionName) ?? ""
+            let modifiedActionName = firebaseAnalytics.prepPropertyForFirebase(actionName) ?? ""
             
             let actionData: [String: Any]? = data as? [String: Any] ?? nil
             
-            let baseParameters: [String: Any] = self?.createBaseProperties(screenName: screenName, siteSection: nil, siteSubSection: nil, previousScreenName: self?.previousTrackedScreenName) ?? [:]
+            let baseParameters: [String: Any] = firebaseAnalytics.createBaseProperties(screenName: screenName, siteSection: nil, siteSubSection: nil, previousScreenName: self?.previousTrackedScreenName) ?? [:]
             
             var parameters: [String: Any] = baseParameters
             
             if let actionData = actionData {
                 for (key, value) in actionData {
-                    parameters[self?.prepPropertyForFirebase(key) ?? key] = value
+                    parameters[firebaseAnalytics.prepPropertyForFirebase(key) ?? key] = value
                 }
             }
             
             Analytics.logEvent(modifiedActionName, parameters: parameters)
             
-            self?.log(method: "trackAction()", label: "actionName", labelValue: modifiedActionName, data: parameters)
+            firebaseAnalytics.log(method: "trackAction()", label: "actionName", labelValue: modifiedActionName, data: parameters)
         }
     }
     
@@ -93,18 +96,19 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         assertFailureIfNotConfigured()
                 
         DispatchQueue.global().async { [weak self] in
+            guard let firebaseAnalytics = self else { return }
             
-            let actionName = self?.prepPropertyForFirebase(AnalyticsConstants.Values.exitLink) ?? AnalyticsConstants.Values.exitLink
+            let actionName = firebaseAnalytics.prepPropertyForFirebase(AnalyticsConstants.Values.exitLink) ?? AnalyticsConstants.Values.exitLink
             
-            let baseParameters: [String: Any] = self?.createBaseProperties(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: self?.previousTrackedScreenName) ?? [:]
+            let baseParameters: [String: Any] = firebaseAnalytics.createBaseProperties(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: firebaseAnalytics.previousTrackedScreenName) ?? [:]
               
             var parameters: [String: Any] = baseParameters
             
-            parameters[self?.prepPropertyForFirebase(AnalyticsConstants.Keys.exitLink) ?? AnalyticsConstants.Keys.exitLink] = url.absoluteString
+            parameters[firebaseAnalytics.prepPropertyForFirebase(AnalyticsConstants.Keys.exitLink) ?? AnalyticsConstants.Keys.exitLink] = url.absoluteString
                 
             Analytics.logEvent(actionName, parameters: parameters)
                 
-            self?.log(method: "trackExitLink()", label: actionName, labelValue: actionName, data: parameters)
+            firebaseAnalytics.log(method: "trackExitLink()", label: actionName, labelValue: actionName, data: parameters)
         }
     }
     
@@ -115,7 +119,9 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
 
         if isLoggedIn {
             keyAuthClient.fetchAttributes() { [weak self] (_, _) in
-                self?.setUserProperties()
+                guard let firebaseAnalytics = self else { return }
+                
+                firebaseAnalytics.setUserProperties()
             }
         } else {
             setUserProperties()
