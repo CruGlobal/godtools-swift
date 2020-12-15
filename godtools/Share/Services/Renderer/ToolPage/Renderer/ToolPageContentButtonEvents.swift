@@ -43,17 +43,6 @@ class ToolPageContentButtonEvents {
         button.addTarget(self, action: #selector(handleButtonTapped(button:)), for: .touchUpInside)
     }
     
-    func removeButtonEvent(button: UIButton) {
-        
-        guard buttonEvents[button] != nil else {
-            return
-        }
-        
-        buttonEvents[button] = nil
-        
-        button.removeTarget(self, action: #selector(handleButtonTapped(button:)), for: .touchUpInside)
-    }
-    
     @objc func handleButtonTapped(button: UIButton) {
         
         guard let buttonNode = buttonEvents[button] else {
