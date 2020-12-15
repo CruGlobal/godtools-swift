@@ -38,9 +38,9 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         isConfigured = true
         
         #if DEBUG
-            Analytics.setUserProperty(AnalyticsConstants.Values.debugIsTrue, forName: prepPropertyForFirebase(key: AnalyticsConstants.Keys.debug))
+            Analytics.setUserProperty(AnalyticsConstants.Values.debugIsTrue, forName: prepPropertyForFirebase(AnalyticsConstants.Keys.debug))
         #else
-            Analytics.setUserProperty(AnalyticsConstants.Values.debugIsFalse, forName: prepPropertyForFirebase(key: AnalyticsConstants.Keys.debug))
+            Analytics.setUserProperty(AnalyticsConstants.Values.debugIsFalse, forName: prepPropertyForFirebase(AnalyticsConstants.Keys.debug))
         #endif
                 
         log(method: "configure()", label: nil, labelValue: nil, data: nil)
