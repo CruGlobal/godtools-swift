@@ -38,9 +38,9 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         isConfigured = true
         
         #if DEBUG
-            Analytics.setUserProperty(AnalyticsConstants.Values.debugIsTrue, forName: AnalyticsConstants.Keys.debug)
+            Analytics.setUserProperty(AnalyticsConstants.Values.debugIsTrue, forName: prepPropertyForFirebase(key: AnalyticsConstants.Keys.debug))
         #else
-            Analytics.setUserProperty(AnalyticsConstants.Values.debugIsTrue, forName: AnalyticsConstants.Keys.debug)
+            Analytics.setUserProperty(AnalyticsConstants.Values.debugIsFalse, forName: prepPropertyForFirebase(key: AnalyticsConstants.Keys.debug))
         #endif
                 
         log(method: "configure()", label: nil, labelValue: nil, data: nil)
@@ -74,7 +74,7 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
             
             let modifiedActionName = firebaseAnalytics.prepPropertyForFirebase(actionName)
             
-            let actionData: [String: Any]? = data as? [String: Any] ?? nil
+            let actionData: [String: Any]? = data as? [String: Any]
             
             let baseParameters: [String: Any] = firebaseAnalytics.createBaseProperties(screenName: screenName, siteSection: nil, siteSubSection: nil, previousScreenName: self?.previousTrackedScreenName)
             
