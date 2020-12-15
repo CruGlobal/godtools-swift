@@ -20,6 +20,7 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
     private let defaultButtonBorderColor: UIColor?
     private let buttonEvents: ToolPageContentButtonEvents
     private let linkEvents: ToolPageContentLinkEvents
+    private let imageEvents: ToolPageContentImageEvents
     
     private weak var rootContentStackRenderer: ToolPageContentStackRenderer?
         
@@ -39,6 +40,7 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
         self.defaultButtonBorderColor = defaultButtonBorderColor
         self.buttonEvents = ToolPageContentButtonEvents(mobileContentEvents: diContainer.mobileContentEvents, mobileContentAnalytics: diContainer.mobileContentAnalytics)
         self.linkEvents = ToolPageContentLinkEvents(mobileContentEvents: diContainer.mobileContentEvents, mobileContentAnalytics: diContainer.mobileContentAnalytics)
+        self.imageEvents = ToolPageContentImageEvents(mobileContentEvents: diContainer.mobileContentEvents)
     }
     
     deinit {
@@ -48,6 +50,7 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
     private func resetForNewRender() {
         buttonEvents.removeAllButtonEvents()
         linkEvents.removeAllLinkEvents()
+        imageEvents.removeAllImageEvents()
     }
     
     func render(didRenderView: ((_ renderedView: MobileContentStackRenderedView) -> Void)) {
@@ -106,6 +109,8 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
             let imageView: UIImageView = UIImageView()
             
             if renderContentImage(imageView: imageView, imageNode: imageNode, languageDirectionSemanticContentAttribute: diContainer.languageDirectionSemanticContentAttribute), let imageSize = imageView.image?.size {
+                                
+                rootContentStackRenderer.imageEvents.addImageEvent(image: imageView, imageNode: imageNode)
                 
                 return MobileContentStackRenderedView(view: imageView, heightConstraintType: .setToAspectRatioOfProvidedSize(size: imageSize))
             }

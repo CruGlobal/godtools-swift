@@ -11,6 +11,7 @@ import SWXMLHash
 
 class ContentImageNode: MobileContentXmlNode {
         
+    let events: [String]
     let resource: String?
     let restrictTo: String?
     
@@ -18,6 +19,7 @@ class ContentImageNode: MobileContentXmlNode {
     
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
+        events = attributes["events"]?.text.components(separatedBy: " ") ?? []
         resource = attributes["resource"]?.text
         restrictTo = attributes["restrictTo"]?.text
         

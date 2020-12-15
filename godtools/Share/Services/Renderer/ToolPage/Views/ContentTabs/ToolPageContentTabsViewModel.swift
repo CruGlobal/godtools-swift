@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ToolPageContentTabsViewModel: ToolPageContentTabsViewModelType {
+class ToolPageContentTabsViewModel: NSObject, ToolPageContentTabsViewModelType {
     
     private let tabsNode: ContentTabsNode
     private let diContainer: ToolPageDiContainer
@@ -30,9 +30,40 @@ class ToolPageContentTabsViewModel: ToolPageContentTabsViewModelType {
         
         tabLabels = tabNodes.map({$0.contentLabelNode?.textNode?.text ?? ""})
         
+        super.init()
+        
+        addEventListeners()
+        
         let startingTab: Int = 0
         selectedTab.accept(value: startingTab)
         tabContent.accept(value: getTabContent(tab: startingTab))
+    }
+    
+    deinit {
+        removeEventListeners()
+    }
+    
+    private func addEventListeners() {
+        
+        diContainer.mobileContentEvents.eventImageTappedSignal.addObserver(self) { [weak self] (imageEvent: ImageEvent) in
+            
+            guard let viewModel = self else {
+                return
+            }
+                        
+            for tabIndex in 0 ..< viewModel.tabNodes.count {
+                let tabNode: ContentTabNode = viewModel.tabNodes[tabIndex]
+                if tabNode.listeners.contains(imageEvent.event) {
+                    self?.selectedTab.accept(value: tabIndex)
+                    self?.tabTapped(tab: tabIndex)
+                    break
+                }
+            }
+        }
+    }
+    
+    private func removeEventListeners() {
+        diContainer.mobileContentEvents.eventImageTappedSignal.removeObserver(self)
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {

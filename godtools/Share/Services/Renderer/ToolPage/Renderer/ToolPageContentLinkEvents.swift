@@ -43,17 +43,6 @@ class ToolPageContentLinkEvents {
         button.addTarget(self, action: #selector(handleLinkTapped(button:)), for: .touchUpInside)
     }
     
-    func removeLinkEvent(button: UIButton) {
-        
-        guard linkEvents[button] != nil else {
-            return
-        }
-        
-        linkEvents[button] = nil
-        
-        button.removeTarget(self, action: #selector(handleLinkTapped(button:)), for: .touchUpInside)
-    }
-    
     @objc func handleLinkTapped(button: UIButton) {
         
         guard let linkNode = linkEvents[button] else {
