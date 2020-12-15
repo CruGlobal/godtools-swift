@@ -11,15 +11,18 @@ import Foundation
 class TrackActionAnalytics {
     
     private let adobeAnalytics: AdobeAnalyticsType
+    private let firebaseAnalytics: FirebaseAnalyticsType
     private let snowplowAnalytics: SnowplowAnalyticsType
     
-    required init(adobeAnalytics: AdobeAnalyticsType, snowplowAnalytics: SnowplowAnalyticsType) {
+    required init(adobeAnalytics: AdobeAnalyticsType, firebaseAnalytics: FirebaseAnalyticsType, snowplowAnalytics: SnowplowAnalyticsType) {
         self.adobeAnalytics = adobeAnalytics
+        self.firebaseAnalytics = firebaseAnalytics
         self.snowplowAnalytics = snowplowAnalytics
     }
     
     func trackAction(screenName: String?, actionName: String, data: [AnyHashable : Any]?) {
         adobeAnalytics.trackAction(screenName: screenName, actionName: actionName, data: data)
+        firebaseAnalytics.trackAction(screenName: screenName, actionName: actionName, data: data)
         snowplowAnalytics.trackAction(action: actionName)
     }
 }

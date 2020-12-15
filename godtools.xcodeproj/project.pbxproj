@@ -829,7 +829,9 @@
 		D129DE6A2543669C00841733 /* onboarding_tutorial_cups.json in Resources */ = {isa = PBXBuildFile; fileRef = D129DE672543669C00841733 /* onboarding_tutorial_cups.json */; };
 		D129DE6B2543669C00841733 /* onboarding_tutorial_knife.json in Resources */ = {isa = PBXBuildFile; fileRef = D129DE682543669C00841733 /* onboarding_tutorial_knife.json */; };
 		D163EA96254A00BE00BA4EA9 /* share_tool_tutorial_link.json in Resources */ = {isa = PBXBuildFile; fileRef = D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */; };
+		D1838479257E86B3004F5674 /* container in Resources */ = {isa = PBXBuildFile; fileRef = D1838478257E86B3004F5674 /* container */; };
 		D1B68BBF24785580001A2894 /* TrackActionAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B68BBE24785580001A2894 /* TrackActionAnalytics.swift */; };
+		D1DA0C9525816C810059E0FC /* AnalyticsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DA0C9425816C810059E0FC /* AnalyticsConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1735,7 +1737,9 @@
 		D129DE672543669C00841733 /* onboarding_tutorial_cups.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding_tutorial_cups.json; sourceTree = "<group>"; };
 		D129DE682543669C00841733 /* onboarding_tutorial_knife.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding_tutorial_knife.json; sourceTree = "<group>"; };
 		D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = share_tool_tutorial_link.json; sourceTree = "<group>"; };
+		D1838478257E86B3004F5674 /* container */ = {isa = PBXFileReference; lastKnownFileType = folder; path = container; sourceTree = "<group>"; };
 		D1B68BBE24785580001A2894 /* TrackActionAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackActionAnalytics.swift; sourceTree = "<group>"; };
+		D1DA0C9425816C810059E0FC /* AnalyticsConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsConstants.swift; sourceTree = "<group>"; };
 		D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtoolsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D61FF360D11F854476B6E206 /* Pods_godtools.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtools.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0F338026DD564DE8D5B7CE2 /* Pods-godtoolsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -3790,6 +3794,7 @@
 			isa = PBXGroup;
 			children = (
 				454526CC243E138B00B84B29 /* AnalyticsContainer.swift */,
+				D1DA0C9425816C810059E0FC /* AnalyticsConstants.swift */,
 				4508F7A12429669700ECA950 /* Adobe */,
 				45B2AE612458DC4600253BAD /* AnalyticsTracking */,
 				4561AC2825598BA300841D9A /* AppsFlyer */,
@@ -4202,6 +4207,7 @@
 		4F5732801EA69CF00082035C = {
 			isa = PBXGroup;
 			children = (
+				D1838478257E86B3004F5674 /* container */,
 				4F57328B1EA69CF00082035C /* godtools */,
 				684328EB1EB7C7F4005E9131 /* fastlane */,
 				4FC97EA720D2B17B00084A33 /* godtoolsTests */,
@@ -4536,6 +4542,7 @@
 				459698B3255DCFFF0085755A /* ToolPageModalView.xib in Resources */,
 				4579169324E8483100C0CF49 /* LoadingView.xib in Resources */,
 				451EBE2924AD968B00C4D6DD /* bae08d104b5ad1e9d7f97a25a88800adbce94cf36c508deaf3a2067f45919a36.png in Resources */,
+				D1838479257E86B3004F5674 /* container in Resources */,
 				450EA195246C6E9E00B78FA3 /* TractPageCell.xib in Resources */,
 				451F3F2824E473BE00A25D11 /* ShareToolScreenTutorialView.xib in Resources */,
 				1737DFDF22FDB48000223CB0 /* GoogleService-Info.plist in Resources */,
@@ -4689,10 +4696,12 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-godtools/Pods-godtools-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseInAppMessaging/InAppMessagingDisplayResources.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/GoogleTagManager/TagManagerResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/InAppMessagingDisplayResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TagManagerResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -4921,6 +4930,7 @@
 				45FFA1032493D2D900DD05F4 /* FileCache.swift in Sources */,
 				4573221424453EB200D653FF /* LanguageSettingsViewModel.swift in Sources */,
 				451DB13B2461DA4200FB14BF /* TractImageProperties.swift in Sources */,
+				D1DA0C9525816C810059E0FC /* AnalyticsConstants.swift in Sources */,
 				452C5770248E77A500B39C09 /* SingleRequestOperation.swift in Sources */,
 				4586D7D2246ECBDB0062D988 /* TractTabs.swift in Sources */,
 				4530DCAB24A3D4DA000DA516 /* AttachmentsDownloader.swift in Sources */,
