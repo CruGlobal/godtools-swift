@@ -94,6 +94,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //on app launch, sync Adobe Analytics auth state
         appDiContainer.analytics.adobeAnalytics.fetchAttributesThenSyncIds()
         appDiContainer.analytics.firebaseAnalytics.fetchAttributesThenSetUserId()
+        
+        GAI.sharedInstance().dispatchInterval = 1
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
