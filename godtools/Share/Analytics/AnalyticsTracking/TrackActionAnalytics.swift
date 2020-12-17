@@ -22,7 +22,7 @@ class TrackActionAnalytics {
     
     func trackAction(screenName: String?, actionName: String, data: [AnyHashable : Any]?) {
         adobeAnalytics.trackAction(screenName: screenName, actionName: actionName, data: data)
-        firebaseAnalytics.trackAction(screenName: screenName, actionName: actionName, data: data)
+        firebaseAnalytics.trackAction(screenName: screenName, actionName: actionName, data: data as! [String : Any])
         snowplowAnalytics.trackAction(action: actionName)
     }
 }
