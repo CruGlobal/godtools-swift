@@ -57,7 +57,7 @@ class ToolNavBarView: NSObject {
         navigationController?.view.backgroundColor = .clear
         navigationController?.navigationBar.titleTextAttributes = [
             NSAttributedString.Key.foregroundColor: navBarControlColor,
-            NSAttributedString.Key.font: UIFont.gtSemiBold(size: 17.0)
+            NSAttributedString.Key.font: viewModel.navBarFont
         ]
         
         _ = parentViewController.addBarButtonItem(
@@ -95,7 +95,7 @@ class ToolNavBarView: NSObject {
             
             chooseLanguageControl.selectedSegmentIndex = 0
 
-            let font = UIFont.defaultFont(size: 14, weight: nil)
+            let font: UIFont = viewModel.languageControlFont
             if #available(iOS 13.0, *) {
                 chooseLanguageControl.selectedSegmentTintColor = navBarControlColor
                 chooseLanguageControl.layer.borderColor = navBarControlColor.cgColor

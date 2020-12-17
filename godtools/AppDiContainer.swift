@@ -10,9 +10,7 @@ import Foundation
 import TheKeyOAuthSwift
 
 class AppDiContainer {
-    
-    private let godToolsAnalytics: GodToolsAnaltyics // TODO: Remove GodToolsAnalytics, replaced by AnalyticsContainer. ~Levi
-    
+        
     private let legacyRealmMigration: LegacyRealmMigration
     private let realmDatabase: RealmDatabase
     private let resourcesSHA256FileCache: ResourcesSHA256FileCache = ResourcesSHA256FileCache()
@@ -170,9 +168,7 @@ class AppDiContainer {
             firebaseAnalytics: FirebaseAnalytics(keyAuthClient: loginClient, languageSettingsService: languageSettingsService, loggingEnabled: false),
             snowplowAnalytics: SnowplowAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: false)
         )
-        
-        godToolsAnalytics = GodToolsAnaltyics(analytics: analytics)
-                                                  
+                                                          
         openTutorialCalloutCache = OpenTutorialCalloutUserDefaultsCache()
                            
         fetchTranslationManifestsViewModel = FetchTranslationManifestsViewModel(
@@ -198,10 +194,6 @@ class AppDiContainer {
         deepLinkingService = DeepLinkingService(dataDownloader: initialDataDownloader, loggingEnabled: config.isDebug)
         
         favoritingToolMessageCache = FavoritingToolMessageCache(userDefaultsCache: sharedUserDefaultsCache)
-                
-        // TODO: Need to remove this singleton once UIFont extension is properly refactored. ~Levi
-        // UIFont extension currently depends on the primary language for picking appropriate UIFont to display.
-        LanguagesManager.shared.setup(languageSettingsService: languageSettingsService)
     }
     
     func getCardJumpService() -> CardJumpService {
@@ -294,10 +286,6 @@ class AppDiContainer {
     
     var tractRemoteShareURLBuilder: TractRemoteShareURLBuilder {
         return TractRemoteShareURLBuilder()
-    }
-    
-    var tractManager: TractManager {
-        return TractManager(translationsFileCache: translationsFileCache, resourcesSHA256FileCache: resourcesSHA256FileCache)
     }
     
     var shareToolScreenTutorialNumberOfViewsCache: ShareToolScreenTutorialNumberOfViewsCache {

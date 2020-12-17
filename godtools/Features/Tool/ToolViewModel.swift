@@ -124,6 +124,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
             tractRemoteSharePublisher: tractRemoteSharePublisher,
             tractRemoteShareSubscriber: tractRemoteShareSubscriber,
             localizationServices: localizationServices,
+            fontService: fontService,
             analytics: analytics,
             hidesShareButton: trainingTipsEnabled
         )

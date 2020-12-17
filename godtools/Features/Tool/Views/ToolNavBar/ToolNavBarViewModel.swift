@@ -22,6 +22,7 @@ class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
     private let tractRemoteShareSubscriber: TractRemoteShareSubscriber
     private let localizationServices: LocalizationServices
+    private let fontService: FontService
     private let analytics: AnalyticsContainer
     
     private weak var delegate: ToolNavBarViewModelDelegate?
@@ -33,7 +34,7 @@ class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
     let selectedLanguage: ObservableValue<Int> = ObservableValue(value: 0)
     let hidesShareButton: Bool
     
-    required init(delegate: ToolNavBarViewModelDelegate, resource: ResourceModel, manifestAttributes: MobileContentManifestAttributesType, languages: [LanguageModel], tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, localizationServices: LocalizationServices, analytics: AnalyticsContainer, hidesShareButton: Bool) {
+    required init(delegate: ToolNavBarViewModelDelegate, resource: ResourceModel, manifestAttributes: MobileContentManifestAttributesType, languages: [LanguageModel], tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, localizationServices: LocalizationServices, fontService: FontService, analytics: AnalyticsContainer, hidesShareButton: Bool) {
         
         self.delegate = delegate
         self.resource = resource
@@ -41,6 +42,7 @@ class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
         self.tractRemoteShareSubscriber = tractRemoteShareSubscriber
         self.localizationServices = localizationServices
+        self.fontService = fontService
         self.analytics = analytics
         self.hidesShareButton = hidesShareButton
         
@@ -90,8 +92,16 @@ class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
         return languages.count
     }
     
+    var navBarFont: UIFont {
+        return fontService.getFont(size: 17, weight: .semibold)
+    }
+    
     var language: LanguageModel {
         return languages[selectedLanguage.value]
+    }
+    
+    var languageControlFont: UIFont {
+        return fontService.getFont(size: 14, weight: .regular)
     }
     
     func navHomeTapped() {

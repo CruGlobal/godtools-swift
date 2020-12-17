@@ -55,7 +55,7 @@ class ChooseLanguageView: UIViewController {
     private func setupLayout() {
         
         // searchBar
-        searchBar.barTintColor = .gtGreyLight
+        searchBar.barTintColor = UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0)
         if #available(iOS 13, *) {
             searchBar.searchTextField.backgroundColor = .white
         }

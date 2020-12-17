@@ -56,7 +56,7 @@ class AppFlow: NSObject, FlowDelegate {
     }
     
     func resetFlowToToolsFlow(animated: Bool) {
-        configureNavigation(navigationController: navigationController)
+        configureNavigationBar()
         toolsFlow?.navigationController.popToRootViewController(animated: animated)
         toolsFlow?.resetToolsMenu()
         navigationController.popToRootViewController(animated: animated)
@@ -136,7 +136,7 @@ class AppFlow: NSObject, FlowDelegate {
             
             navigationController.setNavigationBarHidden(false, animated: false)
 
-            configureNavigation(navigationController: navigationController)
+            configureNavigationBar()
 
             if shouldCreateNewInstance || toolsFlow == nil {
 
@@ -222,7 +222,7 @@ class AppFlow: NSObject, FlowDelegate {
             if isScreenSharing {
                 
                 let acceptHandler = CallbackHandler { [weak self] in
-                    self?.closeTract()
+                    self?.closeTool()
                 }
                 
                 let localizationServices: LocalizationServices = appDiContainer.localizationServices
@@ -241,7 +241,7 @@ class AppFlow: NSObject, FlowDelegate {
             }
             else {
                 
-                closeTract()
+                closeTool()
             }
             
         default:
@@ -249,9 +249,9 @@ class AppFlow: NSObject, FlowDelegate {
         }
     }
     
-    private func closeTract() {
+    private func closeTool() {
         _ = navigationController.popToRootViewController(animated: true)
-        resetNavigationControllerColorToDefault()
+        configureNavigationBar()
     }
     
     private func dismissTutorial() {
@@ -322,21 +322,19 @@ class AppFlow: NSObject, FlowDelegate {
         
     // MARK: - Navigation Bar
     
-    func configureNavigation(navigationController: UINavigationController) {
-        configureNavigationColor(navigationController: navigationController, color: .gtBlue)
-    }
-    
-    func resetNavigationControllerColorToDefault() {
-        configureNavigationColor(navigationController: navigationController, color: .gtBlue)
-    }
-    
-    func configureNavigationColor(navigationController: UINavigationController, color: UIColor) {
-        navigationController.navigationBar.tintColor = .gtWhite
+    private func configureNavigationBar() {
+                
+        let color: UIColor = UIColor.gtBlue
+        
+        let fontService: FontService = appDiContainer.getFontService()
+        let font: UIFont = fontService.getFont(size: 17, weight: .semibold)
+        
+        navigationController.navigationBar.tintColor = .white
         navigationController.navigationBar.barTintColor = .clear
         navigationController.navigationBar.setBackgroundImage(NavigationBarBackground.createFrom(color), for: .default)
         navigationController.navigationBar.isTranslucent = true
-        navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.gtWhite,
-                                                                  NSAttributedString.Key.font: UIFont.gtSemiBold(size: 17.0)]
+        navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white,
+                                                                  NSAttributedString.Key.font: font]
     }
 }
 

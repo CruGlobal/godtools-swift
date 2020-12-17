@@ -73,10 +73,7 @@ class MenuView: UIViewController {
     }
     
     private func setupLayout() {
-        
-        view.backgroundColor = .clear
-        
-        tableView.backgroundColor = .gtGreyLight
+                
         tableView.separatorStyle = .none
         tableView.rowHeight = rowHeight
         tableView.register(

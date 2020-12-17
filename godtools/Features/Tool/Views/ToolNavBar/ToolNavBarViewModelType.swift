@@ -12,11 +12,13 @@ protocol ToolNavBarViewModelType {
     
     var navBarColor: UIColor { get }
     var navBarControlColor: UIColor { get }
+    var navBarFont: UIFont { get }
     var hidesChooseLanguageControl: Bool { get }
     var navTitle: String { get }
     var numberOfLanguages: Int { get }
     var remoteShareIsActive: ObservableValue<Bool> { get }
     var selectedLanguage: ObservableValue<Int> { get }
+    var languageControlFont: UIFont { get }
     var language: LanguageModel { get }
     var hidesShareButton: Bool { get }
     

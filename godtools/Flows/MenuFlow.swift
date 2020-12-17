@@ -24,14 +24,16 @@ class MenuFlow: Flow {
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         
+        let fontService: FontService = appDiContainer.getFontService()
+        
         navigationController = UINavigationController()
         navigationController.navigationBar.barTintColor = UIColor.gtBlue
         navigationController.navigationBar.tintColor = UIColor.white
         navigationController.navigationBar.isTranslucent = false
         navigationController.navigationBar.shadowImage = UIImage()
         navigationController.navigationBar.titleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.gtWhite,
-            NSAttributedString.Key.font: UIFont.gtSemiBold(size: 17.0)
+            NSAttributedString.Key.foregroundColor: UIColor.white,
+            NSAttributedString.Key.font: fontService.getFont(size: 17, weight: .semibold)
         ]
         
         let viewModel = MenuViewModel(
