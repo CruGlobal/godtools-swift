@@ -523,6 +523,12 @@
 		459AA42524A5296F00CAA69C /* DownloadedTranslationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459AA42424A5296F00CAA69C /* DownloadedTranslationResult.swift */; };
 		459C3FE024C5F296006E81CA /* TractRemoteShareSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459C3FDF24C5F296006E81CA /* TractRemoteShareSubscriber.swift */; };
 		459C8692247A2A240077AB7F /* DownloadArticlesErrorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459C8691247A2A240077AB7F /* DownloadArticlesErrorViewModel.swift */; };
+		459FD8C8258BA8BD00248869 /* EmailSignUpApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459FD8C7258BA8BD00248869 /* EmailSignUpApi.swift */; };
+		459FD8CA258BAC6900248869 /* EmailSignUpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459FD8C9258BAC6900248869 /* EmailSignUpService.swift */; };
+		459FD8CC258BAD0800248869 /* RegisteredEmailsCacheType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459FD8CB258BAD0800248869 /* RegisteredEmailsCacheType.swift */; };
+		459FD8CF258BAE1400248869 /* RegisteredEmailModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459FD8CE258BAE1400248869 /* RegisteredEmailModelType.swift */; };
+		459FD8D1258BAE3900248869 /* RegisteredEmailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459FD8D0258BAE3900248869 /* RegisteredEmailModel.swift */; };
+		459FD8D3258BAE5F00248869 /* RealmRegisteredEmailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459FD8D2258BAE5F00248869 /* RealmRegisteredEmailModel.swift */; };
 		459FDB832562C53B002D74D3 /* TrainingTipType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459FDB822562C53B002D74D3 /* TrainingTipType.swift */; };
 		459FDB9425632135002D74D3 /* TractRemoteSharePublisherNavigationEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459FDB9325632135002D74D3 /* TractRemoteSharePublisherNavigationEvent.swift */; };
 		45A1431624A62C1900892200 /* FetchTranslationManifestsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A1431524A62C1900892200 /* FetchTranslationManifestsViewModel.swift */; };
@@ -572,6 +578,7 @@
 		45B2AE692458DE7C00253BAD /* PageViewedAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B2AE682458DE7C00253BAD /* PageViewedAnalytics.swift */; };
 		45B3EE4724C917840042CF7C /* TractRemoteShareSubscriberError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B3EE4624C917840042CF7C /* TractRemoteShareSubscriberError.swift */; };
 		45B3F7DD255596BC00141A62 /* MobileContentRGBAColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B3F7DC255596BC00141A62 /* MobileContentRGBAColor.swift */; };
+		45B57073258BB05200F83F20 /* RealmRegisteredEmailsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B57072258BB05200F83F20 /* RealmRegisteredEmailsCache.swift */; };
 		45B72DA024FC5C7900BD963B /* LanguageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B72D9F24FC5C7900BD963B /* LanguageViewModel.swift */; };
 		45B881C7249AAC35004DC491 /* SHA256FilesCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B881C5249AAC35004DC491 /* SHA256FilesCache.swift */; };
 		45B881C8249AAC35004DC491 /* SHA256FileLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B881C6249AAC35004DC491 /* SHA256FileLocation.swift */; };
@@ -1288,6 +1295,12 @@
 		459AA42424A5296F00CAA69C /* DownloadedTranslationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadedTranslationResult.swift; sourceTree = "<group>"; };
 		459C3FDF24C5F296006E81CA /* TractRemoteShareSubscriber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractRemoteShareSubscriber.swift; sourceTree = "<group>"; };
 		459C8691247A2A240077AB7F /* DownloadArticlesErrorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadArticlesErrorViewModel.swift; sourceTree = "<group>"; };
+		459FD8C7258BA8BD00248869 /* EmailSignUpApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSignUpApi.swift; sourceTree = "<group>"; };
+		459FD8C9258BAC6900248869 /* EmailSignUpService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSignUpService.swift; sourceTree = "<group>"; };
+		459FD8CB258BAD0800248869 /* RegisteredEmailsCacheType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisteredEmailsCacheType.swift; sourceTree = "<group>"; };
+		459FD8CE258BAE1400248869 /* RegisteredEmailModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisteredEmailModelType.swift; sourceTree = "<group>"; };
+		459FD8D0258BAE3900248869 /* RegisteredEmailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisteredEmailModel.swift; sourceTree = "<group>"; };
+		459FD8D2258BAE5F00248869 /* RealmRegisteredEmailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRegisteredEmailModel.swift; sourceTree = "<group>"; };
 		459FDB822562C53B002D74D3 /* TrainingTipType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingTipType.swift; sourceTree = "<group>"; };
 		459FDB9325632135002D74D3 /* TractRemoteSharePublisherNavigationEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractRemoteSharePublisherNavigationEvent.swift; sourceTree = "<group>"; };
 		45A1431524A62C1900892200 /* FetchTranslationManifestsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchTranslationManifestsViewModel.swift; sourceTree = "<group>"; };
@@ -1336,6 +1349,7 @@
 		45B2AE682458DE7C00253BAD /* PageViewedAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageViewedAnalytics.swift; sourceTree = "<group>"; };
 		45B3EE4624C917840042CF7C /* TractRemoteShareSubscriberError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractRemoteShareSubscriberError.swift; sourceTree = "<group>"; };
 		45B3F7DC255596BC00141A62 /* MobileContentRGBAColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentRGBAColor.swift; sourceTree = "<group>"; };
+		45B57072258BB05200F83F20 /* RealmRegisteredEmailsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRegisteredEmailsCache.swift; sourceTree = "<group>"; };
 		45B72D9F24FC5C7900BD963B /* LanguageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageViewModel.swift; sourceTree = "<group>"; };
 		45B881C5249AAC35004DC491 /* SHA256FilesCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHA256FilesCache.swift; sourceTree = "<group>"; };
 		45B881C6249AAC35004DC491 /* SHA256FileLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHA256FileLocation.swift; sourceTree = "<group>"; };
@@ -2276,6 +2290,7 @@
 				4530DCA924A3D4CA000DA516 /* Attachments */,
 				45F567AB24FD7D600078D539 /* CardJumpService */,
 				451EE23624ABC28300BB799F /* DeepLinkingService */,
+				459FD8C6258BA8AC00248869 /* EmailSignUp */,
 				45869EBF24530B9800733B0C /* FileCache */,
 				451EE24024ABFB5C00BB799F /* FollowUps */,
 				4585623C2550E55D0081CC28 /* FontService */,
@@ -3076,6 +3091,28 @@
 				459C8691247A2A240077AB7F /* DownloadArticlesErrorViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		459FD8C6258BA8AC00248869 /* EmailSignUp */ = {
+			isa = PBXGroup;
+			children = (
+				459FD8C7258BA8BD00248869 /* EmailSignUpApi.swift */,
+				459FD8C9258BAC6900248869 /* EmailSignUpService.swift */,
+				45B57072258BB05200F83F20 /* RealmRegisteredEmailsCache.swift */,
+				459FD8CB258BAD0800248869 /* RegisteredEmailsCacheType.swift */,
+				459FD8CD258BADEE00248869 /* Models */,
+			);
+			path = EmailSignUp;
+			sourceTree = "<group>";
+		};
+		459FD8CD258BADEE00248869 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				459FD8D2258BAE5F00248869 /* RealmRegisteredEmailModel.swift */,
+				459FD8D0258BAE3900248869 /* RegisteredEmailModel.swift */,
+				459FD8CE258BAE1400248869 /* RegisteredEmailModelType.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		459FDB812562C531002D74D3 /* Models */ = {
@@ -4489,6 +4526,7 @@
 				450F12A7256D88B000ED69D4 /* LanguageDirection.swift in Sources */,
 				459698D9255E1FBA0085755A /* TrainingTipNode.swift in Sources */,
 				45FCFF77243D0BE000865501 /* ChooseLanguageView.swift in Sources */,
+				459FD8C8258BA8BD00248869 /* EmailSignUpApi.swift in Sources */,
 				451B9CE22475AEE6006ACD32 /* AppFlow.swift in Sources */,
 				454315AD24A152D300B5C37B /* ProgressView.swift in Sources */,
 				450EF829247EAD6C00978926 /* FavoritedToolsViewModelType.swift in Sources */,
@@ -4565,6 +4603,7 @@
 				450F12A9256D9B7200ED69D4 /* MobileContentAnalyticsSystem.swift in Sources */,
 				45DFBF28255EE4BA00E6B591 /* TrainingTipViewType.swift in Sources */,
 				45249D1524ACC62B00E139AD /* ResourceViewModel.swift in Sources */,
+				459FD8CC258BAD0800248869 /* RegisteredEmailsCacheType.swift in Sources */,
 				45647251244F782300CB202D /* ArticleCell.swift in Sources */,
 				45CF88F52571448F00093462 /* ToolPageContentStackContainerViewModelType.swift in Sources */,
 				4575C26323FB45E600D3265B /* GlobalActivityServices.swift in Sources */,
@@ -4591,6 +4630,7 @@
 				45B881E3249AACED004DC491 /* RealmResource.swift in Sources */,
 				4575C28923FC77C500D3265B /* GlobalActivityCellViewModel.swift in Sources */,
 				459A71E324C9C50A00B77942 /* WebSocketType.swift in Sources */,
+				459FD8D3258BAE5F00248869 /* RealmRegisteredEmailModel.swift in Sources */,
 				4595F43024A294EE00B3733E /* ArticleAemImportDataParserError.swift in Sources */,
 				454526CD243E138B00B84B29 /* AnalyticsContainer.swift in Sources */,
 				4561AC402559E89400841D9A /* ContentInputNode.swift in Sources */,
@@ -4649,6 +4689,7 @@
 				45E2BF0B254354C400C4D66C /* MobileContentXmlManifestAttributes.swift in Sources */,
 				454526DE243E1A9100B84B29 /* ShareAStoryWithUsWebContent.swift in Sources */,
 				45EDC540249BAB970020DC62 /* ToolDetailViewModelType.swift in Sources */,
+				459FD8D1258BAE3900248869 /* RegisteredEmailModel.swift in Sources */,
 				45A7BAF8252CEDAE00D70465 /* LocaleLocalizationBundle.swift in Sources */,
 				45249D0D24ACB22A00E139AD /* FollowUpsService.swift in Sources */,
 				453AD7A723FF212700921D75 /* AccountItemViewType.swift in Sources */,
@@ -4770,6 +4811,7 @@
 				45E2BF05254354C400C4D66C /* MobileContentManifestType.swift in Sources */,
 				450EF81B247E9EEF00978926 /* ToolsViewModelType.swift in Sources */,
 				4508729224EEC71A0047123E /* ShareToolScreenTutorialNumberOfViewsCache.swift in Sources */,
+				459FD8CA258BAC6900248869 /* EmailSignUpService.swift in Sources */,
 				451F3F2424E4739900A25D11 /* ShareToolScreenTutorialViewModel.swift in Sources */,
 				452036C7240057F3002B2453 /* RequestOperation.swift in Sources */,
 				45B2AE3D24587BA000253BAD /* ShareArticleView.swift in Sources */,
@@ -4938,6 +4980,7 @@
 				45A1431624A62C1900892200 /* FetchTranslationManifestsViewModel.swift in Sources */,
 				455F4BA02452808300AE6007 /* ArticleWebViewModel.swift in Sources */,
 				459698D2255DE0280085755A /* ContentEventError.swift in Sources */,
+				459FD8CF258BAE1400248869 /* RegisteredEmailModelType.swift in Sources */,
 				456AE95D2564127D0028510C /* ToolLanguageTranslationModel.swift in Sources */,
 				454526DA243E19C300B84B29 /* PrivacyPolicyWebContent.swift in Sources */,
 				456AE96125645A500028510C /* ToolPageViewModelsCache.swift in Sources */,
@@ -4949,6 +4992,7 @@
 				45FCFF41243D07B800865501 /* TutorialFlow.swift in Sources */,
 				45C42F6624A84EDE0046B474 /* LanguageTranslationsDownloader.swift in Sources */,
 				4506DED224B7A78700A1C50B /* NavigationBarBackground.swift in Sources */,
+				45B57073258BB05200F83F20 /* RealmRegisteredEmailsCache.swift in Sources */,
 				4543159C24A103C300B5C37B /* ResourcesSHA256FileCache.swift in Sources */,
 				4508F7A72429669700ECA950 /* AdobeAnalyticsType.swift in Sources */,
 				45F6E018249D44270077C7D9 /* LanguageModel.swift in Sources */,
