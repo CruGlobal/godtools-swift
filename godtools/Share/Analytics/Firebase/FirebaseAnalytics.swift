@@ -49,70 +49,41 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
     //MARK: - Public
     
     func trackScreenView(screenName: String, siteSection: String, siteSubSection: String) {
-        assertFailureIfNotConfigured()
-        
-        let previousScreenName: String = self.previousTrackedScreenName
-        
+        internalTrackEvent(
+            screenName: screenName,
+            siteSection: siteSection,
+            siteSubSection: siteSubSection,
+            previousScreenName: previousTrackedScreenName,
+            eventName: AnalyticsEventScreenView,
+            data: nil
+        )
         previousTrackedScreenName = screenName
-        
-        DispatchQueue.global().async { [weak self] in
-            guard let firebaseAnalytics = self else { return }
-            
-            let parameters = firebaseAnalytics.createBaseProperties(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: previousScreenName)
-                    
-            Analytics.logEvent(AnalyticsEventScreenView, parameters: firebaseAnalytics.prepPropertiesForFirebase(parameters))
-            
-            firebaseAnalytics.log(method: "trackScreenView()", label: "screenName", labelValue: screenName, data: parameters)
-        }
     }
-    
-    func trackAction(screenName: String?, actionName: String, data: [AnyHashable : Any]?) {
-        assertFailureIfNotConfigured()
-        
-        let modifiedActionName = transformStringForFirebase(actionName)
 
-        DispatchQueue.global().async { [weak self] in
-            guard let firebaseAnalytics = self else { return }
-                        
-            let actionData: [String: Any]? = data as? [String: Any]
-            
-            let baseParameters = firebaseAnalytics.createBaseProperties(screenName: screenName, siteSection: nil, siteSubSection: nil, previousScreenName: self?.previousTrackedScreenName)
-            
-            var parameters: [String: Any] = baseParameters
-            
-            if let actionData = actionData {
-                for (key, value) in actionData {
-                    parameters[key] = value
-                }
-            }
-            
-            Analytics.logEvent(modifiedActionName, parameters: firebaseAnalytics.prepPropertiesForFirebase(parameters))
-            
-            firebaseAnalytics.log(method: "trackAction()", label: "actionName", labelValue: modifiedActionName, data: parameters)
-        }
+    func trackAction(screenName: String?, actionName: String, data: [String : Any]?) {
+        internalTrackEvent(
+            screenName: screenName,
+            siteSection: nil,
+            siteSubSection: nil,
+            previousScreenName: previousTrackedScreenName,
+            eventName: actionName,
+            data: data
+        )
     }
     
     func trackExitLink(screenName: String, siteSection: String, siteSubSection: String, url: URL) {
-        assertFailureIfNotConfigured()
-                
-        DispatchQueue.global().async { [weak self] in
-            guard let firebaseAnalytics = self else { return }
-            
-            let actionName = firebaseAnalytics.transformStringForFirebase(AnalyticsConstants.Values.exitLink)
-            
-            let baseParameters: [String: Any] = firebaseAnalytics.createBaseProperties(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: firebaseAnalytics.previousTrackedScreenName)
-              
-            var parameters: [String: Any] = baseParameters
-            
-            parameters[AnalyticsConstants.Keys.exitLink] = url.absoluteString
-                
-            
-            Analytics.logEvent(actionName, parameters: prepPropertiesForFirebase(parameters))
-                
-            firebaseAnalytics.log(method: "trackExitLink()", label: actionName, labelValue: actionName, data: parameters)
-        }
+        internalTrackEvent(
+            screenName: screenName,
+            siteSection: siteSection,
+            siteSubSection: siteSubSection,
+            previousScreenName: previousTrackedScreenName,
+            eventName: AnalyticsConstants.Values.exitLink,
+            data: [
+                AnalyticsConstants.Keys.exitLink: url.absoluteString
+            ]
+        )
     }
-    
+
     func fetchAttributesThenSetUserId() {
         assertFailureIfNotConfigured()
         
@@ -137,17 +108,54 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         }
     }
     
-    private func prepPropertiesForFirebase(_ properties: [String: Any]) -> [String: String] {
-        var newProperties: [String: String] = [:]
+    private func internalTrackEvent(screenName: String?, siteSection: String?, siteSubSection: String?, previousScreenName: String, eventName: String, data: [String: Any]?) {
+        assertFailureIfNotConfigured()
         
-        for (key, value) in properties {
-            let newKey = transformStringForFirebase(key)
-            let newValue = transformStringForFirebase(String(value))
+        DispatchQueue.global().async { [weak self] in
+            guard let firebaseAnalytics = self else {
+                return
+            }
             
-            newProperties[newKey] = newValue
+            let baseParameters: [String: Any] = firebaseAnalytics.createBaseProperties(
+                screenName: screenName,
+                siteSection: siteSection,
+                siteSubSection: siteSubSection,
+                previousScreenName: previousScreenName
+            )
+            
+            var parameters: [String: Any] = baseParameters
+            
+            if let data = data {
+                for (key, value) in data {
+                    if parameters[key] == nil {
+                        parameters[key] = value
+                    }
+                }
+            }
+            
+            let transformedEventName: String = firebaseAnalytics.transformStringForFirebase(eventName).lowercased()
+            let transformedData: [String: Any]? = firebaseAnalytics.transformDataForFirebase(data: parameters)
+            
+            Analytics.logEvent(transformedEventName, parameters: transformedData)
+            
+            firebaseAnalytics.log(method: "trackEvent()", label: "name", labelValue: transformedEventName, data: transformedData)
+           }
+       }
+    
+    private func transformDataForFirebase(data: [String: Any]?) -> [String: Any]? {
+        guard let attributesData = data else {
+            return nil
         }
         
-        return newProperties
+        var transformedData: [String: Any] = Dictionary()
+        
+        for (key, value) in attributesData {
+            let transformedKey: String = transformStringForFirebase(key).lowercased()
+            let transformedValue: Any = value
+            transformedData[transformedKey] = transformedValue
+        }
+        
+        return transformedData
     }
     
     private func transformStringForFirebase(_ key: String) -> String {
@@ -214,6 +222,6 @@ extension FirebaseAnalytics: OIDAuthStateChangeDelegate {
 
 extension FirebaseAnalytics: MobileContentAnalyticsSystem {
     func trackAction(action: String, data: [AnyHashable : Any]?) {
-        trackAction(screenName: nil, actionName: action, data: data)
+        trackAction(screenName: nil, actionName: action, data: data as! [String : Any])
     }
 }
