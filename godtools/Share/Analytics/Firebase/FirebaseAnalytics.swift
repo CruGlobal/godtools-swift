@@ -109,9 +109,11 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
     }
     
     private func internalTrackEvent(screenName: String?, siteSection: String?, siteSubSection: String?, previousScreenName: String, eventName: String, data: [String: Any]?) {
+        
         assertFailureIfNotConfigured()
         
         DispatchQueue.global().async { [weak self] in
+            
             guard let firebaseAnalytics = self else {
                 return
             }
@@ -139,8 +141,8 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
             Analytics.logEvent(transformedEventName, parameters: transformedData)
             
             firebaseAnalytics.log(method: "trackEvent()", label: "name", labelValue: transformedEventName, data: transformedData)
-           }
-       }
+        }
+    }
     
     private func transformDataForFirebase(data: [String: Any]?) -> [String: Any]? {
         guard let attributesData = data else {
