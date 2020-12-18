@@ -1,10 +1,72 @@
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "ስልጠና";
+"language_onboard" = "ከ 70 በላይ ቋንቋዎች";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "ሁሉንም መሳሪያዎች አዉርደዋል";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "የኔ መሳሪያዎች";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "መሳሪያዎችን ፈልግ";
 
+// Onboarding
+"add_new_tools" = "አዲስ መሳሪያን ይጨምሩ";
+// Menu
+"menu_general" = "አጠቃላይ";
+"menu_share" = "ያጋሩ";
+"menu_legal" = "ሕጋዊ";
+"language_settings" = "የቋንቋ ማስተካከያ";
+// Login
+"login" = "ግባ";
+"logout" = "ዉጣ";
+"create_account" = "ይመዝገቡ";
+// Tool Detail
+"about" = "ስለዚህ አፕሊኬሽን";
+"help" = "እገዛ";
+"contact_us" = "አግኙን";
+"share_god_tools" = "GodTools መተግበሪያን አጋራ";
+"share_a_story_with_us" = "ታሪክዎን ከእኛ ጋር ይጋሩ";
+"terms_of_use" = "የአጠቃቀም መመሪያ";
+"privacy_policy" = "የግላዊነት ደምቦች";
+// Language Settings
+"primary_language" = "ዋና ቋንቋ";
+"parallel_language" = "ሁለት ቋንቋ";
+"select_parallel_language" = "ሁለት ቋንቋን ይምረጡ";
+"share_god_tools_native_language" = "GodTools'ን ለሰዎች በራሳቸዉ ቋንቋ አጋራ";
+"not_every_tool_is_available" = "ሁሉም አገልግሎቶች በሁሉም ቋንቋ አይገኙም";
+
+// Settings
+"settings" = "ድባቦች";
+
 "the_tool_you_requested_is_loading" = "የጠየቁት መተግበርያ በሂደት ላይ ነዉ...";
+// Actions
+"yes" = "አዎ";
+"no" = "አይደለም";
+
+// Buttons
+"download" = "ያዉርዱ";
+"done" = "ሆኗል";
+"remove" = "ያጥፉ";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "ክፈት";
+
+"ok" = "እሺ";
+"OK" = "እሺ";
+"cancel" = "ውጣ";
+// About
+"general_about_1" = "GodTools እምነትዎን በቀላል እና በግልጽ መንገድ እንዲያካፍሉ ይረዳዎታል";
+"general_about_2" = "ይህ መተግበርያ ሰዎች ከእግዚአብሄር ጋር በልጁ በኢየሱስ ክርስቶስ በኩል ግንኙነት እንዲኖራቸዉ በድፍረት እንዲያግዙ ይረዳዎታል። ከዚህ በፊት እምነትዎን አካፍለዉ የማያዉቁ ቢሆኑ እና የሌላ ቋንቋ ተናጋሪ ሰዉ ቢገጥምዎ ይህ መተግበርያ በደንብ ያግዛዎታል።";
+"general_about_3" = "ከብዙ አይነት መተግበሪያ(መሳሪያ) የሚሆኖትን ለተመልካቹም የሚመቸዉን ይምረጡ።";
+"general_about_4" = "ከሁሉም መተግበሪያ(መሳሪያ) መጨረሻ ላይ ወደ ምንጩ የሚወስድ ጠቋሚ (ሊንክ) ይገኛል።";
+"general_about_5" = "አዳዲስ መተግበሪያዎችን(አገልግሎቶችን) እና ቋንቋን አንዴ ለማዉረድ ኢንተርኔት ኮኔክሽን ያስፈልጋል። አንድ ጊዜ ከወረደ በዃላ ግን እንደዚዉ ይሰራል።";
+"general_about_6" = "ጥያቄዎች? ጥቆማዎች? በዚህ አድራሻ አግኙን support@godtoolsapp.com";
+"general_about_7" = "እዚህ ላይ ያሉትን አገልግሎቶችን ኦንላይን knowgod.com ላይ ማግኘት ይችላሉ። የራስዎም ሳይት ላይ መጠቀም ይችላሉ።";
+"general_about_8" = "ለተጨማሪ መረጃ godtoolsapp.com ይመልከቱ";
+"general_about_9" = "እምነትዎን ለማካፈል ሲነሱ የሰዉን ልብ የሚቀይረዉ እግዚአብሄር መሆኑን ያስታዉሱ። ሁሉንም ሰዉ በትክክል መዉደድ እና ማዳመጥ ያስፈልጋል።";
+"general_about_10" = "ለእያንዳንዱ እንዴት እንድትመልሱ እንደሚገባችሁ ታውቁ ዘንድ ንግግራችሁ ሁልጊዜ፥ በጨው እንደ ተቀመመ፥ በጸጋ ይሁን። ቆላስይስ 4:6";
+
 // Downloads
 "Download in progress" = "በሂደት ላይ አውርድሂደት ላይ አውርድ";
 
@@ -15,3 +77,5 @@
 // Language Name Strings
 "language_name_fa" = "ፐርሽያን (ፋርሲ)";
 
+// Alerts
+"alert.action.ok" = "እሺ";
