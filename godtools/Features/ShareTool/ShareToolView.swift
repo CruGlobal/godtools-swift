@@ -15,10 +15,14 @@ class ShareToolView {
     let controller: UIActivityViewController
     
     required init(viewModel: ShareToolViewModelType) {
+        
         self.viewModel = viewModel
+        
         controller = UIActivityViewController(
             activityItems: [viewModel.shareMessage],
             applicationActivities: nil
         )
+        
+        viewModel.pageViewed()
     }
 }

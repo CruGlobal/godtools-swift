@@ -26,6 +26,12 @@ class ShareToolRemoteSessionURLViewModel: ShareToolRemoteSessionURLViewModelType
     
     func pageViewed() {
         
-        analytics.trackActionAnalytics.trackAction(screenName: nil, actionName: "Share Screen Engaged", data: ["cru.sharescreenengaged": 1])
+        analytics.trackActionAnalytics.trackAction(
+            screenName: nil,
+            actionName: AnalyticsConstants.Values.shareScreenEngaged,
+            data: [
+                AnalyticsConstants.ActionNames.shareScreenEngagedCountKey: 1
+            ]
+        )
     }
 }

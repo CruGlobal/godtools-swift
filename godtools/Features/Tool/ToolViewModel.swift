@@ -180,7 +180,17 @@ class ToolViewModel: NSObject, ToolViewModelType {
     
     private func trackShareScreenOpened() {
         
-        analytics.trackActionAnalytics.trackAction(screenName: "", actionName: "Share Screen Opened", data: ["cru.share_screen_open": 1])
+        analytics.trackActionAnalytics.trackAction(
+            screenName: nil,
+            actionName: AnalyticsConstants.Values.shareScreenOpen,
+            data: [
+                AnalyticsConstants.ActionNames.shareScreenOpenCountKey: 1
+            ]
+        )
+    }
+    
+    private func getAnalyticsScreenName(page: Int) -> String {
+        return resource.abbreviation + "-" + String(page)
     }
     
     func viewLoaded() {
@@ -395,7 +405,7 @@ extension ToolViewModel {
         currentPagesViewModelsCache.deleteAllPagesOutsideBufferFromPage(page: page, buffer: 2)
                                         
         analytics.pageViewedAnalytics.trackPageView(
-            screenName: resource.abbreviation + "-" + String(page),
+            screenName: getAnalyticsScreenName(page: page),
             siteSection: resource.abbreviation,
             siteSubSection: ""
         )
