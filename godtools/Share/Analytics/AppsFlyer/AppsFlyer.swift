@@ -61,7 +61,7 @@ class AppsFlyer: NSObject, AppsFlyerType {
         }
     }
     
-    func trackEvent(eventName: String, data: [AnyHashable : Any]?) {
+    func trackEvent(eventName: String, data: [String: Any]?) {
                 
         serialQueue.async { [weak self] in
             
@@ -83,7 +83,7 @@ class AppsFlyer: NSObject, AppsFlyerType {
         }
     }
     
-    private func log(method: String, label: String?, labelValue: String?, data: [AnyHashable: Any]?) {
+    private func log(method: String, label: String?, labelValue: String?, data: [String: Any]?) {
         
         if loggingEnabled {
             print("\nAppsFlyer \(method)")
@@ -103,7 +103,7 @@ class AppsFlyer: NSObject, AppsFlyerType {
 // MARK: - MobileContentAnalyticsSystem
 
 extension AppsFlyer: MobileContentAnalyticsSystem {
-    func trackAction(action: String, data: [AnyHashable : Any]?) {
+    func trackAction(action: String, data: [String: Any]?) {
         trackEvent(eventName: action, data: data)
     }
 }

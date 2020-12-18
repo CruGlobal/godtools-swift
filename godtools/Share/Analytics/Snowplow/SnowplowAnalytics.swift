@@ -166,7 +166,7 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
         ] as NSObject)
     }
     
-    private func log(method: String, label: String?, labelValue: String?, data: [AnyHashable: Any]?) {
+    private func log(method: String, label: String?, labelValue: String?, data: [String: Any]?) {
         if loggingEnabled {
             print("\nSnowplowTracker \(method)")
             if let label = label, let labelValue = labelValue {
@@ -182,7 +182,7 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
 // MARK: - MobileContentAnalyticsSystem
 
 extension SnowplowAnalytics: MobileContentAnalyticsSystem {
-    func trackAction(action: String, data: [AnyHashable : Any]?) {
+    func trackAction(action: String, data: [String: Any]?) {
         trackAction(action: action)
     }
 }
