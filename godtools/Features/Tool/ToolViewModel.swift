@@ -183,6 +183,10 @@ class ToolViewModel: NSObject, ToolViewModelType {
         analytics.trackActionAnalytics.trackAction(screenName: "", actionName: "Share Screen Opened", data: ["cru.share_screen_open": 1])
     }
     
+    private func getAnalyticsScreenName(page: Int) -> String {
+        return resource.abbreviation + "-" + String(page)
+    }
+    
     func viewLoaded() {
         
         _ = viewsService.postNewResourceView(resourceId: resource.id)
@@ -395,7 +399,7 @@ extension ToolViewModel {
         currentPagesViewModelsCache.deleteAllPagesOutsideBufferFromPage(page: page, buffer: 2)
                                         
         analytics.pageViewedAnalytics.trackPageView(
-            screenName: resource.abbreviation + "-" + String(page),
+            screenName: getAnalyticsScreenName(page: page),
             siteSection: resource.abbreviation,
             siteSubSection: ""
         )
@@ -432,6 +436,18 @@ extension ToolViewModel: ToolNavBarViewModelDelegate {
         let parallelLanguage: LanguageModel? = parallelLanguageTranslationModel?.language
             
         flowDelegate?.navigate(step: .shareMenuTappedFromTool(tractRemoteShareSubscriber: tractRemoteShareSubscriber, tractRemoteSharePublisher: tractRemoteSharePublisher, resource: resource, selectedLanguage: selectedLanguage, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, pageNumber: pageNumber))
+        
+        
+        let analyticsScreenName: String = getAnalyticsScreenName(page: pageNumber)
+        
+        analytics.trackActionAnalytics.trackAction(
+            screenName: analyticsScreenName,
+            actionName: AdobeAnalyticsConstants.Values.share,
+            data: [
+                AdobeAnalyticsConstants.Keys.shareAction: 1,
+                GTConstants.kAnalyticsScreenNameKey: analyticsScreenName
+            ]
+        )
     }
     
     func languageTapped(navBar: ToolNavBarViewModelType, previousLanguage: Int, newLanguage: Int) {

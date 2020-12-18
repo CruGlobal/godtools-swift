@@ -34,14 +34,5 @@ class ShareToolViewModel: ShareToolViewModelType {
             siteSection: resource.abbreviation,
             siteSubSection: ""
         )
-                
-        analytics.trackActionAnalytics.trackAction(
-            screenName: analyticsScreenName,
-            actionName: AdobeAnalyticsConstants.Values.share,
-            data: [
-                AdobeAnalyticsConstants.Keys.shareAction: 1,
-                GTConstants.kAnalyticsScreenNameKey: analyticsScreenName
-            ]
-        )
     }
 }
