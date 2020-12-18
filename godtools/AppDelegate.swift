@@ -116,6 +116,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         switch shortcutItemType {
             
         case .tool:
+            
+            appDiContainer.analytics.trackActionAnalytics.trackAction(screenName: nil, actionName: "Tool Opened Shortcut", data: ["cru.tool-opened-shortcut": 1])
+            
             if let tractUrl = ToolShortcutItem.getTractUrl(shortcutItem: shortcutItem) {
                 appDiContainer.deepLinkingService.processDeepLink(url: tractUrl)
             }
