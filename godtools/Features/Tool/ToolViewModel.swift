@@ -436,18 +436,6 @@ extension ToolViewModel: ToolNavBarViewModelDelegate {
         let parallelLanguage: LanguageModel? = parallelLanguageTranslationModel?.language
             
         flowDelegate?.navigate(step: .shareMenuTappedFromTool(tractRemoteShareSubscriber: tractRemoteShareSubscriber, tractRemoteSharePublisher: tractRemoteSharePublisher, resource: resource, selectedLanguage: selectedLanguage, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, pageNumber: pageNumber))
-        
-        
-        let analyticsScreenName: String = getAnalyticsScreenName(page: pageNumber)
-        
-        analytics.trackActionAnalytics.trackAction(
-            screenName: analyticsScreenName,
-            actionName: AdobeAnalyticsConstants.Values.share,
-            data: [
-                AdobeAnalyticsConstants.Keys.shareAction: 1,
-                GTConstants.kAnalyticsScreenNameKey: analyticsScreenName
-            ]
-        )
     }
     
     func languageTapped(navBar: ToolNavBarViewModelType, previousLanguage: Int, newLanguage: Int) {

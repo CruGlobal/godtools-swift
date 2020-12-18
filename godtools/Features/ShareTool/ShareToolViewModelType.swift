@@ -11,4 +11,6 @@ import Foundation
 protocol ShareToolViewModelType {
     
     var shareMessage: String { get }
+    
+    func pageViewed()
 }
