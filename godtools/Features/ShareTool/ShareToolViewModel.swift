@@ -48,10 +48,9 @@ class ShareToolViewModel: ShareToolViewModelType {
                 
         analytics.trackActionAnalytics.trackAction(
             screenName: analyticsScreenName,
-            actionName: AdobeAnalyticsConstants.Values.share,
+            actionName: AnalyticsConstants.Values.shareIconEngaged,
             data: [
-                AdobeAnalyticsConstants.Keys.shareAction: 1,
-                GTConstants.kAnalyticsScreenNameKey: analyticsScreenName
+                AnalyticsConstants.ActionNames.shareIconEngagedCountKey: 1
             ]
         )
     }
