@@ -100,7 +100,7 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
                 
         createDefaultPropertiesOnConcurrentQueue(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: previousScreenName) { [weak self] (defaultProperties: AdobeAnalyticsProperties) in
             
-            let data: [AnyHashable: Any] = JsonServices().encode(object: defaultProperties)
+            let data: [String: Any] = JsonServices().encode(object: defaultProperties)
             
             ADBMobile.trackState(screenName, data: data)
             
@@ -108,13 +108,13 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
         }
     }
     
-    func trackAction(screenName: String?, actionName: String, data: [AnyHashable : Any]?) {
+    func trackAction(screenName: String?, actionName: String, data: [String: Any]?) {
         
         assertFailureIfNotConfigured()
         
         createDefaultPropertiesOnConcurrentQueue(screenName: screenName, siteSection: nil, siteSubSection: nil, previousScreenName: previousTrackedScreenName) { [weak self] (defaultProperties: AdobeAnalyticsProperties) in
             
-            var trackingData: [AnyHashable: Any] = JsonServices().encode(object: defaultProperties)
+            var trackingData: [String: Any] = JsonServices().encode(object: defaultProperties)
             
             if let data = data {
                 for (key, value) in data {
@@ -140,7 +140,7 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
             
             let actionName: String = "Exit Link Engaged"
             
-            let data: [AnyHashable: Any] = JsonServices().encode(object: properties)
+            let data: [String: Any] = JsonServices().encode(object: properties)
             
             ADBMobile.trackAction(actionName, data: data)
             
@@ -219,7 +219,7 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
         return keyAuthClient.isAuthenticated() ? AdobeAnalyticsConstants.Values.isLoggedIn : AdobeAnalyticsConstants.Values.notLoggedIn
     }
     
-    private func log(method: String, label: String?, labelValue: String?, data: [AnyHashable: Any]?) {
+    private func log(method: String, label: String?, labelValue: String?, data: [String: Any]?) {
         
         if loggingEnabled {
             print("\nAdobeAnalytics \(method)")
@@ -244,7 +244,7 @@ extension AdobeAnalytics: OIDAuthStateChangeDelegate {
 // MARK: - MobileContentAnalyticsSystem
 
 extension AdobeAnalytics: MobileContentAnalyticsSystem {
-    func trackAction(action: String, data: [AnyHashable : Any]?) {
+    func trackAction(action: String, data: [String: Any]?) {
         trackAction(screenName: nil, actionName: action, data: data)
     }
 }
