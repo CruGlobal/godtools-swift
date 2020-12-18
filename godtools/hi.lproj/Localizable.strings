@@ -8,8 +8,16 @@
 
 "share_link" = "लिंक साझा करें";
 "share_tool_menu.remote_share_tool" = "अपनी स्क्रीन साझा करें";
+"share_tool_menu.send_tool" = "इस टूल को भेजें";
 "share_tool_screen_tutorial.share_your_screen.title" = "अपनी स्क्रीन साझा करें";
+"share_tool_screen_tutorial.share_your_screen.message" = "यह विकल्प एक मित्र को इस टूल का लिंक भेजेगा। जब लिंक को खोला जाएगा तो यह एक स्क्रीन साझाकरण सत्र शुरू करेगा।";
+"share_tool_screen_tutorial.mirrored_experience.title" = "प्रतिबिंबित अनुभव";
+"share_tool_screen_tutorial.mirrored_experience.message" = "जैसे-जैसे आप अपने फ़ोन पर टूल स्क्रॉल करते जाते हैं, वैसे-वैसे आपके दोस्त की स्क्रीन प्रतिउत्तर देगी। यह आपको एक ही समय में 2 उपकरणों पर एक साथ एक टूल्ल को देखने की अनुमति देगा।";
 "share_tool_screen_tutorial.get_started.title" = "शुरू हो जाएं";
+"share_tool_screen_tutorial.get_started.message" = "एक या अधिक लोगों के लिए लिंक भेजें अब स्क्रीन साझाकरण सत्र शुरू करें।";
+"share_tool_remote_link_message" = "हैलो, अपनी स्क्रीन को साझा करते हुए मेरे साथ GodTools में अनुसरण करें।  लिंक यहाँ है:%@ यदि आपको यह संदेश बाद में भी नहीं मिलता है, तो लिंक अभी भी काम नहीं कर सकता है। हम एक बार फिर से कोशिश कर सकते हैं।";
+"exit_tract_remote_share_session.message" = "अब दूरस्थ साझाकरण सत्र से बाहर निकलें?";
+"load_tool_remote_session.message" = "स्क्रीन साझा करना शुरू...";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "प्रशिक्षण";

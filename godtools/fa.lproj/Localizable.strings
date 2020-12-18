@@ -71,9 +71,11 @@
 "okay" = "تأیید";
 // Menu
 "menu_general" = "عمومی";
+"menu_account" = "حساب کاربری";
 "menu_share" = "اشتراک‌گذاری";
 "menu_legal" = "قانونی";
 "language_settings" = "تنظیمات زبان";
+"menu.tutorial" = "آموزش";
 // Login
 "login" = "ورود";
 "logout" = "خروج";
@@ -82,7 +84,7 @@
 
 // Tool Detail
 "about" = "درباره";
-"help" = "راهنمایی";
+"help" = "سؤالات متداول";
 "contact_us" = "تماس با ما";
 "preview_mode_translators_only" = "حالت پیش‌نمایش (فقط مترجمان)";
 "share_god_tools" = "اشتراک‌گذاری برنامه GodTools";
@@ -176,3 +178,51 @@ https://godtoolsapp.com
 // Language Name Strings
 "language_name_fa" = "فارسی";
 
+// OnboardingWelcome
+"onboardingWelcome.titleLabel.welcome" = "خوش آمدید";
+"onboardingWelcome.titleLabel.tagline" = "کمک برای به اشتراک گذاشتن ایمان مسیحی";
+"onboardingWelcome.beginButton" = "شروع";
+
+// OnboardingTutorial
+"onboardingTutorial.aboutAppItem.0.title" = "با دیگران به اشتراک بگذارید";
+"onboardingTutorial.aboutAppItem.0.message" = "این برنامه برای کمک به اشتراک گذاری ایمان شما طراحی شده است";
+"onboardingTutorial.aboutAppItem.1.title" = "انتخاب ابزار";
+"onboardingTutorial.aboutAppItem.1.message" = "God tools یاری دهنده شما برای آغاز و پایان یک گفتگوی روحانی می باشد";
+"onboardingTutorial.aboutAppItem.2.title" = "همیشه آماده است";
+"onboardingTutorial.aboutAppItem.2.message" = "God tools هر زمان که شما آماده باشید، آماده کمک به شماست";
+"onboardingTutorial.appUsageItem.0.message" = "برای هر گفتگویی آماده شوید";
+"onboardingTutorial.appUsageItem.1.message" = "هم قذم شدم با شخصی برای اعلام مژده نجات";
+"onboardingTutorial.appUsageItem.2.message" = "دو زبان را کنار هم اجرا کنید";
+"onboardingTutorial.appUsageItem.3.message" = "از بین بیش از 80 زبان انتخاب کنید";
+"onboardingTutorial.appUsageItem.4.message" = "کمک کردن به دیگران برای شروع به عنوان یک مسیحی";
+"onboardingTutorial.continueButton.title" = "ادامه";
+"onboardingTutorial.showMoreButton.title" = "موارد بیشتری را نشان بده";
+"onboardingTutorial.getStartedButton.title" = "شروع کنید";
+
+// Tutorial
+"tutorial.tutorialItem.0.title" = "تماشا کردن";
+"tutorial.tutorialItem.1.title" = "آماده کردن";
+"tutorial.tutorialItem.1.message" = "آشنایی با امکانات دیگر ابزار";
+"tutorial.tutorialItem.2.title" = "سعی کردن";
+"tutorial.tutorialItem.2.message" = "همه به عنوان مبتدی شروع می کنند. با دیگران به اشتراک بگذارید و از تجربیات خود بیاموزید.";
+"tutorial.tutorialItem.3.title" = "این بخش آموزشی  برای مشاهده دوباره در منو موجود است.";
+"tutorial.continueButton.title.continue" = "ادامه";
+"tutorial.continueButton.title.startUsingGodTools" = "استفاده از GodTools را شروع کنید";
+
+// OpenTutorial
+"openTutorial.showTutorialLabel.text" = "نشان دادن آمورش";
+"openTutorial.openTutorialButton.title" = "باز کردن آموزش";
+
+// Account
+"account.navTitle" = "پروفایل من";
+"account.activity.title" = "فعالیت";
+
+// Account Activity
+"accountActivity.globalAnalytics.header.title" = "فعالیت جهانی";
+"accountActivity.globalAnalytics.users.title" = "کاربران بی نظیر";
+"accountActivity.globalAnalytics.gospelPresentation.title" = "ارائه انجیل";
+"accountActivity.globalAnalytics.launches.title" = "جلسات";
+"accountActivity.globalAnalytics.countries.title" = "کشورها";
+
+// Alerts
+"alert.action.ok" = "تایید";
