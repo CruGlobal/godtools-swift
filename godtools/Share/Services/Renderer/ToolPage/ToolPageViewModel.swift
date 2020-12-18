@@ -364,7 +364,8 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     
     private func trackCardAnalytics(cardPosition: Int) {
         
-        let screenName: String = ToolPageCardAnalyticsScreenName(cardPosition: cardPosition).screenName
+        let pageAnalyticsScreenName: String = diContainer.resource.abbreviation + "-" + String(page)
+        let screenName: String = pageAnalyticsScreenName + ToolPageCardAnalyticsScreenName(cardPosition: cardPosition).screenName
         diContainer.analytics.pageViewedAnalytics.trackPageView(screenName: screenName, siteSection: "", siteSubSection: "")
     }
 }
