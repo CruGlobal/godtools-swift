@@ -1,12 +1,59 @@
-"language_onboard" = "80+ ভাষা";
+"tool_offline_favorite_message" = "একটি টুলকে অফলাইনে উপলব্ধ করুন হার্ট আইকনকে ট্যাপ করার দ্বারা যা এটিকে আপনার পছন্দের সঙ্গে যুক্ত করে I";
+
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "কথোপকথন স্টার্টার";
+
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "খ্রিষ্টীয় বিকাশ";
+
+"share_link" = "লিঙ্ক শেয়ার করুন";
+"share_tool_menu.remote_share_tool" = "আপনার স্ক্রিন শেয়ার করুন";
+"share_tool_menu.send_tool" = "এই টুলটিকে পাঠান";
+"share_tool_screen_tutorial.share_your_screen.title" = "আপনার স্ক্রিন শেয়ার করুন";
+"share_tool_screen_tutorial.share_your_screen.message" = "বিকল্পটি এই টুলেতে একজন বন্ধুর কাছে একটি লিঙ্ক পাঠাবে I যখন লিঙ্কটি খোলা হয় তখন এটি একটি স্ক্রিন শেয়ার করা সেশন শুরু করবে I";
+"share_tool_screen_tutorial.mirrored_experience.title" = "দর্পণের অভিজ্ঞতা";
+"share_tool_screen_tutorial.mirrored_experience.message" = "যেই আপনি আপনার ফোনের মধ্যে টুলটিকে স্ক্রোল করবেন, আপনার বন্ধুর স্ক্রিন একইভাবে সাড়া দেবে I এটি আপনাকে একটি টুলের মধ্য দিয়ে দুটি যন্ত্রের উপরে একসাথে একই সময়ে যেতে অনুমতি দেবে I";
+"share_tool_screen_tutorial.get_started.title" = "শুরু করুন";
+"share_tool_screen_tutorial.get_started.message" = "এখনই একটি স্ক্রিন শেয়ার করা সেশন শুরু করতে এক বা একাধিক লোকদের কাছে লিঙ্কটিকে পাঠান I";
+"share_tool_remote_link_message" = "হাই, স্ক্রিন শেয়ার করার মধ্য দিয়ে GodTools এর মধ্যে আমার সঙ্গে অনুসরণ করুন I এখানে লিঙ্কটি রয়েছে: %@    যদি আপনি এই লিঙ্কটি পরে পান, তাহলে লিঙ্কটি কাজ নাও করতে পারে। আমরা তাহলে অন্য সময় আবার চেষ্টা করতে পারি।";
+"exit_tract_remote_share_session.message" = "এখন রিমোট শেয়ার করা সেশন থেকে বেরিয়ে আসুন";
+"load_tool_remote_session.message" = "স্ক্রিন শেয়ার করা শুরু করুন ...";
+
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "প্রশিক্ষণ";
+
+/* This is an invitation for a user to open a tool */
+"open" = "খুলুন";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "পছন্দের সাথে যোগ করুন";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "পছন্দের থেকে সরিয়ে দিন";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "পছন্দ থেকে \"%@\" সরিয়ে দিন ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "সুসমাচার আমন্ত্রণ";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "প্রবন্ধ সমূহ";
+"language_onboard" = "80 + ভাষা";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "আপনি উপলব্ধ সকল সরঞ্জাম ডাউনলোড করেছেন";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "আমার সরঞ্জামগুলি";
+"my_tools" = "পছন্দ";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "সরঞ্জাম খুঁজুন";
+"find_tools" = "সমস্ত টুলগুলো";
 
 "unavailable" = "অপ্রাপ্য";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "ছেড়ে দিন";
 
 // Onboarding
 "add_new_tools" = "নতুন সরঞ্জাম যোগ করুন";
@@ -14,15 +61,21 @@
 "okay" = "ঠিক আছে";
 // Menu
 "menu_general" = "সাধারণ";
+"menu_account" = "পরিমাণ";
 "menu_share" = "ভাগ করুন";
 "menu_legal" = "আইনগত";
 "language_settings" = "ভাষা ব্যাবস্থা";
+"menu.tutorial" = "টিউটোরিয়াল";
+// Login
+"login" = "লগইন করুন";
+"logout" = "লগ আউট করুন";
+"create_account" = "একাউন্ট খুলুন";
 // Tool Detail
 "about" = "বিষয়ে";
-"help" = "সাহায্য";
+"help" = "সাহায্য করুন বারবার জিজ্ঞাসিত প্রশ্নগুলো";
 "contact_us" = "আমাদের সঙ্গে সম্পর্ক করুন";
 "preview_mode_translators_only" = "পূর্বরূপ মোড (শুধুমাত্র অনুবাদক)";
-"share_god_tools" = "GodTools ভাগ করুন";
+"share_god_tools" = "GodTools App শেয়ার করুন";
 "share_a_story_with_us" = "আমাদের সঙ্গে একটি গল্প শেয়ার করুন";
 "terms_of_use" = "ব্যবহারের শর্তাবলী";
 "privacy_policy" = "গোপনীয়তা নীতি";
@@ -71,9 +124,14 @@ http://godtoolsapp.com";
 "done" = "সম্পন্ন";
 "remove" = "অপসারণ করুন";
 "clear" = "পরিষ্কার করুন";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "টুল খুলুন";
+
 // Alerts
 "error" = "ভুল";
 "ok" = "থক আছে";
+"OK" = "থক আছে";
+"cancel" = "বাতিল করুন";
 "error_can_not_send_email" = "আপনার ডিভাইসে কোনও কনফিগার করা ইমেল নেই.";
 "required_field_missing" = "\"%@\" একটি প্রয়োজনীয় ক্ষেত্র";
 
@@ -101,3 +159,51 @@ knowgod.com. আপনার নিজের সাইটে স্থাপ  �
 // Language Name Strings
 "language_name_fa" = "ফারসি (ফার্সি)";
 
+// OnboardingWelcome
+"onboardingWelcome.titleLabel.welcome" = "স্বাগতম";
+"onboardingWelcome.titleLabel.tagline" = "আপনার বিশ্বাস শেয়ার করতে সাহায্য করা";
+"onboardingWelcome.beginButton" = "আরম্ভ করুন";
+
+// OnboardingTutorial
+"onboardingTutorial.aboutAppItem.0.title" = "অন্যদের সাথে শেয়ার করুন";
+"onboardingTutorial.aboutAppItem.0.message" = "আপনার বিশ্বাসের কথোপকথনকে গাইড করতে GodTools তৈরী করা হয়েছে  I";
+"onboardingTutorial.aboutAppItem.1.title" = "আপনার টুলস পছন্দ করুন I";
+"onboardingTutorial.aboutAppItem.1.message" = "একটি আধ্যাত্মিক কথোপকথনের পূর্বে. মধ্যে, এবং পরে GodTools আপনাকে সাহায্য করে";
+"onboardingTutorial.aboutAppItem.2.title" = "সর্বদা প্রস্তুত";
+"onboardingTutorial.aboutAppItem.2.message" = "GodTools এখানে এবং আপনি যখন প্রস্তুত তখন সাহায্য করতে আছে";
+"onboardingTutorial.appUsageItem.0.message" = "যে কোনো কথোপকথনের জন্য প্রস্তুত করুন";
+"onboardingTutorial.appUsageItem.1.message" = "সুসমাচারের মধ্য দিয়ে কারোর চলা";
+"onboardingTutorial.appUsageItem.2.message" = "দুটি ভাষাকে পাশাপাশি দেখুন";
+"onboardingTutorial.appUsageItem.3.message" = "80 টি ভাষার অধিক থেকে পছন্দ করুন";
+"onboardingTutorial.appUsageItem.4.message" = "একজন খ্রীষ্টান হিসাবে শুরু করতে কাউকে সাহায্য করুন";
+"onboardingTutorial.continueButton.title" = "চালিয়ে যান";
+"onboardingTutorial.showMoreButton.title" = "আমাকে আরও দেখান";
+"onboardingTutorial.getStartedButton.title" = "শুরু করুন";
+
+// Tutorial
+"tutorial.tutorialItem.0.title" = "দেখুন";
+"tutorial.tutorialItem.1.title" = "প্রস্তুত করুন";
+"tutorial.tutorialItem.1.message" = "আপনার কয়েকটি টুলের সঙ্গে পরিচিত হন I শুরু করার জন্য \"টিচ মী টু শেয়ার\" টুলটি একটি উত্তম স্থান I  টুলটির সম্পর্কে আরও অধিক জানার জন্য এবাউট বোতামটিতে চাপ দিন I";
+"tutorial.tutorialItem.2.title" = "চেষ্টা করুন";
+"tutorial.tutorialItem.2.message" = "প্রত্যেকে একজন শিক্ষানবিস হিসাবে শুরু করে I একটি কথোপকথনের মধ্যে একটি টুলকে ব্যবহার করতে চেষ্টা করুন এবং দেখুন আপনি কি শেখেন I";
+"tutorial.tutorialItem.3.title" = "মেনুর মধ্যে পুনরায় দেখতে টিউটোরিয়ালটি উপলব্ধ আছে I";
+"tutorial.continueButton.title.continue" = "চালিয়ে যান";
+"tutorial.continueButton.title.startUsingGodTools" = "GodTools ব্যবহার করতে শুরু করুন";
+
+// OpenTutorial
+"openTutorial.showTutorialLabel.text" = "আমাকে একটি টিউটোরিয়াল দেখান";
+"openTutorial.openTutorialButton.title" = "টিউটোরিয়াল খুলুন";
+
+// Account
+"account.navTitle" = "আমার প্রোফাইল";
+"account.activity.title" = "ক্রিয়াকলাপ";
+
+// Account Activity
+"accountActivity.globalAnalytics.header.title" = "বৈশ্বিক ক্রিয়া কলাপ";
+"accountActivity.globalAnalytics.users.title" = "অনন্য ইউজার";
+"accountActivity.globalAnalytics.gospelPresentation.title" = "সুসমাচার উপস্থাপন";
+"accountActivity.globalAnalytics.launches.title" = "সেশনস";
+"accountActivity.globalAnalytics.countries.title" = "দেশ সমূহ";
+
+// Alerts
+"alert.action.ok" = "থক আছে";

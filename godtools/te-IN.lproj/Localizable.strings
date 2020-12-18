@@ -14,7 +14,7 @@
 "share_tool_screen_tutorial.mirrored_experience.title" = "ప్రతిబింబించిన అనుభవం";
 "share_tool_screen_tutorial.mirrored_experience.message" = "మీ ఫోనుపై పరికరంను మీరు స్క్రోల్ చేసినప్పుడు, మీ స్నేహితుని స్క్రీన్ అదే విధంగా ప్రతిస్పందిస్తుంది. ఒకే సమయంలో 2 పరికరాలపై కలిసి పరికరం గుండా నిడిచేందుకు ఇది మీకు అనుమతిస్తుంది.";
 "share_tool_screen_tutorial.get_started.title" = "ప్రారంభించడానికి";
-"share_tool_screen_tutorial.get_started.message" = "ఇప్పుడు స్క్రీన్ పంచుకునే సెషన్ ప్రారంభించేందుకు ఒకరు లేదా ఎక్కువ వ్యక్తులకు లింకును పంపండి. పాల్గొనేవారు అందరికీ వారి పరికరంపై GodTools ఆప్ డౌన్‌లోడ్ చేసి ఉండడం ఈ అనుభవంకు ప్రస్తుతం అవసరం.";
+"share_tool_screen_tutorial.get_started.message" = "స్క్రీన్ షేరింగ్ సెషన్‌ను ప్రారంభించడానికి లింక్‌ను ఒకటి లేదా అంతకంటే ఎక్కువ మందికి పంపండి.";
 "share_tool_remote_link_message" = "హాయ్, స్క్రీన్ పంచుకోవడం ద్వారా GodTools లో నాతో పాటు అనుసరించండి. లింక్ ఇక్కడ ఉన్నది: %@ ఇంకనూ తరువాత ఈ సందేశమును ఒకవేళ మీరు అందుకోకుంటే, లింక్ ఇంకనూ పనిచేయక పోవచ్చు. మరొక సమయంలో మనము మళ్ళీ ప్రయత్నించవచ్చు.";
 "exit_tract_remote_share_session.message" = "ఇప్పుడే సుదూర పంచుకునే సెషన్ నుండి నిష్క్రమించేదా?";
 "load_tool_remote_session.message" = "స్క్రీన్ పంచుకోవడంను ప్రారంభిస్తున్నా…";
@@ -62,15 +62,20 @@
 
 "unavailable" = "అందుబాటులో లేదు";
 
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "దాటవేయి";
+
 // Onboarding
 "add_new_tools" = "క్రొత్త పరికరాలను జోడించండి";
 "set_your_languages" = "క్రొత్త భాషలను నియమించండి ";
 "okay" = "సరే";
 // Menu
 "menu_general" = "సాధారణం";
+"menu_account" = "ఖాతా";
 "menu_share" = "షేర్ చెయ్యండి";
 "menu_legal" = "చట్టపరమైన";
 "language_settings" = "భాష సెట్టింగ్స్";
+"menu.tutorial" = "ట్యుటోరియల్";
 // Login
 "login" = "లాగిన్";
 "logout" = "లాగౌట్";
@@ -79,7 +84,7 @@
 
 // Tool Detail
 "about" = "గూర్చి";
-"help" = "సహాయం";
+"help" = "తరచుగా అడగబడే ప్రశ్నలు";
 "contact_us" = "సంప్రదించండి";
 "preview_mode_translators_only" = "ప్రివ్యూ మోడ్ (అనువాదకులకు మాత్రమే)";
 "share_god_tools" = "GodTools ఆప్ షేర్ చెయ్యండి";
@@ -171,3 +176,50 @@
 // Language Name Strings
 "language_name_fa" = "పర్షియన్ (ఫార్సీ)";
 
+// OnboardingWelcome
+"onboardingWelcome.titleLabel.welcome" = "స్వాగతం";
+"onboardingWelcome.titleLabel.tagline" = "మీ విశ్వాసాన్ని పంచుకోవడానికి మీకు సహాయం చేస్తుంది";
+"onboardingWelcome.beginButton" = "ప్రారంభించండి";
+
+// OnboardingTutorial
+"onboardingTutorial.aboutAppItem.0.title" = "ఇతరులతో పంచుకోండి";
+"onboardingTutorial.aboutAppItem.0.message" = "మీ విశ్వాస సంభాషణలకు మార్గనిర్దేశం చేయడానికి GodTools నిర్మించబడ్డాయి";
+"onboardingTutorial.aboutAppItem.1.title" = "మీ సాధనాలను ఎంచుకోండి";
+"onboardingTutorial.aboutAppItem.1.message" = "ఆధ్యాత్మిక సంభాషణకు ముందు, సమయంలో మరియు తర్వాత GodTools మీకు సహాయం చేస్తుంది";
+"onboardingTutorial.aboutAppItem.2.title" = "ఎల్లప్పుడూ సిద్ధం";
+"onboardingTutorial.aboutAppItem.2.message" = "GodTools సహాయం కోసం ఇక్కడ ఉంది మరియు మీరు ఉన్నప్పుడు సిద్ధంగా ఉంది";
+"onboardingTutorial.appUsageItem.0.message" = "ఏదైనా సంభాషణ కోసం సిద్ధం చేయండి";
+"onboardingTutorial.appUsageItem.1.message" = "సువార్త ద్వారా ఎవరైనా నడవండి";
+"onboardingTutorial.appUsageItem.2.message" = "రెండు భాషలను పక్కపక్కనే చూడండి";
+"onboardingTutorial.appUsageItem.3.message" = "80 కి పైగా భాషల నుండి ఎంచుకోండి";
+"onboardingTutorial.appUsageItem.4.message" = "క్రైస్తవుడిగా ప్రారంభించడానికి ఎవరైనా సహాయం చేయండి";
+"onboardingTutorial.continueButton.title" = "కొనసాగించండి";
+"onboardingTutorial.getStartedButton.title" = "ప్రారంభించడానికి";
+
+// Tutorial
+"tutorial.tutorialItem.0.title" = "చూడండి";
+"tutorial.tutorialItem.1.title" = "సిద్ధం";
+"tutorial.tutorialItem.1.message" = "మీ కొన్ని సాధనాలతో పరిచయం పెంచుకోండి. \"నాకు నేర్పడానికి నేర్పండి\" సాధనం ప్రారంభించడానికి మంచి ప్రదేశం. సాధనం గురించి మరింత తెలుసుకోవడానికి గురించి బటన్ నొక్కండి.";
+"tutorial.tutorialItem.2.title" = "ప్రయత్నించండి";
+"tutorial.tutorialItem.2.message" = "అందరూ ఒక అనుభవశూన్యుడుగా మొదలవుతారు. సంభాషణలో సాధనాన్ని ఉపయోగించటానికి ప్రయత్నించండి మరియు మీరు నేర్చుకున్న వాటిని చూడండి.";
+"tutorial.tutorialItem.3.title" = "ఈ ట్యుటోరియల్ మెనులో మళ్ళీ చూడటానికి అందుబాటులో ఉంది";
+"tutorial.continueButton.title.continue" = "కొనసాగించండి";
+"tutorial.continueButton.title.startUsingGodTools" = "GodTools ఉపయోగించడం ప్రారంభించండి";
+
+// OpenTutorial
+"openTutorial.showTutorialLabel.text" = "నాకు ట్యుటోరియలను చూపించండి";
+"openTutorial.openTutorialButton.title" = "ఓపెన్ ట్యుటోరియల్";
+
+// Account
+"account.navTitle" = "నా జీవన వివరణ";
+"account.activity.title" = "కార్యాచరణ";
+
+// Account Activity
+"accountActivity.globalAnalytics.header.title" = "ప్రపంచ కార్యాచరణ";
+"accountActivity.globalAnalytics.users.title" = "ప్రత్యేక వినియోగదారులు";
+"accountActivity.globalAnalytics.gospelPresentation.title" = "సువార్త ప్రదర్శనలు";
+"accountActivity.globalAnalytics.launches.title" = "సమావేశములు";
+"accountActivity.globalAnalytics.countries.title" = "దేశాలు";
+
+// Alerts
+"alert.action.ok" = "సరే";
