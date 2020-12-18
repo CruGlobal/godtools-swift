@@ -308,7 +308,7 @@ class TractView: UIViewController {
     
     @objc func sendEmail(notification: Notification) {
         
-        let dictionary: [AnyHashable: Any] = notification.userInfo ?? [:]
+        let dictionary: [String: Any] = notification.userInfo as? [String: Any] ?? [:]
         
         viewModel.sendEmailTapped(
             subject: dictionary["subject"] as? String,

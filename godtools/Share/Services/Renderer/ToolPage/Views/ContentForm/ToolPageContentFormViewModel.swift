@@ -72,7 +72,7 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
             
         resignCurrentInputSignal.accept()
         
-        var inputData: [AnyHashable: Any] = Dictionary()
+        var inputData: [String: Any] = Dictionary()
         var missingFieldsNames: [String] = Array()
                 
         for hiddenInputNode in hiddenInputNodes {

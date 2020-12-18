@@ -196,7 +196,7 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         return properties
     }
     
-    private func log(method: String, label: String?, labelValue: String?, data: [AnyHashable: Any]?) {
+    private func log(method: String, label: String?, labelValue: String?, data: [String: Any]?) {
         
         if loggingEnabled {
             print("\nFirebaseAnalytics \(method)")
@@ -221,7 +221,7 @@ extension FirebaseAnalytics: OIDAuthStateChangeDelegate {
 // MARK: - MobileContentAnalyticsSystem
 
 extension FirebaseAnalytics: MobileContentAnalyticsSystem {
-    func trackAction(action: String, data: [AnyHashable : Any]?) {
+    func trackAction(action: String, data: [String: Any]?) {
         trackAction(screenName: nil, actionName: action, data: data as! [String : Any])
     }
 }

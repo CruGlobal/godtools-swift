@@ -41,7 +41,7 @@ class MobileContentAnalytics {
         
         let attribute: AnalyticsAttributeNode? = event.children.first as? AnalyticsAttributeNode
         
-         let data: [AnyHashable: Any]?
+         let data: [String: Any]?
          
          if let key = attribute?.key, let value = attribute?.value {
              data = [key: value]
