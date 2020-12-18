@@ -180,7 +180,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
     
     private func trackShareScreenOpened() {
         
-        analytics.trackActionAnalytics.trackAction(screenName: "", actionName: "Share Screen Opened", data: ["cru.share_screen_open": 1])
+        analytics.trackActionAnalytics.trackAction(screenName: "", actionName: "Share Screen Open", data: ["cru.share_screen_open": 1])
     }
     
     private func getAnalyticsScreenName(page: Int) -> String {
