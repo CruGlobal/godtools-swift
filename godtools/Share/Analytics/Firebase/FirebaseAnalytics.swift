@@ -222,6 +222,6 @@ extension FirebaseAnalytics: OIDAuthStateChangeDelegate {
 
 extension FirebaseAnalytics: MobileContentAnalyticsSystem {
     func trackAction(action: String, data: [String: Any]?) {
-        trackAction(screenName: nil, actionName: action, data: data as! [String : Any])
+        trackAction(screenName: nil, actionName: action, data: data)
     }
 }
