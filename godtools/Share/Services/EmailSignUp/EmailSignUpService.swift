@@ -19,7 +19,14 @@ class EmailSignUpService {
         self.registeredEmailsCache = RealmRegisteredEmailsCache(realmDatabase: realmDatabase)
     }
     
-    func postEmailSignUp(email: String, firstName: String?, lastName: String?) -> OperationQueue {
+    func postEmailSignUpIfNeeded(email: String, firstName: String?, lastName: String?) -> OperationQueue? {
+        
+        let registeredEmail: RegisteredEmailModel? = registeredEmailsCache.getRegisteredEmail(email: email)
+        let isRegistered: Bool = registeredEmail?.isRegisteredWithRemoteApi ?? false
+        
+        guard !isRegistered else {
+            return nil
+        }
         
         return emailSignUpApi.postEmailSignUp(email: email, firstName: firstName, lastName: lastName) { [weak self] (response: RequestResponse, result: ResponseResult<NoResponseSuccessType, NoClientApiErrorType>) in
             
