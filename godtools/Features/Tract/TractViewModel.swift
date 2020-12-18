@@ -327,7 +327,7 @@ class TractViewModel: NSObject, TractViewModelType {
     
     private func trackTappedLanguage(language: LanguageModel) {
         
-        let data: [AnyHashable: String] = [
+        let data: [String: String] = [
             AdobeAnalyticsConstants.Keys.parallelLanguageToggle: "",
             AdobeAnalyticsProperties.CodingKeys.contentLanguageSecondary.rawValue: language.code,
             AdobeAnalyticsProperties.CodingKeys.siteSection.rawValue: resource.abbreviation

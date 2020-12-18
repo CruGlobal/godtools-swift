@@ -12,6 +12,6 @@ protocol AppsFlyerType: MobileContentAnalyticsSystem {
     
     func configure(adobeAnalytics: AdobeAnalyticsType)
     func trackAppLaunch()
-    func trackEvent(eventName: String, data: [AnyHashable: Any]?)
+    func trackEvent(eventName: String, data: [String: Any]?)
     func handleOpenUrl(url: URL, options: [UIApplication.OpenURLOptionsKey : Any])
 }

@@ -117,7 +117,7 @@ class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
         
         let language: LanguageModel = languages[index]
         
-        let data: [AnyHashable: String] = [
+        let data: [String: String] = [
             AdobeAnalyticsConstants.Keys.parallelLanguageToggle: "",
             AdobeAnalyticsProperties.CodingKeys.contentLanguageSecondary.rawValue: language.code,
             AdobeAnalyticsProperties.CodingKeys.siteSection.rawValue: resource.abbreviation

@@ -38,9 +38,9 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         isConfigured = true
         
         #if DEBUG
-            Analytics.setUserProperty(AnalyticsConstants.Values.debugIsTrue, forName: prepPropertyForFirebase(AnalyticsConstants.Keys.debug))
+            Analytics.setUserProperty(AnalyticsConstants.Values.debugIsTrue, forName: transformStringForFirebase(AnalyticsConstants.Keys.debug))
         #else
-            Analytics.setUserProperty(AnalyticsConstants.Values.debugIsFalse, forName: prepPropertyForFirebase(AnalyticsConstants.Keys.debug))
+            Analytics.setUserProperty(AnalyticsConstants.Values.debugIsFalse, forName: transformStringForFirebase(AnalyticsConstants.Keys.debug))
         #endif
                 
         log(method: "configure()", label: nil, labelValue: nil, data: nil)
@@ -49,69 +49,41 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
     //MARK: - Public
     
     func trackScreenView(screenName: String, siteSection: String, siteSubSection: String) {
-        assertFailureIfNotConfigured()
-        
-        let previousScreenName: String = self.previousTrackedScreenName
-        
+        internalTrackEvent(
+            screenName: screenName,
+            siteSection: siteSection,
+            siteSubSection: siteSubSection,
+            previousScreenName: previousTrackedScreenName,
+            eventName: AnalyticsEventScreenView,
+            data: nil
+        )
         previousTrackedScreenName = screenName
-        
-        DispatchQueue.global().async { [weak self] in
-            guard let firebaseAnalytics = self else { return }
-            
-            let parameters = firebaseAnalytics.createBaseProperties(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: previousScreenName)
-                    
-            Analytics.logEvent(AnalyticsEventScreenView, parameters: parameters)
-            
-            firebaseAnalytics.log(method: "trackScreenView()", label: "screenName", labelValue: screenName, data: parameters)
-        }
     }
-    
-    func trackAction(screenName: String?, actionName: String, data: [AnyHashable : Any]?) {
-        assertFailureIfNotConfigured()
 
-        DispatchQueue.global().async { [weak self] in
-            guard let firebaseAnalytics = self else { return }
-            
-            let modifiedActionName = firebaseAnalytics.prepPropertyForFirebase(actionName)
-            
-            let actionData: [String: Any]? = data as? [String: Any]
-            
-            let baseParameters: [String: Any] = firebaseAnalytics.createBaseProperties(screenName: screenName, siteSection: nil, siteSubSection: nil, previousScreenName: self?.previousTrackedScreenName)
-            
-            var parameters: [String: Any] = baseParameters
-            
-            if let actionData = actionData {
-                for (key, value) in actionData {
-                    parameters[firebaseAnalytics.prepPropertyForFirebase(key)] = value
-                }
-            }
-            
-            Analytics.logEvent(modifiedActionName, parameters: parameters)
-            
-            firebaseAnalytics.log(method: "trackAction()", label: "actionName", labelValue: modifiedActionName, data: parameters)
-        }
+    func trackAction(screenName: String?, actionName: String, data: [String : Any]?) {
+        internalTrackEvent(
+            screenName: screenName,
+            siteSection: nil,
+            siteSubSection: nil,
+            previousScreenName: previousTrackedScreenName,
+            eventName: actionName,
+            data: data
+        )
     }
     
     func trackExitLink(screenName: String, siteSection: String, siteSubSection: String, url: URL) {
-        assertFailureIfNotConfigured()
-                
-        DispatchQueue.global().async { [weak self] in
-            guard let firebaseAnalytics = self else { return }
-            
-            let actionName = firebaseAnalytics.prepPropertyForFirebase(AnalyticsConstants.Values.exitLink)
-            
-            let baseParameters: [String: Any] = firebaseAnalytics.createBaseProperties(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: firebaseAnalytics.previousTrackedScreenName)
-              
-            var parameters: [String: Any] = baseParameters
-            
-            parameters[firebaseAnalytics.prepPropertyForFirebase(AnalyticsConstants.Keys.exitLink)] = url.absoluteString
-                
-            Analytics.logEvent(actionName, parameters: parameters)
-                
-            firebaseAnalytics.log(method: "trackExitLink()", label: actionName, labelValue: actionName, data: parameters)
-        }
+        internalTrackEvent(
+            screenName: screenName,
+            siteSection: siteSection,
+            siteSubSection: siteSubSection,
+            previousScreenName: previousTrackedScreenName,
+            eventName: AnalyticsConstants.Values.exitLink,
+            data: [
+                AnalyticsConstants.Keys.exitLink: url.absoluteString
+            ]
+        )
     }
-    
+
     func fetchAttributesThenSetUserId() {
         assertFailureIfNotConfigured()
         
@@ -136,8 +108,60 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         }
     }
     
-    private func prepPropertyForFirebase(_ key: String) -> String {
-        return key.replacingOccurrences(of: "(-|\\.|\\ )", with: "_", options: .regularExpression)
+    private func internalTrackEvent(screenName: String?, siteSection: String?, siteSubSection: String?, previousScreenName: String, eventName: String, data: [String: Any]?) {
+        
+        assertFailureIfNotConfigured()
+        
+        DispatchQueue.global().async { [weak self] in
+            
+            guard let firebaseAnalytics = self else {
+                return
+            }
+            
+            let baseParameters: [String: Any] = firebaseAnalytics.createBaseProperties(
+                screenName: screenName,
+                siteSection: siteSection,
+                siteSubSection: siteSubSection,
+                previousScreenName: previousScreenName
+            )
+            
+            var parameters: [String: Any] = baseParameters
+            
+            if let data = data {
+                for (key, value) in data {
+                    if parameters[key] == nil {
+                        parameters[key] = value
+                    }
+                }
+            }
+            
+            let transformedEventName: String = firebaseAnalytics.transformStringForFirebase(eventName).lowercased()
+            let transformedData: [String: Any]? = firebaseAnalytics.transformDataForFirebase(data: parameters)
+            
+            Analytics.logEvent(transformedEventName, parameters: transformedData)
+            
+            firebaseAnalytics.log(method: "trackEvent()", label: "name", labelValue: transformedEventName, data: transformedData)
+        }
+    }
+    
+    private func transformDataForFirebase(data: [String: Any]?) -> [String: Any]? {
+        guard let attributesData = data else {
+            return nil
+        }
+        
+        var transformedData: [String: Any] = Dictionary()
+        
+        for (key, value) in attributesData {
+            let transformedKey: String = transformStringForFirebase(key).lowercased()
+            let transformedValue: Any = value
+            transformedData[transformedKey] = transformedValue
+        }
+        
+        return transformedData
+    }
+    
+    private func transformStringForFirebase(_ key: String) -> String {
+        return key.replacingOccurrences(of: "(-|\\.|\\ )", with: "_", options: .regularExpression).lowercased()
     }
     
     private func setUserProperties() {
@@ -153,28 +177,28 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         let userId = grMasterPersonID ?? ssoguid
         
         Analytics.setUserID(userId)
-        Analytics.setUserProperty(loggedInStatus, forName: prepPropertyForFirebase(AnalyticsConstants.Keys.loggedInStatus))
-        Analytics.setUserProperty(grMasterPersonID, forName: prepPropertyForFirebase(AnalyticsConstants.Keys.grMasterPersonID))
-        Analytics.setUserProperty(ssoguid, forName: prepPropertyForFirebase(AnalyticsConstants.Keys.ssoguid))
+        Analytics.setUserProperty(loggedInStatus, forName: transformStringForFirebase(AnalyticsConstants.Keys.loggedInStatus))
+        Analytics.setUserProperty(grMasterPersonID, forName: transformStringForFirebase(AnalyticsConstants.Keys.grMasterPersonID))
+        Analytics.setUserProperty(ssoguid, forName: transformStringForFirebase(AnalyticsConstants.Keys.ssoguid))
     }
     
-    private func createBaseProperties(screenName: String?, siteSection: String?, siteSubSection: String?, previousScreenName: String?) -> [String: Any] {
+    private func createBaseProperties(screenName: String?, siteSection: String?, siteSubSection: String?, previousScreenName: String?) -> [String: String] {
         assertFailureIfNotConfigured()
         
-        var properties: [String: Any] = [:]
+        var properties: [String: String] = [:]
                 
-        properties[prepPropertyForFirebase(AnalyticsConstants.Keys.appName)] = AnalyticsConstants.Values.godTools
-        properties[prepPropertyForFirebase(AnalyticsConstants.Keys.contentLanguage)] = languageSettingsService.primaryLanguage.value?.code
-        properties[prepPropertyForFirebase(AnalyticsConstants.Keys.contentLanguageSecondary)] = languageSettingsService.parallelLanguage.value?.code
-        properties[prepPropertyForFirebase(AnalyticsConstants.Keys.previousScreenName)] = previousScreenName
-        properties[prepPropertyForFirebase(AnalyticsConstants.Keys.screenName)] = screenName
-        properties[prepPropertyForFirebase(AnalyticsConstants.Keys.siteSection)] = siteSection
-        properties[prepPropertyForFirebase(AnalyticsConstants.Keys.siteSubSection)] = siteSubSection
+        properties[AnalyticsConstants.Keys.appName] = AnalyticsConstants.Values.godTools
+        properties[AnalyticsConstants.Keys.contentLanguage] = languageSettingsService.primaryLanguage.value?.code
+        properties[AnalyticsConstants.Keys.contentLanguageSecondary] = languageSettingsService.parallelLanguage.value?.code
+        properties[AnalyticsConstants.Keys.previousScreenName] = previousScreenName
+        properties[AnalyticsConstants.Keys.screenNameFirebase] = screenName
+        properties[AnalyticsConstants.Keys.siteSection] = siteSection
+        properties[AnalyticsConstants.Keys.siteSubSection] = siteSubSection
         
         return properties
     }
     
-    private func log(method: String, label: String?, labelValue: String?, data: [AnyHashable: Any]?) {
+    private func log(method: String, label: String?, labelValue: String?, data: [String: Any]?) {
         
         if loggingEnabled {
             print("\nFirebaseAnalytics \(method)")
@@ -199,7 +223,7 @@ extension FirebaseAnalytics: OIDAuthStateChangeDelegate {
 // MARK: - MobileContentAnalyticsSystem
 
 extension FirebaseAnalytics: MobileContentAnalyticsSystem {
-    func trackAction(action: String, data: [AnyHashable : Any]?) {
+    func trackAction(action: String, data: [String: Any]?) {
         trackAction(screenName: nil, actionName: action, data: data)
     }
 }
