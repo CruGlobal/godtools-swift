@@ -10,10 +10,18 @@ import Foundation
 
 class ShareToolViewModel: ShareToolViewModelType {
         
+    private let resource: ResourceModel
+    private let analytics: AnalyticsContainer
+    private let pageNumber: Int
+    
     let shareMessage: String
     
     required init(resource: ResourceModel, language: LanguageModel, pageNumber: Int, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
                 
+        self.resource = resource
+        self.analytics = analytics
+        self.pageNumber = pageNumber
+        
         var shareUrlString: String = "https://www.knowgod.com/\(language.code)/\(resource.abbreviation)"
 
         if pageNumber > 0 {
@@ -26,6 +34,9 @@ class ShareToolViewModel: ShareToolViewModelType {
             localizationServices.stringForMainBundle(key: "tract_share_message"),
             shareUrlString
         )
+    }
+    
+    func pageViewed() {
         
         let analyticsScreenName: String = resource.abbreviation + "-" + String(pageNumber)
         
@@ -37,10 +48,9 @@ class ShareToolViewModel: ShareToolViewModelType {
                 
         analytics.trackActionAnalytics.trackAction(
             screenName: analyticsScreenName,
-            actionName: AdobeAnalyticsConstants.Values.share,
+            actionName: AnalyticsConstants.Values.shareIconEngaged,
             data: [
-                AdobeAnalyticsConstants.Keys.shareAction: 1,
-                GTConstants.kAnalyticsScreenNameKey: analyticsScreenName
+                AnalyticsConstants.ActionNames.shareIconEngagedCountKey: 1
             ]
         )
     }

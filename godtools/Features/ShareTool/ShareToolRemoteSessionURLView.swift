@@ -15,7 +15,9 @@ class ShareToolRemoteSessionURLView {
     let controller: UIActivityViewController
     
     required init(viewModel: ShareToolRemoteSessionURLViewModelType) {
+        
         self.viewModel = viewModel
+        
         controller = UIActivityViewController(
             activityItems: [viewModel.shareMessage],
             applicationActivities: nil

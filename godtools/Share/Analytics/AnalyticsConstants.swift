@@ -49,15 +49,22 @@ struct AnalyticsConstants {
         static let parallelLanguageToggle = "Parallel Language Toggled"
         static let debugIsTrue = "true"
         static let debugIsFalse = "false"
+        static let toolOpenedShortcut = "Tool Opened Shortcut"
+        static let shareIconEngaged = "Share Icon Engaged"
+        static let shareScreenEngaged = "Share Screen Engaged"
+        static let shareScreenOpen = "Share Screen Open"
     }
     
     struct ActionNames {
-        static let shareAction = "cru.shareiconengaged"
+        static let shareIconEngagedCountKey = "cru.shareiconengaged"
         static let toggleAction = "cru.toggleswitch"
         static let gospelPresentedTimedAction = "cru.presentingthegospel"
         static let presentingHolySpiritTimedAction = "cru.presentingtheholyspirit"
         static let newProfessingBelieverAction = "cru.newprofessingbelievers"
         static let emailSignUpAction = "cru.emailsignup"
         static let parallelLanguageToggle = "cru.parallellanguagetoggle"
+        static let toolOpenedShortcutCountKey = "cru.tool-opened-shortcut"
+        static let shareScreenEngagedCountKey = "cru.sharescreenengaged"
+        static let shareScreenOpenCountKey = "cru.share_screen_open"
     }
 }
