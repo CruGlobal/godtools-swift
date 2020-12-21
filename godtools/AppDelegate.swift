@@ -44,6 +44,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         appDiContainer.config.logConfiguration()
         
+        if appDiContainer.config.build == .analyticsLogging {
+            appDiContainer.getFirebaseDebugArguments().enable()
+        }
+                
         appDiContainer.firebaseConfiguration.configure()
         
         appDiContainer.analytics.adobeAnalytics.configure()

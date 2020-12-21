@@ -12,6 +12,8 @@ import TheKeyOAuthSwift
 import GTMAppAuth
 
 class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
+    
+    private let config: ConfigType
     private let keyAuthClient: TheKeyOAuthClient
     private let languageSettingsService: LanguageSettingsService
     private let loggingEnabled: Bool
@@ -19,7 +21,9 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
     private var previousTrackedScreenName: String = ""
     private var isConfigured: Bool = false
     
-    required init(keyAuthClient: TheKeyOAuthClient, languageSettingsService: LanguageSettingsService, loggingEnabled: Bool) {
+    required init(config: ConfigType, keyAuthClient: TheKeyOAuthClient, languageSettingsService: LanguageSettingsService, loggingEnabled: Bool) {
+        
+        self.config = config
         self.keyAuthClient = keyAuthClient
         self.languageSettingsService = languageSettingsService
         self.loggingEnabled = loggingEnabled
@@ -29,20 +33,30 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
     
     func configure() {
         
-        if isConfigured {
+        guard !isConfigured else {
             return
         }
-                
-        keyAuthClient.addStateChangeDelegate(delegate: self)
         
         isConfigured = true
         
-        #if DEBUG
+        // gai
+        if let gai = GAI.sharedInstance() {
+            if config.build == .analyticsLogging {
+                gai.dispatchInterval = 1
+            }
+            
+            gai.logger.logLevel = loggingEnabled ? .verbose : .none
+        }
+        
+        keyAuthClient.addStateChangeDelegate(delegate: self)
+        
+        if config.isDebug {
             Analytics.setUserProperty(AnalyticsConstants.Values.debugIsTrue, forName: transformStringForFirebase(AnalyticsConstants.Keys.debug))
-        #else
+        }
+        else {
             Analytics.setUserProperty(AnalyticsConstants.Values.debugIsFalse, forName: transformStringForFirebase(AnalyticsConstants.Keys.debug))
-        #endif
-                
+        }
+        
         log(method: "configure()", label: nil, labelValue: nil, data: nil)
     }
     
