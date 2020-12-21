@@ -456,8 +456,6 @@
 		45732E932421A798006F0559 /* TutorialAvailabilityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45732E922421A798006F0559 /* TutorialAvailabilityType.swift */; };
 		45732E962421A976006F0559 /* OpenTutorialCalloutUserDefaultsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45732E952421A976006F0559 /* OpenTutorialCalloutUserDefaultsCache.swift */; };
 		45732E982421A984006F0559 /* OpenTutorialCalloutCacheType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45732E972421A984006F0559 /* OpenTutorialCalloutCacheType.swift */; };
-		45732E9B2421AF00006F0559 /* DeviceLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45732E9A2421AF00006F0559 /* DeviceLanguage.swift */; };
-		45732E9D2421AF11006F0559 /* DeviceLanguageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45732E9C2421AF11006F0559 /* DeviceLanguageType.swift */; };
 		457551EB24A5853D0091652F /* LegacyRealmDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457551EA24A5853D0091652F /* LegacyRealmDatabase.swift */; };
 		457551F424A585F70091652F /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457551ED24A585F70091652F /* Language.swift */; };
 		457551F524A585F70091652F /* Translation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457551EE24A585F70091652F /* Translation.swift */; };
@@ -495,7 +493,6 @@
 		4579169C24E84DAB00C0CF49 /* LoadingViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4579169A24E84DAB00C0CF49 /* LoadingViewModelType.swift */; };
 		4579169D24E84DAB00C0CF49 /* LoadingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4579169B24E84DAB00C0CF49 /* LoadingViewModel.swift */; };
 		4579169F24E84F8500C0CF49 /* LoadToolRemoteSessionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4579169E24E84F8500C0CF49 /* LoadToolRemoteSessionViewModel.swift */; };
-		457C8584242E4B1D0025E079 /* FirebaseConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457C8583242E4B1D0025E079 /* FirebaseConfiguration.swift */; };
 		457C8586242E50D70025E079 /* GoogleService-Info-Debug.plist in Resources */ = {isa = PBXBuildFile; fileRef = 457C8585242E50D70025E079 /* GoogleService-Info-Debug.plist */; };
 		457D9827254B4F9F000B8159 /* MobileContentXmlNodeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457D980D254B4F9F000B8159 /* MobileContentXmlNodeFactory.swift */; };
 		457D9828254B4F9F000B8159 /* LabelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457D980F254B4F9F000B8159 /* LabelNode.swift */; };
@@ -521,8 +518,6 @@
 		457D983E254B555B000B8159 /* PagesNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457D983D254B555B000B8159 /* PagesNode.swift */; };
 		457D9840254B5571000B8159 /* TipNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457D983F254B5571000B8159 /* TipNode.swift */; };
 		458063C62499870C0070AA12 /* AttachmentModelType+SHA256FileLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458063C52499870C0070AA12 /* AttachmentModelType+SHA256FileLocation.swift */; };
-		4584D804252B5CA7007B5D4E /* DeviceLanguageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45732E9C2421AF11006F0559 /* DeviceLanguageType.swift */; };
-		4584D805252B5CA9007B5D4E /* DeviceLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45732E9A2421AF00006F0559 /* DeviceLanguage.swift */; };
 		4585623E2550E56C0081CC28 /* FontService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4585623D2550E56C0081CC28 /* FontService.swift */; };
 		45869ED4245314BD00733B0C /* ArticleManifestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45869ED3245314BD00733B0C /* ArticleManifestType.swift */; };
 		45869EDC2453290400733B0C /* WebArchiveOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45869EDB2453290400733B0C /* WebArchiveOperation.swift */; };
@@ -547,6 +542,9 @@
 		45922587242539B300D7ED22 /* LanguageAvailabilityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45922586242539B300D7ED22 /* LanguageAvailabilityType.swift */; };
 		4592258824253C8A00D7ED22 /* LanguageAvailabilityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45922586242539B300D7ED22 /* LanguageAvailabilityType.swift */; };
 		4592B26024A512B100044435 /* UIColor+HexColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4592B25F24A512B100044435 /* UIColor+HexColor.swift */; };
+		4593952F258E8BE70071AB3D /* DeviceLanguageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4593952B258E8BE70071AB3D /* DeviceLanguageType.swift */; };
+		45939530258E8BE70071AB3D /* DeviceLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4593952C258E8BE70071AB3D /* DeviceLanguage.swift */; };
+		45939531258E8BE70071AB3D /* FirebaseConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4593952E258E8BE70071AB3D /* FirebaseConfiguration.swift */; };
 		4593FF4A24B35F44001CEC5A /* DeviceAttachmentBanners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4593FF4924B35F44001CEC5A /* DeviceAttachmentBanners.swift */; };
 		4595F41324A27DB700B3733E /* RealmArticleAemImportData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F3FE24A27DB700B3733E /* RealmArticleAemImportData.swift */; };
 		4595F41424A27DB700B3733E /* RealmArticleJcrContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F3FF24A27DB700B3733E /* RealmArticleJcrContent.swift */; };
@@ -613,6 +611,7 @@
 		459AA42524A5296F00CAA69C /* DownloadedTranslationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459AA42424A5296F00CAA69C /* DownloadedTranslationResult.swift */; };
 		459C3FE024C5F296006E81CA /* TractRemoteShareSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459C3FDF24C5F296006E81CA /* TractRemoteShareSubscriber.swift */; };
 		459C8692247A2A240077AB7F /* DownloadArticlesErrorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459C8691247A2A240077AB7F /* DownloadArticlesErrorViewModel.swift */; };
+		459DE5402590E5B6005745BB /* FirebaseDebugArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459DE53F2590E5B5005745BB /* FirebaseDebugArguments.swift */; };
 		459FDB832562C53B002D74D3 /* TrainingTipType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459FDB822562C53B002D74D3 /* TrainingTipType.swift */; };
 		459FDB9425632135002D74D3 /* TractRemoteSharePublisherNavigationEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459FDB9325632135002D74D3 /* TractRemoteSharePublisherNavigationEvent.swift */; };
 		45A1431624A62C1900892200 /* FetchTranslationManifestsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A1431524A62C1900892200 /* FetchTranslationManifestsViewModel.swift */; };
@@ -870,7 +869,9 @@
 		17339884230736DB00A715B4 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
 		1737DFDE22FDB48000223CB0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1767C18E62BAF2E86AA37734 /* Pods-godtoolsTests.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsTests.production.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests.production.xcconfig"; sourceTree = "<group>"; };
+		23A7EAE349032E961F1CA576 /* Pods-godtoolsTests.firebasedebugenabled.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsTests.firebasedebugenabled.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests.firebasedebugenabled.xcconfig"; sourceTree = "<group>"; };
 		3795EC9D424F0613AD8AF610 /* Pods-godtools.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.release.xcconfig"; sourceTree = "<group>"; };
+		3847ED582323A4564C2F1E51 /* Pods-godtoolsTests.analyticslogging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsTests.analyticslogging.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests.analyticslogging.xcconfig"; sourceTree = "<group>"; };
 		450253462529319B0014D02D /* LocalizationServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationServices.swift; sourceTree = "<group>"; };
 		45038D6724A24E8400345B42 /* CallbackValueHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallbackValueHandler.swift; sourceTree = "<group>"; };
 		45038D6B24A251EE00345B42 /* UIViewController+AlertMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+AlertMessage.swift"; sourceTree = "<group>"; };
@@ -1317,8 +1318,6 @@
 		45732E922421A798006F0559 /* TutorialAvailabilityType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialAvailabilityType.swift; sourceTree = "<group>"; };
 		45732E952421A976006F0559 /* OpenTutorialCalloutUserDefaultsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenTutorialCalloutUserDefaultsCache.swift; sourceTree = "<group>"; };
 		45732E972421A984006F0559 /* OpenTutorialCalloutCacheType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenTutorialCalloutCacheType.swift; sourceTree = "<group>"; };
-		45732E9A2421AF00006F0559 /* DeviceLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceLanguage.swift; sourceTree = "<group>"; };
-		45732E9C2421AF11006F0559 /* DeviceLanguageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceLanguageType.swift; sourceTree = "<group>"; };
 		457551EA24A5853D0091652F /* LegacyRealmDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacyRealmDatabase.swift; sourceTree = "<group>"; };
 		457551ED24A585F70091652F /* Language.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		457551EE24A585F70091652F /* Translation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Translation.swift; sourceTree = "<group>"; };
@@ -1356,7 +1355,6 @@
 		4579169A24E84DAB00C0CF49 /* LoadingViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewModelType.swift; sourceTree = "<group>"; };
 		4579169B24E84DAB00C0CF49 /* LoadingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewModel.swift; sourceTree = "<group>"; };
 		4579169E24E84F8500C0CF49 /* LoadToolRemoteSessionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadToolRemoteSessionViewModel.swift; sourceTree = "<group>"; };
-		457C8583242E4B1D0025E079 /* FirebaseConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseConfiguration.swift; sourceTree = "<group>"; };
 		457C8585242E50D70025E079 /* GoogleService-Info-Debug.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Debug.plist"; sourceTree = "<group>"; };
 		457D980D254B4F9F000B8159 /* MobileContentXmlNodeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentXmlNodeFactory.swift; sourceTree = "<group>"; };
 		457D980F254B4F9F000B8159 /* LabelNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelNode.swift; sourceTree = "<group>"; };
@@ -1405,6 +1403,9 @@
 		4586D7E5246ECEE90062D988 /* TractButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractButton.swift; sourceTree = "<group>"; };
 		45922586242539B300D7ED22 /* LanguageAvailabilityType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageAvailabilityType.swift; sourceTree = "<group>"; };
 		4592B25F24A512B100044435 /* UIColor+HexColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HexColor.swift"; sourceTree = "<group>"; };
+		4593952B258E8BE70071AB3D /* DeviceLanguageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceLanguageType.swift; sourceTree = "<group>"; };
+		4593952C258E8BE70071AB3D /* DeviceLanguage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceLanguage.swift; sourceTree = "<group>"; };
+		4593952E258E8BE70071AB3D /* FirebaseConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseConfiguration.swift; sourceTree = "<group>"; };
 		4593FF4924B35F44001CEC5A /* DeviceAttachmentBanners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceAttachmentBanners.swift; sourceTree = "<group>"; };
 		4595F3FE24A27DB700B3733E /* RealmArticleAemImportData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmArticleAemImportData.swift; sourceTree = "<group>"; };
 		4595F3FF24A27DB700B3733E /* RealmArticleJcrContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmArticleJcrContent.swift; sourceTree = "<group>"; };
@@ -1471,6 +1472,7 @@
 		459AA42424A5296F00CAA69C /* DownloadedTranslationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadedTranslationResult.swift; sourceTree = "<group>"; };
 		459C3FDF24C5F296006E81CA /* TractRemoteShareSubscriber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractRemoteShareSubscriber.swift; sourceTree = "<group>"; };
 		459C8691247A2A240077AB7F /* DownloadArticlesErrorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadArticlesErrorViewModel.swift; sourceTree = "<group>"; };
+		459DE53F2590E5B5005745BB /* FirebaseDebugArguments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseDebugArguments.swift; sourceTree = "<group>"; };
 		459FDB822562C53B002D74D3 /* TrainingTipType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingTipType.swift; sourceTree = "<group>"; };
 		459FDB9325632135002D74D3 /* TractRemoteSharePublisherNavigationEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractRemoteSharePublisherNavigationEvent.swift; sourceTree = "<group>"; };
 		45A1431524A62C1900892200 /* FetchTranslationManifestsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchTranslationManifestsViewModel.swift; sourceTree = "<group>"; };
@@ -1734,8 +1736,11 @@
 		4FF90B9821E3BB6000374DCB /* mr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = mr; path = mr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4FF90B9B21E3BFD500374DCB /* ta */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ta; path = ta.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4FF90B9C21E3C2E700374DCB /* ur */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ur; path = ur.lproj/Localizable.strings; sourceTree = "<group>"; };
+		55929DB2E21BFC4694EF73AA /* Pods-godtoolsTests.analyticsdebug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsTests.analyticsdebug.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests.analyticsdebug.xcconfig"; sourceTree = "<group>"; };
+		657A5217A188A2070EA0C083 /* Pods-godtools.analyticsdebug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.analyticsdebug.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.analyticsdebug.xcconfig"; sourceTree = "<group>"; };
 		684328EB1EB7C7F4005E9131 /* fastlane */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fastlane; sourceTree = "<group>"; };
 		684328F11EB7CF66005E9131 /* godtoolsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = godtoolsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		803E8B72F1DC39481598B267 /* Pods-godtools.analyticslogging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.analyticslogging.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.analyticslogging.xcconfig"; sourceTree = "<group>"; };
 		A9BDC99CD6AA5FF3CCAC0E93 /* Pods-godtools.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.staging.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.staging.xcconfig"; sourceTree = "<group>"; };
 		B03BA6AC6918BE450406F1E6 /* Pods-godtools.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.debug.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.debug.xcconfig"; sourceTree = "<group>"; };
 		D115A65D25265813007F11AD /* share_tool_tutorial_mirrored.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = share_tool_tutorial_mirrored.json; sourceTree = "<group>"; };
@@ -1749,6 +1754,7 @@
 		D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtoolsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D61FF360D11F854476B6E206 /* Pods_godtools.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtools.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0F338026DD564DE8D5B7CE2 /* Pods-godtoolsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests.debug.xcconfig"; sourceTree = "<group>"; };
+		E8A170D0192AC938F6EAC1EC /* Pods-godtools.firebasedebugenabled.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.firebasedebugenabled.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.firebasedebugenabled.xcconfig"; sourceTree = "<group>"; };
 		EBE523140714C16DAAB6B473 /* Pods-godtools.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.production.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.production.xcconfig"; sourceTree = "<group>"; };
 		ECD344F31F13E79400906471 /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = et.lproj/Localizable.strings; sourceTree = "<group>"; };
 		ECD344F41F13F16100906471 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1811,6 +1817,12 @@
 				EBE523140714C16DAAB6B473 /* Pods-godtools.production.xcconfig */,
 				F1BE3B21D598FF586906D91D /* Pods-godtoolsTests.staging.xcconfig */,
 				1767C18E62BAF2E86AA37734 /* Pods-godtoolsTests.production.xcconfig */,
+				E8A170D0192AC938F6EAC1EC /* Pods-godtools.firebasedebugenabled.xcconfig */,
+				23A7EAE349032E961F1CA576 /* Pods-godtoolsTests.firebasedebugenabled.xcconfig */,
+				657A5217A188A2070EA0C083 /* Pods-godtools.analyticsdebug.xcconfig */,
+				55929DB2E21BFC4694EF73AA /* Pods-godtoolsTests.analyticsdebug.xcconfig */,
+				803E8B72F1DC39481598B267 /* Pods-godtools.analyticslogging.xcconfig */,
+				3847ED582323A4564C2F1E51 /* Pods-godtoolsTests.analyticslogging.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -2616,14 +2628,14 @@
 		4556AEB423E1D97E002C15E8 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				45732E9A2421AF00006F0559 /* DeviceLanguage.swift */,
-				45732E9C2421AF11006F0559 /* DeviceLanguageType.swift */,
-				457C8583242E4B1D0025E079 /* FirebaseConfiguration.swift */,
 				45EC83672451E16400E8DE48 /* Articles */,
 				4530DCA924A3D4CA000DA516 /* Attachments */,
 				45F567AB24FD7D600078D539 /* CardJumpService */,
 				451EE23624ABC28300BB799F /* DeepLinkingService */,
+				4593952A258E8BE70071AB3D /* DeviceLanguage */,
 				45869EBF24530B9800733B0C /* FileCache */,
+				4593952D258E8BE70071AB3D /* FirebaseConfiguration */,
+				459DE53E2590E5B5005745BB /* FirebaseDebugArguments */,
 				451EE24024ABFB5C00BB799F /* FollowUps */,
 				4585623C2550E55D0081CC28 /* FontService */,
 				4530DCA424A3D4BD000DA516 /* JsonServices */,
@@ -3202,6 +3214,23 @@
 			path = FileCache;
 			sourceTree = "<group>";
 		};
+		4593952A258E8BE70071AB3D /* DeviceLanguage */ = {
+			isa = PBXGroup;
+			children = (
+				4593952C258E8BE70071AB3D /* DeviceLanguage.swift */,
+				4593952B258E8BE70071AB3D /* DeviceLanguageType.swift */,
+			);
+			path = DeviceLanguage;
+			sourceTree = "<group>";
+		};
+		4593952D258E8BE70071AB3D /* FirebaseConfiguration */ = {
+			isa = PBXGroup;
+			children = (
+				4593952E258E8BE70071AB3D /* FirebaseConfiguration.swift */,
+			);
+			path = FirebaseConfiguration;
+			sourceTree = "<group>";
+		};
 		4595F3ED24A27DB700B3733E /* ArticleAemImportDownloader */ = {
 			isa = PBXGroup;
 			children = (
@@ -3423,6 +3452,14 @@
 				459C8691247A2A240077AB7F /* DownloadArticlesErrorViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		459DE53E2590E5B5005745BB /* FirebaseDebugArguments */ = {
+			isa = PBXGroup;
+			children = (
+				459DE53F2590E5B5005745BB /* FirebaseDebugArguments.swift */,
+			);
+			path = FirebaseDebugArguments;
 			sourceTree = "<group>";
 		};
 		459FDB812562C531002D74D3 /* Models */ = {
@@ -4820,6 +4857,7 @@
 				451DB1C12461DDE400FB14BF /* TractFormProperties.swift in Sources */,
 				453F1EEE253F864700DA48EA /* ToolTrainingTipsOnboardingViewsService.swift in Sources */,
 				45869EE42453419400733B0C /* HTMLDocument+ResourceUrls.swift in Sources */,
+				4593952F258E8BE70071AB3D /* DeviceLanguageType.swift in Sources */,
 				451DB1382461DA4200FB14BF /* TractEmailProperties.swift in Sources */,
 				4532E5B02572AEC9006FCDE8 /* ToolPageContentButtonEvents.swift in Sources */,
 				4530DCAD24A3D598000DA516 /* AttachmentsFileCache.swift in Sources */,
@@ -4929,7 +4967,6 @@
 				450E21C52491A52200D489A1 /* TranslationModel.swift in Sources */,
 				4575C25623FB3F8900D3265B /* AccountItemCell.swift in Sources */,
 				452732E52587C04B002538E0 /* ImageEvent.swift in Sources */,
-				45732E9D2421AF11006F0559 /* DeviceLanguageType.swift in Sources */,
 				4549058D24AA76480038A1A8 /* ToolShortcutItem.swift in Sources */,
 				459698A0255DCFFF0085755A /* ToolPageContentFormViewModelType.swift in Sources */,
 				45F567AE24FD7D600078D539 /* CardJumpService.swift in Sources */,
@@ -5268,6 +5305,7 @@
 				451B869C252F43D40061942B /* LearnToShareToolCellViewModel.swift in Sources */,
 				45B2AE672458DC4600253BAD /* ToolOpenedAnalytics.swift in Sources */,
 				4575C23E23FAEBF600D3265B /* AccountViewModel.swift in Sources */,
+				45939531258E8BE70071AB3D /* FirebaseConfiguration.swift in Sources */,
 				453A61BA248E81FB00DD3C27 /* AlertMessageType.swift in Sources */,
 				4508F7AC2429671500ECA950 /* AdobeAnalyticsProperties.swift in Sources */,
 				45EDC53F249BAB970020DC62 /* ToolDetailView.swift in Sources */,
@@ -5410,6 +5448,7 @@
 				45C42F6624A84EDE0046B474 /* LanguageTranslationsDownloader.swift in Sources */,
 				4506DED224B7A78700A1C50B /* NavigationBarBackground.swift in Sources */,
 				4543159C24A103C300B5C37B /* ResourcesSHA256FileCache.swift in Sources */,
+				459DE5402590E5B6005745BB /* FirebaseDebugArguments.swift in Sources */,
 				4508F7A72429669700ECA950 /* AdobeAnalyticsType.swift in Sources */,
 				45F6E018249D44270077C7D9 /* LanguageModel.swift in Sources */,
 				4586D7DA246ECCE00062D988 /* TractParagraph.swift in Sources */,
@@ -5424,7 +5463,6 @@
 				4F57328D1EA69CF00082035C /* AppDelegate.swift in Sources */,
 				454526D8243E195500B84B29 /* TermsOfUseWebContent.swift in Sources */,
 				45B881E4249AACED004DC491 /* RealmAttachment.swift in Sources */,
-				457C8584242E4B1D0025E079 /* FirebaseConfiguration.swift in Sources */,
 				45BB6E67254C8F31007D8DDB /* ToolViewModelType.swift in Sources */,
 				453F1EF2253F868000DA48EA /* ToolTrainingTipsOnboardingViewsUserDefaultsCache.swift in Sources */,
 				45692F3A24E7853500A589FE /* ShareToolRemoteSessionURLViewModel.swift in Sources */,
@@ -5480,9 +5518,9 @@
 				459698E0255E23EC0085755A /* TrainingTipViewModel.swift in Sources */,
 				450E21BF24919E5500D489A1 /* ResourcesPlusLatestTranslationsAndAttachmentsModel.swift in Sources */,
 				45B2AE49245886B100253BAD /* MailViewModel.swift in Sources */,
+				45939530258E8BE70071AB3D /* DeviceLanguage.swift in Sources */,
 				45EE3326246E237B003CC641 /* TractPageCache.swift in Sources */,
 				45668E7523E0E1CC002728E7 /* OnboardingTutorialUsageItem.swift in Sources */,
-				45732E9B2421AF00006F0559 /* DeviceLanguage.swift in Sources */,
 				4562B0DA23F1BC4A006B53A9 /* AlertMessageView.swift in Sources */,
 				45E7E1B624AE176800238419 /* DownloadAttachmentsReceipt.swift in Sources */,
 				45869EE82453477100733B0C /* WebArchiveQueue.swift in Sources */,
@@ -5509,7 +5547,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				45FA696E24251CF40006878C /* TutorialSupportedLanguages.swift in Sources */,
-				4584D804252B5CA7007B5D4E /* DeviceLanguageType.swift in Sources */,
 				45FA696F24251D360006878C /* MockSupportedLanguages.swift in Sources */,
 				45557AEA252D094100ACFA95 /* LocaleLocalizationBundleTests.swift in Sources */,
 				45FA69632425180F0006878C /* TutorialAvailabilityType.swift in Sources */,
@@ -5519,7 +5556,6 @@
 				45FA6964242518120006878C /* TutorialAvailability.swift in Sources */,
 				45557AE7252D092100ACFA95 /* LocaleLocalizationBundle.swift in Sources */,
 				45FA696C24251CA00006878C /* TutorialLanguageAvailabilityTests.swift in Sources */,
-				4584D805252B5CA9007B5D4E /* DeviceLanguage.swift in Sources */,
 				45A7BAF5252CBC5B00D70465 /* LocaleTests.swift in Sources */,
 				45FA696D24251CE50006878C /* TutorialLanguageAvailability.swift in Sources */,
 				45A7BAF6252CBCAC00D70465 /* Locale+Extensions.swift in Sources */,
@@ -5732,7 +5768,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 855;
+				CURRENT_PROJECT_VERSION = 863;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				DISPLAY_NAME = "GodTools-Stage";
 				INFOPLIST_FILE = godtools/Info.plist;
@@ -5826,6 +5862,171 @@
 			};
 			name = Staging;
 		};
+		45939535258EB5C80071AB3D /* AnalyticsLogging */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COMPRESS_PNG_FILES = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				STRIP_PNG_TEXT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
+			};
+			name = AnalyticsLogging;
+		};
+		45939536258EB5C80071AB3D /* AnalyticsLogging */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 803E8B72F1DC39481598B267 /* Pods-godtools.analyticslogging.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = godtools/godtools.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 863;
+				DEVELOPMENT_TEAM = DQ48D9BF2V;
+				DISPLAY_NAME = "GodTools-AnalyticsDebug";
+				INFOPLIST_FILE = godtools/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				MARKETING_VERSION = 5.6.2;
+				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEBUG";
+				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "GodTools Production";
+				SWIFT_OBJC_BRIDGING_HEADER = "godtools/godtools-Bridging-Header.h";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = AnalyticsLogging;
+		};
+		45939537258EB5C80071AB3D /* AnalyticsLogging */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3847ED582323A4564C2F1E51 /* Pods-godtoolsTests.analyticslogging.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = DQ48D9BF2V;
+				INFOPLIST_FILE = godtoolsTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtoolsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.cru.godtools";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/godtools.app/godtools";
+			};
+			name = AnalyticsLogging;
+		};
+		45939538258EB5C80071AB3D /* AnalyticsLogging */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = DQ48D9BF2V;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = godtoolsUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtoolsUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "e0c2ae71-3b0f-47a9-b24e-4f8d04a90fb6";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.cru.godtools";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = godtools;
+			};
+			name = AnalyticsLogging;
+		};
+		45939539258EB5C80071AB3D /* AnalyticsLogging */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = godtoolsUIRecording/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtoolsUIRecording;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.cru.godtools";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = godtools;
+			};
+			name = AnalyticsLogging;
+		};
 		45E998E823FDB5340088DD0C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -5897,7 +6098,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 855;
+				CURRENT_PROJECT_VERSION = 863;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				DISPLAY_NAME = "GodTools-Stage";
 				INFOPLIST_FILE = godtools/Info.plist;
@@ -6062,7 +6263,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 855;
+				CURRENT_PROJECT_VERSION = 863;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				DISPLAY_NAME = GodTools;
 				INFOPLIST_FILE = godtools/Info.plist;
@@ -6250,7 +6451,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 855;
+				CURRENT_PROJECT_VERSION = 863;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				DISPLAY_NAME = GodTools;
 				INFOPLIST_FILE = godtools/Info.plist;
@@ -6296,6 +6497,7 @@
 				45E998EC23FDB5340088DD0C /* Debug */,
 				455953E324041C1A002330ED /* Staging */,
 				45E998F123FDB53D0088DD0C /* Production */,
+				45939539258EB5C80071AB3D /* AnalyticsLogging */,
 				17339883230736A400A715B4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -6307,6 +6509,7 @@
 				45E998EB23FDB5340088DD0C /* Debug */,
 				455953E224041C1A002330ED /* Staging */,
 				45E998F023FDB53D0088DD0C /* Production */,
+				45939538258EB5C80071AB3D /* AnalyticsLogging */,
 				4F12297520852BE3008842CC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -6318,6 +6521,7 @@
 				45E998E823FDB5340088DD0C /* Debug */,
 				455953DF24041C1A002330ED /* Staging */,
 				45E998ED23FDB53D0088DD0C /* Production */,
+				45939535258EB5C80071AB3D /* AnalyticsLogging */,
 				4F57329D1EA69CF00082035C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -6329,6 +6533,7 @@
 				45E998E923FDB5340088DD0C /* Debug */,
 				455953E024041C1A002330ED /* Staging */,
 				45E998EE23FDB53D0088DD0C /* Production */,
+				45939536258EB5C80071AB3D /* AnalyticsLogging */,
 				4F5732A01EA69CF00082035C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -6340,6 +6545,7 @@
 				45E998EA23FDB5340088DD0C /* Debug */,
 				455953E124041C1A002330ED /* Staging */,
 				45E998EF23FDB53D0088DD0C /* Production */,
+				45939537258EB5C80071AB3D /* AnalyticsLogging */,
 				684328FA1EB7CF66005E9131 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;

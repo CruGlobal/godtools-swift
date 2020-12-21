@@ -164,11 +164,12 @@ class AppDiContainer {
                 
         loginClient = TheKeyOAuthClient.shared
                 
+        let analyticsLoggingEnabled: Bool = config.build == .analyticsLogging
         analytics = AnalyticsContainer(
-            adobeAnalytics: AdobeAnalytics(config: config, keyAuthClient: loginClient, languageSettingsService: languageSettingsService, loggingEnabled: true),
-            appsFlyer: AppsFlyer(config: config, loggingEnabled: false),
-            firebaseAnalytics: FirebaseAnalytics(keyAuthClient: loginClient, languageSettingsService: languageSettingsService, loggingEnabled: true),
-            snowplowAnalytics: SnowplowAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: false)
+            adobeAnalytics: AdobeAnalytics(config: config, keyAuthClient: loginClient, languageSettingsService: languageSettingsService, loggingEnabled: analyticsLoggingEnabled),
+            appsFlyer: AppsFlyer(config: config, loggingEnabled: analyticsLoggingEnabled),
+            firebaseAnalytics: FirebaseAnalytics(config: config, keyAuthClient: loginClient, languageSettingsService: languageSettingsService, loggingEnabled: analyticsLoggingEnabled),
+            snowplowAnalytics: SnowplowAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: analyticsLoggingEnabled)
         )
         
         godToolsAnalytics = GodToolsAnaltyics(analytics: analytics)
@@ -206,6 +207,10 @@ class AppDiContainer {
     
     func getCardJumpService() -> CardJumpService {
         return CardJumpService(cardJumpCache: CardJumpUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache))
+    }
+    
+    func getFirebaseDebugArguments() -> FirebaseDebugArguments {
+        return FirebaseDebugArguments()
     }
     
     func getFontService() -> FontService {

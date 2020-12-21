@@ -60,6 +60,8 @@ class AppConfig: ConfigType {
         
         switch build {
             
+        case .analyticsLogging:
+            return productionUrl
         case .staging:
             return stagingUrl
         case .production:
@@ -92,6 +94,9 @@ class AppConfig: ConfigType {
         let productionFileName: String = "GoogleService-Info"
         
         switch build {
+            
+        case .analyticsLogging:
+            return productionFileName
         case .staging:
             return debugFileName
         case .production:

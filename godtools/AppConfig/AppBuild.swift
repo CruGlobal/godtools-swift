@@ -8,8 +8,11 @@
 
 import Foundation
 
+// Defined in godtools project > Info > Configurations Section.
+
 enum AppBuild: String {
     
+    case analyticsLogging = "analyticslogging"
     case staging = "staging"
     case production = "production"
     case release = "release"
