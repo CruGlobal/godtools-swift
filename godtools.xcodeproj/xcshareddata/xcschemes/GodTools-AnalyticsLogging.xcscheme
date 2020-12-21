@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1010"
+   LastUpgradeVersion = "1140"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -9,48 +9,29 @@
          <BuildActionEntry
             buildForTesting = "YES"
             buildForRunning = "YES"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "NO">
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4F12296B20852BE3008842CC"
-               BuildableName = "godtoolsUITests.xctest"
-               BlueprintName = "godtoolsUITests"
+               BlueprintIdentifier = "4F5732881EA69CF00082035C"
+               BuildableName = "godtools.app"
+               BlueprintName = "godtools"
                ReferencedContainer = "container:godtools.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
-      buildConfiguration = "Debug"
+      buildConfiguration = "AnalyticsLogging"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
-      <PreActions>
-         <ExecutionAction
-            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
-            <ActionContent
-               title = "Run Script"
-               scriptText = "xcrun simctl uninstall org.cru.godtools">
-            </ActionContent>
-         </ExecutionAction>
-      </PreActions>
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4F12296B20852BE3008842CC"
-               BuildableName = "godtoolsUITests.xctest"
-               BlueprintName = "godtoolsUITests"
-               ReferencedContainer = "container:godtools.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Debug"
+      buildConfiguration = "AnalyticsLogging"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
@@ -59,37 +40,39 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4F12296B20852BE3008842CC"
-            BuildableName = "godtoolsUITests.xctest"
-            BlueprintName = "godtoolsUITests"
+            BlueprintIdentifier = "4F5732881EA69CF00082035C"
+            BuildableName = "godtools.app"
+            BlueprintName = "godtools"
             ReferencedContainer = "container:godtools.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
-      buildConfiguration = "Release"
+      buildConfiguration = "AnalyticsLogging"
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4F12296B20852BE3008842CC"
-            BuildableName = "godtoolsUITests.xctest"
-            BlueprintName = "godtoolsUITests"
+            BlueprintIdentifier = "4F5732881EA69CF00082035C"
+            BuildableName = "godtools.app"
+            BlueprintName = "godtools"
             ReferencedContainer = "container:godtools.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
-      buildConfiguration = "Debug">
+      buildConfiguration = "AnalyticsLogging">
    </AnalyzeAction>
    <ArchiveAction
-      buildConfiguration = "Release"
+      buildConfiguration = "AnalyticsLogging"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>
