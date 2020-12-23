@@ -49,10 +49,6 @@
 		4586C04624631C3900927A42 /* ADBMobileConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = 4586C04424631C3900927A42 /* ADBMobileConfig.json */; };
 		4586C04724631C3900927A42 /* ADBMobileConfig_debug.json in Resources */ = {isa = PBXBuildFile; fileRef = 4586C04524631C3900927A42 /* ADBMobileConfig_debug.json */; };
 		45A7BAF5252CBC5B00D70465 /* LocaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A7BAF4252CBC5B00D70465 /* LocaleTests.swift */; };
-		45AD1A9B25938A4E00A096A0 /* NavigationBarBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD174925938A4D00A096A0 /* NavigationBarBackground.swift */; };
-		45AD1A9C25938A4E00A096A0 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD174A25938A4D00A096A0 /* UIColor.swift */; };
-		45AD1A9D25938A4E00A096A0 /* GTAccessibilityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD174B25938A4D00A096A0 /* GTAccessibilityConstants.swift */; };
-		45AD1A9E25938A4E00A096A0 /* GTConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD174C25938A4D00A096A0 /* GTConstants.swift */; };
 		45AD1A9F25938A4E00A096A0 /* TutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45AD174F25938A4D00A096A0 /* TutorialView.xib */; };
 		45AD1AA025938A4E00A096A0 /* TutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175025938A4D00A096A0 /* TutorialViewModel.swift */; };
 		45AD1AA125938A4E00A096A0 /* TutorialItemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175225938A4D00A096A0 /* TutorialItemProvider.swift */; };
@@ -719,6 +715,10 @@
 		45AD21622593A62800A096A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD21602593A62800A096A0 /* AppDelegate.swift */; };
 		45AD21632593A62800A096A0 /* AppDiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD21612593A62800A096A0 /* AppDiContainer.swift */; };
 		45AD217F2593ABC800A096A0 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 45AD217E2593ABC800A096A0 /* README.md */; };
+		45AD223C2593C90000A096A0 /* CrashReportingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD223A2593C90000A096A0 /* CrashReportingType.swift */; };
+		45AD223D2593C90000A096A0 /* FirebaseCrashlyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD223B2593C90000A096A0 /* FirebaseCrashlyticsService.swift */; };
+		45AD22A12593CE8900A096A0 /* ColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD22A02593CE8900A096A0 /* ColorPalette.swift */; };
+		45AD22B32593D1FB00A096A0 /* UIImage+CreateImageWithColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD22B22593D1FB00A096A0 /* UIImage+CreateImageWithColor.swift */; };
 		45C5386124B8EFA700CABDAC /* godtoolsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C5386024B8EFA700CABDAC /* godtoolsUITests.swift */; };
 		45DEF22E2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json in Resources */ = {isa = PBXBuildFile; fileRef = 45DEF22D2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json */; };
 		45E998D623FD7B090088DD0C /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */; };
@@ -815,10 +815,6 @@
 		4586C04424631C3900927A42 /* ADBMobileConfig.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ADBMobileConfig.json; sourceTree = "<group>"; };
 		4586C04524631C3900927A42 /* ADBMobileConfig_debug.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ADBMobileConfig_debug.json; sourceTree = "<group>"; };
 		45A7BAF4252CBC5B00D70465 /* LocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleTests.swift; sourceTree = "<group>"; };
-		45AD174925938A4D00A096A0 /* NavigationBarBackground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBarBackground.swift; sourceTree = "<group>"; };
-		45AD174A25938A4D00A096A0 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
-		45AD174B25938A4D00A096A0 /* GTAccessibilityConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTAccessibilityConstants.swift; sourceTree = "<group>"; };
-		45AD174C25938A4D00A096A0 /* GTConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTConstants.swift; sourceTree = "<group>"; };
 		45AD174F25938A4D00A096A0 /* TutorialView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialView.xib; sourceTree = "<group>"; };
 		45AD175025938A4D00A096A0 /* TutorialViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewModel.swift; sourceTree = "<group>"; };
 		45AD175225938A4D00A096A0 /* TutorialItemProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialItemProvider.swift; sourceTree = "<group>"; };
@@ -1485,6 +1481,10 @@
 		45AD21602593A62800A096A0 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		45AD21612593A62800A096A0 /* AppDiContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDiContainer.swift; sourceTree = "<group>"; };
 		45AD217E2593ABC800A096A0 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		45AD223A2593C90000A096A0 /* CrashReportingType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrashReportingType.swift; sourceTree = "<group>"; };
+		45AD223B2593C90000A096A0 /* FirebaseCrashlyticsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseCrashlyticsService.swift; sourceTree = "<group>"; };
+		45AD22A02593CE8900A096A0 /* ColorPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPalette.swift; sourceTree = "<group>"; };
+		45AD22B22593D1FB00A096A0 /* UIImage+CreateImageWithColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+CreateImageWithColor.swift"; sourceTree = "<group>"; };
 		45C5386024B8EFA700CABDAC /* godtoolsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = godtoolsUITests.swift; sourceTree = "<group>"; };
 		45DEF22D2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = learn_to_share_tool_with_anyone.json; sourceTree = "<group>"; };
 		45DEF4B724DEF35E00996695 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1791,23 +1791,11 @@
 				45AD21612593A62800A096A0 /* AppDiContainer.swift */,
 				45AD174D25938A4D00A096A0 /* Features */,
 				45AD188B25938A4E00A096A0 /* Flows */,
-				45AD174825938A4D00A096A0 /* HelperClasses */,
 				45AD187D25938A4E00A096A0 /* Legacy */,
 				45AD1D4125938A9700A096A0 /* Services */,
 				45AD189925938A4E00A096A0 /* Share */,
 			);
 			path = App;
-			sourceTree = "<group>";
-		};
-		45AD174825938A4D00A096A0 /* HelperClasses */ = {
-			isa = PBXGroup;
-			children = (
-				45AD174B25938A4D00A096A0 /* GTAccessibilityConstants.swift */,
-				45AD174C25938A4D00A096A0 /* GTConstants.swift */,
-				45AD174925938A4D00A096A0 /* NavigationBarBackground.swift */,
-				45AD174A25938A4D00A096A0 /* UIColor.swift */,
-			);
-			path = HelperClasses;
 			sourceTree = "<group>";
 		};
 		45AD174D25938A4D00A096A0 /* Features */ = {
@@ -2514,6 +2502,7 @@
 		45AD189925938A4E00A096A0 /* Share */ = {
 			isa = PBXGroup;
 			children = (
+				45AD22A02593CE8900A096A0 /* ColorPalette.swift */,
 				45AD189A25938A4E00A096A0 /* FontLibrary.swift */,
 				45AD18BC25938A4E00A096A0 /* ImageCatalog.swift */,
 				45AD207125938B6A00A096A0 /* Common */,
@@ -2556,17 +2545,18 @@
 		45AD18B025938A4E00A096A0 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				45AD18B125938A4E00A096A0 /* UIViewController+AlertMessage.swift */,
-				45AD18B225938A4E00A096A0 /* UIViewController+NavItem.swift */,
-				45AD18B325938A4E00A096A0 /* UIKit+Extensions.swift */,
-				45AD18B425938A4E00A096A0 /* UIView+Animations.swift */,
-				45AD18B525938A4E00A096A0 /* UIViewController+NavBackItem.swift */,
-				45AD18B625938A4E00A096A0 /* UIView+ProgressView.swift */,
-				45AD18B725938A4E00A096A0 /* UIView+Constraints.swift */,
-				45AD18B825938A4E00A096A0 /* UIViewController+Containment.swift */,
-				45AD18B925938A4E00A096A0 /* UIColor+HexColor.swift */,
-				45AD18BA25938A4E00A096A0 /* UIView+RemoveAllSubviews.swift */,
 				45AD18BB25938A4E00A096A0 /* Locale+Extensions.swift */,
+				45AD18B925938A4E00A096A0 /* UIColor+HexColor.swift */,
+				45AD18B325938A4E00A096A0 /* UIKit+Extensions.swift */,
+				45AD22B22593D1FB00A096A0 /* UIImage+CreateImageWithColor.swift */,
+				45AD18B425938A4E00A096A0 /* UIView+Animations.swift */,
+				45AD18B725938A4E00A096A0 /* UIView+Constraints.swift */,
+				45AD18B625938A4E00A096A0 /* UIView+ProgressView.swift */,
+				45AD18BA25938A4E00A096A0 /* UIView+RemoveAllSubviews.swift */,
+				45AD18B125938A4E00A096A0 /* UIViewController+AlertMessage.swift */,
+				45AD18B825938A4E00A096A0 /* UIViewController+Containment.swift */,
+				45AD18B525938A4E00A096A0 /* UIViewController+NavBackItem.swift */,
+				45AD18B225938A4E00A096A0 /* UIViewController+NavItem.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2662,6 +2652,7 @@
 				45AD1E2A25938A9700A096A0 /* Articles */,
 				45AD1E9925938A9800A096A0 /* Attachments */,
 				45AD1EE525938A9800A096A0 /* CardJumpService */,
+				45AD22392593C90000A096A0 /* CrashReporting */,
 				45AD1EB825938A9800A096A0 /* DeepLinkingService */,
 				45AD1DFB25938A9700A096A0 /* DeviceLanguage */,
 				45AD20F12593950300A096A0 /* DownloadedLanguages */,
@@ -3948,6 +3939,15 @@
 			path = ShareToolScreenTutorial;
 			sourceTree = "<group>";
 		};
+		45AD22392593C90000A096A0 /* CrashReporting */ = {
+			isa = PBXGroup;
+			children = (
+				45AD223A2593C90000A096A0 /* CrashReportingType.swift */,
+				45AD223B2593C90000A096A0 /* FirebaseCrashlyticsService.swift */,
+			);
+			path = CrashReporting;
+			sourceTree = "<group>";
+		};
 		45B59D7A242434F700F9D594 /* Features */ = {
 			isa = PBXGroup;
 			children = (
@@ -3985,8 +3985,6 @@
 		4F5732801EA69CF00082035C = {
 			isa = PBXGroup;
 			children = (
-				45AD217E2593ABC800A096A0 /* README.md */,
-				4F0CCC1E1EE73E9D00AE4E45 /* Podfile */,
 				D1838478257E86B3004F5674 /* container */,
 				4F57328B1EA69CF00082035C /* godtools */,
 				684328EB1EB7C7F4005E9131 /* fastlane */,
@@ -3994,6 +3992,8 @@
 				4F12296D20852BE3008842CC /* godtoolsUITests */,
 				1733987B230736A400A715B4 /* godtoolsUIRecording */,
 				4F57328A1EA69CF00082035C /* Products */,
+				45AD217E2593ABC800A096A0 /* README.md */,
+				4F0CCC1E1EE73E9D00AE4E45 /* Podfile */,
 				0D9B3E5467200B09BA255F79 /* Pods */,
 				20ECC28E617DF10976739E6B /* Frameworks */,
 			);
@@ -4103,8 +4103,8 @@
 				4F5732861EA69CF00082035C /* Frameworks */,
 				4F5732871EA69CF00082035C /* Resources */,
 				D28899168EA8F78D5A9CD0D1 /* [CP] Embed Pods Frameworks */,
-				4F5707E51EAFCA7F00A540C2 /* ShellScript */,
 				86E972980F451491AC999005 /* [CP] Copy Pods Resources */,
+				45AD220F2593C66B00A096A0 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -4446,18 +4446,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		4F5707E51EAFCA7F00A540C2 /* ShellScript */ = {
+		45AD220F2593C66B00A096A0 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
+			inputFileListPaths = (
+			);
 			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\" 4c6c9eb55214633c5eca4176c06b20bb8fd07a72 c71d676836deedca0040ec813caa99d5e9330f440319d855e82c69e75779518d\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
 		};
 		86E972980F451491AC999005 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -4466,12 +4472,10 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-godtools/Pods-godtools-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseInAppMessaging/InAppMessagingDisplayResources.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/GoogleTagManager/TagManagerResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/InAppMessagingDisplayResources.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TagManagerResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4491,9 +4495,16 @@
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
 				"${BUILT_PRODUCTS_DIR}/FacebookCore/FacebookCore.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseABTesting/FirebaseABTesting.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseCore/FirebaseCore.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseCoreDiagnostics/FirebaseCoreDiagnostics.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseCrashlytics/FirebaseCrashlytics.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseInAppMessaging/FirebaseInAppMessaging.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseInstallations/FirebaseInstallations.framework",
 				"${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMAppAuth/GTMAppAuth.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleDataTransport/GoogleDataTransport.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
@@ -4516,9 +4527,16 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseABTesting.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCoreDiagnostics.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCrashlytics.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseInAppMessaging.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseInstallations.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Fuzi.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMAppAuth.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleDataTransport.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
@@ -4676,7 +4694,6 @@
 				45AD21152593958E00A096A0 /* LanguageModelType.swift in Sources */,
 				45AD1BD925938A4F00A096A0 /* AlertMessageView.swift in Sources */,
 				45AD205C25938AC300A096A0 /* AppsFlyer.swift in Sources */,
-				45AD1A9D25938A4E00A096A0 /* GTAccessibilityConstants.swift in Sources */,
 				45AD1F4925938A9800A096A0 /* BackgroundImageNodeType.swift in Sources */,
 				45AD1B2525938A4F00A096A0 /* AboutViewModelType.swift in Sources */,
 				45AD1FAD25938A9800A096A0 /* CacheArticleAemWebArchivePlistError.swift in Sources */,
@@ -4739,7 +4756,6 @@
 				45AD204F25938AC300A096A0 /* ExitLinkAnalytics.swift in Sources */,
 				45AD1B8825938A4F00A096A0 /* OnboardingTutorialBackgroundCell.swift in Sources */,
 				45AD204E25938AC300A096A0 /* TrackActionAnalytics.swift in Sources */,
-				45AD1A9E25938A4E00A096A0 /* GTConstants.swift in Sources */,
 				45AD1BAE25938A4F00A096A0 /* TutorialFlow.swift in Sources */,
 				45AD1F2225938A9800A096A0 /* ToolPageHeaderViewModel.swift in Sources */,
 				45AD1F3025938A9800A096A0 /* MobileContentStackViewRendererType.swift in Sources */,
@@ -4757,6 +4773,7 @@
 				45AD1B2425938A4F00A096A0 /* AboutView.swift in Sources */,
 				45AD209C25938C4900A096A0 /* GlobalActivityAnalyticsCacheType.swift in Sources */,
 				45AD1F5A25938A9800A096A0 /* AnalyticsAttributeNode+Trigger.swift in Sources */,
+				45AD22B32593D1FB00A096A0 /* UIImage+CreateImageWithColor.swift in Sources */,
 				45AD1B2A25938A4F00A096A0 /* AboutViewModel.swift in Sources */,
 				45AD200825938A9800A096A0 /* DownloadedTranslationResult.swift in Sources */,
 				45AD1F9425938A9800A096A0 /* ResourcesDownloaderError.swift in Sources */,
@@ -4783,7 +4800,6 @@
 				45AD20EB259391B000A096A0 /* JsonServices.swift in Sources */,
 				45AD1F8F25938A9800A096A0 /* ResourceType.swift in Sources */,
 				45AD1B4725938A4F00A096A0 /* MenuSectionHeaderViewModel.swift in Sources */,
-				45AD1A9C25938A4E00A096A0 /* UIColor.swift in Sources */,
 				45AD201025938A9800A096A0 /* TranslationsFileCache.swift in Sources */,
 				45AD1B6425938A4F00A096A0 /* GlobalActivityHeaderViewModel.swift in Sources */,
 				45AD1F1E25938A9800A096A0 /* ToolPageModalViewModelType.swift in Sources */,
@@ -4905,7 +4921,6 @@
 				45AD201125938A9800A096A0 /* TranslationManifestData.swift in Sources */,
 				45AD205925938AC300A096A0 /* SnowplowAnalyticsType.swift in Sources */,
 				45AD1F7025938A9800A096A0 /* FollowUpsService.swift in Sources */,
-				45AD1A9B25938A4E00A096A0 /* NavigationBarBackground.swift in Sources */,
 				45AD201825938A9800A096A0 /* ShortcutItemType.swift in Sources */,
 				45AD1FB825938A9800A096A0 /* TractRemoteShareChannel.swift in Sources */,
 				45AD1B4A25938A4F00A096A0 /* MenuView.swift in Sources */,
@@ -4978,6 +4993,7 @@
 				45AD1F5F25938A9800A096A0 /* WebSocketChannelSubscriberType.swift in Sources */,
 				45AD1EF325938A9800A096A0 /* MobileContentAnalyticsEvent.swift in Sources */,
 				45AD1FAA25938A9800A096A0 /* ArticleAemImportDataParserError.swift in Sources */,
+				45AD223C2593C90000A096A0 /* CrashReportingType.swift in Sources */,
 				45AD1AA225938A4E00A096A0 /* TutorialItemProviderType.swift in Sources */,
 				45AD1B1225938A4E00A096A0 /* ArticleCategoryCellViewModelType.swift in Sources */,
 				45AD1B8025938A4F00A096A0 /* OnboardingTutorialUsageCellViewModel.swift in Sources */,
@@ -5009,6 +5025,7 @@
 				45AD1B0125938A4E00A096A0 /* ArticleCategoriesView.swift in Sources */,
 				45AD1FF425938A9800A096A0 /* DownloadAttachmentsReceipt.swift in Sources */,
 				45AD21172593958E00A096A0 /* LanguagesApi.swift in Sources */,
+				45AD223D2593C90000A096A0 /* FirebaseCrashlyticsService.swift in Sources */,
 				45AD1BAC25938A4F00A096A0 /* AppFlow.swift in Sources */,
 				45AD1B9C25938A4F00A096A0 /* LegacyRealmDatabase.swift in Sources */,
 				45AD1B6925938A4F00A096A0 /* ToolDetailViewModel.swift in Sources */,
@@ -5142,6 +5159,7 @@
 				45AD200225938A9800A096A0 /* RealmResourceView.swift in Sources */,
 				45AD1FDE25938A9800A096A0 /* RealmEmailSignUpsCache.swift in Sources */,
 				45AD1BA625938A4F00A096A0 /* FlowStep.swift in Sources */,
+				45AD22A12593CE8900A096A0 /* ColorPalette.swift in Sources */,
 				45AD1B2225938A4F00A096A0 /* LearnToShareToolCellViewModelType.swift in Sources */,
 				45AD1BE125938A4F00A096A0 /* ProgressView.swift in Sources */,
 				45AD200E25938A9800A096A0 /* TranslationsApi.swift in Sources */,
@@ -5404,7 +5422,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.cru.godtools";
+				PROVISIONING_PROFILE_SPECIFIER = "GodTools Beta";
 				SWIFT_OBJC_BRIDGING_HEADER = "godtools/godtools-Bridging-Header.h";
 				VERSIONING_SYSTEM = "apple-generic";
 			};

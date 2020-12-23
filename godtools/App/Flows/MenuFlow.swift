@@ -27,7 +27,7 @@ class MenuFlow: Flow {
         let fontService: FontService = appDiContainer.getFontService()
         
         navigationController = UINavigationController()
-        navigationController.navigationBar.barTintColor = UIColor.gtBlue
+        navigationController.navigationBar.barTintColor = ColorPalette.gtBlue.color
         navigationController.navigationBar.tintColor = UIColor.white
         navigationController.navigationBar.isTranslucent = false
         navigationController.navigationBar.shadowImage = UIImage()

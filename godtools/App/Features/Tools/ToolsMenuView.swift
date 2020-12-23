@@ -81,8 +81,6 @@ class ToolsMenuView: UIViewController {
     
     private func setupLayout() {
         
-        // toolsMenuControl
-        toolsMenuControl.accessibilityIdentifier = GTAccessibilityConstants.Home.homeNavSegmentedControl
     }
     
     private func setupBinding() {

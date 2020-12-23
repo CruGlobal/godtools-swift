@@ -34,6 +34,7 @@ class AppDiContainer {
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
 
     let config: ConfigType
+    let crashReporting: CrashReportingType
     let userAuthentication: UserAuthenticationType
     let loginClient: TheKeyOAuthClient
     let translationsFileCache: TranslationsFileCache
@@ -64,6 +65,8 @@ class AppDiContainer {
     required init() {
         
         config = AppConfig()
+        
+        crashReporting = FirebaseCrashlyticsService()
         
         userAuthentication = TheKeyUserAuthentication()
         

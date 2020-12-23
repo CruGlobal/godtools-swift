@@ -48,16 +48,11 @@ class ShareArticleViewModel: ShareArticleViewModelType {
     }
     
     func articleShared() {
-        
-        let data: [String: Any] = [
-            AdobeAnalyticsConstants.Keys.shareAction: 1,
-            GTConstants.kAnalyticsScreenNameKey: analyticsScreenName
-        ]
-        
+                
         analytics.trackActionAnalytics.trackAction(
             screenName: nil,
             actionName: AdobeAnalyticsConstants.Values.share,
-            data: data
+            data: [AdobeAnalyticsConstants.Keys.shareAction: 1]
         )
     }
 }

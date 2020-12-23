@@ -324,17 +324,19 @@ class AppFlow: NSObject, FlowDelegate {
     
     private func configureNavigationBar() {
                 
-        let color: UIColor = UIColor.gtBlue
-        
         let fontService: FontService = appDiContainer.getFontService()
         let font: UIFont = fontService.getFont(size: 17, weight: .semibold)
         
+        navigationController.navigationBar.setBackgroundImage(nil, for: .default)
+        navigationController.navigationBar.isTranslucent = false
+        navigationController.navigationBar.barTintColor = ColorPalette.gtBlue.color
         navigationController.navigationBar.tintColor = .white
-        navigationController.navigationBar.barTintColor = .clear
-        navigationController.navigationBar.setBackgroundImage(NavigationBarBackground.createFrom(color), for: .default)
-        navigationController.navigationBar.isTranslucent = true
-        navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white,
-                                                                  NSAttributedString.Key.font: font]
+        navigationController.navigationBar.shadowImage = UIImage()
+        
+        navigationController.navigationBar.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.white,
+            NSAttributedString.Key.font: font
+        ]
     }
 }
 

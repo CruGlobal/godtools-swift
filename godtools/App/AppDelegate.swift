@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import Crashlytics
-import Fabric
 import FBSDKCoreKit
 
 @UIApplicationMain
@@ -40,8 +38,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         appDiContainer.analytics.snowplowAnalytics.configure(adobeAnalytics: appDiContainer.analytics.adobeAnalytics)
         
-        Fabric.with([Crashlytics.self, Answers.self])
-
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
            
         appFlow = AppFlow(appDiContainer: appDiContainer)

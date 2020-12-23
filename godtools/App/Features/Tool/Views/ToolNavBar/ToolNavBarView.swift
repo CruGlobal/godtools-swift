@@ -51,7 +51,7 @@ class ToolNavBarView: NSObject {
         
         navigationController?.navigationBar.barTintColor = .clear
         navigationController?.navigationBar.tintColor = navBarControlColor
-        navigationController?.navigationBar.setBackgroundImage(NavigationBarBackground.createFrom(navBarColor), for: .default)
+        navigationController?.navigationBar.setBackgroundImage(UIImage.createImageWithColor(color: navBarColor), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.view.backgroundColor = .clear
