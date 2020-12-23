@@ -52,7 +52,7 @@ class AppDiContainer {
     let localizationServices: LocalizationServices = LocalizationServices()
     let deviceLanguage: DeviceLanguageType = DeviceLanguage()
     let fetchTranslationManifestsViewModel: FetchTranslationManifestsViewModel
-    let globalActivityServices: GlobalActivityServicesType
+    let globalActivityServices: GlobalActivityServices
     let followUpsService: FollowUpsService
     let viewsService: ViewsService
     let shortcutItemsService: ShortcutItemsService

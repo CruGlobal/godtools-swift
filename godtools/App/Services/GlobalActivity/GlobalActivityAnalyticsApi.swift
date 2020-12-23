@@ -8,7 +8,7 @@
 
 import Foundation
 
-class GlobalActivityAnalyticsApi: GlobalActivityAnalyticsApiType {
+class GlobalActivityAnalyticsApi {
     
     private let session: URLSession
     private let requestBuilder: RequestBuilder = RequestBuilder()

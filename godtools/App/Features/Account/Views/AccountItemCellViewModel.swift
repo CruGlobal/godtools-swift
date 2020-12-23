@@ -12,7 +12,7 @@ class AccountItemCellViewModel {
     
     let itemView: AccountItemViewType
     
-    required init(item: AccountItem, localizationServices: LocalizationServices, globalActivityServices: GlobalActivityServicesType) {
+    required init(item: AccountItem, localizationServices: LocalizationServices, globalActivityServices: GlobalActivityServices) {
         
         switch item.itemId {
         case .activity:

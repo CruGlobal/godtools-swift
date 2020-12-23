@@ -16,7 +16,7 @@ class AccountActivityViewModel: AccountActivityViewModelType {
     let globalActivityResults: ObservableValue<GlobalActivityResults> = ObservableValue(value: GlobalActivityResults(isLoading: true, didFail: false, globalActivityAttributes: []))
     let alertMessage: ObservableValue<AlertMessageType?> = ObservableValue(value: nil)
     
-    required init(localizationServices: LocalizationServices, globalActivityServices: GlobalActivityServicesType) {
+    required init(localizationServices: LocalizationServices, globalActivityServices: GlobalActivityServices) {
         
         self.localizationServices = localizationServices
         

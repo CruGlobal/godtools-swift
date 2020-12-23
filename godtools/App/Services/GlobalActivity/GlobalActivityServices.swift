@@ -8,9 +8,9 @@
 
 import Foundation
 
-class GlobalActivityServices: GlobalActivityServicesType {
+class GlobalActivityServices {
     
-    private let globalActivityApi: GlobalActivityAnalyticsApiType
+    private let globalActivityApi: GlobalActivityAnalyticsApi
     private let globalActivityCache: GlobalActivityAnalyticsCacheType
     
     required init(config: ConfigType, sharedSession: SharedSessionType) {

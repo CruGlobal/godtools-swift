@@ -3,7 +3,7 @@ source 'https://cdn.cocoapods.org/'
 source 'https://github.com/CruGlobal/cocoapods-specs.git'
 
 # Uncomment this line to define a global platform for your project
-platform :ios, '9.0'
+platform :ios, '11.0'
 
 use_frameworks!
 
@@ -17,14 +17,13 @@ target 'godtools' do
     pod 'Crashlytics', '~> 3.14.0'
     pod 'GoogleConversionTracking', '~> 3.4.0'
     pod 'GoogleTagManager', '~> 7.1.4'
-    pod 'Fabric', '~> 1.10.2'
     pod 'FacebookCore', '~> 0.9.0'
     pod 'Firebase', '6.32.0'
     pod 'Firebase/InAppMessaging', '6.32.0'
     pod 'Firebase/Analytics', '6.32.0'
     pod 'Fuzi', '~> 3.1.1'
     pod 'lottie-ios', '~> 3.1.8'
-    pod 'RealmSwift', '~> 4.3.0'
+    pod 'RealmSwift', '~> 10.5.0'
     pod 'SnowplowTracker', '~> 1.3'
     pod 'SSZipArchive', '~> 2.2.2'
     pod 'Starscream', '~> 4.0.0'

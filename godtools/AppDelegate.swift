@@ -2,14 +2,13 @@
 //  AppDelegate.swift
 //  godtools
 //
-//  Created by Ryan Carlson on 4/18/17.
-//  Copyright © 2017 Cru. All rights reserved.
+//  Created by Levi Eggert on 12/22/20.
+//  Copyright © 2020 Cru. All rights reserved.
 //
 
 import UIKit
-import Fabric
 import Crashlytics
-import AppAuth
+import Fabric
 import FBSDKCoreKit
 
 @UIApplicationMain

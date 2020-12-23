@@ -13,7 +13,7 @@ class AccountViewModel: AccountViewModelType {
     
     private let analytics: AnalyticsContainer
         
-    let globalActivityServices: GlobalActivityServicesType
+    let globalActivityServices: GlobalActivityServices
     let localizationServices: LocalizationServices
     let navTitle: String
     let profileName: ObservableValue<(name: String, animated: Bool)> = ObservableValue(value: (name: "", animated: false))
@@ -21,7 +21,7 @@ class AccountViewModel: AccountViewModelType {
     let accountItems: ObservableValue<[AccountItem]> = ObservableValue(value: [])
     let currentAccountItemIndex: ObservableValue<Int> = ObservableValue(value: 0)
     
-    required init(loginClient: TheKeyOAuthClient, globalActivityServices: GlobalActivityServicesType, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
+    required init(loginClient: TheKeyOAuthClient, globalActivityServices: GlobalActivityServices, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
         
         self.globalActivityServices = globalActivityServices
         self.localizationServices = localizationServices
