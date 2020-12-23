@@ -12,6 +12,7 @@ import TheKeyOAuthSwift
 import GTMAppAuth
 
 class AdobeAnalytics: NSObject, AdobeAnalyticsType {
+    
     private let config: ConfigType
     private let keyAuthClient: TheKeyOAuthClient
     private let languageSettingsService: LanguageSettingsService
@@ -166,6 +167,7 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
     }
     
     func fetchAttributesThenSyncIds() {
+        
         assertFailureIfNotConfigured()
 
         let isLoggedIn: Bool = keyAuthClient.isAuthenticated()

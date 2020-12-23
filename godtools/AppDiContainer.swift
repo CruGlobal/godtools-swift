@@ -7,7 +7,10 @@
 //
 
 import Foundation
+
+// TODO: Remove these imports once TheKeyOauthClient is replaced. ~Levi
 import TheKeyOAuthSwift
+import GTMAppAuth
 
 class AppDiContainer {
         
@@ -31,6 +34,8 @@ class AppDiContainer {
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
 
     let config: ConfigType
+    let userAuthentication: UserAuthenticationType
+    let loginClient: TheKeyOAuthClient
     let translationsFileCache: TranslationsFileCache
     let translationDownloader: TranslationDownloader
     let favoritedResourcesCache: FavoritedResourcesCache
@@ -42,7 +47,6 @@ class AppDiContainer {
     let languageTranslationsDownloader: LanguageTranslationsDownloader
     let articleAemImportDownloader: ArticleAemImportDownloader
     let isNewUserService: IsNewUserService
-    let loginClient: TheKeyOAuthClient
     let analytics: AnalyticsContainer
     let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     let localizationServices: LocalizationServices = LocalizationServices()
@@ -55,10 +59,15 @@ class AppDiContainer {
     let deepLinkingService: DeepLinkingService
     let deviceAttachmentBanners: DeviceAttachmentBanners = DeviceAttachmentBanners()
     let favoritingToolMessageCache: FavoritingToolMessageCache
+    let emailSignUpService: EmailSignUpService
         
     required init() {
         
         config = AppConfig()
+        
+        userAuthentication = TheKeyUserAuthentication()
+        
+        loginClient = TheKeyOAuthClient.shared
         
         realmDatabase = RealmDatabase()
 
@@ -160,8 +169,6 @@ class AppDiContainer {
             determineNewUser: DetermineNewUserIfPrimaryLanguageSet(languageSettingsCache: languageSettingsCache)
         )
                 
-        loginClient = TheKeyOAuthClient.shared
-                
         let analyticsLoggingEnabled: Bool = config.build == .analyticsLogging
         analytics = AnalyticsContainer(
             adobeAnalytics: AdobeAnalytics(config: config, keyAuthClient: loginClient, languageSettingsService: languageSettingsService, loggingEnabled: analyticsLoggingEnabled),
@@ -195,6 +202,8 @@ class AppDiContainer {
         deepLinkingService = DeepLinkingService(dataDownloader: initialDataDownloader, loggingEnabled: config.isDebug)
         
         favoritingToolMessageCache = FavoritingToolMessageCache(userDefaultsCache: sharedUserDefaultsCache)
+        
+        emailSignUpService = EmailSignUpService(sharedSession: sharedIgnoringCacheSession, realmDatabase: realmDatabase, userAuthentication: userAuthentication)
     }
     
     func getCardJumpService() -> CardJumpService {

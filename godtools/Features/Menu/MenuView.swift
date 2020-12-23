@@ -2,34 +2,11 @@
 //  MenuView.swift
 //  godtools
 //
-//  Created by Devserker on 4/24/17.
-//  Copyright © 2017 Cru. All rights reserved.
+//  Created by Levi Eggert on 1/31/20.
+//  Copyright © 2020 Cru. All rights reserved.
 //
 
 import UIKit
-import TheKeyOAuthSwift
-import GTMAppAuth
-
-/*
- ----The OAuth client ID.----
- For client configuration instructions, see the [README](h ttps://github.com/openid/AppAuth-iOS/blob/master/Examples/Example-iOS_Swift-Carthage/README.md).
- Set to nil to use dynamic registration with this example.
- 
-let kClientID: String? = "2880599195946831054";
-  Testing Client_ID 2880599195946831054
-  Real Client_ID 5337397229970887848
-
-----The OAuth redirect URI for the client @c kClientID.----
- For client configuration instructions, see the [README](h ttps://github.com/openid/AppAuth-iOS/blob/master/Examples/Example-iOS_Swift-Carthage/README.md).
- 
-let kRedirectURI: String = "ppoauthapp://h ttps://stage.godtoolsapp.com/auth";
-  Testing RedirectURI ppoauthapp://https://stage.godtoolsapp.com/auth
-  Real RedirectURI //https://godtoolsapp.com/auth
-
- ----NSCoding key for the authState property.----
-let kAppAuthExampleAuthStateKey: String = "authState";
-  */
-
 
 class MenuView: UIViewController {
     
@@ -59,9 +36,7 @@ class MenuView: UIViewController {
         
         setupLayout()
         setupBinding()
-        
-        viewModel.loginClient.addStateChangeDelegate(delegate: self)
-                
+                        
         _ = addBarButtonItem(
             to: .right,
             title: viewModel.navDoneButtonTitle,
@@ -101,9 +76,10 @@ class MenuView: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        // TODO: What is login banner? ~Levi
         if isComingFromLoginBanner {
-            openLoginWindow()
-            isComingFromLoginBanner = false
+            //openLoginWindow()
+            //isComingFromLoginBanner = false
         }
     }
     
@@ -193,10 +169,10 @@ extension MenuView: UITableViewDelegate {
             }
             
         case .login:
-            initiateLogin()
+            viewModel.loginTapped(fromViewController: self)
         
         case .createAccount:
-            initiateLogin(additionalParameters: ["action":"signup"])
+            viewModel.createAccountTapped(fromViewController: self)
             
         case .myAccount:
             viewModel.myAccountTapped()
@@ -245,14 +221,7 @@ extension MenuView: UITableViewDelegate {
 
 extension MenuView {
     
-    fileprivate func initiateLogin(additionalParameters: [String: String]? = nil) {
-        guard let delegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        
-        delegate.currentAuthorizationFlow = viewModel.loginClient.initiateAuthorization(requestingViewController: self, additionalParameters: additionalParameters, callback: { (_) in
-            // block unused
-        })
-    }
-    
+    /*
     fileprivate func openLoginWindow() {
         if viewModel.loginClient.isAuthenticated() {
             DispatchQueue.main.async { [weak self] in
@@ -261,26 +230,5 @@ extension MenuView {
         } else {
             initiateLogin()
         }
-    }
-}
-
-// MARK: - OIDAuthStateChangeDelegate
-
-extension MenuView: OIDAuthStateChangeDelegate {
-    func didChange(_ state: OIDAuthState) {
-        handleEmailRegistration()
-        DispatchQueue.main.async { [weak self] in
-            self?.viewModel.reloadMenuDataSource()
-        }
-    }
-    
-    fileprivate func handleEmailRegistration() {
-        let hasRegisteredEmail = UserDefaults.standard.bool(forKey: GTConstants.kUserEmailIsRegistered)
-        if !hasRegisteredEmail && viewModel.loginClient.isAuthenticated() {
-            viewModel.loginClient.fetchAttributes() { (attributes, _) in
-                let signupManager = EmailSignUpManager()
-                signupManager.signUpUserForEmailRegistration(attributes: attributes)
-            }
-        }
-    }
+    }*/
 }

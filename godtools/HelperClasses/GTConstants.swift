@@ -11,5 +11,4 @@ import Foundation
 struct GTConstants {
             
     static let kAnalyticsScreenNameKey = "org.cru.godtools.analyticsScreeNameKey"
-    static let kUserEmailIsRegistered = "org.cru.godtools.userEmailIsRegistered"
 }

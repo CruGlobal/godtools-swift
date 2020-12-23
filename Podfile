@@ -11,11 +11,7 @@ use_frameworks!
 # https://github.com/CocoaPods/Specs/find/master
 
 target 'godtools' do
-    
-    pod 'Alamofire', '~> 4.8'
-    pod 'PromiseKit', '~> 6.8'
-    pod 'PromiseKit/Alamofire', '~> 6.8'
-    
+        
     pod 'AdobeMobileSDK', '~> 4.19'
     pod 'AppsFlyerFramework', '~> 6.0.0'
     pod 'Crashlytics', '~> 3.14.0'

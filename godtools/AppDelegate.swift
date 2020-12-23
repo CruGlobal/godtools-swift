@@ -10,7 +10,6 @@ import UIKit
 import Fabric
 import Crashlytics
 import AppAuth
-import TheKeyOAuthSwift
 import FBSDKCoreKit
 
 @UIApplicationMain
@@ -21,26 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
-    var currentAuthorizationFlow: OIDAuthorizationFlowSession?
-    let loginClient = TheKeyOAuthClient.shared
-    fileprivate let kClientID = "5337397229970887848"
-    fileprivate let kRedirectURI = "https://godtoolsapp.com/auth"
-    fileprivate let kAppAuthExampleAuthStateKey = "authState"
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-           
-        // Login Client
-        loginClient.configure(baseCasURL: URL(string: "https://thekey.me/cas")!,
-                              clientID: kClientID,
-                              redirectURI: URL(string: kRedirectURI)!)
-        
-        let hasRegisteredEmail = UserDefaults.standard.bool(forKey: GTConstants.kUserEmailIsRegistered)
-        if !hasRegisteredEmail && loginClient.isAuthenticated() {
-            loginClient.fetchAttributes() { (attributes, _) in
-                let signupManager = EmailSignUpManager()
-                signupManager.signUpUserForEmailRegistration(attributes: attributes)
-            }
-        }
         
         appDiContainer.config.logConfiguration()
         
@@ -146,13 +126,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         if let host = url.host, host.contains("godtoolsapp") {
-            if let authorizationFlow = self.currentAuthorizationFlow, authorizationFlow.resumeAuthorizationFlow(with: url) {
-                
-                self.currentAuthorizationFlow = nil
-                return true
+            if let theKeyUserAuthentication = appDiContainer.userAuthentication as? TheKeyUserAuthentication {
+                return theKeyUserAuthentication.canResumeAuthorizationFlow(url: url)
             }
         } else {
-            
             appDiContainer.deepLinkingService.processDeepLink(url: url)
         }
         

@@ -38,7 +38,6 @@
 		4506DEA924B79E2F00A1C50B /* MenuSectionHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4506DEA824B79E2F00A1C50B /* MenuSectionHeaderViewModel.swift */; };
 		4506DEB424B7A69F00A1C50B /* ModalNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4506DEB324B7A69F00A1C50B /* ModalNavigationController.swift */; };
 		4506DED224B7A78700A1C50B /* NavigationBarBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4506DEB624B7A78700A1C50B /* NavigationBarBackground.swift */; };
-		4506DED424B7A78700A1C50B /* EmailSignUpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4506DEB824B7A78700A1C50B /* EmailSignUpManager.swift */; };
 		4508728F24EEC7020047123E /* ShareToolScreenTutorialItemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4508728D24EEC7020047123E /* ShareToolScreenTutorialItemProvider.swift */; };
 		4508729024EEC7020047123E /* ShareToolScreenCustomTutorialViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4508728E24EEC7020047123E /* ShareToolScreenCustomTutorialViewBuilder.swift */; };
 		4508729224EEC71A0047123E /* ShareToolScreenTutorialNumberOfViewsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4508729124EEC71A0047123E /* ShareToolScreenTutorialNumberOfViewsCache.swift */; };
@@ -278,6 +277,12 @@
 		4556AEE823E240EC002C15E8 /* OnboardingTutorialBackgroundItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEE723E240EC002C15E8 /* OnboardingTutorialBackgroundItem.swift */; };
 		455953DE24041259002330ED /* ImageCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455953DD24041259002330ED /* ImageCatalog.swift */; };
 		455A54C82550756C0053C0FD /* HeadingNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455A54C72550756C0053C0FD /* HeadingNode.swift */; };
+		455BC6CD2592B68000C8611D /* EmailSignUpModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455BC6CC2592B68000C8611D /* EmailSignUpModel.swift */; };
+		455BC6CF2592B6E100C8611D /* EmailSignUpModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455BC6CE2592B6E100C8611D /* EmailSignUpModelType.swift */; };
+		455BC6D32592B88E00C8611D /* RealmEmailSignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455BC6D22592B88E00C8611D /* RealmEmailSignUp.swift */; };
+		455BC6D62592BCE200C8611D /* UserAuthenticationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455BC6D52592BCE200C8611D /* UserAuthenticationType.swift */; };
+		455BC6D92592BD1600C8611D /* UserAuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455BC6D82592BD1600C8611D /* UserAuthModel.swift */; };
+		455BC6E22592C2CE00C8611D /* TheKeyUserAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455BC6E12592C2CE00C8611D /* TheKeyUserAuthentication.swift */; };
 		455BF70D23F6F643004A4854 /* GTSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455BF70823F6F643004A4854 /* GTSegment.swift */; };
 		455BF70E23F6F643004A4854 /* GTSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455BF70923F6F643004A4854 /* GTSegmentedControl.swift */; };
 		455BF70F23F6F643004A4854 /* GTSegmentedControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 455BF70A23F6F643004A4854 /* GTSegmentedControl.xib */; };
@@ -413,6 +418,7 @@
 		457719BC23E8788F0049D236 /* MenuDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719BB23E8788F0049D236 /* MenuDataSource.swift */; };
 		457719C323E8BAE50049D236 /* MenuDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719C123E8BAE50049D236 /* MenuDataProvider.swift */; };
 		457719C423E8BAE50049D236 /* MenuDataProviderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719C223E8BAE50049D236 /* MenuDataProviderType.swift */; };
+		457850162592FEB400D4095D /* RealmEmailSignUpsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457850152592FEB400D4095D /* RealmEmailSignUpsCache.swift */; };
 		4579169324E8483100C0CF49 /* LoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4579169024E8483100C0CF49 /* LoadingView.xib */; };
 		4579169524E8483100C0CF49 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4579169224E8483100C0CF49 /* LoadingView.swift */; };
 		4579169C24E84DAB00C0CF49 /* LoadingViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4579169A24E84DAB00C0CF49 /* LoadingViewModelType.swift */; };
@@ -524,10 +530,6 @@
 		459C8692247A2A240077AB7F /* DownloadArticlesErrorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459C8691247A2A240077AB7F /* DownloadArticlesErrorViewModel.swift */; };
 		459FD8C8258BA8BD00248869 /* EmailSignUpApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459FD8C7258BA8BD00248869 /* EmailSignUpApi.swift */; };
 		459FD8CA258BAC6900248869 /* EmailSignUpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459FD8C9258BAC6900248869 /* EmailSignUpService.swift */; };
-		459FD8CC258BAD0800248869 /* RegisteredEmailsCacheType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459FD8CB258BAD0800248869 /* RegisteredEmailsCacheType.swift */; };
-		459FD8CF258BAE1400248869 /* RegisteredEmailModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459FD8CE258BAE1400248869 /* RegisteredEmailModelType.swift */; };
-		459FD8D1258BAE3900248869 /* RegisteredEmailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459FD8D0258BAE3900248869 /* RegisteredEmailModel.swift */; };
-		459FD8D3258BAE5F00248869 /* RealmRegisteredEmailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459FD8D2258BAE5F00248869 /* RealmRegisteredEmailModel.swift */; };
 		459FDB832562C53B002D74D3 /* TrainingTipType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459FDB822562C53B002D74D3 /* TrainingTipType.swift */; };
 		459FDB9425632135002D74D3 /* TractRemoteSharePublisherNavigationEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459FDB9325632135002D74D3 /* TractRemoteSharePublisherNavigationEvent.swift */; };
 		45A1431624A62C1900892200 /* FetchTranslationManifestsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A1431524A62C1900892200 /* FetchTranslationManifestsViewModel.swift */; };
@@ -577,7 +579,6 @@
 		45B2AE692458DE7C00253BAD /* PageViewedAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B2AE682458DE7C00253BAD /* PageViewedAnalytics.swift */; };
 		45B3EE4724C917840042CF7C /* TractRemoteShareSubscriberError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B3EE4624C917840042CF7C /* TractRemoteShareSubscriberError.swift */; };
 		45B3F7DD255596BC00141A62 /* MobileContentRGBAColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B3F7DC255596BC00141A62 /* MobileContentRGBAColor.swift */; };
-		45B57073258BB05200F83F20 /* RealmRegisteredEmailsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B57072258BB05200F83F20 /* RealmRegisteredEmailsCache.swift */; };
 		45B72DA024FC5C7900BD963B /* LanguageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B72D9F24FC5C7900BD963B /* LanguageViewModel.swift */; };
 		45B881C7249AAC35004DC491 /* SHA256FilesCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B881C5249AAC35004DC491 /* SHA256FilesCache.swift */; };
 		45B881C8249AAC35004DC491 /* SHA256FileLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B881C6249AAC35004DC491 /* SHA256FileLocation.swift */; };
@@ -811,7 +812,6 @@
 		4506DEA824B79E2F00A1C50B /* MenuSectionHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSectionHeaderViewModel.swift; sourceTree = "<group>"; };
 		4506DEB324B7A69F00A1C50B /* ModalNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalNavigationController.swift; sourceTree = "<group>"; };
 		4506DEB624B7A78700A1C50B /* NavigationBarBackground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBarBackground.swift; sourceTree = "<group>"; };
-		4506DEB824B7A78700A1C50B /* EmailSignUpManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailSignUpManager.swift; sourceTree = "<group>"; };
 		4508728D24EEC7020047123E /* ShareToolScreenTutorialItemProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareToolScreenTutorialItemProvider.swift; sourceTree = "<group>"; };
 		4508728E24EEC7020047123E /* ShareToolScreenCustomTutorialViewBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareToolScreenCustomTutorialViewBuilder.swift; sourceTree = "<group>"; };
 		4508729124EEC71A0047123E /* ShareToolScreenTutorialNumberOfViewsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareToolScreenTutorialNumberOfViewsCache.swift; sourceTree = "<group>"; };
@@ -1052,6 +1052,12 @@
 		4556AEE723E240EC002C15E8 /* OnboardingTutorialBackgroundItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialBackgroundItem.swift; sourceTree = "<group>"; };
 		455953DD24041259002330ED /* ImageCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCatalog.swift; sourceTree = "<group>"; };
 		455A54C72550756C0053C0FD /* HeadingNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingNode.swift; sourceTree = "<group>"; };
+		455BC6CC2592B68000C8611D /* EmailSignUpModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSignUpModel.swift; sourceTree = "<group>"; };
+		455BC6CE2592B6E100C8611D /* EmailSignUpModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSignUpModelType.swift; sourceTree = "<group>"; };
+		455BC6D22592B88E00C8611D /* RealmEmailSignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmEmailSignUp.swift; sourceTree = "<group>"; };
+		455BC6D52592BCE200C8611D /* UserAuthenticationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthenticationType.swift; sourceTree = "<group>"; };
+		455BC6D82592BD1600C8611D /* UserAuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthModel.swift; sourceTree = "<group>"; };
+		455BC6E12592C2CE00C8611D /* TheKeyUserAuthentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TheKeyUserAuthentication.swift; sourceTree = "<group>"; };
 		455BF70823F6F643004A4854 /* GTSegment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTSegment.swift; sourceTree = "<group>"; };
 		455BF70923F6F643004A4854 /* GTSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTSegmentedControl.swift; sourceTree = "<group>"; };
 		455BF70A23F6F643004A4854 /* GTSegmentedControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GTSegmentedControl.xib; sourceTree = "<group>"; };
@@ -1187,6 +1193,7 @@
 		457719BB23E8788F0049D236 /* MenuDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDataSource.swift; sourceTree = "<group>"; };
 		457719C123E8BAE50049D236 /* MenuDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuDataProvider.swift; sourceTree = "<group>"; };
 		457719C223E8BAE50049D236 /* MenuDataProviderType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuDataProviderType.swift; sourceTree = "<group>"; };
+		457850152592FEB400D4095D /* RealmEmailSignUpsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmEmailSignUpsCache.swift; sourceTree = "<group>"; };
 		4579169024E8483100C0CF49 /* LoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingView.xib; sourceTree = "<group>"; };
 		4579169224E8483100C0CF49 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		4579169A24E84DAB00C0CF49 /* LoadingViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewModelType.swift; sourceTree = "<group>"; };
@@ -1297,10 +1304,6 @@
 		459C8691247A2A240077AB7F /* DownloadArticlesErrorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadArticlesErrorViewModel.swift; sourceTree = "<group>"; };
 		459FD8C7258BA8BD00248869 /* EmailSignUpApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSignUpApi.swift; sourceTree = "<group>"; };
 		459FD8C9258BAC6900248869 /* EmailSignUpService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSignUpService.swift; sourceTree = "<group>"; };
-		459FD8CB258BAD0800248869 /* RegisteredEmailsCacheType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisteredEmailsCacheType.swift; sourceTree = "<group>"; };
-		459FD8CE258BAE1400248869 /* RegisteredEmailModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisteredEmailModelType.swift; sourceTree = "<group>"; };
-		459FD8D0258BAE3900248869 /* RegisteredEmailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisteredEmailModel.swift; sourceTree = "<group>"; };
-		459FD8D2258BAE5F00248869 /* RealmRegisteredEmailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRegisteredEmailModel.swift; sourceTree = "<group>"; };
 		459FDB822562C53B002D74D3 /* TrainingTipType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingTipType.swift; sourceTree = "<group>"; };
 		459FDB9325632135002D74D3 /* TractRemoteSharePublisherNavigationEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractRemoteSharePublisherNavigationEvent.swift; sourceTree = "<group>"; };
 		45A1431524A62C1900892200 /* FetchTranslationManifestsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchTranslationManifestsViewModel.swift; sourceTree = "<group>"; };
@@ -1349,7 +1352,6 @@
 		45B2AE682458DE7C00253BAD /* PageViewedAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageViewedAnalytics.swift; sourceTree = "<group>"; };
 		45B3EE4624C917840042CF7C /* TractRemoteShareSubscriberError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractRemoteShareSubscriberError.swift; sourceTree = "<group>"; };
 		45B3F7DC255596BC00141A62 /* MobileContentRGBAColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentRGBAColor.swift; sourceTree = "<group>"; };
-		45B57072258BB05200F83F20 /* RealmRegisteredEmailsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRegisteredEmailsCache.swift; sourceTree = "<group>"; };
 		45B72D9F24FC5C7900BD963B /* LanguageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageViewModel.swift; sourceTree = "<group>"; };
 		45B881C5249AAC35004DC491 /* SHA256FilesCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHA256FilesCache.swift; sourceTree = "<group>"; };
 		45B881C6249AAC35004DC491 /* SHA256FileLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHA256FileLocation.swift; sourceTree = "<group>"; };
@@ -1740,7 +1742,6 @@
 		4506DEB524B7A78700A1C50B /* HelperClasses */ = {
 			isa = PBXGroup;
 			children = (
-				4506DEB824B7A78700A1C50B /* EmailSignUpManager.swift */,
 				45C6B4C8258B14FA0015556A /* GTAccessibilityConstants.swift */,
 				45C6B4C7258B14FA0015556A /* GTConstants.swift */,
 				4506DEB624B7A78700A1C50B /* NavigationBarBackground.swift */,
@@ -2313,6 +2314,7 @@
 				455D7F40244E77C50059EC49 /* Translations */,
 				452036BB240057B2002B2453 /* URLRequestServices */,
 				451EE23B24ABF6D200BB799F /* URLSession */,
+				455BC6D42592BCCF00C8611D /* UserAuthentication */,
 				454D5A0024BF550400B8528B /* UserDefaultsCache */,
 				45DEF22F2576AD510007AC64 /* ViewedTrainingTips */,
 				456BF68F248F17010094C6F8 /* Views */,
@@ -2373,6 +2375,32 @@
 				452E3228240708F000DB41B7 /* SignalValue.swift */,
 			);
 			path = Objects;
+			sourceTree = "<group>";
+		};
+		455BC6D42592BCCF00C8611D /* UserAuthentication */ = {
+			isa = PBXGroup;
+			children = (
+				455BC6D52592BCE200C8611D /* UserAuthenticationType.swift */,
+				455BC6D72592BD0000C8611D /* Models */,
+				455BC6E02592C2CE00C8611D /* TheKey */,
+			);
+			path = UserAuthentication;
+			sourceTree = "<group>";
+		};
+		455BC6D72592BD0000C8611D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				455BC6D82592BD1600C8611D /* UserAuthModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		455BC6E02592C2CE00C8611D /* TheKey */ = {
+			isa = PBXGroup;
+			children = (
+				455BC6E12592C2CE00C8611D /* TheKeyUserAuthentication.swift */,
+			);
+			path = TheKey;
 			sourceTree = "<group>";
 		};
 		455BF70523F6F643004A4854 /* GTSegmentControl */ = {
@@ -3123,8 +3151,7 @@
 			children = (
 				459FD8C7258BA8BD00248869 /* EmailSignUpApi.swift */,
 				459FD8C9258BAC6900248869 /* EmailSignUpService.swift */,
-				45B57072258BB05200F83F20 /* RealmRegisteredEmailsCache.swift */,
-				459FD8CB258BAD0800248869 /* RegisteredEmailsCacheType.swift */,
+				457850152592FEB400D4095D /* RealmEmailSignUpsCache.swift */,
 				459FD8CD258BADEE00248869 /* Models */,
 			);
 			path = EmailSignUp;
@@ -3133,9 +3160,9 @@
 		459FD8CD258BADEE00248869 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				459FD8D2258BAE5F00248869 /* RealmRegisteredEmailModel.swift */,
-				459FD8D0258BAE3900248869 /* RegisteredEmailModel.swift */,
-				459FD8CE258BAE1400248869 /* RegisteredEmailModelType.swift */,
+				455BC6CC2592B68000C8611D /* EmailSignUpModel.swift */,
+				455BC6CE2592B6E100C8611D /* EmailSignUpModelType.swift */,
+				455BC6D22592B88E00C8611D /* RealmEmailSignUp.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -4410,7 +4437,6 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-godtools/Pods-godtools-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AdobeMobileSDK/AdobeMobileSDK.framework",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AppAuth/AppAuth.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
@@ -4419,7 +4445,6 @@
 				"${BUILT_PRODUCTS_DIR}/GTMAppAuth/GTMAppAuth.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
-				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
 				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
@@ -4437,7 +4462,6 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AdobeMobileSDK.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AppAuth.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
@@ -4446,7 +4470,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMAppAuth.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
@@ -4612,6 +4635,7 @@
 				451F3F2224E4717D00A25D11 /* ShareToolScreenTutorialView.swift in Sources */,
 				4595F43224A294EE00B3733E /* ArticleAemImportOperation.swift in Sources */,
 				45C47E4A24C7483C00BC42BA /* OnboardingTutorialButtonState.swift in Sources */,
+				455BC6D62592BCE200C8611D /* UserAuthenticationType.swift in Sources */,
 				457D9836254B4F9F000B8159 /* MobileContentXmlNodeParser.swift in Sources */,
 				4561AC3025598BA300841D9A /* AppsFlyer.swift in Sources */,
 				4517377D24A7FBD90097FB15 /* RealmDownloadedLanguage.swift in Sources */,
@@ -4628,7 +4652,6 @@
 				450F12A9256D9B7200ED69D4 /* MobileContentAnalyticsSystem.swift in Sources */,
 				45DFBF28255EE4BA00E6B591 /* TrainingTipViewType.swift in Sources */,
 				45249D1524ACC62B00E139AD /* ResourceViewModel.swift in Sources */,
-				459FD8CC258BAD0800248869 /* RegisteredEmailsCacheType.swift in Sources */,
 				45647251244F782300CB202D /* ArticleCell.swift in Sources */,
 				45CF88F52571448F00093462 /* ToolPageContentStackContainerViewModelType.swift in Sources */,
 				4575C26323FB45E600D3265B /* GlobalActivityServices.swift in Sources */,
@@ -4655,7 +4678,6 @@
 				45B881E3249AACED004DC491 /* RealmResource.swift in Sources */,
 				4575C28923FC77C500D3265B /* GlobalActivityCellViewModel.swift in Sources */,
 				459A71E324C9C50A00B77942 /* WebSocketType.swift in Sources */,
-				459FD8D3258BAE5F00248869 /* RealmRegisteredEmailModel.swift in Sources */,
 				4595F43024A294EE00B3733E /* ArticleAemImportDataParserError.swift in Sources */,
 				454526CD243E138B00B84B29 /* AnalyticsContainer.swift in Sources */,
 				4561AC402559E89400841D9A /* ContentInputNode.swift in Sources */,
@@ -4714,8 +4736,8 @@
 				45E2BF0B254354C400C4D66C /* MobileContentXmlManifestAttributes.swift in Sources */,
 				454526DE243E1A9100B84B29 /* ShareAStoryWithUsWebContent.swift in Sources */,
 				45EDC540249BAB970020DC62 /* ToolDetailViewModelType.swift in Sources */,
-				459FD8D1258BAE3900248869 /* RegisteredEmailModel.swift in Sources */,
 				45A7BAF8252CEDAE00D70465 /* LocaleLocalizationBundle.swift in Sources */,
+				455BC6CD2592B68000C8611D /* EmailSignUpModel.swift in Sources */,
 				45249D0D24ACB22A00E139AD /* FollowUpsService.swift in Sources */,
 				453AD7A723FF212700921D75 /* AccountItemViewType.swift in Sources */,
 				454315A224A1464100B5C37B /* SHA256FileModelType.swift in Sources */,
@@ -4927,6 +4949,7 @@
 				459FDB9425632135002D74D3 /* TractRemoteSharePublisherNavigationEvent.swift in Sources */,
 				45B881C8249AAC35004DC491 /* SHA256FileLocation.swift in Sources */,
 				456B9C4C25635C5C008FC3F4 /* ToolLanguageSegmentViewModel.swift in Sources */,
+				455BC6E22592C2CE00C8611D /* TheKeyUserAuthentication.swift in Sources */,
 				456B9C4A25635C5C008FC3F4 /* ToolPageCell.swift in Sources */,
 				451F3F1F24E458A000A25D11 /* ShareToolViewModel.swift in Sources */,
 				459698B5255DCFFF0085755A /* ToolPageModalViewModel.swift in Sources */,
@@ -5006,7 +5029,6 @@
 				45A1431624A62C1900892200 /* FetchTranslationManifestsViewModel.swift in Sources */,
 				455F4BA02452808300AE6007 /* ArticleWebViewModel.swift in Sources */,
 				459698D2255DE0280085755A /* ContentEventError.swift in Sources */,
-				459FD8CF258BAE1400248869 /* RegisteredEmailModelType.swift in Sources */,
 				456AE95D2564127D0028510C /* ToolLanguageTranslationModel.swift in Sources */,
 				454526DA243E19C300B84B29 /* PrivacyPolicyWebContent.swift in Sources */,
 				456AE96125645A500028510C /* ToolPageViewModelsCache.swift in Sources */,
@@ -5018,7 +5040,6 @@
 				45FCFF41243D07B800865501 /* TutorialFlow.swift in Sources */,
 				45C42F6624A84EDE0046B474 /* LanguageTranslationsDownloader.swift in Sources */,
 				4506DED224B7A78700A1C50B /* NavigationBarBackground.swift in Sources */,
-				45B57073258BB05200F83F20 /* RealmRegisteredEmailsCache.swift in Sources */,
 				4543159C24A103C300B5C37B /* ResourcesSHA256FileCache.swift in Sources */,
 				4508F7A72429669700ECA950 /* AdobeAnalyticsType.swift in Sources */,
 				45F6E018249D44270077C7D9 /* LanguageModel.swift in Sources */,
@@ -5036,7 +5057,9 @@
 				45B881E4249AACED004DC491 /* RealmAttachment.swift in Sources */,
 				45BB6E67254C8F31007D8DDB /* ToolViewModelType.swift in Sources */,
 				453F1EF2253F868000DA48EA /* ToolTrainingTipsOnboardingViewsUserDefaultsCache.swift in Sources */,
+				455BC6CF2592B6E100C8611D /* EmailSignUpModelType.swift in Sources */,
 				45692F3A24E7853500A589FE /* ShareToolRemoteSessionURLViewModel.swift in Sources */,
+				455BC6D92592BD1600C8611D /* UserAuthModel.swift in Sources */,
 				457719A823E863A50049D236 /* MenuSectionId.swift in Sources */,
 				45E2BED3254317E100C4D66C /* ToolTrainingTipView.swift in Sources */,
 				4530DCB524A3DEAD000DA516 /* ResourcesDownloaderError.swift in Sources */,
@@ -5046,6 +5069,7 @@
 				4575C28D23FC8E8500D3265B /* GlobalActivityAttribute.swift in Sources */,
 				4562B0DC23F1BC54006B53A9 /* AlertMessageViewModel.swift in Sources */,
 				4539F33324EADA6300B30DF9 /* TractRemoteShareChannel.swift in Sources */,
+				455BC6D32592B88E00C8611D /* RealmEmailSignUp.swift in Sources */,
 				457D9832254B4F9F000B8159 /* TitleNode.swift in Sources */,
 				4506DEA924B79E2F00A1C50B /* MenuSectionHeaderViewModel.swift in Sources */,
 				451B869B252F43D40061942B /* LearnToShareToolCell.swift in Sources */,
@@ -5062,6 +5086,7 @@
 				4561AC3E2559E7E100841D9A /* ContentFormNode.swift in Sources */,
 				455BF70E23F6F643004A4854 /* GTSegmentedControl.swift in Sources */,
 				45ACBD12247DBD5A00514E75 /* ToolMenuItemId.swift in Sources */,
+				457850162592FEB400D4095D /* RealmEmailSignUpsCache.swift in Sources */,
 				45FFA1012493D2D900DD05F4 /* FileCacheType.swift in Sources */,
 				4575C24A23FAF71600D3265B /* AccountActivityViewModelType.swift in Sources */,
 				45A1B5E824A042B8009BA210 /* ResourceType.swift in Sources */,
@@ -5076,7 +5101,6 @@
 				4556AEAF23E1D37F002C15E8 /* AppDiContainer.swift in Sources */,
 				45DED9582478401700B0A71D /* WebArchiveOperationError.swift in Sources */,
 				45668E8323E0E1CC002728E7 /* OnboardingTutorialView.swift in Sources */,
-				4506DED424B7A78700A1C50B /* EmailSignUpManager.swift in Sources */,
 				459C3FE024C5F296006E81CA /* TractRemoteShareSubscriber.swift in Sources */,
 				45D5693524931E0F003E5798 /* RequestReceipt.swift in Sources */,
 				459698E0255E23EC0085755A /* TrainingTipViewModel.swift in Sources */,
@@ -5672,7 +5696,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.cru.godtools";
+				PROVISIONING_PROFILE_SPECIFIER = "GodTools Production";
 				SWIFT_OBJC_BRIDGING_HEADER = "godtools/godtools-Bridging-Header.h";
 				VERSIONING_SYSTEM = "apple-generic";
 			};

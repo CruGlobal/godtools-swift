@@ -6,12 +6,10 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import Foundation
-import TheKeyOAuthSwift
+import UIKit
 
 protocol MenuViewModelType {
     
-    var loginClient: TheKeyOAuthClient { get }
     var navTitle: ObservableValue<String> { get }
     var navDoneButtonTitle: String { get }
     var menuDataSource: ObservableValue<MenuDataSource> { get }
@@ -26,6 +24,8 @@ protocol MenuViewModelType {
     func helpTapped()
     func contactUsTapped()
     func logoutTapped()
+    func loginTapped(fromViewController: UIViewController)
+    func createAccountTapped(fromViewController: UIViewController)
     func shareGodToolsTapped()
     func shareAStoryWithUsTapped()
     func termsOfUseTapped()

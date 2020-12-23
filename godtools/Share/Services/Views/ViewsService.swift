@@ -30,10 +30,9 @@ class ViewsService {
         return viewsApi.postResourceView(resourceView: resourceView) { [weak self] (response: RequestResponse) in
             
             let httpStatusCode: Int = response.httpStatusCode ?? -1
-            let httpStatusCodeSuccess: Bool = httpStatusCode >= 200 && httpStatusCode < 400
+            let httpStatusCodeFailed: Bool = httpStatusCode < 200 || httpStatusCode >= 400
             
-            if !httpStatusCodeSuccess && response.notConnectedToInternet {
-                
+            if httpStatusCodeFailed {
                 self?.failedResourceViewsCache.cacheFailedResourceViews(resourceViews: [resourceView])
             }
         }

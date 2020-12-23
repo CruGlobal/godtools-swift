@@ -8,45 +8,59 @@
 
 import Foundation
 
-class EmailSignUpService {
+class EmailSignUpService: NSObject {
     
     private let emailSignUpApi: EmailSignUpApi
-    private let registeredEmailsCache: RegisteredEmailsCacheType
+    private let emailSignUpsCache: RealmEmailSignUpsCache
+    private let userAuthentication: UserAuthenticationType
     
-    required init(sharedSession: SharedSessionType, realmDatabase: RealmDatabase) {
+    required init(sharedSession: SharedSessionType, realmDatabase: RealmDatabase, userAuthentication: UserAuthenticationType) {
         
         self.emailSignUpApi = EmailSignUpApi(sharedSession: sharedSession)
-        self.registeredEmailsCache = RealmRegisteredEmailsCache(realmDatabase: realmDatabase)
+        self.emailSignUpsCache = RealmEmailSignUpsCache(realmDatabase: realmDatabase)
+        self.userAuthentication = userAuthentication
+        
+        super.init()
+        
+        setupBinding()
     }
     
-    func postEmailSignUpIfNeeded(email: String, firstName: String?, lastName: String?) -> OperationQueue? {
+    private func setupBinding() {
         
-        let registeredEmail: RegisteredEmailModel? = registeredEmailsCache.getRegisteredEmail(email: email)
-        let isRegistered: Bool = registeredEmail?.isRegisteredWithRemoteApi ?? false
+        userAuthentication.authenticatedUser.addObserver(self) { [weak self] (userAuth: UserAuthModel?) in
+            DispatchQueue.main.async { [weak self] in
+                if let userAuth = userAuth {
+                    let emailSignUp = EmailSignUpModel(email: userAuth.email, firstName: userAuth.firstName, lastName: userAuth.lastName)
+                    _ = self?.postNewEmailSignUpIfNeeded(emailSignUp: emailSignUp)
+                }
+            }
+        }
+    }
+    
+    deinit {
+        userAuthentication.authenticatedUser.removeObserver(self)
+    }
+    
+    func postNewEmailSignUpIfNeeded(emailSignUp: EmailSignUpModel) -> OperationQueue? {
         
-        guard !isRegistered else {
+        guard !emailSignUpsCache.emailIsRegistered(email: emailSignUp.email) else {
             return nil
         }
         
-        return emailSignUpApi.postEmailSignUp(email: email, firstName: firstName, lastName: lastName) { [weak self] (response: RequestResponse, result: ResponseResult<NoResponseSuccessType, NoClientApiErrorType>) in
-            
-            let didRegisterWithRemoteApi: Bool
-            
-            switch result {
-            case .success( _, _):
-                didRegisterWithRemoteApi = true
-            case .failure( _):
-                didRegisterWithRemoteApi = false
+        return postNewEmailSignUp(emailSignUp: emailSignUp)
+    }
+    
+    private func postNewEmailSignUp(emailSignUp: EmailSignUpModel) -> OperationQueue {
+        
+        return emailSignUpApi.postEmailSignUp(emailSignUp: emailSignUp) { [weak self] (response: RequestResponse) in
+                        
+            let httpStatusCode: Int = response.httpStatusCode ?? -1
+            let httpStatusCodeFailed: Bool = httpStatusCode < 200 || httpStatusCode >= 400
+
+            if !httpStatusCodeFailed {
+                let registeredEmailSignUp = EmailSignUpModel(model: emailSignUp, isRegistered: true)
+                self?.emailSignUpsCache.cacheEmailSignUp(emailSignUp: registeredEmailSignUp)
             }
-            
-            let registeredEmail = RegisteredEmailModel(
-                email: email,
-                firstName: firstName,
-                lastName: lastName,
-                isRegisteredWithRemoteApi: didRegisterWithRemoteApi
-            )
-            
-            self?.registeredEmailsCache.storeRegisteredEmail(model: registeredEmail)
         }
     }
 }

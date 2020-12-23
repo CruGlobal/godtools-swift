@@ -2,7 +2,6 @@ PODS:
   - AdobeMobileSDK (4.21.0):
     - AdobeMobileSDK/iOS (= 4.21.0)
   - AdobeMobileSDK/iOS (4.21.0)
-  - Alamofire (4.9.1)
   - AppAuth (0.92.0)
   - AppsFlyerFramework (6.0.8)
   - Crashlytics (3.14.0):
@@ -113,18 +112,6 @@ PODS:
     - nanopb/encode (= 1.30906.0)
   - nanopb/decode (1.30906.0)
   - nanopb/encode (1.30906.0)
-  - PromiseKit (6.13.1):
-    - PromiseKit/CorePromise (= 6.13.1)
-    - PromiseKit/Foundation (= 6.13.1)
-    - PromiseKit/UIKit (= 6.13.1)
-  - PromiseKit/Alamofire (6.13.1):
-    - Alamofire (~> 4.0)
-    - PromiseKit/CorePromise
-  - PromiseKit/CorePromise (6.13.1)
-  - PromiseKit/Foundation (6.13.1):
-    - PromiseKit/CorePromise
-  - PromiseKit/UIKit (6.13.1):
-    - PromiseKit/CorePromise
   - PromisesObjC (1.2.11)
   - Realm (4.3.2):
     - Realm/Headers (= 4.3.2)
@@ -145,7 +132,6 @@ PODS:
 
 DEPENDENCIES:
   - AdobeMobileSDK (~> 4.19)
-  - Alamofire (~> 4.8)
   - AppsFlyerFramework (~> 6.0.0)
   - Crashlytics (~> 3.14.0)
   - Fabric (~> 1.10.2)
@@ -158,8 +144,6 @@ DEPENDENCIES:
   - GoogleTagManager (~> 7.1.4)
   - GTMAppAuth (= 0.7.0)
   - lottie-ios (~> 3.1.8)
-  - PromiseKit (~> 6.8)
-  - PromiseKit/Alamofire (~> 6.8)
   - RealmSwift (~> 4.3.0)
   - SnowplowTracker (~> 1.3)
   - SSZipArchive (~> 2.2.2)
@@ -174,7 +158,6 @@ SPEC REPOS:
     - TheKeyOAuthSwift
   trunk:
     - AdobeMobileSDK
-    - Alamofire
     - AppAuth
     - AppsFlyerFramework
     - Crashlytics
@@ -202,7 +185,6 @@ SPEC REPOS:
     - GTMSessionFetcher
     - lottie-ios
     - nanopb
-    - PromiseKit
     - PromisesObjC
     - Realm
     - RealmSwift
@@ -216,7 +198,6 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   AdobeMobileSDK: d1ca0f19d381e977f8c2a8f277c5889df00b479b
-  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   AppAuth: 3f4f1d6d85ad631d0bbf15ffcdc10c447face97a
   AppsFlyerFramework: 57fb1fc68a5b8103353ce94d6e57861cbc4a55c3
   Crashlytics: 9220f5bc89e7a618df411b4f639389dbfb0e03d2
@@ -244,7 +225,6 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: b3503b20a988c4e20cc189aa798fd18220133f52
   lottie-ios: 3a3758ef5a008e762faec9c9d50a39842f26d124
   nanopb: 59317e09cf1f1a0af72f12af412d54edf52603fc
-  PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
   Realm: 5e92902e2875dff4bb0fd02f67bb737c3d5db2bc
   RealmSwift: 9a360fc7bae04fc2e308a34fbd899d5faa2d6b22
@@ -257,6 +237,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   YoutubePlayer-in-WKWebView: af2f5929fc78882d94bfdfeea999b661b78d9717
 
-PODFILE CHECKSUM: 7e14d29fa7eeacb1e6e20633381a8082602e7d23
+PODFILE CHECKSUM: da51d3fc3998e54e8197af3eb377b45688d55c6a
 
 COCOAPODS: 1.10.0

@@ -1,18 +1,17 @@
 //
-//  RegisteredEmailModelType.swift
+//  EmailSignUpModelType.swift
 //  godtools
 //
-//  Created by Levi Eggert on 12/17/20.
+//  Created by Levi Eggert on 12/22/20.
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
 import Foundation
 
-protocol RegisteredEmailModelType {
+protocol EmailSignUpModelType {
     
-    var id: String { get }
     var email: String { get }
     var firstName: String? { get }
     var lastName: String? { get }
-    var isRegisteredWithRemoteApi: Bool { get }
+    var isRegistered: Bool { get }
 }

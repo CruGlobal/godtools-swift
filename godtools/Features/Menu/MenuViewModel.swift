@@ -6,9 +6,7 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import Foundation
-import TheKeyOAuthSwift
-import GTMAppAuth
+import UIKit
 
 class MenuViewModel: NSObject, MenuViewModelType {
     
@@ -18,25 +16,25 @@ class MenuViewModel: NSObject, MenuViewModelType {
     private let tutorialAvailability: TutorialAvailabilityType
     private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     private let supportedLanguageCodesForAccountCreation: [String] = ["en"]
+    private let userAuthentication: UserAuthenticationType
     private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
     
     private weak var flowDelegate: FlowDelegate?
     
-    let loginClient: TheKeyOAuthClient
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
     let navDoneButtonTitle: String
     let menuDataSource: ObservableValue<MenuDataSource> = ObservableValue(value: MenuDataSource.emptyData)
     
-    required init(flowDelegate: FlowDelegate, config: ConfigType, loginClient: TheKeyOAuthClient, menuDataProvider: MenuDataProviderType, deviceLanguage: DeviceLanguageType, tutorialAvailability: TutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, config: ConfigType, menuDataProvider: MenuDataProviderType, deviceLanguage: DeviceLanguageType, tutorialAvailability: TutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, userAuthentication: UserAuthenticationType, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.config = config
-        self.loginClient = loginClient
         self.menuDataProvider = menuDataProvider
         self.deviceLanguage = deviceLanguage
         self.tutorialAvailability = tutorialAvailability
         self.openTutorialCalloutCache = openTutorialCalloutCache
+        self.userAuthentication = userAuthentication
         self.localizationServices = localizationServices
         self.analytics = analytics
         
@@ -47,6 +45,21 @@ class MenuViewModel: NSObject, MenuViewModelType {
         navTitle.accept(value: localizationServices.stringForMainBundle(key: "settings"))
                 
         reloadMenuDataSource()
+        
+        setupBinding()
+    }
+    
+    deinit {
+        userAuthentication.didAuthenticateSignal.removeObserver(self)
+    }
+    
+    private func setupBinding() {
+        
+        userAuthentication.didAuthenticateSignal.addObserver(self) { [weak self] (result: Result<UserAuthModel, Error>) in
+            DispatchQueue.main.async { [weak self] in
+                self?.reloadMenuDataSource()
+            }
+        }
     }
     
     func reloadMenuDataSource() {
@@ -55,7 +68,7 @@ class MenuViewModel: NSObject, MenuViewModelType {
         
         menuDataSource.accept(value:
             createMenuDataSource(
-                isAuthorized: loginClient.isAuthenticated(),
+                isAuthorized: userAuthentication.isAuthenticated,
                 accountCreationIsSupported: accountCreationIsSupported,
                 tutorialIsAvailable: tutorialAvailability.tutorialIsAvailable
             )
@@ -179,13 +192,21 @@ class MenuViewModel: NSObject, MenuViewModelType {
     func logoutTapped() {
         
         let loggedOutHandler: CallbackHandler = CallbackHandler { [weak self] in
-            self?.loginClient.logout()
+            self?.userAuthentication.signOut()
             self?.reloadMenuDataSource()
             //on logout, sync Adobe Analytics auth state
             self?.analytics.adobeAnalytics.fetchAttributesThenSyncIds()
         }
         
         flowDelegate?.navigate(step: .logoutTappedFromMenu(logoutHandler: loggedOutHandler))
+    }
+    
+    func loginTapped(fromViewController: UIViewController) {
+        userAuthentication.signIn(fromViewController: fromViewController)
+    }
+    
+    func createAccountTapped(fromViewController: UIViewController) {
+        userAuthentication.createAccount(fromViewController: fromViewController)
     }
     
     func shareGodToolsTapped() {
