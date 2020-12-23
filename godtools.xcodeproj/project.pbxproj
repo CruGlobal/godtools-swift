@@ -719,6 +719,11 @@
 		45AD223D2593C90000A096A0 /* FirebaseCrashlyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD223B2593C90000A096A0 /* FirebaseCrashlyticsService.swift */; };
 		45AD22A12593CE8900A096A0 /* ColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD22A02593CE8900A096A0 /* ColorPalette.swift */; };
 		45AD22B32593D1FB00A096A0 /* UIImage+CreateImageWithColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD22B22593D1FB00A096A0 /* UIImage+CreateImageWithColor.swift */; };
+		45AD22D02593E57100A096A0 /* SupportedLanguagesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175525938A4D00A096A0 /* SupportedLanguagesType.swift */; };
+		45AD22D52593E5F900A096A0 /* TutorialLanguageAvailability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD176725938A4D00A096A0 /* TutorialLanguageAvailability.swift */; };
+		45AD22DA2593E60900A096A0 /* LanguageAvailabilityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD176825938A4D00A096A0 /* LanguageAvailabilityType.swift */; };
+		45AD22DF2593E63D00A096A0 /* Locale+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD18BB25938A4E00A096A0 /* Locale+Extensions.swift */; };
+		45AD22E42593E68D00A096A0 /* TutorialSupportedLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175625938A4D00A096A0 /* TutorialSupportedLanguages.swift */; };
 		45C5386124B8EFA700CABDAC /* godtoolsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C5386024B8EFA700CABDAC /* godtoolsUITests.swift */; };
 		45DEF22E2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json in Resources */ = {isa = PBXBuildFile; fileRef = 45DEF22D2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json */; };
 		45E998D623FD7B090088DD0C /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */; };
@@ -5197,9 +5202,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45AD22D52593E5F900A096A0 /* TutorialLanguageAvailability.swift in Sources */,
 				45FA696F24251D360006878C /* MockSupportedLanguages.swift in Sources */,
+				45AD22D02593E57100A096A0 /* SupportedLanguagesType.swift in Sources */,
+				45AD22DA2593E60900A096A0 /* LanguageAvailabilityType.swift in Sources */,
 				45557AEA252D094100ACFA95 /* LocaleLocalizationBundleTests.swift in Sources */,
+				45AD22DF2593E63D00A096A0 /* Locale+Extensions.swift in Sources */,
 				45FA696C24251CA00006878C /* TutorialLanguageAvailabilityTests.swift in Sources */,
+				45AD22E42593E68D00A096A0 /* TutorialSupportedLanguages.swift in Sources */,
 				45A7BAF5252CBC5B00D70465 /* LocaleTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5439,7 +5449,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				INFOPLIST_FILE = godtoolsTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtoolsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -5604,7 +5614,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				INFOPLIST_FILE = godtoolsTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtoolsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -5769,7 +5779,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				INFOPLIST_FILE = godtoolsTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtoolsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -5956,7 +5966,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				INFOPLIST_FILE = godtoolsTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtoolsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -18,10 +18,35 @@ class TutorialLanguageAvailability: LanguageAvailabilityType {
     }
     
     func isAvailableInLanguage(locale: Locale) -> Bool {
-                        
+                           
         for supportingLocale in supportedLanguages.languages {
-            if locale.isEqualTo(locale: supportingLocale) || (supportingLocale.isBaseLanguage && locale.baseLanguageIsEqualToLocaleBaseLanguage(locale: supportingLocale)) {
+            
+            let baseLanguagesMatch: Bool = supportingLocale.baseLanguageIsEqualToLocaleBaseLanguage(locale: locale)
+            
+            guard baseLanguagesMatch else {
+                continue
+            }
+            
+            let supportingLocaleHasScriptCode: Bool = supportingLocale.scriptCode != nil
+            let supportingLocaleHasRegionCode: Bool = supportingLocale.regionCode != nil
+            
+            if supportingLocale.isBaseLanguage && baseLanguagesMatch {
                 return true
+            }
+            else if supportingLocaleHasScriptCode && supportingLocaleHasRegionCode {
+                if supportingLocale.scriptCodeIsEqualToLocaleScriptCode(locale: locale) && supportingLocale.regionCodeIsEqualToLocaleRegionCode(locale: locale) {
+                    return true
+                }
+            }
+            else if supportingLocaleHasScriptCode {
+                if supportingLocale.scriptCodeIsEqualToLocaleScriptCode(locale: locale) {
+                    return true
+                }
+            }
+            else if supportingLocaleHasRegionCode {
+                if supportingLocale.regionCodeIsEqualToLocaleRegionCode(locale: locale) {
+                    return true
+                }
             }
         }
         
