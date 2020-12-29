@@ -22,14 +22,14 @@ class InMemoryLearnToShareToolItems: LearnToShareToolItemsProviderType {
                 message: localization.stringForMainBundle(key: "learn_to_share_tool.learn_to_share.message")
             ),
             LearnToShareToolItem(
-                imageName: "training_tip_callout",
-                animationName: nil,
+                imageName: nil,
+                animationName:  "training_tip_callout",
                 title: localization.stringForMainBundle(key: "learn_to_share_tool.tips_light_the_way.title"),
                 message: localization.stringForMainBundle(key: "learn_to_share_tool.tips_light_the_way.message")
             ),
             LearnToShareToolItem(
-                imageName: "training_tip_tips",
-                animationName: nil,
+                imageName: nil,
+                animationName: "training_tip_tips",
                 title: localization.stringForMainBundle(key: "learn_to_share_tool.light_up_the_tips.title"),
                 message: localization.stringForMainBundle(key: "learn_to_share_tool.light_up_the_tips.message")
             )
