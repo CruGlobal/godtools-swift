@@ -13,6 +13,7 @@ import AppAuth
 import TheKeyOAuthSwift
 import FBSDKCoreKit
 import UserNotifications
+import AppsFlyerLib
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -177,5 +178,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-  AppsFlyerTracker.shared().registerUninstall(deviceToken)
+    AppsFlyerLib.shared().registerUninstall(deviceToken)
 }
