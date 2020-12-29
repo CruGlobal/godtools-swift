@@ -38,7 +38,7 @@ class ShareToolMenuFlow: Flow {
             flowDelegate: self,
             localizationServices: appDiContainer.localizationServices,
             resource: resource,
-            language: primaryLanguage,
+            language: selectedLanguage,
             pageNumber: pageNumber,
             hidesRemoteShareToolAction: hidesRemoteShareToolAction
         )
