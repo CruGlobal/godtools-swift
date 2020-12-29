@@ -80,7 +80,7 @@ class ToolsMenuView: UIViewController {
     }
     
     private func setupLayout() {
-        
+        toolsMenuControl.accessibilityIdentifier = "home_nav_segmented_control"
     }
     
     private func setupBinding() {
