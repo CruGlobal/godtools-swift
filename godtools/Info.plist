@@ -46,23 +46,9 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<string>861</string>
 	<key>Configuration</key>
 	<string>$(CONFIGURATION)</string>
-	<key>Fabric</key>
-	<dict>
-		<key>APIKey</key>
-		<string>4c6c9eb55214633c5eca4176c06b20bb8fd07a72</string>
-		<key>Kits</key>
-		<array>
-			<dict>
-				<key>KitInfo</key>
-				<dict/>
-				<key>KitName</key>
-				<string>Answers</string>
-			</dict>
-		</array>
-	</dict>
 	<key>FacebookAppID</key>
 	<string>2236701616451487</string>
 	<key>FacebookDisplayName</key>
