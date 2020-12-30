@@ -67,8 +67,9 @@ class TutorialLanguageAvailabilityTests: XCTestCase {
         for simplifiedChineseLanguage in simplifedChineseLocales {
             
             let tutorialShouldBeAvailable: Bool = true
+            let isAvailable: Bool = tutorialLanuageAvailability.isAvailableInLanguage(locale: simplifiedChineseLanguage)
                         
-            XCTAssertEqual(tutorialLanuageAvailability.isAvailableInLanguage(locale: simplifiedChineseLanguage), tutorialShouldBeAvailable, "Chinese simplified language \(simplifiedChineseLanguage) should be available in the supported simplified chinese language.")
+            XCTAssertEqual(isAvailable, tutorialShouldBeAvailable, "Chinese simplified language \(simplifiedChineseLanguage) should be available in the supported simplified chinese language.")
         }
     }
     
