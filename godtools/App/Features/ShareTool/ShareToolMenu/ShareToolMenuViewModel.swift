@@ -11,9 +11,6 @@ import Foundation
 class ShareToolMenuViewModel: ShareToolMenuViewModelType {
     
     private let localizationServices: LocalizationServices
-    private let resource: ResourceModel
-    private let language: LanguageModel
-    private let pageNumber: Int
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -22,13 +19,10 @@ class ShareToolMenuViewModel: ShareToolMenuViewModelType {
     let cancelTitle: String
     let hidesRemoteShareToolAction: Bool
     
-    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, resource: ResourceModel, language: LanguageModel, pageNumber: Int, hidesRemoteShareToolAction: Bool) {
+    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, hidesRemoteShareToolAction: Bool) {
         
         self.flowDelegate = flowDelegate
         self.localizationServices = localizationServices
-        self.resource = resource
-        self.language = language
-        self.pageNumber = pageNumber
         self.hidesRemoteShareToolAction = hidesRemoteShareToolAction
         
         shareToolTitle = localizationServices.stringForMainBundle(key: "share_tool_menu.send_tool")
@@ -38,7 +32,7 @@ class ShareToolMenuViewModel: ShareToolMenuViewModelType {
     
     func shareToolTapped() {
         
-        flowDelegate?.navigate(step: .shareToolTappedFromShareToolMenu(resource: resource, language: language, pageNumber: pageNumber))
+        flowDelegate?.navigate(step: .shareToolTappedFromShareToolMenu)
     }
     
     func remoteShareToolTapped() {
