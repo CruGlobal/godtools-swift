@@ -743,6 +743,8 @@
 		D129DE6B2543669C00841733 /* onboarding_tutorial_knife.json in Resources */ = {isa = PBXBuildFile; fileRef = D129DE682543669C00841733 /* onboarding_tutorial_knife.json */; };
 		D163EA96254A00BE00BA4EA9 /* share_tool_tutorial_link.json in Resources */ = {isa = PBXBuildFile; fileRef = D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */; };
 		D1838479257E86B3004F5674 /* container in Resources */ = {isa = PBXBuildFile; fileRef = D1838478257E86B3004F5674 /* container */; };
+		D19EB5DE259BB39300685156 /* training_tip_callout.json in Resources */ = {isa = PBXBuildFile; fileRef = D19EB5DD259BB39300685156 /* training_tip_callout.json */; };
+		D19EB5E0259BB75900685156 /* training_tip_tips.json in Resources */ = {isa = PBXBuildFile; fileRef = D19EB5DF259BB75900685156 /* training_tip_tips.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1568,6 +1570,8 @@
 		D129DE682543669C00841733 /* onboarding_tutorial_knife.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding_tutorial_knife.json; sourceTree = "<group>"; };
 		D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = share_tool_tutorial_link.json; sourceTree = "<group>"; };
 		D1838478257E86B3004F5674 /* container */ = {isa = PBXFileReference; lastKnownFileType = folder; path = container; sourceTree = "<group>"; };
+		D19EB5DD259BB39300685156 /* training_tip_callout.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = training_tip_callout.json; sourceTree = "<group>"; };
+		D19EB5DF259BB75900685156 /* training_tip_tips.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = training_tip_tips.json; sourceTree = "<group>"; };
 		D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtoolsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D61FF360D11F854476B6E206 /* Pods_godtools.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtools.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0F338026DD564DE8D5B7CE2 /* Pods-godtoolsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -4050,6 +4054,8 @@
 		D115A65C2526580A007F11AD /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
+				D19EB5DD259BB39300685156 /* training_tip_callout.json */,
+				D19EB5DF259BB75900685156 /* training_tip_tips.json */,
 				45DEF22D2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json */,
 				D129DE672543669C00841733 /* onboarding_tutorial_cups.json */,
 				D129DE682543669C00841733 /* onboarding_tutorial_knife.json */,
@@ -4384,6 +4390,8 @@
 				45AD1F1F25938A9800A096A0 /* ToolPageModalView.xib in Resources */,
 				45AD1ABC25938A4E00A096A0 /* FavoritedToolsView.xib in Resources */,
 				451EBE2A24AD968B00C4D6DD /* a6765002e46cea44dc6245bcb842ce01a0134c147c47cf108134a4c4d1a5c129.jpg in Resources */,
+				D19EB5DE259BB39300685156 /* training_tip_callout.json in Resources */,
+				D19EB5E0259BB75900685156 /* training_tip_tips.json in Resources */,
 				4556AED823E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf in Resources */,
 				45AD1B3925938A4F00A096A0 /* LanguageSettingsView.xib in Resources */,
 				45AD1B6C25938A4F00A096A0 /* ToolDetailView.xib in Resources */,
