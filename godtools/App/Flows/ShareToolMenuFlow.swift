@@ -37,9 +37,6 @@ class ShareToolMenuFlow: Flow {
         let viewModel = ShareToolMenuViewModel(
             flowDelegate: self,
             localizationServices: appDiContainer.localizationServices,
-            resource: resource,
-            language: selectedLanguage,
-            pageNumber: pageNumber,
             hidesRemoteShareToolAction: hidesRemoteShareToolAction
         )
         let view = ShareToolMenuView(viewModel: viewModel)
@@ -51,11 +48,11 @@ class ShareToolMenuFlow: Flow {
         
         switch step {
             
-        case .shareToolTappedFromShareToolMenu(let resource, let language, let pageNumber):
+        case .shareToolTappedFromShareToolMenu:
             
             let viewModel = ShareToolViewModel(
                 resource: resource,
-                language: language,
+                language: selectedLanguage,
                 pageNumber: pageNumber,
                 localizationServices: appDiContainer.localizationServices,
                 analytics: appDiContainer.analytics
