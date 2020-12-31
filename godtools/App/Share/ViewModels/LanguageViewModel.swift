@@ -20,6 +20,8 @@ class LanguageViewModel {
         let localizedKey: String = "language_name_" + language.code
         let localizedName: String = localizationServices.stringForBundle(bundle: Bundle.main, key: localizedKey)
         
+        let translatedLanguageName: String
+        
         if !localizedName.isEmpty && localizedName != localizedKey {
             translatedLanguageName = localizedName
         }
@@ -29,5 +31,16 @@ class LanguageViewModel {
         else {
             translatedLanguageName = language.name
         }
+        
+        var transformedLanguageName: String = translatedLanguageName
+                
+        if transformedLanguageName.contains(", ") {
+            let names: [String] = translatedLanguageName.components(separatedBy: ", ")
+            if names.count == 2 {
+                transformedLanguageName = names[0] + " (" + names[1] + ")"
+            }
+        }
+                
+        self.translatedLanguageName = transformedLanguageName
     }
 }
