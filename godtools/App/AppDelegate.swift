@@ -9,7 +9,6 @@
 import UIKit
 import FBSDKCoreKit
 import UserNotifications
-import AppsFlyerLib
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -50,20 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window.makeKeyAndVisible()
         self.window = window
         
-        // iOS 10 support
-        if #available(iOS 10, *) {
-            UNUserNotificationCenter.current().requestAuthorization(options:[.badge, .alert, .sound]){ (granted, error) in }
-            application.registerForRemoteNotifications()
-        }
-        // iOS 9 and iOS 8 support
-        else if #available(iOS 8, *), #available(iOS 9, *) {
-            UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.badge, .sound, .alert], categories: nil))
-            UIApplication.shared.registerForRemoteNotifications()
-        }
-        // iOS 7 support
-        else {
-            application.registerForRemoteNotifications(matching: [.badge, .sound, .alert])
-        }
+        application.registerForRemoteNotifications()
         
         return true
     }
@@ -147,8 +133,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
-}
-
-func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-    AppsFlyerLib.shared().registerUninstall(deviceToken)
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        appDiContainer.analytics.appsFlyer.registerUninstall(deviceToken: deviceToken)
+    }
 }
