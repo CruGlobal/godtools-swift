@@ -8,7 +8,6 @@
 
 import UIKit
 import FBSDKCoreKit
-import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
