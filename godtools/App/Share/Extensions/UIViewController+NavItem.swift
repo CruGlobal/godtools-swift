@@ -75,9 +75,14 @@ extension UIViewController {
     }
     
     func addBarButtonItem(to barPosition: ButtonItemPosition, index: Int? = nil, animationView: AnimationView) -> UIBarButtonItem {
-        
+        animationView.loopMode = .loop
+        animationView.isHidden = false
+        animationView.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        animationView.backgroundBehavior = .pauseAndRestore
+        animationView.play()
+
         let item = UIBarButtonItem(customView: animationView)
-        
+
         switch barPosition {
         case .left:
             addLeftBarButtonItem(item: item, index: index)

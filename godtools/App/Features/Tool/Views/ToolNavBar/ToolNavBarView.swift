@@ -156,9 +156,6 @@ class ToolNavBarView: NSObject {
             
             let animation = Animation.named("remote_share_active")
             animationView.animation = animation
-            animationView.loopMode = .loop
-            animationView.play()
-            animationView.isHidden = false
             
             remoteShareActiveNavItem = parentViewController?.addBarButtonItem(
                 to: .right,
