@@ -55,6 +55,7 @@ enum FlowStep {
     
     // tool training
     case closeTappedFromToolTraining
+    case urlLinkTappedFromToolTraining(url: URL)
     
     // share tool menu
     case shareToolTappedFromShareToolMenu
