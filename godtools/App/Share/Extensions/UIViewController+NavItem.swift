@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Lottie
 
 enum ButtonItemPosition {
     case left
@@ -73,6 +74,31 @@ extension UIViewController {
         }
     }
     
+    func addBarButtonItem(to barPosition: ButtonItemPosition, index: Int? = nil, animationName: String) -> UIBarButtonItem {
+        
+        let animationView = AnimationView()
+        
+        let animation = Animation.named(animationName)
+        animationView.animation = animation
+        
+        animationView.loopMode = .loop
+        animationView.isHidden = false
+        animationView.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        animationView.backgroundBehavior = .pauseAndRestore
+        animationView.play()
+
+        let item = UIBarButtonItem(customView: animationView)
+
+        switch barPosition {
+        case .left:
+            addLeftBarButtonItem(item: item, index: index)
+        case .right:
+            addRightBarButtonItem(item: item, index: index)
+        }
+        
+        return item
+    }
+        
     func removeBarButtonItem(item: UIBarButtonItem, barPosition: ButtonItemPosition, index: Int? = nil) {
         switch barPosition {
         case .left:

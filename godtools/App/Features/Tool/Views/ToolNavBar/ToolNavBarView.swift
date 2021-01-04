@@ -154,10 +154,7 @@ class ToolNavBarView: NSObject {
             remoteShareActiveNavItem = parentViewController?.addBarButtonItem(
                 to: .right,
                 index: RightNavbarPosition.remoteShareActive.rawValue,
-                image: ImageCatalog.shareToolRemoteSessionActive.image,
-                color: .white,
-                target: nil,
-                action: nil
+                animationName: "remote_share_active"
             )
         }
     }
