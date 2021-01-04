@@ -48,6 +48,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window.makeKeyAndVisible()
         self.window = window
         
+        application.registerForRemoteNotifications()
+        
         return true
     }
     
@@ -129,5 +131,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         return true
+    }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        appDiContainer.analytics.appsFlyer.registerUninstall(deviceToken: deviceToken)
     }
 }

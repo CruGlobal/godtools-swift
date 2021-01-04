@@ -38,6 +38,10 @@ class AppsFlyer: NSObject, AppsFlyerType {
         sharedAppsFlyer.appsFlyerDevKey = config.appsFlyerDevKey
         sharedAppsFlyer.appleAppID = config.appleAppId
         
+        if config.isDebug {
+            sharedAppsFlyer.useUninstallSandbox = true
+        }
+        
         serialQueue.async { [weak self] in
                         
             sharedAppsFlyer.customData = ["marketingCloudID": adobeAnalytics.visitorMarketingCloudID]
@@ -47,6 +51,10 @@ class AppsFlyer: NSObject, AppsFlyerType {
             
             self?.log(method: "configure()", label: nil, labelValue: nil, data: nil)
         }
+    }
+    
+    func registerUninstall(deviceToken: Data) {
+        AppsFlyerLib.shared().registerUninstall(deviceToken)
     }
     
     func trackAppLaunch() {
