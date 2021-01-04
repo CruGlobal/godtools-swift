@@ -807,7 +807,6 @@
 		451EBE2624AD968A00C4D6DD /* e961f409d06308e87deb9ed9166264c7c732d9dc24e70f886944636308810d6e.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = e961f409d06308e87deb9ed9166264c7c732d9dc24e70f886944636308810d6e.png; sourceTree = "<group>"; };
 		453D866324E08310004EA89F /* mn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = mn; path = mn.lproj/Localizable.strings; sourceTree = "<group>"; };
 		453D866424E08347004EA89F /* tpi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tpi; path = tpi.lproj/Localizable.strings; sourceTree = "<group>"; };
-		453D866524E08389004EA89F /* ru-143 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ru-143"; path = "ru-143.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		453D866924E08461004EA89F /* no */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = no; path = Localizable.strings; sourceTree = "<group>"; };
 		45557AE9252D094000ACFA95 /* LocaleLocalizationBundleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocaleLocalizationBundleTests.swift; sourceTree = "<group>"; };
 		4556AECA23E22185002C15E8 /* SF-Pro-Display-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Light.otf"; sourceTree = "<group>"; };
@@ -4257,7 +4256,6 @@
 				no,
 				mn,
 				tpi,
-				"ru-143",
 				nb,
 			);
 			mainGroup = 4F5732801EA69CF00082035C;
@@ -5326,7 +5324,6 @@
 				45DEF4BC24DEF6FA00996695 /* tr */,
 				453D866324E08310004EA89F /* mn */,
 				453D866424E08347004EA89F /* tpi */,
-				453D866524E08389004EA89F /* ru-143 */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
