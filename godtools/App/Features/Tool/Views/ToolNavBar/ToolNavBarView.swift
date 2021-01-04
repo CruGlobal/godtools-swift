@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Lottie
 
 class ToolNavBarView: NSObject {
     
@@ -152,15 +151,10 @@ class ToolNavBarView: NSObject {
         }
         else if !hidden && remoteShareActiveNavItem == nil {
             
-            let animationView = AnimationView()
-            
-            let animation = Animation.named("remote_share_active")
-            animationView.animation = animation
-            
             remoteShareActiveNavItem = parentViewController?.addBarButtonItem(
                 to: .right,
                 index: RightNavbarPosition.remoteShareActive.rawValue,
-                animationView: animationView
+                animationName: "remote_share_active"
             )
         }
     }
