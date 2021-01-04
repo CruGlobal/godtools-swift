@@ -144,7 +144,8 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         
         let languages: [LanguageModel] =  dataDownloader.resourcesCache.getResourceLanguages(resourceId: resource.id)
         let languageNames: [String] = languages.map({LanguageViewModel(language: $0, localizationServices: localizationServices).translatedLanguageName})
-        let sortedLanguageNames: String = languageNames.sorted(by: { $0 < $1 }).joined(separator: ", ")
+        let sortedLanguageNames: [String] = languageNames.sorted(by: { $0 < $1 })
+        let languageDetailsValue: String = sortedLanguageNames.joined(separator: ", ")
         
         let numberOfLanguages: Int = languages.count
         
@@ -170,7 +171,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         toolDetailsControls.accept(value: [aboutDetailsControl, languageDetailsControl])
         selectedDetailControl.accept(value: aboutDetailsControl)
         
-        languageDetails.accept(value: sortedLanguageNames)
+        languageDetails.accept(value: languageDetailsValue)
     }
     
     private var analyticsScreenName: String {
