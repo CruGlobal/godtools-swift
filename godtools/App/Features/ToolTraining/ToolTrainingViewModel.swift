@@ -83,6 +83,8 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
             tipNode: tipNode,
             trainingTipViewed: viewedTrainingTips.containsViewedTrainingTip(viewedTrainingTip: ViewedTrainingTip(trainingTipId: trainingTipId, resourceId: resource.id, languageId: language.id))
         )
+        
+        setupBinding()
     }
     
     deinit {
