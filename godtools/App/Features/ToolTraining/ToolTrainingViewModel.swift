@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ToolTrainingViewModel: ToolTrainingViewModelType {
+class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     
     private let resource: ResourceModel
     private let language: LanguageModel
@@ -69,6 +69,8 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
             languageDirectionSemanticContentAttribute = .forceRightToLeft
         }
         
+        super.init()
+        
         let startingPage: Int = 0
         let pageNodes: [PageNode] = tipNode.pages?.pages ?? []
         self.pageNodes = pageNodes
@@ -81,6 +83,22 @@ class ToolTrainingViewModel: ToolTrainingViewModelType {
             tipNode: tipNode,
             trainingTipViewed: viewedTrainingTips.containsViewedTrainingTip(viewedTrainingTip: ViewedTrainingTip(trainingTipId: trainingTipId, resourceId: resource.id, languageId: language.id))
         )
+        
+        setupBinding()
+    }
+    
+    deinit {
+        mobileContentEvents.urlButtonTappedSignal.removeObserver(self)
+    }
+    
+    private func setupBinding() {
+        
+        mobileContentEvents.urlButtonTappedSignal.addObserver(self) { [weak self] (urlButtonEvent: UrlButtonEvent) in
+            guard let url = URL(string: urlButtonEvent.url) else {
+                return
+            }
+            self?.flowDelegate?.navigate(step: .urlLinkTappedFromToolTraining(url: url))
+        }
     }
     
     private func setPage(page: Int, animated: Bool) {
