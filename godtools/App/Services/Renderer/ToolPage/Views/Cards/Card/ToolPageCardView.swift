@@ -349,21 +349,26 @@ class ToolPageCardView: UIView {
         }
     }
     
-    private func handleScroll(scrollView: UIScrollView) {
-        
-        guard let contentStackView = self.contentStackView, contentStackView.contentScrollViewIsEqualTo(otherScrollView: scrollView) else {
-            return
-        }
-        
-        guard cardSwipingIsEnabled else {
-            return
-        }
-        
+    private func getScrollViewContentOffset(scrollView: UIScrollView) -> CGFloat {
+        return floor(scrollView.contentOffset.y)
+    }
+    
+    private func getScrollViewContentTopOffset() -> CGFloat {
+        return 0
+    }
+    
+    private func getScrollViewContentBottomOffset(scrollView: UIScrollView) -> CGFloat {
         let scrollViewFrameHeight: CGFloat = getScrollViewFrameHeight(scrollView: scrollView)
-        if scrollView.contentOffset.y > 0 && scrollView.contentOffset.y < scrollView.contentSize.height - scrollViewFrameHeight {
-            swipeUpGesture.isEnabled = false
-            swipeDownGesture.isEnabled = false
-        }
+        let contentBottomOffset: CGFloat = floor(scrollView.contentSize.height - scrollViewFrameHeight)
+        return contentBottomOffset
+    }
+    
+    private func didScrollToTopOfScrollView(scrollView: UIScrollView) -> Bool {
+        getScrollViewContentOffset(scrollView: scrollView) <= getScrollViewContentTopOffset()
+    }
+    
+    private func didScrollToBottomOfScrollView(scrollView: UIScrollView) -> Bool {
+        getScrollViewContentOffset(scrollView: scrollView) >= getScrollViewContentBottomOffset(scrollView: scrollView)
     }
     
     private func handleScrollingEnded(scrollView: UIScrollView) {
@@ -376,10 +381,9 @@ class ToolPageCardView: UIView {
             return
         }
                 
-        let scrollViewFrameHeight: CGFloat = getScrollViewFrameHeight(scrollView: scrollView)
-        let didScrollToTop: Bool = scrollView.contentOffset.y <= 0
-        let didScrollToBottom: Bool = scrollView.contentOffset.y >= scrollView.contentSize.height - scrollViewFrameHeight
-        
+        let didScrollToTop: Bool = didScrollToTopOfScrollView(scrollView: scrollView)
+        let didScrollToBottom: Bool = didScrollToBottomOfScrollView(scrollView: scrollView)
+                
         if didScrollToTop {
             swipeUpGesture.isEnabled = false
             swipeDownGesture.isEnabled = true
@@ -398,30 +402,8 @@ class ToolPageCardView: UIView {
 // MARK: - UIGestureRecognizerDelegate
 
 extension ToolPageCardView: UIGestureRecognizerDelegate {
-    
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-                
-        guard let contentStackView = self.contentStackView else {
-            return false
-        }
-        
-        if let otherScrollView = otherGestureRecognizer.view as? UIScrollView, contentStackView.contentScrollViewIsEqualTo(otherScrollView: otherScrollView) {
-            
-            let scrollViewFrameHeight: CGFloat = getScrollViewFrameHeight(scrollView: otherScrollView)
-            let didScrollToTop: Bool = otherScrollView.contentOffset.y <= 0
-            let didScrollToBottom: Bool = otherScrollView.contentOffset.y >= otherScrollView.contentSize.height - scrollViewFrameHeight
-            
-            if didScrollToTop {
-                return true
-            }
-            else if didScrollToBottom {
-                return true
-            }
-            
-            return false
-        }
-        
-        return false
+        return true
     }
 }
 
