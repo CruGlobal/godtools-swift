@@ -8,9 +8,10 @@
 
 import UIKit
 import FBSDKCoreKit
+import AppsFlyerLib
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, AppsFlyerLibDelegate {
         
     private let appDiContainer: AppDiContainer = AppDiContainer()
     private var appFlow: AppFlow?
@@ -50,6 +51,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         application.registerForRemoteNotifications()
         
+        AppsFlyerLib.shared().delegate = self
+                
         return true
     }
     
@@ -135,5 +138,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         appDiContainer.analytics.appsFlyer.registerUninstall(deviceToken: deviceToken)
+    }
+    
+    func onAppOpenAttribution(_ attributionData: [AnyHashable : Any]) {
+        
+    }
+    
+    func onAppOpenAttributionFailure(_ error: Error) {
+        assertionFailure("AppsFlyer Error on Open Deep Link: \(error)")
+    }
+    
+    func onConversionDataSuccess(_ conversionInfo: [AnyHashable : Any]) {
+        
+    }
+    
+    func onConversionDataFail(_ error: Error) {
+        assertionFailure("AppsFlyer Error on Open Deferred Deep Link: \(error)")
     }
 }
