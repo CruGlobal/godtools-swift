@@ -51,15 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         application.registerForRemoteNotifications()
         
-        AppsFlyerLib.shared().appsFlyerDevKey = "QdbVaVHi9bHRchUTWtoaij"
-        AppsFlyerLib.shared().appleAppID = "id542773210"
         AppsFlyerLib.shared().delegate = self
-        
-        #if DEBUG
-            AppsFlyerLib.shared().isDebug = true
-        #else
-            AppsFlyerLib.shared().isDebug = false
-        #endif
                         
         return true
     }
@@ -162,8 +154,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 extension AppDelegate: AppsFlyerLibDelegate {
-    func onAppOpenAttribution(_ attributionData: [AnyHashable : Any]) {
+    func onAppOpenAttribution(_ data: [AnyHashable : Any]) {
+        let resourceName: String
         
+        if let deepLinkValue = data["deep_link_value"] as? String {
+            resourceName = deepLinkValue
+        } else {
+            print("Could not extract query params from link")
+            return
+        }
+        
+        appFlow?.navigateToTool(resourceName: resourceName)
     }
     
     func onAppOpenAttributionFailure(_ error: Error) {
