@@ -149,7 +149,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, AppsFlyerLibDelegate {
     }
     
     func onConversionDataSuccess(_ conversionInfo: [AnyHashable : Any]) {
+        let deepLinkingValue = conversionInfo["deep_link_value"] as? String ?? ""
         
+        appFlow?.navigateToTool(resourceName: "")
     }
     
     func onConversionDataFail(_ error: Error) {

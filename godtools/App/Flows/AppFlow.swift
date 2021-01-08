@@ -249,6 +249,11 @@ class AppFlow: NSObject, FlowDelegate {
         }
     }
     
+    func navigateToTool(resourceName: String) {
+        let resources = dataDownloader.resourcesCache.getSortedResources()
+        toolsFlow?.navigate(step: .toolTappedFromAllTools(resource: resources[0]))
+    }
+    
     private func closeTool() {
         _ = navigationController.popToRootViewController(animated: true)
         configureNavigationBar()
