@@ -250,8 +250,9 @@ class AppFlow: NSObject, FlowDelegate {
     }
     
     func navigateToTool(resourceName: String) {
-        let resources = dataDownloader.resourcesCache.getSortedResources()
-        toolsFlow?.navigate(step: .toolTappedFromAllTools(resource: resources[0]))
+        
+        guard let resource: ResourceModel = dataDownloader.resourcesCache.getResource(abbreviation: resourceName) else { return }
+        toolsFlow?.navigate(step: .toolTappedFromAllTools(resource: resource))
     }
     
     private func closeTool() {
