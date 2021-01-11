@@ -159,8 +159,7 @@ class DeepLinkingService: NSObject {
             resourceName = deepLinkValue
         }
         
-        guard dataDownloader.cachedResourcesAvailable.value else { return }
-        
+        guard dataDownloader.cachedResourcesAvailable.value else { return }        
         
         guard let primaryLanguage = languageSettingsService.primaryLanguage.value, let resource = dataDownloader.resourcesCache.getResource(abbreviation: resourceName) else {
             completed.accept(value: .none)
