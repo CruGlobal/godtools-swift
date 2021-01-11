@@ -158,16 +158,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate: AppsFlyerLibDelegate {
     func onAppOpenAttribution(_ data: [AnyHashable : Any]) {
-        let resourceName: String
         
-        if let deepLinkValue = data["deep_link_value"] as? String {
-            resourceName = deepLinkValue
-        } else {
-            print("Could not extract query params from link")
-            return
-        }
+        appFlow?.navigate(step: .showTools(animated: true, shouldCreateNewInstance: true))
         
-        appFlow?.navigateToTool(resourceName: resourceName)
+        appDiContainer.deepLinkingService.processAppsflyerDeepLink(data: data)
     }
     
     func onAppOpenAttributionFailure(_ error: Error) {
@@ -175,33 +169,10 @@ extension AppDelegate: AppsFlyerLibDelegate {
     }
     
     func onConversionDataSuccess(_ data: [AnyHashable : Any]) {
-        let resourceName: String
         
-        if let is_first_launch = data["is_first_launch"] as? Bool,
-            is_first_launch {
-            print("First Launch")
-        } else {
-            print("Not First Launch")
-        }
+        appFlow?.navigate(step: .showTools(animated: true, shouldCreateNewInstance: true))
         
-        if let deepLinkValue = data["deep_link_value"] as? String {
-            resourceName = deepLinkValue
-        } else if let linkParam = data["link"] as? String {
-            guard let url = URLComponents(string: linkParam) else {
-                print("Could not extract query params from link")
-                return
-            }
-            guard let deepLinkValue = url.queryItems?.first(where: { $0.name == "deep_link_value" })?.value  else {
-                print("Could not extract query params from link")
-                return
-            }
-            resourceName = deepLinkValue
-        } else {
-            print("Could not extract query params from link")
-            return
-        }
-        
-        appFlow?.navigateToTool(resourceName: resourceName)
+        appDiContainer.deepLinkingService.processAppsflyerDeepLink(data: data)
     }
     
     func onConversionDataFail(_ error: Error) {

@@ -202,7 +202,7 @@ class AppDiContainer {
             favoritedResourcesCache: favoritedResourcesCache
         )
         
-        deepLinkingService = DeepLinkingService(dataDownloader: initialDataDownloader, loggingEnabled: config.isDebug)
+        deepLinkingService = DeepLinkingService(dataDownloader: initialDataDownloader, loggingEnabled: config.isDebug, languageSettingsService: languageSettingsService)
         
         favoritingToolMessageCache = FavoritingToolMessageCache(userDefaultsCache: sharedUserDefaultsCache)
         

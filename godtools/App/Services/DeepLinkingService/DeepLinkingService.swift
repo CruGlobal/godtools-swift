@@ -11,6 +11,7 @@ import Foundation
 class DeepLinkingService: NSObject {
     
     private let dataDownloader: InitialDataDownloader
+    private let languageSettingsService: LanguageSettingsService
     private let loggingEnabled: Bool
     
     private var deepLinkUrl: URL?
@@ -18,9 +19,10 @@ class DeepLinkingService: NSObject {
     let processing: ObservableValue<Bool> = ObservableValue(value: false)
     let completed: ObservableValue<DeepLinkingType> = ObservableValue(value: .none)
     
-    required init(dataDownloader: InitialDataDownloader, loggingEnabled: Bool) {
+    required init(dataDownloader: InitialDataDownloader, loggingEnabled: Bool, languageSettingsService: LanguageSettingsService) {
         
         self.dataDownloader = dataDownloader
+        self.languageSettingsService = languageSettingsService
         self.loggingEnabled = loggingEnabled
         
         super.init()
@@ -132,5 +134,39 @@ class DeepLinkingService: NSObject {
         else {
             completed.accept(value: .none)
         }
+    }
+    
+    func processAppsflyerDeepLink(data: [AnyHashable : Any]) {
+        
+        if loggingEnabled {
+            print("\n DeepLinkingService: processAppsflyerDeepLink()")
+        }
+        
+        if let is_first_launch = data["is_first_launch"] as? Bool,
+            is_first_launch {
+            //Use if we want to trigger different behavior for deep link with fresh install
+        }
+        
+        let resourceName: String
+        
+        if let deepLinkValue = data["deep_link_value"] as? String {
+            
+            resourceName = deepLinkValue
+        } else {
+            
+            guard let linkParam = data["link"] as? String, let url = URLComponents(string: linkParam), let deepLinkValue = url.queryItems?.first(where: { $0.name == "deep_link_value" })?.value else { return }
+            
+            resourceName = deepLinkValue
+        }
+        
+        guard dataDownloader.cachedResourcesAvailable.value else { return }
+        
+        
+        guard let primaryLanguage = languageSettingsService.primaryLanguage.value, let resource = dataDownloader.resourcesCache.getResource(abbreviation: resourceName) else {
+            completed.accept(value: .none)
+            return
+        }
+                
+        completed.accept(value: .tool(resource: resource, primaryLanguage: primaryLanguage, parallelLanguage: nil, liveShareStream: nil, page: nil))
     }
 }
