@@ -80,6 +80,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appDiContainer.analytics.firebaseAnalytics.fetchAttributesThenSetUserId()
         
         AppsFlyerLib.shared().start()
+        AppsFlyerLib.shared().isStopped = false
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -136,6 +137,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             appDiContainer.deepLinkingService.processDeepLink(url: url)
         }
+        
+        AppsFlyerLib.shared().continue(userActivity)
         
         return true
     }
