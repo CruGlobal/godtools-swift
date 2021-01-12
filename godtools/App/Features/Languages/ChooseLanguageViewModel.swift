@@ -224,7 +224,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
                         
         if !text.isEmpty {
                         
-            let filteredLanguages = languagesList.filter {
+            let filteredLanguages = allLanguages.filter {
                 $0.translatedLanguageName.lowercased().contains(text.lowercased())
             }
             
