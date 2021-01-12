@@ -4,14 +4,20 @@ PODS:
   - AdobeMobileSDK/iOS (4.21.0)
   - AppAuth (0.92.0)
   - AppsFlyerFramework (6.0.8)
-  - FacebookCore (0.9.0):
-    - FBSDKCoreKit (~> 5.0)
-  - FBSDKCoreKit (5.15.1):
-    - FBSDKCoreKit/Basics (= 5.15.1)
-    - FBSDKCoreKit/Core (= 5.15.1)
-  - FBSDKCoreKit/Basics (5.15.1)
-  - FBSDKCoreKit/Core (5.15.1):
+  - FBSDKCoreKit (8.0.0):
+    - FBSDKCoreKit/Basics (= 8.0.0)
+    - FBSDKCoreKit/Core (= 8.0.0)
+  - FBSDKCoreKit/Basics (8.0.0)
+  - FBSDKCoreKit/Core (8.0.0):
     - FBSDKCoreKit/Basics
+  - FBSDKLoginKit (8.0.0):
+    - FBSDKLoginKit/Login (= 8.0.0)
+  - FBSDKLoginKit/Login (8.0.0):
+    - FBSDKCoreKit (~> 8.0.0)
+  - FBSDKShareKit (8.0.0):
+    - FBSDKShareKit/Share (= 8.0.0)
+  - FBSDKShareKit/Share (8.0.0):
+    - FBSDKCoreKit (~> 8.0.0)
   - FirebaseABTesting (7.3.0):
     - FirebaseCore (~> 7.0)
   - FirebaseAnalytics (7.0.0):
@@ -103,7 +109,7 @@ PODS:
     - nanopb/encode (= 2.30906.0)
   - nanopb/decode (2.30906.0)
   - nanopb/encode (2.30906.0)
-  - PromisesObjC (1.2.11)
+  - PromisesObjC (1.2.12)
   - Realm (10.5.0):
     - Realm/Headers (= 10.5.0)
   - Realm/Headers (10.5.0)
@@ -119,12 +125,14 @@ PODS:
     - GTMAppAuth
     - Result
   - TTTAttributedLabel (2.0.0)
-  - YoutubePlayer-in-WKWebView (0.3.4)
+  - YoutubePlayer-in-WKWebView (0.3.5)
 
 DEPENDENCIES:
   - AdobeMobileSDK (~> 4.19)
   - AppsFlyerFramework (~> 6.0.0)
-  - FacebookCore (~> 0.9.0)
+  - FBSDKCoreKit (~> 8.0.0)
+  - FBSDKLoginKit (~> 8.0.0)
+  - FBSDKShareKit (~> 8.0.0)
   - FirebaseAnalytics (= 7.0.0)
   - FirebaseCore (= 7.0.0)
   - FirebaseCrashlytics (= 7.0.0)
@@ -150,8 +158,9 @@ SPEC REPOS:
     - AdobeMobileSDK
     - AppAuth
     - AppsFlyerFramework
-    - FacebookCore
     - FBSDKCoreKit
+    - FBSDKLoginKit
+    - FBSDKShareKit
     - FirebaseABTesting
     - FirebaseAnalytics
     - FirebaseCore
@@ -188,8 +197,9 @@ SPEC CHECKSUMS:
   AdobeMobileSDK: d1ca0f19d381e977f8c2a8f277c5889df00b479b
   AppAuth: 3f4f1d6d85ad631d0bbf15ffcdc10c447face97a
   AppsFlyerFramework: 57fb1fc68a5b8103353ce94d6e57861cbc4a55c3
-  FacebookCore: ba86524b66cfa86d0f8e65d08faa8504a9f732dd
-  FBSDKCoreKit: 1d5acf7c9d7a2f92bb1a242dc60cae5b7adb91df
+  FBSDKCoreKit: 9d27fe97a2fa2abe5eeefea8240e837623ab88e0
+  FBSDKLoginKit: 2cbaf5405379731b22f2ebc224f7c30f62378171
+  FBSDKShareKit: bf3705fc42b660c3da9f15223db791b3c9c2acde
   FirebaseABTesting: 303b5366c0c75be479424e8935e2f475cf24ce21
   FirebaseAnalytics: c1166b7990bae464c6436132510bb718c6680f80
   FirebaseCore: cf3122185fce1cf71cedbbc498ea84d2b3e7cb69
@@ -211,7 +221,7 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: b3503b20a988c4e20cc189aa798fd18220133f52
   lottie-ios: 3a3758ef5a008e762faec9c9d50a39842f26d124
   nanopb: 1bf24dd71191072e120b83dd02d08f3da0d65e53
-  PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
+  PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   Realm: e1c22c3d83b229afb70ebc10e1771c91e9542d12
   RealmSwift: 6fc078d9d3fd7e58c71bfdbb694e252462f112a5
   Result: ed341d2f236af425b803e690e9bd8fd0a0cb7c5a
@@ -221,8 +231,8 @@ SPEC CHECKSUMS:
   SWXMLHash: 9cc0c2e4807926c74377724aa8722ee5707a0485
   TheKeyOAuthSwift: e5e9ba7c9e9a22b4ddfe586c6b30cb91463410c0
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
-  YoutubePlayer-in-WKWebView: af2f5929fc78882d94bfdfeea999b661b78d9717
+  YoutubePlayer-in-WKWebView: cfbf46da51d7370662a695a8f351e5fa1d3e1008
 
-PODFILE CHECKSUM: 4cc3ab5c166b829c0f870af953e93827b63ddddf
+PODFILE CHECKSUM: 3de649024615d50eb40456f17dd6201b4b8a9eaf
 
 COCOAPODS: 1.10.0
