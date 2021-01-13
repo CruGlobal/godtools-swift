@@ -64,10 +64,10 @@ class TutorialViewModel: TutorialViewModelType {
         )
         
         if isFirstPage {
-            analytics.appsFlyer.trackEvent(eventName: analyticsScreenName, data: nil)
+            analytics.appsFlyerAnalytics.trackEvent(eventName: analyticsScreenName, data: nil)
         }
         else if isLastPage {
-            analytics.appsFlyer.trackEvent(eventName: analyticsScreenName, data: nil)
+            analytics.appsFlyerAnalytics.trackEvent(eventName: analyticsScreenName, data: nil)
         }
     }
     

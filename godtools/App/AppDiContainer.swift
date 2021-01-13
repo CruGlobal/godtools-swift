@@ -176,7 +176,7 @@ class AppDiContainer {
         let analyticsLoggingEnabled: Bool = config.build == .analyticsLogging
         analytics = AnalyticsContainer(
             adobeAnalytics: AdobeAnalytics(config: config, keyAuthClient: loginClient, languageSettingsService: languageSettingsService, loggingEnabled: analyticsLoggingEnabled),
-            appsFlyerAnalytics: AppsFlyerAnalytics(config: config, loggingEnabled: analyticsLoggingEnabled),
+            appsFlyerAnalytics: AppsFlyerAnalytics(loggingEnabled: analyticsLoggingEnabled),
             firebaseAnalytics: FirebaseAnalytics(config: config, keyAuthClient: loginClient, languageSettingsService: languageSettingsService, loggingEnabled: analyticsLoggingEnabled),
             snowplowAnalytics: SnowplowAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: analyticsLoggingEnabled)
         )
@@ -209,7 +209,7 @@ class AppDiContainer {
         
         emailSignUpService = EmailSignUpService(sharedSession: sharedIgnoringCacheSession, realmDatabase: realmDatabase, userAuthentication: userAuthentication)
         
-        appsFlyer = AppsFlyer(deepLinkingService: deepLinkingService)
+        appsFlyer = AppsFlyer(config: config, deepLinkingService: deepLinkingService)
     }
     
     func getCardJumpService() -> CardJumpService {
@@ -257,7 +257,7 @@ class AppDiContainer {
     }
     
     var toolOpenedAnalytics: ToolOpenedAnalytics {
-        return ToolOpenedAnalytics(appsFlyer: analytics.appsFlyerAnalytics)
+        return ToolOpenedAnalytics(appsFlyerAnalytics: analytics.appsFlyerAnalytics)
     }
     
     var exitLinkAnalytics: ExitLinkAnalytics {

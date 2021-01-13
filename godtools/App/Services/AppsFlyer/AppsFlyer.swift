@@ -49,6 +49,18 @@ class AppsFlyer: NSObject, AppsFlyerType {
         AppsFlyerLib.shared().isStopped = false
     }
     
+    func setCustomAnalyticsData(data: [AnyHashable : Any]) {
+        AppsFlyerLib.shared().customData = data
+    }
+    
+    func getCustomAnalyticsData() -> [AnyHashable : Any]? {
+        return AppsFlyerLib.shared().customData
+    }
+    
+    func logEvent(eventName: String, data: [String : Any]?) {
+        AppsFlyerLib.shared().logEvent(eventName, withValues: data)
+    }
+    
     func handleOpenUrl(url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) {
         AppsFlyerLib.shared().handleOpen(url, options: options)
     }
@@ -63,7 +75,7 @@ class AppsFlyer: NSObject, AppsFlyerType {
     
     func handlePushNotification(userInfo: [AnyHashable : Any]) {
         AppsFlyerLib.shared().handlePushNotification(userInfo)
-    }    
+    }
 }
 
 extension AppsFlyer: AppsFlyerLibDelegate {

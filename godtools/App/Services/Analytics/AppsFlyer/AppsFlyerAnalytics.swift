@@ -46,7 +46,7 @@ class AppsFlyerAnalytics: NSObject, AppsFlyerAnalyticsType {
             
             self?.assertFailureIfNotConfigured()
             
-            appsFlyer?.logEvent(eventName: eventName, data: data)
+            self?.appsFlyer?.logEvent(eventName: eventName, data: data)
             self?.log(method: "trackEvent()", label: "eventName", labelValue: eventName, data: data)
         }
     }
@@ -67,7 +67,7 @@ class AppsFlyerAnalytics: NSObject, AppsFlyerAnalyticsType {
             if let data = data {
                 print("  data: \(data)")
             }
-            if let customData = AppsFlyerLib.shared().customData {
+            if let customData = appsFlyer?.getCustomAnalyticsData() {
                 print("  customData: \(customData)")
             }
         }

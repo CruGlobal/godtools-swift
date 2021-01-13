@@ -14,7 +14,7 @@ class AppFlow: NSObject, AppFlowType {
     private let dataDownloader: InitialDataDownloader
     private let followUpsService: FollowUpsService
     private let viewsService: ViewsService
-    private let deepLinkingService: DeepLinkingService
+    private let deepLinkingService: DeepLinkingServiceType
     
     private var onboardingFlow: OnboardingFlow?
     private var menuFlow: MenuFlow?
