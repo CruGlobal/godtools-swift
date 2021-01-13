@@ -57,10 +57,11 @@ class AppDiContainer {
     let followUpsService: FollowUpsService
     let viewsService: ViewsService
     let shortcutItemsService: ShortcutItemsService
-    let deepLinkingService: DeepLinkingService
+    let deepLinkingService: DeepLinkingServiceType
     let deviceAttachmentBanners: DeviceAttachmentBanners = DeviceAttachmentBanners()
     let favoritingToolMessageCache: FavoritingToolMessageCache
     let emailSignUpService: EmailSignUpService
+    let appsFlyer: AppsFlyerType
         
     required init() {
         
@@ -175,7 +176,7 @@ class AppDiContainer {
         let analyticsLoggingEnabled: Bool = config.build == .analyticsLogging
         analytics = AnalyticsContainer(
             adobeAnalytics: AdobeAnalytics(config: config, keyAuthClient: loginClient, languageSettingsService: languageSettingsService, loggingEnabled: analyticsLoggingEnabled),
-            appsFlyer: AppsFlyer(config: config, loggingEnabled: analyticsLoggingEnabled),
+            appsFlyerAnalytics: AppsFlyerAnalytics(config: config, loggingEnabled: analyticsLoggingEnabled),
             firebaseAnalytics: FirebaseAnalytics(config: config, keyAuthClient: loginClient, languageSettingsService: languageSettingsService, loggingEnabled: analyticsLoggingEnabled),
             snowplowAnalytics: SnowplowAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: analyticsLoggingEnabled)
         )
@@ -207,6 +208,8 @@ class AppDiContainer {
         favoritingToolMessageCache = FavoritingToolMessageCache(userDefaultsCache: sharedUserDefaultsCache)
         
         emailSignUpService = EmailSignUpService(sharedSession: sharedIgnoringCacheSession, realmDatabase: realmDatabase, userAuthentication: userAuthentication)
+        
+        appsFlyer = AppsFlyer(deepLinkingService: deepLinkingService)
     }
     
     func getCardJumpService() -> CardJumpService {
@@ -254,7 +257,7 @@ class AppDiContainer {
     }
     
     var toolOpenedAnalytics: ToolOpenedAnalytics {
-        return ToolOpenedAnalytics(appsFlyer: analytics.appsFlyer)
+        return ToolOpenedAnalytics(appsFlyer: analytics.appsFlyerAnalytics)
     }
     
     var exitLinkAnalytics: ExitLinkAnalytics {

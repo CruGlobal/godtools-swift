@@ -8,7 +8,7 @@
 
 import Foundation
 
-class DeepLinkingService: NSObject {
+class DeepLinkingService: NSObject, DeepLinkingServiceType {
     
     private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService

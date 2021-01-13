@@ -744,6 +744,9 @@
 		D163EA96254A00BE00BA4EA9 /* share_tool_tutorial_link.json in Resources */ = {isa = PBXBuildFile; fileRef = D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */; };
 		D1838479257E86B3004F5674 /* container in Resources */ = {isa = PBXBuildFile; fileRef = D1838478257E86B3004F5674 /* container */; };
 		D19D00E725AF4B97007C535B /* AppsFlyerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19D00E625AF4B97007C535B /* AppsFlyerType.swift */; };
+		D19D00F925AF51FA007C535B /* AppsFlyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19D00F825AF51FA007C535B /* AppsFlyer.swift */; };
+		D19D010325AF549B007C535B /* DeepLinkingServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19D010225AF549B007C535B /* DeepLinkingServiceType.swift */; };
+		D19D010925AF5557007C535B /* AppFlowType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19D010825AF5557007C535B /* AppFlowType.swift */; };
 		D19EB5DE259BB39300685156 /* training_tip_callout.json in Resources */ = {isa = PBXBuildFile; fileRef = D19EB5DD259BB39300685156 /* training_tip_callout.json */; };
 		D19EB5E0259BB75900685156 /* training_tip_tips.json in Resources */ = {isa = PBXBuildFile; fileRef = D19EB5DF259BB75900685156 /* training_tip_tips.json */; };
 /* End PBXBuildFile section */
@@ -1572,6 +1575,9 @@
 		D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = share_tool_tutorial_link.json; sourceTree = "<group>"; };
 		D1838478257E86B3004F5674 /* container */ = {isa = PBXFileReference; lastKnownFileType = folder; path = container; sourceTree = "<group>"; };
 		D19D00E625AF4B97007C535B /* AppsFlyerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsFlyerType.swift; sourceTree = "<group>"; };
+		D19D00F825AF51FA007C535B /* AppsFlyer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsFlyer.swift; sourceTree = "<group>"; };
+		D19D010225AF549B007C535B /* DeepLinkingServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkingServiceType.swift; sourceTree = "<group>"; };
+		D19D010825AF5557007C535B /* AppFlowType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlowType.swift; sourceTree = "<group>"; };
 		D19EB5DD259BB39300685156 /* training_tip_callout.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = training_tip_callout.json; sourceTree = "<group>"; };
 		D19EB5DF259BB75900685156 /* training_tip_tips.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = training_tip_tips.json; sourceTree = "<group>"; };
 		D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtoolsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2494,6 +2500,7 @@
 			isa = PBXGroup;
 			children = (
 				45AD189225938A4E00A096A0 /* AppFlow.swift */,
+				D19D010825AF5557007C535B /* AppFlowType.swift */,
 				45AD188E25938A4E00A096A0 /* AppRootController.swift */,
 				45AD189125938A4E00A096A0 /* ArticlesFlow.swift */,
 				45AD189025938A4E00A096A0 /* Flow.swift */,
@@ -3583,6 +3590,7 @@
 			children = (
 				45AD1EBA25938A9800A096A0 /* DeepLinkingService.swift */,
 				45AD1EB925938A9800A096A0 /* DeepLinkingType.swift */,
+				D19D010225AF549B007C535B /* DeepLinkingServiceType.swift */,
 			);
 			path = DeepLinkingService;
 			sourceTree = "<group>";
@@ -4072,6 +4080,7 @@
 		D19D00E525AF4B79007C535B /* AppsFlyer */ = {
 			isa = PBXGroup;
 			children = (
+				D19D00F825AF51FA007C535B /* AppsFlyer.swift */,
 				D19D00E625AF4B97007C535B /* AppsFlyerType.swift */,
 			);
 			path = AppsFlyer;
@@ -4720,6 +4729,7 @@
 				45AD205C25938AC300A096A0 /* AppsFlyerAnalytics.swift in Sources */,
 				45AD1F4925938A9800A096A0 /* BackgroundImageNodeType.swift in Sources */,
 				45AD1B2525938A4F00A096A0 /* AboutViewModelType.swift in Sources */,
+				D19D00F925AF51FA007C535B /* AppsFlyer.swift in Sources */,
 				45AD1FAD25938A9800A096A0 /* CacheArticleAemWebArchivePlistError.swift in Sources */,
 				45AD1B3A25938A4F00A096A0 /* MenuViewModel.swift in Sources */,
 				45AD1FCE25938A9800A096A0 /* SHA256FileLocation.swift in Sources */,
@@ -4868,6 +4878,7 @@
 				45AD1AC125938A4E00A096A0 /* FavoritingToolMessageCache.swift in Sources */,
 				45AD21132593958E00A096A0 /* LanguageModel.swift in Sources */,
 				45AD1BCD25938A4F00A096A0 /* UIView+RemoveAllSubviews.swift in Sources */,
+				D19D010925AF5557007C535B /* AppFlowType.swift in Sources */,
 				45AD202525938A9800A096A0 /* RequestResponse+Log.swift in Sources */,
 				45AD202725938A9800A096A0 /* LocaleLocalizationBundle.swift in Sources */,
 				45AD1EF725938A9800A096A0 /* ToolPageContentStackRenderer.swift in Sources */,
@@ -5005,6 +5016,7 @@
 				45AD1B8F25938A4F00A096A0 /* OnboardingTutorialView.swift in Sources */,
 				45AD1FBC25938A9800A096A0 /* TractRemoteShareSubscriber.swift in Sources */,
 				45AD200325938A9800A096A0 /* UserAuthenticationType.swift in Sources */,
+				D19D010325AF549B007C535B /* DeepLinkingServiceType.swift in Sources */,
 				45AD1F5C25938A9800A096A0 /* MobileContentXmlNode.swift in Sources */,
 				45AD1FCD25938A9800A096A0 /* SHA256FilesCache.swift in Sources */,
 				45AD202B25938A9800A096A0 /* CardJumpUserDefaultsCache.swift in Sources */,

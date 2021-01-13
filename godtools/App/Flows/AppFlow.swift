@@ -9,7 +9,7 @@
 import UIKit
 import MessageUI
 
-class AppFlow: NSObject, FlowDelegate {
+class AppFlow: NSObject, AppFlowType {
     
     private let dataDownloader: InitialDataDownloader
     private let followUpsService: FollowUpsService
