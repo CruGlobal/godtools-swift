@@ -11,17 +11,37 @@ import AppsFlyerLib
 
 class AppsFlyer: NSObject, AppsFlyerType {
     
-    private var appFlow: AppFlowType?
+    private let config: ConfigType
     private let deepLinkingService: DeepLinkingServiceType
+    private var appFlow: AppFlowType?
     
-    required init(deepLinkingService: DeepLinkingServiceType) {
+    private var isConfigured: Bool = false
+    private var isConfiguring: Bool = false
+    
+    required init(config: ConfigType, deepLinkingService: DeepLinkingServiceType) {
+        self.config = config
         self.deepLinkingService = deepLinkingService
+        
+        super.init()
         
         AppsFlyerLib.shared().delegate = self
     }
     
     func configure(appFlow: AppFlowType) {
         self.appFlow = appFlow
+        
+        if isConfigured {
+            return
+        }
+        
+        isConfiguring = true
+        
+        AppsFlyerLib.shared().appsFlyerDevKey = config.appsFlyerDevKey
+        AppsFlyerLib.shared().appleAppID = config.appleAppId
+        
+        if config.isDebug {
+            AppsFlyerLib.shared().useUninstallSandbox = true
+        }
     }
     
     func appDidBecomeActive() {
@@ -49,7 +69,7 @@ class AppsFlyer: NSObject, AppsFlyerType {
 extension AppsFlyer: AppsFlyerLibDelegate {
     func onAppOpenAttribution(_ data: [AnyHashable : Any]) {
         
-        appFlow.navigate(step: .showTools(animated: true, shouldCreateNewInstance: true))
+        appFlow?.navigate(step: .showTools(animated: true, shouldCreateNewInstance: true))
         
         deepLinkingService.processAppsflyerDeepLink(data: data)
     }
@@ -60,7 +80,7 @@ extension AppsFlyer: AppsFlyerLibDelegate {
     
     func onConversionDataSuccess(_ data: [AnyHashable : Any]) {
         
-        appFlow.navigate(step: .showTools(animated: true, shouldCreateNewInstance: true))
+        appFlow?.navigate(step: .showTools(animated: true, shouldCreateNewInstance: true))
         
         deepLinkingService.processAppsflyerDeepLink(data: data)
     }
