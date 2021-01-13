@@ -16,7 +16,6 @@ class AppsFlyer: NSObject, AppsFlyerType {
     private var appFlow: AppFlowType?
     
     private var isConfigured: Bool = false
-    private var isConfiguring: Bool = false
     
     required init(config: ConfigType, deepLinkingService: DeepLinkingServiceType) {
         self.config = config
@@ -33,15 +32,15 @@ class AppsFlyer: NSObject, AppsFlyerType {
         if isConfigured {
             return
         }
-        
-        isConfiguring = true
-        
+                
         AppsFlyerLib.shared().appsFlyerDevKey = config.appsFlyerDevKey
         AppsFlyerLib.shared().appleAppID = config.appleAppId
         
         if config.isDebug {
             AppsFlyerLib.shared().useUninstallSandbox = true
         }
+        
+        isConfigured = true
     }
     
     func appDidBecomeActive() {
