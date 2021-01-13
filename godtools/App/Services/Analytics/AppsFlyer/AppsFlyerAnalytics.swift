@@ -7,9 +7,8 @@
 //
 
 import UIKit
-import AppsFlyerLib
 
-class AppsFlyer: NSObject, AppsFlyerType {
+class AppsFlyerAnalytics: NSObject, AppsFlyerAnalyticsType {
     
     private let serialQueue: DispatchQueue = DispatchQueue(label: "appsflyer.serial.queue")
     private let config: ConfigType
@@ -110,7 +109,7 @@ class AppsFlyer: NSObject, AppsFlyerType {
 
 // MARK: - MobileContentAnalyticsSystem
 
-extension AppsFlyer: MobileContentAnalyticsSystem {
+extension AppsFlyerAnalytics: MobileContentAnalyticsSystem {
     func trackAction(action: String, data: [String: Any]?) {
         trackEvent(eventName: action, data: data)
     }

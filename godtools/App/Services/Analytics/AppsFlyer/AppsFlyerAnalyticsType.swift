@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol AppsFlyerType: MobileContentAnalyticsSystem {
+protocol AppsFlyerAnalyticsType: MobileContentAnalyticsSystem {
     
     func configure(adobeAnalytics: AdobeAnalyticsType)
     func registerUninstall(deviceToken: Data)

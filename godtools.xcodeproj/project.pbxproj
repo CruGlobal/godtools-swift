@@ -655,8 +655,8 @@
 		45AD205825938AC300A096A0 /* FirebaseAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD204525938AC300A096A0 /* FirebaseAnalytics.swift */; };
 		45AD205925938AC300A096A0 /* SnowplowAnalyticsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD204725938AC300A096A0 /* SnowplowAnalyticsType.swift */; };
 		45AD205A25938AC300A096A0 /* SnowplowAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD204825938AC300A096A0 /* SnowplowAnalytics.swift */; };
-		45AD205B25938AC300A096A0 /* AppsFlyerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD204A25938AC300A096A0 /* AppsFlyerType.swift */; };
-		45AD205C25938AC300A096A0 /* AppsFlyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD204B25938AC300A096A0 /* AppsFlyer.swift */; };
+		45AD205B25938AC300A096A0 /* AppsFlyerAnalyticsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD204A25938AC300A096A0 /* AppsFlyerAnalyticsType.swift */; };
+		45AD205C25938AC300A096A0 /* AppsFlyerAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD204B25938AC300A096A0 /* AppsFlyerAnalytics.swift */; };
 		45AD205D25938AC300A096A0 /* AnalyticsContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD204C25938AC300A096A0 /* AnalyticsContainer.swift */; };
 		45AD206425938B1300A096A0 /* AlertMessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD206225938B1300A096A0 /* AlertMessageType.swift */; };
 		45AD206525938B1300A096A0 /* AlertMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD206325938B1300A096A0 /* AlertMessage.swift */; };
@@ -743,6 +743,7 @@
 		D129DE6B2543669C00841733 /* onboarding_tutorial_knife.json in Resources */ = {isa = PBXBuildFile; fileRef = D129DE682543669C00841733 /* onboarding_tutorial_knife.json */; };
 		D163EA96254A00BE00BA4EA9 /* share_tool_tutorial_link.json in Resources */ = {isa = PBXBuildFile; fileRef = D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */; };
 		D1838479257E86B3004F5674 /* container in Resources */ = {isa = PBXBuildFile; fileRef = D1838478257E86B3004F5674 /* container */; };
+		D19D00E725AF4B97007C535B /* AppsFlyerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19D00E625AF4B97007C535B /* AppsFlyerType.swift */; };
 		D19EB5DE259BB39300685156 /* training_tip_callout.json in Resources */ = {isa = PBXBuildFile; fileRef = D19EB5DD259BB39300685156 /* training_tip_callout.json */; };
 		D19EB5E0259BB75900685156 /* training_tip_tips.json in Resources */ = {isa = PBXBuildFile; fileRef = D19EB5DF259BB75900685156 /* training_tip_tips.json */; };
 /* End PBXBuildFile section */
@@ -1428,8 +1429,8 @@
 		45AD204525938AC300A096A0 /* FirebaseAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAnalytics.swift; sourceTree = "<group>"; };
 		45AD204725938AC300A096A0 /* SnowplowAnalyticsType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnowplowAnalyticsType.swift; sourceTree = "<group>"; };
 		45AD204825938AC300A096A0 /* SnowplowAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnowplowAnalytics.swift; sourceTree = "<group>"; };
-		45AD204A25938AC300A096A0 /* AppsFlyerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsFlyerType.swift; sourceTree = "<group>"; };
-		45AD204B25938AC300A096A0 /* AppsFlyer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsFlyer.swift; sourceTree = "<group>"; };
+		45AD204A25938AC300A096A0 /* AppsFlyerAnalyticsType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsFlyerAnalyticsType.swift; sourceTree = "<group>"; };
+		45AD204B25938AC300A096A0 /* AppsFlyerAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsFlyerAnalytics.swift; sourceTree = "<group>"; };
 		45AD204C25938AC300A096A0 /* AnalyticsContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsContainer.swift; sourceTree = "<group>"; };
 		45AD206225938B1300A096A0 /* AlertMessageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertMessageType.swift; sourceTree = "<group>"; };
 		45AD206325938B1300A096A0 /* AlertMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertMessage.swift; sourceTree = "<group>"; };
@@ -1570,6 +1571,7 @@
 		D129DE682543669C00841733 /* onboarding_tutorial_knife.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding_tutorial_knife.json; sourceTree = "<group>"; };
 		D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = share_tool_tutorial_link.json; sourceTree = "<group>"; };
 		D1838478257E86B3004F5674 /* container */ = {isa = PBXFileReference; lastKnownFileType = folder; path = container; sourceTree = "<group>"; };
+		D19D00E625AF4B97007C535B /* AppsFlyerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsFlyerType.swift; sourceTree = "<group>"; };
 		D19EB5DD259BB39300685156 /* training_tip_callout.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = training_tip_callout.json; sourceTree = "<group>"; };
 		D19EB5DF259BB75900685156 /* training_tip_tips.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = training_tip_tips.json; sourceTree = "<group>"; };
 		D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtoolsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2658,6 +2660,7 @@
 			children = (
 				45AD203525938AC200A096A0 /* Analytics */,
 				45AD20A125938CF100A096A0 /* AppConfig */,
+				D19D00E525AF4B79007C535B /* AppsFlyer */,
 				45AD1E2A25938A9700A096A0 /* Articles */,
 				45AD1E9925938A9800A096A0 /* Attachments */,
 				45AD1EE525938A9800A096A0 /* CardJumpService */,
@@ -3760,8 +3763,8 @@
 		45AD204925938AC300A096A0 /* AppsFlyer */ = {
 			isa = PBXGroup;
 			children = (
-				45AD204B25938AC300A096A0 /* AppsFlyer.swift */,
-				45AD204A25938AC300A096A0 /* AppsFlyerType.swift */,
+				45AD204B25938AC300A096A0 /* AppsFlyerAnalytics.swift */,
+				45AD204A25938AC300A096A0 /* AppsFlyerAnalyticsType.swift */,
 			);
 			path = AppsFlyer;
 			sourceTree = "<group>";
@@ -4064,6 +4067,14 @@
 				D115A65D25265813007F11AD /* share_tool_tutorial_mirrored.json */,
 			);
 			path = Lottie;
+			sourceTree = "<group>";
+		};
+		D19D00E525AF4B79007C535B /* AppsFlyer */ = {
+			isa = PBXGroup;
+			children = (
+				D19D00E625AF4B97007C535B /* AppsFlyerType.swift */,
+			);
+			path = AppsFlyer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -4706,7 +4717,7 @@
 				45AD1F0725938A9800A096A0 /* ToolPageContentFormView.swift in Sources */,
 				45AD21152593958E00A096A0 /* LanguageModelType.swift in Sources */,
 				45AD1BD925938A4F00A096A0 /* AlertMessageView.swift in Sources */,
-				45AD205C25938AC300A096A0 /* AppsFlyer.swift in Sources */,
+				45AD205C25938AC300A096A0 /* AppsFlyerAnalytics.swift in Sources */,
 				45AD1F4925938A9800A096A0 /* BackgroundImageNodeType.swift in Sources */,
 				45AD1B2525938A4F00A096A0 /* AboutViewModelType.swift in Sources */,
 				45AD1FAD25938A9800A096A0 /* CacheArticleAemWebArchivePlistError.swift in Sources */,
@@ -5029,8 +5040,9 @@
 				45AD1AAD25938A4E00A096A0 /* TutorialToolsViewModel.swift in Sources */,
 				45AD1B3225938A4F00A096A0 /* ChooseLanguageViewModelType.swift in Sources */,
 				45AD1B2F25938A4F00A096A0 /* ChooseLanguageViewModel.swift in Sources */,
-				45AD205B25938AC300A096A0 /* AppsFlyerType.swift in Sources */,
+				45AD205B25938AC300A096A0 /* AppsFlyerAnalyticsType.swift in Sources */,
 				45AD21382593A47800A096A0 /* ShareToolMenuViewModelType.swift in Sources */,
+				D19D00E725AF4B97007C535B /* AppsFlyerType.swift in Sources */,
 				45AD1B0B25938A4E00A096A0 /* ArticleWebViewModelType.swift in Sources */,
 				45AD1F3925938A9800A096A0 /* LabelNode.swift in Sources */,
 				45AD1BDA25938A4F00A096A0 /* AlertMessageViewModelType.swift in Sources */,
