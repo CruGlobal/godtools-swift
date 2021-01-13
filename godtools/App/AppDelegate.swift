@@ -28,35 +28,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
         appDiContainer.firebaseConfiguration.configure()
         
+        let appFlow = AppFlow(appDiContainer: appDiContainer)
+        
+        self.appFlow = appFlow
+        
+        appDiContainer.appsFlyer.configure(appFlow: appFlow)
+        
+        appsFlyer = appDiContainer.appsFlyer
+        
         appDiContainer.analytics.adobeAnalytics.configure()
         appDiContainer.analytics.adobeAnalytics.collectLifecycleData()
         
         appDiContainer.analytics.firebaseAnalytics.configure()
         
-        appDiContainer.analytics.appsFlyerAnalytics.configure(adobeAnalytics: appDiContainer.analytics.adobeAnalytics)
+        appDiContainer.analytics.appsFlyerAnalytics.configure(appsFlyer: appDiContainer.appsFlyer, adobeAnalytics: appDiContainer.analytics.adobeAnalytics)
         
         appDiContainer.googleAdwordsAnalytics.recordAdwordsConversion()
         
         appDiContainer.analytics.snowplowAnalytics.configure(adobeAnalytics: appDiContainer.analytics.adobeAnalytics)
-                
+        
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
-           
-        let _appFlow = AppFlow(appDiContainer: appDiContainer)
-        
-        appFlow = _appFlow
-        
-        appDiContainer.appsFlyer.configure(appFlow: _appFlow)
-        
-        appsFlyer = appDiContainer.appsFlyer
         
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.backgroundColor = UIColor.white
-        window.rootViewController = appFlow?.rootController
+        window.rootViewController = appFlow.rootController
         window.makeKeyAndVisible()
         self.window = window
         
         application.registerForRemoteNotifications()
-                                
+        
         return true
     }
     
@@ -79,11 +79,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppEvents.activateApp()
         appFlow?.applicationDidBecomeActive(application)
         appsFlyer?.appDidBecomeActive()
-        appDiContainer.analytics.appsFlyerAnalytics.trackAppLaunch()
         //on app launch, sync Adobe Analytics auth state
         appDiContainer.analytics.adobeAnalytics.fetchAttributesThenSyncIds()
         appDiContainer.analytics.firebaseAnalytics.fetchAttributesThenSetUserId()
-        
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
