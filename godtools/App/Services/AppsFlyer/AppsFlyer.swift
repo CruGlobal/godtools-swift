@@ -19,12 +19,11 @@ class AppsFlyer: NSObject, AppsFlyerType {
     private var isConfigured: Bool = false
     
     required init(config: ConfigType, deepLinkingService: DeepLinkingServiceType) {
+        
         self.config = config
         self.deepLinkingService = deepLinkingService
         
         super.init()
-        
-        AppsFlyerLib.shared().delegate = self
     }
     
     var appsFlyerLib: AppsFlyerLib {
@@ -49,6 +48,7 @@ class AppsFlyer: NSObject, AppsFlyerType {
                 
         appsFlyerLib.appsFlyerDevKey = config.appsFlyerDevKey
         appsFlyerLib.appleAppID = config.appleAppId
+        appsFlyerLib.delegate = self
         
         if config.isDebug {
             appsFlyerLib.useUninstallSandbox = true
