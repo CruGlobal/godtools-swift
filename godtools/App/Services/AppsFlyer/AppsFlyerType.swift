@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AppsFlyerLib
 
 protocol AppsFlyerType {
     var appsFlyerLib: AppsFlyerLib { get }

@@ -44,7 +44,7 @@ class AppsFlyerAnalytics: NSObject, AppsFlyerAnalyticsType {
             
             self?.assertFailureIfNotConfigured()
             
-            self?.appsFlyer.appsFlyerLib.logEvent(eventName: eventName, data: data)
+            self?.appsFlyer.appsFlyerLib.logEvent(eventName, withValues: data)
             self?.log(method: "trackEvent()", label: "eventName", labelValue: eventName, data: data)
         }
     }

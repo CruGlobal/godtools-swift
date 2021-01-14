@@ -173,6 +173,8 @@ class AppDiContainer {
             determineNewUser: DetermineNewUserIfPrimaryLanguageSet(languageSettingsCache: languageSettingsCache)
         )
         
+        deepLinkingService = DeepLinkingService(dataDownloader: initialDataDownloader, loggingEnabled: config.isDebug, languageSettingsService: languageSettingsService)
+        
         appsFlyer = AppsFlyer(config: config, deepLinkingService: deepLinkingService)
                 
         let analyticsLoggingEnabled: Bool = config.build == .analyticsLogging
@@ -204,8 +206,6 @@ class AppDiContainer {
             languageSettingsCache: languageSettingsCache,
             favoritedResourcesCache: favoritedResourcesCache
         )
-        
-        deepLinkingService = DeepLinkingService(dataDownloader: initialDataDownloader, loggingEnabled: config.isDebug, languageSettingsService: languageSettingsService)
         
         favoritingToolMessageCache = FavoritingToolMessageCache(userDefaultsCache: sharedUserDefaultsCache)
         

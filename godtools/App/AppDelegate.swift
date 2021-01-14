@@ -41,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         appDiContainer.analytics.firebaseAnalytics.configure()
         
-        appDiContainer.analytics.appsFlyerAnalytics.configure(appsFlyer: appDiContainer.appsFlyer, adobeAnalytics: appDiContainer.analytics.adobeAnalytics)
+        appDiContainer.analytics.appsFlyerAnalytics.configure(adobeAnalytics: appDiContainer.analytics.adobeAnalytics)
         
         appDiContainer.googleAdwordsAnalytics.recordAdwordsConversion()
         

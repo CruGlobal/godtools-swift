@@ -10,6 +10,6 @@ import UIKit
 
 protocol AppsFlyerAnalyticsType: MobileContentAnalyticsSystem {
     
-    func configure(appsFlyer: AppsFlyerType, adobeAnalytics: AdobeAnalyticsType)
+    func configure(adobeAnalytics: AdobeAnalyticsType)
     func trackEvent(eventName: String, data: [String: Any]?)
 }
