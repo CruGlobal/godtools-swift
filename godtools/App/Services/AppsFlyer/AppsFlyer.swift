@@ -13,7 +13,7 @@ class AppsFlyer: NSObject, AppsFlyerType {
     
     private let config: ConfigType
     private let deepLinkingService: DeepLinkingServiceType
-    private var appFlow: AppFlowType?
+    private var appFlow: AppFlow?
     
     private var isConfigured: Bool = false
     
@@ -26,7 +26,7 @@ class AppsFlyer: NSObject, AppsFlyerType {
         AppsFlyerLib.shared().delegate = self
     }
     
-    func configure(appFlow: AppFlowType) {
+    func configure(appFlow: AppFlow) {
         self.appFlow = appFlow
         
         if isConfigured {

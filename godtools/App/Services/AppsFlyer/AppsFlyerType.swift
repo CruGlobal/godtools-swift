@@ -9,7 +9,7 @@
 import Foundation
 
 protocol AppsFlyerType {    
-    func configure(appFlow: AppFlowType)
+    func configure(appFlow: AppFlow)
     func appDidBecomeActive()
     func setCustomAnalyticsData(data: [AnyHashable: Any])
     func getCustomAnalyticsData() -> [AnyHashable: Any]?
