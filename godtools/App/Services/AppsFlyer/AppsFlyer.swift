@@ -11,6 +11,7 @@ import AppsFlyerLib
 
 class AppsFlyer: NSObject, AppsFlyerType {
     
+    private let sharedAppsFlyerLib: AppsFlyerLib = AppsFlyerLib.shared()
     private let config: ConfigType
     private let deepLinkingService: DeepLinkingServiceType
     private var appFlow: AppFlow?
@@ -18,12 +19,22 @@ class AppsFlyer: NSObject, AppsFlyerType {
     private var isConfigured: Bool = false
     
     required init(config: ConfigType, deepLinkingService: DeepLinkingServiceType) {
+        
         self.config = config
         self.deepLinkingService = deepLinkingService
         
         super.init()
-        
-        AppsFlyerLib.shared().delegate = self
+    }
+    
+    var appsFlyerLib: AppsFlyerLib {
+        assertFailureIfNotConfigured()
+        return sharedAppsFlyerLib
+    }
+    
+    private func assertFailureIfNotConfigured() {
+        if !isConfigured {
+            assertionFailure("AppsFlyer has not been configured.  Be sure to call configure on application didFinishLaunching.")
+        }
     }
     
     func configure(appFlow: AppFlow) {
@@ -32,15 +43,16 @@ class AppsFlyer: NSObject, AppsFlyerType {
         if isConfigured {
             return
         }
-                
-        AppsFlyerLib.shared().appsFlyerDevKey = config.appsFlyerDevKey
-        AppsFlyerLib.shared().appleAppID = config.appleAppId
-        
-        if config.isDebug {
-            AppsFlyerLib.shared().useUninstallSandbox = true
-        }
         
         isConfigured = true
+                
+        appsFlyerLib.appsFlyerDevKey = config.appsFlyerDevKey
+        appsFlyerLib.appleAppID = config.appleAppId
+        appsFlyerLib.delegate = self
+        
+        if config.isDebug {
+            appsFlyerLib.useUninstallSandbox = true
+        }
     }
     
     func appDidBecomeActive() {
