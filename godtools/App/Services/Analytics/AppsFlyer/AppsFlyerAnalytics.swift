@@ -13,28 +13,26 @@ class AppsFlyerAnalytics: NSObject, AppsFlyerAnalyticsType {
     private let serialQueue: DispatchQueue = DispatchQueue(label: "appsflyer.serial.queue")
     private let loggingEnabled: Bool
     
-    private var appsFlyer: AppsFlyerType?
+    private var appsFlyer: AppsFlyerType
     
     private var isConfigured: Bool = false
     
-    required init(loggingEnabled: Bool) {
+    required init(appsFlyer: AppsFlyerType, loggingEnabled: Bool) {
         
+        self.appsFlyer = appsFlyer
         self.loggingEnabled = loggingEnabled
         
         super.init()
     }
     
-    func configure(appsFlyer: AppsFlyerType, adobeAnalytics: AdobeAnalyticsType) {
+    func configure(adobeAnalytics: AdobeAnalyticsType) {
         
         if isConfigured {
             return
         }
         
-        self.appsFlyer = appsFlyer
-         
-        appsFlyer.setCustomAnalyticsData(data: ["marketingCloudID": adobeAnalytics.visitorMarketingCloudID])
+        appsFlyer.appsFlyerLib.customData = ["marketingCloudID": adobeAnalytics.visitorMarketingCloudID]
                         
-            
         isConfigured = true
         
         log(method: "configure()", label: nil, labelValue: nil, data: nil)
@@ -46,7 +44,7 @@ class AppsFlyerAnalytics: NSObject, AppsFlyerAnalyticsType {
             
             self?.assertFailureIfNotConfigured()
             
-            self?.appsFlyer?.logEvent(eventName: eventName, data: data)
+            self?.appsFlyer.appsFlyerLib.logEvent(eventName: eventName, data: data)
             self?.log(method: "trackEvent()", label: "eventName", labelValue: eventName, data: data)
         }
     }
@@ -67,7 +65,7 @@ class AppsFlyerAnalytics: NSObject, AppsFlyerAnalyticsType {
             if let data = data {
                 print("  data: \(data)")
             }
-            if let customData = appsFlyer?.getCustomAnalyticsData() {
+            if let customData = appsFlyer.appsFlyerLib.customData {
                 print("  customData: \(customData)")
             }
         }

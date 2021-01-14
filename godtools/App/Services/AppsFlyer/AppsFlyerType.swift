@@ -8,14 +8,13 @@
 
 import Foundation
 
-protocol AppsFlyerType {    
+protocol AppsFlyerType {
+    var appsFlyerLib: AppsFlyerLib { get }
+    
     func configure(appFlow: AppFlow)
     func appDidBecomeActive()
-    func setCustomAnalyticsData(data: [AnyHashable: Any])
-    func getCustomAnalyticsData() -> [AnyHashable: Any]?
     func handleOpenUrl(url: URL, options: [UIApplication.OpenURLOptionsKey : Any])
     func continueUserActivity(userActivity: NSUserActivity)
     func registerUninstall (deviceToken: Data)
     func handlePushNotification(userInfo: [AnyHashable : Any])
-    func logEvent(eventName: String, data: [String: Any]?)
 }
