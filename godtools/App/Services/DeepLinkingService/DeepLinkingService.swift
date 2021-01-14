@@ -15,6 +15,7 @@ class DeepLinkingService: NSObject, DeepLinkingServiceType {
     private let loggingEnabled: Bool
     
     private var deepLinkUrl: URL?
+    private var deepLinkData: [AnyHashable: Any]?
         
     let processing: ObservableValue<Bool> = ObservableValue(value: false)
     let completed: ObservableValue<DeepLinkingType> = ObservableValue(value: .none)
@@ -48,6 +49,8 @@ class DeepLinkingService: NSObject, DeepLinkingServiceType {
     private func processDeepLinkIfNeeded() {
         if let url = deepLinkUrl {
             processDeepLink(url: url)
+        } else if let data = deepLinkData {
+            processAppsflyerDeepLink(data: data)
         }
     }
     
@@ -142,6 +145,12 @@ class DeepLinkingService: NSObject, DeepLinkingServiceType {
             print("\n DeepLinkingService: processAppsflyerDeepLink()")
         }
         
+        guard dataDownloader.cachedResourcesAvailable.value else {
+            deepLinkData = data
+            processing.accept(value: true)
+            return
+        }
+        
         if let is_first_launch = data["is_first_launch"] as? Bool,
             is_first_launch {
             //Use if we want to trigger different behavior for deep link with fresh install
@@ -158,8 +167,9 @@ class DeepLinkingService: NSObject, DeepLinkingServiceType {
             
             resourceName = deepLinkValue
         }
-        
-        guard dataDownloader.cachedResourcesAvailable.value else { return }        
+                
+        processing.accept(value: false)
+        deepLinkData = nil
         
         guard let primaryLanguage = languageSettingsService.primaryLanguage.value, let resource = dataDownloader.resourcesCache.getResource(abbreviation: resourceName) else {
             completed.accept(value: .none)
