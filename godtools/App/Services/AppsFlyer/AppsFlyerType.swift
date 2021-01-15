@@ -12,7 +12,7 @@ import AppsFlyerLib
 protocol AppsFlyerType {
     var appsFlyerLib: AppsFlyerLib { get }
     
-    func configure(appFlow: AppFlow)
+    func configure()
     func appDidBecomeActive()
     func handleOpenUrl(url: URL, options: [UIApplication.OpenURLOptionsKey : Any])
     func continueUserActivity(userActivity: NSUserActivity)

@@ -14,7 +14,6 @@ class AppsFlyer: NSObject, AppsFlyerType {
     private let sharedAppsFlyerLib: AppsFlyerLib = AppsFlyerLib.shared()
     private let config: ConfigType
     private let deepLinkingService: DeepLinkingServiceType
-    private var appFlow: AppFlow?
     
     private var isConfigured: Bool = false
     
@@ -37,8 +36,7 @@ class AppsFlyer: NSObject, AppsFlyerType {
         }
     }
     
-    func configure(appFlow: AppFlow) {
-        self.appFlow = appFlow
+    func configure() {
         
         if isConfigured {
             return
@@ -56,31 +54,29 @@ class AppsFlyer: NSObject, AppsFlyerType {
     }
     
     func appDidBecomeActive() {
-        AppsFlyerLib.shared().start()
-        AppsFlyerLib.shared().isStopped = false
+        appsFlyerLib.start()
+        appsFlyerLib.isStopped = false
     }
     
     func handleOpenUrl(url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) {
-        AppsFlyerLib.shared().handleOpen(url, options: options)
+        appsFlyerLib.handleOpen(url, options: options)
     }
     
     func continueUserActivity(userActivity: NSUserActivity) {
-        AppsFlyerLib.shared().continue(userActivity)
+        appsFlyerLib.continue(userActivity)
     }
     
     func registerUninstall(deviceToken: Data) {
-        AppsFlyerLib.shared().registerUninstall(deviceToken)
+        appsFlyerLib.registerUninstall(deviceToken)
     }
     
     func handlePushNotification(userInfo: [AnyHashable : Any]) {
-        AppsFlyerLib.shared().handlePushNotification(userInfo)
+        appsFlyerLib.handlePushNotification(userInfo)
     }
 }
 
 extension AppsFlyer: AppsFlyerLibDelegate {
     func onAppOpenAttribution(_ data: [AnyHashable : Any]) {
-        
-        appFlow?.navigate(step: .showTools(animated: true, shouldCreateNewInstance: true))
         
         deepLinkingService.processAppsflyerDeepLink(data: data)
     }
@@ -90,8 +86,6 @@ extension AppsFlyer: AppsFlyerLibDelegate {
     }
     
     func onConversionDataSuccess(_ data: [AnyHashable : Any]) {
-        
-        appFlow?.navigate(step: .showTools(animated: true, shouldCreateNewInstance: true))
         
         deepLinkingService.processAppsflyerDeepLink(data: data)
     }

@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.appFlow = appFlow
         
-        appDiContainer.appsFlyer.configure(appFlow: appFlow)
+        appDiContainer.appsFlyer.configure()
         
         appsFlyer = appDiContainer.appsFlyer
         
