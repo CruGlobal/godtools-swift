@@ -14,7 +14,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     private let appDiContainer: AppDiContainer = AppDiContainer()
     private var appFlow: AppFlow?
-    private var appsFlyer: AppsFlyerType?
     
     var window: UIWindow?
     
@@ -33,9 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.appFlow = appFlow
         
         appDiContainer.appsFlyer.configure()
-        
-        appsFlyer = appDiContainer.appsFlyer
-        
+                
         appDiContainer.analytics.adobeAnalytics.configure()
         appDiContainer.analytics.adobeAnalytics.collectLifecycleData()
         
@@ -78,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         AppEvents.activateApp()
         appFlow?.applicationDidBecomeActive(application)
-        appsFlyer?.appDidBecomeActive()
+        appDiContainer.analytics.appsFlyerAnalytics.trackAppLaunch()
         //on app launch, sync Adobe Analytics auth state
         appDiContainer.analytics.adobeAnalytics.fetchAttributesThenSyncIds()
         appDiContainer.analytics.firebaseAnalytics.fetchAttributesThenSetUserId()
@@ -89,7 +86,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        appsFlyer?.handleOpenUrl(url: url, options: options)
+        
+        appDiContainer.appsFlyer.handleOpenUrl(url: url, options: options)
         
         return ApplicationDelegate.shared.application(app, open: url, options: options)
     }
@@ -136,21 +134,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             appDiContainer.deepLinkingService.processDeepLink(url: url)
         }
         
-        appsFlyer?.continueUserActivity(userActivity: userActivity)
+        appDiContainer.appsFlyer.continueUserActivity(userActivity: userActivity)
         
         return true
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        appsFlyer?.registerUninstall(deviceToken: deviceToken)
+        appDiContainer.appsFlyer.registerUninstall(deviceToken: deviceToken)
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
-        appsFlyer?.handlePushNotification(userInfo: userInfo)
+        appDiContainer.appsFlyer.handlePushNotification(userInfo: userInfo)
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
-        appsFlyer?.handlePushNotification(userInfo: userInfo)
+        appDiContainer.appsFlyer.handlePushNotification(userInfo: userInfo)
     }
 }

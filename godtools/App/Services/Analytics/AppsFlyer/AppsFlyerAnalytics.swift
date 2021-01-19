@@ -16,6 +16,7 @@ class AppsFlyerAnalytics: NSObject, AppsFlyerAnalyticsType {
     private var appsFlyer: AppsFlyerType
     
     private var isConfigured: Bool = false
+    private var isConfiguring: Bool = false
     
     required init(appsFlyer: AppsFlyerType, loggingEnabled: Bool) {
         
@@ -26,16 +27,34 @@ class AppsFlyerAnalytics: NSObject, AppsFlyerAnalyticsType {
     }
     
     func configure(adobeAnalytics: AdobeAnalyticsType) {
-        
-        if isConfigured {
+            
+        if isConfigured || isConfiguring {
             return
         }
         
-        appsFlyer.appsFlyerLib.customData = ["marketingCloudID": adobeAnalytics.visitorMarketingCloudID]
-                        
-        isConfigured = true
+        isConfiguring = true
         
-        log(method: "configure()", label: nil, labelValue: nil, data: nil)
+        serialQueue.async { [weak self] in
+                        
+            self?.appsFlyer.appsFlyerLib.customData = ["marketingCloudID": adobeAnalytics.visitorMarketingCloudID]
+            
+            self?.isConfigured = true
+            self?.isConfiguring = false
+            
+            self?.log(method: "configure()", label: nil, labelValue: nil, data: nil)
+        }
+    }
+    
+    func trackAppLaunch() {
+                    
+        serialQueue.async { [weak self] in
+            
+            self?.assertFailureIfNotConfigured()
+        
+            self?.appsFlyer.appsFlyerLib.start()
+                        
+            self?.log(method: "trackAppLaunch()", label: nil, labelValue: nil, data: nil)
+        }
     }
     
     func trackEvent(eventName: String, data: [String: Any]?) {
