@@ -18,7 +18,7 @@ class DeepLinkingService: NSObject, DeepLinkingServiceType {
     private var deepLinkData: [AnyHashable: Any]?
         
     let processing: ObservableValue<Bool> = ObservableValue(value: false)
-    let completed: ObservableValue<DeepLinkingType> = ObservableValue(value: .none)
+    let completed: ObservableValue<DeepLinkingType?> = ObservableValue(value: nil)
     
     required init(dataDownloader: InitialDataDownloader, loggingEnabled: Bool, languageSettingsService: LanguageSettingsService) {
         
@@ -171,10 +171,7 @@ class DeepLinkingService: NSObject, DeepLinkingServiceType {
         processing.accept(value: false)
         deepLinkData = nil
         
-        guard let primaryLanguage = languageSettingsService.primaryLanguage.value, let resource = dataDownloader.resourcesCache.getResource(abbreviation: resourceName) else {
-            completed.accept(value: .none)
-            return
-        }
+        guard let primaryLanguage = languageSettingsService.primaryLanguage.value, let resource = dataDownloader.resourcesCache.getResource(abbreviation: resourceName) else { return }
                 
         completed.accept(value: .tool(resource: resource, primaryLanguage: primaryLanguage, parallelLanguage: nil, liveShareStream: nil, page: nil))
     }

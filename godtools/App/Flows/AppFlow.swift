@@ -96,7 +96,9 @@ class AppFlow: NSObject, Flow {
         
         isObservingDeepLinking = true
         
-        deepLinkingService.completed.addObserver(self) { [weak self] (deepLinkingType: DeepLinkingType) in
+        deepLinkingService.completed.addObserver(self) { [weak self] (_deepLinkingType: DeepLinkingType?) in
+            guard let deepLinkingType = _deepLinkingType else { return }
+            
             DispatchQueue.main.async { [weak self] in
                 
                 switch deepLinkingType {
@@ -115,8 +117,6 @@ class AppFlow: NSObject, Flow {
                             )
                         }
                     }
-                case .none:
-                    break
                 }
             }
         }
