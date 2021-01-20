@@ -16,7 +16,7 @@ class MobileContentAnalytics {
            
         let analyticsSystems = [
             "adobe": analytics.adobeAnalytics,
-            "appsflyer": analytics.appsFlyer,
+            "appsflyer": analytics.appsFlyerAnalytics,
             "firebase": analytics.firebaseAnalytics,
             "snowplow": analytics.snowplowAnalytics
         ]

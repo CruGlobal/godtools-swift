@@ -27,24 +27,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
         appDiContainer.firebaseConfiguration.configure()
         
+        let appFlow = AppFlow(appDiContainer: appDiContainer)
+        
+        self.appFlow = appFlow
+        
+        appDiContainer.appsFlyer.configure()
+                
         appDiContainer.analytics.adobeAnalytics.configure()
         appDiContainer.analytics.adobeAnalytics.collectLifecycleData()
         
         appDiContainer.analytics.firebaseAnalytics.configure()
         
-        appDiContainer.analytics.appsFlyer.configure(adobeAnalytics: appDiContainer.analytics.adobeAnalytics)
+        appDiContainer.analytics.appsFlyerAnalytics.configure(adobeAnalytics: appDiContainer.analytics.adobeAnalytics)
         
         appDiContainer.googleAdwordsAnalytics.recordAdwordsConversion()
         
         appDiContainer.analytics.snowplowAnalytics.configure(adobeAnalytics: appDiContainer.analytics.adobeAnalytics)
         
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
-           
-        appFlow = AppFlow(appDiContainer: appDiContainer)
         
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.backgroundColor = UIColor.white
-        window.rootViewController = appFlow?.rootController
+        window.rootViewController = appFlow.rootController
         window.makeKeyAndVisible()
         self.window = window
         
@@ -71,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         AppEvents.activateApp()
         appFlow?.applicationDidBecomeActive(application)
-        appDiContainer.analytics.appsFlyer.trackAppLaunch()
+        appDiContainer.analytics.appsFlyerAnalytics.trackAppLaunch()
         //on app launch, sync Adobe Analytics auth state
         appDiContainer.analytics.adobeAnalytics.fetchAttributesThenSyncIds()
         appDiContainer.analytics.firebaseAnalytics.fetchAttributesThenSetUserId()
@@ -85,7 +89,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         appDiContainer.deepLinkingService.processDeepLink(url: url)
         
-        appDiContainer.analytics.appsFlyer.handleOpenUrl(url: url, options: options)
+        appDiContainer.appsFlyer.handleOpenUrl(url: url, options: options)
         
         return ApplicationDelegate.shared.application(app, open: url, options: options)
     }
@@ -132,10 +136,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             appDiContainer.deepLinkingService.processDeepLink(url: url)
         }
         
+        appDiContainer.appsFlyer.continueUserActivity(userActivity: userActivity)
+        
         return true
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        appDiContainer.analytics.appsFlyer.registerUninstall(deviceToken: deviceToken)
+        appDiContainer.appsFlyer.registerUninstall(deviceToken: deviceToken)
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
+        appDiContainer.appsFlyer.handlePushNotification(userInfo: userInfo)
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
+        appDiContainer.appsFlyer.handlePushNotification(userInfo: userInfo)
     }
 }
