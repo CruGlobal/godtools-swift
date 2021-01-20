@@ -8,11 +8,9 @@
 
 import UIKit
 
-protocol AppsFlyerType: MobileContentAnalyticsSystem {
+protocol AppsFlyerAnalyticsType: MobileContentAnalyticsSystem {
     
     func configure(adobeAnalytics: AdobeAnalyticsType)
-    func registerUninstall(deviceToken: Data)
     func trackAppLaunch()
     func trackEvent(eventName: String, data: [String: Any]?)
-    func handleOpenUrl(url: URL, options: [UIApplication.OpenURLOptionsKey : Any])
 }

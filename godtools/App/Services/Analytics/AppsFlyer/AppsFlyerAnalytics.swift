@@ -7,44 +7,36 @@
 //
 
 import UIKit
-import AppsFlyerLib
 
-class AppsFlyer: NSObject, AppsFlyerType {
+class AppsFlyerAnalytics: NSObject, AppsFlyerAnalyticsType {
     
     private let serialQueue: DispatchQueue = DispatchQueue(label: "appsflyer.serial.queue")
-    private let config: ConfigType
     private let loggingEnabled: Bool
+    
+    private var appsFlyer: AppsFlyerType
     
     private var isConfigured: Bool = false
     private var isConfiguring: Bool = false
     
-    required init(config: ConfigType, loggingEnabled: Bool) {
+    required init(appsFlyer: AppsFlyerType, loggingEnabled: Bool) {
         
-        self.config = config
+        self.appsFlyer = appsFlyer
         self.loggingEnabled = loggingEnabled
         
         super.init()
     }
     
     func configure(adobeAnalytics: AdobeAnalyticsType) {
-        
+            
         if isConfigured || isConfiguring {
             return
         }
         
         isConfiguring = true
         
-        let sharedAppsFlyer: AppsFlyerLib = AppsFlyerLib.shared()
-        sharedAppsFlyer.appsFlyerDevKey = config.appsFlyerDevKey
-        sharedAppsFlyer.appleAppID = config.appleAppId
-        
-        if config.isDebug {
-            sharedAppsFlyer.useUninstallSandbox = true
-        }
-        
         serialQueue.async { [weak self] in
                         
-            sharedAppsFlyer.customData = ["marketingCloudID": adobeAnalytics.visitorMarketingCloudID]
+            self?.appsFlyer.appsFlyerLib.customData = ["marketingCloudID": adobeAnalytics.visitorMarketingCloudID]
             
             self?.isConfigured = true
             self?.isConfiguring = false
@@ -53,18 +45,14 @@ class AppsFlyer: NSObject, AppsFlyerType {
         }
     }
     
-    func registerUninstall(deviceToken: Data) {
-        AppsFlyerLib.shared().registerUninstall(deviceToken)
-    }
-    
     func trackAppLaunch() {
-                
+                    
         serialQueue.async { [weak self] in
             
             self?.assertFailureIfNotConfigured()
         
-            AppsFlyerLib.shared().start()
-            
+            self?.appsFlyer.appsFlyerLib.start()
+                        
             self?.log(method: "trackAppLaunch()", label: nil, labelValue: nil, data: nil)
         }
     }
@@ -75,14 +63,9 @@ class AppsFlyer: NSObject, AppsFlyerType {
             
             self?.assertFailureIfNotConfigured()
             
-            AppsFlyerLib.shared().logEvent(eventName, withValues: data)
-            
+            self?.appsFlyer.appsFlyerLib.logEvent(eventName, withValues: data)
             self?.log(method: "trackEvent()", label: "eventName", labelValue: eventName, data: data)
         }
-    }
-    
-    func handleOpenUrl(url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) {
-        AppsFlyerLib.shared().handleOpen(url, options: options)
     }
     
     private func assertFailureIfNotConfigured() {
@@ -101,7 +84,7 @@ class AppsFlyer: NSObject, AppsFlyerType {
             if let data = data {
                 print("  data: \(data)")
             }
-            if let customData = AppsFlyerLib.shared().customData {
+            if let customData = appsFlyer.appsFlyerLib.customData {
                 print("  customData: \(customData)")
             }
         }
@@ -110,7 +93,7 @@ class AppsFlyer: NSObject, AppsFlyerType {
 
 // MARK: - MobileContentAnalyticsSystem
 
-extension AppsFlyer: MobileContentAnalyticsSystem {
+extension AppsFlyerAnalytics: MobileContentAnalyticsSystem {
     func trackAction(action: String, data: [String: Any]?) {
         trackEvent(eventName: action, data: data)
     }
