@@ -11,5 +11,6 @@ import UIKit
 protocol AppsFlyerAnalyticsType: MobileContentAnalyticsSystem {
     
     func configure(adobeAnalytics: AdobeAnalyticsType)
+    func trackAppLaunch()
     func trackEvent(eventName: String, data: [String: Any]?)
 }

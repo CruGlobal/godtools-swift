@@ -13,7 +13,6 @@ protocol AppsFlyerType {
     var appsFlyerLib: AppsFlyerLib { get }
     
     func configure()
-    func appDidBecomeActive()
     func handleOpenUrl(url: URL, options: [UIApplication.OpenURLOptionsKey : Any])
     func continueUserActivity(userActivity: NSUserActivity)
     func registerUninstall (deviceToken: Data)

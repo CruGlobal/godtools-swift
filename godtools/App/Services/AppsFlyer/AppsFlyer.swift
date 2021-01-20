@@ -53,11 +53,6 @@ class AppsFlyer: NSObject, AppsFlyerType {
         }
     }
     
-    func appDidBecomeActive() {
-        appsFlyerLib.start()
-        appsFlyerLib.isStopped = false
-    }
-    
     func handleOpenUrl(url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) {
         appsFlyerLib.handleOpen(url, options: options)
     }
