@@ -15,7 +15,7 @@ class Firebase: NSObject, FirebaseType {
     }
     
     func messageClicked(_ inAppMessage: InAppMessagingDisplayMessage) {
-        
+
     }
         
     func messageDismissed(_ inAppMessage: InAppMessagingDisplayMessage, dismissType: FIRInAppMessagingDismissType) {
@@ -28,5 +28,9 @@ class Firebase: NSObject, FirebaseType {
         
     func displayError(for inAppMessage: InAppMessagingDisplayMessage, error: Error) {
         
+    }
+    
+    func triggerInAppMessage(eventId: String) {
+        InAppMessaging.inAppMessaging().triggerEvent(eventId);
     }
 }

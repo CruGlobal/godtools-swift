@@ -10,5 +10,5 @@ import Foundation
 import FirebaseInAppMessaging
 
 protocol FirebaseType: InAppMessagingDisplayDelegate {
-    
+    func triggerInAppMessage(eventId: String)
 }
