@@ -17,6 +17,7 @@ class ToolsMenuView: UIViewController {
     private let favoritingToolMessageViewModel: FavoritingToolMessageViewModelType
     
     private var toolsMenuControl: UISegmentedControl = UISegmentedControl()
+    private var didLayoutSubviews: Bool = false
                 
     @IBOutlet weak private var favoritedTools: FavoritedToolsView!
     @IBOutlet weak private var allTools: AllToolsView!
@@ -44,11 +45,7 @@ class ToolsMenuView: UIViewController {
         super.viewDidLoad()
         print("view didload: \(type(of: self))")
         
-        favoritedTools.configure(viewModel: favoritedToolsViewModel, delegate: self, openTutorialViewModel: openTutorialViewModel)
-        allTools.configure(viewModel: allToolsViewModel, favoritingToolMessageViewModel: favoritingToolMessageViewModel)
-        
         setupLayout()
-        setupBinding()
         
         _ = addBarButtonItem(
             to: .left,
@@ -71,6 +68,27 @@ class ToolsMenuView: UIViewController {
             action: #selector(handleToolsMenuControlChanged(toolsControl:)),
             for: .valueChanged
         )
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if !didLayoutSubviews {
+            didLayoutSubviews = true
+            
+            favoritedTools.configure(
+                viewModel: favoritedToolsViewModel,
+                delegate: self,
+                openTutorialViewModel: openTutorialViewModel
+            )
+            
+            allTools.configure(
+                viewModel: allToolsViewModel,
+                favoritingToolMessageViewModel: favoritingToolMessageViewModel
+            )
+            
+            setupBinding()
+        }
     }
     
     func resetMenu() {
