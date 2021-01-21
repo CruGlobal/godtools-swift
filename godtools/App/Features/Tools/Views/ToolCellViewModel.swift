@@ -29,6 +29,7 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
     let isFavorited: ObservableValue = ObservableValue(value: false)
     let aboutTitle: ObservableValue<String> = ObservableValue(value: "")
     let openTitle: ObservableValue<String> = ObservableValue(value: "")
+    let primaryLanguageDirection: ObservableValue<LanguageDirection> = ObservableValue(value: .leftToRight)
     
     required init(resource: ResourceModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, deviceAttachmentBanners: DeviceAttachmentBanners) {
         
@@ -188,16 +189,22 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
             
             toolName = primaryTranslation.translatedName
             languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.code) ?? Bundle.main
+            
+            primaryLanguageDirection.accept(value: primaryLanguage.languageDirection)
         }
         else if let englishTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageCode: "en") {
             
             toolName = englishTranslation.translatedName
             languageBundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
+            
+            primaryLanguageDirection.accept(value:  .leftToRight)
         }
         else {
             
             toolName = resource.name
             languageBundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
+            
+            primaryLanguageDirection.accept(value:  .leftToRight)
         }
         
         title.accept(value: toolName)

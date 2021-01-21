@@ -140,6 +140,19 @@ class ToolCell: UITableViewCell {
         viewModel.openTitle.addObserver(self) { [weak self] (openTitle: String) in
             self?.openToolButton.setTitle(openTitle, for: .normal)
         }
+        
+        viewModel.primaryLanguageDirection.addObserver(self) { [weak self] (value: LanguageDirection) in
+            switch value {
+            case .leftToRight:
+                self?.toolContentView.semanticContentAttribute = .forceLeftToRight
+                self?.titleLabel.semanticContentAttribute = .forceLeftToRight
+                self?.categoryLabel.semanticContentAttribute = .forceLeftToRight
+            case .rightToLeft:
+                self?.toolContentView.semanticContentAttribute = .forceRightToLeft
+                self?.titleLabel.semanticContentAttribute = .forceRightToLeft
+                self?.categoryLabel.semanticContentAttribute = .forceRightToLeft
+            }
+        }
     }
     
     private func setBannerImage(image: UIImage?) {
