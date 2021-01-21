@@ -11,20 +11,24 @@ import SWXMLHash
 
 class ContentTextNode: MobileContentXmlNode {
     
+    let restrictTo: String?
     let text: String?
     let textAlign: String?
     let textColor: String?
     let textScale: String?
     let textStyle: String?
+    let version: String?
     
     required init(xmlElement: XMLElement) {
     
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
+        restrictTo = attributes["restrictTo"]?.text
         textAlign = attributes["text-align"]?.text
         textColor = attributes["text-color"]?.text
         textScale = attributes["text-scale"]?.text
         textStyle = attributes["text-style"]?.text
+        version = attributes["version"]?.text
                 
         if xmlElement.text.trimmingCharacters(in: .whitespaces) != "" {
             text = xmlElement.text
