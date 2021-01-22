@@ -184,13 +184,12 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
              
         let toolName: String
         let languageBundle: Bundle
+        let semanticContentAttribute: UISemanticContentAttribute
         
         if let primaryLanguage = languageSettingsService.primaryLanguage.value, let primaryTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageId: primaryLanguage.id) {
             
             toolName = primaryTranslation.translatedName
             languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.code) ?? Bundle.main
-            
-            let semanticContentAttribute: UISemanticContentAttribute;
             
             switch primaryLanguage.languageDirection {
             case .leftToRight:
@@ -198,22 +197,18 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
             case .rightToLeft:
                 semanticContentAttribute = .forceRightToLeft
             }
-            
-            toolSemanticContentAttribute.accept(value: semanticContentAttribute)
         }
         else if let englishTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageCode: "en") {
             
             toolName = englishTranslation.translatedName
             languageBundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
-            
-            toolSemanticContentAttribute.accept(value: .forceLeftToRight)
+            semanticContentAttribute = .forceLeftToRight
         }
         else {
             
             toolName = resource.name
             languageBundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
-            
-            toolSemanticContentAttribute.accept(value: .forceLeftToRight)
+            semanticContentAttribute = .forceLeftToRight
         }
         
         title.accept(value: toolName)
@@ -221,5 +216,6 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
         category.accept(value: localizationServices.stringForBundle(bundle: languageBundle, key: "tool_category_\(resource.attrCategory)"))
         aboutTitle.accept(value: localizationServices.stringForBundle(bundle: languageBundle, key: "about"))
         openTitle.accept(value: localizationServices.stringForBundle(bundle: languageBundle, key: "open"))
+        toolSemanticContentAttribute.accept(value: semanticContentAttribute)
     }
 }
