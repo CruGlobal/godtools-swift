@@ -141,17 +141,10 @@ class ToolCell: UITableViewCell {
             self?.openToolButton.setTitle(openTitle, for: .normal)
         }
         
-        viewModel.primaryLanguageDirection.addObserver(self) { [weak self] (value: LanguageDirection) in
-            switch value {
-            case .leftToRight:
-                self?.toolContentView.semanticContentAttribute = .forceLeftToRight
-                self?.titleLabel.semanticContentAttribute = .forceLeftToRight
-                self?.categoryLabel.semanticContentAttribute = .forceLeftToRight
-            case .rightToLeft:
-                self?.toolContentView.semanticContentAttribute = .forceRightToLeft
-                self?.titleLabel.semanticContentAttribute = .forceRightToLeft
-                self?.categoryLabel.semanticContentAttribute = .forceRightToLeft
-            }
+        viewModel.toolSemanticContentAttribute.addObserver(self) { [weak self] (value: UISemanticContentAttribute) in
+            self?.toolContentView.semanticContentAttribute = value
+            self?.titleLabel.semanticContentAttribute = value
+            self?.categoryLabel.semanticContentAttribute = value
         }
     }
     
