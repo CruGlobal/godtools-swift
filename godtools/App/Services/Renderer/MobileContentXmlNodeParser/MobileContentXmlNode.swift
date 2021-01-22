@@ -15,14 +15,23 @@ class MobileContentXmlNode {
     private(set) var children: [MobileContentXmlNode] = Array()
     
     let xmlElementName: String
+    let restrictTo: String?
+    let version: String?
     
     required init(xmlElement: XMLElement) {
         
         xmlElementName = xmlElement.name
+        
+        let attributes: [String: XMLAttribute] = xmlElement.allAttributes
+        
+        restrictTo = attributes["restrictTo"]?.text
+        version = attributes["version"]?.text
     }
     
     init(xmlElementName: String) {
         self.xmlElementName = xmlElementName
+        restrictTo = nil
+        version = nil
     }
     
     func addChild(childNode: MobileContentXmlNode) {

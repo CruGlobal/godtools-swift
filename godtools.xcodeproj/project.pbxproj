@@ -11,6 +11,8 @@
 		17339885230736DB00A715B4 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17339884230736DB00A715B4 /* SnapshotHelper.swift */; };
 		1737DFDF22FDB48000223CB0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1737DFDE22FDB48000223CB0 /* GoogleService-Info.plist */; };
 		1E06EB6DA916BEF9C627866F /* Pods_godtools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D61FF360D11F854476B6E206 /* Pods_godtools.framework */; };
+		4509897425BB17240020BBAA /* MobileContentRestrictToType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509897325BB17240020BBAA /* MobileContentRestrictToType.swift */; };
+		4509897A25BB191A0020BBAA /* MobileContentXmlNode+RestrictToType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509897925BB191A0020BBAA /* MobileContentXmlNode+RestrictToType.swift */; };
 		450EF834247EB3D300978926 /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 450EF833247EB3D300978926 /* SF-Pro-Text-Bold.otf */; };
 		451EBE2724AD968B00C4D6DD /* languages.json in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE0D24AD968A00C4D6DD /* languages.json */; };
 		451EBE2824AD968B00C4D6DD /* resources.json in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE0E24AD968A00C4D6DD /* resources.json */; };
@@ -787,6 +789,8 @@
 		1737DFDE22FDB48000223CB0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1767C18E62BAF2E86AA37734 /* Pods-godtoolsTests.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsTests.production.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests.production.xcconfig"; sourceTree = "<group>"; };
 		3795EC9D424F0613AD8AF610 /* Pods-godtools.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.release.xcconfig"; sourceTree = "<group>"; };
+		4509897325BB17240020BBAA /* MobileContentRestrictToType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRestrictToType.swift; sourceTree = "<group>"; };
+		4509897925BB191A0020BBAA /* MobileContentXmlNode+RestrictToType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MobileContentXmlNode+RestrictToType.swift"; sourceTree = "<group>"; };
 		450EF833247EB3D300978926 /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
 		451EBE0D24AD968A00C4D6DD /* languages.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = languages.json; sourceTree = "<group>"; };
 		451EBE0E24AD968A00C4D6DD /* resources.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = resources.json; sourceTree = "<group>"; };
@@ -3041,6 +3045,7 @@
 			isa = PBXGroup;
 			children = (
 				45AD1DD625938A9700A096A0 /* MobileContentXmlNode.swift */,
+				4509897925BB191A0020BBAA /* MobileContentXmlNode+RestrictToType.swift */,
 				45AD1DD025938A9700A096A0 /* MobileContentXmlNodeType.swift */,
 				45AD1DB025938A9700A096A0 /* MobileContentXmlNodeFactory.swift */,
 				45AD1DD525938A9700A096A0 /* MobileContentXmlNodeParser.swift */,
@@ -3093,6 +3098,7 @@
 			children = (
 				45AD1DD425938A9700A096A0 /* AnalyticsAttributeNode+Trigger.swift */,
 				45AD1DD325938A9700A096A0 /* AnalyticsEventNodeTrigger.swift */,
+				4509897325BB17240020BBAA /* MobileContentRestrictToType.swift */,
 				45AD1DD225938A9700A096A0 /* MobileContentRGBAColor.swift */,
 			);
 			path = Models;
@@ -4988,6 +4994,7 @@
 				45AD1AB725938A4E00A096A0 /* AllToolsView.swift in Sources */,
 				45AD1AA825938A4E00A096A0 /* TutorialViewModelType.swift in Sources */,
 				45AD1B2625938A4F00A096A0 /* LocalizedAboutTextProvider.swift in Sources */,
+				4509897425BB17240020BBAA /* MobileContentRestrictToType.swift in Sources */,
 				45AD1BE325938A4F00A096A0 /* NibBased.swift in Sources */,
 				45AD205A25938AC300A096A0 /* SnowplowAnalytics.swift in Sources */,
 				45AD1B6325938A4F00A096A0 /* AccountActivityView.swift in Sources */,
@@ -5096,6 +5103,7 @@
 				45AD1FB125938A9800A096A0 /* ArticleJcrContentType.swift in Sources */,
 				45AD1B9425938A4F00A096A0 /* ToolViewModel.swift in Sources */,
 				45AD1FF525938A9800A096A0 /* DownloadedAttachmentResult.swift in Sources */,
+				4509897A25BB191A0020BBAA /* MobileContentXmlNode+RestrictToType.swift in Sources */,
 				45AD1F9125938A9800A096A0 /* ResourceModel.swift in Sources */,
 				45AD1B0C25938A4E00A096A0 /* ArticleCell.swift in Sources */,
 				45AD1FA325938A9800A096A0 /* ArticleAemImportOperationError.swift in Sources */,
