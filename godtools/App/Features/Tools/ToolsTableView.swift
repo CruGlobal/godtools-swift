@@ -31,9 +31,6 @@ class ToolsTableView: UIView, NibBased {
                 
         setupLayout()
         
-        tableView.delegate = self
-        tableView.dataSource = self
-        
         tableView.addSubview(refreshControl)
         refreshControl.addTarget(
             self,
@@ -47,6 +44,9 @@ class ToolsTableView: UIView, NibBased {
         self.viewModel = viewModel
         
         setupBinding()
+        
+        tableView.delegate = self
+        tableView.dataSource = self
     }
     
     private func setupLayout() {

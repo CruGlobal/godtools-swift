@@ -45,6 +45,9 @@ class MenuView: UIViewController {
             target: self,
             action: #selector(handleDone(barButtonItem:))
         )
+        
+        tableView.delegate = self
+        tableView.dataSource = self
     }
     
     private func setupLayout() {
