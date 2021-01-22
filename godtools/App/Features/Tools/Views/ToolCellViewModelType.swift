@@ -20,4 +20,5 @@ protocol ToolCellViewModelType {
     var isFavorited: ObservableValue<Bool> { get }
     var aboutTitle: ObservableValue<String> { get }
     var openTitle: ObservableValue<String> { get }
+    var toolSemanticContentAttribute: ObservableValue<UISemanticContentAttribute> { get }
 }
