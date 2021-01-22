@@ -45,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         appDiContainer.analytics.snowplowAnalytics.configure(adobeAnalytics: appDiContainer.analytics.adobeAnalytics)
         
-        InAppMessaging.inAppMessaging().delegate = appDiContainer.firebase
+        InAppMessaging.inAppMessaging().delegate = appDiContainer.firebaseInAppMessaging
         
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         

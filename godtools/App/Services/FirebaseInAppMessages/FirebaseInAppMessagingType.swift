@@ -1,5 +1,5 @@
 //
-//  FirebaseType.swift
+//  FirebaseInAppMessagingType.swift
 //  godtools
 //
 //  Created by Robert Eldredge on 1/21/21.
@@ -9,6 +9,6 @@
 import Foundation
 import FirebaseInAppMessaging
 
-protocol FirebaseType: InAppMessagingDisplayDelegate {
+protocol FirebaseInAppMessagingType: InAppMessagingDisplayDelegate {
     func triggerInAppMessage(eventId: String)
 }

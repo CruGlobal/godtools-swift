@@ -1,5 +1,5 @@
 //
-//  Firebase.swift
+//  FirebaseInAppMessaging.swift
 //  godtools
 //
 //  Created by Robert Eldredge on 1/21/21.
@@ -9,7 +9,7 @@
 import Foundation
 import FirebaseInAppMessaging
 
-class Firebase: NSObject, FirebaseType {
+class FirebaseInAppMessaging: NSObject, FirebaseInAppMessagingType {
     override init() {
         
     }
