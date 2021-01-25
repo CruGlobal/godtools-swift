@@ -9,7 +9,7 @@
 import Foundation
 import SWXMLHash
 
-class LabelNode: MobileContentXmlNode {
+class LabelNode: MobileContentXmlNode, MobileContentRenderableNode {
         
     required init(xmlElement: XMLElement) {
     

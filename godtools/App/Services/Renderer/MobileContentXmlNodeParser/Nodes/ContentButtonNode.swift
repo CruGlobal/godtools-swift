@@ -9,7 +9,7 @@
 import Foundation
 import SWXMLHash
 
-class ContentButtonNode: MobileContentXmlNode {
+class ContentButtonNode: MobileContentXmlNode, MobileContentRenderableNode {
     
     private(set) var textNode: ContentTextNode?
     private(set) var analyticsEventsNode: AnalyticsEventsNode?
@@ -59,5 +59,17 @@ class ContentButtonNode: MobileContentXmlNode {
             return MobileContentRGBAColor(stringColor: stringColor)
         }
         return nil
+    }
+}
+
+extension ContentButtonNode {
+    
+    var buttonType: MobileContentButtonNodeType {
+    
+        guard let type = self.type else {
+            return .unknown
+        }
+        
+        return MobileContentButtonNodeType(rawValue: type) ?? .unknown
     }
 }

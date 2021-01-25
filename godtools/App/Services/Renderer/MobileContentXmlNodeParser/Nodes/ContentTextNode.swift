@@ -9,7 +9,7 @@
 import Foundation
 import SWXMLHash
 
-class ContentTextNode: MobileContentXmlNode {
+class ContentTextNode: MobileContentXmlNode, MobileContentRenderableNode {
     
     let text: String?
     let textAlign: String?

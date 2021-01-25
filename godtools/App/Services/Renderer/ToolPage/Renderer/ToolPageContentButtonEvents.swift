@@ -49,7 +49,7 @@ class ToolPageContentButtonEvents {
             return
         }
         
-        if buttonNode.type == "event" {
+        if buttonNode.buttonType == .event {
             
             let followUpSendEventName: String = "followup:send"
             
@@ -66,7 +66,7 @@ class ToolPageContentButtonEvents {
                 }
             }
         }
-        else if buttonNode.type == "url", let url = buttonNode.url {
+        else if buttonNode.buttonType == .url, let url = buttonNode.url {
             mobileContentEvents.urlButtonTapped(urlButtonEvent: UrlButtonEvent(url: url))
         }
         

@@ -11,8 +11,7 @@ import Foundation
 enum MobileContentRestrictToType: String {
     
     case android = "android"
-    case ios = "ios"
+    case iOS = "ios"
     case mobile = "mobile"
     case web = "web"
-    case noRestriction = "noRestriction"
 }

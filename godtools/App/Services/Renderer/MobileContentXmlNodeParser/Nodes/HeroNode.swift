@@ -9,7 +9,7 @@
 import Foundation
 import SWXMLHash
 
-class HeroNode: MobileContentXmlNode {
+class HeroNode: MobileContentXmlNode, MobileContentRenderableNode {
         
     private(set) var analyticsEventsNode: AnalyticsEventsNode?
     

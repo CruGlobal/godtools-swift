@@ -9,7 +9,7 @@
 import Foundation
 import SWXMLHash
 
-class CallToActionNode: MobileContentXmlNode {
+class CallToActionNode: MobileContentXmlNode, MobileContentRenderableNode {
         
     let controlColor: String?
     

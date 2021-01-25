@@ -12,7 +12,6 @@
 		1737DFDF22FDB48000223CB0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1737DFDE22FDB48000223CB0 /* GoogleService-Info.plist */; };
 		1E06EB6DA916BEF9C627866F /* Pods_godtools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D61FF360D11F854476B6E206 /* Pods_godtools.framework */; };
 		4509897425BB17240020BBAA /* MobileContentRestrictToType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509897325BB17240020BBAA /* MobileContentRestrictToType.swift */; };
-		4509897A25BB191A0020BBAA /* MobileContentXmlNode+RestrictToType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509897925BB191A0020BBAA /* MobileContentXmlNode+RestrictToType.swift */; };
 		450EF834247EB3D300978926 /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 450EF833247EB3D300978926 /* SF-Pro-Text-Bold.otf */; };
 		451EBE2724AD968B00C4D6DD /* languages.json in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE0D24AD968A00C4D6DD /* languages.json */; };
 		451EBE2824AD968B00C4D6DD /* resources.json in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE0E24AD968A00C4D6DD /* resources.json */; };
@@ -37,8 +36,24 @@
 		451EBE3B24AD968B00C4D6DD /* db11fd9214b9a05b5d1e760c707e9db8d4b821dea36bca0c94263efa28e8ac4b.png in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE2424AD968A00C4D6DD /* db11fd9214b9a05b5d1e760c707e9db8d4b821dea36bca0c94263efa28e8ac4b.png */; };
 		451EBE3C24AD968B00C4D6DD /* 8a2312f958cdf6548a1637347bf89560f6ebf284549669638dfef944d8268a08.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE2524AD968A00C4D6DD /* 8a2312f958cdf6548a1637347bf89560f6ebf284549669638dfef944d8268a08.jpg */; };
 		451EBE3D24AD968B00C4D6DD /* e961f409d06308e87deb9ed9166264c7c732d9dc24e70f886944636308810d6e.png in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE2624AD968A00C4D6DD /* e961f409d06308e87deb9ed9166264c7c732d9dc24e70f886944636308810d6e.png */; };
+		4530EE2725BF13C400806938 /* MobileContentRenderableContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4530EE2125BF13C400806938 /* MobileContentRenderableContainerView.swift */; };
+		4530EE2825BF13C400806938 /* MobileContentRenderableContainerNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4530EE2225BF13C400806938 /* MobileContentRenderableContainerNode.swift */; };
+		4530EE2925BF13C400806938 /* MobileContentRenderableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4530EE2325BF13C400806938 /* MobileContentRenderableView.swift */; };
+		4530EE2A25BF13C400806938 /* MobileContentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4530EE2425BF13C400806938 /* MobileContentRenderer.swift */; };
+		4530EE2B25BF13C400806938 /* MobileContentRenderableNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4530EE2525BF13C400806938 /* MobileContentRenderableNode.swift */; };
+		4530EE2C25BF13C400806938 /* MobileContentRendererVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4530EE2625BF13C400806938 /* MobileContentRendererVersion.swift */; };
 		45362A9225BA0AD500AD86DF /* ContentFallbackNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45362A9125BA0AD500AD86DF /* ContentFallbackNode.swift */; };
 		453D866A24E08461004EA89F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 453D866824E08461004EA89F /* Localizable.strings */; };
+		454D015B25BE279E0057FC02 /* MobileContentEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454D014F25BE279E0057FC02 /* MobileContentEvents.swift */; };
+		454D015C25BE279E0057FC02 /* UrlButtonEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454D015125BE279E0057FC02 /* UrlButtonEvent.swift */; };
+		454D015D25BE279E0057FC02 /* ButtonEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454D015225BE279E0057FC02 /* ButtonEvent.swift */; };
+		454D015E25BE279E0057FC02 /* ImageEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454D015325BE279E0057FC02 /* ImageEvent.swift */; };
+		454D015F25BE279E0057FC02 /* FollowUpButtonEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454D015425BE279E0057FC02 /* FollowUpButtonEvent.swift */; };
+		454D016025BE279E0057FC02 /* ContentEventError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454D015525BE279E0057FC02 /* ContentEventError.swift */; };
+		454D016125BE279E0057FC02 /* TrainingTipEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454D015625BE279E0057FC02 /* TrainingTipEvent.swift */; };
+		454D016225BE279E0057FC02 /* MobileContentAnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454D015825BE279E0057FC02 /* MobileContentAnalyticsEvent.swift */; };
+		454D016325BE279E0057FC02 /* MobileContentAnalyticsSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454D015925BE279E0057FC02 /* MobileContentAnalyticsSystem.swift */; };
+		454D016425BE279E0057FC02 /* MobileContentAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454D015A25BE279E0057FC02 /* MobileContentAnalytics.swift */; };
 		45557AEA252D094100ACFA95 /* LocaleLocalizationBundleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45557AE9252D094000ACFA95 /* LocaleLocalizationBundleTests.swift */; };
 		4556AECD23E22185002C15E8 /* SF-Pro-Display-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AECA23E22185002C15E8 /* SF-Pro-Display-Light.otf */; };
 		4556AECE23E22185002C15E8 /* SF-Pro-Text-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AECB23E22185002C15E8 /* SF-Pro-Text-Light.otf */; };
@@ -48,6 +63,7 @@
 		4556AED723E221FE002C15E8 /* NotoSansMyanmar-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AED223E221FE002C15E8 /* NotoSansMyanmar-Bold.ttf */; };
 		4556AED823E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AED323E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf */; };
 		4556AED923E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AED423E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf */; };
+		4578508F25BCC1BA002A3191 /* MobileContentButtonNodeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4578508E25BCC1BA002A3191 /* MobileContentButtonNodeType.swift */; };
 		457C8586242E50D70025E079 /* GoogleService-Info-Debug.plist in Resources */ = {isa = PBXBuildFile; fileRef = 457C8585242E50D70025E079 /* GoogleService-Info-Debug.plist */; };
 		4586C04624631C3900927A42 /* ADBMobileConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = 4586C04424631C3900927A42 /* ADBMobileConfig.json */; };
 		4586C04724631C3900927A42 /* ADBMobileConfig_debug.json in Resources */ = {isa = PBXBuildFile; fileRef = 4586C04524631C3900927A42 /* ADBMobileConfig_debug.json */; };
@@ -349,17 +365,7 @@
 		45AD1BE325938A4F00A096A0 /* NibBased.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD18D825938A4E00A096A0 /* NibBased.swift */; };
 		45AD1BE425938A4F00A096A0 /* CustomViewBuilderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD18D925938A4E00A096A0 /* CustomViewBuilderType.swift */; };
 		45AD1EEA25938A9800A096A0 /* FontService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1D4325938A9700A096A0 /* FontService.swift */; };
-		45AD1EEB25938A9800A096A0 /* MobileContentEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1D4625938A9700A096A0 /* MobileContentEvents.swift */; };
-		45AD1EEC25938A9800A096A0 /* UrlButtonEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1D4825938A9700A096A0 /* UrlButtonEvent.swift */; };
-		45AD1EED25938A9800A096A0 /* ButtonEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1D4925938A9700A096A0 /* ButtonEvent.swift */; };
-		45AD1EEE25938A9800A096A0 /* ImageEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1D4A25938A9700A096A0 /* ImageEvent.swift */; };
-		45AD1EEF25938A9800A096A0 /* FollowUpButtonEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1D4B25938A9700A096A0 /* FollowUpButtonEvent.swift */; };
-		45AD1EF025938A9800A096A0 /* ContentEventError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1D4C25938A9700A096A0 /* ContentEventError.swift */; };
-		45AD1EF125938A9800A096A0 /* TrainingTipEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1D4D25938A9700A096A0 /* TrainingTipEvent.swift */; };
 		45AD1EF225938A9800A096A0 /* ManifestResourcesCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1D4F25938A9700A096A0 /* ManifestResourcesCache.swift */; };
-		45AD1EF325938A9800A096A0 /* MobileContentAnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1D5125938A9700A096A0 /* MobileContentAnalyticsEvent.swift */; };
-		45AD1EF425938A9800A096A0 /* MobileContentAnalyticsSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1D5225938A9700A096A0 /* MobileContentAnalyticsSystem.swift */; };
-		45AD1EF525938A9800A096A0 /* MobileContentAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1D5325938A9700A096A0 /* MobileContentAnalytics.swift */; };
 		45AD1EF625938A9800A096A0 /* ToolPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1D5525938A9700A096A0 /* ToolPageView.swift */; };
 		45AD1EF725938A9800A096A0 /* ToolPageContentStackRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1D5725938A9700A096A0 /* ToolPageContentStackRenderer.swift */; };
 		45AD1EF825938A9800A096A0 /* ToolPageContentLinkEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1D5825938A9700A096A0 /* ToolPageContentLinkEvents.swift */; };
@@ -790,7 +796,6 @@
 		1767C18E62BAF2E86AA37734 /* Pods-godtoolsTests.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsTests.production.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests.production.xcconfig"; sourceTree = "<group>"; };
 		3795EC9D424F0613AD8AF610 /* Pods-godtools.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.release.xcconfig"; sourceTree = "<group>"; };
 		4509897325BB17240020BBAA /* MobileContentRestrictToType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRestrictToType.swift; sourceTree = "<group>"; };
-		4509897925BB191A0020BBAA /* MobileContentXmlNode+RestrictToType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MobileContentXmlNode+RestrictToType.swift"; sourceTree = "<group>"; };
 		450EF833247EB3D300978926 /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
 		451EBE0D24AD968A00C4D6DD /* languages.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = languages.json; sourceTree = "<group>"; };
 		451EBE0E24AD968A00C4D6DD /* resources.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = resources.json; sourceTree = "<group>"; };
@@ -815,10 +820,26 @@
 		451EBE2424AD968A00C4D6DD /* db11fd9214b9a05b5d1e760c707e9db8d4b821dea36bca0c94263efa28e8ac4b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = db11fd9214b9a05b5d1e760c707e9db8d4b821dea36bca0c94263efa28e8ac4b.png; sourceTree = "<group>"; };
 		451EBE2524AD968A00C4D6DD /* 8a2312f958cdf6548a1637347bf89560f6ebf284549669638dfef944d8268a08.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 8a2312f958cdf6548a1637347bf89560f6ebf284549669638dfef944d8268a08.jpg; sourceTree = "<group>"; };
 		451EBE2624AD968A00C4D6DD /* e961f409d06308e87deb9ed9166264c7c732d9dc24e70f886944636308810d6e.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = e961f409d06308e87deb9ed9166264c7c732d9dc24e70f886944636308810d6e.png; sourceTree = "<group>"; };
+		4530EE2125BF13C400806938 /* MobileContentRenderableContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentRenderableContainerView.swift; sourceTree = "<group>"; };
+		4530EE2225BF13C400806938 /* MobileContentRenderableContainerNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentRenderableContainerNode.swift; sourceTree = "<group>"; };
+		4530EE2325BF13C400806938 /* MobileContentRenderableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentRenderableView.swift; sourceTree = "<group>"; };
+		4530EE2425BF13C400806938 /* MobileContentRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentRenderer.swift; sourceTree = "<group>"; };
+		4530EE2525BF13C400806938 /* MobileContentRenderableNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentRenderableNode.swift; sourceTree = "<group>"; };
+		4530EE2625BF13C400806938 /* MobileContentRendererVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentRendererVersion.swift; sourceTree = "<group>"; };
 		45362A9125BA0AD500AD86DF /* ContentFallbackNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentFallbackNode.swift; sourceTree = "<group>"; };
 		453D866324E08310004EA89F /* mn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = mn; path = mn.lproj/Localizable.strings; sourceTree = "<group>"; };
 		453D866424E08347004EA89F /* tpi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tpi; path = tpi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		453D866924E08461004EA89F /* no */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = no; path = Localizable.strings; sourceTree = "<group>"; };
+		454D014F25BE279E0057FC02 /* MobileContentEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentEvents.swift; sourceTree = "<group>"; };
+		454D015125BE279E0057FC02 /* UrlButtonEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlButtonEvent.swift; sourceTree = "<group>"; };
+		454D015225BE279E0057FC02 /* ButtonEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonEvent.swift; sourceTree = "<group>"; };
+		454D015325BE279E0057FC02 /* ImageEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageEvent.swift; sourceTree = "<group>"; };
+		454D015425BE279E0057FC02 /* FollowUpButtonEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowUpButtonEvent.swift; sourceTree = "<group>"; };
+		454D015525BE279E0057FC02 /* ContentEventError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentEventError.swift; sourceTree = "<group>"; };
+		454D015625BE279E0057FC02 /* TrainingTipEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrainingTipEvent.swift; sourceTree = "<group>"; };
+		454D015825BE279E0057FC02 /* MobileContentAnalyticsEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentAnalyticsEvent.swift; sourceTree = "<group>"; };
+		454D015925BE279E0057FC02 /* MobileContentAnalyticsSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentAnalyticsSystem.swift; sourceTree = "<group>"; };
+		454D015A25BE279E0057FC02 /* MobileContentAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentAnalytics.swift; sourceTree = "<group>"; };
 		45557AE9252D094000ACFA95 /* LocaleLocalizationBundleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocaleLocalizationBundleTests.swift; sourceTree = "<group>"; };
 		4556AECA23E22185002C15E8 /* SF-Pro-Display-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Light.otf"; sourceTree = "<group>"; };
 		4556AECB23E22185002C15E8 /* SF-Pro-Text-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Light.otf"; sourceTree = "<group>"; };
@@ -828,6 +849,7 @@
 		4556AED223E221FE002C15E8 /* NotoSansMyanmar-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansMyanmar-Bold.ttf"; sourceTree = "<group>"; };
 		4556AED323E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansEthiopic-Regular.ttf"; sourceTree = "<group>"; };
 		4556AED423E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansEthiopic-Bold.ttf"; sourceTree = "<group>"; };
+		4578508E25BCC1BA002A3191 /* MobileContentButtonNodeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentButtonNodeType.swift; sourceTree = "<group>"; };
 		457C8585242E50D70025E079 /* GoogleService-Info-Debug.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Debug.plist"; sourceTree = "<group>"; };
 		4586C04424631C3900927A42 /* ADBMobileConfig.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ADBMobileConfig.json; sourceTree = "<group>"; };
 		4586C04524631C3900927A42 /* ADBMobileConfig_debug.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ADBMobileConfig_debug.json; sourceTree = "<group>"; };
@@ -1129,17 +1151,7 @@
 		45AD18D825938A4E00A096A0 /* NibBased.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibBased.swift; sourceTree = "<group>"; };
 		45AD18D925938A4E00A096A0 /* CustomViewBuilderType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomViewBuilderType.swift; sourceTree = "<group>"; };
 		45AD1D4325938A9700A096A0 /* FontService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontService.swift; sourceTree = "<group>"; };
-		45AD1D4625938A9700A096A0 /* MobileContentEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentEvents.swift; sourceTree = "<group>"; };
-		45AD1D4825938A9700A096A0 /* UrlButtonEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlButtonEvent.swift; sourceTree = "<group>"; };
-		45AD1D4925938A9700A096A0 /* ButtonEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonEvent.swift; sourceTree = "<group>"; };
-		45AD1D4A25938A9700A096A0 /* ImageEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageEvent.swift; sourceTree = "<group>"; };
-		45AD1D4B25938A9700A096A0 /* FollowUpButtonEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowUpButtonEvent.swift; sourceTree = "<group>"; };
-		45AD1D4C25938A9700A096A0 /* ContentEventError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentEventError.swift; sourceTree = "<group>"; };
-		45AD1D4D25938A9700A096A0 /* TrainingTipEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrainingTipEvent.swift; sourceTree = "<group>"; };
 		45AD1D4F25938A9700A096A0 /* ManifestResourcesCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManifestResourcesCache.swift; sourceTree = "<group>"; };
-		45AD1D5125938A9700A096A0 /* MobileContentAnalyticsEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentAnalyticsEvent.swift; sourceTree = "<group>"; };
-		45AD1D5225938A9700A096A0 /* MobileContentAnalyticsSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentAnalyticsSystem.swift; sourceTree = "<group>"; };
-		45AD1D5325938A9700A096A0 /* MobileContentAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentAnalytics.swift; sourceTree = "<group>"; };
 		45AD1D5525938A9700A096A0 /* ToolPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageView.swift; sourceTree = "<group>"; };
 		45AD1D5725938A9700A096A0 /* ToolPageContentStackRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageContentStackRenderer.swift; sourceTree = "<group>"; };
 		45AD1D5825938A9700A096A0 /* ToolPageContentLinkEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageContentLinkEvents.swift; sourceTree = "<group>"; };
@@ -1748,6 +1760,53 @@
 			name = no.lproj;
 			path = godtools/no.lproj;
 			sourceTree = SOURCE_ROOT;
+		};
+		454D014D25BE279E0057FC02 /* MobileContentRenderer */ = {
+			isa = PBXGroup;
+			children = (
+				4530EE2225BF13C400806938 /* MobileContentRenderableContainerNode.swift */,
+				4530EE2125BF13C400806938 /* MobileContentRenderableContainerView.swift */,
+				4530EE2525BF13C400806938 /* MobileContentRenderableNode.swift */,
+				4530EE2325BF13C400806938 /* MobileContentRenderableView.swift */,
+				4530EE2425BF13C400806938 /* MobileContentRenderer.swift */,
+				4530EE2625BF13C400806938 /* MobileContentRendererVersion.swift */,
+				454D015725BE279E0057FC02 /* Analytics */,
+				454D014E25BE279E0057FC02 /* Events */,
+			);
+			path = MobileContentRenderer;
+			sourceTree = "<group>";
+		};
+		454D014E25BE279E0057FC02 /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				454D014F25BE279E0057FC02 /* MobileContentEvents.swift */,
+				454D015025BE279E0057FC02 /* Models */,
+			);
+			path = Events;
+			sourceTree = "<group>";
+		};
+		454D015025BE279E0057FC02 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				454D015225BE279E0057FC02 /* ButtonEvent.swift */,
+				454D015525BE279E0057FC02 /* ContentEventError.swift */,
+				454D015425BE279E0057FC02 /* FollowUpButtonEvent.swift */,
+				454D015325BE279E0057FC02 /* ImageEvent.swift */,
+				454D015625BE279E0057FC02 /* TrainingTipEvent.swift */,
+				454D015125BE279E0057FC02 /* UrlButtonEvent.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		454D015725BE279E0057FC02 /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				454D015A25BE279E0057FC02 /* MobileContentAnalytics.swift */,
+				454D015825BE279E0057FC02 /* MobileContentAnalyticsEvent.swift */,
+				454D015925BE279E0057FC02 /* MobileContentAnalyticsSystem.swift */,
+			);
+			path = Analytics;
+			sourceTree = "<group>";
 		};
 		45557AE3252D085B00ACFA95 /* Services */ = {
 			isa = PBXGroup;
@@ -2728,35 +2787,12 @@
 			children = (
 				45AD1D9625938A9700A096A0 /* Manifest */,
 				45AD1D4E25938A9700A096A0 /* ManifestResourcesCache */,
-				45AD1D5025938A9700A096A0 /* MobileContentAnalytics */,
-				45AD1D4525938A9700A096A0 /* MobileContentEvents */,
-				45AD1DA325938A9700A096A0 /* MobileContentViews */,
+				454D014D25BE279E0057FC02 /* MobileContentRenderer */,
 				45AD1DAF25938A9700A096A0 /* MobileContentXmlNodeParser */,
+				45AD1DA325938A9700A096A0 /* MobileContentViews */,
 				45AD1D5425938A9700A096A0 /* ToolPage */,
 			);
 			path = Renderer;
-			sourceTree = "<group>";
-		};
-		45AD1D4525938A9700A096A0 /* MobileContentEvents */ = {
-			isa = PBXGroup;
-			children = (
-				45AD1D4625938A9700A096A0 /* MobileContentEvents.swift */,
-				45AD1D4725938A9700A096A0 /* Models */,
-			);
-			path = MobileContentEvents;
-			sourceTree = "<group>";
-		};
-		45AD1D4725938A9700A096A0 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				45AD1D4925938A9700A096A0 /* ButtonEvent.swift */,
-				45AD1D4C25938A9700A096A0 /* ContentEventError.swift */,
-				45AD1D4B25938A9700A096A0 /* FollowUpButtonEvent.swift */,
-				45AD1D4A25938A9700A096A0 /* ImageEvent.swift */,
-				45AD1D4D25938A9700A096A0 /* TrainingTipEvent.swift */,
-				45AD1D4825938A9700A096A0 /* UrlButtonEvent.swift */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		45AD1D4E25938A9700A096A0 /* ManifestResourcesCache */ = {
@@ -2765,16 +2801,6 @@
 				45AD1D4F25938A9700A096A0 /* ManifestResourcesCache.swift */,
 			);
 			path = ManifestResourcesCache;
-			sourceTree = "<group>";
-		};
-		45AD1D5025938A9700A096A0 /* MobileContentAnalytics */ = {
-			isa = PBXGroup;
-			children = (
-				45AD1D5325938A9700A096A0 /* MobileContentAnalytics.swift */,
-				45AD1D5125938A9700A096A0 /* MobileContentAnalyticsEvent.swift */,
-				45AD1D5225938A9700A096A0 /* MobileContentAnalyticsSystem.swift */,
-			);
-			path = MobileContentAnalytics;
 			sourceTree = "<group>";
 		};
 		45AD1D5425938A9700A096A0 /* ToolPage */ = {
@@ -3044,7 +3070,6 @@
 			isa = PBXGroup;
 			children = (
 				45AD1DD625938A9700A096A0 /* MobileContentXmlNode.swift */,
-				4509897925BB191A0020BBAA /* MobileContentXmlNode+RestrictToType.swift */,
 				45AD1DD025938A9700A096A0 /* MobileContentXmlNodeType.swift */,
 				45AD1DB025938A9700A096A0 /* MobileContentXmlNodeFactory.swift */,
 				45AD1DD525938A9700A096A0 /* MobileContentXmlNodeParser.swift */,
@@ -3097,6 +3122,7 @@
 			children = (
 				45AD1DD425938A9700A096A0 /* AnalyticsAttributeNode+Trigger.swift */,
 				45AD1DD325938A9700A096A0 /* AnalyticsEventNodeTrigger.swift */,
+				4578508E25BCC1BA002A3191 /* MobileContentButtonNodeType.swift */,
 				4509897325BB17240020BBAA /* MobileContentRestrictToType.swift */,
 				45AD1DD225938A9700A096A0 /* MobileContentRGBAColor.swift */,
 			);
@@ -4624,6 +4650,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				45AD1F6425938A9800A096A0 /* WebSocketChannelPublisherType.swift in Sources */,
+				4578508F25BCC1BA002A3191 /* MobileContentButtonNodeType.swift in Sources */,
 				45AD1F7525938A9800A096A0 /* ViewedTrainingTipsUserDefaultsCache.swift in Sources */,
 				45AD1B5025938A4F00A096A0 /* ToolTrainingView.swift in Sources */,
 				45AD1F0625938A9800A096A0 /* TrainingTipViewModelType.swift in Sources */,
@@ -4638,7 +4665,6 @@
 				45AD1F1225938A9800A096A0 /* ToolPageCardViewModelType.swift in Sources */,
 				45AD20D525938F6800A096A0 /* FollowUpModelType.swift in Sources */,
 				45AD20BD25938F1A00A096A0 /* Signal.swift in Sources */,
-				45AD1EEF25938A9800A096A0 /* FollowUpButtonEvent.swift in Sources */,
 				45AD1BC625938A4F00A096A0 /* UIKit+Extensions.swift in Sources */,
 				45AD1FFF25938A9800A096A0 /* ViewsApi.swift in Sources */,
 				45AD21192593958E00A096A0 /* RealmLanguagesCache.swift in Sources */,
@@ -4672,7 +4698,6 @@
 				45AD205325938AC300A096A0 /* AdobeAnalyticsType.swift in Sources */,
 				45AD1B9525938A4F00A096A0 /* ToolViewModelType.swift in Sources */,
 				45AD1F0825938A9800A096A0 /* ToolPageContentFormViewModel.swift in Sources */,
-				45AD1EF025938A9800A096A0 /* ContentEventError.swift in Sources */,
 				45AD1FED25938A9800A096A0 /* OpenTutorialCalloutUserDefaultsCache.swift in Sources */,
 				45AD1B7325938A4F00A096A0 /* OnboardingTutorialProvider.swift in Sources */,
 				45AD1B2E25938A4F00A096A0 /* LanguageSettingsViewModel.swift in Sources */,
@@ -4717,6 +4742,7 @@
 				45AD21592593A4D900A096A0 /* ShareToolScreenTutorialViewModel.swift in Sources */,
 				45AD1AE825938A4E00A096A0 /* ShareToolScreenCustomTutorialViewBuilder.swift in Sources */,
 				45AD1BC925938A4F00A096A0 /* UIView+ProgressView.swift in Sources */,
+				4530EE2B25BF13C400806938 /* MobileContentRenderableNode.swift in Sources */,
 				45AD1F5825938A9800A096A0 /* MobileContentRGBAColor.swift in Sources */,
 				45AD1FD425938A9800A096A0 /* WebArchiveQueueResult.swift in Sources */,
 				45AD205625938AC300A096A0 /* AnalyticsConstants.swift in Sources */,
@@ -4757,6 +4783,7 @@
 				45AD21412593A49900A096A0 /* ShareToolRemoteSessionURLViewModel.swift in Sources */,
 				45AD1F9A25938A9800A096A0 /* RealmAttachment.swift in Sources */,
 				45AD1B7B25938A4F00A096A0 /* OnboardingWelcomeViewModelType.swift in Sources */,
+				4530EE2825BF13C400806938 /* MobileContentRenderableContainerNode.swift in Sources */,
 				45AD1F7725938A9800A096A0 /* ViewedTrainingTip.swift in Sources */,
 				45AD206425938B1300A096A0 /* AlertMessageType.swift in Sources */,
 				45AD1F8B25938A9800A096A0 /* AttachmentModelType.swift in Sources */,
@@ -4815,6 +4842,7 @@
 				45AD1EFB25938A9800A096A0 /* ToolPageContentButtonEvents.swift in Sources */,
 				45AD1B3725938A4F00A096A0 /* ChooseLanguageCellViewModel.swift in Sources */,
 				45AD1B2425938A4F00A096A0 /* AboutView.swift in Sources */,
+				454D016125BE279E0057FC02 /* TrainingTipEvent.swift in Sources */,
 				45AD209C25938C4900A096A0 /* GlobalActivityAnalyticsCacheType.swift in Sources */,
 				45AD1F5A25938A9800A096A0 /* AnalyticsAttributeNode+Trigger.swift in Sources */,
 				45AD22B32593D1FB00A096A0 /* UIImage+CreateImageWithColor.swift in Sources */,
@@ -4847,7 +4875,9 @@
 				45AD201025938A9800A096A0 /* TranslationsFileCache.swift in Sources */,
 				45AD1B6425938A4F00A096A0 /* GlobalActivityHeaderViewModel.swift in Sources */,
 				45AD1F1E25938A9800A096A0 /* ToolPageModalViewModelType.swift in Sources */,
+				454D016425BE279E0057FC02 /* MobileContentAnalytics.swift in Sources */,
 				45AD1AF325938A4E00A096A0 /* ShareAStoryWithUsWebContent.swift in Sources */,
+				4530EE2725BF13C400806938 /* MobileContentRenderableContainerView.swift in Sources */,
 				45AD200925938A9800A096A0 /* TranslationDownloader.swift in Sources */,
 				45AD1F5725938A9800A096A0 /* MobileContentXmlNodeType.swift in Sources */,
 				45AD1FBB25938A9800A096A0 /* TractRemoteShareSubscriberError.swift in Sources */,
@@ -4918,13 +4948,13 @@
 				45AD1FD825938A9800A096A0 /* WebArchive.swift in Sources */,
 				45AD1BD525938A4F00A096A0 /* PageNavigationCollectionView.swift in Sources */,
 				45AD20EC259391B000A096A0 /* JsonServicesType.swift in Sources */,
-				45AD1EEE25938A9800A096A0 /* ImageEvent.swift in Sources */,
 				45AD1BB425938A4F00A096A0 /* FetchTranslationManifestResult.swift in Sources */,
 				45AD1B2725938A4F00A096A0 /* AboutTextModel.swift in Sources */,
 				45AD20D425938F6800A096A0 /* RealmFollowUp.swift in Sources */,
 				45AD1BD325938A4F00A096A0 /* LoadingView.swift in Sources */,
 				45AD1B1925938A4E00A096A0 /* LearnToShareToolViewModel.swift in Sources */,
 				45AD1F8425938A9800A096A0 /* ResourcesDownloader.swift in Sources */,
+				454D015D25BE279E0057FC02 /* ButtonEvent.swift in Sources */,
 				45AD1FA125938A9800A096A0 /* ArticleResource.swift in Sources */,
 				45AD1F8625938A9800A096A0 /* SHA256FileModelType.swift in Sources */,
 				45AD1AFF25938A4E00A096A0 /* ArticlesView.swift in Sources */,
@@ -4949,7 +4979,6 @@
 				45AD1F1725938A9800A096A0 /* ToolPageCardTopConstantState.swift in Sources */,
 				45AD1B0225938A4E00A096A0 /* ArticleCategoriesViewModel.swift in Sources */,
 				45AD1F9B25938A9800A096A0 /* RealmTranslation.swift in Sources */,
-				45AD1EF525938A9800A096A0 /* MobileContentAnalytics.swift in Sources */,
 				45AD1F0325938A9800A096A0 /* TrainingTipViewType.swift in Sources */,
 				45AD1B5B25938A4F00A096A0 /* AccountActivityViewModelType.swift in Sources */,
 				45AD1F6F25938A9800A096A0 /* FailedFollowUpsCache.swift in Sources */,
@@ -4973,6 +5002,7 @@
 				45AD1F2825938A9800A096A0 /* MobileContentManifestTipType.swift in Sources */,
 				45AD1AB625938A4E00A096A0 /* TutorialAvailabilityType.swift in Sources */,
 				45AD1B1325938A4E00A096A0 /* ArticleCellViewModel.swift in Sources */,
+				4530EE2C25BF13C400806938 /* MobileContentRendererVersion.swift in Sources */,
 				45AD1B3825938A4F00A096A0 /* ChooseLanguageCellViewModelType.swift in Sources */,
 				45AD1F1025938A9800A096A0 /* ToolPageContentStackContainerViewModelType.swift in Sources */,
 				45AD1F8E25938A9800A096A0 /* ResourceModelType.swift in Sources */,
@@ -5009,14 +5039,14 @@
 				45AD214D2593A4B700A096A0 /* ShareToolViewModel.swift in Sources */,
 				45AD1F9225938A9800A096A0 /* AttachmentModelType+SHA256FileLocation.swift in Sources */,
 				45AD20B225938EE500A096A0 /* FileCache.swift in Sources */,
-				45AD1EEB25938A9800A096A0 /* MobileContentEvents.swift in Sources */,
+				454D016325BE279E0057FC02 /* MobileContentAnalyticsSystem.swift in Sources */,
 				45AD1B1D25938A4E00A096A0 /* LearnToShareToolView.swift in Sources */,
 				45AD1ACC25938A4E00A096A0 /* FavoritingToolMessageViewModelType.swift in Sources */,
 				45AD1F3A25938A9800A096A0 /* PageNode.swift in Sources */,
-				45AD1EF125938A9800A096A0 /* TrainingTipEvent.swift in Sources */,
 				45AD202925938A9800A096A0 /* LocalizationBundleLoader.swift in Sources */,
 				45AD1B6725938A4F00A096A0 /* GlobalActivityCellViewModel.swift in Sources */,
 				45AD201625938A9800A096A0 /* ShortcutItemsService.swift in Sources */,
+				4530EE2925BF13C400806938 /* MobileContentRenderableView.swift in Sources */,
 				45AD1FD725938A9800A096A0 /* WebArchiveOperationResult.swift in Sources */,
 				45AD1F2F25938A9800A096A0 /* MobileContentStackRenderedView.swift in Sources */,
 				45AD1F4825938A9800A096A0 /* ContentTabNode.swift in Sources */,
@@ -5030,6 +5060,7 @@
 				D19D010325AF549B007C535B /* DeepLinkingServiceType.swift in Sources */,
 				45AD1F5C25938A9800A096A0 /* MobileContentXmlNode.swift in Sources */,
 				45AD1FCD25938A9800A096A0 /* SHA256FilesCache.swift in Sources */,
+				454D015B25BE279E0057FC02 /* MobileContentEvents.swift in Sources */,
 				45AD202B25938A9800A096A0 /* CardJumpUserDefaultsCache.swift in Sources */,
 				45AD1AD825938A4E00A096A0 /* ToolsMenuViewModelType.swift in Sources */,
 				45AD1BB625938A4F00A096A0 /* LanguageViewModel.swift in Sources */,
@@ -5038,12 +5069,12 @@
 				45AD1AEB25938A4E00A096A0 /* WebContentViewModelType.swift in Sources */,
 				45AD1EFE25938A9800A096A0 /* ToolPageColors.swift in Sources */,
 				45AD1F5F25938A9800A096A0 /* WebSocketChannelSubscriberType.swift in Sources */,
-				45AD1EF325938A9800A096A0 /* MobileContentAnalyticsEvent.swift in Sources */,
 				45AD1FAA25938A9800A096A0 /* ArticleAemImportDataParserError.swift in Sources */,
 				45AD223C2593C90000A096A0 /* CrashReportingType.swift in Sources */,
 				45AD1AA225938A4E00A096A0 /* TutorialItemProviderType.swift in Sources */,
 				45AD1B1225938A4E00A096A0 /* ArticleCategoryCellViewModelType.swift in Sources */,
 				45AD1B8025938A4F00A096A0 /* OnboardingTutorialUsageCellViewModel.swift in Sources */,
+				454D016225BE279E0057FC02 /* MobileContentAnalyticsEvent.swift in Sources */,
 				45AD202325938A9800A096A0 /* SingleRequestOperation.swift in Sources */,
 				45AD1FEF25938A9800A096A0 /* AttachmentsDownloader.swift in Sources */,
 				45AD1F5225938A9800A096A0 /* ContentTextNode.swift in Sources */,
@@ -5065,6 +5096,7 @@
 				45AD1B2F25938A4F00A096A0 /* ChooseLanguageViewModel.swift in Sources */,
 				45AD205B25938AC300A096A0 /* AppsFlyerAnalyticsType.swift in Sources */,
 				45AD21382593A47800A096A0 /* ShareToolMenuViewModelType.swift in Sources */,
+				454D015F25BE279E0057FC02 /* FollowUpButtonEvent.swift in Sources */,
 				D19D00E725AF4B97007C535B /* AppsFlyerType.swift in Sources */,
 				45AD1B0B25938A4E00A096A0 /* ArticleWebViewModelType.swift in Sources */,
 				45AD1F3925938A9800A096A0 /* LabelNode.swift in Sources */,
@@ -5092,6 +5124,7 @@
 				45AD1AB325938A4E00A096A0 /* TutorialAvailability.swift in Sources */,
 				45AD200125938A9800A096A0 /* ResourceViewModel.swift in Sources */,
 				45AD1B6E25938A4F00A096A0 /* ToolDetailViewModelType.swift in Sources */,
+				454D016025BE279E0057FC02 /* ContentEventError.swift in Sources */,
 				45AD1AB225938A4E00A096A0 /* TutorialView.swift in Sources */,
 				45AD20A525938CF100A096A0 /* ConfigType.swift in Sources */,
 				45AD1AF425938A4E00A096A0 /* WebContentView.swift in Sources */,
@@ -5101,7 +5134,6 @@
 				45AD1FB125938A9800A096A0 /* ArticleJcrContentType.swift in Sources */,
 				45AD1B9425938A4F00A096A0 /* ToolViewModel.swift in Sources */,
 				45AD1FF525938A9800A096A0 /* DownloadedAttachmentResult.swift in Sources */,
-				4509897A25BB191A0020BBAA /* MobileContentXmlNode+RestrictToType.swift in Sources */,
 				45AD1F9125938A9800A096A0 /* ResourceModel.swift in Sources */,
 				45AD1B0C25938A4E00A096A0 /* ArticleCell.swift in Sources */,
 				45AD1FA325938A9800A096A0 /* ArticleAemImportOperationError.swift in Sources */,
@@ -5126,7 +5158,6 @@
 				45AD201B25938A9800A096A0 /* RequestOperation.swift in Sources */,
 				45AD1BDF25938A4F00A096A0 /* GTSegmentedControl.swift in Sources */,
 				45AD1B7F25938A4F00A096A0 /* MainOboardingTutorialCellViewModel.swift in Sources */,
-				45AD1EEC25938A9800A096A0 /* UrlButtonEvent.swift in Sources */,
 				45AD200F25938A9800A096A0 /* TranslationZipFileModelType+ManifestSHA256FileLocation.swift in Sources */,
 				45AD1BCF25938A4F00A096A0 /* ImageCatalog.swift in Sources */,
 				45AD208325938B6A00A096A0 /* KeyboardNotificationObserver.swift in Sources */,
@@ -5134,13 +5165,13 @@
 				45AD1F1325938A9800A096A0 /* ToolPageCardViewModel.swift in Sources */,
 				45AD1AFD25938A4E00A096A0 /* DownloadArticlesErrorViewModel.swift in Sources */,
 				45AD1F1C25938A9800A096A0 /* ToolPageContentInputView.swift in Sources */,
-				45AD1EF425938A9800A096A0 /* MobileContentAnalyticsSystem.swift in Sources */,
 				45AD1F1925938A9800A096A0 /* ToolPageContentInputViewModel.swift in Sources */,
 				45AD1B0D25938A4E00A096A0 /* ArticlesErrorMessageView.swift in Sources */,
 				45AD201525938A9800A096A0 /* RealmTranslationZipFile.swift in Sources */,
 				45AD205725938AC300A096A0 /* FirebaseAnalyticsType.swift in Sources */,
 				45AD1AAF25938A4E00A096A0 /* TutorialCell.swift in Sources */,
 				45AD1B5625938A4F00A096A0 /* GlobalActivityResults.swift in Sources */,
+				454D015E25BE279E0057FC02 /* ImageEvent.swift in Sources */,
 				45AD1B7C25938A4F00A096A0 /* OnboardingTutorialViewModelType.swift in Sources */,
 				45AD1F2025938A9800A096A0 /* ToolPageModalView.swift in Sources */,
 				45AD1B8925938A4F00A096A0 /* OnboardingTutorialUsageListCellViewModel.swift in Sources */,
@@ -5184,6 +5215,7 @@
 				45AD1AED25938A4E00A096A0 /* WebContent.swift in Sources */,
 				45AD21632593A62800A096A0 /* AppDiContainer.swift in Sources */,
 				45AD1F2B25938A9800A096A0 /* MobileContentXmlManifest.swift in Sources */,
+				4530EE2A25BF13C400806938 /* MobileContentRenderer.swift in Sources */,
 				45AD1BDE25938A4F00A096A0 /* GTSegment.swift in Sources */,
 				45AD208425938B6A00A096A0 /* KeyboardObserverType.swift in Sources */,
 				45AD1FD525938A9800A096A0 /* WebArchiveError.swift in Sources */,
@@ -5197,7 +5229,6 @@
 				45AD1BB225938A4F00A096A0 /* LanguageSettingsFlow.swift in Sources */,
 				45AD1B7925938A4F00A096A0 /* OnboardingTutorialUsageItem.swift in Sources */,
 				45AD1F0B25938A9800A096A0 /* ToolPageContentTabsView.swift in Sources */,
-				45AD1EED25938A9800A096A0 /* ButtonEvent.swift in Sources */,
 				45AD1BAD25938A4F00A096A0 /* MenuFlow.swift in Sources */,
 				45AD1B4425938A4F00A096A0 /* MenuSectionHeaderView.swift in Sources */,
 				45AD1FFC25938A9800A096A0 /* IsNewUserCacheType.swift in Sources */,
@@ -5233,6 +5264,7 @@
 				45AD1B0A25938A4E00A096A0 /* ShareArticleView.swift in Sources */,
 				45AD21422593A49900A096A0 /* ShareToolRemoteSessionURLViewModelType.swift in Sources */,
 				45AD1B6825938A4F00A096A0 /* AccountItemViewType.swift in Sources */,
+				454D015C25BE279E0057FC02 /* UrlButtonEvent.swift in Sources */,
 				45AD1FE925938A9800A096A0 /* LegacyRealmMigration.swift in Sources */,
 				45AD205825938AC300A096A0 /* FirebaseAnalytics.swift in Sources */,
 				45AD1F0025938A9800A096A0 /* ToolPageViewModelType.swift in Sources */,

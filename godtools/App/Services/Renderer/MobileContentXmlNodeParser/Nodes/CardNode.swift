@@ -9,7 +9,7 @@
 import Foundation
 import SWXMLHash
 
-class CardNode: MobileContentXmlNode, BackgroundImageNodeType {
+class CardNode: MobileContentXmlNode, BackgroundImageNodeType, MobileContentRenderableNode {
         
     private(set) var labelNode: LabelNode?
     private(set) var analyticsEventsNode: AnalyticsEventsNode?

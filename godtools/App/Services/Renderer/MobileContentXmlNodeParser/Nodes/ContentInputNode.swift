@@ -9,7 +9,7 @@
 import Foundation
 import SWXMLHash
 
-class ContentInputNode: MobileContentXmlNode {
+class ContentInputNode: MobileContentXmlNode, MobileContentRenderableNode {
         
     private(set) var labelNode: ContentLabelNode?
     private(set) var placeholderNode: ContentPlaceholderNode?
