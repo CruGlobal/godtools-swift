@@ -15,14 +15,23 @@ protocol MobileContentRendererDelegate: class {
 
 class MobileContentRenderer {
     
+    private let buttonEvents: MobileContentButtonEvents
+    private let linkEvents: MobileContentLinkEvents
+    private let imageEvents: MobileContentImageEvents
+    
     private weak var delegate: MobileContentRendererDelegate?
     
-    required init() {
+    required init(mobileContentEvents: MobileContentEvents, mobileContentAnalytics: MobileContentAnalytics) {
         
+        buttonEvents = MobileContentButtonEvents(mobileContentEvents: mobileContentEvents, mobileContentAnalytics: mobileContentAnalytics)
+        linkEvents = MobileContentLinkEvents(mobileContentEvents: mobileContentEvents, mobileContentAnalytics: mobileContentAnalytics)
+        imageEvents = MobileContentImageEvents(mobileContentEvents: mobileContentEvents)
     }
     
     private func resetForNewRender() {
-
+        buttonEvents.removeAllButtonEvents()
+        linkEvents.removeAllLinkEvents()
+        imageEvents.removeAllImageEvents()
     }
     
     func render(node: MobileContentXmlNode, delegate: MobileContentRendererDelegate) -> MobileContentRenderableView? {
@@ -48,6 +57,16 @@ class MobileContentRenderer {
             renderer: self,
             renderableNode: renderableNode
         )
+        
+        if let buttonNode = renderableNode as? ContentButtonNode, let button = renderableView?.view as? UIButton {
+            buttonEvents.addButtonEvent(button: button, buttonNode: buttonNode)
+        }
+        else if let imageNode = renderableNode as? ContentImageNode, let imageView = renderableView?.view as? UIImageView {
+            imageEvents.addImageEvent(image: imageView, imageNode: imageNode)
+        }
+        else if let linkNode = renderableNode as? ContentLinkNode, let button = renderableView?.view as? UIButton {
+            linkEvents.addLinkEvent(button: button, linkNode: linkNode)
+        }
         
         for childNode in node.children {
             

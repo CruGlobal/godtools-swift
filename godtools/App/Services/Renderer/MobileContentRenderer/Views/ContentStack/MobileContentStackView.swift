@@ -10,7 +10,6 @@ import UIKit
 
 class MobileContentStackView: UIView, MobileContentRenderableView {
     
-    private let viewRenderer: MobileContentStackViewRendererType
     private let contentView: UIView = UIView()
     private let itemSpacing: CGFloat
     
@@ -18,10 +17,8 @@ class MobileContentStackView: UIView, MobileContentRenderableView {
     private var lastAddedView: UIView?
     private var lastAddedBottomConstraint: NSLayoutConstraint?
             
-    // TODO: Remove viewRenderer: MobileContentStackViewRendererType argument. ~Levi
-    required init(viewRenderer: MobileContentStackViewRendererType, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
+    required init(itemSpacing: CGFloat, scrollIsEnabled: Bool) {
                 
-        self.viewRenderer = viewRenderer
         self.itemSpacing = itemSpacing
         
         super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: itemSpacing))
@@ -33,11 +30,6 @@ class MobileContentStackView: UIView, MobileContentRenderableView {
         scrollView?.backgroundColor = .clear
         scrollView?.showsVerticalScrollIndicator = false
         scrollView?.showsHorizontalScrollIndicator = false
-        
-        /*
-        viewRenderer.render { [weak self] (renderedView: MobileContentStackRenderedView) in
-            self?.addRenderedView(renderedView: renderedView)
-        }*/
     }
     
     required init?(coder: NSCoder) {

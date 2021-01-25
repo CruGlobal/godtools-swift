@@ -21,7 +21,7 @@ protocol ToolTrainingViewModelType {
     func overlayTapped()
     func closeTapped()
     func continueTapped()
-    func tipPageWillAppear(page: Int) -> ToolPageContentStackContainerViewModel
+    func tipPageWillAppear(page: Int) -> MobileContentStackView?
     func tipPageDidChange(page: Int)
     func tipPageDidAppear(page: Int)
 }

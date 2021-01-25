@@ -20,10 +20,11 @@ class ToolPageModalViewModel: NSObject, ToolPageModalViewModelType {
     private let diContainer: ToolPageDiContainer
     private let toolPageColors: ToolPageColors
     private let defaultTextNodeTextColor: UIColor?
+    private let contentRenderer: ToolPageContentStackRenderer
     
     private weak var delegate: ToolPageModalViewModelDelegate?
     
-    let contentViewModel: ToolPageContentStackContainerViewModel
+    let contentView: MobileContentStackView?
     
     required init(delegate: ToolPageModalViewModelDelegate, modalNode: ModalNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColors, defaultTextNodeTextColor: UIColor?) {
         
@@ -33,14 +34,17 @@ class ToolPageModalViewModel: NSObject, ToolPageModalViewModelType {
         self.toolPageColors = toolPageColors
         self.defaultTextNodeTextColor = defaultTextNodeTextColor
         
-        contentViewModel = ToolPageContentStackContainerViewModel(
-            node: modalNode,
+        contentRenderer = ToolPageContentStackRenderer(
+            rootContentStackRenderer: nil,
             diContainer: diContainer,
+            node: modalNode,
             toolPageColors: toolPageColors,
             defaultTextNodeTextColor: nil,
             defaultTextNodeTextAlignment: .center,
             defaultButtonBorderColor: UIColor.white
         )
+        
+        contentView = contentRenderer.render() as? MobileContentStackView
         
         super.init()
         

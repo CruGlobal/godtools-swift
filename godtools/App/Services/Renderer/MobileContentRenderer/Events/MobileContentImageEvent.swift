@@ -1,5 +1,5 @@
 //
-//  ToolPageContentImageEvent.swift
+//  MobileContentImageEvent.swift
 //  godtools
 //
 //  Created by Levi Eggert on 12/14/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ToolPageContentImageEvent {
+class MobileContentImageEvent {
     
     let imageNode: ContentImageNode
     let tapGesture: UITapGestureRecognizer

@@ -57,17 +57,16 @@ class ToolPageContentFormView: UIView {
         viewModel.resignCurrentInputSignal.addObserver(self) { [weak self] in
             self?.resignCurrentEditedTextField()
         }
-        
-        let contentViewModel: ToolPageContentStackContainerViewModel = viewModel.contentViewModel
-        
-        contentViewModel.contentStackRenderer.didRenderContentInputSignal.addObserver(self) { [weak self] (renderedInput: ToolPageRenderedContentInput) in
+                
+        viewModel.contentRenderer.didRenderContentInputSignal.addObserver(self) { [weak self] (renderedInput: ToolPageRenderedContentInput) in
             self?.handleDidRenderContentInput(contentInput: renderedInput.view)
         }
         
-        let contentStackView = MobileContentStackView(viewRenderer: contentViewModel.contentStackRenderer, itemSpacing: 15, scrollIsEnabled: false)
-        contentContainerView.addSubview(contentStackView)
-        contentStackView.translatesAutoresizingMaskIntoConstraints = false
-        contentStackView.constrainEdgesToSuperview()
+        if let contentView = viewModel.contentView {
+            contentContainerView.addSubview(contentView)
+            contentView.translatesAutoresizingMaskIntoConstraints = false
+            contentView.constrainEdgesToSuperview()
+        }
     }
     
     private func handleDidRenderContentInput(contentInput: ToolPageContentInputView) {

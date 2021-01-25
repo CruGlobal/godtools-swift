@@ -13,7 +13,7 @@ class ToolTrainingTipView: UICollectionViewCell {
     static let nibName: String = "ToolTrainingTipView"
     static let reuseIdentifier: String = "ToolTrainingTipViewReuseIdentifier"
     
-    private var tipContentStackView: MobileContentStackView?
+    private var tipContentView: MobileContentStackView?
     
     @IBOutlet weak private var contentStackContainerView: UIView!
     @IBOutlet weak private var bottomGradientView: UIView!
@@ -38,20 +38,21 @@ class ToolTrainingTipView: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        tipContentStackView?.removeFromSuperview()
+        tipContentView?.removeFromSuperview()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        tipContentStackView?.setContentInset(contentInset: UIEdgeInsets(top: 0, left: 0, bottom: bottomGradientView.frame.size.height, right: 0))
+        tipContentView?.setContentInset(contentInset: UIEdgeInsets(top: 0, left: 0, bottom: bottomGradientView.frame.size.height, right: 0))
     }
     
-    func configure(viewModel: ToolPageContentStackContainerViewModel) {
-                
-        let tipContentStackView = MobileContentStackView(viewRenderer: viewModel.contentStackRenderer, itemSpacing: 15, scrollIsEnabled: true)
-        contentStackContainerView.addSubview(tipContentStackView)
-        tipContentStackView.constrainEdgesToSuperview()
-                
-        self.tipContentStackView = tipContentStackView
+    func configure(contentView: MobileContentStackView?) {
+        
+        if let contentView = contentView {
+            contentStackContainerView.addSubview(contentView)
+            contentView.constrainEdgesToSuperview()
+        }
+        
+        tipContentView = contentView
     }
 }

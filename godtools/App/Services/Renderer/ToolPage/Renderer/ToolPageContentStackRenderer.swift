@@ -8,20 +8,17 @@
 
 import UIKit
 
-class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
+class ToolPageContentStackRenderer {
     
     private static let numberFormatter: NumberFormatter = NumberFormatter()
     
-    private let renderer: MobileContentRenderer = MobileContentRenderer()
+    private let renderer: MobileContentRenderer
     private let diContainer: ToolPageDiContainer
     private let node: MobileContentXmlNode
     private let toolPageColors: ToolPageColors
     private let defaultTextNodeTextColor: UIColor?
     private let defaultTextNodeTextAlignment: NSTextAlignment
     private let defaultButtonBorderColor: UIColor?
-    private let buttonEvents: ToolPageContentButtonEvents
-    private let linkEvents: ToolPageContentLinkEvents
-    private let imageEvents: ToolPageContentImageEvents
     
     private weak var rootContentStackRenderer: ToolPageContentStackRenderer?
         
@@ -33,48 +30,22 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
     required init(rootContentStackRenderer: ToolPageContentStackRenderer?, diContainer: ToolPageDiContainer, node: MobileContentXmlNode, toolPageColors: ToolPageColors, defaultTextNodeTextColor: UIColor?, defaultTextNodeTextAlignment: NSTextAlignment?, defaultButtonBorderColor: UIColor?) {
         
         self.rootContentStackRenderer = rootContentStackRenderer
+        self.renderer = MobileContentRenderer(mobileContentEvents: diContainer.mobileContentEvents, mobileContentAnalytics: diContainer.mobileContentAnalytics)
         self.diContainer = diContainer
         self.node = node
         self.toolPageColors = toolPageColors
         self.defaultTextNodeTextColor = defaultTextNodeTextColor
         self.defaultTextNodeTextAlignment = defaultTextNodeTextAlignment ?? (diContainer.language.languageDirection == .leftToRight ? .left : .right)
         self.defaultButtonBorderColor = defaultButtonBorderColor
-        self.buttonEvents = ToolPageContentButtonEvents(mobileContentEvents: diContainer.mobileContentEvents, mobileContentAnalytics: diContainer.mobileContentAnalytics)
-        self.linkEvents = ToolPageContentLinkEvents(mobileContentEvents: diContainer.mobileContentEvents, mobileContentAnalytics: diContainer.mobileContentAnalytics)
-        self.imageEvents = ToolPageContentImageEvents(mobileContentEvents: diContainer.mobileContentEvents)
     }
     
     deinit {
 
     }
     
-    private func resetForNewRender() {
-        buttonEvents.removeAllButtonEvents()
-        linkEvents.removeAllLinkEvents()
-        imageEvents.removeAllImageEvents()
-    }
-    
     func render() -> MobileContentRenderableView? {
         
         return renderer.render(node: node, delegate: self)
-    }
-    
-    func render(didRenderView: ((_ renderedView: MobileContentStackRenderedView) -> Void)) {
-             
-        resetForNewRender()
-        
-        for childNode in node.children {
-            
-            let renderedView: MobileContentStackRenderedView? = recurseAndRender(
-                node: childNode,
-                rootContentStackRenderer: rootContentStackRenderer ?? self
-            )
-            
-            if let renderedView = renderedView {
-                
-                didRenderView(renderedView)
-            }
-        }
     }
     
     // TODO: Remove this function. ~Levi
@@ -100,11 +71,7 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
                 defaultButtonBorderColor: defaultButtonBorderColor
             )
             
-            let view = MobileContentStackView(
-                viewRenderer: paragraphRenderer,
-                itemSpacing: 5,
-                scrollIsEnabled: false
-            )
+            let view = MobileContentStackView(itemSpacing: 5, scrollIsEnabled: false)
                                                          
             return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)
         }
@@ -125,7 +92,7 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
             
             if renderContentImage(imageView: imageView, imageNode: imageNode, languageDirectionSemanticContentAttribute: diContainer.languageDirectionSemanticContentAttribute), let imageSize = imageView.image?.size {
                                 
-                rootContentStackRenderer.imageEvents.addImageEvent(image: imageView, imageNode: imageNode)
+                //rootContentStackRenderer.imageEvents.addImageEvent(image: imageView, imageNode: imageNode)
                 
                 return MobileContentStackRenderedView(view: imageView, heightConstraintType: .setToAspectRatioOfProvidedSize(size: imageSize))
             }
@@ -155,7 +122,7 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
                 titleColor: buttonNode.textNode?.getTextColor()?.color ?? toolPageColors.primaryTextColor
             )
                
-            rootContentStackRenderer.buttonEvents.addButtonEvent(button: button, buttonNode: buttonNode)
+            //rootContentStackRenderer.buttonEvents.addButtonEvent(button: button, buttonNode: buttonNode)
             
             return MobileContentStackRenderedView(view: button, heightConstraintType: .equalToHeight(height: button.frame.size.height))
         }
@@ -171,7 +138,7 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
                 titleColor: linkNode.textNode?.getTextColor()?.color ?? toolPageColors.primaryColor
             )
             
-            rootContentStackRenderer.linkEvents.addLinkEvent(button: button, linkNode: linkNode)
+            //rootContentStackRenderer.linkEvents.addLinkEvent(button: button, linkNode: linkNode)
                                     
             return MobileContentStackRenderedView(view: button, heightConstraintType: .equalToHeight(height: button.frame.size.height))
         }
@@ -472,20 +439,18 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
 extension ToolPageContentStackRenderer: MobileContentRendererDelegate {
     
     func mobileContentRendererViewForRenderableNode(renderer: MobileContentRenderer, renderableNode: MobileContentRenderableNode) -> MobileContentRenderableView? {
-        
-        print("    view for node: \(renderableNode)")
-        
+                
         if renderableNode is ContentParagraphNode {
             
-            return MobileContentStackView(viewRenderer: self, itemSpacing: 5, scrollIsEnabled: false)
+            return MobileContentStackView(itemSpacing: 5, scrollIsEnabled: false)
         }
         else if renderableNode is CardNode {
             
-            return MobileContentStackView(viewRenderer: self, itemSpacing: 20, scrollIsEnabled: true)
+            return MobileContentStackView(itemSpacing: 20, scrollIsEnabled: true)
         }
         else if renderableNode is HeroNode {
             
-            return MobileContentStackView(viewRenderer: self, itemSpacing: 20, scrollIsEnabled: true)
+            return MobileContentStackView(itemSpacing: 20, scrollIsEnabled: true)
         }
         else if let textNode = renderableNode as? ContentTextNode {
             
@@ -503,10 +468,7 @@ extension ToolPageContentStackRenderer: MobileContentRendererDelegate {
             let imageView: UIImageView = UIImageView()
             
             if renderContentImage(imageView: imageView, imageNode: imageNode, languageDirectionSemanticContentAttribute: diContainer.languageDirectionSemanticContentAttribute), let imageSize = imageView.image?.size {
-                  
-                // TODO: Need to add this back in. ~Levi
-                //rootContentStackRenderer.imageEvents.addImageEvent(image: imageView, imageNode: imageNode)
-                
+                                  
                 return MobileContentStackRenderedView(view: imageView, heightConstraintType: .setToAspectRatioOfProvidedSize(size: imageSize))
             }
         }
@@ -535,10 +497,7 @@ extension ToolPageContentStackRenderer: MobileContentRendererDelegate {
                 borderColor: defaultButtonBorderColor,
                 titleColor: buttonNode.textNode?.getTextColor()?.color ?? toolPageColors.primaryTextColor
             )
-            
-            // TODO: Need to add this back in. ~Levi
-            //rootContentStackRenderer.buttonEvents.addButtonEvent(button: button, buttonNode: buttonNode)
-            
+                        
             return MobileContentStackRenderedView(view: button, heightConstraintType: .equalToHeight(height: button.frame.size.height))
         }
         else if let linkNode = renderableNode as? ContentLinkNode {
@@ -552,10 +511,7 @@ extension ToolPageContentStackRenderer: MobileContentRendererDelegate {
                 fontWeight: .regular,
                 titleColor: linkNode.textNode?.getTextColor()?.color ?? toolPageColors.primaryColor
             )
-            
-            // TODO: Need to add this back in. ~Levi
-            //rootContentStackRenderer.linkEvents.addLinkEvent(button: button, linkNode: linkNode)
-                                    
+                                                
             return MobileContentStackRenderedView(view: button, heightConstraintType: .equalToHeight(height: button.frame.size.height))
         }
         else if let titleNode = renderableNode as? TitleNode {
@@ -595,7 +551,7 @@ extension ToolPageContentStackRenderer: MobileContentRendererDelegate {
         }
         else if renderableNode is ContentTabNode {
             
-            return MobileContentStackView(viewRenderer: self, itemSpacing: 10, scrollIsEnabled: false)
+            return MobileContentStackView(itemSpacing: 10, scrollIsEnabled: false)
         }
         else if let inputNode = renderableNode as? ContentInputNode {
                     
@@ -636,6 +592,14 @@ extension ToolPageContentStackRenderer: MobileContentRendererDelegate {
             //rootContentStackRenderer.didRenderContentFormSignal.accept(value: view)
             
             return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)
+        }
+        else if renderableNode is ModalNode {
+            
+            return MobileContentStackView(itemSpacing: 15, scrollIsEnabled: true)
+        }
+        else if renderableNode is TipNode {
+            
+            return MobileContentStackView(itemSpacing: 15, scrollIsEnabled: true)
         }
         
         return nil

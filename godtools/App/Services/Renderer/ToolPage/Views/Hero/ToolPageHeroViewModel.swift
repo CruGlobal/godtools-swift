@@ -8,17 +8,17 @@
 
 import UIKit
 
-class ToolPageHeroViewModel: ToolPageContentStackContainerViewModelType {
+class ToolPageHeroViewModel {
     
     private let heroNode: HeroNode
     private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
-        
-    let contentStackRenderer: ToolPageContentStackRenderer
+    private let contentRenderer: ToolPageContentStackRenderer
     
     required init(heroNode: HeroNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColors) {
         
         self.heroNode = heroNode
-        self.contentStackRenderer = ToolPageContentStackRenderer(
+        
+        contentRenderer = ToolPageContentStackRenderer(
             rootContentStackRenderer: nil,
             diContainer: diContainer,
             node: heroNode,
@@ -38,6 +38,10 @@ class ToolPageHeroViewModel: ToolPageContentStackContainerViewModelType {
     
     deinit {
 
+    }
+    
+    func heroWillAppear() -> MobileContentStackView? {
+        return contentRenderer.render() as? MobileContentStackView
     }
     
     func heroDidAppear() {

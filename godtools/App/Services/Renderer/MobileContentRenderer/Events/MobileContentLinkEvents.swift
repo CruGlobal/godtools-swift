@@ -1,5 +1,5 @@
 //
-//  ToolPageContentLinkEvents.swift
+//  MobileContentLinkEvents.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/27/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ToolPageContentLinkEvents {
+class MobileContentLinkEvents {
     
     private let mobileContentEvents: MobileContentEvents
     private let mobileContentAnalytics: MobileContentAnalytics

@@ -176,8 +176,10 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
         }
     }
     
-    func tipPageWillAppear(page: Int) -> ToolPageContentStackContainerViewModel {
-            
+    func tipPageWillAppear(page: Int) -> MobileContentStackView? {
+        
+        // TODO: I should create a trainingContentRenderer and subclass ToolPageContentStackRenderer and for pageNode provide MobileContentStackView. ~Levi
+        
         let pageNode: PageNode = pageNodes[page]
         
         let toolPageDiContainer = ToolPageDiContainer(
@@ -199,14 +201,19 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
             trainingTipsEnabled: true
         )
         
-        return ToolPageContentStackContainerViewModel(
-            node: pageNode,
+        // TODO: Need to keep a strong reference to the renderer otherwise we lose our event handlers. ~Levi
+        
+        let contentRenderer = ToolPageContentStackRenderer(
+            rootContentStackRenderer: nil,
             diContainer: toolPageDiContainer,
+            node: pageNode,
             toolPageColors: ToolPageColors(pageNode: pageNode, manifest: manifest),
             defaultTextNodeTextColor: nil,
             defaultTextNodeTextAlignment: nil,
             defaultButtonBorderColor: nil
         )
+        
+        return contentRenderer.render() as? MobileContentStackView
     }
     
     func tipPageDidChange(page: Int) {

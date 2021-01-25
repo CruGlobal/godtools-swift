@@ -54,25 +54,26 @@ class ToolPageModalView: UIView {
         
         backgroundColor = viewModel.backgroundColor
         
-        addContentView(viewModel: viewModel.contentViewModel)
+        if let contentView = viewModel.contentView {
+            addContentView(contentView: contentView)
+        }
     }
     
-    private func addContentView(viewModel: ToolPageContentStackContainerViewModel) {
+    private func addContentView(contentView: MobileContentStackView) {
         
         let contentParentView: UIView = contentContainerView
-        let contentStackView = MobileContentStackView(viewRenderer: viewModel.contentStackRenderer, itemSpacing: 15, scrollIsEnabled: true)
         
-        contentParentView.addSubview(contentStackView)
+        contentParentView.addSubview(contentView)
         
-        contentStackView.constrainEdgesToSuperview()
+        contentView.constrainEdgesToSuperview()
         layoutIfNeeded()
         
-        let modalContentSize: CGSize = contentStackView.contentSize
+        let modalContentSize: CGSize = contentView.contentSize
         let shouldCenterVertically: Bool = modalContentSize.height < frame.size.height
         
         if shouldCenterVertically {
             let difference: CGFloat = frame.size.height - modalContentSize.height
-            contentStackView.setContentInset(contentInset: UIEdgeInsets(top: difference / 2, left: 0, bottom: 0, right: 0))
+            contentView.setContentInset(contentInset: UIEdgeInsets(top: difference / 2, left: 0, bottom: 0, right: 0))
         }
     }
 }

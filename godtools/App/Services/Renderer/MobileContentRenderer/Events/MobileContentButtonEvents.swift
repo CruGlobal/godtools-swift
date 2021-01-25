@@ -1,14 +1,14 @@
 //
-//  ToolPageContentButtonEvents.swift
+//  MobileContentButtonEvents.swift
 //  godtools
 //
-//  Created by Levi Eggert on 11/27/20.
-//  Copyright © 2020 Cru. All rights reserved.
+//  Created by Levi Eggert on 1/25/21.
+//  Copyright © 2021 Cru. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
-class ToolPageContentButtonEvents {
+class MobileContentButtonEvents {
     
     private let mobileContentEvents: MobileContentEvents
     private let mobileContentAnalytics: MobileContentAnalytics

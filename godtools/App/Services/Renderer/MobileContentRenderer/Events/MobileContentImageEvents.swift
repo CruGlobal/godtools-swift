@@ -1,5 +1,5 @@
 //
-//  ToolPageContentImageEvents.swift
+//  MobileContentImageEvents.swift
 //  godtools
 //
 //  Created by Levi Eggert on 12/14/20.
@@ -8,11 +8,11 @@
 
 import UIKit
 
-class ToolPageContentImageEvents {
+class MobileContentImageEvents {
     
     private let mobileContentEvents: MobileContentEvents
     
-    private var imageEvents: [UIImageView: ToolPageContentImageEvent] = Dictionary()
+    private var imageEvents: [UIImageView: MobileContentImageEvent] = Dictionary()
     
     required init(mobileContentEvents: MobileContentEvents) {
         
@@ -51,7 +51,7 @@ class ToolPageContentImageEvents {
         image.addGestureRecognizer(tapGesture)
         image.isUserInteractionEnabled = true
         
-        imageEvents[image] = ToolPageContentImageEvent(imageNode: imageNode, tapGesture: tapGesture)
+        imageEvents[image] = MobileContentImageEvent(imageNode: imageNode, tapGesture: tapGesture)
     }
     
     @objc func handleImageTapped(tapGesture: UITapGestureRecognizer) {

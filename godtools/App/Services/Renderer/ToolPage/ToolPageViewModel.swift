@@ -15,6 +15,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     private let toolPageColors: ToolPageColors
     private let page: Int
     private let initialPositions: ToolPageInitialPositions?
+    private let contentRenderer: ToolPageContentStackRenderer?
         
     private var allCardsViewModels: [ToolPageCardViewModelType] = Array()
     private var visibleCardsViewModels: [ToolPageCardViewModelType] = Array()
@@ -52,7 +53,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         
         if firstNodeIsContentParagraph {
             
-            let contentStackRenderer = ToolPageContentStackRenderer(
+            contentRenderer = ToolPageContentStackRenderer(
                 rootContentStackRenderer: nil,
                 diContainer: diContainer,
                 node: pageNode,
@@ -62,9 +63,10 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
                 defaultButtonBorderColor: nil
             )
             
-            contentStackView = contentStackRenderer.render() as? MobileContentStackView
+            contentStackView = contentRenderer?.render() as? MobileContentStackView
         }
         else {
+            contentRenderer = nil
             contentStackView = nil
         }
         
@@ -104,7 +106,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
                 toolPageColors: toolPageColors
             )
             
-            heroView = heroViewModel?.contentStackRenderer.render() as? MobileContentStackView
+            heroView = heroViewModel?.heroWillAppear()
         }
         else {
             heroViewModel = nil

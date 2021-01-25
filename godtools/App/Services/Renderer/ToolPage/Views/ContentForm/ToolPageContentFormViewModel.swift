@@ -19,7 +19,8 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
     private var inputViewModels: [ToolPageContentInputViewModelType] = Array()
     
     let resignCurrentInputSignal: Signal = Signal()
-    let contentViewModel: ToolPageContentStackContainerViewModel
+    let contentView: MobileContentStackView?
+    let contentRenderer: ToolPageContentStackRenderer
     
     required init(formNode: ContentFormNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColors, defaultTextNodeTextColor: UIColor?) {
         
@@ -28,14 +29,18 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
         self.toolPageColors = toolPageColors
         self.defaultTextNodeTextColor = defaultTextNodeTextColor
         
-        contentViewModel = ToolPageContentStackContainerViewModel(
-            node: formNode,
+        contentRenderer = ToolPageContentStackRenderer(
+            rootContentStackRenderer: nil,
             diContainer: diContainer,
+            node: formNode,
             toolPageColors: toolPageColors,
             defaultTextNodeTextColor: defaultTextNodeTextColor,
             defaultTextNodeTextAlignment: nil,
             defaultButtonBorderColor: nil
         )
+        
+        //contentView = contentRenderer.render() as? MobileContentStackView
+        contentView = nil
         
         super.init()
         
@@ -52,11 +57,11 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
             self?.sendFollowUps(followUpButtonEvent: followUpButtonEvent)
         }
         
-        contentViewModel.contentStackRenderer.didRenderHiddenContentInputSignal.addObserver(self) { [weak self] (hiddenInputNode: ContentInputNode) in
+        contentRenderer.didRenderHiddenContentInputSignal.addObserver(self) { [weak self] (hiddenInputNode: ContentInputNode) in
             self?.hiddenInputNodes.append(hiddenInputNode)
         }
         
-        contentViewModel.contentStackRenderer.didRenderContentInputSignal.addObserver(self) { [weak self] (renderedInput: ToolPageRenderedContentInput) in
+        contentRenderer.didRenderContentInputSignal.addObserver(self) { [weak self] (renderedInput: ToolPageRenderedContentInput) in
             self?.inputViewModels.append(renderedInput.viewModel)
         }
     }
@@ -64,8 +69,8 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
     private func removeObservers() {
         diContainer.mobileContentEvents.followUpEventButtonTappedSignal.removeObserver(self)
         diContainer.mobileContentEvents.eventButtonTappedSignal.removeObserver(self)
-        contentViewModel.contentStackRenderer.didRenderHiddenContentInputSignal.removeObserver(self)
-        contentViewModel.contentStackRenderer.didRenderContentInputSignal.removeObserver(self)
+        contentRenderer.didRenderHiddenContentInputSignal.removeObserver(self)
+        contentRenderer.didRenderContentInputSignal.removeObserver(self)
     }
     
     private func sendFollowUps(followUpButtonEvent: FollowUpButtonEvent) {

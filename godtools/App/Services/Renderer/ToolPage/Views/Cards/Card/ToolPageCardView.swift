@@ -145,19 +145,19 @@ class ToolPageCardView: UIView {
         nextButton.setTitleColor(viewModel.nextButtonTitleColor, for: .normal)
         nextButton.isHidden = viewModel.hidesNextButton
         
-        if let contentStackView = viewModel.contentStackView {
+        if let contentView = viewModel.contentView {
             
-            contentStackContainer.addSubview(contentStackView)
-            contentStackView.constrainEdgesToSuperview()
+            contentStackContainer.addSubview(contentView)
+            contentView.constrainEdgesToSuperview()
             layoutIfNeeded()
-            self.contentStackView = contentStackView
-            contentStackView.setContentInset(contentInset: UIEdgeInsets(
+            self.contentStackView = contentView
+            contentView.setContentInset(contentInset: UIEdgeInsets(
                 top: 0,
                 left: 0,
                 bottom: bottomGradientView.frame.size.height,
                 right: 0
             ))
-            contentStackView.setScrollViewDelegate(delegate: self)
+            contentView.setScrollViewDelegate(delegate: self)
         }
     }
 

@@ -16,6 +16,8 @@ class ToolPageContentTabsViewModel: NSObject, ToolPageContentTabsViewModelType {
     private let defaultTextNodeTextColor: UIColor?
     private let tabNodes: [ContentTabNode]
     
+    private var tabRenderer: ToolPageContentStackRenderer?
+    
     let tabLabels: [String]
     let selectedTab: ObservableValue<Int> = ObservableValue(value: 0)
     let tabContent: ObservableValue<MobileContentStackView?> = ObservableValue(value: nil)
@@ -86,7 +88,7 @@ class ToolPageContentTabsViewModel: NSObject, ToolPageContentTabsViewModelType {
         
         let tabNode: ContentTabNode = tabNodes[tab]
         
-        let contentStackRenderer = ToolPageContentStackRenderer(
+        let contentRenderer = ToolPageContentStackRenderer(
             rootContentStackRenderer: nil,
             diContainer: diContainer,
             node: tabNode,
@@ -96,6 +98,8 @@ class ToolPageContentTabsViewModel: NSObject, ToolPageContentTabsViewModelType {
             defaultButtonBorderColor: nil
         )
         
-        return contentStackRenderer.render() as? MobileContentStackView
+        self.tabRenderer = contentRenderer
+        
+        return contentRenderer.render() as? MobileContentStackView
     }
 }
