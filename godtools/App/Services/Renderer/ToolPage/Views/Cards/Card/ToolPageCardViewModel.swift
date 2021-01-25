@@ -19,11 +19,12 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     private let toolPageColors: ToolPageColors
     private let isLastPage: Bool
     private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
+    private let contentStackRenderer: ToolPageContentStackRenderer
     
     private weak var delegate: ToolPageCardViewModelTypeDelegate?
     
     let hidesHeaderTrainingTip: ObservableValue<Bool> = ObservableValue(value: true)
-    let contentStackViewModel: ToolPageContentStackContainerViewModel
+    let contentStackView: MobileContentStackView?
     let isHiddenCard: Bool
     let hidesCardPositionLabel: Bool
     let hidesPreviousButton: Bool
@@ -43,14 +44,17 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
         self.toolPageColors = toolPageColors
         self.isLastPage = isLastPage
         
-        contentStackViewModel = ToolPageContentStackContainerViewModel(
-            node: cardNode,
+        contentStackRenderer = ToolPageContentStackRenderer(
+            rootContentStackRenderer: nil,
             diContainer: diContainer,
+            node: cardNode,
             toolPageColors: toolPageColors,
             defaultTextNodeTextColor: toolPageColors.cardTextColor,
             defaultTextNodeTextAlignment: nil,
             defaultButtonBorderColor: nil
         )
+        
+        contentStackView = contentStackRenderer.render() as? MobileContentStackView
         
         self.isHiddenCard = isHiddenCard
         
@@ -82,7 +86,7 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
         //print("x deinit: \(type(of: self))")
         diContainer.mobileContentEvents.eventButtonTappedSignal.removeObserver(self)
         
-        contentStackViewModel.contentStackRenderer.didRenderTrainingTipsSignal.removeObserver(self)
+        contentStackRenderer.didRenderTrainingTipsSignal.removeObserver(self)
     }
     
     private func setupBinding() {
@@ -99,7 +103,7 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
             }
         }
         
-        contentStackViewModel.contentStackRenderer.didRenderTrainingTipsSignal.addObserver(self) { [weak self] in
+        contentStackRenderer.didRenderTrainingTipsSignal.addObserver(self) { [weak self] in
             let trainingTipsEnabled: Bool = self?.diContainer.trainingTipsEnabled ?? false
             let showsHeaderTrainingTip: Bool = trainingTipsEnabled
             self?.hidesHeaderTrainingTip.accept(value: !showsHeaderTrainingTip)

@@ -11,4 +11,6 @@ import UIKit
 protocol MobileContentRenderableView {
     
     var view: UIView { get }
+    
+    func addRenderableView(renderableView: MobileContentRenderableView)
 }

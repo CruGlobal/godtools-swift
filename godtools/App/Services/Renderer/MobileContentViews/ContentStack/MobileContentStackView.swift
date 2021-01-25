@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MobileContentStackView: UIView {
+class MobileContentStackView: UIView, MobileContentRenderableView {
     
     private let viewRenderer: MobileContentStackViewRendererType
     private let contentView: UIView = UIView()
@@ -18,6 +18,7 @@ class MobileContentStackView: UIView {
     private var lastAddedView: UIView?
     private var lastAddedBottomConstraint: NSLayoutConstraint?
             
+    // TODO: Remove viewRenderer: MobileContentStackViewRendererType argument. ~Levi
     required init(viewRenderer: MobileContentStackViewRendererType, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
                 
         self.viewRenderer = viewRenderer
@@ -33,9 +34,10 @@ class MobileContentStackView: UIView {
         scrollView?.showsVerticalScrollIndicator = false
         scrollView?.showsHorizontalScrollIndicator = false
         
+        /*
         viewRenderer.render { [weak self] (renderedView: MobileContentStackRenderedView) in
             self?.addRenderedView(renderedView: renderedView)
-        }
+        }*/
     }
     
     required init?(coder: NSCoder) {
@@ -56,6 +58,33 @@ class MobileContentStackView: UIView {
     
     var contentSize: CGSize {
         return scrollView?.contentSize ?? contentView.frame.size
+    }
+    
+    var view: UIView {
+        return self
+    }
+    
+    func addRenderableView(renderableView: MobileContentRenderableView) {
+        
+        if let contentStackView = renderableView as? MobileContentStackView {
+            
+            addRenderedView(
+                renderedView: MobileContentStackRenderedView(
+                    view: contentStackView,
+                    heightConstraintType: .constrainedToChildren
+                )
+            )
+            return
+        }
+        
+        guard let contentStackRenderedView = renderableView as? MobileContentStackRenderedView else {
+            assertionFailure("Attempted to add invalid renderableView to MobileContentStackView.  Only MobileContentStackRenderedView types are supported.")
+            return
+        }
+        
+        print(" MobileContentStackView: addRenderableView() -> \(renderableView)")
+        
+        addRenderedView(renderedView: contentStackRenderedView)
     }
     
     func setContentSize(size: CGSize) {

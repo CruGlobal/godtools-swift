@@ -145,24 +145,20 @@ class ToolPageCardView: UIView {
         nextButton.setTitleColor(viewModel.nextButtonTitleColor, for: .normal)
         nextButton.isHidden = viewModel.hidesNextButton
         
-        let contentStackViewModel: ToolPageContentStackContainerViewModel = viewModel.contentStackViewModel
-        
-        contentStackViewModel.contentStackRenderer.didRenderContentFormSignal.addObserver(self) { [weak self] (contentForm: ToolPageContentFormView) in
-            self?.handleDidRenderContentForm(form: contentForm)
+        if let contentStackView = viewModel.contentStackView {
+            
+            contentStackContainer.addSubview(contentStackView)
+            contentStackView.constrainEdgesToSuperview()
+            layoutIfNeeded()
+            self.contentStackView = contentStackView
+            contentStackView.setContentInset(contentInset: UIEdgeInsets(
+                top: 0,
+                left: 0,
+                bottom: bottomGradientView.frame.size.height,
+                right: 0
+            ))
+            contentStackView.setScrollViewDelegate(delegate: self)
         }
-        
-        let contentStackView: MobileContentStackView = MobileContentStackView(viewRenderer: contentStackViewModel.contentStackRenderer, itemSpacing: 20, scrollIsEnabled: true)
-        contentStackContainer.addSubview(contentStackView)
-        contentStackView.constrainEdgesToSuperview()
-        layoutIfNeeded()
-        self.contentStackView = contentStackView
-        contentStackView.setContentInset(contentInset: UIEdgeInsets(
-            top: 0,
-            left: 0,
-            bottom: bottomGradientView.frame.size.height,
-            right: 0
-        ))
-        contentStackView.setScrollViewDelegate(delegate: self)
     }
 
     var cardHeaderHeight: CGFloat {

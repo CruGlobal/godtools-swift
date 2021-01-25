@@ -10,7 +10,6 @@ import Foundation
 
 protocol MobileContentRendererDelegate: class {
     
-    func mobileContentRendererViewForRenderableContainerNode(renderer: MobileContentRenderer, renderableContainerNode: MobileContentRenderableContainerNode) -> MobileContentRenderableContainerView?
     func mobileContentRendererViewForRenderableNode(renderer: MobileContentRenderer, renderableNode: MobileContentRenderableNode) -> MobileContentRenderableView?
 }
 
@@ -44,38 +43,21 @@ class MobileContentRenderer {
         guard renderableNode.isRenderable else {
             return nil
         }
-        
-        let renderableContainerView: MobileContentRenderableContainerView?
-        let renderableView: MobileContentRenderableView?
-        
-        if let renderableContainerNode = renderableNode as? MobileContentRenderableContainerNode {
-            
-            renderableContainerView = delegate.mobileContentRendererViewForRenderableContainerNode(
-                renderer: self,
-                renderableContainerNode: renderableContainerNode
-            )
-            
-            renderableView = nil
-        }
-        else {
-            
-            renderableContainerView = nil
-            
-            renderableView = delegate.mobileContentRendererViewForRenderableNode(
-                renderer: self,
-                renderableNode: renderableNode
-            )
-        }
+    
+        let renderableView: MobileContentRenderableView? = delegate.mobileContentRendererViewForRenderableNode(
+            renderer: self,
+            renderableNode: renderableNode
+        )
         
         for childNode in node.children {
             
             let childRenderableView: MobileContentRenderableView? = recurseAndRender(node: childNode, delegate: delegate)
             
-            if let childRenderableView = childRenderableView, let renderableContainerView = renderableContainerView {
-                renderableContainerView.addRenderableView(renderableView: childRenderableView)
+            if let childRenderableView = childRenderableView, let renderableView = renderableView {
+                renderableView.addRenderableView(renderableView: childRenderableView)
             }
         }
         
-        return renderableContainerView ?? renderableView
+        return renderableView
     }
 }

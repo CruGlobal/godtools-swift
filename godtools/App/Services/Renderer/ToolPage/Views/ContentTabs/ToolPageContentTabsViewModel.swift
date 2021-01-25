@@ -18,7 +18,7 @@ class ToolPageContentTabsViewModel: NSObject, ToolPageContentTabsViewModelType {
     
     let tabLabels: [String]
     let selectedTab: ObservableValue<Int> = ObservableValue(value: 0)
-    let tabContent: ObservableValue<ToolPageContentStackContainerViewModel?> = ObservableValue(value: nil)
+    let tabContent: ObservableValue<MobileContentStackView?> = ObservableValue(value: nil)
     
     required init(tabsNode: ContentTabsNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColors, defaultTextNodeTextColor: UIColor?) {
         
@@ -82,28 +82,20 @@ class ToolPageContentTabsViewModel: NSObject, ToolPageContentTabsViewModelType {
         }
     }
     
-    private func getTabContent(tab: Int) -> ToolPageContentStackContainerViewModel {
+    private func getTabContent(tab: Int) -> MobileContentStackView? {
         
         let tabNode: ContentTabNode = tabNodes[tab]
         
-        let tabNodeChildrenToRender: MobileContentXmlNode = MobileContentXmlNode(xmlElement: tabNode.xmlElement)
-        
-        for childNode in tabNode.children {
-            
-            let shouldRenderChild: Bool = !(childNode is ContentLabelNode) && !(childNode is AnalyticsEventsNode)
-            
-            if shouldRenderChild {
-                tabNodeChildrenToRender.addChild(childNode: childNode)
-            }
-        }
-        
-        return ToolPageContentStackContainerViewModel(
-            node: tabNodeChildrenToRender,
+        let contentStackRenderer = ToolPageContentStackRenderer(
+            rootContentStackRenderer: nil,
             diContainer: diContainer,
+            node: tabNode,
             toolPageColors: toolPageColors,
             defaultTextNodeTextColor: defaultTextNodeTextColor,
             defaultTextNodeTextAlignment: nil,
             defaultButtonBorderColor: nil
         )
+        
+        return contentStackRenderer.render() as? MobileContentStackView
     }
 }

@@ -36,8 +36,6 @@
 		451EBE3B24AD968B00C4D6DD /* db11fd9214b9a05b5d1e760c707e9db8d4b821dea36bca0c94263efa28e8ac4b.png in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE2424AD968A00C4D6DD /* db11fd9214b9a05b5d1e760c707e9db8d4b821dea36bca0c94263efa28e8ac4b.png */; };
 		451EBE3C24AD968B00C4D6DD /* 8a2312f958cdf6548a1637347bf89560f6ebf284549669638dfef944d8268a08.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE2524AD968A00C4D6DD /* 8a2312f958cdf6548a1637347bf89560f6ebf284549669638dfef944d8268a08.jpg */; };
 		451EBE3D24AD968B00C4D6DD /* e961f409d06308e87deb9ed9166264c7c732d9dc24e70f886944636308810d6e.png in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE2624AD968A00C4D6DD /* e961f409d06308e87deb9ed9166264c7c732d9dc24e70f886944636308810d6e.png */; };
-		4530EE2725BF13C400806938 /* MobileContentRenderableContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4530EE2125BF13C400806938 /* MobileContentRenderableContainerView.swift */; };
-		4530EE2825BF13C400806938 /* MobileContentRenderableContainerNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4530EE2225BF13C400806938 /* MobileContentRenderableContainerNode.swift */; };
 		4530EE2925BF13C400806938 /* MobileContentRenderableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4530EE2325BF13C400806938 /* MobileContentRenderableView.swift */; };
 		4530EE2A25BF13C400806938 /* MobileContentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4530EE2425BF13C400806938 /* MobileContentRenderer.swift */; };
 		4530EE2B25BF13C400806938 /* MobileContentRenderableNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4530EE2525BF13C400806938 /* MobileContentRenderableNode.swift */; };
@@ -820,8 +818,6 @@
 		451EBE2424AD968A00C4D6DD /* db11fd9214b9a05b5d1e760c707e9db8d4b821dea36bca0c94263efa28e8ac4b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = db11fd9214b9a05b5d1e760c707e9db8d4b821dea36bca0c94263efa28e8ac4b.png; sourceTree = "<group>"; };
 		451EBE2524AD968A00C4D6DD /* 8a2312f958cdf6548a1637347bf89560f6ebf284549669638dfef944d8268a08.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 8a2312f958cdf6548a1637347bf89560f6ebf284549669638dfef944d8268a08.jpg; sourceTree = "<group>"; };
 		451EBE2624AD968A00C4D6DD /* e961f409d06308e87deb9ed9166264c7c732d9dc24e70f886944636308810d6e.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = e961f409d06308e87deb9ed9166264c7c732d9dc24e70f886944636308810d6e.png; sourceTree = "<group>"; };
-		4530EE2125BF13C400806938 /* MobileContentRenderableContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentRenderableContainerView.swift; sourceTree = "<group>"; };
-		4530EE2225BF13C400806938 /* MobileContentRenderableContainerNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentRenderableContainerNode.swift; sourceTree = "<group>"; };
 		4530EE2325BF13C400806938 /* MobileContentRenderableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentRenderableView.swift; sourceTree = "<group>"; };
 		4530EE2425BF13C400806938 /* MobileContentRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentRenderer.swift; sourceTree = "<group>"; };
 		4530EE2525BF13C400806938 /* MobileContentRenderableNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentRenderableNode.swift; sourceTree = "<group>"; };
@@ -1764,8 +1760,6 @@
 		454D014D25BE279E0057FC02 /* MobileContentRenderer */ = {
 			isa = PBXGroup;
 			children = (
-				4530EE2225BF13C400806938 /* MobileContentRenderableContainerNode.swift */,
-				4530EE2125BF13C400806938 /* MobileContentRenderableContainerView.swift */,
 				4530EE2525BF13C400806938 /* MobileContentRenderableNode.swift */,
 				4530EE2325BF13C400806938 /* MobileContentRenderableView.swift */,
 				4530EE2425BF13C400806938 /* MobileContentRenderer.swift */,
@@ -4783,7 +4777,6 @@
 				45AD21412593A49900A096A0 /* ShareToolRemoteSessionURLViewModel.swift in Sources */,
 				45AD1F9A25938A9800A096A0 /* RealmAttachment.swift in Sources */,
 				45AD1B7B25938A4F00A096A0 /* OnboardingWelcomeViewModelType.swift in Sources */,
-				4530EE2825BF13C400806938 /* MobileContentRenderableContainerNode.swift in Sources */,
 				45AD1F7725938A9800A096A0 /* ViewedTrainingTip.swift in Sources */,
 				45AD206425938B1300A096A0 /* AlertMessageType.swift in Sources */,
 				45AD1F8B25938A9800A096A0 /* AttachmentModelType.swift in Sources */,
@@ -4877,7 +4870,6 @@
 				45AD1F1E25938A9800A096A0 /* ToolPageModalViewModelType.swift in Sources */,
 				454D016425BE279E0057FC02 /* MobileContentAnalytics.swift in Sources */,
 				45AD1AF325938A4E00A096A0 /* ShareAStoryWithUsWebContent.swift in Sources */,
-				4530EE2725BF13C400806938 /* MobileContentRenderableContainerView.swift in Sources */,
 				45AD200925938A9800A096A0 /* TranslationDownloader.swift in Sources */,
 				45AD1F5725938A9800A096A0 /* MobileContentXmlNodeType.swift in Sources */,
 				45AD1FBB25938A9800A096A0 /* TractRemoteShareSubscriberError.swift in Sources */,

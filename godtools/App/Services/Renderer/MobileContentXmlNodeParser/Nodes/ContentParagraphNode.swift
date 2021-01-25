@@ -9,7 +9,7 @@
 import Foundation
 import SWXMLHash
 
-class ContentParagraphNode: MobileContentXmlNode, MobileContentRenderableContainerNode {
+class ContentParagraphNode: MobileContentXmlNode, MobileContentRenderableNode {
     
     let fallback: String?
     

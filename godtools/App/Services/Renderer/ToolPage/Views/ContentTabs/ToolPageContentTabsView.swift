@@ -66,11 +66,11 @@ class ToolPageContentTabsView: UIView {
             self?.tabsControl.selectedSegmentIndex = selectedTab
         }
         
-        viewModel.tabContent.addObserver(self) { [weak self] (tabContentViewModel: ToolPageContentStackContainerViewModel?) in
-            guard let contentViewModel = tabContentViewModel else {
+        viewModel.tabContent.addObserver(self) { [weak self] (tabContentStackView: MobileContentStackView?) in
+            guard let contentStackView = tabContentStackView else {
                 return
             }
-            self?.setContentView(contentViewModel: contentViewModel)
+            self?.setContentView(contentStackView: contentStackView)
         }
     }
     
@@ -78,18 +78,16 @@ class ToolPageContentTabsView: UIView {
         viewModel.tabTapped(tab: tabsControl.selectedSegmentIndex)
     }
     
-    private func setContentView(contentViewModel: ToolPageContentStackContainerViewModel) {
+    private func setContentView(contentStackView: MobileContentStackView) {
         
         for view in tabContentContainerView.subviews {
             view.removeFromSuperview()
         }
+                
+        tabContentContainerView.addSubview(contentStackView)
         
-        let contentView = MobileContentStackView(viewRenderer: contentViewModel.contentStackRenderer, itemSpacing: 10, scrollIsEnabled: false)
-        
-        tabContentContainerView.addSubview(contentView)
-        
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.constrainEdgesToSuperview()
+        contentStackView.translatesAutoresizingMaskIntoConstraints = false
+        contentStackView.constrainEdgesToSuperview()
         
         layoutIfNeeded()
     }

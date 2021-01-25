@@ -20,9 +20,10 @@ protocol ToolPageViewModelTypeDelegate: class {
 protocol ToolPageViewModelType: NSObject {
     
     var backgroundColor: UIColor { get }
-    var contentStackViewModel: ToolPageContentStackContainerViewModel? { get }
+    var contentStackView: MobileContentStackView? { get }
     var headerViewModel: ToolPageHeaderViewModel { get }
     var headerTrainingTipViewModel: TrainingTipViewModelType? { get }
+    var heroView: MobileContentStackView? { get }
     var heroViewModel: ToolPageHeroViewModel? { get }
     var hidesCards: Bool { get }
     var currentCard: ObservableValue<AnimatableValue<Int?>> { get }

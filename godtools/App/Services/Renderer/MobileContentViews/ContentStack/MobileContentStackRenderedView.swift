@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MobileContentStackRenderedView {
+class MobileContentStackRenderedView: MobileContentRenderableView {
     
     enum HeightConstraintType {
         
@@ -26,5 +26,9 @@ class MobileContentStackRenderedView {
         
         self.view = view
         self.heightConstraintType = heightConstraintType
+    }
+    
+    func addRenderableView(renderableView: MobileContentRenderableView) {
+        
     }
 }

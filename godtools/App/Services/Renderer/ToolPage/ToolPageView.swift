@@ -163,8 +163,8 @@ class ToolPageView: UIView {
         let hidesCallToAction: Bool = viewModel.callToActionViewModel.hidesCallToAction
         
         // contentStack
-        if let contentStackViewModel = viewModel.contentStackViewModel {
-            let contentStackView: MobileContentStackView = MobileContentStackView(viewRenderer: contentStackViewModel.contentStackRenderer, itemSpacing: 20, scrollIsEnabled: true)
+        if let contentStackView = viewModel.contentStackView {
+            
             contentStackContainerView.addSubview(contentStackView)
             contentStackView.constrainEdgesToSuperview()
             contentStackContainerView.isHidden = false
@@ -214,7 +214,7 @@ class ToolPageView: UIView {
         }
         
         // hero top and height
-        if let heroViewModel = viewModel.heroViewModel {
+        if let heroView = viewModel.heroView {
             
             let topInset: CGFloat = 15
             let bottomInset: CGFloat = 0
@@ -242,7 +242,6 @@ class ToolPageView: UIView {
                          
             heroTop.constant = headerHeight + topInset
                                     
-            let heroView: MobileContentStackView = MobileContentStackView(viewRenderer: heroViewModel.contentStackRenderer, itemSpacing: 20, scrollIsEnabled: true)
             heroContainerView.addSubview(heroView)
             heroView.constrainEdgesToSuperview()
             heroContainerView.isHidden = false
