@@ -292,8 +292,8 @@
       "id": "9",
       "type": "language",
       "attributes": {
-        "code": "hi-IN",
-        "name": "Hindi (India)",
+        "code": "hi",
+        "name": "Hindi",
         "direction": "ltr"
       }
     },
