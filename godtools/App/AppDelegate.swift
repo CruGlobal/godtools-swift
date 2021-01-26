@@ -8,7 +8,6 @@
 
 import UIKit
 import FBSDKCoreKit
-import FirebaseInAppMessaging
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -44,9 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appDiContainer.googleAdwordsAnalytics.recordAdwordsConversion()
         
         appDiContainer.analytics.snowplowAnalytics.configure(adobeAnalytics: appDiContainer.analytics.adobeAnalytics)
-        
-        InAppMessaging.inAppMessaging().delegate = appDiContainer.firebaseInAppMessaging
-        
+                
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         
         let window = UIWindow(frame: UIScreen.main.bounds)

@@ -10,8 +10,14 @@ import Foundation
 import FirebaseInAppMessaging
 
 class FirebaseInAppMessaging: NSObject, FirebaseInAppMessagingType {
+    
+    private let sharedInAppMessaging: InAppMessaging = InAppMessaging.inAppMessaging()
+    
     override init() {
         
+        super.init()
+        
+        sharedInAppMessaging.delegate = self
     }
     
     func messageClicked(_ inAppMessage: InAppMessagingDisplayMessage) {
@@ -31,6 +37,7 @@ class FirebaseInAppMessaging: NSObject, FirebaseInAppMessagingType {
     }
     
     func triggerInAppMessage(eventId: String) {
-        InAppMessaging.inAppMessaging().triggerEvent(eventId);
+        
+        sharedInAppMessaging.triggerEvent(eventId)
     }
 }
