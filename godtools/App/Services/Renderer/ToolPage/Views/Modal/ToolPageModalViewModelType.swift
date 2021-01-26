@@ -11,5 +11,5 @@ import UIKit
 protocol ToolPageModalViewModelType {
     
     var backgroundColor: UIColor { get }
-    var contentView: MobileContentStackView? { get }
+    var contentView: ObservableValue<MobileContentStackView?> { get }
 }

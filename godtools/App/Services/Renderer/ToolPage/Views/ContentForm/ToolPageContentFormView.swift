@@ -57,21 +57,29 @@ class ToolPageContentFormView: UIView {
         viewModel.resignCurrentInputSignal.addObserver(self) { [weak self] in
             self?.resignCurrentEditedTextField()
         }
-                
+            
+        // TODO: Need to add this back in. ~Levi
+        /*
         viewModel.contentRenderer.didRenderContentInputSignal.addObserver(self) { [weak self] (renderedInput: ToolPageRenderedContentInput) in
             self?.handleDidRenderContentInput(contentInput: renderedInput.view)
-        }
+        }*/
         
-        if let contentView = viewModel.contentView {
-            contentContainerView.addSubview(contentView)
-            contentView.translatesAutoresizingMaskIntoConstraints = false
-            contentView.constrainEdgesToSuperview()
+        viewModel.contentView.addObserver(self) { [weak self] (contentView: MobileContentStackView?) in
+            if let contentView = contentView {
+                self?.addContentView(contentView: contentView)
+            }
         }
     }
     
     private func handleDidRenderContentInput(contentInput: ToolPageContentInputView) {
         contentInput.setInputDelegate(delegate: self)
         inputs.append(contentInput)
+    }
+    
+    private func addContentView(contentView: MobileContentStackView) {
+        contentContainerView.addSubview(contentView)
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.constrainEdgesToSuperview()
     }
     
     func resignCurrentEditedTextField() {

@@ -11,22 +11,17 @@ import UIKit
 class ToolPageHeroViewModel {
     
     private let heroNode: HeroNode
+    private let diContainer: ToolPageDiContainer
+    private let toolPageColors: ToolPageColors
     private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
-    private let contentRenderer: ToolPageContentStackRenderer
+    
+    private var contentRenderer: MobileContentRenderer?
     
     required init(heroNode: HeroNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColors) {
         
         self.heroNode = heroNode
-        
-        contentRenderer = ToolPageContentStackRenderer(
-            rootContentStackRenderer: nil,
-            diContainer: diContainer,
-            node: heroNode,
-            toolPageColors: toolPageColors,
-            defaultTextNodeTextColor: nil,
-            defaultTextNodeTextAlignment: nil,
-            defaultButtonBorderColor: nil
-        )
+        self.diContainer = diContainer
+        self.toolPageColors = toolPageColors
         
         if let analyticsEventsNode = heroNode.analyticsEventsNode {
             analyticsEventsObjects = MobileContentAnalyticsEvent.initEvents(eventsNode: analyticsEventsNode, mobileContentAnalytics: diContainer.mobileContentAnalytics)
@@ -41,6 +36,23 @@ class ToolPageHeroViewModel {
     }
     
     func heroWillAppear() -> MobileContentStackView? {
+        
+        let viewFactory = ToolPageRendererViewFactory(
+            diContainer: diContainer,
+            toolPageColors: toolPageColors,
+            defaultTextNodeTextColor: nil,
+            defaultTextNodeTextAlignment: nil,
+            defaultButtonBorderColor: nil,
+            delegate: nil
+        )
+        
+        let contentRenderer = MobileContentRenderer(
+            node: heroNode,
+            viewFactory: viewFactory
+        )
+        
+        self.contentRenderer = contentRenderer
+        
         return contentRenderer.render() as? MobileContentStackView
     }
     

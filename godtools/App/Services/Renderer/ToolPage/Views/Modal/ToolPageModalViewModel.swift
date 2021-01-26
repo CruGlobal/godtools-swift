@@ -20,11 +20,12 @@ class ToolPageModalViewModel: NSObject, ToolPageModalViewModelType {
     private let diContainer: ToolPageDiContainer
     private let toolPageColors: ToolPageColors
     private let defaultTextNodeTextColor: UIColor?
-    private let contentRenderer: ToolPageContentStackRenderer
+
+    private var contentRenderer: MobileContentRenderer?
     
     private weak var delegate: ToolPageModalViewModelDelegate?
     
-    let contentView: MobileContentStackView?
+    let contentView: ObservableValue<MobileContentStackView?> = ObservableValue(value: nil)
     
     required init(delegate: ToolPageModalViewModelDelegate, modalNode: ModalNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColors, defaultTextNodeTextColor: UIColor?) {
         
@@ -34,21 +35,11 @@ class ToolPageModalViewModel: NSObject, ToolPageModalViewModelType {
         self.toolPageColors = toolPageColors
         self.defaultTextNodeTextColor = defaultTextNodeTextColor
         
-        contentRenderer = ToolPageContentStackRenderer(
-            rootContentStackRenderer: nil,
-            diContainer: diContainer,
-            node: modalNode,
-            toolPageColors: toolPageColors,
-            defaultTextNodeTextColor: nil,
-            defaultTextNodeTextAlignment: .center,
-            defaultButtonBorderColor: UIColor.white
-        )
-        
-        contentView = contentRenderer.render() as? MobileContentStackView
-        
         super.init()
         
         addObservers()
+        
+        renderContentView()
     }
     
     deinit {
@@ -74,6 +65,24 @@ class ToolPageModalViewModel: NSObject, ToolPageModalViewModelType {
     
     private func removeObservers() {
         diContainer.mobileContentEvents.eventButtonTappedSignal.removeObserver(self)
+    }
+    
+    private func renderContentView() {
+        
+        let viewFactory = ToolPageRendererViewFactory(
+            diContainer: diContainer,
+            toolPageColors: toolPageColors,
+            defaultTextNodeTextColor: nil,
+            defaultTextNodeTextAlignment: .center,
+            defaultButtonBorderColor: UIColor.white,
+            delegate: nil
+        )
+        
+        let contentRenderer = MobileContentRenderer(node: modalNode, viewFactory: viewFactory)
+        
+        contentView.accept(value: contentRenderer.render() as? MobileContentStackView)
+        
+        self.contentRenderer = contentRenderer
     }
     
     var backgroundColor: UIColor {

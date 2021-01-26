@@ -8,11 +8,11 @@
 
 import UIKit
 
+// TODO: Remove this class after refactoring to use MobileContentRenderer. ~Levi
 class ToolPageContentStackRenderer {
     
     private static let numberFormatter: NumberFormatter = NumberFormatter()
     
-    private let renderer: MobileContentRenderer
     private let diContainer: ToolPageDiContainer
     private let node: MobileContentXmlNode
     private let toolPageColors: ToolPageColors
@@ -30,7 +30,6 @@ class ToolPageContentStackRenderer {
     required init(rootContentStackRenderer: ToolPageContentStackRenderer?, diContainer: ToolPageDiContainer, node: MobileContentXmlNode, toolPageColors: ToolPageColors, defaultTextNodeTextColor: UIColor?, defaultTextNodeTextAlignment: NSTextAlignment?, defaultButtonBorderColor: UIColor?) {
         
         self.rootContentStackRenderer = rootContentStackRenderer
-        self.renderer = MobileContentRenderer(mobileContentEvents: diContainer.mobileContentEvents, mobileContentAnalytics: diContainer.mobileContentAnalytics)
         self.diContainer = diContainer
         self.node = node
         self.toolPageColors = toolPageColors
@@ -45,7 +44,8 @@ class ToolPageContentStackRenderer {
     
     func render() -> MobileContentRenderableView? {
         
-        return renderer.render(node: node, delegate: self)
+        return nil
+        //return renderer.render(node: node, delegate: self)
     }
     
     // TODO: Remove this function. ~Levi

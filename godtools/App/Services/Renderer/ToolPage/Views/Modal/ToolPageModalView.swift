@@ -54,8 +54,10 @@ class ToolPageModalView: UIView {
         
         backgroundColor = viewModel.backgroundColor
         
-        if let contentView = viewModel.contentView {
-            addContentView(contentView: contentView)
+        viewModel.contentView.addObserver(self) { [weak self] (contentView: MobileContentStackView?) in
+            if let contentView = contentView {
+                self?.addContentView(contentView: contentView)
+            }
         }
     }
     

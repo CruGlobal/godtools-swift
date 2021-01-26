@@ -15,35 +15,40 @@ protocol MobileContentRendererDelegate: class {
 
 class MobileContentRenderer {
     
-    private let buttonEvents: MobileContentButtonEvents
-    private let linkEvents: MobileContentLinkEvents
-    private let imageEvents: MobileContentImageEvents
+    private let node: MobileContentXmlNode
+    private let viewFactory: MobileContentRendererViewFactoryType
     
-    private weak var delegate: MobileContentRendererDelegate?
+    //private let buttonEvents: MobileContentButtonEvents
+    //private let linkEvents: MobileContentLinkEvents
+    //private let imageEvents: MobileContentImageEvents
+    //private weak var delegate: MobileContentRendererDelegate?
     
-    required init(mobileContentEvents: MobileContentEvents, mobileContentAnalytics: MobileContentAnalytics) {
+    required init(node: MobileContentXmlNode, viewFactory: MobileContentRendererViewFactoryType) {
         
-        buttonEvents = MobileContentButtonEvents(mobileContentEvents: mobileContentEvents, mobileContentAnalytics: mobileContentAnalytics)
-        linkEvents = MobileContentLinkEvents(mobileContentEvents: mobileContentEvents, mobileContentAnalytics: mobileContentAnalytics)
-        imageEvents = MobileContentImageEvents(mobileContentEvents: mobileContentEvents)
+        self.node = node
+        self.viewFactory = viewFactory
+        
+        //buttonEvents = MobileContentButtonEvents(mobileContentEvents: mobileContentEvents, mobileContentAnalytics: mobileContentAnalytics)
+        //linkEvents = MobileContentLinkEvents(mobileContentEvents: mobileContentEvents, mobileContentAnalytics: mobileContentAnalytics)
+        //imageEvents = MobileContentImageEvents(mobileContentEvents: mobileContentEvents)
     }
     
     private func resetForNewRender() {
-        buttonEvents.removeAllButtonEvents()
-        linkEvents.removeAllLinkEvents()
-        imageEvents.removeAllImageEvents()
+        //buttonEvents.removeAllButtonEvents()
+        //linkEvents.removeAllLinkEvents()
+        //imageEvents.removeAllImageEvents()
     }
     
-    func render(node: MobileContentXmlNode, delegate: MobileContentRendererDelegate) -> MobileContentRenderableView? {
+    func render() -> MobileContentRenderableView? {
         
         resetForNewRender()
         
-        self.delegate = delegate
+        //self.delegate = delegate
         
-        return recurseAndRender(node: node, delegate: delegate)
+        return recurseAndRender(node: node, viewFactory: viewFactory)
     }
     
-    private func recurseAndRender(node: MobileContentXmlNode, delegate: MobileContentRendererDelegate) -> MobileContentRenderableView? {
+    private func recurseAndRender(node: MobileContentXmlNode, viewFactory: MobileContentRendererViewFactoryType) -> MobileContentRenderableView? {
         
         guard let renderableNode = (node as? MobileContentRenderableNode) else {
             return nil
@@ -53,24 +58,21 @@ class MobileContentRenderer {
             return nil
         }
     
-        let renderableView: MobileContentRenderableView? = delegate.mobileContentRendererViewForRenderableNode(
-            renderer: self,
-            renderableNode: renderableNode
-        )
+        let renderableView: MobileContentRenderableView? = viewFactory.viewForRenderableNode(renderableNode: renderableNode)
         
         if let buttonNode = renderableNode as? ContentButtonNode, let button = renderableView?.view as? UIButton {
-            buttonEvents.addButtonEvent(button: button, buttonNode: buttonNode)
+            //buttonEvents.addButtonEvent(button: button, buttonNode: buttonNode)
         }
         else if let imageNode = renderableNode as? ContentImageNode, let imageView = renderableView?.view as? UIImageView {
-            imageEvents.addImageEvent(image: imageView, imageNode: imageNode)
+            //imageEvents.addImageEvent(image: imageView, imageNode: imageNode)
         }
         else if let linkNode = renderableNode as? ContentLinkNode, let button = renderableView?.view as? UIButton {
-            linkEvents.addLinkEvent(button: button, linkNode: linkNode)
+            //linkEvents.addLinkEvent(button: button, linkNode: linkNode)
         }
         
         for childNode in node.children {
             
-            let childRenderableView: MobileContentRenderableView? = recurseAndRender(node: childNode, delegate: delegate)
+            let childRenderableView: MobileContentRenderableView? = recurseAndRender(node: childNode, viewFactory: viewFactory)
             
             if let childRenderableView = childRenderableView, let renderableView = renderableView {
                 renderableView.addRenderableView(renderableView: childRenderableView)

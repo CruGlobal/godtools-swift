@@ -19,12 +19,13 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     private let toolPageColors: ToolPageColors
     private let isLastPage: Bool
     private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
-    private let contentRenderer: ToolPageContentStackRenderer
+    
+    private var contentRenderer: MobileContentRenderer?
     
     private weak var delegate: ToolPageCardViewModelTypeDelegate?
     
     let hidesHeaderTrainingTip: ObservableValue<Bool> = ObservableValue(value: true)
-    let contentView: MobileContentStackView?
+    let contentView: ObservableValue<MobileContentStackView?> = ObservableValue(value: nil)
     let isHiddenCard: Bool
     let hidesCardPositionLabel: Bool
     let hidesPreviousButton: Bool
@@ -43,18 +44,6 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
         self.numberOfCards = numberOfCards
         self.toolPageColors = toolPageColors
         self.isLastPage = isLastPage
-        
-        contentRenderer = ToolPageContentStackRenderer(
-            rootContentStackRenderer: nil,
-            diContainer: diContainer,
-            node: cardNode,
-            toolPageColors: toolPageColors,
-            defaultTextNodeTextColor: toolPageColors.cardTextColor,
-            defaultTextNodeTextAlignment: nil,
-            defaultButtonBorderColor: nil
-        )
-        
-        contentView = contentRenderer.render() as? MobileContentStackView
         
         self.isHiddenCard = isHiddenCard
         
@@ -80,13 +69,13 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
         super.init()
         
         setupBinding()
+        
+        renderContentView()
     }
     
     deinit {
         //print("x deinit: \(type(of: self))")
         diContainer.mobileContentEvents.eventButtonTappedSignal.removeObserver(self)
-        
-        contentRenderer.didRenderTrainingTipsSignal.removeObserver(self)
     }
     
     private func setupBinding() {
@@ -102,12 +91,27 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
                 self?.delegate?.dismissCardListener(cardViewModel: viewModel, cardPosition: viewModel.cardPosition)
             }
         }
+    }
+    
+    private func renderContentView() {
         
-        contentRenderer.didRenderTrainingTipsSignal.addObserver(self) { [weak self] in
-            let trainingTipsEnabled: Bool = self?.diContainer.trainingTipsEnabled ?? false
-            let showsHeaderTrainingTip: Bool = trainingTipsEnabled
-            self?.hidesHeaderTrainingTip.accept(value: !showsHeaderTrainingTip)
-        }
+        let toolPageRendererViewFactory = ToolPageRendererViewFactory(
+            diContainer: diContainer,
+            toolPageColors: toolPageColors,
+            defaultTextNodeTextColor: toolPageColors.cardTextColor,
+            defaultTextNodeTextAlignment: nil,
+            defaultButtonBorderColor: nil,
+            delegate: self
+        )
+        
+        let contentRenderer = MobileContentRenderer(
+            node: cardNode,
+            viewFactory: toolPageRendererViewFactory
+        )
+        
+        contentView.accept(value: contentRenderer.render() as? MobileContentStackView)
+        
+        self.contentRenderer = contentRenderer
     }
     
     var title: String? {
@@ -211,5 +215,16 @@ extension ToolPageCardViewModel: MobileContentViewModel {
     
     var defaultAnalyticsEventsTrigger: AnalyticsEventNodeTrigger {
         return .visible
+    }
+}
+
+// MARK: - ToolPageRendererViewFactoryDelegate
+
+extension ToolPageCardViewModel: ToolPageRendererViewFactoryDelegate {
+    
+    func toolPageRendererViewFactoryDidRenderTrainingTip(toolPageRenderer: ToolPageRendererViewFactory) {
+        let trainingTipsEnabled: Bool = diContainer.trainingTipsEnabled ?? false
+        let showsHeaderTrainingTip: Bool = trainingTipsEnabled
+        hidesHeaderTrainingTip.accept(value: !showsHeaderTrainingTip)
     }
 }

@@ -26,7 +26,7 @@ protocol ToolPageCardViewModelType: NSObject {
     var titleFont: UIFont { get }
     var titleAlignment: NSTextAlignment { get }
     var hidesHeaderTrainingTip: ObservableValue<Bool> { get }
-    var contentView: MobileContentStackView? { get }
+    var contentView: ObservableValue<MobileContentStackView?> { get }
     var isHiddenCard: Bool { get }
     var cardPositionLabel: String? { get }
     var cardPositionLabelTextColor: UIColor { get }
