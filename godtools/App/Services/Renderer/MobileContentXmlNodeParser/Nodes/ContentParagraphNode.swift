@@ -9,7 +9,7 @@
 import Foundation
 import SWXMLHash
 
-class ContentParagraphNode: MobileContentXmlNode, MobileContentRenderableNode {
+class ContentParagraphNode: MobileContentXmlNode {
     
     let fallback: String?
     
@@ -27,5 +27,13 @@ extension ContentParagraphNode {
     
     var isFallback: Bool {
         return fallback == "true"
+    }
+}
+
+// MARK: - MobileContentRenderableNode
+
+extension ContentParagraphNode: MobileContentRenderableNode {
+    var contentIsRenderable: Bool {
+        return true
     }
 }

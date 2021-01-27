@@ -9,7 +9,7 @@
 import Foundation
 import SWXMLHash
 
-class ContentLabelNode: MobileContentXmlNode, MobileContentRenderableNode {
+class ContentLabelNode: MobileContentXmlNode {
     
     required init(xmlElement: XMLElement) {
     
@@ -18,5 +18,13 @@ class ContentLabelNode: MobileContentXmlNode, MobileContentRenderableNode {
     
     var textNode: ContentTextNode? {
         return children.first as? ContentTextNode
+    }
+}
+
+// MARK: - MobileContentRenderableNode
+
+extension ContentLabelNode: MobileContentRenderableNode {
+    var contentIsRenderable: Bool {
+        return true
     }
 }

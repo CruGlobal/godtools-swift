@@ -9,10 +9,18 @@
 import Foundation
 import SWXMLHash
 
-class ContentFormNode: MobileContentXmlNode, MobileContentRenderableNode {
+class ContentFormNode: MobileContentXmlNode {
         
     required init(xmlElement: XMLElement) {
     
         super.init(xmlElement: xmlElement)
+    }
+}
+
+// MARK: - MobileContentRenderableNode
+
+extension ContentFormNode: MobileContentRenderableNode {
+    var contentIsRenderable: Bool {
+        return true
     }
 }

@@ -8,7 +8,7 @@
 import Foundation
 import SWXMLHash
 
-class ContentButtonNode: MobileContentXmlNode, MobileContentRenderableNode {
+class ContentButtonNode: MobileContentXmlNode {
     
     private(set) var textNode: ContentTextNode?
     private(set) var analyticsEventsNode: AnalyticsEventsNode?
@@ -70,5 +70,14 @@ extension ContentButtonNode {
         }
         
         return MobileContentButtonNodeType(rawValue: type) ?? .unknown
+    }
+}
+
+// MARK: - MobileContentRenderableNode
+
+extension ContentButtonNode: MobileContentRenderableNode {
+    
+    var contentIsRenderable: Bool {
+        return buttonType != .unknown
     }
 }

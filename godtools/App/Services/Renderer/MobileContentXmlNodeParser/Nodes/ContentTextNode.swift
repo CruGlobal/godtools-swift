@@ -9,7 +9,7 @@
 import Foundation
 import SWXMLHash
 
-class ContentTextNode: MobileContentXmlNode, MobileContentRenderableNode {
+class ContentTextNode: MobileContentXmlNode {
     
     let text: String?
     let textAlign: String?
@@ -44,5 +44,13 @@ class ContentTextNode: MobileContentXmlNode, MobileContentRenderableNode {
             return MobileContentRGBAColor(stringColor: stringColor)
         }
         return nil
+    }
+}
+
+// MARK: - MobileContentRenderableNode
+
+extension ContentTextNode: MobileContentRenderableNode {
+    var contentIsRenderable: Bool {
+        return true
     }
 }

@@ -9,7 +9,7 @@
 import Foundation
 import SWXMLHash
 
-class ContentInputNode: MobileContentXmlNode, MobileContentRenderableNode {
+class ContentInputNode: MobileContentXmlNode {
         
     private(set) var labelNode: ContentLabelNode?
     private(set) var placeholderNode: ContentPlaceholderNode?
@@ -41,5 +41,13 @@ class ContentInputNode: MobileContentXmlNode, MobileContentRenderableNode {
         }
         
         super.addChild(childNode: childNode)
+    }
+}
+
+// MARK: - MobileContentRenderableNode
+
+extension ContentInputNode: MobileContentRenderableNode {
+    var contentIsRenderable: Bool {
+        return true
     }
 }

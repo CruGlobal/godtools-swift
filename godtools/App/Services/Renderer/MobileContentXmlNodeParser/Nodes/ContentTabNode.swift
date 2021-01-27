@@ -9,7 +9,7 @@
 import Foundation
 import SWXMLHash
 
-class ContentTabNode: MobileContentXmlNode, MobileContentRenderableNode {
+class ContentTabNode: MobileContentXmlNode {
     
     private(set) var analyticsEventsNode: AnalyticsEventsNode?
     
@@ -35,5 +35,13 @@ class ContentTabNode: MobileContentXmlNode, MobileContentRenderableNode {
         }
         
         super.addChild(childNode: childNode)
+    }
+}
+
+// MARK: - MobileContentRenderableNode
+
+extension ContentTabNode: MobileContentRenderableNode {
+    var contentIsRenderable: Bool {
+        return true
     }
 }

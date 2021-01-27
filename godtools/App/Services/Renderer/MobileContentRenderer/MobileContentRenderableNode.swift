@@ -12,6 +12,8 @@ import SWXMLHash
 protocol MobileContentRenderableNode {
     
     var xmlElement: XMLElement { get }
+    
+    var contentIsRenderable: Bool { get }
 }
 
 extension MobileContentRenderableNode {
@@ -50,6 +52,6 @@ extension MobileContentRenderableNode {
     
     var isRenderable: Bool {
         
-        return meetsRestrictToTypeForRendering && meetsVersionRequirementForRendering
+        return contentIsRenderable && meetsRestrictToTypeForRendering && meetsVersionRequirementForRendering
     }
 }

@@ -9,7 +9,7 @@
 import Foundation
 import SWXMLHash
 
-class ContentImageNode: MobileContentXmlNode, MobileContentRenderableNode {
+class ContentImageNode: MobileContentXmlNode {
         
     let events: [String]
     let resource: String?
@@ -24,5 +24,13 @@ class ContentImageNode: MobileContentXmlNode, MobileContentRenderableNode {
         restrictTo = attributes["restrictTo"]?.text
         
         super.init(xmlElement: xmlElement)
+    }
+}
+
+// MARK: - MobileContentRenderableNode
+
+extension ContentImageNode: MobileContentRenderableNode {
+    var contentIsRenderable: Bool {
+        return true
     }
 }
