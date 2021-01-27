@@ -32,6 +32,7 @@ class OpenTutorialView: UIView, NibBased {
         self.viewModel = viewModel
         showTutorialLabel.text = viewModel.showTutorialTitle
         openTutorialButton.setTitle(viewModel.openTutorialTitle, for: .normal)
+        layoutIfNeeded()
     }
     
     @objc func handleClose(button: UIButton) {
