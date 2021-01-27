@@ -9,7 +9,7 @@
 import Foundation
 import SWXMLHash
 
-class ContentImageNode: MobileContentXmlNode {
+class ContentImageNode: MobileContentXmlNode, MobileContentRenderableNode {
         
     let events: [String]
     let resource: String?
@@ -24,28 +24,5 @@ class ContentImageNode: MobileContentXmlNode {
         restrictTo = attributes["restrictTo"]?.text
         
         super.init(xmlElement: xmlElement)
-    }
-}
-
-extension ContentImageNode {
-    
-    enum RestrictToType: String {
-        
-        case mobile = "mobile"
-        case web = "web"
-        case noRestriction = "noRestriction"
-    }
-    
-    var restrictToType: RestrictToType {
-        
-        guard let restrictToValue = restrictTo else {
-            return .noRestriction
-        }
-        
-        guard let restrictToType = RestrictToType(rawValue: restrictToValue) else {
-            return .noRestriction
-        }
-        
-        return restrictToType
     }
 }

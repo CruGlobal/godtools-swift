@@ -61,6 +61,9 @@ class MobileContentXmlNodeFactory {
         case .contentButton:
             return ContentButtonNode.self
             
+        case .contentFallback:
+                return ContentFallbackNode.self
+            
         case .contentForm:
             return ContentFormNode.self
             
