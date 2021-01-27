@@ -111,9 +111,23 @@ class ToolsFlow: Flow {
             }
             
             let localizationServices: LocalizationServices = appDiContainer.localizationServices
+            let languageSettingsService: LanguageSettingsService = appDiContainer.languageSettingsService
+            let resourcesCache: ResourcesCache = appDiContainer.initialDataDownloader.resourcesCache
+            
+            let toolName: String
+            
+            if let primaryLanguage = languageSettingsService.primaryLanguage.value, let primaryTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageId: primaryLanguage.id) {
+                toolName = primaryTranslation.translatedName
+            }
+            else if let englishTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageCode: "en") {
+                toolName = englishTranslation.translatedName
+            }
+            else {
+                toolName = resource.name
+            }
             
             let title: String = localizationServices.stringForMainBundle(key: "remove_from_favorites_title")
-            let message: String = localizationServices.stringForMainBundle(key: "remove_from_favorites_message").replacingOccurrences(of: "%@", with: resource.name)
+            let message: String = localizationServices.stringForMainBundle(key: "remove_from_favorites_message").replacingOccurrences(of: "%@", with: toolName)
             let acceptedTitle: String = localizationServices.stringForMainBundle(key: "yes")
             
             let viewModel = AlertMessageViewModel(
