@@ -28,6 +28,7 @@ class FavoritingToolMessageView: UIView, NibBased {
     func configure(viewModel: FavoritingToolMessageViewModelType) {
         self.viewModel = viewModel
         messageLabel.text = viewModel.message
+        layoutIfNeeded()
     }
     
     @objc func handleClose(button: UIButton) {
