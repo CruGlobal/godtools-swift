@@ -24,7 +24,7 @@ class ContentLabelNode: MobileContentXmlNode {
 // MARK: - MobileContentRenderableNode
 
 extension ContentLabelNode: MobileContentRenderableNode {
-    var contentIsRenderable: Bool {
+    var nodeContentIsRenderable: Bool {
         return true
     }
 }

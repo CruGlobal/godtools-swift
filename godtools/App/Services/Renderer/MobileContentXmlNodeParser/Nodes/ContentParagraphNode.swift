@@ -33,7 +33,7 @@ extension ContentParagraphNode {
 // MARK: - MobileContentRenderableNode
 
 extension ContentParagraphNode: MobileContentRenderableNode {
-    var contentIsRenderable: Bool {
+    var nodeContentIsRenderable: Bool {
         return true
     }
 }

@@ -19,7 +19,7 @@ class ContentFallbackNode: MobileContentXmlNode {
 // MARK: - MobileContentRenderableNode
 
 extension ContentFallbackNode: MobileContentRenderableNode {
-    var contentIsRenderable: Bool {
+    var nodeContentIsRenderable: Bool {
         return true
     }
 }

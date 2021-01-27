@@ -47,7 +47,7 @@ class ContentInputNode: MobileContentXmlNode {
 // MARK: - MobileContentRenderableNode
 
 extension ContentInputNode: MobileContentRenderableNode {
-    var contentIsRenderable: Bool {
+    var nodeContentIsRenderable: Bool {
         return true
     }
 }

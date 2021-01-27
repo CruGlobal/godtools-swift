@@ -41,7 +41,7 @@ class ContentLinkNode: MobileContentXmlNode {
 // MARK: - MobileContentRenderableNode
 
 extension ContentLinkNode: MobileContentRenderableNode {
-    var contentIsRenderable: Bool {
+    var nodeContentIsRenderable: Bool {
         return true
     }
 }

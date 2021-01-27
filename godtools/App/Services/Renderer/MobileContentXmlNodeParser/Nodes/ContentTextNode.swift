@@ -50,7 +50,7 @@ class ContentTextNode: MobileContentXmlNode {
 // MARK: - MobileContentRenderableNode
 
 extension ContentTextNode: MobileContentRenderableNode {
-    var contentIsRenderable: Bool {
+    var nodeContentIsRenderable: Bool {
         return true
     }
 }

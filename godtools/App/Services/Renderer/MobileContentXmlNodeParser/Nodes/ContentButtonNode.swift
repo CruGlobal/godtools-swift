@@ -77,7 +77,7 @@ extension ContentButtonNode {
 
 extension ContentButtonNode: MobileContentRenderableNode {
     
-    var contentIsRenderable: Bool {
+    var nodeContentIsRenderable: Bool {
         return buttonType != .unknown
     }
 }

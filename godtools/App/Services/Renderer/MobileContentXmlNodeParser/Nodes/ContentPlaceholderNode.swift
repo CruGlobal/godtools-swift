@@ -24,7 +24,7 @@ class ContentPlaceholderNode: MobileContentXmlNode {
 // MARK: - MobileContentRenderableNode
 
 extension ContentPlaceholderNode: MobileContentRenderableNode {
-    var contentIsRenderable: Bool {
+    var nodeContentIsRenderable: Bool {
         return true
     }
 }

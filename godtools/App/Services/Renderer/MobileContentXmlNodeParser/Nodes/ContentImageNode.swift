@@ -30,7 +30,7 @@ class ContentImageNode: MobileContentXmlNode {
 // MARK: - MobileContentRenderableNode
 
 extension ContentImageNode: MobileContentRenderableNode {
-    var contentIsRenderable: Bool {
+    var nodeContentIsRenderable: Bool {
         return true
     }
 }

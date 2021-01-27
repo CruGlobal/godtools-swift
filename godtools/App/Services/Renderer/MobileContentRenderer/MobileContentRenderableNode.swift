@@ -13,7 +13,7 @@ protocol MobileContentRenderableNode {
     
     var xmlElement: XMLElement { get }
     
-    var contentIsRenderable: Bool { get }
+    var nodeContentIsRenderable: Bool { get }
 }
 
 extension MobileContentRenderableNode {
@@ -32,9 +32,12 @@ extension MobileContentRenderableNode {
     
     private var meetsRestrictToTypeForRendering: Bool {
         
-        if let restrictToString = self.restrictTo, let restrictToType = MobileContentRestrictToType(rawValue: restrictToString) {
+        if let restrictToString = self.restrictTo, !restrictToString.isEmpty {
             
-            return restrictToType == .iOS || restrictToType == .mobile
+            let restrictToComponents: [String] = restrictToString.components(separatedBy: " ")
+            let restrictToTypes: [MobileContentRestrictToType] = restrictToComponents.compactMap({MobileContentRestrictToType(rawValue: $0)})
+                    
+            return restrictToTypes.contains(.mobile) || restrictToTypes.contains(.iOS)
         }
         
         return true
@@ -52,6 +55,6 @@ extension MobileContentRenderableNode {
     
     var isRenderable: Bool {
         
-        return contentIsRenderable && meetsRestrictToTypeForRendering && meetsVersionRequirementForRendering
+        return nodeContentIsRenderable && meetsRestrictToTypeForRendering && meetsVersionRequirementForRendering
     }
 }

@@ -270,10 +270,6 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
                 continue
             }
             
-            if let buttonNode = childNode as? ContentButtonNode, buttonNode.buttonType == .unknown {
-                continue
-            }
-            
             nodeToRender = childNode
             break
         }

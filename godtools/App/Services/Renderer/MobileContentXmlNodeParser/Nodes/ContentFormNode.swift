@@ -20,7 +20,7 @@ class ContentFormNode: MobileContentXmlNode {
 // MARK: - MobileContentRenderableNode
 
 extension ContentFormNode: MobileContentRenderableNode {
-    var contentIsRenderable: Bool {
+    var nodeContentIsRenderable: Bool {
         return true
     }
 }
