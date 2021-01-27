@@ -58,8 +58,10 @@ class EmailSignUpService: NSObject {
             let httpStatusCodeFailed: Bool = httpStatusCode < 200 || httpStatusCode >= 400
 
             if !httpStatusCodeFailed {
-                let registeredEmailSignUp = EmailSignUpModel(model: emailSignUp, isRegistered: true)
-                self?.emailSignUpsCache.cacheEmailSignUp(emailSignUp: registeredEmailSignUp)
+                DispatchQueue.main.async {
+                    let registeredEmailSignUp = EmailSignUpModel(model: emailSignUp, isRegistered: true)
+                    self?.emailSignUpsCache.cacheEmailSignUp(emailSignUp: registeredEmailSignUp)
+                }
             }
         }
     }
