@@ -62,6 +62,7 @@ class AppDiContainer {
     let favoritingToolMessageCache: FavoritingToolMessageCache
     let emailSignUpService: EmailSignUpService
     let appsFlyer: AppsFlyerType
+    let firebaseInAppMessaging: FirebaseInAppMessagingType
         
     required init() {
         
@@ -176,6 +177,8 @@ class AppDiContainer {
         deepLinkingService = DeepLinkingService(dataDownloader: initialDataDownloader, loggingEnabled: config.isDebug, languageSettingsService: languageSettingsService)
         
         appsFlyer = AppsFlyer(config: config, deepLinkingService: deepLinkingService)
+        
+        firebaseInAppMessaging = FirebaseInAppMessaging()
                 
         let analyticsLoggingEnabled: Bool = config.build == .analyticsLogging
         analytics = AnalyticsContainer(
