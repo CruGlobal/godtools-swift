@@ -140,6 +140,12 @@ class ToolCell: UITableViewCell {
         viewModel.openTitle.addObserver(self) { [weak self] (openTitle: String) in
             self?.openToolButton.setTitle(openTitle, for: .normal)
         }
+        
+        viewModel.toolSemanticContentAttribute.addObserver(self) { [weak self] (value: UISemanticContentAttribute) in
+            self?.toolContentView.semanticContentAttribute = value
+            self?.titleLabel.semanticContentAttribute = value
+            self?.categoryLabel.semanticContentAttribute = value
+        }
     }
     
     private func setBannerImage(image: UIImage?) {

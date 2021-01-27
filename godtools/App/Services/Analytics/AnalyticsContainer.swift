@@ -12,7 +12,7 @@ class AnalyticsContainer {
      
     // analytics systems
     let adobeAnalytics: AdobeAnalyticsType
-    let appsFlyer: AppsFlyerType
+    let appsFlyerAnalytics: AppsFlyerAnalyticsType
     let firebaseAnalytics: FirebaseAnalyticsType
     let snowplowAnalytics: SnowplowAnalyticsType
 
@@ -22,7 +22,7 @@ class AnalyticsContainer {
     
     required init(
         adobeAnalytics: AdobeAnalyticsType,
-        appsFlyer: AppsFlyerType,
+        appsFlyerAnalytics: AppsFlyerAnalyticsType,
         firebaseAnalytics: FirebaseAnalyticsType,
         snowplowAnalytics: SnowplowAnalyticsType
     ) {
@@ -39,7 +39,7 @@ class AnalyticsContainer {
         )
 
         self.adobeAnalytics = adobeAnalytics
-        self.appsFlyer = appsFlyer
+        self.appsFlyerAnalytics = appsFlyerAnalytics
         self.firebaseAnalytics = firebaseAnalytics
         self.snowplowAnalytics = snowplowAnalytics
     }

@@ -9,12 +9,12 @@
 import UIKit
 import MessageUI
 
-class AppFlow: NSObject, FlowDelegate {
+class AppFlow: NSObject, Flow {
     
     private let dataDownloader: InitialDataDownloader
     private let followUpsService: FollowUpsService
     private let viewsService: ViewsService
-    private let deepLinkingService: DeepLinkingService
+    private let deepLinkingService: DeepLinkingServiceType
     
     private var onboardingFlow: OnboardingFlow?
     private var menuFlow: MenuFlow?
@@ -96,7 +96,9 @@ class AppFlow: NSObject, FlowDelegate {
         
         isObservingDeepLinking = true
         
-        deepLinkingService.completed.addObserver(self) { [weak self] (deepLinkingType: DeepLinkingType) in
+        deepLinkingService.completed.addObserver(self) { [weak self] (_deepLinkingType: DeepLinkingType?) in
+            guard let deepLinkingType = _deepLinkingType else { return }
+            
             DispatchQueue.main.async { [weak self] in
                 
                 switch deepLinkingType {
@@ -115,8 +117,6 @@ class AppFlow: NSObject, FlowDelegate {
                             )
                         }
                     }
-                case .none:
-                    break
                 }
             }
         }

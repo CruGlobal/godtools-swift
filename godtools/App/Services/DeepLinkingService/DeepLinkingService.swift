@@ -8,19 +8,22 @@
 
 import Foundation
 
-class DeepLinkingService: NSObject {
+class DeepLinkingService: NSObject, DeepLinkingServiceType {
     
     private let dataDownloader: InitialDataDownloader
+    private let languageSettingsService: LanguageSettingsService
     private let loggingEnabled: Bool
     
     private var deepLinkUrl: URL?
+    private var deepLinkData: [AnyHashable: Any]?
         
     let processing: ObservableValue<Bool> = ObservableValue(value: false)
-    let completed: ObservableValue<DeepLinkingType> = ObservableValue(value: .none)
+    let completed: ObservableValue<DeepLinkingType?> = ObservableValue(value: nil)
     
-    required init(dataDownloader: InitialDataDownloader, loggingEnabled: Bool) {
+    required init(dataDownloader: InitialDataDownloader, loggingEnabled: Bool, languageSettingsService: LanguageSettingsService) {
         
         self.dataDownloader = dataDownloader
+        self.languageSettingsService = languageSettingsService
         self.loggingEnabled = loggingEnabled
         
         super.init()
@@ -46,6 +49,8 @@ class DeepLinkingService: NSObject {
     private func processDeepLinkIfNeeded() {
         if let url = deepLinkUrl {
             processDeepLink(url: url)
+        } else if let data = deepLinkData {
+            processAppsflyerDeepLink(data: data)
         }
     }
     
@@ -132,5 +137,42 @@ class DeepLinkingService: NSObject {
         else {
             completed.accept(value: .none)
         }
+    }
+    
+    func processAppsflyerDeepLink(data: [AnyHashable : Any]) {
+        
+        if loggingEnabled {
+            print("\n DeepLinkingService: processAppsflyerDeepLink()")
+        }
+        
+        guard dataDownloader.cachedResourcesAvailable.value else {
+            deepLinkData = data
+            processing.accept(value: true)
+            return
+        }
+        
+        if let is_first_launch = data["is_first_launch"] as? Bool,
+            is_first_launch {
+            //Use if we want to trigger different behavior for deep link with fresh install
+        }
+        
+        let resourceName: String
+        
+        if let deepLinkValue = data["deep_link_value"] as? String {
+            
+            resourceName = deepLinkValue
+        } else {
+            
+            guard let linkParam = data["link"] as? String, let url = URLComponents(string: linkParam), let deepLinkValue = url.queryItems?.first(where: { $0.name == "deep_link_value" })?.value else { return }
+            
+            resourceName = deepLinkValue
+        }
+                
+        processing.accept(value: false)
+        deepLinkData = nil
+        
+        guard let primaryLanguage = languageSettingsService.primaryLanguage.value, let resource = dataDownloader.resourcesCache.getResource(abbreviation: resourceName) else { return }
+                
+        completed.accept(value: .tool(resource: resource, primaryLanguage: primaryLanguage, parallelLanguage: nil, liveShareStream: nil, page: nil))
     }
 }
