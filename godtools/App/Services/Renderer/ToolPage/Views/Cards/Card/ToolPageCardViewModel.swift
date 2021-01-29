@@ -19,6 +19,7 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     private let toolPageColors: ToolPageColors
     private let isLastPage: Bool
     private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
+    private let languageBundle: Bundle
     
     private weak var delegate: ToolPageCardViewModelTypeDelegate?
     
@@ -72,6 +73,8 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
         else {
             analyticsEventsObjects = []
         }
+        
+        languageBundle = diContainer.localizationServices.bundleLoader.bundleForResource(resourceName: diContainer.primaryLanguage.code) ?? Bundle.main
         
         super.init()
         
@@ -137,7 +140,7 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     }
     
     var previousButtonTitle: String? {
-        return diContainer.localizationServices.stringForMainBundle(key: "card_status1")
+        return diContainer.localizationServices.stringForBundle(bundle: languageBundle, key: "card_status1")
     }
     
     var previousButtonTitleColor: UIColor {
@@ -149,7 +152,7 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     }
     
     var nextButtonTitle: String? {
-        return diContainer.localizationServices.stringForMainBundle(key: "card_status2")
+        return diContainer.localizationServices.stringForBundle(bundle: languageBundle, key: "card_status2")
     }
     
     var nextButtonTitleColor: UIColor {
