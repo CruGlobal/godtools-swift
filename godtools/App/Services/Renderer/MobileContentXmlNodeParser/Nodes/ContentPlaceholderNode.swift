@@ -20,3 +20,11 @@ class ContentPlaceholderNode: MobileContentXmlNode {
         return children.first as? ContentTextNode
     }
 }
+
+// MARK: - MobileContentRenderableNode
+
+extension ContentPlaceholderNode: MobileContentRenderableNode {
+    var nodeContentIsRenderable: Bool {
+        return true
+    }
+}

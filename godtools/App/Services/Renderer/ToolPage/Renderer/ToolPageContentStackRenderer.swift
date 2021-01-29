@@ -75,23 +75,33 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
         
         if let paragraphNode = node as? ContentParagraphNode {
         
-            let paragraphRenderer = ToolPageContentStackRenderer(
-                rootContentStackRenderer: rootContentStackRenderer,
-                diContainer: diContainer,
-                node: paragraphNode,
-                toolPageColors: toolPageColors,
-                defaultTextNodeTextColor: defaultTextNodeTextColor,
-                defaultTextNodeTextAlignment: defaultTextNodeTextAlignment,
-                defaultButtonBorderColor: defaultButtonBorderColor
-            )
-            
-            let view = MobileContentStackView(
-                viewRenderer: paragraphRenderer,
-                itemSpacing: 5,
-                scrollIsEnabled: false
-            )
-                                                         
-            return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)
+            if !paragraphNode.isFallback {
+               
+                let paragraphRenderer = ToolPageContentStackRenderer(
+                    rootContentStackRenderer: rootContentStackRenderer,
+                    diContainer: diContainer,
+                    node: paragraphNode,
+                    toolPageColors: toolPageColors,
+                    defaultTextNodeTextColor: defaultTextNodeTextColor,
+                    defaultTextNodeTextAlignment: defaultTextNodeTextAlignment,
+                    defaultButtonBorderColor: defaultButtonBorderColor
+                )
+                
+                let view = MobileContentStackView(
+                    viewRenderer: paragraphRenderer,
+                    itemSpacing: 5,
+                    scrollIsEnabled: false
+                )
+                                                             
+                return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)
+            }
+            else {
+             
+                return renderContentFallback(
+                    contentFallbackNode: paragraphNode,
+                    rootContentStackRenderer: rootContentStackRenderer
+                )
+            }
         }
         else if let textNode = node as? ContentTextNode {
                       
@@ -128,6 +138,10 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
         }
         else if let buttonNode = node as? ContentButtonNode {
             
+            guard buttonNode.buttonType != .unknown else {
+                return nil
+            }
+            
             let button: UIButton = UIButton(type: .custom)
             
             renderContentButton(
@@ -159,6 +173,10 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
             rootContentStackRenderer.linkEvents.addLinkEvent(button: button, linkNode: linkNode)
                                     
             return MobileContentStackRenderedView(view: button, heightConstraintType: .equalToHeight(height: button.frame.size.height))
+        }
+        else if let fallbackNode = node as? ContentFallbackNode {
+            
+            return renderContentFallback(contentFallbackNode: fallbackNode, rootContentStackRenderer: rootContentStackRenderer)
         }
         else if let titleNode = node as? TitleNode {
                   
@@ -238,6 +256,31 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
     
     // MARK: - Rendering
     
+    private func renderContentFallback(contentFallbackNode: MobileContentXmlNode, rootContentStackRenderer: ToolPageContentStackRenderer) -> MobileContentStackRenderedView? {
+        
+        var nodeToRender: MobileContentXmlNode?
+        
+        for childNode in contentFallbackNode.children {
+            
+            guard let renderableNode = childNode as? MobileContentRenderableNode else {
+                continue
+            }
+            
+            guard renderableNode.isRenderable else {
+                continue
+            }
+            
+            nodeToRender = childNode
+            break
+        }
+        
+        if let nodeToRender = nodeToRender {
+            return recurseAndRender(node: nodeToRender, rootContentStackRenderer: rootContentStackRenderer)
+        }
+        
+        return nil
+    }
+    
     func renderContentButton(button: UIButton, buttonNode: ContentButtonNode, fontSize: CGFloat, fontWeight: UIFont.Weight, buttonColor: UIColor, borderColor: UIColor?, titleColor: UIColor) {
         
         button.backgroundColor = buttonColor
@@ -266,7 +309,7 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
         
         imageView.backgroundColor = .clear
         
-        guard imageNode.restrictToType == .mobile || imageNode.restrictToType == .noRestriction else {
+        guard imageNode.isRenderable else {
             return false
         }
         

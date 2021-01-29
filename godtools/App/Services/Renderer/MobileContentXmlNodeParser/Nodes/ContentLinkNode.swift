@@ -37,3 +37,11 @@ class ContentLinkNode: MobileContentXmlNode {
         super.addChild(childNode: childNode)
     }
 }
+
+// MARK: - MobileContentRenderableNode
+
+extension ContentLinkNode: MobileContentRenderableNode {
+    var nodeContentIsRenderable: Bool {
+        return true
+    }
+}

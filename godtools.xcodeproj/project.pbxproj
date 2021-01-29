@@ -45,6 +45,11 @@
 		4556AED723E221FE002C15E8 /* NotoSansMyanmar-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AED223E221FE002C15E8 /* NotoSansMyanmar-Bold.ttf */; };
 		4556AED823E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AED323E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf */; };
 		4556AED923E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AED423E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf */; };
+		45762A9225C1B86300CFE82D /* MobileContentRendererVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45762A9125C1B86300CFE82D /* MobileContentRendererVersion.swift */; };
+		45762A9C25C1B8F400CFE82D /* ContentFallbackNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45762A9B25C1B8F400CFE82D /* ContentFallbackNode.swift */; };
+		45762AA225C1B96400CFE82D /* MobileContentRenderableNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45762AA125C1B96400CFE82D /* MobileContentRenderableNode.swift */; };
+		45762AAC25C1B99B00CFE82D /* MobileContentRestrictToType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45762AAB25C1B99B00CFE82D /* MobileContentRestrictToType.swift */; };
+		45762AB225C1BD5100CFE82D /* MobileContentButtonNodeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45762AB125C1BD5100CFE82D /* MobileContentButtonNodeType.swift */; };
 		457C8586242E50D70025E079 /* GoogleService-Info-Debug.plist in Resources */ = {isa = PBXBuildFile; fileRef = 457C8585242E50D70025E079 /* GoogleService-Info-Debug.plist */; };
 		4586C04624631C3900927A42 /* ADBMobileConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = 4586C04424631C3900927A42 /* ADBMobileConfig.json */; };
 		4586C04724631C3900927A42 /* ADBMobileConfig_debug.json in Resources */ = {isa = PBXBuildFile; fileRef = 4586C04524631C3900927A42 /* ADBMobileConfig_debug.json */; };
@@ -824,6 +829,11 @@
 		4556AED223E221FE002C15E8 /* NotoSansMyanmar-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansMyanmar-Bold.ttf"; sourceTree = "<group>"; };
 		4556AED323E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansEthiopic-Regular.ttf"; sourceTree = "<group>"; };
 		4556AED423E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansEthiopic-Bold.ttf"; sourceTree = "<group>"; };
+		45762A9125C1B86300CFE82D /* MobileContentRendererVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRendererVersion.swift; sourceTree = "<group>"; };
+		45762A9B25C1B8F400CFE82D /* ContentFallbackNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentFallbackNode.swift; sourceTree = "<group>"; };
+		45762AA125C1B96400CFE82D /* MobileContentRenderableNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRenderableNode.swift; sourceTree = "<group>"; };
+		45762AAB25C1B99B00CFE82D /* MobileContentRestrictToType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRestrictToType.swift; sourceTree = "<group>"; };
+		45762AB125C1BD5100CFE82D /* MobileContentButtonNodeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentButtonNodeType.swift; sourceTree = "<group>"; };
 		457C8585242E50D70025E079 /* GoogleService-Info-Debug.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Debug.plist"; sourceTree = "<group>"; };
 		4586C04424631C3900927A42 /* ADBMobileConfig.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ADBMobileConfig.json; sourceTree = "<group>"; };
 		4586C04524631C3900927A42 /* ADBMobileConfig_debug.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ADBMobileConfig_debug.json; sourceTree = "<group>"; };
@@ -1790,6 +1800,15 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		45762A9025C1B85500CFE82D /* MobileContentRenderer */ = {
+			isa = PBXGroup;
+			children = (
+				45762A9125C1B86300CFE82D /* MobileContentRendererVersion.swift */,
+				45762AA125C1B96400CFE82D /* MobileContentRenderableNode.swift */,
+			);
+			path = MobileContentRenderer;
+			sourceTree = "<group>";
+		};
 		4584D7FF252B5BDD007B5D4E /* Share */ = {
 			isa = PBXGroup;
 			children = (
@@ -2729,6 +2748,7 @@
 				45AD1D4E25938A9700A096A0 /* ManifestResourcesCache */,
 				45AD1D5025938A9700A096A0 /* MobileContentAnalytics */,
 				45AD1D4525938A9700A096A0 /* MobileContentEvents */,
+				45762A9025C1B85500CFE82D /* MobileContentRenderer */,
 				45AD1DA325938A9700A096A0 /* MobileContentViews */,
 				45AD1DAF25938A9700A096A0 /* MobileContentXmlNodeParser */,
 				45AD1D5425938A9700A096A0 /* ToolPage */,
@@ -3063,6 +3083,7 @@
 				45AD1DC325938A9700A096A0 /* CardNode.swift */,
 				45AD1DB725938A9700A096A0 /* CardsNode.swift */,
 				45AD1DCD25938A9700A096A0 /* ContentButtonNode.swift */,
+				45762A9B25C1B8F400CFE82D /* ContentFallbackNode.swift */,
 				45AD1DCA25938A9700A096A0 /* ContentFormNode.swift */,
 				45AD1DCF25938A9700A096A0 /* ContentImageNode.swift */,
 				45AD1DC525938A9700A096A0 /* ContentInputNode.swift */,
@@ -3094,7 +3115,9 @@
 			children = (
 				45AD1DD425938A9700A096A0 /* AnalyticsAttributeNode+Trigger.swift */,
 				45AD1DD325938A9700A096A0 /* AnalyticsEventNodeTrigger.swift */,
+				45762AB125C1BD5100CFE82D /* MobileContentButtonNodeType.swift */,
 				45AD1DD225938A9700A096A0 /* MobileContentRGBAColor.swift */,
+				45762AAB25C1B99B00CFE82D /* MobileContentRestrictToType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -4765,6 +4788,7 @@
 				45AD1F7725938A9800A096A0 /* ViewedTrainingTip.swift in Sources */,
 				45AD206425938B1300A096A0 /* AlertMessageType.swift in Sources */,
 				45AD1F8B25938A9800A096A0 /* AttachmentModelType.swift in Sources */,
+				45762A9225C1B86300CFE82D /* MobileContentRendererVersion.swift in Sources */,
 				45AD1AD025938A4E00A096A0 /* ToolCell.swift in Sources */,
 				45AD21122593958E00A096A0 /* LanguagesDataModel.swift in Sources */,
 				45AD1B8625938A4F00A096A0 /* OnboardingTutorialGradientBackgroundView.swift in Sources */,
@@ -4971,10 +4995,12 @@
 				45AD205925938AC300A096A0 /* SnowplowAnalyticsType.swift in Sources */,
 				45AD1F7025938A9800A096A0 /* FollowUpsService.swift in Sources */,
 				45AD201825938A9800A096A0 /* ShortcutItemType.swift in Sources */,
+				45762A9C25C1B8F400CFE82D /* ContentFallbackNode.swift in Sources */,
 				45AD1FB825938A9800A096A0 /* TractRemoteShareChannel.swift in Sources */,
 				45AD1B4A25938A4F00A096A0 /* MenuView.swift in Sources */,
 				45AD1B7A25938A4F00A096A0 /* OnboardingWelcomeView.swift in Sources */,
 				45AD1F2825938A9800A096A0 /* MobileContentManifestTipType.swift in Sources */,
+				45762AB225C1BD5100CFE82D /* MobileContentButtonNodeType.swift in Sources */,
 				45AD1AB625938A4E00A096A0 /* TutorialAvailabilityType.swift in Sources */,
 				45AD1B1325938A4E00A096A0 /* ArticleCellViewModel.swift in Sources */,
 				45AD1B3825938A4F00A096A0 /* ChooseLanguageCellViewModelType.swift in Sources */,
@@ -4997,6 +5023,7 @@
 				45AD1AA825938A4E00A096A0 /* TutorialViewModelType.swift in Sources */,
 				45AD1B2625938A4F00A096A0 /* LocalizedAboutTextProvider.swift in Sources */,
 				45AD1BE325938A4F00A096A0 /* NibBased.swift in Sources */,
+				45762AA225C1B96400CFE82D /* MobileContentRenderableNode.swift in Sources */,
 				45AD205A25938AC300A096A0 /* SnowplowAnalytics.swift in Sources */,
 				45AD1B6325938A4F00A096A0 /* AccountActivityView.swift in Sources */,
 				45AD1FB325938A9800A096A0 /* ArticleAemImportDataType.swift in Sources */,
@@ -5030,6 +5057,7 @@
 				45AD1B8F25938A4F00A096A0 /* OnboardingTutorialView.swift in Sources */,
 				45AD1FBC25938A9800A096A0 /* TractRemoteShareSubscriber.swift in Sources */,
 				45AD200325938A9800A096A0 /* UserAuthenticationType.swift in Sources */,
+				45762AAC25C1B99B00CFE82D /* MobileContentRestrictToType.swift in Sources */,
 				D19D010325AF549B007C535B /* DeepLinkingServiceType.swift in Sources */,
 				45AD1F5C25938A9800A096A0 /* MobileContentXmlNode.swift in Sources */,
 				45AD1FCD25938A9800A096A0 /* SHA256FilesCache.swift in Sources */,
