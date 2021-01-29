@@ -17,8 +17,6 @@ target 'godtools' do
     pod 'GoogleConversionTracking', '~> 3.4.0'
     pod 'GoogleTagManager', '~> 7.2.0'
     pod 'FBSDKCoreKit', '~> 8.0.0'
-    pod 'FBSDKLoginKit', '~> 8.0.0'
-    pod 'FBSDKShareKit', '~> 8.0.0'
     pod 'FirebaseCore', '7.0.0'
     pod 'FirebaseInAppMessaging', '7.0.0-beta'
     pod 'FirebaseAnalytics', '7.0.0'

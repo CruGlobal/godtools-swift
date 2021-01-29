@@ -10,14 +10,6 @@ PODS:
   - FBSDKCoreKit/Basics (8.0.0)
   - FBSDKCoreKit/Core (8.0.0):
     - FBSDKCoreKit/Basics
-  - FBSDKLoginKit (8.0.0):
-    - FBSDKLoginKit/Login (= 8.0.0)
-  - FBSDKLoginKit/Login (8.0.0):
-    - FBSDKCoreKit (~> 8.0.0)
-  - FBSDKShareKit (8.0.0):
-    - FBSDKShareKit/Share (= 8.0.0)
-  - FBSDKShareKit/Share (8.0.0):
-    - FBSDKCoreKit (~> 8.0.0)
   - FirebaseABTesting (7.3.0):
     - FirebaseCore (~> 7.0)
   - FirebaseAnalytics (7.0.0):
@@ -131,8 +123,6 @@ DEPENDENCIES:
   - AdobeMobileSDK (~> 4.19)
   - AppsFlyerFramework (~> 6.0.0)
   - FBSDKCoreKit (~> 8.0.0)
-  - FBSDKLoginKit (~> 8.0.0)
-  - FBSDKShareKit (~> 8.0.0)
   - FirebaseAnalytics (= 7.0.0)
   - FirebaseCore (= 7.0.0)
   - FirebaseCrashlytics (= 7.0.0)
@@ -159,8 +149,6 @@ SPEC REPOS:
     - AppAuth
     - AppsFlyerFramework
     - FBSDKCoreKit
-    - FBSDKLoginKit
-    - FBSDKShareKit
     - FirebaseABTesting
     - FirebaseAnalytics
     - FirebaseCore
@@ -198,8 +186,6 @@ SPEC CHECKSUMS:
   AppAuth: 3f4f1d6d85ad631d0bbf15ffcdc10c447face97a
   AppsFlyerFramework: 57fb1fc68a5b8103353ce94d6e57861cbc4a55c3
   FBSDKCoreKit: 9d27fe97a2fa2abe5eeefea8240e837623ab88e0
-  FBSDKLoginKit: 2cbaf5405379731b22f2ebc224f7c30f62378171
-  FBSDKShareKit: bf3705fc42b660c3da9f15223db791b3c9c2acde
   FirebaseABTesting: 303b5366c0c75be479424e8935e2f475cf24ce21
   FirebaseAnalytics: c1166b7990bae464c6436132510bb718c6680f80
   FirebaseCore: cf3122185fce1cf71cedbbc498ea84d2b3e7cb69
@@ -233,6 +219,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   YoutubePlayer-in-WKWebView: cfbf46da51d7370662a695a8f351e5fa1d3e1008
 
-PODFILE CHECKSUM: 3de649024615d50eb40456f17dd6201b4b8a9eaf
+PODFILE CHECKSUM: 211ec3993af88bc5da9326abc30573b55291bd42
 
 COCOAPODS: 1.10.0
