@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appDiContainer.googleAdwordsAnalytics.recordAdwordsConversion()
         
         appDiContainer.analytics.snowplowAnalytics.configure(adobeAnalytics: appDiContainer.analytics.adobeAnalytics)
-        
+                
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         
         let window = UIWindow(frame: UIScreen.main.bounds)
@@ -132,8 +132,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if let theKeyUserAuthentication = appDiContainer.userAuthentication as? TheKeyUserAuthentication {
                 return theKeyUserAuthentication.canResumeAuthorizationFlow(url: url)
             }
-        } else {
+        } else if let host = url.host, host.contains("knowgod") {
             appDiContainer.deepLinkingService.processDeepLink(url: url)
+        } else {
+            UIApplication.shared.open(url)
         }
         
         appDiContainer.appsFlyer.continueUserActivity(userActivity: userActivity)

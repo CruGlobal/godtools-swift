@@ -16,3 +16,11 @@ class ContentTabsNode: MobileContentXmlNode {
         super.init(xmlElement: xmlElement)
     }
 }
+
+// MARK: - MobileContentRenderableNode
+
+extension ContentTabsNode: MobileContentRenderableNode {
+    var nodeContentIsRenderable: Bool {
+        return true
+    }
+}
