@@ -34,10 +34,12 @@ class FontService {
             }
         }
         else if primaryLanguageCode == "my" {
+            let fontScaleAdjustment = CGFloat(0.9)
+            
             if weight == UIFont.Weight.semibold || weight == UIFont.Weight.bold {
                 font = FontLibrary.notoSansMyanmarBold.font(size: size)
             } else {
-                font = FontLibrary.notoSansMyanmar.font(size: size)
+                font = FontLibrary.notoSansMyanmar.font(size: size * fontScaleAdjustment)
             }
         }
         else {
