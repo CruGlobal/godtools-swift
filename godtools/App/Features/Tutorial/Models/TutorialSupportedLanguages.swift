@@ -20,7 +20,8 @@ class TutorialSupportedLanguages: SupportedLanguagesType {
             Locale(identifier: "zh-Hans"),
             Locale(identifier: "ru"),
             Locale(identifier: "id"),
-            Locale(identifier: "fr")
+            Locale(identifier: "fr"),
+            Locale(identifier: "hi")
         ]
     }
 }
