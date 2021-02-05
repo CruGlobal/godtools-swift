@@ -10,9 +10,9 @@ import Foundation
 
 class DeepLinkingService: NSObject, DeepLinkingServiceType {
     
+    private let loggingEnabled: Bool
     private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
-    private let loggingEnabled: Bool
     
     private var deepLinkUrl: URL?
     private var deepLinkData: [AnyHashable: Any]?
@@ -20,11 +20,12 @@ class DeepLinkingService: NSObject, DeepLinkingServiceType {
     let processing: ObservableValue<Bool> = ObservableValue(value: false)
     let completed: ObservableValue<DeepLinkingType?> = ObservableValue(value: nil)
     
-    required init(dataDownloader: InitialDataDownloader, loggingEnabled: Bool, languageSettingsService: LanguageSettingsService) {
+    required init(loggingEnabled: Bool, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService) {
         
+        self.loggingEnabled = loggingEnabled
+
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
-        self.loggingEnabled = loggingEnabled
         
         super.init()
         
@@ -54,6 +55,8 @@ class DeepLinkingService: NSObject, DeepLinkingServiceType {
         }
     }
     
+    //MARK: - Public
+    
     func processDeepLink(url: URL) {
         
         if loggingEnabled {
@@ -63,13 +66,64 @@ class DeepLinkingService: NSObject, DeepLinkingServiceType {
         guard let host = url.host, !host.isEmpty else {
             return
         }
-                
+        
         guard dataDownloader.cachedResourcesAvailable.value else {
             deepLinkUrl = url
             processing.accept(value: true)
             return
         }
         
+        if host.contains("godtoolsapp") {
+            //Article Deep Link
+            processArticleDeepLink(url: url)
+        } else if host.contains("knowgod") {
+            //Tool Deep Link
+            processToolDeepLink(url: url)
+        } else {
+            //open URL link
+            UIApplication.shared.open(url)
+        }
+    }
+    
+    func processAppsflyerDeepLink(data: [AnyHashable : Any]) {
+        if loggingEnabled {
+            print("\n DeepLinkingService: processAppsflyerDeepLink()")
+        }
+        
+        guard dataDownloader.cachedResourcesAvailable.value else {
+            deepLinkData = data
+            processing.accept(value: true)
+            return
+        }
+        
+        if let is_first_launch = data["is_first_launch"] as? Bool,
+            is_first_launch {
+            //Use if we want to trigger different behavior for deep link with fresh install
+        }
+        
+        let resourceName: String
+        
+        if let deepLinkValue = data["deep_link_value"] as? String {
+            
+            resourceName = deepLinkValue
+        } else {
+            
+            guard let linkParam = data["link"] as? String, let url = URLComponents(string: linkParam), let deepLinkValue = url.queryItems?.first(where: { $0.name == "deep_link_value" })?.value else { return }
+            
+            resourceName = deepLinkValue
+        }
+                
+        processing.accept(value: false)
+        deepLinkData = nil
+        
+        guard let primaryLanguage = languageSettingsService.primaryLanguage.value, let resource = dataDownloader.resourcesCache.getResource(abbreviation: resourceName) else { return }
+                
+        completed.accept(value: .tool(resource: resource, primaryLanguage: primaryLanguage, parallelLanguage: nil, liveShareStream: nil, page: nil))
+    }
+    
+    //MARK: - Private
+    
+    private func processToolDeepLink(url: URL) {
         let pathComponents: [String] = url.pathComponents
         
         var primaryLanguage: LanguageModel?
@@ -139,40 +193,7 @@ class DeepLinkingService: NSObject, DeepLinkingServiceType {
         }
     }
     
-    func processAppsflyerDeepLink(data: [AnyHashable : Any]) {
-        
-        if loggingEnabled {
-            print("\n DeepLinkingService: processAppsflyerDeepLink()")
-        }
-        
-        guard dataDownloader.cachedResourcesAvailable.value else {
-            deepLinkData = data
-            processing.accept(value: true)
-            return
-        }
-        
-        if let is_first_launch = data["is_first_launch"] as? Bool,
-            is_first_launch {
-            //Use if we want to trigger different behavior for deep link with fresh install
-        }
-        
-        let resourceName: String
-        
-        if let deepLinkValue = data["deep_link_value"] as? String {
-            
-            resourceName = deepLinkValue
-        } else {
-            
-            guard let linkParam = data["link"] as? String, let url = URLComponents(string: linkParam), let deepLinkValue = url.queryItems?.first(where: { $0.name == "deep_link_value" })?.value else { return }
-            
-            resourceName = deepLinkValue
-        }
-                
-        processing.accept(value: false)
-        deepLinkData = nil
-        
-        guard let primaryLanguage = languageSettingsService.primaryLanguage.value, let resource = dataDownloader.resourcesCache.getResource(abbreviation: resourceName) else { return }
-                
-        completed.accept(value: .tool(resource: resource, primaryLanguage: primaryLanguage, parallelLanguage: nil, liveShareStream: nil, page: nil))
+    private func processArticleDeepLink(url: URL) {
+        //TODO: open AEM article
     }
 }

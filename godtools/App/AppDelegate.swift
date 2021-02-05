@@ -132,11 +132,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if let theKeyUserAuthentication = appDiContainer.userAuthentication as? TheKeyUserAuthentication {
                 return theKeyUserAuthentication.canResumeAuthorizationFlow(url: url)
             }
-        } else if let host = url.host, host.contains("knowgod") {
-            appDiContainer.deepLinkingService.processDeepLink(url: url)
-        } else {
-            UIApplication.shared.open(url)
         }
+        
+        appDiContainer.deepLinkingService.processDeepLink(url: url)
         
         appDiContainer.appsFlyer.continueUserActivity(userActivity: userActivity)
         
