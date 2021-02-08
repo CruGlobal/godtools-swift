@@ -10,15 +10,16 @@ import Foundation
 
 class DeepLinkingService: NSObject, DeepLinkingServiceType {
     
+    private let deepLinkingParsers: DeepLinkParsersContainer = DeepLinkParsersContainer()
     private let loggingEnabled: Bool
-    private let dataDownloader: InitialDataDownloader
+    private let dataDownloader: InitialDataDownloader // TODO: Remove dataDownloader and handle this from the Flow.
     private let languageSettingsService: LanguageSettingsService
     
     private var deepLinkUrl: URL?
     private var deepLinkData: [AnyHashable: Any]?
         
     let processing: ObservableValue<Bool> = ObservableValue(value: false)
-    let completed: ObservableValue<DeepLinkingType?> = ObservableValue(value: nil)
+    let completed: ObservableValue<ParsedDeepLinkType?> = ObservableValue(value: nil)
     
     required init(loggingEnabled: Bool, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService) {
         
@@ -57,12 +58,31 @@ class DeepLinkingService: NSObject, DeepLinkingServiceType {
     
     //MARK: - Public
     
-    func processDeepLink(url: URL) {
+    func parseDeepLink(incomingDeepLink: IncomingDeepLinkType) -> Bool {
+        
+        if loggingEnabled {
+            print("\n DeepLinkingService: parseDeepLink()")
+            print("  incomingDeepLink: \(incomingDeepLink)")
+        }
+                
+        for deepLinkParser in deepLinkingParsers.parsers {
+            if let deepLink = deepLinkParser.parse(incomingDeepLink: incomingDeepLink) {
+                completed.accept(value: deepLink)
+                return true
+            }
+        }
+        
+        completed.accept(value: nil)
+        return false
+    }
+    
+    func processDeepLink(url: URL) -> Bool {
         
         if loggingEnabled {
             print("\n DeepLinkingService: processDeepLink() with url: \(url.absoluteString)")
         }
         
+        /*
         guard let host = url.host, !host.isEmpty else {
             return
         }
@@ -82,7 +102,9 @@ class DeepLinkingService: NSObject, DeepLinkingServiceType {
         } else {
             //open URL link
             UIApplication.shared.open(url)
-        }
+        }*/
+        
+        return false
     }
     
     func processAppsflyerDeepLink(data: [AnyHashable : Any]) {
@@ -118,7 +140,7 @@ class DeepLinkingService: NSObject, DeepLinkingServiceType {
         
         guard let primaryLanguage = languageSettingsService.primaryLanguage.value, let resource = dataDownloader.resourcesCache.getResource(abbreviation: resourceName) else { return }
                 
-        completed.accept(value: .tool(resource: resource, primaryLanguage: primaryLanguage, parallelLanguage: nil, liveShareStream: nil, page: nil))
+        //completed.accept(value: .tool(resource: resource, primaryLanguage: primaryLanguage, parallelLanguage: nil, liveShareStream: nil, page: nil))
     }
     
     //MARK: - Private
@@ -186,10 +208,10 @@ class DeepLinkingService: NSObject, DeepLinkingServiceType {
         deepLinkUrl = nil
                 
         if let resource = resource, let primaryLanguage = primaryLanguage {
-            completed.accept(value: .tool(resource: resource, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, liveShareStream: liveShareStream, page: page))
+            //completed.accept(value: .tool(resource: resource, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, liveShareStream: liveShareStream, page: page))
         }
         else {
-            completed.accept(value: .none)
+            //completed.accept(value: .none)
         }
     }
     

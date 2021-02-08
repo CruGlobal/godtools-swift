@@ -87,8 +87,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         
-        appDiContainer.deepLinkingService.processDeepLink(url: url)
-        
+        appDiContainer.deepLinkingService.parseDeepLink(incomingDeepLink: .url(url: url))
+                
         appDiContainer.appsFlyer.handleOpenUrl(url: url, options: options)
         
         return ApplicationDelegate.shared.application(app, open: url, options: options)
@@ -113,7 +113,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             )
             
             if let tractUrl = ToolShortcutItem.getTractUrl(shortcutItem: shortcutItem) {
-                appDiContainer.deepLinkingService.processDeepLink(url: tractUrl)
+                appDiContainer.deepLinkingService.parseDeepLink(incomingDeepLink: .url(url: tractUrl))
             }
         }
     }
@@ -134,7 +134,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
-        appDiContainer.deepLinkingService.processDeepLink(url: url)
+        let urlString: String = url.absoluteString
+        
+        appDiContainer.deepLinkingService.parseDeepLink(incomingDeepLink: .url(url: url))
         
         appDiContainer.appsFlyer.continueUserActivity(userActivity: userActivity)
         
