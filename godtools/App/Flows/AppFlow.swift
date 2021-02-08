@@ -107,23 +107,21 @@ class AppFlow: NSObject, Flow {
                 switch deepLink {
                 
                 case .tool(let resourceAbbreviation, let primaryLanguageCodes, let parallelLanguageCodes, let liveShareStream, let page):
-                    break
+                    guard let toolsFlow = self?.toolsFlow, let dataDownloader = self?.dataDownloader, let resource = dataDownloader.resourcesCache.getResource(abbreviation: resourceAbbreviation), let primaryLanguage = dataDownloader.getStoredLanguage(code: primaryLanguageCodes[0]) else { return }
                     
-                /*
-                case .tool(let resource, let primaryLanguage, let parallelLanguage, let liveShareStream, let page):
-                    if let toolsFlow = self?.toolsFlow {
-                        self?.resetFlowToToolsFlow(animated: false)
-                        DispatchQueue.main.async {
-                            toolsFlow.navigateToTool(
-                                resource: resource,
-                                primaryLanguage: primaryLanguage,
-                                parallelLanguage: parallelLanguage,
-                                liveShareStream: liveShareStream,
-                                trainingTipsEnabled: false,
-                                page: page
-                            )
-                        }
-                    }*/
+                    let parallelLanguage = !parallelLanguageCodes.isEmpty ? dataDownloader.getStoredLanguage(code: parallelLanguageCodes[0]) : nil
+                    
+                    self?.resetFlowToToolsFlow(animated: false)
+                    DispatchQueue.main.async {
+                        toolsFlow.navigateToTool(
+                            resource: resource,
+                            primaryLanguage: primaryLanguage,
+                            parallelLanguage: parallelLanguage,
+                            liveShareStream: liveShareStream,
+                            trainingTipsEnabled: false,
+                            page: page
+                        )
+                    }
                 }
             }
         }
