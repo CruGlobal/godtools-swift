@@ -43,7 +43,7 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
         self.numberOfCards = numberOfCards
         self.toolPageColors = toolPageColors
         self.isLastPage = isLastPage
-        
+
         contentStackViewModel = ToolPageContentStackContainerViewModel(
             node: cardNode,
             diContainer: diContainer,
@@ -74,7 +74,7 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
             analyticsEventsObjects = []
         }
         
-        languageBundle = diContainer.localizationServices.bundleLoader.bundleForResource(resourceName: diContainer.primaryLanguage.code) ?? Bundle.main
+        languageBundle = diContainer.localizationServices.bundleLoader.bundleForResource(resourceName: diContainer.language.code) ?? Bundle.main
         
         super.init()
         
