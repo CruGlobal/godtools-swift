@@ -3652,8 +3652,8 @@
 				45AD1EBA25938A9800A096A0 /* DeepLinkingService.swift */,
 				D19D010225AF549B007C535B /* DeepLinkingServiceType.swift */,
 				45A73E4B25CF19E600B7533F /* IncomingDeepLinkType.swift */,
-				456E504825D0CF7E0075FF6A /* Parsers */,
 				456E503F25D0CEEE0075FF6A /* Host */,
+				456E504825D0CF7E0075FF6A /* Parsers */,
 			);
 			path = DeepLinkingService;
 			sourceTree = "<group>";
