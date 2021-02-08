@@ -185,7 +185,6 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
             resource: resource,
             language: language,
             primaryLanguage: primaryLanguage,
-            languageDirectionSemanticContentAttribute: languageDirectionSemanticContentAttribute,
             translationsFileCache: translationsFileCache,
             mobileContentNodeParser: mobileContentNodeParser,
             mobileContentAnalytics: mobileContentAnalytics,

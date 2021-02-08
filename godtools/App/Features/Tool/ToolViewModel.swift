@@ -350,7 +350,6 @@ extension ToolViewModel {
                 resource: resource,
                 language: languageTranslationModel.language,
                 primaryLanguage: primaryLanguageTranslationModel.language,
-                languageDirectionSemanticContentAttribute: languageDirectionSemanticContentAttribute,
                 translationsFileCache: translationsFileCache,
                 mobileContentNodeParser: mobileContentNodeParser,
                 mobileContentAnalytics: mobileContentAnalytics,
