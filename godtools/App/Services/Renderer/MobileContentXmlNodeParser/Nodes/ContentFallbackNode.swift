@@ -1,16 +1,15 @@
 //
-//  ContentFormNode.swift
+//  ContentFallbackNode.swift
 //  godtools
 //
-//  Created by Levi Eggert on 11/9/20.
-//  Copyright © 2020 Cru. All rights reserved.
+//  Created by Levi Eggert on 1/21/21.
+//  Copyright © 2021 Cru. All rights reserved.
 //
-
 import Foundation
 import SWXMLHash
 
-class ContentFormNode: MobileContentXmlNode {
-        
+class ContentFallbackNode: MobileContentXmlNode {
+ 
     required init(xmlElement: XMLElement) {
     
         super.init(xmlElement: xmlElement)
@@ -19,7 +18,7 @@ class ContentFormNode: MobileContentXmlNode {
 
 // MARK: - MobileContentRenderableNode
 
-extension ContentFormNode: MobileContentRenderableNode {
+extension ContentFallbackNode: MobileContentRenderableNode {
     var nodeContentIsRenderable: Bool {
         return true
     }

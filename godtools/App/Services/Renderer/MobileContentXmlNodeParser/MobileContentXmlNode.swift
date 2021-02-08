@@ -5,7 +5,6 @@
 //  Created by Levi Eggert on 10/27/20.
 //  Copyright © 2020 Cru. All rights reserved.
 //
-
 import Foundation
 import SWXMLHash
 
@@ -14,15 +13,15 @@ class MobileContentXmlNode {
     private(set) weak var parent: MobileContentXmlNode?
     private(set) var children: [MobileContentXmlNode] = Array()
     
-    let xmlElementName: String
+    let xmlElement: XMLElement
     
     required init(xmlElement: XMLElement) {
         
-        xmlElementName = xmlElement.name
+        self.xmlElement = xmlElement
     }
     
-    init(xmlElementName: String) {
-        self.xmlElementName = xmlElementName
+    var xmlElementName: String {
+        return xmlElement.name
     }
     
     func addChild(childNode: MobileContentXmlNode) {

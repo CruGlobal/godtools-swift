@@ -86,7 +86,7 @@ class ToolPageContentTabsViewModel: NSObject, ToolPageContentTabsViewModelType {
         
         let tabNode: ContentTabNode = tabNodes[tab]
         
-        let tabNodeChildrenToRender: MobileContentXmlNode = MobileContentXmlNode(xmlElementName: tabNode.xmlElementName)
+        let tabNodeChildrenToRender: MobileContentXmlNode = MobileContentXmlNode(xmlElement: tabNode.xmlElement)
         
         for childNode in tabNode.children {
             

@@ -27,25 +27,10 @@ class ContentImageNode: MobileContentXmlNode {
     }
 }
 
-extension ContentImageNode {
-    
-    enum RestrictToType: String {
-        
-        case mobile = "mobile"
-        case web = "web"
-        case noRestriction = "noRestriction"
-    }
-    
-    var restrictToType: RestrictToType {
-        
-        guard let restrictToValue = restrictTo else {
-            return .noRestriction
-        }
-        
-        guard let restrictToType = RestrictToType(rawValue: restrictToValue) else {
-            return .noRestriction
-        }
-        
-        return restrictToType
+// MARK: - MobileContentRenderableNode
+
+extension ContentImageNode: MobileContentRenderableNode {
+    var nodeContentIsRenderable: Bool {
+        return true
     }
 }

@@ -5,7 +5,6 @@
 //  Created by Levi Eggert on 10/27/20.
 //  Copyright © 2020 Cru. All rights reserved.
 //
-
 import Foundation
 import SWXMLHash
 
@@ -59,5 +58,26 @@ class ContentButtonNode: MobileContentXmlNode {
             return MobileContentRGBAColor(stringColor: stringColor)
         }
         return nil
+    }
+}
+
+extension ContentButtonNode {
+    
+    var buttonType: MobileContentButtonNodeType {
+    
+        guard let type = self.type else {
+            return .unknown
+        }
+        
+        return MobileContentButtonNodeType(rawValue: type) ?? .unknown
+    }
+}
+
+// MARK: - MobileContentRenderableNode
+
+extension ContentButtonNode: MobileContentRenderableNode {
+    
+    var nodeContentIsRenderable: Bool {
+        return buttonType != .unknown
     }
 }

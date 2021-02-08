@@ -26,8 +26,9 @@ jobs:
   - name: "Create TestFlight Build"
     if: branch = master and type = push
 
-    script: 
-    - travis_wait 60 fastlane ios beta
+    script:
+    - fastlane ios beta
+    - fastlane ios cru_build_adhoc skip_create_keychain:true
     - fastlane refresh_dsyms
 
   - name: "Release Build"

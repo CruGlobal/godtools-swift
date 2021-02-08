@@ -17,6 +17,7 @@ enum MobileContentXmlNodeType: String, CaseIterable {
     case card = "card"
     case cards = "cards"
     case contentButton = "content:button"
+    case contentFallback = "content:fallback"
     case contentForm = "content:form"
     case contentImage = "content:image"
     case contentInput = "content:input"
