@@ -96,13 +96,20 @@ class AppFlow: NSObject, Flow {
         
         isObservingDeepLinking = true
         
-        deepLinkingService.completed.addObserver(self) { [weak self] (_deepLinkingType: DeepLinkingType?) in
-            guard let deepLinkingType = _deepLinkingType else { return }
+        deepLinkingService.completed.addObserver(self) { [weak self] (optionalDeepLink: ParsedDeepLinkType?) in
+            
+            guard let deepLink = optionalDeepLink else {
+                return
+            }
             
             DispatchQueue.main.async { [weak self] in
                 
-                switch deepLinkingType {
+                switch deepLink {
                 
+                case .tool(let resourceAbbreviation, let primaryLanguageCodes, let parallelLanguageCodes, let liveShareStream, let page):
+                    break
+                    
+                /*
                 case .tool(let resource, let primaryLanguage, let parallelLanguage, let liveShareStream, let page):
                     if let toolsFlow = self?.toolsFlow {
                         self?.resetFlowToToolsFlow(animated: false)
@@ -116,7 +123,7 @@ class AppFlow: NSObject, Flow {
                                 page: page
                             )
                         }
-                    }
+                    }*/
                 }
             }
         }
