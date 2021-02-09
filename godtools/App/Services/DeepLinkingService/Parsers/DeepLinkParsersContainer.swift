@@ -15,7 +15,8 @@ class DeepLinkParsersContainer {
     required init() {
         
         parsers = [
-            ToolDeepLinkParser()
+            ToolDeepLinkParser(),
+            ArticleDeepLinkParser()
         ]
     }
 }

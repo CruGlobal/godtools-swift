@@ -105,25 +105,10 @@ class AppFlow: NSObject, Flow {
             DispatchQueue.main.async { [weak self] in
                 
                 switch deepLink {
-                
-                case .tool(let resourceAbbreviation, let primaryLanguageCodes, let parallelLanguageCodes, let liveShareStream, let page):
-                    break
-                    
-                /*
-                case .tool(let resource, let primaryLanguage, let parallelLanguage, let liveShareStream, let page):
-                    if let toolsFlow = self?.toolsFlow {
-                        self?.resetFlowToToolsFlow(animated: false)
-                        DispatchQueue.main.async {
-                            toolsFlow.navigateToTool(
-                                resource: resource,
-                                primaryLanguage: primaryLanguage,
-                                parallelLanguage: parallelLanguage,
-                                liveShareStream: liveShareStream,
-                                trainingTipsEnabled: false,
-                                page: page
-                            )
-                        }
-                    }*/
+                    case .tool(let resourceAbbreviation, let primaryLanguageCodes, let parallelLanguageCodes, let liveShareStream, let page):
+                        break
+                    case .article(let resourceAbbreviation, let translationZipFile, let articleAemImportData):
+                        break
                 }
             }
         }
