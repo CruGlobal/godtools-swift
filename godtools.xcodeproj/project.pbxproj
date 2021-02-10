@@ -53,6 +53,7 @@
 		457C8586242E50D70025E079 /* GoogleService-Info-Debug.plist in Resources */ = {isa = PBXBuildFile; fileRef = 457C8585242E50D70025E079 /* GoogleService-Info-Debug.plist */; };
 		4586C04624631C3900927A42 /* ADBMobileConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = 4586C04424631C3900927A42 /* ADBMobileConfig.json */; };
 		4586C04724631C3900927A42 /* ADBMobileConfig_debug.json in Resources */ = {isa = PBXBuildFile; fileRef = 4586C04524631C3900927A42 /* ADBMobileConfig_debug.json */; };
+		458AA38425D4252000E71B32 /* LocalizationBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458AA38325D4252000E71B32 /* LocalizationBundle.swift */; };
 		45A7BAF5252CBC5B00D70465 /* LocaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A7BAF4252CBC5B00D70465 /* LocaleTests.swift */; };
 		45AD1A9F25938A4E00A096A0 /* TutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45AD174F25938A4D00A096A0 /* TutorialView.xib */; };
 		45AD1AA025938A4E00A096A0 /* TutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175025938A4D00A096A0 /* TutorialViewModel.swift */; };
@@ -837,6 +838,7 @@
 		457C8585242E50D70025E079 /* GoogleService-Info-Debug.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Debug.plist"; sourceTree = "<group>"; };
 		4586C04424631C3900927A42 /* ADBMobileConfig.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ADBMobileConfig.json; sourceTree = "<group>"; };
 		4586C04524631C3900927A42 /* ADBMobileConfig_debug.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ADBMobileConfig_debug.json; sourceTree = "<group>"; };
+		458AA38325D4252000E71B32 /* LocalizationBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationBundle.swift; sourceTree = "<group>"; };
 		45A7BAF4252CBC5B00D70465 /* LocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleTests.swift; sourceTree = "<group>"; };
 		45AD174F25938A4D00A096A0 /* TutorialView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialView.xib; sourceTree = "<group>"; };
 		45AD175025938A4D00A096A0 /* TutorialViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewModel.swift; sourceTree = "<group>"; };
@@ -3711,6 +3713,7 @@
 			isa = PBXGroup;
 			children = (
 				45AD1EE225938A9800A096A0 /* LocaleLocalizationBundle.swift */,
+				458AA38325D4252000E71B32 /* LocalizationBundle.swift */,
 				45AD1EE425938A9800A096A0 /* LocalizationBundleLoader.swift */,
 				45AD1EE325938A9800A096A0 /* LocalizationServices.swift */,
 			);
@@ -4879,6 +4882,7 @@
 				45AD1F1E25938A9800A096A0 /* ToolPageModalViewModelType.swift in Sources */,
 				45AD1AF325938A4E00A096A0 /* ShareAStoryWithUsWebContent.swift in Sources */,
 				45AD200925938A9800A096A0 /* TranslationDownloader.swift in Sources */,
+				458AA38425D4252000E71B32 /* LocalizationBundle.swift in Sources */,
 				45AD1F5725938A9800A096A0 /* MobileContentXmlNodeType.swift in Sources */,
 				45AD1FBB25938A9800A096A0 /* TractRemoteShareSubscriberError.swift in Sources */,
 				45AD1F0F25938A9800A096A0 /* ToolPageContentStackContainerViewModel.swift in Sources */,
