@@ -128,14 +128,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return false
         }
         
-        if let host = url.host, host.contains("godtoolsapp") {
+        if url.containsDeepLinkHost(deepLinkHost: .godToolsApp), url.path.contains("auth") {
             if let theKeyUserAuthentication = appDiContainer.userAuthentication as? TheKeyUserAuthentication {
                 return theKeyUserAuthentication.canResumeAuthorizationFlow(url: url)
             }
         }
-        
-        let urlString: String = url.absoluteString
-        
+                
         appDiContainer.deepLinkingService.parseDeepLink(incomingDeepLink: .url(url: url))
         
         appDiContainer.appsFlyer.continueUserActivity(userActivity: userActivity)
