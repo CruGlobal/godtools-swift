@@ -41,8 +41,6 @@
 		4556AECE23E22185002C15E8 /* SF-Pro-Text-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AECB23E22185002C15E8 /* SF-Pro-Text-Light.otf */; };
 		4556AECF23E22185002C15E8 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AECC23E22185002C15E8 /* SF-Pro-Text-Regular.otf */; };
 		4556AED523E221FE002C15E8 /* AbyssinicaSIL-R.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AED023E221FE002C15E8 /* AbyssinicaSIL-R.ttf */; };
-		4556AED623E221FE002C15E8 /* NotoSansMyanmar-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AED123E221FE002C15E8 /* NotoSansMyanmar-Regular.ttf */; };
-		4556AED723E221FE002C15E8 /* NotoSansMyanmar-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AED223E221FE002C15E8 /* NotoSansMyanmar-Bold.ttf */; };
 		4556AED823E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AED323E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf */; };
 		4556AED923E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AED423E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf */; };
 		45762A9225C1B86300CFE82D /* MobileContentRendererVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45762A9125C1B86300CFE82D /* MobileContentRendererVersion.swift */; };
@@ -53,6 +51,7 @@
 		457C8586242E50D70025E079 /* GoogleService-Info-Debug.plist in Resources */ = {isa = PBXBuildFile; fileRef = 457C8585242E50D70025E079 /* GoogleService-Info-Debug.plist */; };
 		4586C04624631C3900927A42 /* ADBMobileConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = 4586C04424631C3900927A42 /* ADBMobileConfig.json */; };
 		4586C04724631C3900927A42 /* ADBMobileConfig_debug.json in Resources */ = {isa = PBXBuildFile; fileRef = 4586C04524631C3900927A42 /* ADBMobileConfig_debug.json */; };
+		458AA38425D4252000E71B32 /* LocalizationBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458AA38325D4252000E71B32 /* LocalizationBundle.swift */; };
 		45A7BAF5252CBC5B00D70465 /* LocaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A7BAF4252CBC5B00D70465 /* LocaleTests.swift */; };
 		45AD1A9F25938A4E00A096A0 /* TutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45AD174F25938A4D00A096A0 /* TutorialView.xib */; };
 		45AD1AA025938A4E00A096A0 /* TutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175025938A4D00A096A0 /* TutorialViewModel.swift */; };
@@ -825,8 +824,6 @@
 		4556AECB23E22185002C15E8 /* SF-Pro-Text-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Light.otf"; sourceTree = "<group>"; };
 		4556AECC23E22185002C15E8 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
 		4556AED023E221FE002C15E8 /* AbyssinicaSIL-R.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AbyssinicaSIL-R.ttf"; sourceTree = "<group>"; };
-		4556AED123E221FE002C15E8 /* NotoSansMyanmar-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansMyanmar-Regular.ttf"; sourceTree = "<group>"; };
-		4556AED223E221FE002C15E8 /* NotoSansMyanmar-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansMyanmar-Bold.ttf"; sourceTree = "<group>"; };
 		4556AED323E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansEthiopic-Regular.ttf"; sourceTree = "<group>"; };
 		4556AED423E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansEthiopic-Bold.ttf"; sourceTree = "<group>"; };
 		45762A9125C1B86300CFE82D /* MobileContentRendererVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRendererVersion.swift; sourceTree = "<group>"; };
@@ -837,6 +834,7 @@
 		457C8585242E50D70025E079 /* GoogleService-Info-Debug.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Debug.plist"; sourceTree = "<group>"; };
 		4586C04424631C3900927A42 /* ADBMobileConfig.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ADBMobileConfig.json; sourceTree = "<group>"; };
 		4586C04524631C3900927A42 /* ADBMobileConfig_debug.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ADBMobileConfig_debug.json; sourceTree = "<group>"; };
+		458AA38325D4252000E71B32 /* LocalizationBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationBundle.swift; sourceTree = "<group>"; };
 		45A7BAF4252CBC5B00D70465 /* LocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleTests.swift; sourceTree = "<group>"; };
 		45AD174F25938A4D00A096A0 /* TutorialView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialView.xib; sourceTree = "<group>"; };
 		45AD175025938A4D00A096A0 /* TutorialViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewModel.swift; sourceTree = "<group>"; };
@@ -1584,6 +1582,8 @@
 		D129DE662543669C00841733 /* onboarding_tutorial_rocket.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding_tutorial_rocket.json; sourceTree = "<group>"; };
 		D129DE672543669C00841733 /* onboarding_tutorial_cups.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding_tutorial_cups.json; sourceTree = "<group>"; };
 		D129DE682543669C00841733 /* onboarding_tutorial_knife.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding_tutorial_knife.json; sourceTree = "<group>"; };
+		D14F75B825D58B96008749CF /* NotoSansMyanmarUI-Condensed.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansMyanmarUI-Condensed.ttf"; sourceTree = "<group>"; };
+		D14F75B925D58B96008749CF /* NotoSansMyanmarUI-CondensedBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansMyanmarUI-CondensedBold.ttf"; sourceTree = "<group>"; };
 		D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = share_tool_tutorial_link.json; sourceTree = "<group>"; };
 		D1838478257E86B3004F5674 /* container */ = {isa = PBXFileReference; lastKnownFileType = folder; path = container; sourceTree = "<group>"; };
 		D19D00E625AF4B97007C535B /* AppsFlyerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsFlyerType.swift; sourceTree = "<group>"; };
@@ -1789,8 +1789,8 @@
 				4556AED023E221FE002C15E8 /* AbyssinicaSIL-R.ttf */,
 				4556AED423E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf */,
 				4556AED323E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf */,
-				4556AED223E221FE002C15E8 /* NotoSansMyanmar-Bold.ttf */,
-				4556AED123E221FE002C15E8 /* NotoSansMyanmar-Regular.ttf */,
+				D14F75B825D58B96008749CF /* NotoSansMyanmarUI-Condensed.ttf */,
+				D14F75B925D58B96008749CF /* NotoSansMyanmarUI-CondensedBold.ttf */,
 				4556AECA23E22185002C15E8 /* SF-Pro-Display-Light.otf */,
 				450EF833247EB3D300978926 /* SF-Pro-Text-Bold.otf */,
 				4556AECB23E22185002C15E8 /* SF-Pro-Text-Light.otf */,
@@ -3711,6 +3711,7 @@
 			isa = PBXGroup;
 			children = (
 				45AD1EE225938A9800A096A0 /* LocaleLocalizationBundle.swift */,
+				458AA38325D4252000E71B32 /* LocalizationBundle.swift */,
 				45AD1EE425938A9800A096A0 /* LocalizationBundleLoader.swift */,
 				45AD1EE325938A9800A096A0 /* LocalizationServices.swift */,
 			);
@@ -4387,7 +4388,6 @@
 				45AD1F0A25938A9800A096A0 /* ToolPageContentFormView.xib in Resources */,
 				451EBE2724AD968B00C4D6DD /* languages.json in Resources */,
 				451EBE2D24AD968B00C4D6DD /* e999c849242ba4abf20560274f92dd6c77631992d10db0eca5515e80ffb431c6.jpg in Resources */,
-				4556AED723E221FE002C15E8 /* NotoSansMyanmar-Bold.ttf in Resources */,
 				451EBE3924AD968B00C4D6DD /* 9a8cfa08121f0f0e78dbed54652c2c3f1d51c001a0b81dfdd092d378fd43633c.jpg in Resources */,
 				45AD1B1025938A4E00A096A0 /* ArticlesErrorMessageView.xib in Resources */,
 				45AD1ACD25938A4E00A096A0 /* FavoritingToolMessageView.xib in Resources */,
@@ -4397,7 +4397,6 @@
 				45AD1B0925938A4E00A096A0 /* ArticleWebView.xib in Resources */,
 				45AD215A2593A4D900A096A0 /* ShareToolScreenTutorialView.xib in Resources */,
 				45AD1F1B25938A9800A096A0 /* ToolPageContentInputView.xib in Resources */,
-				4556AED623E221FE002C15E8 /* NotoSansMyanmar-Regular.ttf in Resources */,
 				45AD1AB925938A4E00A096A0 /* ToolsTableView.xib in Resources */,
 				4586C04724631C3900927A42 /* ADBMobileConfig_debug.json in Resources */,
 				45AD1B0F25938A4E00A096A0 /* ArticleCategoryCell.xib in Resources */,
@@ -4566,7 +4565,6 @@
 				"${BUILT_PRODUCTS_DIR}/AppAuth/AppAuth.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
-				"${BUILT_PRODUCTS_DIR}/FacebookCore/FacebookCore.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseABTesting/FirebaseABTesting.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseCore/FirebaseCore.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseCoreDiagnostics/FirebaseCoreDiagnostics.framework",
@@ -4598,7 +4596,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AppAuth.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseABTesting.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCoreDiagnostics.framework",
@@ -4879,6 +4876,7 @@
 				45AD1F1E25938A9800A096A0 /* ToolPageModalViewModelType.swift in Sources */,
 				45AD1AF325938A4E00A096A0 /* ShareAStoryWithUsWebContent.swift in Sources */,
 				45AD200925938A9800A096A0 /* TranslationDownloader.swift in Sources */,
+				458AA38425D4252000E71B32 /* LocalizationBundle.swift in Sources */,
 				45AD1F5725938A9800A096A0 /* MobileContentXmlNodeType.swift in Sources */,
 				45AD1FBB25938A9800A096A0 /* TractRemoteShareSubscriberError.swift in Sources */,
 				45AD1F0F25938A9800A096A0 /* ToolPageContentStackContainerViewModel.swift in Sources */,

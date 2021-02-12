@@ -18,7 +18,27 @@ class LocalizationServices {
             
     }
     
+    func stringForLanguage(language: LanguageModel, key: String) -> String {
+        
+        let localeLocalizationBundle: LocaleLocalizationBundle = LocaleLocalizationBundle(
+            localeIdentifier: language.code,
+            bundleLoader: bundleLoader
+        )
+        
+        if let localizedStringForLanguage = localeLocalizationBundle.localeBundle?.stringForKey(key: key) {
+            return localizedStringForLanguage
+        }
+        else if let localizedStringForBaseLanguage = localeLocalizationBundle.getBaseLanguageBundle()?.stringForKey(key: key) {
+            return localizedStringForBaseLanguage
+        }
+        
+        return stringForMainBundle(key: key)
+    }
+    
     func stringForMainBundle(key: String) -> String {
+        
+        // TODO: Would like to do some refactoring here and remove the stringForBundleOrder function because this requires that all bundles be loaded which creates more overhead. ~Levi
+        // Instead, use the LocalizationBundle stringForKey method to first see if a localized string can be found and if not, load the next bundle.
         
         let systemLocaleIdentifier: String
         
@@ -37,11 +57,11 @@ class LocalizationServices {
         var bundleOrder: [Bundle] = Array()
         
         if let systemBundle = systemLocalizationBundle.localeBundle {
-            bundleOrder.append(systemBundle)
+            bundleOrder.append(systemBundle.bundle)
         }
         
-        if let systemBaseLanguageBundle = systemLocalizationBundle.localeBaseLanguageBundle {
-            bundleOrder.append(systemBaseLanguageBundle)
+        if let systemBaseLanguageBundle = systemLocalizationBundle.getBaseLanguageBundle() {
+            bundleOrder.append(systemBaseLanguageBundle.bundle)
         }
         
         bundleOrder.append(Bundle.main)
