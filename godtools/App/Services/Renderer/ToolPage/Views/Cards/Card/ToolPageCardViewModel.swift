@@ -42,7 +42,7 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
         self.numberOfCards = numberOfCards
         self.toolPageColors = toolPageColors
         self.isLastPage = isLastPage
-        
+
         contentStackViewModel = ToolPageContentStackContainerViewModel(
             node: cardNode,
             diContainer: diContainer,
@@ -72,7 +72,7 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
         else {
             analyticsEventsObjects = []
         }
-        
+                
         super.init()
         
         setupBinding()
@@ -137,7 +137,7 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     }
     
     var previousButtonTitle: String? {
-        return diContainer.localizationServices.stringForMainBundle(key: "card_status1")
+        return diContainer.localizationServices.stringForLanguage(language: diContainer.language, key: "card_status1")
     }
     
     var previousButtonTitleColor: UIColor {
@@ -149,7 +149,7 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     }
     
     var nextButtonTitle: String? {
-        return diContainer.localizationServices.stringForMainBundle(key: "card_status2")
+        return diContainer.localizationServices.stringForLanguage(language: diContainer.language, key: "card_status2")
     }
     
     var nextButtonTitleColor: UIColor {
