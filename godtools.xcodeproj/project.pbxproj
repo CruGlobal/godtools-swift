@@ -36,6 +36,8 @@
 		451EBE3C24AD968B00C4D6DD /* 8a2312f958cdf6548a1637347bf89560f6ebf284549669638dfef944d8268a08.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE2524AD968A00C4D6DD /* 8a2312f958cdf6548a1637347bf89560f6ebf284549669638dfef944d8268a08.jpg */; };
 		451EBE3D24AD968B00C4D6DD /* e961f409d06308e87deb9ed9166264c7c732d9dc24e70f886944636308810d6e.png in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE2624AD968A00C4D6DD /* e961f409d06308e87deb9ed9166264c7c732d9dc24e70f886944636308810d6e.png */; };
 		453D866A24E08461004EA89F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 453D866824E08461004EA89F /* Localizable.strings */; };
+		4544224425E054C200AC3115 /* ContentSpacerNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4544224325E054C200AC3115 /* ContentSpacerNode.swift */; };
+		4544225325E057E500AC3115 /* MobileContentSpacerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4544225225E057E500AC3115 /* MobileContentSpacerView.swift */; };
 		45557AEA252D094100ACFA95 /* LocaleLocalizationBundleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45557AE9252D094000ACFA95 /* LocaleLocalizationBundleTests.swift */; };
 		4556AECD23E22185002C15E8 /* SF-Pro-Display-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AECA23E22185002C15E8 /* SF-Pro-Display-Light.otf */; };
 		4556AECE23E22185002C15E8 /* SF-Pro-Text-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AECB23E22185002C15E8 /* SF-Pro-Text-Light.otf */; };
@@ -819,6 +821,8 @@
 		453D866324E08310004EA89F /* mn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = mn; path = mn.lproj/Localizable.strings; sourceTree = "<group>"; };
 		453D866424E08347004EA89F /* tpi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tpi; path = tpi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		453D866924E08461004EA89F /* no */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = no; path = Localizable.strings; sourceTree = "<group>"; };
+		4544224325E054C200AC3115 /* ContentSpacerNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentSpacerNode.swift; sourceTree = "<group>"; };
+		4544225225E057E500AC3115 /* MobileContentSpacerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentSpacerView.swift; sourceTree = "<group>"; };
 		45557AE9252D094000ACFA95 /* LocaleLocalizationBundleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocaleLocalizationBundleTests.swift; sourceTree = "<group>"; };
 		4556AECA23E22185002C15E8 /* SF-Pro-Display-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Light.otf"; sourceTree = "<group>"; };
 		4556AECB23E22185002C15E8 /* SF-Pro-Text-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Light.otf"; sourceTree = "<group>"; };
@@ -1756,6 +1760,14 @@
 			name = no.lproj;
 			path = godtools/no.lproj;
 			sourceTree = SOURCE_ROOT;
+		};
+		4544225125E057DA00AC3115 /* Spacer */ = {
+			isa = PBXGroup;
+			children = (
+				4544225225E057E500AC3115 /* MobileContentSpacerView.swift */,
+			);
+			path = Spacer;
+			sourceTree = "<group>";
 		};
 		45557AE3252D085B00ACFA95 /* Services */ = {
 			isa = PBXGroup;
@@ -3033,6 +3045,7 @@
 				45AD1DAE25938A9700A096A0 /* MobileContentViewModel.swift */,
 				45AD1DA825938A9700A096A0 /* BackgroundImage */,
 				45AD1DA425938A9700A096A0 /* ContentStack */,
+				4544225125E057DA00AC3115 /* Spacer */,
 			);
 			path = MobileContentViews;
 			sourceTree = "<group>";
@@ -3091,6 +3104,7 @@
 				45AD1DBD25938A9700A096A0 /* ContentLinkNode.swift */,
 				45AD1DC825938A9700A096A0 /* ContentParagraphNode.swift */,
 				45AD1DC425938A9700A096A0 /* ContentPlaceholderNode.swift */,
+				4544224325E054C200AC3115 /* ContentSpacerNode.swift */,
 				45AD1DC125938A9700A096A0 /* ContentTabNode.swift */,
 				45AD1DBE25938A9700A096A0 /* ContentTabsNode.swift */,
 				45AD1DCB25938A9700A096A0 /* ContentTextNode.swift */,
@@ -4828,6 +4842,7 @@
 				45AD1B8825938A4F00A096A0 /* OnboardingTutorialBackgroundCell.swift in Sources */,
 				45AD204E25938AC300A096A0 /* TrackActionAnalytics.swift in Sources */,
 				45AD1BAE25938A4F00A096A0 /* TutorialFlow.swift in Sources */,
+				4544224425E054C200AC3115 /* ContentSpacerNode.swift in Sources */,
 				45AD1F2225938A9800A096A0 /* ToolPageHeaderViewModel.swift in Sources */,
 				45AD1F3025938A9800A096A0 /* MobileContentStackViewRendererType.swift in Sources */,
 				45AD1F3825938A9800A096A0 /* MobileContentXmlNodeFactory.swift in Sources */,
@@ -5256,6 +5271,7 @@
 				45AD1BCC25938A4F00A096A0 /* UIColor+HexColor.swift in Sources */,
 				45AD1F7F25938A9800A096A0 /* RealmFavoritedResource.swift in Sources */,
 				45AD1F5925938A9800A096A0 /* AnalyticsEventNodeTrigger.swift in Sources */,
+				4544225325E057E500AC3115 /* MobileContentSpacerView.swift in Sources */,
 				45AD1F2A25938A9800A096A0 /* MobileContentXmlManifestTip.swift in Sources */,
 				45AD1BCB25938A4F00A096A0 /* UIViewController+Containment.swift in Sources */,
 				45AD1BA825938A4F00A096A0 /* AppRootController.swift in Sources */,
