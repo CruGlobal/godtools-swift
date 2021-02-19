@@ -10,6 +10,6 @@ import Foundation
 
 enum DeepLinkHostType: String {
     
-    case godToolsApp = "godtoolsapp"
-    case knowGod = "knowgod"
+    case godToolsApp = "godtoolsapp.com"
+    case knowGod = "knowgod.com"
 }

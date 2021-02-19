@@ -35,6 +35,10 @@ class ToolDeepLinkParser: DeepLinkParserType {
         //  Example from Jesus Film Project:
         //    https://knowgod.com/en/kgp/?primaryLanguage=en&parallelLanguage=en&mcId=58263357509938105951208433145336893265
         
+        guard url.containsDeepLinkHost(deepLinkHost: .knowGod) else {
+            return nil
+        }
+        
         var primaryLanguageCodeFromUrlPath: String?
         var resourceAbbreviationFromUrlPath: String?
         var pageFromUrlPath: Int?
