@@ -12,9 +12,9 @@ class TrainingTipViewModel: TrainingTipViewModelType {
     
     private let trainingTipId: String
     private let mobileContentEvents: MobileContentEvents
-    private let tipNode: TipNode?
     private let viewType: TrainingTipViewType
-    private let viewedTrainingTips: ViewedTrainingTipsService
+    
+    private var tipNode: TipNode?
     
     let trainingTipBackgroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     let trainingTipForegroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
@@ -24,33 +24,70 @@ class TrainingTipViewModel: TrainingTipViewModelType {
         self.trainingTipId = trainingTipId
         self.mobileContentEvents = mobileContentEvents
         self.viewType = viewType
-        self.viewedTrainingTips = viewedTrainingTips
+        
+        parseTrainingTip(trainingTipId: trainingTipId, manifest: manifest, translationsFileCache: translationsFileCache, mobileContentNodeParser: mobileContentNodeParser) { [weak self] (result: Result<TipNode, Error>) in
+            
+            switch result {
+            
+            case .success(let tipNode):
+                
+                let viewedTrainingTip = ViewedTrainingTip(trainingTipId: trainingTipId, resourceId: resource.id, languageId: language.id)
+                let trainingTipViewed: Bool = viewedTrainingTips.containsViewedTrainingTip(viewedTrainingTip: viewedTrainingTip)
+                
+                self?.reloadTipIcon(
+                    tipNode: tipNode,
+                    viewType: viewType,
+                    trainingTipViewed: trainingTipViewed
+                )
+                
+                self?.tipNode = tipNode
+            
+            case .failure(let error):
+                break
+            }
+        }
+    }
+    
+    private func parseTrainingTip(trainingTipId: String, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, complete: @escaping ((_ result: Result<TipNode, Error>) -> Void)) {
         
         let manifestTip: MobileContentXmlManifestTip? = manifest.tips[trainingTipId]
         let manifestTipSrc: String = manifestTip?.src ?? ""
         let translationsFileCache: TranslationsFileCache = translationsFileCache
         let location: SHA256FileLocation = SHA256FileLocation(sha256WithPathExtension: manifestTipSrc)
         
-        switch translationsFileCache.getData(location: location) {
+        DispatchQueue.global().async {
             
-        case .success(let xmlData):
+            let tipNode: TipNode?
+            let error: Error?
+            let defaultError: Error = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to parse tip from xml data."])
             
-            if let tipXmlData = xmlData, let tipNode = mobileContentNodeParser.parse(xml: tipXmlData, delegate: nil) as? TipNode {
-                self.tipNode = tipNode
+            switch translationsFileCache.getData(location: location) {
+                
+            case .success(let xmlData):
+                
+                if let tipXmlData = xmlData, let parsedTipNode = mobileContentNodeParser.parse(xml: tipXmlData, delegate: nil) as? TipNode {
+                    tipNode = parsedTipNode
+                    error = nil
+                }
+                else {
+                    tipNode = nil
+                    error = defaultError
+                }
+                        
+            case .failure(let fileCacheError):
+                tipNode = nil
+                error = fileCacheError
             }
-            else {
-                // TODO: Report that tip xml couldn't be parsed. ~Levi
-                self.tipNode = nil
+            
+            DispatchQueue.main.async {
+                
+                if let tipNode = tipNode {
+                    complete(.success(tipNode))
+                }
+                else {
+                    complete(.failure(error ?? defaultError))
+                }
             }
-                    
-        case .failure(let error):
-            // TODO: Report error that tips xml couldn't be loaded. ~Levi
-            self.tipNode = nil
-        }
-        
-        if let tipNode = self.tipNode {
-            let trainingTipViewed: Bool = viewedTrainingTips.containsViewedTrainingTip(viewedTrainingTip: ViewedTrainingTip(trainingTipId: trainingTipId, resourceId: resource.id, languageId: language.id))
-            reloadTipIcon(tipNode: tipNode, viewType: viewType, trainingTipViewed: trainingTipViewed)
         }
     }
     
@@ -88,6 +125,7 @@ class TrainingTipViewModel: TrainingTipViewModelType {
     func tipTapped() {
         
         guard let trainingTipNode = tipNode else {
+            assertionFailure("tipNode is null, make sure tipNode is set.")
             return
         }
         
