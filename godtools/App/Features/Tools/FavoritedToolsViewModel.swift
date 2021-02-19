@@ -20,7 +20,6 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     let analytics: AnalyticsContainer
     let tools: ObservableValue<[ResourceModel]> = ObservableValue(value: [])
     let toolRefreshed: SignalValue<IndexPath> = SignalValue()
-    let toolsAdded: ObservableValue<[IndexPath]> = ObservableValue(value: [])
     let toolsRemoved: ObservableValue<[IndexPath]> = ObservableValue(value: [])
     let toolListIsEditable: Bool = true
     let toolListIsEditing: ObservableValue<Bool> = ObservableValue(value: false)
