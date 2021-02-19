@@ -16,10 +16,11 @@ class ArticleDeepLinkParser: DeepLinkParserType {
     
     func parse(incomingDeepLink: IncomingDeepLinkType) -> ParsedDeepLinkType? {
         switch incomingDeepLink {
-            case .url(let url):
-                return parseDeepLinkFromUrl(url: url)
-            default:
-                return nil
+        
+        case .url(let url):
+            return parseDeepLinkFromUrl(url: url)
+        default:
+            return nil
         }
     }
     
@@ -27,12 +28,29 @@ class ArticleDeepLinkParser: DeepLinkParserType {
         // Example url:
         //  https://godtoolsapp.com/article/aem?uri=https://www.cru.org/content/experience-fragments/shared-library/language-masters/en/how-to-know-god/what-is-christianity/does-god-answer-our-prayers-/godtools
         
-        
-        var primaryLanguageCodeFromUrlPath: String?
-        var resourceAbbreviationFromUrlPath: String?
-        var pageFromUrlPath: Int?
-        
         let pathComponents: [String] = url.pathComponents.filter({$0 != "/"})
+        let urlString = url.absoluteString
+
+        guard url.containsDeepLinkHost(deepLinkHost: .godToolsApp), pathComponents[0] == "article", pathComponents[1] == "aem"  else {
+            return nil
+        }
+        
+        var articleURI: String? = nil
+        
+        let components: URLComponents? = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        let queryItems: [URLQueryItem] = components?.queryItems ?? []
+        
+        for queryItem in queryItems {
+            let key: String = queryItem.name
+            let value: String? = queryItem.value
+                        
+            if key == "uri", let value = value {
+               articleURI = value
+            }
+        }
+        
+        
+        
         
         /*if pathComponents.count > 0 {
             primaryLanguageCodeFromUrlPath = pathComponents[0]
