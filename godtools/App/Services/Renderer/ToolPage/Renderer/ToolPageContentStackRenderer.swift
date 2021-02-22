@@ -250,6 +250,10 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
             
             return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)
         }
+        else if node is ContentSpacerNode {
+            
+            return MobileContentStackRenderedView(view: MobileContentSpacerView(), heightConstraintType: .spacer)
+        }
         
         return nil
     }

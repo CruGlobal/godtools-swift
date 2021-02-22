@@ -85,6 +85,9 @@ class MobileContentXmlNodeFactory {
         case .contentPlaceholder:
             return ContentPlaceholderNode.self
             
+        case .contentSpacer:
+            return ContentSpacerNode.self
+            
         case .contentTab:
                 return ContentTabNode.self
                 
