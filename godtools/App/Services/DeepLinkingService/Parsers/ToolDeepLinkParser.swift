@@ -9,7 +9,7 @@
 import Foundation
 
 class ToolDeepLinkParser: DeepLinkParserType {
-        
+    
     required init() {
         
     }
@@ -99,6 +99,23 @@ class ToolDeepLinkParser: DeepLinkParserType {
     
     private func parseDeepLinkFromAppsFlyer(data: [AnyHashable: Any]) -> ParsedDeepLinkType? {
         
-        return nil
+        if let is_first_launch = data["is_first_launch"] as? Bool,
+            is_first_launch {
+            //Use if we want to trigger different behavior for deep link with fresh install
+        }
+        
+        let resourceAbbreviation: String
+        
+        if let deepLinkValue = data["deep_link_value"] as? String {
+            
+            resourceAbbreviation = deepLinkValue
+        } else {
+            
+            guard let linkParam = data["link"] as? String, let url = URLComponents(string: linkParam), let deepLinkValue = url.queryItems?.first(where: { $0.name == "deep_link_value" })?.value else { return nil }
+            
+            resourceAbbreviation = deepLinkValue
+        }
+        
+        return .tool(resourceAbbreviation: resourceAbbreviation, primaryLanguageCodes: Array(), parallelLanguageCodes: Array(), liveShareStream: nil, page: nil)
     }
 }

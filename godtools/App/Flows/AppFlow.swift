@@ -107,7 +107,15 @@ class AppFlow: NSObject, Flow {
                 switch deepLink {
                 
                 case .tool(let resourceAbbreviation, let primaryLanguageCodes, let parallelLanguageCodes, let liveShareStream, let page):
-                    guard let toolsFlow = self?.toolsFlow, let dataDownloader = self?.dataDownloader, let resource = dataDownloader.resourcesCache.getResource(abbreviation: resourceAbbreviation), let primaryLanguage = dataDownloader.getStoredLanguage(code: primaryLanguageCodes[0]) else { return }
+                    guard let toolsFlow = self?.toolsFlow, let dataDownloader = self?.dataDownloader, let resource = dataDownloader.resourcesCache.getResource(abbreviation: resourceAbbreviation) else { return }
+                    
+                    let primaryLanguage: LanguageModel
+                    
+                    if !primaryLanguageCodes.isEmpty, let primaryLanguageFromCodes = dataDownloader.getStoredLanguage(id: primaryLanguageCodes[0]) {
+                        primaryLanguage = primaryLanguageFromCodes
+                    } else if let primaryLanugageFromSettings = self?.appDiContainer.languageSettingsService.primaryLanguage.value {
+                        primaryLanguage = primaryLanugageFromSettings
+                    } else { return }
                     
                     let parallelLanguage = !parallelLanguageCodes.isEmpty ? dataDownloader.getStoredLanguage(code: parallelLanguageCodes[0]) : nil
                     
