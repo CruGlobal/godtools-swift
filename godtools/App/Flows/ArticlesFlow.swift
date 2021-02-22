@@ -11,6 +11,8 @@ import UIKit
 class ArticlesFlow: Flow {
     
     private weak var flowDelegate: FlowDelegate?
+    private let resource: ResourceModel
+    private let translationManifest: TranslationManifestData
     
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
@@ -19,6 +21,8 @@ class ArticlesFlow: Flow {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
+        self.resource = resource
+        self.translationManifest = translationManifest
         self.navigationController = sharedNavigationController
         
         let viewModel = ArticleCategoriesViewModel(
@@ -82,8 +86,31 @@ class ArticlesFlow: Flow {
             
             navigationController.present(view.controller, animated: true, completion: nil)
             
+        case .articleDeepLinkTapped(let resource, let translationZipFile, let articleAemImportData):
+            
+            let viewModel = ArticleWebViewModel(
+                flowDelegate: self,
+                resource: resource,
+                translationZipFile: translationZipFile,
+                articleAemImportData: articleAemImportData,
+                articleAemImportDownloader: appDiContainer.articleAemImportDownloader,
+                analytics: appDiContainer.analytics
+            )
+            
+            let view = ArticleWebView(viewModel: viewModel)
+            
+            navigationController.pushViewController(view, animated: true)
+            
         default:
             break
         }
+    }
+    
+    func navigateToArticle(articleUri: String) {
+        let translationZipFile = translationManifest.translationZipFile
+        
+        let importData = appDiContainer.articleAemImportDownloader.downloadAndCache(translationZipFile: translationZipFile, aemImportSrcs: [articleUri])
+        
+        navigate(step: .articleDeepLinkTapped(resource: resource, translationZipFile: translationManifest.translationZipFile, articleAemImportData: importData))
     }
 }
