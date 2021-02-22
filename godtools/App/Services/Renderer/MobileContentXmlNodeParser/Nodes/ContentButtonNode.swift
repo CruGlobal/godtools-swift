@@ -15,6 +15,7 @@ class ContentButtonNode: MobileContentXmlNode {
     
     let color: String?
     let events: [String]
+    let style: String?
     let type: String?
     let url: String?
     
@@ -24,6 +25,7 @@ class ContentButtonNode: MobileContentXmlNode {
         
         color = attributes["color"]?.text
         events = attributes["events"]?.text.components(separatedBy: " ") ?? []
+        style = attributes["style"]?.text
         type = attributes["type"]?.text
         
         if var urlString = attributes["url"]?.text {
@@ -62,6 +64,17 @@ class ContentButtonNode: MobileContentXmlNode {
 }
 
 extension ContentButtonNode {
+    
+    var buttonStyle: MobileContentButtonNodeStyle {
+        
+        let defaultStyle: MobileContentButtonNodeStyle = .contained
+        
+        guard let style = self.style else {
+            return defaultStyle
+        }
+        
+        return MobileContentButtonNodeStyle(rawValue: style) ?? defaultStyle
+    }
     
     var buttonType: MobileContentButtonNodeType {
     

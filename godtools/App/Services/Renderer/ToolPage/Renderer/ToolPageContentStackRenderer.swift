@@ -144,15 +144,22 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
             
             let button: UIButton = UIButton(type: .custom)
             
-            renderContentButton(
-                button: button,
-                buttonNode: buttonNode,
-                fontSize: 18,
-                fontWeight: .regular,
-                buttonColor: buttonNode.getColor()?.color ?? toolPageColors.primaryColor,
-                borderColor: defaultButtonBorderColor,
-                titleColor: buttonNode.textNode?.getTextColor()?.color ?? toolPageColors.primaryTextColor
-            )
+            let buttonColor: UIColor = buttonNode.getColor()?.color ?? toolPageColors.primaryColor
+            let borderColor: UIColor? = defaultButtonBorderColor
+            let titleColor: UIColor = buttonNode.textNode?.getTextColor()?.color ?? toolPageColors.primaryTextColor
+            let fontSize: CGFloat = 18
+            let fontWeight: UIFont.Weight = .regular
+            
+            button.backgroundColor = buttonColor
+            if let borderColor = borderColor {
+                button.layer.borderColor = borderColor.cgColor
+                button.layer.borderWidth = 1
+            }
+            button.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width * 0.9, height: 50)
+            button.layer.cornerRadius = 5
+            button.titleLabel?.font = diContainer.fontService.getFont(size: fontSize, weight: fontWeight)
+            button.setTitleColor(titleColor, for: .normal)
+            button.setTitle(buttonNode.textNode?.text, for: .normal)
                
             rootContentStackRenderer.buttonEvents.addButtonEvent(button: button, buttonNode: buttonNode)
             
@@ -283,20 +290,6 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
         }
         
         return nil
-    }
-    
-    func renderContentButton(button: UIButton, buttonNode: ContentButtonNode, fontSize: CGFloat, fontWeight: UIFont.Weight, buttonColor: UIColor, borderColor: UIColor?, titleColor: UIColor) {
-        
-        button.backgroundColor = buttonColor
-        if let borderColor = borderColor {
-            button.layer.borderColor = borderColor.cgColor
-            button.layer.borderWidth = 1
-        }
-        button.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width * 0.9, height: 50)
-        button.layer.cornerRadius = 5
-        button.titleLabel?.font = diContainer.fontService.getFont(size: fontSize, weight: fontWeight)
-        button.setTitleColor(titleColor, for: .normal)
-        button.setTitle(buttonNode.textNode?.text, for: .normal)
     }
     
     func renderContentLink(button: UIButton, linkNode: ContentLinkNode, fontSize: CGFloat, fontWeight: UIFont.Weight, titleColor: UIColor) {
