@@ -730,6 +730,7 @@
 		45AD22DA2593E60900A096A0 /* LanguageAvailabilityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD176825938A4D00A096A0 /* LanguageAvailabilityType.swift */; };
 		45AD22DF2593E63D00A096A0 /* Locale+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD18BB25938A4E00A096A0 /* Locale+Extensions.swift */; };
 		45AD22E42593E68D00A096A0 /* TutorialSupportedLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175625938A4D00A096A0 /* TutorialSupportedLanguages.swift */; };
+		45C038FE25E457AD00ECCCBB /* MobileContentButtonNodeStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C038FD25E457AD00ECCCBB /* MobileContentButtonNodeStyle.swift */; };
 		45C5386124B8EFA700CABDAC /* godtoolsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C5386024B8EFA700CABDAC /* godtoolsUITests.swift */; };
 		45DEF22E2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json in Resources */ = {isa = PBXBuildFile; fileRef = 45DEF22D2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json */; };
 		45E998D623FD7B090088DD0C /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */; };
@@ -1510,6 +1511,7 @@
 		45AD223B2593C90000A096A0 /* FirebaseCrashlyticsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseCrashlyticsService.swift; sourceTree = "<group>"; };
 		45AD22A02593CE8900A096A0 /* ColorPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPalette.swift; sourceTree = "<group>"; };
 		45AD22B22593D1FB00A096A0 /* UIImage+CreateImageWithColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+CreateImageWithColor.swift"; sourceTree = "<group>"; };
+		45C038FD25E457AD00ECCCBB /* MobileContentButtonNodeStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentButtonNodeStyle.swift; sourceTree = "<group>"; };
 		45C5386024B8EFA700CABDAC /* godtoolsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = godtoolsUITests.swift; sourceTree = "<group>"; };
 		45DEF22D2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = learn_to_share_tool_with_anyone.json; sourceTree = "<group>"; };
 		45DEF4B724DEF35E00996695 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -3129,6 +3131,7 @@
 			children = (
 				45AD1DD425938A9700A096A0 /* AnalyticsAttributeNode+Trigger.swift */,
 				45AD1DD325938A9700A096A0 /* AnalyticsEventNodeTrigger.swift */,
+				45C038FD25E457AD00ECCCBB /* MobileContentButtonNodeStyle.swift */,
 				45762AB125C1BD5100CFE82D /* MobileContentButtonNodeType.swift */,
 				45AD1DD225938A9700A096A0 /* MobileContentRGBAColor.swift */,
 				45762AAB25C1B99B00CFE82D /* MobileContentRestrictToType.swift */,
@@ -4726,6 +4729,7 @@
 				45AD201D25938A9800A096A0 /* ResponseResult.swift in Sources */,
 				45AD1ABB25938A4E00A096A0 /* FavoritedToolsViewModel.swift in Sources */,
 				45AD1FAE25938A9800A096A0 /* ArticleAemImportDownloaderResult.swift in Sources */,
+				45C038FE25E457AD00ECCCBB /* MobileContentButtonNodeStyle.swift in Sources */,
 				45AD1B7225938A4F00A096A0 /* MainOnboardingTutorialItem.swift in Sources */,
 				45AD1F9F25938A9800A096A0 /* ArticleCategory.swift in Sources */,
 				45AD1FF325938A9800A096A0 /* DeviceAttachmentBanners.swift in Sources */,
