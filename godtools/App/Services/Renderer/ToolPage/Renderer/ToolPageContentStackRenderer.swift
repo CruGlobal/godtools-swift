@@ -144,13 +144,28 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
             
             let button: UIButton = UIButton(type: .custom)
             
-            let buttonColor: UIColor = buttonNode.getColor()?.color ?? toolPageColors.primaryColor
-            let borderColor: UIColor? = defaultButtonBorderColor
-            let titleColor: UIColor = buttonNode.textNode?.getTextColor()?.color ?? toolPageColors.primaryTextColor
+            let defaultBackgroundColor: UIColor = buttonNode.getColor()?.color ?? toolPageColors.primaryColor
+            let defaultTitleColor: UIColor = buttonNode.textNode?.getTextColor()?.color ?? toolPageColors.primaryTextColor
+            
+            let backgroundColor: UIColor
+            let titleColor: UIColor
+            let borderColor: UIColor?
             let fontSize: CGFloat = 18
             let fontWeight: UIFont.Weight = .regular
             
-            button.backgroundColor = buttonColor
+            switch buttonNode.buttonStyle {
+            
+            case .contained:
+                backgroundColor = defaultBackgroundColor
+                titleColor = defaultTitleColor
+                borderColor = defaultButtonBorderColor
+            case .outlined:
+                backgroundColor = buttonNode.getBackgroundColor()?.color ?? .clear
+                titleColor = defaultBackgroundColor
+                borderColor = defaultBackgroundColor
+            }
+            
+            button.backgroundColor = backgroundColor
             if let borderColor = borderColor {
                 button.layer.borderColor = borderColor.cgColor
                 button.layer.borderWidth = 1

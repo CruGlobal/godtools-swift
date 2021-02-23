@@ -13,6 +13,7 @@ class ContentButtonNode: MobileContentXmlNode {
     private(set) var textNode: ContentTextNode?
     private(set) var analyticsEventsNode: AnalyticsEventsNode?
     
+    let backgroundColor: String?
     let color: String?
     let events: [String]
     let style: String?
@@ -23,6 +24,7 @@ class ContentButtonNode: MobileContentXmlNode {
     
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
+        backgroundColor = attributes["background-color"]?.text
         color = attributes["color"]?.text
         events = attributes["events"]?.text.components(separatedBy: " ") ?? []
         style = attributes["style"]?.text
@@ -53,6 +55,13 @@ class ContentButtonNode: MobileContentXmlNode {
         }
         
         super.addChild(childNode: childNode)
+    }
+    
+    func getBackgroundColor() -> MobileContentRGBAColor? {
+        if let stringColor = backgroundColor {
+            return MobileContentRGBAColor(stringColor: stringColor)
+        }
+        return nil
     }
     
     func getColor() -> MobileContentRGBAColor? {
