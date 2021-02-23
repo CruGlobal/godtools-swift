@@ -94,6 +94,6 @@ enum FlowStep {
     // articles
     case articleCategoryTappedFromArticleCategories(resource: ResourceModel, translationZipFile: TranslationZipFileModel, category: ArticleCategory, articleManifest: ArticleManifestXmlParser)
     case articleTappedFromArticles(resource: ResourceModel, translationZipFile: TranslationZipFileModel, articleAemImportData: ArticleAemImportData)
-    case articleDeepLinkTapped(resource: ResourceModel, translationZipFile: TranslationZipFileModel, articleAemImportData: ArticleAemImportData)
+    case articleDeepLinkTapped(articleUri: URL)
     case sharedTappedFromArticle(articleAemImportData: ArticleAemImportData)
 }

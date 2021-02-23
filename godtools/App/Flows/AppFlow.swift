@@ -21,7 +21,6 @@ class AppFlow: NSObject, Flow {
     private var languageSettingsFlow: LanguageSettingsFlow?
     private var toolsFlow: ToolsFlow?
     private var tutorialFlow: TutorialFlow?
-    private var articlesFlow: ArticlesFlow?
     private var resignedActiveDate: Date?
     private var navigationStarted: Bool = false
     private var isObservingDeepLinking: Bool = false
@@ -131,12 +130,9 @@ class AppFlow: NSObject, Flow {
                             page: page
                         )
                     }
+                
                 case .article(let articleURI):
-                    guard let articlesFlow = self?.articlesFlow else { return }
-                    
-                    DispatchQueue.main.sync {
-                        articlesFlow.navigate(step: <#T##FlowStep#>)
-                    }
+                    break
                 }
             }
         }

@@ -88,7 +88,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         
         appDiContainer.deepLinkingService.parseDeepLink(incomingDeepLink: .url(url: url))
-                
+        
         appDiContainer.appsFlyer.handleOpenUrl(url: url, options: options)
         
         return ApplicationDelegate.shared.application(app, open: url, options: options)
