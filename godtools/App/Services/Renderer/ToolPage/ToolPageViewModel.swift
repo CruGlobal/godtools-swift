@@ -15,7 +15,9 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     private let toolPageColors: ToolPageColors
     private let page: Int
     private let initialPositions: ToolPageInitialPositions?
-        
+    private let isLastPage: Bool
+    private let heroViewModel: ToolPageHeroViewModelType?
+
     private var allCardsViewModels: [ToolPageCardViewModelType] = Array()
     private var visibleCardsViewModels: [ToolPageCardViewModelType] = Array()
     private var hiddenCardsViewModels: [ToolPageCardViewModel] = Array()
@@ -25,12 +27,9 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     private weak var delegate: ToolPageViewModelTypeDelegate?
     
     let contentStackViewModel: ToolPageContentStackContainerViewModel?
-    let headerViewModel: ToolPageHeaderViewModel
     let headerTrainingTipViewModel: TrainingTipViewModelType?
-    let heroViewModel: ToolPageHeroViewModel?
     let hidesCards: Bool
     let currentCard: ObservableValue<AnimatableValue<Int?>> = ObservableValue(value: AnimatableValue(value: nil, animated: false))
-    let callToActionViewModel: ToolPageCallToActionViewModel
     let modal: ObservableValue<ToolPageModalViewModel?> = ObservableValue(value: nil)
     let hidesHeaderTrainingTip: ObservableValue<Bool> = ObservableValue(value: true)
     let hidesCardJump: ObservableValue<Bool> = ObservableValue(value: true)
@@ -45,7 +44,15 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         self.toolPageColors = ToolPageColors(pageNode: pageNode, manifest: diContainer.manifest)
         self.page = page
         self.initialPositions = initialPositions
-                
+        self.isLastPage = isLastPage
+
+        if let heroNode = pageNode.heroNode {
+            heroViewModel = ToolPageHeroViewModel(heroNode: heroNode, diContainer: diContainer, toolPageColors: toolPageColors)
+        }
+        else {
+            heroViewModel = nil
+        }
+        
         // content stack
         let firstNodeIsContentParagraph: Bool = pageNode.children.first is ContentParagraphNode
         
@@ -63,14 +70,6 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         else {
             contentStackViewModel = nil
         }
-        
-        // header
-        headerViewModel = ToolPageHeaderViewModel(
-            pageNode: pageNode,
-            toolPageColors: toolPageColors,
-            fontService: diContainer.fontService,
-            language: diContainer.language
-        )
         
         // headerTrainingTipViewModel
         if let trainingTipId = pageNode.headerNode?.trainingTip, !trainingTipId.isEmpty {
@@ -90,28 +89,6 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         else {
             headerTrainingTipViewModel = nil
         }
-        
-        // hero
-        if let heroNode = pageNode.heroNode {
-            
-            heroViewModel = ToolPageHeroViewModel(
-                heroNode: heroNode,
-                diContainer: diContainer,
-                toolPageColors: toolPageColors
-            )
-        }
-        else {
-            heroViewModel = nil
-        }
-        
-        // call to action
-        callToActionViewModel = ToolPageCallToActionViewModel(
-            pageNode: pageNode,
-            toolPageColors: toolPageColors,
-            fontService: diContainer.fontService,
-            languageDirectionSemanticContentAttribute: diContainer.languageDirectionSemanticContentAttribute,
-            isLastPage: isLastPage
-        )
                 
         // cards
         hidesCards = pageNode.cardsNode?.cards.isEmpty ?? true
@@ -304,6 +281,42 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         )
                 
         return MobileContentBackgroundImageViewModel(backgroundImageNode: backgroundImageNode, manifestResourcesCache: diContainer.manifestResourcesCache)
+    }
+    
+    func headerWillAppear() -> ToolPageHeaderViewModelType? {
+        
+        guard let headerNode = pageNode.headerNode else {
+            return nil
+        }
+        
+        return ToolPageHeaderViewModel(
+            headerNode: headerNode,
+            toolPageColors: toolPageColors,
+            fontService: diContainer.fontService,
+            language: diContainer.language,
+            languageDirectionSemanticContentAttribute: languageDirectionSemanticContentAttribute
+        )
+    }
+    
+    func heroWillAppear() -> ToolPageHeroViewModelType? {
+        
+        guard let heroViewModel = self.heroViewModel else {
+            return nil
+        }
+                
+        return heroViewModel
+    }
+    
+    func callToActionWillAppear() -> ToolPageCallToActionViewModelType? {
+        
+        return ToolPageCallToActionViewModel(
+            callToActionNode: pageNode.callToActionNode,
+            heroNode: pageNode.heroNode,
+            toolPageColors: toolPageColors,
+            fontService: diContainer.fontService,
+            languageDirectionSemanticContentAttribute: languageDirectionSemanticContentAttribute,
+            isLastPage: isLastPage
+        )
     }
     
     func getCurrentPositions() -> ToolPageInitialPositions {

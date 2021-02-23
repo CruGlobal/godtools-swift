@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ToolPageHeroViewModel: ToolPageContentStackContainerViewModelType {
+class ToolPageHeroViewModel: ToolPageHeroViewModelType {
     
     private let heroNode: HeroNode
     private let analyticsEventsObjects: [MobileContentAnalyticsEvent]

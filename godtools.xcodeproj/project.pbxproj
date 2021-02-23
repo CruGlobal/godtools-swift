@@ -407,7 +407,6 @@
 		45AD1F1F25938A9800A096A0 /* ToolPageModalView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45AD1D8E25938A9700A096A0 /* ToolPageModalView.xib */; };
 		45AD1F2025938A9800A096A0 /* ToolPageModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1D8F25938A9700A096A0 /* ToolPageModalView.swift */; };
 		45AD1F2125938A9800A096A0 /* ToolPageModalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1D9025938A9700A096A0 /* ToolPageModalViewModel.swift */; };
-		45AD1F2225938A9800A096A0 /* ToolPageHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1D9225938A9700A096A0 /* ToolPageHeaderViewModel.swift */; };
 		45AD1F2325938A9800A096A0 /* ToolPageCardBounceAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1D9425938A9700A096A0 /* ToolPageCardBounceAnimation.swift */; };
 		45AD1F2425938A9800A096A0 /* ToolPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45AD1D9525938A9700A096A0 /* ToolPageView.xib */; };
 		45AD1F2525938A9800A096A0 /* MobileContentManifestPageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1D9825938A9700A096A0 /* MobileContentManifestPageType.swift */; };
@@ -730,6 +729,15 @@
 		45AD22DA2593E60900A096A0 /* LanguageAvailabilityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD176825938A4D00A096A0 /* LanguageAvailabilityType.swift */; };
 		45AD22DF2593E63D00A096A0 /* Locale+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD18BB25938A4E00A096A0 /* Locale+Extensions.swift */; };
 		45AD22E42593E68D00A096A0 /* TutorialSupportedLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175625938A4D00A096A0 /* TutorialSupportedLanguages.swift */; };
+		45B6480925E581660098BAF1 /* ToolPageHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B6480525E581660098BAF1 /* ToolPageHeaderViewModel.swift */; };
+		45B6480A25E581660098BAF1 /* ToolPageHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45B6480625E581660098BAF1 /* ToolPageHeaderView.xib */; };
+		45B6480B25E581660098BAF1 /* ToolPageHeaderViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B6480725E581660098BAF1 /* ToolPageHeaderViewModelType.swift */; };
+		45B6480C25E581660098BAF1 /* ToolPageHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B6480825E581660098BAF1 /* ToolPageHeaderView.swift */; };
+		45B6481625E58ECC0098BAF1 /* ToolPageHeroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B6481525E58ECC0098BAF1 /* ToolPageHeroView.swift */; };
+		45B6482025E58EE70098BAF1 /* ToolPageHeroViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B6481F25E58EE70098BAF1 /* ToolPageHeroViewModelType.swift */; };
+		45B6482825E593110098BAF1 /* ToolPageCallToActionViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B6482525E593100098BAF1 /* ToolPageCallToActionViewModelType.swift */; };
+		45B6482925E593110098BAF1 /* ToolPageCallToActionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45B6482625E593100098BAF1 /* ToolPageCallToActionView.xib */; };
+		45B6482A25E593110098BAF1 /* ToolPageCallToActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B6482725E593110098BAF1 /* ToolPageCallToActionView.swift */; };
 		45C5386124B8EFA700CABDAC /* godtoolsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C5386024B8EFA700CABDAC /* godtoolsUITests.swift */; };
 		45DEF22E2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json in Resources */ = {isa = PBXBuildFile; fileRef = 45DEF22D2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json */; };
 		45E998D623FD7B090088DD0C /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */; };
@@ -1192,7 +1200,6 @@
 		45AD1D8E25938A9700A096A0 /* ToolPageModalView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToolPageModalView.xib; sourceTree = "<group>"; };
 		45AD1D8F25938A9700A096A0 /* ToolPageModalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageModalView.swift; sourceTree = "<group>"; };
 		45AD1D9025938A9700A096A0 /* ToolPageModalViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageModalViewModel.swift; sourceTree = "<group>"; };
-		45AD1D9225938A9700A096A0 /* ToolPageHeaderViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageHeaderViewModel.swift; sourceTree = "<group>"; };
 		45AD1D9425938A9700A096A0 /* ToolPageCardBounceAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageCardBounceAnimation.swift; sourceTree = "<group>"; };
 		45AD1D9525938A9700A096A0 /* ToolPageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToolPageView.xib; sourceTree = "<group>"; };
 		45AD1D9825938A9700A096A0 /* MobileContentManifestPageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentManifestPageType.swift; sourceTree = "<group>"; };
@@ -1510,6 +1517,15 @@
 		45AD223B2593C90000A096A0 /* FirebaseCrashlyticsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseCrashlyticsService.swift; sourceTree = "<group>"; };
 		45AD22A02593CE8900A096A0 /* ColorPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPalette.swift; sourceTree = "<group>"; };
 		45AD22B22593D1FB00A096A0 /* UIImage+CreateImageWithColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+CreateImageWithColor.swift"; sourceTree = "<group>"; };
+		45B6480525E581660098BAF1 /* ToolPageHeaderViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageHeaderViewModel.swift; sourceTree = "<group>"; };
+		45B6480625E581660098BAF1 /* ToolPageHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToolPageHeaderView.xib; sourceTree = "<group>"; };
+		45B6480725E581660098BAF1 /* ToolPageHeaderViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageHeaderViewModelType.swift; sourceTree = "<group>"; };
+		45B6480825E581660098BAF1 /* ToolPageHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageHeaderView.swift; sourceTree = "<group>"; };
+		45B6481525E58ECC0098BAF1 /* ToolPageHeroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolPageHeroView.swift; sourceTree = "<group>"; };
+		45B6481F25E58EE70098BAF1 /* ToolPageHeroViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolPageHeroViewModelType.swift; sourceTree = "<group>"; };
+		45B6482525E593100098BAF1 /* ToolPageCallToActionViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageCallToActionViewModelType.swift; sourceTree = "<group>"; };
+		45B6482625E593100098BAF1 /* ToolPageCallToActionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToolPageCallToActionView.xib; sourceTree = "<group>"; };
+		45B6482725E593110098BAF1 /* ToolPageCallToActionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageCallToActionView.swift; sourceTree = "<group>"; };
 		45C5386024B8EFA700CABDAC /* godtoolsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = godtoolsUITests.swift; sourceTree = "<group>"; };
 		45DEF22D2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = learn_to_share_tool_with_anyone.json; sourceTree = "<group>"; };
 		45DEF4B724DEF35E00996695 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -2955,7 +2971,10 @@
 		45AD1D8325938A9700A096A0 /* CallToAction */ = {
 			isa = PBXGroup;
 			children = (
+				45B6482725E593110098BAF1 /* ToolPageCallToActionView.swift */,
+				45B6482625E593100098BAF1 /* ToolPageCallToActionView.xib */,
 				45AD1D8425938A9700A096A0 /* ToolPageCallToActionViewModel.swift */,
+				45B6482525E593100098BAF1 /* ToolPageCallToActionViewModelType.swift */,
 			);
 			path = CallToAction;
 			sourceTree = "<group>";
@@ -2974,7 +2993,9 @@
 		45AD1D8A25938A9700A096A0 /* Hero */ = {
 			isa = PBXGroup;
 			children = (
+				45B6481525E58ECC0098BAF1 /* ToolPageHeroView.swift */,
 				45AD1D8B25938A9700A096A0 /* ToolPageHeroViewModel.swift */,
+				45B6481F25E58EE70098BAF1 /* ToolPageHeroViewModelType.swift */,
 			);
 			path = Hero;
 			sourceTree = "<group>";
@@ -2993,7 +3014,10 @@
 		45AD1D9125938A9700A096A0 /* Header */ = {
 			isa = PBXGroup;
 			children = (
-				45AD1D9225938A9700A096A0 /* ToolPageHeaderViewModel.swift */,
+				45B6480825E581660098BAF1 /* ToolPageHeaderView.swift */,
+				45B6480625E581660098BAF1 /* ToolPageHeaderView.xib */,
+				45B6480525E581660098BAF1 /* ToolPageHeaderViewModel.swift */,
+				45B6480725E581660098BAF1 /* ToolPageHeaderViewModelType.swift */,
 			);
 			path = Header;
 			sourceTree = "<group>";
@@ -4397,6 +4421,7 @@
 				D1838479257E86B3004F5674 /* container in Resources */,
 				1737DFDF22FDB48000223CB0 /* GoogleService-Info.plist in Resources */,
 				45AD1B6F25938A4F00A096A0 /* OnboardingWelcomeView.xib in Resources */,
+				45B6482925E593110098BAF1 /* ToolPageCallToActionView.xib in Resources */,
 				45AD1F0C25938A9800A096A0 /* ToolPageContentTabsView.xib in Resources */,
 				451EBE2E24AD968B00C4D6DD /* 1958f6ba22b659adfc7eb43dcfac7cc5cfe192df45437355aa99a8752192ed92.jpg in Resources */,
 				45AD1F0A25938A9800A096A0 /* ToolPageContentFormView.xib in Resources */,
@@ -4469,6 +4494,7 @@
 				45AD1B1425938A4E00A096A0 /* ArticleCell.xib in Resources */,
 				451EBE3D24AD968B00C4D6DD /* e961f409d06308e87deb9ed9166264c7c732d9dc24e70f886944636308810d6e.png in Resources */,
 				4556AED523E221FE002C15E8 /* AbyssinicaSIL-R.ttf in Resources */,
+				45B6480A25E581660098BAF1 /* ToolPageHeaderView.xib in Resources */,
 				45DEF22E2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json in Resources */,
 				45AD1AB125938A4E00A096A0 /* TutorialInMenuView.xib in Resources */,
 				457C8586242E50D70025E079 /* GoogleService-Info-Debug.plist in Resources */,
@@ -4690,6 +4716,7 @@
 				45AD1FA525938A9800A096A0 /* RealmArticleAemImportData.swift in Sources */,
 				45AD1EEA25938A9800A096A0 /* FontService.swift in Sources */,
 				45AD201425938A9800A096A0 /* TranslationZipFileModel.swift in Sources */,
+				45B6481625E58ECC0098BAF1 /* ToolPageHeroView.swift in Sources */,
 				45AD1B7125938A4F00A096A0 /* OnboardingTutorialViewModel.swift in Sources */,
 				45AD1F6D25938A9800A096A0 /* LanguageSettingsService.swift in Sources */,
 				45AD1FEC25938A9800A096A0 /* InitialDataDownloaderError.swift in Sources */,
@@ -4705,6 +4732,7 @@
 				45AD1BD025938A4F00A096A0 /* LoadingViewModelType.swift in Sources */,
 				45AD1FFB25938A9800A096A0 /* DetermineNewUserIfPrimaryLanguageSet.swift in Sources */,
 				45AD205425938AC300A096A0 /* AdobeAnalyticsConstants.swift in Sources */,
+				45B6480B25E581660098BAF1 /* ToolPageHeaderViewModelType.swift in Sources */,
 				45AD1BAB25938A4F00A096A0 /* ArticlesFlow.swift in Sources */,
 				45AD1F9925938A9800A096A0 /* RealmResource.swift in Sources */,
 				45AD1FF825938A9800A096A0 /* IsNewUserService.swift in Sources */,
@@ -4772,6 +4800,7 @@
 				45AD206525938B1300A096A0 /* AlertMessage.swift in Sources */,
 				45AD1FAB25938A9800A096A0 /* ArticleAemWebArchiveFileCacheLocation.swift in Sources */,
 				45AD1FD325938A9800A096A0 /* HTMLDocument+ResourceUrls.swift in Sources */,
+				45B6482025E58EE70098BAF1 /* ToolPageHeroViewModelType.swift in Sources */,
 				45AD1AB025938A4E00A096A0 /* TutorialInMenuViewModel.swift in Sources */,
 				45AD1F0725938A9800A096A0 /* ToolPageContentFormView.swift in Sources */,
 				45AD21152593958E00A096A0 /* LanguageModelType.swift in Sources */,
@@ -4828,6 +4857,7 @@
 				45AD1FFE25938A9800A096A0 /* ResourceViewModelType.swift in Sources */,
 				45AD1F9025938A9800A096A0 /* TranslationModel.swift in Sources */,
 				45AD1F3225938A9800A096A0 /* MobileContentBackgroundImageNode.swift in Sources */,
+				45B6480925E581660098BAF1 /* ToolPageHeaderViewModel.swift in Sources */,
 				45AD1F7A25938A9800A096A0 /* DeviceLanguage.swift in Sources */,
 				45AD1F7625938A9800A096A0 /* ViewedTrainingTipType.swift in Sources */,
 				45AD1B2025938A4E00A096A0 /* LearnToShareToolCellViewModel.swift in Sources */,
@@ -4843,7 +4873,6 @@
 				45AD204E25938AC300A096A0 /* TrackActionAnalytics.swift in Sources */,
 				45AD1BAE25938A4F00A096A0 /* TutorialFlow.swift in Sources */,
 				4544224425E054C200AC3115 /* ContentSpacerNode.swift in Sources */,
-				45AD1F2225938A9800A096A0 /* ToolPageHeaderViewModel.swift in Sources */,
 				45AD1F3025938A9800A096A0 /* MobileContentStackViewRendererType.swift in Sources */,
 				45AD1F3825938A9800A096A0 /* MobileContentXmlNodeFactory.swift in Sources */,
 				45AD1F2725938A9800A096A0 /* MobileContentManifestType.swift in Sources */,
@@ -4979,6 +5008,7 @@
 				45AD1B9625938A4F00A096A0 /* ToolNavBarView.swift in Sources */,
 				45AD1B9A25938A4F00A096A0 /* ToolPageCell.swift in Sources */,
 				45AD1FB025938A9800A096A0 /* ArticleJcrContent.swift in Sources */,
+				45B6482A25E593110098BAF1 /* ToolPageCallToActionView.swift in Sources */,
 				45AD1ABA25938A4E00A096A0 /* ToolsMenuViewModel.swift in Sources */,
 				45AD214C2593A4B700A096A0 /* ShareToolView.swift in Sources */,
 				45AD1F7D25938A9800A096A0 /* ResourcesCleanUpError.swift in Sources */,
@@ -5005,6 +5035,7 @@
 				45AD1B1F25938A4E00A096A0 /* LearnToShareToolCell.swift in Sources */,
 				45AD1AF025938A4E00A096A0 /* WebContentType.swift in Sources */,
 				45AD201C25938A9800A096A0 /* ResponseError.swift in Sources */,
+				45B6480C25E581660098BAF1 /* ToolPageHeaderView.swift in Sources */,
 				45AD201125938A9800A096A0 /* TranslationManifestData.swift in Sources */,
 				45AD205925938AC300A096A0 /* SnowplowAnalyticsType.swift in Sources */,
 				45AD1F7025938A9800A096A0 /* FollowUpsService.swift in Sources */,
@@ -5075,6 +5106,7 @@
 				D19D010325AF549B007C535B /* DeepLinkingServiceType.swift in Sources */,
 				45AD1F5C25938A9800A096A0 /* MobileContentXmlNode.swift in Sources */,
 				45AD1FCD25938A9800A096A0 /* SHA256FilesCache.swift in Sources */,
+				45B6482825E593110098BAF1 /* ToolPageCallToActionViewModelType.swift in Sources */,
 				45AD202B25938A9800A096A0 /* CardJumpUserDefaultsCache.swift in Sources */,
 				45AD1AD825938A4E00A096A0 /* ToolsMenuViewModelType.swift in Sources */,
 				45AD1BB625938A4F00A096A0 /* LanguageViewModel.swift in Sources */,
