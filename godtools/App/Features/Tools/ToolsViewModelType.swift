@@ -18,7 +18,6 @@ protocol ToolsViewModelType {
     var analytics: AnalyticsContainer { get }
     var tools: ObservableValue<[ResourceModel]> { get }
     var toolRefreshed: SignalValue<IndexPath> { get }
-    var toolsAdded: ObservableValue<[IndexPath]> { get }
     var toolsRemoved: ObservableValue<[IndexPath]> { get }
     var toolListIsEditable: Bool { get }
     var toolListIsEditing: ObservableValue<Bool> { get }
@@ -52,12 +51,13 @@ extension ToolsViewModelType {
     func addTool(tool: ResourceModel) {
         
         var updatedToolsList: [ResourceModel] = tools.value
+        
+        guard !updatedToolsList.contains(tool) else {
+            return
+        }
+        
         updatedToolsList.insert(tool, at: 0)
-        
-        let addedIndexPaths: [IndexPath] = [IndexPath(row: 0, section: 0)]
-        
-        tools.setValue(value: updatedToolsList)
-        toolsAdded.accept(value: addedIndexPaths)
+        tools.accept(value: updatedToolsList)
     }
 
     func removeTools(toolIdsToRemove: [String]) {

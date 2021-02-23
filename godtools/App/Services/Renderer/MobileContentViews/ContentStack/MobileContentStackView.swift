@@ -17,6 +17,7 @@ class MobileContentStackView: UIView {
     private var scrollView: UIScrollView?
     private var lastAddedView: UIView?
     private var lastAddedBottomConstraint: NSLayoutConstraint?
+    private var spacerViews: [MobileContentSpacerView] = Array()
             
     required init(viewRenderer: MobileContentStackViewRendererType, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
                 
@@ -46,6 +47,16 @@ class MobileContentStackView: UIView {
 
     }
     
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        relayoutForSpacerViews()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        relayoutForSpacerViews()
+    }
+    
     var isEmpty: Bool {
         return contentView.subviews.isEmpty
     }
@@ -67,8 +78,10 @@ class MobileContentStackView: UIView {
     }
     
     func setContentInset(contentInset: UIEdgeInsets) {
-        
-        scrollView?.contentInset = contentInset
+        if let scrollView = self.scrollView {
+            scrollView.contentInset = contentInset
+            relayoutForSpacerViews()
+        }
     }
     
     func getContentOffset() -> CGPoint? {
@@ -95,6 +108,61 @@ class MobileContentStackView: UIView {
             return contentScrollView == otherScrollView
         }
         return false
+    }
+    
+    func relayoutForSpacerViews() {
+                
+        guard let parentView = superview else {
+            return
+        }
+        
+        guard spacerViews.count > 0 else {
+            return
+        }
+        
+        parentView.layoutIfNeeded()
+        parentView.superview?.layoutIfNeeded()
+                
+        let parentHeight: CGFloat = parentView.frame.size.height
+        
+        var heightOfChildrenAndItemSpacing: CGFloat = 0
+        
+        for subview in contentView.subviews {
+            
+            let subviewIsSpacerView: Bool = subview is MobileContentSpacerView
+            
+            if !subviewIsSpacerView {
+                heightOfChildrenAndItemSpacing += subview.frame.size.height
+            }
+            
+            heightOfChildrenAndItemSpacing += itemSpacing
+        }
+        
+        let totalInsetsHeight: CGFloat
+        
+        if let scrollView = self.scrollView {
+            totalInsetsHeight = scrollView.contentInset.top + scrollView.contentInset.bottom
+        }
+        else {
+            totalInsetsHeight = 0
+        }
+        
+        let remainingSpacingHeight: CGFloat = parentHeight - heightOfChildrenAndItemSpacing - totalInsetsHeight
+        
+        let spacerHeight: CGFloat
+        
+        if remainingSpacingHeight > 0 {
+            spacerHeight = floor(remainingSpacingHeight / CGFloat(spacerViews.count))
+        }
+        else {
+            spacerHeight = 0
+        }
+        
+        for spacerView in spacerViews {
+            spacerView.setHeight(height: spacerHeight)
+        }
+        
+        parentView.layoutIfNeeded()
     }
     
     private func addRenderedView(renderedView: MobileContentStackRenderedView) {
@@ -205,6 +273,20 @@ class MobileContentStackView: UIView {
             )
             
             renderedView.view.addConstraint(aspectRatio)
+            
+        case .spacer:
+           
+            constrainLeadingToSuperviewLeading = true
+            constrainTrailingToSuperviewTrailing = true
+            
+            if let spacerView = renderedView.view as? MobileContentSpacerView {
+                
+                spacerView.setHeight(height: 0)
+                spacerViews.append(spacerView)
+            }
+            else {
+                assertionFailure("Invalid view type for spacer.  View should be of type MobileContentSpacerView.")
+            }
         }
         
         if constrainLeadingToSuperviewLeading {
@@ -280,6 +362,8 @@ class MobileContentStackView: UIView {
         
         lastAddedView = renderedView.view
         lastAddedBottomConstraint = bottom
+        
+        relayoutForSpacerViews()
     }
 }
 
