@@ -17,6 +17,7 @@ class MobileContentStackRenderedView {
         case equalToSize(size: CGSize)
         case intrinsic
         case setToAspectRatioOfProvidedSize(size: CGSize)
+        case spacer
     }
     
     let view: UIView

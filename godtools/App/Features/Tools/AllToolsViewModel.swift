@@ -20,7 +20,6 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     let analytics: AnalyticsContainer
     let tools: ObservableValue<[ResourceModel]> = ObservableValue(value: [])
     let toolRefreshed: SignalValue<IndexPath> = SignalValue()
-    let toolsAdded: ObservableValue<[IndexPath]> = ObservableValue(value: [])
     let toolsRemoved: ObservableValue<[IndexPath]> = ObservableValue(value: [])
     let message: ObservableValue<String> = ObservableValue(value: "")
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)

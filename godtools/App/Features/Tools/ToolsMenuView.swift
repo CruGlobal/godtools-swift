@@ -92,8 +92,12 @@ class ToolsMenuView: UIViewController {
     }
     
     func resetMenu() {
-        favoritedTools.scrollToTopOfTools(animated: false)
-        allTools.scrollToTopOfTools(animated: false)
+        if favoritedTools != nil {
+            favoritedTools.scrollToTopOfTools(animated: false)
+        }
+        if allTools != nil {
+            allTools.scrollToTopOfTools(animated: false)
+        }
         viewModel.resetMenu()
     }
     
