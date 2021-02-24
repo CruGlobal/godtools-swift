@@ -59,13 +59,11 @@ class ToolPageHeaderView: UIView {
         
         numberLabel.text = viewModel.number
         numberLabel.font = viewModel.numberFont
-        numberLabel.text = viewModel.number
         numberLabel.textColor = viewModel.numberColor
         numberLabel.textAlignment = viewModel.numberAlignment
         
         titleLabel.text = viewModel.title
         titleLabel.font = viewModel.titleFont
-        titleLabel.text = viewModel.title
         titleLabel.textColor = viewModel.titleColor
         titleLabel.setLineSpacing(lineSpacing: 2)
         titleLabel.textAlignment = viewModel.titleAlignment
