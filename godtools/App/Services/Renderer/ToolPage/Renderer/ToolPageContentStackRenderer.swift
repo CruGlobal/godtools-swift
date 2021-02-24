@@ -75,33 +75,23 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
         
         if let paragraphNode = node as? ContentParagraphNode {
         
-            if !paragraphNode.isFallback {
-               
-                let paragraphRenderer = ToolPageContentStackRenderer(
-                    rootContentStackRenderer: rootContentStackRenderer,
-                    diContainer: diContainer,
-                    node: paragraphNode,
-                    toolPageColors: toolPageColors,
-                    defaultTextNodeTextColor: defaultTextNodeTextColor,
-                    defaultTextNodeTextAlignment: defaultTextNodeTextAlignment,
-                    defaultButtonBorderColor: defaultButtonBorderColor
-                )
-                
-                let view = MobileContentStackView(
-                    viewRenderer: paragraphRenderer,
-                    itemSpacing: 5,
-                    scrollIsEnabled: false
-                )
-                                                             
-                return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)
-            }
-            else {
-             
-                return renderContentFallback(
-                    contentFallbackNode: paragraphNode,
-                    rootContentStackRenderer: rootContentStackRenderer
-                )
-            }
+            let paragraphRenderer = ToolPageContentStackRenderer(
+                rootContentStackRenderer: rootContentStackRenderer,
+                diContainer: diContainer,
+                node: paragraphNode,
+                toolPageColors: toolPageColors,
+                defaultTextNodeTextColor: defaultTextNodeTextColor,
+                defaultTextNodeTextAlignment: defaultTextNodeTextAlignment,
+                defaultButtonBorderColor: defaultButtonBorderColor
+            )
+            
+            let view = MobileContentStackView(
+                viewRenderer: paragraphRenderer,
+                itemSpacing: 5,
+                scrollIsEnabled: false
+            )
+                                                         
+            return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)
         }
         else if let textNode = node as? ContentTextNode {
                       

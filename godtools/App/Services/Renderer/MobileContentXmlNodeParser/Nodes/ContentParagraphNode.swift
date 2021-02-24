@@ -10,23 +10,10 @@ import Foundation
 import SWXMLHash
 
 class ContentParagraphNode: MobileContentXmlNode {
-    
-    let fallback: String?
-    
-    required init(xmlElement: XMLElement) {
-    
-        let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
-        fallback = attributes["fallback"]?.text
+    required init(xmlElement: XMLElement) {
         
         super.init(xmlElement: xmlElement)
-    }
-}
-
-extension ContentParagraphNode {
-    
-    var isFallback: Bool {
-        return fallback == "true"
     }
 }
 
