@@ -30,7 +30,7 @@ class ArticleDeepLinkParser: DeepLinkParserType {
         
         let pathComponents: [String] = url.pathComponents.filter({$0 != "/"})
         
-        guard url.containsDeepLinkHost(deepLinkHost: .godToolsApp), pathComponents[0] == "article", pathComponents[1] == "aem"  else {
+        guard url.containsDeepLinkHost(deepLinkHost: .godToolsApp), pathComponents.count >= 2, pathComponents[0] == "article", pathComponents[1] == "aem"  else {
             return nil
         }
         
