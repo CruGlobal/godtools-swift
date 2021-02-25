@@ -112,7 +112,7 @@ class AppFlow: NSObject, Flow {
                     var fetchedPrimaryLanguage: LanguageModel? = nil
                     
                     for code in primaryLanguageCodes {
-                        if let language = dataDownloader.getStoredLanguage(id: code) {
+                        if let language = dataDownloader.getStoredLanguage(code: code) {
                             fetchedPrimaryLanguage = language
                             break
                         }
@@ -127,7 +127,7 @@ class AppFlow: NSObject, Flow {
                     var parallelLanguage: LanguageModel? = nil
                     
                     for code in parallelLanguageCodes {
-                        if let language = dataDownloader.getStoredLanguage(id: code) {
+                        if let language = dataDownloader.getStoredLanguage(code: code) {
                             parallelLanguage = language
                             break
                         }
