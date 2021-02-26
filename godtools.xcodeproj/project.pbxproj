@@ -45,6 +45,12 @@
 		4556AED523E221FE002C15E8 /* AbyssinicaSIL-R.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AED023E221FE002C15E8 /* AbyssinicaSIL-R.ttf */; };
 		4556AED823E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AED323E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf */; };
 		4556AED923E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AED423E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf */; };
+		456E504225D0CEEE0075FF6A /* DeepLinkHostType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456E504025D0CEEE0075FF6A /* DeepLinkHostType.swift */; };
+		456E504325D0CEEE0075FF6A /* URL+DeepLinkHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456E504125D0CEEE0075FF6A /* URL+DeepLinkHost.swift */; };
+		456E504C25D0CF7E0075FF6A /* DeepLinkParserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456E504925D0CF7E0075FF6A /* DeepLinkParserType.swift */; };
+		456E504D25D0CF7E0075FF6A /* ParsedDeepLinkType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456E504A25D0CF7E0075FF6A /* ParsedDeepLinkType.swift */; };
+		456E504E25D0CF7E0075FF6A /* ToolDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456E504B25D0CF7E0075FF6A /* ToolDeepLinkParser.swift */; };
+		456E505825D0CFC90075FF6A /* DeepLinkParsersContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456E505725D0CFC90075FF6A /* DeepLinkParsersContainer.swift */; };
 		45762A9225C1B86300CFE82D /* MobileContentRendererVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45762A9125C1B86300CFE82D /* MobileContentRendererVersion.swift */; };
 		45762A9C25C1B8F400CFE82D /* ContentFallbackNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45762A9B25C1B8F400CFE82D /* ContentFallbackNode.swift */; };
 		45762AA225C1B96400CFE82D /* MobileContentRenderableNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45762AA125C1B96400CFE82D /* MobileContentRenderableNode.swift */; };
@@ -53,6 +59,7 @@
 		457C8586242E50D70025E079 /* GoogleService-Info-Debug.plist in Resources */ = {isa = PBXBuildFile; fileRef = 457C8585242E50D70025E079 /* GoogleService-Info-Debug.plist */; };
 		4586C04624631C3900927A42 /* ADBMobileConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = 4586C04424631C3900927A42 /* ADBMobileConfig.json */; };
 		4586C04724631C3900927A42 /* ADBMobileConfig_debug.json in Resources */ = {isa = PBXBuildFile; fileRef = 4586C04524631C3900927A42 /* ADBMobileConfig_debug.json */; };
+		45A73E4C25CF19E600B7533F /* IncomingDeepLinkType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A73E4B25CF19E600B7533F /* IncomingDeepLinkType.swift */; };
 		458AA38425D4252000E71B32 /* LocalizationBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458AA38325D4252000E71B32 /* LocalizationBundle.swift */; };
 		45A7BAF5252CBC5B00D70465 /* LocaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A7BAF4252CBC5B00D70465 /* LocaleTests.swift */; };
 		45AD1A9F25938A4E00A096A0 /* TutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45AD174F25938A4D00A096A0 /* TutorialView.xib */; };
@@ -608,7 +615,6 @@
 		45AD200325938A9800A096A0 /* UserAuthenticationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EB225938A9800A096A0 /* UserAuthenticationType.swift */; };
 		45AD200425938A9800A096A0 /* UserAuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EB425938A9800A096A0 /* UserAuthModel.swift */; };
 		45AD200525938A9800A096A0 /* TheKeyUserAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EB625938A9800A096A0 /* TheKeyUserAuthentication.swift */; };
-		45AD200625938A9800A096A0 /* DeepLinkingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EB925938A9800A096A0 /* DeepLinkingType.swift */; };
 		45AD200725938A9800A096A0 /* DeepLinkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EBA25938A9800A096A0 /* DeepLinkingService.swift */; };
 		45AD200825938A9800A096A0 /* DownloadedTranslationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EBD25938A9800A096A0 /* DownloadedTranslationResult.swift */; };
 		45AD200925938A9800A096A0 /* TranslationDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EBE25938A9800A096A0 /* TranslationDownloader.swift */; };
@@ -750,6 +756,7 @@
 		D129DE6B2543669C00841733 /* onboarding_tutorial_knife.json in Resources */ = {isa = PBXBuildFile; fileRef = D129DE682543669C00841733 /* onboarding_tutorial_knife.json */; };
 		D163EA96254A00BE00BA4EA9 /* share_tool_tutorial_link.json in Resources */ = {isa = PBXBuildFile; fileRef = D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */; };
 		D1838479257E86B3004F5674 /* container in Resources */ = {isa = PBXBuildFile; fileRef = D1838478257E86B3004F5674 /* container */; };
+		D1982F2125D1EEBD0095EEE2 /* ArticleDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1982F2025D1EEBD0095EEE2 /* ArticleDeepLinkParser.swift */; };
 		D19D00E725AF4B97007C535B /* AppsFlyerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19D00E625AF4B97007C535B /* AppsFlyerType.swift */; };
 		D19D00F925AF51FA007C535B /* AppsFlyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19D00F825AF51FA007C535B /* AppsFlyer.swift */; };
 		D19D010325AF549B007C535B /* DeepLinkingServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19D010225AF549B007C535B /* DeepLinkingServiceType.swift */; };
@@ -831,6 +838,12 @@
 		4556AED023E221FE002C15E8 /* AbyssinicaSIL-R.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AbyssinicaSIL-R.ttf"; sourceTree = "<group>"; };
 		4556AED323E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansEthiopic-Regular.ttf"; sourceTree = "<group>"; };
 		4556AED423E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansEthiopic-Bold.ttf"; sourceTree = "<group>"; };
+		456E504025D0CEEE0075FF6A /* DeepLinkHostType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkHostType.swift; sourceTree = "<group>"; };
+		456E504125D0CEEE0075FF6A /* URL+DeepLinkHost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+DeepLinkHost.swift"; sourceTree = "<group>"; };
+		456E504925D0CF7E0075FF6A /* DeepLinkParserType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkParserType.swift; sourceTree = "<group>"; };
+		456E504A25D0CF7E0075FF6A /* ParsedDeepLinkType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParsedDeepLinkType.swift; sourceTree = "<group>"; };
+		456E504B25D0CF7E0075FF6A /* ToolDeepLinkParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolDeepLinkParser.swift; sourceTree = "<group>"; };
+		456E505725D0CFC90075FF6A /* DeepLinkParsersContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkParsersContainer.swift; sourceTree = "<group>"; };
 		45762A9125C1B86300CFE82D /* MobileContentRendererVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRendererVersion.swift; sourceTree = "<group>"; };
 		45762A9B25C1B8F400CFE82D /* ContentFallbackNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentFallbackNode.swift; sourceTree = "<group>"; };
 		45762AA125C1B96400CFE82D /* MobileContentRenderableNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRenderableNode.swift; sourceTree = "<group>"; };
@@ -839,6 +852,7 @@
 		457C8585242E50D70025E079 /* GoogleService-Info-Debug.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Debug.plist"; sourceTree = "<group>"; };
 		4586C04424631C3900927A42 /* ADBMobileConfig.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ADBMobileConfig.json; sourceTree = "<group>"; };
 		4586C04524631C3900927A42 /* ADBMobileConfig_debug.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ADBMobileConfig_debug.json; sourceTree = "<group>"; };
+		45A73E4B25CF19E600B7533F /* IncomingDeepLinkType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingDeepLinkType.swift; sourceTree = "<group>"; };
 		458AA38325D4252000E71B32 /* LocalizationBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationBundle.swift; sourceTree = "<group>"; };
 		45A7BAF4252CBC5B00D70465 /* LocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleTests.swift; sourceTree = "<group>"; };
 		45AD174F25938A4D00A096A0 /* TutorialView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialView.xib; sourceTree = "<group>"; };
@@ -1394,7 +1408,6 @@
 		45AD1EB225938A9800A096A0 /* UserAuthenticationType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAuthenticationType.swift; sourceTree = "<group>"; };
 		45AD1EB425938A9800A096A0 /* UserAuthModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAuthModel.swift; sourceTree = "<group>"; };
 		45AD1EB625938A9800A096A0 /* TheKeyUserAuthentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TheKeyUserAuthentication.swift; sourceTree = "<group>"; };
-		45AD1EB925938A9800A096A0 /* DeepLinkingType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkingType.swift; sourceTree = "<group>"; };
 		45AD1EBA25938A9800A096A0 /* DeepLinkingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkingService.swift; sourceTree = "<group>"; };
 		45AD1EBD25938A9800A096A0 /* DownloadedTranslationResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadedTranslationResult.swift; sourceTree = "<group>"; };
 		45AD1EBE25938A9800A096A0 /* TranslationDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationDownloader.swift; sourceTree = "<group>"; };
@@ -1592,6 +1605,7 @@
 		D14F75B925D58B96008749CF /* NotoSansMyanmarUI-CondensedBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansMyanmarUI-CondensedBold.ttf"; sourceTree = "<group>"; };
 		D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = share_tool_tutorial_link.json; sourceTree = "<group>"; };
 		D1838478257E86B3004F5674 /* container */ = {isa = PBXFileReference; lastKnownFileType = folder; path = container; sourceTree = "<group>"; };
+		D1982F2025D1EEBD0095EEE2 /* ArticleDeepLinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDeepLinkParser.swift; sourceTree = "<group>"; };
 		D19D00E625AF4B97007C535B /* AppsFlyerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsFlyerType.swift; sourceTree = "<group>"; };
 		D19D00F825AF51FA007C535B /* AppsFlyer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsFlyer.swift; sourceTree = "<group>"; };
 		D19D010225AF549B007C535B /* DeepLinkingServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkingServiceType.swift; sourceTree = "<group>"; };
@@ -1812,6 +1826,27 @@
 				45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		456E503F25D0CEEE0075FF6A /* Host */ = {
+			isa = PBXGroup;
+			children = (
+				456E504025D0CEEE0075FF6A /* DeepLinkHostType.swift */,
+				456E504125D0CEEE0075FF6A /* URL+DeepLinkHost.swift */,
+			);
+			path = Host;
+			sourceTree = "<group>";
+		};
+		456E504825D0CF7E0075FF6A /* Parsers */ = {
+			isa = PBXGroup;
+			children = (
+				456E505725D0CFC90075FF6A /* DeepLinkParsersContainer.swift */,
+				456E504925D0CF7E0075FF6A /* DeepLinkParserType.swift */,
+				456E504A25D0CF7E0075FF6A /* ParsedDeepLinkType.swift */,
+				456E504B25D0CF7E0075FF6A /* ToolDeepLinkParser.swift */,
+				D1982F2025D1EEBD0095EEE2 /* ArticleDeepLinkParser.swift */,
+			);
+			path = Parsers;
 			sourceTree = "<group>";
 		};
 		45762A9025C1B85500CFE82D /* MobileContentRenderer */ = {
@@ -3635,8 +3670,10 @@
 			isa = PBXGroup;
 			children = (
 				45AD1EBA25938A9800A096A0 /* DeepLinkingService.swift */,
-				45AD1EB925938A9800A096A0 /* DeepLinkingType.swift */,
 				D19D010225AF549B007C535B /* DeepLinkingServiceType.swift */,
+				45A73E4B25CF19E600B7533F /* IncomingDeepLinkType.swift */,
+				456E503F25D0CEEE0075FF6A /* Host */,
+				456E504825D0CF7E0075FF6A /* Parsers */,
 			);
 			path = DeepLinkingService;
 			sourceTree = "<group>";
@@ -4821,6 +4858,7 @@
 				45AD1B5725938A4F00A096A0 /* AccountItem.swift in Sources */,
 				45AD1F5525938A9800A096A0 /* HeadingNode.swift in Sources */,
 				45AD1F0925938A9800A096A0 /* ToolPageContentFormViewModelType.swift in Sources */,
+				456E504325D0CEEE0075FF6A /* URL+DeepLinkHost.swift in Sources */,
 				45AD1FFA25938A9800A096A0 /* DetermineIfNewUserType.swift in Sources */,
 				45AD20BC25938F1A00A096A0 /* SignalValue.swift in Sources */,
 				45AD20E32593915300A096A0 /* GlobalActivityAnalytics.swift in Sources */,
@@ -4856,6 +4894,7 @@
 				45AD1F4E25938A9800A096A0 /* TipNode.swift in Sources */,
 				45AD1ACF25938A4E00A096A0 /* ToolCellViewModelType.swift in Sources */,
 				45AD1BA125938A4F00A096A0 /* ReferencedFile.swift in Sources */,
+				456E504C25D0CF7E0075FF6A /* DeepLinkParserType.swift in Sources */,
 				45AD1F9525938A9800A096A0 /* DownloadResourceTranslationsReceipts.swift in Sources */,
 				45AD1EFA25938A9800A096A0 /* ToolPageRenderedContentInput.swift in Sources */,
 				45AD1EFB25938A9800A096A0 /* ToolPageContentButtonEvents.swift in Sources */,
@@ -5099,6 +5138,7 @@
 				45AD1FEF25938A9800A096A0 /* AttachmentsDownloader.swift in Sources */,
 				45AD1F5225938A9800A096A0 /* ContentTextNode.swift in Sources */,
 				45AD1BE425938A4F00A096A0 /* CustomViewBuilderType.swift in Sources */,
+				D1982F2125D1EEBD0095EEE2 /* ArticleDeepLinkParser.swift in Sources */,
 				45AD1B7825938A4F00A096A0 /* OnboardingTutorialProviderType.swift in Sources */,
 				45AD1F3C25938A9800A096A0 /* PagesNode.swift in Sources */,
 				45AD1AFE25938A4E00A096A0 /* ArticleWebView.swift in Sources */,
@@ -5134,6 +5174,7 @@
 				45AD1BAA25938A4F00A096A0 /* Flow.swift in Sources */,
 				45AD1AA925938A4E00A096A0 /* TutorialInMenuView.swift in Sources */,
 				45AD1B1C25938A4E00A096A0 /* LearnToShareToolItemsProviderType.swift in Sources */,
+				456E504D25D0CF7E0075FF6A /* ParsedDeepLinkType.swift in Sources */,
 				45AD208625938B6A00A096A0 /* KeyboardStateChange.swift in Sources */,
 				45AD21362593A47800A096A0 /* ShareToolMenuViewModel.swift in Sources */,
 				45AD1FDB25938A9800A096A0 /* WebArchiveQueue.swift in Sources */,
@@ -5168,8 +5209,10 @@
 				45AD202825938A9800A096A0 /* LocalizationServices.swift in Sources */,
 				45AD202C25938A9800A096A0 /* SharedUserDefaultsCache.swift in Sources */,
 				45AD1B2B25938A4F00A096A0 /* AboutTextCell.swift in Sources */,
+				456E505825D0CFC90075FF6A /* DeepLinkParsersContainer.swift in Sources */,
 				45AD1F5425938A9800A096A0 /* ContentButtonNode.swift in Sources */,
 				45AD1FD625938A9800A096A0 /* HTMLDocumentData.swift in Sources */,
+				456E504225D0CEEE0075FF6A /* DeepLinkHostType.swift in Sources */,
 				45AD200725938A9800A096A0 /* DeepLinkingService.swift in Sources */,
 				45AD1B7625938A4F00A096A0 /* OnboardingTutorialItem.swift in Sources */,
 				45AD1FA425938A9800A096A0 /* ArticleAemImportDownloaderError.swift in Sources */,
@@ -5202,12 +5245,12 @@
 				45AD200425938A9800A096A0 /* UserAuthModel.swift in Sources */,
 				45AD1B7525938A4F00A096A0 /* OnboardingTutorialButtonState.swift in Sources */,
 				45AD1F4B25938A9800A096A0 /* ContentPlaceholderNode.swift in Sources */,
-				45AD200625938A9800A096A0 /* DeepLinkingType.swift in Sources */,
 				45AD204D25938AC300A096A0 /* GoogleAdwordsAnalytics.swift in Sources */,
 				45AD20B025938EE500A096A0 /* FileCacheType.swift in Sources */,
 				45AD1B5525938A4F00A096A0 /* AccountItemId.swift in Sources */,
 				45AD1F1D25938A9800A096A0 /* ToolPageHeroViewModel.swift in Sources */,
 				45AD1B7725938A4F00A096A0 /* OnboardingTutorialBackgroundItem.swift in Sources */,
+				45A73E4C25CF19E600B7533F /* IncomingDeepLinkType.swift in Sources */,
 				45AD1EF925938A9800A096A0 /* ToolPageContentImageEvents.swift in Sources */,
 				45AD1BB325938A4F00A096A0 /* FontLibrary.swift in Sources */,
 				45AD1B3C25938A4F00A096A0 /* MenuSectionId.swift in Sources */,
@@ -5245,6 +5288,7 @@
 				45AD1BCE25938A4F00A096A0 /* Locale+Extensions.swift in Sources */,
 				45AD1F6025938A9800A096A0 /* ActionCableChannelPublisher.swift in Sources */,
 				45AD1BB225938A4F00A096A0 /* LanguageSettingsFlow.swift in Sources */,
+				456E504E25D0CF7E0075FF6A /* ToolDeepLinkParser.swift in Sources */,
 				45AD1B7925938A4F00A096A0 /* OnboardingTutorialUsageItem.swift in Sources */,
 				45AD1F0B25938A9800A096A0 /* ToolPageContentTabsView.swift in Sources */,
 				45AD1EED25938A9800A096A0 /* ButtonEvent.swift in Sources */,
@@ -6020,7 +6064,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.cru.godtools";
+				PROVISIONING_PROFILE_SPECIFIER = "GodTools Production";
 				SWIFT_OBJC_BRIDGING_HEADER = "godtools/godtools-Bridging-Header.h";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
