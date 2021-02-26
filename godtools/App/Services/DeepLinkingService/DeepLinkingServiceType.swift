@@ -10,7 +10,6 @@ import Foundation
 
 protocol DeepLinkingServiceType {
     
-    var processing: ObservableValue<Bool> { get }
     var completed: ObservableValue<ParsedDeepLinkType?> { get }
     
     func parseDeepLink(incomingDeepLink: IncomingDeepLinkType) -> Bool

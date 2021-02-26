@@ -13,7 +13,6 @@ class DeepLinkingService: NSObject, DeepLinkingServiceType {
     private let deepLinkingParsers: DeepLinkParsersContainer = DeepLinkParsersContainer()
     private let loggingEnabled: Bool
         
-    let processing: ObservableValue<Bool> = ObservableValue(value: false)
     let completed: ObservableValue<ParsedDeepLinkType?> = ObservableValue(value: nil)
     
     required init(loggingEnabled: Bool) {

@@ -109,29 +109,19 @@ class AppFlow: NSObject, Flow {
                 case .tool(let resourceAbbreviation, let primaryLanguageCodes, let parallelLanguageCodes, let liveShareStream, let page):
                     guard let toolsFlow = self?.toolsFlow, let dataDownloader = self?.dataDownloader, let resource = dataDownloader.resourcesCache.getResource(abbreviation: resourceAbbreviation) else { return }
                     
-                    var fetchedPrimaryLanguage: LanguageModel? = nil
+                    var fetchedPrimaryLanguage: LanguageModel?
                     
-                    for code in primaryLanguageCodes {
-                        if let language = dataDownloader.getStoredLanguage(code: code) {
-                            fetchedPrimaryLanguage = language
-                            break
-                        }
-                    }
-                    
-                    if fetchedPrimaryLanguage == nil {
-                        fetchedPrimaryLanguage = self?.appDiContainer.languageSettingsService.primaryLanguage.value
+                    if let primaryLanguageFromCodes = self?.fetchLanguageFromCodes(codes: primaryLanguageCodes) {
+                        fetchedPrimaryLanguage = primaryLanguageFromCodes
+                    } else if let primaryLanguageFromSettings = self?.appDiContainer.languageSettingsService.primaryLanguage.value {
+                        fetchedPrimaryLanguage = primaryLanguageFromSettings
+                    } else {
+                        fetchedPrimaryLanguage = dataDownloader.getStoredLanguage(code: "en")
                     }
                     
                     guard let primaryLanguage = fetchedPrimaryLanguage else { return }
                     
-                    var parallelLanguage: LanguageModel? = nil
-                    
-                    for code in parallelLanguageCodes {
-                        if let language = dataDownloader.getStoredLanguage(code: code) {
-                            parallelLanguage = language
-                            break
-                        }
-                    }
+                    let parallelLanguage = self?.fetchLanguageFromCodes(codes: parallelLanguageCodes)
                     
                     self?.resetFlowToToolsFlow(animated: false)
                     DispatchQueue.main.async {
@@ -348,6 +338,16 @@ class AppFlow: NSObject, Flow {
                 self.menuFlow = nil
             }
         }
+    }
+    
+    private func fetchLanguageFromCodes (codes: [String]) -> LanguageModel? {
+        for code in codes {
+            if let language = dataDownloader.getStoredLanguage(code: code) {
+                return language
+            }
+        }
+        
+        return nil
     }
         
     // MARK: - Navigation Bar
