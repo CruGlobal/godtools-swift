@@ -21,12 +21,9 @@ protocol ToolPageViewModelType: NSObject {
     
     var backgroundColor: UIColor { get }
     var contentStackViewModel: ToolPageContentStackContainerViewModel? { get }
-    var headerViewModel: ToolPageHeaderViewModel { get }
     var headerTrainingTipViewModel: TrainingTipViewModelType? { get }
-    var heroViewModel: ToolPageHeroViewModel? { get }
     var hidesCards: Bool { get }
     var currentCard: ObservableValue<AnimatableValue<Int?>> { get }
-    var callToActionViewModel: ToolPageCallToActionViewModel { get }
     var cardsViewModels: [ToolPageCardViewModelType] { get }
     var modal: ObservableValue<ToolPageModalViewModel?> { get }
     var hidesHeaderTrainingTip: ObservableValue<Bool> { get }
@@ -38,6 +35,9 @@ protocol ToolPageViewModelType: NSObject {
     var bottomViewColor: UIColor { get }
     
     func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel
+    func headerWillAppear() -> ToolPageHeaderViewModelType?
+    func heroWillAppear() -> ToolPageHeroViewModelType?
+    func callToActionWillAppear() -> ToolPageCallToActionViewModelType?
     func getCurrentPositions() -> ToolPageInitialPositions
     func callToActionNextButtonTapped()
     func hiddenCardWillAppear(cardPosition: Int) -> ToolPageCardViewModelType?

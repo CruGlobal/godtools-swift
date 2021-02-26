@@ -73,6 +73,10 @@ class LoadingToolView: UIViewController {
             }
             self?.presentAlertMessage(alertMessage: alertMessage)
         }
+        
+        viewModel.message.addObserver(self) { [weak self] (message: String) in
+            self?.messageLabel.text = message
+        }
     }
     
     @objc func handleClose(barButtonItem: UIBarButtonItem) {

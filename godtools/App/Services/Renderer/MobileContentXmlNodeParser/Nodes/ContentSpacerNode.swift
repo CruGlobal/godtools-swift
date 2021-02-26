@@ -1,16 +1,16 @@
-
 //
-//  ContentParagraphNode.swift
+//  ContentSpacerNode.swift
 //  godtools
 //
-//  Created by Levi Eggert on 10/27/20.
-//  Copyright © 2020 Cru. All rights reserved.
+//  Created by Levi Eggert on 2/19/21.
+//  Copyright © 2021 Cru. All rights reserved.
 //
+
 import Foundation
 import SWXMLHash
 
-class ContentParagraphNode: MobileContentXmlNode {
-        
+class ContentSpacerNode: MobileContentXmlNode {
+    
     required init(xmlElement: XMLElement) {
         
         super.init(xmlElement: xmlElement)
@@ -19,7 +19,7 @@ class ContentParagraphNode: MobileContentXmlNode {
 
 // MARK: - MobileContentRenderableNode
 
-extension ContentParagraphNode: MobileContentRenderableNode {
+extension ContentSpacerNode: MobileContentRenderableNode {
     var nodeContentIsRenderable: Bool {
         return true
     }
