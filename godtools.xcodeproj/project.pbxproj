@@ -756,6 +756,9 @@
 		45DFB1B325E942C200C27BD0 /* ToolPageCallToActionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45DFB1B025E942C200C27BD0 /* ToolPageCallToActionView.xib */; };
 		45DFB1B425E942C200C27BD0 /* ToolPageCallToActionViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DFB1B125E942C200C27BD0 /* ToolPageCallToActionViewModelType.swift */; };
 		45DFB1B525E942C200C27BD0 /* ToolPageCallToActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DFB1B225E942C200C27BD0 /* ToolPageCallToActionView.swift */; };
+		45E307D125ED6E3700299484 /* ArticleAemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E307CF25ED6E3700299484 /* ArticleAemModel.swift */; };
+		45E307D225ED6E3700299484 /* ArticleAemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E307D025ED6E3700299484 /* ArticleAemRepository.swift */; };
+		45E307D825ED6E6F00299484 /* ArticleAemUri.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E307D725ED6E6F00299484 /* ArticleAemUri.swift */; };
 		45E998D623FD7B090088DD0C /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */; };
 		45FA696C24251CA00006878C /* TutorialLanguageAvailabilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FA696B24251CA00006878C /* TutorialLanguageAvailabilityTests.swift */; };
 		45FA696F24251D360006878C /* MockSupportedLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FA6960242517590006878C /* MockSupportedLanguages.swift */; };
@@ -1556,6 +1559,9 @@
 		45DFB1B025E942C200C27BD0 /* ToolPageCallToActionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToolPageCallToActionView.xib; sourceTree = "<group>"; };
 		45DFB1B125E942C200C27BD0 /* ToolPageCallToActionViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageCallToActionViewModelType.swift; sourceTree = "<group>"; };
 		45DFB1B225E942C200C27BD0 /* ToolPageCallToActionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageCallToActionView.swift; sourceTree = "<group>"; };
+		45E307CF25ED6E3700299484 /* ArticleAemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleAemModel.swift; sourceTree = "<group>"; };
+		45E307D025ED6E3700299484 /* ArticleAemRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleAemRepository.swift; sourceTree = "<group>"; };
+		45E307D725ED6E6F00299484 /* ArticleAemUri.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleAemUri.swift; sourceTree = "<group>"; };
 		45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Semibold.otf"; sourceTree = "<group>"; };
 		45FA6960242517590006878C /* MockSupportedLanguages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSupportedLanguages.swift; sourceTree = "<group>"; };
 		45FA696B24251CA00006878C /* TutorialLanguageAvailabilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialLanguageAvailabilityTests.swift; sourceTree = "<group>"; };
@@ -3409,6 +3415,7 @@
 			isa = PBXGroup;
 			children = (
 				45AD1E3225938A9700A096A0 /* ArticleAemImportDownloader */,
+				45E307CE25ED6E0100299484 /* ArticleAemRepository */,
 				45AD1E2B25938A9700A096A0 /* ArticleManifest */,
 			);
 			path = Articles;
@@ -4110,6 +4117,16 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		45E307CE25ED6E0100299484 /* ArticleAemRepository */ = {
+			isa = PBXGroup;
+			children = (
+				45E307CF25ED6E3700299484 /* ArticleAemModel.swift */,
+				45E307D025ED6E3700299484 /* ArticleAemRepository.swift */,
+				45E307D725ED6E6F00299484 /* ArticleAemUri.swift */,
+			);
+			path = ArticleAemRepository;
+			sourceTree = "<group>";
+		};
 		4F12296D20852BE3008842CC /* godtoolsUITests */ = {
 			isa = PBXGroup;
 			children = (
@@ -4751,6 +4768,7 @@
 				45AD1F7B25938A9800A096A0 /* SharedSessionType.swift in Sources */,
 				45AD1B4825938A4F00A096A0 /* MenuCell.swift in Sources */,
 				45AD1B4F25938A4F00A096A0 /* ToolTrainingViewModelType.swift in Sources */,
+				45E307D125ED6E3700299484 /* ArticleAemModel.swift in Sources */,
 				45AD1F4225938A9800A096A0 /* AnalyticsEventNode.swift in Sources */,
 				45AD1F1225938A9800A096A0 /* ToolPageCardViewModelType.swift in Sources */,
 				45AD20D525938F6800A096A0 /* FollowUpModelType.swift in Sources */,
@@ -4933,6 +4951,7 @@
 				45AD1F3825938A9800A096A0 /* MobileContentXmlNodeFactory.swift in Sources */,
 				45AD1F2725938A9800A096A0 /* MobileContentManifestType.swift in Sources */,
 				45AD1BCA25938A4F00A096A0 /* UIView+Constraints.swift in Sources */,
+				45E307D225ED6E3700299484 /* ArticleAemRepository.swift in Sources */,
 				45AD1FB425938A9800A096A0 /* ArticleAemImportDownloaderReceipt.swift in Sources */,
 				45AD1F4E25938A9800A096A0 /* TipNode.swift in Sources */,
 				45AD1ACF25938A4E00A096A0 /* ToolCellViewModelType.swift in Sources */,
@@ -5334,6 +5353,7 @@
 				45AD200B25938A9800A096A0 /* DownloadTranslationsReceipt.swift in Sources */,
 				45AD1FDA25938A9800A096A0 /* WebArchiveOperation.swift in Sources */,
 				45AD1FEA25938A9800A096A0 /* InitialDataDownloader.swift in Sources */,
+				45E307D825ED6E6F00299484 /* ArticleAemUri.swift in Sources */,
 				45AD1BCE25938A4F00A096A0 /* Locale+Extensions.swift in Sources */,
 				45AD1F6025938A9800A096A0 /* ActionCableChannelPublisher.swift in Sources */,
 				45AD1BB225938A4F00A096A0 /* LanguageSettingsFlow.swift in Sources */,

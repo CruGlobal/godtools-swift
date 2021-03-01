@@ -53,11 +53,11 @@ class ArticleAemImportDataParser {
         let aemImportWebUrl: String = aemImportSrc.absoluteString + "/" + variation + ".html"
         
         let articleAemImportData = ArticleAemImportData(
+            aemUri: aemImportSrc.absoluteString,
             articleJcrContent: articleJcrContent,
-            languageCode: languageCode,
-            resourceId: resourceId,
             webUrl: aemImportWebUrl,
-            webArchiveFilename: NSUUID().uuidString
+            webArchiveFilename: NSUUID().uuidString,
+            updatedAt: Date()
         )
         
         return .success(articleAemImportData)

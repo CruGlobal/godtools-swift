@@ -30,10 +30,14 @@ class RealmArticleAemImportDataCache {
     
     func getArticleAemImportDataObjects(realm: Realm, resourceId: String, languageCode: String) -> [RealmArticleAemImportData] {
         
-        let filter: String = "resourceId = '\(resourceId)' AND languageCode = '\(languageCode)'"
+        // This method is no longer valid, no longer cacheing articles by resourceId and languageCode. ~Levi
+        
+        /*let filter: String = "resourceId = '\(resourceId)' AND languageCode = '\(languageCode)'"
         let realmArticleAemImportData: [RealmArticleAemImportData] = Array(realm.objects(RealmArticleAemImportData.self).filter(filter))
         
-        return realmArticleAemImportData
+        return realmArticleAemImportData*/
+        
+        return []
     }
     
     func getArticlesWithTags(resourceId: String, languageCode: String, aemTags: [String], completeOnMain: @escaping ((_ articleAemImportData: [ArticleAemImportData]) -> Void)) {
@@ -68,6 +72,8 @@ class RealmArticleAemImportDataCache {
     
     func cache(articleAemImportDataObjects: [ArticleAemImportData], complete: @escaping ((_ error: Error?) -> Void)) {
         
+        // TODO: We will need to update this. ArticleAemImportData objects now have a primaryKey so we will have to check for existing objects first and update those instead of adding new objects. ~Levi
+        
         realmDatabase.background { (realm: Realm) in
             
             let realmArticleAemImportDataArray: [RealmArticleAemImportData] = articleAemImportDataObjects.map({
@@ -76,6 +82,7 @@ class RealmArticleAemImportDataCache {
                 return realmArticleAemImportData
             })
             
+            /*
             do {
                 try realm.write {
                     realm.add(realmArticleAemImportDataArray)
@@ -84,7 +91,10 @@ class RealmArticleAemImportDataCache {
             }
             catch let error {
                 complete(error)
-            }
+            }*/
+            
+            
+            complete(nil)// TODO: Remove this completion. ~Levi
         }
     }
     

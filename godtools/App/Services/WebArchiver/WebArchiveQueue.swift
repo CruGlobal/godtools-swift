@@ -12,19 +12,9 @@ class WebArchiveQueue {
     
     private let session: URLSession
         
-    required init() {
+    required init(sharedSession: SharedSessionType) {
         
-        let configuration = URLSessionConfiguration.ephemeral
-        configuration.requestCachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
-        configuration.urlCache = nil
-        
-        configuration.httpCookieAcceptPolicy = HTTPCookie.AcceptPolicy.never
-        configuration.httpShouldSetCookies = false
-        configuration.httpCookieStorage = nil
-        
-        configuration.timeoutIntervalForRequest = 60
-            
-        session = URLSession(configuration: configuration)
+        self.session = sharedSession.session
     }
     
     deinit {

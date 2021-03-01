@@ -10,23 +10,24 @@ import Foundation
 
 struct ArticleAemImportData: ArticleAemImportDataType {
     
+    let aemUri: String
     let articleJcrContent: ArticleJcrContent?
-    let languageCode: String
-    let resourceId: String
     let webUrl: String
     let webArchiveFilename: String
+    let updatedAt: Date
     
-    init(articleJcrContent: ArticleJcrContent?, languageCode: String, resourceId: String, webUrl: String, webArchiveFilename: String) {
+    init(aemUri: String, articleJcrContent: ArticleJcrContent?, webUrl: String, webArchiveFilename: String, updatedAt: Date) {
         
+        self.aemUri = aemUri
         self.articleJcrContent = articleJcrContent
-        self.languageCode = languageCode
-        self.resourceId = resourceId
         self.webUrl = webUrl
         self.webArchiveFilename = webArchiveFilename
+        self.updatedAt = updatedAt
     }
     
     init(realmModel: RealmArticleAemImportData) {
         
+        aemUri = realmModel.aemUri
         if let realmArticleJcrContent = realmModel.articleJcrContent {
             articleJcrContent = ArticleJcrContent(realmModel: realmArticleJcrContent)
         }
@@ -34,9 +35,8 @@ struct ArticleAemImportData: ArticleAemImportDataType {
             articleJcrContent = nil
         }
         
-        languageCode = realmModel.languageCode
-        resourceId = realmModel.resourceId
         webUrl = realmModel.webUrl
         webArchiveFilename = realmModel.webArchiveFilename
+        updatedAt = realmModel.updatedAt
     }
 }

@@ -11,36 +11,26 @@ import Foundation
 class ArticleAemWebArchiveFileCache: FileCache<ArticleAemWebArchiveFileCacheLocation> {
     
     required init() {
-        super.init(rootDirectory: "articles_webarchives")
+                
+        super.init(rootDirectory: "articles")
+        
+        deleteLegacyArticlesDirectory()
     }
     
     required init(rootDirectory: String) {
         fatalError("ArticleAemWebArchiveFileCache: init(rootDirectory: should not be used.  Instead, use init() to initialize with the correct rootDirectory.")
     }
     
-    func deleteWebArchiveDirectory(resourceId: String, languageCode: String) -> Error? {
-        
-        var error: Error?
-        
-        let webArchiveCacheLocation = ArticleAemWebArchiveFileCacheLocation(
-            resourceId: resourceId,
-            languageCode: languageCode,
-            filename: ""
-        )
-        
-        var webArchiveDirectoryUrl: URL?
+    private func deleteLegacyArticlesDirectory() {
                 
-        switch getRootDirectory() {
-        case .success(let rootDirectoryUrl):
-            webArchiveDirectoryUrl = rootDirectoryUrl.appendingPathComponent(webArchiveCacheLocation.directory)
-        case .failure(let getWebArchiveRootDirectoryError):
-            error = getWebArchiveRootDirectoryError
-        }
+        let legacyDirectoryName: String = "articles_webarchives"
         
-        if let webArchiveDirectoryUrl = webArchiveDirectoryUrl {
-            error = removeItem(url: webArchiveDirectoryUrl)
+        switch getUserDocumentsDirectory() {
+        case .success(let documentsDirectory):
+            let legacyDirectory: URL = documentsDirectory.appendingPathComponent(legacyDirectoryName)
+            _ = removeItem(url: legacyDirectory)
+        case .failure( _):
+            break
         }
-        
-        return error
     }
 }

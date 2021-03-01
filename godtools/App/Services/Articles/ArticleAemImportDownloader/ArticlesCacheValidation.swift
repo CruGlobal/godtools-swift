@@ -8,6 +8,7 @@
 
 import Foundation
 
+// TODO: This class will need to be removed.  No longer cacheing articles by resourceId and languageCode. ~Levi
 class ArticlesCacheValidation {
         
     private static let secondsInDay: TimeInterval = 86400

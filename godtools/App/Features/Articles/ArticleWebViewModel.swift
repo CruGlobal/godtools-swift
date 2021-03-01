@@ -11,9 +11,7 @@ import Foundation
 class ArticleWebViewModel: ArticleWebViewModelType {
     
     private let resource: ResourceModel
-    private let translationZipFile: TranslationZipFileModel
     private let articleAemImportData: ArticleAemImportData
-    private let articleAemImportDownloader: ArticleAemImportDownloader
     private let analytics: AnalyticsContainer
     
     private weak var flowDelegate: FlowDelegate?
@@ -27,18 +25,12 @@ class ArticleWebViewModel: ArticleWebViewModelType {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
-        self.translationZipFile = translationZipFile
         self.articleAemImportData = articleAemImportData
-        self.articleAemImportDownloader = articleAemImportDownloader
         self.analytics = analytics
         
         navTitle.accept(value: articleAemImportData.articleJcrContent?.title ?? "")
         
-        let webArchiveLocation = ArticleAemWebArchiveFileCacheLocation(
-            resourceId: translationZipFile.resourceId,
-            languageCode: translationZipFile.languageCode,
-            filename: articleAemImportData.webArchiveFilename
-        )
+        let webArchiveLocation = ArticleAemWebArchiveFileCacheLocation(filename: articleAemImportData.webArchiveFilename)
                 
         if let cachedWebArchiveUrl = articleAemImportDownloader.getWebArchiveUrl(location: webArchiveLocation) {
             webArchiveUrl.accept(value: cachedWebArchiveUrl)

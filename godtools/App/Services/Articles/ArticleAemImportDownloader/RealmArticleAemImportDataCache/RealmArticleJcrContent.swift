@@ -21,7 +21,7 @@ class RealmArticleJcrContent: Object, ArticleJcrContentType {
         
         canonical = model.canonical
         title = model.title
-        uuid = model.title
+        uuid = model.uuid
         tags.removeAll()
         tags.append(objectsIn: model.tags)
     }

@@ -14,30 +14,19 @@ class ArticleAemImportDownloader {
     typealias TranslationId = String
     
     private let session: URLSession
-    private let requestBuilder: RequestBuilder = RequestBuilder()
     private let realmCache: RealmArticleAemImportDataCache
-    private let webArchiver: WebArchiveQueue = WebArchiveQueue()
+    private let webArchiver: WebArchiveQueue
     private let webArchiveFileCache: ArticleAemWebArchiveFileCache = ArticleAemWebArchiveFileCache()
     private let maxAemImportJsonTreeLevels: Int = 10
     private let errorDomain: String = String(describing: ArticleAemImportDownloader.self)
     
     private var currentDownloadReceipts: [TranslationId: ArticleAemImportDownloaderReceipt] = Dictionary()
     
-    required init(realmDatabase: RealmDatabase) {
+    required init(realmDatabase: RealmDatabase, sharedSession: SharedSessionType) {
         
-        let configuration = URLSessionConfiguration.ephemeral
-        configuration.requestCachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
-        configuration.urlCache = nil
-        
-        configuration.httpCookieAcceptPolicy = HTTPCookie.AcceptPolicy.never
-        configuration.httpShouldSetCookies = false
-        configuration.httpCookieStorage = nil
-        
-        configuration.timeoutIntervalForRequest = 60
-            
-        session = URLSession(configuration: configuration)
-        
+        self.session = sharedSession.session
         self.realmCache = RealmArticleAemImportDataCache(realmDatabase: realmDatabase)
+        self.webArchiver = WebArchiveQueue(sharedSession: sharedSession)
     }
     
     func getArticlesWithTags(translationZipFile: TranslationZipFileModel, aemTags: [String], completeOnMain: @escaping ((_ articleAemImportData: [ArticleAemImportData]) -> Void)) {
@@ -131,10 +120,13 @@ class ArticleAemImportDownloader {
                     let cacheValidation = ArticlesCacheValidation(translationZipFile: translationZipFile)
                                         
                     // Delete web archives and realm objects for resourceId, languageCode
+                    
+                    // TODO: No longer cacheing articles by resourceId and languageCode. Need to do this differently. ~Levi
+                    /*
                     let deleteWebArchiveDirectoryError: Error? = self?.webArchiveFileCache.deleteWebArchiveDirectory(
                         resourceId: resourceId,
                         languageCode: languageCode
-                    )
+                    )*/
                     
                     self?.realmCache.deleteAemImportDataObjects(resourceId: resourceId, languageCode: languageCode) { [weak self] (deleteArticleAemImportDataObjectsError: Error?) in
                         
@@ -147,7 +139,7 @@ class ArticleAemImportDownloader {
                                     languageCode: languageCode,
                                     articleAemImportDataObjects: articleAemImportDataObjects,
                                     articleAemImportErrors: articleAemImportErrors,
-                                    deleteWebArchiveDirectoryError: deleteWebArchiveDirectoryError,
+                                    deleteWebArchiveDirectoryError: nil,
                                     deleteArticleAemImportDataObjectsError: deleteArticleAemImportDataObjectsError,
                                     cacheArticleAemImportDataObjectsError: cacheArticleAemImportDataObjectsError,
                                     cacheWebArchivePlistDataErrors: cacheWebArchivePlistDataErrors,
@@ -229,11 +221,7 @@ class ArticleAemImportDownloader {
                     return
                 }
                 
-                let cacheLocation = ArticleAemWebArchiveFileCacheLocation(
-                    resourceId: resourceId,
-                    languageCode: languageCode,
-                    filename: webArchiveFilename
-                )
+                let cacheLocation = ArticleAemWebArchiveFileCacheLocation(filename: webArchiveFilename)
 
                 if let cacheResult = self?.webArchiveFileCache.cache(location: cacheLocation, data: webArchivePlistData) {
                     switch cacheResult {

@@ -14,7 +14,7 @@ struct ArticleAemImportDownloaderResult {
     let languageCode: String
     let articleAemImportDataObjects: [ArticleAemImportData]
     let articleAemImportErrors: [ArticleAemImportOperationError]
-    let deleteWebArchiveDirectoryError: Error?
+    let deleteWebArchiveDirectoryError: Error? // TODO: Is this property still needed? ~Levi
     let deleteArticleAemImportDataObjectsError: Error?
     let cacheArticleAemImportDataObjectsError: Error?
     let cacheWebArchivePlistDataErrors: [CacheArticleAemWebArchivePlistError]

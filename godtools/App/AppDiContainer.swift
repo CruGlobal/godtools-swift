@@ -46,6 +46,7 @@ class AppDiContainer {
     let languageSettingsService: LanguageSettingsService
     let languageDirectionService: LanguageDirectionService
     let languageTranslationsDownloader: LanguageTranslationsDownloader
+    let articleAemRepository: ArticleAemRepository
     let articleAemImportDownloader: ArticleAemImportDownloader
     let isNewUserService: IsNewUserService
     let analytics: AnalyticsContainer
@@ -167,7 +168,9 @@ class AppDiContainer {
             translationDownloader: translationDownloader
         )
         
-        articleAemImportDownloader = ArticleAemImportDownloader(realmDatabase: realmDatabase)
+        articleAemRepository = ArticleAemRepository(sharedSession: sharedIgnoringCacheSession)
+        
+        articleAemImportDownloader = ArticleAemImportDownloader(realmDatabase: realmDatabase, sharedSession: sharedIgnoringCacheSession)
                 
         isNewUserService = IsNewUserService(
             isNewUserCache: IsNewUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache),
