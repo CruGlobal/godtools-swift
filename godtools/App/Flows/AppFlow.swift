@@ -55,7 +55,7 @@ class AppFlow: NSObject, Flow {
         removeDeepLinkingObservers()
     }
     
-    func resetFlowToToolsFlow(animated: Bool) {
+    private func resetFlowToToolsFlow(animated: Bool) {
         configureNavigationBar()
         toolsFlow?.navigationController.popToRootViewController(animated: animated)
         toolsFlow?.resetToolsMenu()
@@ -65,6 +65,10 @@ class AppFlow: NSObject, Flow {
         menuFlow = nil
         languageSettingsFlow = nil
         tutorialFlow = nil
+        
+        if toolsFlow == nil {
+            navigate(step: .showTools(animated: animated, shouldCreateNewInstance: true))
+        }
     }
     
     private func setupInitialNavigation() {
@@ -75,8 +79,6 @@ class AppFlow: NSObject, Flow {
         else {
             navigate(step: .showTools(animated: true, shouldCreateNewInstance: true))
         }
-        
-        loadInitialData()
     }
     
     private func loadInitialData() {
@@ -390,7 +392,6 @@ extension AppFlow: UIApplicationDelegate {
                 application.keyWindow?.addSubview(loadingView)
                 
                 resetFlowToToolsFlow(animated: false)
-                
                 loadInitialData()
                 
                 UIView.animate(withDuration: 0.4, delay: 1.5, options: .curveEaseOut, animations: {
@@ -410,6 +411,7 @@ extension AppFlow: UIApplicationDelegate {
             
             navigationStarted = true
             setupInitialNavigation()
+            loadInitialData()
         }
     }
     
