@@ -337,6 +337,8 @@ class ToolPageView: UIView {
         callToActionView.constrainEdgesToSuperview()
         self.callToActionView = callToActionView
         
+        callToActionContainerView.layoutIfNeeded()
+        
         setCallToActionHidden(hidden: false, animated: false)
     }
     
