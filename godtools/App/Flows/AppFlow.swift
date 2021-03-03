@@ -111,7 +111,7 @@ class AppFlow: NSObject, Flow {
                     
                     var fetchedPrimaryLanguage: LanguageModel?
                     
-                    if let primaryLanguageFromCodes = self?.fetchLanguageFromCodes(codes: primaryLanguageCodes) {
+                    if let primaryLanguageFromCodes = self?.fetchLanguageFromCodes(resource: resource, codes: primaryLanguageCodes) {
                         fetchedPrimaryLanguage = primaryLanguageFromCodes
                     } else if let primaryLanguageFromSettings = self?.appDiContainer.languageSettingsService.primaryLanguage.value {
                         fetchedPrimaryLanguage = primaryLanguageFromSettings
@@ -121,7 +121,7 @@ class AppFlow: NSObject, Flow {
                     
                     guard let primaryLanguage = fetchedPrimaryLanguage else { return }
                     
-                    let parallelLanguage = self?.fetchLanguageFromCodes(codes: parallelLanguageCodes)
+                    let parallelLanguage = self?.fetchLanguageFromCodes(resource: resource, codes: parallelLanguageCodes)
                     
                     self?.resetFlowToToolsFlow(animated: false)
                     DispatchQueue.main.async {
@@ -340,9 +340,9 @@ class AppFlow: NSObject, Flow {
         }
     }
     
-    private func fetchLanguageFromCodes (codes: [String]) -> LanguageModel? {
+    private func fetchLanguageFromCodes (resource: ResourceModel, codes: [String]) -> LanguageModel? {
         for code in codes {
-            if let language = dataDownloader.getStoredLanguage(code: code) {
+            if let language = dataDownloader.getStoredLanguage(code: code), resource.supportsLanguage(languageId: language.id) {
                 return language
             }
         }
