@@ -13,7 +13,7 @@ class MobileContentBackgroundImageViewModel {
     private let backgroundImageNode: BackgroundImageNodeType
     private let manifestResourcesCache: ManifestResourcesCache
     
-    let align: MobileContentBackgroundImageAlignType
+    let align: [MobileContentBackgroundImageAlignType]
     let scale: MobileContentBackgroundImageScaleType
     
     required init(backgroundImageNode: BackgroundImageNodeType, manifestResourcesCache: ManifestResourcesCache) {
@@ -21,7 +21,7 @@ class MobileContentBackgroundImageViewModel {
         self.backgroundImageNode = backgroundImageNode
         self.manifestResourcesCache = manifestResourcesCache
         
-        align = MobileContentBackgroundImageAlignType(rawValue: backgroundImageNode.backgroundImageAlign) ?? .center
+        align = backgroundImageNode.backgroundImageAlign.compactMap({MobileContentBackgroundImageAlignType(rawValue: $0)})
         scale = MobileContentBackgroundImageScaleType(rawValue: backgroundImageNode.backgroundImageScaleType) ?? .fillHorizontally
     }
     

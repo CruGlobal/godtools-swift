@@ -35,6 +35,8 @@
 		451EBE3B24AD968B00C4D6DD /* db11fd9214b9a05b5d1e760c707e9db8d4b821dea36bca0c94263efa28e8ac4b.png in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE2424AD968A00C4D6DD /* db11fd9214b9a05b5d1e760c707e9db8d4b821dea36bca0c94263efa28e8ac4b.png */; };
 		451EBE3C24AD968B00C4D6DD /* 8a2312f958cdf6548a1637347bf89560f6ebf284549669638dfef944d8268a08.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE2524AD968A00C4D6DD /* 8a2312f958cdf6548a1637347bf89560f6ebf284549669638dfef944d8268a08.jpg */; };
 		451EBE3D24AD968B00C4D6DD /* e961f409d06308e87deb9ed9166264c7c732d9dc24e70f886944636308810d6e.png in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE2624AD968A00C4D6DD /* e961f409d06308e87deb9ed9166264c7c732d9dc24e70f886944636308810d6e.png */; };
+		45267B5825F16AEE004DB4C4 /* MobileContentBackgroundImageAlignType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45267B5625F16AEE004DB4C4 /* MobileContentBackgroundImageAlignType.swift */; };
+		45267B5925F16AEE004DB4C4 /* MobileContentBackgroundImageScaleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45267B5725F16AEE004DB4C4 /* MobileContentBackgroundImageScaleType.swift */; };
 		453D866A24E08461004EA89F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 453D866824E08461004EA89F /* Localizable.strings */; };
 		4544224425E054C200AC3115 /* ContentSpacerNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4544224325E054C200AC3115 /* ContentSpacerNode.swift */; };
 		4544225325E057E500AC3115 /* MobileContentSpacerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4544225225E057E500AC3115 /* MobileContentSpacerView.swift */; };
@@ -429,10 +431,7 @@
 		45AD1F2F25938A9800A096A0 /* MobileContentStackRenderedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DA525938A9700A096A0 /* MobileContentStackRenderedView.swift */; };
 		45AD1F3025938A9800A096A0 /* MobileContentStackViewRendererType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DA625938A9700A096A0 /* MobileContentStackViewRendererType.swift */; };
 		45AD1F3125938A9800A096A0 /* MobileContentStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DA725938A9700A096A0 /* MobileContentStackView.swift */; };
-		45AD1F3225938A9800A096A0 /* MobileContentBackgroundImageNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DA925938A9700A096A0 /* MobileContentBackgroundImageNode.swift */; };
-		45AD1F3325938A9800A096A0 /* MobileContentBackgroundImageScaleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DAA25938A9700A096A0 /* MobileContentBackgroundImageScaleType.swift */; };
 		45AD1F3425938A9800A096A0 /* MobileContentBackgroundImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DAB25938A9700A096A0 /* MobileContentBackgroundImageViewModel.swift */; };
-		45AD1F3525938A9800A096A0 /* MobileContentBackgroundImageAlignType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DAC25938A9700A096A0 /* MobileContentBackgroundImageAlignType.swift */; };
 		45AD1F3625938A9800A096A0 /* MobileContentBackgroundImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DAD25938A9700A096A0 /* MobileContentBackgroundImageView.swift */; };
 		45AD1F3725938A9800A096A0 /* MobileContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DAE25938A9700A096A0 /* MobileContentViewModel.swift */; };
 		45AD1F3825938A9800A096A0 /* MobileContentXmlNodeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DB025938A9700A096A0 /* MobileContentXmlNodeFactory.swift */; };
@@ -843,6 +842,8 @@
 		451EBE2424AD968A00C4D6DD /* db11fd9214b9a05b5d1e760c707e9db8d4b821dea36bca0c94263efa28e8ac4b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = db11fd9214b9a05b5d1e760c707e9db8d4b821dea36bca0c94263efa28e8ac4b.png; sourceTree = "<group>"; };
 		451EBE2524AD968A00C4D6DD /* 8a2312f958cdf6548a1637347bf89560f6ebf284549669638dfef944d8268a08.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 8a2312f958cdf6548a1637347bf89560f6ebf284549669638dfef944d8268a08.jpg; sourceTree = "<group>"; };
 		451EBE2624AD968A00C4D6DD /* e961f409d06308e87deb9ed9166264c7c732d9dc24e70f886944636308810d6e.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = e961f409d06308e87deb9ed9166264c7c732d9dc24e70f886944636308810d6e.png; sourceTree = "<group>"; };
+		45267B5625F16AEE004DB4C4 /* MobileContentBackgroundImageAlignType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentBackgroundImageAlignType.swift; sourceTree = "<group>"; };
+		45267B5725F16AEE004DB4C4 /* MobileContentBackgroundImageScaleType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentBackgroundImageScaleType.swift; sourceTree = "<group>"; };
 		453D866324E08310004EA89F /* mn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = mn; path = mn.lproj/Localizable.strings; sourceTree = "<group>"; };
 		453D866424E08347004EA89F /* tpi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tpi; path = tpi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		453D866924E08461004EA89F /* no */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = no; path = Localizable.strings; sourceTree = "<group>"; };
@@ -1239,10 +1240,7 @@
 		45AD1DA525938A9700A096A0 /* MobileContentStackRenderedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentStackRenderedView.swift; sourceTree = "<group>"; };
 		45AD1DA625938A9700A096A0 /* MobileContentStackViewRendererType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentStackViewRendererType.swift; sourceTree = "<group>"; };
 		45AD1DA725938A9700A096A0 /* MobileContentStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentStackView.swift; sourceTree = "<group>"; };
-		45AD1DA925938A9700A096A0 /* MobileContentBackgroundImageNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentBackgroundImageNode.swift; sourceTree = "<group>"; };
-		45AD1DAA25938A9700A096A0 /* MobileContentBackgroundImageScaleType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentBackgroundImageScaleType.swift; sourceTree = "<group>"; };
 		45AD1DAB25938A9700A096A0 /* MobileContentBackgroundImageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentBackgroundImageViewModel.swift; sourceTree = "<group>"; };
-		45AD1DAC25938A9700A096A0 /* MobileContentBackgroundImageAlignType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentBackgroundImageAlignType.swift; sourceTree = "<group>"; };
 		45AD1DAD25938A9700A096A0 /* MobileContentBackgroundImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentBackgroundImageView.swift; sourceTree = "<group>"; };
 		45AD1DAE25938A9700A096A0 /* MobileContentViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentViewModel.swift; sourceTree = "<group>"; };
 		45AD1DB025938A9700A096A0 /* MobileContentXmlNodeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentXmlNodeFactory.swift; sourceTree = "<group>"; };
@@ -3133,9 +3131,6 @@
 		45AD1DA825938A9700A096A0 /* BackgroundImage */ = {
 			isa = PBXGroup;
 			children = (
-				45AD1DAC25938A9700A096A0 /* MobileContentBackgroundImageAlignType.swift */,
-				45AD1DA925938A9700A096A0 /* MobileContentBackgroundImageNode.swift */,
-				45AD1DAA25938A9700A096A0 /* MobileContentBackgroundImageScaleType.swift */,
 				45AD1DAD25938A9700A096A0 /* MobileContentBackgroundImageView.swift */,
 				45AD1DAB25938A9700A096A0 /* MobileContentBackgroundImageViewModel.swift */,
 			);
@@ -3199,6 +3194,8 @@
 			children = (
 				45AD1DD425938A9700A096A0 /* AnalyticsAttributeNode+Trigger.swift */,
 				45AD1DD325938A9700A096A0 /* AnalyticsEventNodeTrigger.swift */,
+				45267B5625F16AEE004DB4C4 /* MobileContentBackgroundImageAlignType.swift */,
+				45267B5725F16AEE004DB4C4 /* MobileContentBackgroundImageScaleType.swift */,
 				45C038FD25E457AD00ECCCBB /* MobileContentButtonNodeStyle.swift */,
 				45762AB125C1BD5100CFE82D /* MobileContentButtonNodeType.swift */,
 				45AD1DD225938A9700A096A0 /* MobileContentRGBAColor.swift */,
@@ -4912,7 +4909,6 @@
 				45AD1B0525938A4E00A096A0 /* ArticlesErrorMessage.swift in Sources */,
 				45AD1FFE25938A9800A096A0 /* ResourceViewModelType.swift in Sources */,
 				45AD1F9025938A9800A096A0 /* TranslationModel.swift in Sources */,
-				45AD1F3225938A9800A096A0 /* MobileContentBackgroundImageNode.swift in Sources */,
 				45B6480925E581660098BAF1 /* (null) in Sources */,
 				45AD1F7A25938A9800A096A0 /* DeviceLanguage.swift in Sources */,
 				45AD1F7625938A9800A096A0 /* ViewedTrainingTipType.swift in Sources */,
@@ -5031,7 +5027,6 @@
 				45AD1FBD25938A9800A096A0 /* TractRemoteShareNavigationEvent.swift in Sources */,
 				45AD1F3725938A9800A096A0 /* MobileContentViewModel.swift in Sources */,
 				45AD1B9D25938A4F00A096A0 /* Language.swift in Sources */,
-				45AD1F3325938A9800A096A0 /* MobileContentBackgroundImageScaleType.swift in Sources */,
 				45AD1B5825938A4F00A096A0 /* AccountViewModelType.swift in Sources */,
 				45AD21162593958E00A096A0 /* LanguageModel+Direction.swift in Sources */,
 				45AD1AF225938A4E00A096A0 /* HelpWebContent.swift in Sources */,
@@ -5100,6 +5095,7 @@
 				45AD205925938AC300A096A0 /* SnowplowAnalyticsType.swift in Sources */,
 				45AD1F7025938A9800A096A0 /* FollowUpsService.swift in Sources */,
 				45AD201825938A9800A096A0 /* ShortcutItemType.swift in Sources */,
+				45267B5825F16AEE004DB4C4 /* MobileContentBackgroundImageAlignType.swift in Sources */,
 				45762A9C25C1B8F400CFE82D /* ContentFallbackNode.swift in Sources */,
 				45AD1FB825938A9800A096A0 /* TractRemoteShareChannel.swift in Sources */,
 				45AD1B4A25938A4F00A096A0 /* MenuView.swift in Sources */,
@@ -5186,6 +5182,7 @@
 				45AD202325938A9800A096A0 /* SingleRequestOperation.swift in Sources */,
 				45AD1FEF25938A9800A096A0 /* AttachmentsDownloader.swift in Sources */,
 				45AD1F5225938A9800A096A0 /* ContentTextNode.swift in Sources */,
+				45267B5925F16AEE004DB4C4 /* MobileContentBackgroundImageScaleType.swift in Sources */,
 				45AD1BE425938A4F00A096A0 /* CustomViewBuilderType.swift in Sources */,
 				D1982F2125D1EEBD0095EEE2 /* ArticleDeepLinkParser.swift in Sources */,
 				45AD1B7825938A4F00A096A0 /* OnboardingTutorialProviderType.swift in Sources */,
@@ -5306,7 +5303,6 @@
 				45AD1F2525938A9800A096A0 /* MobileContentManifestPageType.swift in Sources */,
 				45AD1F1525938A9800A096A0 /* ToolPageCardAnalyticsScreenName.swift in Sources */,
 				45AD1ABF25938A4E00A096A0 /* LoadingToolViewModel.swift in Sources */,
-				45AD1F3525938A9800A096A0 /* MobileContentBackgroundImageAlignType.swift in Sources */,
 				45AD1F6E25938A9800A096A0 /* FollowUpsApi.swift in Sources */,
 				45AD1F5125938A9800A096A0 /* ContentFormNode.swift in Sources */,
 				45AD1FF025938A9800A096A0 /* NoAttachmentData.swift in Sources */,

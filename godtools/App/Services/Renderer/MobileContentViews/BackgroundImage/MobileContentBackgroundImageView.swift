@@ -27,6 +27,8 @@ class MobileContentBackgroundImageView {
             return
         }
         
+        /*
+        
         self.viewModel = viewModel
         self.parentView = parentView
         
@@ -101,7 +103,7 @@ class MobileContentBackgroundImageView {
             }
             
             return
-        }
+        }*/
     }
     
     // MARK: - Adding Constraints To Image

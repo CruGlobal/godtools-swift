@@ -264,19 +264,31 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         return color.withAlphaComponent(0.1)
     }
     
-    func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel {
+    func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel? {
+                    
+        let pageNode: PageNode = self.pageNode
+        let manifestAttributes: MobileContentXmlManifestAttributes = diContainer.manifest.attributes
         
-        // NOTE: Override page node because we want page background to always fill the device. ~Levi
+        let backgroundImageNode: BackgroundImageNodeType?
         
-        let backgroundImage: String? = pageNode.backgroundImage ?? diContainer.manifest.attributes.backgroundImage
+        if pageNode.backgroundImageExists {
+            backgroundImageNode = pageNode
+        }
+        else if manifestAttributes.backgroundImageExists {
+            backgroundImageNode = manifestAttributes
+        }
+        else {
+            backgroundImageNode = nil
+        }
         
-        let backgroundImageNode = MobileContentBackgroundImageNode(
-            backgroundImage: backgroundImage,
-            backgroundImageAlign: "center",
-            backgroundImageScaleType: "fill"
-        )
-                
-        return MobileContentBackgroundImageViewModel(backgroundImageNode: backgroundImageNode, manifestResourcesCache: diContainer.manifestResourcesCache)
+        if let backgroundImageNode = backgroundImageNode {
+            return MobileContentBackgroundImageViewModel(
+                backgroundImageNode: backgroundImageNode,
+                manifestResourcesCache: diContainer.manifestResourcesCache
+            )
+        }
+        
+        return nil
     }
     
     func headerWillAppear() -> ToolPageHeaderViewModelType? {

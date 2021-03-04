@@ -8,12 +8,12 @@
 
 import Foundation
 
-protocol MobileContentManifestAttributesType {
+protocol MobileContentManifestAttributesType: BackgroundImageNodeType {
     
     var backgroundColor: String { get }
     var backgroundImage: String? { get }
-    var backgroundImageAlign: String? { get }
-    var backgroundImageScaleType: String? { get }
+    var backgroundImageAlign: [String] { get }
+    var backgroundImageScaleType: String { get }
     var categoryLabelColor: String? { get }
     var locale: String? { get }
     var navbarColor: String? { get }
