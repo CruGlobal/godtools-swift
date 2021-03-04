@@ -37,6 +37,7 @@
 		451EBE3D24AD968B00C4D6DD /* e961f409d06308e87deb9ed9166264c7c732d9dc24e70f886944636308810d6e.png in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE2624AD968A00C4D6DD /* e961f409d06308e87deb9ed9166264c7c732d9dc24e70f886944636308810d6e.png */; };
 		45267B5825F16AEE004DB4C4 /* MobileContentBackgroundImageAlignType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45267B5625F16AEE004DB4C4 /* MobileContentBackgroundImageAlignType.swift */; };
 		45267B5925F16AEE004DB4C4 /* MobileContentBackgroundImageScaleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45267B5725F16AEE004DB4C4 /* MobileContentBackgroundImageScaleType.swift */; };
+		45267B6A25F16FA2004DB4C4 /* MobileContentBackgroundImageRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45267B6925F16FA2004DB4C4 /* MobileContentBackgroundImageRenderer.swift */; };
 		453D866A24E08461004EA89F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 453D866824E08461004EA89F /* Localizable.strings */; };
 		4544224425E054C200AC3115 /* ContentSpacerNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4544224325E054C200AC3115 /* ContentSpacerNode.swift */; };
 		4544225325E057E500AC3115 /* MobileContentSpacerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4544225225E057E500AC3115 /* MobileContentSpacerView.swift */; };
@@ -844,6 +845,7 @@
 		451EBE2624AD968A00C4D6DD /* e961f409d06308e87deb9ed9166264c7c732d9dc24e70f886944636308810d6e.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = e961f409d06308e87deb9ed9166264c7c732d9dc24e70f886944636308810d6e.png; sourceTree = "<group>"; };
 		45267B5625F16AEE004DB4C4 /* MobileContentBackgroundImageAlignType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentBackgroundImageAlignType.swift; sourceTree = "<group>"; };
 		45267B5725F16AEE004DB4C4 /* MobileContentBackgroundImageScaleType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentBackgroundImageScaleType.swift; sourceTree = "<group>"; };
+		45267B6925F16FA2004DB4C4 /* MobileContentBackgroundImageRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentBackgroundImageRenderer.swift; sourceTree = "<group>"; };
 		453D866324E08310004EA89F /* mn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = mn; path = mn.lproj/Localizable.strings; sourceTree = "<group>"; };
 		453D866424E08347004EA89F /* tpi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tpi; path = tpi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		453D866924E08461004EA89F /* no */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = no; path = Localizable.strings; sourceTree = "<group>"; };
@@ -3131,6 +3133,7 @@
 		45AD1DA825938A9700A096A0 /* BackgroundImage */ = {
 			isa = PBXGroup;
 			children = (
+				45267B6925F16FA2004DB4C4 /* MobileContentBackgroundImageRenderer.swift */,
 				45AD1DAD25938A9700A096A0 /* MobileContentBackgroundImageView.swift */,
 				45AD1DAB25938A9700A096A0 /* MobileContentBackgroundImageViewModel.swift */,
 			);
@@ -4939,6 +4942,7 @@
 				45AD1EFB25938A9800A096A0 /* ToolPageContentButtonEvents.swift in Sources */,
 				45AD1B3725938A4F00A096A0 /* ChooseLanguageCellViewModel.swift in Sources */,
 				45AD1B2425938A4F00A096A0 /* AboutView.swift in Sources */,
+				45267B6A25F16FA2004DB4C4 /* MobileContentBackgroundImageRenderer.swift in Sources */,
 				45AD209C25938C4900A096A0 /* GlobalActivityAnalyticsCacheType.swift in Sources */,
 				45AD1F5A25938A9800A096A0 /* AnalyticsAttributeNode+Trigger.swift in Sources */,
 				45AD22B32593D1FB00A096A0 /* UIImage+CreateImageWithColor.swift in Sources */,
