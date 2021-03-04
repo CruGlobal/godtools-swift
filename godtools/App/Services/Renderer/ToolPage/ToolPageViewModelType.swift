@@ -31,7 +31,6 @@ protocol ToolPageViewModelType: NSObject {
     var numberOfVisibleCards: Int { get }
     var numberOfHiddenCards: Int { get }
     var hidesCardJump: ObservableValue<Bool> { get }
-    var languageDirectionSemanticContentAttribute: UISemanticContentAttribute { get }
     var bottomViewColor: UIColor { get }
     
     func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel

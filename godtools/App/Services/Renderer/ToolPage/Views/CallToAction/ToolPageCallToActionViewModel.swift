@@ -11,19 +11,23 @@ import UIKit
 class ToolPageCallToActionViewModel: ToolPageCallToActionViewModelType {
     
     private let callToActionNode: CallToActionNode?
+    private let diContainer: ToolPageDiContainer
     private let toolPageColors: ToolPageColors
     private let fontService: FontService
     
     let hidesCallToAction: Bool
-    let languageDirectionSemanticContentAttribute: UISemanticContentAttribute
     
-    required init(callToActionNode: CallToActionNode?, heroNode: HeroNode?, toolPageColors: ToolPageColors, fontService: FontService, languageDirectionSemanticContentAttribute: UISemanticContentAttribute, isLastPage: Bool) {
+    required init(callToActionNode: CallToActionNode?, heroNode: HeroNode?, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColors, fontService: FontService, isLastPage: Bool) {
         
         self.callToActionNode = callToActionNode
+        self.diContainer = diContainer
         self.toolPageColors = toolPageColors
         self.fontService = fontService
         self.hidesCallToAction = (callToActionNode == nil && heroNode == nil) || isLastPage
-        self.languageDirectionSemanticContentAttribute = languageDirectionSemanticContentAttribute
+    }
+    
+    var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
+        return diContainer.languageDirectionSemanticContentAttribute
     }
     
     var title: String? {
