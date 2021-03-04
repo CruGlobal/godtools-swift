@@ -87,7 +87,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         
-        appDiContainer.deepLinkingService.processDeepLink(url: url)
+        appDiContainer.deepLinkingService.parseDeepLink(incomingDeepLink: .url(url: url))
         
         appDiContainer.appsFlyer.handleOpenUrl(url: url, options: options)
         
@@ -113,7 +113,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             )
             
             if let tractUrl = ToolShortcutItem.getTractUrl(shortcutItem: shortcutItem) {
-                appDiContainer.deepLinkingService.processDeepLink(url: tractUrl)
+                appDiContainer.deepLinkingService.parseDeepLink(incomingDeepLink: .url(url: tractUrl))
             }
         }
     }
@@ -128,15 +128,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return false
         }
         
-        if let host = url.host, host.contains("godtoolsapp") {
+        if url.containsDeepLinkHost(deepLinkHost: .godToolsApp), url.path.contains("auth") {
             if let theKeyUserAuthentication = appDiContainer.userAuthentication as? TheKeyUserAuthentication {
                 return theKeyUserAuthentication.canResumeAuthorizationFlow(url: url)
             }
-        } else if let host = url.host, host.contains("knowgod") {
-            appDiContainer.deepLinkingService.processDeepLink(url: url)
-        } else {
-            UIApplication.shared.open(url)
         }
+                
+        appDiContainer.deepLinkingService.parseDeepLink(incomingDeepLink: .url(url: url))
         
         appDiContainer.appsFlyer.continueUserActivity(userActivity: userActivity)
         

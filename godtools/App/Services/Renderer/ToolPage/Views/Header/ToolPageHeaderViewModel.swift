@@ -8,56 +8,62 @@
 
 import UIKit
 
-class ToolPageHeaderViewModel {
+class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
     
+    private let diContainer: ToolPageDiContainer
     private let toolPageColors: ToolPageColors
     private let fontService: FontService
     private let language: LanguageModel
     
-    let headerNumber: String?
-    let headerTitle: String?
     let hidesHeader: Bool
+    let number: String?
+    let title: String?
     
-    required init(pageNode: PageNode, toolPageColors: ToolPageColors, fontService: FontService, language: LanguageModel) {
+    required init(headerNode: HeaderNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColors, fontService: FontService, language: LanguageModel) {
         
+        self.diContainer = diContainer
         self.toolPageColors = toolPageColors
         self.fontService = fontService
         self.language = language
         
-        let pageHeaderNumber: String? = pageNode.headerNode?.number
-        let pageHeaderTitle: String? = pageNode.headerNode?.title
+        let pageHeaderNumber: String? = headerNode.number
+        let pageHeaderTitle: String? = headerNode.title
         let hidesHeader: Bool = pageHeaderNumber == nil && pageHeaderTitle == nil
         
-        headerNumber = pageHeaderNumber
-        headerTitle = pageHeaderTitle
         self.hidesHeader = hidesHeader
+        number = pageHeaderNumber
+        title = pageHeaderTitle
+    }
+    
+    var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
+        return diContainer.languageDirectionSemanticContentAttribute
     }
     
     var backgroundColor: UIColor {
         return toolPageColors.primaryColor
     }
     
-    var headerNumberFont: UIFont {
+    var numberFont: UIFont {
         return fontService.getFont(size: 54, weight: .regular)
     }
     
-    var headerNumberColor: UIColor {
+    var numberColor: UIColor {
         return toolPageColors.primaryTextColor
     }
     
-    var headerNumberAlignment: NSTextAlignment {
+    var numberAlignment: NSTextAlignment {
         return language.languageDirection == .leftToRight ? .left : .right
     }
     
-    var headerTitleFont: UIFont {
+    var titleFont: UIFont {
         return fontService.getFont(size: 19, weight: .regular)
     }
     
-    var headerTitleColor: UIColor {
+    var titleColor: UIColor {
         return toolPageColors.primaryTextColor
     }
     
-    var headerTitleAlignment: NSTextAlignment {
+    var titleAlignment: NSTextAlignment {
         return language.languageDirection == .leftToRight ? .left : .right
     }
 }

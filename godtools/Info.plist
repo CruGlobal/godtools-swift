@@ -73,8 +73,8 @@
 	</dict>
 	<key>UIAppFonts</key>
 	<array>
-		<string>NotoSansMyanmar-Regular.ttf</string>
-		<string>NotoSansMyanmar-Bold.ttf</string>
+		<string>NotoSansMyanmarUI-Condensed.ttf</string>
+		<string>NotoSansMyanmarUI-CondensedBold.ttf</string>
 		<string>NotoSansEthiopic-Regular.ttf</string>
 		<string>NotoSansEthiopic-Bold.ttf</string>
 		<string>AbyssinicaSIL-R.ttf</string>

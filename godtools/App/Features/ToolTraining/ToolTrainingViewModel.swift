@@ -13,7 +13,6 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     private let resource: ResourceModel
     private let language: LanguageModel
     private let primaryLanguage: LanguageModel
-    private let languageDirectionSemanticContentAttribute: UISemanticContentAttribute
     private let trainingTipId: String
     private let tipNode: TipNode
     private let manifest: MobileContentXmlManifest
@@ -61,13 +60,6 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
         self.cardJumpService = cardJumpService
         self.viewedTrainingTips = viewedTrainingTips
         self.toolPage = toolPage
-        
-        switch primaryLanguage.languageDirection {
-        case .leftToRight:
-            languageDirectionSemanticContentAttribute = .forceLeftToRight
-        case .rightToLeft:
-            languageDirectionSemanticContentAttribute = .forceRightToLeft
-        }
         
         super.init()
         

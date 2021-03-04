@@ -15,8 +15,10 @@ class ToolPageView: UIView {
     private let backgroundImageView: MobileContentBackgroundImageView = MobileContentBackgroundImageView()
     private let keyboardObserver: KeyboardObserverType = KeyboardNotificationObserver(loggingEnabled: false)
     
+    private var headerView: ToolPageHeaderView?
+    private var heroView: ToolPageHeroView?
     private var contentStackView: MobileContentStackView?
-    private var heroView: MobileContentStackView?
+    private var callToActionView: ToolPageCallToActionView?
     private var cards: [ToolPageCardView] = Array()
     private var cardTopConstraints: [NSLayoutConstraint] = Array()
     private var currentCardState: ToolPageCardsState = .initialized
@@ -29,18 +31,14 @@ class ToolPageView: UIView {
     
     @IBOutlet weak private var backgroundImageContainer: UIView!
     @IBOutlet weak private var contentStackContainerView: UIView!
-    @IBOutlet weak private var headerView: UIView!
-    
-    @IBOutlet weak private var headerNumberLabel: UILabel!
-    @IBOutlet weak private var headerTitleLabel: UILabel!
+    @IBOutlet weak private var headerContainerView: UIView!
     @IBOutlet weak private var headerTrainingTipView: UIView!
     @IBOutlet weak private var heroContainerView: UIView!
-    @IBOutlet weak private var callToActionView: UIView!
-    @IBOutlet weak private var callToActionTitleLabel: UILabel!
-    @IBOutlet weak private var callToActionNextButton: UIButton!
+    @IBOutlet weak private var callToActionContainerView: UIView!
     
     @IBOutlet weak private var topInsetTopConstraint: NSLayoutConstraint!
     @IBOutlet weak private var headerTop: NSLayoutConstraint!
+    @IBOutlet weak private var headerTrainingTipLeading: NSLayoutConstraint!
     @IBOutlet weak private var heroTop: NSLayoutConstraint!
     @IBOutlet weak private var heroHeight: NSLayoutConstraint!
     @IBOutlet weak private var callToActionBottom: NSLayoutConstraint!
@@ -57,9 +55,7 @@ class ToolPageView: UIView {
         initializeNib()
         setupLayout()
         setupBinding()
-        
-        callToActionNextButton.addTarget(self, action: #selector(handleCallToActionNext(button:)), for: .touchUpInside)
-        
+                
         addGestureRecognizer(panGestureToControlPageCollectionViewPanningSensitivity)
         panGestureToControlPageCollectionViewPanningSensitivity.delegate = self
     }
@@ -89,7 +85,22 @@ class ToolPageView: UIView {
     
     private func setupLayout() {
         
+        // headerContainerView
+        headerContainerView.isHidden = true
+        headerContainerView.backgroundColor = .clear
+        setHeaderHidden(hidden: true, animated: false)
+        
+        // headerTrainingTipView
         headerTrainingTipView.backgroundColor = .clear
+        
+        // heroContainerView
+        heroContainerView.isHidden = true
+        heroContainerView.backgroundColor = .clear
+        
+        // callToActionContainerView
+        callToActionContainerView.isHidden = true
+        callToActionContainerView.backgroundColor = .clear
+        setCallToActionHidden(hidden: true, animated: false)
     }
     
     private func setupBinding() {
@@ -101,23 +112,15 @@ class ToolPageView: UIView {
         
         // backgroundImageView
         backgroundImageView.configure(viewModel: viewModel.backgroundImageWillAppear(), parentView: backgroundImageContainer)
-        
+                
         // headerView
-        let headerViewModel: ToolPageHeaderViewModel = viewModel.headerViewModel
-        
-        headerView.semanticContentAttribute = viewModel.languageDirectionSemanticContentAttribute
-        headerView.backgroundColor = headerViewModel.backgroundColor
-        
-        headerNumberLabel.font = headerViewModel.headerNumberFont
-        headerNumberLabel.text = headerViewModel.headerNumber
-        headerNumberLabel.textColor = headerViewModel.headerNumberColor
-        headerNumberLabel.textAlignment = headerViewModel.headerNumberAlignment
-        
-        headerTitleLabel.font = headerViewModel.headerTitleFont
-        headerTitleLabel.text = headerViewModel.headerTitle
-        headerTitleLabel.textColor = headerViewModel.headerTitleColor
-        headerTitleLabel.setLineSpacing(lineSpacing: 2)
-        headerTitleLabel.textAlignment = headerViewModel.headerTitleAlignment
+        if let headerViewModel = viewModel.headerWillAppear() {
+            let headerView = ToolPageHeaderView(viewModel: headerViewModel)
+            addHeaderView(headerView: headerView)
+            headerContainerView.layoutIfNeeded()
+            headerTrainingTipLeading.constant = headerView.titleLabelFrame.origin.x - (headerTrainingTipView.frame.size.width / 2) + 5
+            layoutIfNeeded()
+        }
         
         // headerTrainingTipView
         viewModel.hidesHeaderTrainingTip.addObserver(self) { [weak self] (hidesHeaderTrainingTip: Bool) in
@@ -133,16 +136,17 @@ class ToolPageView: UIView {
             headerTrainingTipView.addSubview(trainingTipView)
             trainingTipView.constrainEdgesToSuperview()
         }
-            
-        // callToAction
-        let callToActionViewModel: ToolPageCallToActionViewModel = viewModel.callToActionViewModel
-        callToActionView.semanticContentAttribute = viewModel.languageDirectionSemanticContentAttribute
-        callToActionTitleLabel.text = callToActionViewModel.callToActionTitle
-        callToActionTitleLabel.textColor = callToActionViewModel.callToActionTitleColor
-        callToActionNextButton.semanticContentAttribute = viewModel.languageDirectionSemanticContentAttribute
-        callToActionNextButton.setImage(callToActionViewModel.callToActionButtonImage, for: .normal)
-        callToActionNextButton.setImageColor(color: callToActionViewModel.callToActionNextButtonColor)
         
+        // heroView
+        if let heroViewModel = viewModel.heroWillAppear() {
+            addHeroView(heroView: ToolPageHeroView(viewModel: heroViewModel))
+        }
+        
+        // callToActionView
+        if let callToActionViewModel = viewModel.callToActionWillAppear() {
+            addCallToActionView(callToActionView: ToolPageCallToActionView(viewModel: callToActionViewModel))
+        }
+                    
         // toolModal
         viewModel.modal.addObserver(self) { [weak self] (viewModel: ToolPageModalViewModel?) in
             if let viewModel = viewModel {
@@ -158,10 +162,6 @@ class ToolPageView: UIView {
             self?.handleKeyboardStateChange(keyboardStateChange: keyboardStateChange)
         }
         
-        let hidesHeader: Bool = viewModel.headerViewModel.hidesHeader
-        let hidesCards: Bool = viewModel.numberOfVisibleCards == 0
-        let hidesCallToAction: Bool = viewModel.callToActionViewModel.hidesCallToAction
-        
         // contentStack
         if let contentStackViewModel = viewModel.contentStackViewModel {
             let contentStackView: MobileContentStackView = MobileContentStackView(viewRenderer: contentStackViewModel.contentStackRenderer, itemSpacing: 20, scrollIsEnabled: true)
@@ -174,10 +174,7 @@ class ToolPageView: UIView {
         else {
             contentStackContainerView.isHidden = true
         }
-        
-        setHeaderHidden(hidden: hidesHeader, animated: false)
-        setCallToActionHidden(hidden: hidesCallToAction, animated: false)
-                
+                        
         //cards
         if viewModel.numberOfCards > 0 {
                         
@@ -213,83 +210,49 @@ class ToolPageView: UIView {
             }
         }
         
-        // hero top and height
-        if let heroViewModel = viewModel.heroViewModel {
-            
-            let topInset: CGFloat = 15
-            let bottomInset: CGFloat = 0
-            let screenHeight: CGFloat = UIScreen.main.bounds.size.height
-            let headerHeight: CGFloat = hidesHeader ? 0 : headerView.frame.size.height
-            let maximumHeight: CGFloat = screenHeight - safeArea.top - safeArea.bottom - headerHeight - topInset - bottomInset
-            
-            if hidesCards && hidesCallToAction {
-                heroHeight.constant = maximumHeight
-            }
-            else if hidesCards && !hidesCallToAction {
-                heroHeight.constant = maximumHeight - callToActionView.frame.size.height
-            }
-            else if !hidesCards {
-                
-                guard let cardView = cards.first else {
-                    assertionFailure("Cards should be initialized and added at this point.")
-                    return
-                }
-                
-                let numberOfVisibleCards: CGFloat =  CGFloat(viewModel.numberOfVisibleCards)
-                let cardTitleHeight: CGFloat = cardView.cardHeaderHeight
-                heroHeight.constant = maximumHeight - (numberOfVisibleCards * cardTitleHeight)
-            }
-                         
-            heroTop.constant = headerHeight + topInset
-                                    
-            let heroView: MobileContentStackView = MobileContentStackView(viewRenderer: heroViewModel.contentStackRenderer, itemSpacing: 20, scrollIsEnabled: true)
-            heroContainerView.addSubview(heroView)
-            heroView.constrainEdgesToSuperview()
-            heroContainerView.isHidden = false
-            self.heroView = heroView
-            
-            heroContainerView.layoutIfNeeded()
-        }
-        else {
-            heroContainerView.isHidden = true
-        }
-        
         addBottomView()
+        
+        updateHeroPosition()
     }
     
-    @objc func handleCallToActionNext(button: UIButton) {
-        viewModel.callToActionNextButtonTapped()
+    func pageDidAppear() {
+        
     }
     
-    private func setHeroContentInsets(hidesHeader: Bool) {
+    func pageDidDisappear() {
         
-        // TODO: Is this method needed? ~Levi
-        
-        let heroTopContentInset: CGFloat
-        
-        if !hidesHeader {
-            heroTopContentInset = headerView.frame.size.height + 20
-        }
-        else {
-            heroTopContentInset = 30
-        }
-        
-        //heroView?.setContentInset(contentInset: UIEdgeInsets(top: heroTopContentInset, left: 0, bottom: 0, right: 0))
-        //heroView?.setContentOffset(contentOffset: CGPoint(x: 0, y: heroTopContentInset * -1))
     }
     
     private var numberOfCards: Int {
         return viewModel.numberOfCards
     }
     
-    private func setHeaderHidden(hidden: Bool, animated: Bool) {
-             
-        let attemptingToShowHeader: Bool = !hidden
-        if attemptingToShowHeader && viewModel.headerViewModel.hidesHeader {
+    // MARK: - Header
+    
+    private func addHeaderView(headerView: ToolPageHeaderView) {
+        
+        guard self.headerView == nil else {
             return
         }
         
-        let topConstant: CGFloat = hidden ? headerView.frame.size.height * -1 : 0
+        headerContainerView.isHidden = false
+        headerContainerView.addSubview(headerView)
+        headerView.constrainEdgesToSuperview()
+        self.headerView = headerView
+        
+        setHeaderHidden(hidden: false, animated: false)
+    }
+    
+    private func setHeaderHidden(hidden: Bool, animated: Bool) {
+         
+        let headerShouldBeHidden: Bool = headerView?.viewModel.hidesHeader ?? true
+                
+        let attemptingToShowHeader: Bool = !hidden
+        if attemptingToShowHeader && headerShouldBeHidden {
+            return
+        }
+        
+        let topConstant: CGFloat = hidden ? headerContainerView.frame.size.height * -1 : 0
         let headerAlpha: CGFloat = hidden ? 0 : 1
         
         headerTop.constant = topConstant
@@ -297,25 +260,98 @@ class ToolPageView: UIView {
         if animated {
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
                 self.layoutIfNeeded()
-                self.headerView.alpha = headerAlpha
+                self.headerContainerView.alpha = headerAlpha
                 self.headerTrainingTipView.alpha = headerAlpha
             }, completion: nil)
         }
         else {
             layoutIfNeeded()
-            headerView.alpha = headerAlpha
+            headerContainerView.alpha = headerAlpha
             headerTrainingTipView.alpha = headerAlpha
         }
     }
     
-    private func setCallToActionHidden(hidden: Bool, animated: Bool) {
+    // MARK: - Hero
+    
+    private func addHeroView(heroView: ToolPageHeroView) {
         
-        let attemptingToShowCallToAction: Bool = !hidden
-        if attemptingToShowCallToAction && viewModel.callToActionViewModel.hidesCallToAction {
+        guard self.heroView == nil else {
             return
         }
         
-        let bottomConstant: CGFloat = hidden ? callToActionView.frame.size.height : 0
+        heroContainerView.isHidden = false
+        heroContainerView.addSubview(heroView)
+        heroView.constrainEdgesToSuperview()
+        self.heroView = heroView
+    }
+    
+    private func updateHeroPosition() {
+        
+        if self.heroView == nil {
+            return
+        }
+        
+        let hidesCards: Bool = viewModel.numberOfVisibleCards == 0
+        let hidesCallToAction: Bool = callToActionView?.viewModel.hidesCallToAction ?? true
+        
+        let topInset: CGFloat = 15
+        let bottomInset: CGFloat = 0
+        let screenHeight: CGFloat = UIScreen.main.bounds.size.height
+        let headerHeight: CGFloat = headerContainerView.isHidden ? 0 : headerContainerView.frame.size.height
+        let maximumHeight: CGFloat = screenHeight - safeArea.top - safeArea.bottom - headerHeight - topInset - bottomInset
+                
+        if hidesCards && hidesCallToAction {
+            heroHeight.constant = maximumHeight
+        }
+        else if hidesCards && !hidesCallToAction {
+            heroHeight.constant = maximumHeight - callToActionContainerView.frame.size.height
+        }
+        else if !hidesCards {
+            
+            guard let cardView = cards.first else {
+                assertionFailure("Cards should be initialized and added at this point.")
+                return
+            }
+            
+            let numberOfVisibleCards: CGFloat =  CGFloat(viewModel.numberOfVisibleCards)
+            let cardTitleHeight: CGFloat = cardView.cardHeaderHeight
+            heroHeight.constant = maximumHeight - (numberOfVisibleCards * cardTitleHeight)
+        }
+                     
+        heroTop.constant = headerHeight + topInset
+        layoutIfNeeded()
+    }
+    
+    // MARK: - Call To Action
+    
+    private func addCallToActionView(callToActionView: ToolPageCallToActionView) {
+        
+        guard self.callToActionView == nil else {
+            return
+        }
+        
+        callToActionView.configure(delegate: self)
+        
+        callToActionContainerView.isHidden = false
+        callToActionContainerView.addSubview(callToActionView)
+        callToActionView.constrainEdgesToSuperview()
+        self.callToActionView = callToActionView
+        
+        callToActionContainerView.layoutIfNeeded()
+        
+        setCallToActionHidden(hidden: false, animated: false)
+    }
+    
+    private func setCallToActionHidden(hidden: Bool, animated: Bool) {
+        
+        let callToActionShouldBeHidden: Bool = callToActionView?.viewModel.hidesCallToAction ?? true
+        
+        let attemptingToShowCallToAction: Bool = !hidden
+        if attemptingToShowCallToAction && callToActionShouldBeHidden {
+            return
+        }
+        
+        let bottomConstant: CGFloat = hidden ? callToActionContainerView.frame.size.height : 0
         let callToActionAlpha: CGFloat = hidden ? 0 : 1
         
         callToActionBottom.constant = bottomConstant
@@ -323,12 +359,12 @@ class ToolPageView: UIView {
         if animated {
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
                 self.layoutIfNeeded()
-                self.callToActionView.alpha = callToActionAlpha
+                self.callToActionContainerView.alpha = callToActionAlpha
             }, completion: nil)
         }
         else {
             layoutIfNeeded()
-            callToActionView.alpha = callToActionAlpha
+            callToActionContainerView.alpha = callToActionAlpha
         }
     }
 }
@@ -338,6 +374,14 @@ class ToolPageView: UIView {
 extension ToolPageView: ToolPageCardBounceAnimationDelegate {
     func toolPageCardBounceAnimationDidFinish(cardBounceAnimation: ToolPageCardBounceAnimation, forceStopped: Bool) {
         viewModel.cardBounceAnimationFinished()
+    }
+}
+
+// MARK: - ToolPageCallToActionViewDelegate
+
+extension ToolPageView: ToolPageCallToActionViewDelegate {
+    func callToActionNextButtonTapped() {
+        viewModel.callToActionNextButtonTapped()
     }
 }
 
@@ -415,7 +459,7 @@ extension ToolPageView {
     
     private var cardHeight: CGFloat {
                
-        let callToActionHeight: CGFloat = callToActionView.frame.size.height
+        let callToActionHeight: CGFloat = callToActionContainerView.frame.size.height
         
         guard let cardView = cards.first else {
             assertionFailure("Cards should be initialized before cardHeight is accessed.")

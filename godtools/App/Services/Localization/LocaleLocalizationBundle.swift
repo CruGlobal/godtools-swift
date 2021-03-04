@@ -10,20 +10,35 @@ import Foundation
 
 class LocaleLocalizationBundle {
     
-    let localeBundle: Bundle?
-    let localeBaseLanguageBundle: Bundle?
+    let locale: Locale
+    let bundleLoader: LocalizationBundleLoader
+    let localeBundle: LocalizationBundle?
     
     required init(localeIdentifier: String, bundleLoader: LocalizationBundleLoader) {
         
-        localeBundle = bundleLoader.bundleForResource(resourceName: localeIdentifier)
-        
         let locale: Locale = Locale(identifier: localeIdentifier)
         
-        if !locale.isBaseLanguage, let languageCode = locale.languageCode, !languageCode.isEmpty {
-            localeBaseLanguageBundle = bundleLoader.bundleForResource(resourceName: languageCode)
+        self.locale = locale
+        self.bundleLoader = bundleLoader
+        
+        if let bundle = bundleLoader.bundleForResource(resourceName: localeIdentifier) {
+            localeBundle = LocalizationBundle(bundle: bundle)
         }
         else {
-            localeBaseLanguageBundle = nil
+            localeBundle = nil
         }
+    }
+    
+    func getBaseLanguageBundle() -> LocalizationBundle? {
+        
+        guard !locale.isBaseLanguage else {
+            return localeBundle
+        }
+        
+        if let languageCode = locale.languageCode, !languageCode.isEmpty, let bundle = bundleLoader.bundleForResource(resourceName: languageCode) {
+            return LocalizationBundle(bundle: bundle)
+        }
+        
+        return nil
     }
 }

@@ -96,27 +96,47 @@ class AppFlow: NSObject, Flow {
         
         isObservingDeepLinking = true
         
-        deepLinkingService.completed.addObserver(self) { [weak self] (_deepLinkingType: DeepLinkingType?) in
-            guard let deepLinkingType = _deepLinkingType else { return }
+        deepLinkingService.completed.addObserver(self) { [weak self] (optionalDeepLink: ParsedDeepLinkType?) in
+            
+            guard let deepLink = optionalDeepLink else {
+                return
+            }
             
             DispatchQueue.main.async { [weak self] in
                 
-                switch deepLinkingType {
+                switch deepLink {
                 
-                case .tool(let resource, let primaryLanguage, let parallelLanguage, let liveShareStream, let page):
-                    if let toolsFlow = self?.toolsFlow {
-                        self?.resetFlowToToolsFlow(animated: false)
-                        DispatchQueue.main.async {
-                            toolsFlow.navigateToTool(
-                                resource: resource,
-                                primaryLanguage: primaryLanguage,
-                                parallelLanguage: parallelLanguage,
-                                liveShareStream: liveShareStream,
-                                trainingTipsEnabled: false,
-                                page: page
-                            )
-                        }
+                case .tool(let resourceAbbreviation, let primaryLanguageCodes, let parallelLanguageCodes, let liveShareStream, let page):
+                    guard let toolsFlow = self?.toolsFlow, let dataDownloader = self?.dataDownloader, let resource = dataDownloader.resourcesCache.getResource(abbreviation: resourceAbbreviation) else { return }
+                    
+                    var fetchedPrimaryLanguage: LanguageModel?
+                    
+                    if let primaryLanguageFromCodes = self?.fetchLanguageFromCodes(codes: primaryLanguageCodes) {
+                        fetchedPrimaryLanguage = primaryLanguageFromCodes
+                    } else if let primaryLanguageFromSettings = self?.appDiContainer.languageSettingsService.primaryLanguage.value {
+                        fetchedPrimaryLanguage = primaryLanguageFromSettings
+                    } else {
+                        fetchedPrimaryLanguage = dataDownloader.getStoredLanguage(code: "en")
                     }
+                    
+                    guard let primaryLanguage = fetchedPrimaryLanguage else { return }
+                    
+                    let parallelLanguage = self?.fetchLanguageFromCodes(codes: parallelLanguageCodes)
+                    
+                    self?.resetFlowToToolsFlow(animated: false)
+                    DispatchQueue.main.async {
+                        toolsFlow.navigateToTool(
+                            resource: resource,
+                            primaryLanguage: primaryLanguage,
+                            parallelLanguage: parallelLanguage,
+                            liveShareStream: liveShareStream,
+                            trainingTipsEnabled: false,
+                            page: page
+                        )
+                    }
+                
+                case .article(let articleURI):
+                    break
                 }
             }
         }
@@ -318,6 +338,16 @@ class AppFlow: NSObject, Flow {
                 self.menuFlow = nil
             }
         }
+    }
+    
+    private func fetchLanguageFromCodes (codes: [String]) -> LanguageModel? {
+        for code in codes {
+            if let language = dataDownloader.getStoredLanguage(code: code) {
+                return language
+            }
+        }
+        
+        return nil
     }
         
     // MARK: - Navigation Bar

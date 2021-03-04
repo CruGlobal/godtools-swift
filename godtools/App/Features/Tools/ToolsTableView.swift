@@ -43,10 +43,10 @@ class ToolsTableView: UIView, NibBased {
         
         self.viewModel = viewModel
         
-        setupBinding()
-        
         tableView.delegate = self
         tableView.dataSource = self
+        
+        setupBinding()
     }
     
     private func setupLayout() {
@@ -74,13 +74,6 @@ class ToolsTableView: UIView, NibBased {
         
         viewModel.toolRefreshed.addObserver(self) { [weak self] (indexPath: IndexPath) in
             self?.tableView.reloadRows(at: [indexPath], with: .none)
-        }
-        
-        viewModel.toolsAdded.addObserver(self) { [weak self] (indexPaths: [IndexPath]) in
-            if !indexPaths.isEmpty {
-                self?.tableView.insertRows(at: indexPaths, with: .fade)
-                self?.animateToolsTableAlpha(alpha: 1)
-            }
         }
         
         viewModel.toolsRemoved.addObserver(self) { [weak self] (indexPaths: [IndexPath]) in
