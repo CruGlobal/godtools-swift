@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ToolPageCallToActionView" customModule="godtools" customModuleProvider="target">
+            <connections>
+                <outlet property="nextButton" destination="cIv-Jw-jbO" id="oQ6-b3-ffA"/>
+                <outlet property="titleLabel" destination="qIN-MO-d97" id="PTY-aM-MFT"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O7v-ac-HLD">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I don’t want your sacrifices, I want your love; I don’t want your offerings, I want you to know me." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qIN-MO-d97" userLabel="titleLabel">
+                    <rect key="frame" x="20" y="10" width="324" height="80"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cIv-Jw-jbO" userLabel="nextButton">
+                    <rect key="frame" x="344" y="45" width="60" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="60" id="8rs-bo-7eW"/>
+                        <constraint firstAttribute="height" constant="50" id="smT-an-r6F"/>
+                    </constraints>
+                    <state key="normal" image="right_arrow_blue"/>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="cIv-Jw-jbO" firstAttribute="leading" secondItem="qIN-MO-d97" secondAttribute="trailing" id="1L7-51-Q5Z"/>
+                <constraint firstItem="qIN-MO-d97" firstAttribute="leading" secondItem="O7v-ac-HLD" secondAttribute="leading" constant="20" id="GMn-z8-gJb"/>
+                <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="500" constant="50" id="Htf-TU-30d"/>
+                <constraint firstItem="qIN-MO-d97" firstAttribute="top" secondItem="O7v-ac-HLD" secondAttribute="top" constant="10" id="Vul-8r-M6Q"/>
+                <constraint firstAttribute="trailing" secondItem="cIv-Jw-jbO" secondAttribute="trailing" constant="10" id="ch0-ha-gdl"/>
+                <constraint firstAttribute="bottom" secondItem="qIN-MO-d97" secondAttribute="bottom" constant="10" id="etu-WL-Avf"/>
+                <constraint firstItem="cIv-Jw-jbO" firstAttribute="top" relation="greaterThanOrEqual" secondItem="O7v-ac-HLD" secondAttribute="top" constant="5" id="xev-z9-Jh9"/>
+                <constraint firstAttribute="bottom" secondItem="cIv-Jw-jbO" secondAttribute="bottom" constant="5" id="zlT-zI-Dlq"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="139" y="144"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="right_arrow_blue" width="22" height="22"/>
+    </resources>
+</document>

@@ -25,6 +25,7 @@ enum MobileContentXmlNodeType: String, CaseIterable {
     case contentLink = "content:link"
     case contentParagraph = "content:paragraph"
     case contentPlaceholder = "content:placeholder"
+    case contentSpacer = "content:spacer"
     case contentTab = "content:tab"
     case contentTabs = "content:tabs"
     case contentText = "content:text"

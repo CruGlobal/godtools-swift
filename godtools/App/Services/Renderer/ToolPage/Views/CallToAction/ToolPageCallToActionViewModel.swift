@@ -8,42 +8,41 @@
 
 import UIKit
 
-class ToolPageCallToActionViewModel {
+class ToolPageCallToActionViewModel: ToolPageCallToActionViewModelType {
     
-    private let pageNode: PageNode
+    private let callToActionNode: CallToActionNode?
     private let toolPageColors: ToolPageColors
     private let fontService: FontService
-    private let languageDirectionSemanticContentAttribute: UISemanticContentAttribute
-
-    let hidesCallToAction: Bool
     
-    required init(pageNode: PageNode, toolPageColors: ToolPageColors, fontService: FontService, languageDirectionSemanticContentAttribute: UISemanticContentAttribute, isLastPage: Bool) {
+    let hidesCallToAction: Bool
+    let languageDirectionSemanticContentAttribute: UISemanticContentAttribute
+    
+    required init(callToActionNode: CallToActionNode?, heroNode: HeroNode?, toolPageColors: ToolPageColors, fontService: FontService, languageDirectionSemanticContentAttribute: UISemanticContentAttribute, isLastPage: Bool) {
         
-        self.pageNode = pageNode
+        self.callToActionNode = callToActionNode
         self.toolPageColors = toolPageColors
         self.fontService = fontService
+        self.hidesCallToAction = (callToActionNode == nil && heroNode == nil) || isLastPage
         self.languageDirectionSemanticContentAttribute = languageDirectionSemanticContentAttribute
-        
-        hidesCallToAction = (pageNode.callToActionNode == nil && pageNode.heroNode == nil) || isLastPage
     }
     
-    var callToActionTitle: String? {
-        return pageNode.callToActionNode?.textNode?.text
+    var title: String? {
+        return callToActionNode?.textNode?.text
     }
     
-    var callToActionTitleFont: UIFont {
+    var titleFont: UIFont {
         return fontService.getFont(size: 18, weight: .regular)
     }
     
-    var callToActionTitleColor: UIColor {
-        return pageNode.callToActionNode?.textNode?.getTextColor()?.color ?? toolPageColors.textColor
+    var titleColor: UIColor {
+        return callToActionNode?.textNode?.getTextColor()?.color ?? toolPageColors.textColor
     }
     
-    var callToActionNextButtonColor: UIColor {
-        return pageNode.callToActionNode?.getControlColor()?.color ?? toolPageColors.primaryColor
+    var nextButtonColor: UIColor {
+        return callToActionNode?.getControlColor()?.color ?? toolPageColors.primaryColor
     }
     
-    var callToActionButtonImage: UIImage? {
+    var nextButtonImage: UIImage? {
         
         guard let buttonImage = UIImage(named: "right_arrow_blue") else {
             return nil
