@@ -6,7 +6,7 @@
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class MobileContentBackgroundImageRenderer {
     
@@ -14,11 +14,9 @@ class MobileContentBackgroundImageRenderer {
         
     }
     
-    func getBackgroundImageRectForRenderingInContainer(container: CGRect, backgroundImageSizePixels: CGSize, backgroundImageNode: BackgroundImageNodeType) -> CGRect? {
+    func getBackgroundImageRectForRenderingInContainer(container: CGRect, backgroundImageSizePixels: CGSize, backgroundImageNode: BackgroundImageNodeType) -> CGRect {
         
-        guard let scale = MobileContentBackgroundImageScaleType(rawValue: backgroundImageNode.backgroundImageScaleType) else {
-            return nil
-        }
+        let scale: MobileContentBackgroundImageScaleType = MobileContentBackgroundImageScaleType(rawValue: backgroundImageNode.backgroundImageScaleType) ?? .fill
         
         let alignments: [MobileContentBackgroundImageAlignType] = backgroundImageNode.backgroundImageAlign.compactMap({MobileContentBackgroundImageAlignType(rawValue: $0)})
         
@@ -33,8 +31,28 @@ class MobileContentBackgroundImageRenderer {
             rect: scaledRect,
             alignments: alignments
         )
+                
+        let floorScaledAndPositionedRect: CGRect = CGRect(
+            x: floorValue(value: scaledAndPositioned.origin.x),
+            y: floorValue(value: scaledAndPositioned.origin.y),
+            width: floorValue(value: scaledAndPositioned.size.width),
+            height: floorValue(value: scaledAndPositioned.size.height)
+        )
         
-        return scaledAndPositioned
+        return floorScaledAndPositionedRect
+    }
+    
+    private func floorValue(value: CGFloat) -> CGFloat {
+        
+        if value < 0 {
+            
+            let positiveValue: CGFloat = value * -1
+            let flooredPositiveValue: CGFloat = floor(positiveValue)
+            
+            return flooredPositiveValue * -1
+        }
+        
+        return floor(value)
     }
     
     // MARK: - Scale
@@ -62,10 +80,10 @@ class MobileContentBackgroundImageRenderer {
         let scaleX: CGFloat = container.size.width / rect.size.width
         let scaleY: CGFloat = container.size.height / rect.size.height
         
-        if scaleX > scaleY {
+        if scaleX < scaleY {
             return scaleRectToHorizontallyFitContainer(container: container, rect: rect)
         }
-        else if scaleY > scaleX {
+        else if scaleY < scaleX {
             return scaleRectToVerticallyFitContainer(container: container, rect: rect)
         }
         
@@ -77,10 +95,10 @@ class MobileContentBackgroundImageRenderer {
         let scaleX: CGFloat = container.size.width / rect.size.width
         let scaleY: CGFloat = container.size.height / rect.size.height
         
-        if scaleX < scaleY {
+        if scaleX > scaleY {
             return scaleRectToHorizontallyFitContainer(container: container, rect: rect)
         }
-        else if scaleY < scaleX {
+        else if scaleY > scaleX {
             return scaleRectToVerticallyFitContainer(container: container, rect: rect)
         }
         

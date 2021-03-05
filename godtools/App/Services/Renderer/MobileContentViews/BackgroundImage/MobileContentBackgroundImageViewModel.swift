@@ -12,6 +12,7 @@ class MobileContentBackgroundImageViewModel {
     
     private let backgroundImageNode: BackgroundImageNodeType
     private let manifestResourcesCache: ManifestResourcesCache
+    private let backgroundImageRenderer: MobileContentBackgroundImageRenderer = MobileContentBackgroundImageRenderer()
     
     let align: [MobileContentBackgroundImageAlignType]
     let scale: MobileContentBackgroundImageScaleType
@@ -30,5 +31,44 @@ class MobileContentBackgroundImageViewModel {
             return nil
         }
         return manifestResourcesCache.getImage(resource: resource)
+    }
+    
+    func getRenderPositionForBackgroundImage(container: CGRect, backgroundImage: UIImage) -> CGRect {
+        
+        let imageSizePixels: CGSize = CGSize(
+            width: backgroundImage.size.width * backgroundImage.scale,
+            height: backgroundImage.size.height * backgroundImage.scale
+        )
+        
+        return getRenderPositionForBackgroundImage(container: container, imageSizePixels: imageSizePixels)
+    }
+    
+    private func getRenderPositionForBackgroundImage(container: CGRect, imageSizePixels: CGSize) -> CGRect {
+        
+        return backgroundImageRenderer.getBackgroundImageRectForRenderingInContainer(
+            container: container,
+            backgroundImageSizePixels: imageSizePixels,
+            backgroundImageNode: backgroundImageNode
+        )
+    }
+    
+    func backgroundImageWillAppear(container: CGRect) -> UIImageView? {
+        
+        guard let resource = backgroundImageNode.backgroundImage else {
+            return nil
+        }
+        
+        guard let backgroundImage = manifestResourcesCache.getImage(resource: resource) else {
+            return nil
+        }
+        
+        let backgroundImageRect: CGRect = getRenderPositionForBackgroundImage(container: container, backgroundImage: backgroundImage)
+        
+        let imageView: UIImageView = UIImageView(frame: backgroundImageRect)
+        imageView.backgroundColor = .clear
+        imageView.contentMode = .scaleToFill
+        imageView.image = backgroundImage
+        
+        return imageView
     }
 }
