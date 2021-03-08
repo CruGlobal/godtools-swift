@@ -36,8 +36,8 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
     
     func testRectIsPositionedCorrectlyInContainerWithScaleFitAndAlignCenter() {
         
-        let scale: String = MobileContentBackgroundImageScaleType.fit.rawValue
-        let align: [String] = [MobileContentBackgroundImageAlignType.center.rawValue]
+        let scale: MobileContentBackgroundImageScaleType = MobileContentBackgroundImageScaleType.fit
+        let align: [MobileContentBackgroundImageAlignType] = [MobileContentBackgroundImageAlignType.center]
         let languageDirection: LanguageDirection = .leftToRight
         
         let container: CGRect = CGRect(x: 0, y: 0, width: 320, height: 568)
@@ -125,8 +125,8 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
     
     func testRectIsPositionedCorrectlyInContainerWithScaleFillAndAlignCenter() {
         
-        let scale: String = MobileContentBackgroundImageScaleType.fill.rawValue
-        let align: [String] = [MobileContentBackgroundImageAlignType.center.rawValue]
+        let scale: MobileContentBackgroundImageScaleType = MobileContentBackgroundImageScaleType.fill
+        let align: [MobileContentBackgroundImageAlignType] = [MobileContentBackgroundImageAlignType.center]
         let languageDirection: LanguageDirection = .leftToRight
         
         let container: CGRect = CGRect(x: 0, y: 0, width: 320, height: 568)
@@ -214,8 +214,9 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
     
     func testIphone11BackgroundImageWithAlignBottomAndFillHorizontally() {
         
-        let scale: String = MobileContentBackgroundImageScaleType.fillHorizontally.rawValue
-        let align: [String] = [MobileContentBackgroundImageAlignType.bottom.rawValue]
+        let scale: MobileContentBackgroundImageScaleType = MobileContentBackgroundImageScaleType.fillHorizontally
+        let align: [MobileContentBackgroundImageAlignType] = [MobileContentBackgroundImageAlignType.bottom]
+        let languageDirection: LanguageDirection = .leftToRight
         
         let container: CGRect = CGRect(x: 0, y: 0, width: 414, height: 896)
         
