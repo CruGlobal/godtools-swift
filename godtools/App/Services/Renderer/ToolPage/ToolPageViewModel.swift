@@ -236,10 +236,6 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         return false
     }
     
-    var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return diContainer.languageDirectionSemanticContentAttribute
-    }
-    
     var backgroundColor: UIColor {
         return toolPageColors.backgroundColor
     }
@@ -291,10 +287,10 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         
         return ToolPageHeaderViewModel(
             headerNode: headerNode,
+            diContainer: diContainer,
             toolPageColors: toolPageColors,
             fontService: diContainer.fontService,
-            language: diContainer.language,
-            languageDirectionSemanticContentAttribute: languageDirectionSemanticContentAttribute
+            language: diContainer.language
         )
     }
     
@@ -312,9 +308,9 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         return ToolPageCallToActionViewModel(
             callToActionNode: pageNode.callToActionNode,
             heroNode: pageNode.heroNode,
+            diContainer: diContainer,
             toolPageColors: toolPageColors,
             fontService: diContainer.fontService,
-            languageDirectionSemanticContentAttribute: languageDirectionSemanticContentAttribute,
             isLastPage: isLastPage
         )
     }

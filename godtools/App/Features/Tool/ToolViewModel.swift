@@ -41,7 +41,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
         
     let currentPage: ObservableValue<AnimatableValue<Int>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
     let numberOfToolPages: ObservableValue<Int> = ObservableValue(value: 0)
-    let languageDirectionSemanticContentAttribute: UISemanticContentAttribute
+    let toolPageNavigationSemanticContentAttribute: UISemanticContentAttribute
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -109,9 +109,9 @@ class ToolViewModel: NSObject, ToolViewModelType {
         
         switch primaryLanguage.languageDirection {
         case .leftToRight:
-            languageDirectionSemanticContentAttribute = .forceLeftToRight
+            toolPageNavigationSemanticContentAttribute = .forceLeftToRight
         case .rightToLeft:
-            languageDirectionSemanticContentAttribute = .forceRightToLeft
+            toolPageNavigationSemanticContentAttribute = .forceRightToLeft
         }
         
         super.init()
@@ -350,7 +350,6 @@ extension ToolViewModel {
                 resource: resource,
                 language: languageTranslationModel.language,
                 primaryLanguage: primaryLanguageTranslationModel.language,
-                languageDirectionSemanticContentAttribute: languageDirectionSemanticContentAttribute,
                 translationsFileCache: translationsFileCache,
                 mobileContentNodeParser: mobileContentNodeParser,
                 mobileContentAnalytics: mobileContentAnalytics,
