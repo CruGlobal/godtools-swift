@@ -111,7 +111,7 @@ class AppFlow: NSObject, Flow {
                     
                     var fetchedPrimaryLanguage: LanguageModel?
                     
-                    if let primaryLanguageFromCodes = self?.fetchLanguageFromCodes(resource: resource, codes: primaryLanguageCodes) {
+                    if let primaryLanguageFromCodes = dataDownloader.fetchFirstSupportedLanguageForResource(resource: resource, codes: primaryLanguageCodes) {
                         fetchedPrimaryLanguage = primaryLanguageFromCodes
                     } else if let primaryLanguageFromSettings = self?.appDiContainer.languageSettingsService.primaryLanguage.value {
                         fetchedPrimaryLanguage = primaryLanguageFromSettings
@@ -121,7 +121,7 @@ class AppFlow: NSObject, Flow {
                     
                     guard let primaryLanguage = fetchedPrimaryLanguage else { return }
                     
-                    let parallelLanguage = self?.fetchLanguageFromCodes(resource: resource, codes: parallelLanguageCodes)
+                    let parallelLanguage = dataDownloader.fetchFirstSupportedLanguageForResource(resource: resource, codes: parallelLanguageCodes)
                     
                     self?.resetFlowToToolsFlow(animated: false)
                     DispatchQueue.main.async {
@@ -338,16 +338,6 @@ class AppFlow: NSObject, Flow {
                 self.menuFlow = nil
             }
         }
-    }
-    
-    private func fetchLanguageFromCodes (resource: ResourceModel, codes: [String]) -> LanguageModel? {
-        for code in codes {
-            if let language = dataDownloader.getStoredLanguage(code: code), resource.supportsLanguage(languageId: language.id) {
-                return language
-            }
-        }
-        
-        return nil
     }
         
     // MARK: - Navigation Bar
