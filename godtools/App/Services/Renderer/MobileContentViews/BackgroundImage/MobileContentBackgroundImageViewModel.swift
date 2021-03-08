@@ -12,15 +12,17 @@ class MobileContentBackgroundImageViewModel {
     
     private let backgroundImageNode: BackgroundImageNodeType
     private let manifestResourcesCache: ManifestResourcesCache
+    private let languageDirection: LanguageDirection
     private let backgroundImageRenderer: MobileContentBackgroundImageRenderer = MobileContentBackgroundImageRenderer()
     
     let align: [MobileContentBackgroundImageAlignType]
     let scale: MobileContentBackgroundImageScaleType
     
-    required init(backgroundImageNode: BackgroundImageNodeType, manifestResourcesCache: ManifestResourcesCache) {
+    required init(backgroundImageNode: BackgroundImageNodeType, manifestResourcesCache: ManifestResourcesCache, languageDirection: LanguageDirection) {
         
         self.backgroundImageNode = backgroundImageNode
         self.manifestResourcesCache = manifestResourcesCache
+        self.languageDirection = languageDirection
         
         align = backgroundImageNode.backgroundImageAlign.compactMap({MobileContentBackgroundImageAlignType(rawValue: $0)})
         scale = MobileContentBackgroundImageScaleType(rawValue: backgroundImageNode.backgroundImageScaleType) ?? .fillHorizontally
@@ -48,7 +50,9 @@ class MobileContentBackgroundImageViewModel {
         return backgroundImageRenderer.getBackgroundImageRectForRenderingInContainer(
             container: container,
             backgroundImageSizePixels: imageSizePixels,
-            backgroundImageNode: backgroundImageNode
+            scale: scale,
+            align: align,
+            languageDirection: languageDirection
         )
     }
     

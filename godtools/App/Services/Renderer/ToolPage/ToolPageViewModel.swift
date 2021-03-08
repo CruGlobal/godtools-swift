@@ -284,7 +284,8 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         if let backgroundImageNode = backgroundImageNode {
             return MobileContentBackgroundImageViewModel(
                 backgroundImageNode: backgroundImageNode,
-                manifestResourcesCache: diContainer.manifestResourcesCache
+                manifestResourcesCache: diContainer.manifestResourcesCache,
+                languageDirection: diContainer.language.languageDirection
             )
         }
         

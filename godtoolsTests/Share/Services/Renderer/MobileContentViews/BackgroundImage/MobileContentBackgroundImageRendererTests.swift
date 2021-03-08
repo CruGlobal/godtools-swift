@@ -38,6 +38,7 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
         
         let scale: String = MobileContentBackgroundImageScaleType.fit.rawValue
         let align: [String] = [MobileContentBackgroundImageAlignType.center.rawValue]
+        let languageDirection: LanguageDirection = .leftToRight
         
         let container: CGRect = CGRect(x: 0, y: 0, width: 320, height: 568)
         
@@ -50,7 +51,9 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
         let rendered_rect_A: CGRect = backgroundImageRenderer.getBackgroundImageRectForRenderingInContainer(
             container: container,
             backgroundImageSizePixels: rect_A.size,
-            backgroundImageNode: TestBackgroundImageNode(backgroundImageAlign: align, backgroundImageScaleType: scale)
+            scale: scale,
+            align: align,
+            languageDirection: languageDirection
         )
         
         assertFailureIfExpectedRectIsNotEqualToRenderedRect(renderedRect: rendered_rect_A, expectedRect: expectedRendered_rect_A)
@@ -64,7 +67,9 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
         let rendered_rect_B: CGRect = backgroundImageRenderer.getBackgroundImageRectForRenderingInContainer(
             container: container,
             backgroundImageSizePixels: rect_B.size,
-            backgroundImageNode: TestBackgroundImageNode(backgroundImageAlign: align, backgroundImageScaleType: scale)
+            scale: scale,
+            align: align,
+            languageDirection: languageDirection
         )
         
         assertFailureIfExpectedRectIsNotEqualToRenderedRect(renderedRect: rendered_rect_B, expectedRect: expectedRendered_rect_B)
@@ -78,7 +83,9 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
         let rendered_rect_C: CGRect = backgroundImageRenderer.getBackgroundImageRectForRenderingInContainer(
             container: container,
             backgroundImageSizePixels: rect_C.size,
-            backgroundImageNode: TestBackgroundImageNode(backgroundImageAlign: align, backgroundImageScaleType: scale)
+            scale: scale,
+            align: align,
+            languageDirection: languageDirection
         )
         
         assertFailureIfExpectedRectIsNotEqualToRenderedRect(renderedRect: rendered_rect_C, expectedRect: expectedRendered_rect_C)
@@ -92,7 +99,9 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
         let rendered_rect_D: CGRect = backgroundImageRenderer.getBackgroundImageRectForRenderingInContainer(
             container: container,
             backgroundImageSizePixels: rect_D.size,
-            backgroundImageNode: TestBackgroundImageNode(backgroundImageAlign: align, backgroundImageScaleType: scale)
+            scale: scale,
+            align: align,
+            languageDirection: languageDirection
         )
         
         assertFailureIfExpectedRectIsNotEqualToRenderedRect(renderedRect: rendered_rect_D, expectedRect: expectedRendered_rect_D)
@@ -106,7 +115,9 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
         let rendered_rect_E: CGRect = backgroundImageRenderer.getBackgroundImageRectForRenderingInContainer(
             container: container,
             backgroundImageSizePixels: rect_E.size,
-            backgroundImageNode: TestBackgroundImageNode(backgroundImageAlign: align, backgroundImageScaleType: scale)
+            scale: scale,
+            align: align,
+            languageDirection: languageDirection
         )
         
         assertFailureIfExpectedRectIsNotEqualToRenderedRect(renderedRect: rendered_rect_E, expectedRect: expectedRendered_rect_E)
@@ -116,6 +127,7 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
         
         let scale: String = MobileContentBackgroundImageScaleType.fill.rawValue
         let align: [String] = [MobileContentBackgroundImageAlignType.center.rawValue]
+        let languageDirection: LanguageDirection = .leftToRight
         
         let container: CGRect = CGRect(x: 0, y: 0, width: 320, height: 568)
         
@@ -128,7 +140,9 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
         let rendered_rect_A: CGRect = backgroundImageRenderer.getBackgroundImageRectForRenderingInContainer(
             container: container,
             backgroundImageSizePixels: rect_A.size,
-            backgroundImageNode: TestBackgroundImageNode(backgroundImageAlign: align, backgroundImageScaleType: scale)
+            scale: scale,
+            align: align,
+            languageDirection: languageDirection
         )
         
         assertFailureIfExpectedRectIsNotEqualToRenderedRect(renderedRect: rendered_rect_A, expectedRect: expectedRendered_rect_A)
@@ -142,7 +156,9 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
         let rendered_rect_B: CGRect = backgroundImageRenderer.getBackgroundImageRectForRenderingInContainer(
             container: container,
             backgroundImageSizePixels: rect_B.size,
-            backgroundImageNode: TestBackgroundImageNode(backgroundImageAlign: align, backgroundImageScaleType: scale)
+            scale: scale,
+            align: align,
+            languageDirection: languageDirection
         )
         
         assertFailureIfExpectedRectIsNotEqualToRenderedRect(renderedRect: rendered_rect_B, expectedRect: expectedRendered_rect_B)
@@ -156,7 +172,9 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
         let rendered_rect_C: CGRect = backgroundImageRenderer.getBackgroundImageRectForRenderingInContainer(
             container: container,
             backgroundImageSizePixels: rect_C.size,
-            backgroundImageNode: TestBackgroundImageNode(backgroundImageAlign: align, backgroundImageScaleType: scale)
+            scale: scale,
+            align: align,
+            languageDirection: languageDirection
         )
         
         assertFailureIfExpectedRectIsNotEqualToRenderedRect(renderedRect: rendered_rect_C, expectedRect: expectedRendered_rect_C)
@@ -170,7 +188,9 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
         let rendered_rect_D: CGRect = backgroundImageRenderer.getBackgroundImageRectForRenderingInContainer(
             container: container,
             backgroundImageSizePixels: rect_D.size,
-            backgroundImageNode: TestBackgroundImageNode(backgroundImageAlign: align, backgroundImageScaleType: scale)
+            scale: scale,
+            align: align,
+            languageDirection: languageDirection
         )
         
         assertFailureIfExpectedRectIsNotEqualToRenderedRect(renderedRect: rendered_rect_D, expectedRect: expectedRendered_rect_D)
@@ -184,7 +204,9 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
         let rendered_rect_E: CGRect = backgroundImageRenderer.getBackgroundImageRectForRenderingInContainer(
             container: container,
             backgroundImageSizePixels: rect_E.size,
-            backgroundImageNode: TestBackgroundImageNode(backgroundImageAlign: align, backgroundImageScaleType: scale)
+            scale: scale,
+            align: align,
+            languageDirection: languageDirection
         )
         
         assertFailureIfExpectedRectIsNotEqualToRenderedRect(renderedRect: rendered_rect_E, expectedRect: expectedRendered_rect_E)
@@ -206,7 +228,9 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
         let rendered_rect_A: CGRect = backgroundImageRenderer.getBackgroundImageRectForRenderingInContainer(
             container: container,
             backgroundImageSizePixels: rect_A.size,
-            backgroundImageNode: TestBackgroundImageNode(backgroundImageAlign: align, backgroundImageScaleType: scale)
+            scale: scale,
+            align: align,
+            languageDirection: languageDirection
         )
         
         assertFailureIfExpectedRectIsNotEqualToRenderedRect(renderedRect: rendered_rect_A, expectedRect: expectedRendered_rect_A)

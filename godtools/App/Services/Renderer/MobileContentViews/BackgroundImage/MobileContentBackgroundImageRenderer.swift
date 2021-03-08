@@ -14,11 +14,7 @@ class MobileContentBackgroundImageRenderer {
         
     }
     
-    func getBackgroundImageRectForRenderingInContainer(container: CGRect, backgroundImageSizePixels: CGSize, backgroundImageNode: BackgroundImageNodeType) -> CGRect {
-        
-        let scale: MobileContentBackgroundImageScaleType = MobileContentBackgroundImageScaleType(rawValue: backgroundImageNode.backgroundImageScaleType) ?? .fill
-        
-        let alignments: [MobileContentBackgroundImageAlignType] = backgroundImageNode.backgroundImageAlign.compactMap({MobileContentBackgroundImageAlignType(rawValue: $0)})
+    func getBackgroundImageRectForRenderingInContainer(container: CGRect, backgroundImageSizePixels: CGSize, scale: MobileContentBackgroundImageScaleType, align: [MobileContentBackgroundImageAlignType], languageDirection: LanguageDirection) -> CGRect {
         
         let scaledRect: CGRect = scaleRectToContainer(
             container: container,
@@ -29,7 +25,8 @@ class MobileContentBackgroundImageRenderer {
         let scaledAndPositioned: CGRect = positionRectInContainer(
             container: container,
             rect: scaledRect,
-            alignments: alignments
+            alignments: align,
+            languageDirection: languageDirection
         )
                 
         let floorScaledAndPositionedRect: CGRect = CGRect(
@@ -139,14 +136,14 @@ class MobileContentBackgroundImageRenderer {
     
     // MARK: - Position
     
-    func positionRectInContainer(container: CGRect, rect: CGRect, alignments: [MobileContentBackgroundImageAlignType]) -> CGRect {
+    func positionRectInContainer(container: CGRect, rect: CGRect, alignments: [MobileContentBackgroundImageAlignType], languageDirection: LanguageDirection) -> CGRect {
         
         guard let firstAlignment: MobileContentBackgroundImageAlignType = alignments.first else {
             return rect
         }
                 
         if alignments.count == 1 {
-            return positionRectInContainer(container: container, rect: rect, align: firstAlignment)
+            return positionRectInContainer(container: container, rect: rect, align: firstAlignment, languageDirection: languageDirection)
         }
         
         let containsCenterAlign: Bool = alignments.contains(.center)
@@ -166,13 +163,13 @@ class MobileContentBackgroundImageRenderer {
                 
                 didPositionHorizontally = true
                 
-                positionedRect = positionRectInContainer(container: container, rect: positionedRect, align: align)
+                positionedRect = positionRectInContainer(container: container, rect: positionedRect, align: align, languageDirection: languageDirection)
             }
             else if (align == .top || align == .bottom) && !didPositionVertically {
                 
                 didPositionVertically = true
                 
-                positionedRect = positionRectInContainer(container: container, rect: positionedRect, align: align)
+                positionedRect = positionRectInContainer(container: container, rect: positionedRect, align: align, languageDirection: languageDirection)
             }
         }
         
@@ -192,15 +189,25 @@ class MobileContentBackgroundImageRenderer {
         return positionedRect
     }
     
-    private func positionRectInContainer(container: CGRect, rect: CGRect, align: MobileContentBackgroundImageAlignType) -> CGRect {
+    private func positionRectInContainer(container: CGRect, rect: CGRect, align: MobileContentBackgroundImageAlignType, languageDirection: LanguageDirection) -> CGRect {
         
         switch align {
             
         case .start:
-            return positionRectToStartOfContainer(container: container, rect: rect)
-            
+            switch languageDirection {
+            case .leftToRight:
+                return positionRectToStartOfContainer(container: container, rect: rect)
+            case .rightToLeft:
+                return positionRectToEndOfContainer(container: container, rect: rect)
+            }
+        
         case .end:
-            return positionRectToEndOfContainer(container: container, rect: rect)
+            switch languageDirection {
+            case .leftToRight:
+                return positionRectToEndOfContainer(container: container, rect: rect)
+            case .rightToLeft:
+                return positionRectToStartOfContainer(container: container, rect: rect)
+            }
             
         case .top:
             return positionRectToTopOfContainer(container: container, rect: rect)
