@@ -11,6 +11,10 @@ import SWXMLHash
 
 class ContentTextNode: MobileContentXmlNode {
     
+    let endImage: String?
+    let endImageSize: String?
+    let startImage: String?
+    let startImageSize: String?
     let text: String?
     let textAlign: String?
     let textColor: String?
@@ -21,6 +25,10 @@ class ContentTextNode: MobileContentXmlNode {
     
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
+        endImage = attributes["end-image"]?.text
+        endImageSize = attributes["end-image-size"]?.text
+        startImage = attributes["start-image"]?.text
+        startImageSize = attributes["start-image-size"]?.text
         textAlign = attributes["text-align"]?.text
         textColor = attributes["text-color"]?.text
         textScale = attributes["text-scale"]?.text
