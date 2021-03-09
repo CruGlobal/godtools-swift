@@ -33,7 +33,7 @@ protocol ToolPageViewModelType: NSObject {
     var hidesCardJump: ObservableValue<Bool> { get }
     var bottomViewColor: UIColor { get }
     
-    func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel
+    func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel?
     func headerWillAppear() -> ToolPageHeaderViewModelType?
     func heroWillAppear() -> ToolPageHeroViewModelType?
     func callToActionWillAppear() -> ToolPageCallToActionViewModelType?

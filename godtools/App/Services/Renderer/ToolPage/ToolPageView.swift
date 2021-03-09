@@ -111,7 +111,9 @@ class ToolPageView: UIView {
         backgroundColor = viewModel.backgroundColor
         
         // backgroundImageView
-        backgroundImageView.configure(viewModel: viewModel.backgroundImageWillAppear(), parentView: backgroundImageContainer)
+        if let backgroundImageViewModel = viewModel.backgroundImageWillAppear() {
+            backgroundImageView.configure(viewModel: backgroundImageViewModel, parentView: backgroundImageContainer)
+        }
                 
         // headerView
         if let headerViewModel = viewModel.headerWillAppear() {

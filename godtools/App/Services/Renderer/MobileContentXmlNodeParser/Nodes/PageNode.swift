@@ -19,7 +19,7 @@ class PageNode: MobileContentXmlNode, BackgroundImageNodeType {
     
     let backgroundColor: String?
     let backgroundImage: String?
-    let backgroundImageAlign: String
+    let backgroundImageAlign: [String]
     let backgroundImageScaleType: String
     let cardTextColor: String?
     let listeners: [String]
@@ -33,8 +33,14 @@ class PageNode: MobileContentXmlNode, BackgroundImageNodeType {
         
         backgroundColor = attributes["background-color"]?.text
         backgroundImage = attributes["background-image"]?.text
-        backgroundImageAlign = attributes["background-image-align"]?.text ?? "center"
-        backgroundImageScaleType = attributes["background-image-scale-type"]?.text ?? "fill-x"
+        
+        if let backgroundImageAlignValues = attributes["background-image-align"]?.text, !backgroundImageAlignValues.isEmpty {
+            backgroundImageAlign = backgroundImageAlignValues.components(separatedBy: " ")
+        }
+        else {
+            backgroundImageAlign = [MobileContentBackgroundImageAlignType.center.rawValue]
+        }
+        backgroundImageScaleType = attributes["background-image-scale-type"]?.text ?? MobileContentBackgroundImageScaleType.fillHorizontally.rawValue
         cardTextColor = attributes["card-text-color"]?.text
         listeners = attributes["listeners"]?.text.components(separatedBy: " ") ?? []
         primaryColor = attributes["primary-color"]?.text

@@ -10,8 +10,8 @@ import Foundation
 
 enum MobileContentBackgroundImageScaleType: String {
     
-    case fitAll = "fit"
-    case fillAll = "fill"
+    case fit = "fit"
+    case fill = "fill"
     case fillHorizontally = "fill-x"
     case fillVertically = "fill-y"
 }
