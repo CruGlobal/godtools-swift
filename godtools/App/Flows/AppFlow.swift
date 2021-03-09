@@ -21,6 +21,7 @@ class AppFlow: NSObject, Flow {
     private var languageSettingsFlow: LanguageSettingsFlow?
     private var toolsFlow: ToolsFlow?
     private var tutorialFlow: TutorialFlow?
+    private var articleDeepLinkFlow: ArticleDeepLinkFlow?
     private var resignedActiveDate: Date?
     private var navigationStarted: Bool = false
     private var isObservingDeepLinking: Bool = false
@@ -64,6 +65,19 @@ class AppFlow: NSObject, Flow {
         navigationController.dismiss(animated: animated, completion: nil)
         menuFlow = nil
         languageSettingsFlow = nil
+        articleDeepLinkFlow = nil
+        tutorialFlow = nil
+    }
+    
+    func resetFlowToArticleDeepLinkFlow(animated: Bool) {
+        configureNavigationBar()
+        articleDeepLinkFlow?.navigationController.popToRootViewController(animated: animated)
+        navigationController.popToRootViewController(animated: animated)
+        closeMenu(animated: animated)
+        navigationController.dismiss(animated: animated, completion: nil)
+        menuFlow = nil
+        languageSettingsFlow = nil
+        toolsFlow = nil
         tutorialFlow = nil
     }
     
@@ -135,8 +149,18 @@ class AppFlow: NSObject, Flow {
                         )
                     }
                 
-                case .article(let articleURI):
-                    break
+                case .article(let articleUri):
+                    guard let appFlow = self else { return }
+                    
+                    let articleDeepLinkFlow = ArticleDeepLinkFlow(flowDelegate: appFlow, appDiContainer: appFlow.appDiContainer, sharedNavigationController: appFlow.navigationController)
+                    
+                    appFlow.articleDeepLinkFlow = articleDeepLinkFlow
+                    
+                    //appFlow.resetFlowToArticleDeepLinkFlow(animated: false)
+                    DispatchQueue.main.async {
+                        articleDeepLinkFlow.navigate(step: .articleDeepLinkTapped(articleUri: ArticleAemUri(aemUri: articleUri)))
+                    }
+                    
                 }
             }
         }

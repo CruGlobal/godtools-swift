@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ArticleDeepLinkFlow: NSObject, Flow {
+class ArticleDeepLinkFlow: Flow {
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -20,8 +20,6 @@ class ArticleDeepLinkFlow: NSObject, Flow {
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
-
-        super.init()
     }
     
     func navigate(step: FlowStep) {
