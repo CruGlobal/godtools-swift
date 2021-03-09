@@ -168,10 +168,11 @@ class AppDiContainer {
             translationDownloader: translationDownloader
         )
         
-        articleAemRepository = ArticleAemRepository(sharedSession: sharedIgnoringCacheSession)
-        
         articleAemImportDownloader = ArticleAemImportDownloader(realmDatabase: realmDatabase, sharedSession: sharedIgnoringCacheSession)
-                
+               
+        articleAemRepository = ArticleAemRepository(importDownloader: articleAemImportDownloader)
+
+        
         isNewUserService = IsNewUserService(
             isNewUserCache: IsNewUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache),
             determineNewUser: DetermineNewUserIfPrimaryLanguageSet(languageSettingsCache: languageSettingsCache)

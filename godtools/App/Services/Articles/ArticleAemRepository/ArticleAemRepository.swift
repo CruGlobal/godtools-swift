@@ -10,17 +10,19 @@ import Foundation
 
 class ArticleAemRepository {
     
-    private let session: URLSession
+    private let importDownloader: ArticleAemImportDownloader
     
-    required init(sharedSession: SharedSessionType) {
+    required init(importDownloader: ArticleAemImportDownloader) {
         
-        self.session = sharedSession.session
+        self.importDownloader = importDownloader
     }
     
     func getArticleAem(aemUri: ArticleAemUri, cache: ((_ articleAem: ArticleAemModel) -> Void), downloadStarted: (() -> Void), downloadFinished: ((_ result: Result<ArticleAemModel, Error>) -> Void)) {
         
+        //TODO: create ArticleAemArchiver and ArticleAemDownloader to replace ArticleAemImportDownloader ~Robert
         // If the article aem is cached to the filesystem, go ahead and call the cache closure and return immediately.
-        
+
         // Otherwise, we will download and parse the aem uri and cache the web archive to the filesystem.
+        importDownloader.downloadAndCache(translationZipFile: nil, aemImportSrcs: [aemUri.uriString])
     }
 }

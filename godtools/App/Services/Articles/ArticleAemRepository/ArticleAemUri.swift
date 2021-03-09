@@ -10,13 +10,12 @@ import Foundation
 
 class ArticleAemUri {
     
-    private let aemUri: String
-    
+    let uriString: String
     let url: URL?
     
     required init(aemUri: String) {
         
-        self.aemUri = aemUri
+        self.uriString = aemUri
         self.url = URL(string: aemUri)
     }
 }

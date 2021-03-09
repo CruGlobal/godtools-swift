@@ -783,6 +783,7 @@
 		D19EB5DE259BB39300685156 /* training_tip_callout.json in Resources */ = {isa = PBXBuildFile; fileRef = D19EB5DD259BB39300685156 /* training_tip_callout.json */; };
 		D19EB5E0259BB75900685156 /* training_tip_tips.json in Resources */ = {isa = PBXBuildFile; fileRef = D19EB5DF259BB75900685156 /* training_tip_tips.json */; };
 		D1B944E5259E58F5004641DB /* remote_share_active.json in Resources */ = {isa = PBXBuildFile; fileRef = D1B944E4259E58F5004641DB /* remote_share_active.json */; };
+		D1EE0D5225F7C60E008BF955 /* ArticleAemRepositoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EE0D5125F7C60E008BF955 /* ArticleAemRepositoryType.swift */; };
 		D1FF263825BA0C0E00C825DB /* FirebaseInAppMessagingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FF263725BA0C0E00C825DB /* FirebaseInAppMessagingType.swift */; };
 		D1FF263E25BA0C1C00C825DB /* FirebaseInAppMessaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FF263D25BA0C1C00C825DB /* FirebaseInAppMessaging.swift */; };
 /* End PBXBuildFile section */
@@ -1643,6 +1644,7 @@
 		D19EB5DD259BB39300685156 /* training_tip_callout.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = training_tip_callout.json; sourceTree = "<group>"; };
 		D19EB5DF259BB75900685156 /* training_tip_tips.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = training_tip_tips.json; sourceTree = "<group>"; };
 		D1B944E4259E58F5004641DB /* remote_share_active.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = remote_share_active.json; sourceTree = "<group>"; };
+		D1EE0D5125F7C60E008BF955 /* ArticleAemRepositoryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleAemRepositoryType.swift; sourceTree = "<group>"; };
 		D1FF263725BA0C0E00C825DB /* FirebaseInAppMessagingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseInAppMessagingType.swift; sourceTree = "<group>"; };
 		D1FF263D25BA0C1C00C825DB /* FirebaseInAppMessaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseInAppMessaging.swift; sourceTree = "<group>"; };
 		D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtoolsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4122,6 +4124,7 @@
 			children = (
 				45E307CF25ED6E3700299484 /* ArticleAemModel.swift */,
 				45E307D025ED6E3700299484 /* ArticleAemRepository.swift */,
+				D1EE0D5125F7C60E008BF955 /* ArticleAemRepositoryType.swift */,
 				45E307D725ED6E6F00299484 /* ArticleAemUri.swift */,
 			);
 			path = ArticleAemRepository;
@@ -5023,6 +5026,7 @@
 				45AD1BDC25938A4F00A096A0 /* AlertMessageViewModel.swift in Sources */,
 				45AD1F2125938A9800A096A0 /* ToolPageModalViewModel.swift in Sources */,
 				45AD21142593958E00A096A0 /* RealmLanguage.swift in Sources */,
+				D1EE0D5225F7C60E008BF955 /* ArticleAemRepositoryType.swift in Sources */,
 				45AD1F0525938A9800A096A0 /* TrainingTipView.swift in Sources */,
 				45AD1F5625938A9800A096A0 /* ContentImageNode.swift in Sources */,
 				45AD1EFC25938A9800A096A0 /* ToolPageContentImageEvent.swift in Sources */,
