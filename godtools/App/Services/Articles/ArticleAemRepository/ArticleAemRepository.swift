@@ -17,6 +17,10 @@ class ArticleAemRepository {
         self.importDownloader = importDownloader
     }
     
+    func getArticleArchiveUrl(filename: String) -> URL? {
+        return importDownloader.getWebArchiveUrl(location: ArticleAemWebArchiveFileCacheLocation(filename: filename))
+    }
+    
     func getArticleAem(aemUri: ArticleAemUri, cache: ((_ articleAem: ArticleAemModel) -> Void), downloadStarted: (() -> Void), downloadFinished: ((_ result: Result<ArticleAemModel, Error>) -> Void)) {
         
         //TODO: create ArticleAemArchiver and ArticleAemDownloader to replace ArticleAemImportDownloader ~Robert

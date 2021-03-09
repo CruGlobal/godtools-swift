@@ -10,7 +10,7 @@ import Foundation
 
 class ArticleWebViewModel: ArticleWebViewModelType {
     
-    private let resource: ResourceModel
+    private let resource: ResourceModel?
     private let articleAemImportData: ArticleAemImportData
     private let analytics: AnalyticsContainer
     
@@ -42,11 +42,29 @@ class ArticleWebViewModel: ArticleWebViewModelType {
         hidesShareButton.accept(value: articleAemImportData.articleJcrContent?.canonical == nil)
     }
     
+    required init(flowDelegate: FlowDelegate, articleAemImportData: ArticleAemImportData, articleAemRepository: ArticleAemRepositoryType, analytics: AnalyticsContainer) {
+        
+        self.flowDelegate = flowDelegate
+        self.resource = nil
+        self.articleAemImportData = articleAemImportData
+        self.analytics = analytics
+        
+        navTitle.accept(value: articleAemImportData.articleJcrContent?.title ?? "")
+        hidesShareButton.accept(value: articleAemImportData.articleJcrContent?.canonical == nil)
+        
+        if let cachedWebArchiveUrl = articleAemRepository.getArticleArchiveUrl(filename: articleAemImportData.webArchiveFilename) {
+            webArchiveUrl.accept(value: cachedWebArchiveUrl)
+        }
+        else if let articleWebUrl = URL(string: articleAemImportData.webUrl) {
+            webUrl.accept(value: articleWebUrl)
+        }
+    }
+    
     func pageViewed() {
         
         analytics.pageViewedAnalytics.trackPageView(
             screenName: "Article : \(articleAemImportData.articleJcrContent?.title ?? "")",
-            siteSection: resource.abbreviation,
+            siteSection: resource?.abbreviation ?? "article",
             siteSubSection: "article"
         )
     }
