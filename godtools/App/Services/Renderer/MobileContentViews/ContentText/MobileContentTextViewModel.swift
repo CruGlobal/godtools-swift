@@ -12,7 +12,8 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     
     private let contentTextNode: ContentTextNode
     private let manifestResourcesCache: ManifestResourcesCache
-        
+    private let defaultPointSize: Float = 40
+    
     required init(contentTextNode: ContentTextNode, manifestResourcesCache: ManifestResourcesCache) {
         
         self.contentTextNode = contentTextNode
@@ -32,6 +33,11 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
         return resourceImage
     }
     
+    var startImageSize: CGSize {
+        let floatValue: CGFloat = CGFloat(Float(contentTextNode.startImageSize) ?? defaultPointSize)
+        return CGSize(width: floatValue, height: floatValue)
+    }
+    
     var text: String? {
         return contentTextNode.text
     }
@@ -47,5 +53,10 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
         }
         
         return resourceImage
+    }
+    
+    var endImageSize: CGSize {
+        let floatValue: CGFloat = CGFloat(Float(contentTextNode.endImageSize) ?? defaultPointSize)
+        return CGSize(width: floatValue, height: floatValue)
     }
 }

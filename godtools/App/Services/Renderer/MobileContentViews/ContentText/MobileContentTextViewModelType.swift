@@ -11,6 +11,8 @@ import UIKit
 protocol MobileContentTextViewModelType {
     
     var startImage: UIImage? { get }
+    var startImageSize: CGSize { get }
     var text: String? { get }
     var endImage: UIImage? { get }
+    var endImageSize: CGSize { get }
 }
