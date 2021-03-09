@@ -8,206 +8,84 @@
 
 import UIKit
 
-class MobileContentBackgroundImageView {
+class MobileContentBackgroundImageView: NSObject {
     
     private var viewModel: MobileContentBackgroundImageViewModel?
     private var imageView: UIImageView?
     
+    private var parentViewBounds: CGRect = .zero
+    
     private weak var parentView: UIView?
     
-    required init() {
+    override init() {
         
+        super.init()
     }
     
     func configure(viewModel: MobileContentBackgroundImageViewModel, parentView: UIView) {
-        
-        guard let backgroundImage = viewModel.backgroundImage else {
-            imageView?.image = nil
-            imageView?.removeFromSuperview()
-            return
+                
+        if let currentImageView = self.imageView {
+            currentImageView.removeFromSuperview()
+            self.imageView = nil
         }
+        
+        if let currentParentView = self.parentView {
+            removeParentBoundsChangeObserver(parentView: currentParentView)
+            self.parentView = nil
+        }
+        
+        parentView.layoutIfNeeded()
+        
+        parentViewBounds = parentView.bounds
         
         self.viewModel = viewModel
+        self.imageView = viewModel.backgroundImageWillAppear(container: parentView.bounds)
         self.parentView = parentView
         
-        let imageView: UIImageView = UIImageView()
-        self.imageView = imageView
-        imageView.backgroundColor = .clear
-        imageView.image = backgroundImage
-        imageView.contentMode = .scaleAspectFit
-        
-        let imageSize: CGSize = backgroundImage.size
-        
-        parentView.addSubview(imageView)
-        
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        switch viewModel.scale {
-            
-        case .fitAll:
-            
-            imageView.contentMode = .scaleAspectFit
-            imageView.constrainEdgesToSuperview()
-            
-            return
-            
-        case .fillAll:
-            
-            imageView.contentMode = .scaleAspectFill
-            imageView.constrainEdgesToSuperview()
-            
-            return
-            
-        case .fillHorizontally:
-            
-            imageView.contentMode = .scaleAspectFit
-            addEdgeConstraintsToImageView(imageView: imageView, parentView: parentView, leading: true, trailing: true)
-            addAspectRatioToImageView(imageView: imageView, imageSize: imageSize)
-            
-            switch viewModel.align {
+        if let imageView = imageView {
+            parentView.addSubview(imageView)
+        }
                 
-            case .center:
-                addCenterConstraintsToImageView(imageView: imageView, parentView: parentView)
-            case .start:
-                break
-            case .end:
-                break
-            case .top:
-                addEdgeConstraintsToImageView(imageView: imageView, parentView: parentView, top: true)
-            case .bottom:
-                addEdgeConstraintsToImageView(imageView: imageView, parentView: parentView, bottom: true)
-            }
-            
-            return
-            
-        case .fillVertically:
-            
-            imageView.contentMode = .scaleAspectFit
-            addEdgeConstraintsToImageView(imageView: imageView, parentView: parentView, top: true, bottom: true)
-            addAspectRatioToImageView(imageView: imageView, imageSize: imageSize)
-            
-            switch viewModel.align {
+        addParentBoundsChangeObserver(parentView: parentView)
+    }
+    
+    private func renderForBoundsChangeIfNeeded() {
                 
-            case .center:
-                addCenterConstraintsToImageView(imageView: imageView, parentView: parentView)
-            case .start:
-                addEdgeConstraintsToImageView(imageView: imageView, parentView: parentView, leading: true)
-            case .end:
-                addEdgeConstraintsToImageView(imageView: imageView, parentView: parentView, trailing: true)
-            case .top:
-                break
-            case .bottom:
-                break
-            }
-            
+        guard let parentView = self.parentView else {
             return
         }
-    }
-    
-    // MARK: - Adding Constraints To Image
-    
-    private func addEdgeConstraintsToImageView(imageView: UIImageView, parentView: UIView, leading: Bool = false, trailing: Bool = false, top: Bool = false, bottom: Bool = false) {
         
-        if leading {
-            
-            let leading: NSLayoutConstraint = NSLayoutConstraint(
-                item: imageView,
-                attribute: .leading,
-                relatedBy: .equal,
-                toItem: parentView,
-                attribute: .leading,
-                multiplier: 1,
-                constant: 0
-            )
-            
-            parentView.addConstraint(leading)
+        guard let viewModel = self.viewModel else {
+            return
         }
         
-        if trailing {
-            
-            let trailing: NSLayoutConstraint = NSLayoutConstraint(
-                item: imageView,
-                attribute: .trailing,
-                relatedBy: .equal,
-                toItem: parentView,
-                attribute: .trailing,
-                multiplier: 1,
-                constant: 0
-            )
-            
-            parentView.addConstraint(trailing)
-        }
-        
-        if top {
-            
-            let top: NSLayoutConstraint = NSLayoutConstraint(
-                item: imageView,
-                attribute: .top,
-                relatedBy: .equal,
-                toItem: parentView,
-                attribute: .top,
-                multiplier: 1,
-                constant: 0
-            )
-            
-            parentView.addConstraint(top)
-        }
-        
-        if bottom {
-            
-            let bottom: NSLayoutConstraint = NSLayoutConstraint(
-                item: imageView,
-                attribute: .bottom,
-                relatedBy: .equal,
-                toItem: parentView,
-                attribute: .bottom,
-                multiplier: 1,
-                constant: 0
-            )
-            
-            parentView.addConstraint(bottom)
+        if !parentView.bounds.equalTo(parentViewBounds) {
+            configure(viewModel: viewModel, parentView: parentView)
         }
     }
     
-    private func addCenterConstraintsToImageView(imageView: UIImageView, parentView: UIView) {
+    // MARK: - Parent View Bounds Change Observer
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
-        let centerX: NSLayoutConstraint = NSLayoutConstraint(
-            item: imageView,
-            attribute: .centerX,
-            relatedBy: .equal,
-            toItem: parentView,
-            attribute: .centerX,
-            multiplier: 1,
-            constant: 0
-        )
+        guard let parentView = self.parentView else {
+            return
+        }
         
-        parentView.addConstraint(centerX)
+        guard let objectValue = object as? NSObject else {
+            return
+        }
         
-        let centerY: NSLayoutConstraint = NSLayoutConstraint(
-            item: imageView,
-            attribute: .centerY,
-            relatedBy: .equal,
-            toItem: parentView,
-            attribute: .centerY,
-            multiplier: 1,
-            constant: 0
-        )
-        
-        parentView.addConstraint(centerY)
+        if objectValue == parentView && keyPath == "bounds" {
+            renderForBoundsChangeIfNeeded()
+        }
     }
     
-    private func addAspectRatioToImageView(imageView: UIImageView, imageSize: CGSize) {
-        
-        let aspectRatio: NSLayoutConstraint = NSLayoutConstraint(
-            item: imageView,
-            attribute: .height,
-            relatedBy: .equal,
-            toItem: imageView,
-            attribute: .width,
-            multiplier: imageSize.height / imageSize.width,
-            constant: 0
-        )
-        
-        imageView.addConstraint(aspectRatio)
+    private func removeParentBoundsChangeObserver(parentView: UIView) {
+        parentView.removeObserver(self, forKeyPath: "bounds", context: nil)
+    }
+    
+    private func addParentBoundsChangeObserver(parentView: UIView) {
+        parentView.addObserver(self, forKeyPath: "bounds", options: [.new], context: nil)
     }
 }

@@ -165,7 +165,11 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     }
     
     func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel {
-        return MobileContentBackgroundImageViewModel(backgroundImageNode: cardNode, manifestResourcesCache: diContainer.manifestResourcesCache)
+        return MobileContentBackgroundImageViewModel(
+            backgroundImageNode: cardNode,
+            manifestResourcesCache: diContainer.manifestResourcesCache,
+            languageDirection: diContainer.language.languageDirection
+        )
     }
     
     func headerTapped() {
