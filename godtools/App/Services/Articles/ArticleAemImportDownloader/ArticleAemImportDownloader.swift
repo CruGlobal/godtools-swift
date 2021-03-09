@@ -29,12 +29,9 @@ class ArticleAemImportDownloader {
         self.webArchiver = WebArchiveQueue(sharedSession: sharedSession)
     }
     
-    func getArticlesWithTags(translationZipFile: TranslationZipFileModel, aemTags: [String], completeOnMain: @escaping ((_ articleAemImportData: [ArticleAemImportData]) -> Void)) {
+    func getArticlesWithTags(aemTags: [String], completeOnMain: @escaping ((_ articleAemImportData: [ArticleAemImportData]) -> Void)) {
         
-        let resourceId: String = translationZipFile.resourceId
-        let languageCode: String = translationZipFile.languageCode
-        
-        realmCache.getArticlesWithTags(resourceId: resourceId, languageCode: languageCode, aemTags: aemTags, completeOnMain: completeOnMain)
+        realmCache.getArticlesWithTags(aemTags: aemTags, completeOnMain: completeOnMain)
     }
     
     func getWebArchiveUrl(location: ArticleAemWebArchiveFileCacheLocation) -> URL? {
@@ -78,10 +75,7 @@ class ArticleAemImportDownloader {
         let receipt = getDownloadReceipt(translationZipFile: translationZipFile)
         
         var operations: [ArticleAemImportOperation] = Array()
-        
-        let resourceId: String = translationZipFile.resourceId
-        let languageCode: String = translationZipFile.languageCode
-        
+                
         var articleAemImportDataObjects: [ArticleAemImportData] = Array()
         var articleAemImportErrors: [ArticleAemImportOperationError] = Array()
                         
@@ -89,8 +83,6 @@ class ArticleAemImportDownloader {
             
             let operation = ArticleAemImportOperation(
                 session: session,
-                resourceId: resourceId,
-                languageCode: languageCode,
                 aemImportSrc: aemImportSrc,
                 maxAemImportJsonTreeLevels: maxAemImportJsonTreeLevels
             )
@@ -128,15 +120,13 @@ class ArticleAemImportDownloader {
                         languageCode: languageCode
                     )*/
                     
-                    self?.realmCache.deleteAemImportDataObjects(resourceId: resourceId, languageCode: languageCode) { [weak self] (deleteArticleAemImportDataObjectsError: Error?) in
+                    self?.realmCache.deleteAemImportDataObjects() { [weak self] (deleteArticleAemImportDataObjectsError: Error?) in
                         
                         self?.realmCache.cache(articleAemImportDataObjects: articleAemImportDataObjects) { (cacheArticleAemImportDataObjectsError: Error?) in
                             
-                            _ = self?.archiveAemImportData(resourceId: resourceId, languageCode: languageCode, articleAemImportDataObjects: articleAemImportDataObjects, complete: { (cacheWebArchivePlistDataErrors: [CacheArticleAemWebArchivePlistError], webArchiveQueueResult: WebArchiveQueueResult) in
+                            _ = self?.archiveAemImportData(articleAemImportDataObjects: articleAemImportDataObjects, complete: { (cacheWebArchivePlistDataErrors: [CacheArticleAemWebArchivePlistError], webArchiveQueueResult: WebArchiveQueueResult) in
                                 
                                 let result = ArticleAemImportDownloaderResult(
-                                    resourceId: resourceId,
-                                    languageCode: languageCode,
                                     articleAemImportDataObjects: articleAemImportDataObjects,
                                     articleAemImportErrors: articleAemImportErrors,
                                     deleteWebArchiveDirectoryError: nil,
@@ -174,8 +164,6 @@ class ArticleAemImportDownloader {
     private func handleReceiptCancelled(receipt: ArticleAemImportDownloaderReceipt, translationZipFile: TranslationZipFileModel) {
         
         let result = ArticleAemImportDownloaderResult(
-            resourceId: translationZipFile.resourceId,
-            languageCode: translationZipFile.languageCode,
             articleAemImportDataObjects: [],
             articleAemImportErrors: [],
             deleteWebArchiveDirectoryError: nil,
@@ -189,7 +177,7 @@ class ArticleAemImportDownloader {
         receipt.completeDownload(result: result)
     }
     
-    private func archiveAemImportData(resourceId: String, languageCode: String, articleAemImportDataObjects: [ArticleAemImportData], complete: @escaping ((_ cacheWebArchivePlistDataErrors: [CacheArticleAemWebArchivePlistError], _ webArchiveQueueResult: WebArchiveQueueResult) -> Void)) -> OperationQueue {
+    private func archiveAemImportData(articleAemImportDataObjects: [ArticleAemImportData], complete: @escaping ((_ cacheWebArchivePlistDataErrors: [CacheArticleAemWebArchivePlistError], _ webArchiveQueueResult: WebArchiveQueueResult) -> Void)) -> OperationQueue {
                         
         var urls: [URL] = Array()
         var webArchiveFilenames: [String] = Array()
@@ -229,8 +217,6 @@ class ArticleAemImportDownloader {
                         break
                     case .failure(let error):
                         let cachePlistError = CacheArticleAemWebArchivePlistError(
-                            resourceId: resourceId,
-                            languageCode: languageCode,
                             webArchiveFilename: webArchiveFilename,
                             url: url,
                             error: error

@@ -22,13 +22,13 @@ class RealmArticleAemImportDataCache {
         
         realmDatabase.background { [weak self] (realm: Realm) in
             
-            let realmArticleAemImportData: [RealmArticleAemImportData] = self?.getArticleAemImportDataObjects(realm: realm, resourceId: resourceId, languageCode: languageCode) ?? []
+            let realmArticleAemImportData: [RealmArticleAemImportData] = self?.getArticleAemImportDataObjects(realm: realm) ?? []
             
             complete(realmArticleAemImportData)
         }
     }
     
-    func getArticleAemImportDataObjects(realm: Realm, resourceId: String, languageCode: String) -> [RealmArticleAemImportData] {
+    func getArticleAemImportDataObjects(realm: Realm) -> [RealmArticleAemImportData] {
         
         // This method is no longer valid, no longer cacheing articles by resourceId and languageCode. ~Levi
         
@@ -40,14 +40,14 @@ class RealmArticleAemImportDataCache {
         return []
     }
     
-    func getArticlesWithTags(resourceId: String, languageCode: String, aemTags: [String], completeOnMain: @escaping ((_ articleAemImportData: [ArticleAemImportData]) -> Void)) {
+    func getArticlesWithTags(aemTags: [String], completeOnMain: @escaping ((_ articleAemImportData: [ArticleAemImportData]) -> Void)) {
         
         realmDatabase.background { [weak self] (realm: Realm) in
             
             var articlesByTag: [RealmArticleAemImportData] = Array()
             var articleUrlsByTag: [String] = Array()
             
-            let cachedArticleAemImportDataObjects: [RealmArticleAemImportData] = self?.getArticleAemImportDataObjects(realm: realm, resourceId: resourceId, languageCode: languageCode) ?? []
+            let cachedArticleAemImportDataObjects: [RealmArticleAemImportData] = self?.getArticleAemImportDataObjects(realm: realm) ?? []
             
             for tagId in aemTags {
                 
@@ -98,11 +98,11 @@ class RealmArticleAemImportDataCache {
         }
     }
     
-    func deleteAemImportDataObjects(resourceId: String, languageCode: String, complete: @escaping ((_ error: Error?) -> Void)) {
+    func deleteAemImportDataObjects(complete: @escaping ((_ error: Error?) -> Void)) {
         
         realmDatabase.background { [weak self] (realm: Realm) in
             
-            let cachedArticleAemImportDataObjects: [RealmArticleAemImportData] = self?.getArticleAemImportDataObjects(realm: realm, resourceId: resourceId, languageCode: languageCode) ?? []
+            let cachedArticleAemImportDataObjects: [RealmArticleAemImportData] = self?.getArticleAemImportDataObjects(realm: realm) ?? []
             
             do {
                 try realm.write {

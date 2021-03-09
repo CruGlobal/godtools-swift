@@ -10,8 +10,6 @@ import Foundation
 
 struct ArticleAemImportDownloaderResult {
     
-    let resourceId: String
-    let languageCode: String
     let articleAemImportDataObjects: [ArticleAemImportData]
     let articleAemImportErrors: [ArticleAemImportOperationError]
     let deleteWebArchiveDirectoryError: Error? // TODO: Is this property still needed? ~Levi
