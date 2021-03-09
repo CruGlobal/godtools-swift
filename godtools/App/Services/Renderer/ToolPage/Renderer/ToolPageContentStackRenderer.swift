@@ -94,7 +94,17 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
             return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)
         }
         else if let textNode = node as? ContentTextNode {
-                      
+                 
+            let viewModel = MobileContentTextViewModel(
+                contentTextNode: textNode,
+                manifestResourcesCache: diContainer.manifestResourcesCache
+            )
+            
+            let view = MobileContentTextView(viewModel: viewModel)
+            
+            return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)
+            
+            /*
             let label: UILabel = UILabel()
             
             renderContentText(
@@ -102,7 +112,7 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
                 textNode: textNode
             )
                         
-            return MobileContentStackRenderedView(view: label, heightConstraintType: .intrinsic)
+            return MobileContentStackRenderedView(view: label, heightConstraintType: .intrinsic)*/
         }
         else if let imageNode = node as? ContentImageNode {
             
