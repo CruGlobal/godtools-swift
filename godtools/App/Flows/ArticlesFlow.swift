@@ -82,11 +82,6 @@ class ArticlesFlow: Flow {
             
             navigationController.present(view.controller, animated: true, completion: nil)
             
-        case .articleDeepLinkTapped(let articleUri):
-                        
-            //TODO: Load article from uri
-            break
-            
         default:
             break
         }

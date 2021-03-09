@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ArticleAemRepository {
+class ArticleAemRepository: ArticleAemRepositoryType {
     
     private let importDownloader: ArticleAemImportDownloader
     
