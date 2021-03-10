@@ -10,8 +10,13 @@ import UIKit
 
 class MobileContentTextView: UIView {
     
-    private let viewModel: MobileContentTextViewModelType
+    enum ViewType {
+        case labelOnly
+        case loadFromNib
+    }
     
+    private let viewModel: MobileContentTextViewModelType
+        
     @IBOutlet weak private var startImageView: UIImageView!
     @IBOutlet weak private var textLabel: UILabel!
     @IBOutlet weak private var endImageView: UIImageView!
@@ -31,9 +36,22 @@ class MobileContentTextView: UIView {
         
         super.init(frame: UIScreen.main.bounds)
         
-        initializeNib()
-        setupLayout()
-        setupBinding()
+        // If content text doesn't have any images we will just instaniate a label rather than the entire nib.
+        // Might help with performance since content:text is frequently used. ~Levi
+        if viewModel.hidesStartImage && viewModel.hidesEndImage {
+            
+            let textLabel: UILabel = UILabel()
+            addSubview(textLabel)
+            textLabel.constrainEdgesToSuperview()
+            
+            self.textLabel = textLabel
+            
+            setupBinding(viewType: .labelOnly)
+        }
+        else {
+            initializeNib()
+            setupBinding(viewType: .loadFromNib)
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -57,50 +75,34 @@ class MobileContentTextView: UIView {
         }
     }
     
-    private func setupLayout() {
+    private func setupBinding(viewType: ViewType) {
         
-        // textLabel
         textLabel.backgroundColor = UIColor.clear
         textLabel.numberOfLines = 0
         textLabel.lineBreakMode = .byWordWrapping
-    }
-    
-    private func setupBinding() {
-        
-        let hidesStartImage: Bool
-        let hidesEndImage: Bool
-        
-        if let startImage = viewModel.startImage {
-            startImageView.image = startImage
-            hidesStartImage = false
-        }
-        else {
-            startImageView.image = nil
-            hidesStartImage = true
-        }
-        
-        if let endImage = viewModel.endImage {
-            endImageView.image = endImage
-            hidesEndImage = false
-        }
-        else {
-            endImageView.image = nil
-            hidesEndImage = true
-        }
-        
         textLabel.font = viewModel.font
         textLabel.text = viewModel.text
         textLabel.textColor = viewModel.textColor
         textLabel.textAlignment = viewModel.textAlignment
-        
         textLabel.setLineSpacing(lineSpacing: 2)
         
-        updateLayoutConstraints(
-            hidesStartImage: hidesStartImage,
-            hidesEndImage: hidesEndImage,
-            startImageSize: viewModel.startImageSize,
-            endImageSize: viewModel.endImageSize
-        )
+        if viewType == .loadFromNib {
+            
+            if let startImage = viewModel.startImage {
+                startImageView.image = startImage
+            }
+            
+            if let endImage = viewModel.endImage {
+                endImageView.image = endImage
+            }
+            
+            updateLayoutConstraints(
+                hidesStartImage: viewModel.hidesStartImage,
+                hidesEndImage: viewModel.hidesEndImage,
+                startImageSize: viewModel.startImageSize,
+                endImageSize: viewModel.endImageSize
+            )
+        }
     }
     
     private func updateLayoutConstraints(hidesStartImage: Bool, hidesEndImage: Bool, startImageSize: CGSize, endImageSize: CGSize) {

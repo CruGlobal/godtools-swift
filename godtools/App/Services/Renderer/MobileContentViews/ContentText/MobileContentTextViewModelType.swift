@@ -12,10 +12,12 @@ protocol MobileContentTextViewModelType {
     
     var startImage: UIImage? { get }
     var startImageSize: CGSize { get }
+    var hidesStartImage: Bool { get }
     var font: UIFont { get }
     var text: String? { get }
     var textColor: UIColor { get }
     var textAlignment: NSTextAlignment { get }
     var endImage: UIImage? { get }
     var endImageSize: CGSize { get }
+    var hidesEndImage: Bool { get }
 }

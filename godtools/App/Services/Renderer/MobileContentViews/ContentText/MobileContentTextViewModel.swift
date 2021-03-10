@@ -51,6 +51,13 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
         return CGSize(width: floatValue, height: floatValue)
     }
     
+    var hidesStartImage: Bool {
+        guard let resource = contentTextNode.startImage else {
+            return true
+        }
+        return resource.isEmpty
+    }
+    
     var font: UIFont {
         
         let fontScale: CGFloat
@@ -133,5 +140,12 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     var endImageSize: CGSize {
         let floatValue: CGFloat = CGFloat(Float(contentTextNode.endImageSize) ?? defaultImagePointSize)
         return CGSize(width: floatValue, height: floatValue)
+    }
+    
+    var hidesEndImage: Bool {
+        guard let resource = contentTextNode.endImage else {
+            return true
+        }
+        return resource.isEmpty
     }
 }
