@@ -59,6 +59,10 @@ class MobileContentTextView: UIView {
     
     private func setupLayout() {
         
+        // textLabel
+        textLabel.backgroundColor = UIColor.clear
+        textLabel.numberOfLines = 0
+        textLabel.lineBreakMode = .byWordWrapping
     }
     
     private func setupBinding() {
@@ -84,7 +88,12 @@ class MobileContentTextView: UIView {
             hidesEndImage = true
         }
         
+        textLabel.font = viewModel.font
         textLabel.text = viewModel.text
+        textLabel.textColor = viewModel.textColor
+        textLabel.textAlignment = viewModel.textAlignment
+        
+        textLabel.setLineSpacing(lineSpacing: 2)
         
         updateLayoutConstraints(
             hidesStartImage: hidesStartImage,

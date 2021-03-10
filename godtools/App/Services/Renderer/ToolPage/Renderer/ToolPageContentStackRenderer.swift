@@ -94,25 +94,20 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
             return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)
         }
         else if let textNode = node as? ContentTextNode {
-                 
+              
             let viewModel = MobileContentTextViewModel(
                 contentTextNode: textNode,
-                manifestResourcesCache: diContainer.manifestResourcesCache
+                manifestResourcesCache: diContainer.manifestResourcesCache,
+                fontService: diContainer.fontService,
+                fontSize: 18,
+                defaultFontWeight: .regular,
+                defaultTextAlignment: defaultTextNodeTextAlignment,
+                textColor: textNode.getTextColor()?.color ?? defaultTextNodeTextColor ?? toolPageColors.textColor
             )
-            
+
             let view = MobileContentTextView(viewModel: viewModel)
             
             return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)
-            
-            /*
-            let label: UILabel = UILabel()
-            
-            renderContentText(
-                label: label,
-                textNode: textNode
-            )
-                        
-            return MobileContentStackRenderedView(view: label, heightConstraintType: .intrinsic)*/
         }
         else if let imageNode = node as? ContentImageNode {
             
@@ -200,27 +195,37 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
             
             return renderContentFallback(contentFallbackNode: fallbackNode, rootContentStackRenderer: rootContentStackRenderer)
         }
-        else if let titleNode = node as? TitleNode {
+        else if let titleNode = node as? TitleNode, let textNode = titleNode.textNode {
                   
-            let label: UILabel = UILabel()
-            
-            renderTitle(
-                label: label,
-                titleNode: titleNode
+            let viewModel = MobileContentTextViewModel(
+                contentTextNode: textNode,
+                manifestResourcesCache: diContainer.manifestResourcesCache,
+                fontService: diContainer.fontService,
+                fontSize: 44,
+                defaultFontWeight: .regular,
+                defaultTextAlignment: defaultTextNodeTextAlignment,
+                textColor: textNode.getTextColor()?.color ?? toolPageColors.primaryTextColor
             )
-                                    
-            return MobileContentStackRenderedView(view: label, heightConstraintType: .intrinsic)
+
+            let view = MobileContentTextView(viewModel: viewModel)
+            
+            return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)
         }
-        else if let headingNode = node as? HeadingNode {
-              
-            let label: UILabel = UILabel()
+        else if let headingNode = node as? HeadingNode, let textNode = headingNode.textNode {
             
-            renderHeading(
-                label: label,
-                headingNode: headingNode
+            let viewModel = MobileContentTextViewModel(
+                contentTextNode: textNode,
+                manifestResourcesCache: diContainer.manifestResourcesCache,
+                fontService: diContainer.fontService,
+                fontSize: 30,
+                defaultFontWeight: .regular,
+                defaultTextAlignment: defaultTextNodeTextAlignment,
+                textColor: textNode.getTextColor()?.color ?? toolPageColors.primaryColor
             )
-                      
-            return MobileContentStackRenderedView(view: label, heightConstraintType: .intrinsic)
+
+            let view = MobileContentTextView(viewModel: viewModel)
+            
+            return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)
         }
         else if let tabsNode = node as? ContentTabsNode {
 
@@ -343,116 +348,6 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
         }
         
         return true
-    }
-    
-    func renderContentText(label: UILabel, textNode: ContentTextNode) {
-        
-        renderText(
-            label: label,
-            textNode: textNode,
-            fontSize: 18,
-            defaultFontWeight: .regular,
-            defaultTextAlignment: defaultTextNodeTextAlignment,
-            textColor: textNode.getTextColor()?.color ?? defaultTextNodeTextColor ?? toolPageColors.textColor
-        )
-    }
-    
-    private func renderText(label: UILabel, textNode: ContentTextNode, fontSize: CGFloat, defaultFontWeight: UIFont.Weight, defaultTextAlignment: NSTextAlignment, textColor: UIColor) {
-        
-        label.backgroundColor = UIColor.clear
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-                
-        let fontScale: CGFloat
-        
-        if let textScaleString = textNode.textScale,
-            !textScaleString.isEmpty,
-            let number = ToolPageContentStackRenderer.numberFormatter.number(from: textScaleString) {
-            
-            fontScale = CGFloat(truncating: number)
-        }
-        else {
-            fontScale = 1
-        }
-        
-        let textAlignment: NSTextAlignment
-        
-        if let textAlign = textNode.textAlign, !textAlign.isEmpty {
-            if textAlign == "left" {
-                textAlignment = .left
-            }
-            else if textAlign == "center" {
-                textAlignment = .center
-            }
-            else if textAlign == "end" {
-                textAlignment = .right
-            }
-            else {
-                textAlignment = defaultTextAlignment
-            }
-        }
-        else {
-            textAlignment = defaultTextAlignment
-        }
-        
-        let fontWeight: UIFont.Weight
-        
-        if let textStyle = textNode.textStyle, !textStyle.isEmpty {
-            if textStyle == "bold" {
-                fontWeight = .bold
-            }
-            else if textStyle == "italic" {
-                fontWeight = defaultFontWeight
-            }
-            else if textStyle == "underline" {
-                fontWeight = defaultFontWeight
-            }
-            else {
-                fontWeight = defaultFontWeight
-            }
-        }
-        else {
-            fontWeight = defaultFontWeight
-        }
-        
-        label.font = diContainer.fontService.getFont(size: fontSize * fontScale, weight: fontWeight)
-        label.text = textNode.text
-        label.textColor = textColor
-        label.textAlignment = textAlignment
-        
-        label.setLineSpacing(lineSpacing: 2)
-    }
-    
-    func renderTitle(label: UILabel, titleNode: TitleNode) {
-        
-        guard let textNode = titleNode.textNode else {
-            return
-        }
-        
-        renderText(
-            label: label,
-            textNode: textNode,
-            fontSize: 44,
-            defaultFontWeight: .regular,
-            defaultTextAlignment: defaultTextNodeTextAlignment,
-            textColor: textNode.getTextColor()?.color ?? toolPageColors.primaryTextColor
-        )
-    }
-    
-    func renderHeading(label: UILabel, headingNode: HeadingNode) {
-        
-        guard let textNode = headingNode.textNode else {
-            return
-        }
-        
-        renderText(
-            label: label,
-            textNode: textNode,
-            fontSize: 30,
-            defaultFontWeight: .regular,
-            defaultTextAlignment: defaultTextNodeTextAlignment,
-            textColor: textNode.getTextColor()?.color ?? toolPageColors.primaryColor
-        )
     }
     
     func renderTrainingTip(trainingTipNode: TrainingTipNode) -> TrainingTipView? {
