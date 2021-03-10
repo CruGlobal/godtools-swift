@@ -114,14 +114,29 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
         }
         else if let trainingTipNode = node as? TrainingTipNode {
             
-            if let view = renderTrainingTip(trainingTipNode: trainingTipNode) {
-                                          
-                rootContentStackRenderer.didRenderTrainingTipsSignal.accept()
-                
-                let tipSize: CGFloat = 50
-                
-                return MobileContentStackRenderedView(view: view, heightConstraintType: .equalToSize(size: CGSize(width: tipSize, height: tipSize)))
+            guard let trainingTipId = trainingTipNode.id, !trainingTipId.isEmpty, diContainer.trainingTipsEnabled else {
+                return nil
             }
+            
+            let viewModel = TrainingTipViewModel(
+                trainingTipId: trainingTipId,
+                resource: diContainer.resource,
+                language: diContainer.language,
+                manifest: diContainer.manifest,
+                translationsFileCache: diContainer.translationsFileCache,
+                mobileContentNodeParser: diContainer.mobileContentNodeParser,
+                mobileContentEvents: diContainer.mobileContentEvents,
+                viewType: .rounded,
+                viewedTrainingTips: diContainer.viewedTrainingTips
+            )
+            
+            let view = TrainingTipView(viewModel: viewModel)
+                        
+            rootContentStackRenderer.didRenderTrainingTipsSignal.accept()
+            
+            let tipSize: CGFloat = 50
+            
+            return MobileContentStackRenderedView(view: view, heightConstraintType: .equalToSize(size: CGSize(width: tipSize, height: tipSize)))
         }
         else if let buttonNode = node as? ContentButtonNode {
             
@@ -159,7 +174,27 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
         }
         else if let fallbackNode = node as? ContentFallbackNode {
             
-            return renderContentFallback(contentFallbackNode: fallbackNode, rootContentStackRenderer: rootContentStackRenderer)
+            var nodeToRender: MobileContentXmlNode?
+            
+            for childNode in fallbackNode.children {
+                
+                guard let renderableNode = childNode as? MobileContentRenderableNode else {
+                    continue
+                }
+                
+                guard renderableNode.isRenderable else {
+                    continue
+                }
+                
+                nodeToRender = childNode
+                break
+            }
+            
+            if let nodeToRender = nodeToRender {
+                return recurseAndRender(node: nodeToRender, rootContentStackRenderer: rootContentStackRenderer)
+            }
+            
+            return nil
         }
         else if let titleNode = node as? TitleNode, let textNode = titleNode.textNode {
                   
@@ -249,55 +284,5 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
         }
         
         return nil
-    }
-    
-    // MARK: - Rendering
-    
-    private func renderContentFallback(contentFallbackNode: MobileContentXmlNode, rootContentStackRenderer: ToolPageContentStackRenderer) -> MobileContentStackRenderedView? {
-        
-        var nodeToRender: MobileContentXmlNode?
-        
-        for childNode in contentFallbackNode.children {
-            
-            guard let renderableNode = childNode as? MobileContentRenderableNode else {
-                continue
-            }
-            
-            guard renderableNode.isRenderable else {
-                continue
-            }
-            
-            nodeToRender = childNode
-            break
-        }
-        
-        if let nodeToRender = nodeToRender {
-            return recurseAndRender(node: nodeToRender, rootContentStackRenderer: rootContentStackRenderer)
-        }
-        
-        return nil
-    }
-    
-    func renderTrainingTip(trainingTipNode: TrainingTipNode) -> TrainingTipView? {
-        
-        guard let trainingTipId = trainingTipNode.id, !trainingTipId.isEmpty, diContainer.trainingTipsEnabled else {
-            return nil
-        }
-        
-        let viewModel = TrainingTipViewModel(
-            trainingTipId: trainingTipId,
-            resource: diContainer.resource,
-            language: diContainer.language,
-            manifest: diContainer.manifest,
-            translationsFileCache: diContainer.translationsFileCache,
-            mobileContentNodeParser: diContainer.mobileContentNodeParser,
-            mobileContentEvents: diContainer.mobileContentEvents,
-            viewType: .rounded,
-            viewedTrainingTips: diContainer.viewedTrainingTips
-        )
-        
-        let view = TrainingTipView(viewModel: viewModel)
-        
-        return view
     }
 }
