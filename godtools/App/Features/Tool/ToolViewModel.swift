@@ -134,10 +134,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
         let startingToolPage: Int = page ?? 0
             
         forceToolRefresh(language: 0, page: startingToolPage, card: nil)
-        
-        toolPageDidChange(page: startingToolPage)
-        toolPageDidAppear(page: startingToolPage)
-        
+                
         subscribeToLiveShareStreamIfNeeded(liveShareStream: liveShareStream)
     }
     
