@@ -129,11 +129,6 @@ extension ToolView: PageNavigationCollectionViewDelegate {
         return cell
     }
     
-    func pageNavigationPageDidDisappear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
-        
-        viewModel.toolPageDidDisappear(page: page)
-    }
-    
     func pageNavigationDidChangeMostVisiblePage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
         
         view.endEditing(true)
@@ -144,5 +139,16 @@ extension ToolView: PageNavigationCollectionViewDelegate {
     func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
         
         viewModel.toolPageDidAppear(page: page)
+        
+        if let toolPageCell = pageCell as? ToolPageCell {
+            toolPageCell.pageDidAppear()
+        }
+    }
+    
+    func pageNavigationPageDidDisappear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
+                
+        if let toolPageCell = pageCell as? ToolPageCell {
+            toolPageCell.pageDidDisappear()
+        }
     }
 }

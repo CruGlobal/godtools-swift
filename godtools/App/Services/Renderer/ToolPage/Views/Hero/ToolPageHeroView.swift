@@ -31,3 +31,20 @@ class ToolPageHeroView: MobileContentStackView {
         print("x deinit: \(type(of: self))")
     }
 }
+
+// MARK: - MobileContentRenderableView
+
+extension ToolPageHeroView: MobileContentRenderableView {
+    
+    var view: UIView {
+        return self
+    }
+    
+    func viewDidAppear() {
+        viewModel.heroDidAppear()
+    }
+    
+    func viewDidDisappear() {
+        viewModel.heroDidDisappear()
+    }
+}

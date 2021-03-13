@@ -19,5 +19,4 @@ protocol ToolViewModelType {
     func toolPageWillAppear(page: Int) -> ToolPageViewModelType?
     func toolPageDidChange(page: Int)
     func toolPageDidAppear(page: Int)
-    func toolPageDidDisappear(page: Int)
 }

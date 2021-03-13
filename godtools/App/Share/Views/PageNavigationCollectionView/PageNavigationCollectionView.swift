@@ -77,6 +77,7 @@ class PageNavigationCollectionView: UIView, NibBased {
     }
     
     func reloadData() {
+        shouldNotifyPageDidAppearForDataReload = true
         collectionView.reloadData()
     }
     
@@ -198,27 +199,22 @@ class PageNavigationCollectionView: UIView, NibBased {
     // MARK: -
     
     private func mostVisiblePageChanged(pageCell: UICollectionViewCell, page: Int) {
-        print("\n PAGE NAVIGATION pageChanged: \(page)\n")
         delegate?.pageNavigationDidChangeMostVisiblePage?(pageNavigation: self, pageCell: pageCell, page: page)
     }
     
     private func pageWillAppear(pageCell: UICollectionViewCell, page: Int) {
-        print("\n PAGE NAVIGATION pageWillAppear:\(page)\n")
         delegate?.pageNavigationPageWillAppear?(pageNavigation: self, pageCell: pageCell, page: page)
     }
     
     private func pageDidAppear(pageCell: UICollectionViewCell, page: Int) {
-        print("\n PAGE NAVIGATION pageDidAppear:\(page)\n")
         delegate?.pageNavigationPageDidAppear?(pageNavigation: self, pageCell: pageCell, page: page)
     }
     
     private func pageWillDisappear(pageCell: UICollectionViewCell, page: Int) {
-        print("\n PAGE NAVIGATION pageWillDisappear:\(page)\n")
         delegate?.pageNavigationPageWillDisappear?(pageNavigation: self, pageCell: pageCell, page: page)
     }
     
     private func pageDidDisappear(pageCell: UICollectionViewCell, page: Int) {
-        print("\n PAGE NAVIGATION pageDidDisappear:\(page)\n")
         delegate?.pageNavigationPageDidDisappear?(pageNavigation: self, pageCell: pageCell, page: page)
     }
 }

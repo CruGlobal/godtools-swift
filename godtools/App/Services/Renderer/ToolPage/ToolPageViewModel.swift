@@ -16,7 +16,6 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     private let page: Int
     private let initialPositions: ToolPageInitialPositions?
     private let isLastPage: Bool
-    private let heroViewModel: ToolPageHeroViewModelType?
 
     private var allCardsViewModels: [ToolPageCardViewModelType] = Array()
     private var visibleCardsViewModels: [ToolPageCardViewModelType] = Array()
@@ -45,13 +44,6 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         self.page = page
         self.initialPositions = initialPositions
         self.isLastPage = isLastPage
-
-        if let heroNode = pageNode.heroNode {
-            heroViewModel = ToolPageHeroViewModel(heroNode: heroNode, diContainer: diContainer, toolPageColors: toolPageColors)
-        }
-        else {
-            heroViewModel = nil
-        }
         
         // content stack
         let firstNodeIsContentParagraph: Bool = pageNode.children.first is ContentParagraphNode
@@ -309,11 +301,15 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     
     func heroWillAppear() -> ToolPageHeroViewModelType? {
         
-        guard let heroViewModel = self.heroViewModel else {
+        guard let heroNode = pageNode.heroNode else {
             return nil
         }
-                
-        return heroViewModel
+        
+        return ToolPageHeroViewModel(
+            heroNode: heroNode,
+            diContainer: diContainer,
+            toolPageColors: toolPageColors
+        )
     }
     
     func callToActionWillAppear() -> ToolPageCallToActionViewModelType? {
@@ -370,14 +366,6 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         if let cardPosition = cardPosition {
             trackCardAnalytics(cardPosition: cardPosition)
         }
-    }
-    
-    func pageDidAppear() {
-        heroViewModel?.heroDidAppear()
-    }
-    
-    func pageDidDisappear() {
-        heroViewModel?.heroDidDisappear()
     }
     
     func cardBounceAnimationFinished() {
