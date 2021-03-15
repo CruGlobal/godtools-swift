@@ -14,56 +14,58 @@ class ToolLanguageTranslationModel {
     
     private let translationsFileCache: TranslationsFileCache
     private let mobileContentNodeParser: MobileContentXmlNodeParser
-    
-    private var pageNodeCache: [PageNumber: PageNode] = Dictionary()
+    private let pagesNodeParser: ToolPagesNodeParser
+        
+    private var pageNodes: [Int: PageNode] = Dictionary()
     
     let language: LanguageModel
     let manifest: MobileContentXmlManifest
+    let pagesListenersNotifier: ToolPagesListenersNotifier
     
-    required init(language: LanguageModel, translationManifestData: TranslationManifestData, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser) {
+    required init(language: LanguageModel, translationManifestData: TranslationManifestData, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentEvents: MobileContentEvents) {
         
         self.language = language
         self.manifest = MobileContentXmlManifest(translationManifest: translationManifestData)
         self.translationsFileCache = translationsFileCache
         self.mobileContentNodeParser = mobileContentNodeParser
+        self.pagesNodeParser = ToolPagesNodeParser()
+        self.pagesListenersNotifier = ToolPagesListenersNotifier(mobileContentEvents: mobileContentEvents)
+                
+        pagesNodeParser.asyncParseAllPageNodes(manifest: manifest, translationsFileCache: translationsFileCache, mobileContentNodeParser: mobileContentNodeParser) { [weak self] (page: Int, pageNode: PageNode?, error: Error?) in
+        
+            if let pageNode = pageNode {
+                self?.pageNodes[page] = pageNode
+                self?.pagesListenersNotifier.addPageListeners(pageNode: pageNode, page: page)
+            }
+        } completion: { [weak self] (errors: [Error]) in
+            
+        }
     }
     
-    func getToolPageNode(page: Int) -> PageNode? {
+    func setToolPageListenersNotifierDelegate(delegate: ToolPagesListenersNotifierDelegate) {
+        pagesListenersNotifier.setListenersNotifierDelegate(delegate: delegate)
+    }
+    
+    func getPageNode(page: Int) -> PageNode? {
         
-        guard page >= 0 && page < manifest.pages.count else {
+        if let pageNode = pageNodes[page] {
+            return pageNode
+        }
+        
+        let result: Result<PageNode, Error> = pagesNodeParser.parsePageNode(
+            manifest: manifest,
+            translationsFileCache: translationsFileCache,
+            mobileContentNodeParser: mobileContentNodeParser,
+            page: page
+        )
+        
+        switch result {
+        
+        case .success(let pageNode):
+            return pageNode
+        
+        case .failure(let error):
             return nil
         }
-        
-        let manifestPage: MobileContentXmlManifestPage = manifest.pages[page]
-        let pageXmlCacheLocation: SHA256FileLocation = SHA256FileLocation(sha256WithPathExtension: manifestPage.src)
-        
-        let pageXml: Data?
-        let pageNode: PageNode?
-        
-        if let cachedPageNode = pageNodeCache[page] {
-            pageNode = cachedPageNode
-        }
-        else {
-
-            switch translationsFileCache.getData(location: pageXmlCacheLocation) {
-                
-            case .success(let pageXmlData):
-                pageXml = pageXmlData
-            case .failure(let error):
-                pageXml = nil
-            }
-            
-            // TODO: Would it be better to return page xml and have tool pages build themselves as nodes are built? ~Levi
-            
-            guard let pageXmlData = pageXml else {
-                return nil
-            }
-            
-            pageNode = mobileContentNodeParser.parse(xml: pageXmlData, delegate: nil) as? PageNode
-            
-            pageNodeCache[page] = pageNode
-        }
-        
-        return pageNode
     }
 }
