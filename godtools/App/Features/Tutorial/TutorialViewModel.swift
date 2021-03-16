@@ -33,8 +33,6 @@ class TutorialViewModel: TutorialViewModelType {
         self.startUsingGodToolsTitle = localizationServices.stringForMainBundle(key: "tutorial.continueButton.title.startUsingGodTools")
         
         tutorialItems.accept(value: tutorialItemsProvider.tutorialItems)
-        
-        pageDidAppear(page: 0)
     }
     
     private var analyticsScreenName: String {
