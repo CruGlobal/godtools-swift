@@ -139,7 +139,7 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
             return
         }
         
-        articleAemImportDownloader.getArticlesWithTags(translationZipFile: translationZipFile, aemTags: category.aemTags, completeOnMain: { [weak self] (cachedArticleImportDataArray: [ArticleAemImportData]) in
+        articleAemImportDownloader.getArticlesWithTags(aemTags: category.aemTags, completeOnMain: { [weak self] (cachedArticleImportDataArray: [ArticleAemImportData]) in
             
             let sortedArticles = cachedArticleImportDataArray.sorted {(rhs: ArticleAemImportData, lhs: ArticleAemImportData) in
                 rhs.articleJcrContent?.title?.lowercased() ?? "" < lhs.articleJcrContent?.title?.lowercased() ?? ""

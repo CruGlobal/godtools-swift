@@ -69,7 +69,7 @@ class AppFlow: NSObject, Flow {
         tutorialFlow = nil
     }
     
-    func resetFlowToArticleDeepLinkFlow(animated: Bool) {
+    /*func resetFlowToArticleDeepLinkFlow(animated: Bool) {
         configureNavigationBar()
         articleDeepLinkFlow?.navigationController.popToRootViewController(animated: animated)
         navigationController.popToRootViewController(animated: animated)
@@ -79,7 +79,7 @@ class AppFlow: NSObject, Flow {
         languageSettingsFlow = nil
         toolsFlow = nil
         tutorialFlow = nil
-    }
+    }*/
     
     private func setupInitialNavigation() {
         

@@ -11,10 +11,12 @@ import Foundation
 class ArticleAemRepository: ArticleAemRepositoryType {
     
     private let importDownloader: ArticleAemImportDownloader
+    private let appDiContainer: AppDiContainer
     
-    required init(importDownloader: ArticleAemImportDownloader) {
+    required init(importDownloader: ArticleAemImportDownloader, appDiContainer: AppDiContainer) {
         
         self.importDownloader = importDownloader
+        self.appDiContainer = appDiContainer
     }
     
     func getArticleArchiveUrl(filename: String) -> URL? {
@@ -27,6 +29,32 @@ class ArticleAemRepository: ArticleAemRepositoryType {
         // If the article aem is cached to the filesystem, go ahead and call the cache closure and return immediately.
 
         // Otherwise, we will download and parse the aem uri and cache the web archive to the filesystem.
-        importDownloader.downloadAndCache(translationZipFile: nil, aemImportSrcs: [aemUri.uriString])
+        appDiContainer.translationsFileCache.getTranslationManifest(translationId: "en-US") { (result: Result<TranslationManifestData, TranslationsFileCacheError>) in
+            
+            switch result {
+            
+            case .success(let translationManifestData):
+                let translationZipFile = translationManifestData.translationZipFile
+                
+                let receipt = importDownloader.downloadAndCache(translationZipFile: translationZipFile, aemImportSrcs: [aemUri.uriString])
+                
+                receipt?.started.addObserver(self) { [weak self] (isStarted: Bool) in
+                    if isStarted {
+                        
+                    }
+                }
+                
+                receipt?.completed.addObserver(self) { [weak self] (isComplete: Bool) in
+                    if isComplete {
+                        
+                    }
+                }
+                
+            case .failure(let error):
+                break
+                
+            }
+        }
+        
     }
 }
