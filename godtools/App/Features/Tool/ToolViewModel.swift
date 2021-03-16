@@ -70,7 +70,8 @@ class ToolViewModel: NSObject, ToolViewModelType {
             language: primaryLanguage,
             translationManifestData: primaryTranslationManifestData,
             translationsFileCache: translationsFileCache,
-            mobileContentNodeParser: mobileContentNodeParser
+            mobileContentNodeParser: mobileContentNodeParser,
+            mobileContentEvents: mobileContentEvents
         )
         
         self.primaryLanguageTranslationModel = primaryLanguageTranslationModel
@@ -89,7 +90,8 @@ class ToolViewModel: NSObject, ToolViewModelType {
                 language: parallelLanguage,
                 translationManifestData: parallelTranslationManifestData,
                 translationsFileCache: translationsFileCache,
-                mobileContentNodeParser: mobileContentNodeParser
+                mobileContentNodeParser: mobileContentNodeParser,
+                mobileContentEvents: mobileContentEvents
             )
             
             self.parallelLanguageTranslationModel = parallelLanguageTranslationModel
@@ -136,6 +138,10 @@ class ToolViewModel: NSObject, ToolViewModelType {
         forceToolRefresh(language: 0, page: startingToolPage, card: nil)
                 
         subscribeToLiveShareStreamIfNeeded(liveShareStream: liveShareStream)
+        
+        for toolLanguageTranslationModel in languageTranslationModels {
+            toolLanguageTranslationModel.setToolPageListenersNotifierDelegate(delegate: self)
+        }
     }
     
     deinit {
@@ -340,7 +346,7 @@ extension ToolViewModel {
         
         let languageTranslationModel: ToolLanguageTranslationModel = languageTranslationModels[language]
         
-        if let pageNode = languageTranslationModel.getToolPageNode(page: page) {
+        if let pageNode = languageTranslationModel.getPageNode(page: page) {
                                                              
             let toolPageDiContainer = ToolPageDiContainer(
                 manifest: languageTranslationModel.manifest,
@@ -413,6 +419,22 @@ extension ToolViewModel {
         if nextPage < numberOfToolPages.value {
             currentPage.accept(value: AnimatableValue(value: nextPage, animated: animated))
         }
+    }
+}
+
+// MARK: - ToolPagesListenersNotifierDelegate
+
+extension ToolViewModel: ToolPagesListenersNotifierDelegate {
+
+    func toolPagesListenersNotifierDidReceivePageListener(toolPagesListenersNotifier: ToolPagesListenersNotifier, listener: String, page: Int) {
+
+        let currentLanguageTranslationModel: ToolLanguageTranslationModel = languageTranslationModels[currentToolLanguage]
+        
+        guard currentLanguageTranslationModel.pagesListenersNotifier == toolPagesListenersNotifier else {
+            return
+        }
+        
+        currentPage.accept(value: AnimatableValue(value: page, animated: true))
     }
 }
 
