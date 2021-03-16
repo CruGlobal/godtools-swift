@@ -371,6 +371,23 @@ class ToolPageView: UIView {
     }
 }
 
+// MARK: - MobileContentRenderableView
+
+extension ToolPageView: MobileContentRenderableView {
+    
+    var view: UIView {
+        return self
+    }
+    
+    func viewDidAppear() {
+        heroView?.viewDidAppear()
+    }
+    
+    func viewDidDisappear() {
+        heroView?.viewDidDisappear()
+    }
+}
+
 // MARK: - ToolPageCardBounceAnimationDelegate
 
 extension ToolPageView: ToolPageCardBounceAnimationDelegate {

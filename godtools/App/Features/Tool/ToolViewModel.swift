@@ -134,10 +134,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
         let startingToolPage: Int = page ?? 0
             
         forceToolRefresh(language: 0, page: startingToolPage, card: nil)
-        
-        toolPageDidChange(page: startingToolPage)
-        toolPageDidAppear(page: startingToolPage)
-        
+                
         subscribeToLiveShareStreamIfNeeded(liveShareStream: liveShareStream)
     }
     
@@ -399,9 +396,7 @@ extension ToolViewModel {
     func toolPageDidAppear(page: Int) {
                       
         self.currentToolPage = page
-        
-        currentPagesViewModelsCache.getPage(page: page)?.pageDidAppear()
-        
+                
         currentPagesViewModelsCache.deleteAllPagesOutsideBufferFromPage(page: page, buffer: 2)
                                         
         analytics.pageViewedAnalytics.trackPageView(
@@ -409,11 +404,6 @@ extension ToolViewModel {
             siteSection: resource.abbreviation,
             siteSubSection: ""
         )
-    }
-    
-    func toolPageDidDisappear(page: Int) {
-        
-        currentPagesViewModelsCache.getPage(page: page)?.pageDidDisappear()
     }
     
     func gotoNextPage(animated: Bool) {

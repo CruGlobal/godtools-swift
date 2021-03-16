@@ -129,20 +129,26 @@ extension ToolView: PageNavigationCollectionViewDelegate {
         return cell
     }
     
-    func pageNavigation(pageNavigation: PageNavigationCollectionView, didEndDisplaying pageCell: UICollectionViewCell, forPageAt indexPath: IndexPath) {
-        
-        viewModel.toolPageDidDisappear(page: indexPath.row)
-    }
-    
-    func pageNavigationDidChangePage(pageNavigation: PageNavigationCollectionView, page: Int) {
+    func pageNavigationDidChangeMostVisiblePage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
         
         view.endEditing(true)
         
         viewModel.toolPageDidChange(page: page)
     }
     
-    func pageNavigationDidStopOnPage(pageNavigation: PageNavigationCollectionView, page: Int) {
+    func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
         
         viewModel.toolPageDidAppear(page: page)
+        
+        if let toolPageCell = pageCell as? ToolPageCell {
+            toolPageCell.pageDidAppear()
+        }
+    }
+    
+    func pageNavigationPageDidDisappear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
+                
+        if let toolPageCell = pageCell as? ToolPageCell {
+            toolPageCell.pageDidDisappear()
+        }
     }
 }

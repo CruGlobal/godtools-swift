@@ -47,4 +47,12 @@ class ToolPageCell: UICollectionViewCell {
         self.toolPage = toolPage
         self.viewModel = viewModel
     }
+    
+    func pageDidAppear() {
+        toolPage?.viewDidAppear()
+    }
+    
+    func pageDidDisappear() {
+        toolPage?.viewDidDisappear()
+    }
 }

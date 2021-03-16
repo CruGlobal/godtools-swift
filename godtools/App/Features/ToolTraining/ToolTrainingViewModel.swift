@@ -68,8 +68,6 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
         self.pageNodes = pageNodes
         numberOfTipPages.accept(value: pageNodes.count)
         setPage(page: startingPage, animated: false)
-        tipPageDidChange(page: startingPage)
-        tipPageDidAppear(page: startingPage)
         
         reloadTitleAndTipIcon(
             tipNode: tipNode,

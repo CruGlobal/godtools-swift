@@ -148,22 +148,14 @@ extension LearnToShareToolView: PageNavigationCollectionViewDelegate {
         return cell
     }
     
-    func pageNavigation(pageNavigation: PageNavigationCollectionView, willDisplay pageCell: UICollectionViewCell, forPageAt indexPath: IndexPath) {
-
-    }
-    
-    func pageNavigation(pageNavigation: PageNavigationCollectionView, didEndDisplaying pageCell: UICollectionViewCell, forPageAt indexPath: IndexPath) {
-
-    }
-    
-    func pageNavigationDidChangePage(pageNavigation: PageNavigationCollectionView, page: Int) {
+    func pageNavigationDidChangeMostVisiblePage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
 
         handlePageChange(page: page)
         
         viewModel.pageDidChange(page: page)
     }
     
-    func pageNavigationDidStopOnPage(pageNavigation: PageNavigationCollectionView, page: Int) {
+    func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
         
         pageControl.currentPage = page
         

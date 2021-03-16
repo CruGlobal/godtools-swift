@@ -204,11 +204,11 @@ extension ToolTrainingView: PageNavigationCollectionViewDelegate {
         return cell
     }
     
-    func pageNavigationDidChangePage(pageNavigation: PageNavigationCollectionView, page: Int) {
+    func pageNavigationDidChangeMostVisiblePage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
         viewModel.tipPageDidChange(page: page)
     }
     
-    func pageNavigationDidStopOnPage(pageNavigation: PageNavigationCollectionView, page: Int) {
+    func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
         viewModel.tipPageDidAppear(page: page)
     }
 }

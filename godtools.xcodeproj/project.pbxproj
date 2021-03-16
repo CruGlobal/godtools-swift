@@ -68,6 +68,7 @@
 		4586C04624631C3900927A42 /* ADBMobileConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = 4586C04424631C3900927A42 /* ADBMobileConfig.json */; };
 		4586C04724631C3900927A42 /* ADBMobileConfig_debug.json in Resources */ = {isa = PBXBuildFile; fileRef = 4586C04524631C3900927A42 /* ADBMobileConfig_debug.json */; };
 		458AA38425D4252000E71B32 /* LocalizationBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458AA38325D4252000E71B32 /* LocalizationBundle.swift */; };
+		458B04DC25FD259100D6538F /* MobileContentRenderableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458B04DB25FD259100D6538F /* MobileContentRenderableView.swift */; };
 		459DD58E25F95764009A5234 /* MobileContentButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459DD58D25F95764009A5234 /* MobileContentButtonView.swift */; };
 		459DD59825F95772009A5234 /* MobileContentButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459DD59725F95772009A5234 /* MobileContentButtonViewModel.swift */; };
 		459DD59E25F9577E009A5234 /* MobileContentButtonViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459DD59D25F9577E009A5234 /* MobileContentButtonViewModelType.swift */; };
@@ -891,6 +892,7 @@
 		4586C04424631C3900927A42 /* ADBMobileConfig.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ADBMobileConfig.json; sourceTree = "<group>"; };
 		4586C04524631C3900927A42 /* ADBMobileConfig_debug.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ADBMobileConfig_debug.json; sourceTree = "<group>"; };
 		458AA38325D4252000E71B32 /* LocalizationBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationBundle.swift; sourceTree = "<group>"; };
+		458B04DB25FD259100D6538F /* MobileContentRenderableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentRenderableView.swift; sourceTree = "<group>"; };
 		459DD58D25F95764009A5234 /* MobileContentButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentButtonView.swift; sourceTree = "<group>"; };
 		459DD59725F95772009A5234 /* MobileContentButtonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentButtonViewModel.swift; sourceTree = "<group>"; };
 		459DD59D25F9577E009A5234 /* MobileContentButtonViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentButtonViewModelType.swift; sourceTree = "<group>"; };
@@ -1930,8 +1932,9 @@
 		45762A9025C1B85500CFE82D /* MobileContentRenderer */ = {
 			isa = PBXGroup;
 			children = (
-				45762A9125C1B86300CFE82D /* MobileContentRendererVersion.swift */,
 				45762AA125C1B96400CFE82D /* MobileContentRenderableNode.swift */,
+				458B04DB25FD259100D6538F /* MobileContentRenderableView.swift */,
+				45762A9125C1B86300CFE82D /* MobileContentRendererVersion.swift */,
 			);
 			path = MobileContentRenderer;
 			sourceTree = "<group>";
@@ -5083,6 +5086,7 @@
 				45AD1F5725938A9800A096A0 /* MobileContentXmlNodeType.swift in Sources */,
 				45AD1FBB25938A9800A096A0 /* TractRemoteShareSubscriberError.swift in Sources */,
 				45AD1F0F25938A9800A096A0 /* ToolPageContentStackContainerViewModel.swift in Sources */,
+				458B04DC25FD259100D6538F /* MobileContentRenderableView.swift in Sources */,
 				45AD1F3F25938A9800A096A0 /* HeroNode.swift in Sources */,
 				45AD1F4025938A9800A096A0 /* HeaderNode.swift in Sources */,
 				45AD1B5A25938A4F00A096A0 /* AccountView.swift in Sources */,

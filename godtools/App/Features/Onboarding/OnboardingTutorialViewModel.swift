@@ -41,10 +41,7 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
         tutorialItemsArray.append(onboardingTutorialProvider.appUsageListItem)
         
         tutorialItems.accept(value: tutorialItemsArray)
-                
-        pageDidChange(page: 0)
-        pageDidAppear(page: 0)
-        
+                        
         onboardingTutorialAvailability.markOnboardingTutorialViewed()
     }
     
