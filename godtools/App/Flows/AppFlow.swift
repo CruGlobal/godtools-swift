@@ -69,18 +69,6 @@ class AppFlow: NSObject, Flow {
         tutorialFlow = nil
     }
     
-    /*func resetFlowToArticleDeepLinkFlow(animated: Bool) {
-        configureNavigationBar()
-        articleDeepLinkFlow?.navigationController.popToRootViewController(animated: animated)
-        navigationController.popToRootViewController(animated: animated)
-        closeMenu(animated: animated)
-        navigationController.dismiss(animated: animated, completion: nil)
-        menuFlow = nil
-        languageSettingsFlow = nil
-        toolsFlow = nil
-        tutorialFlow = nil
-    }*/
-    
     private func setupInitialNavigation() {
         
         if appDiContainer.onboardingTutorialAvailability.onboardingTutorialIsAvailable {
@@ -156,7 +144,6 @@ class AppFlow: NSObject, Flow {
                     
                     appFlow.articleDeepLinkFlow = articleDeepLinkFlow
                     
-                    //appFlow.resetFlowToArticleDeepLinkFlow(animated: false)
                     DispatchQueue.main.async {
                         articleDeepLinkFlow.navigate(step: .articleDeepLinkTapped(articleUri: ArticleAemUri(aemUri: articleUri)))
                     }

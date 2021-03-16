@@ -26,6 +26,7 @@ class ArticleDeepLinkFlow: Flow {
         switch step {
         
         case .articleDeepLinkTapped(let articleUri):
+            
             appDiContainer.articleAemRepository.getArticleAem(aemUri: articleUri, cache: navigateToArticleWebView, downloadStarted: downloadStarted, downloadFinished: handleDownloadResult)
         
         default:
