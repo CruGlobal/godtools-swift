@@ -1,30 +1,28 @@
 //
-//  MobileContentRenderer.swift
+//  MobileContentNodeToViewRenderer.swift
 //  godtools
 //
-//  Created by Levi Eggert on 1/24/21.
+//  Created by Levi Eggert on 3/18/21.
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
 import Foundation
 
-class MobileContentRenderer {
+class MobileContentNodeToViewRenderer {
     
-    private let node: MobileContentXmlNode
-    private let viewFactory: MobileContentRendererViewFactoryType
+    private let viewFactory: MobileContentRendererViewFactory
+    
+    required init(viewFactory: MobileContentRendererViewFactory) {
         
-    required init(node: MobileContentXmlNode, viewFactory: MobileContentRendererViewFactoryType) {
-        
-        self.node = node
         self.viewFactory = viewFactory
     }
     
-    func render() -> MobileContentRenderableView? {
+    func render(node: MobileContentXmlNode) -> MobileContentRenderableView? {
                         
         return recurseAndRender(node: node, viewFactory: viewFactory)
     }
     
-    private func recurseAndRender(node: MobileContentXmlNode, viewFactory: MobileContentRendererViewFactoryType) -> MobileContentRenderableView? {
+    private func recurseAndRender(node: MobileContentXmlNode, viewFactory: MobileContentRendererViewFactory) -> MobileContentRenderableView? {
         
         guard let renderableNode = (node as? MobileContentRenderableNode) else {
             return nil
