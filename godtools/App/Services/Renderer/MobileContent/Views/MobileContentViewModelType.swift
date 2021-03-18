@@ -1,5 +1,5 @@
 //
-//  MobileContentViewModel.swift
+//  MobileContentViewModelType.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/27/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol MobileContentViewModel {
+protocol MobileContentViewModelType {
     
     var analyticsEvents: [MobileContentAnalyticsEvent] { get }
     var defaultAnalyticsEventsTrigger: AnalyticsEventNodeTrigger { get }
@@ -17,7 +17,7 @@ protocol MobileContentViewModel {
     func mobileContentDidDisappear()
 }
 
-extension MobileContentViewModel {
+extension MobileContentViewModelType {
     
     func mobileContentDidAppear() {
         

@@ -49,9 +49,9 @@ class ToolPageHeroViewModel: ToolPageHeroViewModelType {
     }
 }
 
-// MARK: - MobileContentViewModel
+// MARK: - MobileContentViewModelType
 
-extension ToolPageHeroViewModel: MobileContentViewModel {
+extension ToolPageHeroViewModel: MobileContentViewModelType {
     
     var analyticsEvents: [MobileContentAnalyticsEvent] {
         return analyticsEventsObjects

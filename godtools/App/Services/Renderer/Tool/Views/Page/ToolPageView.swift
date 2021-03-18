@@ -379,6 +379,14 @@ extension ToolPageView: MobileContentRenderableView {
         return self
     }
     
+    func addRenderableView(renderableView: MobileContentRenderableView) {
+        
+    }
+    
+    func finishedRenderingChildren() {
+        
+    }
+    
     func viewDidAppear() {
         heroView?.viewDidAppear()
     }
