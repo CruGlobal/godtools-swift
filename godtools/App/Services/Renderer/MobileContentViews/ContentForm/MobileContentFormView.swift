@@ -1,5 +1,5 @@
 //
-//  ToolPageContentFormView.swift
+//  MobileContentFormView.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/9/20.
@@ -8,16 +8,16 @@
 
 import UIKit
 
-class ToolPageContentFormView: UIView {
+class MobileContentFormView: UIView {
     
-    private let viewModel: ToolPageContentFormViewModelType
+    private let viewModel: MobileContentFormViewModelType
     
-    private var inputs: [ToolPageContentInputView] = Array()
+    private var inputs: [MobileContentInputView] = Array()
     private var currentEditedTextField: UITextField?
             
     @IBOutlet weak private var contentContainerView: UIView!
     
-    required init(viewModel: ToolPageContentFormViewModelType) {
+    required init(viewModel: MobileContentFormViewModelType) {
         
         self.viewModel = viewModel
         
@@ -38,7 +38,7 @@ class ToolPageContentFormView: UIView {
     
     private func initializeNib() {
         
-        let nib: UINib = UINib(nibName: String(describing: ToolPageContentFormView.self), bundle: nil)
+        let nib: UINib = UINib(nibName: String(describing: MobileContentFormView.self), bundle: nil)
         let contents: [Any]? = nib.instantiate(withOwner: self, options: nil)
         if let rootNibView = (contents as? [UIView])?.first {
             addSubview(rootNibView)
@@ -70,7 +70,7 @@ class ToolPageContentFormView: UIView {
         contentStackView.constrainEdgesToSuperview()
     }
     
-    private func handleDidRenderContentInput(contentInput: ToolPageContentInputView) {
+    private func handleDidRenderContentInput(contentInput: MobileContentInputView) {
         contentInput.setInputDelegate(delegate: self)
         inputs.append(contentInput)
     }
@@ -83,7 +83,7 @@ class ToolPageContentFormView: UIView {
 
 // MARK: - UITextFieldDelegate
 
-extension ToolPageContentFormView: UITextFieldDelegate {
+extension MobileContentFormView: UITextFieldDelegate {
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         currentEditedTextField = textField

@@ -21,7 +21,7 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
     
     private weak var rootContentStackRenderer: ToolPageContentStackRenderer?
         
-    let didRenderContentFormSignal: SignalValue<ToolPageContentFormView> = SignalValue()
+    let didRenderContentFormSignal: SignalValue<MobileContentFormView> = SignalValue()
     let didRenderHiddenContentInputSignal: SignalValue<ContentInputNode> = SignalValue()
     let didRenderContentInputSignal: SignalValue<ToolPageRenderedContentInput> = SignalValue()
     let didRenderTrainingTipsSignal: Signal = Signal()
@@ -230,14 +230,14 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
         }
         else if let tabsNode = node as? ContentTabsNode {
 
-            let viewModel = ToolPageContentTabsViewModel(
+            let viewModel = MobileContentTabsViewModel(
                 tabsNode: tabsNode,
                 diContainer: diContainer,
                 toolPageColors: toolPageColors,
                 defaultTextNodeTextColor: defaultTextNodeTextColor
             )
             
-            let view = ToolPageContentTabsView(viewModel: viewModel)
+            let view = MobileContentTabsView(viewModel: viewModel)
                                     
             return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)
         }
@@ -248,14 +248,14 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
                 return nil
             }
             
-            let viewModel = ToolPageContentInputViewModel(
+            let viewModel = MobileContentInputViewModel(
                 inputNode: inputNode,
                 fontService: diContainer.fontService,
                 toolPageColors: toolPageColors,
                 defaultTextNodeTextColor: defaultTextNodeTextColor
             )
             
-            let view = ToolPageContentInputView(viewModel: viewModel)
+            let view = MobileContentInputView(viewModel: viewModel)
             
             let renderedInput = ToolPageRenderedContentInput(viewModel: viewModel, view: view)
             
@@ -265,14 +265,14 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
         }
         else if let formNode = node as? ContentFormNode {
             
-            let viewModel = ToolPageContentFormViewModel(
+            let viewModel = MobileContentFormViewModel(
                 formNode: formNode,
                 diContainer: diContainer,
                 toolPageColors: toolPageColors,
                 defaultTextNodeTextColor: defaultTextNodeTextColor
             )
             
-            let view = ToolPageContentFormView(viewModel: viewModel)
+            let view = MobileContentFormView(viewModel: viewModel)
                         
             rootContentStackRenderer.didRenderContentFormSignal.accept(value: view)
             

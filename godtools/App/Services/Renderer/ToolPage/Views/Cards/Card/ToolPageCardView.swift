@@ -18,7 +18,7 @@ class ToolPageCardView: UIView {
     private lazy var keyboardObserver: KeyboardObserverType = KeyboardNotificationObserver(loggingEnabled: false)
     
     private var contentStackView: MobileContentStackView?
-    private var contentFormView: ToolPageContentFormView?
+    private var contentFormView: MobileContentFormView?
     private var startingHeaderTrainingTipIconTrailing: CGFloat = 20
     private var keyboardHeightForAddedContentSize: Double?
     private var didAddKeyboardHeightToContentSize: Bool = false
@@ -147,7 +147,7 @@ class ToolPageCardView: UIView {
         
         let contentStackViewModel: ToolPageContentStackContainerViewModel = viewModel.contentStackViewModel
         
-        contentStackViewModel.contentStackRenderer.didRenderContentFormSignal.addObserver(self) { [weak self] (contentForm: ToolPageContentFormView) in
+        contentStackViewModel.contentStackRenderer.didRenderContentFormSignal.addObserver(self) { [weak self] (contentForm: MobileContentFormView) in
             self?.handleDidRenderContentForm(form: contentForm)
         }
         
@@ -217,7 +217,7 @@ class ToolPageCardView: UIView {
         layoutIfNeeded()
     }
     
-    private func handleDidRenderContentForm(form: ToolPageContentFormView) {
+    private func handleDidRenderContentForm(form: MobileContentFormView) {
         
         guard self.contentFormView == nil else {
             return
