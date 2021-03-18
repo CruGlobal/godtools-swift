@@ -1,5 +1,5 @@
 //
-//  ToolPageContentTabsViewModelType.swift
+//  MobileContentTabsViewModelType.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/6/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ToolPageContentTabsViewModelType {
+protocol MobileContentTabsViewModelType {
     
     var tabLabels: [String] { get }
     var selectedTab: ObservableValue<Int> { get }

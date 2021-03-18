@@ -1,5 +1,5 @@
 //
-//  ToolPageContentInputViewModel.swift
+//  MobileContentInputViewModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/9/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ToolPageContentInputViewModel: ToolPageContentInputViewModelType {
+class MobileContentInputViewModel: MobileContentInputViewModelType {
     
     private let fontService: FontService
     private let toolPageColors: ToolPageColors

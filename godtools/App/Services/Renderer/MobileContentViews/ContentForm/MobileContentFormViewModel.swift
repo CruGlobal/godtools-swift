@@ -1,5 +1,5 @@
 //
-//  ToolPageContentFormViewModel.swift
+//  MobileContentFormViewModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/9/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
+class MobileContentFormViewModel: NSObject, MobileContentFormViewModelType {
     
     private let formNode: ContentFormNode
     private let diContainer: ToolPageDiContainer
@@ -16,7 +16,7 @@ class ToolPageContentFormViewModel: NSObject, ToolPageContentFormViewModelType {
     private let defaultTextNodeTextColor: UIColor?
     
     private var hiddenInputNodes: [ContentInputNode] = Array()
-    private var inputViewModels: [ToolPageContentInputViewModelType] = Array()
+    private var inputViewModels: [MobileContentInputViewModelType] = Array()
     
     let resignCurrentInputSignal: Signal = Signal()
     let contentViewModel: ToolPageContentStackContainerViewModel

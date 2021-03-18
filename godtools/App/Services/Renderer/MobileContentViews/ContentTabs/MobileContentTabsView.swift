@@ -1,5 +1,5 @@
 //
-//  ToolPageContentTabsView.swift
+//  MobileContentTabsView.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/6/20.
@@ -8,14 +8,14 @@
 
 import UIKit
 
-class ToolPageContentTabsView: UIView {
+class MobileContentTabsView: UIView {
     
-    private let viewModel: ToolPageContentTabsViewModelType
+    private let viewModel: MobileContentTabsViewModelType
     
     @IBOutlet weak private var tabsControl: UISegmentedControl!
     @IBOutlet weak private var tabContentContainerView: UIView!
     
-    required init(viewModel: ToolPageContentTabsViewModelType) {
+    required init(viewModel: MobileContentTabsViewModelType) {
         
         self.viewModel = viewModel
         
@@ -38,7 +38,7 @@ class ToolPageContentTabsView: UIView {
     
     private func initializeNib() {
         
-        let nib: UINib = UINib(nibName: String(describing: ToolPageContentTabsView.self), bundle: nil)
+        let nib: UINib = UINib(nibName: String(describing: MobileContentTabsView.self), bundle: nil)
         let contents: [Any]? = nib.instantiate(withOwner: self, options: nil)
         if let rootNibView = (contents as? [UIView])?.first {
             addSubview(rootNibView)

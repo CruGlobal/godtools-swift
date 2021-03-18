@@ -10,6 +10,6 @@ import Foundation
 
 struct ToolPageRenderedContentInput {
     
-    let viewModel: ToolPageContentInputViewModelType
-    let view: ToolPageContentInputView
+    let viewModel: MobileContentInputViewModelType
+    let view: MobileContentInputView
 }

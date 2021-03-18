@@ -1,5 +1,5 @@
 //
-//  ToolPageContentInputView.swift
+//  MobileContentInputView.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/9/20.
@@ -8,14 +8,14 @@
 
 import UIKit
 
-class ToolPageContentInputView: UIView {
+class MobileContentInputView: UIView {
     
-    private let viewModel: ToolPageContentInputViewModelType
+    private let viewModel: MobileContentInputViewModelType
         
     @IBOutlet weak private var inputLabel: UILabel!
     @IBOutlet weak private var inputTextField: UITextField!
     
-    required init(viewModel: ToolPageContentInputViewModelType) {
+    required init(viewModel: MobileContentInputViewModelType) {
         
         self.viewModel = viewModel
         
@@ -38,7 +38,7 @@ class ToolPageContentInputView: UIView {
     
     private func initializeNib() {
         
-        let nib: UINib = UINib(nibName: String(describing: ToolPageContentInputView.self), bundle: nil)
+        let nib: UINib = UINib(nibName: String(describing: MobileContentInputView.self), bundle: nil)
         let contents: [Any]? = nib.instantiate(withOwner: self, options: nil)
         if let rootNibView = (contents as? [UIView])?.first {
             addSubview(rootNibView)

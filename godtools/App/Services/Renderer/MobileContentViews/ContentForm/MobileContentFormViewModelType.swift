@@ -1,5 +1,5 @@
 //
-//  ToolPageContentFormViewModelType.swift
+//  MobileContentFormViewModelType.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/9/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ToolPageContentFormViewModelType {
+protocol MobileContentFormViewModelType {
     
     var resignCurrentInputSignal: Signal { get }
     var contentViewModel: ToolPageContentStackContainerViewModel { get }

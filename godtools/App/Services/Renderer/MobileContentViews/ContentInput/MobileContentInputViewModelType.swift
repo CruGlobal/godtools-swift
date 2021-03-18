@@ -1,5 +1,5 @@
 //
-//  ToolPageContentInputViewModelType.swift
+//  MobileContentInputViewModelType.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/9/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ToolPageContentInputViewModelType {
+protocol MobileContentInputViewModelType {
     
     var inputNode: ContentInputNode { get }
     var inputLabel: String? { get }

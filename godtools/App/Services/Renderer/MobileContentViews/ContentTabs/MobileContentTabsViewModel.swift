@@ -1,5 +1,5 @@
 //
-//  ToolPageContentTabsViewModel.swift
+//  MobileContentTabsViewModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/6/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ToolPageContentTabsViewModel: NSObject, ToolPageContentTabsViewModelType {
+class MobileContentTabsViewModel: NSObject, MobileContentTabsViewModelType {
     
     private let tabsNode: ContentTabsNode
     private let diContainer: ToolPageDiContainer
