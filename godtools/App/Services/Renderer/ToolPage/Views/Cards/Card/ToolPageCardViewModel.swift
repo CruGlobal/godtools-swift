@@ -201,9 +201,9 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     }
 }
 
-// MARK: - MobileContentViewModel
+// MARK: - MobileContentViewModelType
 
-extension ToolPageCardViewModel: MobileContentViewModel {
+extension ToolPageCardViewModel: MobileContentViewModelType {
     
     var analyticsEvents: [MobileContentAnalyticsEvent] {
         return analyticsEventsObjects

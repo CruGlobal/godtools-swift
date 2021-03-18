@@ -12,6 +12,8 @@ protocol MobileContentRenderableView {
     
     var view: UIView { get }
     
+    func addRenderableView(renderableView: MobileContentRenderableView)
+    func finishedRenderingChildren()
     func viewDidAppear()
     func viewDidDisappear()
 }
