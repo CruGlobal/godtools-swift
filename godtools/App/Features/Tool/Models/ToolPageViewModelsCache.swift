@@ -8,6 +8,7 @@
 
 import Foundation
 
+// TODO: Remove this class. ~Levi
 class ToolPageViewModelsCache {
     
     typealias PageNumber = Int

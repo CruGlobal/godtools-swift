@@ -17,9 +17,17 @@ protocol ToolPageViewModelTypeDelegate: class {
     func toolPageError(viewModel: ToolPageViewModelType, page: Int, error: ContentEventError)
 }
 
-protocol ToolPageViewModelType: NSObject {
+protocol ToolPageViewModelType {
     
     var backgroundColor: UIColor { get }
+    var bottomViewColor: UIColor { get }
+    
+    func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel?
+}
+
+/*
+protocol ToolPageViewModelType: NSObject {
+    
     var contentStackViewModel: ToolPageContentStackContainerViewModel? { get }
     var headerTrainingTipViewModel: TrainingTipViewModelType? { get }
     var hidesCards: Bool { get }
@@ -30,16 +38,11 @@ protocol ToolPageViewModelType: NSObject {
     var numberOfCards: Int { get }
     var numberOfVisibleCards: Int { get }
     var numberOfHiddenCards: Int { get }
-    var hidesCardJump: ObservableValue<Bool> { get }
-    var bottomViewColor: UIColor { get }
+    var hidesCardJump: ObservableValue<Bool> { get }s
     
-    func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel?
-    func headerWillAppear() -> ToolPageHeaderViewModelType?
-    func heroWillAppear() -> ToolPageHeroViewModelType?
-    func callToActionWillAppear() -> ToolPageCallToActionViewModelType?
     func getCurrentPositions() -> ToolPageInitialPositions
     func callToActionNextButtonTapped()
     func hiddenCardWillAppear(cardPosition: Int) -> ToolPageCardViewModelType?
     func setCard(cardPosition: Int?, animated: Bool)
     func cardBounceAnimationFinished()
-}
+}*/

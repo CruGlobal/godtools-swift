@@ -16,43 +16,38 @@ class ToolPageHeroView: MobileContentStackView {
         
         self.viewModel = viewModel
         
-        super.init(viewRenderer: viewModel.contentStackRenderer, itemSpacing: 20, scrollIsEnabled: true)
+        super.init(itemSpacing: 20, scrollIsEnabled: true)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    required init(viewRenderer: MobileContentStackViewRendererType, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
+    required init(itemSpacing: CGFloat, scrollIsEnabled: Bool) {
         fatalError("init(itemSpacing:scrollIsEnabled:) has not been implemented")
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
     }
-}
+    
+    // MARK: - MobileContentView
 
-// MARK: - MobileContentRenderableView
+    override func renderChild(childView: MobileContentView) {
+        super.renderChild(childView: childView)
+    }
 
-extension ToolPageHeroView: MobileContentRenderableView {
-    
-    var view: UIView {
-        return self
+    override func finishedRenderingChildren() {
+        super.finishedRenderingChildren()
     }
-    
-    func addRenderableView(renderableView: MobileContentRenderableView) {
-        
-    }
-    
-    func finishedRenderingChildren() {
-        
-    }
-    
-    func viewDidAppear() {
+
+    override func viewDidAppear() {
+        super.viewDidAppear()
         viewModel.heroDidAppear()
     }
-    
-    func viewDidDisappear() {
+
+    override func viewDidDisappear() {
+        super.viewDidDisappear()
         viewModel.heroDidDisappear()
     }
 }

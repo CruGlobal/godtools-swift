@@ -8,6 +8,7 @@
 
 import Foundation
 
+// TODO: Remove this class. ~Levi
 class ToolLanguageTranslationModel {
         
     typealias PageNumber = Int

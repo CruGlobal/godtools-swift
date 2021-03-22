@@ -8,6 +8,7 @@
 
 import Foundation
 
+// TODO: Remove this protocol. ~Levi
 protocol MobileContentStackViewRendererType {
     
     func render(didRenderView: ((_ renderedView: MobileContentStackRenderedView) -> Void))

@@ -254,6 +254,7 @@ extension ToolViewModel {
     
     private func sendRemoteShareNavigationEventForPage(page: Int) {
         
+        /*
         guard tractRemoteSharePublisher.isSubscriberChannelIdCreatedForPublish else {
             return
         }
@@ -268,7 +269,7 @@ extension ToolViewModel {
             tool: resource.abbreviation
         )
         
-        tractRemoteSharePublisher.sendNavigationEvent(event: event)
+        tractRemoteSharePublisher.sendNavigationEvent(event: event)*/
     }
 }
 
@@ -313,6 +314,7 @@ extension ToolViewModel {
     
     private func setToolPage(page: Int, card: Int?, animated: Bool) {
         
+        /*
         let pageViewModel: ToolPageViewModelType?
         
         if let cachedPageViewModel = currentPagesViewModelsCache.getPage(page: page) {
@@ -326,7 +328,7 @@ extension ToolViewModel {
         
         if page != currentToolPage {
             currentPage.accept(value: AnimatableValue(value: page, animated: animated))
-        }
+        }*/
     }
     
     private var currentToolLanguage: Int {
@@ -344,6 +346,7 @@ extension ToolViewModel {
     
     private func getAndCacheToolPageViewModel(page: Int, language: Int, initialPositions: ToolPageInitialPositions?) -> ToolPageViewModelType? {
         
+        /*
         let languageTranslationModel: ToolLanguageTranslationModel = languageTranslationModels[language]
         
         if let pageNode = languageTranslationModel.getPageNode(page: page) {
@@ -377,7 +380,7 @@ extension ToolViewModel {
             currentPagesViewModelsCache.cachePage(page: page, toolPageViewModel: viewModel)
                                                
             return viewModel
-        }
+        }*/
         
         return nil
     }
@@ -458,11 +461,12 @@ extension ToolViewModel: ToolNavBarViewModelDelegate {
     
     func languageTapped(navBar: ToolNavBarViewModelType, previousLanguage: Int, newLanguage: Int) {
            
+        /*
         let currentToolPagePositions: ToolPageInitialPositions? = currentPagesViewModelsCache.getPage(page: currentToolPage)?.getCurrentPositions()
         
         forceToolRefresh(language: newLanguage, page: currentToolPage, card: currentToolPagePositions?.card)
                 
-        sendRemoteShareNavigationEventForPage(page: currentToolPage)
+        sendRemoteShareNavigationEventForPage(page: currentToolPage)*/
     }
 }
 

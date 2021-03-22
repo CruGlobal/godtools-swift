@@ -8,9 +8,8 @@
 
 import UIKit
 
-class ToolPageCardView: UIView {
+class ToolPageCardView: MobileContentView {
         
-    private let viewModel: ToolPageCardViewModelType
     private let backgroundImageView: MobileContentBackgroundImageView = MobileContentBackgroundImageView()
     private let swipeUpGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer()
     private let swipeDownGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer()
@@ -24,6 +23,8 @@ class ToolPageCardView: UIView {
     private var didAddKeyboardHeightToContentSize: Bool = false
     private var cardSwipingIsEnabled: Bool = false
     private var isObservingKeyboard: Bool = false
+    
+    let viewModel: ToolPageCardViewModelType
             
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var headerTrainingTipImageView: UIImageView!
@@ -145,6 +146,8 @@ class ToolPageCardView: UIView {
         nextButton.setTitleColor(viewModel.nextButtonTitleColor, for: .normal)
         nextButton.isHidden = viewModel.hidesNextButton
         
+        // TODO: Fix this for new renderer changes. ~Levi
+        /*
         let contentStackViewModel: ToolPageContentStackContainerViewModel = viewModel.contentStackViewModel
         
         contentStackViewModel.contentStackRenderer.didRenderContentFormSignal.addObserver(self) { [weak self] (contentForm: MobileContentFormView) in
@@ -162,10 +165,23 @@ class ToolPageCardView: UIView {
             bottom: bottomGradientView.frame.size.height,
             right: 0
         ))
-        contentStackView.setScrollViewDelegate(delegate: self)
+        contentStackView.setScrollViewDelegate(delegate: self)*/
     }
+    
+    // MARK: - MobileContentView
 
-    var cardHeaderHeight: CGFloat {
+    override func renderChild(childView: MobileContentView) {
+        
+        super.renderChild(childView: childView)
+        
+        if let contentStackView = childView as? MobileContentStackView {
+            addContentStackView(contentStackView: contentStackView)
+        }
+    }
+    
+    // MARK: -
+
+    static var cardHeaderHeight: CGFloat {
         return 50
     }
     
@@ -396,6 +412,31 @@ class ToolPageCardView: UIView {
             swipeUpGesture.isEnabled = false
             swipeDownGesture.isEnabled = false
         }
+    }
+}
+
+// MARK: - Content Stack View
+
+extension ToolPageCardView {
+    
+    private func addContentStackView(contentStackView: MobileContentStackView) {
+        
+        guard self.contentStackView == nil else {
+            return
+        }
+        
+        contentStackContainer.addSubview(contentStackView)
+        contentStackView.constrainEdgesToSuperview()
+        layoutIfNeeded()
+        contentStackView.setContentInset(contentInset: UIEdgeInsets(
+            top: 0,
+            left: 0,
+            bottom: bottomGradientView.frame.size.height,
+            right: 0
+        ))
+        contentStackView.setScrollViewDelegate(delegate: self)
+        
+        self.contentStackView = contentStackView
     }
 }
 

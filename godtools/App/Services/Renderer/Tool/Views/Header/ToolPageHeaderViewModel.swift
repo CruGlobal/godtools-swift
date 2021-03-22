@@ -10,7 +10,7 @@ import UIKit
 
 class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
     
-    private let diContainer: ToolPageDiContainer
+    private let pageModel: MobileContentRendererPageModel
     private let toolPageColors: ToolPageColors
     private let fontService: FontService
     private let language: LanguageModel
@@ -19,12 +19,12 @@ class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
     let number: String?
     let title: String?
     
-    required init(headerNode: HeaderNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColors, fontService: FontService, language: LanguageModel) {
+    required init(headerNode: HeaderNode, pageModel: MobileContentRendererPageModel, toolPageColors: ToolPageColors, fontService: FontService) {
         
-        self.diContainer = diContainer
+        self.pageModel = pageModel
         self.toolPageColors = toolPageColors
         self.fontService = fontService
-        self.language = language
+        self.language = pageModel.language
         
         let pageHeaderNumber: String? = headerNode.number
         let pageHeaderTitle: String? = headerNode.title
@@ -36,7 +36,7 @@ class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return diContainer.languageDirectionSemanticContentAttribute
+        return pageModel.languageDirectionSemanticContentAttribute
     }
     
     var backgroundColor: UIColor {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class MobileContentLinkView: UIView {
+class MobileContentLinkView: MobileContentView {
     
     private let viewModel: MobileContentLinkViewModelType
     private let linkButton: UIButton = UIButton(type: .custom)
@@ -60,5 +60,11 @@ class MobileContentLinkView: UIView {
     
     @objc func handleLinkTapped() {
         viewModel.linkTapped()
+    }
+    
+    // MARK: - MobileContentView
+    
+    override var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType {
+        return .constrainedToChildren
     }
 }

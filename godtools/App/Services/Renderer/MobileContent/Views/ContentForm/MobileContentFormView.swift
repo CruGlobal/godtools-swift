@@ -64,10 +64,12 @@ class MobileContentFormView: UIView {
             self?.handleDidRenderContentInput(contentInput: renderedInput.view)
         }
         
+        // TODO: Fix this for new renderer changes. ~Levi
+        /*
         let contentStackView = MobileContentStackView(viewRenderer: contentViewModel.contentStackRenderer, itemSpacing: 15, scrollIsEnabled: false)
         contentContainerView.addSubview(contentStackView)
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
-        contentStackView.constrainEdgesToSuperview()
+        contentStackView.constrainEdgesToSuperview()*/
     }
     
     private func handleDidRenderContentInput(contentInput: MobileContentInputView) {

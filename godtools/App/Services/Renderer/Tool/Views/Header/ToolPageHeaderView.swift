@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ToolPageHeaderView: UIView {
+class ToolPageHeaderView: MobileContentView {
     
     let viewModel: ToolPageHeaderViewModelType
     

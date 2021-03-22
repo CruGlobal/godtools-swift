@@ -80,6 +80,10 @@ class MobileContentTabsView: UIView {
     
     private func setContentView(contentViewModel: ToolPageContentStackContainerViewModel) {
         
+        // TODO: Fix this for new renderer changes. ~Levi
+        
+        /*
+        
         for view in tabContentContainerView.subviews {
             view.removeFromSuperview()
         }
@@ -91,6 +95,6 @@ class MobileContentTabsView: UIView {
         contentView.translatesAutoresizingMaskIntoConstraints = false
         contentView.constrainEdgesToSuperview()
         
-        layoutIfNeeded()
+        layoutIfNeeded()*/
     }
 }

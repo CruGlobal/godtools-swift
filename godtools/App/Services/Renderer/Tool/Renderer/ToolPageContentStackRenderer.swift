@@ -8,6 +8,7 @@
 
 import UIKit
 
+// TODO: Remove this class. ~Levi
 class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
     
     private static let numberFormatter: NumberFormatter = NumberFormatter()
@@ -61,6 +62,8 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
         
         if let paragraphNode = node as? ContentParagraphNode {
         
+            // TODO: Fix this for new renderer changes. ~Levi
+            /*
             let paragraphRenderer = ToolPageContentStackRenderer(
                 rootContentStackRenderer: rootContentStackRenderer,
                 diContainer: diContainer,
@@ -77,12 +80,14 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
                 scrollIsEnabled: false
             )
                                                          
-            return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)
+            return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)*/
+            return nil
         }
         else if let textNode = node as? ContentTextNode {
               
+            /*
             let viewModel = MobileContentTextViewModel(
-                contentTextNode: textNode,
+                textNode: textNode,
                 manifestResourcesCache: diContainer.manifestResourcesCache,
                 fontService: diContainer.fontService,
                 fontSize: 18,
@@ -93,10 +98,11 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
 
             let view = MobileContentTextView(viewModel: viewModel)
             
-            return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)
+            return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)*/
         }
         else if let imageNode = node as? ContentImageNode {
             
+            /*
             guard imageNode.isRenderable else {
                 return nil
             }
@@ -110,7 +116,7 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
             
             let view = MobileContentImageView(viewModel: viewModel)
             
-            return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)
+            return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)*/
         }
         else if let trainingTipNode = node as? TrainingTipNode {
             
@@ -140,6 +146,7 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
         }
         else if let buttonNode = node as? ContentButtonNode {
             
+            /*
             let viewModel = MobileContentButtonViewModel(
                 buttonNode: buttonNode,
                 mobileContentEvents: diContainer.mobileContentEvents,
@@ -155,9 +162,11 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
             let view = MobileContentButtonView(viewModel: viewModel)
             
             return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)
+            */
         }
         else if let linkNode = node as? ContentLinkNode {
             
+            /*
             let viewModel = MobileContentLinkViewModel(
                 linkNode: linkNode,
                 mobileContentEvents: diContainer.mobileContentEvents,
@@ -171,6 +180,7 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
             let view = MobileContentLinkView(viewModel: viewModel)
             
             return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)
+            */
         }
         else if let fallbackNode = node as? ContentFallbackNode {
             
@@ -197,9 +207,10 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
             return nil
         }
         else if let titleNode = node as? TitleNode, let textNode = titleNode.textNode {
-                  
+                
+            /*
             let viewModel = MobileContentTextViewModel(
-                contentTextNode: textNode,
+                textNode: textNode,
                 manifestResourcesCache: diContainer.manifestResourcesCache,
                 fontService: diContainer.fontService,
                 fontSize: 44,
@@ -210,12 +221,13 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
 
             let view = MobileContentTextView(viewModel: viewModel)
             
-            return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)
+            return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)*/
         }
         else if let headingNode = node as? HeadingNode, let textNode = headingNode.textNode {
             
+            /*
             let viewModel = MobileContentTextViewModel(
-                contentTextNode: textNode,
+                textNode: textNode,
                 manifestResourcesCache: diContainer.manifestResourcesCache,
                 fontService: diContainer.fontService,
                 fontSize: 30,
@@ -226,7 +238,7 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
 
             let view = MobileContentTextView(viewModel: viewModel)
             
-            return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)
+            return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)*/
         }
         else if let tabsNode = node as? ContentTabsNode {
 

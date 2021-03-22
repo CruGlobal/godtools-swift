@@ -11,13 +11,15 @@ import UIKit
 class ToolPageHeroViewModel: ToolPageHeroViewModelType {
     
     private let heroNode: HeroNode
-    private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
+    //private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
         
-    let contentStackRenderer: ToolPageContentStackRenderer
+    //let contentStackRenderer: ToolPageContentStackRenderer
     
-    required init(heroNode: HeroNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColors) {
+    required init(heroNode: HeroNode) {
         
         self.heroNode = heroNode
+        
+        /*
         self.contentStackRenderer = ToolPageContentStackRenderer(
             rootContentStackRenderer: nil,
             diContainer: diContainer,
@@ -26,14 +28,15 @@ class ToolPageHeroViewModel: ToolPageHeroViewModelType {
             defaultTextNodeTextColor: nil,
             defaultTextNodeTextAlignment: nil,
             defaultButtonBorderColor: nil
-        )
+        )*/
         
+        /*
         if let analyticsEventsNode = heroNode.analyticsEventsNode {
             analyticsEventsObjects = MobileContentAnalyticsEvent.initEvents(eventsNode: analyticsEventsNode, mobileContentAnalytics: diContainer.mobileContentAnalytics)
         }
         else {
             analyticsEventsObjects = []
-        }
+        }*/
     }
     
     deinit {
@@ -41,16 +44,17 @@ class ToolPageHeroViewModel: ToolPageHeroViewModelType {
     }
     
     func heroDidAppear() {
-        mobileContentDidAppear()
+        //mobileContentDidAppear()
     }
     
     func heroDidDisappear() {
-        mobileContentDidDisappear()
+        //mobileContentDidDisappear()
     }
 }
 
 // MARK: - MobileContentViewModelType
 
+/*
 extension ToolPageHeroViewModel: MobileContentViewModelType {
     
     var analyticsEvents: [MobileContentAnalyticsEvent] {
@@ -60,4 +64,4 @@ extension ToolPageHeroViewModel: MobileContentViewModelType {
     var defaultAnalyticsEventsTrigger: AnalyticsEventNodeTrigger {
         return .visible
     }
-}
+}*/

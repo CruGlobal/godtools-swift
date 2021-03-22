@@ -11,23 +11,23 @@ import UIKit
 class ToolPageCallToActionViewModel: ToolPageCallToActionViewModelType {
     
     private let callToActionNode: CallToActionNode?
-    private let diContainer: ToolPageDiContainer
+    private let pageModel: MobileContentRendererPageModel
     private let toolPageColors: ToolPageColors
     private let fontService: FontService
     
     let hidesCallToAction: Bool
     
-    required init(callToActionNode: CallToActionNode?, heroNode: HeroNode?, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColors, fontService: FontService, isLastPage: Bool) {
+    required init(callToActionNode: CallToActionNode?, pageModel: MobileContentRendererPageModel, toolPageColors: ToolPageColors, fontService: FontService) {
         
         self.callToActionNode = callToActionNode
-        self.diContainer = diContainer
+        self.pageModel = pageModel
         self.toolPageColors = toolPageColors
         self.fontService = fontService
-        self.hidesCallToAction = (callToActionNode == nil && heroNode == nil) || isLastPage
+        self.hidesCallToAction = (callToActionNode == nil && pageModel.pageNode.heroNode == nil) || pageModel.isLastPage
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return diContainer.languageDirectionSemanticContentAttribute
+        return pageModel.languageDirectionSemanticContentAttribute
     }
     
     var title: String? {

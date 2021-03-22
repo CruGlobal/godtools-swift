@@ -8,6 +8,60 @@
 
 import UIKit
 
+class ToolPageViewModel: ToolPageViewModelType {
+    
+    private let pageNode: PageNode
+    private let pageModel: MobileContentRendererPageModel
+    private let toolPageColors: ToolPageColors
+    
+    required init(pageNode: PageNode, pageModel: MobileContentRendererPageModel, toolPageColors: ToolPageColors) {
+        
+        self.pageNode = pageNode
+        self.pageModel = pageModel
+        self.toolPageColors = toolPageColors
+    }
+    
+    var backgroundColor: UIColor {
+        return toolPageColors.backgroundColor
+    }
+    
+    var bottomViewColor: UIColor {
+        
+        let manifestAttributes: MobileContentXmlManifestAttributes = pageModel.manifest.attributes
+        let color: UIColor = manifestAttributes.getNavBarColor()?.color ?? manifestAttributes.getPrimaryColor().color
+        
+        return color.withAlphaComponent(0.1)
+    }
+    
+    func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel? {
+                    
+        let manifestAttributes: MobileContentXmlManifestAttributes = pageModel.manifest.attributes
+        
+        let backgroundImageNode: BackgroundImageNodeType?
+        
+        if pageNode.backgroundImageExists {
+            backgroundImageNode = pageNode
+        }
+        else if manifestAttributes.backgroundImageExists {
+            backgroundImageNode = manifestAttributes
+        }
+        else {
+            backgroundImageNode = nil
+        }
+        
+        if let backgroundImageNode = backgroundImageNode {
+            return MobileContentBackgroundImageViewModel(
+                backgroundImageNode: backgroundImageNode,
+                manifestResourcesCache: pageModel.resourcesCache,
+                languageDirection: pageModel.language.languageDirection
+            )
+        }
+        
+        return nil
+    }
+}
+
+/*
 class ToolPageViewModel: NSObject, ToolPageViewModelType {
         
     private let pageNode: PageNode
@@ -33,11 +87,10 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     let hidesHeaderTrainingTip: ObservableValue<Bool> = ObservableValue(value: true)
     let hidesCardJump: ObservableValue<Bool> = ObservableValue(value: true)
     
-    required init(delegate: ToolPageViewModelTypeDelegate, pageNode: PageNode, diContainer: ToolPageDiContainer, page: Int, initialPositions: ToolPageInitialPositions?) {
+    required init(pageNode: PageNode, diContainer: ToolPageDiContainer, page: Int, initialPositions: ToolPageInitialPositions?) {
                 
         let isLastPage: Bool = page >= diContainer.manifest.pages.count - 1
         
-        self.delegate = delegate
         self.pageNode = pageNode
         self.diContainer = diContainer
         self.toolPageColors = ToolPageColors(pageNode: pageNode, manifest: diContainer.manifest)
@@ -246,83 +299,7 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     
     var cardsViewModels: [ToolPageCardViewModelType] {
         return allCardsViewModels
-    }
-    
-    var bottomViewColor: UIColor {
-        
-        let manifestAttributes: MobileContentXmlManifestAttributes = diContainer.manifest.attributes
-        let color: UIColor = manifestAttributes.getNavBarColor()?.color ?? manifestAttributes.getPrimaryColor().color
-        
-        return color.withAlphaComponent(0.1)
-    }
-    
-    func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel? {
-                    
-        let pageNode: PageNode = self.pageNode
-        let manifestAttributes: MobileContentXmlManifestAttributes = diContainer.manifest.attributes
-        
-        let backgroundImageNode: BackgroundImageNodeType?
-        
-        if pageNode.backgroundImageExists {
-            backgroundImageNode = pageNode
-        }
-        else if manifestAttributes.backgroundImageExists {
-            backgroundImageNode = manifestAttributes
-        }
-        else {
-            backgroundImageNode = nil
-        }
-        
-        if let backgroundImageNode = backgroundImageNode {
-            return MobileContentBackgroundImageViewModel(
-                backgroundImageNode: backgroundImageNode,
-                manifestResourcesCache: diContainer.manifestResourcesCache,
-                languageDirection: diContainer.language.languageDirection
-            )
-        }
-        
-        return nil
-    }
-    
-    func headerWillAppear() -> ToolPageHeaderViewModelType? {
-        
-        guard let headerNode = pageNode.headerNode else {
-            return nil
-        }
-        
-        return ToolPageHeaderViewModel(
-            headerNode: headerNode,
-            diContainer: diContainer,
-            toolPageColors: toolPageColors,
-            fontService: diContainer.fontService,
-            language: diContainer.language
-        )
-    }
-    
-    func heroWillAppear() -> ToolPageHeroViewModelType? {
-        
-        guard let heroNode = pageNode.heroNode else {
-            return nil
-        }
-        
-        return ToolPageHeroViewModel(
-            heroNode: heroNode,
-            diContainer: diContainer,
-            toolPageColors: toolPageColors
-        )
-    }
-    
-    func callToActionWillAppear() -> ToolPageCallToActionViewModelType? {
-        
-        return ToolPageCallToActionViewModel(
-            callToActionNode: pageNode.callToActionNode,
-            heroNode: pageNode.heroNode,
-            diContainer: diContainer,
-            toolPageColors: toolPageColors,
-            fontService: diContainer.fontService,
-            isLastPage: isLastPage
-        )
-    }
+    }s
     
     func getCurrentPositions() -> ToolPageInitialPositions {
         
@@ -481,3 +458,4 @@ extension ToolPageViewModel: ToolPageModalViewModelDelegate {
         modal.accept(value: nil)
     }
 }
+*/

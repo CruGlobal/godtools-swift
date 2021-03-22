@@ -26,7 +26,6 @@ protocol ToolPageCardViewModelType: NSObject {
     var titleFont: UIFont { get }
     var titleAlignment: NSTextAlignment { get }
     var hidesHeaderTrainingTip: ObservableValue<Bool> { get }
-    var contentStackViewModel: ToolPageContentStackContainerViewModel { get }
     var isHiddenCard: Bool { get }
     var cardPositionLabel: String? { get }
     var cardPositionLabelTextColor: UIColor { get }
@@ -42,6 +41,7 @@ protocol ToolPageCardViewModelType: NSObject {
     var hidesNextButton: Bool { get }
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute { get }
     
+    func setDelegate(delegate: ToolPageCardViewModelTypeDelegate)
     func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel
     func headerTapped()
     func previousTapped()

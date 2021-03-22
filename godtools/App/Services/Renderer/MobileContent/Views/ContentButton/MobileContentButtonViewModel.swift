@@ -11,7 +11,7 @@ import UIKit
 class MobileContentButtonViewModel: MobileContentButtonViewModelType {
     
     private let buttonNode: ContentButtonNode
-    private let mobileContentEvents: MobileContentEvents
+    private let pageModel: MobileContentRendererPageModel
     private let mobileContentAnalytics: MobileContentAnalytics
     private let fontService: FontService
     private let fontSize: CGFloat
@@ -21,10 +21,10 @@ class MobileContentButtonViewModel: MobileContentButtonViewModelType {
     let titleColor: UIColor
     let borderColor: CGColor?
     
-    required init(buttonNode: ContentButtonNode, mobileContentEvents: MobileContentEvents, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, fontSize: CGFloat, fontWeight: UIFont.Weight, defaultBackgroundColor: UIColor, defaultTitleColor: UIColor, defaultBorderColor: UIColor?) {
+    required init(buttonNode: ContentButtonNode, pageModel: MobileContentRendererPageModel, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, fontSize: CGFloat, fontWeight: UIFont.Weight, defaultBackgroundColor: UIColor, defaultTitleColor: UIColor, defaultBorderColor: UIColor?) {
         
         self.buttonNode = buttonNode
-        self.mobileContentEvents = mobileContentEvents
+        self.pageModel = pageModel
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
         self.fontSize = fontSize
@@ -60,6 +60,8 @@ class MobileContentButtonViewModel: MobileContentButtonViewModelType {
     
     func buttonTapped() {
         
+        // TODO: Process button event. ~Levi
+        
         if buttonNode.type == "event" {
             
             let followUpSendEventName: String = "followup:send"
@@ -69,16 +71,16 @@ class MobileContentButtonViewModel: MobileContentButtonViewModelType {
                 if let index = triggerEvents.firstIndex(of: followUpSendEventName) {
                     triggerEvents.remove(at: index)
                 }
-                mobileContentEvents.followUpEventButtonTapped(followUpEventButton: FollowUpButtonEvent(triggerEventsOnFollowUpSent: triggerEvents))
+                //mobileContentEvents.followUpEventButtonTapped(followUpEventButton: FollowUpButtonEvent(triggerEventsOnFollowUpSent: triggerEvents))
             }
             else {
                 for event in buttonNode.events {
-                    mobileContentEvents.eventButtonTapped(eventButton: ButtonEvent(event: event))
+                    //mobileContentEvents.eventButtonTapped(eventButton: ButtonEvent(event: event))
                 }
             }
         }
         else if buttonNode.type == "url", let url = buttonNode.url {
-            mobileContentEvents.urlButtonTapped(urlButtonEvent: UrlButtonEvent(url: url))
+            //mobileContentEvents.urlButtonTapped(urlButtonEvent: UrlButtonEvent(url: url))
         }
         
         if let analyticsEventsNode = buttonNode.analyticsEventsNode {

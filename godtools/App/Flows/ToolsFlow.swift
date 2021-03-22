@@ -575,7 +575,36 @@ class ToolsFlow: Flow {
     }
     
     private func navigateToTract(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
-                
+        
+        let mobileContentAnalytics: MobileContentAnalytics = appDiContainer.getMobileContentAnalytics()
+        let fontService: FontService = appDiContainer.getFontService()
+        
+        let pageViewFactory = ToolPageViewFactory(
+            mobileContentAnalytics: mobileContentAnalytics,
+            fontService: fontService,
+            localizationServices: appDiContainer.localizationServices
+        )
+        
+        let primaryRenderer: MobileContentRenderer = MobileContentRenderer(
+            language: primaryLanguage,
+            translationManifestData: primaryTranslationManifest,
+            translationsFileCache: appDiContainer.translationsFileCache,
+            pageViewFactory: pageViewFactory,
+            mobileContentAnalytics: mobileContentAnalytics,
+            fontService: fontService
+        )
+        
+        let viewModel = MobileContentPagesViewModel(
+            renderers: [primaryRenderer],
+            primaryLanguage: primaryLanguage,
+            page: nil
+        )
+        
+        let view = MobileContentPagesView(viewModel: viewModel)
+        
+        navigationController.pushViewController(view, animated: true)
+        
+        /*
         let viewModel = ToolViewModel(
             flowDelegate: self,
             resource: resource,
@@ -606,6 +635,6 @@ class ToolsFlow: Flow {
                     
         let view = ToolView(viewModel: viewModel)
 
-        navigationController.pushViewController(view, animated: true)
+        navigationController.pushViewController(view, animated: true)*/
     }
 }

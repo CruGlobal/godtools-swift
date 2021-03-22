@@ -59,6 +59,8 @@ class ToolPageModalView: UIView {
     
     private func addContentView(viewModel: ToolPageContentStackContainerViewModel) {
         
+        // TODO: Fix this for new renderer changes. ~Levi
+        /*
         let contentParentView: UIView = contentContainerView
         let contentStackView = MobileContentStackView(viewRenderer: viewModel.contentStackRenderer, itemSpacing: 15, scrollIsEnabled: true)
         
@@ -73,6 +75,6 @@ class ToolPageModalView: UIView {
         if shouldCenterVertically {
             let difference: CGFloat = frame.size.height - modalContentSize.height
             contentStackView.setContentInset(contentInset: UIEdgeInsets(top: difference / 2, left: 0, bottom: 0, right: 0))
-        }
+        }*/
     }
 }

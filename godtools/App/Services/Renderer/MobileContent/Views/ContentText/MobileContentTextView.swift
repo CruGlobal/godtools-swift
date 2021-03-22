@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MobileContentTextView: UIView {
+class MobileContentTextView: MobileContentView {
     
     enum ViewType {
         case labelOnly
@@ -147,5 +147,29 @@ class MobileContentTextView: UIView {
             textLabelTrailing.constant = textLabelPaddingToImage
         }
     }
+    
+    // MARK: - MobileContentView
+
+    override func renderChild(childView: MobileContentView) {
+        super.renderChild(childView: childView)
+    }
+
+    override func finishedRenderingChildren() {
+        super.finishedRenderingChildren()
+    }
+
+    override func viewDidAppear() {
+        super.viewDidAppear()
+    }
+
+    override func viewDidDisappear() {
+        super.viewDidDisappear()
+    }
+    
+    override var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType {
+        return .constrainedToChildren
+    }
+    
+    // MARK: -
 }
 

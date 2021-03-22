@@ -12,7 +12,7 @@ protocol ToolPageCallToActionViewDelegate: class {
     func callToActionNextButtonTapped()
 }
 
-class ToolPageCallToActionView: UIView {
+class ToolPageCallToActionView: MobileContentView {
     
     private weak var delegate: ToolPageCallToActionViewDelegate?
     

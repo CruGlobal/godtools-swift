@@ -11,7 +11,7 @@ import UIKit
 class MobileContentLinkViewModel: MobileContentLinkViewModelType {
     
     private let linkNode: ContentLinkNode
-    private let mobileContentEvents: MobileContentEvents
+    private let pageModel: MobileContentRendererPageModel
     private let mobileContentAnalytics: MobileContentAnalytics
     private let fontService: FontService
     private let fontSize: CGFloat
@@ -19,10 +19,10 @@ class MobileContentLinkViewModel: MobileContentLinkViewModelType {
     
     let titleColor: UIColor
     
-    required init(linkNode: ContentLinkNode, mobileContentEvents: MobileContentEvents, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, fontSize: CGFloat, fontWeight: UIFont.Weight, titleColor: UIColor) {
+    required init(linkNode: ContentLinkNode, pageModel: MobileContentRendererPageModel, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, fontSize: CGFloat, fontWeight: UIFont.Weight, titleColor: UIColor) {
         
         self.linkNode = linkNode
-        self.mobileContentEvents = mobileContentEvents
+        self.pageModel = pageModel
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
         self.fontSize = fontSize
@@ -44,8 +44,10 @@ class MobileContentLinkViewModel: MobileContentLinkViewModelType {
     
     func linkTapped() {
     
+        // TODO: Process events. ~Levi
+        
         for event in linkNode.events {
-            mobileContentEvents.eventButtonTapped(eventButton: ButtonEvent(event: event))
+            //mobileContentEvents.eventButtonTapped(eventButton: ButtonEvent(event: event))
         }
         
         if let analyticsEventsNode = linkNode.analyticsEventsNode {

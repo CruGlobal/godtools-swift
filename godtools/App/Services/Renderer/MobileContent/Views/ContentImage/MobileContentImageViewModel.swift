@@ -11,16 +11,14 @@ import UIKit
 class MobileContentImageViewModel: MobileContentImageViewModelType {
     
     private let imageNode: ContentImageNode
-    private let mobileContentEvents: MobileContentEvents
-    private let manifestResourcesCache: ManifestResourcesCache
+    private let pageModel: MobileContentRendererPageModel
     private let languageDirection: LanguageDirection
     
-    required init(imageNode: ContentImageNode, mobileContentEvents: MobileContentEvents, manifestResourcesCache: ManifestResourcesCache, languageDirection: LanguageDirection) {
+    required init(imageNode: ContentImageNode, pageModel: MobileContentRendererPageModel) {
         
         self.imageNode = imageNode
-        self.mobileContentEvents = mobileContentEvents
-        self.manifestResourcesCache = manifestResourcesCache
-        self.languageDirection = languageDirection
+        self.pageModel = pageModel
+        self.languageDirection = pageModel.language.languageDirection
     }
     
     var image: UIImage? {
@@ -29,7 +27,7 @@ class MobileContentImageViewModel: MobileContentImageViewModelType {
             return nil
         }
         
-        guard let resourceImage = manifestResourcesCache.getImage(resource: resource) else {
+        guard let resourceImage = pageModel.resourcesCache.getImage(resource: resource) else {
             return nil
         }
         
@@ -53,7 +51,8 @@ class MobileContentImageViewModel: MobileContentImageViewModelType {
     func imageTapped() {
         
         for event in imageNode.events {
-            mobileContentEvents.eventImageTapped(eventImage: ImageEvent(event: event))
+            // TODO: Process image event. ~Levi
+            //mobileContentEvents.eventImageTapped(eventImage: ImageEvent(event: event))
         }
     }
 }

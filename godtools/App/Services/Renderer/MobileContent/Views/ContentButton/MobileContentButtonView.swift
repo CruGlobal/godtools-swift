@@ -8,7 +8,7 @@
 
 import Foundation
 
-class MobileContentButtonView: UIView {
+class MobileContentButtonView: MobileContentView {
     
     private let viewModel: MobileContentButtonViewModelType
     private let button: UIButton = UIButton(type: .custom)
@@ -65,5 +65,11 @@ class MobileContentButtonView: UIView {
     
     @objc func handleButtonTapped() {
         viewModel.buttonTapped()
+    }
+    
+    // MARK: - MobileContentView
+    
+    override var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType {
+        return .constrainedToChildren
     }
 }

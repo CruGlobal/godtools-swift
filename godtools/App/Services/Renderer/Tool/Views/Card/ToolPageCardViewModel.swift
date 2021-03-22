@@ -11,48 +11,36 @@ import UIKit
 class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     
     private let cardNode: CardNode
-    private let diContainer: ToolPageDiContainer
-    private let cardPosition: Int
-    private let visibleCardPosition: Int?
-    private let hiddenCardPosition: Int?
-    private let numberOfCards: Int
+    private let cardsNode: CardsNode
+    private let pageModel: MobileContentRendererPageModel
     private let toolPageColors: ToolPageColors
-    private let isLastPage: Bool
+    private let fontService: FontService
+    private let localizationServices: LocalizationServices
     private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
+    private let cardPosition: Int
+    private let numberOfCards: Int
     
     private weak var delegate: ToolPageCardViewModelTypeDelegate?
     
     let hidesHeaderTrainingTip: ObservableValue<Bool> = ObservableValue(value: true)
-    let contentStackViewModel: ToolPageContentStackContainerViewModel
     let isHiddenCard: Bool
     let hidesCardPositionLabel: Bool
     let hidesPreviousButton: Bool
     let hidesNextButton: Bool
     
-    required init(delegate: ToolPageCardViewModelTypeDelegate, cardNode: CardNode, diContainer: ToolPageDiContainer, cardPosition: Int, visibleCardPosition: Int?, hiddenCardPosition: Int?, numberOfCards: Int, toolPageColors: ToolPageColors, isLastPage: Bool) {
+    required init(cardNode: CardNode, cardsNode: CardsNode, pageModel: MobileContentRendererPageModel, toolPageColors: ToolPageColors, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices) {
+                
+        let visibleCards: [CardNode] = cardsNode.visibleCards
         
-        let isHiddenCard: Bool = cardNode.hidden == "true"
-        
-        self.delegate = delegate
         self.cardNode = cardNode
-        self.diContainer = diContainer
-        self.cardPosition = cardPosition
-        self.visibleCardPosition = visibleCardPosition
-        self.hiddenCardPosition = hiddenCardPosition
-        self.numberOfCards = numberOfCards
+        self.cardsNode = cardsNode
+        self.pageModel = pageModel
         self.toolPageColors = toolPageColors
-        self.isLastPage = isLastPage
-
-        contentStackViewModel = ToolPageContentStackContainerViewModel(
-            node: cardNode,
-            diContainer: diContainer,
-            toolPageColors: toolPageColors,
-            defaultTextNodeTextColor: toolPageColors.cardTextColor,
-            defaultTextNodeTextAlignment: nil,
-            defaultButtonBorderColor: nil
-        )
-        
-        self.isHiddenCard = isHiddenCard
+        self.fontService = fontService
+        self.localizationServices = localizationServices
+        self.cardPosition = visibleCards.firstIndex(of: cardNode) ?? 0
+        self.numberOfCards = visibleCards.count
+        self.isHiddenCard = cardNode.isHidden
         
         if isHiddenCard {
             hidesCardPositionLabel = true
@@ -63,11 +51,11 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
             let isLastCard: Bool = cardPosition >= numberOfCards - 1
             hidesCardPositionLabel = false
             hidesPreviousButton = false
-            hidesNextButton = (isLastPage || isLastCard) ? true : false
+            hidesNextButton = (pageModel.isLastPage || isLastCard) ? true : false
         }
         
         if let analyticsEventsNode = cardNode.analyticsEventsNode {
-            analyticsEventsObjects = MobileContentAnalyticsEvent.initEvents(eventsNode: analyticsEventsNode, mobileContentAnalytics: diContainer.mobileContentAnalytics)
+            analyticsEventsObjects = MobileContentAnalyticsEvent.initEvents(eventsNode: analyticsEventsNode, mobileContentAnalytics: mobileContentAnalytics)
         }
         else {
             analyticsEventsObjects = []
@@ -80,13 +68,14 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     
     deinit {
         //print("x deinit: \(type(of: self))")
-        diContainer.mobileContentEvents.eventButtonTappedSignal.removeObserver(self)
         
-        contentStackViewModel.contentStackRenderer.didRenderTrainingTipsSignal.removeObserver(self)
+        //diContainer.mobileContentEvents.eventButtonTappedSignal.removeObserver(self)
+        //contentStackViewModel.contentStackRenderer.didRenderTrainingTipsSignal.removeObserver(self)
     }
     
     private func setupBinding() {
         
+        /*
         diContainer.mobileContentEvents.eventButtonTappedSignal.addObserver(self) { [weak self] (buttonEvent: ButtonEvent) in
             guard let viewModel = self else {
                 return
@@ -103,7 +92,7 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
             let trainingTipsEnabled: Bool = self?.diContainer.trainingTipsEnabled ?? false
             let showsHeaderTrainingTip: Bool = trainingTipsEnabled
             self?.hidesHeaderTrainingTip.accept(value: !showsHeaderTrainingTip)
-        }
+        }*/
     }
     
     var title: String? {
@@ -116,15 +105,14 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     }
     
     var titleFont: UIFont {
-        return diContainer.fontService.getFont(size: 19, weight: .regular)
+        return fontService.getFont(size: 19, weight: .regular)
     }
     
     var titleAlignment: NSTextAlignment {
-        return diContainer.language.languageDirection == .leftToRight ? .left : .right
+        return pageModel.language.languageDirection == .leftToRight ? .left : .right
     }
     
     var cardPositionLabel: String? {
-        let cardPosition: Int = visibleCardPosition ?? 0
         return String(cardPosition+1) + "/" + String(numberOfCards)
     }
     
@@ -133,11 +121,11 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     }
     
     var cardPositionLabelFont: UIFont {
-        return diContainer.fontService.getFont(size: 18, weight: .regular)
+        return fontService.getFont(size: 18, weight: .regular)
     }
     
     var previousButtonTitle: String? {
-        return diContainer.localizationServices.stringForLanguage(language: diContainer.language, key: "card_status1")
+        return localizationServices.stringForLanguage(language: pageModel.language, key: "card_status1")
     }
     
     var previousButtonTitleColor: UIColor {
@@ -145,11 +133,11 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     }
     
     var previousButtonTitleFont: UIFont {
-        return diContainer.fontService.getFont(size: 18, weight: .regular)
+        return fontService.getFont(size: 18, weight: .regular)
     }
     
     var nextButtonTitle: String? {
-        return diContainer.localizationServices.stringForLanguage(language: diContainer.language, key: "card_status2")
+        return localizationServices.stringForLanguage(language: pageModel.language, key: "card_status2")
     }
     
     var nextButtonTitleColor: UIColor {
@@ -157,18 +145,22 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     }
     
     var nextButtonTitleFont: UIFont {
-        return diContainer.fontService.getFont(size: 18, weight: .regular)
+        return fontService.getFont(size: 18, weight: .regular)
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return diContainer.languageDirectionSemanticContentAttribute
+        return pageModel.languageDirectionSemanticContentAttribute
+    }
+    
+    func setDelegate(delegate: ToolPageCardViewModelTypeDelegate) {
+        self.delegate = delegate
     }
     
     func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel {
         return MobileContentBackgroundImageViewModel(
             backgroundImageNode: cardNode,
-            manifestResourcesCache: diContainer.manifestResourcesCache,
-            languageDirection: diContainer.language.languageDirection
+            manifestResourcesCache: pageModel.resourcesCache,
+            languageDirection: pageModel.language.languageDirection
         )
     }
     
