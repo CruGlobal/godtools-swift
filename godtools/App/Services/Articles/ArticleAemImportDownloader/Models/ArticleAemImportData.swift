@@ -11,16 +11,12 @@ import Foundation
 struct ArticleAemImportData: ArticleAemImportDataType {
     
     let articleJcrContent: ArticleJcrContent?
-    let languageCode: String
-    let resourceId: String
     let webUrl: String
     let webArchiveFilename: String
     
-    init(articleJcrContent: ArticleJcrContent?, languageCode: String, resourceId: String, webUrl: String, webArchiveFilename: String) {
+    init(articleJcrContent: ArticleJcrContent?, webUrl: String, webArchiveFilename: String) {
         
         self.articleJcrContent = articleJcrContent
-        self.languageCode = languageCode
-        self.resourceId = resourceId
         self.webUrl = webUrl
         self.webArchiveFilename = webArchiveFilename
     }
@@ -34,8 +30,6 @@ struct ArticleAemImportData: ArticleAemImportDataType {
             articleJcrContent = nil
         }
         
-        languageCode = realmModel.languageCode
-        resourceId = realmModel.resourceId
         webUrl = realmModel.webUrl
         webArchiveFilename = realmModel.webArchiveFilename
     }

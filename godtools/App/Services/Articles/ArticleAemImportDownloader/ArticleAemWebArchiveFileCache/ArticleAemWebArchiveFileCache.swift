@@ -22,11 +22,7 @@ class ArticleAemWebArchiveFileCache: FileCache<ArticleAemWebArchiveFileCacheLoca
         
         var error: Error?
         
-        let webArchiveCacheLocation = ArticleAemWebArchiveFileCacheLocation(
-            resourceId: resourceId,
-            languageCode: languageCode,
-            filename: ""
-        )
+        let webArchiveCacheLocation = ArticleAemWebArchiveFileCacheLocation(filename: "")
         
         var webArchiveDirectoryUrl: URL?
                 

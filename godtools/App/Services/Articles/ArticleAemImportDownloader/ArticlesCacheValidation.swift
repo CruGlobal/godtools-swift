@@ -8,6 +8,8 @@
 
 import Foundation
 
+//TODO: Remove this class ~Robert
+
 class ArticlesCacheValidation {
         
     private static let secondsInDay: TimeInterval = 86400

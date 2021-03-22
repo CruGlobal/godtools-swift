@@ -10,8 +10,6 @@ import Foundation
 
 struct CacheArticleAemWebArchivePlistError {
     
-    let resourceId: String
-    let languageCode: String
     let webArchiveFilename: String
     let url: URL
     let error: Error

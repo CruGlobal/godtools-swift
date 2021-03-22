@@ -18,14 +18,16 @@ class RealmArticleAemImportDataCache {
         self.realmDatabase = realmDatabase
     }
     
-    func getArticleAemImportDataObjects(resourceId: String, languageCode: String, complete: @escaping ((_ articleAemImportData: [RealmArticleAemImportData]) -> Void)) {
+    func getArticleAemImportDataObjects(complete: @escaping ((_ articleAemImportData: [RealmArticleAemImportData]) -> Void)) {
         
-        realmDatabase.background { [weak self] (realm: Realm) in
+        //TODO: Work on this ~Robert
+        /*realmDatabase.background { [weak self] (realm: Realm) in
             
-            let realmArticleAemImportData: [RealmArticleAemImportData] = self?.getArticleAemImportDataObjects(realm: realm, resourceId: resourceId, languageCode: languageCode) ?? []
+            let realmArticleAemImportData: [RealmArticleAemImportData] = self?.getArticleAemImportDataObjects(realm: realm) ?? []
             
             complete(realmArticleAemImportData)
-        }
+        }*/
+        complete([])
     }
     
     func getArticleAemImportDataObjects(realm: Realm, resourceId: String, languageCode: String) -> [RealmArticleAemImportData] {
@@ -88,9 +90,10 @@ class RealmArticleAemImportDataCache {
         }
     }
     
-    func deleteAemImportDataObjects(resourceId: String, languageCode: String, complete: @escaping ((_ error: Error?) -> Void)) {
+    func deleteAemImportDataObjects(complete: @escaping ((_ error: Error?) -> Void)) {
         
-        realmDatabase.background { [weak self] (realm: Realm) in
+        //TODO: Need to fix this to no longer use languageCode and resourceId ~Robert
+        /*realmDatabase.background { [weak self] (realm: Realm) in
             
             let cachedArticleAemImportDataObjects: [RealmArticleAemImportData] = self?.getArticleAemImportDataObjects(realm: realm, resourceId: resourceId, languageCode: languageCode) ?? []
             
@@ -103,7 +106,9 @@ class RealmArticleAemImportDataCache {
             catch let error {
                 complete(error)
             }
-        }
+        }*/
+        
+        complete(nil)
     }
     
     func deleteAllAemImportDataObjects(complete: @escaping ((_ error: Error?) -> Void)) {

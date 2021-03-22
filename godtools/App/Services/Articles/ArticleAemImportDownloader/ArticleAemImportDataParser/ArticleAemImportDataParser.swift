@@ -21,7 +21,7 @@ class ArticleAemImportDataParser {
         return ["godtools", "godtools-variation", aemImportSrc.lastPathComponent, "master"]
     }
     
-    func parse(aemImportSrc: URL, aemImportJson: [String: Any], resourceId: String, languageCode: String) -> Result<ArticleAemImportData, ArticleAemImportDataParserError> {
+    func parse(aemImportSrc: URL, aemImportJson: [String: Any]) -> Result<ArticleAemImportData, ArticleAemImportDataParserError> {
               
         let variation: String
         let variationJson: [String: Any]
@@ -54,8 +54,6 @@ class ArticleAemImportDataParser {
         
         let articleAemImportData = ArticleAemImportData(
             articleJcrContent: articleJcrContent,
-            languageCode: languageCode,
-            resourceId: resourceId,
             webUrl: aemImportWebUrl,
             webArchiveFilename: NSUUID().uuidString
         )

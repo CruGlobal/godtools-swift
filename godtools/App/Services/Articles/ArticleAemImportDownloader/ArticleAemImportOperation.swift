@@ -24,8 +24,6 @@ class ArticleAemImportOperation: Operation {
     }
     
     private let session: URLSession
-    private let resourceId: String
-    private let languageCode: String
     private let aemImportSrc: String
     private let maxAemImportJsonTreeLevels: Int
     private let errorDomain: String = String(describing: ArticleAemImportOperation.self)
@@ -34,10 +32,8 @@ class ArticleAemImportOperation: Operation {
     private var task: URLSessionDataTask?
     private var completion: Completion?
     
-    required init(session: URLSession, resourceId: String, languageCode: String, aemImportSrc: String, maxAemImportJsonTreeLevels: Int) {
+    required init(session: URLSession, aemImportSrc: String, maxAemImportJsonTreeLevels: Int) {
         self.session = session
-        self.resourceId = resourceId
-        self.languageCode = languageCode
         self.aemImportSrc = aemImportSrc
         self.maxAemImportJsonTreeLevels = maxAemImportJsonTreeLevels
         super.init()
@@ -85,9 +81,6 @@ class ArticleAemImportOperation: Operation {
             cachePolicy: session.configuration.requestCachePolicy,
             timeoutInterval: session.configuration.timeoutIntervalForRequest
         )
-        
-        let resourceId: String = self.resourceId
-        let languageCode: String = self.languageCode
         
         self.urlRequest = urlJsonRequest
         
@@ -166,9 +159,7 @@ class ArticleAemImportOperation: Operation {
                     
                     let aemImportParserResult: Result<ArticleAemImportData, ArticleAemImportDataParserError> = aemImportDataParser.parse(
                         aemImportSrc: aemImportSrcUrl,
-                        aemImportJson: jsonDictionary,
-                        resourceId: resourceId,
-                        languageCode: languageCode
+                        aemImportJson: jsonDictionary
                     )
                     
                     switch aemImportParserResult {

@@ -38,7 +38,7 @@ class ArticleCategoriesViewModel: NSObject, ArticleCategoriesViewModelType {
         self.localizationServices = localizationServices
         self.analytics = analytics
         self.articleManifest = ArticleManifestXmlParser(xmlData: translationManifest.manifestXmlData)
-        self.downloadArticlesReceipt = articleAemImportDownloader.getDownloadReceipt(translationZipFile: translationZipFile)
+        self.downloadArticlesReceipt = ArticleAemImportDownloaderReceipt() //TODO: Pass this from the flow ~Robert
         
         super.init()
         
@@ -98,10 +98,7 @@ class ArticleCategoriesViewModel: NSObject, ArticleCategoriesViewModelType {
         
         if (!articlesCached || articlesCacheExpired || forceDownload) && !downloadRunning {
                                     
-            _ = articleAemImportDownloader.downloadAndCache(
-                translationZipFile: translationZipFile,
-                aemImportSrcs: articleManifest.aemImportSrcs
-            )
+            _ = articleAemImportDownloader.downloadAndCache(aemImportSrcs: articleManifest.aemImportSrcs)
         }
     }
     

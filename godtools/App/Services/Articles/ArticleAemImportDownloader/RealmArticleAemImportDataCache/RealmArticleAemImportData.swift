@@ -12,8 +12,6 @@ import RealmSwift
 class RealmArticleAemImportData: Object, ArticleAemImportDataType {
     
     @objc dynamic var articleJcrContent: RealmArticleJcrContent?
-    @objc dynamic var languageCode: String = ""
-    @objc dynamic var resourceId: String = ""
     @objc dynamic var webUrl: String = ""
     @objc dynamic var webArchiveFilename: String = ""
     
@@ -27,8 +25,6 @@ class RealmArticleAemImportData: Object, ArticleAemImportDataType {
             articleJcrContent = nil
         }
         
-        languageCode = model.languageCode
-        resourceId = model.resourceId
         webUrl = model.webUrl
         webArchiveFilename = model.webArchiveFilename
     }

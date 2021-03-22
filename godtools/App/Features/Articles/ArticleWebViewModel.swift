@@ -35,8 +35,6 @@ class ArticleWebViewModel: ArticleWebViewModelType {
         navTitle.accept(value: articleAemImportData.articleJcrContent?.title ?? "")
         
         let webArchiveLocation = ArticleAemWebArchiveFileCacheLocation(
-            resourceId: translationZipFile.resourceId,
-            languageCode: translationZipFile.languageCode,
             filename: articleAemImportData.webArchiveFilename
         )
                 
