@@ -13,7 +13,6 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     private let resource: ResourceModel
     private let language: LanguageModel
     private let primaryLanguage: LanguageModel
-    private let languageDirectionSemanticContentAttribute: UISemanticContentAttribute
     private let trainingTipId: String
     private let tipNode: TipNode
     private let manifest: MobileContentXmlManifest
@@ -62,13 +61,6 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
         self.viewedTrainingTips = viewedTrainingTips
         self.toolPage = toolPage
         
-        switch primaryLanguage.languageDirection {
-        case .leftToRight:
-            languageDirectionSemanticContentAttribute = .forceLeftToRight
-        case .rightToLeft:
-            languageDirectionSemanticContentAttribute = .forceRightToLeft
-        }
-        
         super.init()
         
         let startingPage: Int = 0
@@ -76,8 +68,6 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
         self.pageNodes = pageNodes
         numberOfTipPages.accept(value: pageNodes.count)
         setPage(page: startingPage, animated: false)
-        tipPageDidChange(page: startingPage)
-        tipPageDidAppear(page: startingPage)
         
         reloadTitleAndTipIcon(
             tipNode: tipNode,
@@ -185,7 +175,6 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
             resource: resource,
             language: language,
             primaryLanguage: primaryLanguage,
-            languageDirectionSemanticContentAttribute: languageDirectionSemanticContentAttribute,
             translationsFileCache: translationsFileCache,
             mobileContentNodeParser: mobileContentNodeParser,
             mobileContentAnalytics: mobileContentAnalytics,

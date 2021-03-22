@@ -12,12 +12,11 @@ protocol ToolViewModelType {
     
     var currentPage: ObservableValue<AnimatableValue<Int>> { get }
     var numberOfToolPages: ObservableValue<Int> { get }
-    var languageDirectionSemanticContentAttribute: UISemanticContentAttribute { get }
+    var toolPageNavigationSemanticContentAttribute: UISemanticContentAttribute { get }
     
     func navBarWillAppear() -> ToolNavBarViewModelType
     func viewLoaded()
     func toolPageWillAppear(page: Int) -> ToolPageViewModelType?
     func toolPageDidChange(page: Int)
     func toolPageDidAppear(page: Int)
-    func toolPageDidDisappear(page: Int)
 }

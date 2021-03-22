@@ -11,7 +11,7 @@ import RealmSwift
 
 class ArticleAemImportDownloader {
         
-    typealias TranslationId = String
+    typealias AemUri = String
     
     private let session: URLSession
     private let realmCache: RealmArticleAemImportDataCache
@@ -19,9 +19,7 @@ class ArticleAemImportDownloader {
     private let webArchiveFileCache: ArticleAemWebArchiveFileCache = ArticleAemWebArchiveFileCache()
     private let maxAemImportJsonTreeLevels: Int = 10
     private let errorDomain: String = String(describing: ArticleAemImportDownloader.self)
-    
-    private var currentDownloadReceipts: [TranslationId: ArticleAemImportDownloaderReceipt] = Dictionary()
-    
+        
     required init(realmDatabase: RealmDatabase, sharedSession: SharedSessionType) {
         
         self.session = sharedSession.session
@@ -44,20 +42,6 @@ class ArticleAemImportDownloader {
         }
     }
     
-    func getDownloadReceipt(translationZipFile: TranslationZipFileModel) -> ArticleAemImportDownloaderReceipt {
-        
-        let translationId: String = translationZipFile.translationId
-        
-        if let receipt = currentDownloadReceipts[translationId] {
-            return receipt
-        }
-        else {
-            let receipt = ArticleAemImportDownloaderReceipt()
-            currentDownloadReceipts[translationId] = receipt
-            return receipt
-        }
-    }
-    
     func articlesCached(translationZipFile: TranslationZipFileModel) -> Bool {
         
         return ArticlesCacheValidation(translationZipFile: translationZipFile).isCached
@@ -68,11 +52,11 @@ class ArticleAemImportDownloader {
         return ArticlesCacheValidation(translationZipFile: translationZipFile).cacheExpired
     }
     
-    func downloadAndCache(translationZipFile: TranslationZipFileModel, aemImportSrcs: [String]) -> ArticleAemImportDownloaderReceipt? {
+    func downloadAndCache(aemImportSrcs: [String]) -> ArticleAemImportDownloaderReceipt {
                         
         let queue = OperationQueue()
         
-        let receipt = getDownloadReceipt(translationZipFile: translationZipFile)
+        let receipt = ArticleAemImportDownloaderReceipt()
         
         var operations: [ArticleAemImportOperation] = Array()
                 
@@ -104,13 +88,11 @@ class ArticleAemImportDownloader {
                     
                     guard !receipt.isCancelled && !articleAemImportDataObjects.isEmpty else {
                         
-                        self?.handleReceiptCancelled(receipt: receipt, translationZipFile: translationZipFile)
+                        self?.handleReceiptCancelled(receipt: receipt)
                         
                         return
                     }
-                    
-                    let cacheValidation = ArticlesCacheValidation(translationZipFile: translationZipFile)
-                                        
+                                                            
                     // Delete web archives and realm objects for resourceId, languageCode
                     
                     // TODO: No longer cacheing articles by resourceId and languageCode. Need to do this differently. ~Levi
@@ -137,10 +119,6 @@ class ArticleAemImportDownloader {
                                     cancelled: false
                                 )
                                 
-                                if result.downloadError == nil {
-                                    cacheValidation.setCached()
-                                }
-                                
                                 receipt.completeDownload(result: result)
                             })
                         }
@@ -152,16 +130,15 @@ class ArticleAemImportDownloader {
         
         if !operations.isEmpty {
             receipt.startDownload(downloadAemImportsQueue: queue)
-            currentDownloadReceipts[translationZipFile.translationId] = receipt
             queue.addOperations(operations, waitUntilFinished: false)
             return receipt
         }
         else {
-            return nil
+            return receipt
         }
     }
     
-    private func handleReceiptCancelled(receipt: ArticleAemImportDownloaderReceipt, translationZipFile: TranslationZipFileModel) {
+    private func handleReceiptCancelled(receipt: ArticleAemImportDownloaderReceipt) {
         
         let result = ArticleAemImportDownloaderResult(
             articleAemImportDataObjects: [],
@@ -209,7 +186,13 @@ class ArticleAemImportDownloader {
                     return
                 }
                 
+<<<<<<< HEAD
                 let cacheLocation = ArticleAemWebArchiveFileCacheLocation(filename: webArchiveFilename)
+=======
+                let cacheLocation = ArticleAemWebArchiveFileCacheLocation(
+                    filename: webArchiveFilename
+                )
+>>>>>>> GT-1089-remove-translation
 
                 if let cacheResult = self?.webArchiveFileCache.cache(location: cacheLocation, data: webArchivePlistData) {
                     switch cacheResult {

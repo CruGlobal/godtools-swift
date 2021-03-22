@@ -159,9 +159,7 @@ class ArticleAemImportOperation: Operation {
                     
                     let aemImportParserResult: Result<ArticleAemImportData, ArticleAemImportDataParserError> = aemImportDataParser.parse(
                         aemImportSrc: aemImportSrcUrl,
-                        aemImportJson: jsonDictionary,
-                        resourceId: resourceId,
-                        languageCode: languageCode
+                        aemImportJson: jsonDictionary
                     )
                     
                     switch aemImportParserResult {

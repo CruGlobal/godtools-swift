@@ -56,7 +56,7 @@ class AppFlow: NSObject, Flow {
         removeDeepLinkingObservers()
     }
     
-    func resetFlowToToolsFlow(animated: Bool) {
+    private func resetFlowToToolsFlow(animated: Bool) {
         configureNavigationBar()
         toolsFlow?.navigationController.popToRootViewController(animated: animated)
         toolsFlow?.resetToolsMenu()
@@ -67,6 +67,10 @@ class AppFlow: NSObject, Flow {
         languageSettingsFlow = nil
         articleDeepLinkFlow = nil
         tutorialFlow = nil
+        
+        if toolsFlow == nil {
+            navigate(step: .showTools(animated: animated, shouldCreateNewInstance: true))
+        }
     }
     
     private func setupInitialNavigation() {
@@ -77,8 +81,6 @@ class AppFlow: NSObject, Flow {
         else {
             navigate(step: .showTools(animated: true, shouldCreateNewInstance: true))
         }
-        
-        loadInitialData()
     }
     
     private func loadInitialData() {
@@ -113,7 +115,7 @@ class AppFlow: NSObject, Flow {
                     
                     var fetchedPrimaryLanguage: LanguageModel?
                     
-                    if let primaryLanguageFromCodes = self?.fetchLanguageFromCodes(codes: primaryLanguageCodes) {
+                    if let primaryLanguageFromCodes = dataDownloader.fetchFirstSupportedLanguageForResource(resource: resource, codes: primaryLanguageCodes) {
                         fetchedPrimaryLanguage = primaryLanguageFromCodes
                     } else if let primaryLanguageFromSettings = self?.appDiContainer.languageSettingsService.primaryLanguage.value {
                         fetchedPrimaryLanguage = primaryLanguageFromSettings
@@ -123,7 +125,7 @@ class AppFlow: NSObject, Flow {
                     
                     guard let primaryLanguage = fetchedPrimaryLanguage else { return }
                     
-                    let parallelLanguage = self?.fetchLanguageFromCodes(codes: parallelLanguageCodes)
+                    let parallelLanguage = dataDownloader.fetchFirstSupportedLanguageForResource(resource: resource, codes: parallelLanguageCodes)
                     
                     self?.resetFlowToToolsFlow(animated: false)
                     DispatchQueue.main.async {
@@ -350,16 +352,6 @@ class AppFlow: NSObject, Flow {
             }
         }
     }
-    
-    private func fetchLanguageFromCodes (codes: [String]) -> LanguageModel? {
-        for code in codes {
-            if let language = dataDownloader.getStoredLanguage(code: code) {
-                return language
-            }
-        }
-        
-        return nil
-    }
         
     // MARK: - Navigation Bar
     
@@ -401,7 +393,6 @@ extension AppFlow: UIApplicationDelegate {
                 application.keyWindow?.addSubview(loadingView)
                 
                 resetFlowToToolsFlow(animated: false)
-                
                 loadInitialData()
                 
                 UIView.animate(withDuration: 0.4, delay: 1.5, options: .curveEaseOut, animations: {
@@ -421,6 +412,7 @@ extension AppFlow: UIApplicationDelegate {
             
             navigationStarted = true
             setupInitialNavigation()
+            loadInitialData()
         }
     }
     
