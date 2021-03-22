@@ -186,13 +186,7 @@ class ArticleAemImportDownloader {
                     return
                 }
                 
-<<<<<<< HEAD
                 let cacheLocation = ArticleAemWebArchiveFileCacheLocation(filename: webArchiveFilename)
-=======
-                let cacheLocation = ArticleAemWebArchiveFileCacheLocation(
-                    filename: webArchiveFilename
-                )
->>>>>>> GT-1089-remove-translation
 
                 if let cacheResult = self?.webArchiveFileCache.cache(location: cacheLocation, data: webArchivePlistData) {
                     switch cacheResult {
