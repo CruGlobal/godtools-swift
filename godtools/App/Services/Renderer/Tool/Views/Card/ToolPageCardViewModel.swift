@@ -19,14 +19,12 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
     private let cardPosition: Int
     private let numberOfCards: Int
-    
-    private weak var delegate: ToolPageCardViewModelTypeDelegate?
-    
+        
     let hidesHeaderTrainingTip: ObservableValue<Bool> = ObservableValue(value: true)
-    let isHiddenCard: Bool
     let hidesCardPositionLabel: Bool
     let hidesPreviousButton: Bool
     let hidesNextButton: Bool
+    let isHiddenCard: Bool
     
     required init(cardNode: CardNode, cardsNode: CardsNode, pageModel: MobileContentRendererPageModel, toolPageColors: ToolPageColors, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices) {
                 
@@ -152,8 +150,12 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
         return pageModel.languageDirectionSemanticContentAttribute
     }
     
-    func setDelegate(delegate: ToolPageCardViewModelTypeDelegate) {
-        self.delegate = delegate
+    var dismissListeners: [String] {
+        return cardNode.dismissListeners
+    }
+    
+    var listeners: [String] {
+        return cardNode.listeners
     }
     
     func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel {
@@ -164,11 +166,11 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
         )
     }
         
-    func cardWillAppear() {
+    func cardDidAppear() {
         mobileContentDidAppear()
     }
     
-    func cardWillDisappear() {
+    func cardDidDisappear() {
         mobileContentDidDisappear()
     }
 }

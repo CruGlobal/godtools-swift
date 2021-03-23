@@ -583,7 +583,8 @@ class ToolsFlow: Flow {
             mobileContentAnalytics: mobileContentAnalytics,
             fontService: fontService,
             localizationServices: appDiContainer.localizationServices,
-            cardJumpService: appDiContainer.getCardJumpService()
+            cardJumpService: appDiContainer.getCardJumpService(),
+            followUpService: appDiContainer.followUpsService
         )
         
         let primaryRenderer: MobileContentRenderer = MobileContentRenderer(

@@ -8,9 +8,9 @@
 
 import UIKit
 
-class MobileContentInputView: UIView {
+class MobileContentInputView: MobileContentView {
     
-    private let viewModel: MobileContentInputViewModelType
+    let viewModel: MobileContentInputViewModelType
         
     @IBOutlet weak private var inputLabel: UILabel!
     @IBOutlet weak private var inputTextField: UITextField!
@@ -68,4 +68,12 @@ class MobileContentInputView: UIView {
     func setInputDelegate(delegate: UITextFieldDelegate) {
         inputTextField.delegate = delegate
     }
+    
+    // MARK: - MobileContentView
+
+    override var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType {
+        return .constrainedToChildren
+    }
+    
+    // MARK: -
 }

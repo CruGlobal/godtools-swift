@@ -256,6 +256,7 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
         }
         else if let inputNode = node as? ContentInputNode {
             
+            /*
             guard inputNode.type != "hidden" else {
                 rootContentStackRenderer.didRenderHiddenContentInputSignal.accept(value: inputNode)
                 return nil
@@ -274,10 +275,11 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
             
             rootContentStackRenderer.didRenderContentInputSignal.accept(value: renderedInput)
             
-            return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)
+            return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)*/
         }
         else if let formNode = node as? ContentFormNode {
             
+            /*
             let viewModel = MobileContentFormViewModel(
                 formNode: formNode,
                 diContainer: diContainer,
@@ -289,7 +291,7 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
                         
             rootContentStackRenderer.didRenderContentFormSignal.accept(value: view)
             
-            return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)
+            return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)*/
         }
         else if node is ContentSpacerNode {
             

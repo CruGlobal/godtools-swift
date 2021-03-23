@@ -58,9 +58,17 @@ class MobileContentButtonViewModel: MobileContentButtonViewModelType {
         return 1
     }
     
+    var buttonType: MobileContentButtonNodeType {
+        return buttonNode.buttonType
+    }
+    
+    var buttonEvents: [String] {
+        return buttonNode.events
+    }
+    
     func buttonTapped() {
         
-        // TODO: Process button event. ~Levi
+        // TODO: Process button event for follup:send. ~Levi
         
         if buttonNode.type == "event" {
             

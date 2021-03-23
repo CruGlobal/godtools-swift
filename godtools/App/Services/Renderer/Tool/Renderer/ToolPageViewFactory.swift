@@ -14,13 +14,15 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
     private let fontService: FontService
     private let localizationServices: LocalizationServices
     private let cardJumpService: CardJumpService
+    private let followUpService: FollowUpsService
     
-    required init(mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, cardJumpService: CardJumpService) {
+    required init(mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, followUpService: FollowUpsService) {
         
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
         self.localizationServices = localizationServices
         self.cardJumpService = cardJumpService
+        self.followUpService = followUpService
     }
     
     func viewForRenderableNode(renderableNode: MobileContentRenderableNode, pageModel: MobileContentRendererPageModel) -> MobileContentView? {
@@ -70,7 +72,9 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
         else if let heroNode = renderableNode as? HeroNode {
             
             let viewModel = ToolPageHeroViewModel(
-                heroNode: heroNode
+                heroNode: heroNode,
+                pageModel: pageModel,
+                mobileContentAnalytics: mobileContentAnalytics
             )
             
             let view = ToolPageHeroView(viewModel: viewModel)
@@ -88,6 +92,44 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             let view = ToolPageCardsView(
                 viewModel: viewModel,
                 safeArea: pageModel.safeArea
+            )
+            
+            return view
+        }
+        else if let formNode = renderableNode as? ContentFormNode {
+            
+            let viewModel = ToolPageFormViewModel(
+                formNode: formNode,
+                pageModel: pageModel,
+                followUpService: followUpService,
+                localizationServices: localizationServices
+            )
+            
+            let view = ToolPageFormView(viewModel: viewModel)
+            
+            return view
+        }
+        else if let modalNode = renderableNode as? ModalNode {
+            
+            let viewModel = ToolPageModalViewModel(
+                modalNode: modalNode,
+                pageModel: pageModel
+            )
+            
+            let view = ToolPageModalView(viewModel: viewModel)
+            
+            return view
+        }
+        else if let modalsNode = renderableNode as? ModalsNode {
+            
+            let viewModel = ToolPageModalsViewModel(
+                modalsNode: modalsNode,
+                pageModel: pageModel
+            )
+            
+            let view = ToolPageModalsView(
+                viewModel: viewModel,
+                windowViewController: pageModel.window
             )
             
             return view

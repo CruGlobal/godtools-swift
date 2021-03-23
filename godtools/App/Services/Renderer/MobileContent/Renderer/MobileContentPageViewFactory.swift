@@ -70,8 +70,8 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 fontService: fontService,
                 fontSize: 18,
                 fontWeight: .regular,
-                defaultBackgroundColor: buttonNode.getColor()?.color ?? .black,
-                defaultTitleColor: buttonNode.textNode?.getTextColor()?.color ?? .black,
+                defaultBackgroundColor: buttonNode.getColor()?.color ?? .darkGray,
+                defaultTitleColor: buttonNode.textNode?.getTextColor()?.color ?? .white,
                 defaultBorderColor: .black
             )
 
@@ -171,42 +171,26 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let inputNode = renderableNode as? ContentInputNode {
             
-            /*
-            guard inputNode.type != "hidden" else {
-                rootContentStackRenderer.didRenderHiddenContentInputSignal.accept(value: inputNode)
-                return nil
-            }
-            
             let viewModel = MobileContentInputViewModel(
                 inputNode: inputNode,
-                fontService: diContainer.fontService,
-                toolPageColors: toolPageColors,
-                defaultTextNodeTextColor: defaultTextNodeTextColor
+                pageModel: pageModel,
+                fontService: fontService
             )
             
             let view = MobileContentInputView(viewModel: viewModel)
             
-            let renderedInput = ToolPageRenderedContentInput(viewModel: viewModel, view: view)
-            
-            rootContentStackRenderer.didRenderContentInputSignal.accept(value: renderedInput)
-            
-            return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)*/
+            return view
         }
         else if let formNode = renderableNode as? ContentFormNode {
             
-            /*
             let viewModel = MobileContentFormViewModel(
                 formNode: formNode,
-                diContainer: diContainer,
-                toolPageColors: toolPageColors,
-                defaultTextNodeTextColor: defaultTextNodeTextColor
+                pageModel: pageModel
             )
             
             let view = MobileContentFormView(viewModel: viewModel)
-                        
-            rootContentStackRenderer.didRenderContentFormSignal.accept(value: view)
             
-            return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)*/
+            return view
         }
         else if renderableNode is ContentSpacerNode {
             

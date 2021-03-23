@@ -11,32 +11,18 @@ import UIKit
 class ToolPageHeroViewModel: ToolPageHeroViewModelType {
     
     private let heroNode: HeroNode
-    //private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
-        
-    //let contentStackRenderer: ToolPageContentStackRenderer
-    
-    required init(heroNode: HeroNode) {
+    private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
+            
+    required init(heroNode: HeroNode, pageModel: MobileContentRendererPageModel, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.heroNode = heroNode
         
-        /*
-        self.contentStackRenderer = ToolPageContentStackRenderer(
-            rootContentStackRenderer: nil,
-            diContainer: diContainer,
-            node: heroNode,
-            toolPageColors: toolPageColors,
-            defaultTextNodeTextColor: nil,
-            defaultTextNodeTextAlignment: nil,
-            defaultButtonBorderColor: nil
-        )*/
-        
-        /*
         if let analyticsEventsNode = heroNode.analyticsEventsNode {
-            analyticsEventsObjects = MobileContentAnalyticsEvent.initEvents(eventsNode: analyticsEventsNode, mobileContentAnalytics: diContainer.mobileContentAnalytics)
+            analyticsEventsObjects = MobileContentAnalyticsEvent.initEvents(eventsNode: analyticsEventsNode, mobileContentAnalytics: mobileContentAnalytics)
         }
         else {
             analyticsEventsObjects = []
-        }*/
+        }
     }
     
     deinit {
@@ -44,17 +30,16 @@ class ToolPageHeroViewModel: ToolPageHeroViewModelType {
     }
     
     func heroDidAppear() {
-        //mobileContentDidAppear()
+        mobileContentDidAppear()
     }
     
     func heroDidDisappear() {
-        //mobileContentDidDisappear()
+        mobileContentDidDisappear()
     }
 }
 
 // MARK: - MobileContentViewModelType
 
-/*
 extension ToolPageHeroViewModel: MobileContentViewModelType {
     
     var analyticsEvents: [MobileContentAnalyticsEvent] {
@@ -64,4 +49,4 @@ extension ToolPageHeroViewModel: MobileContentViewModelType {
     var defaultAnalyticsEventsTrigger: AnalyticsEventNodeTrigger {
         return .visible
     }
-}*/
+}

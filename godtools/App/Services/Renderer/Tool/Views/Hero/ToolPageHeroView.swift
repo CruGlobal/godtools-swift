@@ -33,21 +33,13 @@ class ToolPageHeroView: MobileContentStackView {
     
     // MARK: - MobileContentView
 
-    override func renderChild(childView: MobileContentView) {
-        super.renderChild(childView: childView)
-    }
-
-    override func finishedRenderingChildren() {
-        super.finishedRenderingChildren()
-    }
-
     override func viewDidAppear() {
-        super.viewDidAppear()
+
         viewModel.heroDidAppear()
     }
 
     override func viewDidDisappear() {
-        super.viewDidDisappear()
+
         viewModel.heroDidDisappear()
     }
 }

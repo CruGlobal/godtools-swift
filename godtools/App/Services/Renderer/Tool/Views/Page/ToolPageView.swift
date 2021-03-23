@@ -18,14 +18,12 @@ class ToolPageView: MobileContentView {
     private let safeArea: UIEdgeInsets
     private let panGestureToControlPageCollectionViewPanningSensitivity: UIPanGestureRecognizer = UIPanGestureRecognizer()
     private let backgroundImageView: MobileContentBackgroundImageView = MobileContentBackgroundImageView()
-    private let keyboardObserver: KeyboardObserverType = KeyboardNotificationObserver(loggingEnabled: false)
     
     private var headerView: ToolPageHeaderView?
     private var heroView: ToolPageHeroView?
     private var contentStackView: MobileContentStackView? // TODO: Is this needed? ~Levi
     private var callToActionView: ToolPageCallToActionView?
     private var cardsView: ToolPageCardsView?
-    private var toolModal: ToolPageModalView?
     private var bottomView: UIView?
     
     private weak var windowViewController: UIViewController?
@@ -206,6 +204,7 @@ class ToolPageView: MobileContentView {
     // MARK: - MobileContentView
 
     override func renderChild(childView: MobileContentView) {
+        
         super.renderChild(childView: childView)
         
         if let headerView = childView as? ToolPageHeaderView {
@@ -224,7 +223,6 @@ class ToolPageView: MobileContentView {
     }
 
     override func finishedRenderingChildren() {
-        super.finishedRenderingChildren()
         
         cardsView?.addCardsToView(
             parentView: self,
@@ -234,16 +232,6 @@ class ToolPageView: MobileContentView {
         addBottomView()
         
         updateHeroPosition()
-    }
-
-    override func viewDidAppear() {
-        super.viewDidAppear()
-        heroView?.viewDidAppear()
-    }
-
-    override func viewDidDisappear() {
-        super.viewDidDisappear()
-        heroView?.viewDidDisappear()
     }
     
     // MARK: -
@@ -781,30 +769,8 @@ class ToolPageView: MobileContentView {
         
         updateHeroPosition()
     }
-    
-    // MARK: - MobileContentView
 
-    override func renderChild(contentView: MobileContentView) {
-        super.renderChild(contentView: contentView)
-    }
-
-    override func finishedRenderingChildren() {
-        super.finishedRenderingChildren()
-    }
-
-    override func viewDidAppear() {
-        super.viewDidAppear()
-        heroView?.viewDidAppear()
-    }
-
-    override func viewDidDisappear() {
-        super.viewDidDisappear()
-        heroView?.viewDidDisappear()
-    }
-    
-    // MARK: -
-    
-    private var numberOfCards: Int {
+ private var numberOfCards: Int {
         return viewModel.numberOfCards
     }
     
@@ -947,92 +913,6 @@ class ToolPageView: MobileContentView {
             layoutIfNeeded()
             callToActionContainerView.alpha = callToActionAlpha
         }
-    }
-}
-
-// MARK: - ToolPageCallToActionViewDelegate
-
-extension ToolPageView: ToolPageCallToActionViewDelegate {
-    func callToActionNextButtonTapped() {
-        viewModel.callToActionNextButtonTapped()
-    }
-}
-
-// MARK: - Modal
-extension ToolPageView {
-    
-    private func presentModal(viewModel: ToolPageModalViewModel, animated: Bool) {
-        
-        guard toolModal == nil, let window = self.windowViewController else {
-            return
-        }
-        
-        let toolModal: ToolPageModalView = ToolPageModalView(viewModel: viewModel)
-        
-        window.view.addSubview(toolModal)
-        toolModal.frame = window.view.bounds
-                        
-        self.toolModal = toolModal
-        
-        if animated {
-            toolModal.alpha = 0
-            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
-                toolModal.alpha = 1
-            }, completion: nil)
-        }
-    }
-    
-    private func dismissModalIfNeeded(animated: Bool, completion: (() -> Void)?) {
-        
-        guard let toolModalView = self.toolModal else {
-            completion?()
-            return
-        }
-        
-        if animated {
-            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
-                toolModalView.alpha = 0
-            }) { (finished: Bool) in
-                toolModalView.removeFromSuperview()
-                completion?()
-            }
-        }
-        else {
-            toolModalView.alpha = 0
-            toolModalView.removeFromSuperview()
-            completion?()
-        }
-    }
-}
-
-// MARK: - Keyboard
-extension ToolPageView {
-    
-    func handleKeyboardStateChange(keyboardStateChange: KeyboardStateChange) {
-        
-        guard let currentCardPosition = viewModel.currentCard.value.value else {
-            return
-        }
-        
-        guard currentCardPosition >= 0 && currentCardPosition < numberOfCards else {
-            return
-        }
-        
-        switch keyboardStateChange.keyboardState {
-
-        case .willShow:
-            setCardsState(cardsState: .showingKeyboard(showingCardAtPosition: currentCardPosition), animated: true)
-        case .willHide:
-            setCardsState(cardsState: .showingCard(showingCardAtPosition: currentCardPosition), animated: true)
-        case .didShow:
-            break
-        case .didHide:
-            break
-        }
-    }
-    
-    func handleKeyboardHeightChanged(keyboardHeight: Double) {
-        
     }
 }
 

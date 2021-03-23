@@ -42,6 +42,10 @@ class MobileContentLinkViewModel: MobileContentLinkViewModelType {
         return linkNode.textNode?.text
     }
     
+    var linkEvents: [String] {
+        return linkNode.events
+    }
+    
     func linkTapped() {
     
         // TODO: Process events. ~Levi

@@ -24,3 +24,11 @@ class ModalNode: MobileContentXmlNode {
         super.init(xmlElement: xmlElement)
     }
 }
+
+// MARK: - MobileContentRenderableNode
+
+extension ModalNode: MobileContentRenderableNode {
+    var nodeContentIsRenderable: Bool {
+        return true
+    }
+}

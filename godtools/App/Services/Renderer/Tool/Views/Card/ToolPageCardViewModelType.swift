@@ -8,17 +8,6 @@
 
 import UIKit
 
-protocol ToolPageCardViewModelTypeDelegate: class {
-    
-    func headerTappedFromCard(cardViewModel: ToolPageCardViewModelType, cardPosition: Int)
-    func previousTappedFromCard(cardViewModel: ToolPageCardViewModelType, cardPosition: Int)
-    func nextTappedFromCard(cardViewModel: ToolPageCardViewModelType, cardPosition: Int)
-    func cardSwipedUpFromCard(cardViewModel: ToolPageCardViewModelType, cardPosition: Int)
-    func cardSwipedDownFromCard(cardViewModel: ToolPageCardViewModelType, cardPosition: Int)
-    func presentCardListener(cardViewModel: ToolPageCardViewModelType, cardPosition: Int)
-    func dismissCardListener(cardViewModel: ToolPageCardViewModelType, cardPosition: Int)
-}
-
 protocol ToolPageCardViewModelType: NSObject {
     
     var title: String? { get }
@@ -26,7 +15,6 @@ protocol ToolPageCardViewModelType: NSObject {
     var titleFont: UIFont { get }
     var titleAlignment: NSTextAlignment { get }
     var hidesHeaderTrainingTip: ObservableValue<Bool> { get }
-    var isHiddenCard: Bool { get }
     var cardPositionLabel: String? { get }
     var cardPositionLabelTextColor: UIColor { get }
     var cardPositionLabelFont: UIFont { get }
@@ -40,9 +28,11 @@ protocol ToolPageCardViewModelType: NSObject {
     var nextButtonTitleFont: UIFont { get }
     var hidesNextButton: Bool { get }
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute { get }
+    var dismissListeners: [String] { get }
+    var listeners: [String] { get }
+    var isHiddenCard: Bool { get }
     
-    func setDelegate(delegate: ToolPageCardViewModelTypeDelegate)
     func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel
-    func cardWillAppear()
-    func cardWillDisappear()
+    func cardDidAppear()
+    func cardDidDisappear()
 }

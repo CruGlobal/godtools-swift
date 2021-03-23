@@ -92,34 +92,11 @@ class MobileContentImageView: MobileContentView {
     
     @objc func handleImageTapped() {
         
-        let events: [String] = viewModel.imageEvents
-        
-        var nextParent: MobileContentView? = parent
-        
-        while nextParent != nil {
-            nextParent?.imageTapped(events: events)
-            nextParent = nextParent?.parent
-        }
+        super.sendEventsToAllViews(events: viewModel.imageEvents)
     }
     
     // MARK: - MobileContentView
 
-    override func renderChild(childView: MobileContentView) {
-        super.renderChild(childView: childView)
-    }
-
-    override func finishedRenderingChildren() {
-        super.finishedRenderingChildren()
-    }
-
-    override func viewDidAppear() {
-        super.viewDidAppear()
-    }
-
-    override func viewDidDisappear() {
-        super.viewDidDisappear()
-    }
-    
     override var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType {
         return .constrainedToChildren
     }

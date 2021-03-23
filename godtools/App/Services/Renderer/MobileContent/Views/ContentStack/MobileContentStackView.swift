@@ -54,21 +54,10 @@ class MobileContentStackView: MobileContentView {
     // MARK: - MobileContentView
 
     override func renderChild(childView: MobileContentView) {
+        
         super.renderChild(childView: childView)
         
         addChildView(childView: childView)
-    }
-
-    override func finishedRenderingChildren() {
-        super.finishedRenderingChildren()
-    }
-
-    override func viewDidAppear() {
-        super.viewDidAppear()
-    }
-
-    override func viewDidDisappear() {
-        super.viewDidDisappear()
     }
     
     override var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType {

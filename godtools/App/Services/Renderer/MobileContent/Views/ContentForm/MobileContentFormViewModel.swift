@@ -11,32 +11,16 @@ import UIKit
 class MobileContentFormViewModel: NSObject, MobileContentFormViewModelType {
     
     private let formNode: ContentFormNode
-    private let diContainer: ToolPageDiContainer
-    private let toolPageColors: ToolPageColors
-    private let defaultTextNodeTextColor: UIColor?
+    private let pageModel: MobileContentRendererPageModel
     
     private var hiddenInputNodes: [ContentInputNode] = Array()
     private var inputViewModels: [MobileContentInputViewModelType] = Array()
-    
-    let resignCurrentInputSignal: Signal = Signal()
-    let contentViewModel: ToolPageContentStackContainerViewModel
-    
-    required init(formNode: ContentFormNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColors, defaultTextNodeTextColor: UIColor?) {
+        
+    required init(formNode: ContentFormNode, pageModel: MobileContentRendererPageModel) {
         
         self.formNode = formNode
-        self.diContainer = diContainer
-        self.toolPageColors = toolPageColors
-        self.defaultTextNodeTextColor = defaultTextNodeTextColor
-        
-        contentViewModel = ToolPageContentStackContainerViewModel(
-            node: formNode,
-            diContainer: diContainer,
-            toolPageColors: toolPageColors,
-            defaultTextNodeTextColor: defaultTextNodeTextColor,
-            defaultTextNodeTextAlignment: nil,
-            defaultButtonBorderColor: nil
-        )
-        
+        self.pageModel = pageModel
+
         super.init()
         
         addObservers()
@@ -48,6 +32,7 @@ class MobileContentFormViewModel: NSObject, MobileContentFormViewModelType {
     
     private func addObservers() {
         
+        /*
         diContainer.mobileContentEvents.followUpEventButtonTappedSignal.addObserver(self) { [weak self] (followUpButtonEvent: FollowUpButtonEvent) in
             self?.sendFollowUps(followUpButtonEvent: followUpButtonEvent)
         }
@@ -58,16 +43,18 @@ class MobileContentFormViewModel: NSObject, MobileContentFormViewModelType {
         
         contentViewModel.contentStackRenderer.didRenderContentInputSignal.addObserver(self) { [weak self] (renderedInput: ToolPageRenderedContentInput) in
             self?.inputViewModels.append(renderedInput.viewModel)
-        }
+        }*/
     }
     
     private func removeObservers() {
-        diContainer.mobileContentEvents.followUpEventButtonTappedSignal.removeObserver(self)
-        diContainer.mobileContentEvents.eventButtonTappedSignal.removeObserver(self)
-        contentViewModel.contentStackRenderer.didRenderHiddenContentInputSignal.removeObserver(self)
-        contentViewModel.contentStackRenderer.didRenderContentInputSignal.removeObserver(self)
+        
+        //diContainer.mobileContentEvents.followUpEventButtonTappedSignal.removeObserver(self)
+        //diContainer.mobileContentEvents.eventButtonTappedSignal.removeObserver(self)
+        //contentViewModel.contentStackRenderer.didRenderHiddenContentInputSignal.removeObserver(self)
+        //contentViewModel.contentStackRenderer.didRenderContentInputSignal.removeObserver(self)
     }
     
+    /*
     private func sendFollowUps(followUpButtonEvent: FollowUpButtonEvent) {
             
         resignCurrentInputSignal.accept()
@@ -151,5 +138,5 @@ class MobileContentFormViewModel: NSObject, MobileContentFormViewModelType {
         }
         
         diContainer.mobileContentEvents.contentError(error: ContentEventError(title: errorTitle, message: errorMessage))
-    }
+    }*/
 }

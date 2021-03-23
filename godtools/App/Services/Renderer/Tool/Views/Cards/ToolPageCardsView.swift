@@ -17,6 +17,7 @@ class ToolPageCardsView: MobileContentView {
     
     private let viewModel: ToolPageCardsViewModelType
     private let safeArea: UIEdgeInsets
+    private let keyboardObserver: KeyboardObserverType = KeyboardNotificationObserver(loggingEnabled: false)
     
     private var cardBounceAnimation: ToolPageCardBounceAnimation?
     private var cardViews: [ToolPageCardView] = Array()
@@ -37,10 +38,19 @@ class ToolPageCardsView: MobileContentView {
         
         setupLayout()
         setupBinding()
+        
+        keyboardObserver.startObservingKeyboardChanges()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
+        keyboardObserver.stopObservingKeyboardChanges()
+        keyboardObserver.keyboardStateDidChangeSignal.removeObserver(self)
+        keyboardObserver.keyboardHeightDidChangeSignal.removeObserver(self)
     }
     
     private func setupLayout() {
@@ -49,6 +59,9 @@ class ToolPageCardsView: MobileContentView {
     
     private func setupBinding() {
         
+        keyboardObserver.keyboardStateDidChangeSignal.addObserver(self) { [weak self] (keyboardStateChange: KeyboardStateChange) in
+            self?.handleKeyboardStateChange(keyboardStateChange: keyboardStateChange)
+        }
     }
     
     private func addCardJumpObserving() {
@@ -84,6 +97,7 @@ class ToolPageCardsView: MobileContentView {
     // MARK: - MobileContentView
     
     override func renderChild(childView: MobileContentView) {
+        
         super.renderChild(childView: childView)
         
         if let cardView = childView as? ToolPageCardView {
@@ -91,10 +105,72 @@ class ToolPageCardsView: MobileContentView {
         }
     }
     
+    override func didReceiveEvents(events: [String]) {
+                
+        for event in events {
+            
+            for cardView in cardViews {
+                
+                if cardView.viewModel.dismissListeners.contains(event) {
+                    dismissCard(cardView: cardView)
+                }
+                else if cardView.viewModel.listeners.contains(event) {
+                    presentCard(cardView: cardView)
+                }
+            }
+        }
+    }
+    
     // MARK: -
     
     func setDelegate(delegate: ToolPageCardsViewDelegate) {
         self.delegate = delegate
+    }
+    
+    private func dismissCard(cardView: ToolPageCardView) {
+        
+        guard let cardPosition = getCardPosition(cardView: cardView) else {
+            return
+        }
+            
+        gotoPreviousCardFromCardPosition(cardPosition: cardPosition, animated: true)
+    }
+    
+    private func presentCard(cardView: ToolPageCardView) {
+        
+        guard let cardPosition = getCardPosition(cardView: cardView) else {
+            return
+        }
+        
+        setCardsState(cardsState: .showingCard(showingCardAtPosition: cardPosition), animated: true)
+    }
+}
+
+// MARK: - Keyboard
+
+extension ToolPageCardsView {
+    
+    func handleKeyboardStateChange(keyboardStateChange: KeyboardStateChange) {
+        
+        guard let currentCardPosition = self.currentCardPosition else {
+            return
+        }
+        
+        switch keyboardStateChange.keyboardState {
+
+        case .willShow:
+            setCardsState(cardsState: .showingKeyboard(showingCardAtPosition: currentCardPosition), animated: true)
+        case .willHide:
+            setCardsState(cardsState: .showingCard(showingCardAtPosition: currentCardPosition), animated: true)
+        case .didShow:
+            break
+        case .didHide:
+            break
+        }
+    }
+    
+    func handleKeyboardHeightChanged(keyboardHeight: Double) {
+        
     }
 }
 
@@ -154,6 +230,11 @@ extension ToolPageCardsView: ToolPageCardViewDelegate {
             return
         }
         
+        gotoPreviousCardFromCardPosition(cardPosition: cardPosition, animated: animated)
+    }
+    
+    private func gotoPreviousCardFromCardPosition(cardPosition: Int, animated: Bool) {
+        
         let previousCard: Int = cardPosition - 1
         
         if previousCard >= 0 {
@@ -186,6 +267,13 @@ extension ToolPageCardsView {
        
     private func getCardPosition(cardView: ToolPageCardView) -> Int? {
         return cardViews.firstIndex(of: cardView)
+    }
+    
+    private func getCardView(cardPosition: Int) -> ToolPageCardView? {
+        guard cardPosition >= 0 && cardPosition < cardViews.count else {
+            return nil
+        }
+        return cardViews[cardPosition]
     }
     
     private func removeAllCardsFromParentView() {
@@ -337,8 +425,8 @@ extension ToolPageCardsView {
         switch cardsState {
             
         case .starting:
-                 
-            currentCardPosition = nil
+                      
+            setCurrentCardPosition(cardPosition: nil)
             
             var visibleCardPosition: Int = 0
             
@@ -368,8 +456,8 @@ extension ToolPageCardsView {
                 return
             }
             
-            currentCardPosition = showingCardAtPosition
-                        
+            setCurrentCardPosition(cardPosition: showCardAtPosition)
+                                    
             var visibleCardPosition: Int = 0
             
             for cardPosition in 0 ..< cardViews.count {
@@ -396,8 +484,8 @@ extension ToolPageCardsView {
             }
             
         case .showingKeyboard(let showingCardAtPosition):
-            
-            currentCardPosition = showingCardAtPosition
+                
+            setCurrentCardPosition(cardPosition: showingCardAtPosition)
             
             for cardPosition in 0 ..< numberOfCards {
                 
@@ -409,8 +497,8 @@ extension ToolPageCardsView {
             }
                         
         case .collapseAllCards:
-            
-            currentCardPosition = nil
+                  
+            setCurrentCardPosition(cardPosition: nil)
             
             var visibleCardPosition: Int = 0
             
@@ -429,8 +517,7 @@ extension ToolPageCardsView {
             }
             
         case .initialized:
-            
-            currentCardPosition = nil
+            break
         }
         
         if animated {
@@ -473,6 +560,22 @@ extension ToolPageCardsView {
             
         case .initialized:
             break
+        }
+    }
+    
+    private func setCurrentCardPosition(cardPosition: Int?) {
+        
+        if currentCardPosition != cardPosition {
+            
+            if let currentCardPosition = currentCardPosition, let currentCardView = getCardView(cardPosition: currentCardPosition) {
+                currentCardView.viewDidDisappear()
+            }
+            
+            currentCardPosition = cardPosition
+            
+            if let cardPosition = cardPosition, let cardView = getCardView(cardPosition: cardPosition) {
+                cardView.viewDidAppear()
+            }
         }
     }
 }

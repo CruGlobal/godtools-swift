@@ -72,7 +72,6 @@ class MobileContentTabsView: MobileContentView {
     }
     
     override func finishedRenderingChildren() {
-        super.finishedRenderingChildren()
         
         setSelectedTabIndex(selectedTabIndex: 0)
     }
@@ -81,10 +80,8 @@ class MobileContentTabsView: MobileContentView {
         return .constrainedToChildren
     }
     
-    override func imageTapped(events: [String]) {
-        
-        super.imageTapped(events: events)
-        
+    override func didReceiveEvents(events: [String]) {
+                
         for event in events {
             
             for tabIndex in 0 ..< tabViews.count {
@@ -93,7 +90,6 @@ class MobileContentTabsView: MobileContentView {
                 
                 if tabListeners.contains(event) {
                     setSelectedTabIndex(selectedTabIndex: tabIndex)
-                    return
                 }
             }
         }
