@@ -11,5 +11,5 @@ import Foundation
 protocol ArticleAemRepositoryType {
     
     func getArticleArchiveUrl(filename: String) -> URL?
-    func getArticleAem(aemUri: ArticleAemUri, cache: @escaping ((_ articleAem: ArticleAemModel) -> Void), downloadStarted: @escaping (() -> Void), downloadFinished: @escaping ((_ result: Result<ArticleAemModel, Error>) -> Void))
+    func getArticleAem(aemUri: ArticleAemUri, cache: @escaping ((_ articleAem: ArticleAemModel) -> Void), downloadStarted: @escaping (() -> Void), downloadFinished: @escaping ((_ result: ArticleAemModel) -> Void))
 }
