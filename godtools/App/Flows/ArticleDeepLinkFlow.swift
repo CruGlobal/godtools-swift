@@ -36,34 +36,39 @@ class ArticleDeepLinkFlow: Flow {
     }
     
     private func downloadStarted() {
-        
+        // TODO: add a loading screen while downloading ~Robert
     }
     
     private func downloadFailed() {
         
     }
     
-    private func handleDownloadResult(result: Result<ArticleAemModel, Error>) {
-        switch result {
+    private func handleDownloadResult(result: ArticleAemModel) {
+        
+        navigateToArticleWebView(articleAemData: result)
+        /*switch result {
         case .success(let articleAemData):
             navigateToArticleWebView(articleAemData: articleAemData)
             
         case .failure( _):
             downloadFailed()
             
-        }
+        }*/
     }
     
     private func navigateToArticleWebView(articleAemData: ArticleAemModel) {
-        let viewModel = ArticleWebViewModel(
-            flowDelegate: self,
-            articleAemImportData: articleAemData.importData,
-            articleAemRepository: appDiContainer.articleAemRepository,
-            analytics: appDiContainer.analytics
-        )
+        DispatchQueue.main.async {
+
+            let viewModel = ArticleWebViewModel(
+                flowDelegate: self,
+                articleAemImportData: articleAemData.importData,
+                articleAemRepository: self.appDiContainer.articleAemRepository,
+                analytics: self.appDiContainer.analytics
+            )
         
-        let view = ArticleWebView(viewModel: viewModel)
+            let view = ArticleWebView(viewModel: viewModel)
         
-        navigationController.pushViewController(view, animated: true)
+            self.navigationController.pushViewController(view, animated: true)
+        }
     }
 }

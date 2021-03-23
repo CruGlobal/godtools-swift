@@ -18,10 +18,13 @@ class ArticleAemRepository: NSObject, ArticleAemRepositoryType {
     }
     
     func getArticleArchiveUrl(filename: String) -> URL? {
-        return importDownloader.getWebArchiveUrl(location: ArticleAemWebArchiveFileCacheLocation(filename: filename))
+        
+        let webArchiveLocation = ArticleAemWebArchiveFileCacheLocation(filename: filename)
+        
+        return importDownloader.getWebArchiveUrl(location: webArchiveLocation)
     }
     
-    func getArticleAem(aemUri: ArticleAemUri, cache: ((_ articleAem: ArticleAemModel) -> Void), downloadStarted: (() -> Void), downloadFinished: ((_ result: ArticleAemModel) -> Void)) {
+    func getArticleAem(aemUri: ArticleAemUri, cache: @escaping ((_ articleAem: ArticleAemModel) -> Void), downloadStarted: @escaping (() -> Void), downloadFinished: @escaping ((_ result: ArticleAemModel) -> Void)) {
         
         //TODO: create ArticleAemArchiver and ArticleAemDownloader to replace ArticleAemImportDownloader ~Robert
         // If the article aem is cached to the filesystem, go ahead and call the cache closure and return immediately.
@@ -29,16 +32,18 @@ class ArticleAemRepository: NSObject, ArticleAemRepositoryType {
         // Otherwise, we will download and parse the aem uri and cache the web archive to the filesystem.
         let receipt = importDownloader.downloadAndCache(aemImportSrcs: [aemUri.uriString])
                 
-        receipt.started.addObserver(self) { [weak self] (isStarted: Bool) in
+        receipt.started.addObserver(self) { (isStarted: Bool) in
             if isStarted {
                 downloadStarted()
             }
         }
         
-        receipt.completed.addObserver(self) { [weak self] (result: ArticleAemImportDownloaderResult) in
+        receipt.completed.addObserver(self) { (result: ArticleAemImportDownloaderResult) in
             let data = result.articleAemImportDataObjects[0]
-           
-            let articleAemModel = ArticleAemModel(aemUri: data.aemUri, importData: data, webArchiveUrl: data.webUrl)
+
+            guard let url = URL(string: data.webUrl) else { return }
+            
+            let articleAemModel = ArticleAemModel(aemUri: ArticleAemUri(aemUri: data.aemUri), importData: data, webArchiveUrl: url)
                         
             downloadFinished(articleAemModel)
         }
