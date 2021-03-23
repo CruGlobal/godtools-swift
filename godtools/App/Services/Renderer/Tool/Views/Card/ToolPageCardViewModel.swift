@@ -163,27 +163,7 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
             languageDirection: pageModel.language.languageDirection
         )
     }
-    
-    func headerTapped() {
-        delegate?.headerTappedFromCard(cardViewModel: self, cardPosition: cardPosition)
-    }
-    
-    func previousTapped() {
-        delegate?.previousTappedFromCard(cardViewModel: self, cardPosition: cardPosition)
-    }
-    
-    func nextTapped() {
-        delegate?.nextTappedFromCard(cardViewModel: self, cardPosition: cardPosition)
-    }
-    
-    func didSwipeCardUp() {
-        delegate?.cardSwipedUpFromCard(cardViewModel: self, cardPosition: cardPosition)
-    }
-    
-    func didSwipeCardDown() {
-        delegate?.cardSwipedDownFromCard(cardViewModel: self, cardPosition: cardPosition)
-    }
-    
+        
     func cardWillAppear() {
         mobileContentDidAppear()
     }

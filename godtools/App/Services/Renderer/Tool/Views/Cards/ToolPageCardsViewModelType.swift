@@ -10,7 +10,11 @@ import Foundation
 
 protocol ToolPageCardsViewModelType {
     
-    var currentCard: ObservableValue<AnimatableValue<Int?>> { get }
+    var hidesCardJump: ObservableValue<Bool> { get }
     var numberOfCards: Int { get }
     var numberOfVisibleCards: Int { get }
+    
+    func cardHeaderTapped()
+    func cardSwipedUp()
+    func cardBounceAnimationFinished()
 }

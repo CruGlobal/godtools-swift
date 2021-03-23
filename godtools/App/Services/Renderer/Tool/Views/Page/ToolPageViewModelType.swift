@@ -38,11 +38,9 @@ protocol ToolPageViewModelType: NSObject {
     var numberOfCards: Int { get }
     var numberOfVisibleCards: Int { get }
     var numberOfHiddenCards: Int { get }
-    var hidesCardJump: ObservableValue<Bool> { get }s
     
     func getCurrentPositions() -> ToolPageInitialPositions
     func callToActionNextButtonTapped()
     func hiddenCardWillAppear(cardPosition: Int) -> ToolPageCardViewModelType?
     func setCard(cardPosition: Int?, animated: Bool)
-    func cardBounceAnimationFinished()
 }*/

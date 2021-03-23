@@ -582,7 +582,8 @@ class ToolsFlow: Flow {
         let pageViewFactory = ToolPageViewFactory(
             mobileContentAnalytics: mobileContentAnalytics,
             fontService: fontService,
-            localizationServices: appDiContainer.localizationServices
+            localizationServices: appDiContainer.localizationServices,
+            cardJumpService: appDiContainer.getCardJumpService()
         )
         
         let primaryRenderer: MobileContentRenderer = MobileContentRenderer(

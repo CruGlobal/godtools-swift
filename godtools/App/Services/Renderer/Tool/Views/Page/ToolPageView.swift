@@ -7,6 +7,11 @@
 //
 import UIKit
 
+protocol ToolPageViewDelegate: class {
+    
+    func toolPageCallToActionNextButtonTapped(toolPage: ToolPageView)
+}
+
 class ToolPageView: MobileContentView {
     
     private let viewModel: ToolPageViewModelType
@@ -17,14 +22,14 @@ class ToolPageView: MobileContentView {
     
     private var headerView: ToolPageHeaderView?
     private var heroView: ToolPageHeroView?
-    private var contentStackView: MobileContentStackView?
+    private var contentStackView: MobileContentStackView? // TODO: Is this needed? ~Levi
     private var callToActionView: ToolPageCallToActionView?
     private var cardsView: ToolPageCardsView?
     private var toolModal: ToolPageModalView?
-    private var cardBounceAnimation: ToolPageCardBounceAnimation?
     private var bottomView: UIView?
     
     private weak var windowViewController: UIViewController?
+    private weak var delegate: ToolPageViewDelegate?
     
     @IBOutlet weak private var backgroundImageContainer: UIView!
     @IBOutlet weak private var contentStackContainerView: UIView!
@@ -194,6 +199,10 @@ class ToolPageView: MobileContentView {
         }*/
     }
     
+    func setDelegate(delegate: ToolPageViewDelegate?) {
+        self.delegate = delegate
+    }
+    
     // MARK: - MobileContentView
 
     override func renderChild(childView: MobileContentView) {
@@ -225,9 +234,6 @@ class ToolPageView: MobileContentView {
         addBottomView()
         
         updateHeroPosition()
-        
-        // TODO: Set cards state. ~Levi
-        //setCardsState(cardsState: .starting, animated: false)
     }
 
     override func viewDidAppear() {
@@ -274,7 +280,7 @@ extension ToolPageView {
     }
     
     private func setHeaderHidden(hidden: Bool, animated: Bool) {
-         
+                 
         let headerShouldBeHidden: Bool = headerView?.viewModel.hidesHeader ?? true
                 
         let attemptingToShowHeader: Bool = !hidden
@@ -320,13 +326,11 @@ extension ToolPageView {
     
     private func updateHeroPosition() {
         
-        // TODO: Implement. ~Levi
-        
-        /*
         if self.heroView == nil {
             return
         }
         
+        let numberOfVisibleCards: Int = cardsView?.numberOfVisibleCards ?? 0
         let hidesCards: Bool = numberOfVisibleCards == 0
         let hidesCallToAction: Bool = callToActionView?.viewModel.hidesCallToAction ?? true
         
@@ -337,25 +341,22 @@ extension ToolPageView {
         let maximumHeight: CGFloat = screenHeight - safeArea.top - safeArea.bottom - headerHeight - topInset - bottomInset
                 
         if hidesCards && hidesCallToAction {
+            
             heroHeight.constant = maximumHeight
         }
         else if hidesCards && !hidesCallToAction {
+            
             heroHeight.constant = maximumHeight - callToActionContainerView.frame.size.height
         }
         else if !hidesCards {
             
-            guard let cardView = cardsView?.cards.first else {
-                assertionFailure("Cards should be initialized and added at this point.")
-                return
-            }
-            
             let numberOfVisibleCardsFloatValue: CGFloat =  CGFloat(numberOfVisibleCards)
-            let cardTitleHeight: CGFloat = cardView.cardHeaderHeight
-            heroHeight.constant = maximumHeight - (numberOfVisibleCardsFloatValue * cardTitleHeight)
+            let cardHeaderHeight: CGFloat = ToolPageCardView.cardHeaderHeight
+            heroHeight.constant = maximumHeight - (numberOfVisibleCardsFloatValue * cardHeaderHeight)
         }
                      
         heroTop.constant = headerHeight + topInset
-        layoutIfNeeded()*/
+        layoutIfNeeded()
     }
 }
 
@@ -407,8 +408,9 @@ extension ToolPageView: ToolPageCallToActionViewDelegate {
         }
     }
     
-    func callToActionNextButtonTapped() {
-        //viewModel.callToActionNextButtonTapped()
+    func toolPageCallToActionNextButtonTapped(callToActionView: ToolPageCallToActionView) {
+        
+        delegate?.toolPageCallToActionNextButtonTapped(toolPage: self)
     }
 }
 
@@ -416,7 +418,7 @@ extension ToolPageView: ToolPageCallToActionViewDelegate {
 
 extension ToolPageView: ToolPageCardsViewDelegate {
     
-    func cardsViewDidChangeCardState(cardsView: ToolPageCardsView, cardsState: ToolPageCardsState, animated: Bool) {
+    func toolPageCardsViewDidChangeCardState(cardsView: ToolPageCardsView, cardsState: ToolPageCardsState, animated: Bool) {
         
         switch cardsState {
         
@@ -945,14 +947,6 @@ class ToolPageView: MobileContentView {
             layoutIfNeeded()
             callToActionContainerView.alpha = callToActionAlpha
         }
-    }
-}
-
-// MARK: - ToolPageCardBounceAnimationDelegate
-
-extension ToolPageView: ToolPageCardBounceAnimationDelegate {
-    func toolPageCardBounceAnimationDidFinish(cardBounceAnimation: ToolPageCardBounceAnimation, forceStopped: Bool) {
-        viewModel.cardBounceAnimationFinished()
     }
 }
 

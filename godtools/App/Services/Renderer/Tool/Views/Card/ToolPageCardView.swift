@@ -8,6 +8,15 @@
 
 import UIKit
 
+protocol ToolPageCardViewDelegate: class {
+    
+    func toolPageCardHeaderTapped(cardView: ToolPageCardView)
+    func toolPageCardPreviousTapped(cardView: ToolPageCardView)
+    func toolPageCardNextTapped(cardView: ToolPageCardView)
+    func toolPageCardDidSwipeCardUp(cardView: ToolPageCardView)
+    func toolPageCardDidSwipeCardDown(cardView: ToolPageCardView)
+}
+
 class ToolPageCardView: MobileContentView {
         
     private let backgroundImageView: MobileContentBackgroundImageView = MobileContentBackgroundImageView()
@@ -16,14 +25,17 @@ class ToolPageCardView: MobileContentView {
     
     private lazy var keyboardObserver: KeyboardObserverType = KeyboardNotificationObserver(loggingEnabled: false)
     
-    private var contentStackView: MobileContentStackView?
+    private var contentStackView: MobileContentStackView = MobileContentStackView(itemSpacing: 20, scrollIsEnabled: true)
     private var contentFormView: MobileContentFormView?
     private var startingHeaderTrainingTipIconTrailing: CGFloat = 20
+    private var didRenderFirstLabel: Bool = false
     private var keyboardHeightForAddedContentSize: Double?
     private var didAddKeyboardHeightToContentSize: Bool = false
     private var cardSwipingIsEnabled: Bool = false
     private var isObservingKeyboard: Bool = false
     
+    private weak var delegate: ToolPageCardViewDelegate?
+        
     let viewModel: ToolPageCardViewModelType
             
     @IBOutlet weak private var titleLabel: UILabel!
@@ -49,9 +61,9 @@ class ToolPageCardView: MobileContentView {
         setupLayout()
         setupBinding()
         
-        headerButton.addTarget(self, action: #selector(handleHeader(button:)), for: .touchUpInside)
-        previousButton.addTarget(self, action: #selector(handlePrevious(button:)), for: .touchUpInside)
-        nextButton.addTarget(self, action: #selector(handleNext(button:)), for: .touchUpInside)
+        headerButton.addTarget(self, action: #selector(headerTapped), for: .touchUpInside)
+        previousButton.addTarget(self, action: #selector(previousTapped), for: .touchUpInside)
+        nextButton.addTarget(self, action: #selector(nextTapped), for: .touchUpInside)
         
         swipeUpGesture.addTarget(self, action: #selector(handleSwipeGesture(swipeGesture:)))
         swipeUpGesture.delegate = self
@@ -92,6 +104,18 @@ class ToolPageCardView: MobileContentView {
         let cardCornerRadius: CGFloat = 8
         
         startingHeaderTrainingTipIconTrailing = headerTrainingTipTrailing.constant
+        
+        // contentStackView
+        contentStackContainer.addSubview(contentStackView)
+        contentStackView.constrainEdgesToSuperview()
+        layoutIfNeeded()
+        contentStackView.setContentInset(contentInset: UIEdgeInsets(
+            top: 0,
+            left: 0,
+            bottom: bottomGradientView.frame.size.height,
+            right: 0
+        ))
+        contentStackView.setScrollViewDelegate(delegate: self)
         
         // shadow
         layer.cornerRadius = cardCornerRadius
@@ -168,15 +192,20 @@ class ToolPageCardView: MobileContentView {
         contentStackView.setScrollViewDelegate(delegate: self)*/
     }
     
+    func setDelegate(delegate: ToolPageCardViewDelegate?) {
+        self.delegate = delegate
+    }
+    
     // MARK: - MobileContentView
 
     override func renderChild(childView: MobileContentView) {
-        
+       
         super.renderChild(childView: childView)
         
-        if let contentStackView = childView as? MobileContentStackView {
-            addContentStackView(contentStackView: contentStackView)
-        }
+        // NOTE: Currently the renderer will not return a view for Label xml nodes. If it did, we would say the card header label rendered twice.
+        // We would have to ignore that here and not add it to the content stack. ~Levi
+        
+        contentStackView.renderChild(childView: childView)
     }
     
     // MARK: -
@@ -185,26 +214,22 @@ class ToolPageCardView: MobileContentView {
         return 50
     }
     
-    @objc func handleHeader(button: UIButton) {
+    @objc func headerTapped() {
         contentFormView?.resignCurrentEditedTextField()
-        viewModel.headerTapped()
+        delegate?.toolPageCardHeaderTapped(cardView: self)
     }
     
-    @objc func handlePrevious(button: UIButton) {
+    @objc func previousTapped() {
         contentFormView?.resignCurrentEditedTextField()
-        viewModel.previousTapped()
+        delegate?.toolPageCardPreviousTapped(cardView: self)
     }
     
-    @objc func handleNext(button: UIButton) {
+    @objc func nextTapped() {
         contentFormView?.resignCurrentEditedTextField()
-        viewModel.nextTapped()
+        delegate?.toolPageCardNextTapped(cardView: self)
     }
     
     @objc func handleSwipeGesture(swipeGesture: UISwipeGestureRecognizer) {
-        
-        guard let contentStackView = self.contentStackView else {
-            return
-        }
         
         guard let offset = contentStackView.getContentOffset(), let inset = contentStackView.getContentInset(), let scrollFrame = contentStackView.scrollViewFrame else {
             return
@@ -213,9 +238,9 @@ class ToolPageCardView: MobileContentView {
         contentFormView?.resignCurrentEditedTextField()
                 
         if swipeGesture.direction == .up && offset.y + scrollFrame.size.height >= contentStackView.contentSize.height - inset.top - inset.bottom {
-            viewModel.didSwipeCardUp()
+            delegate?.toolPageCardDidSwipeCardUp(cardView: self)
         } else if swipeGesture.direction == .down && offset.y <= 0 {
-            viewModel.didSwipeCardDown()
+            delegate?.toolPageCardDidSwipeCardDown(cardView: self)
         }
     }
     
@@ -305,16 +330,13 @@ class ToolPageCardView: MobileContentView {
     
     private func addKeyboardHeightToContentSize(keyboardHeight: CGFloat) {
         
-        guard let scrollContentSize = contentStackView?.contentSize else {
-            return
-        }
-        
         guard !didAddKeyboardHeightToContentSize else {
             return
         }
         
         didAddKeyboardHeightToContentSize = true
         
+        let scrollContentSize: CGSize = contentStackView.contentSize
         let contentHeight: CGFloat = scrollContentSize.height + keyboardHeight
         
         let contentSize: CGSize = CGSize(
@@ -322,14 +344,10 @@ class ToolPageCardView: MobileContentView {
             height: contentHeight
         )
         
-        contentStackView?.setContentSize(size: contentSize)
+        contentStackView.setContentSize(size: contentSize)
     }
     
     private func removeKeyboardHeightFromContentSize() {
-        
-        guard let scrollContentSize = contentStackView?.contentSize else {
-            return
-        }
         
         guard let keyboardHeight = keyboardHeightForAddedContentSize else {
             return
@@ -341,6 +359,7 @@ class ToolPageCardView: MobileContentView {
         
         didAddKeyboardHeightToContentSize = false
         
+        let scrollContentSize: CGSize = contentStackView.contentSize
         let contentHeight: CGFloat = scrollContentSize.height - CGFloat(keyboardHeight)
         
         let contentSize: CGSize = CGSize(
@@ -348,7 +367,7 @@ class ToolPageCardView: MobileContentView {
             height: contentHeight
         )
         
-        contentStackView?.setContentSize(size: contentSize)
+        contentStackView.setContentSize(size: contentSize)
     }
     
     private func setCardSwipingEnabled(enabled: Bool) {
@@ -389,7 +408,7 @@ class ToolPageCardView: MobileContentView {
     
     private func handleScrollingEnded(scrollView: UIScrollView) {
         
-        guard let contentStackView = self.contentStackView, contentStackView.contentScrollViewIsEqualTo(otherScrollView: scrollView) else {
+        guard contentStackView.contentScrollViewIsEqualTo(otherScrollView: scrollView) else {
             return
         }
         
@@ -412,31 +431,6 @@ class ToolPageCardView: MobileContentView {
             swipeUpGesture.isEnabled = false
             swipeDownGesture.isEnabled = false
         }
-    }
-}
-
-// MARK: - Content Stack View
-
-extension ToolPageCardView {
-    
-    private func addContentStackView(contentStackView: MobileContentStackView) {
-        
-        guard self.contentStackView == nil else {
-            return
-        }
-        
-        contentStackContainer.addSubview(contentStackView)
-        contentStackView.constrainEdgesToSuperview()
-        layoutIfNeeded()
-        contentStackView.setContentInset(contentInset: UIEdgeInsets(
-            top: 0,
-            left: 0,
-            bottom: bottomGradientView.frame.size.height,
-            right: 0
-        ))
-        contentStackView.setScrollViewDelegate(delegate: self)
-        
-        self.contentStackView = contentStackView
     }
 }
 

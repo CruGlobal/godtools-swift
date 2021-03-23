@@ -242,6 +242,7 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
         }
         else if let tabsNode = node as? ContentTabsNode {
 
+            /*
             let viewModel = MobileContentTabsViewModel(
                 tabsNode: tabsNode,
                 diContainer: diContainer,
@@ -251,7 +252,7 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
             
             let view = MobileContentTabsView(viewModel: viewModel)
                                     
-            return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)
+            return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)*/
         }
         else if let inputNode = node as? ContentInputNode {
             

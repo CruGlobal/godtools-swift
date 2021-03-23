@@ -11,21 +11,17 @@ import UIKit
 class MobileContentTabsViewModel: NSObject, MobileContentTabsViewModelType {
     
     private let tabsNode: ContentTabsNode
-    private let diContainer: ToolPageDiContainer
-    private let toolPageColors: ToolPageColors
-    private let defaultTextNodeTextColor: UIColor?
+    private let pageModel: MobileContentRendererPageModel
     private let tabNodes: [ContentTabNode]
     
     let tabLabels: [String]
     let selectedTab: ObservableValue<Int> = ObservableValue(value: 0)
     let tabContent: ObservableValue<ToolPageContentStackContainerViewModel?> = ObservableValue(value: nil)
     
-    required init(tabsNode: ContentTabsNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColors, defaultTextNodeTextColor: UIColor?) {
+    required init(tabsNode: ContentTabsNode, pageModel: MobileContentRendererPageModel) {
         
         self.tabsNode = tabsNode
-        self.diContainer = diContainer
-        self.toolPageColors = toolPageColors
-        self.defaultTextNodeTextColor = defaultTextNodeTextColor
+        self.pageModel = pageModel
         self.tabNodes = tabsNode.children as? [ContentTabNode] ?? []
         
         tabLabels = tabNodes.map({$0.contentLabelNode?.textNode?.text ?? ""})
@@ -36,7 +32,7 @@ class MobileContentTabsViewModel: NSObject, MobileContentTabsViewModelType {
         
         let startingTab: Int = 0
         selectedTab.accept(value: startingTab)
-        tabContent.accept(value: getTabContent(tab: startingTab))
+        //tabContent.accept(value: getTabContent(tab: startingTab))
     }
     
     deinit {
@@ -45,6 +41,7 @@ class MobileContentTabsViewModel: NSObject, MobileContentTabsViewModelType {
     
     private func addEventListeners() {
         
+        /*
         diContainer.mobileContentEvents.eventImageTappedSignal.addObserver(self) { [weak self] (imageEvent: ImageEvent) in
             
             guard let viewModel = self else {
@@ -59,29 +56,31 @@ class MobileContentTabsViewModel: NSObject, MobileContentTabsViewModelType {
                     break
                 }
             }
-        }
+        }*/
     }
     
     private func removeEventListeners() {
-        diContainer.mobileContentEvents.eventImageTappedSignal.removeObserver(self)
+        //diContainer.mobileContentEvents.eventImageTappedSignal.removeObserver(self)
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return diContainer.languageDirectionSemanticContentAttribute
+        return pageModel.languageDirectionSemanticContentAttribute
     }
     
     func tabTapped(tab: Int) {
         
         selectedTab.setValue(value: tab)
-        tabContent.accept(value: getTabContent(tab: tab))
+        //tabContent.accept(value: getTabContent(tab: tab))
         
         let tabNode: ContentTabNode = tabNodes[tab]
         
+        /*
         if let analyticsEventsNode = tabNode.analyticsEventsNode {
             diContainer.mobileContentAnalytics.trackEvents(events: analyticsEventsNode)
-        }
+        }*/
     }
     
+    /*
     private func getTabContent(tab: Int) -> ToolPageContentStackContainerViewModel {
         
         let tabNode: ContentTabNode = tabNodes[tab]
@@ -105,5 +104,5 @@ class MobileContentTabsViewModel: NSObject, MobileContentTabsViewModelType {
             defaultTextNodeTextAlignment: nil,
             defaultButtonBorderColor: nil
         )
-    }
+    }*/
 }

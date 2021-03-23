@@ -13,29 +13,19 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
     private let mobileContentAnalytics: MobileContentAnalytics
     private let fontService: FontService
     private let localizationServices: LocalizationServices
+    private let cardJumpService: CardJumpService
     
-    required init(mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices) {
+    required init(mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, cardJumpService: CardJumpService) {
         
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
         self.localizationServices = localizationServices
+        self.cardJumpService = cardJumpService
     }
     
     func viewForRenderableNode(renderableNode: MobileContentRenderableNode, pageModel: MobileContentRendererPageModel) -> MobileContentView? {
         
-        if let paragraphNode = renderableNode as? ContentParagraphNode {
-            
-            if paragraphNode.parent is CardNode {
-                
-                return MobileContentStackView(
-                    itemSpacing: 20,
-                    scrollIsEnabled: true
-                )
-            }
-            
-            return nil
-        }
-        else if let cardNode = renderableNode as? CardNode, let cardsNode = cardNode.parent as? CardsNode {
+        if let cardNode = renderableNode as? CardNode, let cardsNode = cardNode.parent as? CardsNode {
             
             let viewModel = ToolPageCardViewModel(
                 cardNode: cardNode,
@@ -90,7 +80,9 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
         else if let cardsNode = renderableNode as? CardsNode {
             
             let viewModel = ToolPageCardsViewModel(
-                cardsNode: cardsNode
+                cardsNode: cardsNode,
+                pageModel: pageModel,
+                cardJumpService: cardJumpService
             )
             
             let view = ToolPageCardsView(

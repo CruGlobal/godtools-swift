@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ToolPageCallToActionViewDelegate: class {
-    func callToActionNextButtonTapped()
+    func toolPageCallToActionNextButtonTapped(callToActionView: ToolPageCallToActionView)
 }
 
 class ToolPageCallToActionView: MobileContentView {
@@ -71,7 +71,7 @@ class ToolPageCallToActionView: MobileContentView {
     }
     
     @objc func handleNextTapped(button: UIButton) {
-        delegate?.callToActionNextButtonTapped()
+        delegate?.toolPageCallToActionNextButtonTapped(callToActionView: self)
     }
     
     func configure(delegate: ToolPageCallToActionViewDelegate) {

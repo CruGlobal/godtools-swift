@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MobileContentTabsView: UIView {
+class MobileContentTabsView: MobileContentView {
     
     private let viewModel: MobileContentTabsViewModelType
     
@@ -97,4 +97,12 @@ class MobileContentTabsView: UIView {
         
         layoutIfNeeded()*/
     }
+    
+    // MARK: - MobileContentView
+    
+    override var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType {
+        return .constrainedToChildren
+    }
+    
+    // MARK: -
 }

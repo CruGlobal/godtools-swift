@@ -10,7 +10,7 @@ import UIKit
 
 protocol ToolPageCardsViewDelegate: class {
     
-    func cardsViewDidChangeCardState(cardsView: ToolPageCardsView, cardsState: ToolPageCardsState, animated: Bool)
+    func toolPageCardsViewDidChangeCardState(cardsView: ToolPageCardsView, cardsState: ToolPageCardsState, animated: Bool)
 }
 
 class ToolPageCardsView: MobileContentView {
@@ -18,12 +18,14 @@ class ToolPageCardsView: MobileContentView {
     private let viewModel: ToolPageCardsViewModelType
     private let safeArea: UIEdgeInsets
     
+    private var cardBounceAnimation: ToolPageCardBounceAnimation?
     private var cardViews: [ToolPageCardView] = Array()
     private var cardTopConstraints: [NSLayoutConstraint] = Array()
     private var currentCardState: ToolPageCardsState = .initialized
     private var cardParentContentInsets: UIEdgeInsets = .zero
-    private var cardsAddedToParentView: Bool = false
+    private var currentCardPosition: Int?
     
+    private weak var cardsParentView: UIView?
     private weak var delegate: ToolPageCardsViewDelegate?
     
     required init(viewModel: ToolPageCardsViewModelType, safeArea: UIEdgeInsets) {
@@ -47,8 +49,35 @@ class ToolPageCardsView: MobileContentView {
     
     private func setupBinding() {
         
-        viewModel.currentCard.addObserver(self) { [weak self] (cardPositionAnimatable: AnimatableValue<Int?>) in
-            self?.setCardsState(cardsState: .showingCard(showingCardAtPosition: cardPositionAnimatable.value), animated: cardPositionAnimatable.animated)
+    }
+    
+    private func addCardJumpObserving() {
+        
+        viewModel.hidesCardJump.addObserver(self) { [weak self] (hidesCardJump: Bool) in
+            
+            guard let cardsView = self else {
+                return
+            }
+            
+            let firstCard: ToolPageCardView? = cardsView.cardViews.first
+            let firstCardTopConstraint: NSLayoutConstraint? = cardsView.cardTopConstraints.first
+            let cardsParent: UIView? = cardsView.cardsParentView
+            
+            if hidesCardJump, let cardBounceAnimation = self?.cardBounceAnimation {
+                cardBounceAnimation.stopAnimation(forceStop: true)
+            }
+            else if !hidesCardJump, let firstCard = firstCard, let firstCardTopConstraint = firstCardTopConstraint, let cardsParent = cardsParent {
+                
+                let cardBounceAnimation = ToolPageCardBounceAnimation(
+                    card: firstCard,
+                    cardTopConstraint: firstCardTopConstraint,
+                    cardStartingTopConstant: cardsView.getCardTopConstant(state: .starting(cardPosition: 0)),
+                    layoutView: cardsParent,
+                    delegate: cardsView
+                )
+                cardBounceAnimation.startAnimation()
+                self?.cardBounceAnimation = cardBounceAnimation
+            }
         }
     }
     
@@ -67,8 +96,97 @@ class ToolPageCardsView: MobileContentView {
     func setDelegate(delegate: ToolPageCardsViewDelegate) {
         self.delegate = delegate
     }
+}
+
+// MARK: - ToolPageCardBounceAnimationDelegate
+
+extension ToolPageCardsView: ToolPageCardBounceAnimationDelegate {
+    func toolPageCardBounceAnimationDidFinish(cardBounceAnimation: ToolPageCardBounceAnimation, forceStopped: Bool) {
+        viewModel.cardBounceAnimationFinished()
+    }
+}
+
+// MARK: - ToolPageCardViewDelegate
+
+extension ToolPageCardsView: ToolPageCardViewDelegate {
     
-    // MARK: - Cards
+    func toolPageCardHeaderTapped(cardView: ToolPageCardView) {
+        
+        guard let cardPosition = getCardPosition(cardView: cardView) else {
+            return
+        }
+        
+        viewModel.cardHeaderTapped()
+        
+        if cardPosition != currentCardPosition {
+            setCardsState(cardsState: .showingCard(showingCardAtPosition: cardPosition), animated: true)
+        }
+        else {
+            setCardsState(cardsState: .collapseAllCards, animated: true)
+        }
+    }
+    
+    func toolPageCardPreviousTapped(cardView: ToolPageCardView) {
+        
+        gotoPreviousCard(animated: true)
+    }
+    
+    func toolPageCardNextTapped(cardView: ToolPageCardView) {
+        
+        gotoNextCard(animated: true)
+    }
+    
+    func toolPageCardDidSwipeCardUp(cardView: ToolPageCardView) {
+        
+        viewModel.cardSwipedUp()
+        
+        gotoNextCard(animated: true)
+    }
+    
+    func toolPageCardDidSwipeCardDown(cardView: ToolPageCardView) {
+        
+        gotoPreviousCard(animated: true)
+    }
+    
+    private func gotoPreviousCard(animated: Bool) {
+        
+        guard let cardPosition = currentCardPosition else {
+            return
+        }
+        
+        let previousCard: Int = cardPosition - 1
+        
+        if previousCard >= 0 {
+            setCardsState(cardsState: .showingCard(showingCardAtPosition: previousCard), animated: animated)
+        }
+        else {
+            setCardsState(cardsState: .showingCard(showingCardAtPosition: nil), animated: animated)
+        }
+    }
+    
+    private func gotoNextCard(animated: Bool) {
+        
+        guard let cardPosition = currentCardPosition else {
+            return
+        }
+        
+        let nextCard: Int = cardPosition + 1
+        
+        guard nextCard < numberOfVisibleCards else {
+            return
+        }
+        
+        setCardsState(cardsState: .showingCard(showingCardAtPosition: nextCard), animated: animated)
+    }
+}
+
+// MARK: - Cards
+
+extension ToolPageCardsView {
+       
+    private func getCardPosition(cardView: ToolPageCardView) -> Int? {
+        return cardViews.firstIndex(of: cardView)
+    }
     
     private func removeAllCardsFromParentView() {
         
@@ -76,20 +194,20 @@ class ToolPageCardsView: MobileContentView {
         
         for cardView in cardViews {
             cardView.removeFromSuperview()
+            cardView.setDelegate(delegate: nil)
         }
-        
-        cardsAddedToParentView = false
     }
     
     func addCardsToView(parentView: UIView, cardParentContentInsets: UIEdgeInsets) {
         
         self.cardParentContentInsets = cardParentContentInsets
         
-        if cardsAddedToParentView {
+        if cardsParentView != nil {
             removeAllCardsFromParentView()
+            cardsParentView = nil
         }
         
-        cardsAddedToParentView = true
+        cardsParentView = parentView
         
         for cardView in cardViews {
             
@@ -144,9 +262,13 @@ class ToolPageCardsView: MobileContentView {
             cardView.addConstraint(heightConstraint)
             
             cardTopConstraints.append(top)
+            
+            cardView.setDelegate(delegate: self)
         }
         
         setCardsState(cardsState: .starting, animated: false)
+        
+        addCardJumpObserving()
     }
     
     private var numberOfCards: Int {
@@ -177,18 +299,8 @@ class ToolPageCardsView: MobileContentView {
         return safeArea.bottom + maxBottomSpace + cardInsets.bottom
     }
     
-    private var cardsContainerFrameRelativeToScreen: CGRect {
-        let screenSize: CGSize = UIScreen.main.bounds.size
-        let height: CGFloat = screenSize.height - safeArea.top - safeArea.bottom
-        return CGRect(x: 0, y: safeArea.top, width: screenSize.width, height: height)
-    }
-    
     private var cardCollapsedVisibilityPercentage: CGFloat {
         return 0.4
-    }
-    
-    private var cardsTopRelativeToCardsContainerFrameBottom: CGFloat {
-        return cardsContainerFrameRelativeToScreen.origin.y + cardsContainerFrameRelativeToScreen.size.height
     }
 
     private func getCardHeight() -> CGFloat {
@@ -203,7 +315,7 @@ class ToolPageCardsView: MobileContentView {
         switch state {
             
         case .starting(let cardPosition):
-            return cardsContainerFrameRelativeToScreen.size.height - (cardHeaderHeight * (numberOfVisibleCardsFloatValue - CGFloat(cardPosition)))
+            return UIScreen.main.bounds.size.height - safeArea.bottom - (cardHeaderHeight * (numberOfVisibleCardsFloatValue - CGFloat(cardPosition)))
         
         case .showing:
             return showCardTopInset
@@ -213,7 +325,7 @@ class ToolPageCardsView: MobileContentView {
             
         case .collapsed(let cardPosition):
             let cardTopVisibilityHeight: CGFloat = floor(cardHeaderHeight * cardCollapsedVisibilityPercentage)
-            return cardsTopRelativeToCardsContainerFrameBottom - (cardTopVisibilityHeight * (numberOfVisibleCardsFloatValue - CGFloat(cardPosition)))
+            return UIScreen.main.bounds.size.height - safeArea.bottom - (cardTopVisibilityHeight * (numberOfVisibleCardsFloatValue - CGFloat(cardPosition)))
         
         case .hidden:
             return UIScreen.main.bounds.size.height
@@ -225,7 +337,9 @@ class ToolPageCardsView: MobileContentView {
         switch cardsState {
             
         case .starting:
-                        
+                 
+            currentCardPosition = nil
+            
             var visibleCardPosition: Int = 0
             
             for cardPosition in 0 ..< cardViews.count {
@@ -253,6 +367,8 @@ class ToolPageCardsView: MobileContentView {
                 setCardsState(cardsState: .collapseAllCards, animated: animated)
                 return
             }
+            
+            currentCardPosition = showingCardAtPosition
                         
             var visibleCardPosition: Int = 0
             
@@ -281,6 +397,8 @@ class ToolPageCardsView: MobileContentView {
             
         case .showingKeyboard(let showingCardAtPosition):
             
+            currentCardPosition = showingCardAtPosition
+            
             for cardPosition in 0 ..< numberOfCards {
                 
                 let cardTopConstraint: NSLayoutConstraint = cardTopConstraints[cardPosition]
@@ -291,6 +409,8 @@ class ToolPageCardsView: MobileContentView {
             }
                         
         case .collapseAllCards:
+            
+            currentCardPosition = nil
             
             var visibleCardPosition: Int = 0
             
@@ -309,29 +429,30 @@ class ToolPageCardsView: MobileContentView {
             }
             
         case .initialized:
-            break
+            
+            currentCardPosition = nil
         }
-        
-        delegate?.cardsViewDidChangeCardState(
-            cardsView: self,
-            cardsState: cardsState,
-            animated: animated
-        )
         
         if animated {
             
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
-                self.layoutIfNeeded()
+                self.cardsParentView?.layoutIfNeeded()
             }, completion: { (finished: Bool) in
                 self.handleCompletedSetCardState(cardsState: cardsState, animated: animated)
             })
         }
         else {
-            layoutIfNeeded()
+            cardsParentView?.layoutIfNeeded()
             handleCompletedSetCardState(cardsState: cardsState, animated: animated)
         }
         
         currentCardState = cardsState
+        
+        delegate?.toolPageCardsViewDidChangeCardState(
+            cardsView: self,
+            cardsState: cardsState,
+            animated: animated
+        )
     }
     
     private func handleCompletedSetCardState(cardsState: ToolPageCardsState, animated: Bool) {

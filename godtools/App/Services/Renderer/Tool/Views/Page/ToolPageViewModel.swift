@@ -85,7 +85,6 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
     let currentCard: ObservableValue<AnimatableValue<Int?>> = ObservableValue(value: AnimatableValue(value: nil, animated: false))
     let modal: ObservableValue<ToolPageModalViewModel?> = ObservableValue(value: nil)
     let hidesHeaderTrainingTip: ObservableValue<Bool> = ObservableValue(value: true)
-    let hidesCardJump: ObservableValue<Bool> = ObservableValue(value: true)
     
     required init(pageNode: PageNode, diContainer: ToolPageDiContainer, page: Int, initialPositions: ToolPageInitialPositions?) {
                 
@@ -343,10 +342,6 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         if let cardPosition = cardPosition {
             trackCardAnalytics(cardPosition: cardPosition)
         }
-    }
-    
-    func cardBounceAnimationFinished() {
-        diContainer.cardJumpService.saveDidShowCardJump()
     }
     
     private func trackCardAnalytics(cardPosition: Int) {

@@ -88,7 +88,9 @@ class MobileContentPagesView: UIViewController {
     }
     
     func setupLayout() {
-                
+               
+        navigationController?.navigationBar.isTranslucent = true
+        
         // pageNavigationView
         pageNavigationView.pageBackgroundColor = .clear
         pageNavigationView.registerPageCell(
@@ -106,7 +108,7 @@ class MobileContentPagesView: UIViewController {
     }
     
     func setupBinding() {
-                                
+        
     }
 }
 

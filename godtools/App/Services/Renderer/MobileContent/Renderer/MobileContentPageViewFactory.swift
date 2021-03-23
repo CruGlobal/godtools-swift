@@ -148,17 +148,14 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let tabsNode = renderableNode as? ContentTabsNode {
 
-            /*
             let viewModel = MobileContentTabsViewModel(
                 tabsNode: tabsNode,
-                diContainer: diContainer,
-                toolPageColors: toolPageColors,
-                defaultTextNodeTextColor: defaultTextNodeTextColor
+                pageModel: pageModel
             )
             
             let view = MobileContentTabsView(viewModel: viewModel)
-                                    
-            return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)*/
+            
+            return view
         }
         else if let inputNode = renderableNode as? ContentInputNode {
             

@@ -43,11 +43,6 @@ protocol ToolPageCardViewModelType: NSObject {
     
     func setDelegate(delegate: ToolPageCardViewModelTypeDelegate)
     func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel
-    func headerTapped()
-    func previousTapped()
-    func nextTapped()
-    func didSwipeCardUp()
-    func didSwipeCardDown()
     func cardWillAppear()
     func cardWillDisappear()
 }
