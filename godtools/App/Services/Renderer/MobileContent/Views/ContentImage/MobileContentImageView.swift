@@ -91,7 +91,15 @@ class MobileContentImageView: MobileContentView {
     }
     
     @objc func handleImageTapped() {
-        viewModel.imageTapped()
+        
+        let events: [String] = viewModel.imageEvents
+        
+        var nextParent: MobileContentView? = parent
+        
+        while nextParent != nil {
+            nextParent?.imageTapped(events: events)
+            nextParent = nextParent?.parent
+        }
     }
     
     // MARK: - MobileContentView

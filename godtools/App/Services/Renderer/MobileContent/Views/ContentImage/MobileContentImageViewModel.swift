@@ -48,11 +48,7 @@ class MobileContentImageViewModel: MobileContentImageViewModelType {
         }
     }
     
-    func imageTapped() {
-        
-        for event in imageNode.events {
-            // TODO: Process image event. ~Levi
-            //mobileContentEvents.eventImageTapped(eventImage: ImageEvent(event: event))
-        }
+    var imageEvents: [String] {
+        return imageNode.events
     }
 }

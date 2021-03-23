@@ -146,6 +146,18 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)*/
         }
+        else if let tabNode = renderableNode as? ContentTabNode {
+            
+            let viewModel = MobileContentTabViewModel(
+                tabNode: tabNode,
+                pageModel: pageModel,
+                mobileContentAnalytics: mobileContentAnalytics
+            )
+            
+            let view = MobileContentTabView(viewModel: viewModel)
+            
+            return view
+        }
         else if let tabsNode = renderableNode as? ContentTabsNode {
 
             let viewModel = MobileContentTabsViewModel(

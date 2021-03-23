@@ -10,7 +10,7 @@ import UIKit
 
 class MobileContentView: UIView, MobileContentStackChildViewType {
     
-    private weak var parent: MobileContentView?
+    private(set) weak var parent: MobileContentView?
     
     private(set) var children: [MobileContentView] = Array()
     
@@ -30,6 +30,10 @@ class MobileContentView: UIView, MobileContentStackChildViewType {
     }
     
     func viewDidDisappear() {
+        
+    }
+    
+    func imageTapped(events: [String]) {
         
     }
     

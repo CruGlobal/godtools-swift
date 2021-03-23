@@ -116,7 +116,6 @@
 		455FF6D12603DC690028B95B /* MobileContentEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455FF6642603DC690028B95B /* MobileContentEvents.swift */; };
 		455FF6D22603DC690028B95B /* UrlButtonEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455FF6662603DC690028B95B /* UrlButtonEvent.swift */; };
 		455FF6D32603DC690028B95B /* ButtonEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455FF6672603DC690028B95B /* ButtonEvent.swift */; };
-		455FF6D42603DC690028B95B /* ImageEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455FF6682603DC690028B95B /* ImageEvent.swift */; };
 		455FF6D52603DC690028B95B /* FollowUpButtonEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455FF6692603DC690028B95B /* FollowUpButtonEvent.swift */; };
 		455FF6D62603DC690028B95B /* ContentEventError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455FF66A2603DC690028B95B /* ContentEventError.swift */; };
 		455FF6D72603DC690028B95B /* TrainingTipEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455FF66B2603DC690028B95B /* TrainingTipEvent.swift */; };
@@ -962,7 +961,6 @@
 		455FF6642603DC690028B95B /* MobileContentEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentEvents.swift; sourceTree = "<group>"; };
 		455FF6662603DC690028B95B /* UrlButtonEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlButtonEvent.swift; sourceTree = "<group>"; };
 		455FF6672603DC690028B95B /* ButtonEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonEvent.swift; sourceTree = "<group>"; };
-		455FF6682603DC690028B95B /* ImageEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageEvent.swift; sourceTree = "<group>"; };
 		455FF6692603DC690028B95B /* FollowUpButtonEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowUpButtonEvent.swift; sourceTree = "<group>"; };
 		455FF66A2603DC690028B95B /* ContentEventError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentEventError.swift; sourceTree = "<group>"; };
 		455FF66B2603DC690028B95B /* TrainingTipEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrainingTipEvent.swift; sourceTree = "<group>"; };
@@ -2096,7 +2094,6 @@
 				455FF6672603DC690028B95B /* ButtonEvent.swift */,
 				455FF66A2603DC690028B95B /* ContentEventError.swift */,
 				455FF6692603DC690028B95B /* FollowUpButtonEvent.swift */,
-				455FF6682603DC690028B95B /* ImageEvent.swift */,
 				455FF66B2603DC690028B95B /* TrainingTipEvent.swift */,
 				455FF6662603DC690028B95B /* UrlButtonEvent.swift */,
 			);
@@ -5455,7 +5452,6 @@
 				D19D00E725AF4B97007C535B /* AppsFlyerType.swift in Sources */,
 				45AD1B0B25938A4E00A096A0 /* ArticleWebViewModelType.swift in Sources */,
 				455FF6B12603DC690028B95B /* ModalNode.swift in Sources */,
-				455FF6D42603DC690028B95B /* ImageEvent.swift in Sources */,
 				45AD1BDA25938A4F00A096A0 /* AlertMessageViewModelType.swift in Sources */,
 				45AD1FB925938A9800A096A0 /* TractRemoteShareURLBuilder.swift in Sources */,
 				45AD1B0125938A4E00A096A0 /* ArticleCategoriesView.swift in Sources */,
