@@ -40,20 +40,13 @@ class ArticleDeepLinkFlow: Flow {
     }
     
     private func downloadFailed() {
-        
+        // TODO: add download failure logic ~Robert
+
     }
     
     private func handleDownloadResult(result: ArticleAemModel) {
         
         navigateToArticleWebView(articleAemData: result)
-        /*switch result {
-        case .success(let articleAemData):
-            navigateToArticleWebView(articleAemData: articleAemData)
-            
-        case .failure( _):
-            downloadFailed()
-            
-        }*/
     }
     
     private func navigateToArticleWebView(articleAemData: ArticleAemModel) {
