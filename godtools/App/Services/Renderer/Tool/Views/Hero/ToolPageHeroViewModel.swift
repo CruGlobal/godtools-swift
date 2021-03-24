@@ -10,12 +10,14 @@ import UIKit
 
 class ToolPageHeroViewModel: ToolPageHeroViewModelType {
     
+    private let pageModel: MobileContentRendererPageModel
     private let heroNode: HeroNode
     private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
-            
+    
     required init(heroNode: HeroNode, pageModel: MobileContentRendererPageModel, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.heroNode = heroNode
+        self.pageModel = pageModel
         
         if let analyticsEventsNode = heroNode.analyticsEventsNode {
             analyticsEventsObjects = MobileContentAnalyticsEvent.initEvents(eventsNode: analyticsEventsNode, mobileContentAnalytics: mobileContentAnalytics)
@@ -41,6 +43,10 @@ class ToolPageHeroViewModel: ToolPageHeroViewModelType {
 // MARK: - MobileContentViewModelType
 
 extension ToolPageHeroViewModel: MobileContentViewModelType {
+    
+    var language: LanguageModel {
+        return pageModel.language
+    }
     
     var analyticsEvents: [MobileContentAnalyticsEvent] {
         return analyticsEventsObjects

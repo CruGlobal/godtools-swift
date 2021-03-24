@@ -10,9 +10,9 @@ import UIKit
 
 class ToolPageCardViewModel: ToolPageCardViewModelType {
     
+    private let pageModel: MobileContentRendererPageModel
     private let cardNode: CardNode
     private let cardsNode: CardsNode
-    private let pageModel: MobileContentRendererPageModel
     private let toolPageColors: ToolPageColors
     private let analytics: AnalyticsContainer
     private let fontService: FontService
@@ -21,7 +21,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
     private let cardPosition: Int
     private let numberOfCards: Int
-        
+     
     let hidesHeaderTrainingTip: ObservableValue<Bool> = ObservableValue(value: true)
     let hidesCardPositionLabel: Bool
     let hidesPreviousButton: Bool
@@ -192,6 +192,10 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
 // MARK: - MobileContentViewModelType
 
 extension ToolPageCardViewModel: MobileContentViewModelType {
+    
+    var language: LanguageModel {
+        return pageModel.language
+    }
     
     var analyticsEvents: [MobileContentAnalyticsEvent] {
         return analyticsEventsObjects
