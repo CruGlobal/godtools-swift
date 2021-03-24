@@ -99,6 +99,22 @@ class ToolPageView: MobileContentPageView {
         }
     }
     
+    override func getPagePositions() -> MobileContentPagePositionsType {
+        
+        return ToolPagePositions(
+            cardPosition: cardsView?.getCurrentCardPosition()
+        )
+    }
+    
+    override func setPagePositions(pagePositions: MobileContentPagePositionsType) {
+        
+        guard let toolPagePositions = pagePositions as? ToolPagePositions else {
+            return
+        }
+        
+        cardsView?.setCardsState(cardsState: .showingCard(showingCardAtPosition: toolPagePositions.cardPosition), animated: false)
+    }
+    
     // MARK: - MobileContentView
 
     override func renderChild(childView: MobileContentView) {
@@ -130,6 +146,12 @@ class ToolPageView: MobileContentPageView {
         addBottomView()
         
         updateHeroPosition()
+    }
+    
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        
+        viewModel.pageDidAppear()
     }
     
     // MARK: -

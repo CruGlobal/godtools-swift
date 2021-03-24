@@ -627,14 +627,17 @@ class ToolsFlow: Flow {
             renderers: renderers,
             resource: resource,
             primaryLanguage: primaryLanguage,
-            page: page,
             toolPageEvents: toolPageEvents,
             tractRemoteSharePublisher: appDiContainer.tractRemoteSharePublisher,
             tractRemoteShareSubscriber: appDiContainer.tractRemoteShareSubscriber,
             localizationServices: localizationServices,
             fontService: fontService,
+            viewsService: appDiContainer.viewsService,
             analytics: analytics,
-            trainingTipsEnabled: trainingTipsEnabled
+            toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics,
+            liveShareStream: liveShareStream,
+            trainingTipsEnabled: trainingTipsEnabled,
+            page: page
         )
         
         let view = ToolView(viewModel: viewModel)

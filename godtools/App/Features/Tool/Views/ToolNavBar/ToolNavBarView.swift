@@ -12,7 +12,7 @@ protocol ToolNavBarViewDelegate: class {
     
     func navBarHomeTapped(navBar: ToolNavBarView, remoteShareIsActive: Bool)
     func navBarShareTapped(navBar: ToolNavBarView, selectedLanguage: LanguageModel)
-    func navBarLanguageTapped(navBar: ToolNavBarView, previousLanguage: Int, newLanguage: Int)
+    func navBarLanguageChanged(navBar: ToolNavBarView)
 }
 
 class ToolNavBarView: NSObject {
@@ -167,13 +167,10 @@ class ToolNavBarView: NSObject {
         guard let viewModel = self.viewModel else {
             return
         }
-        
+           
         viewModel.languageTapped(index: segmentedControl.selectedSegmentIndex)
         
-        let previousLanguage: Int = viewModel.selectedLanguage.value
-        let newLanguage: Int = segmentedControl.selectedSegmentIndex
-        
-        delegate?.navBarLanguageTapped(navBar: self, previousLanguage: previousLanguage, newLanguage: newLanguage)
+        delegate?.navBarLanguageChanged(navBar: self)
     }
     
     private func setRemoteShareActiveNavItem(hidden: Bool) {

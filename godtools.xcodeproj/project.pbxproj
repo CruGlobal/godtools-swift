@@ -155,7 +155,6 @@
 		455FF6F92603DC6A0028B95B /* MobileContentAnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455FF6992603DC690028B95B /* MobileContentAnalyticsEvent.swift */; };
 		455FF6FA2603DC6A0028B95B /* MobileContentAnalyticsSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455FF69A2603DC690028B95B /* MobileContentAnalyticsSystem.swift */; };
 		455FF6FB2603DC6A0028B95B /* MobileContentAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455FF69B2603DC690028B95B /* MobileContentAnalytics.swift */; };
-		455FF73F2603DDD30028B95B /* ToolPageInitialPositions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455FF7092603DDD30028B95B /* ToolPageInitialPositions.swift */; };
 		455FF7412603DDD30028B95B /* ToolPageContentStackRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455FF70D2603DDD30028B95B /* ToolPageContentStackRenderer.swift */; };
 		455FF7432603DDD30028B95B /* ToolPageColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455FF7102603DDD30028B95B /* ToolPageColors.swift */; };
 		455FF74A2603DDD30028B95B /* ToolPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455FF71B2603DDD30028B95B /* ToolPageView.swift */; };
@@ -787,6 +786,9 @@
 		45FA43A3260983870056FD49 /* MobileContentTabViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FA43A2260983870056FD49 /* MobileContentTabViewModelType.swift */; };
 		45FA696C24251CA00006878C /* TutorialLanguageAvailabilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FA696B24251CA00006878C /* TutorialLanguageAvailabilityTests.swift */; };
 		45FA696F24251D360006878C /* MockSupportedLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FA6960242517590006878C /* MockSupportedLanguages.swift */; };
+		45FF259C260BB95F00D771B6 /* MobileContentPagePositionsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FF259B260BB95F00D771B6 /* MobileContentPagePositionsType.swift */; };
+		45FF25A2260BB9DB00D771B6 /* MobileContentPagePositions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FF25A1260BB9DB00D771B6 /* MobileContentPagePositions.swift */; };
+		45FF25AD260BBB9800D771B6 /* ToolPagePositions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FF25AC260BBB9800D771B6 /* ToolPagePositions.swift */; };
 		4F0CCC1F1EE73E9D00AE4E45 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 4F0CCC1E1EE73E9D00AE4E45 /* Podfile */; };
 		4F2500621F0C1E8D00364FBC /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F2500611F0C1E8D00364FBC /* AdSupport.framework */; };
 		4F5732971EA69CF00082035C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F5732961EA69CF00082035C /* Assets.xcassets */; };
@@ -993,7 +995,6 @@
 		455FF6992603DC690028B95B /* MobileContentAnalyticsEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentAnalyticsEvent.swift; sourceTree = "<group>"; };
 		455FF69A2603DC690028B95B /* MobileContentAnalyticsSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentAnalyticsSystem.swift; sourceTree = "<group>"; };
 		455FF69B2603DC690028B95B /* MobileContentAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentAnalytics.swift; sourceTree = "<group>"; };
-		455FF7092603DDD30028B95B /* ToolPageInitialPositions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageInitialPositions.swift; sourceTree = "<group>"; };
 		455FF70D2603DDD30028B95B /* ToolPageContentStackRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageContentStackRenderer.swift; sourceTree = "<group>"; };
 		455FF7102603DDD30028B95B /* ToolPageColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageColors.swift; sourceTree = "<group>"; };
 		455FF71B2603DDD30028B95B /* ToolPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageView.swift; sourceTree = "<group>"; };
@@ -1612,6 +1613,9 @@
 		45FA43A2260983870056FD49 /* MobileContentTabViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentTabViewModelType.swift; sourceTree = "<group>"; };
 		45FA6960242517590006878C /* MockSupportedLanguages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSupportedLanguages.swift; sourceTree = "<group>"; };
 		45FA696B24251CA00006878C /* TutorialLanguageAvailabilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialLanguageAvailabilityTests.swift; sourceTree = "<group>"; };
+		45FF259B260BB95F00D771B6 /* MobileContentPagePositionsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentPagePositionsType.swift; sourceTree = "<group>"; };
+		45FF25A1260BB9DB00D771B6 /* MobileContentPagePositions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentPagePositions.swift; sourceTree = "<group>"; };
+		45FF25AC260BBB9800D771B6 /* ToolPagePositions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolPagePositions.swift; sourceTree = "<group>"; };
 		4F0CCC1E1EE73E9D00AE4E45 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		4F12296C20852BE3008842CC /* godtoolsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = godtoolsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F12297020852BE3008842CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -2264,14 +2268,6 @@
 			path = Analytics;
 			sourceTree = "<group>";
 		};
-		455FF7082603DDD30028B95B /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				455FF7092603DDD30028B95B /* ToolPageInitialPositions.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		455FF70C2603DDD30028B95B /* Renderer */ = {
 			isa = PBXGroup;
 			children = (
@@ -2306,6 +2302,7 @@
 				455FF71E2603DDD30028B95B /* ToolPageView.xib */,
 				455FF71D2603DDD30028B95B /* ToolPageViewModel.swift */,
 				455FF71C2603DDD30028B95B /* ToolPageViewModelType.swift */,
+				45FF25AB260BBB9000D771B6 /* Models */,
 			);
 			path = Page;
 			sourceTree = "<group>";
@@ -2433,7 +2430,6 @@
 		459C56CB25FF954F00F15967 /* Tool */ = {
 			isa = PBXGroup;
 			children = (
-				455FF7082603DDD30028B95B /* Models */,
 				455FF70C2603DDD30028B95B /* Renderer */,
 				455FF7122603DDD30028B95B /* Views */,
 			);
@@ -4301,6 +4297,7 @@
 			isa = PBXGroup;
 			children = (
 				45E8B3A2260B658A00B171CB /* MobileContentPageView.swift */,
+				45FF259A260BB95400D771B6 /* Models */,
 			);
 			path = Page;
 			sourceTree = "<group>";
@@ -4330,6 +4327,23 @@
 				45FA43A2260983870056FD49 /* MobileContentTabViewModelType.swift */,
 			);
 			path = ContentTab;
+			sourceTree = "<group>";
+		};
+		45FF259A260BB95400D771B6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				45FF25A1260BB9DB00D771B6 /* MobileContentPagePositions.swift */,
+				45FF259B260BB95F00D771B6 /* MobileContentPagePositionsType.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		45FF25AB260BBB9000D771B6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				45FF25AC260BBB9800D771B6 /* ToolPagePositions.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		4F12296D20852BE3008842CC /* godtoolsUITests */ = {
@@ -5019,7 +5033,6 @@
 				45AD1F5E25938A9800A096A0 /* StarscreamWebSocket.swift in Sources */,
 				45AD205325938AC300A096A0 /* AdobeAnalyticsType.swift in Sources */,
 				455FF6AB2603DC690028B95B /* CardsNode.swift in Sources */,
-				455FF73F2603DDD30028B95B /* ToolPageInitialPositions.swift in Sources */,
 				455FF6F42603DC6A0028B95B /* MobileContentBackgroundImageRenderer.swift in Sources */,
 				45AD1FED25938A9800A096A0 /* OpenTutorialCalloutUserDefaultsCache.swift in Sources */,
 				45AD1B7325938A4F00A096A0 /* OnboardingTutorialProvider.swift in Sources */,
@@ -5038,6 +5051,7 @@
 				45AD1FE125938A9800A096A0 /* EmailSignUpModelType.swift in Sources */,
 				45AD201D25938A9800A096A0 /* ResponseResult.swift in Sources */,
 				45AD1ABB25938A4E00A096A0 /* FavoritedToolsViewModel.swift in Sources */,
+				45FF25AD260BBB9800D771B6 /* ToolPagePositions.swift in Sources */,
 				45AD1FAE25938A9800A096A0 /* ArticleAemImportDownloaderResult.swift in Sources */,
 				45AD1B7225938A4F00A096A0 /* MainOnboardingTutorialItem.swift in Sources */,
 				455FF74B2603DDD30028B95B /* ToolPageViewModelType.swift in Sources */,
@@ -5567,6 +5581,7 @@
 				4555C35A26063E3A007E61BE /* MobileContentPagesView.swift in Sources */,
 				455FF6C32603DC690028B95B /* ContentButtonNode.swift in Sources */,
 				45AD21632593A62800A096A0 /* AppDiContainer.swift in Sources */,
+				45FF259C260BB95F00D771B6 /* MobileContentPagePositionsType.swift in Sources */,
 				455FF6D12603DC690028B95B /* MobileContentEvents.swift in Sources */,
 				45AD1F2B25938A9800A096A0 /* MobileContentXmlManifest.swift in Sources */,
 				455FF6EF2603DC6A0028B95B /* MobileContentInputView.swift in Sources */,
@@ -5623,6 +5638,7 @@
 				455FF6F32603DC6A0028B95B /* MobileContentBackgroundImageView.swift in Sources */,
 				45AD1B7E25938A4F00A096A0 /* OnboardingTutorialUsageListCell.swift in Sources */,
 				455FF6B22603DC690028B95B /* ContentSpacerNode.swift in Sources */,
+				45FF25A2260BB9DB00D771B6 /* MobileContentPagePositions.swift in Sources */,
 				45AD1B0A25938A4E00A096A0 /* ShareArticleView.swift in Sources */,
 				45AD21422593A49900A096A0 /* ShareToolRemoteSessionURLViewModelType.swift in Sources */,
 				45AD1B6825938A4F00A096A0 /* AccountItemViewType.swift in Sources */,

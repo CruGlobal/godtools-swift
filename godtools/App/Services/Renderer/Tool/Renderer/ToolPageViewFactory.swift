@@ -160,7 +160,8 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             let viewModel = ToolPageViewModel(
                 pageNode: pageNode,
                 pageModel: pageModel,
-                toolPageColors: ToolPageColors(pageNode: pageNode, manifest: pageModel.manifest)
+                toolPageColors: ToolPageColors(pageNode: pageNode, manifest: pageModel.manifest),
+                analytics: analytics
             )
             
             let view = ToolPageView(

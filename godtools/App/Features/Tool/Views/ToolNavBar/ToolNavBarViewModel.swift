@@ -11,13 +11,13 @@ import UIKit
 class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
     
     private let resource: ResourceModel
-    private let languages: [LanguageModel]
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
     private let tractRemoteShareSubscriber: TractRemoteShareSubscriber
     private let localizationServices: LocalizationServices
     private let fontService: FontService
     private let analytics: AnalyticsContainer
     
+    let languages: [LanguageModel]
     let navBarColor: UIColor
     let navBarControlColor: UIColor
     let hidesChooseLanguageControl: Bool

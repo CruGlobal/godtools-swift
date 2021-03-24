@@ -62,7 +62,7 @@ extension ToolView: ToolNavBarViewDelegate {
         viewModel.navShareTapped(selectedLanguage: selectedLanguage)
     }
     
-    func navBarLanguageTapped(navBar: ToolNavBarView, previousLanguage: Int, newLanguage: Int) {
-        viewModel.navLanguageTapped(previousLanguage: previousLanguage, newLanguage: newLanguage)
+    func navBarLanguageChanged(navBar: ToolNavBarView) {
+        viewModel.navLanguageChanged()
     }
 }

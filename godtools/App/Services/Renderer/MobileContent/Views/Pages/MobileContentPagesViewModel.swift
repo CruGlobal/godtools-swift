@@ -18,6 +18,7 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     let numberOfPages: ObservableValue<Int> = ObservableValue(value: 0)
     let currentPage: ObservableValue<AnimatableValue<Int>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
     let pageNavigationSemanticContentAttribute: UISemanticContentAttribute
+    let rendererWillChangeSignal: Signal = Signal()
     
     required init(renderers: [MobileContentRenderer], primaryLanguage: LanguageModel, page: Int?) {
         
@@ -31,13 +32,6 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         }
         
         super.init()
-    }
-    
-    private func setRenderer(renderer: MobileContentRenderer) {
-        
-        currentRenderer = renderer
-        
-        numberOfPages.accept(value: renderer.numberOfPages)
     }
     
     private var currentPageValue: Int {
@@ -61,8 +55,21 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         setRenderer(renderer: renderer)
     }
     
+    func getCurrentPageValue() -> Int {
+        return currentPageValue
+    }
+    
     func getPageForListenerEvents(events: [String]) -> Int? {
         return currentRenderer?.getPageForListenerEvents(events: events)
+    }
+    
+    func setRenderer(renderer: MobileContentRenderer) {
+        
+        rendererWillChangeSignal.accept()
+        
+        currentRenderer = renderer
+        
+        numberOfPages.accept(value: renderer.numberOfPages)
     }
     
     func pageWillAppear(page: Int) -> MobileContentView? {

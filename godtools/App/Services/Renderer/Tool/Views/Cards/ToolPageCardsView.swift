@@ -420,7 +420,7 @@ extension ToolPageCardsView {
         }
     }
     
-    private func setCardsState(cardsState: ToolPageCardsState, animated: Bool) {
+    func setCardsState(cardsState: ToolPageCardsState, animated: Bool) {
         
         switch cardsState {
             
@@ -577,5 +577,9 @@ extension ToolPageCardsView {
                 cardView.viewDidAppear()
             }
         }
+    }
+    
+    func getCurrentCardPosition() -> Int? {
+        return currentCardPosition
     }
 }

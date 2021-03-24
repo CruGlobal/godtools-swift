@@ -10,8 +10,11 @@ import UIKit
 
 class MobileContentPagesView: UIViewController {
     
+    typealias PageNumber = Int
+    
     private let viewModel: MobileContentPagesViewModelType
     
+    private var initialPagePositions: [PageNumber: MobileContentPagePositionsType] = Dictionary()
     private var didLayoutSubviews: Bool = false
           
     @IBOutlet weak private var safeAreaView: UIView!
@@ -27,13 +30,11 @@ class MobileContentPagesView: UIViewController {
     }
     
     deinit {
-        print("x deinit: \(type(of: self))")
         UIApplication.shared.isIdleTimerDisabled = false
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("view didload: \(type(of: self))")
         
         setupLayout()
         setupBinding()
@@ -109,6 +110,37 @@ class MobileContentPagesView: UIViewController {
     
     func setupBinding() {
         
+        viewModel.rendererWillChangeSignal.addObserver(self) { [weak self] in
+            
+            guard let pagesView = self else {
+                return
+            }
+            
+            pagesView.initialPagePositions.removeAll()
+            pagesView.initialPagePositions = pagesView.getAllVisiblePagesPositions()
+        }
+    }
+    
+    private func getAllVisiblePagesPositions() -> [PageNumber: MobileContentPagePositionsType] {
+                
+        let collectionView: UICollectionView = pageNavigationView.pagesCollectionView
+        
+        var pagePositions: [PageNumber: MobileContentPagePositionsType] = Dictionary()
+        
+        for cell in collectionView.visibleCells {
+            
+            if let pageCell = cell as? MobileContentPageCell,
+               let pageView = pageCell.mobileContentView as? MobileContentPageView,
+               let indexPath = collectionView.indexPath(for: pageCell) {
+                
+                let page: Int = indexPath.row
+                let currentPagePositions: MobileContentPagePositionsType = pageView.getPagePositions()
+                
+                pagePositions[page] = currentPagePositions
+            }
+        }
+        
+        return pagePositions
     }
 }
 
@@ -127,17 +159,28 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
             cellReuseIdentifier: MobileContentPageCell.reuseIdentifier,
             indexPath: indexPath) as! MobileContentPageCell
         
-        if let mobileContentView = viewModel.pageWillAppear(page: indexPath.row) {
+        let pageNumber: Int = indexPath.row
+        
+        if let mobileContentView = viewModel.pageWillAppear(page: pageNumber) {
             
             if let pageView = mobileContentView as? MobileContentPageView {
+
                 pageView.setDelegate(delegate: self)
+                
+                if let pagePositions = initialPagePositions[pageNumber] {
+                    
+                    pageView.setPagePositions(pagePositions: pagePositions)
+                }
             }
             else {
+                
                 assertionFailure("Provided MobileContentView should inherit from MobileContentPageView")
             }
             
             cell.configure(mobileContentView: mobileContentView)
         }
+        
+        initialPagePositions[pageNumber] = nil
         
         return cell
     }
