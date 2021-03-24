@@ -12,6 +12,7 @@ protocol MobileContentPageViewDelegate: class {
     
     func pageViewDidReceiveEvents(pageView: MobileContentPageView, events: [String])
     func pageViewDidReceiveUrl(pageView: MobileContentPageView, url: String)
+    func pageViewDidReceiveTrainingTipTap(pageView: MobileContentPageView, event: TrainingTipEvent)
     func pageViewDidReceiveError(pageView: MobileContentPageView, error: MobileContentErrorViewModel)
 }
 
@@ -47,8 +48,12 @@ class MobileContentPageView: MobileContentView {
         delegate?.pageViewDidReceiveEvents(pageView: self, events: events)
     }
     
-    override func didReceiveUrl(url: String) {
+    override func didReceiveButtonWithUrlEvent(url: String) {
         delegate?.pageViewDidReceiveUrl(pageView: self, url: url)
+    }
+    
+    override func didReceiveTrainingTipTap(event: TrainingTipEvent) {
+        delegate?.pageViewDidReceiveTrainingTipTap(pageView: self, event: event)
     }
     
     override func didReceiveError(error: MobileContentErrorViewModel) {

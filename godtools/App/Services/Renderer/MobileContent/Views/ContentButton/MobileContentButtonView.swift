@@ -71,7 +71,7 @@ class MobileContentButtonView: MobileContentView {
             super.sendEventsToAllViews(events: viewModel.buttonEvents)
         
         case .url:
-            super.sendUrlToRootView(url: viewModel.buttonUrl)
+            super.sendButtonWithUrlEventToRootView(url: viewModel.buttonUrl)
        
         case .unknown:
             break

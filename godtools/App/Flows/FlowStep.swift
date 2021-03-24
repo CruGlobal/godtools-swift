@@ -48,8 +48,10 @@ enum FlowStep {
         
     // tool
     case homeTappedFromTool(isScreenSharing: Bool)
-    case shareMenuTappedFromTool(tractRemoteShareSubscriber: TractRemoteShareSubscriber, tractRemoteSharePublisher: TractRemoteSharePublisher, resource: ResourceModel, selectedLanguage: LanguageModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, pageNumber: Int)
-    case toolTrainingTipTappedFromTool(resource: ResourceModel, manifest: MobileContentXmlManifest, trainingTipId: String, tipNode: TipNode, language: LanguageModel, primaryLanguage: LanguageModel, toolPage: Int)
+    case shareMenuTappedFromTool(tractRemoteShareSubscriber: TractRemoteShareSubscriber, tractRemoteSharePublisher: TractRemoteSharePublisher, resource: ResourceModel, selectedLanguage: LanguageModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, pageNumber: Int)    
+    case buttonWithUrlTappedFromMobileContentRenderer(url: String)
+    case trainingTipTappedFromMobileContentRenderer(event: TrainingTipEvent)
+    case errorOccurredFromMobileContentRenderer(error: MobileContentErrorViewModel)
     
     // tool training
     case closeTappedFromToolTraining

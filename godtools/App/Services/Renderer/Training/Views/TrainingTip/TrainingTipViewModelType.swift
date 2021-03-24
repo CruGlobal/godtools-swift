@@ -14,5 +14,5 @@ protocol TrainingTipViewModelType {
     var trainingTipForegroundImage: ObservableValue<UIImage?> { get }
     
     func setViewType(viewType: TrainingTipViewType)
-    func tipTapped()
+    func tipTapped() -> TrainingTipEvent?
 }

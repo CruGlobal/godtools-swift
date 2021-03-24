@@ -13,6 +13,7 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     private var currentRenderer: MobileContentRenderer?
     private var safeArea: UIEdgeInsets?
     private weak var window: UIViewController?
+    private weak var flowDelegate: FlowDelegate?
     
     let renderers: [MobileContentRenderer]
     let numberOfPages: ObservableValue<Int> = ObservableValue(value: 0)
@@ -20,8 +21,9 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     let pageNavigationSemanticContentAttribute: UISemanticContentAttribute
     let rendererWillChangeSignal: Signal = Signal()
     
-    required init(renderers: [MobileContentRenderer], primaryLanguage: LanguageModel, page: Int?) {
+    required init(flowDelegate: FlowDelegate, renderers: [MobileContentRenderer], primaryLanguage: LanguageModel, page: Int?) {
         
+        self.flowDelegate = flowDelegate
         self.renderers = renderers
         
         switch primaryLanguage.languageDirection {
@@ -104,6 +106,18 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     func pageDidAppear(page: Int) {
         
         self.currentPageValue = page
+    }
+    
+    func buttonWithUrlTapped(url: String) {
+        flowDelegate?.navigate(step: .buttonWithUrlTappedFromMobileContentRenderer(url: url))
+    }
+    
+    func trainingTipTapped(event: TrainingTipEvent) {
+        flowDelegate?.navigate(step: .trainingTipTappedFromMobileContentRenderer(event: event))
+    }
+    
+    func errorOccurred(error: MobileContentErrorViewModel) {
+        flowDelegate?.navigate(step: .errorOccurredFromMobileContentRenderer(error: error))
     }
     
     // MARK: -

@@ -87,11 +87,21 @@ class MobileContentView: UIView, MobileContentStackChildViewType {
     
     // MARK: - Url Events
     
-    func sendUrlToRootView(url: String) {
-        getRootView().didReceiveUrl(url: url)
+    func sendButtonWithUrlEventToRootView(url: String) {
+        getRootView().didReceiveButtonWithUrlEvent(url: url)
     }
     
-    func didReceiveUrl(url: String) {
+    func didReceiveButtonWithUrlEvent(url: String) {
+        
+    }
+    
+    // MARK: - Training Tips
+    
+    func sendTrainingTipTappedToRootView(event: TrainingTipEvent) {
+        getRootView().didReceiveTrainingTipTap(event: event)
+    }
+    
+    func didReceiveTrainingTipTap(event: TrainingTipEvent) {
         
     }
     

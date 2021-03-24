@@ -155,20 +155,14 @@ class TrainingTipViewModel: TrainingTipViewModelType {
         )
     }
     
-    func tipTapped() {
+    func tipTapped() -> TrainingTipEvent? {
         
-        guard let trainingTipNode = tipNode else {
-            assertionFailure("tipNode is null, make sure tipNode is set.")
-            return
+        guard let tipNode = self.tipNode else {
+            return nil
         }
+                
+        reloadTipIcon(tipNode: tipNode, viewType: viewType, trainingTipViewed: true)
         
-        //let trainingTipEvent: TrainingTipEvent = TrainingTipEvent(trainingTipId: trainingTipId, tipNode: trainingTipNode)
-        
-        // TODO: Implement.
-        //mobileContentEvents.trainingTipTapped(trainingTipEvent: trainingTipEvent)
-        
-        if let tipNode = self.tipNode {
-            reloadTipIcon(tipNode: tipNode, viewType: viewType, trainingTipViewed: true)
-        }
+        return TrainingTipEvent(pageModel: pageModel, trainingTipId: trainingTipId, tipNode: tipNode)
     }
 }

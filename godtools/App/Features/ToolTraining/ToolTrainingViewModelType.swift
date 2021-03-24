@@ -21,8 +21,8 @@ protocol ToolTrainingViewModelType {
     func overlayTapped()
     func closeTapped()
     func continueTapped()
-    // TODO: Fix this. ~Levi
-    //func tipPageWillAppear(page: Int) -> ToolPageContentStackContainerViewModel
+    func buttonWithUrlTapped(url: String)
+    func tipPageWillAppear(page: Int, window: UIViewController, safeArea: UIEdgeInsets) -> MobileContentView?
     func tipPageDidChange(page: Int)
     func tipPageDidAppear(page: Int)
 }

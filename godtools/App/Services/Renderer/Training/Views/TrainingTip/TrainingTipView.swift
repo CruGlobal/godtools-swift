@@ -61,7 +61,12 @@ class TrainingTipView: MobileContentView {
     }
     
     @objc func handleTip(button: UIButton) {
-        viewModel.tipTapped()
+        
+        let event: TrainingTipEvent? = viewModel.tipTapped()
+        
+        if let event = event {
+            super.sendTrainingTipTappedToRootView(event: event)
+        }
     }
     
     // MARK: - MobileContentView

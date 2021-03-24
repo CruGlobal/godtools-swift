@@ -44,6 +44,17 @@ class TrainingViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
+        else if let pageNode = renderableNode as? PageNode {
+            
+            let viewModel = TrainingPageViewModel(
+                pageNode: pageNode,
+                pageModel: pageModel
+            )
+            
+            let view = TrainingPageView(viewModel: viewModel)
+            
+            return view
+        }
         
         return nil
     }

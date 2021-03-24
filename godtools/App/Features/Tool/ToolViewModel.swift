@@ -54,15 +54,15 @@ class ToolViewModel: MobileContentPagesViewModel {
             hidesShareButton: trainingTipsEnabled
         )
         
-        super.init(renderers: renderers, primaryLanguage: primaryLanguage, page: page)
+        super.init(flowDelegate: flowDelegate, renderers: renderers, primaryLanguage: primaryLanguage, page: page)
         
         setupBinding()
         
         subscribeToLiveShareStreamIfNeeded(liveShareStream: liveShareStream)
     }
     
-    required init(renderers: [MobileContentRenderer], primaryLanguage: LanguageModel, page: Int?) {
-        fatalError("init(renderers:primaryLanguage:page:) has not been implemented")
+    required init(flowDelegate: FlowDelegate, renderers: [MobileContentRenderer], primaryLanguage: LanguageModel, page: Int?) {
+        fatalError("init(flowDelegate:renderers:primaryLanguage:page:) has not been implemented")
     }
     
     deinit {

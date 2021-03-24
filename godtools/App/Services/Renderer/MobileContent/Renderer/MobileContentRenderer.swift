@@ -10,12 +10,18 @@ import UIKit
 
 class MobileContentRenderer {
       
+    enum RendererType {
+        case builtFromManifest
+        case builtFromProvidedPageNodes
+    }
+    
     typealias PageListenerEventName = String
     typealias PageNumber = Int
     
     private let mobileContentNodeParser: MobileContentXmlNodeParser = MobileContentXmlNodeParser()
     private let translationsFileCache: TranslationsFileCache
     private let pageViewFactories: [MobileContentPageViewFactoryType]
+    private let rendererType: RendererType
     
     private var pageNodes: [Int: PageNode] = Dictionary()
     private var pageListeners: [PageListenerEventName: PageNumber] = Dictionary()
@@ -25,10 +31,10 @@ class MobileContentRenderer {
     let resource: ResourceModel
     let language: LanguageModel
     
-    required init(resource: ResourceModel, language: LanguageModel, translationManifestData: TranslationManifestData, translationsFileCache: TranslationsFileCache, pageViewFactories: [MobileContentPageViewFactoryType], mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
+    required init(resource: ResourceModel, language: LanguageModel, manifest: MobileContentXmlManifest, pageNodes: [PageNode], translationsFileCache: TranslationsFileCache, pageViewFactories: [MobileContentPageViewFactoryType], mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
         
         self.translationsFileCache = translationsFileCache
-        self.manifest = MobileContentXmlManifest(translationManifest: translationManifestData)
+        self.manifest = manifest
         self.resourcesCache = ManifestResourcesCache(manifest: manifest, translationsFileCache: translationsFileCache)
         self.resource = resource
         self.language = language
@@ -42,20 +48,51 @@ class MobileContentRenderer {
         mutablePageViewFactories.append(mobileContentPageViewFactory)
         self.pageViewFactories = mutablePageViewFactories
         
-        // asyncParseAllPageNodes
-        asyncParseAllPageNodes(manifest: manifest, translationsFileCache: translationsFileCache) { [weak self] (page: Int, pageNode: PageNode?, error: Error?) in
+        if pageNodes.isEmpty {
             
+            rendererType = .builtFromManifest
+            
+            parseAllPageNodesFromManifestIntoPageNodesDictionary(
+                manifest: manifest,
+                translationsFileCache: translationsFileCache
+            )
+        }
+        else {
+            
+            rendererType = .builtFromProvidedPageNodes
+            
+            for page in 0 ..< pageNodes.count {
+                addPageNodeAndPageListeners(
+                    page: page,
+                    pageNode: pageNodes[page]
+                )
+            }
+        }
+    }
+    
+    private func parseAllPageNodesFromManifestIntoPageNodesDictionary(manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache) {
+        
+        asyncParseAllPageNodes(manifest: manifest, translationsFileCache: translationsFileCache) { [weak self] (page: Int, pageNode: PageNode?, error: Error?) in
             if let pageNode = pageNode {
-                self?.pageNodes[page] = pageNode
-                self?.addPageListeners(pageNode: pageNode, page: page)
+                self?.addPageNodeAndPageListeners(page: page, pageNode: pageNode)
             }
         } completion: { [weak self] (errors: [Error]) in
             
         }
     }
     
+    private func addPageNodeAndPageListeners(page: Int, pageNode: PageNode) {
+        pageNodes[page] = pageNode
+        addPageListeners(pageNode: pageNode, page: page)
+    }
+    
     var numberOfPages: Int {
-        return manifest.pages.count
+        switch rendererType {
+        case .builtFromManifest:
+            return manifest.pages.count
+        case .builtFromProvidedPageNodes:
+            return pageNodes.count
+        }
     }
     
     // MARK: - Page Listeners

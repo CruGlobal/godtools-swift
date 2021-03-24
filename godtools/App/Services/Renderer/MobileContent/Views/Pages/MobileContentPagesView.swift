@@ -221,22 +221,14 @@ extension MobileContentPagesView: MobileContentPageViewDelegate {
     }
     
     func pageViewDidReceiveUrl(pageView: MobileContentPageView, url: String) {
-
-        guard let webUrl = URL(string: url) else {
-            return
-        }
-        
-        if #available(iOS 10.0, *) {
-            UIApplication.shared.open(webUrl)
-        } else {
-            UIApplication.shared.openURL(webUrl)
-        }
+        viewModel.buttonWithUrlTapped(url: url)
+    }
+    
+    func pageViewDidReceiveTrainingTipTap(pageView: MobileContentPageView, event: TrainingTipEvent) {
+        viewModel.trainingTipTapped(event: event)
     }
     
     func pageViewDidReceiveError(pageView: MobileContentPageView, error: MobileContentErrorViewModel) {
-        
-        let view = MobileContentErrorView(viewModel: error)
-        
-        present(view.controller, animated: true, completion: nil)
+        viewModel.errorOccurred(error: error)
     }
 }

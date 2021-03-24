@@ -22,10 +22,10 @@ class ToolPageCardView: MobileContentView {
     private let backgroundImageView: MobileContentBackgroundImageView = MobileContentBackgroundImageView()
     private let swipeUpGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer()
     private let swipeDownGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer()
+    private let contentStackView: MobileContentStackView = MobileContentStackView(itemSpacing: 20, scrollIsEnabled: true)
     
     private lazy var keyboardObserver: KeyboardObserverType = KeyboardNotificationObserver(loggingEnabled: false)
     
-    private var contentStackView: MobileContentStackView = MobileContentStackView(itemSpacing: 20, scrollIsEnabled: true)
     private var formView: MobileContentFormView?
     private var startingHeaderTrainingTipIconTrailing: CGFloat = 20
     private var didRenderFirstLabel: Bool = false
