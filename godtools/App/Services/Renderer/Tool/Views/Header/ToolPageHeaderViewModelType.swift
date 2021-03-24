@@ -21,4 +21,5 @@ protocol ToolPageHeaderViewModelType {
     var titleFont: UIFont { get }
     var titleColor: UIColor { get }
     var titleAlignment: NSTextAlignment { get }
+    var trainingTipViewModel: TrainingTipViewModelType? { get }
 }

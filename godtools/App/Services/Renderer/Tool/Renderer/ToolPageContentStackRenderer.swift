@@ -120,6 +120,7 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
         }
         else if let trainingTipNode = node as? TrainingTipNode {
             
+            /*
             guard let trainingTipId = trainingTipNode.id, !trainingTipId.isEmpty, diContainer.trainingTipsEnabled else {
                 return nil
             }
@@ -142,7 +143,7 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
             
             let tipSize: CGFloat = 50
             
-            return MobileContentStackRenderedView(view: view, heightConstraintType: .equalToSize(size: CGSize(width: tipSize, height: tipSize)))
+            return MobileContentStackRenderedView(view: view, heightConstraintType: .equalToSize(size: CGSize(width: tipSize, height: tipSize)))*/
         }
         else if let buttonNode = node as? ContentButtonNode {
             

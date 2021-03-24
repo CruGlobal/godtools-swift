@@ -8,14 +8,13 @@
 
 import UIKit
 
-class MobileContentPagesViewModel: MobileContentPagesViewModelType {
-    
-    private let renderers: [MobileContentRenderer]
+class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     
     private var currentRenderer: MobileContentRenderer?
     private var safeArea: UIEdgeInsets?
     private weak var window: UIViewController?
     
+    let renderers: [MobileContentRenderer]
     let numberOfPages: ObservableValue<Int> = ObservableValue(value: 0)
     let currentPage: ObservableValue<AnimatableValue<Int>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
     let pageNavigationSemanticContentAttribute: UISemanticContentAttribute
@@ -30,6 +29,8 @@ class MobileContentPagesViewModel: MobileContentPagesViewModelType {
         case .rightToLeft:
             pageNavigationSemanticContentAttribute = .forceRightToLeft
         }
+        
+        super.init()
     }
     
     private func setRenderer(renderer: MobileContentRenderer) {
@@ -92,5 +93,14 @@ class MobileContentPagesViewModel: MobileContentPagesViewModelType {
     func pageDidAppear(page: Int) {
         
         self.currentPageValue = page
+    }
+    
+    func gotoNextPage(animated: Bool) {
+        
+        let nextPage: Int = currentPageValue + 1
+        
+        if nextPage < numberOfPages.value {
+            currentPage.accept(value: AnimatableValue(value: nextPage, animated: animated))
+        }
     }
 }

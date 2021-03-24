@@ -14,7 +14,7 @@ class MobileContentView: UIView, MobileContentStackChildViewType {
     
     private(set) var children: [MobileContentView] = Array()
     
-    func getRootView() -> MobileContentView {
+    private func getRootView() -> MobileContentView {
         
         if let parentView = parent {
             
@@ -35,6 +35,8 @@ class MobileContentView: UIView, MobileContentStackChildViewType {
         
         return self
     }
+    
+    // MARK: -
     
     func setParentAndAddChild(childView: MobileContentView) {
     

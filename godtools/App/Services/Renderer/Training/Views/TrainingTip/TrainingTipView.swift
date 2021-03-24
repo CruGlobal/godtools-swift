@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TrainingTipView: UIView {
+class TrainingTipView: MobileContentView {
     
     private let viewModel: TrainingTipViewModelType
     
@@ -67,4 +67,16 @@ class TrainingTipView: UIView {
     @objc func handleTip(button: UIButton) {
         viewModel.tipTapped()
     }
+    
+    // MARK: - MobileContentView
+    
+    override func renderChild(childView: MobileContentView) {
+        super.renderChild(childView: childView)
+    }
+    
+    override var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType {
+        return .equalToSize(size: CGSize(width: 50, height: 50))
+    }
+    
+    // MARK: - 
 }

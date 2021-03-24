@@ -10,19 +10,29 @@ import Foundation
 
 class ToolPageViewFactory: MobileContentPageViewFactoryType {
         
+    private let analytics: AnalyticsContainer
     private let mobileContentAnalytics: MobileContentAnalytics
     private let fontService: FontService
     private let localizationServices: LocalizationServices
     private let cardJumpService: CardJumpService
     private let followUpService: FollowUpsService
+    private let translationsFileCache: TranslationsFileCache
+    private let mobileContentNodeParser: MobileContentXmlNodeParser
+    private let viewedTrainingTipsService: ViewedTrainingTipsService
+    private let trainingTipsEnabled: Bool
     
-    required init(mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, followUpService: FollowUpsService) {
+    required init(analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, followUpService: FollowUpsService, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, viewedTrainingTipsService: ViewedTrainingTipsService, trainingTipsEnabled: Bool) {
         
+        self.analytics = analytics
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
         self.localizationServices = localizationServices
         self.cardJumpService = cardJumpService
         self.followUpService = followUpService
+        self.translationsFileCache = translationsFileCache
+        self.mobileContentNodeParser = mobileContentNodeParser
+        self.viewedTrainingTipsService = viewedTrainingTipsService
+        self.trainingTipsEnabled = trainingTipsEnabled
     }
     
     func viewForRenderableNode(renderableNode: MobileContentRenderableNode, pageModel: MobileContentRendererPageModel) -> MobileContentView? {
@@ -34,9 +44,11 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
                 cardsNode: cardsNode,
                 pageModel: pageModel,
                 toolPageColors: ToolPageColors(pageNode: pageModel.pageNode, manifest: pageModel.manifest),
+                analytics: analytics,
                 mobileContentAnalytics: mobileContentAnalytics,
                 fontService: fontService,
-                localizationServices: localizationServices
+                localizationServices: localizationServices,
+                trainingTipsEnabled: trainingTipsEnabled
             )
             
             let view = ToolPageCardView(viewModel: viewModel)
@@ -62,7 +74,11 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
                 headerNode: headerNode,
                 pageModel: pageModel,
                 toolPageColors: ToolPageColors(pageNode: pageModel.pageNode, manifest: pageModel.manifest),
-                fontService: fontService
+                fontService: fontService,
+                translationsFileCache: translationsFileCache,
+                mobileContentNodeParser: mobileContentNodeParser,
+                viewedTrainingTipsService: viewedTrainingTipsService,
+                trainingTipsEnabled: trainingTipsEnabled
             )
 
             let view = ToolPageHeaderView(viewModel: viewModel)
@@ -146,7 +162,6 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             
             let view = ToolPageView(
                 viewModel: viewModel,
-                windowViewController: pageModel.window,
                 safeArea: pageModel.safeArea
             )
             

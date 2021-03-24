@@ -8,7 +8,83 @@
 
 import UIKit
 
-class ToolViewModel: NSObject, ToolViewModelType {
+class ToolViewModel: MobileContentPagesViewModel {
+    
+    private let resource: ResourceModel
+    private let primaryLanguage: LanguageModel
+    private let tractRemoteSharePublisher: TractRemoteSharePublisher
+    private let tractRemoteShareSubscriber: TractRemoteShareSubscriber
+    
+    let navBarViewModel: ToolNavBarViewModel
+    
+    private weak var flowDelegate: FlowDelegate?
+    
+    required init(flowDelegate: FlowDelegate, renderers: [MobileContentRenderer], resource: ResourceModel, primaryLanguage: LanguageModel, page: Int?, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, localizationServices: LocalizationServices, fontService: FontService, analytics: AnalyticsContainer, trainingTipsEnabled: Bool) {
+        
+        self.flowDelegate = flowDelegate
+        self.resource = resource
+        self.primaryLanguage = primaryLanguage
+        self.tractRemoteSharePublisher = tractRemoteSharePublisher
+        self.tractRemoteShareSubscriber = tractRemoteShareSubscriber
+        
+        let primaryManifest: MobileContentXmlManifest = renderers.first!.manifest
+        let languages: [LanguageModel] = renderers.map({$0.language})
+        
+        navBarViewModel = ToolNavBarViewModel(
+            resource: resource,
+            manifestAttributes: primaryManifest.attributes,
+            languages: languages,
+            tractRemoteSharePublisher: tractRemoteSharePublisher,
+            tractRemoteShareSubscriber: tractRemoteShareSubscriber,
+            localizationServices: localizationServices,
+            fontService: fontService,
+            analytics: analytics,
+            hidesShareButton: trainingTipsEnabled
+        )
+        
+        super.init(renderers: renderers, primaryLanguage: primaryLanguage, page: page)
+    }
+    
+    required init(renderers: [MobileContentRenderer], primaryLanguage: LanguageModel, page: Int?) {
+        fatalError("init(renderers:primaryLanguage:page:) has not been implemented")
+    }
+    
+    private var parallelLanguage: LanguageModel? {
+        if renderers.count > 1 {
+            return renderers[1].language
+        }
+        return nil
+    }
+}
+
+// MARK: - Nav Bar
+
+extension ToolViewModel {
+    
+    func navHomeTapped(remoteShareIsActive: Bool) {
+        flowDelegate?.navigate(step: .homeTappedFromTool(isScreenSharing: remoteShareIsActive))
+    }
+    
+    func navShareTapped(selectedLanguage: LanguageModel) {
+
+        let pageNumber: Int = currentPage.value.value
+        
+        flowDelegate?.navigate(step: .shareMenuTappedFromTool(tractRemoteShareSubscriber: tractRemoteShareSubscriber, tractRemoteSharePublisher: tractRemoteSharePublisher, resource: resource, selectedLanguage: selectedLanguage, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, pageNumber: pageNumber))
+    }
+    
+    func navLanguageTapped(previousLanguage: Int, newLanguage: Int) {
+           
+        /*
+        let currentToolPagePositions: ToolPageInitialPositions? = currentPagesViewModelsCache.getPage(page: currentToolPage)?.getCurrentPositions()
+        
+        forceToolRefresh(language: newLanguage, page: currentToolPage, card: currentToolPagePositions?.card)
+                
+        sendRemoteShareNavigationEventForPage(page: currentToolPage)*/
+    }
+}
+
+/*
+class ToolViewModel: MobileContentPagesViewModel {
     
     typealias PageNumber = Int
     typealias LanguageCode = String
@@ -38,11 +114,7 @@ class ToolViewModel: NSObject, ToolViewModelType {
     
     private var navBarViewModel: ToolNavBarViewModel!
     private var lastToolPagePositionsForLanguageChange: ToolPageInitialPositions?
-        
-    let currentPage: ObservableValue<AnimatableValue<Int>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
-    let numberOfToolPages: ObservableValue<Int> = ObservableValue(value: 0)
-    let toolPageNavigationSemanticContentAttribute: UISemanticContentAttribute
-    
+            
     private weak var flowDelegate: FlowDelegate?
     
     required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, primaryTranslationManifestData: TranslationManifestData, parallelTranslationManifestData: TranslationManifestData?, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, translationsFileCache: TranslationsFileCache, languageSettingsService: LanguageSettingsService, fontService: FontService, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, isNewUserService: IsNewUserService, cardJumpService: CardJumpService, followUpsService: FollowUpsService, viewsService: ViewsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, viewedTrainingTips: ViewedTrainingTipsService, trainingTipsEnabled: Bool, page: Int?) {
@@ -254,7 +326,6 @@ extension ToolViewModel {
     
     private func sendRemoteShareNavigationEventForPage(page: Int) {
         
-        /*
         guard tractRemoteSharePublisher.isSubscriberChannelIdCreatedForPublish else {
             return
         }
@@ -269,9 +340,11 @@ extension ToolViewModel {
             tool: resource.abbreviation
         )
         
-        tractRemoteSharePublisher.sendNavigationEvent(event: event)*/
+        tractRemoteSharePublisher.sendNavigationEvent(event: event)
     }
-}
+}*/
+
+/*
 
 // MARK: - Tool Pages
 
@@ -441,35 +514,6 @@ extension ToolViewModel: ToolPagesListenersNotifierDelegate {
     }
 }
 
-// MARK: - ToolNavBarViewModelDelegate
-
-extension ToolViewModel: ToolNavBarViewModelDelegate {
-    
-    func navHomeTapped(navBar: ToolNavBarViewModelType) {
-        flowDelegate?.navigate(step: .homeTappedFromTool(isScreenSharing: navBar.remoteShareIsActive.value))
-    }
-    
-    func shareTapped(navBar: ToolNavBarViewModelType) {
-
-        let pageNumber: Int = currentPage.value.value
-        let selectedLanguage: LanguageModel = navBar.language
-        let primaryLanguage: LanguageModel = primaryLanguageTranslationModel.language
-        let parallelLanguage: LanguageModel? = parallelLanguageTranslationModel?.language
-            
-        flowDelegate?.navigate(step: .shareMenuTappedFromTool(tractRemoteShareSubscriber: tractRemoteShareSubscriber, tractRemoteSharePublisher: tractRemoteSharePublisher, resource: resource, selectedLanguage: selectedLanguage, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, pageNumber: pageNumber))
-    }
-    
-    func languageTapped(navBar: ToolNavBarViewModelType, previousLanguage: Int, newLanguage: Int) {
-           
-        /*
-        let currentToolPagePositions: ToolPageInitialPositions? = currentPagesViewModelsCache.getPage(page: currentToolPage)?.getCurrentPositions()
-        
-        forceToolRefresh(language: newLanguage, page: currentToolPage, card: currentToolPagePositions?.card)
-                
-        sendRemoteShareNavigationEventForPage(page: currentToolPage)*/
-    }
-}
-
 // MARK: - ToolPageViewModelTypeDelegate
 
 extension ToolViewModel: ToolPageViewModelTypeDelegate {
@@ -523,3 +567,4 @@ extension ToolViewModel: ToolPageViewModelTypeDelegate {
         flowDelegate?.navigate(step: .toolDidEncounterErrorFromTool(error: error))
     }
 }
+*/

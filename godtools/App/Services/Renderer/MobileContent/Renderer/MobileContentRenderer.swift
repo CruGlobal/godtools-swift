@@ -22,22 +22,27 @@ class MobileContentRenderer {
     
     let manifest: MobileContentXmlManifest
     let resourcesCache: ManifestResourcesCache
+    let resource: ResourceModel
     let language: LanguageModel
     
-    required init(language: LanguageModel, translationManifestData: TranslationManifestData, translationsFileCache: TranslationsFileCache, pageViewFactory: MobileContentPageViewFactoryType, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
+    required init(resource: ResourceModel, language: LanguageModel, translationManifestData: TranslationManifestData, translationsFileCache: TranslationsFileCache, pageViewFactories: [MobileContentPageViewFactoryType], mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
         
         self.translationsFileCache = translationsFileCache
         self.manifest = MobileContentXmlManifest(translationManifest: translationManifestData)
         self.resourcesCache = ManifestResourcesCache(manifest: manifest, translationsFileCache: translationsFileCache)
+        self.resource = resource
         self.language = language
-        self.pageViewFactories = [
-            pageViewFactory,
-            MobileContentPageViewFactory(
-                mobileContentAnalytics: mobileContentAnalytics,
-                fontService: fontService
-            )
-        ]
+
+        // pageViewFactories
+        let mobileContentPageViewFactory = MobileContentPageViewFactory(
+            mobileContentAnalytics: mobileContentAnalytics,
+            fontService: fontService
+        )
+        var mutablePageViewFactories: [MobileContentPageViewFactoryType] = pageViewFactories
+        mutablePageViewFactories.append(mobileContentPageViewFactory)
+        self.pageViewFactories = mutablePageViewFactories
         
+        // asyncParseAllPageNodes
         asyncParseAllPageNodes(manifest: manifest, translationsFileCache: translationsFileCache) { [weak self] (page: Int, pageNode: PageNode?, error: Error?) in
             
             if let pageNode = pageNode {
@@ -103,6 +108,7 @@ class MobileContentRenderer {
                 safeArea: safeArea,
                 manifest: manifest,
                 resourcesCache: resourcesCache,
+                resource: resource,
                 language: language
             )
             

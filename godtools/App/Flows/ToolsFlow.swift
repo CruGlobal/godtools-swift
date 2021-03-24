@@ -576,33 +576,82 @@ class ToolsFlow: Flow {
     
     private func navigateToTract(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
         
+        let analytics: AnalyticsContainer = appDiContainer.analytics
         let mobileContentAnalytics: MobileContentAnalytics = appDiContainer.getMobileContentAnalytics()
+        let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
+        let mobileContentNodeParser: MobileContentXmlNodeParser = appDiContainer.getMobileContentNodeParser()
+        let viewedTrainingTipsService: ViewedTrainingTipsService = appDiContainer.getViewedTrainingTipsService()
         let fontService: FontService = appDiContainer.getFontService()
+        let localizationServices: LocalizationServices = appDiContainer.localizationServices
+        let followUpsService: FollowUpsService = appDiContainer.followUpsService
+        let cardJumpService: CardJumpService = appDiContainer.getCardJumpService()
         
-        let pageViewFactory = ToolPageViewFactory(
+        let toolPageViewFactory = ToolPageViewFactory(
+            analytics: analytics,
             mobileContentAnalytics: mobileContentAnalytics,
             fontService: fontService,
-            localizationServices: appDiContainer.localizationServices,
-            cardJumpService: appDiContainer.getCardJumpService(),
-            followUpService: appDiContainer.followUpsService
+            localizationServices: localizationServices,
+            cardJumpService: cardJumpService,
+            followUpService: followUpsService,
+            translationsFileCache: translationsFileCache,
+            mobileContentNodeParser: mobileContentNodeParser,
+            viewedTrainingTipsService: viewedTrainingTipsService,
+            trainingTipsEnabled: trainingTipsEnabled
         )
         
-        let primaryRenderer: MobileContentRenderer = MobileContentRenderer(
+        let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
+            translationsFileCache: translationsFileCache,
+            mobileContentNodeParser: mobileContentNodeParser,
+            viewedTrainingTipsService: viewedTrainingTipsService,
+            trainingTipsEnabled: trainingTipsEnabled
+        )
+        
+        let pageViewFactories: [MobileContentPageViewFactoryType] = [toolPageViewFactory, trainingViewFactory]
+        
+        let primaryRenderer = MobileContentRenderer(
+            resource: resource,
             language: primaryLanguage,
             translationManifestData: primaryTranslationManifest,
-            translationsFileCache: appDiContainer.translationsFileCache,
-            pageViewFactory: pageViewFactory,
+            translationsFileCache: translationsFileCache,
+            pageViewFactories: pageViewFactories,
             mobileContentAnalytics: mobileContentAnalytics,
             fontService: fontService
         )
         
-        let viewModel = MobileContentPagesViewModel(
-            renderers: [primaryRenderer],
+        var renderers: [MobileContentRenderer] = Array()
+        
+        renderers.append(primaryRenderer)
+        
+        if !trainingTipsEnabled, let parallelLanguage = parallelLanguage, let parallelTranslationManifest = parallelTranslationManifest, parallelLanguage.code != primaryLanguage.code {
+            
+            let parallelRenderer = MobileContentRenderer(
+                resource: resource,
+                language: parallelLanguage,
+                translationManifestData: parallelTranslationManifest,
+                translationsFileCache: translationsFileCache,
+                pageViewFactories: pageViewFactories,
+                mobileContentAnalytics: mobileContentAnalytics,
+                fontService: fontService
+            )
+            
+            renderers.append(parallelRenderer)
+        }
+        
+        let viewModel = ToolViewModel(
+            flowDelegate: self,
+            renderers: renderers,
+            resource: resource,
             primaryLanguage: primaryLanguage,
-            page: nil
+            page: page,
+            tractRemoteSharePublisher: appDiContainer.tractRemoteSharePublisher,
+            tractRemoteShareSubscriber: appDiContainer.tractRemoteShareSubscriber,
+            localizationServices: localizationServices,
+            fontService: fontService,
+            analytics: analytics,
+            trainingTipsEnabled: trainingTipsEnabled
         )
         
-        let view = MobileContentPagesView(viewModel: viewModel)
+        let view = ToolView(viewModel: viewModel)
         
         navigationController.pushViewController(view, animated: true)
         

@@ -13,5 +13,6 @@ protocol TrainingTipViewModelType {
     var trainingTipBackgroundImage: ObservableValue<UIImage?> { get }
     var trainingTipForegroundImage: ObservableValue<UIImage?> { get }
     
+    func setViewType(viewType: TrainingTipViewType)
     func tipTapped()
 }

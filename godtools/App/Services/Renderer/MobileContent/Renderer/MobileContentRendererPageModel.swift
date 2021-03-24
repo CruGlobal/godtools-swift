@@ -16,11 +16,12 @@ class MobileContentRendererPageModel {
     let safeArea: UIEdgeInsets
     let manifest: MobileContentXmlManifest
     let resourcesCache: ManifestResourcesCache
+    let resource: ResourceModel
     let language: LanguageModel
     
     private weak var weakWindow: UIViewController?
     
-    required init(pageNode: PageNode, page: Int, numberOfPages: Int, window: UIViewController, safeArea: UIEdgeInsets, manifest: MobileContentXmlManifest, resourcesCache: ManifestResourcesCache, language: LanguageModel) {
+    required init(pageNode: PageNode, page: Int, numberOfPages: Int, window: UIViewController, safeArea: UIEdgeInsets, manifest: MobileContentXmlManifest, resourcesCache: ManifestResourcesCache, resource: ResourceModel, language: LanguageModel) {
         
         self.pageNode = pageNode
         self.page = page
@@ -29,6 +30,7 @@ class MobileContentRendererPageModel {
         self.safeArea = safeArea
         self.manifest = manifest
         self.resourcesCache = resourcesCache
+        self.resource = resource
         self.language = language
     }
     

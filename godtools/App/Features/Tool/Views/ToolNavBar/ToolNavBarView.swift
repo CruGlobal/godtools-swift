@@ -8,6 +8,13 @@
 
 import UIKit
 
+protocol ToolNavBarViewDelegate: class {
+    
+    func navBarHomeTapped(navBar: ToolNavBarView, remoteShareIsActive: Bool)
+    func navBarShareTapped(navBar: ToolNavBarView, selectedLanguage: LanguageModel)
+    func navBarLanguageTapped(navBar: ToolNavBarView, previousLanguage: Int, newLanguage: Int)
+}
+
 class ToolNavBarView: NSObject {
     
     enum RightNavbarPosition: Int {
@@ -22,12 +29,13 @@ class ToolNavBarView: NSObject {
     private var isConfigured: Bool = false
     
     private weak var parentViewController: UIViewController?
+    private weak var delegate: ToolNavBarViewDelegate?
     
     override init() {
         super.init()
     }
     
-    func configure(parentViewController: UIViewController, viewModel: ToolNavBarViewModelType) {
+    func configure(parentViewController: UIViewController, viewModel: ToolNavBarViewModelType, delegate: ToolNavBarViewDelegate) {
         
         guard !isConfigured else {
             return
@@ -36,6 +44,7 @@ class ToolNavBarView: NSObject {
         
         self.parentViewController = parentViewController
         self.viewModel = viewModel
+        self.delegate = delegate
         
         setupNavigationBar(parentViewController: parentViewController, viewModel: viewModel)
         setupBinding(viewModel: viewModel)
@@ -130,15 +139,41 @@ class ToolNavBarView: NSObject {
     }
     
     @objc func handleHome(barButtonItem: UIBarButtonItem) {
-        viewModel?.navHomeTapped()
+        
+        guard let viewModel = self.viewModel else {
+            return
+        }
+        
+        delegate?.navBarHomeTapped(
+            navBar: self,
+            remoteShareIsActive: viewModel.remoteShareIsActive.value
+        )
     }
     
     @objc func handleShare(barButtonItem: UIBarButtonItem) {
-        viewModel?.shareTapped()
+        
+        guard let viewModel = self.viewModel else {
+            return
+        }
+        
+        delegate?.navBarShareTapped(
+            navBar: self,
+            selectedLanguage: viewModel.language
+        )
     }
     
     @objc func didChooseLanguage(segmentedControl: UISegmentedControl) {
-        viewModel?.languageTapped(index: segmentedControl.selectedSegmentIndex)
+        
+        guard let viewModel = self.viewModel else {
+            return
+        }
+        
+        viewModel.languageTapped(index: segmentedControl.selectedSegmentIndex)
+        
+        let previousLanguage: Int = viewModel.selectedLanguage.value
+        let newLanguage: Int = segmentedControl.selectedSegmentIndex
+        
+        delegate?.navBarLanguageTapped(navBar: self, previousLanguage: previousLanguage, newLanguage: newLanguage)
     }
     
     private func setRemoteShareActiveNavItem(hidden: Bool) {

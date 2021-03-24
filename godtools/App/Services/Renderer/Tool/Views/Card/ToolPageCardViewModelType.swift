@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ToolPageCardViewModelType: NSObject {
+protocol ToolPageCardViewModelType {
     
     var title: String? { get }
     var titleColor: UIColor { get }

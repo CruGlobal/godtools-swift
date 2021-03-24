@@ -8,14 +8,16 @@
 
 import UIKit
 
-class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
+class ToolPageCardViewModel: ToolPageCardViewModelType {
     
     private let cardNode: CardNode
     private let cardsNode: CardsNode
     private let pageModel: MobileContentRendererPageModel
     private let toolPageColors: ToolPageColors
+    private let analytics: AnalyticsContainer
     private let fontService: FontService
     private let localizationServices: LocalizationServices
+    private let trainingTipsEnabled: Bool
     private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
     private let cardPosition: Int
     private let numberOfCards: Int
@@ -26,7 +28,7 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
     let hidesNextButton: Bool
     let isHiddenCard: Bool
     
-    required init(cardNode: CardNode, cardsNode: CardsNode, pageModel: MobileContentRendererPageModel, toolPageColors: ToolPageColors, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices) {
+    required init(cardNode: CardNode, cardsNode: CardsNode, pageModel: MobileContentRendererPageModel, toolPageColors: ToolPageColors, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, trainingTipsEnabled: Bool) {
                 
         let visibleCards: [CardNode] = cardsNode.visibleCards
         
@@ -34,8 +36,10 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
         self.cardsNode = cardsNode
         self.pageModel = pageModel
         self.toolPageColors = toolPageColors
+        self.analytics = analytics
         self.fontService = fontService
         self.localizationServices = localizationServices
+        self.trainingTipsEnabled = trainingTipsEnabled
         self.cardPosition = visibleCards.firstIndex(of: cardNode) ?? 0
         self.numberOfCards = visibleCards.count
         self.isHiddenCard = cardNode.isHidden
@@ -58,39 +62,42 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
         else {
             analyticsEventsObjects = []
         }
-                
-        super.init()
-        
-        setupBinding()
+                        
+        checkIfHeaderTrainingTipShouldBeEnabled()
     }
     
-    deinit {
-        //print("x deinit: \(type(of: self))")
+    private func checkIfHeaderTrainingTipShouldBeEnabled() {
         
-        //diContainer.mobileContentEvents.eventButtonTappedSignal.removeObserver(self)
-        //contentStackViewModel.contentStackRenderer.didRenderTrainingTipsSignal.removeObserver(self)
+        guard trainingTipsEnabled else {
+            return
+        }
+        
+        let cardNode: MobileContentXmlNode = self.cardNode
+        
+        DispatchQueue.global().async { [weak self] in
+            let trainingTipNode: TrainingTipNode? = self?.recurseForTrainingTipNode(nodes: [cardNode])
+            DispatchQueue.main.async { [weak self] in
+                if trainingTipNode != nil {
+                    self?.hidesHeaderTrainingTip.accept(value: false)
+                }
+            }
+        }
     }
     
-    private func setupBinding() {
+    private func recurseForTrainingTipNode(nodes: [MobileContentXmlNode]) -> TrainingTipNode? {
         
-        /*
-        diContainer.mobileContentEvents.eventButtonTappedSignal.addObserver(self) { [weak self] (buttonEvent: ButtonEvent) in
-            guard let viewModel = self else {
-                return
+        for node in nodes {
+            
+            if let trainingTipNode = node as? TrainingTipNode {
+                return trainingTipNode
             }
-            if viewModel.cardNode.listeners.contains(buttonEvent.event) {
-                self?.delegate?.presentCardListener(cardViewModel: viewModel, cardPosition: viewModel.cardPosition)
-            }
-            else if viewModel.cardNode.dismissListeners.contains(buttonEvent.event) {
-                self?.delegate?.dismissCardListener(cardViewModel: viewModel, cardPosition: viewModel.cardPosition)
+            
+            if let trainingTipNode: TrainingTipNode = recurseForTrainingTipNode(nodes: node.children) {
+                return trainingTipNode
             }
         }
         
-        contentStackViewModel.contentStackRenderer.didRenderTrainingTipsSignal.addObserver(self) { [weak self] in
-            let trainingTipsEnabled: Bool = self?.diContainer.trainingTipsEnabled ?? false
-            let showsHeaderTrainingTip: Bool = trainingTipsEnabled
-            self?.hidesHeaderTrainingTip.accept(value: !showsHeaderTrainingTip)
-        }*/
+        return nil
     }
     
     var title: String? {
@@ -168,6 +175,13 @@ class ToolPageCardViewModel: NSObject, ToolPageCardViewModelType {
         
     func cardDidAppear() {
         mobileContentDidAppear()
+        
+        let resource: ResourceModel = pageModel.resource
+        let page: Int = pageModel.page
+        
+        let pageAnalyticsScreenName: String = resource.abbreviation + "-" + String(page)
+        let screenName: String = pageAnalyticsScreenName + ToolPageCardAnalyticsScreenName(cardPosition: cardPosition).screenName
+        analytics.pageViewedAnalytics.trackPageView(screenName: screenName, siteSection: "", siteSubSection: "")
     }
     
     func cardDidDisappear() {

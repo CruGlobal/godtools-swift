@@ -18,8 +18,9 @@ class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
     let hidesHeader: Bool
     let number: String?
     let title: String?
+    let trainingTipViewModel: TrainingTipViewModelType?
     
-    required init(headerNode: HeaderNode, pageModel: MobileContentRendererPageModel, toolPageColors: ToolPageColors, fontService: FontService) {
+    required init(headerNode: HeaderNode, pageModel: MobileContentRendererPageModel, toolPageColors: ToolPageColors, fontService: FontService, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, viewedTrainingTipsService: ViewedTrainingTipsService, trainingTipsEnabled: Bool) {
         
         self.pageModel = pageModel
         self.toolPageColors = toolPageColors
@@ -33,6 +34,21 @@ class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
         self.hidesHeader = hidesHeader
         number = pageHeaderNumber
         title = pageHeaderTitle
+        
+        if trainingTipsEnabled, let trainingTipId = headerNode.trainingTip, !trainingTipId.isEmpty {
+            
+            trainingTipViewModel = TrainingTipViewModel(
+                trainingTipId: trainingTipId,
+                pageModel: pageModel,
+                viewType: .upArrow,
+                translationsFileCache: translationsFileCache,
+                mobileContentNodeParser: mobileContentNodeParser,
+                viewedTrainingTipsService: viewedTrainingTipsService
+            )
+        }
+        else {
+            trainingTipViewModel = nil
+        }
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {

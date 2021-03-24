@@ -10,13 +10,15 @@ import UIKit
 
 class ToolPageHeaderView: MobileContentView {
     
+    private var trainingTipView: TrainingTipView?
+    
     let viewModel: ToolPageHeaderViewModelType
     
+    @IBOutlet weak private var backgroundContainerView: UIView!
     @IBOutlet weak private var numberLabel: UILabel!
     @IBOutlet weak private var titleLabel: UILabel!
-    
-    @IBOutlet weak private var titleLeading: NSLayoutConstraint!
-    
+    @IBOutlet weak private var trainingTipContainerView: UIView!
+            
     required init(viewModel: ToolPageHeaderViewModelType) {
         
         self.viewModel = viewModel
@@ -50,12 +52,15 @@ class ToolPageHeaderView: MobileContentView {
     
     private func setupLayout() {
         
+        // trainingTipContainerView
+        trainingTipContainerView.backgroundColor = .clear
+        trainingTipContainerView.isHidden = true
     }
     
     private func setupBinding() {
         
         semanticContentAttribute = viewModel.languageDirectionSemanticContentAttribute
-        backgroundColor = viewModel.backgroundColor
+        backgroundContainerView.backgroundColor = viewModel.backgroundColor
         
         numberLabel.text = viewModel.number
         numberLabel.font = viewModel.numberFont
@@ -67,6 +72,15 @@ class ToolPageHeaderView: MobileContentView {
         titleLabel.textColor = viewModel.titleColor
         titleLabel.setLineSpacing(lineSpacing: 2)
         titleLabel.textAlignment = viewModel.titleAlignment
+        
+        if let trainingTipViewModel = viewModel.trainingTipViewModel {
+            let trainingTipView = TrainingTipView(viewModel: trainingTipViewModel)
+            setParentAndAddChild(childView: trainingTipView)
+            trainingTipContainerView.addSubview(trainingTipView)
+            trainingTipView.constrainEdgesToSuperview()
+            trainingTipContainerView.isHidden = false
+            self.trainingTipView = trainingTipView
+        }
     }
     
     var titleLabelFrame: CGRect {

@@ -10,40 +10,64 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ToolPageHeaderView" customModule="godtools" customModuleProvider="target">
             <connections>
+                <outlet property="backgroundContainerView" destination="4KW-n8-20F" id="hH2-S0-Yiq"/>
                 <outlet property="numberLabel" destination="vOd-4M-X2Z" id="rR2-Zj-tZE"/>
                 <outlet property="titleLabel" destination="mac-fm-0Vf" id="Fba-6M-wy3"/>
-                <outlet property="titleLeading" destination="3xf-Ex-HYw" id="OPq-rb-HOf"/>
+                <outlet property="trainingTipContainerView" destination="ITH-AE-2ID" id="Vfq-WN-7lL"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qxT-Wd-QwC">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="120"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="25" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vOd-4M-X2Z" userLabel="numberLabel">
-                    <rect key="frame" x="10" y="6" width="58.5" height="60"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="50"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" iOS 11 and later, use the directionalLayoutMargins property" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mac-fm-0Vf" userLabel="titleLabel">
-                    <rect key="frame" x="78.5" y="15" width="315.5" height="70"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4KW-n8-20F" userLabel="backgroundContainerView">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="25" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vOd-4M-X2Z" userLabel="numberLabel">
+                            <rect key="frame" x="10" y="6" width="58.5" height="60"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="50"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" iOS 11 and later, use the directionalLayoutMargins property" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mac-fm-0Vf" userLabel="titleLabel">
+                            <rect key="frame" x="78.5" y="15" width="315.5" height="50"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemTealColor"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="mac-fm-0Vf" secondAttribute="trailing" constant="20" id="7TN-tX-eJQ"/>
+                        <constraint firstItem="vOd-4M-X2Z" firstAttribute="top" secondItem="4KW-n8-20F" secondAttribute="top" constant="6" id="Du9-bR-PxZ"/>
+                        <constraint firstItem="mac-fm-0Vf" firstAttribute="leading" secondItem="vOd-4M-X2Z" secondAttribute="trailing" constant="10" id="JaP-nY-Lue"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="65" id="Xdm-1M-3AG"/>
+                        <constraint firstItem="mac-fm-0Vf" firstAttribute="top" secondItem="4KW-n8-20F" secondAttribute="top" constant="15" id="nc2-YC-pqp"/>
+                        <constraint firstItem="vOd-4M-X2Z" firstAttribute="leading" secondItem="4KW-n8-20F" secondAttribute="leading" constant="10" id="oY1-oF-cfK"/>
+                        <constraint firstAttribute="bottom" secondItem="mac-fm-0Vf" secondAttribute="bottom" constant="15" id="qGN-Kc-cux"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ITH-AE-2ID" userLabel="trainingTipContainerView">
+                    <rect key="frame" x="63.5" y="66" width="46.5" height="54"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="54" id="2jN-uI-imh"/>
+                        <constraint firstAttribute="width" secondItem="ITH-AE-2ID" secondAttribute="height" multiplier="55:64" id="R5s-9D-3Tv"/>
+                    </constraints>
+                </view>
             </subviews>
-            <color key="backgroundColor" systemColor="systemTealColor"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="mac-fm-0Vf" firstAttribute="leading" secondItem="vOd-4M-X2Z" secondAttribute="trailing" constant="10" id="3xf-Ex-HYw"/>
-                <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="500" constant="65" id="558-VV-VjQ"/>
-                <constraint firstItem="vOd-4M-X2Z" firstAttribute="leading" secondItem="qxT-Wd-QwC" secondAttribute="leading" constant="10" id="En2-pH-uyy"/>
-                <constraint firstItem="mac-fm-0Vf" firstAttribute="top" secondItem="qxT-Wd-QwC" secondAttribute="top" constant="15" id="M2I-CG-ORJ"/>
-                <constraint firstAttribute="bottom" secondItem="mac-fm-0Vf" secondAttribute="bottom" constant="15" id="cy2-qp-i2x"/>
-                <constraint firstAttribute="trailing" secondItem="mac-fm-0Vf" secondAttribute="trailing" constant="20" id="lfS-2T-Jnh"/>
-                <constraint firstItem="vOd-4M-X2Z" firstAttribute="top" secondItem="qxT-Wd-QwC" secondAttribute="top" constant="6" id="oPz-gw-VAh"/>
+                <constraint firstAttribute="bottom" secondItem="ITH-AE-2ID" secondAttribute="bottom" id="Btp-XU-pZt"/>
+                <constraint firstAttribute="trailing" secondItem="4KW-n8-20F" secondAttribute="trailing" id="Gtm-tB-JcF"/>
+                <constraint firstItem="4KW-n8-20F" firstAttribute="top" secondItem="qxT-Wd-QwC" secondAttribute="top" id="OAE-yL-sEx"/>
+                <constraint firstItem="ITH-AE-2ID" firstAttribute="leading" secondItem="mac-fm-0Vf" secondAttribute="leading" constant="-15" id="Pcr-5b-Frf"/>
+                <constraint firstItem="4KW-n8-20F" firstAttribute="leading" secondItem="qxT-Wd-QwC" secondAttribute="leading" id="PgE-ba-hXR"/>
+                <constraint firstItem="ITH-AE-2ID" firstAttribute="width" secondItem="ITH-AE-2ID" secondAttribute="height" multiplier="55:64" id="Z6h-cc-fQq"/>
+                <constraint firstItem="ITH-AE-2ID" firstAttribute="top" secondItem="4KW-n8-20F" secondAttribute="bottom" constant="-14" id="sWN-3e-DAt"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="-57" y="78"/>
+            <point key="canvasLocation" x="-44.20289855072464" y="179.46428571428569"/>
         </view>
     </objects>
     <resources>

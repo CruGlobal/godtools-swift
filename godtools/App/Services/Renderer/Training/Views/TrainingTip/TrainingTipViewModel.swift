@@ -11,41 +11,59 @@ import UIKit
 class TrainingTipViewModel: TrainingTipViewModelType {
     
     private let trainingTipId: String
-    private let mobileContentEvents: MobileContentEvents
-    private let viewType: TrainingTipViewType
+    private let pageModel: MobileContentRendererPageModel
+    private let viewedTrainingTipsService: ViewedTrainingTipsService
     
     private var tipNode: TipNode?
+    private var viewType: TrainingTipViewType = .rounded
     
     let trainingTipBackgroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     let trainingTipForegroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     
-    required init(trainingTipId: String, resource: ResourceModel, language: LanguageModel, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentEvents: MobileContentEvents, viewType: TrainingTipViewType, viewedTrainingTips: ViewedTrainingTipsService) {
+    required init(trainingTipId: String, pageModel: MobileContentRendererPageModel, viewType: TrainingTipViewType, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, viewedTrainingTipsService: ViewedTrainingTipsService) {
         
         self.trainingTipId = trainingTipId
-        self.mobileContentEvents = mobileContentEvents
+        self.pageModel = pageModel
         self.viewType = viewType
-        
-        parseTrainingTip(trainingTipId: trainingTipId, manifest: manifest, translationsFileCache: translationsFileCache, mobileContentNodeParser: mobileContentNodeParser) { [weak self] (result: Result<TipNode, Error>) in
+        self.viewedTrainingTipsService = viewedTrainingTipsService
+                
+        parseTrainingTip(trainingTipId: trainingTipId, manifest: pageModel.manifest, translationsFileCache: translationsFileCache, mobileContentNodeParser: mobileContentNodeParser) { [weak self] (result: Result<TipNode, Error>) in
+            
+            guard let viewModel = self else {
+                return
+            }
             
             switch result {
             
             case .success(let tipNode):
                 
-                let viewedTrainingTip = ViewedTrainingTip(trainingTipId: trainingTipId, resourceId: resource.id, languageId: language.id)
-                let trainingTipViewed: Bool = viewedTrainingTips.containsViewedTrainingTip(viewedTrainingTip: viewedTrainingTip)
+                let trainingTipViewed: Bool = viewModel.getTrainingTipViewed()
                 
-                self?.reloadTipIcon(
+                viewModel.reloadTipIcon(
                     tipNode: tipNode,
-                    viewType: viewType,
+                    viewType: viewModel.viewType,
                     trainingTipViewed: trainingTipViewed
                 )
                 
-                self?.tipNode = tipNode
+                viewModel.tipNode = tipNode
             
             case .failure(let error):
                 break
             }
         }
+    }
+    
+    private func getTrainingTipViewed() -> Bool {
+        
+        let viewedTrainingTip = ViewedTrainingTip(
+            trainingTipId: trainingTipId,
+            resourceId: pageModel.resource.id,
+            languageId: pageModel.language.id
+        )
+        
+        let trainingTipViewed: Bool = viewedTrainingTipsService.containsViewedTrainingTip(viewedTrainingTip: viewedTrainingTip)
+        
+        return trainingTipViewed
     }
     
     private func parseTrainingTip(trainingTipId: String, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, complete: @escaping ((_ result: Result<TipNode, Error>) -> Void)) {
@@ -122,6 +140,21 @@ class TrainingTipViewModel: TrainingTipViewModelType {
         }
     }
     
+    func setViewType(viewType: TrainingTipViewType) {
+        
+        self.viewType = viewType
+        
+        guard let tipNode = self.tipNode else {
+            return
+        }
+        
+        reloadTipIcon(
+            tipNode: tipNode,
+            viewType: viewType,
+            trainingTipViewed: getTrainingTipViewed()
+        )
+    }
+    
     func tipTapped() {
         
         guard let trainingTipNode = tipNode else {
@@ -130,7 +163,9 @@ class TrainingTipViewModel: TrainingTipViewModelType {
         }
         
         let trainingTipEvent: TrainingTipEvent = TrainingTipEvent(trainingTipId: trainingTipId, tipNode: trainingTipNode)
-        mobileContentEvents.trainingTipTapped(trainingTipEvent: trainingTipEvent)
+        
+        // TODO: Implement.
+        //mobileContentEvents.trainingTipTapped(trainingTipEvent: trainingTipEvent)
         
         if let tipNode = self.tipNode {
             reloadTipIcon(tipNode: tipNode, viewType: viewType, trainingTipViewed: true)
