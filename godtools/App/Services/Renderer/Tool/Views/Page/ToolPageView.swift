@@ -7,12 +7,7 @@
 //
 import UIKit
 
-protocol ToolPageViewDelegate: class {
-    
-    func toolPageCallToActionNextButtonTapped(toolPage: ToolPageView)
-}
-
-class ToolPageView: MobileContentView {
+class ToolPageView: MobileContentPageView {
     
     private let viewModel: ToolPageViewModelType
     private let safeArea: UIEdgeInsets
@@ -24,9 +19,7 @@ class ToolPageView: MobileContentView {
     private var callToActionView: ToolPageCallToActionView?
     private var cardsView: ToolPageCardsView?
     private var bottomView: UIView?
-    
-    private weak var delegate: ToolPageViewDelegate?
-    
+        
     @IBOutlet weak private var backgroundImageContainer: UIView!
     @IBOutlet weak private var contentStackContainerView: UIView!
     @IBOutlet weak private var headerContainerView: UIView!
@@ -104,10 +97,6 @@ class ToolPageView: MobileContentView {
         if let backgroundImageViewModel = viewModel.backgroundImageWillAppear() {
             backgroundImageView.configure(viewModel: backgroundImageViewModel, parentView: backgroundImageContainer)
         }
-    }
-    
-    func setDelegate(delegate: ToolPageViewDelegate?) {
-        self.delegate = delegate
     }
     
     // MARK: - MobileContentView
@@ -255,18 +244,16 @@ extension ToolPageView {
     }
 }
 
-// MARK: - Call To Action, ToolPageCallToActionViewDelegate
+// MARK: - Call To Action
 
-extension ToolPageView: ToolPageCallToActionViewDelegate {
+extension ToolPageView {
     
     private func addCallToActionView(callToActionView: ToolPageCallToActionView) {
         
         guard self.callToActionView == nil else {
             return
         }
-        
-        callToActionView.configure(delegate: self)
-        
+                
         callToActionContainerView.isHidden = false
         callToActionContainerView.addSubview(callToActionView)
         callToActionView.constrainEdgesToSuperview()
@@ -301,11 +288,6 @@ extension ToolPageView: ToolPageCallToActionViewDelegate {
             layoutIfNeeded()
             callToActionContainerView.alpha = callToActionAlpha
         }
-    }
-    
-    func toolPageCallToActionNextButtonTapped(callToActionView: ToolPageCallToActionView) {
-        
-        delegate?.toolPageCallToActionNextButtonTapped(toolPage: self)
     }
 }
 

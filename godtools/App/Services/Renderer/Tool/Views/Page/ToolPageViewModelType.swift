@@ -8,15 +8,6 @@
 
 import UIKit
 
-protocol ToolPageViewModelTypeDelegate: class {
-    
-    func toolPagePresentedListener(viewModel: ToolPageViewModelType, page: Int)
-    func toolPageTrainingTipTapped(viewModel: ToolPageViewModelType, page: Int, trainingTipId: String, tipNode: TipNode)
-    func toolPageCardChanged(viewModel: ToolPageViewModelType, page: Int, cardPosition: Int?)
-    func toolPageNextPageTapped(viewModel: ToolPageViewModelType, page: Int)
-    func toolPageError(viewModel: ToolPageViewModelType, page: Int, error: ContentEventError)
-}
-
 protocol ToolPageViewModelType {
     
     var backgroundColor: UIColor { get }

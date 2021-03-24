@@ -12,6 +12,7 @@ class ToolViewModel: MobileContentPagesViewModel {
     
     private let resource: ResourceModel
     private let primaryLanguage: LanguageModel
+    private let toolPageEvents: ToolPageEvents
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
     private let tractRemoteShareSubscriber: TractRemoteShareSubscriber
     
@@ -19,11 +20,12 @@ class ToolViewModel: MobileContentPagesViewModel {
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, renderers: [MobileContentRenderer], resource: ResourceModel, primaryLanguage: LanguageModel, page: Int?, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, localizationServices: LocalizationServices, fontService: FontService, analytics: AnalyticsContainer, trainingTipsEnabled: Bool) {
+    required init(flowDelegate: FlowDelegate, renderers: [MobileContentRenderer], resource: ResourceModel, primaryLanguage: LanguageModel, page: Int?, toolPageEvents: ToolPageEvents, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, localizationServices: LocalizationServices, fontService: FontService, analytics: AnalyticsContainer, trainingTipsEnabled: Bool) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.primaryLanguage = primaryLanguage
+        self.toolPageEvents = toolPageEvents
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
         self.tractRemoteShareSubscriber = tractRemoteShareSubscriber
         
@@ -43,10 +45,23 @@ class ToolViewModel: MobileContentPagesViewModel {
         )
         
         super.init(renderers: renderers, primaryLanguage: primaryLanguage, page: page)
+        
+        setupBinding()
     }
     
     required init(renderers: [MobileContentRenderer], primaryLanguage: LanguageModel, page: Int?) {
         fatalError("init(renderers:primaryLanguage:page:) has not been implemented")
+    }
+    
+    deinit {
+        
+    }
+    
+    private func setupBinding() {
+        
+        toolPageEvents.didTapCallToActionNextButtonSignal.addObserver(self) { [weak self] in
+            self?.gotoNextPage(animated: true)
+        }
     }
     
     private var parallelLanguage: LanguageModel? {
@@ -219,7 +234,6 @@ class ToolViewModel: MobileContentPagesViewModel {
     deinit {
         print("x deinit: \(type(of: self))")
         currentPagesViewModelsCache.clearCache()
-        mobileContentEvents.urlButtonTappedSignal.removeObserver(self)
         tractRemoteSharePublisher.didCreateNewSubscriberChannelIdForPublish.removeObserver(self)
         tractRemoteSharePublisher.endPublishingSession(disconnectSocket: true)
         tractRemoteShareSubscriber.navigationEventSignal.removeObserver(self)
@@ -227,13 +241,6 @@ class ToolViewModel: MobileContentPagesViewModel {
     }
     
     private func setupBinding() {
-        
-        mobileContentEvents.urlButtonTappedSignal.addObserver(self) { [weak self] (urlButtonEvent: UrlButtonEvent) in
-            guard let url = URL(string: urlButtonEvent.url) else {
-                return
-            }
-            self?.flowDelegate?.navigate(step: .urlLinkTappedFromTool(url: url))
-        }
         
         var isFirstRemoteShareNavigationEvent: Bool = true
         

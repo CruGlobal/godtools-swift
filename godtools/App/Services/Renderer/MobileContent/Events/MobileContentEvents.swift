@@ -10,33 +10,13 @@ import Foundation
 
 class MobileContentEvents {
         
-    let eventButtonTappedSignal: SignalValue<ButtonEvent> = SignalValue()
     let urlButtonTappedSignal: SignalValue<UrlButtonEvent> = SignalValue()
-    let contentErrorSignal: SignalValue<ContentEventError> = SignalValue()
-    let followUpEventButtonTappedSignal: SignalValue<FollowUpButtonEvent> = SignalValue()
-    let trainingTipTappedSignal: SignalValue<TrainingTipEvent> = SignalValue()
     
     deinit {
         print("x deinit: \(type(of: self)) ***")
     }
     
-    func eventButtonTapped(eventButton: ButtonEvent) {
-        eventButtonTappedSignal.accept(value: eventButton)
-    }
-    
     func urlButtonTapped(urlButtonEvent: UrlButtonEvent) {
         urlButtonTappedSignal.accept(value: urlButtonEvent)
-    }
-    
-    func contentError(error: ContentEventError) {
-        contentErrorSignal.accept(value: error)
-    }
-    
-    func followUpEventButtonTapped(followUpEventButton: FollowUpButtonEvent) {
-        followUpEventButtonTappedSignal.accept(value: followUpEventButton)
-    }
-    
-    func trainingTipTapped(trainingTipEvent: TrainingTipEvent) {
-        trainingTipTappedSignal.accept(value: trainingTipEvent)
     }
 }

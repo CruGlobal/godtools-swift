@@ -65,19 +65,19 @@ class MobileContentButtonView: MobileContentView {
     
     @objc func handleButtonTapped() {
         
-        let events: [String] = viewModel.buttonEvents
-        
         switch viewModel.buttonType {
         
         case .event:
-            super.sendEventsToAllViews(events: events)
+            super.sendEventsToAllViews(events: viewModel.buttonEvents)
         
         case .url:
-            super.sendUrlEventsToAllViews(urlEvents: events)
+            super.sendUrlToRootView(url: viewModel.buttonUrl)
        
         case .unknown:
             break
         }
+        
+        viewModel.buttonTapped()
     }
     
     // MARK: - MobileContentView

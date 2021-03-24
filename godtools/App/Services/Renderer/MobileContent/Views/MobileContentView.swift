@@ -87,20 +87,21 @@ class MobileContentView: UIView, MobileContentStackChildViewType {
     
     // MARK: - Url Events
     
-    func sendUrlEventsToAllViews(urlEvents: [String]) {
-        recurseChildrenAndSendUrlEvents(view: getRootView(), urlEvents: urlEvents)
+    func sendUrlToRootView(url: String) {
+        getRootView().didReceiveUrl(url: url)
     }
     
-    private func recurseChildrenAndSendUrlEvents(view: MobileContentView, urlEvents: [String]) {
+    func didReceiveUrl(url: String) {
         
-        for childView in view.children {
-            recurseChildrenAndSendUrlEvents(view: childView, urlEvents: urlEvents)
-        }
-        
-        view.didReceiveUrlEvents(urlEvents: urlEvents)
     }
     
-    func didReceiveUrlEvents(urlEvents: [String]) {
+    // MARK: - Errors
+    
+    func sendErrorToRootView(error: MobileContentErrorViewModel) {
+        getRootView().didReceiveError(error: error)
+    }
+    
+    func didReceiveError(error: MobileContentErrorViewModel) {
         
     }
     

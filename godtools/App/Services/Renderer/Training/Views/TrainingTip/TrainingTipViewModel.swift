@@ -162,7 +162,7 @@ class TrainingTipViewModel: TrainingTipViewModelType {
             return
         }
         
-        let trainingTipEvent: TrainingTipEvent = TrainingTipEvent(trainingTipId: trainingTipId, tipNode: trainingTipNode)
+        //let trainingTipEvent: TrainingTipEvent = TrainingTipEvent(trainingTipId: trainingTipId, tipNode: trainingTipNode)
         
         // TODO: Implement.
         //mobileContentEvents.trainingTipTapped(trainingTipEvent: trainingTipEvent)

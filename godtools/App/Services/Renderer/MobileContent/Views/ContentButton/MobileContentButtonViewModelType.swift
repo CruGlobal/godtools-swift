@@ -18,4 +18,7 @@ protocol MobileContentButtonViewModelType {
     var borderWidth: CGFloat? { get }
     var buttonType: MobileContentButtonNodeType { get }
     var buttonEvents: [String] { get }
+    var buttonUrl: String { get }
+    
+    func buttonTapped()
 }

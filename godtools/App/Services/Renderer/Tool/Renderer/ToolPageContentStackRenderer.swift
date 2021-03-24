@@ -9,11 +9,10 @@
 import UIKit
 
 // TODO: Remove this class. ~Levi
-class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
+class ToolPageContentStackRenderer {
     
     private static let numberFormatter: NumberFormatter = NumberFormatter()
     
-    private let diContainer: ToolPageDiContainer
     private let node: MobileContentXmlNode
     private let toolPageColors: ToolPageColors
     private let defaultTextNodeTextColor: UIColor?
@@ -21,20 +20,16 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
     private let defaultButtonBorderColor: UIColor?
     
     private weak var rootContentStackRenderer: ToolPageContentStackRenderer?
-        
-    let didRenderContentFormSignal: SignalValue<MobileContentFormView> = SignalValue()
-    let didRenderHiddenContentInputSignal: SignalValue<ContentInputNode> = SignalValue()
-    let didRenderContentInputSignal: SignalValue<ToolPageRenderedContentInput> = SignalValue()
-    let didRenderTrainingTipsSignal: Signal = Signal()
-        
-    required init(rootContentStackRenderer: ToolPageContentStackRenderer?, diContainer: ToolPageDiContainer, node: MobileContentXmlNode, toolPageColors: ToolPageColors, defaultTextNodeTextColor: UIColor?, defaultTextNodeTextAlignment: NSTextAlignment?, defaultButtonBorderColor: UIColor?) {
+                
+    required init(rootContentStackRenderer: ToolPageContentStackRenderer?, node: MobileContentXmlNode, toolPageColors: ToolPageColors, defaultTextNodeTextColor: UIColor?, defaultTextNodeTextAlignment: NSTextAlignment?, defaultButtonBorderColor: UIColor?) {
         
         self.rootContentStackRenderer = rootContentStackRenderer
-        self.diContainer = diContainer
         self.node = node
         self.toolPageColors = toolPageColors
         self.defaultTextNodeTextColor = defaultTextNodeTextColor
-        self.defaultTextNodeTextAlignment = defaultTextNodeTextAlignment ?? (diContainer.language.languageDirection == .leftToRight ? .left : .right)
+        // TODO: Make sure this is added back in.
+        //self.defaultTextNodeTextAlignment = defaultTextNodeTextAlignment ?? (diContainer.language.languageDirection == .leftToRight ? .left : .right)
+        self.defaultTextNodeTextAlignment = .left
         self.defaultButtonBorderColor = defaultButtonBorderColor
     }
     
@@ -42,23 +37,7 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
 
     }
     
-    func render(didRenderView: ((_ renderedView: MobileContentStackRenderedView) -> Void)) {
-                        
-        for childNode in node.children {
-            
-            let renderedView: MobileContentStackRenderedView? = recurseAndRender(
-                node: childNode,
-                rootContentStackRenderer: rootContentStackRenderer ?? self
-            )
-            
-            if let renderedView = renderedView {
-                
-                didRenderView(renderedView)
-            }
-        }
-    }
-    
-    private func recurseAndRender(node: MobileContentXmlNode, rootContentStackRenderer: ToolPageContentStackRenderer) -> MobileContentStackRenderedView? {
+    private func recurseAndRender(node: MobileContentXmlNode, rootContentStackRenderer: ToolPageContentStackRenderer) -> UIView? {
         
         if let paragraphNode = node as? ContentParagraphNode {
         
@@ -296,7 +275,7 @@ class ToolPageContentStackRenderer: MobileContentStackViewRendererType {
         }
         else if node is ContentSpacerNode {
             
-            return MobileContentStackRenderedView(view: MobileContentSpacerView(), heightConstraintType: .spacer)
+            //return MobileContentStackRenderedView(view: MobileContentSpacerView(), heightConstraintType: .spacer)
         }
         
         return nil

@@ -167,24 +167,7 @@ class ToolsFlow: Flow {
             )
             
             self.shareToolMenuFlow = shareToolMenuFlow
-            
-        case .urlLinkTappedFromTool(let url):
-            navigateToURL(url: url)
-            
-        case .toolDidEncounterErrorFromTool(let error):
-            
-            let viewModel = AlertMessageViewModel(
-                title: error.title,
-                message: error.message,
-                cancelTitle: nil,
-                acceptTitle: appDiContainer.localizationServices.stringForMainBundle(key: "OK"),
-                acceptHandler: nil
-            )
-            
-            let view = AlertMessageView(viewModel: viewModel)
-            
-            navigationController.present(view.controller, animated: true, completion: nil)
-            
+                        
         case .toolTrainingTipTappedFromTool(let resource, let manifest, let trainingTipId, let tipNode, let language, let primaryLanguage, let toolPage):
             
             let viewModel = ToolTrainingViewModel(
@@ -576,6 +559,7 @@ class ToolsFlow: Flow {
     
     private func navigateToTract(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
         
+        let toolPageEvents: ToolPageEvents = ToolPageEvents()
         let analytics: AnalyticsContainer = appDiContainer.analytics
         let mobileContentAnalytics: MobileContentAnalytics = appDiContainer.getMobileContentAnalytics()
         let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
@@ -587,6 +571,7 @@ class ToolsFlow: Flow {
         let cardJumpService: CardJumpService = appDiContainer.getCardJumpService()
         
         let toolPageViewFactory = ToolPageViewFactory(
+            toolPageEvents: toolPageEvents,
             analytics: analytics,
             mobileContentAnalytics: mobileContentAnalytics,
             fontService: fontService,
@@ -643,6 +628,7 @@ class ToolsFlow: Flow {
             resource: resource,
             primaryLanguage: primaryLanguage,
             page: page,
+            toolPageEvents: toolPageEvents,
             tractRemoteSharePublisher: appDiContainer.tractRemoteSharePublisher,
             tractRemoteShareSubscriber: appDiContainer.tractRemoteShareSubscriber,
             localizationServices: localizationServices,

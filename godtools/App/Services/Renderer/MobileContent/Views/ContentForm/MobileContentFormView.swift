@@ -35,33 +35,12 @@ class MobileContentFormView: MobileContentStackView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        print("x deinit: \(type(of: self))")
-    }
-    
     private func setupLayout() {
         
     }
     
     private func setupBinding() {
         
-        /*
-        viewModel.resignCurrentInputSignal.addObserver(self) { [weak self] in
-            self?.resignCurrentEditedTextField()
-        }
-        
-        let contentViewModel: ToolPageContentStackContainerViewModel = viewModel.contentViewModel
-        
-        contentViewModel.contentStackRenderer.didRenderContentInputSignal.addObserver(self) { [weak self] (renderedInput: ToolPageRenderedContentInput) in
-            self?.handleDidRenderContentInput(contentInput: renderedInput.view)
-        }*/
-        
-        // TODO: Fix this for new renderer changes. ~Levi
-        /*
-        let contentStackView = MobileContentStackView(viewRenderer: contentViewModel.contentStackRenderer, itemSpacing: 15, scrollIsEnabled: false)
-        contentContainerView.addSubview(contentStackView)
-        contentStackView.translatesAutoresizingMaskIntoConstraints = false
-        contentStackView.constrainEdgesToSuperview()*/
     }
     
     func getInputModels() -> [MobileContentFormInputModel] {

@@ -8,14 +8,8 @@
 
 import UIKit
 
-protocol ToolPageCallToActionViewDelegate: class {
-    func toolPageCallToActionNextButtonTapped(callToActionView: ToolPageCallToActionView)
-}
-
 class ToolPageCallToActionView: MobileContentView {
-    
-    private weak var delegate: ToolPageCallToActionViewDelegate?
-    
+        
     let viewModel: ToolPageCallToActionViewModelType
         
     @IBOutlet weak private var titleLabel: UILabel!
@@ -37,11 +31,7 @@ class ToolPageCallToActionView: MobileContentView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    deinit {
-        print("x deinit: \(type(of: self))")
-    }
-    
+
     private func initializeNib() {
         
         let nib: UINib = UINib(nibName: String(describing: ToolPageCallToActionView.self), bundle: nil)
@@ -71,11 +61,6 @@ class ToolPageCallToActionView: MobileContentView {
     }
     
     @objc func handleNextTapped(button: UIButton) {
-        delegate?.toolPageCallToActionNextButtonTapped(callToActionView: self)
-    }
-    
-    func configure(delegate: ToolPageCallToActionViewDelegate) {
-        
-        self.delegate = delegate
+        viewModel.nextButtonTapped()
     }
 }

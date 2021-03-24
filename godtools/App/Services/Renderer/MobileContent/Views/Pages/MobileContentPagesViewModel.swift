@@ -61,6 +61,10 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         setRenderer(renderer: renderer)
     }
     
+    func getPageForListenerEvents(events: [String]) -> Int? {
+        return currentRenderer?.getPageForListenerEvents(events: events)
+    }
+    
     func pageWillAppear(page: Int) -> MobileContentView? {
         
         guard let window = self.window, let safeArea = self.safeArea else {
@@ -94,6 +98,8 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         
         self.currentPageValue = page
     }
+    
+    // MARK: -
     
     func gotoNextPage(animated: Bool) {
         

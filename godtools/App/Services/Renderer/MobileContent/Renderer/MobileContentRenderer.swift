@@ -17,8 +17,8 @@ class MobileContentRenderer {
     private let translationsFileCache: TranslationsFileCache
     private let pageViewFactories: [MobileContentPageViewFactoryType]
     
-    private(set) var pageNodes: [Int: PageNode] = Dictionary()
-    private(set) var pageListeners: [PageListenerEventName: PageNumber] = Dictionary()
+    private var pageNodes: [Int: PageNode] = Dictionary()
+    private var pageListeners: [PageListenerEventName: PageNumber] = Dictionary()
     
     let manifest: MobileContentXmlManifest
     let resourcesCache: ManifestResourcesCache
@@ -59,6 +59,15 @@ class MobileContentRenderer {
     }
     
     // MARK: - Page Listeners
+    
+    func getPageForListenerEvents(events: [String]) -> Int? {
+        for event in events {
+            if let page = pageListeners[event] {
+                return page
+            }
+        }
+        return nil
+    }
     
     private func addPageListeners(pageNode: PageNode, page: Int) {
         for listener in pageNode.listeners {

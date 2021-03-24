@@ -224,42 +224,8 @@ class ToolPageViewModel: NSObject, ToolPageViewModelType {
         hidesCardJump.accept(value: diContainer.cardJumpService.didShowCardJump)
     }
     
-    deinit {
-        print("x deinit: \(type(of: self))")
-        diContainer.mobileContentEvents.eventButtonTappedSignal.removeObserver(self)
-        diContainer.mobileContentEvents.contentErrorSignal.removeObserver(self)
-        diContainer.mobileContentEvents.trainingTipTappedSignal.removeObserver(self)
-        diContainer.cardJumpService.didSaveCardJumpShownSignal.removeObserver(self)
-    }
-    
     private func setupBinding() {
         
-        diContainer.mobileContentEvents.eventButtonTappedSignal.addObserver(self) { [weak self] (buttonEvent: ButtonEvent) in
-            guard let viewModel = self else {
-                return
-            }
-            if viewModel.pageNode.listeners.contains(buttonEvent.event) {
-                viewModel.delegate?.toolPagePresentedListener(viewModel: viewModel, page: viewModel.page)
-            }
-        }
-        
-        diContainer.mobileContentEvents.contentErrorSignal.addObserver(self) { [weak self] (error: ContentEventError) in
-            guard let viewModel = self else {
-                return
-            }
-            self?.delegate?.toolPageError(viewModel: viewModel, page: viewModel.page, error: error)
-        }
-        
-        diContainer.mobileContentEvents.trainingTipTappedSignal.addObserver(self) { [weak self] (trainingTipEvent: TrainingTipEvent) in
-            guard let viewModel = self else {
-                return
-            }
-            self?.delegate?.toolPageTrainingTipTapped(viewModel: viewModel, page: viewModel.page, trainingTipId: trainingTipEvent.trainingTipId, tipNode: trainingTipEvent.tipNode)
-        }
-        
-        diContainer.cardJumpService.didSaveCardJumpShownSignal.addObserver(self) { [weak self] in
-            self?.hidesCardJump.accept(value: true)
-        }
     }
     
     private func reloadTrainingTipsEnabled(trainingTipsEnabled: Bool) {

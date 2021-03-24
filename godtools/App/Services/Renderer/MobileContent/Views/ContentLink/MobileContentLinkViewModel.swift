@@ -47,13 +47,6 @@ class MobileContentLinkViewModel: MobileContentLinkViewModelType {
     }
     
     func linkTapped() {
-    
-        // TODO: Process events. ~Levi
-        
-        for event in linkNode.events {
-            //mobileContentEvents.eventButtonTapped(eventButton: ButtonEvent(event: event))
-        }
-        
         if let analyticsEventsNode = linkNode.analyticsEventsNode {
             mobileContentAnalytics.trackEvents(events: analyticsEventsNode)
         }

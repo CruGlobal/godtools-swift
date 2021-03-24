@@ -15,6 +15,7 @@ protocol MobileContentPagesViewModelType {
     var pageNavigationSemanticContentAttribute: UISemanticContentAttribute { get }
     
     func viewDidFinishLayout(window: UIViewController, safeArea: UIEdgeInsets)
+    func getPageForListenerEvents(events: [String]) -> Int?
     func pageWillAppear(page: Int) -> MobileContentView?
     func pageDidChange(page: Int)
     func pageDidAppear(page: Int)

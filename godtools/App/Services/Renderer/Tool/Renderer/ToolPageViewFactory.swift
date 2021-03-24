@@ -10,6 +10,7 @@ import Foundation
 
 class ToolPageViewFactory: MobileContentPageViewFactoryType {
         
+    private let toolPageEvents: ToolPageEvents
     private let analytics: AnalyticsContainer
     private let mobileContentAnalytics: MobileContentAnalytics
     private let fontService: FontService
@@ -21,8 +22,9 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
     private let viewedTrainingTipsService: ViewedTrainingTipsService
     private let trainingTipsEnabled: Bool
     
-    required init(analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, followUpService: FollowUpsService, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, viewedTrainingTipsService: ViewedTrainingTipsService, trainingTipsEnabled: Bool) {
+    required init(toolPageEvents: ToolPageEvents, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, followUpService: FollowUpsService, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, viewedTrainingTipsService: ViewedTrainingTipsService, trainingTipsEnabled: Bool) {
         
+        self.toolPageEvents = toolPageEvents
         self.analytics = analytics
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
@@ -60,6 +62,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             let viewModel = ToolPageCallToActionViewModel(
                 callToActionNode: callToActionNode,
                 pageModel: pageModel,
+                toolPageEvents: toolPageEvents,
                 toolPageColors: ToolPageColors(pageNode: pageModel.pageNode, manifest: pageModel.manifest),
                 fontService: fontService
             )
@@ -166,22 +169,6 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             )
             
             return view
-            
-            /*
-            let viewModel: ToolPageViewModel = ToolPageViewModel(
-                pageNode: pageNode,
-                diContainer: diContainer,
-                page: page,
-                initialPositions: nil
-            )
-            
-            let view = ToolPageView(
-                viewModel: viewModel,
-                windowViewController: <#T##UIViewController#>,
-                safeArea: <#T##UIEdgeInsets#>
-            )
-            
-            return view*/
         }
         
         return nil

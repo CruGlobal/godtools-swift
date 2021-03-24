@@ -59,7 +59,7 @@ class MobileContentLinkView: MobileContentView {
     }
     
     @objc func handleLinkTapped() {
-                
+        viewModel.linkTapped()
         super.sendEventsToAllViews(events: viewModel.linkEvents)
     }
     

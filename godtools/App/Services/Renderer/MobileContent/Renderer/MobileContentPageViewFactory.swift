@@ -193,8 +193,8 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             return view
         }
         else if renderableNode is ContentSpacerNode {
-            
-            //return MobileContentStackRenderedView(view: MobileContentSpacerView(), heightConstraintType: .spacer)
+                
+            return MobileContentSpacerView()
         }
         
         return nil

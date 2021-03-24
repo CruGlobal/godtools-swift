@@ -32,10 +32,6 @@ class TrainingTipView: MobileContentView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        print("x deinit: \(type(of: self))")
-    }
-    
     private func initializeNib() {
         
         let nib: UINib = UINib(nibName: String(describing: TrainingTipView.self), bundle: nil)

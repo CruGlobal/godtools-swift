@@ -66,31 +66,11 @@ class MobileContentButtonViewModel: MobileContentButtonViewModelType {
         return buttonNode.events
     }
     
+    var buttonUrl: String {
+        return buttonNode.url ?? ""
+    }
+    
     func buttonTapped() {
-        
-        // TODO: Process button event for follup:send. ~Levi
-        
-        if buttonNode.type == "event" {
-            
-            let followUpSendEventName: String = "followup:send"
-            
-            if buttonNode.events.contains(followUpSendEventName) {
-                var triggerEvents: [String] = buttonNode.events
-                if let index = triggerEvents.firstIndex(of: followUpSendEventName) {
-                    triggerEvents.remove(at: index)
-                }
-                //mobileContentEvents.followUpEventButtonTapped(followUpEventButton: FollowUpButtonEvent(triggerEventsOnFollowUpSent: triggerEvents))
-            }
-            else {
-                for event in buttonNode.events {
-                    //mobileContentEvents.eventButtonTapped(eventButton: ButtonEvent(event: event))
-                }
-            }
-        }
-        else if buttonNode.type == "url", let url = buttonNode.url {
-            //mobileContentEvents.urlButtonTapped(urlButtonEvent: UrlButtonEvent(url: url))
-        }
-        
         if let analyticsEventsNode = buttonNode.analyticsEventsNode {
             mobileContentAnalytics.trackEvents(events: analyticsEventsNode)
         }

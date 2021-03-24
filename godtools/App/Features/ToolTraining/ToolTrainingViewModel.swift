@@ -166,6 +166,8 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
         }
     }
     
+    // TODO: Fix this. ~Levi
+    /*
     func tipPageWillAppear(page: Int) -> ToolPageContentStackContainerViewModel {
             
         let pageNode: PageNode = pageNodes[page]
@@ -196,7 +198,7 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
             defaultTextNodeTextAlignment: nil,
             defaultButtonBorderColor: nil
         )
-    }
+    }*/
     
     func tipPageDidChange(page: Int) {
         setPage(page: page, animated: true)
@@ -208,30 +210,5 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
         let tipPage: Int = page
         let analyticsScreenName: String = "\(resource.abbreviation)-tip-\(trainingTipId)-\(tipPage)"
         analytics.pageViewedAnalytics.trackPageView(screenName: analyticsScreenName, siteSection: "", siteSubSection: "")
-    }
-}
-
-// MARK: - ToolPageViewModelTypeDelegate
-
-extension ToolTrainingViewModel: ToolPageViewModelTypeDelegate {
-    
-    func toolPagePresentedListener(viewModel: ToolPageViewModelType, page: Int) {
-        
-    }
-    
-    func toolPageTrainingTipTapped(viewModel: ToolPageViewModelType, page: Int, trainingTipId: String, tipNode: TipNode) {
-        
-    }
-    
-    func toolPageCardChanged(viewModel: ToolPageViewModelType, page: Int, cardPosition: Int?) {
-        
-    }
-    
-    func toolPageNextPageTapped(viewModel: ToolPageViewModelType, page: Int) {
-        
-    }
-    
-    func toolPageError(viewModel: ToolPageViewModelType, page: Int, error: ContentEventError) {
-        
     }
 }

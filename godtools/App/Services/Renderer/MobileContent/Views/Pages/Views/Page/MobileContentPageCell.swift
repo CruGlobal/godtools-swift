@@ -13,7 +13,7 @@ class MobileContentPageCell: UICollectionViewCell {
     static let nibName: String = "MobileContentPageCell"
     static let reuseIdentifier: String = "MobileContentPageCellReuseIdentifier"
      
-    private(set) var page: MobileContentView?
+    private(set) var mobileContentView: MobileContentView?
     
     deinit {
         print("x deinit: \(type(of: self))")
@@ -27,15 +27,15 @@ class MobileContentPageCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        page?.removeFromSuperview()
-        page = nil
+        mobileContentView?.removeFromSuperview()
+        mobileContentView = nil
     }
     
-    func configure(page: MobileContentView) {
+    func configure(mobileContentView: MobileContentView) {
         
-        contentView.addSubview(page)
-        page.constrainEdgesToSuperview()
+        contentView.addSubview(mobileContentView)
+        mobileContentView.constrainEdgesToSuperview()
         
-        self.page = page
+        self.mobileContentView = mobileContentView
     }
 }

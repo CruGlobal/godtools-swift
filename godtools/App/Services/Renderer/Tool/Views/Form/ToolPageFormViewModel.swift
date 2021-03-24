@@ -15,7 +15,7 @@ class ToolPageFormViewModel: MobileContentFormViewModel {
     private let localizationServices: LocalizationServices
     
     let didSendFollowUpSignal: SignalValue<[String]> = SignalValue()
-    let alertMessage: ObservableValue<AlertMessageType?> = ObservableValue(value: nil)
+    let error: ObservableValue<MobileContentErrorViewModel?> = ObservableValue(value: nil)
     
     required init(formNode: ContentFormNode, pageModel: MobileContentRendererPageModel, followUpService: FollowUpsService, localizationServices: LocalizationServices) {
         
@@ -79,8 +79,7 @@ class ToolPageFormViewModel: MobileContentFormViewModel {
             languageId: languageId
         )
         
-        // TODO: Uncomment.
-        //followUpService.postNewFollowUp(followUp: followUpModel)
+        _ = followUpService.postNewFollowUp(followUp: followUpModel)
         
         didSendFollowUpSignal.accept(value: events)
     }
@@ -99,7 +98,13 @@ class ToolPageFormViewModel: MobileContentFormViewModel {
             
             errorMessage += String(format: localizationServices.stringForMainBundle(key: "required_field_missing"), name.localizedCapitalized)
         }
-                    
-        alertMessage.accept(value: AlertMessage(title: errorTitle, message: errorMessage))
+        
+        let errorViewModel = MobileContentErrorViewModel(
+            title: errorTitle,
+            message: errorMessage,
+            localizationServices: localizationServices
+        )
+        
+        error.accept(value: errorViewModel)
     }
 }

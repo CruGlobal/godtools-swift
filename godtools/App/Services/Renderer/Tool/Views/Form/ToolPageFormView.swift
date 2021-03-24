@@ -44,6 +44,12 @@ class ToolPageFormView: MobileContentFormView {
                 self?.sendEventsToAllViews(events: eventsWithoutFollowUp)
             }
         }
+        
+        pageFormViewModel.error.addObserver(self) { [weak self] (error: MobileContentErrorViewModel?) in
+            if let error = error {
+                self?.sendErrorToRootView(error: error)
+            }
+        }
     }
     
     // MARK: - MobileContenView

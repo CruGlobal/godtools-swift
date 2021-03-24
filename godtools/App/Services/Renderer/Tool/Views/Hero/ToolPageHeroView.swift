@@ -26,11 +26,7 @@ class ToolPageHeroView: MobileContentStackView {
     required init(itemSpacing: CGFloat, scrollIsEnabled: Bool) {
         fatalError("init(itemSpacing:scrollIsEnabled:) has not been implemented")
     }
-    
-    deinit {
-        print("x deinit: \(type(of: self))")
-    }
-    
+
     // MARK: - MobileContentView
 
     override func viewDidAppear() {

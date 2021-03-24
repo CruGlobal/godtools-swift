@@ -127,9 +127,16 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
             cellReuseIdentifier: MobileContentPageCell.reuseIdentifier,
             indexPath: indexPath) as! MobileContentPageCell
         
-        if let pageView = viewModel.pageWillAppear(page: indexPath.row) {
+        if let mobileContentView = viewModel.pageWillAppear(page: indexPath.row) {
             
-            cell.configure(page: pageView)
+            if let pageView = mobileContentView as? MobileContentPageView {
+                pageView.setDelegate(delegate: self)
+            }
+            else {
+                assertionFailure("Provided MobileContentView should inherit from MobileContentPageView")
+            }
+            
+            cell.configure(mobileContentView: mobileContentView)
         }
         
         return cell
@@ -147,14 +154,46 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
         viewModel.pageDidAppear(page: page)
         
         if let contentPageCell = pageCell as? MobileContentPageCell {
-            contentPageCell.page?.viewDidAppear()
+            contentPageCell.mobileContentView?.viewDidAppear()
         }
     }
     
     func pageNavigationPageDidDisappear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
                 
         if let contentPageCell = pageCell as? MobileContentPageCell {
-            contentPageCell.page?.viewDidDisappear()
+            contentPageCell.mobileContentView?.viewDidDisappear()
         }
+    }
+}
+
+// MARK: - MobileContentPageViewDelegate
+
+extension MobileContentPagesView: MobileContentPageViewDelegate {
+    
+    func pageViewDidReceiveEvents(pageView: MobileContentPageView, events: [String]) {
+        
+        if let page = viewModel.getPageForListenerEvents(events: events) {
+            pageNavigationView.scrollToPage(page: page, animated: true)
+        }
+    }
+    
+    func pageViewDidReceiveUrl(pageView: MobileContentPageView, url: String) {
+
+        guard let webUrl = URL(string: url) else {
+            return
+        }
+        
+        if #available(iOS 10.0, *) {
+            UIApplication.shared.open(webUrl)
+        } else {
+            UIApplication.shared.openURL(webUrl)
+        }
+    }
+    
+    func pageViewDidReceiveError(pageView: MobileContentPageView, error: MobileContentErrorViewModel) {
+        
+        let view = MobileContentErrorView(viewModel: error)
+        
+        present(view.controller, animated: true, completion: nil)
     }
 }
