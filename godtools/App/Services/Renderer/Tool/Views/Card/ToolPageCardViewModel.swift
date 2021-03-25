@@ -112,7 +112,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     }
     
     var titleAlignment: NSTextAlignment {
-        return pageModel.language.languageDirection == .leftToRight ? .left : .right
+        return languageTextAlignment
     }
     
     var cardPositionLabel: String? {

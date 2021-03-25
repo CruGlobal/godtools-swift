@@ -14,20 +14,18 @@ class MobileContentLinkViewModel: MobileContentLinkViewModelType {
     private let pageModel: MobileContentRendererPageModel
     private let mobileContentAnalytics: MobileContentAnalytics
     private let fontService: FontService
-    private let fontSize: CGFloat
-    private let fontWeight: UIFont.Weight
+    private let fontSize: CGFloat = 18
+    private let fontWeight: UIFont.Weight = .regular
     
     let titleColor: UIColor
     
-    required init(linkNode: ContentLinkNode, pageModel: MobileContentRendererPageModel, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, fontSize: CGFloat, fontWeight: UIFont.Weight, titleColor: UIColor) {
+    required init(linkNode: ContentLinkNode, pageModel: MobileContentRendererPageModel, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
         
         self.linkNode = linkNode
         self.pageModel = pageModel
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
-        self.fontSize = fontSize
-        self.fontWeight = fontWeight
-        self.titleColor = titleColor
+        self.titleColor = linkNode.textNode?.getTextColor()?.color ?? pageModel.pageColors.primaryColor
     }
     
     var backgroundColor: UIColor {

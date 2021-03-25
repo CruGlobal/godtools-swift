@@ -11,28 +11,14 @@ import UIKit
 class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
     
     private let pageModel: MobileContentRendererPageModel
-    private let fontService: FontService
-    private let language: LanguageModel
     
-    let hidesHeader: Bool
-    let number: String?
-    let title: String?
     let trainingTipViewModel: TrainingTipViewModelType?
     
-    required init(headerNode: HeaderNode, pageModel: MobileContentRendererPageModel, fontService: FontService, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, viewedTrainingTipsService: ViewedTrainingTipsService, trainingTipsEnabled: Bool) {
+    required init(headerNode: HeaderNode, pageModel: MobileContentRendererPageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, viewedTrainingTipsService: ViewedTrainingTipsService, trainingTipsEnabled: Bool) {
         
         self.pageModel = pageModel
-        self.fontService = fontService
-        self.language = pageModel.language
         
-        let pageHeaderNumber: String? = headerNode.number
-        let pageHeaderTitle: String? = headerNode.title
-        let hidesHeader: Bool = pageHeaderNumber == nil && pageHeaderTitle == nil
-        
-        self.hidesHeader = hidesHeader
-        number = pageHeaderNumber
-        title = pageHeaderTitle
-        
+        // TODO: Can I fetch this from renderer?
         if trainingTipsEnabled, let trainingTipId = headerNode.trainingTip, !trainingTipId.isEmpty {
             
             trainingTipViewModel = TrainingTipViewModel(
@@ -56,28 +42,22 @@ class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
     var backgroundColor: UIColor {
         return pageModel.pageColors.primaryColor
     }
+}
+
+// MARK: - MobileContentViewModelType
+
+extension ToolPageHeaderViewModel: MobileContentViewModelType {
     
-    var numberFont: UIFont {
-        return fontService.getFont(size: 54, weight: .regular)
+    var language: LanguageModel {
+        return pageModel.language
     }
     
-    var numberColor: UIColor {
-        return pageModel.pageColors.primaryTextColor
+    var analyticsEvents: [MobileContentAnalyticsEvent] {
+        return []
     }
     
-    var numberAlignment: NSTextAlignment {
-        return language.languageDirection == .leftToRight ? .left : .right
-    }
-    
-    var titleFont: UIFont {
-        return fontService.getFont(size: 19, weight: .regular)
-    }
-    
-    var titleColor: UIColor {
-        return pageModel.pageColors.primaryTextColor
-    }
-    
-    var titleAlignment: NSTextAlignment {
-        return language.languageDirection == .leftToRight ? .left : .right
+    var defaultAnalyticsEventsTrigger: AnalyticsEventNodeTrigger {
+        return .visible
     }
 }
+

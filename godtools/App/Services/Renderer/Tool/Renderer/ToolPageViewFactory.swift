@@ -66,7 +66,6 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             let viewModel = ToolPageHeaderViewModel(
                 headerNode: headerNode,
                 pageModel: pageModel,
-                fontService: fontService,
                 translationsFileCache: translationsFileCache,
                 mobileContentNodeParser: mobileContentNodeParser,
                 viewedTrainingTipsService: viewedTrainingTipsService,

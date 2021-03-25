@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol MobileContentTextViewModelType {
+protocol MobileContentTextViewModelType: MobileContentViewModelType {
     
     var startImage: UIImage? { get }
     var startImageSize: CGSize { get }
@@ -20,4 +20,6 @@ protocol MobileContentTextViewModelType {
     var endImage: UIImage? { get }
     var endImageSize: CGSize { get }
     var hidesEndImage: Bool { get }
+    
+    func getScaledFont(fontSizeToScale: CGFloat, fontWeightElseUseTextDefault: UIFont.Weight?) -> UIFont
 }

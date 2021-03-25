@@ -15,22 +15,18 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     private let textNode: ContentTextNode
     private let pageModel: MobileContentRendererPageModel
     private let fontService: FontService
-    private let fontSize: CGFloat
-    private let defaultFontWeight: UIFont.Weight
-    private let defaultTextAlignment: NSTextAlignment
+    private let fontSize: CGFloat = 18
+    private let defaultFontWeight: UIFont.Weight = .regular
     private let defaultImagePointSize: Float = 40
-    
+        
     let textColor: UIColor
     
-    required init(textNode: ContentTextNode, pageModel: MobileContentRendererPageModel, fontService: FontService, fontSize: CGFloat, defaultFontWeight: UIFont.Weight, defaultTextAlignment: NSTextAlignment, textColor: UIColor) {
+    required init(textNode: ContentTextNode, pageModel: MobileContentRendererPageModel, fontService: FontService) {
         
         self.textNode = textNode
         self.pageModel = pageModel
         self.fontService = fontService
-        self.fontSize = fontSize
-        self.defaultFontWeight = defaultFontWeight
-        self.defaultTextAlignment = defaultTextAlignment
-        self.textColor = textColor
+        self.textColor = textNode.getTextColor()?.color ?? pageModel.pageColors.textColor // TODO: I think we need to check for nearest ancestor text color before page color. ~Levi
     }
     
     var startImage: UIImage? {
@@ -60,39 +56,10 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     
     var font: UIFont {
         
-        let fontScale: CGFloat
-        
-        if let textScaleString = textNode.textScale,
-            !textScaleString.isEmpty,
-            let number = MobileContentTextViewModel.numberFormatter.number(from: textScaleString) {
-            
-            fontScale = CGFloat(truncating: number)
-        }
-        else {
-            fontScale = 1
-        }
-        
-        let fontWeight: UIFont.Weight
-        
-        if let textStyle = textNode.textStyle, !textStyle.isEmpty {
-            if textStyle == "bold" {
-                fontWeight = .bold
-            }
-            else if textStyle == "italic" {
-                fontWeight = defaultFontWeight
-            }
-            else if textStyle == "underline" {
-                fontWeight = defaultFontWeight
-            }
-            else {
-                fontWeight = defaultFontWeight
-            }
-        }
-        else {
-            fontWeight = defaultFontWeight
-        }
-        
-        return fontService.getFont(size: fontSize * fontScale, weight: fontWeight)
+        return getScaledFont(
+            fontSizeToScale: fontSize,
+            fontWeightElseUseTextDefault: nil
+        )
     }
     
     var text: String? {
@@ -114,11 +81,11 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
                 textAlignment = .right
             }
             else {
-                textAlignment = defaultTextAlignment
+                textAlignment = languageTextAlignment
             }
         }
         else {
-            textAlignment = defaultTextAlignment
+            textAlignment = languageTextAlignment
         }
         
         return textAlignment
@@ -147,5 +114,69 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
             return true
         }
         return resource.isEmpty
+    }
+    
+    private func getFontWeight() -> UIFont.Weight {
+        
+        let fontWeight: UIFont.Weight
+        
+        if let textStyle = textNode.textStyle, !textStyle.isEmpty {
+            if textStyle == "bold" {
+                fontWeight = .bold
+            }
+            else if textStyle == "italic" {
+                fontWeight = defaultFontWeight
+            }
+            else if textStyle == "underline" {
+                fontWeight = defaultFontWeight
+            }
+            else {
+                fontWeight = defaultFontWeight
+            }
+        }
+        else {
+            fontWeight = defaultFontWeight
+        }
+        
+        return fontWeight
+    }
+    
+    private func getFontScale() -> CGFloat {
+        
+        let fontScale: CGFloat
+        
+        if let textScaleString = textNode.textScale, !textScaleString.isEmpty, let number = MobileContentTextViewModel.numberFormatter.number(from: textScaleString) {
+            fontScale = CGFloat(truncating: number)
+        }
+        else {
+            fontScale = 1
+        }
+        
+        return fontScale
+    }
+    
+    func getScaledFont(fontSizeToScale: CGFloat, fontWeightElseUseTextDefault: UIFont.Weight?) -> UIFont {
+                
+        return fontService.getFont(
+            size: fontSizeToScale * getFontScale(),
+            weight: fontWeightElseUseTextDefault ?? getFontWeight()
+        )
+    }
+}
+
+// MARK: - MobileContentViewModelType
+
+extension MobileContentTextViewModel: MobileContentViewModelType {
+    
+    var language: LanguageModel {
+        return pageModel.language
+    }
+    
+    var analyticsEvents: [MobileContentAnalyticsEvent] {
+        return []
+    }
+    
+    var defaultAnalyticsEventsTrigger: AnalyticsEventNodeTrigger {
+        return .visible
     }
 }

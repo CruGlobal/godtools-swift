@@ -29,19 +29,11 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             )
         }
         else if let textNode = renderableNode as? ContentTextNode {
-              
-            // TODO: How can I add a default text alignment and text color given the page? ~Levi
-            // defaultTextAlignment: defaultTextNodeTextAlignment,
-            // textColor: textNode.getTextColor()?.color ?? defaultTextNodeTextColor ?? toolPageColors.textColor
-            
+                          
             let viewModel = MobileContentTextViewModel(
                 textNode: textNode,
                 pageModel: pageModel,
-                fontService: fontService,
-                fontSize: 18,
-                defaultFontWeight: .regular,
-                defaultTextAlignment: .left,
-                textColor: textNode.getTextColor()?.color ?? .black
+                fontService: fontService
             )
             
             let view = MobileContentTextView(viewModel: viewModel)
@@ -80,71 +72,50 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             return view
         }
         else if let linkNode = renderableNode as? ContentLinkNode {
-            
-            // TODO: Need to provide back-up titleColor depending on container. ~Levi
-            
+                        
             let viewModel = MobileContentLinkViewModel(
                 linkNode: linkNode,
                 pageModel: pageModel,
                 mobileContentAnalytics: mobileContentAnalytics,
-                fontService: fontService,
-                fontSize: 18,
-                fontWeight: .regular,
-                titleColor: linkNode.textNode?.getTextColor()?.color ?? .black
+                fontService: fontService
             )
             
             let view = MobileContentLinkView(viewModel: viewModel)
             
             return view
+        }
+        else if let headingNode = renderableNode as? HeadingNode {
             
-            /*
-            let viewModel = MobileContentLinkViewModel(
-                linkNode: linkNode,
-                mobileContentEvents: diContainer.mobileContentEvents,
-                mobileContentAnalytics: diContainer.mobileContentAnalytics,
-                fontService: diContainer.fontService,
-                fontSize: 18,
-                fontWeight: .regular,
-                titleColor: linkNode.textNode?.getTextColor()?.color ?? toolPageColors.primaryColor
+            let viewModel = MobileContentHeadingViewModel(
+                headingNode: headingNode,
+                pageModel: pageModel
             )
             
-            let view = MobileContentLinkView(viewModel: viewModel)
+            let view = MobileContentHeadingView(viewModel: viewModel)
             
-            return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)*/
+            return view
         }
-        else if let titleNode = renderableNode as? TitleNode, let textNode = titleNode.textNode {
+        else if let titleNode = renderableNode as? TitleNode {
                   
-            /*
-            let viewModel = MobileContentTextViewModel(
-                contentTextNode: textNode,
-                manifestResourcesCache: diContainer.manifestResourcesCache,
-                fontService: diContainer.fontService,
-                fontSize: 44,
-                defaultFontWeight: .regular,
-                defaultTextAlignment: defaultTextNodeTextAlignment,
-                textColor: textNode.getTextColor()?.color ?? toolPageColors.primaryTextColor
+            let viewModel = MobileContentTitleViewModel(
+                titleNode: titleNode,
+                pageModel: pageModel
             )
-
-            let view = MobileContentTextView(viewModel: viewModel)
             
-            return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)*/
+            let view = MobileContentTitleView(viewModel: viewModel)
+            
+            return view
         }
-        else if let headingNode = renderableNode as? HeadingNode, let textNode = headingNode.textNode {
+        else if let numberNode = renderableNode as? NumberNode {
             
-            /*
-            let viewModel = MobileContentTextViewModel(
-                contentTextNode: textNode,
-                manifestResourcesCache: diContainer.manifestResourcesCache,
-                fontService: diContainer.fontService,
-                fontSize: 30,
-                defaultFontWeight: .regular,
-                defaultTextAlignment: defaultTextNodeTextAlignment,
-                textColor: textNode.getTextColor()?.color ?? toolPageColors.primaryColor
+            let viewModel = MobileContentNumberViewModel(
+                numberNode: numberNode,
+                pageModel: pageModel
             )
-
-            let view = MobileContentTextView(viewModel: viewModel)
             
-            return MobileContentStackRenderedView(view: view, heightConstraintType: .constrainedToChildren)*/
+            let view = MobileContentNumberView(viewModel: viewModel)
+            
+            return view
         }
         else if let tabNode = renderableNode as? ContentTabNode {
             

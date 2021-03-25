@@ -205,7 +205,7 @@ extension ToolPageView {
     
     private func setHeaderHidden(hidden: Bool, animated: Bool) {
                  
-        let headerShouldBeHidden: Bool = headerView?.viewModel.hidesHeader ?? true
+        let headerShouldBeHidden: Bool = headerView == nil
                 
         let attemptingToShowHeader: Bool = !hidden
         if attemptingToShowHeader && headerShouldBeHidden {
@@ -306,7 +306,7 @@ extension ToolPageView: ToolPageCallToActionViewDelegate {
     
     private func setCallToActionHidden(hidden: Bool, animated: Bool) {
         
-        let callToActionShouldBeHidden: Bool = viewModel.hidesCallToAction
+        let callToActionShouldBeHidden: Bool = viewModel.hidesCallToAction || callToActionView == nil
         
         let attemptingToShowCallToAction: Bool = !hidden
         if attemptingToShowCallToAction && callToActionShouldBeHidden {

@@ -16,7 +16,15 @@ class NumberNode: MobileContentXmlNode {
         super.init(xmlElement: xmlElement)
     }
     
-    var text: String? {
-        return (children.first as? ContentTextNode)?.text
+    var textNode: ContentTextNode? {
+        return children.first as? ContentTextNode
+    }
+}
+
+// MARK: - MobileContentRenderableNode
+
+extension NumberNode: MobileContentRenderableNode {
+    var nodeContentIsRenderable: Bool {
+        return true
     }
 }
