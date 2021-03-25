@@ -11,15 +11,13 @@ import UIKit
 protocol MobileContentPagesViewModelType {
     
     var numberOfPages: ObservableValue<Int> { get }
-    var currentPage: ObservableValue<AnimatableValue<Int>> { get }
     var pageNavigationSemanticContentAttribute: UISemanticContentAttribute { get }
     var rendererWillChangeSignal: Signal { get }
+    var navigateSignal: SignalValue<MobileContentPagesNavigationModel> { get }
     
     func viewDidFinishLayout(window: UIViewController, safeArea: UIEdgeInsets)
     func getPageForListenerEvents(events: [String]) -> Int?
     func pageWillAppear(page: Int) -> MobileContentView?
-    func pageDidChange(page: Int)
-    func pageDidAppear(page: Int)
     func buttonWithUrlTapped(url: String)
     func trainingTipTapped(event: TrainingTipEvent)
     func errorOccurred(error: MobileContentErrorViewModel)

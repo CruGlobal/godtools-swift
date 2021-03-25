@@ -17,6 +17,4 @@ protocol ToolPageCallToActionViewModelType {
     var titleColor: UIColor { get }
     var nextButtonColor: UIColor { get }
     var nextButtonImage: UIImage? { get }
-    
-    func nextButtonTapped()
 }

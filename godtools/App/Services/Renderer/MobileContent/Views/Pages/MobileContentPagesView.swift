@@ -15,10 +15,11 @@ class MobileContentPagesView: UIViewController {
     private let viewModel: MobileContentPagesViewModelType
     
     private var initialPagePositions: [PageNumber: MobileContentPagePositionsType] = Dictionary()
+    private var currentNavigation: MobileContentPagesNavigationModel?
     private var didLayoutSubviews: Bool = false
           
     @IBOutlet weak private var safeAreaView: UIView!
-    @IBOutlet weak private var pageNavigationView: PageNavigationCollectionView!
+    @IBOutlet weak private(set) var pageNavigationView: PageNavigationCollectionView!
     
     required init(viewModel: MobileContentPagesViewModelType) {
         self.viewModel = viewModel
@@ -82,10 +83,6 @@ class MobileContentPagesView: UIViewController {
         viewModel.numberOfPages.addObserver(self) { [weak self] (numberOfToolPages: Int) in
             self?.pageNavigationView.reloadData()
         }
-        
-        viewModel.currentPage.addObserver(self) { [weak self] (animatableValue: AnimatableValue<Int>) in
-            self?.pageNavigationView.scrollToPage(page: animatableValue.value, animated: animatableValue.animated)
-        }
     }
     
     func setupLayout() {
@@ -119,6 +116,14 @@ class MobileContentPagesView: UIViewController {
             pagesView.initialPagePositions.removeAll()
             pagesView.initialPagePositions = pagesView.getAllVisiblePagesPositions()
         }
+        
+        viewModel.navigateSignal.addObserver(self) { [weak self] (navigationModel: MobileContentPagesNavigationModel) in
+            self?.startNavigation(navigationModel: navigationModel)
+        }
+    }
+    
+    func didConfigurePageView(pageView: MobileContentPageView) {
+        
     }
     
     private func getAllVisiblePagesPositions() -> [PageNumber: MobileContentPagePositionsType] {
@@ -142,6 +147,79 @@ class MobileContentPagesView: UIViewController {
         
         return pagePositions
     }
+    
+    func getPagePositions(page: Int) -> MobileContentPagePositionsType? {
+        
+        guard let pageCell = pageNavigationView.pagesCollectionView.cellForItem(at: IndexPath(item: page, section: 0)) as? MobileContentPageCell else {
+            return nil
+        }
+        
+        guard let pageView = pageCell.mobileContentView as? MobileContentPageView else {
+            return nil
+        }
+        
+        return pageView.getPagePositions()
+    }
+    
+    func getCurrentPagePositions() -> MobileContentPagePositionsType? {
+                
+        guard let pageCell = pageNavigationView.currentPageCell as? MobileContentPageCell else {
+            return nil
+        }
+        
+        guard let pageView = pageCell.mobileContentView as? MobileContentPageView else {
+            return nil
+        }
+        
+        return pageView.getPagePositions()
+    }
+    
+    func setCurrentPagePositions(pagePositions: MobileContentPagePositionsType, animated: Bool) {
+        
+        guard let pageCell = pageNavigationView.currentPageCell as? MobileContentPageCell else {
+            return
+        }
+        
+        guard let pageView = pageCell.mobileContentView as? MobileContentPageView else {
+            return
+        }
+        
+        pageView.setPagePositions(pagePositions: pagePositions, animated: animated)
+    }
+    
+    private func startNavigation(navigationModel: MobileContentPagesNavigationModel) {
+        
+        self.currentNavigation = navigationModel
+        
+        if !navigationModel.willReloadData {
+            
+            navigate(navigationModel: navigationModel)
+        }
+    }
+    
+    private func navigate(navigationModel: MobileContentPagesNavigationModel) {
+                
+        if pageNavigationView.currentPage == navigationModel.page {
+            
+            if let pagePositions = navigationModel.pagePositions {
+                
+                setCurrentPagePositions(pagePositions: pagePositions, animated: navigationModel.animated)
+            }
+            
+            currentNavigation = nil
+        }
+        else {
+            pageNavigationView.scrollToPage(page: navigationModel.page, animated: navigationModel.animated)
+        }
+    }
+    
+    private func completeCurrentNavigationIfNeeded() {
+        
+        if let navigationModel = currentNavigation {
+            
+            navigate(navigationModel: navigationModel)
+        }
+    }
 }
 
 // MARK: - PageNavigationCollectionViewDelegate
@@ -161,26 +239,24 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
         
         let pageNumber: Int = indexPath.row
         
-        if let mobileContentView = viewModel.pageWillAppear(page: pageNumber) {
-            
-            if let pageView = mobileContentView as? MobileContentPageView {
-
-                pageView.setDelegate(delegate: self)
-                
-                if let pagePositions = initialPagePositions[pageNumber] {
-                    
-                    pageView.setPagePositions(pagePositions: pagePositions)
-                }
-            }
-            else {
-                
-                assertionFailure("Provided MobileContentView should inherit from MobileContentPageView")
-            }
-            
-            cell.configure(mobileContentView: mobileContentView)
+        guard let pageView = viewModel.pageWillAppear(page: pageNumber) as? MobileContentPageView else {
+            assertionFailure("Provided MobileContentView should inherit from MobileContentPageView")
+            return UICollectionViewCell()
         }
         
+        cell.configure(mobileContentView: pageView)
+        
+        pageView.setDelegate(delegate: self)
+        
+        if let pagePositions = initialPagePositions[pageNumber] {
+            pageView.setPagePositions(pagePositions: pagePositions, animated: false)
+        }
+        
+        didConfigurePageView(pageView: pageView)
+        
         initialPagePositions[pageNumber] = nil
+        
+        completeCurrentNavigationIfNeeded()
         
         return cell
     }
@@ -188,17 +264,15 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
     func pageNavigationDidChangeMostVisiblePage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
         
         view.endEditing(true)
-        
-        viewModel.pageDidChange(page: page)
     }
     
     func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
-        
-        viewModel.pageDidAppear(page: page)
-        
+                
         if let contentPageCell = pageCell as? MobileContentPageCell {
             contentPageCell.mobileContentView?.viewDidAppear()
         }
+        
+        completeCurrentNavigationIfNeeded()
     }
     
     func pageNavigationPageDidDisappear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {

@@ -10,10 +10,10 @@ import UIKit
 
 class ToolView: MobileContentPagesView {
     
-    private let viewModel: ToolViewModel
+    private let viewModel: ToolViewModelType
     private let navBarView: ToolNavBarView = ToolNavBarView()
                     
-    required init(viewModel: ToolViewModel) {
+    required init(viewModel: ToolViewModelType) {
         self.viewModel = viewModel
         super.init(viewModel: viewModel)
     }
@@ -48,6 +48,24 @@ class ToolView: MobileContentPagesView {
             delegate: self
         )
     }
+    
+    override func didConfigurePageView(pageView: MobileContentPageView) {
+        if let toolPageView = pageView as? ToolPageView {
+            toolPageView.setToolPageDelegate(delegate: self)
+        }
+    }
+    
+    override func pageNavigationDidChangeMostVisiblePage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
+        super.pageNavigationDidChangeMostVisiblePage(pageNavigation: pageNavigation, pageCell: pageCell, page: page)
+                
+        let pagePositions: MobileContentPagePositionsType? = getPagePositions(page: page)
+        
+        guard let toolPagePositions = pagePositions as? ToolPagePositions else {
+            return
+        }
+        
+        viewModel.pageChanged(page: page, pagePositions: toolPagePositions)
+    }
 }
 
 // MARK: - ToolNavBarViewDelegate
@@ -59,10 +77,39 @@ extension ToolView: ToolNavBarViewDelegate {
     }
     
     func navBarShareTapped(navBar: ToolNavBarView, selectedLanguage: LanguageModel) {
-        viewModel.navShareTapped(selectedLanguage: selectedLanguage)
+        
+        let page: Int = pageNavigationView.currentPage
+        
+        viewModel.navShareTapped(page: page, selectedLanguage: selectedLanguage)
     }
     
     func navBarLanguageChanged(navBar: ToolNavBarView) {
-        viewModel.navLanguageChanged()
+
+        let page: Int = pageNavigationView.currentPage
+        let pagePositions: MobileContentPagePositionsType? = getCurrentPagePositions()
+        
+        guard let toolPagePositions = pagePositions as? ToolPagePositions else {
+            return
+        }
+        
+        viewModel.navLanguageChanged(page: page, pagePositions: toolPagePositions)
+    }
+}
+
+// MARK: - ToolPageViewDelegate
+
+extension ToolView: ToolPageViewDelegate {
+    
+    func toolPageCardPositionChanged(pageView: ToolPageView, page: Int, cardPosition: Int?, animated: Bool) {
+
+        let pagePositionsForCardChange = ToolPagePositions(
+            cardPosition: cardPosition
+        )
+        
+        viewModel.pageChanged(page: page, pagePositions: pagePositionsForCardChange)
+    }
+    
+    func toolPageCallToActionNextButtonTapped(pageView: ToolPageView, page: Int) {
+        pageNavigationView.scrollToNextPage(animated: true)
     }
 }

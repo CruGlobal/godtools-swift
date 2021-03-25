@@ -7,6 +7,12 @@
 //
 import UIKit
 
+protocol ToolPageViewDelegate: class {
+    
+    func toolPageCardPositionChanged(pageView: ToolPageView, page: Int, cardPosition: Int?, animated: Bool)
+    func toolPageCallToActionNextButtonTapped(pageView: ToolPageView, page: Int)
+}
+
 class ToolPageView: MobileContentPageView {
     
     private let viewModel: ToolPageViewModelType
@@ -19,6 +25,8 @@ class ToolPageView: MobileContentPageView {
     private var callToActionView: ToolPageCallToActionView?
     private var cardsView: ToolPageCardsView?
     private var bottomView: UIView?
+    
+    private weak var delegate: ToolPageViewDelegate?
         
     @IBOutlet weak private var backgroundImageContainer: UIView!
     @IBOutlet weak private var contentStackContainerView: UIView!
@@ -106,13 +114,13 @@ class ToolPageView: MobileContentPageView {
         )
     }
     
-    override func setPagePositions(pagePositions: MobileContentPagePositionsType) {
+    override func setPagePositions(pagePositions: MobileContentPagePositionsType, animated: Bool) {
         
         guard let toolPagePositions = pagePositions as? ToolPagePositions else {
             return
         }
         
-        cardsView?.setCardsState(cardsState: .showingCard(showingCardAtPosition: toolPagePositions.cardPosition), animated: false)
+        cardsView?.setCardsState(cardsState: .showingCard(showingCardAtPosition: toolPagePositions.cardPosition), animated: animated)
     }
     
     // MARK: - MobileContentView
@@ -166,6 +174,10 @@ class ToolPageView: MobileContentPageView {
             bottom: callToActionHeight,
             right: 0
         )
+    }
+    
+    func setToolPageDelegate(delegate: ToolPageViewDelegate?) {
+        self.delegate = delegate
     }
 }
 
@@ -266,9 +278,9 @@ extension ToolPageView {
     }
 }
 
-// MARK: - Call To Action
+// MARK: - Call To Action, ToolPageCallToActionViewDelegate
 
-extension ToolPageView {
+extension ToolPageView: ToolPageCallToActionViewDelegate {
     
     private func addCallToActionView(callToActionView: ToolPageCallToActionView) {
         
@@ -284,6 +296,8 @@ extension ToolPageView {
         callToActionContainerView.layoutIfNeeded()
         
         setCallToActionHidden(hidden: false, animated: false)
+        
+        callToActionView.setDelegate(delegate: self)
     }
     
     private func setCallToActionHidden(hidden: Bool, animated: Bool) {
@@ -311,13 +325,23 @@ extension ToolPageView {
             callToActionContainerView.alpha = callToActionAlpha
         }
     }
+    
+    func toolPageCallToActionNextButtonTapped(callToActionView: ToolPageCallToActionView) {
+        
+        delegate?.toolPageCallToActionNextButtonTapped(pageView: self, page: viewModel.page)
+    }
 }
 
 // MARK: - ToolPageCardsViewDelegate
 
 extension ToolPageView: ToolPageCardsViewDelegate {
     
-    func toolPageCardsViewDidChangeCardState(cardsView: ToolPageCardsView, cardsState: ToolPageCardsState, animated: Bool) {
+    func toolPageCardsDidChangeCardPosition(cardsView: ToolPageCardsView, cardPosition: Int?, animated: Bool) {
+        
+        delegate?.toolPageCardPositionChanged(pageView: self, page: viewModel.page, cardPosition: cardPosition, animated: animated)
+    }
+    
+    func toolPageCardsDidChangeCardState(cardsView: ToolPageCardsView, cardsState: ToolPageCardsState, animated: Bool) {
         
         switch cardsState {
         

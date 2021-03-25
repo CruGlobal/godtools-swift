@@ -8,10 +8,17 @@
 
 import UIKit
 
+protocol ToolPageCallToActionViewDelegate: class {
+    
+    func toolPageCallToActionNextButtonTapped(callToActionView: ToolPageCallToActionView)
+}
+
 class ToolPageCallToActionView: MobileContentView {
         
     let viewModel: ToolPageCallToActionViewModelType
         
+    private weak var delegate: ToolPageCallToActionViewDelegate?
+    
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var nextButton: UIButton!
     
@@ -60,7 +67,11 @@ class ToolPageCallToActionView: MobileContentView {
         nextButton.setImageColor(color: viewModel.nextButtonColor)
     }
     
+    func setDelegate(delegate: ToolPageCallToActionViewDelegate?) {
+        self.delegate = delegate
+    }
+    
     @objc func handleNextTapped(button: UIButton) {
-        viewModel.nextButtonTapped()
+        delegate?.toolPageCallToActionNextButtonTapped(callToActionView: self)
     }
 }

@@ -547,7 +547,6 @@ class ToolsFlow: Flow {
     
     private func navigateToTract(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
         
-        let toolPageEvents: ToolPageEvents = ToolPageEvents()
         let analytics: AnalyticsContainer = appDiContainer.analytics
         let mobileContentAnalytics: MobileContentAnalytics = appDiContainer.getMobileContentAnalytics()
         let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
@@ -559,7 +558,6 @@ class ToolsFlow: Flow {
         let cardJumpService: CardJumpService = appDiContainer.getCardJumpService()
         
         let toolPageViewFactory = ToolPageViewFactory(
-            toolPageEvents: toolPageEvents,
             analytics: analytics,
             mobileContentAnalytics: mobileContentAnalytics,
             fontService: fontService,
@@ -617,7 +615,6 @@ class ToolsFlow: Flow {
             renderers: renderers,
             resource: resource,
             primaryLanguage: primaryLanguage,
-            toolPageEvents: toolPageEvents,
             tractRemoteSharePublisher: appDiContainer.tractRemoteSharePublisher,
             tractRemoteShareSubscriber: appDiContainer.tractRemoteShareSubscriber,
             localizationServices: localizationServices,

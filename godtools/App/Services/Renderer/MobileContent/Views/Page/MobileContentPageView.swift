@@ -38,7 +38,7 @@ class MobileContentPageView: MobileContentView {
         return MobileContentPagePositions()
     }
     
-    func setPagePositions(pagePositions: MobileContentPagePositionsType) {
+    func setPagePositions(pagePositions: MobileContentPagePositionsType, animated: Bool) {
         
     }
     

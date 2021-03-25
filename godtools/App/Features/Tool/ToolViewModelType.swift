@@ -1,0 +1,20 @@
+//
+//  ToolViewModelType.swift
+//  godtools
+//
+//  Created by Levi Eggert on 3/24/21.
+//  Copyright © 2021 Cru. All rights reserved.
+//
+
+import Foundation
+
+protocol ToolViewModelType: MobileContentPagesViewModel {
+    
+    var navBarViewModel: ToolNavBarViewModel { get }
+    
+    func pageChanged(page: Int, pagePositions: ToolPagePositions)
+    func cardChanged(page: Int, pagePositions: ToolPagePositions)
+    func navHomeTapped(remoteShareIsActive: Bool)
+    func navShareTapped(page: Int, selectedLanguage: LanguageModel)
+    func navLanguageChanged(page: Int, pagePositions: ToolPagePositions)
+}

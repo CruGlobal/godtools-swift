@@ -8,11 +8,10 @@
 
 import UIKit
 
-class ToolViewModel: MobileContentPagesViewModel {
+class ToolViewModel: MobileContentPagesViewModel, ToolViewModelType {
     
     private let resource: ResourceModel
     private let primaryLanguage: LanguageModel
-    private let toolPageEvents: ToolPageEvents
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
     private let tractRemoteShareSubscriber: TractRemoteShareSubscriber
     private let localizationServices: LocalizationServices
@@ -25,12 +24,11 @@ class ToolViewModel: MobileContentPagesViewModel {
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, renderers: [MobileContentRenderer], resource: ResourceModel, primaryLanguage: LanguageModel, toolPageEvents: ToolPageEvents, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, localizationServices: LocalizationServices, fontService: FontService, viewsService: ViewsService, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
+    required init(flowDelegate: FlowDelegate, renderers: [MobileContentRenderer], resource: ResourceModel, primaryLanguage: LanguageModel, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, localizationServices: LocalizationServices, fontService: FontService, viewsService: ViewsService, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.primaryLanguage = primaryLanguage
-        self.toolPageEvents = toolPageEvents
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
         self.tractRemoteShareSubscriber = tractRemoteShareSubscriber
         self.localizationServices = localizationServices
@@ -66,9 +64,7 @@ class ToolViewModel: MobileContentPagesViewModel {
     }
     
     deinit {
-        
-        toolPageEvents.didTapCallToActionNextButtonSignal.removeObserver(self)
-        
+                
         tractRemoteSharePublisher.didCreateNewSubscriberChannelIdForPublish.removeObserver(self)
         tractRemoteSharePublisher.endPublishingSession(disconnectSocket: true)
         
@@ -78,15 +74,11 @@ class ToolViewModel: MobileContentPagesViewModel {
     
     private func setupBinding() {
         
-        toolPageEvents.didTapCallToActionNextButtonSignal.addObserver(self) { [weak self] in
-            self?.gotoNextPage(animated: true)
-        }
-        
         tractRemoteSharePublisher.didCreateNewSubscriberChannelIdForPublish.addObserver(self) { [weak self] (channel: TractRemoteShareChannel) in
             DispatchQueue.main.async { [weak self] in
-                if let currentPage = self?.getCurrentPageValue() {
+                /*if let currentPage = self?.getCurrentPageValue() {
                     self?.sendRemoteShareNavigationEventForPage(page: currentPage)
-                }
+                }*/
             }
         }
         
@@ -108,6 +100,15 @@ class ToolViewModel: MobileContentPagesViewModel {
         return nil
     }
     
+    private func getRenderer(language: LanguageModel) -> MobileContentRenderer? {
+        for renderer in renderers {
+            if renderer.language.code.lowercased() == language.code.lowercased() {
+                return renderer
+            }
+        }
+        return nil
+    }
+    
     override func viewDidFinishLayout(window: UIViewController, safeArea: UIEdgeInsets) {
         
         super.viewDidFinishLayout(window: window, safeArea: safeArea)
@@ -118,10 +119,20 @@ class ToolViewModel: MobileContentPagesViewModel {
         toolOpenedAnalytics.trackToolOpened()
     }
     
-    override func pageDidChange(page: Int) {
-        super.pageDidChange(page: page)
+    func pageChanged(page: Int, pagePositions: ToolPagePositions) {
         
-        sendRemoteShareNavigationEventForPage(page: page)
+        sendRemoteShareNavigationEvent(
+            page: page,
+            pagePositions: pagePositions
+        )
+    }
+    
+    func cardChanged(page: Int, pagePositions: ToolPagePositions) {
+        
+        sendRemoteShareNavigationEvent(
+            page: page,
+            pagePositions: pagePositions
+        )
     }
 }
 
@@ -157,47 +168,66 @@ extension ToolViewModel {
         
         let attributes = navigationEvent.message?.data?.attributes
         
-        var navigateToLanguage: Int?
-        let navigateToPage: Int? = attributes?.page
-        let navigateToCard: Int? = attributes?.card
+        let page: Int? = attributes?.page
+        let cardPosition: Int? = attributes?.card
         
-        let languages: [LanguageModel] = navBarViewModel.languages
+        let navBarLanguages: [LanguageModel] = navBarViewModel.languages
+        let currentNavBarLanguage: LanguageModel = navBarViewModel.language
+        var remoteShareLanguage: LanguageModel = currentNavBarLanguage
+        var remoteShareLanguageIndex: Int?
         
         if let locale = attributes?.locale, !locale.isEmpty {
-            for index in 0 ..< languages.count {
-                if locale.lowercased() == languages[index].code.lowercased() {
-                    navigateToLanguage = index
+            
+            for index in 0 ..< navBarLanguages.count {
+                
+                let language: LanguageModel = navBarLanguages[index]
+
+                if locale.lowercased() == language.code.lowercased() {
+                    remoteShareLanguage = language
+                    remoteShareLanguageIndex = index
+                    break
                 }
             }
         }
         
-        /*
-        setToolPage(
-            language: navigateToLanguage,
-            page: navigateToPage ?? currentToolPage,
-            card: navigateToCard,
-            animated: animated
-        )*/
+        let navBarLanguageChanged: Bool = remoteShareLanguage.id != currentNavBarLanguage.id
+        let willReloadData: Bool = navBarLanguageChanged
+                
+        if let page = page {
+            
+            let pagePositions: ToolPagePositions = ToolPagePositions(cardPosition: cardPosition)
+            
+            let navigationModel = MobileContentPagesNavigationModel(
+                willReloadData: willReloadData,
+                page: page,
+                pagePositions: pagePositions,
+                animated: true
+            )
+            
+            navigateSignal.accept(value: navigationModel)
+        }
+        
+        if let remoteShareLanguageIndex = remoteShareLanguageIndex, navBarLanguageChanged {
+            
+            navBarViewModel.selectedLanguage.accept(value: remoteShareLanguageIndex)
+            setRenderer(renderer: renderers[remoteShareLanguageIndex])
+        }
     }
     
-    private func sendRemoteShareNavigationEventForPage(page: Int) {
+    private func sendRemoteShareNavigationEvent(page: Int, pagePositions: ToolPagePositions) {
         
         guard tractRemoteSharePublisher.isSubscriberChannelIdCreatedForPublish else {
             return
         }
-        
-        /*
-        let currentToolPagePositions: ToolPageInitialPositions? = currentPagesViewModelsCache.getPage(page: page)?.getCurrentPositions()
-        let language: LanguageModel = languages[currentToolLanguage]
-        
+                
         let event = TractRemoteSharePublisherNavigationEvent(
-            card: currentToolPagePositions?.card,
-            locale: language.code,
+            card: pagePositions.cardPosition,
+            locale: navBarViewModel.language.code,
             page: page,
             tool: resource.abbreviation
         )
         
-        tractRemoteSharePublisher.sendNavigationEvent(event: event)*/
+        tractRemoteSharePublisher.sendNavigationEvent(event: event)
     }
 }
 
@@ -209,136 +239,20 @@ extension ToolViewModel {
         flowDelegate?.navigate(step: .homeTappedFromTool(isScreenSharing: remoteShareIsActive))
     }
     
-    func navShareTapped(selectedLanguage: LanguageModel) {
-
-        let pageNumber: Int = currentPage.value.value
+    func navShareTapped(page: Int, selectedLanguage: LanguageModel) {
         
-        flowDelegate?.navigate(step: .shareMenuTappedFromTool(tractRemoteShareSubscriber: tractRemoteShareSubscriber, tractRemoteSharePublisher: tractRemoteSharePublisher, resource: resource, selectedLanguage: selectedLanguage, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, pageNumber: pageNumber))
+        flowDelegate?.navigate(step: .shareMenuTappedFromTool(tractRemoteShareSubscriber: tractRemoteShareSubscriber, tractRemoteSharePublisher: tractRemoteSharePublisher, resource: resource, selectedLanguage: selectedLanguage, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, pageNumber: page))
     }
     
-    func navLanguageChanged() {
-          
-        let navBarLanguage: LanguageModel = navBarViewModel.language
+    func navLanguageChanged(page: Int, pagePositions: ToolPagePositions) {
         
-        for renderer in renderers {
-            if renderer.language.code == navBarLanguage.code {
-                setRenderer(renderer: renderer)
-                break
-            }
+        if let renderer = getRenderer(language: navBarViewModel.language) {
+            setRenderer(renderer: renderer)
         }
         
-        sendRemoteShareNavigationEventForPage(page: getCurrentPageValue())
+        sendRemoteShareNavigationEvent(
+            page: page,
+            pagePositions: pagePositions
+        )
     }
 }
-
-/*
-class ToolViewModel: MobileContentPagesViewModel {
-    
-    
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, primaryTranslationManifestData: TranslationManifestData, parallelTranslationManifestData: TranslationManifestData?, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, translationsFileCache: TranslationsFileCache, languageSettingsService: LanguageSettingsService, fontService: FontService, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, isNewUserService: IsNewUserService, cardJumpService: CardJumpService, followUpsService: FollowUpsService, viewsService: ViewsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, viewedTrainingTips: ViewedTrainingTipsService, trainingTipsEnabled: Bool, page: Int?) {
-                
-                
-        let startingToolPage: Int = page ?? 0
-            
-        forceToolRefresh(language: 0, page: startingToolPage, card: nil)
-                
-        subscribeToLiveShareStreamIfNeeded(liveShareStream: liveShareStream)
-        
-        for toolLanguageTranslationModel in languageTranslationModels {
-            toolLanguageTranslationModel.setToolPageListenersNotifierDelegate(delegate: self)
-        }
-    }
-
-}
-
-*/
-
-/*
-
-// MARK: - Tool Pages
-
-extension ToolViewModel {
-    
-    private func setToolPage(language: Int?, page: Int, card: Int?, animated: Bool) {
-                        
-        guard let newLanguageIndex = language, newLanguageIndex != currentToolLanguage else {
-            setToolPage(page: page, card: card, animated: animated)
-            return
-        }
-        
-        forceToolRefresh(language: newLanguageIndex, page: page, card: card)
-    }
-    
-    private func forceToolRefresh(language: Int, page: Int, card: Int?) {
-                
-        // clear cache on force refresh
-        currentPagesViewModelsCache.clearCache()
-        
-        let initialPositions: ToolPageInitialPositions?
-        
-        if let card = card {
-            initialPositions = ToolPageInitialPositions(page: page, card: card)
-        }
-        else {
-            initialPositions = nil
-        }
-        
-        // cache new positions
-        _ = getAndCacheToolPageViewModel(page: page, language: language, initialPositions: initialPositions)
-                    
-        // update languages control in navbar
-        navBarViewModel.selectedLanguage.accept(value: language)
-        
-        numberOfToolPages.accept(value: languageTranslationModels[language].manifest.pages.count)
-        
-        currentPage.accept(value: AnimatableValue(value: page, animated: false))
-    }
-    
-    private func setToolPage(page: Int, card: Int?, animated: Bool) {
-        
-        /*
-        let pageViewModel: ToolPageViewModelType?
-        
-        if let cachedPageViewModel = currentPagesViewModelsCache.getPage(page: page) {
-            pageViewModel = cachedPageViewModel
-        }
-        else {
-            pageViewModel = getAndCacheToolPageViewModel(page: page, language: currentToolLanguage, initialPositions: ToolPageInitialPositions(page: page, card: card))
-        }
-        
-        pageViewModel?.setCard(cardPosition: card, animated: animated)
-        
-        if page != currentToolPage {
-            currentPage.accept(value: AnimatableValue(value: page, animated: animated))
-        }*/
-    }
-    
-}
-
-// MARK: - ToolPageViewModelTypeDelegate
-
-extension ToolViewModel: ToolPageViewModelTypeDelegate {
-        
-    func toolPageTrainingTipTapped(viewModel: ToolPageViewModelType, page: Int, trainingTipId: String, tipNode: TipNode) {
-
-        guard page == self.currentToolPage else {
-            return
-        }
-                
-        let languageTranslationModel: ToolLanguageTranslationModel = languageTranslationModels[currentToolLanguage]
-        
-        let toolPage: Int = currentPage.value.value
-        
-        flowDelegate?.navigate(step: .toolTrainingTipTappedFromTool(resource: resource, manifest: languageTranslationModel.manifest, trainingTipId: trainingTipId, tipNode: tipNode, language: languageTranslationModel.language, primaryLanguage: primaryLanguageTranslationModel.language, toolPage: toolPage))
-    }
-    
-    func toolPageCardChanged(viewModel: ToolPageViewModelType, page: Int, cardPosition: Int?) {
-        
-        guard page == self.currentToolPage else {
-            return
-        }
-        
-        sendRemoteShareNavigationEventForPage(page: currentToolPage)
-    }
-}
-*/

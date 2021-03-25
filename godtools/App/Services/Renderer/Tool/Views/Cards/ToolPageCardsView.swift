@@ -10,7 +10,8 @@ import UIKit
 
 protocol ToolPageCardsViewDelegate: class {
     
-    func toolPageCardsViewDidChangeCardState(cardsView: ToolPageCardsView, cardsState: ToolPageCardsState, animated: Bool)
+    func toolPageCardsDidChangeCardState(cardsView: ToolPageCardsView, cardsState: ToolPageCardsState, animated: Bool)
+    func toolPageCardsDidChangeCardPosition(cardsView: ToolPageCardsView, cardPosition: Int?, animated: Bool)
 }
 
 class ToolPageCardsView: MobileContentView {
@@ -426,7 +427,7 @@ extension ToolPageCardsView {
             
         case .starting:
                       
-            setCurrentCardPosition(cardPosition: nil)
+            setCurrentCardPosition(cardPosition: nil, animated: animated)
             
             var visibleCardPosition: Int = 0
             
@@ -456,7 +457,7 @@ extension ToolPageCardsView {
                 return
             }
             
-            setCurrentCardPosition(cardPosition: showCardAtPosition)
+            setCurrentCardPosition(cardPosition: showCardAtPosition, animated: animated)
                                     
             var visibleCardPosition: Int = 0
             
@@ -485,7 +486,7 @@ extension ToolPageCardsView {
             
         case .showingKeyboard(let showingCardAtPosition):
                 
-            setCurrentCardPosition(cardPosition: showingCardAtPosition)
+            setCurrentCardPosition(cardPosition: showingCardAtPosition, animated: animated)
             
             for cardPosition in 0 ..< numberOfCards {
                 
@@ -498,7 +499,7 @@ extension ToolPageCardsView {
                         
         case .collapseAllCards:
                   
-            setCurrentCardPosition(cardPosition: nil)
+            setCurrentCardPosition(cardPosition: nil, animated: animated)
             
             var visibleCardPosition: Int = 0
             
@@ -535,7 +536,7 @@ extension ToolPageCardsView {
         
         currentCardState = cardsState
         
-        delegate?.toolPageCardsViewDidChangeCardState(
+        delegate?.toolPageCardsDidChangeCardState(
             cardsView: self,
             cardsState: cardsState,
             animated: animated
@@ -563,7 +564,7 @@ extension ToolPageCardsView {
         }
     }
     
-    private func setCurrentCardPosition(cardPosition: Int?) {
+    private func setCurrentCardPosition(cardPosition: Int?, animated: Bool) {
         
         if currentCardPosition != cardPosition {
             
@@ -576,6 +577,8 @@ extension ToolPageCardsView {
             if let cardPosition = cardPosition, let cardView = getCardView(cardPosition: cardPosition) {
                 cardView.viewDidAppear()
             }
+            
+            delegate?.toolPageCardsDidChangeCardPosition(cardsView: self, cardPosition: cardPosition, animated: animated)
         }
     }
     

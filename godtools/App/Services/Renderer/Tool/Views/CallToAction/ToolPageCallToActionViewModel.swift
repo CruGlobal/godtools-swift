@@ -12,17 +12,15 @@ class ToolPageCallToActionViewModel: ToolPageCallToActionViewModelType {
     
     private let callToActionNode: CallToActionNode?
     private let pageModel: MobileContentRendererPageModel
-    private let toolPageEvents: ToolPageEvents
     private let toolPageColors: ToolPageColors
     private let fontService: FontService
     
     let hidesCallToAction: Bool
     
-    required init(callToActionNode: CallToActionNode?, pageModel: MobileContentRendererPageModel, toolPageEvents: ToolPageEvents, toolPageColors: ToolPageColors, fontService: FontService) {
+    required init(callToActionNode: CallToActionNode?, pageModel: MobileContentRendererPageModel, toolPageColors: ToolPageColors, fontService: FontService) {
         
         self.callToActionNode = callToActionNode
         self.pageModel = pageModel
-        self.toolPageEvents = toolPageEvents
         self.toolPageColors = toolPageColors
         self.fontService = fontService
         self.hidesCallToAction = (callToActionNode == nil && pageModel.pageNode.heroNode == nil) || pageModel.isLastPage
@@ -59,9 +57,5 @@ class ToolPageCallToActionViewModel: ToolPageCallToActionViewModelType {
         }
         
         return buttonImage.imageFlippedForRightToLeftLayoutDirection()
-    }
-    
-    func nextButtonTapped() {
-        toolPageEvents.didTapCallToActionNextButtonSignal.accept()
     }
 }

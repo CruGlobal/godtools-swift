@@ -17,9 +17,9 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     
     let renderers: [MobileContentRenderer]
     let numberOfPages: ObservableValue<Int> = ObservableValue(value: 0)
-    let currentPage: ObservableValue<AnimatableValue<Int>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
     let pageNavigationSemanticContentAttribute: UISemanticContentAttribute
     let rendererWillChangeSignal: Signal = Signal()
+    let navigateSignal: SignalValue<MobileContentPagesNavigationModel> = SignalValue()
     
     required init(flowDelegate: FlowDelegate, renderers: [MobileContentRenderer], primaryLanguage: LanguageModel, page: Int?) {
         
@@ -36,15 +36,6 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         super.init()
     }
     
-    private var currentPageValue: Int {
-        get {
-            return currentPage.value.value
-        }
-        set(newValue) {
-            currentPage.setValue(value: AnimatableValue(value: newValue, animated: false))
-        }
-    }
-    
     func viewDidFinishLayout(window: UIViewController, safeArea: UIEdgeInsets) {
         
         self.window = window
@@ -55,10 +46,6 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         }
         
         setRenderer(renderer: renderer)
-    }
-    
-    func getCurrentPageValue() -> Int {
-        return currentPageValue
     }
     
     func getPageForListenerEvents(events: [String]) -> Int? {
@@ -98,16 +85,6 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         return nil
     }
     
-    func pageDidChange(page: Int) {
-        
-        self.currentPageValue = page
-    }
-    
-    func pageDidAppear(page: Int) {
-        
-        self.currentPageValue = page
-    }
-    
     func buttonWithUrlTapped(url: String) {
         flowDelegate?.navigate(step: .buttonWithUrlTappedFromMobileContentRenderer(url: url))
     }
@@ -118,16 +95,5 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     
     func errorOccurred(error: MobileContentErrorViewModel) {
         flowDelegate?.navigate(step: .errorOccurredFromMobileContentRenderer(error: error))
-    }
-    
-    // MARK: -
-    
-    func gotoNextPage(animated: Bool) {
-        
-        let nextPage: Int = currentPageValue + 1
-        
-        if nextPage < numberOfPages.value {
-            currentPage.accept(value: AnimatableValue(value: nextPage, animated: animated))
-        }
     }
 }
