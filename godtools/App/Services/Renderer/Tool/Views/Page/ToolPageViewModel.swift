@@ -12,19 +12,20 @@ class ToolPageViewModel: ToolPageViewModelType {
     
     private let pageNode: PageNode
     private let pageModel: MobileContentRendererPageModel
-    private let toolPageColors: ToolPageColors
     private let analytics: AnalyticsContainer
     
-    required init(pageNode: PageNode, pageModel: MobileContentRendererPageModel, toolPageColors: ToolPageColors, analytics: AnalyticsContainer) {
+    let hidesCallToAction: Bool
+    
+    required init(pageNode: PageNode, pageModel: MobileContentRendererPageModel, analytics: AnalyticsContainer) {
         
         self.pageNode = pageNode
         self.pageModel = pageModel
-        self.toolPageColors = toolPageColors
         self.analytics = analytics
+        self.hidesCallToAction = (pageNode.callToActionNode == nil && pageModel.pageNode.heroNode == nil) || pageModel.isLastPage
     }
     
     var backgroundColor: UIColor {
-        return toolPageColors.backgroundColor
+        return pageModel.pageColors.backgroundColor
     }
     
     var bottomViewColor: UIColor {
@@ -61,6 +62,20 @@ class ToolPageViewModel: ToolPageViewModelType {
                 manifestResourcesCache: pageModel.resourcesCache,
                 languageDirection: pageModel.language.languageDirection
             )
+        }
+        
+        return nil
+    }
+    
+    func callToActionWillAppear() -> ToolPageCallToActionView? {
+        
+        if !hidesCallToAction && pageNode.callToActionNode == nil {
+            
+            for viewFactory in pageModel.pageViewFactories {
+                if let toolPageViewFactory = viewFactory as? ToolPageViewFactory {
+                    return toolPageViewFactory.getCallToActionView(callToActionNode: nil, pageModel: pageModel)
+                }
+            }
         }
         
         return nil

@@ -11,7 +11,6 @@ import UIKit
 class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
     
     private let pageModel: MobileContentRendererPageModel
-    private let toolPageColors: ToolPageColors
     private let fontService: FontService
     private let language: LanguageModel
     
@@ -20,10 +19,9 @@ class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
     let title: String?
     let trainingTipViewModel: TrainingTipViewModelType?
     
-    required init(headerNode: HeaderNode, pageModel: MobileContentRendererPageModel, toolPageColors: ToolPageColors, fontService: FontService, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, viewedTrainingTipsService: ViewedTrainingTipsService, trainingTipsEnabled: Bool) {
+    required init(headerNode: HeaderNode, pageModel: MobileContentRendererPageModel, fontService: FontService, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, viewedTrainingTipsService: ViewedTrainingTipsService, trainingTipsEnabled: Bool) {
         
         self.pageModel = pageModel
-        self.toolPageColors = toolPageColors
         self.fontService = fontService
         self.language = pageModel.language
         
@@ -56,7 +54,7 @@ class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
     }
     
     var backgroundColor: UIColor {
-        return toolPageColors.primaryColor
+        return pageModel.pageColors.primaryColor
     }
     
     var numberFont: UIFont {
@@ -64,7 +62,7 @@ class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
     }
     
     var numberColor: UIColor {
-        return toolPageColors.primaryTextColor
+        return pageModel.pageColors.primaryTextColor
     }
     
     var numberAlignment: NSTextAlignment {
@@ -76,7 +74,7 @@ class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
     }
     
     var titleColor: UIColor {
-        return toolPageColors.primaryTextColor
+        return pageModel.pageColors.primaryTextColor
     }
     
     var titleAlignment: NSTextAlignment {

@@ -13,7 +13,9 @@ protocol ToolPageViewModelType {
     var backgroundColor: UIColor { get }
     var bottomViewColor: UIColor { get }
     var page: Int { get }
+    var hidesCallToAction: Bool { get }
     
     func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel?
+    func callToActionWillAppear() -> ToolPageCallToActionView?
     func pageDidAppear()
 }

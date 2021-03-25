@@ -74,6 +74,7 @@
 		4556AED523E221FE002C15E8 /* AbyssinicaSIL-R.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AED023E221FE002C15E8 /* AbyssinicaSIL-R.ttf */; };
 		4556AED823E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AED323E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf */; };
 		4556AED923E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AED423E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf */; };
+		4556E8B8260CFA3500FBD883 /* MobileContentPageColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556E8B7260CFA3500FBD883 /* MobileContentPageColors.swift */; };
 		455FF69C2603DC690028B95B /* MobileContentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455FF6282603DC690028B95B /* MobileContentRenderer.swift */; };
 		455FF69D2603DC690028B95B /* MobileContentRendererVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455FF6292603DC690028B95B /* MobileContentRendererVersion.swift */; };
 		455FF6A52603DC690028B95B /* MobileContentXmlNodeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455FF6352603DC690028B95B /* MobileContentXmlNodeFactory.swift */; };
@@ -156,7 +157,6 @@
 		455FF6FA2603DC6A0028B95B /* MobileContentAnalyticsSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455FF69A2603DC690028B95B /* MobileContentAnalyticsSystem.swift */; };
 		455FF6FB2603DC6A0028B95B /* MobileContentAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455FF69B2603DC690028B95B /* MobileContentAnalytics.swift */; };
 		455FF7412603DDD30028B95B /* ToolPageContentStackRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455FF70D2603DDD30028B95B /* ToolPageContentStackRenderer.swift */; };
-		455FF7432603DDD30028B95B /* ToolPageColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455FF7102603DDD30028B95B /* ToolPageColors.swift */; };
 		455FF74A2603DDD30028B95B /* ToolPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455FF71B2603DDD30028B95B /* ToolPageView.swift */; };
 		455FF74B2603DDD30028B95B /* ToolPageViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455FF71C2603DDD30028B95B /* ToolPageViewModelType.swift */; };
 		455FF74C2603DDD30028B95B /* ToolPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455FF71D2603DDD30028B95B /* ToolPageViewModel.swift */; };
@@ -920,6 +920,7 @@
 		4556AED023E221FE002C15E8 /* AbyssinicaSIL-R.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AbyssinicaSIL-R.ttf"; sourceTree = "<group>"; };
 		4556AED323E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansEthiopic-Regular.ttf"; sourceTree = "<group>"; };
 		4556AED423E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansEthiopic-Bold.ttf"; sourceTree = "<group>"; };
+		4556E8B7260CFA3500FBD883 /* MobileContentPageColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentPageColors.swift; sourceTree = "<group>"; };
 		455FF6282603DC690028B95B /* MobileContentRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentRenderer.swift; sourceTree = "<group>"; };
 		455FF6292603DC690028B95B /* MobileContentRendererVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentRendererVersion.swift; sourceTree = "<group>"; };
 		455FF6352603DC690028B95B /* MobileContentXmlNodeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentXmlNodeFactory.swift; sourceTree = "<group>"; };
@@ -1002,7 +1003,6 @@
 		455FF69A2603DC690028B95B /* MobileContentAnalyticsSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentAnalyticsSystem.swift; sourceTree = "<group>"; };
 		455FF69B2603DC690028B95B /* MobileContentAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentAnalytics.swift; sourceTree = "<group>"; };
 		455FF70D2603DDD30028B95B /* ToolPageContentStackRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageContentStackRenderer.swift; sourceTree = "<group>"; };
-		455FF7102603DDD30028B95B /* ToolPageColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageColors.swift; sourceTree = "<group>"; };
 		455FF71B2603DDD30028B95B /* ToolPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageView.swift; sourceTree = "<group>"; };
 		455FF71C2603DDD30028B95B /* ToolPageViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageViewModelType.swift; sourceTree = "<group>"; };
 		455FF71D2603DDD30028B95B /* ToolPageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageViewModel.swift; sourceTree = "<group>"; };
@@ -2286,7 +2286,6 @@
 		455FF70C2603DDD30028B95B /* Renderer */ = {
 			isa = PBXGroup;
 			children = (
-				455FF7102603DDD30028B95B /* ToolPageColors.swift */,
 				455FF70D2603DDD30028B95B /* ToolPageContentStackRenderer.swift */,
 				4555C3CF2606A140007E61BE /* ToolPageViewFactory.swift */,
 			);
@@ -4355,6 +4354,7 @@
 		45FF259A260BB95400D771B6 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				4556E8B7260CFA3500FBD883 /* MobileContentPageColors.swift */,
 				45FF25A1260BB9DB00D771B6 /* MobileContentPagePositions.swift */,
 				45FF259B260BB95F00D771B6 /* MobileContentPagePositionsType.swift */,
 			);
@@ -5035,6 +5035,7 @@
 				45AD20BD25938F1A00A096A0 /* Signal.swift in Sources */,
 				45AD1BC625938A4F00A096A0 /* UIKit+Extensions.swift in Sources */,
 				45AD1FFF25938A9800A096A0 /* ViewsApi.swift in Sources */,
+				4556E8B8260CFA3500FBD883 /* MobileContentPageColors.swift in Sources */,
 				455FF6A52603DC690028B95B /* MobileContentXmlNodeFactory.swift in Sources */,
 				45AD21192593958E00A096A0 /* RealmLanguagesCache.swift in Sources */,
 				45AD1B5425938A4F00A096A0 /* GlobalActivityAttribute.swift in Sources */,
@@ -5144,7 +5145,6 @@
 				45AD206525938B1300A096A0 /* AlertMessage.swift in Sources */,
 				45AD1FAB25938A9800A096A0 /* ArticleAemWebArchiveFileCacheLocation.swift in Sources */,
 				455FF6D02603DC690028B95B /* MobileContentXmlNode.swift in Sources */,
-				455FF7432603DDD30028B95B /* ToolPageColors.swift in Sources */,
 				45AD1FD325938A9800A096A0 /* HTMLDocument+ResourceUrls.swift in Sources */,
 				45B6482025E58EE70098BAF1 /* (null) in Sources */,
 				45AD1AB025938A4E00A096A0 /* TutorialInMenuViewModel.swift in Sources */,

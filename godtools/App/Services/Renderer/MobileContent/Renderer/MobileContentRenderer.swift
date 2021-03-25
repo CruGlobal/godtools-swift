@@ -155,7 +155,8 @@ class MobileContentRenderer {
                 manifest: manifest,
                 resourcesCache: resourcesCache,
                 resource: resource,
-                language: language
+                language: language,
+                pageViewFactories: pageViewFactories
             )
             
             if let renderableView = recurseAndRender(node: pageNode, pageModel: pageModel) {

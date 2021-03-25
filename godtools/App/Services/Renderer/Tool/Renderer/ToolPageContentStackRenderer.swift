@@ -14,18 +14,16 @@ class ToolPageContentStackRenderer {
     private static let numberFormatter: NumberFormatter = NumberFormatter()
     
     private let node: MobileContentXmlNode
-    private let toolPageColors: ToolPageColors
     private let defaultTextNodeTextColor: UIColor?
     private let defaultTextNodeTextAlignment: NSTextAlignment
     private let defaultButtonBorderColor: UIColor?
     
     private weak var rootContentStackRenderer: ToolPageContentStackRenderer?
                 
-    required init(rootContentStackRenderer: ToolPageContentStackRenderer?, node: MobileContentXmlNode, toolPageColors: ToolPageColors, defaultTextNodeTextColor: UIColor?, defaultTextNodeTextAlignment: NSTextAlignment?, defaultButtonBorderColor: UIColor?) {
+    required init(rootContentStackRenderer: ToolPageContentStackRenderer?, node: MobileContentXmlNode, defaultTextNodeTextColor: UIColor?, defaultTextNodeTextAlignment: NSTextAlignment?, defaultButtonBorderColor: UIColor?) {
         
         self.rootContentStackRenderer = rootContentStackRenderer
         self.node = node
-        self.toolPageColors = toolPageColors
         self.defaultTextNodeTextColor = defaultTextNodeTextColor
         // TODO: Make sure this is added back in.
         //self.defaultTextNodeTextAlignment = defaultTextNodeTextAlignment ?? (diContainer.language.languageDirection == .leftToRight ? .left : .right)

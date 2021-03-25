@@ -13,7 +13,6 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     private let pageModel: MobileContentRendererPageModel
     private let cardNode: CardNode
     private let cardsNode: CardsNode
-    private let toolPageColors: ToolPageColors
     private let analytics: AnalyticsContainer
     private let fontService: FontService
     private let localizationServices: LocalizationServices
@@ -28,14 +27,13 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     let hidesNextButton: Bool
     let isHiddenCard: Bool
     
-    required init(cardNode: CardNode, cardsNode: CardsNode, pageModel: MobileContentRendererPageModel, toolPageColors: ToolPageColors, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, trainingTipsEnabled: Bool) {
+    required init(cardNode: CardNode, cardsNode: CardsNode, pageModel: MobileContentRendererPageModel, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, trainingTipsEnabled: Bool) {
                 
         let visibleCards: [CardNode] = cardsNode.visibleCards
         
         self.cardNode = cardNode
         self.cardsNode = cardsNode
         self.pageModel = pageModel
-        self.toolPageColors = toolPageColors
         self.analytics = analytics
         self.fontService = fontService
         self.localizationServices = localizationServices
@@ -106,7 +104,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     }
     
     var titleColor: UIColor {
-        return cardNode.labelNode?.textNode?.getTextColor()?.color ?? toolPageColors.primaryColor
+        return cardNode.labelNode?.textNode?.getTextColor()?.color ?? pageModel.pageColors.primaryColor
     }
     
     var titleFont: UIFont {

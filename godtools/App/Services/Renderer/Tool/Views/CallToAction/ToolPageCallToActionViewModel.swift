@@ -12,18 +12,13 @@ class ToolPageCallToActionViewModel: ToolPageCallToActionViewModelType {
     
     private let callToActionNode: CallToActionNode?
     private let pageModel: MobileContentRendererPageModel
-    private let toolPageColors: ToolPageColors
     private let fontService: FontService
-    
-    let hidesCallToAction: Bool
-    
-    required init(callToActionNode: CallToActionNode?, pageModel: MobileContentRendererPageModel, toolPageColors: ToolPageColors, fontService: FontService) {
+        
+    required init(callToActionNode: CallToActionNode?, pageModel: MobileContentRendererPageModel, fontService: FontService) {
         
         self.callToActionNode = callToActionNode
         self.pageModel = pageModel
-        self.toolPageColors = toolPageColors
         self.fontService = fontService
-        self.hidesCallToAction = (callToActionNode == nil && pageModel.pageNode.heroNode == nil) || pageModel.isLastPage
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
@@ -39,11 +34,11 @@ class ToolPageCallToActionViewModel: ToolPageCallToActionViewModelType {
     }
     
     var titleColor: UIColor {
-        return callToActionNode?.textNode?.getTextColor()?.color ?? toolPageColors.textColor
+        return callToActionNode?.textNode?.getTextColor()?.color ?? pageModel.pageColors.textColor
     }
     
     var nextButtonColor: UIColor {
-        return callToActionNode?.getControlColor()?.color ?? toolPageColors.primaryColor
+        return callToActionNode?.getControlColor()?.color ?? pageModel.pageColors.primaryColor
     }
     
     var nextButtonImage: UIImage? {

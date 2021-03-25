@@ -146,6 +146,10 @@ class ToolPageView: MobileContentPageView {
 
     override func finishedRenderingChildren() {
         
+        if callToActionView == nil && !viewModel.hidesCallToAction, let callToActionView = viewModel.callToActionWillAppear() {
+            addCallToActionView(callToActionView: callToActionView)
+        }
+        
         cardsView?.addCardsToView(
             parentView: self,
             cardParentContentInsets: getCardContentInsets()
@@ -250,7 +254,7 @@ extension ToolPageView {
         
         let numberOfVisibleCards: Int = cardsView?.numberOfVisibleCards ?? 0
         let hidesCards: Bool = numberOfVisibleCards == 0
-        let hidesCallToAction: Bool = callToActionView?.viewModel.hidesCallToAction ?? true
+        let hidesCallToAction: Bool = viewModel.hidesCallToAction
         
         let topInset: CGFloat = 15
         let bottomInset: CGFloat = 0
@@ -302,7 +306,7 @@ extension ToolPageView: ToolPageCallToActionViewDelegate {
     
     private func setCallToActionHidden(hidden: Bool, animated: Bool) {
         
-        let callToActionShouldBeHidden: Bool = callToActionView?.viewModel.hidesCallToAction ?? true
+        let callToActionShouldBeHidden: Bool = viewModel.hidesCallToAction
         
         let attemptingToShowCallToAction: Bool = !hidden
         if attemptingToShowCallToAction && callToActionShouldBeHidden {

@@ -43,7 +43,6 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
                 cardNode: cardNode,
                 cardsNode: cardsNode,
                 pageModel: pageModel,
-                toolPageColors: ToolPageColors(pageNode: pageModel.pageNode, manifest: pageModel.manifest),
                 analytics: analytics,
                 mobileContentAnalytics: mobileContentAnalytics,
                 fontService: fontService,
@@ -57,23 +56,16 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let callToActionNode = renderableNode as? CallToActionNode {
             
-            let viewModel = ToolPageCallToActionViewModel(
+            return getCallToActionView(
                 callToActionNode: callToActionNode,
-                pageModel: pageModel,
-                toolPageColors: ToolPageColors(pageNode: pageModel.pageNode, manifest: pageModel.manifest),
-                fontService: fontService
+                pageModel: pageModel
             )
-            
-            let view = ToolPageCallToActionView(viewModel: viewModel)
-            
-            return view
         }
         else if let headerNode = renderableNode as? HeaderNode {
             
             let viewModel = ToolPageHeaderViewModel(
                 headerNode: headerNode,
                 pageModel: pageModel,
-                toolPageColors: ToolPageColors(pageNode: pageModel.pageNode, manifest: pageModel.manifest),
                 fontService: fontService,
                 translationsFileCache: translationsFileCache,
                 mobileContentNodeParser: mobileContentNodeParser,
@@ -157,7 +149,6 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             let viewModel = ToolPageViewModel(
                 pageNode: pageNode,
                 pageModel: pageModel,
-                toolPageColors: ToolPageColors(pageNode: pageNode, manifest: pageModel.manifest),
                 analytics: analytics
             )
             
@@ -170,5 +161,18 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
         }
         
         return nil
+    }
+    
+    func getCallToActionView(callToActionNode: CallToActionNode?, pageModel: MobileContentRendererPageModel) -> ToolPageCallToActionView {
+        
+        let viewModel = ToolPageCallToActionViewModel(
+            callToActionNode: callToActionNode,
+            pageModel: pageModel,
+            fontService: fontService
+        )
+        
+        let view = ToolPageCallToActionView(viewModel: viewModel)
+        
+        return view
     }
 }
