@@ -11,7 +11,9 @@ import Foundation
 protocol ToolViewModelType: MobileContentPagesViewModel {
     
     var navBarViewModel: ToolNavBarViewModel { get }
+    var didSubscribeForRemoteSharePublishing: ObservableValue<Bool> { get }
     
+    func subscribedForRemoteSharePublishing(page: Int, pagePositions: ToolPagePositions)
     func pageChanged(page: Int, pagePositions: ToolPagePositions)
     func cardChanged(page: Int, pagePositions: ToolPagePositions)
     func navHomeTapped(remoteShareIsActive: Bool)

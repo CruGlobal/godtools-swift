@@ -10,6 +10,8 @@ import UIKit
 
 class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     
+    private let startingPage: Int?
+    
     private var currentRenderer: MobileContentRenderer?
     private var safeArea: UIEdgeInsets?
     private weak var window: UIViewController?
@@ -25,6 +27,7 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         
         self.flowDelegate = flowDelegate
         self.renderers = renderers
+        self.startingPage = page
         
         switch primaryLanguage.languageDirection {
         case .leftToRight:
@@ -43,6 +46,16 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         
         guard let renderer = renderers.first else {
             return
+        }
+        
+        if let startingPage = startingPage {
+            let navigationModel = MobileContentPagesNavigationModel(
+                willReloadData: true,
+                page: startingPage,
+                pagePositions: nil,
+                animated: false
+            )
+            pageNavigation.accept(value: navigationModel)
         }
         
         setRenderer(renderer: renderer)

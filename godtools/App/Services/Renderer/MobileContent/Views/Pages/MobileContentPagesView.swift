@@ -83,6 +83,12 @@ class MobileContentPagesView: UIViewController {
         viewModel.numberOfPages.addObserver(self) { [weak self] (numberOfToolPages: Int) in
             self?.pageNavigationView.reloadData()
         }
+        
+        viewModel.pageNavigation.addObserver(self) { [weak self] (navigationModel: MobileContentPagesNavigationModel?) in
+            if let navigationModel = navigationModel {
+                self?.startNavigation(navigationModel: navigationModel)
+            }
+        }
     }
     
     func setupLayout() {
@@ -115,12 +121,6 @@ class MobileContentPagesView: UIViewController {
             
             pagesView.initialPagePositions.removeAll()
             pagesView.initialPagePositions = pagesView.getAllVisiblePagesPositions()
-        }
-        
-        viewModel.pageNavigation.addObserver(self) { [weak self] (navigationModel: MobileContentPagesNavigationModel?) in
-            if let navigationModel = navigationModel {
-                self?.startNavigation(navigationModel: navigationModel)
-            }
         }
     }
     

@@ -47,6 +47,20 @@ class ToolView: MobileContentPagesView {
             viewModel: viewModel.navBarViewModel,
             delegate: self
         )
+        
+        viewModel.didSubscribeForRemoteSharePublishing.addObserver(self) { [weak self] (didSubscribeForRemoteSharePublishing: Bool) in
+            guard let toolView = self else {
+                return
+            }
+            if didSubscribeForRemoteSharePublishing {
+                let page: Int = toolView.pageNavigationView.currentPage
+                let pagePositions: MobileContentPagePositionsType? = toolView.getPagePositions(page: page)
+                guard let toolPagePositions = pagePositions as? ToolPagePositions else {
+                    return
+                }
+                toolView.viewModel.subscribedForRemoteSharePublishing(page: page, pagePositions: toolPagePositions)
+            }
+        }
     }
     
     override func didConfigurePageView(pageView: MobileContentPageView) {

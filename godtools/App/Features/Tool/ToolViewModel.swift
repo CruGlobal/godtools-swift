@@ -19,8 +19,10 @@ class ToolViewModel: MobileContentPagesViewModel, ToolViewModelType {
     private let viewsService: ViewsService
     private let analytics: AnalyticsContainer
     private let toolOpenedAnalytics: ToolOpenedAnalytics
+    private let liveShareStream: String?
     
     let navBarViewModel: ToolNavBarViewModel
+    let didSubscribeForRemoteSharePublishing: ObservableValue<Bool> = ObservableValue(value: false)
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -36,6 +38,7 @@ class ToolViewModel: MobileContentPagesViewModel, ToolViewModelType {
         self.viewsService = viewsService
         self.analytics = analytics
         self.toolOpenedAnalytics = toolOpenedAnalytics
+        self.liveShareStream = liveShareStream
         
         let primaryManifest: MobileContentXmlManifest = renderers.first!.manifest
         let languages: [LanguageModel] = renderers.map({$0.language})
@@ -55,8 +58,6 @@ class ToolViewModel: MobileContentPagesViewModel, ToolViewModelType {
         super.init(flowDelegate: flowDelegate, renderers: renderers, primaryLanguage: primaryLanguage, page: page)
         
         setupBinding()
-        
-        subscribeToLiveShareStreamIfNeeded(liveShareStream: liveShareStream)
     }
     
     required init(flowDelegate: FlowDelegate, renderers: [MobileContentRenderer], primaryLanguage: LanguageModel, page: Int?) {
@@ -76,9 +77,7 @@ class ToolViewModel: MobileContentPagesViewModel, ToolViewModelType {
         
         tractRemoteSharePublisher.didCreateNewSubscriberChannelIdForPublish.addObserver(self) { [weak self] (channel: TractRemoteShareChannel) in
             DispatchQueue.main.async { [weak self] in
-                /*if let currentPage = self?.getCurrentPageValue() {
-                    self?.sendRemoteShareNavigationEventForPage(page: currentPage)
-                }*/
+                self?.didSubscribeForRemoteSharePublishing.accept(value: true)
             }
         }
         
@@ -113,10 +112,20 @@ class ToolViewModel: MobileContentPagesViewModel, ToolViewModelType {
         
         super.viewDidFinishLayout(window: window, safeArea: safeArea)
         
+        subscribeToLiveShareStreamIfNeeded()
+        
         _ = viewsService.postNewResourceView(resourceId: resource.id)
         
         toolOpenedAnalytics.trackFirstToolOpenedIfNeeded()
         toolOpenedAnalytics.trackToolOpened()
+    }
+    
+    func subscribedForRemoteSharePublishing(page: Int, pagePositions: ToolPagePositions) {
+     
+        sendRemoteShareNavigationEvent(
+            page: page,
+            pagePositions: pagePositions
+        )
     }
     
     func pageChanged(page: Int, pagePositions: ToolPagePositions) {
@@ -151,7 +160,7 @@ extension ToolViewModel {
         )
     }
     
-    private func subscribeToLiveShareStreamIfNeeded(liveShareStream: String?) {
+    private func subscribeToLiveShareStreamIfNeeded() {
         
         guard let channelId = liveShareStream, !channelId.isEmpty else {
             return
