@@ -93,6 +93,27 @@ extension ToolPageHeaderView {
         backgroundViewParent.addSubview(backgroundView)
         backgroundView.translatesAutoresizingMaskIntoConstraints = false
         
+        if let numberLabel = numberLabel {
+            
+            numberLabelParent.addSubview(numberLabel)
+            numberLabel.translatesAutoresizingMaskIntoConstraints = false
+            numberLabel.setContentHuggingPriority(UILayoutPriority(252), for: .horizontal)
+        }
+        
+        if let titleLabel = titleLabel {
+            
+            titleLabelParent.addSubview(titleLabel)
+            titleLabel.translatesAutoresizingMaskIntoConstraints = false
+            titleLabel.setContentHuggingPriority(UILayoutPriority(251), for: .horizontal)
+        }
+        
+        if let trainingTipView = trainingTipView {
+            
+            trainingTipParent.addSubview(trainingTipView)
+            trainingTipView.translatesAutoresizingMaskIntoConstraints = false
+        }
+        
+        // background constraints
         let top = NSLayoutConstraint(
             item: backgroundView,
             attribute: .top,
@@ -158,26 +179,7 @@ extension ToolPageHeaderView {
         
         // end background
         
-        if let numberLabel = numberLabel {
-            
-            numberLabelParent.addSubview(numberLabel)
-            numberLabel.translatesAutoresizingMaskIntoConstraints = false
-            numberLabel.setContentHuggingPriority(UILayoutPriority(252), for: .horizontal)
-        }
-        
-        if let titleLabel = titleLabel {
-            
-            titleLabelParent.addSubview(titleLabel)
-            titleLabel.translatesAutoresizingMaskIntoConstraints = false
-            titleLabel.setContentHuggingPriority(UILayoutPriority(251), for: .horizontal)
-        }
-        
-        if let trainingTipView = trainingTipView {
-            
-            trainingTipParent.addSubview(trainingTipView)
-            trainingTipView.translatesAutoresizingMaskIntoConstraints = false
-        }
-        
+        // number constraints
         if let numberLabel = numberLabel {
             
             let top = NSLayoutConstraint(
@@ -187,7 +189,7 @@ extension ToolPageHeaderView {
                 toItem: numberLabelParent,
                 attribute: .top,
                 multiplier: 1,
-                constant: contentInsets.top
+                constant: contentInsets.top - 9
             )
             
             let leading = NSLayoutConstraint(
@@ -204,6 +206,7 @@ extension ToolPageHeaderView {
             numberLabelParent.addConstraint(leading)
         }
         
+        // title constraints
         if let titleLabel = titleLabel {
             
             let top = NSLayoutConstraint(
@@ -285,7 +288,7 @@ extension ToolPageHeaderView {
             numberLabelParent.addConstraint(trailing)
         }
         
-        // training tip
+        // training tip constraints
         if let trainingTipView = trainingTipView {
             
             let trainingTipLeadingToTitle: CGFloat = (floor(trainingTipSize.width / 2) * -1) + 4
