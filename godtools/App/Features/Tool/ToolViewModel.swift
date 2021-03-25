@@ -173,7 +173,7 @@ extension ToolViewModel {
         }
     }
     
-    private func handleDidReceiveRemoteShareNavigationEvent(navigationEvent: TractRemoteShareNavigationEvent, animated: Bool = true) {
+    private func handleDidReceiveRemoteShareNavigationEvent(navigationEvent: TractRemoteShareNavigationEvent, animated: Bool) {
         
         let attributes = navigationEvent.message?.data?.attributes
         
@@ -210,7 +210,7 @@ extension ToolViewModel {
                 willReloadData: willReloadData,
                 page: page,
                 pagePositions: pagePositions,
-                animated: true
+                animated: animated
             )
             
             pageNavigation.accept(value: navigationModel)
