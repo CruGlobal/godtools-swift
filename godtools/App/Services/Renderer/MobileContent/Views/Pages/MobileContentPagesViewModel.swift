@@ -19,7 +19,7 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     let numberOfPages: ObservableValue<Int> = ObservableValue(value: 0)
     let pageNavigationSemanticContentAttribute: UISemanticContentAttribute
     let rendererWillChangeSignal: Signal = Signal()
-    let navigateSignal: SignalValue<MobileContentPagesNavigationModel> = SignalValue()
+    let pageNavigation: ObservableValue<MobileContentPagesNavigationModel?> = ObservableValue(value: nil)
     
     required init(flowDelegate: FlowDelegate, renderers: [MobileContentRenderer], primaryLanguage: LanguageModel, page: Int?) {
         

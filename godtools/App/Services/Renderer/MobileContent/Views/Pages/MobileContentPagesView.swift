@@ -117,8 +117,10 @@ class MobileContentPagesView: UIViewController {
             pagesView.initialPagePositions = pagesView.getAllVisiblePagesPositions()
         }
         
-        viewModel.navigateSignal.addObserver(self) { [weak self] (navigationModel: MobileContentPagesNavigationModel) in
-            self?.startNavigation(navigationModel: navigationModel)
+        viewModel.pageNavigation.addObserver(self) { [weak self] (navigationModel: MobileContentPagesNavigationModel?) in
+            if let navigationModel = navigationModel {
+                self?.startNavigation(navigationModel: navigationModel)
+            }
         }
     }
     

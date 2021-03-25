@@ -204,7 +204,7 @@ extension ToolViewModel {
                 animated: true
             )
             
-            navigateSignal.accept(value: navigationModel)
+            pageNavigation.accept(value: navigationModel)
         }
         
         if let remoteShareLanguageIndex = remoteShareLanguageIndex, navBarLanguageChanged {

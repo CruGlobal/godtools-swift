@@ -13,7 +13,7 @@ protocol MobileContentPagesViewModelType {
     var numberOfPages: ObservableValue<Int> { get }
     var pageNavigationSemanticContentAttribute: UISemanticContentAttribute { get }
     var rendererWillChangeSignal: Signal { get }
-    var navigateSignal: SignalValue<MobileContentPagesNavigationModel> { get }
+    var pageNavigation: ObservableValue<MobileContentPagesNavigationModel?> { get }
     
     func viewDidFinishLayout(window: UIViewController, safeArea: UIEdgeInsets)
     func getPageForListenerEvents(events: [String]) -> Int?
