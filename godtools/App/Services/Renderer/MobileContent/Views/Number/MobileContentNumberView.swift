@@ -75,9 +75,7 @@ extension MobileContentNumberView {
         )
                         
         textView.getTextLabel().numberOfLines = 1
-        textView.getTextLabel().text = viewModel.text
         textView.getTextLabel().font = scaledFont
         textView.getTextLabel().textColor = viewModel.textColor
-        textView.getTextLabel().textAlignment = viewModel.textAlignment
     }
 }

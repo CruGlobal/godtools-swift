@@ -19,7 +19,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         self.fontService = fontService
     }
     
-    func viewForRenderableNode(renderableNode: MobileContentRenderableNode, pageModel: MobileContentRendererPageModel) -> MobileContentView? {
+    func viewForRenderableNode(renderableNode: MobileContentRenderableNode, pageModel: MobileContentRendererPageModel, containerStyles: MobileContentNodeStyles?) -> MobileContentView? {
         
         if renderableNode is ContentParagraphNode {
         
@@ -33,6 +33,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             let viewModel = MobileContentTextViewModel(
                 textNode: textNode,
                 pageModel: pageModel,
+                containerStyles: containerStyles,
                 fontService: fontService
             )
             

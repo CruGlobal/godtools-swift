@@ -10,5 +10,5 @@ import Foundation
 
 protocol MobileContentPageViewFactoryType {
     
-    func viewForRenderableNode(renderableNode: MobileContentRenderableNode, pageModel: MobileContentRendererPageModel) -> MobileContentView?
+    func viewForRenderableNode(renderableNode: MobileContentRenderableNode, pageModel: MobileContentRendererPageModel, containerStyles: MobileContentNodeStyles?) -> MobileContentView?
 }

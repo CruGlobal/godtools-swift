@@ -19,10 +19,6 @@ class MobileContentTitleViewModel: MobileContentTitleViewModelType {
         self.pageModel = pageModel
     }
     
-    var text: String? {
-        return titleNode.textNode?.text
-    }
-    
     var fontSize: CGFloat {
         return 19
     }
@@ -34,10 +30,6 @@ class MobileContentTitleViewModel: MobileContentTitleViewModelType {
     var textColor: UIColor {
         
         return titleNode.textNode?.getTextColor()?.color ?? pageModel.pageColors.primaryTextColor
-    }
-    
-    var textAlignment: NSTextAlignment {
-        return languageTextAlignment
     }
     
     var lineSpacing: CGFloat {

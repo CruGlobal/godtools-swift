@@ -19,10 +19,6 @@ class MobileContentNumberViewModel: MobileContentNumberViewModelType {
         self.pageModel = pageModel
     }
     
-    var text: String? {
-        return numberNode.textNode?.text
-    }
-    
     var fontSize: CGFloat {
         return 54
     }
@@ -33,10 +29,6 @@ class MobileContentNumberViewModel: MobileContentNumberViewModelType {
     
     var textColor: UIColor {
         return pageModel.pageColors.primaryTextColor
-    }
-    
-    var textAlignment: NSTextAlignment {
-        return languageTextAlignment
     }
 }
 

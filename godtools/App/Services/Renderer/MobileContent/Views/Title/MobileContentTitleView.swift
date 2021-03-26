@@ -75,10 +75,8 @@ extension MobileContentTitleView {
         )
         
         textView.getTextLabel().numberOfLines = 0
-        textView.getTextLabel().text = viewModel.text
         textView.getTextLabel().font = scaledFont
         textView.getTextLabel().textColor = viewModel.textColor
-        textView.getTextLabel().textAlignment = viewModel.textAlignment
         textView.getTextLabel().setLineSpacing(lineSpacing: viewModel.lineSpacing)
     }
 }

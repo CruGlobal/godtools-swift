@@ -14,6 +14,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     
     private let textNode: ContentTextNode
     private let pageModel: MobileContentRendererPageModel
+    private let containerStyles: MobileContentNodeStyles?
     private let fontService: FontService
     private let fontSize: CGFloat = 18
     private let defaultFontWeight: UIFont.Weight = .regular
@@ -21,12 +22,13 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
         
     let textColor: UIColor
     
-    required init(textNode: ContentTextNode, pageModel: MobileContentRendererPageModel, fontService: FontService) {
+    required init(textNode: ContentTextNode, pageModel: MobileContentRendererPageModel, containerStyles: MobileContentNodeStyles?, fontService: FontService) {
         
         self.textNode = textNode
         self.pageModel = pageModel
+        self.containerStyles = containerStyles
         self.fontService = fontService
-        self.textColor = textNode.getTextColor()?.color ?? pageModel.pageColors.textColor // TODO: I think we need to check for nearest ancestor text color before page color. ~Levi
+        self.textColor = textNode.getTextColor()?.color ?? containerStyles?.textColor?.color ?? pageModel.pageColors.textColor
     }
     
     var startImage: UIImage? {
@@ -67,8 +69,10 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     }
     
     var textAlignment: NSTextAlignment {
-                
-        if let nodeTextAlignment = textNode.textAlignment {
+               
+        let nodeTextAlignment: MobileContentTextAlign? = textNode.textAlignment ?? containerStyles?.textAlignment
+        
+        if let nodeTextAlignment = nodeTextAlignment {
             
             switch nodeTextAlignment {
             case .left:

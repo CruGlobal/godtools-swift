@@ -35,7 +35,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
         self.trainingTipsEnabled = trainingTipsEnabled
     }
     
-    func viewForRenderableNode(renderableNode: MobileContentRenderableNode, pageModel: MobileContentRendererPageModel) -> MobileContentView? {
+    func viewForRenderableNode(renderableNode: MobileContentRenderableNode, pageModel: MobileContentRendererPageModel, containerStyles: MobileContentNodeStyles?) -> MobileContentView? {
         
         if let cardNode = renderableNode as? CardNode, let cardsNode = cardNode.parent as? CardsNode {
             

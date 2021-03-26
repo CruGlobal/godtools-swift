@@ -10,9 +10,7 @@ import UIKit
 
 protocol MobileContentNumberViewModelType: MobileContentViewModelType {
     
-    var text: String? { get }
     var fontSize: CGFloat { get }
     var fontWeight: UIFont.Weight { get }
     var textColor: UIColor { get }
-    var textAlignment: NSTextAlignment { get }
 }
