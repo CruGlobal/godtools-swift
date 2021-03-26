@@ -58,7 +58,7 @@ class MobileContentButtonView: MobileContentView {
         button.setTitleColor(viewModel.titleColor, for: .normal)
         
         if let borderColor = viewModel.borderColor, let borderWidth = viewModel.borderWidth {
-            button.layer.borderColor = borderColor
+            button.layer.borderColor = borderColor.cgColor
             button.layer.borderWidth = borderWidth
         }
     }

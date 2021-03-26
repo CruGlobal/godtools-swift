@@ -12,27 +12,27 @@ class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
     
     private let pageModel: MobileContentRendererPageModel
     
-    let trainingTipViewModel: TrainingTipViewModelType?
+    let trainingTipView: TrainingTipView?
     
-    required init(headerNode: HeaderNode, pageModel: MobileContentRendererPageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, viewedTrainingTipsService: ViewedTrainingTipsService, trainingTipsEnabled: Bool) {
+    required init(headerNode: HeaderNode, pageModel: MobileContentRendererPageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, viewedTrainingTipsService: ViewedTrainingTipsService) {
         
         self.pageModel = pageModel
         
-        // TODO: Can I fetch this from renderer?
-        if trainingTipsEnabled, let trainingTipId = headerNode.trainingTip, !trainingTipId.isEmpty {
-            
-            trainingTipViewModel = TrainingTipViewModel(
-                trainingTipId: trainingTipId,
-                pageModel: pageModel,
-                viewType: .upArrow,
-                translationsFileCache: translationsFileCache,
-                mobileContentNodeParser: mobileContentNodeParser,
-                viewedTrainingTipsService: viewedTrainingTipsService
-            )
+        var trainingTipView: TrainingTipView? = nil
+        
+        if let trainingTipId = headerNode.trainingTip {
+            for pageViewFactory in pageModel.pageViewFactories {
+                if let trainingViewFactory = pageViewFactory as? TrainingViewFactory {
+                    trainingTipView = trainingViewFactory.getTrainingTipView(
+                        trainingTipId: trainingTipId,
+                        pageModel: pageModel,
+                        trainingTipViewType: .upArrow
+                    )
+                }
+            }
         }
-        else {
-            trainingTipViewModel = nil
-        }
+        
+        self.trainingTipView = trainingTipView
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {

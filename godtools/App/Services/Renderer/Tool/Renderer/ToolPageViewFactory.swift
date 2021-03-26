@@ -68,8 +68,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
                 pageModel: pageModel,
                 translationsFileCache: translationsFileCache,
                 mobileContentNodeParser: mobileContentNodeParser,
-                viewedTrainingTipsService: viewedTrainingTipsService,
-                trainingTipsEnabled: trainingTipsEnabled
+                viewedTrainingTipsService: viewedTrainingTipsService
             )
 
             let view = ToolPageHeaderView(viewModel: viewModel)
@@ -142,9 +141,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             return view
         }
         else if let pageNode = renderableNode as? PageNode {
-            
-            // TODO: I need to fix initial positions. ~Levi
-            
+                        
             let viewModel = ToolPageViewModel(
                 pageNode: pageNode,
                 pageModel: pageModel,

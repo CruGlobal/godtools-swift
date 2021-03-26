@@ -52,19 +52,12 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             return view            
         }
         else if let buttonNode = renderableNode as? ContentButtonNode {
-            
-            // TODO: Need to set default background color, title color, border color according to container. ~Levi
-            
+                        
             let viewModel = MobileContentButtonViewModel(
                 buttonNode: buttonNode,
                 pageModel: pageModel,
                 mobileContentAnalytics: mobileContentAnalytics,
-                fontService: fontService,
-                fontSize: 18,
-                fontWeight: .regular,
-                defaultBackgroundColor: buttonNode.getColor()?.color ?? .darkGray,
-                defaultTitleColor: buttonNode.textNode?.getTextColor()?.color ?? .white,
-                defaultBorderColor: .black
+                fontService: fontService
             )
 
             let view = MobileContentButtonView(viewModel: viewModel)

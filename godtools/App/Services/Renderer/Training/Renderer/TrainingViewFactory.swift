@@ -27,22 +27,11 @@ class TrainingViewFactory: MobileContentPageViewFactoryType {
         
         if let trainingTipNode = renderableNode as? TrainingTipNode {
             
-            guard let trainingTipId = trainingTipNode.id, !trainingTipId.isEmpty, trainingTipsEnabled else {
-                return nil
-            }
-            
-            let viewModel = TrainingTipViewModel(
-                trainingTipId: trainingTipId,
+            return getTrainingTipView(
+                trainingTipId: trainingTipNode.id ?? "",
                 pageModel: pageModel,
-                viewType: .rounded,
-                translationsFileCache: translationsFileCache,
-                mobileContentNodeParser: mobileContentNodeParser,
-                viewedTrainingTipsService: viewedTrainingTipsService
+                trainingTipViewType: .rounded
             )
-            
-            let view = TrainingTipView(viewModel: viewModel)
-            
-            return view
         }
         else if let pageNode = renderableNode as? PageNode {
             
@@ -57,5 +46,25 @@ class TrainingViewFactory: MobileContentPageViewFactoryType {
         }
         
         return nil
+    }
+    
+    func getTrainingTipView(trainingTipId: String, pageModel: MobileContentRendererPageModel, trainingTipViewType: TrainingTipViewType) -> TrainingTipView? {
+        
+        guard !trainingTipId.isEmpty && trainingTipsEnabled else {
+            return nil
+        }
+        
+        let viewModel = TrainingTipViewModel(
+            trainingTipId: trainingTipId,
+            pageModel: pageModel,
+            viewType: trainingTipViewType,
+            translationsFileCache: translationsFileCache,
+            mobileContentNodeParser: mobileContentNodeParser,
+            viewedTrainingTipsService: viewedTrainingTipsService
+        )
+        
+        let view = TrainingTipView(viewModel: viewModel)
+        
+        return view
     }
 }

@@ -46,8 +46,7 @@ class ToolPageHeaderView: MobileContentView {
         backgroundColor = .clear
         backgroundView.backgroundColor = viewModel.backgroundColor
         
-        if let trainingTipViewModel = viewModel.trainingTipViewModel {
-            let trainingTipView = TrainingTipView(viewModel: trainingTipViewModel)
+        if let trainingTipView = viewModel.trainingTipView {
             setParentAndAddChild(childView: trainingTipView)
             self.trainingTipView = trainingTipView
         }

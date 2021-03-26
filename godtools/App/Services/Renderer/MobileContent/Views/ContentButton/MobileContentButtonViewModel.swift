@@ -14,32 +14,33 @@ class MobileContentButtonViewModel: MobileContentButtonViewModelType {
     private let pageModel: MobileContentRendererPageModel
     private let mobileContentAnalytics: MobileContentAnalytics
     private let fontService: FontService
-    private let fontSize: CGFloat
-    private let fontWeight: UIFont.Weight
+    private let fontSize: CGFloat = 18
+    private let fontWeight: UIFont.Weight = .regular
     
     let backgroundColor: UIColor
     let titleColor: UIColor
-    let borderColor: CGColor?
+    let borderColor: UIColor?
     
-    required init(buttonNode: ContentButtonNode, pageModel: MobileContentRendererPageModel, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, fontSize: CGFloat, fontWeight: UIFont.Weight, defaultBackgroundColor: UIColor, defaultTitleColor: UIColor, defaultBorderColor: UIColor?) {
+    required init(buttonNode: ContentButtonNode, pageModel: MobileContentRendererPageModel, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
         
         self.buttonNode = buttonNode
         self.pageModel = pageModel
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
-        self.fontSize = fontSize
-        self.fontWeight = fontWeight
+        
+        let buttonColor: UIColor? = buttonNode.getColor()?.color
+        let buttonTitleColor: UIColor? = buttonNode.textNode?.getTextColor()?.color
         
         switch buttonNode.buttonStyle {
         
         case .contained:
-            backgroundColor = defaultBackgroundColor
-            titleColor = defaultTitleColor
-            borderColor = defaultBorderColor?.cgColor
+            backgroundColor = buttonColor ?? pageModel.pageColors.primaryColor
+            titleColor = buttonTitleColor ?? pageModel.pageColors.primaryTextColor
+            borderColor = UIColor.clear
         case .outlined:
             backgroundColor = buttonNode.getBackgroundColor()?.color ?? .clear
-            titleColor = defaultBackgroundColor
-            borderColor = defaultBackgroundColor.cgColor
+            titleColor = buttonColor ?? pageModel.pageColors.primaryColor
+            borderColor = buttonColor ?? pageModel.pageColors.primaryColor
         }
     }
     
