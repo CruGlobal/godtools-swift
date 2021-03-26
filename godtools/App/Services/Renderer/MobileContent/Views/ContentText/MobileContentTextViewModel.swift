@@ -67,28 +67,20 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     }
     
     var textAlignment: NSTextAlignment {
-        
-        let textAlignment: NSTextAlignment
-        
-        if let textAlign = textNode.textAlign, !textAlign.isEmpty {
-            if textAlign == "left" {
-                textAlignment = .left
-            }
-            else if textAlign == "center" {
-                textAlignment = .center
-            }
-            else if textAlign == "end" {
-                textAlignment = .right
-            }
-            else {
-                textAlignment = languageTextAlignment
+                
+        if let nodeTextAlignment = textNode.textAlignment {
+            
+            switch nodeTextAlignment {
+            case .left:
+                return .left
+            case .center:
+                return .center
+            case .right:
+                return .right
             }
         }
-        else {
-            textAlignment = languageTextAlignment
-        }
         
-        return textAlignment
+        return languageTextAlignment
     }
     
     var endImage: UIImage? {
