@@ -57,6 +57,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             let viewModel = MobileContentButtonViewModel(
                 buttonNode: buttonNode,
                 pageModel: pageModel,
+                containerStyles: containerStyles,
                 mobileContentAnalytics: mobileContentAnalytics,
                 fontService: fontService
             )
