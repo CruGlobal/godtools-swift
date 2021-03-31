@@ -12,4 +12,5 @@ enum IncomingDeepLinkType {
     
     case appsFlyer(data: [AnyHashable: Any])
     case url(url: URL)
+    case firebaseMessage(url: URL)
 }

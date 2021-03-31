@@ -16,7 +16,8 @@ class DeepLinkParsersContainer {
         
         parsers = [
             ToolDeepLinkParser(),
-            ArticleDeepLinkParser()
+            ArticleDeepLinkParser(),
+            URLDeepLinkParser()
         ]
     }
 }
