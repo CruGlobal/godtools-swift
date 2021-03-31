@@ -8,25 +8,16 @@
 
 import UIKit
 
-protocol ToolNavBarViewModelDelegate: class {
-    
-    func navHomeTapped(navBar: ToolNavBarViewModelType)
-    func shareTapped(navBar: ToolNavBarViewModelType)
-    func languageTapped(navBar: ToolNavBarViewModelType, previousLanguage: Int, newLanguage: Int)
-}
-
 class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
     
     private let resource: ResourceModel
-    private let languages: [LanguageModel]
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
     private let tractRemoteShareSubscriber: TractRemoteShareSubscriber
     private let localizationServices: LocalizationServices
     private let fontService: FontService
     private let analytics: AnalyticsContainer
     
-    private weak var delegate: ToolNavBarViewModelDelegate?
-    
+    let languages: [LanguageModel]
     let navBarColor: UIColor
     let navBarControlColor: UIColor
     let hidesChooseLanguageControl: Bool
@@ -34,9 +25,8 @@ class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
     let selectedLanguage: ObservableValue<Int> = ObservableValue(value: 0)
     let hidesShareButton: Bool
     
-    required init(delegate: ToolNavBarViewModelDelegate, resource: ResourceModel, manifestAttributes: MobileContentManifestAttributesType, languages: [LanguageModel], tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, localizationServices: LocalizationServices, fontService: FontService, analytics: AnalyticsContainer, hidesShareButton: Bool) {
+    required init(resource: ResourceModel, manifestAttributes: MobileContentManifestAttributesType, languages: [LanguageModel], tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, localizationServices: LocalizationServices, fontService: FontService, analytics: AnalyticsContainer, hidesShareButton: Bool) {
         
-        self.delegate = delegate
         self.resource = resource
         self.languages = languages
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
@@ -104,14 +94,6 @@ class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
         return fontService.getFont(size: 14, weight: .regular)
     }
     
-    func navHomeTapped() {
-        delegate?.navHomeTapped(navBar: self)
-    }
-    
-    func shareTapped() {
-        delegate?.shareTapped(navBar: self)
-    }
-    
     func languageSegmentWillAppear(index: Int) -> ToolLanguageSegmentViewModel {
         
         let language: LanguageModel = languages[index]
@@ -120,9 +102,7 @@ class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
     }
     
     func languageTapped(index: Int) {
-        
-        let previousLanguage: Int = selectedLanguage.value
-        
+                
         selectedLanguage.setValue(value: index)
         
         let language: LanguageModel = languages[index]
@@ -138,7 +118,5 @@ class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
             actionName: AdobeAnalyticsConstants.Values.parallelLanguageToggle,
             data: data
         )
-        
-        delegate?.languageTapped(navBar: self, previousLanguage: previousLanguage, newLanguage: index)
     }
 }

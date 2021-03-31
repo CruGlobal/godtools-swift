@@ -180,4 +180,14 @@ extension InitialDataDownloader {
         
         return languagesCache.getLanguages().map({LanguageModel(model: $0)})
     }
+    
+    func fetchFirstSupportedLanguageForResource(resource: ResourceModel, codes: [String]) -> LanguageModel? {
+        for code in codes {
+            if let language = getStoredLanguage(code: code), resource.supportsLanguage(languageId: language.id) {
+                return language
+            }
+        }
+        
+        return nil
+    }
 }

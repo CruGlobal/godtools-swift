@@ -197,19 +197,41 @@ extension ToolTrainingView: PageNavigationCollectionViewDelegate {
             cellReuseIdentifier: ToolTrainingTipView.reuseIdentifier,
             indexPath: indexPath) as! ToolTrainingTipView
 
-        let tipPageContentStackViewModel = viewModel.tipPageWillAppear(page: indexPath.row)
-     
-        cell.configure(viewModel: tipPageContentStackViewModel)
+        let mobileContentView: MobileContentView? = viewModel.tipPageWillAppear(
+            page: indexPath.row,
+            window: navigationController ?? self,
+            safeArea: .zero
+        )
         
+        if let mobileContentView = mobileContentView {
+            
+            if let trainingPageView = mobileContentView as? TrainingPageView {
+                trainingPageView.setDelegate(delegate: self)
+            }
+            else {
+                assertionFailure("Expected TrainingPageView")
+            }
+            
+            cell.configure(mobileContentView: mobileContentView)
+        }
+                
         return cell
     }
     
-    func pageNavigationDidChangePage(pageNavigation: PageNavigationCollectionView, page: Int) {
+    func pageNavigationDidChangeMostVisiblePage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
         viewModel.tipPageDidChange(page: page)
     }
     
-    func pageNavigationDidStopOnPage(pageNavigation: PageNavigationCollectionView, page: Int) {
+    func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
         viewModel.tipPageDidAppear(page: page)
+    }
+}
+
+// MARK: - TrainingPageViewDelegate
+
+extension ToolTrainingView: TrainingPageViewDelegate {
+    func trainingPageButtonWithUrlTapped(trainingPage: TrainingPageView, url: String) {
+        viewModel.buttonWithUrlTapped(url: url)
     }
 }
 
