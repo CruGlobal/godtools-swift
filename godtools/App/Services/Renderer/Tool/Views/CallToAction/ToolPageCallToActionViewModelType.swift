@@ -10,7 +10,6 @@ import UIKit
 
 protocol ToolPageCallToActionViewModelType {
     
-    var hidesCallToAction: Bool { get }
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute { get }
     var title: String? { get }
     var titleFont: UIFont { get }

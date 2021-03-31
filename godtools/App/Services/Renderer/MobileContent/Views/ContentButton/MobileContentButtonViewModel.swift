@@ -11,35 +11,40 @@ import UIKit
 class MobileContentButtonViewModel: MobileContentButtonViewModelType {
     
     private let buttonNode: ContentButtonNode
-    private let mobileContentEvents: MobileContentEvents
+    private let pageModel: MobileContentRendererPageModel
+    private let containerStyles: MobileContentNodeStyles?
     private let mobileContentAnalytics: MobileContentAnalytics
     private let fontService: FontService
-    private let fontSize: CGFloat
-    private let fontWeight: UIFont.Weight
+    private let fontSize: CGFloat = 18
+    private let fontWeight: UIFont.Weight = .regular
     
     let backgroundColor: UIColor
     let titleColor: UIColor
-    let borderColor: CGColor?
+    let borderColor: UIColor?
     
-    required init(buttonNode: ContentButtonNode, mobileContentEvents: MobileContentEvents, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, fontSize: CGFloat, fontWeight: UIFont.Weight, defaultBackgroundColor: UIColor, defaultTitleColor: UIColor, defaultBorderColor: UIColor?) {
+    required init(buttonNode: ContentButtonNode, pageModel: MobileContentRendererPageModel, containerStyles: MobileContentNodeStyles?, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
         
         self.buttonNode = buttonNode
-        self.mobileContentEvents = mobileContentEvents
+        self.pageModel = pageModel
+        self.containerStyles = containerStyles
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
-        self.fontSize = fontSize
-        self.fontWeight = fontWeight
         
-        switch buttonNode.buttonStyle {
+        let buttonColor: UIColor = buttonNode.getColor()?.color ?? containerStyles?.buttonColor?.color ?? pageModel.pageColors.primaryColor
+        let buttonTitleColor: UIColor? = buttonNode.textNode?.getTextColor()?.color
+        
+        let buttonStyle: MobileContentButtonNodeStyle = buttonNode.buttonStyle ?? containerStyles?.buttonStyle ?? .contained
+        
+        switch buttonStyle {
         
         case .contained:
-            backgroundColor = defaultBackgroundColor
-            titleColor = defaultTitleColor
-            borderColor = defaultBorderColor?.cgColor
+            backgroundColor = buttonColor
+            titleColor = buttonTitleColor ?? pageModel.pageColors.primaryTextColor
+            borderColor = UIColor.clear
         case .outlined:
             backgroundColor = buttonNode.getBackgroundColor()?.color ?? .clear
-            titleColor = defaultBackgroundColor
-            borderColor = defaultBackgroundColor.cgColor
+            titleColor = buttonColor
+            borderColor = buttonColor
         }
     }
     
@@ -58,29 +63,19 @@ class MobileContentButtonViewModel: MobileContentButtonViewModelType {
         return 1
     }
     
+    var buttonType: MobileContentButtonNodeType {
+        return buttonNode.buttonType
+    }
+    
+    var buttonEvents: [String] {
+        return buttonNode.events
+    }
+    
+    var buttonUrl: String {
+        return buttonNode.url ?? ""
+    }
+    
     func buttonTapped() {
-        
-        if buttonNode.type == "event" {
-            
-            let followUpSendEventName: String = "followup:send"
-            
-            if buttonNode.events.contains(followUpSendEventName) {
-                var triggerEvents: [String] = buttonNode.events
-                if let index = triggerEvents.firstIndex(of: followUpSendEventName) {
-                    triggerEvents.remove(at: index)
-                }
-                mobileContentEvents.followUpEventButtonTapped(followUpEventButton: FollowUpButtonEvent(triggerEventsOnFollowUpSent: triggerEvents))
-            }
-            else {
-                for event in buttonNode.events {
-                    mobileContentEvents.eventButtonTapped(eventButton: ButtonEvent(event: event))
-                }
-            }
-        }
-        else if buttonNode.type == "url", let url = buttonNode.url {
-            mobileContentEvents.urlButtonTapped(urlButtonEvent: UrlButtonEvent(url: url))
-        }
-        
         if let analyticsEventsNode = buttonNode.analyticsEventsNode {
             mobileContentAnalytics.trackEvents(events: analyticsEventsNode)
         }

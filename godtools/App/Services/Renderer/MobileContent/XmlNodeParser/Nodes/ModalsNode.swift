@@ -20,3 +20,11 @@ class ModalsNode: MobileContentXmlNode {
         return children as? [ModalNode] ?? []
     }
 }
+
+// MARK: - MobileContentRenderableNode
+
+extension ModalsNode: MobileContentRenderableNode {
+    var nodeContentIsRenderable: Bool {
+        return true
+    }
+}

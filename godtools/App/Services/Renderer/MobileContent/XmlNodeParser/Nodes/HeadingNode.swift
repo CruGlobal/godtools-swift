@@ -20,3 +20,11 @@ class HeadingNode: MobileContentXmlNode {
         return children.first as? ContentTextNode
     }
 }
+
+// MARK: - MobileContentRenderableNode
+
+extension HeadingNode: MobileContentRenderableNode {
+    var nodeContentIsRenderable: Bool {
+        return true
+    }
+}

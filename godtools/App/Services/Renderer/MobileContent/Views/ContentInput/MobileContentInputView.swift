@@ -8,9 +8,9 @@
 
 import UIKit
 
-class MobileContentInputView: UIView {
+class MobileContentInputView: MobileContentView {
     
-    private let viewModel: MobileContentInputViewModelType
+    let viewModel: MobileContentInputViewModelType
         
     @IBOutlet weak private var inputLabel: UILabel!
     @IBOutlet weak private var inputTextField: UITextField!
@@ -30,10 +30,6 @@ class MobileContentInputView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    deinit {
-        print("x deinit: \(type(of: self))")
     }
     
     private func initializeNib() {
@@ -68,4 +64,12 @@ class MobileContentInputView: UIView {
     func setInputDelegate(delegate: UITextFieldDelegate) {
         inputTextField.delegate = delegate
     }
+    
+    // MARK: - MobileContentView
+
+    override var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType {
+        return .constrainedToChildren
+    }
+    
+    // MARK: -
 }

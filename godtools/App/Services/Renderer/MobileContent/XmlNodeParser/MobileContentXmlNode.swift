@@ -8,7 +8,7 @@
 import Foundation
 import SWXMLHash
 
-class MobileContentXmlNode {
+class MobileContentXmlNode: NSObject {
     
     private(set) weak var parent: MobileContentXmlNode?
     private(set) var children: [MobileContentXmlNode] = Array()
@@ -18,6 +18,8 @@ class MobileContentXmlNode {
     required init(xmlElement: XMLElement) {
         
         self.xmlElement = xmlElement
+        
+        super.init()
     }
     
     var xmlElementName: String {

@@ -17,8 +17,6 @@
                 <outlet property="contentStackContainerView" destination="iQQ-dy-v0D" id="eW9-S1-UTR"/>
                 <outlet property="headerContainerView" destination="fDq-Oz-qfu" id="jnh-jy-ePX"/>
                 <outlet property="headerTop" destination="xz2-vR-tNc" id="LhA-3s-y9Z"/>
-                <outlet property="headerTrainingTipLeading" destination="Qcs-yy-4L6" id="bW3-Cm-8WG"/>
-                <outlet property="headerTrainingTipView" destination="7Pk-je-jWe" id="2KP-fI-Qw9"/>
                 <outlet property="heroContainerView" destination="W0e-5d-5fy" id="Fgi-UX-1mR"/>
                 <outlet property="heroHeight" destination="5Mo-BB-qCH" id="MRf-tP-x8Z"/>
                 <outlet property="heroTop" destination="OSS-mG-R5s" id="IhX-uP-Uvr"/>
@@ -59,14 +57,6 @@
                         <constraint firstAttribute="height" priority="500" constant="65" id="Tm9-fJ-2Pe"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Pk-je-jWe" userLabel="headerTrainingTipView">
-                    <rect key="frame" x="20" y="51" width="46.5" height="54"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="54" id="dDz-bP-d9Z"/>
-                        <constraint firstAttribute="width" secondItem="7Pk-je-jWe" secondAttribute="height" multiplier="55:64" id="xZt-oc-SOl"/>
-                    </constraints>
-                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vNO-5W-ee8" userLabel="callToActionContainerView">
                     <rect key="frame" x="0.0" y="846" width="414" height="50"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -93,11 +83,9 @@
                 <constraint firstItem="6RN-4u-szb" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="E37-yY-626"/>
                 <constraint firstItem="fDq-Oz-qfu" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" id="JgR-bn-DyX"/>
                 <constraint firstItem="W0e-5d-5fy" firstAttribute="top" secondItem="hSb-LO-Zv1" secondAttribute="top" id="OSS-mG-R5s"/>
-                <constraint firstItem="7Pk-je-jWe" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="Qcs-yy-4L6"/>
                 <constraint firstAttribute="trailing" secondItem="Vn2-3e-PLp" secondAttribute="trailing" id="V8x-YN-Viw"/>
                 <constraint firstItem="W0e-5d-5fy" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="30" id="WM8-QF-Wff"/>
                 <constraint firstAttribute="trailing" secondItem="hSb-LO-Zv1" secondAttribute="trailing" id="YpK-L8-S1b"/>
-                <constraint firstItem="7Pk-je-jWe" firstAttribute="top" secondItem="fDq-Oz-qfu" secondAttribute="bottom" constant="-14" id="ZU8-7N-3vQ"/>
                 <constraint firstItem="iQQ-dy-v0D" firstAttribute="bottom" secondItem="6RN-4u-szb" secondAttribute="bottom" id="bA1-Wv-U79"/>
                 <constraint firstItem="hSb-LO-Zv1" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="gG0-L9-mIR"/>
                 <constraint firstItem="vNO-5W-ee8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="ikC-Ee-HXA"/>

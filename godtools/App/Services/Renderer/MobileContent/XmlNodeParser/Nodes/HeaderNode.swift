@@ -11,8 +11,8 @@ import SWXMLHash
 
 class HeaderNode: MobileContentXmlNode {
     
-    private(set) var number: String?
-    private(set) var title: String?
+    private(set) var numberNode: NumberNode?
+    private(set) var titleNode: TitleNode?
     
     let trainingTip: String?
     
@@ -30,11 +30,19 @@ class HeaderNode: MobileContentXmlNode {
         super.addChild(childNode: childNode)
         
         if let numberNode = childNode as? NumberNode {
-            number = numberNode.text
+            self.numberNode = numberNode
         }
         
         if let titleNode = children.last as? TitleNode {
-            title = titleNode.textNode?.text
+            self.titleNode = titleNode
         }
+    }
+}
+
+// MARK: - MobileContentRenderableNode
+
+extension HeaderNode: MobileContentRenderableNode {
+    var nodeContentIsRenderable: Bool {
+        return true
     }
 }

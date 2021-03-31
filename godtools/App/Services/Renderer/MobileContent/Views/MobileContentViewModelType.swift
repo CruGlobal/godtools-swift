@@ -10,6 +10,7 @@ import Foundation
 
 protocol MobileContentViewModelType {
     
+    var language: LanguageModel { get }
     var analyticsEvents: [MobileContentAnalyticsEvent] { get }
     var defaultAnalyticsEventsTrigger: AnalyticsEventNodeTrigger { get }
     
@@ -18,6 +19,10 @@ protocol MobileContentViewModelType {
 }
 
 extension MobileContentViewModelType {
+    
+    var languageTextAlignment: NSTextAlignment {
+        return language.languageDirection == .leftToRight ? .left : .right
+    }
     
     func mobileContentDidAppear() {
         

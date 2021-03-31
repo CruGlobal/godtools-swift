@@ -57,6 +57,12 @@ class ContentTextNode: MobileContentXmlNode {
     }
 }
 
+extension ContentTextNode {
+    var textAlignment: MobileContentTextAlign? {
+        return MobileContentTextAlign(rawValue: textAlign ?? "")
+    }
+}
+
 // MARK: - MobileContentRenderableNode
 
 extension ContentTextNode: MobileContentRenderableNode {

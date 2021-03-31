@@ -105,3 +105,11 @@ class PageNode: MobileContentXmlNode, BackgroundImageNodeType {
         return nil
     }
 }
+
+// MARK: - MobileContentRenderableNode
+
+extension PageNode: MobileContentRenderableNode {
+    var nodeContentIsRenderable: Bool {
+        return true
+    }
+}
