@@ -18,6 +18,11 @@ class RealmArticleAemImportDataCache {
         self.realmDatabase = realmDatabase
     }
     
+    func getArticleJcrContentWithTag(tag: String) -> ArticleJcrContent? {
+        
+        return nil
+    }
+    
     func getArticleAemImportDataObjects(complete: @escaping ((_ articleAemImportData: [RealmArticleAemImportData]) -> Void)) {
         
         //TODO: Work on this ~Robert

@@ -8,15 +8,13 @@
 
 import Foundation
 
-protocol ArticlesViewModelType {
+protocol ArticlesViewModelType: DownloadManifestArticlesViewModelType {
     
-    var localizationServices: LocalizationServices { get }
     var navTitle: ObservableValue<String> { get }
-    var articleAemImportData: ObservableValue<[ArticleAemImportData]> { get }
-    var isLoading: ObservableValue<Bool> { get }
-    var errorMessage: ObservableValue<ArticlesErrorMessage> { get }
+    var numberOfArticles: ObservableValue<Int> { get }
     
     func pageViewed()
-    func articleTapped(articleAemImportData: ArticleAemImportData)
+    func articleTapped(index: Int)
+    //func articleWillAppear(index: Int) -> ArticleCellViewModelType
     func downloadArticlesTapped()
 }

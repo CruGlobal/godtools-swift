@@ -219,6 +219,10 @@ class AppDiContainer {
         emailSignUpService = EmailSignUpService(sharedSession: sharedIgnoringCacheSession, realmDatabase: realmDatabase, userAuthentication: userAuthentication)
     }
     
+    func getArticleManifestAemDownloader() -> ArticleManifestAemDownloader {
+        return ArticleManifestAemDownloader(realmDatabase: realmDatabase, downloader: articleAemImportDownloader)
+    }
+    
     func getCardJumpService() -> CardJumpService {
         return CardJumpService(cardJumpCache: CardJumpUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache))
     }

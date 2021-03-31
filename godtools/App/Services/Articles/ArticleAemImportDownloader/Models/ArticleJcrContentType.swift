@@ -12,6 +12,7 @@ protocol ArticleJcrContentType {
     
     associatedtype TagsList: Sequence
     
+    var aemUri: String { get }
     var canonical: String? { get }
     var tags: TagsList { get }
     var title: String? { get }

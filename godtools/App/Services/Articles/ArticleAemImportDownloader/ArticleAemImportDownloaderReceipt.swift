@@ -43,4 +43,9 @@ class ArticleAemImportDownloaderReceipt {
         downloadAemImportsQueue?.cancelAllOperations()
         started.accept(value: false)
     }
+    
+    func removeAllObservers(object: NSObject) {
+        started.removeObserver(object)
+        completed.removeObserver(object)
+    }
 }

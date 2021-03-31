@@ -10,13 +10,15 @@ import Foundation
 
 struct ArticleJcrContent: ArticleJcrContentType {
     
+    let aemUri: String
     let canonical: String?
     let tags: [String]
     let title: String?
     let uuid: String?
     
-    init(canonical: String?, tags: [String], title: String?, uuid: String?) {
+    init(aemUri: String, canonical: String?, tags: [String], title: String?, uuid: String?) {
         
+        self.aemUri = aemUri
         self.canonical = canonical
         self.tags = tags
         self.title = title
@@ -25,6 +27,7 @@ struct ArticleJcrContent: ArticleJcrContentType {
     
     init(realmModel: RealmArticleJcrContent) {
         
+        aemUri = realmModel.aemUri
         canonical = realmModel.canonical
         tags = Array(realmModel.tags)
         title = realmModel.title

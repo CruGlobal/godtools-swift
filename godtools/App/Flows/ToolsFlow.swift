@@ -10,7 +10,7 @@ import UIKit
 
 class ToolsFlow: Flow {
     
-    private var articlesFlow: ArticlesFlow?
+    private var articleToolFlow: ArticleToolFlow?
     private var shareToolMenuFlow: ShareToolMenuFlow?
     private var learnToShareToolFlow: LearnToShareToolFlow?
     
@@ -539,7 +539,7 @@ class ToolsFlow: Flow {
         switch resourceType {
             
         case .article:
-            navigateToArticlesFlow(
+            navigateToArticleToolFlow(
                 resource: resource,
                 translationManifest: primaryTranslationManifest
             )
@@ -561,9 +561,9 @@ class ToolsFlow: Flow {
         }
     }
     
-    private func navigateToArticlesFlow(resource: ResourceModel, translationManifest: TranslationManifestData) {
+    private func navigateToArticleToolFlow(resource: ResourceModel, translationManifest: TranslationManifestData) {
         
-        let articlesFlow = ArticlesFlow(
+        let articleToolFlow = ArticleToolFlow(
             flowDelegate: self,
             appDiContainer: appDiContainer,
             sharedNavigationController: navigationController,
@@ -571,7 +571,7 @@ class ToolsFlow: Flow {
             translationManifest: translationManifest
         )
         
-        self.articlesFlow = articlesFlow
+        self.articleToolFlow = articleToolFlow
     }
     
     private func navigateToTract(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {

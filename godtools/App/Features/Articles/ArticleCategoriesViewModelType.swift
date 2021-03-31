@@ -8,18 +8,15 @@
 
 import Foundation
 
-protocol ArticleCategoriesViewModelType {
+protocol ArticleCategoriesViewModelType: DownloadManifestArticlesViewModelType {
     
-    var localizationServices: LocalizationServices { get }
-    var translationsFileCache: TranslationsFileCache { get }
-    var categories: ObservableValue<[ArticleCategory]> { get }
     var navTitle: ObservableValue<String> { get }
+    var numberOfCategories: ObservableValue<Int> { get }
     var loadingMessage: ObservableValue<String> { get }
-    var isLoading: ObservableValue<Bool> { get }
-    var errorMessage: ObservableValue<ArticlesErrorMessage> { get }
     
     func pageViewed()
+    func categoryWillAppear(index: Int) -> ArticleCategoryCellViewModelType
+    func categoryTapped(index: Int)
     func downloadArticlesTapped()
     func refreshArticles()
-    func articleTapped(category: ArticleCategory)
 }

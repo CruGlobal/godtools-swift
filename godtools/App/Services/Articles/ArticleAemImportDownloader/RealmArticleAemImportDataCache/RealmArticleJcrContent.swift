@@ -11,6 +11,7 @@ import RealmSwift
 
 class RealmArticleJcrContent: Object, ArticleJcrContentType {
     
+    @objc dynamic var aemUri: String = ""
     @objc dynamic var canonical: String?
     @objc dynamic var title: String?
     @objc dynamic var uuid: String?
@@ -19,6 +20,7 @@ class RealmArticleJcrContent: Object, ArticleJcrContentType {
     
     func mapFrom(model: ArticleJcrContent) {
         
+        aemUri = model.aemUri
         canonical = model.canonical
         title = model.title
         uuid = model.uuid

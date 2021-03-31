@@ -53,6 +53,9 @@ class ArticleCategoriesView: UIViewController {
     
     private func setupLayout() {
         
+        // errorMessageView
+        errorMessageView.animateHidden(hidden: true, animated: false)
+        
         // categoriesTableView
         categoriesTableView.register(
             UINib(nibName: ArticleCategoryCell.nibName, bundle: nil),
@@ -75,12 +78,11 @@ class ArticleCategoriesView: UIViewController {
             self?.title = navTitle
         }
         
-        viewModel.categories.addObserver(self) { [weak self] (categories: [ArticleCategory]) in
+        viewModel.numberOfCategories.addObserver(self) { [weak self] (numberOfCategories: Int) in
             
-            self?.refreshArticlesControl.endRefreshing()
             self?.categoriesTableView.reloadData()
             
-            if categories.isEmpty {
+            if numberOfCategories == 0 {
                 self?.categoriesTableView.alpha = 0
             }
             else {
@@ -95,25 +97,23 @@ class ArticleCategoriesView: UIViewController {
         }
         
         viewModel.isLoading.addObserver(self) { [weak self] (isLoading: Bool) in
-            isLoading ? self?.loadingView.startAnimating() : self?.loadingView.stopAnimating()
-        }
-        
-        viewModel.errorMessage.addObserver(self) { [weak self] (errorMessage: ArticlesErrorMessage) in
-                
-            guard let viewModel = self?.viewModel else {
-                return
-            }
-            
-            if errorMessage.hidesErrorMessage {
-                self?.errorMessageView.animateHidden(hidden: true, animated: errorMessage.shouldAnimate)
+            if isLoading {
+                self?.loadingView.startAnimating()
             }
             else {
+                self?.loadingView.stopAnimating()
+                self?.refreshArticlesControl.endRefreshing()
+            }
+        }
+        
+        viewModel.errorMessage.addObserver(self) { [weak self] (errorMessageViewModel: ArticlesErrorMessageViewModel?) in
                 
-                self?.errorMessageView.configure(
-                    viewModel: ArticlesErrorMessageViewModel(localizationServices: viewModel.localizationServices, message: errorMessage.message),
-                    delegate: self
-                )
-                self?.errorMessageView.animateHidden(hidden: false, animated: errorMessage.shouldAnimate)
+            if let errorMessageViewModel = errorMessageViewModel {
+                self?.errorMessageView.configure(viewModel: errorMessageViewModel, delegate: self)
+                self?.errorMessageView.animateHidden(hidden: false, animated: true)
+            }
+            else {
+                self?.errorMessageView.animateHidden(hidden: true, animated: true)
             }
         }
     }
@@ -121,10 +121,6 @@ class ArticleCategoriesView: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.pageViewed()
-    }
-    
-    @objc func handleDownloadArticles(button: UIButton) {
-        viewModel.downloadArticlesTapped()
     }
     
     @objc func handleRefreshArticleCategoriesControl() {
@@ -141,13 +137,11 @@ extension ArticleCategoriesView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.categories.value.count
+        return viewModel.numberOfCategories.value
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let category: ArticleCategory = viewModel.categories.value[indexPath.row]
-        viewModel.articleTapped(category: category)
+        viewModel.categoryTapped(index: indexPath.row)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -156,16 +150,9 @@ extension ArticleCategoriesView: UITableViewDelegate, UITableViewDataSource {
             withIdentifier: ArticleCategoryCell.reuseIdentifier,
             for: indexPath) as! ArticleCategoryCell
         
-        let category: ArticleCategory = viewModel.categories.value[indexPath.row]
+        let cellViewModel: ArticleCategoryCellViewModelType = viewModel.categoryWillAppear(index: indexPath.row)
         
-        let cellViewModel = ArticleCategoryCellViewModel(
-            category: category,
-            translationsFileCache: viewModel.translationsFileCache
-        )
         cell.configure(viewModel: cellViewModel)
- 
-        cell.selectionStyle = .none
-        cell.backgroundColor = .lightGray
         
         return cell
     }

@@ -18,12 +18,12 @@ class ArticleJcrContentParser {
         return ["/conf/cru/settings/wcm/templates/experience-fragment-cru-godtools-variation"]
     }
     
-    func parse(jsonDictionary: [String: Any]) -> ArticleJcrContent? {
+    func parse(aemUri: String, jsonDictionary: [String: Any]) -> ArticleJcrContent? {
                 
-        return recurseJsonForArticleJcrContent(jsonDictionary: jsonDictionary)        
+        return recurseJsonForArticleJcrContent(aemUri: aemUri, jsonDictionary: jsonDictionary)
     }
     
-    private func recurseJsonForArticleJcrContent(jsonDictionary: [String: Any]) -> ArticleJcrContent? {
+    private func recurseJsonForArticleJcrContent(aemUri: String, jsonDictionary: [String: Any]) -> ArticleJcrContent? {
 
         for (key, value) in jsonDictionary {
             
@@ -37,6 +37,7 @@ class ArticleJcrContentParser {
                     let uuid: String? = childJsonDictionary["jcr:uuid"] as? String
                     
                     let jcrContent = ArticleJcrContent(
+                        aemUri: aemUri,
                         canonical: canonical,
                         tags: tags,
                         title: title,
@@ -46,7 +47,7 @@ class ArticleJcrContentParser {
                     return jcrContent
                 }
                 
-                return recurseJsonForArticleJcrContent(jsonDictionary: childJsonDictionary)
+                return recurseJsonForArticleJcrContent(aemUri: aemUri, jsonDictionary: childJsonDictionary)
             }
         }
         

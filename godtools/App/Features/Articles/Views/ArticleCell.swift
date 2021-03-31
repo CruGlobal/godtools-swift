@@ -26,6 +26,8 @@ class ArticleCell: UITableViewCell {
         
         self.viewModel = viewModel
         
+        selectionStyle = .none
+        
         titleLabel.text = viewModel.title
     }
 }

@@ -1,5 +1,5 @@
 //
-//  ArticlesFlow.swift
+//  ArticleToolFlow.swift
 //  godtools
 //
 //  Created by Levi Eggert on 4/20/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ArticlesFlow: Flow {
+class ArticleToolFlow: Flow {
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -25,7 +25,7 @@ class ArticlesFlow: Flow {
             flowDelegate: self,
             resource: resource,
             translationManifest: translationManifest,
-            articleAemImportDownloader: appDiContainer.articleAemImportDownloader,
+            articleManifestAemDownloader: appDiContainer.getArticleManifestAemDownloader(),
             translationsFileCache: appDiContainer.translationsFileCache,
             localizationServices: appDiContainer.localizationServices,
             analytics: appDiContainer.analytics
@@ -40,7 +40,7 @@ class ArticlesFlow: Flow {
         
         switch step {
             
-        case .articleCategoryTappedFromArticleCategories(let resource, let translationZipFile, let category, let articleManifest):
+        case .articleCategoryTappedFromArticleCategories(let resource, let translationZipFile, let category, let articleManifest, let currentArticleDownloadReceipt):
             
             let viewModel = ArticlesViewModel(
                 flowDelegate: self,
@@ -48,9 +48,10 @@ class ArticlesFlow: Flow {
                 translationZipFile: translationZipFile,
                 category: category,
                 articleManifest: articleManifest,
-                articleAemImportDownloader: appDiContainer.articleAemImportDownloader,
+                articleManifestAemDownloader: appDiContainer.getArticleManifestAemDownloader(),
                 localizationServices: appDiContainer.localizationServices,
-                analytics: appDiContainer.analytics
+                analytics: appDiContainer.analytics,
+                currentArticleDownloadReceipt: currentArticleDownloadReceipt
             )
             let view = ArticlesView(viewModel: viewModel)
             
@@ -87,3 +88,4 @@ class ArticlesFlow: Flow {
         }
     }
 }
+

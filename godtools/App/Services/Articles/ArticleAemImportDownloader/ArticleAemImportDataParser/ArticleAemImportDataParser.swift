@@ -47,13 +47,15 @@ class ArticleAemImportDataParser {
             variation = ""
             variationJson = aemImportJson
         }
+        
+        let aemUri: String = aemImportSrc.absoluteString
                 
-        let articleJcrContent: ArticleJcrContent? = articleJcrContentParser.parse(jsonDictionary: variationJson)
+        let articleJcrContent: ArticleJcrContent? = articleJcrContentParser.parse(aemUri: aemUri, jsonDictionary: variationJson)
         
         let aemImportWebUrl: String = aemImportSrc.absoluteString + "/" + variation + ".html"
         
         let articleAemImportData = ArticleAemImportData(
-            aemUri: aemImportSrc.absoluteString,
+            aemUri: aemUri,
             articleJcrContent: articleJcrContent,
             webUrl: aemImportWebUrl,
             webArchiveFilename: NSUUID().uuidString,

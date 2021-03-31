@@ -83,7 +83,7 @@ class ArticleAemImportDownloader {
                 case .failure(let aemImportOperationError):
                     articleAemImportErrors.append(aemImportOperationError)
                 }
-                                
+                                                
                 if queue.operations.isEmpty {
                     
                     guard !receipt.isCancelled && !articleAemImportDataObjects.isEmpty else {
