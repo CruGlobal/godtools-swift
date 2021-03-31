@@ -48,6 +48,8 @@ class AppFlow: NSObject, Flow {
         navigationController.setViewControllers([], animated: false)
         
         rootController.addChildController(child: navigationController)
+        
+        addDeepLinkingObservers()
     }
     
     deinit {
@@ -139,6 +141,15 @@ class AppFlow: NSObject, Flow {
                 
                 case .article(let articleURI):
                     break
+                
+                case .url(let url):
+                    if #available(iOS 10.0, *) {
+                        
+                        UIApplication.shared.open(url)
+                    } else {
+                        
+                        UIApplication.shared.openURL(url)
+                    }
                 }
             }
         }

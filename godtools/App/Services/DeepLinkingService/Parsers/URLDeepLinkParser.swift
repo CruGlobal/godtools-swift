@@ -17,7 +17,7 @@ class URLDeepLinkParser: DeepLinkParserType {
     func parse(incomingDeepLink: IncomingDeepLinkType) -> ParsedDeepLinkType? {
         switch incomingDeepLink {
         
-        case .firebaseMessage(let url):
+        case .url(let url):
             return .url(url: url)
             
         default:
