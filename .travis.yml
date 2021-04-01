@@ -26,6 +26,9 @@ jobs:
   - name: "Create TestFlight Build"
     if: branch = master and type = push
 
+    before_script:
+    - openssl aes-256-cbc -K $encrypted_cf3a694b4ade_key -iv $encrypted_cf3a694b4ade_iv -in fastlane/AppleAppStoreApi.json.enc -out fastlane/AppleAppStoreApi.json -d
+
     script:
     - fastlane ios beta
     - fastlane ios cru_build_adhoc skip_create_keychain:true
