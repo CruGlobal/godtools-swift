@@ -13,30 +13,27 @@ class ArticleCategoriesViewModel: NSObject, ArticleCategoriesViewModelType {
         
     private let resource: ResourceModel
     private let translationZipFile: TranslationZipFileModel
-    private let articleManifestAemDownloader: ArticleManifestAemDownloader
+    private let articleManifestAemRepository: ArticleManifestAemRepository
     private let localizationServices: LocalizationServices
     private let translationsFileCache: TranslationsFileCache
     private let analytics: AnalyticsContainer
     private let articleManifest: ArticleManifestXmlParser
     
     private var categories: [ArticleCategory] = Array()
+    private var downloadArticlesReceipt: ArticleManifestDownloadArticlesReceipt?
     
     private weak var flowDelegate: FlowDelegate?
     
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
     let numberOfCategories: ObservableValue<Int> = ObservableValue(value: 0)
-    let loadingMessage: ObservableValue<String> = ObservableValue(value: "")
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
-    let errorMessage: ObservableValue<ArticlesErrorMessageViewModel?> = ObservableValue(value: nil)
-    
-    var downloadArticlesReceipt: ArticleManifestAemDownloadReceipt?
-    
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, translationManifest: TranslationManifestData, articleManifestAemDownloader: ArticleManifestAemDownloader, translationsFileCache: TranslationsFileCache, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
+        
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, translationManifest: TranslationManifestData, articleManifestAemRepository: ArticleManifestAemRepository, translationsFileCache: TranslationsFileCache, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.translationZipFile = translationManifest.translationZipFile
-        self.articleManifestAemDownloader = articleManifestAemDownloader
+        self.articleManifestAemRepository = articleManifestAemRepository
         self.translationsFileCache = translationsFileCache
         self.localizationServices = localizationServices
         self.analytics = analytics
@@ -53,25 +50,31 @@ class ArticleCategoriesViewModel: NSObject, ArticleCategoriesViewModelType {
     
     deinit {
         print("x deinit: \(type(of: self))")
-        
-        destroyDownloadArticlesReceipt()
+        cancelArticleDownload()
+    }
+    
+    private func cancelArticleDownload() {
+        downloadArticlesReceipt?.cancel()
+        downloadArticlesReceipt = nil
     }
     
     private func reloadCategories() {
-     
         self.categories = articleManifest.categories
         numberOfCategories.accept(value: categories.count)
     }
 
     private func downloadArticles(forceDownload: Bool) {
+          
+        cancelArticleDownload()
+        
+        isLoading.accept(value: true)
+        
+        downloadArticlesReceipt = articleManifestAemRepository.downloadAndCacheManifestAemUris(manifest: articleManifest, languageCode: translationZipFile.languageCode, forceDownload: forceDownload, completion: { [weak self] (result: ArticleAemRepositoryResult) in
             
-        downloadArticles(
-            downloader: articleManifestAemDownloader,
-            manifest: articleManifest,
-            languageCode: translationZipFile.languageCode,
-            localizationServices: localizationServices,
-            forceDownload: forceDownload
-        )
+            DispatchQueue.main.async { [weak self] in
+                self?.isLoading.accept(value: false)
+            }
+        })
     }
 
     func pageViewed() {
@@ -93,10 +96,6 @@ class ArticleCategoriesViewModel: NSObject, ArticleCategoriesViewModelType {
         let category: ArticleCategory = categories[index]
         
         flowDelegate?.navigate(step: .articleCategoryTappedFromArticleCategories(resource: resource, translationZipFile: translationZipFile, category: category, articleManifest: articleManifest, currentArticleDownloadReceipt: downloadArticlesReceipt))
-    }
-    
-    func downloadArticlesTapped() {
-        downloadArticles(forceDownload: true)
     }
     
     func refreshArticles() {

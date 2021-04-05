@@ -25,7 +25,7 @@ class ArticleToolFlow: Flow {
             flowDelegate: self,
             resource: resource,
             translationManifest: translationManifest,
-            articleManifestAemDownloader: appDiContainer.getArticleManifestAemDownloader(),
+            articleManifestAemRepository: appDiContainer.getArticleManifestAemRepository(),
             translationsFileCache: appDiContainer.translationsFileCache,
             localizationServices: appDiContainer.localizationServices,
             analytics: appDiContainer.analytics
@@ -48,7 +48,7 @@ class ArticleToolFlow: Flow {
                 translationZipFile: translationZipFile,
                 category: category,
                 articleManifest: articleManifest,
-                articleManifestAemDownloader: appDiContainer.getArticleManifestAemDownloader(),
+                articleManifestAemRepository: appDiContainer.getArticleManifestAemRepository(),
                 localizationServices: appDiContainer.localizationServices,
                 analytics: appDiContainer.analytics,
                 currentArticleDownloadReceipt: currentArticleDownloadReceipt
@@ -57,25 +57,23 @@ class ArticleToolFlow: Flow {
             
             navigationController.pushViewController(view, animated: true)
                         
-        case .articleTappedFromArticles(let resource, let translationZipFile, let articleAemImportData):
+        case .articleTappedFromArticles(let resource, let aemCacheObject):
             
             let viewModel = ArticleWebViewModel(
                 flowDelegate: self,
-                resource: resource,
-                translationZipFile: translationZipFile,
-                articleAemImportData: articleAemImportData,
-                articleAemImportDownloader: appDiContainer.articleAemImportDownloader,
-                analytics: appDiContainer.analytics
+                aemCacheObject: aemCacheObject,
+                analytics: appDiContainer.analytics,
+                flowType: .tool(resource: resource)
             )
             
             let view = ArticleWebView(viewModel: viewModel)
             
             navigationController.pushViewController(view, animated: true)
             
-        case .sharedTappedFromArticle(let articleAemImportData):
+        case .sharedTappedFromArticle(let articleAemData):
             
             let viewModel = ShareArticleViewModel(
-                articleAemImportData: articleAemImportData,
+                articleAemData: articleAemData,
                 analytics: appDiContainer.analytics
             )
             

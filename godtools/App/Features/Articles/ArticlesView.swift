@@ -120,9 +120,9 @@ extension ArticlesView: UITableViewDelegate, UITableViewDataSource {
             withIdentifier: ArticleCell.reuseIdentifier,
             for: indexPath) as! ArticleCell
                 
-        //let cellViewModel: ArticleCellViewModelType = viewModel.articleWillAppear(index: indexPath.row)
-        
-        //cell.configure(viewModel: cellViewModel)
+        if let cellViewModel = viewModel.articleWillAppear(index: indexPath.row) {
+            cell.configure(viewModel: cellViewModel)
+        }
 
         return cell
     }

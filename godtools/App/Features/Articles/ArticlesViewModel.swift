@@ -16,11 +16,12 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
     private let translationZipFile: TranslationZipFileModel
     private let category: ArticleCategory
     private let articleManifest: ArticleManifestXmlParser
-    private let articleManifestAemDownloader: ArticleManifestAemDownloader
+    private let articleManifestAemRepository: ArticleManifestAemRepository
     private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
         
     private var articles: [AemUri] = Array()
+    private var currentArticleDownloadReceipt: ArticleManifestDownloadArticlesReceipt?
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -28,19 +29,18 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
     let numberOfArticles: ObservableValue<Int> = ObservableValue(value: 0)
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     let errorMessage: ObservableValue<ArticlesErrorMessageViewModel?> = ObservableValue(value: nil)
-    
-    var downloadArticlesReceipt: ArticleManifestAemDownloadReceipt?
-    
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, translationZipFile: TranslationZipFileModel, category: ArticleCategory, articleManifest: ArticleManifestXmlParser, articleManifestAemDownloader: ArticleManifestAemDownloader, localizationServices: LocalizationServices, analytics: AnalyticsContainer, currentArticleDownloadReceipt: ArticleManifestAemDownloadReceipt?) {
+        
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, translationZipFile: TranslationZipFileModel, category: ArticleCategory, articleManifest: ArticleManifestXmlParser, articleManifestAemRepository: ArticleManifestAemRepository, localizationServices: LocalizationServices, analytics: AnalyticsContainer, currentArticleDownloadReceipt: ArticleManifestDownloadArticlesReceipt?) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.translationZipFile = translationZipFile
         self.category = category
         self.articleManifest = articleManifest
-        self.articleManifestAemDownloader = articleManifestAemDownloader
+        self.articleManifestAemRepository = articleManifestAemRepository
         self.localizationServices = localizationServices
         self.analytics = analytics
+        self.currentArticleDownloadReceipt = currentArticleDownloadReceipt
         
         super.init()
                         
@@ -52,8 +52,7 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
         
         // currently downloading
         if let currentArticleDownloadReceipt = currentArticleDownloadReceipt {
-            addManifestDownloadReceiptObservers(manifestDownloadReceipt: currentArticleDownloadReceipt)
-            downloadArticlesReceipt = currentArticleDownloadReceipt
+            continueArticlesDownload(downloadArticlesReceipt: currentArticleDownloadReceipt)
         }
         else if cachedArticles.isEmpty {
             downloadArticles(forceDownload: true)
@@ -62,39 +61,48 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
     
     deinit {
         print("x deinit: \(type(of: self))")
-        
-        destroyDownloadArticlesReceipt()
+        currentArticleDownloadReceipt?.removeAllObserversFrom(object: self)
     }
     
-    private func addManifestDownloadReceiptObservers(manifestDownloadReceipt: ArticleManifestAemDownloadReceipt) {
-                
-        addReceiptObservers(
-            manifestDownloadReceipt: manifestDownloadReceipt,
-            manifest: articleManifest,
-            localizationServices: localizationServices
-        )
+    private var shouldShowLoadingIndicator: Bool {
+        return numberOfArticles.value == 0
+    }
+    
+    private func continueArticlesDownload(downloadArticlesReceipt: ArticleManifestDownloadArticlesReceipt) {
         
-        manifestDownloadReceipt.completed.addObserver(self) { [weak self] in
+        if shouldShowLoadingIndicator {
+            isLoading.accept(value: true)
+        }
+        
+        downloadArticlesReceipt.completed.addObserver(self) { [weak self] (result: ArticleAemRepositoryResult?) in
             DispatchQueue.main.async { [weak self] in
-                self?.reloadArticles(aemUris: self?.getCachedArticles() ?? [])
-                self?.destroyDownloadArticlesReceipt()
+                if let result = result {
+                    self?.handleCompleteArticlesDownload(result: result)
+                }
             }
         }
     }
     
     private func downloadArticles(forceDownload: Bool) {
         
-        let downloadArticlesReceipt: ArticleManifestAemDownloadReceipt? = downloadArticles(
-            downloader: articleManifestAemDownloader,
-            manifest: articleManifest,
-            languageCode: translationZipFile.languageCode,
-            localizationServices: localizationServices,
-            forceDownload: forceDownload
-        )
-        
-        if let downloadArticlesReceipt = downloadArticlesReceipt {
-            addManifestDownloadReceiptObservers(manifestDownloadReceipt: downloadArticlesReceipt)
+        if shouldShowLoadingIndicator {
+            isLoading.accept(value: true)
         }
+        
+        _ = articleManifestAemRepository.downloadAndCacheManifestAemUris(manifest: articleManifest, languageCode: translationZipFile.languageCode, forceDownload: forceDownload) { [weak self] (result: ArticleAemRepositoryResult) in
+            DispatchQueue.main.async { [weak self] in
+                self?.handleCompleteArticlesDownload(result: result)
+            }
+        }
+    }
+    
+    private func handleCompleteArticlesDownload(result: ArticleAemRepositoryResult) {
+        
+        // TODO: Need to handle network errors if network is not connected. ~Levi
+        
+        isLoading.accept(value: false)
+        
+        reloadArticles(aemUris: getCachedArticles())
     }
     
     private func getCachedArticles() -> [AemUri] {
@@ -102,7 +110,7 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
         let category: ArticleCategory = self.category
         let languageCode: String = translationZipFile.languageCode
         
-        let categoryArticles: [CategoryArticleModel] = articleManifestAemDownloader.getCategoryArticles(
+        let categoryArticles: [CategoryArticleModel] = articleManifestAemRepository.getCategoryArticles(
             category: category,
             languageCode: languageCode
         )
@@ -116,7 +124,7 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
         return aemUris
     }
     
-    private func reloadArticles(aemUris: [String]) {
+    private func reloadArticles(aemUris: [AemUri]) {
         
         self.articles = aemUris
         numberOfArticles.accept(value: aemUris.count)
@@ -129,22 +137,24 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
     func articleTapped(index: Int) {
         
         let aemUri: String = articles[index]
-        // TODO: Fetch ArticleAemImportData from cache with aemUri. ~Levi
-        //let aemData: ArticleAemImportData = //... fetch from cache
         
-        // TODO: Uncomment this line to complete navigation. ~Levi
-        //flowDelegate?.navigate(step: .articleTappedFromArticles(resource: resource, translationZipFile: translationZipFile, articleAemImportData: aemData))
+        guard let aemCacheObject = articleManifestAemRepository.getAemCacheObject(aemUri: aemUri) else {
+            return
+        }
+        
+        flowDelegate?.navigate(step: .articleTappedFromArticles(resource: resource, aemCacheObject: aemCacheObject))
     }
     
-    /*
-    func articleWillAppear(index: Int) -> ArticleCellViewModelType {
+    func articleWillAppear(index: Int) -> ArticleCellViewModelType? {
         
         let aemUri: String = articles[index]
-        // TODO: Fetch ArticleAemImportData from cache and return view model.
-        //let aemData: ArticleAemImportData = //... fetch from cache
-             
-        return ArticleCellViewModel(articleAemImportData: aemData)
-    }*/
+    
+        guard let aemCacheObject = articleManifestAemRepository.getAemCacheObject(aemUri: aemUri) else {
+            return nil
+        }
+        
+        return ArticleCellViewModel(aemData: aemCacheObject.aemData)
+    }
     
     func downloadArticlesTapped() {
         downloadArticles(forceDownload: true)

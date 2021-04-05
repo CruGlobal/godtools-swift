@@ -10,58 +10,84 @@ import Foundation
 
 class ArticleDeepLinkFlow: Flow {
     
+    private let aemUri: String
+    
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, aemUri: String) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
+        self.aemUri = aemUri
+        
+        let articleAemRepository: ArticleAemRepository = appDiContainer.getArticleAemRepository()
+        
+        if let aemCacheObject = articleAemRepository.getAemCacheObject(aemUri: aemUri) {
+            
+            navigateToArticleWebView(aemCacheObject: aemCacheObject, animated: true)
+        }
+        else {
+            
+            let viewModel = LoadingArticleViewModel(
+                flowDelegate: self,
+                aemUri: aemUri,
+                articleAemRepository: articleAemRepository,
+                localizationServices: appDiContainer.localizationServices
+            )
+            
+            let view = LoadingView(viewModel: viewModel)
+            
+            sharedNavigationController.present(view, animated: true, completion: nil)
+        }
     }
     
     func navigate(step: FlowStep) {
+        
         switch step {
         
-        case .articleDeepLinkTapped(let articleUri):
+        case .didDownloadArticleFromLoadingArticle(let aemCacheObject):
+            navigateToArticleWebView(aemCacheObject: aemCacheObject, animated: false)
+            navigationController.dismiss(animated: true, completion: nil)
             
-            appDiContainer.articleAemRepository.getArticleAem(aemUri: articleUri, cache: navigateToArticleWebView, downloadStarted: downloadStarted, downloadFinished: handleDownloadResult)
-        
+        case .didFailToDownloadArticleFromLoadingArticle(let alertMessage):
+            
+            let localizationServices: LocalizationServices = appDiContainer.localizationServices
+            
+            navigationController.dismiss(animated: true) { [weak self] in
+                
+                let viewModel = AlertMessageViewModel(
+                    title: alertMessage.title,
+                    message: alertMessage.message,
+                    cancelTitle: nil,
+                    acceptTitle: localizationServices.stringForMainBundle(key: "OK"),
+                    acceptHandler: nil
+                )
+                
+                let view = AlertMessageView(viewModel: viewModel)
+                
+                self?.navigationController.present(view.controller, animated: true, completion: nil)
+            }
+            
         default:
             break
-            
         }
     }
     
-    private func downloadStarted() {
-        // TODO: add a loading screen while downloading ~Robert
-    }
+    private func navigateToArticleWebView(aemCacheObject: ArticleAemCacheObject, animated: Bool) {
+       
+        let viewModel = ArticleWebViewModel(
+            flowDelegate: self,
+            aemCacheObject: aemCacheObject,
+            analytics: appDiContainer.analytics,
+            flowType: .deeplink
+        )
     
-    private func downloadFailed() {
-        // TODO: add download failure logic ~Robert
-
-    }
+        let view = ArticleWebView(viewModel: viewModel)
     
-    private func handleDownloadResult(result: ArticleAemModel) {
-        
-        navigateToArticleWebView(articleAemData: result)
-    }
-    
-    private func navigateToArticleWebView(articleAemData: ArticleAemModel) {
-        DispatchQueue.main.async {
-
-            let viewModel = ArticleWebViewModel(
-                flowDelegate: self,
-                articleAemImportData: articleAemData.importData,
-                articleAemRepository: self.appDiContainer.articleAemRepository,
-                analytics: self.appDiContainer.analytics
-            )
-        
-            let view = ArticleWebView(viewModel: viewModel)
-        
-            self.navigationController.pushViewController(view, animated: true)
-        }
+        navigationController.pushViewController(view, animated: animated)
     }
 }

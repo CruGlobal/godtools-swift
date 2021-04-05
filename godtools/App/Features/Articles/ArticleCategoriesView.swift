@@ -14,10 +14,7 @@ class ArticleCategoriesView: UIViewController {
     
     private var refreshArticlesControl: UIRefreshControl = UIRefreshControl()
            
-    @IBOutlet weak private var errorMessageView: ArticlesErrorMessageView!
     @IBOutlet weak private var categoriesTableView: UITableView!
-    @IBOutlet weak private var loadingMessageLabel: UILabel!
-    @IBOutlet weak private var loadingView: UIActivityIndicatorView!
     
     required init(viewModel: ArticleCategoriesViewModelType) {
         self.viewModel = viewModel
@@ -52,10 +49,7 @@ class ArticleCategoriesView: UIViewController {
     }
     
     private func setupLayout() {
-        
-        // errorMessageView
-        errorMessageView.animateHidden(hidden: true, animated: false)
-        
+                
         // categoriesTableView
         categoriesTableView.register(
             UINib(nibName: ArticleCategoryCell.nibName, bundle: nil),
@@ -92,28 +86,9 @@ class ArticleCategoriesView: UIViewController {
             }
         }
         
-        viewModel.loadingMessage.addObserver(self) { [weak self] (loadingMessage: String) in
-            self?.loadingMessageLabel.text = loadingMessage
-        }
-        
         viewModel.isLoading.addObserver(self) { [weak self] (isLoading: Bool) in
-            if isLoading {
-                self?.loadingView.startAnimating()
-            }
-            else {
-                self?.loadingView.stopAnimating()
+            if !isLoading {
                 self?.refreshArticlesControl.endRefreshing()
-            }
-        }
-        
-        viewModel.errorMessage.addObserver(self) { [weak self] (errorMessageViewModel: ArticlesErrorMessageViewModel?) in
-                
-            if let errorMessageViewModel = errorMessageViewModel {
-                self?.errorMessageView.configure(viewModel: errorMessageViewModel, delegate: self)
-                self?.errorMessageView.animateHidden(hidden: false, animated: true)
-            }
-            else {
-                self?.errorMessageView.animateHidden(hidden: true, animated: true)
             }
         }
     }
@@ -155,13 +130,5 @@ extension ArticleCategoriesView: UITableViewDelegate, UITableViewDataSource {
         cell.configure(viewModel: cellViewModel)
         
         return cell
-    }
-}
-
-// MARK: - ArticlesErrorMessageViewDelegate
-
-extension ArticleCategoriesView: ArticlesErrorMessageViewDelegate {
-    func articlesErrorMessageViewDownloadArticlesButtonTapped(articlesErrorMessageView: ArticlesErrorMessageView) {
-        viewModel.downloadArticlesTapped()
     }
 }

@@ -8,13 +8,15 @@
 
 import Foundation
 
-protocol ArticlesViewModelType: DownloadManifestArticlesViewModelType {
+protocol ArticlesViewModelType {
     
     var navTitle: ObservableValue<String> { get }
     var numberOfArticles: ObservableValue<Int> { get }
+    var isLoading: ObservableValue<Bool> { get }
+    var errorMessage: ObservableValue<ArticlesErrorMessageViewModel?> { get }
     
     func pageViewed()
     func articleTapped(index: Int)
-    //func articleWillAppear(index: Int) -> ArticleCellViewModelType
+    func articleWillAppear(index: Int) -> ArticleCellViewModelType?
     func downloadArticlesTapped()
 }

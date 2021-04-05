@@ -140,16 +140,19 @@ class AppFlow: NSObject, Flow {
                     }
                 
                 case .article(let articleUri):
-                    guard let appFlow = self else { return }
                     
-                    let articleDeepLinkFlow = ArticleDeepLinkFlow(flowDelegate: appFlow, appDiContainer: appFlow.appDiContainer, sharedNavigationController: appFlow.navigationController)
-                    
-                    appFlow.articleDeepLinkFlow = articleDeepLinkFlow
-                    
-                    DispatchQueue.main.async {
-                        articleDeepLinkFlow.navigate(step: .articleDeepLinkTapped(articleUri: ArticleAemUri(aemUri: articleUri)))
+                    guard let appFlow = self else {
+                        return
                     }
                     
+                    let articleDeepLinkFlow = ArticleDeepLinkFlow(
+                        flowDelegate: appFlow,
+                        appDiContainer: appFlow.appDiContainer,
+                        sharedNavigationController: appFlow.navigationController,
+                        aemUri: articleUri
+                    )
+                    
+                    appFlow.articleDeepLinkFlow = articleDeepLinkFlow
                 }
             }
         }

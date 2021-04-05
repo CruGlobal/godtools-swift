@@ -38,7 +38,7 @@ class RealmCategoryArticlesCache {
         return realm.object(ofType: RealmCategoryArticle.self, forPrimaryKey: uuid.uuidString)
     }
     
-    func storeArticleAemDataForManifestCategories(manifest: ArticleManifestType, languageCode: String, downloadedManifestAemDataImports: [ArticleAemImportData], completion: @escaping ((_ errors: [Error]) -> Void)) {
+    func storeAemDataObjectsForManifest(manifest: ArticleManifestType, languageCode: String, aemDataObjects: [ArticleAemData], completion: @escaping ((_ errors: [Error]) -> Void)) {
         
         realmDatabase.background { [weak self] (realm: Realm) in
             
@@ -89,7 +89,7 @@ class RealmCategoryArticlesCache {
                 }//end category aemTags
             }//end categories
             
-            for aemData in downloadedManifestAemDataImports {
+            for aemData in aemDataObjects {
                 
                 let jcrAemTags: [String] = aemData.articleJcrContent?.tags ?? []
                 
