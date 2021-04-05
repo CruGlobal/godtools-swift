@@ -505,7 +505,7 @@ class ToolsFlow: Flow {
     
     private func navigateToTool(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
         
-        let resourceType: ResourceType = ResourceType.resourceType(resource: resource)
+        let resourceType: ResourceType = resource.resourceTypeEnum
         
         switch resourceType {
             
@@ -514,6 +514,10 @@ class ToolsFlow: Flow {
                 resource: resource,
                 translationManifest: primaryTranslationManifest
             )
+            
+        case .lesson:
+            // TODO: Navigate to lesson. ~Levi
+            break
             
         case .tract:
             navigateToTract(

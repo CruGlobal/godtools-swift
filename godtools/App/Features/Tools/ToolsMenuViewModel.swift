@@ -35,6 +35,10 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
         selectedToolMenuItem.accept(value: favoritesMenuItem)
     }
     
+    func toolbarWillAppear() -> ToolsMenuToolbarViewModelType {
+        return ToolsMenuToolbarViewModel()
+    }
+    
     func resetMenu() {
         selectedToolMenuItem.accept(value: favoritesMenuItem)
     }

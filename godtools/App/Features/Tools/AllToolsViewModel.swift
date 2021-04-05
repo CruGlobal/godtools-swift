@@ -90,8 +90,8 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     private func reloadResourcesFromCache() {
         let sortedResources: [ResourceModel] = dataDownloader.resourcesCache.getSortedResources()
         let resources: [ResourceModel] = sortedResources.filter({
-            let resourceType: String = $0.resourceType.lowercased()
-            return resourceType == ResourceType.tract.rawValue || resourceType == ResourceType.article.rawValue
+            let resourceType: ResourceType = $0.resourceTypeEnum
+            return resourceType == .tract || resourceType == .article
         })
         tools.accept(value: resources)
         isLoading.accept(value: false)

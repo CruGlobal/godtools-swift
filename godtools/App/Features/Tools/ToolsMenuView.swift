@@ -21,10 +21,13 @@ class ToolsMenuView: UIViewController {
                 
     @IBOutlet weak private var favoritedTools: FavoritedToolsView!
     @IBOutlet weak private var allTools: AllToolsView!
+    @IBOutlet weak private var toolbarView: ToolsMenuToolbarView!
+    @IBOutlet weak private var bottomView: UIView!
         
     @IBOutlet weak private var favoritedToolsLeading: NSLayoutConstraint!
     
     required init(viewModel: ToolsMenuViewModelType, openTutorialViewModel: OpenTutorialViewModelType, favoritedToolsViewModel: FavoritedToolsViewModelType, allToolsViewModel: AllToolsViewModelType, favoritingToolMessageViewModel: FavoritingToolMessageViewModelType) {
+        
         self.viewModel = viewModel
         self.openTutorialViewModel = openTutorialViewModel
         self.favoritedToolsViewModel = favoritedToolsViewModel
@@ -85,6 +88,11 @@ class ToolsMenuView: UIViewController {
             allTools.configure(
                 viewModel: allToolsViewModel,
                 favoritingToolMessageViewModel: favoritingToolMessageViewModel
+            )
+            
+            toolbarView.configure(
+                viewModel: viewModel.toolbarWillAppear(),
+                delegate: self
             )
             
             setupBinding()
@@ -193,4 +201,10 @@ extension ToolsMenuView: FavoritedToolsViewDelegate {
             handleToolsMenuControlChanged(toolsControl: toolsMenuControl)
         }
     }
+}
+
+// MARK: - ToolsMenuToolbarViewDelegate
+
+extension ToolsMenuView: ToolsMenuToolbarViewDelegate {
+    
 }

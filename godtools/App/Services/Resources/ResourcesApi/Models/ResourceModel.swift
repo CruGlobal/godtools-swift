@@ -144,6 +144,11 @@ extension ResourceModel: Equatable {
 }
 
 extension ResourceModel {
+    
+    var resourceTypeEnum: ResourceType {
+        return ResourceType(rawValue: resourceType) ?? .unknown
+    }
+    
     func supportsLanguage(languageId: String) -> Bool {
         if !languageId.isEmpty {
             return languageIds.contains(languageId)
