@@ -235,6 +235,10 @@ class AppDiContainer {
         return MobileContentXmlNodeParser()
     }
     
+    func getToolMenuItemsRepository() -> ToolMenuItemsRepository {
+        return ToolMenuItemsRepository(localizationServices: localizationServices)
+    }
+    
     func getToolTrainingTipsOnboardingViews() -> ToolTrainingTipsOnboardingViewsService {
         return ToolTrainingTipsOnboardingViewsService(
             cache: ToolTrainingTipsOnboardingViewsUserDefaultsCache(userDefaultsCache: sharedUserDefaultsCache)

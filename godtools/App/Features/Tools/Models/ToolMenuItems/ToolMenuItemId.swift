@@ -9,6 +9,7 @@
 import Foundation
 
 enum ToolMenuItemId {
+    case lessons
     case favorites
     case allTools
 }

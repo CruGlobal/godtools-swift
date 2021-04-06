@@ -241,3 +241,6 @@ The app can be downloaded from https://godtoolsapp.com";
 "training_tip_prepare" = "Prepare";
 "training_tip_quote" = "Quote";
 "training_tip_tip" = "Tip";
+
+// Lessons
+"tool_menu_item.lessons" = "Learn";

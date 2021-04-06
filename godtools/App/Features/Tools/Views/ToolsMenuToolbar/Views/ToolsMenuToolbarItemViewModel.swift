@@ -10,7 +10,10 @@ import Foundation
 
 class ToolsMenuToolbarItemViewModel: ToolsMenuToolbarItemViewModelType {
     
-    required init() {
+    let title: String
+    
+    required init(toolMenuItem: ToolMenuItem) {
         
+        title = toolMenuItem.title
     }
 }

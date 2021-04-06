@@ -10,4 +10,5 @@ import Foundation
 
 protocol ToolsMenuToolbarItemViewModelType {
     
+    var title: String { get }
 }

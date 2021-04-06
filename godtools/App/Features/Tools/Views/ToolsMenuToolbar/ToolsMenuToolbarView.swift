@@ -39,6 +39,12 @@ class ToolsMenuToolbarView: UIView, NibBased {
     
     private func setupLayout() {
         
+        // toolbarItemsCollectionView
+        toolbarItemsCollectionView.register(
+            UINib(nibName: ToolsMenuToolbarItemView.nibName, bundle: nil),
+            forCellWithReuseIdentifier: ToolsMenuToolbarItemView.reuseIdentifier
+        )
+        
         // shadow
         clipsToBounds = false
         layer.shadowOffset = CGSize(width: 0, height: -1)
@@ -49,6 +55,9 @@ class ToolsMenuToolbarView: UIView, NibBased {
     
     private func setupBinding() {
         
+        viewModel?.numberOfToolbarItems.addObserver(self) { [weak self] (numberOfToolbarItems: Int) in
+            self?.toolbarItemsCollectionView.reloadData()
+        }
     }
 }
 
@@ -69,7 +78,17 @@ extension ToolsMenuToolbarView: UICollectionViewDelegateFlowLayout, UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
+        
+        let cell = toolbarItemsCollectionView.dequeueReusableCell(
+            withReuseIdentifier: ToolsMenuToolbarItemView.reuseIdentifier,
+            for: indexPath
+        ) as! ToolsMenuToolbarItemView
+        
+        if let cellViewModel = viewModel?.toolbarItemWillAppear(index: indexPath.row) {
+            cell.configure(viewModel: cellViewModel)
+        }
+        
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

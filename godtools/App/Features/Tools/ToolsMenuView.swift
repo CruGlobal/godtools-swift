@@ -171,6 +171,9 @@ class ToolsMenuView: UIViewController {
     private func navigateToToolMenuItem(menuItem: ToolMenuItem, animated: Bool) {
                 
         switch menuItem.id {
+        case .lessons:
+            // TODO: Navigate to lessons.
+            break
         case .favorites:
             favoritedToolsLeading.constant = 0
             favoritedTools.pageViewed()

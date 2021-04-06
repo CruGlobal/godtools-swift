@@ -10,6 +10,7 @@ import Foundation
 
 class ToolsMenuViewModel: ToolsMenuViewModelType {
     
+    private let toolMenuItemsRepository: ToolMenuItemsRepository
     private let localizationServices: LocalizationServices
     
     private weak var flowDelegate: FlowDelegate?
@@ -19,9 +20,10 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
     let toolMenuItems: ObservableValue<[ToolMenuItem]> = ObservableValue(value: [])
     let selectedToolMenuItem: ObservableValue<ToolMenuItem?> = ObservableValue(value: nil)
     
-    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices) {
+    required init(flowDelegate: FlowDelegate, toolMenuItemsRepository: ToolMenuItemsRepository, localizationServices: LocalizationServices) {
         
         self.flowDelegate = flowDelegate
+        self.toolMenuItemsRepository = toolMenuItemsRepository
         self.localizationServices = localizationServices
         
         favoritesMenuItem = ToolMenuItem(id: .favorites, title: localizationServices.stringForMainBundle(key: "my_tools"), accessibilityLabel: "my_tools")
@@ -36,7 +38,7 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
     }
     
     func toolbarWillAppear() -> ToolsMenuToolbarViewModelType {
-        return ToolsMenuToolbarViewModel()
+        return ToolsMenuToolbarViewModel(toolMenuItemsRepository: toolMenuItemsRepository)
     }
     
     func resetMenu() {
@@ -55,6 +57,9 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
         
         switch menuItem.id {
             
+        case .lessons:
+            // TODO: Implement. ~Levi
+            break
         case .favorites:
             selectedToolMenuItem.accept(value: favoritesMenuItem)
         case .allTools:
