@@ -48,8 +48,6 @@ class AppFlow: NSObject, Flow {
         navigationController.setViewControllers([], animated: false)
         
         rootController.addChildController(child: navigationController)
-        
-        addDeepLinkingObservers()
     }
     
     deinit {
@@ -81,6 +79,8 @@ class AppFlow: NSObject, Flow {
         else {
             navigate(step: .showTools(animated: true, shouldCreateNewInstance: true))
         }
+        
+        addDeepLinkingObservers()
     }
     
     private func loadInitialData() {
@@ -111,7 +111,12 @@ class AppFlow: NSObject, Flow {
                 switch deepLink {
                 
                 case .tool(let resourceAbbreviation, let primaryLanguageCodes, let parallelLanguageCodes, let liveShareStream, let page):
-                    guard let toolsFlow = self?.toolsFlow, let dataDownloader = self?.dataDownloader, let resource = dataDownloader.resourcesCache.getResource(abbreviation: resourceAbbreviation) else { return }
+                    
+                    guard let dataDownloader = self?.dataDownloader,
+                          let resource = dataDownloader.resourcesCache.getResource(abbreviation: resourceAbbreviation) else {
+                        
+                        return
+                    }
                     
                     var fetchedPrimaryLanguage: LanguageModel?
                     
@@ -127,9 +132,11 @@ class AppFlow: NSObject, Flow {
                     
                     let parallelLanguage = dataDownloader.fetchFirstSupportedLanguageForResource(resource: resource, codes: parallelLanguageCodes)
                     
-                    self?.resetFlowToToolsFlow(animated: false)
-                    DispatchQueue.main.async {
-                        toolsFlow.navigateToTool(
+                    DispatchQueue.main.async { [weak self] in
+                        
+                        self?.resetFlowToToolsFlow(animated: false)
+                        
+                        self?.toolsFlow?.navigateToTool(
                             resource: resource,
                             primaryLanguage: primaryLanguage,
                             parallelLanguage: parallelLanguage,
@@ -187,8 +194,6 @@ class AppFlow: NSObject, Flow {
                         toolsView.alpha = 1
                     }, completion: nil)
                 }
-                
-                addDeepLinkingObservers()
             }
             
         case .showOnboardingTutorial(let animated):
