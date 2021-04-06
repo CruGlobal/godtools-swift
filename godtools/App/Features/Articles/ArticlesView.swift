@@ -44,6 +44,10 @@ class ArticlesView: UIViewController {
     
     private func setupLayout() {
         
+        // errorMessageView
+        errorMessageView.animateHidden(hidden: true, animated: false)
+        
+        // articlesTableView
         articlesTableView.register(
             UINib(nibName: ArticleCell.nibName, bundle: nil),
             forCellReuseIdentifier: ArticleCell.reuseIdentifier
@@ -58,11 +62,11 @@ class ArticlesView: UIViewController {
             self?.title = navTitle
         }
         
-        viewModel.articleAemImportData.addObserver(self) { [weak self] (articleAemImportData: [ArticleAemImportData]) in
+        viewModel.numberOfArticles.addObserver(self) { [weak self] (numberOfArticles: Int) in
         
             self?.articlesTableView.reloadData()
             
-            if articleAemImportData.isEmpty {
+            if numberOfArticles == 0 {
                 self?.articlesTableView.alpha = 0
             }
             else {
@@ -76,22 +80,14 @@ class ArticlesView: UIViewController {
             isLoading ? self?.loadingView.startAnimating() : self?.loadingView.stopAnimating()
         }
         
-        viewModel.errorMessage.addObserver(self) { [weak self] (errorMessage: ArticlesErrorMessage) in
-            
-            guard let viewModel = self?.viewModel else {
-                return
-            }
-            
-            if errorMessage.hidesErrorMessage {
-                self?.errorMessageView.animateHidden(hidden: true, animated: errorMessage.shouldAnimate)
+        viewModel.errorMessage.addObserver(self) { [weak self] (errorMessageViewModel: ArticlesErrorMessageViewModel?) in
+                
+            if let errorMessageViewModel = errorMessageViewModel {
+                self?.errorMessageView.configure(viewModel: errorMessageViewModel, delegate: self)
+                self?.errorMessageView.animateHidden(hidden: false, animated: true)
             }
             else {
-                
-                self?.errorMessageView.configure(
-                    viewModel: ArticlesErrorMessageViewModel(localizationServices: viewModel.localizationServices, message: errorMessage.message),
-                    delegate: self
-                )
-                self?.errorMessageView.animateHidden(hidden: false, animated: errorMessage.shouldAnimate)
+                self?.errorMessageView.animateHidden(hidden: true, animated: true)
             }
         }
     }
@@ -111,13 +107,11 @@ extension ArticlesView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.articleAemImportData.value.count
+        return viewModel.numberOfArticles.value
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let articleAemImportData: ArticleAemImportData = viewModel.articleAemImportData.value[indexPath.row]
-        viewModel.articleTapped(articleAemImportData: articleAemImportData)
+        viewModel.articleTapped(index: indexPath.row)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -125,16 +119,10 @@ extension ArticlesView: UITableViewDelegate, UITableViewDataSource {
         let cell: ArticleCell = articlesTableView.dequeueReusableCell(
             withIdentifier: ArticleCell.reuseIdentifier,
             for: indexPath) as! ArticleCell
-        
-        let articleAemImportData: ArticleAemImportData = viewModel.articleAemImportData.value[indexPath.row]
-        
-        let cellViewModel = ArticleCellViewModel(
-            articleAemImportData: articleAemImportData
-        )
-        
-        cell.configure(viewModel: cellViewModel)
-        
-        cell.selectionStyle = .none
+                
+        if let cellViewModel = viewModel.articleWillAppear(index: indexPath.row) {
+            cell.configure(viewModel: cellViewModel)
+        }
 
         return cell
     }
