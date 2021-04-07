@@ -9,31 +9,32 @@
 import Foundation
 
 class ToolsMenuToolbarViewModel: ToolsMenuToolbarViewModelType {
-    
-    private let toolMenuItemsRepository: ToolMenuItemsRepository
-    
-    private var toolbarItems: [ToolMenuItem] = Array()
-    
-    let numberOfToolbarItems: ObservableValue<Int> = ObservableValue(value: 0)
-    
-    required init(toolMenuItemsRepository: ToolMenuItemsRepository) {
         
-        self.toolMenuItemsRepository = toolMenuItemsRepository
+    private let localizationServices: LocalizationServices
+    
+    required init(localizationServices: LocalizationServices) {
         
-        toolMenuItemsRepository.getToolMenuItems { [weak self] (toolMenuItems: [ToolMenuItem]) in
-            self?.reloadToolbarItems(toolbarItems: toolMenuItems)
-        }
+        self.localizationServices = localizationServices
     }
     
-    private func reloadToolbarItems(toolbarItems: [ToolMenuItem]) {
-        self.toolbarItems = toolbarItems
-        numberOfToolbarItems.accept(value: toolbarItems.count)
+    func learnToolbarItemWillAppear() -> ToolsMenuToolbarItemViewModelType {
+        
+        return ToolsMenuToolbarItemViewModel(
+            title: localizationServices.stringForMainBundle(key: "tool_menu_item.lessons")
+        )
     }
     
-    func toolbarItemWillAppear(index: Int) -> ToolsMenuToolbarItemViewModelType {
+    func favoritedToolsToolbarItemWillAppear() -> ToolsMenuToolbarItemViewModelType {
         
-        let toolMenuItem: ToolMenuItem = toolbarItems[index]
+        return ToolsMenuToolbarItemViewModel(
+            title: localizationServices.stringForMainBundle(key: "my_tools")
+        )
+    }
+    
+    func allToolsToolbarItemWillAppear() -> ToolsMenuToolbarItemViewModelType {
         
-        return ToolsMenuToolbarItemViewModel(toolMenuItem: toolMenuItem)
+        return ToolsMenuToolbarItemViewModel(
+            title: localizationServices.stringForMainBundle(key: "find_tools")
+        )
     }
 }

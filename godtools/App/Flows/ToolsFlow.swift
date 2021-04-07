@@ -61,7 +61,6 @@ class ToolsFlow: Flow {
         
         let toolsMenuViewModel = ToolsMenuViewModel(
             flowDelegate: self,
-            toolMenuItemsRepository: appDiContainer.getToolMenuItemsRepository(),
             localizationServices: appDiContainer.localizationServices
         )
         let view = ToolsMenuView(

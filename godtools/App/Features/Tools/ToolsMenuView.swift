@@ -16,7 +16,6 @@ class ToolsMenuView: UIViewController {
     private let allToolsViewModel: AllToolsViewModelType
     private let favoritingToolMessageViewModel: FavoritingToolMessageViewModelType
     
-    private var toolsMenuControl: UISegmentedControl = UISegmentedControl()
     private var didLayoutSubviews: Bool = false
                 
     @IBOutlet weak private var favoritedTools: FavoritedToolsView!
@@ -65,12 +64,6 @@ class ToolsMenuView: UIViewController {
             target: self,
             action: #selector(handleLanguage(barButtonItem:))
         )
-        
-        toolsMenuControl.addTarget(
-            self,
-            action: #selector(handleToolsMenuControlChanged(toolsControl:)),
-            for: .valueChanged
-        )
     }
     
     override func viewDidLayoutSubviews() {
@@ -106,25 +99,14 @@ class ToolsMenuView: UIViewController {
         if allTools != nil {
             allTools.scrollToTopOfTools(animated: false)
         }
-        viewModel.resetMenu()
     }
     
     private func setupLayout() {
-        toolsMenuControl.accessibilityIdentifier = "home_nav_segmented_control"
+
     }
     
     private func setupBinding() {
         
-        viewModel.toolMenuItems.addObserver(self) { [weak self] (toolMenuItems: [ToolMenuItem]) in
-            self?.reloadToolsMenuControl()
-        }
-        
-        viewModel.selectedToolMenuItem.addObserver(self) { [weak self] (toolMenuItem: ToolMenuItem?) in
-            if let toolMenuItem = toolMenuItem, let menuItems = self?.viewModel.toolMenuItems.value, let index = menuItems.firstIndex(of: toolMenuItem) {
-                self?.toolsMenuControl.selectedSegmentIndex = index
-                self?.navigateToToolMenuItem(menuItem: toolMenuItem, animated: true)
-            }
-        }
     }
     
     @objc func handleMenu(barButtonItem: UIBarButtonItem) {
@@ -135,46 +117,13 @@ class ToolsMenuView: UIViewController {
         viewModel.languageTapped()
     }
     
-    @objc func handleToolsMenuControlChanged(toolsControl: UISegmentedControl) {
-        
-        let menuItem: ToolMenuItem = viewModel.toolMenuItems.value[toolsControl.selectedSegmentIndex]
-
-        viewModel.toolMenuItemTapped(menuItem: menuItem)
-    }
-    
-    private func reloadToolsMenuControl() {
-        
-        toolsMenuControl.removeAllSegments()
-        
-        for index in 0 ..< viewModel.toolMenuItems.value.count {
-            let menuItem: ToolMenuItem = viewModel.toolMenuItems.value[index]
-            toolsMenuControl.insertSegment(withTitle: menuItem.title, at: index, animated: false)
-        }
-        
-        let titleFont: UIFont = FontLibrary.sfProTextRegular.font(size: 15) ?? UIFont.systemFont(ofSize: 15)
-                        
-        if #available(iOS 13.0, *) {
-            toolsMenuControl.setTitleTextAttributes([.font: titleFont, .foregroundColor: UIColor.white], for: .normal)
-            toolsMenuControl.setTitleTextAttributes([.font: titleFont, .foregroundColor: UIColor(red: 0 / 255, green: 173 / 255, blue: 218 / 255, alpha: 1)], for: .selected)
-            toolsMenuControl.layer.borderColor = UIColor.white.cgColor
-            toolsMenuControl.layer.borderWidth = 1
-            toolsMenuControl.selectedSegmentTintColor = .white
-            toolsMenuControl.backgroundColor = .clear
-        }
-        else {
-            toolsMenuControl.setTitleTextAttributes([.font: titleFont], for: .normal)
-        }
-        
-        navigationItem.titleView = toolsMenuControl
-    }
-    
-    private func navigateToToolMenuItem(menuItem: ToolMenuItem, animated: Bool) {
+    private func navigateForTappedToolbarItem(toolbarItem: ToolsMenuToolbarView.ToolbarItemView, animated: Bool) {
                 
-        switch menuItem.id {
-        case .lessons:
+        switch toolbarItem {
+        case .learn:
             // TODO: Navigate to lessons.
             break
-        case .favorites:
+        case .favoritedTools:
             favoritedToolsLeading.constant = 0
             favoritedTools.pageViewed()
         case .allTools:
@@ -198,11 +147,13 @@ class ToolsMenuView: UIViewController {
 extension ToolsMenuView: FavoritedToolsViewDelegate {
     
     func favoritedToolsViewFindToolsTapped(favoritedToolsView: FavoritedToolsView) {
-                
+              
+        // TODO: Implement. ~Levi
+        /*
         if let index = viewModel.toolMenuItems.value.firstIndex(of: viewModel.allToolsMenuItem) {
             toolsMenuControl.selectedSegmentIndex = index
             handleToolsMenuControlChanged(toolsControl: toolsMenuControl)
-        }
+        }*/
     }
 }
 
@@ -210,4 +161,15 @@ extension ToolsMenuView: FavoritedToolsViewDelegate {
 
 extension ToolsMenuView: ToolsMenuToolbarViewDelegate {
     
+    func toolsMenuToolbarLessonsTapped(toolsMenuToolbar: ToolsMenuToolbarView) {
+        
+    }
+    
+    func toolsMenuToolbarFavoritedToolsTapped(toolsMenuToolbar: ToolsMenuToolbarView) {
+        
+    }
+    
+    func toolsMenuToolbarAllToolsTapped(toolsMenuToolbar: ToolsMenuToolbarView) {
+        
+    }
 }

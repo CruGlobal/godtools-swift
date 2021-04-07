@@ -18,8 +18,20 @@
         <view contentMode="scaleToFill" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vxA-kQ-6xx" userLabel="lessonsTableView">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </tableView>
+            </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="vxA-kQ-6xx" secondAttribute="trailing" id="8hK-RJ-xcV"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="vxA-kQ-6xx" secondAttribute="bottom" id="b7m-G2-844"/>
+                <constraint firstItem="vxA-kQ-6xx" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="hDg-ou-JKp"/>
+                <constraint firstItem="vxA-kQ-6xx" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="hiw-Wk-ueb"/>
+            </constraints>
             <point key="canvasLocation" x="-220" y="144"/>
         </view>
     </objects>

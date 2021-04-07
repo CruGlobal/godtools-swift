@@ -9,8 +9,8 @@
 import Foundation
 
 protocol ToolsMenuToolbarViewModelType {
-    
-    var numberOfToolbarItems: ObservableValue<Int> { get }
-    
-    func toolbarItemWillAppear(index: Int) -> ToolsMenuToolbarItemViewModelType
+        
+    func learnToolbarItemWillAppear() -> ToolsMenuToolbarItemViewModelType
+    func favoritedToolsToolbarItemWillAppear() -> ToolsMenuToolbarItemViewModelType
+    func allToolsToolbarItemWillAppear() -> ToolsMenuToolbarItemViewModelType
 }

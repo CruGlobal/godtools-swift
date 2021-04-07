@@ -12,8 +12,8 @@ class ToolsMenuToolbarItemViewModel: ToolsMenuToolbarItemViewModelType {
     
     let title: String
     
-    required init(toolMenuItem: ToolMenuItem) {
+    required init(title: String) {
         
-        title = toolMenuItem.title
+        self.title = title
     }
 }
