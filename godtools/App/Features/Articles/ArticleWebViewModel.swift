@@ -42,19 +42,22 @@ class ArticleWebViewModel: ArticleWebViewModelType {
 
     func pageViewed() {
         
+        let siteSection: String
+        
         switch flowType {
         
         case .deeplink:
-            // TODO: Analytics for deeplink? ~Levi
-            break
+            siteSection = "articles"
         
         case .tool(let resource):
-            analytics.pageViewedAnalytics.trackPageView(
-                screenName: "Article : \(aemCacheObject.aemData.articleJcrContent?.title ?? "")",
-                siteSection: resource.abbreviation,
-                siteSubSection: "article"
-            )
+            siteSection = resource.abbreviation
         }
+        
+        analytics.pageViewedAnalytics.trackPageView(
+            screenName: "Article : \(aemCacheObject.aemData.articleJcrContent?.title ?? "")",
+            siteSection: siteSection,
+            siteSubSection: "article"
+        )
     }
     
     func sharedTapped() {

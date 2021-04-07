@@ -103,25 +103,27 @@ class ArticleAemCache {
         
         return webArchiver.archive(webArchiveUrls: webArchiveUrls) { [weak self] (result: WebArchiveQueueResult) in
             
-            if result.successfulArchives.count > 0 {
-                
-                var aemCacheArchivedObjects: [ArticleAemCacheArchivedObject] = Array()
-                
-                for webArchiveResult in result.successfulArchives {
-                    
-                    if let aemData = aemDataDictionary[webArchiveResult.webArchiveUrl.uuid] {
-                        
-                        let archivedObject = ArticleAemCacheArchivedObject(
-                            aemData: aemData,
-                            webArchivePlistData: webArchiveResult.webArchivePlistData
-                        )
-                        
-                        aemCacheArchivedObjects.append(archivedObject)
-                    }
-                }
-                
-                self?.storeAemCacheArchivedObjects(aemCacheArchivedObjects: aemCacheArchivedObjects, completion: completion)
+            guard result.successfulArchives.count > 0 else {
+                completion(ArticleAemCacheResult(numberOfArchivedObjects: 0, cacheErrorData: []))
+                return
             }
+            
+            var aemCacheArchivedObjects: [ArticleAemCacheArchivedObject] = Array()
+            
+            for webArchiveResult in result.successfulArchives {
+                
+                if let aemData = aemDataDictionary[webArchiveResult.webArchiveUrl.uuid] {
+                    
+                    let archivedObject = ArticleAemCacheArchivedObject(
+                        aemData: aemData,
+                        webArchivePlistData: webArchiveResult.webArchivePlistData
+                    )
+                    
+                    aemCacheArchivedObjects.append(archivedObject)
+                }
+            }
+            
+            self?.storeAemCacheArchivedObjects(aemCacheArchivedObjects: aemCacheArchivedObjects, completion: completion)
         }
     }
     

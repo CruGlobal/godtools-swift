@@ -21,7 +21,8 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
     private let analytics: AnalyticsContainer
         
     private var articles: [AemUri] = Array()
-    private var currentArticleDownloadReceipt: ArticleManifestDownloadArticlesReceipt?
+    private var continueArticleDownloadReceipt: ArticleManifestDownloadArticlesReceipt?
+    private var downloadArticlesReceipt: ArticleManifestDownloadArticlesReceipt?
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -40,7 +41,7 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
         self.articleManifestAemRepository = articleManifestAemRepository
         self.localizationServices = localizationServices
         self.analytics = analytics
-        self.currentArticleDownloadReceipt = currentArticleDownloadReceipt
+        self.continueArticleDownloadReceipt = currentArticleDownloadReceipt
         
         super.init()
                         
@@ -51,8 +52,8 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
         reloadArticles(aemUris: cachedArticles)
         
         // currently downloading
-        if let currentArticleDownloadReceipt = currentArticleDownloadReceipt {
-            continueArticlesDownload(downloadArticlesReceipt: currentArticleDownloadReceipt)
+        if let continueArticleDownloadReceipt = continueArticleDownloadReceipt {
+            continueArticlesDownload(downloadArticlesReceipt: continueArticleDownloadReceipt)
         }
         else if cachedArticles.isEmpty {
             downloadArticles(forceDownload: true)
@@ -61,7 +62,8 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
     
     deinit {
         print("x deinit: \(type(of: self))")
-        currentArticleDownloadReceipt?.removeAllObserversFrom(object: self)
+        continueArticleDownloadReceipt?.removeAllObserversFrom(object: self)
+        downloadArticlesReceipt?.cancel()
     }
     
     private var shouldShowLoadingIndicator: Bool {
@@ -75,9 +77,13 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
         }
         
         downloadArticlesReceipt.completed.addObserver(self) { [weak self] (result: ArticleAemRepositoryResult?) in
-            DispatchQueue.main.async { [weak self] in
+            guard let viewModel = self else {
+                return
+            }
+            DispatchQueue.main.async {
+                viewModel.continueArticleDownloadReceipt?.removeAllObserversFrom(object: viewModel)
                 if let result = result {
-                    self?.handleCompleteArticlesDownload(result: result)
+                    viewModel.handleCompleteArticlesDownload(result: result)
                 }
             }
         }
@@ -85,11 +91,18 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
     
     private func downloadArticles(forceDownload: Bool) {
         
+        if downloadArticlesReceipt != nil {
+            return
+        }
+        
         if shouldShowLoadingIndicator {
             isLoading.accept(value: true)
         }
         
-        _ = articleManifestAemRepository.downloadAndCacheManifestAemUris(manifest: articleManifest, languageCode: translationZipFile.languageCode, forceDownload: forceDownload) { [weak self] (result: ArticleAemRepositoryResult) in
+        errorMessage.accept(value: nil)
+        
+        downloadArticlesReceipt = articleManifestAemRepository.downloadAndCacheManifestAemUris(manifest: articleManifest, languageCode: translationZipFile.languageCode, forceDownload: forceDownload) { [weak self] (result: ArticleAemRepositoryResult) in
+            self?.downloadArticlesReceipt = nil
             DispatchQueue.main.async { [weak self] in
                 self?.handleCompleteArticlesDownload(result: result)
             }
@@ -97,12 +110,30 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
     }
     
     private func handleCompleteArticlesDownload(result: ArticleAemRepositoryResult) {
-        
-        // TODO: Need to handle network errors if network is not connected. ~Levi
-        
+                
         isLoading.accept(value: false)
         
-        reloadArticles(aemUris: getCachedArticles())
+        let cachedArticles: [AemUri] = getCachedArticles()
+        
+        reloadArticles(aemUris: cachedArticles)
+        
+        if let downloadError = result.downloaderResult.downloadError, cachedArticles.isEmpty {
+            
+            let downloadArticlesErrorViewModel = DownloadArticlesErrorViewModel(
+                localizationServices: localizationServices,
+                error: downloadError
+            )
+            
+            let errorViewModel = ArticlesErrorMessageViewModel(
+                localizationServices: localizationServices,
+                message: downloadArticlesErrorViewModel.message
+            )
+            
+            errorMessage.accept(value: errorViewModel)
+        }
+        else {
+            errorMessage.accept(value: nil)
+        }
     }
     
     private func getCachedArticles() -> [AemUri] {
