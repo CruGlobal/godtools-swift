@@ -61,7 +61,12 @@ class ArticleAemDownloader {
             }
         }
         
-        queue.addOperations(operations, waitUntilFinished: false)
+        if !operations.isEmpty {
+            queue.addOperations(operations, waitUntilFinished: false)
+        }
+        else {
+            completion(ArticleAemDownloaderResult(aemDataObjects: [], aemDownloadErrors: []))
+        }
         
         return queue
     }
