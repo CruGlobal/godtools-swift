@@ -782,6 +782,7 @@
 		45B879CE260C2CA800807821 /* MobileContentPagesNavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B879CD260C2CA800807821 /* MobileContentPagesNavigationModel.swift */; };
 		45BB7FB925F6BE76000FE44B /* LanguageDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DE725938A9700A096A0 /* LanguageDirection.swift */; };
 		45C5386124B8EFA700CABDAC /* godtoolsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C5386024B8EFA700CABDAC /* godtoolsUITests.swift */; };
+		45C93A8E261D2A4300592FFF /* MobileContentContainerNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C93A8D261D2A4300592FFF /* MobileContentContainerNode.swift */; };
 		45DEF22E2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json in Resources */ = {isa = PBXBuildFile; fileRef = 45DEF22D2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json */; };
 		45E8B3A3260B658A00B171CB /* MobileContentPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E8B3A2260B658A00B171CB /* MobileContentPageView.swift */; };
 		45E8B3B2260B6BF400B171CB /* MobileContentErrorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E8B3B1260B6BF400B171CB /* MobileContentErrorViewModel.swift */; };
@@ -1618,6 +1619,7 @@
 		45AD22B22593D1FB00A096A0 /* UIImage+CreateImageWithColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+CreateImageWithColor.swift"; sourceTree = "<group>"; };
 		45B879CD260C2CA800807821 /* MobileContentPagesNavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentPagesNavigationModel.swift; sourceTree = "<group>"; };
 		45C5386024B8EFA700CABDAC /* godtoolsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = godtoolsUITests.swift; sourceTree = "<group>"; };
+		45C93A8D261D2A4300592FFF /* MobileContentContainerNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentContainerNode.swift; sourceTree = "<group>"; };
 		45DEF22D2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = learn_to_share_tool_with_anyone.json; sourceTree = "<group>"; };
 		45DEF4B724DEF35E00996695 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		45DEF4B824DEF4E100996695 /* lv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = lv; path = lv.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -2480,6 +2482,7 @@
 		45A5B0C4260E2B8E0021EDAF /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				45C93A8D261D2A4300592FFF /* MobileContentContainerNode.swift */,
 				45A5B0CB260E2BC80021EDAF /* MobileContentNodeStyles.swift */,
 				45A5B0C5260E2BB70021EDAF /* MobileContentRenderableNode.swift */,
 			);
@@ -5218,6 +5221,7 @@
 				45FF25B8260BBF8500D771B6 /* TrainingTipEvent.swift in Sources */,
 				45AD21122593958E00A096A0 /* LanguagesDataModel.swift in Sources */,
 				45AD1B8625938A4F00A096A0 /* OnboardingTutorialGradientBackgroundView.swift in Sources */,
+				45C93A8E261D2A4300592FFF /* MobileContentContainerNode.swift in Sources */,
 				4511A9DC2607C37200686E43 /* ToolPageCardsViewModelType.swift in Sources */,
 				455FF6B52603DC690028B95B /* AnalyticsAttributeNode.swift in Sources */,
 				45AD1AAE25938A4E00A096A0 /* TutorialCellViewModel.swift in Sources */,

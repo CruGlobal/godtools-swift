@@ -14,7 +14,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     
     private let textNode: ContentTextNode
     private let pageModel: MobileContentRendererPageModel
-    private let containerStyles: MobileContentNodeStyles?
+    private let containerNode: MobileContentContainerNode?
     private let fontService: FontService
     private let fontSize: CGFloat = 18
     private let defaultFontWeight: UIFont.Weight = .regular
@@ -22,13 +22,22 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
         
     let textColor: UIColor
     
-    required init(textNode: ContentTextNode, pageModel: MobileContentRendererPageModel, containerStyles: MobileContentNodeStyles?, fontService: FontService) {
+    required init(textNode: ContentTextNode, pageModel: MobileContentRendererPageModel, containerNode: MobileContentContainerNode?, fontService: FontService) {
         
         self.textNode = textNode
         self.pageModel = pageModel
-        self.containerStyles = containerStyles
+        self.containerNode = containerNode
         self.fontService = fontService
-        self.textColor = textNode.getTextColor()?.color ?? containerStyles?.textColor?.color ?? pageModel.pageColors.textColor
+        
+        let containerTextColor: UIColor?
+        if containerNode is CardNode {
+            containerTextColor = pageModel.pageColors.cardTextColor
+        }
+        else {
+            containerTextColor = containerNode?.textColor?.color
+        }
+        
+        self.textColor = textNode.getTextColor()?.color ?? containerTextColor ?? pageModel.pageColors.textColor
     }
     
     var startImage: UIImage? {
@@ -70,7 +79,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     
     var textAlignment: NSTextAlignment {
                
-        let nodeTextAlignment: MobileContentTextAlign? = textNode.textAlignment ?? containerStyles?.textAlignment
+        let nodeTextAlignment: MobileContentTextAlign? = textNode.textAlignment ?? containerNode?.textAlignment
         
         if let nodeTextAlignment = nodeTextAlignment {
             

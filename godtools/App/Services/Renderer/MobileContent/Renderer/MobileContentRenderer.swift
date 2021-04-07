@@ -159,7 +159,7 @@ class MobileContentRenderer {
                 pageViewFactories: pageViewFactories
             )
             
-            if let renderableView = recurseAndRender(node: pageNode, pageModel: pageModel, containerStyles: nil) {
+            if let renderableView = recurseAndRender(node: pageNode, pageModel: pageModel, containerNode: nil) {
                 return .success(renderableView)
             }
         }
@@ -172,9 +172,9 @@ class MobileContentRenderer {
         return .failure(failedToRenderPageError)
     }
     
-    private func recurseAndRender(node: MobileContentXmlNode, pageModel: MobileContentRendererPageModel, containerStyles: MobileContentNodeStyles?) -> MobileContentView? {
+    private func recurseAndRender(node: MobileContentXmlNode, pageModel: MobileContentRendererPageModel, containerNode: MobileContentContainerNode?) -> MobileContentView? {
         
-        let containerStyles: MobileContentNodeStyles? = (node as? MobileContentNodeStyles) ?? containerStyles
+        let containerNode: MobileContentContainerNode? = (node as? MobileContentContainerNode) ?? containerNode
         
         guard let renderableNode = (node as? MobileContentRenderableNode) else {
             return nil
@@ -187,7 +187,7 @@ class MobileContentRenderer {
         if let fallbackNode = renderableNode as? ContentFallbackNode {
             var viewToRender: MobileContentView?
             for childNode in fallbackNode.children {
-                if let mobileContentView = recurseAndRender(node: childNode, pageModel: pageModel, containerStyles: containerStyles) {
+                if let mobileContentView = recurseAndRender(node: childNode, pageModel: pageModel, containerNode: containerNode) {
                     viewToRender = mobileContentView
                     break
                 }
@@ -195,11 +195,11 @@ class MobileContentRenderer {
             return viewToRender
         }
          
-        let mobileContentView: MobileContentView? = getViewFromViewFactory(renderableNode: renderableNode, pageModel: pageModel, containerStyles: containerStyles)
+        let mobileContentView: MobileContentView? = getViewFromViewFactory(renderableNode: renderableNode, pageModel: pageModel, containerNode: containerNode)
         
         for childNode in node.children {
             
-            let childMobileContentView: MobileContentView? = recurseAndRender(node: childNode, pageModel: pageModel, containerStyles: containerStyles)
+            let childMobileContentView: MobileContentView? = recurseAndRender(node: childNode, pageModel: pageModel, containerNode: containerNode)
             
             if let childMobileContentView = childMobileContentView, let mobileContentView = mobileContentView {
                 mobileContentView.renderChild(childView: childMobileContentView)
@@ -211,11 +211,11 @@ class MobileContentRenderer {
         return mobileContentView
     }
     
-    private func getViewFromViewFactory(renderableNode: MobileContentRenderableNode, pageModel: MobileContentRendererPageModel, containerStyles: MobileContentNodeStyles?) -> MobileContentView? {
+    private func getViewFromViewFactory(renderableNode: MobileContentRenderableNode, pageModel: MobileContentRendererPageModel, containerNode: MobileContentContainerNode?) -> MobileContentView? {
         
         for viewFactory in pageViewFactories {
             
-            if let view = viewFactory.viewForRenderableNode(renderableNode: renderableNode, pageModel: pageModel, containerStyles: containerStyles) {
+            if let view = viewFactory.viewForRenderableNode(renderableNode: renderableNode, pageModel: pageModel, containerNode: containerNode) {
             
                 return view
             }
