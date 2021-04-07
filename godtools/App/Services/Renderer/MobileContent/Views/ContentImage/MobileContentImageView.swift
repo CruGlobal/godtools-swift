@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MobileContentImageView: UIView {
+class MobileContentImageView: MobileContentView {
     
     private let viewModel: MobileContentImageViewModelType
     private let imageView: UIImageView = UIImageView()
@@ -91,6 +91,15 @@ class MobileContentImageView: UIView {
     }
     
     @objc func handleImageTapped() {
-        viewModel.imageTapped()
+        
+        super.sendEventsToAllViews(events: viewModel.imageEvents)
     }
+    
+    // MARK: - MobileContentView
+
+    override var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType {
+        return .constrainedToChildren
+    }
+    
+    // MARK: -
 }

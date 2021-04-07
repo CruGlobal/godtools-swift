@@ -12,34 +12,32 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     
     private static let numberFormatter: NumberFormatter = NumberFormatter()
     
-    private let contentTextNode: ContentTextNode
-    private let manifestResourcesCache: ManifestResourcesCache
+    private let textNode: ContentTextNode
+    private let pageModel: MobileContentRendererPageModel
+    private let containerStyles: MobileContentNodeStyles?
     private let fontService: FontService
-    private let fontSize: CGFloat
-    private let defaultFontWeight: UIFont.Weight
-    private let defaultTextAlignment: NSTextAlignment
+    private let fontSize: CGFloat = 18
+    private let defaultFontWeight: UIFont.Weight = .regular
     private let defaultImagePointSize: Float = 40
-    
+        
     let textColor: UIColor
     
-    required init(contentTextNode: ContentTextNode, manifestResourcesCache: ManifestResourcesCache, fontService: FontService, fontSize: CGFloat, defaultFontWeight: UIFont.Weight, defaultTextAlignment: NSTextAlignment, textColor: UIColor) {
+    required init(textNode: ContentTextNode, pageModel: MobileContentRendererPageModel, containerStyles: MobileContentNodeStyles?, fontService: FontService) {
         
-        self.contentTextNode = contentTextNode
-        self.manifestResourcesCache = manifestResourcesCache
+        self.textNode = textNode
+        self.pageModel = pageModel
+        self.containerStyles = containerStyles
         self.fontService = fontService
-        self.fontSize = fontSize
-        self.defaultFontWeight = defaultFontWeight
-        self.defaultTextAlignment = defaultTextAlignment
-        self.textColor = textColor
+        self.textColor = textNode.getTextColor()?.color ?? containerStyles?.textColor?.color ?? pageModel.pageColors.textColor
     }
     
     var startImage: UIImage? {
         
-        guard let resource = contentTextNode.startImage, !resource.isEmpty else {
+        guard let resource = textNode.startImage, !resource.isEmpty else {
             return nil
         }
         
-        guard let resourceImage = manifestResourcesCache.getImage(resource: resource) else {
+        guard let resourceImage = pageModel.resourcesCache.getImage(resource: resource) else {
             return nil
         }
         
@@ -47,12 +45,12 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     }
     
     var startImageSize: CGSize {
-        let floatValue: CGFloat = CGFloat(Float(contentTextNode.startImageSize) ?? defaultImagePointSize)
+        let floatValue: CGFloat = CGFloat(Float(textNode.startImageSize) ?? defaultImagePointSize)
         return CGSize(width: floatValue, height: floatValue)
     }
     
     var hidesStartImage: Bool {
-        guard let resource = contentTextNode.startImage else {
+        guard let resource = textNode.startImage else {
             return true
         }
         return resource.isEmpty
@@ -60,21 +58,65 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     
     var font: UIFont {
         
-        let fontScale: CGFloat
+        return getScaledFont(
+            fontSizeToScale: fontSize,
+            fontWeightElseUseTextDefault: nil
+        )
+    }
+    
+    var text: String? {
+        return textNode.text
+    }
+    
+    var textAlignment: NSTextAlignment {
+               
+        let nodeTextAlignment: MobileContentTextAlign? = textNode.textAlignment ?? containerStyles?.textAlignment
         
-        if let textScaleString = contentTextNode.textScale,
-            !textScaleString.isEmpty,
-            let number = MobileContentTextViewModel.numberFormatter.number(from: textScaleString) {
+        if let nodeTextAlignment = nodeTextAlignment {
             
-            fontScale = CGFloat(truncating: number)
+            switch nodeTextAlignment {
+            case .left:
+                return .left
+            case .center:
+                return .center
+            case .right:
+                return .right
+            }
         }
-        else {
-            fontScale = 1
+        
+        return languageTextAlignment
+    }
+    
+    var endImage: UIImage? {
+        
+        guard let resource = textNode.endImage, !resource.isEmpty else {
+            return nil
         }
+        
+        guard let resourceImage = pageModel.resourcesCache.getImage(resource: resource) else {
+            return nil
+        }
+        
+        return resourceImage
+    }
+    
+    var endImageSize: CGSize {
+        let floatValue: CGFloat = CGFloat(Float(textNode.endImageSize) ?? defaultImagePointSize)
+        return CGSize(width: floatValue, height: floatValue)
+    }
+    
+    var hidesEndImage: Bool {
+        guard let resource = textNode.endImage else {
+            return true
+        }
+        return resource.isEmpty
+    }
+    
+    private func getFontWeight() -> UIFont.Weight {
         
         let fontWeight: UIFont.Weight
         
-        if let textStyle = contentTextNode.textStyle, !textStyle.isEmpty {
+        if let textStyle = textNode.textStyle, !textStyle.isEmpty {
             if textStyle == "bold" {
                 fontWeight = .bold
             }
@@ -92,60 +134,45 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
             fontWeight = defaultFontWeight
         }
         
-        return fontService.getFont(size: fontSize * fontScale, weight: fontWeight)
+        return fontWeight
     }
     
-    var text: String? {
-        return contentTextNode.text
-    }
-    
-    var textAlignment: NSTextAlignment {
+    private func getFontScale() -> CGFloat {
         
-        let textAlignment: NSTextAlignment
+        let fontScale: CGFloat
         
-        if let textAlign = contentTextNode.textAlign, !textAlign.isEmpty {
-            if textAlign == "left" {
-                textAlignment = .left
-            }
-            else if textAlign == "center" {
-                textAlignment = .center
-            }
-            else if textAlign == "end" {
-                textAlignment = .right
-            }
-            else {
-                textAlignment = defaultTextAlignment
-            }
+        if let textScaleString = textNode.textScale, !textScaleString.isEmpty, let number = MobileContentTextViewModel.numberFormatter.number(from: textScaleString) {
+            fontScale = CGFloat(truncating: number)
         }
         else {
-            textAlignment = defaultTextAlignment
+            fontScale = 1
         }
         
-        return textAlignment
+        return fontScale
     }
     
-    var endImage: UIImage? {
-        
-        guard let resource = contentTextNode.endImage, !resource.isEmpty else {
-            return nil
-        }
-        
-        guard let resourceImage = manifestResourcesCache.getImage(resource: resource) else {
-            return nil
-        }
-        
-        return resourceImage
+    func getScaledFont(fontSizeToScale: CGFloat, fontWeightElseUseTextDefault: UIFont.Weight?) -> UIFont {
+                
+        return fontService.getFont(
+            size: fontSizeToScale * getFontScale(),
+            weight: fontWeightElseUseTextDefault ?? getFontWeight()
+        )
+    }
+}
+
+// MARK: - MobileContentViewModelType
+
+extension MobileContentTextViewModel: MobileContentViewModelType {
+    
+    var language: LanguageModel {
+        return pageModel.language
     }
     
-    var endImageSize: CGSize {
-        let floatValue: CGFloat = CGFloat(Float(contentTextNode.endImageSize) ?? defaultImagePointSize)
-        return CGSize(width: floatValue, height: floatValue)
+    var analyticsEvents: [MobileContentAnalyticsEvent] {
+        return []
     }
     
-    var hidesEndImage: Bool {
-        guard let resource = contentTextNode.endImage else {
-            return true
-        }
-        return resource.isEmpty
+    var defaultAnalyticsEventsTrigger: AnalyticsEventNodeTrigger {
+        return .visible
     }
 }

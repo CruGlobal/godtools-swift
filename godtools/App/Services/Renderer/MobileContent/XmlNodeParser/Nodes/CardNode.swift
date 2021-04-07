@@ -52,3 +52,17 @@ class CardNode: MobileContentXmlNode, BackgroundImageNodeType {
         super.addChild(childNode: childNode)
     }
 }
+
+extension CardNode {
+    var isHidden: Bool {
+        return hidden == "true"
+    }
+}
+
+// MARK: - MobileContentRenderableNode
+
+extension CardNode: MobileContentRenderableNode {
+    var nodeContentIsRenderable: Bool {
+        return true
+    }
+}

@@ -243,10 +243,6 @@ class AppDiContainer {
         return MobileContentAnalytics(analytics: analytics)
     }
     
-    func getMobileContentEvents() -> MobileContentEvents {
-        return MobileContentEvents()
-    }
-    
     func getMobileContentNodeParser() -> MobileContentXmlNodeParser {
         return MobileContentXmlNodeParser()
     }

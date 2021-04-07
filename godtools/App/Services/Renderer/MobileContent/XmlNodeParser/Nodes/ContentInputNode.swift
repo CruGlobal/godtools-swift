@@ -44,6 +44,22 @@ class ContentInputNode: MobileContentXmlNode {
     }
 }
 
+extension ContentInputNode {
+    
+    var inputType: MobileContentInputNodeType {
+        
+        guard let type = self.type else {
+            return .unknown
+        }
+        
+        return MobileContentInputNodeType(rawValue: type) ?? .unknown
+    }
+    
+    var isRequired: Bool {
+        return required == "true"
+    }
+}
+
 // MARK: - MobileContentRenderableNode
 
 extension ContentInputNode: MobileContentRenderableNode {

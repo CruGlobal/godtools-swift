@@ -125,6 +125,13 @@ class PageNavigationCollectionView: UIView, NibBased {
         }
     }
     
+    var currentPageCell: UICollectionViewCell? {
+        
+        let currentPage: Int = self.currentPage
+        
+        return collectionView.cellForItem(at: IndexPath(item: currentPage, section: 0))
+    }
+    
     var currentPage: Int {
         
         guard !collectionView.visibleCells.isEmpty else {

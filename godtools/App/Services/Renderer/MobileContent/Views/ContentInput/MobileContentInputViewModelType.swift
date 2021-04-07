@@ -10,10 +10,12 @@ import UIKit
 
 protocol MobileContentInputViewModelType {
     
-    var inputNode: ContentInputNode { get }
     var inputLabel: String? { get }
     var placeholder: String? { get }
-    var inputValue: String? { get }
+    var isHidden: Bool { get }
+    var isRequired: Bool { get }
     
     func inputChanged(text: String?)
+    func getInputName() -> String?
+    func getInputValue() -> String?
 }

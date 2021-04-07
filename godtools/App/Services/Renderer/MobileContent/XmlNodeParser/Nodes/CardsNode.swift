@@ -19,4 +19,32 @@ class CardsNode: MobileContentXmlNode {
     var cards: [CardNode] {
         return children as? [CardNode] ?? []
     }
+    
+    var visibleCards: [CardNode] {
+        return cards.filter({!$0.isHidden})
+    }
+    
+    var hiddenCards: [CardNode] {
+        return cards.filter({$0.isHidden})
+    }
+    
+    func getCardPosition(cardNode: CardNode) -> Int? {
+        return cards.firstIndex(of: cardNode)
+    }
+    
+    func getCardVisiblePosition(cardNode: CardNode) -> Int? {
+        return visibleCards.firstIndex(of: cardNode)
+    }
+    
+    func getCardHiddenPosition(cardNode: CardNode) -> Int? {
+        return hiddenCards.firstIndex(of: cardNode)
+    }
+}
+
+// MARK: - MobileContentRenderableNode
+
+extension CardsNode: MobileContentRenderableNode {
+    var nodeContentIsRenderable: Bool {
+        return true
+    }
 }

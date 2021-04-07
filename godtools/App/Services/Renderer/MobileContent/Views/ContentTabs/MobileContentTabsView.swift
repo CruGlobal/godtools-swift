@@ -8,9 +8,11 @@
 
 import UIKit
 
-class MobileContentTabsView: UIView {
+class MobileContentTabsView: MobileContentView {
     
     private let viewModel: MobileContentTabsViewModelType
+    
+    private var tabViews: [MobileContentTabView] = Array()
     
     @IBOutlet weak private var tabsControl: UISegmentedControl!
     @IBOutlet weak private var tabContentContainerView: UIView!
@@ -32,10 +34,6 @@ class MobileContentTabsView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        print("x deinit: \(type(of: self))")
-    }
-    
     private func initializeNib() {
         
         let nib: UINib = UINib(nibName: String(describing: MobileContentTabsView.self), bundle: nil)
@@ -50,47 +48,98 @@ class MobileContentTabsView: UIView {
     
     private func setupLayout() {
         
+        tabsControl.removeAllSegments()
     }
     
     private func setupBinding() {
         
-        // tabsControl
         tabsControl.semanticContentAttribute = viewModel.languageDirectionSemanticContentAttribute
-        tabsControl.removeAllSegments()
-        for index in 0 ..< viewModel.tabLabels.count {
-            let tabLabel: String = viewModel.tabLabels[index]
-            tabsControl.insertSegment(withTitle: tabLabel, at: index, animated: false)
-        }
+    }
+    
+    // MARK: - MobileContentView
+    
+    override func renderChild(childView: MobileContentView) {
         
-        viewModel.selectedTab.addObserver(self) { [weak self] (selectedTab: Int) in
-            self?.tabsControl.selectedSegmentIndex = selectedTab
-        }
+        super.renderChild(childView: childView)
         
-        viewModel.tabContent.addObserver(self) { [weak self] (tabContentViewModel: ToolPageContentStackContainerViewModel?) in
-            guard let contentViewModel = tabContentViewModel else {
-                return
+        if let tabView = childView as? MobileContentTabView {
+            addTabView(tabView: tabView)
+        }
+    }
+    
+    override func finishedRenderingChildren() {
+        
+        setSelectedTabIndex(selectedTabIndex: 0)
+    }
+    
+    override var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType {
+        return .constrainedToChildren
+    }
+    
+    override func didReceiveEvents(events: [String]) {
+                
+        for event in events {
+            
+            for tabIndex in 0 ..< tabViews.count {
+                
+                let tabListeners: [String] = tabViews[tabIndex].viewModel.tabListeners
+                
+                if tabListeners.contains(event) {
+                    setSelectedTabIndex(selectedTabIndex: tabIndex)
+                }
             }
-            self?.setContentView(contentViewModel: contentViewModel)
         }
     }
+}
+
+// MARK: - Tabs
+
+extension MobileContentTabsView {
     
-    @objc func handleTabChanged() {
-        viewModel.tabTapped(tab: tabsControl.selectedSegmentIndex)
+    private func addTabView(tabView: MobileContentTabView) {
+        
+        tabViews.append(tabView)
+        
+        let index: Int = tabsControl.numberOfSegments
+        
+        tabsControl.insertSegment(
+            withTitle: tabView.viewModel.labelText ?? "",
+            at: index,
+            animated: false
+        )
     }
     
-    private func setContentView(contentViewModel: ToolPageContentStackContainerViewModel) {
+    private func setSelectedTabIndex(selectedTabIndex: Int) {
+        
+        guard selectedTabIndex >= 0 && selectedTabIndex < tabViews.count else {
+            return
+        }
+        
+        tabsControl.selectedSegmentIndex = selectedTabIndex
+        
+        let tabView: MobileContentTabView = tabViews[selectedTabIndex]
+
+        tabView.viewModel.tabTapped()
+        
+        setTabContentContainerTabView(tabView: tabView)
+    }
+    
+    private func setTabContentContainerTabView(tabView: MobileContentTabView) {
         
         for view in tabContentContainerView.subviews {
             view.removeFromSuperview()
         }
+                
+        tabContentContainerView.addSubview(tabView)
         
-        let contentView = MobileContentStackView(viewRenderer: contentViewModel.contentStackRenderer, itemSpacing: 10, scrollIsEnabled: false)
-        
-        tabContentContainerView.addSubview(contentView)
-        
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.constrainEdgesToSuperview()
+        tabView.translatesAutoresizingMaskIntoConstraints = false
+        tabView.constrainEdgesToSuperview()
         
         layoutIfNeeded()
+    }
+    
+    @objc func handleTabChanged() {
+                
+        setSelectedTabIndex(selectedTabIndex: tabsControl.selectedSegmentIndex)
     }
 }

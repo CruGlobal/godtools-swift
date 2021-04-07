@@ -74,15 +74,8 @@ class ContentButtonNode: MobileContentXmlNode {
 
 extension ContentButtonNode {
     
-    var buttonStyle: MobileContentButtonNodeStyle {
-        
-        let defaultStyle: MobileContentButtonNodeStyle = .contained
-        
-        guard let style = self.style else {
-            return defaultStyle
-        }
-        
-        return MobileContentButtonNodeStyle(rawValue: style) ?? defaultStyle
+    var buttonStyle: MobileContentButtonNodeStyle? {
+        return MobileContentButtonNodeStyle(rawValue: style ?? "")
     }
     
     var buttonType: MobileContentButtonNodeType {

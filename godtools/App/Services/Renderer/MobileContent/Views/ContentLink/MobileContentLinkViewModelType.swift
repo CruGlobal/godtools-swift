@@ -14,6 +14,7 @@ protocol MobileContentLinkViewModelType {
     var font: UIFont { get }
     var title: String? { get }
     var titleColor: UIColor { get }
+    var linkEvents: [String] { get }
     
     func linkTapped()
 }

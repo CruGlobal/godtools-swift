@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MobileContentSpacerView: UIView {
+class MobileContentSpacerView: MobileContentView {
     
     private var heightConstraint: NSLayoutConstraint!
     
@@ -39,6 +39,12 @@ class MobileContentSpacerView: UIView {
     
     func setHeight(height: CGFloat) {
         heightConstraint.constant = height
+    }
+    
+    // MARK: - MobileContentView
+    
+    override var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType {
+        return .spacer
     }
 }
 

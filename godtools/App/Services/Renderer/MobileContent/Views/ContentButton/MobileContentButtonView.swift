@@ -8,7 +8,7 @@
 
 import Foundation
 
-class MobileContentButtonView: UIView {
+class MobileContentButtonView: MobileContentView {
     
     private let viewModel: MobileContentButtonViewModelType
     private let button: UIButton = UIButton(type: .custom)
@@ -58,12 +58,31 @@ class MobileContentButtonView: UIView {
         button.setTitleColor(viewModel.titleColor, for: .normal)
         
         if let borderColor = viewModel.borderColor, let borderWidth = viewModel.borderWidth {
-            button.layer.borderColor = borderColor
+            button.layer.borderColor = borderColor.cgColor
             button.layer.borderWidth = borderWidth
         }
     }
     
     @objc func handleButtonTapped() {
+        
+        switch viewModel.buttonType {
+        
+        case .event:
+            super.sendEventsToAllViews(events: viewModel.buttonEvents)
+        
+        case .url:
+            super.sendButtonWithUrlEventToRootView(url: viewModel.buttonUrl)
+       
+        case .unknown:
+            break
+        }
+        
         viewModel.buttonTapped()
+    }
+    
+    // MARK: - MobileContentView
+    
+    override var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType {
+        return .constrainedToChildren
     }
 }

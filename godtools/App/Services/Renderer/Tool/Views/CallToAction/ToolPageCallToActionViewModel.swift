@@ -11,23 +11,18 @@ import UIKit
 class ToolPageCallToActionViewModel: ToolPageCallToActionViewModelType {
     
     private let callToActionNode: CallToActionNode?
-    private let diContainer: ToolPageDiContainer
-    private let toolPageColors: ToolPageColors
+    private let pageModel: MobileContentRendererPageModel
     private let fontService: FontService
-    
-    let hidesCallToAction: Bool
-    
-    required init(callToActionNode: CallToActionNode?, heroNode: HeroNode?, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColors, fontService: FontService, isLastPage: Bool) {
+        
+    required init(callToActionNode: CallToActionNode?, pageModel: MobileContentRendererPageModel, fontService: FontService) {
         
         self.callToActionNode = callToActionNode
-        self.diContainer = diContainer
-        self.toolPageColors = toolPageColors
+        self.pageModel = pageModel
         self.fontService = fontService
-        self.hidesCallToAction = (callToActionNode == nil && heroNode == nil) || isLastPage
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return diContainer.languageDirectionSemanticContentAttribute
+        return pageModel.languageDirectionSemanticContentAttribute
     }
     
     var title: String? {
@@ -39,11 +34,11 @@ class ToolPageCallToActionViewModel: ToolPageCallToActionViewModelType {
     }
     
     var titleColor: UIColor {
-        return callToActionNode?.textNode?.getTextColor()?.color ?? toolPageColors.textColor
+        return callToActionNode?.textNode?.getTextColor()?.color ?? pageModel.pageColors.textColor
     }
     
     var nextButtonColor: UIColor {
-        return callToActionNode?.getControlColor()?.color ?? toolPageColors.primaryColor
+        return callToActionNode?.getControlColor()?.color ?? pageModel.pageColors.primaryColor
     }
     
     var nextButtonImage: UIImage? {
