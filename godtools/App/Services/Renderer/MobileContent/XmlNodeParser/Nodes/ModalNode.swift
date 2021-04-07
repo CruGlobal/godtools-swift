@@ -33,9 +33,9 @@ extension ModalNode: MobileContentRenderableNode {
     }
 }
 
-// MARK: - MobileContentNodeStyles
+// MARK: - MobileContentContainerNode
 
-extension ModalNode: MobileContentNodeStyles {
+extension ModalNode: MobileContentContainerNode {
     
     var buttonColor: MobileContentRGBAColor? {
         return MobileContentRGBAColor(stringColor: "rgba(255,255,255,1)")

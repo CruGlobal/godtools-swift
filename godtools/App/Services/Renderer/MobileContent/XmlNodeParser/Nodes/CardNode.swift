@@ -66,3 +66,32 @@ extension CardNode: MobileContentRenderableNode {
         return true
     }
 }
+
+// MARK: - MobileContentContainerNode
+
+extension CardNode: MobileContentContainerNode {
+    
+    var buttonColor: MobileContentRGBAColor? {
+        return nil
+    }
+    
+    var buttonStyle: MobileContentButtonNodeStyle? {
+        return nil
+    }
+    
+    var primaryColor: MobileContentRGBAColor? {
+        return nil
+    }
+    
+    var primaryTextColor: MobileContentRGBAColor? {
+        return nil
+    }
+    
+    var textAlignment: MobileContentTextAlign? {
+        return nil
+    }
+    
+    var textColor: MobileContentRGBAColor? {
+        return nil
+    }
+}
