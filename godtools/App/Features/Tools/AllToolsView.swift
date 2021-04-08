@@ -71,7 +71,9 @@ class AllToolsView: UIViewController {
     }
     
     func scrollToTopOfTools(animated: Bool) {
-        toolsView.scrollToTopOfTools(animated: animated)
+        if toolsView != nil {
+            toolsView.scrollToTopOfTools(animated: animated)
+        }
     }
     
     private func setFavoritingToolMessageHidden(_ hidden: Bool, animated: Bool) {

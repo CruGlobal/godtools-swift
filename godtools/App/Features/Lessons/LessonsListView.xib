@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LessonsListView" customModule="godtools" customModuleProvider="target">
             <connections>
+                <outlet property="lessonsTableView" destination="vxA-kQ-6xx" id="NAg-yN-b7k"/>
                 <outlet property="view" destination="iN0-l3-epB" id="504-Or-Ezf"/>
             </connections>
         </placeholder>

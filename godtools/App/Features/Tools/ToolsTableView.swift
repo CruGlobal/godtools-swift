@@ -118,7 +118,9 @@ class ToolsTableView: UIView, NibBased {
     }
     
     func scrollToTopOfTools(animated: Bool) {
-        tableView.setContentOffset(.zero, animated: animated)
+        if tableView != nil {
+            tableView.setContentOffset(.zero, animated: animated)
+        }
     }
 }
 
