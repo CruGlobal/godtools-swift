@@ -64,6 +64,9 @@ class ToolsFlow: Flow {
         case .languageSettingsTappedFromTools:
             flowDelegate?.navigate(step: .showLanguageSettings)
             
+        case .lessonTappedFromLessonsList(let resource):
+            navigateToTool(resource: resource, trainingTipsEnabled: false)
+            
         case .openTutorialTapped:
             flowDelegate?.navigate(step: .openTutorialTapped)
             
@@ -486,8 +489,13 @@ class ToolsFlow: Flow {
             )
             
         case .lesson:
-            // TODO: Navigate to lesson. ~Levi
-            break
+            navigateToLesson(
+                resource: resource,
+                primaryLanguage: primaryLanguage,
+                primaryTranslationManifest: primaryTranslationManifest,
+                trainingTipsEnabled: trainingTipsEnabled,
+                page: page
+            )
             
         case .tract:
             navigateToTract(
@@ -604,39 +612,6 @@ class ToolsFlow: Flow {
         let view = ToolView(viewModel: viewModel)
         
         navigationController.pushViewController(view, animated: true)
-        
-        /*
-        let viewModel = ToolViewModel(
-            flowDelegate: self,
-            resource: resource,
-            primaryLanguage: primaryLanguage,
-            parallelLanguage: parallelLanguage,
-            primaryTranslationManifestData: primaryTranslationManifest,
-            parallelTranslationManifestData: parallelTranslationManifest,
-            mobileContentNodeParser: appDiContainer.getMobileContentNodeParser(),
-            mobileContentAnalytics: appDiContainer.getMobileContentAnalytics(),
-            mobileContentEvents: appDiContainer.getMobileContentEvents(),
-            translationsFileCache: appDiContainer.translationsFileCache,
-            languageSettingsService: appDiContainer.languageSettingsService,
-            fontService: appDiContainer.getFontService(),
-            tractRemoteSharePublisher: appDiContainer.tractRemoteSharePublisher,
-            tractRemoteShareSubscriber: appDiContainer.tractRemoteShareSubscriber,
-            isNewUserService: appDiContainer.isNewUserService,
-            cardJumpService: appDiContainer.getCardJumpService(),
-            followUpsService: appDiContainer.followUpsService,
-            viewsService: appDiContainer.viewsService,
-            localizationServices: appDiContainer.localizationServices,
-            analytics: appDiContainer.analytics,
-            toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics,
-            liveShareStream: liveShareStream,
-            viewedTrainingTips: appDiContainer.getViewedTrainingTipsService(),
-            trainingTipsEnabled: trainingTipsEnabled,
-            page: page
-        )
-                    
-        let view = ToolView(viewModel: viewModel)
-
-        navigationController.pushViewController(view, animated: true)*/
     }
     
     private func navigateToToolTraining(event: TrainingTipEvent) {
@@ -684,5 +659,63 @@ class ToolsFlow: Flow {
         let view = ToolTrainingView(viewModel: viewModel)
         
         navigationController.present(view, animated: true, completion: nil)
+    }
+    
+    private func navigateToLesson(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, trainingTipsEnabled: Bool, page: Int?) {
+        
+        let analytics: AnalyticsContainer = appDiContainer.analytics
+        let mobileContentAnalytics: MobileContentAnalytics = appDiContainer.getMobileContentAnalytics()
+        let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
+        let mobileContentNodeParser: MobileContentXmlNodeParser = appDiContainer.getMobileContentNodeParser()
+        let viewedTrainingTipsService: ViewedTrainingTipsService = appDiContainer.getViewedTrainingTipsService()
+        let fontService: FontService = appDiContainer.getFontService()
+        let localizationServices: LocalizationServices = appDiContainer.localizationServices
+        let followUpsService: FollowUpsService = appDiContainer.followUpsService
+        let cardJumpService: CardJumpService = appDiContainer.getCardJumpService()
+        
+        let toolPageViewFactory = ToolPageViewFactory(
+            analytics: analytics,
+            mobileContentAnalytics: mobileContentAnalytics,
+            fontService: fontService,
+            localizationServices: localizationServices,
+            cardJumpService: cardJumpService,
+            followUpService: followUpsService,
+            translationsFileCache: translationsFileCache,
+            mobileContentNodeParser: mobileContentNodeParser,
+            viewedTrainingTipsService: viewedTrainingTipsService,
+            trainingTipsEnabled: trainingTipsEnabled
+        )
+        
+        let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
+            translationsFileCache: translationsFileCache,
+            mobileContentNodeParser: mobileContentNodeParser,
+            viewedTrainingTipsService: viewedTrainingTipsService,
+            trainingTipsEnabled: trainingTipsEnabled
+        )
+        
+        let pageViewFactories: [MobileContentPageViewFactoryType] = [toolPageViewFactory, trainingViewFactory]
+        
+        let renderer = MobileContentRenderer(
+            resource: resource,
+            language: primaryLanguage,
+            manifest: MobileContentXmlManifest(translationManifest: primaryTranslationManifest),
+            pageNodes: [],
+            translationsFileCache: translationsFileCache,
+            pageViewFactories: pageViewFactories,
+            mobileContentAnalytics: mobileContentAnalytics,
+            fontService: fontService
+        )
+        
+        let viewModel = LessonViewModel(
+            flowDelegate: self,
+            renderers: [renderer],
+            resource: resource,
+            primaryLanguage: primaryLanguage,
+            page: page
+        )
+        
+        let view = LessonView(viewModel: viewModel)
+        
+        navigationController.pushViewController(view, animated: true)
     }
 }

@@ -45,7 +45,10 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
     }
     
     func lessonsWillAppear() -> LessonsListViewModelType {
-        return LessonsListViewModel()
+        return LessonsListViewModel(
+            flowDelegate: getFlowDelegate(),
+            dataDownloader: initialDataDownloader
+        )
     }
     
     func favoritedToolsWillAppear() -> FavoritedToolsViewModelType {

@@ -10,4 +10,8 @@ import Foundation
 
 protocol LessonsListViewModelType {
     
+    var numberOfLessons: ObservableValue<Int> { get }
+    
+    func lessonWillAppear(index: Int) -> LessonListItemViewModelType
+    func lessonTapped(index: Int)
 }

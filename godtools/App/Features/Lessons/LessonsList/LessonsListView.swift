@@ -41,6 +41,10 @@ class LessonsListView: UIViewController {
     private func setupLayout() {
         
         // lessonsTableView
+        lessonsTableView.register(
+            UINib(nibName: LessonListItemView.nibName, bundle: nil),
+            forCellReuseIdentifier: LessonListItemView.reuseIdentifier
+        )
         lessonsTableView.rowHeight = UITableView.automaticDimension
         lessonsTableView.separatorStyle = .none
     }
@@ -65,14 +69,24 @@ extension LessonsListView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return viewModel.numberOfLessons.value
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        viewModel.lessonTapped(index: indexPath.row)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        
+        let cell: LessonListItemView = lessonsTableView.dequeueReusableCell(
+            withIdentifier: LessonListItemView.reuseIdentifier,
+            for: indexPath) as! LessonListItemView
+        
+        let cellViewModel: LessonListItemViewModelType = viewModel.lessonWillAppear(index: indexPath.row)
+        
+        cell.configure(viewModel: cellViewModel)
+        
+        return cell
     }
 }
