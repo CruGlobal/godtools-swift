@@ -10,6 +10,8 @@ import Foundation
 
 class AllToolsViewModel: NSObject, AllToolsViewModelType {
     
+    private let favoritingToolMessageCache: FavoritingToolMessageCache
+    
     private weak var flowDelegate: FlowDelegate?
     
     let dataDownloader: InitialDataDownloader
@@ -27,7 +29,7 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     let toolListIsEditing: ObservableValue<Bool> = ObservableValue(value: false)
     let didEndRefreshing: Signal = Signal()
     
-    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, deviceAttachmentBanners: DeviceAttachmentBanners, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, deviceAttachmentBanners: DeviceAttachmentBanners, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
@@ -35,10 +37,11 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
         self.localizationServices = localizationServices
         self.favoritedResourcesCache = favoritedResourcesCache
         self.deviceAttachmentBanners = deviceAttachmentBanners
+        self.favoritingToolMessageCache = favoritingToolMessageCache
         self.analytics = analytics
         
         super.init()
-                 
+                         
         setupBinding()
     }
     
@@ -100,6 +103,14 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     func pageViewed() {
         
         analytics.pageViewedAnalytics.trackPageView(screenName: analyticsScreenName, siteSection: "tools", siteSubSection: "")
+    }
+    
+    func favoritingToolMessageWillAppear() -> FavoritingToolMessageViewModelType {
+        
+        return FavoritingToolMessageViewModel(
+            favoritingToolMessageCache: favoritingToolMessageCache,
+            localizationServices: localizationServices
+        )
     }
     
     func toolTapped(resource: ResourceModel) {

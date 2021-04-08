@@ -11,27 +11,19 @@ import UIKit
 class ToolsMenuView: UIViewController {
     
     private let viewModel: ToolsMenuViewModelType
-    private let openTutorialViewModel: OpenTutorialViewModelType
-    private let favoritedToolsViewModel: FavoritedToolsViewModelType
-    private let allToolsViewModel: AllToolsViewModelType
-    private let favoritingToolMessageViewModel: FavoritingToolMessageViewModelType
-    
+
+    private var lessonsView: LessonsListView?
+    private var favoritedToolsView: FavoritedToolsView?
+    private var allToolsView: AllToolsView?
     private var didLayoutSubviews: Bool = false
                 
-    @IBOutlet weak private var favoritedTools: FavoritedToolsView!
-    @IBOutlet weak private var allTools: AllToolsView!
+    @IBOutlet weak private var toolsNavigationView: PageNavigationCollectionView!
     @IBOutlet weak private var toolbarView: ToolsMenuToolbarView!
     @IBOutlet weak private var bottomView: UIView!
-        
-    @IBOutlet weak private var favoritedToolsLeading: NSLayoutConstraint!
-    
-    required init(viewModel: ToolsMenuViewModelType, openTutorialViewModel: OpenTutorialViewModelType, favoritedToolsViewModel: FavoritedToolsViewModelType, allToolsViewModel: AllToolsViewModelType, favoritingToolMessageViewModel: FavoritingToolMessageViewModelType) {
+            
+    required init(viewModel: ToolsMenuViewModelType) {
         
         self.viewModel = viewModel
-        self.openTutorialViewModel = openTutorialViewModel
-        self.favoritedToolsViewModel = favoritedToolsViewModel
-        self.allToolsViewModel = allToolsViewModel
-        self.favoritingToolMessageViewModel = favoritingToolMessageViewModel
         super.init(nibName: String(describing: ToolsMenuView.self), bundle: nil)
     }
     
@@ -66,47 +58,51 @@ class ToolsMenuView: UIViewController {
         )
     }
     
+    private func setupLayout() {
+
+        // toolsNavigationView
+        toolsNavigationView.registerPageCell(
+            nib: UINib(nibName: ToolNavigationPageCell.nibName, bundle: nil),
+            cellReuseIdentifier: ToolNavigationPageCell.reuseIdentifier
+        )
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        if !didLayoutSubviews {
-            didLayoutSubviews = true
-            
-            favoritedTools.configure(
-                viewModel: favoritedToolsViewModel,
-                delegate: self,
-                openTutorialViewModel: openTutorialViewModel
-            )
-            
-            allTools.configure(
-                viewModel: allToolsViewModel,
-                favoritingToolMessageViewModel: favoritingToolMessageViewModel
-            )
-            
-            toolbarView.configure(
-                viewModel: viewModel.toolbarWillAppear(),
-                delegate: self
-            )
-            
-            setupBinding()
+        guard !didLayoutSubviews else {
+            return
         }
+        didLayoutSubviews = true
+        
+        lessonsView = LessonsListView(viewModel: viewModel.lessonsWillAppear())
+        
+        favoritedToolsView = FavoritedToolsView(viewModel: viewModel.favoritedToolsWillAppear())
+        
+        allToolsView = AllToolsView(viewModel: viewModel.allToolsWillAppear())
+        
+        toolbarView.configure(viewModel: viewModel.toolbarWillAppear(), delegate: self)
+        
+        toolsNavigationView.delegate = self
+        
+        favoritedToolsView?.setDelegate(delegate: self)
     }
     
     func resetMenu() {
-        if favoritedTools != nil {
-            favoritedTools.scrollToTopOfTools(animated: false)
-        }
-        if allTools != nil {
-            allTools.scrollToTopOfTools(animated: false)
-        }
-    }
-    
-    private func setupLayout() {
-
-    }
-    
-    private func setupBinding() {
         
+        if let lessonsView = lessonsView {
+            lessonsView.scrollToTopOfLessons(animated: false)
+        }
+        
+        if let favoritedToolsView = favoritedToolsView {
+            favoritedToolsView.scrollToTopOfTools(animated: false)
+        }
+        
+        if let allToolsView = allToolsView {
+            allToolsView.scrollToTopOfTools(animated: false)
+        }
+        
+        toolsNavigationView.scrollToPage(page: 0, animated: false)
     }
     
     @objc func handleMenu(barButtonItem: UIBarButtonItem) {
@@ -117,28 +113,53 @@ class ToolsMenuView: UIViewController {
         viewModel.languageTapped()
     }
     
-    private func navigateForTappedToolbarItem(toolbarItem: ToolsMenuToolbarView.ToolbarItemView, animated: Bool) {
-                
-        switch toolbarItem {
+    private func navigateToToolPageForToolbarItem(toolbarItem: ToolsMenuToolbarView.ToolbarItemView, animated: Bool) {
+        
+        guard let page = toolbarView.toolbarItemViews.firstIndex(of: toolbarItem) else {
+            return
+        }
+        
+        toolsNavigationView.scrollToPage(
+            page: page,
+            animated: true
+        )
+    }
+}
+
+// MARK: - PageNavigationCollectionViewDelegate
+
+extension ToolsMenuView: PageNavigationCollectionViewDelegate {
+    
+    func pageNavigationNumberOfPages(pageNavigation: PageNavigationCollectionView) -> Int {
+        return toolbarView.toolbarItemViews.count
+    }
+    
+    func pageNavigation(pageNavigation: PageNavigationCollectionView, cellForPageAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell: ToolNavigationPageCell = toolsNavigationView.getReusablePageCell(
+            cellReuseIdentifier: ToolNavigationPageCell.reuseIdentifier,
+            indexPath: indexPath) as! ToolNavigationPageCell
+        
+        let toolbarItemView = toolbarView.toolbarItemViews[indexPath.row]
+        
+        let toolsView: UIViewController?
+        
+        switch toolbarItemView {
         case .learn:
-            // TODO: Navigate to lessons.
-            break
+            toolsView = lessonsView
+            
         case .favoritedTools:
-            favoritedToolsLeading.constant = 0
-            favoritedTools.pageViewed()
+            toolsView = favoritedToolsView
+            
         case .allTools:
-            favoritedToolsLeading.constant = view.bounds.size.width * -1
-            allTools.pageViewed()
+            toolsView = allToolsView
+        }
+    
+        if let toolsView = toolsView {
+           cell.configure(pageViewController: toolsView, parentViewController: self)
         }
                 
-        if animated {
-            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: { [weak self] in
-                self?.view.layoutIfNeeded()
-            }, completion: nil)
-        }
-        else {
-            view.layoutIfNeeded()
-        }
+        return cell
     }
 }
 
@@ -148,12 +169,7 @@ extension ToolsMenuView: FavoritedToolsViewDelegate {
     
     func favoritedToolsViewFindToolsTapped(favoritedToolsView: FavoritedToolsView) {
               
-        // TODO: Implement. ~Levi
-        /*
-        if let index = viewModel.toolMenuItems.value.firstIndex(of: viewModel.allToolsMenuItem) {
-            toolsMenuControl.selectedSegmentIndex = index
-            handleToolsMenuControlChanged(toolsControl: toolsMenuControl)
-        }*/
+        navigateToToolPageForToolbarItem(toolbarItem: .allTools, animated: true)
     }
 }
 
@@ -163,13 +179,16 @@ extension ToolsMenuView: ToolsMenuToolbarViewDelegate {
     
     func toolsMenuToolbarLessonsTapped(toolsMenuToolbar: ToolsMenuToolbarView) {
         
+        navigateToToolPageForToolbarItem(toolbarItem: .learn, animated: true)
     }
     
     func toolsMenuToolbarFavoritedToolsTapped(toolsMenuToolbar: ToolsMenuToolbarView) {
         
+        navigateToToolPageForToolbarItem(toolbarItem: .favoritedTools, animated: true)
     }
     
     func toolsMenuToolbarAllToolsTapped(toolsMenuToolbar: ToolsMenuToolbarView) {
         
+        navigateToToolPageForToolbarItem(toolbarItem: .allTools, animated: true)
     }
 }

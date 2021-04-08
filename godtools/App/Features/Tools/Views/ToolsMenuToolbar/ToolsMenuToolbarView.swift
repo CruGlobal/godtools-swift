@@ -23,11 +23,10 @@ class ToolsMenuToolbarView: UIView, NibBased {
         case allTools
     }
     
-    private let toolbarItemViews: [ToolbarItemView] = [.learn, .favoritedTools, .allTools]
-    
     private var viewModel: ToolsMenuToolbarViewModelType?
-    
     private weak var delegate: ToolsMenuToolbarViewDelegate?
+    
+    let toolbarItemViews: [ToolbarItemView] = [.learn, .favoritedTools, .allTools]
     
     @IBOutlet weak private var toolbarItemsCollectionView: UICollectionView!
     

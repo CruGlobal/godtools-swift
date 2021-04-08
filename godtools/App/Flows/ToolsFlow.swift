@@ -25,51 +25,21 @@ class ToolsFlow: Flow {
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
-                     
-        let openTutorialViewModel = OpenTutorialViewModel(
-            flowDelegate: self,
-            tutorialAvailability: appDiContainer.tutorialAvailability,
-            openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache,
-            localizationServices: appDiContainer.localizationServices,
-            analytics: appDiContainer.analytics
-        )
         
-        let favoritingToolMessageViewModel = FavoritingToolMessageViewModel(
+        let viewModel = ToolsMenuViewModel(
+            flowDelegate: self,
+            initialDataDownloader: appDiContainer.initialDataDownloader,
+            languageSettingsService: appDiContainer.languageSettingsService,
+            localizationServices: appDiContainer.localizationServices,
+            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
+            deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
             favoritingToolMessageCache: appDiContainer.favoritingToolMessageCache,
-            localizationServices: appDiContainer.localizationServices
+            analytics: appDiContainer.analytics,
+            tutorialAvailability: appDiContainer.tutorialAvailability,
+            openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache
         )
         
-        let favoritedToolsViewModel = FavoritedToolsViewModel(
-            flowDelegate: self,
-            dataDownloader: appDiContainer.initialDataDownloader,
-            languageSettingsService: appDiContainer.languageSettingsService,
-            localizationServices: appDiContainer.localizationServices,
-            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
-            deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
-            analytics: appDiContainer.analytics
-        )
-        
-        let allToolsViewModel = AllToolsViewModel(
-            flowDelegate: self,
-            dataDownloader: appDiContainer.initialDataDownloader,
-            languageSettingsService: appDiContainer.languageSettingsService,
-            localizationServices: appDiContainer.localizationServices,
-            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
-            deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
-            analytics: appDiContainer.analytics
-        )
-        
-        let toolsMenuViewModel = ToolsMenuViewModel(
-            flowDelegate: self,
-            localizationServices: appDiContainer.localizationServices
-        )
-        let view = ToolsMenuView(
-            viewModel: toolsMenuViewModel,
-            openTutorialViewModel: openTutorialViewModel,
-            favoritedToolsViewModel: favoritedToolsViewModel,
-            allToolsViewModel: allToolsViewModel,
-            favoritingToolMessageViewModel: favoritingToolMessageViewModel
-        )
+        let view = ToolsMenuView(viewModel: viewModel)
         
         navigationController.setViewControllers([view], animated: false)
     }

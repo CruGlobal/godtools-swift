@@ -11,11 +11,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ToolsMenuView" customModule="godtools" customModuleProvider="target">
             <connections>
-                <outlet property="allTools" destination="3bJ-1S-vZ5" id="dEH-PQ-u0X"/>
                 <outlet property="bottomView" destination="4Uw-zr-5rw" id="4JP-hU-T45"/>
-                <outlet property="favoritedTools" destination="1xw-Ar-50N" id="38a-lG-eVw"/>
-                <outlet property="favoritedToolsLeading" destination="g3S-v0-nRA" id="p1K-HW-5Qe"/>
                 <outlet property="toolbarView" destination="1bv-pO-U7s" id="ztY-eE-98O"/>
+                <outlet property="toolsNavigationView" destination="7ze-Fz-qPr" id="Le3-sT-MvK"/>
                 <outlet property="view" destination="iN0-l3-epB" id="GxQ-BJ-8w6"/>
             </connections>
         </placeholder>
@@ -24,18 +22,9 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ygj-NW-8tD" userLabel="lessonsContainerView">
-                    <rect key="frame" x="0.0" y="100" width="414" height="500"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3bJ-1S-vZ5" userLabel="allTools" customClass="AllToolsView" customModule="godtools" customModuleProvider="target">
-                    <rect key="frame" x="414" y="44" width="414" height="758"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1xw-Ar-50N" userLabel="favoritedTools" customClass="FavoritedToolsView" customModule="godtools" customModuleProvider="target">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7ze-Fz-qPr" userLabel="toolsNavigationView" customClass="PageNavigationCollectionView" customModule="godtools" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="44" width="414" height="758"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1bv-pO-U7s" userLabel="toolbarView" customClass="ToolsMenuToolbarView" customModule="godtools" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="802" width="414" height="60"/>
@@ -52,19 +41,15 @@
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
+                <constraint firstItem="7ze-Fz-qPr" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="29j-VP-22m"/>
                 <constraint firstItem="4Uw-zr-5rw" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="A70-Q3-aMO"/>
-                <constraint firstItem="1xw-Ar-50N" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="AGa-CJ-GRZ"/>
-                <constraint firstItem="3bJ-1S-vZ5" firstAttribute="leading" secondItem="1xw-Ar-50N" secondAttribute="trailing" id="ERH-rd-O1y"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="1bv-pO-U7s" secondAttribute="trailing" id="FTG-0u-0nb"/>
-                <constraint firstItem="1bv-pO-U7s" firstAttribute="top" secondItem="1xw-Ar-50N" secondAttribute="bottom" id="GPr-yN-kbr"/>
+                <constraint firstItem="1bv-pO-U7s" firstAttribute="top" secondItem="7ze-Fz-qPr" secondAttribute="bottom" id="LXn-nc-VPl"/>
                 <constraint firstAttribute="trailing" secondItem="4Uw-zr-5rw" secondAttribute="trailing" id="NxF-mB-gOB"/>
-                <constraint firstItem="3bJ-1S-vZ5" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="ORg-KQ-Pgp"/>
-                <constraint firstItem="1bv-pO-U7s" firstAttribute="top" secondItem="3bJ-1S-vZ5" secondAttribute="bottom" id="RUZ-gP-hiQ"/>
                 <constraint firstItem="4Uw-zr-5rw" firstAttribute="top" secondItem="1bv-pO-U7s" secondAttribute="bottom" id="Rn8-IO-ePC"/>
+                <constraint firstItem="7ze-Fz-qPr" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="SNn-tL-kmD"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="1bv-pO-U7s" secondAttribute="bottom" id="SWq-MW-iAF"/>
-                <constraint firstItem="1xw-Ar-50N" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="g3S-v0-nRA"/>
-                <constraint firstItem="1xw-Ar-50N" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="laH-HA-QMQ"/>
-                <constraint firstItem="3bJ-1S-vZ5" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="wJT-EG-waU"/>
+                <constraint firstItem="7ze-Fz-qPr" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="gcQ-u1-UtF"/>
                 <constraint firstItem="1bv-pO-U7s" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="x7R-fF-217"/>
                 <constraint firstAttribute="bottom" secondItem="4Uw-zr-5rw" secondAttribute="bottom" id="yEy-1r-8Wa"/>
             </constraints>

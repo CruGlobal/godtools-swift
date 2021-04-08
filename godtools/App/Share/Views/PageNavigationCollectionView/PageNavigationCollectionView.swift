@@ -72,6 +72,10 @@ class PageNavigationCollectionView: UIView, NibBased {
         collectionView.register(nib, forCellWithReuseIdentifier: cellReuseIdentifier)
     }
     
+    func registerPageCell(classClass: AnyClass?, cellReuseIdentifier: String) {
+        collectionView.register(classClass, forCellWithReuseIdentifier: cellReuseIdentifier)
+    }
+    
     func getReusablePageCell(cellReuseIdentifier: String, indexPath: IndexPath) -> UICollectionViewCell {        
         return collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath)
     }

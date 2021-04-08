@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -21,6 +22,7 @@
                 <outlet property="openTutorialView" destination="Dc5-HE-dIi" id="T3Q-vH-IO2"/>
                 <outlet property="searchImageView" destination="UOx-hw-u0b" id="urn-YI-cP1"/>
                 <outlet property="toolsView" destination="8ja-u9-mhA" id="0Aa-KG-7b2"/>
+                <outlet property="view" destination="iN0-l3-epB" id="naL-za-upA"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -30,14 +32,14 @@
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dc5-HE-dIi" userLabel="openTutorialView" customClass="OpenTutorialView" customModule="godtools" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstAttribute="height" priority="500" constant="100" id="LJd-pJ-YkK"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8ja-u9-mhA" userLabel="toolsView" customClass="ToolsTableView" customModule="godtools" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="100" width="414" height="796"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jgm-cd-FPm" userLabel="findToolsView">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -60,7 +62,7 @@
                             <state key="normal" title="Find Tools"/>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstItem="UOx-hw-u0b" firstAttribute="centerX" secondItem="jgm-cd-FPm" secondAttribute="centerX" id="afn-na-g60"/>
                         <constraint firstItem="UOx-hw-u0b" firstAttribute="centerY" secondItem="jgm-cd-FPm" secondAttribute="centerY" multiplier="0.9" id="oC0-ra-oCV"/>
@@ -73,7 +75,7 @@
                     <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </activityIndicatorView>
             </subviews>
-            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="t2W-QV-xap" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="2Gk-zF-a36"/>
                 <constraint firstAttribute="trailing" secondItem="Dc5-HE-dIi" secondAttribute="trailing" id="Fdh-cM-Tfi"/>
@@ -94,5 +96,8 @@
     </objects>
     <resources>
         <image name="iconSearch" width="144" height="144"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

@@ -10,6 +10,9 @@ import Foundation
 
 class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
         
+    private let tutorialAvailability: TutorialAvailabilityType
+    private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
+    
     private weak var flowDelegate: FlowDelegate?
     
     let dataDownloader: InitialDataDownloader
@@ -28,7 +31,7 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     let didEndRefreshing: Signal = Signal()
     
-    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, deviceAttachmentBanners: DeviceAttachmentBanners, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, deviceAttachmentBanners: DeviceAttachmentBanners, analytics: AnalyticsContainer, tutorialAvailability: TutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
@@ -37,6 +40,8 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
         self.favoritedResourcesCache = favoritedResourcesCache
         self.deviceAttachmentBanners = deviceAttachmentBanners
         self.analytics = analytics
+        self.tutorialAvailability = tutorialAvailability
+        self.openTutorialCalloutCache = openTutorialCalloutCache
         
         super.init()
         
@@ -56,6 +61,14 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     
     var analyticsScreenName: String {
         return "Favorites"
+    }
+    
+    private func getFlowDelegate() -> FlowDelegate {
+        guard let flowDelegate = self.flowDelegate else {
+            assertionFailure("FlowDelegate should not be nil.")
+            return self.flowDelegate!
+        }
+        return flowDelegate
     }
     
     private func setupBinding() {
@@ -127,6 +140,17 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     func pageViewed() {
         
         analytics.pageViewedAnalytics.trackPageView(screenName: analyticsScreenName, siteSection: "", siteSubSection: "")
+    }
+    
+    func openTutorialWillAppear() -> OpenTutorialViewModelType {
+        
+        return OpenTutorialViewModel(
+            flowDelegate: getFlowDelegate(),
+            tutorialAvailability: tutorialAvailability,
+            openTutorialCalloutCache: openTutorialCalloutCache,
+            localizationServices: localizationServices,
+            analytics: analytics
+        )
     }
     
     func toolTapped(resource: ResourceModel) {

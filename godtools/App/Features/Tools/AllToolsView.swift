@@ -8,11 +8,10 @@
 
 import UIKit
 
-class AllToolsView: UIView, NibBased {
+class AllToolsView: UIViewController {
     
-    private var viewModel: AllToolsViewModelType!
-    private var favoritingToolMessageViewModel: FavoritingToolMessageViewModelType!
-        
+    private let viewModel: AllToolsViewModelType
+            
     @IBOutlet weak private var favoritingToolMessageView: FavoritingToolMessageView!
     @IBOutlet weak private var toolsView: ToolsTableView!
     @IBOutlet weak private var messageLabel: UILabel!
@@ -20,45 +19,30 @@ class AllToolsView: UIView, NibBased {
     
     @IBOutlet weak private var favoritingToolMessageViewTop: NSLayoutConstraint!
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        fatalError("init(frame:) has not been implemented")
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        initialize()
-    }
-    
-    private func initialize() {
-        loadNib()
-                
-        setupLayout()
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        setFavoritingToolMessageHidden(
-            favoritingToolMessageViewModel.hidesMessage.value.hidden,
-            animated: false
-        )
-    }
-    
-    func configure(viewModel: AllToolsViewModelType, favoritingToolMessageViewModel: FavoritingToolMessageViewModelType) {
-        
+    required init(viewModel: AllToolsViewModelType) {
         self.viewModel = viewModel
-        self.favoritingToolMessageViewModel = favoritingToolMessageViewModel
+        super.init(nibName: String(describing: AllToolsView.self), bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        print("view didload: \(type(of: self))")
         
-        toolsView.configure(viewModel: viewModel)
-        
-        favoritingToolMessageView.configure(viewModel: favoritingToolMessageViewModel)
-        
+        setupLayout()
         setupBinding()
     }
     
-    func pageViewed() {
-        viewModel?.pageViewed()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        viewModel.pageViewed()
     }
     
     private func setupLayout() {
@@ -67,8 +51,13 @@ class AllToolsView: UIView, NibBased {
     
     private func setupBinding() {
         
-        favoritingToolMessageViewModel.hidesMessage.addObserver(self) { [weak self] (objectTuple: (hidden: Bool, animated: Bool)) in
-            self?.setFavoritingToolMessageHidden(objectTuple.hidden, animated: objectTuple.animated)
+        toolsView.configure(viewModel: viewModel)
+        
+        let favoritingToolMessageViewModel = viewModel.favoritingToolMessageWillAppear()
+        favoritingToolMessageView.configure(viewModel: favoritingToolMessageViewModel)
+        
+        favoritingToolMessageViewModel.hidesMessage.addObserver(self) { [weak self] (animatableValue: AnimatableValue<Bool>) in
+            self?.setFavoritingToolMessageHidden(animatableValue.value, animated: animatableValue.animated)
         }
         
         viewModel.message.addObserver(self, onObserve: { [weak self] (message: String) in
@@ -95,7 +84,7 @@ class AllToolsView: UIView, NibBased {
             }
             
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
-                self.layoutIfNeeded()
+                self.view.layoutIfNeeded()
                 }, completion: {(finished: Bool) in
                     if hidden {
                         self.favoritingToolMessageView.isHidden = true
@@ -104,7 +93,7 @@ class AllToolsView: UIView, NibBased {
         }
         else {
             favoritingToolMessageView.isHidden = hidden
-            layoutIfNeeded()
+            view.layoutIfNeeded()
         }
     }
 }

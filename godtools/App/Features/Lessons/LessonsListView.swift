@@ -40,4 +40,9 @@ class LessonsListView: UIViewController {
     private func setupBinding() {
         
     }
+    
+    func scrollToTopOfLessons(animated: Bool) {
+        // TODO: Implement. ~Levi
+        //tableView.setContentOffset(.zero, animated: animated)
+    }
 }

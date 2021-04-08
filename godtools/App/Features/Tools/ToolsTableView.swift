@@ -148,15 +148,7 @@ extension ToolsTableView: UITableViewDelegate, UITableViewDataSource {
 
         cell.selectionStyle = .none
         
-        let resource = viewModel.tools.value[indexPath.row]
-        let cellViewModel = ToolCellViewModel(
-            resource: resource,
-            dataDownloader: viewModel.dataDownloader,
-            languageSettingsService: viewModel.languageSettingsService,
-            localizationServices: viewModel.localizationServices,
-            favoritedResourcesCache: viewModel.favoritedResourcesCache,
-            deviceAttachmentBanners: viewModel.deviceAttachmentBanners
-        )
+        let cellViewModel = viewModel.toolWillAppear(index: indexPath.row)
         
         cell.configure(viewModel: cellViewModel, delegate: self)
         
