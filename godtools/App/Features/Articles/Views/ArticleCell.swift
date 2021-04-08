@@ -20,11 +20,14 @@ class ArticleCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         viewModel = nil
+        titleLabel.text = ""
     }
     
     func configure(viewModel: ArticleCellViewModelType) {
         
         self.viewModel = viewModel
+        
+        selectionStyle = .none
         
         titleLabel.text = viewModel.title
     }

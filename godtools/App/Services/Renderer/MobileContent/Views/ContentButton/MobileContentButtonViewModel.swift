@@ -12,7 +12,7 @@ class MobileContentButtonViewModel: MobileContentButtonViewModelType {
     
     private let buttonNode: ContentButtonNode
     private let pageModel: MobileContentRendererPageModel
-    private let containerStyles: MobileContentNodeStyles?
+    private let containerNode: MobileContentContainerNode?
     private let mobileContentAnalytics: MobileContentAnalytics
     private let fontService: FontService
     private let fontSize: CGFloat = 18
@@ -22,18 +22,18 @@ class MobileContentButtonViewModel: MobileContentButtonViewModelType {
     let titleColor: UIColor
     let borderColor: UIColor?
     
-    required init(buttonNode: ContentButtonNode, pageModel: MobileContentRendererPageModel, containerStyles: MobileContentNodeStyles?, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
+    required init(buttonNode: ContentButtonNode, pageModel: MobileContentRendererPageModel, containerNode: MobileContentContainerNode?, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
         
         self.buttonNode = buttonNode
         self.pageModel = pageModel
-        self.containerStyles = containerStyles
+        self.containerNode = containerNode
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
         
-        let buttonColor: UIColor = buttonNode.getColor()?.color ?? containerStyles?.buttonColor?.color ?? pageModel.pageColors.primaryColor
+        let buttonColor: UIColor = buttonNode.getColor()?.color ?? containerNode?.buttonColor?.color ?? pageModel.pageColors.primaryColor
         let buttonTitleColor: UIColor? = buttonNode.textNode?.getTextColor()?.color
         
-        let buttonStyle: MobileContentButtonNodeStyle = buttonNode.buttonStyle ?? containerStyles?.buttonStyle ?? .contained
+        let buttonStyle: MobileContentButtonNodeStyle = buttonNode.buttonStyle ?? containerNode?.buttonStyle ?? .contained
         
         switch buttonStyle {
         

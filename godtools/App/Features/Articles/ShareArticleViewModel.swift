@@ -11,17 +11,17 @@ import Foundation
 class ShareArticleViewModel: ShareArticleViewModelType {
     
     private let analytics: AnalyticsContainer
-    private let articleAemImportData: ArticleAemImportData
+    private let articleAemData: ArticleAemData
     
     let shareMessage: String
     
-    required init(articleAemImportData: ArticleAemImportData, analytics: AnalyticsContainer) {
+    required init(articleAemData: ArticleAemData, analytics: AnalyticsContainer) {
         
         self.analytics = analytics
-        self.articleAemImportData = articleAemImportData
+        self.articleAemData = articleAemData
         
         // shareUrlString
-        var urlString: String = articleAemImportData.articleJcrContent?.canonical ?? ""
+        var urlString: String = articleAemData.articleJcrContent?.canonical ?? ""
         while urlString.last == "/" {
             urlString.removeLast()
         }
@@ -35,7 +35,7 @@ class ShareArticleViewModel: ShareArticleViewModelType {
     }
     
     private var analyticsScreenName: String {
-        return "Article : \(articleAemImportData.articleJcrContent?.title ?? "GodTools")"
+        return "Article : \(articleAemData.articleJcrContent?.title ?? "GodTools")"
     }
     
     func pageViewed() {

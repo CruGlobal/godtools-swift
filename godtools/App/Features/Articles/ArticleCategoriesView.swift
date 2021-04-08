@@ -14,10 +14,7 @@ class ArticleCategoriesView: UIViewController {
     
     private var refreshArticlesControl: UIRefreshControl = UIRefreshControl()
            
-    @IBOutlet weak private var errorMessageView: ArticlesErrorMessageView!
     @IBOutlet weak private var categoriesTableView: UITableView!
-    @IBOutlet weak private var loadingMessageLabel: UILabel!
-    @IBOutlet weak private var loadingView: UIActivityIndicatorView!
     
     required init(viewModel: ArticleCategoriesViewModelType) {
         self.viewModel = viewModel
@@ -52,7 +49,7 @@ class ArticleCategoriesView: UIViewController {
     }
     
     private func setupLayout() {
-        
+                
         // categoriesTableView
         categoriesTableView.register(
             UINib(nibName: ArticleCategoryCell.nibName, bundle: nil),
@@ -75,12 +72,11 @@ class ArticleCategoriesView: UIViewController {
             self?.title = navTitle
         }
         
-        viewModel.categories.addObserver(self) { [weak self] (categories: [ArticleCategory]) in
+        viewModel.numberOfCategories.addObserver(self) { [weak self] (numberOfCategories: Int) in
             
-            self?.refreshArticlesControl.endRefreshing()
             self?.categoriesTableView.reloadData()
             
-            if categories.isEmpty {
+            if numberOfCategories == 0 {
                 self?.categoriesTableView.alpha = 0
             }
             else {
@@ -90,30 +86,9 @@ class ArticleCategoriesView: UIViewController {
             }
         }
         
-        viewModel.loadingMessage.addObserver(self) { [weak self] (loadingMessage: String) in
-            self?.loadingMessageLabel.text = loadingMessage
-        }
-        
         viewModel.isLoading.addObserver(self) { [weak self] (isLoading: Bool) in
-            isLoading ? self?.loadingView.startAnimating() : self?.loadingView.stopAnimating()
-        }
-        
-        viewModel.errorMessage.addObserver(self) { [weak self] (errorMessage: ArticlesErrorMessage) in
-                
-            guard let viewModel = self?.viewModel else {
-                return
-            }
-            
-            if errorMessage.hidesErrorMessage {
-                self?.errorMessageView.animateHidden(hidden: true, animated: errorMessage.shouldAnimate)
-            }
-            else {
-                
-                self?.errorMessageView.configure(
-                    viewModel: ArticlesErrorMessageViewModel(localizationServices: viewModel.localizationServices, message: errorMessage.message),
-                    delegate: self
-                )
-                self?.errorMessageView.animateHidden(hidden: false, animated: errorMessage.shouldAnimate)
+            if !isLoading {
+                self?.refreshArticlesControl.endRefreshing()
             }
         }
     }
@@ -121,10 +96,6 @@ class ArticleCategoriesView: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.pageViewed()
-    }
-    
-    @objc func handleDownloadArticles(button: UIButton) {
-        viewModel.downloadArticlesTapped()
     }
     
     @objc func handleRefreshArticleCategoriesControl() {
@@ -141,13 +112,11 @@ extension ArticleCategoriesView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.categories.value.count
+        return viewModel.numberOfCategories.value
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let category: ArticleCategory = viewModel.categories.value[indexPath.row]
-        viewModel.articleTapped(category: category)
+        viewModel.categoryTapped(index: indexPath.row)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -156,25 +125,10 @@ extension ArticleCategoriesView: UITableViewDelegate, UITableViewDataSource {
             withIdentifier: ArticleCategoryCell.reuseIdentifier,
             for: indexPath) as! ArticleCategoryCell
         
-        let category: ArticleCategory = viewModel.categories.value[indexPath.row]
+        let cellViewModel: ArticleCategoryCellViewModelType = viewModel.categoryWillAppear(index: indexPath.row)
         
-        let cellViewModel = ArticleCategoryCellViewModel(
-            category: category,
-            translationsFileCache: viewModel.translationsFileCache
-        )
         cell.configure(viewModel: cellViewModel)
- 
-        cell.selectionStyle = .none
-        cell.backgroundColor = .lightGray
         
         return cell
-    }
-}
-
-// MARK: - ArticlesErrorMessageViewDelegate
-
-extension ArticleCategoriesView: ArticlesErrorMessageViewDelegate {
-    func articlesErrorMessageViewDownloadArticlesButtonTapped(articlesErrorMessageView: ArticlesErrorMessageView) {
-        viewModel.downloadArticlesTapped()
     }
 }

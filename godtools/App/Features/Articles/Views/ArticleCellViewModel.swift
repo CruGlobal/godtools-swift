@@ -12,8 +12,8 @@ class ArticleCellViewModel: ArticleCellViewModelType {
     
     let title: String?
     
-    required init(articleAemImportData: ArticleAemImportData) {
+    required init(aemData: ArticleAemData) {
         
-        title = articleAemImportData.articleJcrContent?.title
+        title = aemData.articleJcrContent?.title
     }
 }

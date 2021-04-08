@@ -12,26 +12,16 @@ class WebArchiveQueue {
     
     private let session: URLSession
         
-    required init() {
+    required init(sharedSession: SharedSessionType) {
         
-        let configuration = URLSessionConfiguration.ephemeral
-        configuration.requestCachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
-        configuration.urlCache = nil
-        
-        configuration.httpCookieAcceptPolicy = HTTPCookie.AcceptPolicy.never
-        configuration.httpShouldSetCookies = false
-        configuration.httpCookieStorage = nil
-        
-        configuration.timeoutIntervalForRequest = 60
-            
-        session = URLSession(configuration: configuration)
+        self.session = sharedSession.session
     }
     
     deinit {
 
     }
     
-    func archive(urls: [URL], didArchivePlistData: @escaping ((_ result: Result<WebArchiveOperationResult, WebArchiveOperationError>) -> Void), complete: @escaping ((_ webArchiveQueueResult: WebArchiveQueueResult) -> Void)) -> OperationQueue {
+    func archive(webArchiveUrls: [WebArchiveUrl], completion: @escaping ((_ webArchiveQueueResult: WebArchiveQueueResult) -> Void)) -> OperationQueue {
         
         let queue = OperationQueue()
         
@@ -40,9 +30,9 @@ class WebArchiveQueue {
         var successfulArchives: [WebArchiveOperationResult] = Array()
         var failedArchives: [WebArchiveOperationError] = Array()
         
-        for url in urls {
+        for webArchiveUrl in webArchiveUrls {
             
-            let operation = WebArchiveOperation(session: session, url: url)
+            let operation = WebArchiveOperation(session: session, webArchiveUrl: webArchiveUrl)
             
             operation.completionHandler { (result: Result<WebArchiveOperationResult, WebArchiveOperationError>) in
                 
@@ -52,12 +42,10 @@ class WebArchiveQueue {
                 case .failure(let operationError):
                     failedArchives.append(operationError)
                 }
-                
-                didArchivePlistData(result)
-                                
+                                                
                 if queue.operations.isEmpty {
                    
-                    complete(WebArchiveQueueResult(successfulArchives: successfulArchives, failedArchives: failedArchives, totalAttemptedArchives: operations.count))
+                    completion(WebArchiveQueueResult(successfulArchives: successfulArchives, failedArchives: failedArchives, totalAttemptedArchives: operations.count))
                 }
             }
             
@@ -68,7 +56,7 @@ class WebArchiveQueue {
             queue.addOperations(operations, waitUntilFinished: false)
         }
         else {
-            complete(WebArchiveQueueResult(successfulArchives: [], failedArchives: [], totalAttemptedArchives: 0))
+            completion(WebArchiveQueueResult(successfulArchives: [], failedArchives: [], totalAttemptedArchives: 0))
         }
         
         return queue
