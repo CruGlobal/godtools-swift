@@ -12,6 +12,5 @@ protocol MobileContentImageViewModelType {
     
     var image: UIImage? { get }
     var imageSemanticContentAttribute: UISemanticContentAttribute { get }
-    
-    func imageTapped()
+    var imageEvents: [String] { get }
 }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TrainingPageView" customModule="godtools" customModuleProvider="target">
+            <connections>
+                <outlet property="bottomGradientView" destination="dty-Hz-9em" id="FTI-FU-uDs"/>
+                <outlet property="contentStackContainerView" destination="78k-tv-8To" id="T8C-bd-hrH"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="78k-tv-8To" userLabel="contentStackContainerView">
+                    <rect key="frame" x="30" y="0.0" width="354" height="881"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </view>
+                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dty-Hz-9em" userLabel="bottomGradientView">
+                    <rect key="frame" x="0.0" y="851" width="414" height="30"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="C4t-0F-aEq"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="78k-tv-8To" secondAttribute="bottom" constant="15" id="2hZ-sb-4Hf"/>
+                <constraint firstItem="78k-tv-8To" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="30" id="CsQ-YV-BjV"/>
+                <constraint firstItem="78k-tv-8To" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="EG7-NW-yfT"/>
+                <constraint firstItem="dty-Hz-9em" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="H0t-RU-A9l"/>
+                <constraint firstItem="dty-Hz-9em" firstAttribute="bottom" secondItem="78k-tv-8To" secondAttribute="bottom" id="IUu-St-9A4"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="78k-tv-8To" secondAttribute="trailing" constant="30" id="c1U-WO-c0b"/>
+                <constraint firstItem="dty-Hz-9em" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="eh2-S3-hb8"/>
+            </constraints>
+            <point key="canvasLocation" x="19" y="144"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

@@ -9,15 +9,16 @@
 import UIKit
 
 protocol ToolPageCallToActionViewDelegate: class {
-    func callToActionNextButtonTapped()
+    
+    func toolPageCallToActionNextButtonTapped(callToActionView: ToolPageCallToActionView)
 }
 
-class ToolPageCallToActionView: UIView {
-    
-    private weak var delegate: ToolPageCallToActionViewDelegate?
-    
+class ToolPageCallToActionView: MobileContentView {
+        
     let viewModel: ToolPageCallToActionViewModelType
         
+    private weak var delegate: ToolPageCallToActionViewDelegate?
+    
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var nextButton: UIButton!
     
@@ -37,11 +38,7 @@ class ToolPageCallToActionView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    deinit {
-        print("x deinit: \(type(of: self))")
-    }
-    
+
     private func initializeNib() {
         
         let nib: UINib = UINib(nibName: String(describing: ToolPageCallToActionView.self), bundle: nil)
@@ -70,12 +67,11 @@ class ToolPageCallToActionView: UIView {
         nextButton.setImageColor(color: viewModel.nextButtonColor)
     }
     
-    @objc func handleNextTapped(button: UIButton) {
-        delegate?.callToActionNextButtonTapped()
+    func setDelegate(delegate: ToolPageCallToActionViewDelegate?) {
+        self.delegate = delegate
     }
     
-    func configure(delegate: ToolPageCallToActionViewDelegate) {
-        
-        self.delegate = delegate
+    @objc func handleNextTapped(button: UIButton) {
+        delegate?.toolPageCallToActionNextButtonTapped(callToActionView: self)
     }
 }

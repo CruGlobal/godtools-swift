@@ -10,6 +10,4 @@ import Foundation
 
 protocol MobileContentFormViewModelType {
     
-    var resignCurrentInputSignal: Signal { get }
-    var contentViewModel: ToolPageContentStackContainerViewModel { get }
 }

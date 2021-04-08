@@ -10,7 +10,7 @@ import UIKit
 
 class ToolsFlow: Flow {
     
-    private var articlesFlow: ArticlesFlow?
+    private var articleToolFlow: ArticleToolFlow?
     private var shareToolMenuFlow: ShareToolMenuFlow?
     private var learnToShareToolFlow: LearnToShareToolFlow?
     
@@ -167,50 +167,21 @@ class ToolsFlow: Flow {
             )
             
             self.shareToolMenuFlow = shareToolMenuFlow
+
+        case .buttonWithUrlTappedFromMobileContentRenderer(let url):
+            guard let webUrl = URL(string: url) else {
+                return
+            }
+            navigateToURL(url: webUrl)
             
-        case .urlLinkTappedFromTool(let url):
-            navigateToURL(url: url)
+        case .trainingTipTappedFromMobileContentRenderer(let event):
+            navigateToToolTraining(event: event)
             
-        case .toolDidEncounterErrorFromTool(let error):
+        case .errorOccurredFromMobileContentRenderer(let error):
             
-            let viewModel = AlertMessageViewModel(
-                title: error.title,
-                message: error.message,
-                cancelTitle: nil,
-                acceptTitle: appDiContainer.localizationServices.stringForMainBundle(key: "OK"),
-                acceptHandler: nil
-            )
-            
-            let view = AlertMessageView(viewModel: viewModel)
+            let view = MobileContentErrorView(viewModel: error)
             
             navigationController.present(view.controller, animated: true, completion: nil)
-            
-        case .toolTrainingTipTappedFromTool(let resource, let manifest, let trainingTipId, let tipNode, let language, let primaryLanguage, let toolPage):
-            
-            let viewModel = ToolTrainingViewModel(
-                flowDelegate: self,
-                resource: resource,
-                language: language,
-                primaryLanguage: primaryLanguage,
-                trainingTipId: trainingTipId,
-                tipNode: tipNode,
-                manifest: manifest,
-                translationsFileCache: appDiContainer.translationsFileCache,
-                mobileContentNodeParser: appDiContainer.getMobileContentNodeParser(),
-                mobileContentAnalytics: appDiContainer.getMobileContentAnalytics(),
-                mobileContentEvents: appDiContainer.getMobileContentEvents(),
-                analytics: appDiContainer.analytics,
-                fontService: appDiContainer.getFontService(),
-                followUpsService: appDiContainer.followUpsService,
-                localizationServices: appDiContainer.localizationServices,
-                cardJumpService: appDiContainer.getCardJumpService(),
-                viewedTrainingTips: appDiContainer.getViewedTrainingTipsService(),
-                toolPage: toolPage
-            )
-            
-            let view = ToolTrainingView(viewModel: viewModel)
-            
-            navigationController.present(view, animated: true, completion: nil)
             
         case .closeTappedFromToolTraining:
             navigationController.dismiss(animated: true, completion: nil)
@@ -539,7 +510,7 @@ class ToolsFlow: Flow {
         switch resourceType {
             
         case .article:
-            navigateToArticlesFlow(
+            navigateToArticleToolFlow(
                 resource: resource,
                 translationManifest: primaryTranslationManifest
             )
@@ -561,9 +532,9 @@ class ToolsFlow: Flow {
         }
     }
     
-    private func navigateToArticlesFlow(resource: ResourceModel, translationManifest: TranslationManifestData) {
+    private func navigateToArticleToolFlow(resource: ResourceModel, translationManifest: TranslationManifestData) {
         
-        let articlesFlow = ArticlesFlow(
+        let articleToolFlow = ArticleToolFlow(
             flowDelegate: self,
             appDiContainer: appDiContainer,
             sharedNavigationController: navigationController,
@@ -571,11 +542,96 @@ class ToolsFlow: Flow {
             translationManifest: translationManifest
         )
         
-        self.articlesFlow = articlesFlow
+        self.articleToolFlow = articleToolFlow
     }
     
     private func navigateToTract(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
-                
+        
+        let analytics: AnalyticsContainer = appDiContainer.analytics
+        let mobileContentAnalytics: MobileContentAnalytics = appDiContainer.getMobileContentAnalytics()
+        let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
+        let mobileContentNodeParser: MobileContentXmlNodeParser = appDiContainer.getMobileContentNodeParser()
+        let viewedTrainingTipsService: ViewedTrainingTipsService = appDiContainer.getViewedTrainingTipsService()
+        let fontService: FontService = appDiContainer.getFontService()
+        let localizationServices: LocalizationServices = appDiContainer.localizationServices
+        let followUpsService: FollowUpsService = appDiContainer.followUpsService
+        let cardJumpService: CardJumpService = appDiContainer.getCardJumpService()
+        
+        let toolPageViewFactory = ToolPageViewFactory(
+            analytics: analytics,
+            mobileContentAnalytics: mobileContentAnalytics,
+            fontService: fontService,
+            localizationServices: localizationServices,
+            cardJumpService: cardJumpService,
+            followUpService: followUpsService,
+            translationsFileCache: translationsFileCache,
+            mobileContentNodeParser: mobileContentNodeParser,
+            viewedTrainingTipsService: viewedTrainingTipsService,
+            trainingTipsEnabled: trainingTipsEnabled
+        )
+        
+        let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
+            translationsFileCache: translationsFileCache,
+            mobileContentNodeParser: mobileContentNodeParser,
+            viewedTrainingTipsService: viewedTrainingTipsService,
+            trainingTipsEnabled: trainingTipsEnabled
+        )
+        
+        let pageViewFactories: [MobileContentPageViewFactoryType] = [toolPageViewFactory, trainingViewFactory]
+        
+        let primaryRenderer = MobileContentRenderer(
+            resource: resource,
+            language: primaryLanguage,
+            manifest: MobileContentXmlManifest(translationManifest: primaryTranslationManifest),
+            pageNodes: [],
+            translationsFileCache: translationsFileCache,
+            pageViewFactories: pageViewFactories,
+            mobileContentAnalytics: mobileContentAnalytics,
+            fontService: fontService
+        )
+        
+        var renderers: [MobileContentRenderer] = Array()
+        
+        renderers.append(primaryRenderer)
+        
+        if !trainingTipsEnabled, let parallelLanguage = parallelLanguage, let parallelTranslationManifest = parallelTranslationManifest, parallelLanguage.code != primaryLanguage.code {
+            
+            let parallelRenderer = MobileContentRenderer(
+                resource: resource,
+                language: parallelLanguage,
+                manifest: MobileContentXmlManifest(translationManifest: parallelTranslationManifest),
+                pageNodes: [],
+                translationsFileCache: translationsFileCache,
+                pageViewFactories: pageViewFactories,
+                mobileContentAnalytics: mobileContentAnalytics,
+                fontService: fontService
+            )
+            
+            renderers.append(parallelRenderer)
+        }
+        
+        let viewModel = ToolViewModel(
+            flowDelegate: self,
+            renderers: renderers,
+            resource: resource,
+            primaryLanguage: primaryLanguage,
+            tractRemoteSharePublisher: appDiContainer.tractRemoteSharePublisher,
+            tractRemoteShareSubscriber: appDiContainer.tractRemoteShareSubscriber,
+            localizationServices: localizationServices,
+            fontService: fontService,
+            viewsService: appDiContainer.viewsService,
+            analytics: analytics,
+            toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics,
+            liveShareStream: liveShareStream,
+            trainingTipsEnabled: trainingTipsEnabled,
+            page: page
+        )
+        
+        let view = ToolView(viewModel: viewModel)
+        
+        navigationController.pushViewController(view, animated: true)
+        
+        /*
         let viewModel = ToolViewModel(
             flowDelegate: self,
             resource: resource,
@@ -606,6 +662,53 @@ class ToolsFlow: Flow {
                     
         let view = ToolView(viewModel: viewModel)
 
-        navigationController.pushViewController(view, animated: true)
+        navigationController.pushViewController(view, animated: true)*/
+    }
+    
+    private func navigateToToolTraining(event: TrainingTipEvent) {
+        
+        let pageNodes: [PageNode] = event.tipNode.pages?.pages ?? []
+        
+        if pageNodes.isEmpty {
+            // TODO: Page nodes should not be empty. ~Levi
+        }
+                
+        let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
+        let mobileContentNodeParser: MobileContentXmlNodeParser = appDiContainer.getMobileContentNodeParser()
+        let viewedTrainingTipsService: ViewedTrainingTipsService = appDiContainer.getViewedTrainingTipsService()
+        
+        let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
+            translationsFileCache: translationsFileCache,
+            mobileContentNodeParser: mobileContentNodeParser,
+            viewedTrainingTipsService: viewedTrainingTipsService,
+            trainingTipsEnabled: false
+        )
+        
+        let pageViewFactories: [MobileContentPageViewFactoryType] = [trainingViewFactory]
+        
+        let renderer = MobileContentRenderer(
+            resource: event.pageModel.resource,
+            language: event.pageModel.language,
+            manifest: event.pageModel.manifest,
+            pageNodes: pageNodes,
+            translationsFileCache: appDiContainer.translationsFileCache,
+            pageViewFactories: pageViewFactories,
+            mobileContentAnalytics: appDiContainer.getMobileContentAnalytics(),
+            fontService: appDiContainer.getFontService()
+        )
+                
+        let viewModel = ToolTrainingViewModel(
+            flowDelegate: self,
+            renderer: renderer,
+            trainingTipId: event.trainingTipId,
+            tipNode: event.tipNode,
+            analytics: appDiContainer.analytics,
+            localizationServices: appDiContainer.localizationServices,
+            viewedTrainingTips: appDiContainer.getViewedTrainingTipsService()
+        )
+        
+        let view = ToolTrainingView(viewModel: viewModel)
+        
+        navigationController.present(view, animated: true, completion: nil)
     }
 }

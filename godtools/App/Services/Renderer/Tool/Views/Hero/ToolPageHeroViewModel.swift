@@ -10,26 +10,17 @@ import UIKit
 
 class ToolPageHeroViewModel: ToolPageHeroViewModelType {
     
+    private let pageModel: MobileContentRendererPageModel
     private let heroNode: HeroNode
     private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
-        
-    let contentStackRenderer: ToolPageContentStackRenderer
     
-    required init(heroNode: HeroNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColors) {
+    required init(heroNode: HeroNode, pageModel: MobileContentRendererPageModel, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.heroNode = heroNode
-        self.contentStackRenderer = ToolPageContentStackRenderer(
-            rootContentStackRenderer: nil,
-            diContainer: diContainer,
-            node: heroNode,
-            toolPageColors: toolPageColors,
-            defaultTextNodeTextColor: nil,
-            defaultTextNodeTextAlignment: nil,
-            defaultButtonBorderColor: nil
-        )
+        self.pageModel = pageModel
         
         if let analyticsEventsNode = heroNode.analyticsEventsNode {
-            analyticsEventsObjects = MobileContentAnalyticsEvent.initEvents(eventsNode: analyticsEventsNode, mobileContentAnalytics: diContainer.mobileContentAnalytics)
+            analyticsEventsObjects = MobileContentAnalyticsEvent.initEvents(eventsNode: analyticsEventsNode, mobileContentAnalytics: mobileContentAnalytics)
         }
         else {
             analyticsEventsObjects = []
@@ -52,6 +43,10 @@ class ToolPageHeroViewModel: ToolPageHeroViewModelType {
 // MARK: - MobileContentViewModelType
 
 extension ToolPageHeroViewModel: MobileContentViewModelType {
+    
+    var language: LanguageModel {
+        return pageModel.language
+    }
     
     var analyticsEvents: [MobileContentAnalyticsEvent] {
         return analyticsEventsObjects

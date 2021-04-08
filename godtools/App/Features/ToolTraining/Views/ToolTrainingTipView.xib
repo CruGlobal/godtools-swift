@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,36 +16,10 @@
             <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="MWb-3b-9pZ">
                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZLR-do-R0q" userLabel="contentStackContainerView">
-                        <rect key="frame" x="30" y="0.0" width="354" height="881"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </view>
-                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fSq-Gt-Y65" userLabel="bottomGradientView">
-                        <rect key="frame" x="0.0" y="851" width="414" height="30"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="30" id="ubx-ET-HOW"/>
-                        </constraints>
-                    </view>
-                </subviews>
                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                <constraints>
-                    <constraint firstAttribute="bottom" secondItem="ZLR-do-R0q" secondAttribute="bottom" constant="15" id="Pz3-32-E5a"/>
-                    <constraint firstItem="fSq-Gt-Y65" firstAttribute="leading" secondItem="MWb-3b-9pZ" secondAttribute="leading" id="ebb-OS-FTm"/>
-                    <constraint firstAttribute="trailing" secondItem="fSq-Gt-Y65" secondAttribute="trailing" id="krt-tJ-lBe"/>
-                    <constraint firstAttribute="trailing" secondItem="ZLR-do-R0q" secondAttribute="trailing" constant="30" id="oM3-R5-FDj"/>
-                    <constraint firstItem="fSq-Gt-Y65" firstAttribute="bottom" secondItem="ZLR-do-R0q" secondAttribute="bottom" id="qgG-eF-FYC"/>
-                    <constraint firstItem="ZLR-do-R0q" firstAttribute="top" secondItem="MWb-3b-9pZ" secondAttribute="top" id="sug-Ey-gf7"/>
-                    <constraint firstItem="ZLR-do-R0q" firstAttribute="leading" secondItem="MWb-3b-9pZ" secondAttribute="leading" constant="30" id="wZP-e7-SAU"/>
-                </constraints>
             </collectionViewCellContentView>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <size key="customSize" width="454" height="346"/>
-            <connections>
-                <outlet property="bottomGradientView" destination="fSq-Gt-Y65" id="DwN-4d-ocQ"/>
-                <outlet property="contentStackContainerView" destination="ZLR-do-R0q" id="BQp-By-SaS"/>
-            </connections>
             <point key="canvasLocation" x="-128.98550724637681" y="64.285714285714278"/>
         </collectionViewCell>
     </objects>

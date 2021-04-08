@@ -28,3 +28,10 @@ class HeroNode: MobileContentXmlNode {
     }
 }
 
+// MARK: - MobileContentRenderableNode
+
+extension HeroNode: MobileContentRenderableNode {
+    var nodeContentIsRenderable: Bool {
+        return true
+    }
+}

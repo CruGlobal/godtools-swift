@@ -9,9 +9,7 @@
 import Foundation
 
 protocol ToolPageHeroViewModelType {
-    
-    var contentStackRenderer: ToolPageContentStackRenderer { get }
-    
+        
     func heroDidAppear()
     func heroDidDisappear()
 }

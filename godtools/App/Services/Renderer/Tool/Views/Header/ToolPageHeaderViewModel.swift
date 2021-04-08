@@ -10,60 +10,54 @@ import UIKit
 
 class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
     
-    private let diContainer: ToolPageDiContainer
-    private let toolPageColors: ToolPageColors
-    private let fontService: FontService
-    private let language: LanguageModel
+    private let pageModel: MobileContentRendererPageModel
     
-    let hidesHeader: Bool
-    let number: String?
-    let title: String?
+    let trainingTipView: TrainingTipView?
     
-    required init(headerNode: HeaderNode, diContainer: ToolPageDiContainer, toolPageColors: ToolPageColors, fontService: FontService, language: LanguageModel) {
+    required init(headerNode: HeaderNode, pageModel: MobileContentRendererPageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, viewedTrainingTipsService: ViewedTrainingTipsService) {
         
-        self.diContainer = diContainer
-        self.toolPageColors = toolPageColors
-        self.fontService = fontService
-        self.language = language
+        self.pageModel = pageModel
         
-        let pageHeaderNumber: String? = headerNode.number
-        let pageHeaderTitle: String? = headerNode.title
-        let hidesHeader: Bool = pageHeaderNumber == nil && pageHeaderTitle == nil
+        var trainingTipView: TrainingTipView? = nil
         
-        self.hidesHeader = hidesHeader
-        number = pageHeaderNumber
-        title = pageHeaderTitle
+        if let trainingTipId = headerNode.trainingTip {
+            for pageViewFactory in pageModel.pageViewFactories {
+                if let trainingViewFactory = pageViewFactory as? TrainingViewFactory {
+                    trainingTipView = trainingViewFactory.getTrainingTipView(
+                        trainingTipId: trainingTipId,
+                        pageModel: pageModel,
+                        trainingTipViewType: .upArrow
+                    )
+                }
+            }
+        }
+        
+        self.trainingTipView = trainingTipView
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return diContainer.languageDirectionSemanticContentAttribute
+        return pageModel.languageDirectionSemanticContentAttribute
     }
     
     var backgroundColor: UIColor {
-        return toolPageColors.primaryColor
-    }
-    
-    var numberFont: UIFont {
-        return fontService.getFont(size: 54, weight: .regular)
-    }
-    
-    var numberColor: UIColor {
-        return toolPageColors.primaryTextColor
-    }
-    
-    var numberAlignment: NSTextAlignment {
-        return language.languageDirection == .leftToRight ? .left : .right
-    }
-    
-    var titleFont: UIFont {
-        return fontService.getFont(size: 19, weight: .regular)
-    }
-    
-    var titleColor: UIColor {
-        return toolPageColors.primaryTextColor
-    }
-    
-    var titleAlignment: NSTextAlignment {
-        return language.languageDirection == .leftToRight ? .left : .right
+        return pageModel.pageColors.primaryColor
     }
 }
+
+// MARK: - MobileContentViewModelType
+
+extension ToolPageHeaderViewModel: MobileContentViewModelType {
+    
+    var language: LanguageModel {
+        return pageModel.language
+    }
+    
+    var analyticsEvents: [MobileContentAnalyticsEvent] {
+        return []
+    }
+    
+    var defaultAnalyticsEventsTrigger: AnalyticsEventNodeTrigger {
+        return .visible
+    }
+}
+
