@@ -148,7 +148,8 @@ class AppFlow: NSObject, Flow {
                         )
                     }
                 
-                case .article(let articleURI):
+                case .article(let articleUri):
+                    
                     guard let appFlow = self else {
                         return
                     }
