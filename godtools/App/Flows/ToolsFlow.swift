@@ -673,6 +673,8 @@ class ToolsFlow: Flow {
         let followUpsService: FollowUpsService = appDiContainer.followUpsService
         let cardJumpService: CardJumpService = appDiContainer.getCardJumpService()
         
+        let lessonPageViewFactory = LessonPageViewFactory()
+        
         let toolPageViewFactory = ToolPageViewFactory(
             analytics: analytics,
             mobileContentAnalytics: mobileContentAnalytics,
@@ -693,7 +695,7 @@ class ToolsFlow: Flow {
             trainingTipsEnabled: trainingTipsEnabled
         )
         
-        let pageViewFactories: [MobileContentPageViewFactoryType] = [toolPageViewFactory, trainingViewFactory]
+        let pageViewFactories: [MobileContentPageViewFactoryType] = [lessonPageViewFactory, toolPageViewFactory, trainingViewFactory]
         
         let renderer = MobileContentRenderer(
             resource: resource,
