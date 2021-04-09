@@ -18,7 +18,7 @@ class MobileContentImageViewModel: MobileContentImageViewModelType {
         
         self.imageNode = imageNode
         self.pageModel = pageModel
-        self.languageDirection = pageModel.language.languageDirection
+        self.languageDirection = pageModel.primaryLanguage.languageDirection
     }
     
     var image: UIImage? {

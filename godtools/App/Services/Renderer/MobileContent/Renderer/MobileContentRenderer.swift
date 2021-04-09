@@ -22,6 +22,7 @@ class MobileContentRenderer {
     private let translationsFileCache: TranslationsFileCache
     private let pageViewFactories: [MobileContentPageViewFactoryType]
     private let rendererType: RendererType
+    private let primaryLanguage: LanguageModel
     
     private var pageNodes: [Int: PageNode] = Dictionary()
     private var pageListeners: [PageListenerEventName: PageNumber] = Dictionary()
@@ -31,13 +32,14 @@ class MobileContentRenderer {
     let resource: ResourceModel
     let language: LanguageModel
     
-    required init(resource: ResourceModel, language: LanguageModel, manifest: MobileContentXmlManifest, pageNodes: [PageNode], translationsFileCache: TranslationsFileCache, pageViewFactories: [MobileContentPageViewFactoryType], mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
+    required init(resource: ResourceModel, language: LanguageModel, primaryLanguage: LanguageModel, manifest: MobileContentXmlManifest, pageNodes: [PageNode], translationsFileCache: TranslationsFileCache, pageViewFactories: [MobileContentPageViewFactoryType], mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
         
         self.translationsFileCache = translationsFileCache
         self.manifest = manifest
         self.resourcesCache = ManifestResourcesCache(manifest: manifest, translationsFileCache: translationsFileCache)
         self.resource = resource
         self.language = language
+        self.primaryLanguage = primaryLanguage
 
         // pageViewFactories
         let mobileContentPageViewFactory = MobileContentPageViewFactory(
@@ -156,6 +158,7 @@ class MobileContentRenderer {
                 resourcesCache: resourcesCache,
                 resource: resource,
                 language: language,
+                primaryLanguage: primaryLanguage,
                 pageViewFactories: pageViewFactories
             )
             

@@ -556,6 +556,7 @@ class ToolsFlow: Flow {
         let localizationServices: LocalizationServices = appDiContainer.localizationServices
         let followUpsService: FollowUpsService = appDiContainer.followUpsService
         let cardJumpService: CardJumpService = appDiContainer.getCardJumpService()
+        let devicePrimaryLanguage = appDiContainer.languageSettingsService.primaryLanguage.value ?? primaryLanguage
         
         let toolPageViewFactory = ToolPageViewFactory(
             analytics: analytics,
@@ -582,6 +583,7 @@ class ToolsFlow: Flow {
         let primaryRenderer = MobileContentRenderer(
             resource: resource,
             language: primaryLanguage,
+            primaryLanguage: devicePrimaryLanguage,
             manifest: MobileContentXmlManifest(translationManifest: primaryTranslationManifest),
             pageNodes: [],
             translationsFileCache: translationsFileCache,
@@ -599,6 +601,7 @@ class ToolsFlow: Flow {
             let parallelRenderer = MobileContentRenderer(
                 resource: resource,
                 language: parallelLanguage,
+                primaryLanguage: devicePrimaryLanguage,
                 manifest: MobileContentXmlManifest(translationManifest: parallelTranslationManifest),
                 pageNodes: [],
                 translationsFileCache: translationsFileCache,
@@ -686,9 +689,12 @@ class ToolsFlow: Flow {
         
         let pageViewFactories: [MobileContentPageViewFactoryType] = [trainingViewFactory]
         
+        let devicePrimaryLanguage = appDiContainer.languageSettingsService.primaryLanguage.value ?? event.pageModel.language
+        
         let renderer = MobileContentRenderer(
             resource: event.pageModel.resource,
             language: event.pageModel.language,
+            primaryLanguage: devicePrimaryLanguage,
             manifest: event.pageModel.manifest,
             pageNodes: pageNodes,
             translationsFileCache: appDiContainer.translationsFileCache,
