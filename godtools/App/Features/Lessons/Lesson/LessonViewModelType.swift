@@ -12,6 +12,6 @@ protocol LessonViewModelType: MobileContentPagesViewModel {
     
     var progress: ObservableValue<AnimatableValue<CGFloat>> { get }
     
-    func lessonPageWillAppear(page: Int)
+    func lessonPageDidAppear(page: Int)
     func closeTapped()
 }

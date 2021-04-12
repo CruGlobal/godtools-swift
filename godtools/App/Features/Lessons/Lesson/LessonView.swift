@@ -59,9 +59,9 @@ class LessonView: MobileContentPagesView {
         }
     }
     
-    override func pageNavigationPageWillAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
-        super.pageNavigationPageWillAppear(pageNavigation: pageNavigation, pageCell: pageCell, page: page)
-        viewModel.lessonPageWillAppear(page: page)
+    override func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
+        super.pageNavigationPageDidAppear(pageNavigation: pageNavigation, pageCell: pageCell, page: page)
+        viewModel.lessonPageDidAppear(page: page)
     }
 }
 
