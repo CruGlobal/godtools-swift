@@ -44,7 +44,7 @@ class LessonView: MobileContentPagesView {
         setPageInsets(pageInsets: UIEdgeInsets(top: progressView.height, left: 0, bottom: 0, right: 0))
         
         // navigationController
-        navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationController?.setNavigationBarHidden(true, animated: true)
         
         // progressView
         addProgressView(progressView: progressView)

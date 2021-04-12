@@ -68,7 +68,7 @@ class ToolsFlow: Flow {
             navigateToTool(resource: resource, trainingTipsEnabled: false)
             
         case .closeTappedFromLesson:
-            navigationController.popViewController(animated: true)
+            flowDelegate?.navigate(step: .closeTappedFromLesson)
             
         case .openTutorialTapped:
             flowDelegate?.navigate(step: .openTutorialTapped)

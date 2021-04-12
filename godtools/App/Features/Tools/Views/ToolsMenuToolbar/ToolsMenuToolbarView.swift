@@ -24,6 +24,7 @@ class ToolsMenuToolbarView: UIView, NibBased {
     }
     
     private var viewModel: ToolsMenuToolbarViewModelType?
+    private var selectedToolbarItem: ToolbarItemView = .lessons
     private weak var delegate: ToolsMenuToolbarViewDelegate?
     
     let toolbarItemViews: [ToolbarItemView] = [.lessons, .favoritedTools, .allTools]
@@ -92,6 +93,9 @@ extension ToolsMenuToolbarView: UICollectionViewDelegateFlowLayout, UICollection
         case .allTools:
             delegate?.toolsMenuToolbarAllToolsTapped(toolsMenuToolbar: self)
         }
+        
+        selectedToolbarItem = toolbarItemView
+        toolbarItemsCollectionView.reloadData()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -115,7 +119,11 @@ extension ToolsMenuToolbarView: UICollectionViewDelegateFlowLayout, UICollection
         }
         
         if let cellViewModel = cellViewModel {
-            cell.configure(viewModel: cellViewModel)
+            
+            cell.configure(
+                viewModel: cellViewModel,
+                isSelected: toolbarItemView == selectedToolbarItem
+            )
         }
         
         return cell
