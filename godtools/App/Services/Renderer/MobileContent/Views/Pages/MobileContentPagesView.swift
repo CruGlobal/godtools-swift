@@ -16,11 +16,12 @@ class MobileContentPagesView: UIViewController {
     
     private var initialPagePositions: [PageNumber: MobileContentPagePositionsType] = Dictionary()
     private var currentNavigation: MobileContentPagesNavigationModel?
+    private var pageInsets: UIEdgeInsets = .zero
     private var didLayoutSubviews: Bool = false
           
-    @IBOutlet weak private var safeAreaView: UIView!
+    @IBOutlet weak private(set) var safeAreaView: UIView!
     @IBOutlet weak private(set) var pageNavigationView: PageNavigationCollectionView!
-    
+        
     required init(viewModel: MobileContentPagesViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: String(describing: MobileContentPagesView.self), bundle: nil)
@@ -67,9 +68,9 @@ class MobileContentPagesView: UIViewController {
         }
         
         let safeArea: UIEdgeInsets = UIEdgeInsets(
-            top: safeAreaTopInset,
+            top: safeAreaTopInset + pageInsets.top,
             left: 0,
-            bottom: safeAreaBottomInset,
+            bottom: safeAreaBottomInset + pageInsets.bottom,
             right: 0
         )
         
@@ -101,11 +102,11 @@ class MobileContentPagesView: UIViewController {
             nib: UINib(nibName: MobileContentPageCell.nibName, bundle: nil),
             cellReuseIdentifier: MobileContentPageCell.reuseIdentifier
         )
-        pageNavigationView.pagesCollectionView.contentInset = UIEdgeInsets.zero
-        pageNavigationView.pagesCollectionView.semanticContentAttribute = viewModel.pageNavigationSemanticContentAttribute
+        pageNavigationView.setContentInset(contentInset: .zero)
+        pageNavigationView.setSemanticContentAttribute(semanticContentAttribute: viewModel.pageNavigationSemanticContentAttribute)
         
         if #available(iOS 11.0, *) {
-            pageNavigationView.pagesCollectionView.contentInsetAdjustmentBehavior = .never
+            pageNavigationView.setContentInsetAdjustmentBehavior(contentInsetAdjustmentBehavior: .never)
         } else {
             automaticallyAdjustsScrollViewInsets = false
         }
@@ -128,17 +129,27 @@ class MobileContentPagesView: UIViewController {
         
     }
     
-    private func getAllVisiblePagesPositions() -> [PageNumber: MobileContentPagePositionsType] {
-                
-        let collectionView: UICollectionView = pageNavigationView.pagesCollectionView
+    func setPageInsets(pageInsets: UIEdgeInsets) {
         
+        if didLayoutSubviews {
+            assertionFailure("Set pageInsets before views are laid out.  Best place to set is on initialization or viewDidLoad.")
+            return
+        }
+        
+        self.pageInsets = pageInsets
+    }
+    
+    private func getAllVisiblePagesPositions() -> [PageNumber: MobileContentPagePositionsType] {
+                        
         var pagePositions: [PageNumber: MobileContentPagePositionsType] = Dictionary()
         
-        for cell in collectionView.visibleCells {
+        let visiblePageCells: [UICollectionViewCell] = pageNavigationView.getVisiblePageCells()
+        
+        for cell in visiblePageCells {
             
             if let pageCell = cell as? MobileContentPageCell,
                let pageView = pageCell.mobileContentView as? MobileContentPageView,
-               let indexPath = collectionView.indexPath(for: pageCell) {
+               let indexPath = pageNavigationView.getIndexPathForPageCell(pageCell: pageCell) {
                 
                 let page: Int = indexPath.row
                 let currentPagePositions: MobileContentPagePositionsType = pageView.getPagePositions()
@@ -152,7 +163,7 @@ class MobileContentPagesView: UIViewController {
     
     func getPagePositions(page: Int) -> MobileContentPagePositionsType? {
         
-        guard let pageCell = pageNavigationView.pagesCollectionView.cellForItem(at: IndexPath(item: page, section: 0)) as? MobileContentPageCell else {
+        guard let pageCell = pageNavigationView.getCellForItem(indexPath: IndexPath(item: page, section: 0)) as? MobileContentPageCell else {
             return nil
         }
         

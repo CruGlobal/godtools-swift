@@ -10,4 +10,5 @@ import Foundation
 
 protocol LessonViewModelType: MobileContentPagesViewModel {
     
+    func closeTapped()
 }

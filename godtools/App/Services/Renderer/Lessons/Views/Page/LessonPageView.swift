@@ -17,6 +17,9 @@ class LessonPageView: MobileContentPageView {
     
     @IBOutlet weak private var contentContainerView: UIView!
     
+    @IBOutlet weak private var topInsetTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak private var bottomInsetBottomConstraint: NSLayoutConstraint!
+    
     required init(viewModel: LessonPageViewModelType, safeArea: UIEdgeInsets) {
         
         self.viewModel = viewModel
@@ -51,6 +54,8 @@ class LessonPageView: MobileContentPageView {
     
     private func setupLayout() {
         
+        topInsetTopConstraint.constant = safeArea.top
+        bottomInsetBottomConstraint.constant = safeArea.bottom
     }
     
     private func setupBinding() {

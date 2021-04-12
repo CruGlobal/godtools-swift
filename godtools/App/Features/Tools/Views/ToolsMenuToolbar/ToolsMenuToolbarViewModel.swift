@@ -17,7 +17,7 @@ class ToolsMenuToolbarViewModel: ToolsMenuToolbarViewModelType {
         self.localizationServices = localizationServices
     }
     
-    func learnToolbarItemWillAppear() -> ToolsMenuToolbarItemViewModelType {
+    func lessonsToolbarItemWillAppear() -> ToolsMenuToolbarItemViewModelType {
         
         return ToolsMenuToolbarItemViewModel(
             title: localizationServices.stringForMainBundle(key: "tool_menu_item.lessons")

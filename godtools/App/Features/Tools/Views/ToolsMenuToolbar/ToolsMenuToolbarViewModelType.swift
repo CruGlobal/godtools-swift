@@ -10,7 +10,7 @@ import Foundation
 
 protocol ToolsMenuToolbarViewModelType {
         
-    func learnToolbarItemWillAppear() -> ToolsMenuToolbarItemViewModelType
+    func lessonsToolbarItemWillAppear() -> ToolsMenuToolbarItemViewModelType
     func favoritedToolsToolbarItemWillAppear() -> ToolsMenuToolbarItemViewModelType
     func allToolsToolbarItemWillAppear() -> ToolsMenuToolbarItemViewModelType
 }

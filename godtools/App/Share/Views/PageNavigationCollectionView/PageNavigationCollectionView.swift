@@ -85,7 +85,7 @@ class PageNavigationCollectionView: UIView, NibBased {
         collectionView.reloadData()
     }
     
-    // MARK: -
+    // MARK: - Navigation
     
     func scrollToPreviousPage(animated: Bool) {
         if !isOnFirstPage {
@@ -121,6 +121,15 @@ class PageNavigationCollectionView: UIView, NibBased {
     }
     
     // MARK: -
+    
+    var pageBackgroundColor: UIColor = UIColor.white {
+        didSet {
+            backgroundColor = pageBackgroundColor
+            subviews.first?.backgroundColor = pageBackgroundColor
+            collectionView.backgroundColor = pageBackgroundColor
+            collectionView.reloadData()
+        }
+    }
     
     var gestureScrollingEnabled: Bool = true {
         didSet {
@@ -181,17 +190,37 @@ class PageNavigationCollectionView: UIView, NibBased {
         return collectionView.numberOfItems(inSection: 0)
     }
     
-    var pagesCollectionView: UICollectionView {
-        return collectionView
+    func setContentInset(contentInset: UIEdgeInsets) {
+        collectionView.contentInset = contentInset
+        collectionView.reloadData()
     }
     
-    var pageBackgroundColor: UIColor = UIColor.white {
-        didSet {
-            backgroundColor = pageBackgroundColor
-            subviews.first?.backgroundColor = pageBackgroundColor
-            collectionView.backgroundColor = pageBackgroundColor
-            collectionView.reloadData()
-        }
+    func setContentOffset(contentOffset: CGPoint, animated: Bool) {
+        collectionView.setContentOffset(contentOffset, animated: animated)
+    }
+    
+    func setSemanticContentAttribute(semanticContentAttribute: UISemanticContentAttribute) {
+        collectionView.semanticContentAttribute = semanticContentAttribute
+    }
+    
+    func getContentOffset() -> CGPoint {
+        return collectionView.contentOffset
+    }
+    
+    func setContentInsetAdjustmentBehavior(contentInsetAdjustmentBehavior: UIScrollView.ContentInsetAdjustmentBehavior) {
+        collectionView.contentInsetAdjustmentBehavior = contentInsetAdjustmentBehavior
+    }
+    
+    func getIndexPathForPageCell(pageCell: UICollectionViewCell) -> IndexPath? {
+        return collectionView.indexPath(for: pageCell)
+    }
+    
+    func getCellForItem(indexPath: IndexPath) -> UICollectionViewCell? {
+        return collectionView.cellForItem(at: indexPath)
+    }
+    
+    func getVisiblePageCells() -> [UICollectionViewCell] {
+        return collectionView.visibleCells
     }
     
     private func didEndPageScrolling() {
@@ -270,7 +299,11 @@ extension PageNavigationCollectionView: UICollectionViewDelegateFlowLayout, UICo
     }
         
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return bounds.size
+        
+        let pageWidth: CGFloat = bounds.size.width
+        let pageHeight: CGFloat = bounds.size.height - collectionView.contentInset.top - collectionView.contentInset.bottom
+        
+        return CGSize(width: pageWidth, height: pageHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

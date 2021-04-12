@@ -145,7 +145,7 @@ extension ToolsMenuView: PageNavigationCollectionViewDelegate {
         let toolsView: UIViewController?
         
         switch toolbarItemView {
-        case .learn:
+        case .lessons:
             toolsView = lessonsView
             
         case .favoritedTools:
@@ -179,7 +179,7 @@ extension ToolsMenuView: ToolsMenuToolbarViewDelegate {
     
     func toolsMenuToolbarLessonsTapped(toolsMenuToolbar: ToolsMenuToolbarView) {
         
-        navigateToToolPageForToolbarItem(toolbarItem: .learn, animated: true)
+        navigateToToolPageForToolbarItem(toolbarItem: .lessons, animated: true)
     }
     
     func toolsMenuToolbarFavoritedToolsTapped(toolsMenuToolbar: ToolsMenuToolbarView) {

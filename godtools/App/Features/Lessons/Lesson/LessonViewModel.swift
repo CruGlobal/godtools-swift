@@ -22,4 +22,8 @@ class LessonViewModel: MobileContentPagesViewModel, LessonViewModelType {
     required init(flowDelegate: FlowDelegate, renderers: [MobileContentRenderer], primaryLanguage: LanguageModel, page: Int?) {
         fatalError("init(flowDelegate:renderers:primaryLanguage:page:) has not been implemented")
     }
+    
+    func closeTapped() {
+        
+    }
 }

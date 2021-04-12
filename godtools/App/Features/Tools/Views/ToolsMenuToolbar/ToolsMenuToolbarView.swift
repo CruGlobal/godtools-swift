@@ -18,7 +18,7 @@ protocol ToolsMenuToolbarViewDelegate: class {
 class ToolsMenuToolbarView: UIView, NibBased {
     
     enum ToolbarItemView {
-        case learn
+        case lessons
         case favoritedTools
         case allTools
     }
@@ -26,7 +26,7 @@ class ToolsMenuToolbarView: UIView, NibBased {
     private var viewModel: ToolsMenuToolbarViewModelType?
     private weak var delegate: ToolsMenuToolbarViewDelegate?
     
-    let toolbarItemViews: [ToolbarItemView] = [.learn, .favoritedTools, .allTools]
+    let toolbarItemViews: [ToolbarItemView] = [.lessons, .favoritedTools, .allTools]
     
     @IBOutlet weak private var toolbarItemsCollectionView: UICollectionView!
     
@@ -85,7 +85,7 @@ extension ToolsMenuToolbarView: UICollectionViewDelegateFlowLayout, UICollection
         let toolbarItemView: ToolbarItemView = toolbarItemViews[indexPath.row]
         
         switch toolbarItemView {
-        case .learn:
+        case .lessons:
             delegate?.toolsMenuToolbarLessonsTapped(toolsMenuToolbar: self)
         case .favoritedTools:
             delegate?.toolsMenuToolbarFavoritedToolsTapped(toolsMenuToolbar: self)
@@ -106,8 +106,8 @@ extension ToolsMenuToolbarView: UICollectionViewDelegateFlowLayout, UICollection
         let cellViewModel: ToolsMenuToolbarItemViewModelType?
         
         switch toolbarItemView {
-        case .learn:
-            cellViewModel = viewModel?.learnToolbarItemWillAppear()
+        case .lessons:
+            cellViewModel = viewModel?.lessonsToolbarItemWillAppear()
         case .favoritedTools:
             cellViewModel = viewModel?.favoritedToolsToolbarItemWillAppear()
         case .allTools:
