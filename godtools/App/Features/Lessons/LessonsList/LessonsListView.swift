@@ -11,8 +11,10 @@ import UIKit
 class LessonsListView: UIViewController {
     
     private let viewModel: LessonsListViewModelType
+    private let refreshControl: UIRefreshControl = UIRefreshControl()
           
     @IBOutlet weak private var lessonsTableView: UITableView!
+    @IBOutlet weak private var loadingView: UIActivityIndicatorView!
     
     required init(viewModel: LessonsListViewModelType) {
         self.viewModel = viewModel
@@ -36,6 +38,13 @@ class LessonsListView: UIViewController {
         
         lessonsTableView.delegate = self
         lessonsTableView.dataSource = self
+        
+        lessonsTableView.addSubview(refreshControl)
+        refreshControl.addTarget(
+            self,
+            action: #selector(handleRefreshLessons),
+            for: .valueChanged
+        )
     }
     
     private func setupLayout() {
@@ -51,6 +60,21 @@ class LessonsListView: UIViewController {
     
     private func setupBinding() {
         
+        viewModel.numberOfLessons.addObserver(self) { [weak self] (numberOfLessons: Int) in
+            self?.lessonsTableView.reloadData()
+        }
+        
+        viewModel.isLoading.addObserver(self) { [weak self] (isLoading: Bool) in
+            isLoading ? self?.loadingView.startAnimating() : self?.loadingView.stopAnimating()
+        }
+        
+        viewModel.didEndRefreshing.addObserver(self) { [ weak self] in
+            self?.refreshControl.endRefreshing()
+        }
+    }
+    
+    @objc func handleRefreshLessons() {
+        viewModel.refreshLessons()
     }
     
     func scrollToTopOfLessons(animated: Bool) {

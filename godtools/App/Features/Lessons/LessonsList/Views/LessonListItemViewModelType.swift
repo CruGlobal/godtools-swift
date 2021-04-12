@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol LessonListItemViewModelType {
+protocol LessonListItemViewModelType: ToolItemInitialDownloadProgress {
     
     var title: String { get }
     var bannerImage: ObservableValue<UIImage?> { get }

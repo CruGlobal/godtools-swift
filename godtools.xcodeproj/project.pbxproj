@@ -207,6 +207,7 @@
 		45A5B0D2260E2CCC0021EDAF /* MobileContentTextAlign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A5B0D1260E2CCC0021EDAF /* MobileContentTextAlign.swift */; };
 		45A73E4C25CF19E600B7533F /* IncomingDeepLinkType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A73E4B25CF19E600B7533F /* IncomingDeepLinkType.swift */; };
 		45A7BAF5252CBC5B00D70465 /* LocaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A7BAF4252CBC5B00D70465 /* LocaleTests.swift */; };
+		45AC60192624BAB100253217 /* ToolItemInitialDownloadProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AC60182624BAB100253217 /* ToolItemInitialDownloadProgress.swift */; };
 		45AD1A9F25938A4E00A096A0 /* TutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45AD174F25938A4D00A096A0 /* TutorialView.xib */; };
 		45AD1AA025938A4E00A096A0 /* TutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175025938A4D00A096A0 /* TutorialViewModel.swift */; };
 		45AD1AA125938A4E00A096A0 /* TutorialItemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175225938A4D00A096A0 /* TutorialItemProvider.swift */; };
@@ -1106,6 +1107,7 @@
 		45A5B0D1260E2CCC0021EDAF /* MobileContentTextAlign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentTextAlign.swift; sourceTree = "<group>"; };
 		45A73E4B25CF19E600B7533F /* IncomingDeepLinkType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingDeepLinkType.swift; sourceTree = "<group>"; };
 		45A7BAF4252CBC5B00D70465 /* LocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleTests.swift; sourceTree = "<group>"; };
+		45AC60182624BAB100253217 /* ToolItemInitialDownloadProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolItemInitialDownloadProgress.swift; sourceTree = "<group>"; };
 		45AD174F25938A4D00A096A0 /* TutorialView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialView.xib; sourceTree = "<group>"; };
 		45AD175025938A4D00A096A0 /* TutorialViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewModel.swift; sourceTree = "<group>"; };
 		45AD175225938A4D00A096A0 /* TutorialItemProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialItemProvider.swift; sourceTree = "<group>"; };
@@ -4553,6 +4555,7 @@
 				45CB9F9A261F8BA80036BEB3 /* ToolCell.xib */,
 				45CB9F9D261F8BA80036BEB3 /* ToolCellViewModel.swift */,
 				45CB9F9B261F8BA80036BEB3 /* ToolCellViewModelType.swift */,
+				45AC60182624BAB100253217 /* ToolItemInitialDownloadProgress.swift */,
 			);
 			path = Tool;
 			sourceTree = "<group>";
@@ -5640,6 +5643,7 @@
 				45AD1B5A25938A4F00A096A0 /* AccountView.swift in Sources */,
 				45AD1B8E25938A4F00A096A0 /* OnboardingWelcomeViewModel.swift in Sources */,
 				45AD1BDD25938A4F00A096A0 /* GTSegmentType.swift in Sources */,
+				45AC60192624BAB100253217 /* ToolItemInitialDownloadProgress.swift in Sources */,
 				45AD1B7425938A4F00A096A0 /* OnboardingTutorialUsageListItem.swift in Sources */,
 				45AD1FDD25938A9800A096A0 /* EmailSignUpApi.swift in Sources */,
 				45AD1B1525938A4E00A096A0 /* ArticleCategoryCellViewModel.swift in Sources */,

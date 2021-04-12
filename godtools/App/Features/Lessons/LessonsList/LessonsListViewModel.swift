@@ -8,7 +8,7 @@
 
 import Foundation
 
-class LessonsListViewModel: LessonsListViewModelType {
+class LessonsListViewModel: NSObject, LessonsListViewModelType {
     
     private let dataDownloader: InitialDataDownloader
     
@@ -17,14 +17,54 @@ class LessonsListViewModel: LessonsListViewModelType {
     private weak var flowDelegate: FlowDelegate?
     
     let numberOfLessons: ObservableValue<Int> = ObservableValue(value: 0)
+    let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
+    let didEndRefreshing: Signal = Signal()
     
     required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         
+        super.init()
+        
         let cachedLessons: [ResourceModel] = getLessonsFromCache()
-        reloadLessons(lessons: cachedLessons)
+        
+        if cachedLessons.isEmpty {
+            isLoading.accept(value: true)
+        }
+        else {
+            reloadLessons(lessons: cachedLessons)
+        }
+        
+        setupBinding()
+    }
+    
+    deinit {
+        
+        print("x deinit: \(type(of: self))")
+        dataDownloader.cachedResourcesAvailable.removeObserver(self)
+        dataDownloader.resourcesUpdatedFromRemoteDatabase.removeObserver(self)
+    }
+    
+    private func setupBinding() {
+        
+        dataDownloader.cachedResourcesAvailable.addObserver(self) { [weak self] (cachedResourcesAvailable: Bool) in
+            DispatchQueue.main.async { [weak self] in
+                if cachedResourcesAvailable {
+                    self?.reloadLessonsFromCache()
+                }
+            }
+        }
+        
+        dataDownloader.resourcesUpdatedFromRemoteDatabase.addObserver(self) { [weak self] (error: InitialDataDownloaderError?) in
+            DispatchQueue.main.async { [weak self] in
+                self?.didEndRefreshing.accept()
+                self?.isLoading.accept(value: false)
+                if error == nil {
+                    self?.reloadLessonsFromCache()
+                }
+            }
+        }
     }
     
     private func getLessonsFromCache() -> [ResourceModel] {
@@ -39,7 +79,16 @@ class LessonsListViewModel: LessonsListViewModelType {
         return resources
     }
     
+    private func reloadLessonsFromCache() {
+        let cachedLessons: [ResourceModel] = getLessonsFromCache()
+        reloadLessons(lessons: cachedLessons)
+    }
+    
     private func reloadLessons(lessons: [ResourceModel]) {
+        
+        if lessons.count > 0 {
+            isLoading.accept(value: false)
+        }
         
         self.lessons = lessons
         
@@ -61,5 +110,9 @@ class LessonsListViewModel: LessonsListViewModelType {
         let resource: ResourceModel = lessons[index]
         
         flowDelegate?.navigate(step: .lessonTappedFromLessonsList(resource: resource))
+    }
+    
+    func refreshLessons() {
+        dataDownloader.downloadInitialData()
     }
 }

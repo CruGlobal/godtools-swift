@@ -11,7 +11,10 @@ import Foundation
 protocol LessonsListViewModelType {
     
     var numberOfLessons: ObservableValue<Int> { get }
+    var isLoading: ObservableValue<Bool> { get }
+    var didEndRefreshing: Signal { get }
     
     func lessonWillAppear(index: Int) -> LessonListItemViewModelType
     func lessonTapped(index: Int)
+    func refreshLessons()
 }

@@ -25,7 +25,7 @@ class LessonViewModel: MobileContentPagesViewModel, LessonViewModelType {
         fatalError("init(flowDelegate:renderers:primaryLanguage:page:) has not been implemented")
     }
     
-    func lessonPageWillAppear(page: Int) {
+    private func updateProgress(page: Int) {
         
         let currentPage: CGFloat = CGFloat(page + 1)
         let pagesCount: CGFloat = CGFloat(numberOfPages.value)
@@ -39,6 +39,10 @@ class LessonViewModel: MobileContentPagesViewModel, LessonViewModelType {
         }
         
         progress.accept(value: AnimatableValue(value: newProgress, animated: true))
+    }
+    
+    func lessonPageWillAppear(page: Int) {
+        updateProgress(page: page)
     }
     
     func closeTapped() {
