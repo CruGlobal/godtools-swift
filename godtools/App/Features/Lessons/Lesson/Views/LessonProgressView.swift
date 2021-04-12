@@ -51,4 +51,18 @@ class LessonProgressView: UIView, NibBased {
     func setDelegate(delegate: LessonProgressViewDelegate?) {
         self.delegate = delegate
     }
+    
+    func setProgress(progress: CGFloat, animated: Bool) {
+     
+        if animated {
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
+                self.progressView.progress = progress
+            } completion: { (finished: Bool) in
+                
+            }
+        }
+        else {
+            progressView.progress = progress
+        }
+    }
 }

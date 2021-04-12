@@ -48,10 +48,20 @@ class LessonView: MobileContentPagesView {
         
         // progressView
         addProgressView(progressView: progressView)
+        progressView.setProgress(progress: 0, animated: false)
     }
     
     override func setupBinding() {
         super.setupBinding()
+        
+        viewModel.progress.addObserver(self) { [weak self] (progress: AnimatableValue<CGFloat>) in
+            self?.progressView.setProgress(progress: progress.value, animated: progress.animated)
+        }
+    }
+    
+    override func pageNavigationPageWillAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
+        super.pageNavigationPageWillAppear(pageNavigation: pageNavigation, pageCell: pageCell, page: page)
+        viewModel.lessonPageWillAppear(page: page)
     }
 }
 

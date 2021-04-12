@@ -6,9 +6,12 @@
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol LessonViewModelType: MobileContentPagesViewModel {
     
+    var progress: ObservableValue<AnimatableValue<CGFloat>> { get }
+    
+    func lessonPageWillAppear(page: Int)
     func closeTapped()
 }

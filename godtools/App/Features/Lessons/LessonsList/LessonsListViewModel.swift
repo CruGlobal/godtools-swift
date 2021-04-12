@@ -51,7 +51,8 @@ class LessonsListViewModel: LessonsListViewModelType {
         let resource: ResourceModel = lessons[index]
         
         return LessonListItemViewModel(
-            resource: resource
+            resource: resource,
+            dataDownloader: dataDownloader
         )
     }
     

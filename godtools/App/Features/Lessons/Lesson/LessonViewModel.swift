@@ -6,11 +6,13 @@
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class LessonViewModel: MobileContentPagesViewModel, LessonViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
+    
+    let progress: ObservableValue<AnimatableValue<CGFloat>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
     
     required init(flowDelegate: FlowDelegate, renderers: [MobileContentRenderer], resource: ResourceModel, primaryLanguage: LanguageModel, page: Int?) {
         
@@ -23,7 +25,23 @@ class LessonViewModel: MobileContentPagesViewModel, LessonViewModelType {
         fatalError("init(flowDelegate:renderers:primaryLanguage:page:) has not been implemented")
     }
     
-    func closeTapped() {
+    func lessonPageWillAppear(page: Int) {
         
+        let currentPage: CGFloat = CGFloat(page + 1)
+        let pagesCount: CGFloat = CGFloat(numberOfPages.value)
+        let newProgress: CGFloat
+        
+        if pagesCount > 0 {
+            newProgress = currentPage / pagesCount
+        }
+        else {
+            newProgress = 0
+        }
+        
+        progress.accept(value: AnimatableValue(value: newProgress, animated: true))
+    }
+    
+    func closeTapped() {
+        flowDelegate?.navigate(step: .closeTappedFromLesson)
     }
 }

@@ -19,9 +19,9 @@ class LessonListItemView: UITableViewCell {
     
     @IBOutlet weak private var shadowView: UIView!
     @IBOutlet weak private var lessonContentView: UIView!
-    @IBOutlet weak private var topImageView: UIImageView!
+    @IBOutlet weak private var bannerImageView: UIImageView!
     @IBOutlet weak private var bottomContentView: UIView!
-    @IBOutlet weak private var topLabel: UILabel!
+    @IBOutlet weak private var titleLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -31,8 +31,8 @@ class LessonListItemView: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         viewModel = nil
-        topImageView.image = nil
-        topLabel.text = ""
+        bannerImageView.image = nil
+        titleLabel.text = ""
     }
     
     private func setupLayout() {
@@ -51,8 +51,8 @@ class LessonListItemView: UITableViewCell {
         lessonContentView.layer.cornerRadius = lessonCornerRadius
         lessonContentView.clipsToBounds = true
         
-        // topImageView
-        topImageView.contentMode = .scaleAspectFill
+        // bannerImageView
+        bannerImageView.contentMode = .scaleAspectFill
         
         // bottomContentView
         bottomContentView.backgroundColor = .clear
@@ -63,5 +63,11 @@ class LessonListItemView: UITableViewCell {
         self.viewModel = viewModel
         
         selectionStyle = .none
+        
+        titleLabel.text = viewModel.title
+        
+        viewModel.bannerImage.addObserver(self) { [weak self] (bannerImage: UIImage?) in
+            self?.bannerImageView.image = bannerImage
+        }
     }
 }

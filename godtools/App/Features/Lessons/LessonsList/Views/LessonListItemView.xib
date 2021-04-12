@@ -29,7 +29,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EFe-xH-MDZ" userLabel="lessonContentView">
                         <rect key="frame" x="15" y="15" width="384" height="160"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7B5-5D-1HA" userLabel="topImageView">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7B5-5D-1HA" userLabel="bannerImageView">
                                 <rect key="frame" x="0.0" y="0.0" width="384" height="80"/>
                                 <color key="backgroundColor" systemColor="systemGray5Color"/>
                                 <constraints>
@@ -80,11 +80,11 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="bannerImageView" destination="7B5-5D-1HA" id="1tF-7b-KvL"/>
                 <outlet property="bottomContentView" destination="g4J-Jg-BGi" id="mdF-CV-5OJ"/>
                 <outlet property="lessonContentView" destination="EFe-xH-MDZ" id="pcc-OA-15L"/>
                 <outlet property="shadowView" destination="c1d-qk-xau" id="tzX-rQ-nPw"/>
-                <outlet property="topImageView" destination="7B5-5D-1HA" id="qVl-wT-Mib"/>
-                <outlet property="topLabel" destination="dUd-w0-t1V" id="nqm-ri-AdW"/>
+                <outlet property="titleLabel" destination="dUd-w0-t1V" id="ujt-ZM-HVl"/>
             </connections>
             <point key="canvasLocation" x="-300" y="-149"/>
         </tableViewCell>

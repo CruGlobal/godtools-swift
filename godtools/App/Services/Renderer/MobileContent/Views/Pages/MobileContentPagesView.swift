@@ -279,6 +279,10 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
         view.endEditing(true)
     }
     
+    func pageNavigationPageWillAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
+        
+    }
+    
     func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
                 
         if let contentPageCell = pageCell as? MobileContentPageCell {
@@ -288,11 +292,19 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
         completeCurrentNavigationIfNeeded()
     }
     
+    func pageNavigationPageWillDisappear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
+        
+    }
+    
     func pageNavigationPageDidDisappear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
                 
         if let contentPageCell = pageCell as? MobileContentPageCell {
             contentPageCell.mobileContentView?.viewDidDisappear()
         }
+    }
+    
+    func pageNavigationDidScrollPage(pageNavigation: PageNavigationCollectionView, page: Int) {
+        
     }
 }
 

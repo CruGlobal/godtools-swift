@@ -20,20 +20,20 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AbV-8k-djy" userLabel="progressView" customClass="ProgressView" customModule="godtools" customModuleProvider="target">
-                    <rect key="frame" x="70" y="27" width="274" height="10"/>
+                    <rect key="frame" x="70" y="26" width="274" height="12"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="10" id="yhC-Hv-CpO"/>
+                        <constraint firstAttribute="height" constant="12" id="yhC-Hv-CpO"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="color" keyPath="progressBackgroundColor">
-                            <color key="value" systemColor="systemRedColor"/>
+                            <color key="value" red="0.93333333333333335" green="0.92549019607843142" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="color" keyPath="progressColor">
-                            <color key="value" systemColor="systemYellowColor"/>
+                            <color key="value" red="0.23137254901960785" green="0.64313725490196072" blue="0.85882352941176465" alpha="1" colorSpace="calibratedRGB"/>
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="number" keyPath="progressCornerRadius">
-                            <real key="value" value="5"/>
+                            <real key="value" value="6"/>
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="number" keyPath="progress">
                             <real key="value" value="1"/>
@@ -65,12 +65,6 @@
         <image name="nav_item_close" width="14" height="13"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemYellowColor">
-            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

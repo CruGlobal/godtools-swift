@@ -6,8 +6,10 @@
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol LessonListItemViewModelType {
     
+    var title: String { get }
+    var bannerImage: ObservableValue<UIImage?> { get }
 }
