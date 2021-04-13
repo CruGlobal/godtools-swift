@@ -11,6 +11,5 @@ import UIKit
 protocol MobileContentImageViewModelType {
     
     var image: UIImage? { get }
-    var imageSemanticContentAttribute: UISemanticContentAttribute { get }
     var imageEvents: [String] { get }
 }

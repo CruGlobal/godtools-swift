@@ -40,7 +40,6 @@ class MobileContentImageView: MobileContentView {
     
     private func setupBinding() {
         
-        imageView.semanticContentAttribute = viewModel.imageSemanticContentAttribute
         if let image = viewModel.image {
             addImage(image: image)
         }
