@@ -148,7 +148,12 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     
     func tipPageWillAppear(page: Int, window: UIViewController, safeArea: UIEdgeInsets) -> MobileContentView? {
                 
-        let renderPageResult: Result<MobileContentView, Error> = renderer.renderPage(page: page, window: window, safeArea: safeArea)
+        let renderPageResult: Result<MobileContentView, Error> = renderer.renderPage(
+            page: page,
+            window: window,
+            safeArea: safeArea,
+            primaryRendererLanguage: renderer.language
+        )
         
         switch renderPageResult {
         

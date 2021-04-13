@@ -22,7 +22,7 @@ class ToolPageCallToActionViewModel: ToolPageCallToActionViewModelType {
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return pageModel.languageDirectionSemanticContentAttribute
+        return pageModel.primaryRendererLanguage.languageDirection.semanticContentAttribute
     }
     
     var title: String? {
@@ -31,6 +31,16 @@ class ToolPageCallToActionViewModel: ToolPageCallToActionViewModelType {
     
     var titleFont: UIFont {
         return fontService.getFont(size: 18, weight: .regular)
+    }
+    
+    var titleTextAlignment: NSTextAlignment {
+        
+        switch pageModel.language.languageDirection {
+        case .leftToRight:
+            return .left
+        case .rightToLeft:
+            return .right
+        }
     }
     
     var titleColor: UIColor {
@@ -52,5 +62,9 @@ class ToolPageCallToActionViewModel: ToolPageCallToActionViewModelType {
         }
         
         return buttonImage.imageFlippedForRightToLeftLayoutDirection()
+    }
+    
+    var nextButtonSemanticContentAttribute: UISemanticContentAttribute {
+        return languageDirectionSemanticContentAttribute
     }
 }
