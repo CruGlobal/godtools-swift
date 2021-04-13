@@ -46,7 +46,7 @@ class ToolPageCallToActionViewModel: ToolPageCallToActionViewModelType {
         guard let buttonImage = UIImage(named: "right_arrow_blue") else {
             return nil
         }
-        
+            
         if languageDirectionSemanticContentAttribute == .forceLeftToRight {
             return buttonImage
         }
