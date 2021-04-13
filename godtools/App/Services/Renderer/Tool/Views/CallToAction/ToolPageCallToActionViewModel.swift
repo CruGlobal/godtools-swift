@@ -43,14 +43,6 @@ class ToolPageCallToActionViewModel: ToolPageCallToActionViewModelType {
     
     var nextButtonImage: UIImage? {
         
-        guard let buttonImage = UIImage(named: "right_arrow_blue") else {
-            return nil
-        }
-                        
-        if languageDirectionSemanticContentAttribute == .forceLeftToRight {
-            return buttonImage
-        }
-        
-        return buttonImage.imageFlippedForRightToLeftLayoutDirection()
+        return UIImage(named: "right_arrow_blue")
     }
 }
