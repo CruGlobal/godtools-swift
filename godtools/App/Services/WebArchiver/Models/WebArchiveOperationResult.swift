@@ -9,6 +9,7 @@
 import Foundation
 
 struct WebArchiveOperationResult {
-    let url: URL
+    
+    let webArchiveUrl: WebArchiveUrl
     let webArchivePlistData: Data
 }

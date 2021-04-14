@@ -13,7 +13,9 @@ protocol ToolPageCallToActionViewModelType {
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute { get }
     var title: String? { get }
     var titleFont: UIFont { get }
+    var titleTextAlignment: NSTextAlignment { get }
     var titleColor: UIColor { get }
     var nextButtonColor: UIColor { get }
     var nextButtonImage: UIImage? { get }
+    var nextButtonSemanticContentAttribute: UISemanticContentAttribute { get }
 }

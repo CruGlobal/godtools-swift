@@ -44,6 +44,7 @@ class ToolPageCallToActionView: MobileContentView {
         let nib: UINib = UINib(nibName: String(describing: ToolPageCallToActionView.self), bundle: nil)
         let contents: [Any]? = nib.instantiate(withOwner: self, options: nil)
         if let rootNibView = (contents as? [UIView])?.first {
+            rootNibView.semanticContentAttribute = viewModel.languageDirectionSemanticContentAttribute
             addSubview(rootNibView)
             rootNibView.backgroundColor = .clear
             rootNibView.frame = bounds
@@ -56,13 +57,12 @@ class ToolPageCallToActionView: MobileContentView {
     }
     
     private func setupBinding() {
-        
-        semanticContentAttribute = viewModel.languageDirectionSemanticContentAttribute
-        
+                
         titleLabel.text = viewModel.title
         titleLabel.textColor = viewModel.titleColor
+        titleLabel.textAlignment = viewModel.titleTextAlignment
         
-        nextButton.semanticContentAttribute = viewModel.languageDirectionSemanticContentAttribute
+        nextButton.semanticContentAttribute = viewModel.nextButtonSemanticContentAttribute
         nextButton.setImage(viewModel.nextButtonImage, for: .normal)
         nextButton.setImageColor(color: viewModel.nextButtonColor)
     }

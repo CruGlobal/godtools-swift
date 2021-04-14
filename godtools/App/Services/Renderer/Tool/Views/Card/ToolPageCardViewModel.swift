@@ -152,7 +152,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return pageModel.languageDirectionSemanticContentAttribute
+        return pageModel.language.languageDirection.semanticContentAttribute
     }
     
     var dismissListeners: [String] {

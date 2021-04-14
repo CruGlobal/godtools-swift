@@ -20,6 +20,6 @@ class MobileContentTabsViewModel: MobileContentTabsViewModelType {
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return pageModel.languageDirectionSemanticContentAttribute
+        return pageModel.language.languageDirection.semanticContentAttribute
     }
 }

@@ -23,6 +23,9 @@ class ToolDeepLinkParser: DeepLinkParserType {
         
         case .url(let url):
             return parseDeepLinkFromUrl(url: url)
+        
+        default:
+            return nil
         }
     }
     
