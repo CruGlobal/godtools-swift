@@ -39,6 +39,16 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         super.init()
     }
     
+    var primaryRenderer: MobileContentRenderer {
+        
+        guard let primaryRenderer = renderers.first else {
+            assertionFailure("ViewModel does not contain any renderers.  Should have at least 1 renderer.")
+            return renderers.first!
+        }
+        
+        return primaryRenderer
+    }
+    
     func viewDidFinishLayout(window: UIViewController, safeArea: UIEdgeInsets) {
         
         self.window = window
@@ -84,7 +94,12 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
             return nil
         }
         
-        let renderPageResult: Result<MobileContentView, Error> = renderer.renderPage(page: page, window: window, safeArea: safeArea)
+        let renderPageResult: Result<MobileContentView, Error> = renderer.renderPage(
+            page: page,
+            window: window,
+            safeArea: safeArea,
+            primaryRendererLanguage: primaryRenderer.language
+        )
         
         switch renderPageResult {
         

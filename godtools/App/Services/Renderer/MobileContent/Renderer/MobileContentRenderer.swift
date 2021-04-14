@@ -114,7 +114,7 @@ class MobileContentRenderer {
     
     // MARK: - Rendering
     
-    func renderPage(page: Int, window: UIViewController, safeArea: UIEdgeInsets) -> Result<MobileContentView, Error> {
+    func renderPage(page: Int, window: UIViewController, safeArea: UIEdgeInsets, primaryRendererLanguage: LanguageModel) -> Result<MobileContentView, Error> {
         
         let pageNode: PageNode?
         let parseError: Error?
@@ -156,7 +156,8 @@ class MobileContentRenderer {
                 resourcesCache: resourcesCache,
                 resource: resource,
                 language: language,
-                pageViewFactories: pageViewFactories
+                pageViewFactories: pageViewFactories,
+                primaryRendererLanguage: primaryRendererLanguage
             )
             
             if let renderableView = recurseAndRender(node: pageNode, pageModel: pageModel, containerNode: nil) {
