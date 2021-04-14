@@ -20,10 +20,11 @@ class MobileContentRendererPageModel {
     let resource: ResourceModel
     let language: LanguageModel
     let pageViewFactories: [MobileContentPageViewFactoryType]
+    let primaryRendererLanguage: LanguageModel
     
     private weak var weakWindow: UIViewController?
     
-    required init(pageNode: PageNode, page: Int, numberOfPages: Int, window: UIViewController, safeArea: UIEdgeInsets, manifest: MobileContentXmlManifest, resourcesCache: ManifestResourcesCache, resource: ResourceModel, language: LanguageModel, pageViewFactories: [MobileContentPageViewFactoryType]) {
+    required init(pageNode: PageNode, page: Int, numberOfPages: Int, window: UIViewController, safeArea: UIEdgeInsets, manifest: MobileContentXmlManifest, resourcesCache: ManifestResourcesCache, resource: ResourceModel, language: LanguageModel, pageViewFactories: [MobileContentPageViewFactoryType], primaryRendererLanguage: LanguageModel) {
         
         self.pageNode = pageNode
         self.page = page
@@ -36,6 +37,7 @@ class MobileContentRendererPageModel {
         self.resource = resource
         self.language = language
         self.pageViewFactories = pageViewFactories
+        self.primaryRendererLanguage = primaryRendererLanguage
     }
     
     var window: UIViewController {
@@ -46,16 +48,6 @@ class MobileContentRendererPageModel {
         }
         
         return window
-    }
-    
-    var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        
-        switch language.languageDirection {
-            case .leftToRight:
-                return .forceLeftToRight
-            case .rightToLeft:
-                return .forceRightToLeft
-        }
     }
     
     var isLastPage: Bool {

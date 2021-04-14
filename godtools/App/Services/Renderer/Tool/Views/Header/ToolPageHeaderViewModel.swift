@@ -36,7 +36,7 @@ class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return pageModel.languageDirectionSemanticContentAttribute
+        return pageModel.language.languageDirection.semanticContentAttribute
     }
     
     var backgroundColor: UIColor {
