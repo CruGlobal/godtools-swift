@@ -77,14 +77,18 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
         }
         
         downloadArticlesReceipt.completed.addObserver(self) { [weak self] (result: ArticleAemRepositoryResult?) in
+            
             guard let viewModel = self else {
                 return
             }
+            
+            guard let downloadResult = result else {
+                return
+            }
+            
             DispatchQueue.main.async {
                 viewModel.continueArticleDownloadReceipt?.removeAllObserversFrom(object: viewModel)
-                if let result = result {
-                    viewModel.handleCompleteArticlesDownload(result: result)
-                }
+                viewModel.handleCompleteArticlesDownload(result: downloadResult)
             }
         }
     }
