@@ -14,4 +14,5 @@ protocol AllToolsViewModelType: ToolsViewModelType {
     var isLoading: ObservableValue<Bool> { get }
     
     func pageViewed()
+    func favoritingToolMessageWillAppear() -> FavoritingToolMessageViewModelType
 }

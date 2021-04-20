@@ -83,6 +83,9 @@ class MobileContentXmlNodeFactory {
         case .contentLink:
                 return ContentLinkNode.self
             
+        case .contentNode:
+            return ContentNode.self
+            
         case .contentParagraph:
             return ContentParagraphNode.self
             

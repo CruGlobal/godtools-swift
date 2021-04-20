@@ -28,6 +28,10 @@ enum FlowStep {
     case showMoreTappedFromOnboardingTutorial
     case getStartedTappedFromOnboardingTutorial
     
+    // lessons
+    case lessonTappedFromLessonsList(resource: ResourceModel)
+    case closeTappedFromLesson
+    
     // favoritedTools
     case toolTappedFromFavoritedTools(resource: ResourceModel)
     case aboutToolTappedFromFavoritedTools(resource: ResourceModel)

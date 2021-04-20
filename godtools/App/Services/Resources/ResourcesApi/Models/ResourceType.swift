@@ -11,15 +11,7 @@ import Foundation
 enum ResourceType: String {
 
     case article = "article"
+    case lesson = "lesson"
     case tract = "tract"
     case unknown = "unknown"
-    
-    static func resourceType(resource: ResourceModel) -> ResourceType {
-        
-        if let resourceType = ResourceType(rawValue: resource.resourceType) {
-            return resourceType
-        }
-        
-        return .unknown
-    }
 }

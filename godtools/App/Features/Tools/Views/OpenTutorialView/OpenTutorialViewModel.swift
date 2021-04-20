@@ -19,7 +19,7 @@ class OpenTutorialViewModel: NSObject, OpenTutorialViewModelType {
     
     let showTutorialTitle: String
     let openTutorialTitle: String
-    let hidesOpenTutorial: ObservableValue<(hidden: Bool, animated: Bool)>
+    let hidesOpenTutorial: ObservableValue<AnimatableValue<Bool>>
     
     required init(flowDelegate: FlowDelegate, tutorialAvailability: TutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
         
@@ -33,12 +33,12 @@ class OpenTutorialViewModel: NSObject, OpenTutorialViewModelType {
         openTutorialTitle = localizationServices.stringForMainBundle(key: "openTutorial.openTutorialButton.title")
         
         let hidesOpenTutorialCallout: Bool = !tutorialAvailability.tutorialIsAvailable || openTutorialCalloutCache.openTutorialCalloutDisabled
-        hidesOpenTutorial = ObservableValue(value: (hidden: hidesOpenTutorialCallout, animated: false))
+        hidesOpenTutorial = ObservableValue(value: AnimatableValue(value: hidesOpenTutorialCallout, animated: false))
         
         super.init()
         
         openTutorialCalloutCache.openTutorialCalloutDisabledSignal.addObserver(self) { [weak self] in
-            self?.hidesOpenTutorial.accept(value: (hidden: true, animated: true))
+            self?.hidesOpenTutorial.accept(value: AnimatableValue(value: true, animated: true))
         }
     }
     

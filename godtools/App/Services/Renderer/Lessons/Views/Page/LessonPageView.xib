@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17701"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LessonPageView" customModule="godtools" customModuleProvider="target">
+            <connections>
+                <outlet property="bottomInsetBottomConstraint" destination="xrp-ok-XS2" id="bUI-oe-x0b"/>
+                <outlet property="contentContainerView" destination="B5f-PM-lOk" id="zVb-YQ-Ffr"/>
+                <outlet property="topInsetTopConstraint" destination="g3a-RI-Y3f" id="X5V-Nd-xgE"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mdh-18-Bok" userLabel="topInset">
+                    <rect key="frame" x="0.0" y="-1" width="414" height="1"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="PNf-gf-QUk"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B5f-PM-lOk" userLabel="contentContainerView">
+                    <rect key="frame" x="30" y="0.0" width="354" height="866"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </view>
+                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="28k-Tw-Kgq" userLabel="bottomInset">
+                    <rect key="frame" x="0.0" y="896" width="414" height="1"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="vBh-hP-Qs9"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="Mdh-18-Bok" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="I2I-wI-dEZ"/>
+                <constraint firstAttribute="trailing" secondItem="28k-Tw-Kgq" secondAttribute="trailing" id="Ol2-VW-uVY"/>
+                <constraint firstAttribute="trailing" secondItem="B5f-PM-lOk" secondAttribute="trailing" constant="30" id="PFN-Wg-ajg"/>
+                <constraint firstItem="B5f-PM-lOk" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="30" id="Tgh-TM-1Co"/>
+                <constraint firstItem="28k-Tw-Kgq" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="c78-Dl-zN4"/>
+                <constraint firstItem="B5f-PM-lOk" firstAttribute="top" secondItem="Mdh-18-Bok" secondAttribute="bottom" id="cav-bP-qMx"/>
+                <constraint firstItem="28k-Tw-Kgq" firstAttribute="top" secondItem="B5f-PM-lOk" secondAttribute="bottom" constant="30" id="dir-IM-owZ"/>
+                <constraint firstItem="Mdh-18-Bok" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="-1" id="g3a-RI-Y3f"/>
+                <constraint firstAttribute="trailing" secondItem="Mdh-18-Bok" secondAttribute="trailing" id="tHP-a2-8JP"/>
+                <constraint firstAttribute="bottom" secondItem="28k-Tw-Kgq" secondAttribute="bottom" constant="-1" id="xrp-ok-XS2"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="144"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

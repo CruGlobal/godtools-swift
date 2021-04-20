@@ -34,6 +34,20 @@ protocol ToolsViewModelType {
 
 extension ToolsViewModelType {
     
+    func toolWillAppear(index: Int) -> ToolCellViewModelType {
+        
+        let resource = tools.value[index]
+        
+        return ToolCellViewModel(
+            resource: resource,
+            dataDownloader: dataDownloader,
+            languageSettingsService: languageSettingsService,
+            localizationServices: localizationServices,
+            favoritedResourcesCache: favoritedResourcesCache,
+            deviceAttachmentBanners: deviceAttachmentBanners
+        )
+    }
+    
     func reloadTool(resourceId: String) {
         for index in 0 ..< tools.value.count {
             if tools.value[index].id == resourceId {
