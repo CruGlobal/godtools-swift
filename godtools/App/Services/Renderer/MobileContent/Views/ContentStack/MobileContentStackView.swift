@@ -119,6 +119,20 @@ class MobileContentStackView: MobileContentView {
         return false
     }
     
+    func scrollToBottomOfContent(animated: Bool) {
+        
+        guard let scrollView = self.scrollView else {
+            return
+        }
+        
+        let bottomOffset = CGPoint(
+            x: 0,
+            y: scrollView.contentSize.height - scrollView.bounds.height + scrollView.contentInset.bottom
+        )
+        
+        scrollView.setContentOffset(bottomOffset, animated: true)
+    }
+    
     func relayoutForSpacerViews() {
                 
         guard let parentView = superview else {
@@ -373,6 +387,26 @@ class MobileContentStackView: MobileContentView {
         lastAddedBottomConstraint = bottom
         
         relayoutForSpacerViews()
+        
+        childView.setDelegate(delegate: self)
+    }
+}
+
+// MARK: - MobileContentStackChildViewDelegate
+
+extension MobileContentStackView: MobileContentStackChildViewDelegate {
+    func contentStackChildViewHeightDidChange(contentStackChildView: MobileContentStackChildViewType, heightAmountChanged: CGFloat) {
+        
+        layoutIfNeeded()
+        
+        guard let scrollView = self.scrollView else {
+            return
+        }
+                
+        scrollView.setContentOffset(
+            CGPoint(x: 0, y: scrollView.contentOffset.y + heightAmountChanged),
+            animated: true
+        )
     }
 }
 

@@ -14,6 +14,8 @@ class MobileContentView: UIView, MobileContentStackChildViewType {
     
     private(set) var children: [MobileContentView] = Array()
     
+    var contentStackChildViewDelegate: MobileContentStackChildViewDelegate?
+    
     private func getRootView() -> MobileContentView {
         
         if let parentView = parent {

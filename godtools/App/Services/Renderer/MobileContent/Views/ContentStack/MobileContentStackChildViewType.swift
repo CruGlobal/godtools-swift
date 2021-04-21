@@ -8,8 +8,20 @@
 
 import UIKit
 
-protocol MobileContentStackChildViewType {
+protocol MobileContentStackChildViewDelegate: class {
+    
+    func contentStackChildViewHeightDidChange(contentStackChildView: MobileContentStackChildViewType, heightAmountChanged: CGFloat)
+}
+
+protocol MobileContentStackChildViewType: class {
     
     var view: UIView { get }
     var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType { get }
+    var contentStackChildViewDelegate: MobileContentStackChildViewDelegate? { get set }
+}
+
+extension MobileContentStackChildViewType {
+    func setDelegate(delegate: MobileContentStackChildViewDelegate?) {
+        self.contentStackChildViewDelegate = delegate
+    }
 }

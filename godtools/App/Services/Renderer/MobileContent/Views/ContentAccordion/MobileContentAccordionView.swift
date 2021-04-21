@@ -15,7 +15,7 @@ class MobileContentAccordionView: MobileContentView {
     private var sectionViews: [MobileContentSectionView] = Array()
     private var spacingBetweenSections: CGFloat = 15
     private var sectionViewsAdded: Bool = false
-    
+        
     required init(viewModel: MobileContentAccordionViewModelType) {
         
         self.viewModel = viewModel
@@ -40,6 +40,7 @@ class MobileContentAccordionView: MobileContentView {
         
         if let sectionView = childView as? MobileContentSectionView {
             sectionViews.append(sectionView)
+            sectionView.setDelegate(delegate: self)
         }
     }
     
@@ -172,5 +173,13 @@ extension MobileContentAccordionView {
             
             previousSectionView = sectionView
         }
+    }
+}
+
+// MARK: - MobileContentSectionViewDelegate
+
+extension MobileContentAccordionView: MobileContentSectionViewDelegate {
+    func contentSectionViewHeightDidChange(sectionView: MobileContentSectionView, heightAmountChanged: CGFloat) {
+        contentStackChildViewDelegate?.contentStackChildViewHeightDidChange(contentStackChildView: self, heightAmountChanged: heightAmountChanged)
     }
 }

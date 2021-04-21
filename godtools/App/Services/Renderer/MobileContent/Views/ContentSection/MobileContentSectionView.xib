@@ -3,48 +3,64 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MobileContentSectionView" customModule="godtools" customModuleProvider="target">
             <connections>
+                <outlet property="headerContainerBottomToView" destination="kxK-X3-ztU" id="bY8-NE-4yC"/>
                 <outlet property="headerContainerView" destination="fT8-zZ-Ha7" id="Xry-6a-jsV"/>
+                <outlet property="revealTextButton" destination="rxU-wm-wOn" id="FfB-zU-UL5"/>
+                <outlet property="textContainerBottomToView" destination="Gue-3g-vEc" id="PL1-lH-JMU"/>
                 <outlet property="textContainerView" destination="Bho-ue-3qC" id="W6p-HW-sMq"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="74"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fT8-zZ-Ha7" userLabel="headerContainerView">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    <constraints>
-                        <constraint firstAttribute="height" priority="500" constant="50" id="cPG-DE-Cx3"/>
-                    </constraints>
-                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bho-ue-3qC" userLabel="textContainerView">
-                    <rect key="frame" x="0.0" y="50" width="414" height="50"/>
+                    <rect key="frame" x="0.0" y="74" width="414" height="50"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="YP1-Pu-Rrt"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fT8-zZ-Ha7" userLabel="headerContainerView">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="74"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="74" id="pqc-Ix-aEG"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rxU-wm-wOn" userLabel="revealTextButton">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="74"/>
+                </button>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="Bho-ue-3qC" firstAttribute="top" secondItem="fT8-zZ-Ha7" secondAttribute="bottom" id="AWg-YU-Gv4"/>
                 <constraint firstAttribute="trailing" secondItem="Bho-ue-3qC" secondAttribute="trailing" id="DpL-JA-xM9"/>
                 <constraint firstItem="fT8-zZ-Ha7" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="EZk-Lx-vpc"/>
+                <constraint firstItem="rxU-wm-wOn" firstAttribute="leading" secondItem="fT8-zZ-Ha7" secondAttribute="leading" id="EgF-iG-MIe"/>
                 <constraint firstAttribute="bottom" secondItem="Bho-ue-3qC" secondAttribute="bottom" id="Gue-3g-vEc"/>
                 <constraint firstItem="fT8-zZ-Ha7" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Hoh-EN-fPe"/>
                 <constraint firstAttribute="trailing" secondItem="fT8-zZ-Ha7" secondAttribute="trailing" id="KnG-p1-CJB"/>
+                <constraint firstItem="rxU-wm-wOn" firstAttribute="top" secondItem="fT8-zZ-Ha7" secondAttribute="top" id="LBn-gg-bO6"/>
                 <constraint firstItem="Bho-ue-3qC" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="SUa-N4-woh"/>
+                <constraint firstAttribute="bottom" secondItem="fT8-zZ-Ha7" secondAttribute="bottom" id="kxK-X3-ztU"/>
+                <constraint firstItem="rxU-wm-wOn" firstAttribute="trailing" secondItem="fT8-zZ-Ha7" secondAttribute="trailing" id="qHs-yx-A85"/>
+                <constraint firstItem="rxU-wm-wOn" firstAttribute="bottom" secondItem="fT8-zZ-Ha7" secondAttribute="bottom" id="wxX-Vm-u0c"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="Gue-3g-vEc"/>
+                </mask>
+            </variation>
             <point key="canvasLocation" x="139" y="144"/>
         </view>
     </objects>
