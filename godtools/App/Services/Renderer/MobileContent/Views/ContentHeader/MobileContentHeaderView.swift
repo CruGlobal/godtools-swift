@@ -73,6 +73,5 @@ extension MobileContentHeaderView {
         textView.getTextLabel().numberOfLines = 0
         textView.getTextLabel().lineBreakMode = .byWordWrapping
         textView.getTextLabel().font = scaledFont
-        textView.getTextLabel().textColor = viewModel.textColor
     }
 }

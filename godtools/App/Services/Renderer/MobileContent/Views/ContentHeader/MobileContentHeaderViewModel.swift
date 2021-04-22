@@ -20,11 +20,11 @@ class MobileContentHeaderViewModel: MobileContentHeaderViewModelType {
     }
     
     var fontSize: CGFloat {
-        return 24
+        return 20
     }
     
     var fontWeight: UIFont.Weight {
-        return .regular
+        return .semibold
     }
     
     var textColor: UIColor {
