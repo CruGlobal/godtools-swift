@@ -24,6 +24,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         if renderableNode is ContentParagraphNode {
         
             return MobileContentStackView(
+                itemHorizontalInsets: 0,
                 itemSpacing: 5,
                 scrollIsEnabled: false
             )

@@ -87,6 +87,6 @@ extension LessonPageView {
         contentContainerView.isHidden = false
         contentContainerView.addSubview(contentView)
         contentView.constrainEdgesToSuperview()
-        self.contentView = contentView
+        self.contentView = contentView        
     }
 }

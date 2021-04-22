@@ -28,7 +28,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B5f-PM-lOk" userLabel="contentContainerView">
-                    <rect key="frame" x="30" y="0.0" width="354" height="866"/>
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </view>
                 <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="28k-Tw-Kgq" userLabel="bottomInset">
@@ -43,11 +43,11 @@
             <constraints>
                 <constraint firstItem="Mdh-18-Bok" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="I2I-wI-dEZ"/>
                 <constraint firstAttribute="trailing" secondItem="28k-Tw-Kgq" secondAttribute="trailing" id="Ol2-VW-uVY"/>
-                <constraint firstAttribute="trailing" secondItem="B5f-PM-lOk" secondAttribute="trailing" constant="30" id="PFN-Wg-ajg"/>
-                <constraint firstItem="B5f-PM-lOk" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="30" id="Tgh-TM-1Co"/>
+                <constraint firstAttribute="trailing" secondItem="B5f-PM-lOk" secondAttribute="trailing" id="PFN-Wg-ajg"/>
+                <constraint firstItem="B5f-PM-lOk" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Tgh-TM-1Co"/>
                 <constraint firstItem="28k-Tw-Kgq" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="c78-Dl-zN4"/>
                 <constraint firstItem="B5f-PM-lOk" firstAttribute="top" secondItem="Mdh-18-Bok" secondAttribute="bottom" id="cav-bP-qMx"/>
-                <constraint firstItem="28k-Tw-Kgq" firstAttribute="top" secondItem="B5f-PM-lOk" secondAttribute="bottom" constant="30" id="dir-IM-owZ"/>
+                <constraint firstItem="28k-Tw-Kgq" firstAttribute="top" secondItem="B5f-PM-lOk" secondAttribute="bottom" id="dir-IM-owZ"/>
                 <constraint firstItem="Mdh-18-Bok" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="-1" id="g3a-RI-Y3f"/>
                 <constraint firstAttribute="trailing" secondItem="Mdh-18-Bok" secondAttribute="trailing" id="tHP-a2-8JP"/>
                 <constraint firstAttribute="bottom" secondItem="28k-Tw-Kgq" secondAttribute="bottom" constant="-1" id="xrp-ok-XS2"/>

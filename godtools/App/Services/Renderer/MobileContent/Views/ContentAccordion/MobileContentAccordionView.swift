@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol MobileContentAccordionViewDelegate: class {
+    
+    func accordionViewDidChangeSectionViewTextHiddenState(accordionView: MobileContentAccordionView, sectionView: MobileContentSectionView, textIsHidden: Bool, textHeight: CGFloat)
+}
+
 class MobileContentAccordionView: MobileContentView {
     
     private let viewModel: MobileContentAccordionViewModelType
@@ -15,6 +20,8 @@ class MobileContentAccordionView: MobileContentView {
     private var sectionViews: [MobileContentSectionView] = Array()
     private var spacingBetweenSections: CGFloat = 15
     private var sectionViewsAdded: Bool = false
+    
+    private weak var delegate: MobileContentAccordionViewDelegate?
         
     required init(viewModel: MobileContentAccordionViewModelType) {
         
@@ -31,7 +38,20 @@ class MobileContentAccordionView: MobileContentView {
     
     private func setupLayout() {
         
-        drawBorder(color: .blue)
+        clipsToBounds = false
+    }
+    
+    var isRevealingSectionText: Bool {
+        for sectionView in sectionViews {
+            if !sectionView.textIsHidden {
+                return true
+            }
+        }
+        return false
+    }
+    
+    func setDelegate(delegate: MobileContentAccordionViewDelegate?) {
+        self.delegate = delegate
     }
     
     override func renderChild(childView: MobileContentView) {
@@ -179,7 +199,14 @@ extension MobileContentAccordionView {
 // MARK: - MobileContentSectionViewDelegate
 
 extension MobileContentAccordionView: MobileContentSectionViewDelegate {
-    func contentSectionViewHeightDidChange(sectionView: MobileContentSectionView, heightAmountChanged: CGFloat) {
-        contentStackChildViewDelegate?.contentStackChildViewHeightDidChange(contentStackChildView: self, heightAmountChanged: heightAmountChanged)
+    
+    func sectionViewDidChangeTextHiddenState(sectionView: MobileContentSectionView, textIsHidden: Bool, textHeight: CGFloat) {
+        
+        delegate?.accordionViewDidChangeSectionViewTextHiddenState(
+            accordionView: self,
+            sectionView: sectionView,
+            textIsHidden: textIsHidden,
+            textHeight: textHeight
+        )
     }
 }

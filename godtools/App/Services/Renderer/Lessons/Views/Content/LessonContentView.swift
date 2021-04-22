@@ -16,14 +16,14 @@ class LessonContentView: MobileContentStackView {
         
         self.viewModel = viewModel
         
-        super.init(itemSpacing: 20, scrollIsEnabled: true)
+        super.init(itemHorizontalInsets: 30, itemSpacing: 20, scrollIsEnabled: true)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    required init(itemSpacing: CGFloat, scrollIsEnabled: Bool) {
-        fatalError("init(itemSpacing:scrollIsEnabled:) has not been implemented")
+    required init(itemHorizontalInsets: CGFloat, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
+        fatalError("init(itemHorizontalInsets:itemSpacing:scrollIsEnabled:) has not been implemented")
     }
 }
