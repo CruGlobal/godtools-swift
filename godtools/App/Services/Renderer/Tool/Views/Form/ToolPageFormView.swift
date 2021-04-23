@@ -23,16 +23,16 @@ class ToolPageFormView: MobileContentFormView {
         setupBinding()
     }
     
-    required init(itemSpacing: CGFloat, scrollIsEnabled: Bool) {
-        fatalError("init(itemSpacing:scrollIsEnabled:) has not been implemented")
-    }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     required init(viewModel: MobileContentFormViewModelType) {
         fatalError("init(viewModel:) has not been implemented")
+    }
+    
+    required init(itemHorizontalInsets: CGFloat, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
+        fatalError("init(itemHorizontalInsets:itemSpacing:scrollIsEnabled:) has not been implemented")
     }
     
     private func setupBinding() {

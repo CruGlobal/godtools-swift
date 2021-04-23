@@ -11,6 +11,7 @@ import UIKit
 class MobileContentStackView: MobileContentView {
     
     private let contentView: UIView = UIView()
+    private let itemHorizontalInsets: CGFloat
     private let itemSpacing: CGFloat
     
     private var scrollView: UIScrollView?
@@ -18,8 +19,9 @@ class MobileContentStackView: MobileContentView {
     private var lastAddedBottomConstraint: NSLayoutConstraint?
     private var spacerViews: [MobileContentSpacerView] = Array()
             
-    required init(itemSpacing: CGFloat, scrollIsEnabled: Bool) {
+    required init(itemHorizontalInsets: CGFloat, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
                 
+        self.itemHorizontalInsets = itemHorizontalInsets
         self.itemSpacing = itemSpacing
         
         super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: itemSpacing))
@@ -58,6 +60,10 @@ class MobileContentStackView: MobileContentView {
         super.renderChild(childView: childView)
         
         addChildView(childView: childView)
+        
+        if let accordionView = childView as? MobileContentAccordionView {
+            accordionView.setDelegate(delegate: self)
+        }
     }
     
     override var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType {
@@ -117,6 +123,20 @@ class MobileContentStackView: MobileContentView {
             return contentScrollView == otherScrollView
         }
         return false
+    }
+    
+    func scrollToBottomOfContent(animated: Bool) {
+        
+        guard let scrollView = self.scrollView else {
+            return
+        }
+        
+        let bottomOffset = CGPoint(
+            x: 0,
+            y: scrollView.contentSize.height - scrollView.bounds.height + scrollView.contentInset.bottom
+        )
+        
+        scrollView.setContentOffset(bottomOffset, animated: true)
     }
     
     func relayoutForSpacerViews() {
@@ -307,7 +327,7 @@ class MobileContentStackView: MobileContentView {
                 toItem: contentView,
                 attribute: .leading,
                 multiplier: 1,
-                constant: 0
+                constant: itemHorizontalInsets
             )
             
             contentView.addConstraint(leading)
@@ -322,7 +342,7 @@ class MobileContentStackView: MobileContentView {
                 toItem: contentView,
                 attribute: .trailing,
                 multiplier: 1,
-                constant: 0
+                constant: itemHorizontalInsets * -1
             )
             
             contentView.addConstraint(trailing)
@@ -373,6 +393,39 @@ class MobileContentStackView: MobileContentView {
         lastAddedBottomConstraint = bottom
         
         relayoutForSpacerViews()
+    }
+}
+
+// MARK: - MobileContentAccordionViewDelegate
+
+extension MobileContentStackView: MobileContentAccordionViewDelegate {
+    
+    func accordionViewDidChangeSectionViewTextHiddenState(accordionView: MobileContentAccordionView, sectionView: MobileContentSectionView, textIsHidden: Bool, textHeight: CGFloat) {
+        
+        layoutIfNeeded()
+        
+        relayoutForSpacerViews()
+        
+        guard let scrollView = self.scrollView, !textIsHidden else {
+            return
+        }
+        
+        let scrollAreaTopY: CGFloat = scrollView.contentOffset.y
+        let scrollAreaBottomY: CGFloat = scrollAreaTopY + scrollView.frame.size.height
+            
+        let accordionTopY: CGFloat = accordionView.frame.origin.y
+        let sectionTopY: CGFloat = accordionTopY + sectionView.frame.origin.y
+        let sectionBottomY: CGFloat = sectionTopY + sectionView.viewHeight
+        
+        let sectionAreaOutsideScrollView: CGFloat = sectionBottomY - scrollAreaBottomY
+        
+        if sectionAreaOutsideScrollView > 0 {
+                        
+            scrollView.setContentOffset(
+                CGPoint(x: 0, y: scrollView.contentOffset.y + sectionAreaOutsideScrollView),
+                animated: true
+            )
+        }
     }
 }
 

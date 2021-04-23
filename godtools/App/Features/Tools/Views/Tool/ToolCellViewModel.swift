@@ -10,15 +10,12 @@ import UIKit
 
 class ToolCellViewModel: NSObject, ToolCellViewModelType {
         
-    private let resource: ResourceModel
-    private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
     private let deviceAttachmentBanners: DeviceAttachmentBanners
     
-    private var downloadAttachmentsReceipt: DownloadAttachmentsReceipt?
-    private var downloadResourceTranslationsReceipt: DownloadTranslationsReceipt?
-    
+    let resource: ResourceModel
+    let dataDownloader: InitialDataDownloader
     let bannerImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     let attachmentsDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
     let articlesDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
@@ -30,6 +27,9 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
     let aboutTitle: ObservableValue<String> = ObservableValue(value: "")
     let openTitle: ObservableValue<String> = ObservableValue(value: "")
     let toolSemanticContentAttribute: ObservableValue<UISemanticContentAttribute> = ObservableValue(value: .forceLeftToRight)
+    
+    var downloadAttachmentsReceipt: DownloadAttachmentsReceipt?
+    var downloadResourceTranslationsReceipt: DownloadTranslationsReceipt?
     
     required init(resource: ResourceModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, deviceAttachmentBanners: DeviceAttachmentBanners) {
         
@@ -50,31 +50,14 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
     }
     
     deinit {
-        dataDownloader.attachmentsDownload.removeObserver(self)
-        destroyDownloadAttachmentsReceipt()
-        dataDownloader.latestTranslationsDownload.removeObserver(self)
-        destroyDownloadResourceTranslationsReceipt()
+        removeDataDownloaderObservers()
         languageSettingsService.primaryLanguage.removeObserver(self)
         languageSettingsService.parallelLanguage.removeObserver(self)
     }
     
     private func setupBinding() {
            
-        dataDownloader.attachmentsDownload.addObserver(self) { [weak self] (receipt: DownloadAttachmentsReceipt?) in
-            DispatchQueue.main.async { [weak self] in
-                if let receipt = receipt {
-                    self?.observeDownloadAttachmentsReceipt(receipt: receipt)
-                }
-            }
-        }
-        
-        dataDownloader.latestTranslationsDownload.addObserver(self) { [weak self] (receipts: DownloadResourceTranslationsReceipts?) in
-            DispatchQueue.main.async { [weak self] in
-                if let receipts = receipts, let resourceId = self?.resource.id, let resourceTranslationsDownloadReceipt = receipts.getReceipt(resourceId: resourceId) {
-                    self?.observeDownloadResourceTranslationsReceipt(receipt: resourceTranslationsDownloadReceipt)
-                }
-            }
-        }
+        addDataDownloaderObservers()
         
         languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
             DispatchQueue.main.async { [weak self] in
@@ -84,58 +67,6 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
         languageSettingsService.parallelLanguage.addObserver(self) { [weak self] (parallelLanguage: LanguageModel?) in
             DispatchQueue.main.async { [weak self] in
                 self?.reloadParallelLanguageName()
-            }
-        }
-    }
-    
-    private func destroyDownloadAttachmentsReceipt() {
-        if let receipt = downloadAttachmentsReceipt {
-            receipt.progressObserver.removeObserver(self)
-            receipt.attachmentDownloadedSignal.removeObserver(self)
-            receipt.completedSignal.removeObserver(self)
-            downloadAttachmentsReceipt = nil
-        }
-    }
-    
-    private func observeDownloadAttachmentsReceipt(receipt: DownloadAttachmentsReceipt) {
-        
-        destroyDownloadAttachmentsReceipt()
-        
-        receipt.progressObserver.addObserver(self) { [weak self] (progress: Double) in
-            DispatchQueue.main.async { [weak self] in
-                self?.attachmentsDownloadProgress.accept(value: progress)
-            }
-        }
-        
-        receipt.attachmentDownloadedSignal.addObserver(self) { [weak self] (result: DownloadedAttachmentResult) in
-            DispatchQueue.main.async { [weak self] in
-                guard let attachmentId = self?.resource.attrBanner else {
-                    return
-                }
-                
-                if result.downloadError == nil && result.attachmentFile.relatedAttachmentIds.contains(attachmentId) {
-                    self?.reloadBannerImage()
-                }
-            }
-        }
-    }
-    
-    private func destroyDownloadResourceTranslationsReceipt() {
-        if let receipt = downloadResourceTranslationsReceipt {
-            receipt.progressObserver.removeObserver(self)
-            receipt.translationDownloadedSignal.removeObserver(self)
-            receipt.completedSignal.removeObserver(self)
-            downloadResourceTranslationsReceipt = nil
-        }
-    }
-    
-    private func observeDownloadResourceTranslationsReceipt(receipt: DownloadTranslationsReceipt) {
-        
-        destroyDownloadResourceTranslationsReceipt()
-        
-        receipt.progressObserver.addObserver(self) { [weak self] (progress: Double) in
-            DispatchQueue.main.async { [weak self] in
-                self?.translationDownloadProgress.accept(value: progress)
             }
         }
     }
@@ -217,5 +148,10 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
         aboutTitle.accept(value: localizationServices.stringForBundle(bundle: languageBundle, key: "about"))
         openTitle.accept(value: localizationServices.stringForBundle(bundle: languageBundle, key: "open"))
         toolSemanticContentAttribute.accept(value: semanticContentAttribute)
+    }
+    
+    func didDownloadAttachments() {
+        
+        reloadBannerImage()
     }
 }

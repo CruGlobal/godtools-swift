@@ -15,4 +15,5 @@ protocol FavoritedToolsViewModelType: ToolsViewModelType {
     var isLoading: ObservableValue<Bool> { get }
     
     func pageViewed()
+    func openTutorialWillAppear() -> OpenTutorialViewModelType
 }

@@ -24,6 +24,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         if renderableNode is ContentParagraphNode {
         
             return MobileContentStackView(
+                itemHorizontalInsets: 0,
                 itemSpacing: 5,
                 scrollIsEnabled: false
             )
@@ -161,6 +162,36 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         else if renderableNode is ContentSpacerNode {
                 
             return MobileContentSpacerView()
+        }
+        else if let headerNode = renderableNode as? ContentHeaderNode {
+            
+            let viewModel = MobileContentHeaderViewModel(
+                headerNode: headerNode,
+                pageModel: pageModel
+            )
+            
+            let view = MobileContentHeaderView(viewModel: viewModel)
+            
+            return view
+        }
+        else if let sectionNode = renderableNode as? ContentSectionNode {
+            
+            let viewModel = MobileContentSectionViewModel(
+                sectionNode: sectionNode,
+                pageModel: pageModel
+            )
+            
+            let view = MobileContentSectionView(viewModel: viewModel)
+            
+            return view
+        }
+        else if renderableNode is ContentAccordionNode {
+            
+            let viewModel = MobileContentAccordionViewModel()
+            
+            let view = MobileContentAccordionView(viewModel: viewModel)
+            
+            return view
         }
         
         return nil

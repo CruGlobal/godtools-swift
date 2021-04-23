@@ -8,12 +8,10 @@
 
 import UIKit
 
-protocol ToolCellViewModelType {
+protocol ToolCellViewModelType: ToolItemInitialDownloadProgress {
     
     var bannerImage: ObservableValue<UIImage?> { get }
-    var attachmentsDownloadProgress: ObservableValue<Double> { get }
     var articlesDownloadProgress: ObservableValue<Double> { get }
-    var translationDownloadProgress: ObservableValue<Double> { get }
     var title: ObservableValue<String> { get }
     var category: ObservableValue<String> { get }
     var parallelLanguageName: ObservableValue<String> { get }

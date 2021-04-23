@@ -14,7 +14,7 @@ class FavoritingToolMessageViewModel: FavoritingToolMessageViewModelType {
     private let localizationServices: LocalizationServices
     
     let message: String
-    let hidesMessage: ObservableValue<(hidden: Bool, animated: Bool)> = ObservableValue(value: (hidden: false, animated: false))
+    let hidesMessage: ObservableValue<AnimatableValue<Bool>> = ObservableValue(value: AnimatableValue(value: true, animated: false))
     
     required init(favoritingToolMessageCache: FavoritingToolMessageCache, localizationServices: LocalizationServices) {
         
@@ -22,12 +22,12 @@ class FavoritingToolMessageViewModel: FavoritingToolMessageViewModelType {
         self.localizationServices = localizationServices
         self.message = localizationServices.stringForMainBundle(key: "tool_offline_favorite_message")
         
-        hidesMessage.accept(value: (hidden: favoritingToolMessageCache.favoritingToolMessageDisabled, animated: false))
+        hidesMessage.accept(value: AnimatableValue(value: favoritingToolMessageCache.favoritingToolMessageDisabled, animated: false))
     }
     
     func closeTapped() {
         
         favoritingToolMessageCache.disableFavoritingToolMessage()
-        hidesMessage.accept(value: (hidden: true, animated: true))
+        hidesMessage.accept(value: AnimatableValue(value: true, animated: true))
     }
 }
