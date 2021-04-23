@@ -91,6 +91,21 @@ class MobileContentSectionView: MobileContentView {
         setTextHidden(hidden: !textIsHidden, animated: true)
     }
     
+    var viewHeight: CGFloat {
+        return headerHeight + textHeight
+    }
+    
+    var headerHeight: CGFloat {
+        return headerContainerView.frame.size.height
+    }
+    
+    var textHeight: CGFloat {
+        if textIsHidden {
+            return 0
+        }
+        return textContainerView.frame.size.height
+    }
+    
     func setDelegate(delegate: MobileContentSectionViewDelegate?) {
         self.delegate = delegate
     }

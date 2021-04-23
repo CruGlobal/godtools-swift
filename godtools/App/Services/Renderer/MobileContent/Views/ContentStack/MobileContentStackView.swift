@@ -406,20 +406,23 @@ extension MobileContentStackView: MobileContentAccordionViewDelegate {
         
         relayoutForSpacerViews()
         
-        return
-        
-        guard let scrollView = self.scrollView else {
+        guard let scrollView = self.scrollView, !textIsHidden else {
             return
         }
         
-        if !accordionView.isRevealingSectionText {
-           
-            scrollView.setContentOffset(.zero, animated: true)
-        }
-        else if scrollView.contentSize.height > scrollView.frame.size.height {
+        let scrollAreaTopY: CGFloat = scrollView.contentOffset.y
+        let scrollAreaBottomY: CGFloat = scrollAreaTopY + scrollView.frame.size.height
             
+        let accordionTopY: CGFloat = accordionView.frame.origin.y
+        let sectionTopY: CGFloat = accordionTopY + sectionView.frame.origin.y
+        let sectionBottomY: CGFloat = sectionTopY + sectionView.viewHeight
+        
+        let sectionAreaOutsideScrollView: CGFloat = sectionBottomY - scrollAreaBottomY
+        
+        if sectionAreaOutsideScrollView > 0 {
+                        
             scrollView.setContentOffset(
-                CGPoint(x: 0, y: scrollView.contentOffset.y + textHeight),
+                CGPoint(x: 0, y: scrollView.contentOffset.y + sectionAreaOutsideScrollView),
                 animated: true
             )
         }
