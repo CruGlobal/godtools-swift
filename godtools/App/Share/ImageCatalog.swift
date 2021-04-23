@@ -10,6 +10,8 @@ import UIKit
 
 enum ImageCatalog: String {
     
+    case accordionSectionPlus = "accordion_section_plus"
+    case accordionSectionMinus = "accordion_section_minus"
     case favorited = "favorited"
     case navClose = "nav_item_close"
     case navHome = "home"

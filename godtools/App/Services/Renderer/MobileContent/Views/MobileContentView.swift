@@ -13,7 +13,7 @@ class MobileContentView: UIView, MobileContentStackChildViewType {
     private(set) weak var parent: MobileContentView?
     
     private(set) var children: [MobileContentView] = Array()
-    
+        
     private func getRootView() -> MobileContentView {
         
         if let parentView = parent {

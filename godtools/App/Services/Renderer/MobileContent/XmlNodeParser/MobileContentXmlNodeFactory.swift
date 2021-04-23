@@ -62,6 +62,9 @@ class MobileContentXmlNodeFactory {
         case .cards:
                 return CardsNode.self
             
+        case .contentAccordion:
+            return ContentAccordionNode.self
+            
         case .contentButton:
             return ContentButtonNode.self
             
@@ -70,6 +73,9 @@ class MobileContentXmlNodeFactory {
             
         case .contentForm:
             return ContentFormNode.self
+            
+        case .contentHeader:
+            return ContentHeaderNode.self
             
         case .contentImage:
                 return ContentImageNode.self
@@ -91,6 +97,9 @@ class MobileContentXmlNodeFactory {
             
         case .contentPlaceholder:
             return ContentPlaceholderNode.self
+            
+        case .contentSection:
+            return ContentSectionNode.self
             
         case .contentSpacer:
             return ContentSpacerNode.self
