@@ -16,6 +16,7 @@ struct MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
     let backgroundImageAlign: [String]
     let backgroundImageScaleType: String
     let categoryLabelColor: String?
+    let dismissListeners: [String]
     let locale: String?
     let navbarColor: String?
     let navbarControlColor: String?
@@ -40,6 +41,7 @@ struct MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
         }
         backgroundImageScaleType = attributes["background-image-scale-type"]?.text ?? MobileContentBackgroundImageScaleType.fill.rawValue
         categoryLabelColor = attributes["category-label-color"]?.text
+        dismissListeners = attributes["dismiss-listeners"]?.text.components(separatedBy: " ") ?? []
         locale = attributes["locale"]?.text
         navbarColor = attributes["navbar-color"]?.text
         navbarControlColor = attributes["navbar-control-color"]?.text
