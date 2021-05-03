@@ -15,6 +15,7 @@ class ToolsMenuView: UIViewController {
     private var lessonsView: LessonsListView?
     private var favoritedToolsView: FavoritedToolsView?
     private var allToolsView: AllToolsView?
+    private var chooseLanguageButton: UIBarButtonItem?
     private var didLayoutSubviews: Bool = false
                 
     @IBOutlet weak private var toolsNavigationView: PageNavigationCollectionView!
@@ -47,14 +48,6 @@ class ToolsMenuView: UIViewController {
             color: .white,
             target: self,
             action: #selector(handleMenu(barButtonItem:))
-        )
-        
-        _ = addBarButtonItem(
-            to: .right,
-            image: ImageCatalog.navLanguage.image,
-            color: .white,
-            target: self,
-            action: #selector(handleLanguage(barButtonItem:))
         )
     }
     
@@ -119,10 +112,42 @@ class ToolsMenuView: UIViewController {
             return
         }
         
+        let hidesChooseLanguageButton: Bool
+        
+        switch toolbarItem {
+        case .lessons:
+            hidesChooseLanguageButton = true
+        case .allTools:
+            hidesChooseLanguageButton = false
+        case .favoritedTools:
+            hidesChooseLanguageButton = false
+        }
+        
+        setChooseLanguageButtonHidden(hidden: hidesChooseLanguageButton)
+        
         toolsNavigationView.scrollToPage(
             page: page,
             animated: true
         )
+    }
+    
+    private func setChooseLanguageButtonHidden(hidden: Bool) {
+        
+        if hidden, let chooseLanguageButton = self.chooseLanguageButton {
+            
+            removeBarButtonItem(item: chooseLanguageButton, barPosition: .right)
+            self.chooseLanguageButton = nil
+        }
+        else if !hidden && chooseLanguageButton == nil {
+            
+            chooseLanguageButton = addBarButtonItem(
+                to: .right,
+                image: ImageCatalog.navLanguage.image,
+                color: .white,
+                target: self,
+                action: #selector(handleLanguage(barButtonItem:))
+            )
+        }
     }
 }
 

@@ -9,7 +9,7 @@
 import Foundation
 
 protocol ToolsMenuViewModelType {
-           
+                   
     func lessonsWillAppear() -> LessonsListViewModelType
     func favoritedToolsWillAppear() -> FavoritedToolsViewModelType
     func allToolsWillAppear() -> AllToolsViewModelType
