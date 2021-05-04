@@ -150,9 +150,9 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
         
         let fontScale: CGFloat
         
-        let manifestTextScale: MobileContentTextScale = MobileContentTextScale(textScale: pageModel.manifest.attributes.textScale)
-        let pageTextScale: MobileContentTextScale = MobileContentTextScale(textScale: pageModel.pageNode.textScale)
-        let textScale: MobileContentTextScale = MobileContentTextScale(textScale: textNode.textScale)
+        let manifestTextScale = MobileContentTextScale(textScale: pageModel.manifest.attributes.textScale)
+        let pageTextScale = MobileContentTextScale(textScale: pageModel.pageNode.textScale)
+        let textScale = MobileContentTextScale(textScale: textNode.textScale)
         
         fontScale = manifestTextScale.floatValue * pageTextScale.floatValue * textScale.floatValue
         
