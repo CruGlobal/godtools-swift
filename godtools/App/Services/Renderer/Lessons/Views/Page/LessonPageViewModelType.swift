@@ -10,4 +10,5 @@ import Foundation
 
 protocol LessonPageViewModelType {
     
+    var manifestDismissListeners: [String] { get }
 }
