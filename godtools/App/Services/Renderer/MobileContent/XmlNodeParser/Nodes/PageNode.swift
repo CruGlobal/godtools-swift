@@ -26,6 +26,7 @@ class PageNode: MobileContentXmlNode, BackgroundImageNodeType {
     let primaryColor: String?
     let primaryTextColor: String?
     let textColor: String?
+    let textScale: String?
     
     required init(xmlElement: XMLElement) {
    
@@ -46,6 +47,7 @@ class PageNode: MobileContentXmlNode, BackgroundImageNodeType {
         primaryColor = attributes["primary-color"]?.text
         primaryTextColor = attributes["primary-text-color"]?.text
         textColor = attributes["text-color"]?.text
+        textScale = attributes["text-scale"]?.text
 
         super.init(xmlElement: xmlElement)
     }
