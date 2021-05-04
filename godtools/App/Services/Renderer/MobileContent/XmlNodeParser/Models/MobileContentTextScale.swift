@@ -9,9 +9,7 @@
 import Foundation
 
 class MobileContentTextScale {
-    
-    private static let numberFormatter: NumberFormatter = NumberFormatter()
-    
+        
     let stringValue: String?
     let floatValue: CGFloat
     
@@ -26,9 +24,9 @@ class MobileContentTextScale {
         let textScaleFloatValue: CGFloat
         
         if let textScaleString = textScale,
-           let number = MobileContentTextScale.numberFormatter.number(from: textScaleString) {
-            
-            textScaleFloatValue = CGFloat(truncating: number)
+           let floatValue = Float(textScaleString) {
+                        
+            textScaleFloatValue = CGFloat(floatValue)
         }
         else {
             
