@@ -150,12 +150,11 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
         
         let fontScale: CGFloat
         
-        if let textScaleString = textNode.textScale, !textScaleString.isEmpty, let number = MobileContentTextViewModel.numberFormatter.number(from: textScaleString) {
-            fontScale = CGFloat(truncating: number)
-        }
-        else {
-            fontScale = 1
-        }
+        let manifestTextScale = MobileContentTextScale(textScale: pageModel.manifest.attributes.textScale)
+        let pageTextScale = MobileContentTextScale(textScale: pageModel.pageNode.textScale)
+        let textScale = MobileContentTextScale(textScale: textNode.textScale)
+        
+        fontScale = manifestTextScale.floatValue * pageTextScale.floatValue * textScale.floatValue
         
         return fontScale
     }
