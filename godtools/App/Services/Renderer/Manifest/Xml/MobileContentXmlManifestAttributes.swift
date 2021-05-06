@@ -23,6 +23,7 @@ struct MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
     let primaryColor: String
     let primaryTextColor: String
     let textColor: String
+    let textScale: String?
     let tool: String?
     let type: String?
     
@@ -48,6 +49,7 @@ struct MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
         primaryColor = attributes["primary-color"]?.text ?? "rgba(59,164,219,1)"
         primaryTextColor = attributes["primary-text-color"]?.text ?? "rgba(255,255,255,1)"
         textColor = attributes["text-color"]?.text ?? "rgba(90,90,90,1)"
+        textScale = attributes["text-scale"]?.text
         tool = attributes["tool"]?.text
         type = attributes["type"]?.text
     }

@@ -22,6 +22,7 @@ protocol MobileContentManifestAttributesType: BackgroundImageNodeType {
     var primaryColor: String { get }
     var primaryTextColor: String { get }
     var textColor: String { get }
+    var textScale: String? { get }
     var tool: String? { get }
     var type: String? { get }
     
