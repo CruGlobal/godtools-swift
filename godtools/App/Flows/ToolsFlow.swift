@@ -575,7 +575,7 @@ class ToolsFlow: Flow {
             fontService: fontService
         )
         
-        var renderers: [MobileContentRenderer] = Array()
+        var renderers: [MobileContentRendererType] = Array()
         
         renderers.append(primaryRenderer)
         

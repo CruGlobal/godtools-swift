@@ -12,7 +12,7 @@ class MobileContentRendererPageModel {
     
     let pageNode: PageNode
     let page: Int
-    let numberOfPages: Int
+    let isLastPage: Bool
     let pageColors: MobileContentPageColors
     let safeArea: UIEdgeInsets
     let manifest: MobileContentXmlManifest
@@ -24,11 +24,11 @@ class MobileContentRendererPageModel {
     
     private weak var weakWindow: UIViewController?
     
-    required init(pageNode: PageNode, page: Int, numberOfPages: Int, window: UIViewController, safeArea: UIEdgeInsets, manifest: MobileContentXmlManifest, resourcesCache: ManifestResourcesCache, resource: ResourceModel, language: LanguageModel, pageViewFactories: [MobileContentPageViewFactoryType], primaryRendererLanguage: LanguageModel) {
+    required init(pageNode: PageNode, page: Int, isLastPage: Bool, window: UIViewController, safeArea: UIEdgeInsets, manifest: MobileContentXmlManifest, resourcesCache: ManifestResourcesCache, resource: ResourceModel, language: LanguageModel, pageViewFactories: [MobileContentPageViewFactoryType], primaryRendererLanguage: LanguageModel) {
         
         self.pageNode = pageNode
         self.page = page
-        self.numberOfPages = numberOfPages
+        self.isLastPage = isLastPage
         self.pageColors = MobileContentPageColors(pageNode: pageNode, manifest: manifest)
         self.weakWindow = window
         self.safeArea = safeArea
@@ -48,9 +48,5 @@ class MobileContentRendererPageModel {
         }
         
         return window
-    }
-    
-    var isLastPage: Bool {
-        return page == numberOfPages - 1
     }
 }

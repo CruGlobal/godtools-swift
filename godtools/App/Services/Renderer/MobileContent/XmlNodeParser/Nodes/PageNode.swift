@@ -22,6 +22,7 @@ class PageNode: MobileContentXmlNode, BackgroundImageNodeType {
     let backgroundImageAlign: [String]
     let backgroundImageScaleType: String
     let cardTextColor: String?
+    let hidden: String?
     let listeners: [String]
     let primaryColor: String?
     let primaryTextColor: String?
@@ -43,6 +44,7 @@ class PageNode: MobileContentXmlNode, BackgroundImageNodeType {
         }
         backgroundImageScaleType = attributes["background-image-scale-type"]?.text ?? MobileContentBackgroundImageScaleType.fillHorizontally.rawValue
         cardTextColor = attributes["card-text-color"]?.text
+        hidden = attributes["hidden"]?.text
         listeners = attributes["listeners"]?.text.components(separatedBy: " ") ?? []
         primaryColor = attributes["primary-color"]?.text
         primaryTextColor = attributes["primary-text-color"]?.text
@@ -70,6 +72,10 @@ class PageNode: MobileContentXmlNode, BackgroundImageNodeType {
         else if let modalsNode = childNode as? ModalsNode {
             self.modalsNode = modalsNode
         }
+    }
+    
+    var isHidden: Bool {
+        return hidden == "true"
     }
     
     func getBackgroundColor() -> MobileContentRGBAColor? {

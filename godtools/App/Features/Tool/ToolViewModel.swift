@@ -26,7 +26,7 @@ class ToolViewModel: MobileContentPagesViewModel, ToolViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, renderers: [MobileContentRenderer], resource: ResourceModel, primaryLanguage: LanguageModel, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, localizationServices: LocalizationServices, fontService: FontService, viewsService: ViewsService, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
+    required init(flowDelegate: FlowDelegate, renderers: [MobileContentRendererType], resource: ResourceModel, primaryLanguage: LanguageModel, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, localizationServices: LocalizationServices, fontService: FontService, viewsService: ViewsService, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -60,7 +60,7 @@ class ToolViewModel: MobileContentPagesViewModel, ToolViewModelType {
         setupBinding()
     }
     
-    required init(flowDelegate: FlowDelegate, renderers: [MobileContentRenderer], primaryLanguage: LanguageModel, page: Int?) {
+    required init(flowDelegate: FlowDelegate, renderers: [MobileContentRendererType], primaryLanguage: LanguageModel, page: Int?) {
         fatalError("init(flowDelegate:renderers:primaryLanguage:page:) has not been implemented")
     }
     
@@ -99,7 +99,7 @@ class ToolViewModel: MobileContentPagesViewModel, ToolViewModelType {
         return nil
     }
     
-    private func getRenderer(language: LanguageModel) -> MobileContentRenderer? {
+    private func getRenderer(language: LanguageModel) -> MobileContentRendererType? {
         for renderer in renderers {
             if renderer.language.code.lowercased() == language.code.lowercased() {
                 return renderer
