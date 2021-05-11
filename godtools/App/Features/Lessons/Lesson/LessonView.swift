@@ -59,9 +59,9 @@ class LessonView: MobileContentPagesView {
         }
     }
     
-    override func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
-        super.pageNavigationPageDidAppear(pageNavigation: pageNavigation, pageCell: pageCell, page: page)
-        viewModel.lessonPageDidAppear(page: page)
+    override func pageNavigationDidChangeMostVisiblePage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
+        super.pageNavigationDidChangeMostVisiblePage(pageNavigation: pageNavigation, pageCell: pageCell, page: page)
+        viewModel.lessonMostVisiblePageDidChange(page: page)
     }
     
     override func didConfigurePageView(pageView: MobileContentPageView) {
