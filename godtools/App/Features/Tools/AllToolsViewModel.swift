@@ -10,6 +10,8 @@ import Foundation
 
 class AllToolsViewModel: NSObject, AllToolsViewModelType {
     
+    private let favoritingToolMessageCache: FavoritingToolMessageCache
+    
     private weak var flowDelegate: FlowDelegate?
     
     let dataDownloader: InitialDataDownloader
@@ -20,7 +22,6 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     let analytics: AnalyticsContainer
     let tools: ObservableValue<[ResourceModel]> = ObservableValue(value: [])
     let toolRefreshed: SignalValue<IndexPath> = SignalValue()
-    let toolsAdded: ObservableValue<[IndexPath]> = ObservableValue(value: [])
     let toolsRemoved: ObservableValue<[IndexPath]> = ObservableValue(value: [])
     let message: ObservableValue<String> = ObservableValue(value: "")
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
@@ -28,7 +29,7 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     let toolListIsEditing: ObservableValue<Bool> = ObservableValue(value: false)
     let didEndRefreshing: Signal = Signal()
     
-    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, deviceAttachmentBanners: DeviceAttachmentBanners, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, deviceAttachmentBanners: DeviceAttachmentBanners, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
@@ -36,10 +37,11 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
         self.localizationServices = localizationServices
         self.favoritedResourcesCache = favoritedResourcesCache
         self.deviceAttachmentBanners = deviceAttachmentBanners
+        self.favoritingToolMessageCache = favoritingToolMessageCache
         self.analytics = analytics
         
         super.init()
-                 
+                         
         setupBinding()
     }
     
@@ -91,8 +93,8 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     private func reloadResourcesFromCache() {
         let sortedResources: [ResourceModel] = dataDownloader.resourcesCache.getSortedResources()
         let resources: [ResourceModel] = sortedResources.filter({
-            let resourceType: String = $0.resourceType.lowercased()
-            return resourceType == ResourceType.tract.rawValue || resourceType == ResourceType.article.rawValue
+            let resourceType: ResourceType = $0.resourceTypeEnum
+            return resourceType == .tract || resourceType == .article
         })
         tools.accept(value: resources)
         isLoading.accept(value: false)
@@ -101,6 +103,14 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     func pageViewed() {
         
         analytics.pageViewedAnalytics.trackPageView(screenName: analyticsScreenName, siteSection: "tools", siteSubSection: "")
+    }
+    
+    func favoritingToolMessageWillAppear() -> FavoritingToolMessageViewModelType {
+        
+        return FavoritingToolMessageViewModel(
+            favoritingToolMessageCache: favoritingToolMessageCache,
+            localizationServices: localizationServices
+        )
     }
     
     func toolTapped(resource: ResourceModel) {

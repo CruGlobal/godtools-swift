@@ -71,7 +71,7 @@ class FetchTranslationManifestsViewModel {
         
         // fetch parallel if needed
         
-        let resourceType: ResourceType = ResourceType.resourceType(resource: resource)
+        let resourceType: ResourceType = resource.resourceTypeEnum
         let parallelLanguageId: String = languageSettingsService.languageSettingsCache.parallelLanguageId.value ?? ""
         let parallelSupported: Bool = resource.supportsLanguage(languageId: parallelLanguageId) && resourceType != .article
         

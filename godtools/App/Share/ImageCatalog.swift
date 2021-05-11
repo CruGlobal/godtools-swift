@@ -10,6 +10,8 @@ import UIKit
 
 enum ImageCatalog: String {
     
+    case accordionSectionPlus = "accordion_section_plus"
+    case accordionSectionMinus = "accordion_section_minus"
     case favorited = "favorited"
     case navClose = "nav_item_close"
     case navHome = "home"
@@ -18,7 +20,6 @@ enum ImageCatalog: String {
     case navSettings = "nav_gear"
     case navShare = "share"
     case notFavorited = "not_favorited"
-    case shareToolRemoteSessionActive = "share_tool_remote_session_active"
     case tutorialInMenuEnglish = "tutorial_in_menu_english"
     case tutorialInMenuNonEnglish = "tutorial_in_menu_non_english"
     case tutorialToolEnglish = "tutorial_tool_english"

@@ -27,6 +27,9 @@ class ArticleCategoryCell: UITableViewCell {
         
         self.viewModel = viewModel
         
+        selectionStyle = .none
+        backgroundColor = .lightGray
+        
         viewModel.articleImage.addObserver(self) { [weak self] (image: UIImage?) in
             self?.articleImageView.image = image
         }

@@ -10,38 +10,48 @@ import Foundation
 import SWXMLHash
 
 struct MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
-    
+        
     let backgroundColor: String
     let backgroundImage: String?
-    let backgroundImageAlign: String?
-    let backgroundImageScaleType: String?
+    let backgroundImageAlign: [String]
+    let backgroundImageScaleType: String
     let categoryLabelColor: String?
+    let dismissListeners: [String]
     let locale: String?
     let navbarColor: String?
     let navbarControlColor: String?
     let primaryColor: String
     let primaryTextColor: String
     let textColor: String
+    let textScale: String?
     let tool: String?
     let type: String?
     
     init(manifest: XMLIndexer) {
         
-        let attributes: [String: XMLAttribute]? = manifest.element?.allAttributes
+        let attributes: [String: XMLAttribute] = manifest.element?.allAttributes ?? [:]
         
-        backgroundColor = attributes?["background-color"]?.text ?? "rgba(255,255,255,1)"
-        backgroundImage = attributes?["background-image"]?.text
-        backgroundImageAlign = attributes?["background-image-align"]?.text
-        backgroundImageScaleType = attributes?["background-image-scale-type"]?.text
-        categoryLabelColor = attributes?["category-label-color"]?.text
-        locale = attributes?["locale"]?.text
-        navbarColor = attributes?["navbar-color"]?.text
-        navbarControlColor = attributes?["navbar-control-color"]?.text
-        primaryColor = attributes?["primary-color"]?.text ?? "rgba(59,164,219,1)"
-        primaryTextColor = attributes?["primary-text-color"]?.text ?? "rgba(255,255,255,1)"
-        textColor = attributes?["text-color"]?.text ?? "rgba(90,90,90,1)"
-        tool = attributes?["tool"]?.text
-        type = attributes?["type"]?.text
+        backgroundColor = attributes["background-color"]?.text ?? "rgba(255,255,255,1)"
+        backgroundImage = attributes["background-image"]?.text
+        
+        if let backgroundImageAlignValues = attributes["background-image-align"]?.text, !backgroundImageAlignValues.isEmpty {
+            backgroundImageAlign = backgroundImageAlignValues.components(separatedBy: " ")
+        }
+        else {
+            backgroundImageAlign = [MobileContentBackgroundImageAlignType.center.rawValue]
+        }
+        backgroundImageScaleType = attributes["background-image-scale-type"]?.text ?? MobileContentBackgroundImageScaleType.fill.rawValue
+        categoryLabelColor = attributes["category-label-color"]?.text
+        dismissListeners = attributes["dismiss-listeners"]?.text.components(separatedBy: " ") ?? []
+        locale = attributes["locale"]?.text
+        navbarColor = attributes["navbar-color"]?.text
+        navbarControlColor = attributes["navbar-control-color"]?.text
+        primaryColor = attributes["primary-color"]?.text ?? "rgba(59,164,219,1)"
+        primaryTextColor = attributes["primary-text-color"]?.text ?? "rgba(255,255,255,1)"
+        textColor = attributes["text-color"]?.text ?? "rgba(90,90,90,1)"
+        textScale = attributes["text-scale"]?.text
+        tool = attributes["tool"]?.text
+        type = attributes["type"]?.text
     }
     
     func getBackgroundColor() -> MobileContentRGBAColor {

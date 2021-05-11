@@ -9,14 +9,11 @@
 import Foundation
 
 protocol ToolsMenuViewModelType {
-        
-    var favoritesMenuItem: ToolMenuItem { get }
-    var allToolsMenuItem: ToolMenuItem { get }
-    var toolMenuItems: ObservableValue<[ToolMenuItem]> { get }
-    var selectedToolMenuItem: ObservableValue<ToolMenuItem?> { get }
-    
-    func resetMenu()
+                   
+    func lessonsWillAppear() -> LessonsListViewModelType
+    func favoritedToolsWillAppear() -> FavoritedToolsViewModelType
+    func allToolsWillAppear() -> AllToolsViewModelType
+    func toolbarWillAppear() -> ToolsMenuToolbarViewModelType
     func menuTapped()
     func languageTapped()
-    func toolMenuItemTapped(menuItem: ToolMenuItem)
 }

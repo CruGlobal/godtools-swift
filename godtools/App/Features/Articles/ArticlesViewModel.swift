@@ -10,156 +10,188 @@ import Foundation
 
 class ArticlesViewModel: NSObject, ArticlesViewModelType {
     
+    typealias AemUri = String
+    
     private let resource: ResourceModel
     private let translationZipFile: TranslationZipFileModel
     private let category: ArticleCategory
     private let articleManifest: ArticleManifestXmlParser
-    private let articleAemImportDownloader: ArticleAemImportDownloader
+    private let articleManifestAemRepository: ArticleManifestAemRepository
+    private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
-    private let downloadArticlesReceipt: ArticleAemImportDownloaderReceipt
         
+    private var articles: [AemUri] = Array()
+    private var continueArticleDownloadReceipt: ArticleManifestDownloadArticlesReceipt?
+    private var downloadArticlesReceipt: ArticleManifestDownloadArticlesReceipt?
+    
     private weak var flowDelegate: FlowDelegate?
     
-    let localizationServices: LocalizationServices
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
-    let articleAemImportData: ObservableValue<[ArticleAemImportData]> = ObservableValue(value: [])
+    let numberOfArticles: ObservableValue<Int> = ObservableValue(value: 0)
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
-    let errorMessage: ObservableValue<ArticlesErrorMessage> = ObservableValue(value: ArticlesErrorMessage(message: "", hidesErrorMessage: true, shouldAnimate: false))
-    
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, translationZipFile: TranslationZipFileModel, category: ArticleCategory, articleManifest: ArticleManifestXmlParser, articleAemImportDownloader: ArticleAemImportDownloader, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
+    let errorMessage: ObservableValue<ArticlesErrorMessageViewModel?> = ObservableValue(value: nil)
+        
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, translationZipFile: TranslationZipFileModel, category: ArticleCategory, articleManifest: ArticleManifestXmlParser, articleManifestAemRepository: ArticleManifestAemRepository, localizationServices: LocalizationServices, analytics: AnalyticsContainer, currentArticleDownloadReceipt: ArticleManifestDownloadArticlesReceipt?) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.translationZipFile = translationZipFile
         self.category = category
         self.articleManifest = articleManifest
-        self.articleAemImportDownloader = articleAemImportDownloader
+        self.articleManifestAemRepository = articleManifestAemRepository
         self.localizationServices = localizationServices
         self.analytics = analytics
-        self.downloadArticlesReceipt = articleAemImportDownloader.getDownloadReceipt(translationZipFile: translationZipFile)
+        self.continueArticleDownloadReceipt = currentArticleDownloadReceipt
         
         super.init()
-        
-        setupBinding()
-        
+                        
         navTitle.accept(value: category.title)
+
+        let cachedArticles: [AemUri] = getCachedArticles()
         
-        reloadArticlesIfNeeded()
+        reloadArticles(aemUris: cachedArticles)
+        
+        // currently downloading
+        if let continueArticleDownloadReceipt = continueArticleDownloadReceipt {
+            continueArticlesDownload(downloadArticlesReceipt: continueArticleDownloadReceipt)
+        }
+        else if cachedArticles.isEmpty {
+            downloadArticles(forceDownload: true)
+        }
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+        continueArticleDownloadReceipt?.removeAllObserversFrom(object: self)
+        downloadArticlesReceipt?.cancel()
+    }
+    
+    private var shouldShowLoadingIndicator: Bool {
+        return numberOfArticles.value == 0
+    }
+    
+    private func continueArticlesDownload(downloadArticlesReceipt: ArticleManifestDownloadArticlesReceipt) {
         
-        downloadArticlesReceipt.started.removeObserver(self)
-        downloadArticlesReceipt.completed.removeObserver(self)
-    }
-    
-    private var articlesCached: Bool {
-        return articleAemImportDownloader.articlesCached(translationZipFile: translationZipFile)
-    }
-    
-    private var articlesCacheExpired: Bool {
-        return articleAemImportDownloader.articlesCacheExpired(translationZipFile: translationZipFile)
-    }
-    
-    private var shouldShowArticlesList: Bool {
-        return articlesCached
-    }
-    
-    private var showLoadingArticles: Bool {
-        !shouldShowArticlesList
-    }
-    
-    private func setupBinding() {
-              
-        let localizationServices: LocalizationServices = self.localizationServices
-        
-        downloadArticlesReceipt.started.addObserver(self) { [weak self] (started: Bool) in
-            DispatchQueue.main.async { [weak self] in
-                let showLoadingArticles: Bool = self?.showLoadingArticles ?? false
-                self?.isLoading.accept(value: started && showLoadingArticles)
-            }
+        if shouldShowLoadingIndicator {
+            isLoading.accept(value: true)
         }
         
-        downloadArticlesReceipt.completed.addObserver(self) { [weak self] (result: ArticleAemImportDownloaderResult) in
-            DispatchQueue.main.async { [weak self] in
-                
-                guard let category = self?.category else {
-                    return
-                }
-                
-                self?.reloadArticleAemImportDataFromCache(category: category, completeOnMain: { (cachedArticleData: [ArticleAemImportData]) in
-                    
-                    let articlesCached: Bool = self?.articlesCached ?? false
-                    let showDownloadError: Bool = !articlesCached
-                    
-                    if let downloadError = result.downloadError, showDownloadError {
-                        
-                        let errorViewModel = DownloadArticlesErrorViewModel(localizationServices: localizationServices, error: downloadError)
-                        
-                        self?.errorMessage.accept(
-                            value: ArticlesErrorMessage(
-                                message: errorViewModel.message,
-                                hidesErrorMessage: false,
-                                shouldAnimate: true
-                        ))
-                    }
-                })
-            }
-        }
-    }
-    
-    private func reloadArticlesIfNeeded() {
-        reloadArticleAemImportDataFromCache(category: category) { [weak self] (cachedArticles: [ArticleAemImportData]) in
-            if cachedArticles.isEmpty {
-                self?.reloadArticles(forceDownload: true)
-            }
-        }
-    }
-    
-    private func reloadArticles(forceDownload: Bool) {
+        downloadArticlesReceipt.completed.addObserver(self) { [weak self] (result: ArticleAemRepositoryResult?) in
             
-        let articleManifest: ArticleManifestXmlParser = self.articleManifest
-        
-        let downloadRunning: Bool = downloadArticlesReceipt.started.value
-                
-        if (!articlesCached || articlesCacheExpired || forceDownload) && !downloadRunning {
-                                                
-            _ = articleAemImportDownloader.downloadAndCache(
-                translationZipFile: translationZipFile,
-                aemImportSrcs: articleManifest.aemImportSrcs
-            )
+            guard let viewModel = self else {
+                return
+            }
+            
+            guard let downloadResult = result else {
+                return
+            }
+            
+            DispatchQueue.main.async {
+                viewModel.continueArticleDownloadReceipt?.removeAllObserversFrom(object: viewModel)
+                viewModel.handleCompleteArticlesDownload(result: downloadResult)
+            }
         }
     }
     
-    private func reloadArticleAemImportDataFromCache(category: ArticleCategory, completeOnMain: @escaping ((_ cachedArticles: [ArticleAemImportData]) -> Void)) {
-           
-        if !shouldShowArticlesList {
-            completeOnMain([])
+    private func downloadArticles(forceDownload: Bool) {
+        
+        if downloadArticlesReceipt != nil {
             return
         }
         
-        articleAemImportDownloader.getArticlesWithTags(translationZipFile: translationZipFile, aemTags: category.aemTags, completeOnMain: { [weak self] (cachedArticleImportDataArray: [ArticleAemImportData]) in
-            
-            let sortedArticles = cachedArticleImportDataArray.sorted {(rhs: ArticleAemImportData, lhs: ArticleAemImportData) in
-                rhs.articleJcrContent?.title?.lowercased() ?? "" < lhs.articleJcrContent?.title?.lowercased() ?? ""
+        if shouldShowLoadingIndicator {
+            isLoading.accept(value: true)
+        }
+        
+        errorMessage.accept(value: nil)
+        
+        downloadArticlesReceipt = articleManifestAemRepository.downloadAndCacheManifestAemUris(manifest: articleManifest, languageCode: translationZipFile.languageCode, forceDownload: forceDownload) { [weak self] (result: ArticleAemRepositoryResult) in
+            self?.downloadArticlesReceipt = nil
+            DispatchQueue.main.async { [weak self] in
+                self?.handleCompleteArticlesDownload(result: result)
             }
+        }
+    }
+    
+    private func handleCompleteArticlesDownload(result: ArticleAemRepositoryResult) {
+                
+        isLoading.accept(value: false)
+        
+        let cachedArticles: [AemUri] = getCachedArticles()
+        
+        reloadArticles(aemUris: cachedArticles)
+        
+        if let downloadError = result.downloaderResult.downloadError, cachedArticles.isEmpty {
             
-            self?.articleAemImportData.accept(value: sortedArticles)
+            let downloadArticlesErrorViewModel = DownloadArticlesErrorViewModel(
+                localizationServices: localizationServices,
+                error: downloadError
+            )
             
-            completeOnMain(sortedArticles)
-        })
+            let errorViewModel = ArticlesErrorMessageViewModel(
+                localizationServices: localizationServices,
+                message: downloadArticlesErrorViewModel.message
+            )
+            
+            errorMessage.accept(value: errorViewModel)
+        }
+        else {
+            errorMessage.accept(value: nil)
+        }
+    }
+    
+    private func getCachedArticles() -> [AemUri] {
+        
+        let category: ArticleCategory = self.category
+        let languageCode: String = translationZipFile.languageCode
+        
+        let categoryArticles: [CategoryArticleModel] = articleManifestAemRepository.getCategoryArticles(
+            category: category,
+            languageCode: languageCode
+        )
+        
+        var aemUris: [AemUri] = Array()
+        
+        for article in categoryArticles {
+            aemUris.append(contentsOf: article.aemUris)
+        }
+        
+        return aemUris
+    }
+    
+    private func reloadArticles(aemUris: [AemUri]) {
+        
+        self.articles = aemUris
+        numberOfArticles.accept(value: aemUris.count)
     }
     
     func pageViewed() {
         analytics.pageViewedAnalytics.trackPageView(screenName: "Category : \(category.title)", siteSection: resource.abbreviation, siteSubSection: "articles-list")
     }
     
-    func articleTapped(articleAemImportData: ArticleAemImportData) {
-        flowDelegate?.navigate(step: .articleTappedFromArticles(resource: resource, translationZipFile: translationZipFile, articleAemImportData: articleAemImportData))
+    func articleTapped(index: Int) {
+        
+        let aemUri: String = articles[index]
+        
+        guard let aemCacheObject = articleManifestAemRepository.getAemCacheObject(aemUri: aemUri) else {
+            return
+        }
+        
+        flowDelegate?.navigate(step: .articleTappedFromArticles(resource: resource, aemCacheObject: aemCacheObject))
+    }
+    
+    func articleWillAppear(index: Int) -> ArticleCellViewModelType? {
+        
+        let aemUri: String = articles[index]
+    
+        guard let aemCacheObject = articleManifestAemRepository.getAemCacheObject(aemUri: aemUri) else {
+            return nil
+        }
+        
+        return ArticleCellViewModel(aemData: aemCacheObject.aemData)
     }
     
     func downloadArticlesTapped() {
-        reloadArticles(forceDownload: true)
+        downloadArticles(forceDownload: true)
     }
 }

@@ -12,11 +12,13 @@ import UIKit
     
     func pageNavigationNumberOfPages(pageNavigation: PageNavigationCollectionView) -> Int
     func pageNavigation(pageNavigation: PageNavigationCollectionView, cellForPageAt indexPath: IndexPath) -> UICollectionViewCell
-    @objc optional func pageNavigation(pageNavigation: PageNavigationCollectionView, willDisplay pageCell: UICollectionViewCell, forPageAt indexPath: IndexPath)
-    @objc optional func pageNavigation(pageNavigation: PageNavigationCollectionView, didEndDisplaying pageCell: UICollectionViewCell, forPageAt indexPath: IndexPath)
-    func pageNavigationDidChangePage(pageNavigation: PageNavigationCollectionView, page: Int)
-    func pageNavigationDidStopOnPage(pageNavigation: PageNavigationCollectionView, page: Int)
-    @objc optional func pageNavigationDidScrollPage(pageNavigation: PageNavigationCollectionView)
+    
+    @objc optional func pageNavigationDidScrollPage(pageNavigation: PageNavigationCollectionView, page: Int)
+    @objc optional func pageNavigationDidChangeMostVisiblePage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
+    @objc optional func pageNavigationPageWillAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
+    @objc optional func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
+    @objc optional func pageNavigationPageWillDisappear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
+    @objc optional func pageNavigationPageDidDisappear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
 }
 
 class PageNavigationCollectionView: UIView, NibBased {
@@ -25,6 +27,7 @@ class PageNavigationCollectionView: UIView, NibBased {
         
     private var internalCurrentChangedPage: Int = 0
     private var internalCurrentStoppedOnPage: Int = 0
+    private var shouldNotifyPageDidAppearForDataReload: Bool = false
     
     @IBOutlet weak private var collectionView: UICollectionView!
     
@@ -39,6 +42,8 @@ class PageNavigationCollectionView: UIView, NibBased {
         
         loadNib()
         setupLayout()
+        
+        shouldNotifyPageDidAppearForDataReload = true
         
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -67,15 +72,20 @@ class PageNavigationCollectionView: UIView, NibBased {
         collectionView.register(nib, forCellWithReuseIdentifier: cellReuseIdentifier)
     }
     
+    func registerPageCell(classClass: AnyClass?, cellReuseIdentifier: String) {
+        collectionView.register(classClass, forCellWithReuseIdentifier: cellReuseIdentifier)
+    }
+    
     func getReusablePageCell(cellReuseIdentifier: String, indexPath: IndexPath) -> UICollectionViewCell {        
         return collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath)
     }
     
     func reloadData() {
+        shouldNotifyPageDidAppearForDataReload = true
         collectionView.reloadData()
     }
     
-    // MARK: -
+    // MARK: - Navigation
     
     func scrollToPreviousPage(animated: Bool) {
         if !isOnFirstPage {
@@ -112,11 +122,27 @@ class PageNavigationCollectionView: UIView, NibBased {
     
     // MARK: -
     
+    var pageBackgroundColor: UIColor = UIColor.white {
+        didSet {
+            backgroundColor = pageBackgroundColor
+            subviews.first?.backgroundColor = pageBackgroundColor
+            collectionView.backgroundColor = pageBackgroundColor
+            collectionView.reloadData()
+        }
+    }
+    
     var gestureScrollingEnabled: Bool = true {
         didSet {
             collectionView.isScrollEnabled = gestureScrollingEnabled
             collectionView.isPagingEnabled = gestureScrollingEnabled
         }
+    }
+    
+    var currentPageCell: UICollectionViewCell? {
+        
+        let currentPage: Int = self.currentPage
+        
+        return collectionView.cellForItem(at: IndexPath(item: currentPage, section: 0))
     }
     
     var currentPage: Int {
@@ -164,17 +190,61 @@ class PageNavigationCollectionView: UIView, NibBased {
         return collectionView.numberOfItems(inSection: 0)
     }
     
-    var pagesCollectionView: UICollectionView {
-        return collectionView
+    func setContentInset(contentInset: UIEdgeInsets) {
+        collectionView.contentInset = contentInset
+        collectionView.reloadData()
     }
     
-    var pageBackgroundColor: UIColor = UIColor.white {
-        didSet {
-            backgroundColor = pageBackgroundColor
-            subviews.first?.backgroundColor = pageBackgroundColor
-            collectionView.backgroundColor = pageBackgroundColor
-            collectionView.reloadData()
+    func setContentOffset(contentOffset: CGPoint, animated: Bool) {
+        collectionView.setContentOffset(contentOffset, animated: animated)
+    }
+    
+    func setSemanticContentAttribute(semanticContentAttribute: UISemanticContentAttribute) {
+        collectionView.semanticContentAttribute = semanticContentAttribute
+    }
+    
+    func getContentOffset() -> CGPoint {
+        return collectionView.contentOffset
+    }
+    
+    func setContentInsetAdjustmentBehavior(contentInsetAdjustmentBehavior: UIScrollView.ContentInsetAdjustmentBehavior) {
+        collectionView.contentInsetAdjustmentBehavior = contentInsetAdjustmentBehavior
+    }
+    
+    func deletePagesAt(indexPaths: [IndexPath]) {
+                
+        guard collectionView.numberOfItems(inSection: 0) > 0 else {
+            return
         }
+        
+        let currentPage: Int = self.currentPage
+        var pageNumberForDeletedPages: Int = currentPage
+        
+        for indexPath in indexPaths {
+            if indexPath.item < currentPage {
+                pageNumberForDeletedPages -= 1
+            }
+        }
+        
+        UIView.performWithoutAnimation {
+            collectionView.performBatchUpdates({
+                collectionView.deleteItems(at: indexPaths)
+            }, completion: nil)
+        }
+        
+        collectionView.scrollToItem(at: IndexPath(item: pageNumberForDeletedPages, section: 0), at: .centeredHorizontally, animated: false)
+    }
+    
+    func getIndexPathForPageCell(pageCell: UICollectionViewCell) -> IndexPath? {
+        return collectionView.indexPath(for: pageCell)
+    }
+    
+    func getCellForItem(indexPath: IndexPath) -> UICollectionViewCell? {
+        return collectionView.cellForItem(at: indexPath)
+    }
+    
+    func getVisiblePageCells() -> [UICollectionViewCell] {
+        return collectionView.visibleCells
     }
     
     private func didEndPageScrolling() {
@@ -182,8 +252,34 @@ class PageNavigationCollectionView: UIView, NibBased {
         let currentPage: Int = self.currentPage
         if internalCurrentStoppedOnPage != currentPage {
             internalCurrentStoppedOnPage = currentPage
-            delegate?.pageNavigationDidStopOnPage(pageNavigation: self, page: internalCurrentStoppedOnPage)
+            
+            let indexPath = IndexPath(item: currentPage, section: 0)
+            if let pageCell = collectionView.cellForItem(at: indexPath) {
+                pageDidAppear(pageCell: pageCell, page: currentPage)
+            }
         }
+    }
+    
+    // MARK: -
+    
+    private func mostVisiblePageChanged(pageCell: UICollectionViewCell, page: Int) {
+        delegate?.pageNavigationDidChangeMostVisiblePage?(pageNavigation: self, pageCell: pageCell, page: page)
+    }
+    
+    private func pageWillAppear(pageCell: UICollectionViewCell, page: Int) {
+        delegate?.pageNavigationPageWillAppear?(pageNavigation: self, pageCell: pageCell, page: page)
+    }
+    
+    private func pageDidAppear(pageCell: UICollectionViewCell, page: Int) {
+        delegate?.pageNavigationPageDidAppear?(pageNavigation: self, pageCell: pageCell, page: page)
+    }
+    
+    private func pageWillDisappear(pageCell: UICollectionViewCell, page: Int) {
+        delegate?.pageNavigationPageWillDisappear?(pageNavigation: self, pageCell: pageCell, page: page)
+    }
+    
+    private func pageDidDisappear(pageCell: UICollectionViewCell, page: Int) {
+        delegate?.pageNavigationPageDidDisappear?(pageNavigation: self, pageCell: pageCell, page: page)
     }
 }
 
@@ -210,15 +306,28 @@ extension PageNavigationCollectionView: UICollectionViewDelegateFlowLayout, UICo
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        delegate?.pageNavigation?(pageNavigation: self, willDisplay: cell, forPageAt: indexPath)
+        
+        let page: Int = indexPath.row
+        
+        pageWillAppear(pageCell: cell, page: page)
+        
+        if shouldNotifyPageDidAppearForDataReload {
+            shouldNotifyPageDidAppearForDataReload = false
+            mostVisiblePageChanged(pageCell: cell, page: page)
+            pageDidAppear(pageCell: cell, page: page)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        delegate?.pageNavigation?(pageNavigation: self, didEndDisplaying: cell, forPageAt: indexPath)
+        pageDidDisappear(pageCell: cell, page: indexPath.row)
     }
         
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return bounds.size
+        
+        let pageWidth: CGFloat = bounds.size.width
+        let pageHeight: CGFloat = bounds.size.height - collectionView.contentInset.top - collectionView.contentInset.bottom
+        
+        return CGSize(width: pageWidth, height: pageHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -236,12 +345,16 @@ extension PageNavigationCollectionView: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-        delegate?.pageNavigationDidScrollPage?(pageNavigation: self)
-        
         let currentPage: Int = self.currentPage
+        
+        delegate?.pageNavigationDidScrollPage?(pageNavigation: self, page: currentPage)
+        
         if internalCurrentChangedPage != currentPage {
             internalCurrentChangedPage = currentPage
-            delegate?.pageNavigationDidChangePage(pageNavigation: self, page: internalCurrentChangedPage)
+            let indexPath = IndexPath(item: currentPage, section: 0)
+            if let pageCell = collectionView.cellForItem(at: indexPath) {
+                mostVisiblePageChanged(pageCell: pageCell, page: currentPage)
+            }
         }
     }
     

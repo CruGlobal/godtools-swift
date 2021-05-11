@@ -13,11 +13,10 @@ protocol FavoritedToolsViewDelegate: class {
     func favoritedToolsViewFindToolsTapped(favoritedToolsView: FavoritedToolsView)
 }
 
-class FavoritedToolsView: UIView, NibBased {
+class FavoritedToolsView: UIViewController {
     
-    private var viewModel: FavoritedToolsViewModelType!
-    private var openTutorialViewModel: OpenTutorialViewModelType!
-    
+    private let viewModel: FavoritedToolsViewModelType
+        
     private weak var delegate: FavoritedToolsViewDelegate?
     
     @IBOutlet weak private var openTutorialView: OpenTutorialView!
@@ -29,47 +28,37 @@ class FavoritedToolsView: UIView, NibBased {
     
     @IBOutlet weak private var openTutorialTop: NSLayoutConstraint!
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        fatalError("init(frame:) has not been implemented")
+    required init(viewModel: FavoritedToolsViewModelType) {
+        self.viewModel = viewModel
+        super.init(nibName: String(describing: FavoritedToolsView.self), bundle: nil)
     }
     
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        initialize()
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
-    private func initialize() {
-        loadNib()
-                
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        print("view didload: \(type(of: self))")
+        
         setupLayout()
+        setupBinding()
         
         findToolsButton.addTarget(self, action: #selector(handleFindTools(button:)), for: .touchUpInside)
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
-        setOpenTutorialHidden(
-            openTutorialViewModel.hidesOpenTutorial.value.hidden,
-            animated: false
-        )
+        viewModel.pageViewed()
     }
     
-    func configure(viewModel: FavoritedToolsViewModelType, delegate: FavoritedToolsViewDelegate, openTutorialViewModel: OpenTutorialViewModelType) {
-        
-        self.viewModel = viewModel
+    func setDelegate(delegate: FavoritedToolsViewDelegate?) {
         self.delegate = delegate
-        self.openTutorialViewModel = openTutorialViewModel
-        
-        toolsView.configure(viewModel: viewModel)
-        openTutorialView.configure(viewModel: openTutorialViewModel)
-        
-        setupBinding(openTutorialViewModel: openTutorialViewModel)
-    }
-    
-    func pageViewed() {
-        viewModel?.pageViewed()
     }
     
     private func setupLayout() {
@@ -78,10 +67,15 @@ class FavoritedToolsView: UIView, NibBased {
         findToolsButton.layer.cornerRadius = 6
     }
     
-    private func setupBinding(openTutorialViewModel: OpenTutorialViewModelType) {
+    private func setupBinding() {
         
-        openTutorialViewModel.hidesOpenTutorial.addObserver(self) { [weak self] (tuple: (hidden: Bool, animated: Bool)) in
-            self?.setOpenTutorialHidden(tuple.hidden, animated: tuple.animated)
+        toolsView.configure(viewModel: viewModel)
+        
+        let openTutorialViewModel = viewModel.openTutorialWillAppear()
+        openTutorialView.configure(viewModel: openTutorialViewModel)
+        
+        openTutorialViewModel.hidesOpenTutorial.addObserver(self) { [weak self] (animatableValue: AnimatableValue<Bool>) in
+            self?.setOpenTutorialHidden(animatableValue.value, animated: animatableValue.animated)
         }
         
         findToolsButton.setTitle(viewModel.findToolsTitle, for: .normal)
@@ -102,7 +96,9 @@ class FavoritedToolsView: UIView, NibBased {
     }
     
     func scrollToTopOfTools(animated: Bool) {
-        toolsView.scrollToTopOfTools(animated: animated)
+        if toolsView != nil {
+            toolsView.scrollToTopOfTools(animated: animated)
+        }
     }
     
     private func setOpenTutorialHidden(_ hidden: Bool, animated: Bool) {
@@ -114,7 +110,7 @@ class FavoritedToolsView: UIView, NibBased {
             }
             
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
-                self.layoutIfNeeded()
+                self.view.layoutIfNeeded()
                 }, completion: { (finished: Bool) in
                     if hidden {
                         self.openTutorialView.isHidden = true
@@ -123,7 +119,7 @@ class FavoritedToolsView: UIView, NibBased {
         }
         else {
             openTutorialView.isHidden = hidden
-            layoutIfNeeded()
+            view.layoutIfNeeded()
         }
     }
 }

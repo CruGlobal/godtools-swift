@@ -116,7 +116,6 @@ class ShareToolScreenTutorialView: UIViewController {
     }
     
     @objc func handleSkip(barButtonItem: UIBarButtonItem) {
-        viewModel.skipTapped()
         tutorialPagesView.scrollToLastPage(animated: true)
     }
     
@@ -129,9 +128,6 @@ class ShareToolScreenTutorialView: UIViewController {
         
         if tutorialPagesView.isOnLastPage {
             viewModel.shareLinkTapped()
-        }
-        else {
-            viewModel.continueTapped()
         }
     }
 }
@@ -161,28 +157,20 @@ extension ShareToolScreenTutorialView: PageNavigationCollectionViewDelegate {
         return cell
     }
     
-    func pageNavigation(pageNavigation: PageNavigationCollectionView, willDisplay pageCell: UICollectionViewCell, forPageAt indexPath: IndexPath) {
-
-    }
-    
-    func pageNavigation(pageNavigation: PageNavigationCollectionView, didEndDisplaying pageCell: UICollectionViewCell, forPageAt indexPath: IndexPath) {
+    func pageNavigationPageDidDisappear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
         if let tutorialCell = pageCell as? TutorialCell {
             tutorialCell.stopVideo()
         }
     }
     
-    func pageNavigationDidChangePage(pageNavigation: PageNavigationCollectionView, page: Int) {
+    func pageNavigationDidChangeMostVisiblePage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
 
         handleTutorialPageChange(page: page)
-        
-        viewModel.pageDidChange(page: page)
     }
     
-    func pageNavigationDidStopOnPage(pageNavigation: PageNavigationCollectionView, page: Int) {
+    func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
         
         pageControl.currentPage = page
-        
-        viewModel.pageDidAppear(page: page)
     }
 }
 

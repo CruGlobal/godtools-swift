@@ -10,7 +10,7 @@ import UIKit
 
 extension UIView {
     
-    func constrainEdgesToSuperview() {
+    func constrainEdgesToSuperview(edgeInsets: UIEdgeInsets = .zero) {
         
         if let superview = superview {
             
@@ -23,7 +23,7 @@ extension UIView {
                 toItem: superview,
                 attribute: .leading,
                 multiplier: 1,
-                constant: 0
+                constant: edgeInsets.left
             )
             
             let trailing: NSLayoutConstraint = NSLayoutConstraint(
@@ -33,7 +33,7 @@ extension UIView {
                 toItem: superview,
                 attribute: .trailing,
                 multiplier: 1,
-                constant: 0
+                constant: edgeInsets.right * -1
             )
             
             let top: NSLayoutConstraint = NSLayoutConstraint(
@@ -43,7 +43,7 @@ extension UIView {
                 toItem: superview,
                 attribute: .top,
                 multiplier: 1,
-                constant: 0
+                constant: edgeInsets.top
             )
             
             let bottom: NSLayoutConstraint = NSLayoutConstraint(
@@ -53,7 +53,7 @@ extension UIView {
                 toItem: superview,
                 attribute: .bottom,
                 multiplier: 1,
-                constant: 0
+                constant: edgeInsets.bottom * -1
             )
             
             superview.addConstraint(leading)

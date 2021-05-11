@@ -10,26 +10,15 @@ import UIKit
 
 class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     
+    private let renderer: MobileContentRendererType
     private let resource: ResourceModel
     private let language: LanguageModel
-    private let primaryLanguage: LanguageModel
-    private let languageDirectionSemanticContentAttribute: UISemanticContentAttribute
     private let trainingTipId: String
     private let tipNode: TipNode
-    private let manifest: MobileContentXmlManifest
-    private let translationsFileCache: TranslationsFileCache
-    private let mobileContentNodeParser: MobileContentXmlNodeParser
-    private let mobileContentAnalytics: MobileContentAnalytics
-    private let mobileContentEvents: MobileContentEvents
     private let analytics: AnalyticsContainer
-    private let fontService: FontService
-    private let followUpsService: FollowUpsService
     private let localizationServices: LocalizationServices
-    private let cardJumpService: CardJumpService
     private let viewedTrainingTips: ViewedTrainingTipsService
-    private let toolPage: Int
     
-    private var pageNodes: [PageNode] = Array()
     private var page: Int = 0
     
     private weak var flowDelegate: FlowDelegate?
@@ -41,64 +30,37 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     let continueButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     let numberOfTipPages: ObservableValue<Int> = ObservableValue(value: 0)
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageModel, primaryLanguage: LanguageModel, trainingTipId: String, tipNode: TipNode, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, mobileContentAnalytics: MobileContentAnalytics, mobileContentEvents: MobileContentEvents, analytics: AnalyticsContainer, fontService: FontService, followUpsService: FollowUpsService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, viewedTrainingTips: ViewedTrainingTipsService, toolPage: Int) {
+    required init(flowDelegate: FlowDelegate, renderer: MobileContentRendererType, trainingTipId: String, tipNode: TipNode, analytics: AnalyticsContainer, localizationServices: LocalizationServices, viewedTrainingTips: ViewedTrainingTipsService) {
         
         self.flowDelegate = flowDelegate
-        self.resource = resource
-        self.language = language
-        self.primaryLanguage = primaryLanguage
+        self.renderer = renderer
+        self.resource = renderer.resource
+        self.language = renderer.language
         self.trainingTipId = trainingTipId
         self.tipNode = tipNode
-        self.manifest = manifest
-        self.translationsFileCache = translationsFileCache
-        self.mobileContentNodeParser = mobileContentNodeParser
-        self.mobileContentAnalytics = mobileContentAnalytics
-        self.mobileContentEvents = mobileContentEvents
         self.analytics = analytics
-        self.fontService = fontService
-        self.followUpsService = followUpsService
         self.localizationServices = localizationServices
-        self.cardJumpService = cardJumpService
         self.viewedTrainingTips = viewedTrainingTips
-        self.toolPage = toolPage
-        
-        switch primaryLanguage.languageDirection {
-        case .leftToRight:
-            languageDirectionSemanticContentAttribute = .forceLeftToRight
-        case .rightToLeft:
-            languageDirectionSemanticContentAttribute = .forceRightToLeft
-        }
         
         super.init()
-        
-        let startingPage: Int = 0
-        let pageNodes: [PageNode] = tipNode.pages?.pages ?? []
-        self.pageNodes = pageNodes
-        numberOfTipPages.accept(value: pageNodes.count)
-        setPage(page: startingPage, animated: false)
-        tipPageDidChange(page: startingPage)
-        tipPageDidAppear(page: startingPage)
         
         reloadTitleAndTipIcon(
             tipNode: tipNode,
             trainingTipViewed: viewedTrainingTips.containsViewedTrainingTip(viewedTrainingTip: ViewedTrainingTip(trainingTipId: trainingTipId, resourceId: resource.id, languageId: language.id))
         )
         
-        setupBinding()
+        renderer.pages.addObserver(self) { [weak self] (pages: [PageNode]) in
+            guard pages.count > 0 else {
+                return
+            }
+            let startingPage: Int = 0
+            self?.numberOfTipPages.accept(value: pages.count)
+            self?.setPage(page: startingPage, animated: false)
+        }
     }
     
     deinit {
-        mobileContentEvents.urlButtonTappedSignal.removeObserver(self)
-    }
-    
-    private func setupBinding() {
-        
-        mobileContentEvents.urlButtonTappedSignal.addObserver(self) { [weak self] (urlButtonEvent: UrlButtonEvent) in
-            guard let url = URL(string: urlButtonEvent.url) else {
-                return
-            }
-            self?.flowDelegate?.navigate(step: .urlLinkTappedFromToolTraining(url: url))
-        }
+        renderer.pages.removeObserver(self)
     }
     
     private func setPage(page: Int, animated: Bool) {
@@ -176,37 +138,27 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
         }
     }
     
-    func tipPageWillAppear(page: Int) -> ToolPageContentStackContainerViewModel {
+    func buttonWithUrlTapped(url: String) {
+        flowDelegate?.navigate(step: .buttonWithUrlTappedFromMobileContentRenderer(url: url))
+    }
+    
+    func tipPageWillAppear(page: Int, window: UIViewController, safeArea: UIEdgeInsets) -> MobileContentView? {
+                
+        let renderPageResult: Result<MobileContentView, Error> = renderer.renderPageFromAllPageNodes(
+            page: page,
+            window: window,
+            safeArea: safeArea,
+            primaryRendererLanguage: renderer.language
+        )
+        
+        switch renderPageResult {
+        
+        case .success(let mobileContentView):
+            return mobileContentView
             
-        let pageNode: PageNode = pageNodes[page]
-        
-        let toolPageDiContainer = ToolPageDiContainer(
-            manifest: manifest,
-            resource: resource,
-            language: language,
-            primaryLanguage: primaryLanguage,
-            languageDirectionSemanticContentAttribute: languageDirectionSemanticContentAttribute,
-            translationsFileCache: translationsFileCache,
-            mobileContentNodeParser: mobileContentNodeParser,
-            mobileContentAnalytics: mobileContentAnalytics,
-            mobileContentEvents: mobileContentEvents,
-            analytics: analytics,
-            fontService: fontService,
-            followUpsService: followUpsService,
-            localizationServices: localizationServices,
-            cardJumpService: cardJumpService,
-            viewedTrainingTips: viewedTrainingTips,
-            trainingTipsEnabled: true
-        )
-        
-        return ToolPageContentStackContainerViewModel(
-            node: pageNode,
-            diContainer: toolPageDiContainer,
-            toolPageColors: ToolPageColors(pageNode: pageNode, manifest: manifest),
-            defaultTextNodeTextColor: nil,
-            defaultTextNodeTextAlignment: nil,
-            defaultButtonBorderColor: nil
-        )
+        case .failure(let error):
+            return nil
+        }
     }
     
     func tipPageDidChange(page: Int) {
@@ -219,30 +171,5 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
         let tipPage: Int = page
         let analyticsScreenName: String = "\(resource.abbreviation)-tip-\(trainingTipId)-\(tipPage)"
         analytics.pageViewedAnalytics.trackPageView(screenName: analyticsScreenName, siteSection: "", siteSubSection: "")
-    }
-}
-
-// MARK: - ToolPageViewModelTypeDelegate
-
-extension ToolTrainingViewModel: ToolPageViewModelTypeDelegate {
-    
-    func toolPagePresentedListener(viewModel: ToolPageViewModelType, page: Int) {
-        
-    }
-    
-    func toolPageTrainingTipTapped(viewModel: ToolPageViewModelType, page: Int, trainingTipId: String, tipNode: TipNode) {
-        
-    }
-    
-    func toolPageCardChanged(viewModel: ToolPageViewModelType, page: Int, cardPosition: Int?) {
-        
-    }
-    
-    func toolPageNextPageTapped(viewModel: ToolPageViewModelType, page: Int) {
-        
-    }
-    
-    func toolPageError(viewModel: ToolPageViewModelType, page: Int, error: ContentEventError) {
-        
     }
 }

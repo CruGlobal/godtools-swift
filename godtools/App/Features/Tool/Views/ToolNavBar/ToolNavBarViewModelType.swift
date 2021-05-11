@@ -22,8 +22,6 @@ protocol ToolNavBarViewModelType {
     var language: LanguageModel { get }
     var hidesShareButton: Bool { get }
     
-    func navHomeTapped()
-    func shareTapped()
     func languageSegmentWillAppear(index: Int) -> ToolLanguageSegmentViewModel
     func languageTapped(index: Int)
 }

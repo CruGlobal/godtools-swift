@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appDiContainer.googleAdwordsAnalytics.recordAdwordsConversion()
         
         appDiContainer.analytics.snowplowAnalytics.configure(adobeAnalytics: appDiContainer.analytics.adobeAnalytics)
-        
+                
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         
         let window = UIWindow(frame: UIScreen.main.bounds)
@@ -87,7 +87,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         
-        appDiContainer.deepLinkingService.processDeepLink(url: url)
+        appDiContainer.deepLinkingService.parseDeepLink(incomingDeepLink: .url(url: url))
         
         appDiContainer.appsFlyer.handleOpenUrl(url: url, options: options)
         
@@ -113,12 +113,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             )
             
             if let tractUrl = ToolShortcutItem.getTractUrl(shortcutItem: shortcutItem) {
-                appDiContainer.deepLinkingService.processDeepLink(url: tractUrl)
+                appDiContainer.deepLinkingService.parseDeepLink(incomingDeepLink: .url(url: tractUrl))
             }
         }
     }
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        
+        appDiContainer.appsFlyer.continueUserActivity(userActivity: userActivity)
         
         if userActivity.activityType != NSUserActivityTypeBrowsingWeb {
             return false
@@ -128,15 +130,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return false
         }
         
-        if let host = url.host, host.contains("godtoolsapp") {
+        if url.containsDeepLinkHost(deepLinkHost: .godToolsApp), url.path.contains("auth") {
             if let theKeyUserAuthentication = appDiContainer.userAuthentication as? TheKeyUserAuthentication {
                 return theKeyUserAuthentication.canResumeAuthorizationFlow(url: url)
             }
-        } else {
-            appDiContainer.deepLinkingService.processDeepLink(url: url)
         }
-        
-        appDiContainer.appsFlyer.continueUserActivity(userActivity: userActivity)
+                
+        appDiContainer.deepLinkingService.parseDeepLink(incomingDeepLink: .url(url: url))
         
         return true
     }

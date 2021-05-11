@@ -41,28 +41,23 @@ class RealmEmailSignUpsCache {
     }
     
     func cacheEmailSignUp(emailSignUp: EmailSignUpModel) {
-           
-        realmDatabase.background { [weak self] (realm: Realm) in
-             
-            guard let cache = self else {
-                return
-            }
+                   
+        let realm: Realm = realmDatabase.mainThreadRealm
+        
+        if let cachedEmailSignUp = realm.object(ofType: RealmEmailSignUp.self, forPrimaryKey: emailSignUp.email) {
             
-            if let cachedEmailSignUp = realm.object(ofType: RealmEmailSignUp.self, forPrimaryKey: emailSignUp.email) {
-                
-                cache.updateExistingEmailSignUp(
-                    realm: realm,
-                    cachedEmailSignUp: cachedEmailSignUp,
-                    updateFromEmailSignUp: emailSignUp
-                )
-            }
-            else {
-                
-                cache.cacheNewEmailSignUp(
-                    realm: realm,
-                    emailSignUp: emailSignUp
-                )
-            }
+            updateExistingEmailSignUp(
+                realm: realm,
+                cachedEmailSignUp: cachedEmailSignUp,
+                updateFromEmailSignUp: emailSignUp
+            )
+        }
+        else {
+            
+            cacheNewEmailSignUp(
+                realm: realm,
+                emailSignUp: emailSignUp
+            )
         }
     }
     

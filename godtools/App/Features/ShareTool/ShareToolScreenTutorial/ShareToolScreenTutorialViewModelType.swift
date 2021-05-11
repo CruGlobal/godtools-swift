@@ -17,9 +17,5 @@ protocol ShareToolScreenTutorialViewModelType {
     var shareLinkTitle: String { get }
     
     func closeTapped()
-    func skipTapped()
-    func pageDidChange(page: Int)
-    func pageDidAppear(page: Int)
-    func continueTapped()
     func shareLinkTapped()
 }

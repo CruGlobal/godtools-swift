@@ -28,6 +28,10 @@ enum FlowStep {
     case showMoreTappedFromOnboardingTutorial
     case getStartedTappedFromOnboardingTutorial
     
+    // lessons
+    case lessonTappedFromLessonsList(resource: ResourceModel)
+    case closeTappedFromLesson
+    
     // favoritedTools
     case toolTappedFromFavoritedTools(resource: ResourceModel)
     case aboutToolTappedFromFavoritedTools(resource: ResourceModel)
@@ -48,10 +52,10 @@ enum FlowStep {
         
     // tool
     case homeTappedFromTool(isScreenSharing: Bool)
-    case shareMenuTappedFromTool(tractRemoteShareSubscriber: TractRemoteShareSubscriber, tractRemoteSharePublisher: TractRemoteSharePublisher, resource: ResourceModel, selectedLanguage: LanguageModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, pageNumber: Int)
-    case urlLinkTappedFromTool(url: URL)
-    case toolDidEncounterErrorFromTool(error: ContentEventError)
-    case toolTrainingTipTappedFromTool(resource: ResourceModel, manifest: MobileContentXmlManifest, trainingTipId: String, tipNode: TipNode, language: LanguageModel, primaryLanguage: LanguageModel, toolPage: Int)
+    case shareMenuTappedFromTool(tractRemoteShareSubscriber: TractRemoteShareSubscriber, tractRemoteSharePublisher: TractRemoteSharePublisher, resource: ResourceModel, selectedLanguage: LanguageModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, pageNumber: Int)    
+    case buttonWithUrlTappedFromMobileContentRenderer(url: String)
+    case trainingTipTappedFromMobileContentRenderer(event: TrainingTipEvent)
+    case errorOccurredFromMobileContentRenderer(error: MobileContentErrorViewModel)
     
     // tool training
     case closeTappedFromToolTraining
@@ -91,8 +95,12 @@ enum FlowStep {
     case languageTappedFromChooseLanguage
     case deleteLanguageTappedFromChooseLanguage
     
-    // articles
-    case articleCategoryTappedFromArticleCategories(resource: ResourceModel, translationZipFile: TranslationZipFileModel, category: ArticleCategory, articleManifest: ArticleManifestXmlParser)
-    case articleTappedFromArticles(resource: ResourceModel, translationZipFile: TranslationZipFileModel, articleAemImportData: ArticleAemImportData)
-    case sharedTappedFromArticle(articleAemImportData: ArticleAemImportData)
+    // article tool
+    case articleCategoryTappedFromArticleCategories(resource: ResourceModel, translationZipFile: TranslationZipFileModel, category: ArticleCategory, articleManifest: ArticleManifestXmlParser, currentArticleDownloadReceipt: ArticleManifestDownloadArticlesReceipt?)
+    case articleTappedFromArticles(resource: ResourceModel, aemCacheObject: ArticleAemCacheObject)
+    case sharedTappedFromArticle(articleAemData: ArticleAemData)
+    
+    // article deep link
+    case didDownloadArticleFromLoadingArticle(aemCacheObject: ArticleAemCacheObject)
+    case didFailToDownloadArticleFromLoadingArticle(alertMessage: AlertMessageType)
 }

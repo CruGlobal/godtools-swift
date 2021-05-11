@@ -25,7 +25,7 @@ class WebArchiveOperation: Operation {
     }
         
     private let session: URLSession
-    private let url: URL
+    private let webArchiveUrl: WebArchiveUrl
     private let urlRequest: URLRequest
     private let includeJavascript: Bool = true
     private let errorDomain: String = String(describing: WebArchiveOperation.self)
@@ -34,10 +34,10 @@ class WebArchiveOperation: Operation {
     private var getHtmlDocumentTask: URLSessionDataTask?
     private var completion: Completion?
     
-    required init(session: URLSession, url: URL) {
+    required init(session: URLSession, webArchiveUrl: WebArchiveUrl) {
         self.session = session
-        self.url = url
-        self.urlRequest = URLRequest(url: url)
+        self.webArchiveUrl = webArchiveUrl
+        self.urlRequest = URLRequest(url: webArchiveUrl.webUrl)
         super.init()
     }
     
@@ -47,9 +47,9 @@ class WebArchiveOperation: Operation {
     
     override func start() {
                         
-        let urlRef: URL = url
+        let webArchiveUrl: WebArchiveUrl = self.webArchiveUrl
         
-        requestHtmlDocumentData(url: url, includeJavascript: includeJavascript) { [weak self] (_ result: Result<HTMLDocumentData, WebArchiveOperationError>) in
+        requestHtmlDocumentData(url: webArchiveUrl.webUrl, includeJavascript: includeJavascript) { [weak self] (_ result: Result<HTMLDocumentData, WebArchiveOperationError>) in
             
             switch result {
                 
@@ -74,7 +74,8 @@ class WebArchiveOperation: Operation {
                     
                     do {
                         let plistData: Data = try plistEncoder.encode(webArchive)
-                        self?.handleOperationFinished(result: .success(WebArchiveOperationResult(url: urlRef, webArchivePlistData: plistData)))
+                        let webArchiveResult = WebArchiveOperationResult(webArchiveUrl: webArchiveUrl, webArchivePlistData: plistData)
+                        self?.handleOperationFinished(result: .success(webArchiveResult))
                     }
                     catch let error {
                         

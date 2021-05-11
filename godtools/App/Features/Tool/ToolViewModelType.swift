@@ -2,22 +2,21 @@
 //  ToolViewModelType.swift
 //  godtools
 //
-//  Created by Levi Eggert on 10/30/20.
-//  Copyright © 2020 Cru. All rights reserved.
+//  Created by Levi Eggert on 3/24/21.
+//  Copyright © 2021 Cru. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
-protocol ToolViewModelType {
+protocol ToolViewModelType: MobileContentPagesViewModel {
     
-    var currentPage: ObservableValue<AnimatableValue<Int>> { get }
-    var numberOfToolPages: ObservableValue<Int> { get }
-    var languageDirectionSemanticContentAttribute: UISemanticContentAttribute { get }
+    var navBarViewModel: ToolNavBarViewModel { get }
+    var didSubscribeForRemoteSharePublishing: ObservableValue<Bool> { get }
     
-    func navBarWillAppear() -> ToolNavBarViewModelType
-    func viewLoaded()
-    func toolPageWillAppear(page: Int) -> ToolPageViewModelType?
-    func toolPageDidChange(page: Int)
-    func toolPageDidAppear(page: Int)
-    func toolPageDidDisappear(page: Int)
+    func subscribedForRemoteSharePublishing(page: Int, pagePositions: ToolPagePositions)
+    func pageChanged(page: Int, pagePositions: ToolPagePositions)
+    func cardChanged(page: Int, pagePositions: ToolPagePositions)
+    func navHomeTapped(remoteShareIsActive: Bool)
+    func navShareTapped(page: Int, selectedLanguage: LanguageModel)
+    func navLanguageChanged(page: Int, pagePositions: ToolPagePositions)
 }

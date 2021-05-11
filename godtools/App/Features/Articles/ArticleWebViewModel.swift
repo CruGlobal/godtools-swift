@@ -10,11 +10,9 @@ import Foundation
 
 class ArticleWebViewModel: ArticleWebViewModelType {
     
-    private let resource: ResourceModel
-    private let translationZipFile: TranslationZipFileModel
-    private let articleAemImportData: ArticleAemImportData
-    private let articleAemImportDownloader: ArticleAemImportDownloader
+    private let aemCacheObject: ArticleAemCacheObject
     private let analytics: AnalyticsContainer
+    private let flowType: ArticleWebViewModelFlowType
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -23,44 +21,46 @@ class ArticleWebViewModel: ArticleWebViewModelType {
     let webUrl: ObservableValue<URL?> = ObservableValue(value: nil)
     let webArchiveUrl: ObservableValue<URL?> = ObservableValue(value: nil)
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, translationZipFile: TranslationZipFileModel, articleAemImportData: ArticleAemImportData, articleAemImportDownloader: ArticleAemImportDownloader, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, aemCacheObject: ArticleAemCacheObject, analytics: AnalyticsContainer, flowType: ArticleWebViewModelFlowType) {
         
         self.flowDelegate = flowDelegate
-        self.resource = resource
-        self.translationZipFile = translationZipFile
-        self.articleAemImportData = articleAemImportData
-        self.articleAemImportDownloader = articleAemImportDownloader
+        self.aemCacheObject = aemCacheObject
         self.analytics = analytics
+        self.flowType = flowType
         
-        navTitle.accept(value: articleAemImportData.articleJcrContent?.title ?? "")
+        navTitle.accept(value: aemCacheObject.aemData.articleJcrContent?.title ?? "")
         
-        let webArchiveLocation = ArticleAemWebArchiveFileCacheLocation(
-            resourceId: translationZipFile.resourceId,
-            languageCode: translationZipFile.languageCode,
-            filename: articleAemImportData.webArchiveFilename
-        )
-                
-        if let cachedWebArchiveUrl = articleAemImportDownloader.getWebArchiveUrl(location: webArchiveLocation) {
-            webArchiveUrl.accept(value: cachedWebArchiveUrl)
+        if let webArchiveUrl = aemCacheObject.webArchiveFileUrl {
+            self.webArchiveUrl.accept(value: webArchiveUrl)
         }
-        else if let articleWebUrl = URL(string: articleAemImportData.webUrl) {
-            webUrl.accept(value: articleWebUrl)
+        else if let webUrl = URL(string: aemCacheObject.aemData.webUrl) {
+            self.webUrl.accept(value: webUrl)
         }
         
-        hidesShareButton.accept(value: articleAemImportData.articleJcrContent?.canonical == nil)
+        hidesShareButton.accept(value: aemCacheObject.aemData.articleJcrContent?.canonical == nil)
     }
-    
+
     func pageViewed() {
         
+        let siteSection: String
+        
+        switch flowType {
+        
+        case .deeplink:
+            siteSection = "articles"
+        
+        case .tool(let resource):
+            siteSection = resource.abbreviation
+        }
+        
         analytics.pageViewedAnalytics.trackPageView(
-            screenName: "Article : \(articleAemImportData.articleJcrContent?.title ?? "")",
-            siteSection: resource.abbreviation,
+            screenName: "Article : \(aemCacheObject.aemData.articleJcrContent?.title ?? "")",
+            siteSection: siteSection,
             siteSubSection: "article"
         )
     }
     
     func sharedTapped() {
-        
-        flowDelegate?.navigate(step: .sharedTappedFromArticle(articleAemImportData: articleAemImportData))
+        flowDelegate?.navigate(step: .sharedTappedFromArticle(articleAemData: aemCacheObject.aemData))
     }
 }

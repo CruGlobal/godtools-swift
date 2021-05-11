@@ -27,7 +27,7 @@ struct AnalyticsConstants {
     }
     
     struct Values {
-        static let godTools = "GodTools"
+        static let godTools = "GodTools App"
         static let isLoggedIn = "true"
         static let notLoggedIn = "false"
         static let share = "Share Icon Engaged"

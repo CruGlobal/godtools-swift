@@ -31,9 +31,6 @@ class ToolsTableView: UIView, NibBased {
                 
         setupLayout()
         
-        tableView.delegate = self
-        tableView.dataSource = self
-        
         tableView.addSubview(refreshControl)
         refreshControl.addTarget(
             self,
@@ -45,6 +42,9 @@ class ToolsTableView: UIView, NibBased {
     func configure(viewModel: ToolsViewModelType) {
         
         self.viewModel = viewModel
+        
+        tableView.delegate = self
+        tableView.dataSource = self
         
         setupBinding()
     }
@@ -74,13 +74,6 @@ class ToolsTableView: UIView, NibBased {
         
         viewModel.toolRefreshed.addObserver(self) { [weak self] (indexPath: IndexPath) in
             self?.tableView.reloadRows(at: [indexPath], with: .none)
-        }
-        
-        viewModel.toolsAdded.addObserver(self) { [weak self] (indexPaths: [IndexPath]) in
-            if !indexPaths.isEmpty {
-                self?.tableView.insertRows(at: indexPaths, with: .fade)
-                self?.animateToolsTableAlpha(alpha: 1)
-            }
         }
         
         viewModel.toolsRemoved.addObserver(self) { [weak self] (indexPaths: [IndexPath]) in
@@ -125,7 +118,9 @@ class ToolsTableView: UIView, NibBased {
     }
     
     func scrollToTopOfTools(animated: Bool) {
-        tableView.setContentOffset(.zero, animated: animated)
+        if tableView != nil {
+            tableView.setContentOffset(.zero, animated: animated)
+        }
     }
 }
 
@@ -155,15 +150,7 @@ extension ToolsTableView: UITableViewDelegate, UITableViewDataSource {
 
         cell.selectionStyle = .none
         
-        let resource = viewModel.tools.value[indexPath.row]
-        let cellViewModel = ToolCellViewModel(
-            resource: resource,
-            dataDownloader: viewModel.dataDownloader,
-            languageSettingsService: viewModel.languageSettingsService,
-            localizationServices: viewModel.localizationServices,
-            favoritedResourcesCache: viewModel.favoritedResourcesCache,
-            deviceAttachmentBanners: viewModel.deviceAttachmentBanners
-        )
+        let cellViewModel = viewModel.toolWillAppear(index: indexPath.row)
         
         cell.configure(viewModel: cellViewModel, delegate: self)
         

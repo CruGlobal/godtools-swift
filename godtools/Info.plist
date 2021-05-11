@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>FirebaseAutomaticScreenReportingEnabled</key>
-	<false/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -48,13 +46,15 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>861</string>
+	<string>894</string>
 	<key>Configuration</key>
 	<string>$(CONFIGURATION)</string>
 	<key>FacebookAppID</key>
 	<string>2236701616451487</string>
 	<key>FacebookDisplayName</key>
 	<string>GodTools</string>
+	<key>FirebaseAutomaticScreenReportingEnabled</key>
+	<false/>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>
@@ -73,8 +73,8 @@
 	</dict>
 	<key>UIAppFonts</key>
 	<array>
-		<string>NotoSansMyanmar-Regular.ttf</string>
-		<string>NotoSansMyanmar-Bold.ttf</string>
+		<string>NotoSansMyanmarUI-Condensed.ttf</string>
+		<string>NotoSansMyanmarUI-CondensedBold.ttf</string>
 		<string>NotoSansEthiopic-Regular.ttf</string>
 		<string>NotoSansEthiopic-Bold.ttf</string>
 		<string>AbyssinicaSIL-R.ttf</string>

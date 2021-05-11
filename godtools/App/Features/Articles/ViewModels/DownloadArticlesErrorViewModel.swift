@@ -12,7 +12,7 @@ class DownloadArticlesErrorViewModel {
     
     let message: String
     
-    required init(localizationServices: LocalizationServices, error: ArticleAemImportDownloaderError) {
+    required init(localizationServices: LocalizationServices, error: ArticleAemDownloaderError) {
             
         let notConnectedToNetworkMessage: String = localizationServices.stringForMainBundle(key: "no_internet")
         let cancelledError: String = "The request was cancelled"

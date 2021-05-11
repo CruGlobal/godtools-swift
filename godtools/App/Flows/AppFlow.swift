@@ -21,6 +21,7 @@ class AppFlow: NSObject, Flow {
     private var languageSettingsFlow: LanguageSettingsFlow?
     private var toolsFlow: ToolsFlow?
     private var tutorialFlow: TutorialFlow?
+    private var articleDeepLinkFlow: ArticleDeepLinkFlow?
     private var resignedActiveDate: Date?
     private var navigationStarted: Bool = false
     private var isObservingDeepLinking: Bool = false
@@ -55,7 +56,7 @@ class AppFlow: NSObject, Flow {
         removeDeepLinkingObservers()
     }
     
-    func resetFlowToToolsFlow(animated: Bool) {
+    private func resetFlowToToolsFlow(animated: Bool) {
         configureNavigationBar()
         toolsFlow?.navigationController.popToRootViewController(animated: animated)
         toolsFlow?.resetToolsMenu()
@@ -64,7 +65,12 @@ class AppFlow: NSObject, Flow {
         navigationController.dismiss(animated: animated, completion: nil)
         menuFlow = nil
         languageSettingsFlow = nil
+        articleDeepLinkFlow = nil
         tutorialFlow = nil
+        
+        if toolsFlow == nil {
+            navigate(step: .showTools(animated: animated, shouldCreateNewInstance: true))
+        }
     }
     
     private func setupInitialNavigation() {
@@ -76,7 +82,7 @@ class AppFlow: NSObject, Flow {
             navigate(step: .showTools(animated: true, shouldCreateNewInstance: true))
         }
         
-        loadInitialData()
+        addDeepLinkingObservers()
     }
     
     private func loadInitialData() {
@@ -96,26 +102,74 @@ class AppFlow: NSObject, Flow {
         
         isObservingDeepLinking = true
         
-        deepLinkingService.completed.addObserver(self) { [weak self] (_deepLinkingType: DeepLinkingType?) in
-            guard let deepLinkingType = _deepLinkingType else { return }
+        deepLinkingService.completed.addObserver(self) { [weak self] (optionalDeepLink: ParsedDeepLinkType?) in
+            
+            guard let deepLink = optionalDeepLink else {
+                return
+            }
             
             DispatchQueue.main.async { [weak self] in
                 
-                switch deepLinkingType {
+                switch deepLink {
                 
-                case .tool(let resource, let primaryLanguage, let parallelLanguage, let liveShareStream, let page):
-                    if let toolsFlow = self?.toolsFlow {
+                case .tool(let resourceAbbreviation, let primaryLanguageCodes, let parallelLanguageCodes, let liveShareStream, let page):
+                    
+                    guard let dataDownloader = self?.dataDownloader,
+                          let resource = dataDownloader.resourcesCache.getResource(abbreviation: resourceAbbreviation) else {
+                        
+                        return
+                    }
+                    
+                    var fetchedPrimaryLanguage: LanguageModel?
+                    
+                    if let primaryLanguageFromCodes = dataDownloader.fetchFirstSupportedLanguageForResource(resource: resource, codes: primaryLanguageCodes) {
+                        fetchedPrimaryLanguage = primaryLanguageFromCodes
+                    } else if let primaryLanguageFromSettings = self?.appDiContainer.languageSettingsService.primaryLanguage.value {
+                        fetchedPrimaryLanguage = primaryLanguageFromSettings
+                    } else {
+                        fetchedPrimaryLanguage = dataDownloader.getStoredLanguage(code: "en")
+                    }
+                    
+                    guard let primaryLanguage = fetchedPrimaryLanguage else { return }
+                    
+                    let parallelLanguage = dataDownloader.fetchFirstSupportedLanguageForResource(resource: resource, codes: parallelLanguageCodes)
+                    
+                    DispatchQueue.main.async { [weak self] in
+                        
                         self?.resetFlowToToolsFlow(animated: false)
-                        DispatchQueue.main.async {
-                            toolsFlow.navigateToTool(
-                                resource: resource,
-                                primaryLanguage: primaryLanguage,
-                                parallelLanguage: parallelLanguage,
-                                liveShareStream: liveShareStream,
-                                trainingTipsEnabled: false,
-                                page: page
-                            )
-                        }
+                        
+                        self?.toolsFlow?.navigateToTool(
+                            resource: resource,
+                            primaryLanguage: primaryLanguage,
+                            parallelLanguage: parallelLanguage,
+                            liveShareStream: liveShareStream,
+                            trainingTipsEnabled: false,
+                            page: page
+                        )
+                    }
+                
+                case .article(let articleUri):
+                    
+                    guard let appFlow = self else {
+                        return
+                    }
+                    
+                    let articleDeepLinkFlow = ArticleDeepLinkFlow(
+                        flowDelegate: appFlow,
+                        appDiContainer: appFlow.appDiContainer,
+                        sharedNavigationController: appFlow.navigationController,
+                        aemUri: articleUri
+                    )
+                    
+                    appFlow.articleDeepLinkFlow = articleDeepLinkFlow
+                
+                case .url(let url):
+                    if #available(iOS 10.0, *) {
+                        
+                        UIApplication.shared.open(url)
+                    } else {
+                        
+                        UIApplication.shared.openURL(url)
                     }
                 }
             }
@@ -154,8 +208,6 @@ class AppFlow: NSObject, Flow {
                         toolsView.alpha = 1
                     }, completion: nil)
                 }
-                
-                addDeepLinkingObservers()
             }
             
         case .showOnboardingTutorial(let animated):
@@ -244,6 +296,9 @@ class AppFlow: NSObject, Flow {
                 closeTool()
             }
             
+        case .closeTappedFromLesson:
+            closeTool()
+            
         default:
             break
         }
@@ -327,6 +382,7 @@ class AppFlow: NSObject, Flow {
         let fontService: FontService = appDiContainer.getFontService()
         let font: UIFont = fontService.getFont(size: 17, weight: .semibold)
         
+        navigationController.setNavigationBarHidden(false, animated: true)
         navigationController.navigationBar.setBackgroundImage(nil, for: .default)
         navigationController.navigationBar.isTranslucent = false
         navigationController.navigationBar.barTintColor = ColorPalette.gtBlue.color
@@ -360,7 +416,6 @@ extension AppFlow: UIApplicationDelegate {
                 application.keyWindow?.addSubview(loadingView)
                 
                 resetFlowToToolsFlow(animated: false)
-                
                 loadInitialData()
                 
                 UIView.animate(withDuration: 0.4, delay: 1.5, options: .curveEaseOut, animations: {
@@ -380,6 +435,7 @@ extension AppFlow: UIApplicationDelegate {
             
             navigationStarted = true
             setupInitialNavigation()
+            loadInitialData()
         }
     }
     

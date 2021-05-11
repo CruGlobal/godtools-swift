@@ -46,7 +46,6 @@ class AppDiContainer {
     let languageSettingsService: LanguageSettingsService
     let languageDirectionService: LanguageDirectionService
     let languageTranslationsDownloader: LanguageTranslationsDownloader
-    let articleAemImportDownloader: ArticleAemImportDownloader
     let isNewUserService: IsNewUserService
     let analytics: AnalyticsContainer
     let openTutorialCalloutCache: OpenTutorialCalloutCacheType
@@ -62,6 +61,7 @@ class AppDiContainer {
     let favoritingToolMessageCache: FavoritingToolMessageCache
     let emailSignUpService: EmailSignUpService
     let appsFlyer: AppsFlyerType
+    let firebaseInAppMessaging: FirebaseInAppMessagingType
         
     required init() {
         
@@ -166,16 +166,16 @@ class AppDiContainer {
             translationDownloader: translationDownloader
         )
         
-        articleAemImportDownloader = ArticleAemImportDownloader(realmDatabase: realmDatabase)
-                
         isNewUserService = IsNewUserService(
             isNewUserCache: IsNewUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache),
             determineNewUser: DetermineNewUserIfPrimaryLanguageSet(languageSettingsCache: languageSettingsCache)
         )
         
-        deepLinkingService = DeepLinkingService(dataDownloader: initialDataDownloader, loggingEnabled: config.isDebug, languageSettingsService: languageSettingsService)
+        deepLinkingService = DeepLinkingService(loggingEnabled: config.isDebug)
         
         appsFlyer = AppsFlyer(config: config, deepLinkingService: deepLinkingService)
+        
+        firebaseInAppMessaging = FirebaseInAppMessaging()
                 
         let analyticsLoggingEnabled: Bool = config.build == .analyticsLogging
         analytics = AnalyticsContainer(
@@ -212,6 +212,21 @@ class AppDiContainer {
         emailSignUpService = EmailSignUpService(sharedSession: sharedIgnoringCacheSession, realmDatabase: realmDatabase, userAuthentication: userAuthentication)
     }
     
+    func getArticleAemRepository() -> ArticleAemRepository {
+        return ArticleAemRepository(
+            downloader: ArticleAemDownloader(sharedSession: sharedIgnoringCacheSession),
+            cache: ArticleAemCache(realmDatabase: realmDatabase, webArchiverSession: sharedIgnoringCacheSession)
+        )
+    }
+    
+    func getArticleManifestAemRepository() -> ArticleManifestAemRepository {
+        return ArticleManifestAemRepository(
+            downloader: ArticleAemDownloader(sharedSession: sharedIgnoringCacheSession),
+            cache: ArticleAemCache(realmDatabase: realmDatabase, webArchiverSession: sharedIgnoringCacheSession),
+            realmDatabase: realmDatabase
+        )
+    }
+    
     func getCardJumpService() -> CardJumpService {
         return CardJumpService(cardJumpCache: CardJumpUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache))
     }
@@ -226,10 +241,6 @@ class AppDiContainer {
     
     func getMobileContentAnalytics() -> MobileContentAnalytics {
         return MobileContentAnalytics(analytics: analytics)
-    }
-    
-    func getMobileContentEvents() -> MobileContentEvents {
-        return MobileContentEvents()
     }
     
     func getMobileContentNodeParser() -> MobileContentXmlNodeParser {

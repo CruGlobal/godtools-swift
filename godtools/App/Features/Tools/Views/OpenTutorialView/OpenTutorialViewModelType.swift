@@ -12,7 +12,7 @@ protocol OpenTutorialViewModelType {
     
     var showTutorialTitle: String { get }
     var openTutorialTitle: String { get }
-    var hidesOpenTutorial: ObservableValue<(hidden: Bool, animated: Bool)> { get }
+    var hidesOpenTutorial: ObservableValue<AnimatableValue<Bool>> { get }
     
     func openTutorialTapped()
     func closeTapped()

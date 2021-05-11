@@ -278,7 +278,7 @@ extension OnboardingTutorialView: PageNavigationCollectionViewDelegate {
         return UICollectionViewCell()
     }
     
-    func pageNavigationDidChangePage(pageNavigation: PageNavigationCollectionView, page: Int) {
+    func pageNavigationDidChangeMostVisiblePage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
         
         if pageNavigation == tutorialPagesView {
             
@@ -288,7 +288,7 @@ extension OnboardingTutorialView: PageNavigationCollectionViewDelegate {
         }
     }
     
-    func pageNavigationDidStopOnPage(pageNavigation: PageNavigationCollectionView, page: Int) {
+    func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
         
         if pageNavigation == tutorialPagesView {
            
@@ -298,9 +298,10 @@ extension OnboardingTutorialView: PageNavigationCollectionViewDelegate {
         }
     }
     
-    func pageNavigationDidScrollPage(pageNavigation: PageNavigationCollectionView) {
+    func pageNavigationDidScrollPage(pageNavigation: PageNavigationCollectionView, page: Int) {
         if pageNavigation == tutorialPagesView {
-            backgroundPagesView.pagesCollectionView.setContentOffset(tutorialPagesView.pagesCollectionView.contentOffset, animated: false)
+            let tutorialContentOffset: CGPoint = tutorialPagesView.getContentOffset()
+            backgroundPagesView.setContentOffset(contentOffset: tutorialContentOffset, animated: false)
         }
     }
 }
