@@ -10,7 +10,7 @@ import UIKit
 
 class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     
-    private let renderer: MobileContentRenderer
+    private let renderer: MobileContentRendererType
     private let resource: ResourceModel
     private let language: LanguageModel
     private let trainingTipId: String
@@ -30,7 +30,7 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     let continueButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     let numberOfTipPages: ObservableValue<Int> = ObservableValue(value: 0)
     
-    required init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, trainingTipId: String, tipNode: TipNode, analytics: AnalyticsContainer, localizationServices: LocalizationServices, viewedTrainingTips: ViewedTrainingTipsService) {
+    required init(flowDelegate: FlowDelegate, renderer: MobileContentRendererType, trainingTipId: String, tipNode: TipNode, analytics: AnalyticsContainer, localizationServices: LocalizationServices, viewedTrainingTips: ViewedTrainingTipsService) {
         
         self.flowDelegate = flowDelegate
         self.renderer = renderer
@@ -44,27 +44,23 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
         
         super.init()
         
-        let startingPage: Int = 0
-        numberOfTipPages.accept(value: renderer.numberOfPages)
-        setPage(page: startingPage, animated: false)
-        
         reloadTitleAndTipIcon(
             tipNode: tipNode,
             trainingTipViewed: viewedTrainingTips.containsViewedTrainingTip(viewedTrainingTip: ViewedTrainingTip(trainingTipId: trainingTipId, resourceId: resource.id, languageId: language.id))
         )
         
-        setupBinding()
-    }
-    
-    private func setupBinding() {
-        
-        /*
-        mobileContentEvents.urlButtonTappedSignal.addObserver(self) { [weak self] (urlButtonEvent: UrlButtonEvent) in
-            guard let url = URL(string: urlButtonEvent.url) else {
+        renderer.pages.addObserver(self) { [weak self] (pages: [PageNode]) in
+            guard pages.count > 0 else {
                 return
             }
-            self?.flowDelegate?.navigate(step: .urlLinkTappedFromToolTraining(url: url))
-        }*/
+            let startingPage: Int = 0
+            self?.numberOfTipPages.accept(value: pages.count)
+            self?.setPage(page: startingPage, animated: false)
+        }
+    }
+    
+    deinit {
+        renderer.pages.removeObserver(self)
     }
     
     private func setPage(page: Int, animated: Bool) {
@@ -148,7 +144,7 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     
     func tipPageWillAppear(page: Int, window: UIViewController, safeArea: UIEdgeInsets) -> MobileContentView? {
                 
-        let renderPageResult: Result<MobileContentView, Error> = renderer.renderPage(
+        let renderPageResult: Result<MobileContentView, Error> = renderer.renderPageFromAllPageNodes(
             page: page,
             window: window,
             safeArea: safeArea,

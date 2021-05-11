@@ -86,6 +86,8 @@ class LessonPageView: MobileContentPageView {
     
     override func didReceiveEvents(events: [String]) {
         
+        super.didReceiveEvents(events: events)
+        
         for event in events {
             if viewModel.manifestDismissListeners.contains(event) {
                 delegate?.lessonPageCloseLessonTapped(lessonPage: self)

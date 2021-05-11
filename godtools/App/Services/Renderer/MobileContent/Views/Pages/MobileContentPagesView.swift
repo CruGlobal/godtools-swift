@@ -90,6 +90,13 @@ class MobileContentPagesView: UIViewController {
                 self?.startNavigation(navigationModel: navigationModel)
             }
         }
+        
+        viewModel.pagesRemoved.addObserver(self) { [weak self] (indexPaths: [IndexPath]) in
+            guard !indexPaths.isEmpty else {
+                return
+            }
+            self?.pageNavigationView.deletePagesAt(indexPaths: indexPaths)
+        }
     }
     
     func setupLayout() {
@@ -301,6 +308,8 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
         if let contentPageCell = pageCell as? MobileContentPageCell {
             contentPageCell.mobileContentView?.viewDidDisappear()
         }
+        
+        viewModel.pageDidDisappear(page: page)
     }
     
     func pageNavigationDidScrollPage(pageNavigation: PageNavigationCollectionView, page: Int) {
@@ -313,10 +322,7 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
 extension MobileContentPagesView: MobileContentPageViewDelegate {
     
     func pageViewDidReceiveEvents(pageView: MobileContentPageView, events: [String]) {
-        
-        if let page = viewModel.getPageForListenerEvents(events: events) {
-            pageNavigationView.scrollToPage(page: page, animated: true)
-        }
+        viewModel.pageDidReceiveEvents(events: events)
     }
     
     func pageViewDidReceiveUrl(pageView: MobileContentPageView, url: String) {

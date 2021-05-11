@@ -211,6 +211,30 @@ class PageNavigationCollectionView: UIView, NibBased {
         collectionView.contentInsetAdjustmentBehavior = contentInsetAdjustmentBehavior
     }
     
+    func deletePagesAt(indexPaths: [IndexPath]) {
+                
+        guard collectionView.numberOfItems(inSection: 0) > 0 else {
+            return
+        }
+        
+        let currentPage: Int = self.currentPage
+        var pageNumberForDeletedPages: Int = currentPage
+        
+        for indexPath in indexPaths {
+            if indexPath.item < currentPage {
+                pageNumberForDeletedPages -= 1
+            }
+        }
+        
+        UIView.performWithoutAnimation {
+            collectionView.performBatchUpdates({
+                collectionView.deleteItems(at: indexPaths)
+            }, completion: nil)
+        }
+        
+        collectionView.scrollToItem(at: IndexPath(item: pageNumberForDeletedPages, section: 0), at: .centeredHorizontally, animated: false)
+    }
+    
     func getIndexPathForPageCell(pageCell: UICollectionViewCell) -> IndexPath? {
         return collectionView.indexPath(for: pageCell)
     }

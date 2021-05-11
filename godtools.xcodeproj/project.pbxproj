@@ -860,6 +860,7 @@
 		45FA43A3260983870056FD49 /* MobileContentTabViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FA43A2260983870056FD49 /* MobileContentTabViewModelType.swift */; };
 		45FA696C24251CA00006878C /* TutorialLanguageAvailabilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FA696B24251CA00006878C /* TutorialLanguageAvailabilityTests.swift */; };
 		45FA696F24251D360006878C /* MockSupportedLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FA6960242517590006878C /* MockSupportedLanguages.swift */; };
+		45FEAFC3264462A500775894 /* MobileContentRendererType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FEAFC2264462A500775894 /* MobileContentRendererType.swift */; };
 		45FF259C260BB95F00D771B6 /* MobileContentPagePositionsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FF259B260BB95F00D771B6 /* MobileContentPagePositionsType.swift */; };
 		45FF25A2260BB9DB00D771B6 /* MobileContentPagePositions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FF25A1260BB9DB00D771B6 /* MobileContentPagePositions.swift */; };
 		45FF25AD260BBB9800D771B6 /* ToolPagePositions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FF25AC260BBB9800D771B6 /* ToolPagePositions.swift */; };
@@ -1768,6 +1769,7 @@
 		45FA43A2260983870056FD49 /* MobileContentTabViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentTabViewModelType.swift; sourceTree = "<group>"; };
 		45FA6960242517590006878C /* MockSupportedLanguages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSupportedLanguages.swift; sourceTree = "<group>"; };
 		45FA696B24251CA00006878C /* TutorialLanguageAvailabilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialLanguageAvailabilityTests.swift; sourceTree = "<group>"; };
+		45FEAFC2264462A500775894 /* MobileContentRendererType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRendererType.swift; sourceTree = "<group>"; };
 		45FF259B260BB95F00D771B6 /* MobileContentPagePositionsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentPagePositionsType.swift; sourceTree = "<group>"; };
 		45FF25A1260BB9DB00D771B6 /* MobileContentPagePositions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentPagePositions.swift; sourceTree = "<group>"; };
 		45FF25AC260BBB9800D771B6 /* ToolPagePositions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolPagePositions.swift; sourceTree = "<group>"; };
@@ -2234,6 +2236,7 @@
 				4555C3B326069C59007E61BE /* MobileContentPageViewFactory.swift */,
 				4555C3D92606A1CE007E61BE /* MobileContentPageViewFactoryType.swift */,
 				455FF6282603DC690028B95B /* MobileContentRenderer.swift */,
+				45FEAFC2264462A500775894 /* MobileContentRendererType.swift */,
 				4555C3ED2606AAFA007E61BE /* MobileContentRendererPageModel.swift */,
 				455FF6292603DC690028B95B /* MobileContentRendererVersion.swift */,
 				45FF25B6260BBF8500D771B6 /* Events */,
@@ -5972,6 +5975,7 @@
 				45CBA059261FDFD90036BEB3 /* LessonPageView.swift in Sources */,
 				45AD1B1125938A4E00A096A0 /* ArticleCategoryCell.swift in Sources */,
 				45AD20B125938EE500A096A0 /* FileCacheLocationType.swift in Sources */,
+				45FEAFC3264462A500775894 /* MobileContentRendererType.swift in Sources */,
 				45AD1BAF25938A4F00A096A0 /* OnboardingFlow.swift in Sources */,
 				45AD1B8725938A4F00A096A0 /* OnboardingTutorialUsageCell.swift in Sources */,
 				45AD1AA425938A4E00A096A0 /* SupportedLanguagesType.swift in Sources */,

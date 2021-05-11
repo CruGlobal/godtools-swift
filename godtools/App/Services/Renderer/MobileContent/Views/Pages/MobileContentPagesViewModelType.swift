@@ -14,10 +14,12 @@ protocol MobileContentPagesViewModelType {
     var pageNavigationSemanticContentAttribute: UISemanticContentAttribute { get }
     var rendererWillChangeSignal: Signal { get }
     var pageNavigation: ObservableValue<MobileContentPagesNavigationModel?> { get }
+    var pagesRemoved: ObservableValue<[IndexPath]> { get }
     
     func viewDidFinishLayout(window: UIViewController, safeArea: UIEdgeInsets)
-    func getPageForListenerEvents(events: [String]) -> Int?
     func pageWillAppear(page: Int) -> MobileContentView?
+    func pageDidDisappear(page: Int)
+    func pageDidReceiveEvents(events: [String])
     func buttonWithUrlTapped(url: String)
     func trainingTipTapped(event: TrainingTipEvent)
     func errorOccurred(error: MobileContentErrorViewModel)
