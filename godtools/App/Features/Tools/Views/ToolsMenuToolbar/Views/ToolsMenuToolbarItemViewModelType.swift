@@ -6,9 +6,10 @@
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol ToolsMenuToolbarItemViewModelType {
     
     var title: String { get }
+    var image: UIImage? { get }
 }

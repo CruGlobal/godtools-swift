@@ -6,14 +6,16 @@
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class ToolsMenuToolbarItemViewModel: ToolsMenuToolbarItemViewModelType {
     
     let title: String
+    let image: UIImage?
     
-    required init(title: String) {
+    required init(title: String, image: UIImage?) {
         
         self.title = title
+        self.image = image
     }
 }

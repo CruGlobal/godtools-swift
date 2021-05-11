@@ -125,7 +125,7 @@ extension ToolsMenuToolbarView: UICollectionViewDelegateFlowLayout, UICollection
                 isSelected: toolbarItemView == selectedToolbarItem
             )
         }
-        
+                
         return cell
     }
     

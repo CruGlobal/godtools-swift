@@ -38,6 +38,15 @@ extension UIButton {
     }
 }
 
+extension UIImageView {
+    func setImageColor(color: UIColor) {
+        if let image = self.image {
+            self.image = image.withRenderingMode(.alwaysTemplate)
+            tintColor = color
+        }
+    }
+}
+
 extension UILabel {
     
     func getAttributedString() -> NSMutableAttributedString {
