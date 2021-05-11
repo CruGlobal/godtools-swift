@@ -8,12 +8,19 @@
 
 import UIKit
 
+protocol LessonPageViewDelegate: class {
+    
+    func lessonPageCloseLessonTapped(lessonPage: LessonPageView)
+}
+
 class LessonPageView: MobileContentPageView {
     
     private let viewModel: LessonPageViewModelType
     private let safeArea: UIEdgeInsets
     
     private var contentView: LessonContentView?
+    
+    private weak var delegate: LessonPageViewDelegate?
     
     @IBOutlet weak private var contentContainerView: UIView!
     
@@ -62,6 +69,10 @@ class LessonPageView: MobileContentPageView {
         
     }
     
+    func setLessonPageDelegate(delegate: LessonPageViewDelegate?) {
+        self.delegate = delegate
+    }
+    
     // MARK: - MobileContentView
 
     override func renderChild(childView: MobileContentView) {
@@ -70,6 +81,17 @@ class LessonPageView: MobileContentPageView {
         
         if let contentView = childView as? LessonContentView {
             addContentView(contentView: contentView)
+        }
+    }
+    
+    override func didReceiveEvents(events: [String]) {
+        
+        super.didReceiveEvents(events: events)
+        
+        for event in events {
+            if viewModel.manifestDismissListeners.contains(event) {
+                delegate?.lessonPageCloseLessonTapped(lessonPage: self)
+            }
         }
     }
 }

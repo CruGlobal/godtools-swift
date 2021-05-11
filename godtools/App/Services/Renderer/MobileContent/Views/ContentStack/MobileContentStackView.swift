@@ -17,7 +17,7 @@ class MobileContentStackView: MobileContentView {
     private var scrollView: UIScrollView?
     private var lastAddedView: UIView?
     private var lastAddedBottomConstraint: NSLayoutConstraint?
-    private var spacerViews: [MobileContentSpacerView] = Array()
+    private var autoSpacerViews: [MobileContentSpacerView] = Array()
             
     required init(itemHorizontalInsets: CGFloat, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
                 
@@ -145,7 +145,7 @@ class MobileContentStackView: MobileContentView {
             return
         }
         
-        guard spacerViews.count > 0 else {
+        guard autoSpacerViews.count > 0 else {
             return
         }
         
@@ -181,17 +181,28 @@ class MobileContentStackView: MobileContentView {
         let spacerHeight: CGFloat
         
         if remainingSpacingHeight > 0 {
-            spacerHeight = floor(remainingSpacingHeight / CGFloat(spacerViews.count))
+            spacerHeight = floor(remainingSpacingHeight / CGFloat(autoSpacerViews.count))
         }
         else {
             spacerHeight = 0
         }
         
-        for spacerView in spacerViews {
+        for spacerView in autoSpacerViews {
             spacerView.setHeight(height: spacerHeight)
         }
         
         parentView.layoutIfNeeded()
+    }
+    
+    private func addAutoSpacerView(spacerView: MobileContentSpacerView) {
+        
+        guard spacerView.mode == .auto else {
+            assertionFailure("Only spacer's with mode auto can be added.")
+            return
+        }
+        
+        spacerView.setHeight(height: 0)
+        autoSpacerViews.append(spacerView)
     }
     
     private func addChildView(childView: MobileContentStackChildViewType) {
@@ -309,9 +320,10 @@ class MobileContentStackView: MobileContentView {
             constrainTrailingToSuperviewTrailing = true
             
             if let spacerView = childView.view as? MobileContentSpacerView {
-                
-                spacerView.setHeight(height: 0)
-                spacerViews.append(spacerView)
+                                
+                if spacerView.mode == .auto {
+                    addAutoSpacerView(spacerView: spacerView)
+                }
             }
             else {
                 assertionFailure("Invalid view type for spacer.  View should be of type MobileContentSpacerView.")

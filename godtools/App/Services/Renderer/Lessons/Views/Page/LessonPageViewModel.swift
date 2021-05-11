@@ -18,4 +18,8 @@ class LessonPageViewModel: LessonPageViewModelType {
         self.pageNode = pageNode
         self.pageModel = pageModel
     }
+    
+    var manifestDismissListeners: [String] {
+        return pageModel.manifest.attributes.dismissListeners
+    }
 }

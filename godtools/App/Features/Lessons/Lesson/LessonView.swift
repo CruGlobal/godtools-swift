@@ -63,6 +63,22 @@ class LessonView: MobileContentPagesView {
         super.pageNavigationPageDidAppear(pageNavigation: pageNavigation, pageCell: pageCell, page: page)
         viewModel.lessonPageDidAppear(page: page)
     }
+    
+    override func didConfigurePageView(pageView: MobileContentPageView) {
+        super.didConfigurePageView(pageView: pageView)
+        
+        if let lessonPage = pageView as? LessonPageView {
+            lessonPage.setLessonPageDelegate(delegate: self)
+        }
+    }
+}
+
+// MARK: - LessonPageViewDelegate
+
+extension LessonView: LessonPageViewDelegate {
+    func lessonPageCloseLessonTapped(lessonPage: LessonPageView) {
+        viewModel.closeTapped()
+    }
 }
 
 // MARK: - LessonProgressViewDelegate

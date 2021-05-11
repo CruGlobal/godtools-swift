@@ -120,6 +120,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         
+        appDiContainer.appsFlyer.continueUserActivity(userActivity: userActivity)
+        
         if userActivity.activityType != NSUserActivityTypeBrowsingWeb {
             return false
         }
@@ -135,8 +137,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
                 
         appDiContainer.deepLinkingService.parseDeepLink(incomingDeepLink: .url(url: url))
-        
-        appDiContainer.appsFlyer.continueUserActivity(userActivity: userActivity)
         
         return true
     }

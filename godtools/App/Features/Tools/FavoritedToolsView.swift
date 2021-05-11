@@ -96,7 +96,9 @@ class FavoritedToolsView: UIViewController {
     }
     
     func scrollToTopOfTools(animated: Bool) {
-        toolsView.scrollToTopOfTools(animated: animated)
+        if toolsView != nil {
+            toolsView.scrollToTopOfTools(animated: animated)
+        }
     }
     
     private func setOpenTutorialHidden(_ hidden: Bool, animated: Bool) {
