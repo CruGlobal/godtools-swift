@@ -159,9 +159,16 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if renderableNode is ContentSpacerNode {
+        else if let spacerNode = renderableNode as? ContentSpacerNode {
                 
-            return MobileContentSpacerView()
+            let viewModel = MobileContentSpacerViewModel(
+                spacerNode: spacerNode,
+                pageModel: pageModel
+            )
+            
+            let view = MobileContentSpacerView(viewModel: viewModel)
+            
+            return view
         }
         else if let headerNode = renderableNode as? ContentHeaderNode {
             

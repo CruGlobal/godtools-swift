@@ -10,11 +10,15 @@ import UIKit
 
 class MobileContentSpacerView: MobileContentView {
     
+    private let viewModel: MobileContentSpacerViewModelType
+    
     private var heightConstraint: NSLayoutConstraint!
     
-    required init() {
+    required init(viewModel: MobileContentSpacerViewModelType) {
         
-        let height: CGFloat = 100
+        self.viewModel = viewModel
+        
+        let height: CGFloat = viewModel.height
     
         super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: height))
         
@@ -35,6 +39,10 @@ class MobileContentSpacerView: MobileContentView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    var mode: MobileContentSpacerMode {
+        return viewModel.mode
     }
     
     func setHeight(height: CGFloat) {
