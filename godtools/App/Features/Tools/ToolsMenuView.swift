@@ -186,6 +186,13 @@ extension ToolsMenuView: PageNavigationCollectionViewDelegate {
                 
         return cell
     }
+    
+    func pageNavigationDidChangeMostVisiblePage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
+        
+        let toolbarItemView = toolbarView.toolbarItemViews[page]
+        
+        toolbarView.setSelectedToolbarItem(toolbarItem: toolbarItemView)
+    }
 }
 
 // MARK: - FavoritedToolsViewDelegate

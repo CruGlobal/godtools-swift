@@ -20,21 +20,24 @@ class ToolsMenuToolbarViewModel: ToolsMenuToolbarViewModelType {
     func lessonsToolbarItemWillAppear() -> ToolsMenuToolbarItemViewModelType {
         
         return ToolsMenuToolbarItemViewModel(
-            title: localizationServices.stringForMainBundle(key: "tool_menu_item.lessons")
+            title: localizationServices.stringForMainBundle(key: "tool_menu_item.lessons"),
+            image: ImageCatalog.toolsMenuLessons.image
         )
     }
     
     func favoritedToolsToolbarItemWillAppear() -> ToolsMenuToolbarItemViewModelType {
         
         return ToolsMenuToolbarItemViewModel(
-            title: localizationServices.stringForMainBundle(key: "my_tools")
+            title: localizationServices.stringForMainBundle(key: "my_tools"),
+            image: ImageCatalog.toolsMenuFavorites.image
         )
     }
     
     func allToolsToolbarItemWillAppear() -> ToolsMenuToolbarItemViewModelType {
         
         return ToolsMenuToolbarItemViewModel(
-            title: localizationServices.stringForMainBundle(key: "find_tools")
+            title: localizationServices.stringForMainBundle(key: "find_tools"),
+            image: ImageCatalog.toolsMenuAllTools.image
         )
     }
 }
