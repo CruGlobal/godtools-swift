@@ -101,7 +101,9 @@ class PageNavigationCollectionView: UIView, NibBased {
     
     func scrollToPage(page: Int, animated: Bool) {
         
-        guard numberOfPages > 0 else {
+        let numberOfPages: Int = self.numberOfPages
+        
+        guard page >= 0 && page < numberOfPages else {
             return
         }
         
