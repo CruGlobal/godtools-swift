@@ -46,12 +46,7 @@ class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
 
         setProgress(progress: 0)
         
-        if favoritedResourcesCache.isFavorited(resourceId: resource.id) {
-            message.accept(value: localizationServices.stringForMainBundle(key: "loading_favorited_tool"))
-        }
-        else {
-            message.accept(value: localizationServices.stringForMainBundle(key: "loading_unfavorited_tool"))
-        }
+        reloadMessage(resource: resource, favoritedResourcesCache: favoritedResourcesCache, localizationServices: localizationServices)
         
         downloadTranslations(translations: translationsToDownload)
     }
@@ -81,6 +76,30 @@ class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
     private func stopDisplayLoaderForMinimumSecondsTimer() {
         displayLoaderForMinimumSecondsTimer?.invalidate()
         displayLoaderForMinimumSecondsTimer = nil
+    }
+    
+    private func reloadMessage(resource: ResourceModel, favoritedResourcesCache: FavoritedResourcesCache, localizationServices: LocalizationServices) {
+                
+        let messageValue: String
+        
+        let resourceType: ResourceType = resource.resourceTypeEnum
+        
+        if resourceType == .article || resourceType == .tract {
+            
+            let isFavorited: Bool = favoritedResourcesCache.isFavorited(resourceId: resource.id)
+            
+            messageValue = isFavorited ? localizationServices.stringForMainBundle(key: "loading_favorited_tool") : localizationServices.stringForMainBundle(key: "loading_unfavorited_tool")
+        }
+        else if resourceType == .lesson {
+            
+            messageValue = localizationServices.stringForMainBundle(key: "loading_favorited_tool")
+        }
+        else {
+            
+            messageValue = localizationServices.stringForMainBundle(key: "loading_favorited_tool")
+        }
+        
+        message.accept(value: messageValue)
     }
     
     private func downloadTranslations(translations: [TranslationModel]) {
