@@ -10,6 +10,6 @@ import UIKit
 
 protocol LessonListItemViewModelType: ToolItemInitialDownloadProgress {
     
-    var title: String { get }
+    var title: ObservableValue<String> { get }
     var bannerImage: ObservableValue<UIImage?> { get }
 }

@@ -11,6 +11,7 @@ import Foundation
 class LessonsListViewModel: NSObject, LessonsListViewModelType {
     
     private let dataDownloader: InitialDataDownloader
+    private let languageSettingsService: LanguageSettingsService
     
     private var lessons: [ResourceModel] = Array()
     
@@ -20,10 +21,11 @@ class LessonsListViewModel: NSObject, LessonsListViewModelType {
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     let didEndRefreshing: Signal = Signal()
     
-    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader) {
+    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
+        self.languageSettingsService = languageSettingsService
         
         super.init()
         
@@ -101,7 +103,8 @@ class LessonsListViewModel: NSObject, LessonsListViewModelType {
         
         return LessonListItemViewModel(
             resource: resource,
-            dataDownloader: dataDownloader
+            dataDownloader: dataDownloader,
+            languageSettingsService: languageSettingsService
         )
     }
     

@@ -77,8 +77,10 @@ class LessonListItemView: UITableViewCell {
         
         selectionStyle = .none
         
-        titleLabel.text = viewModel.title
-        
+        viewModel.title.addObserver(self) { [weak self] (title: String) in
+            self?.titleLabel.text = title
+        }
+                
         viewModel.bannerImage.addObserver(self) { [weak self] (bannerImage: UIImage?) in
             
             guard let bannerImageView = self?.bannerImageView else {
