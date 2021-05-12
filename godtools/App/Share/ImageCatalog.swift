@@ -13,6 +13,8 @@ enum ImageCatalog: String {
     case accordionSectionPlus = "accordion_section_plus"
     case accordionSectionMinus = "accordion_section_minus"
     case favorited = "favorited"
+    case lessonPageLeftArrow = "lesson_page_left_arrow"
+    case lessonPageRightArrow = "lesson_page_right_arrow"
     case navClose = "nav_item_close"
     case navHome = "home"
     case navLanguage = "nav_language"
