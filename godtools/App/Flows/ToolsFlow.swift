@@ -676,7 +676,9 @@ class ToolsFlow: Flow {
         let followUpsService: FollowUpsService = appDiContainer.followUpsService
         let cardJumpService: CardJumpService = appDiContainer.getCardJumpService()
         
-        let lessonPageViewFactory = LessonPageViewFactory()
+        let lessonPageViewFactory = LessonPageViewFactory(
+            analytics: analytics
+        )
         
         let toolPageViewFactory = ToolPageViewFactory(
             analytics: analytics,
