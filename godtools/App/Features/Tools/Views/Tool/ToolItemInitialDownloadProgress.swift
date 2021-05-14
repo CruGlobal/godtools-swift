@@ -44,6 +44,8 @@ extension ToolItemInitialDownloadProgress {
         
         destroyDownloadAttachmentsReceipt()
         
+        downloadAttachmentsReceipt = receipt
+        
         receipt.progressObserver.addObserver(self) { [weak self] (progress: Double) in
             DispatchQueue.main.async { [weak self] in
                 self?.attachmentsDownloadProgress.accept(value: progress)
@@ -63,15 +65,29 @@ extension ToolItemInitialDownloadProgress {
                 }
             }
         }
+        
+        receipt.completedSignal.addObserver(self) { [weak self] in
+            DispatchQueue.main.async { [weak self] in
+                self?.destroyDownloadAttachmentsReceipt()
+            }
+        }
     }
     
     private func observeDownloadResourceTranslationsReceipt(receipt: DownloadTranslationsReceipt) {
         
         destroyDownloadResourceTranslationsReceipt()
         
+        downloadResourceTranslationsReceipt = receipt
+        
         receipt.progressObserver.addObserver(self) { [weak self] (progress: Double) in
             DispatchQueue.main.async { [weak self] in
                 self?.translationDownloadProgress.accept(value: progress)
+            }
+        }
+        
+        receipt.completedSignal.addObserver(self) { [weak self] in
+            DispatchQueue.main.async { [weak self] in
+                self?.destroyDownloadResourceTranslationsReceipt()
             }
         }
     }

@@ -94,6 +94,12 @@ class LessonPageView: MobileContentPageView {
             }
         }
     }
+    
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        
+        viewModel.pageDidAppear()
+    }
 }
 
 // MARK: - ContentView

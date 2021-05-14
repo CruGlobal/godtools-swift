@@ -33,6 +33,7 @@ class ToolsMenuToolbarItemView: UICollectionViewCell {
         self.viewModel = viewModel
         
         titleLabel.text = viewModel.title
+        itemImageView.image = viewModel.image
         
         setItemIsSelected(itemIsSelected: isSelected)
     }
@@ -42,5 +43,6 @@ class ToolsMenuToolbarItemView: UICollectionViewCell {
         let color: UIColor = itemIsSelected ? ToolsMenuToolbarItemView.selectedColor : ToolsMenuToolbarItemView.deselectedColor
         
         titleLabel.textColor = color
+        itemImageView.setImageColor(color: color)
     }
 }

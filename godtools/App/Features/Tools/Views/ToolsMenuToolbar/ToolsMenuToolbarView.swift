@@ -67,6 +67,16 @@ class ToolsMenuToolbarView: UIView, NibBased {
     private func setupBinding() {
         
     }
+    
+    func setSelectedToolbarItem(toolbarItem: ToolbarItemView) {
+        
+        guard toolbarItemsCollectionView != nil else {
+            return
+        }
+        
+        selectedToolbarItem = toolbarItem
+        toolbarItemsCollectionView.reloadData()
+    }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout, UICollectionViewDataSource
@@ -125,7 +135,7 @@ extension ToolsMenuToolbarView: UICollectionViewDelegateFlowLayout, UICollection
                 isSelected: toolbarItemView == selectedToolbarItem
             )
         }
-        
+                
         return cell
     }
     

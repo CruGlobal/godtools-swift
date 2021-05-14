@@ -153,21 +153,26 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
             return
         }
         
-        guard let pageNode = currentRenderer?.getPageNode(page: didReceivePageListenerForPageNumber) else {
+        guard let didReceivePageListenerEventForPageNode = currentRenderer?.getPageNode(page: didReceivePageListenerForPageNumber) else {
             return
         }
         
         let pageNumber: Int
         let willReloadData: Bool
         
-        if pageNode.isHidden {
+        if let pageNumberExistsInActivatePages = pages.firstIndex(of: didReceivePageListenerEventForPageNode) {
+            
+            pageNumber = pageNumberExistsInActivatePages
+            willReloadData = false
+        }
+        else if didReceivePageListenerEventForPageNode.isHidden {
             
             if didReceivePageListenerForPageNumber < pages.count {
-                pages.insert(pageNode, at: didReceivePageListenerForPageNumber)
+                pages.insert(didReceivePageListenerEventForPageNode, at: didReceivePageListenerForPageNumber)
                 pageNumber = didReceivePageListenerForPageNumber
             }
             else {
-                pages.append(pageNode)
+                pages.append(didReceivePageListenerEventForPageNode)
                 pageNumber = pages.count - 1
             }
             

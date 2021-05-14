@@ -41,7 +41,7 @@ class LessonViewModel: MobileContentPagesViewModel, LessonViewModelType {
         progress.accept(value: AnimatableValue(value: newProgress, animated: true))
     }
     
-    func lessonPageDidAppear(page: Int) {
+    func lessonMostVisiblePageDidChange(page: Int) {
         updateProgress(page: page)
     }
     

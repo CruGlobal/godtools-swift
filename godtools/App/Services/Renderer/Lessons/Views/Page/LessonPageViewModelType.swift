@@ -11,4 +11,6 @@ import Foundation
 protocol LessonPageViewModelType {
     
     var manifestDismissListeners: [String] { get }
+    
+    func pageDidAppear()
 }
