@@ -10,8 +10,11 @@ import Foundation
 
 class LessonPageViewFactory: MobileContentPageViewFactoryType {
     
-    required init() {
-        
+    private let analytics: AnalyticsContainer
+    
+    required init(analytics: AnalyticsContainer) {
+    
+        self.analytics = analytics
     }
     
     func viewForRenderableNode(renderableNode: MobileContentRenderableNode, pageModel: MobileContentRendererPageModel, containerNode: MobileContentContainerNode?) -> MobileContentView? {
@@ -20,7 +23,8 @@ class LessonPageViewFactory: MobileContentPageViewFactoryType {
                         
             let viewModel = LessonPageViewModel(
                 pageNode: pageNode,
-                pageModel: pageModel
+                pageModel: pageModel,
+                analytics: analytics
             )
             
             let view = LessonPageView(
