@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol LessonPageViewModelType {
+protocol LessonPageViewModelType: MobileContentPageViewModelType {
     
     var manifestDismissListeners: [String] { get }
     

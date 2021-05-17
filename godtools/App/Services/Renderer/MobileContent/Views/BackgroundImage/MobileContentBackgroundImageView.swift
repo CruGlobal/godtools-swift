@@ -43,7 +43,7 @@ class MobileContentBackgroundImageView: NSObject {
         self.parentView = parentView
         
         if let imageView = imageView {
-            parentView.addSubview(imageView)
+            parentView.insertSubview(imageView, at: 0)
         }
                 
         addParentBoundsChangeObserver(parentView: parentView)

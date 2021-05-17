@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol TrainingPageViewModelType {
+protocol TrainingPageViewModelType: MobileContentPageViewModelType {
     
 }
