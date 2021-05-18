@@ -164,13 +164,7 @@ class AppFlow: NSObject, Flow {
                     appFlow.articleDeepLinkFlow = articleDeepLinkFlow
                 
                 case .url(let url):
-                    if #available(iOS 10.0, *) {
-                        
-                        UIApplication.shared.open(url)
-                    } else {
-                        
-                        UIApplication.shared.openURL(url)
-                    }
+                    UIApplication.shared.open(url)
                 }
             }
         }

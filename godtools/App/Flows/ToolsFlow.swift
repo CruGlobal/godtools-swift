@@ -144,11 +144,11 @@ class ToolsFlow: Flow {
             
             self.shareToolMenuFlow = shareToolMenuFlow
 
-        case .buttonWithUrlTappedFromMobileContentRenderer(let url):
+        case .buttonWithUrlTappedFromMobileContentRenderer(let url, let exitLink):
             guard let webUrl = URL(string: url) else {
                 return
             }
-            navigateToURL(url: webUrl)
+            navigateToURL(url: webUrl, exitLink: exitLink)
             
         case .trainingTipTappedFromMobileContentRenderer(let event):
             navigateToToolTraining(event: event)
@@ -162,8 +162,8 @@ class ToolsFlow: Flow {
         case .closeTappedFromToolTraining:
             navigationController.dismiss(animated: true, completion: nil)
             
-        case .urlLinkTappedFromToolTraining(let url):
-            navigateToURL(url: url)
+        case .urlLinkTappedFromToolTraining(let url, let exitLink):
+            navigateToURL(url: url, exitLink: exitLink)
             
         case .closeTappedFromShareToolScreenTutorial:
             self.shareToolMenuFlow = nil
@@ -204,8 +204,8 @@ class ToolsFlow: Flow {
             navigateToTool(resource: resource, trainingTipsEnabled: true)
             dismissLearnToShareToolFlow()
             
-        case .urlLinkTappedFromToolDetail(let url):
-            navigateToURL(url: url)
+        case .urlLinkTappedFromToolDetail(let url, let exitLink):
+            navigateToURL(url: url, exitLink: exitLink)
             
         default:
             break
@@ -221,12 +221,11 @@ class ToolsFlow: Flow {
         self.learnToShareToolFlow = nil
     }
     
-    private func navigateToURL(url: URL) {
-        if #available(iOS 10.0, *) {
-            UIApplication.shared.open(url)
-        } else {
-            UIApplication.shared.openURL(url)
-        }
+    private func navigateToURL(url: URL, exitLink: ExitLinkModel) {
+        
+        appDiContainer.exitLinkAnalytics.trackExitLink(exitLink: exitLink)
+        
+        UIApplication.shared.open(url)
     }
     
     private func navigateToToolDetail(resource: ResourceModel) {
@@ -239,8 +238,7 @@ class ToolsFlow: Flow {
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
             translationDownloader: appDiContainer.translationDownloader,
-            analytics: appDiContainer.analytics,
-            exitLinkAnalytics: appDiContainer.exitLinkAnalytics
+            analytics: appDiContainer.analytics
         )
         let view = ToolDetailView(viewModel: viewModel)
         

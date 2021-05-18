@@ -44,7 +44,7 @@ enum FlowStep {
     // toolDetails
     case openToolTappedFromToolDetails(resource: ResourceModel)
     case learnToShareToolTappedFromToolDetails(resource: ResourceModel)
-    case urlLinkTappedFromToolDetail(url: URL)
+    case urlLinkTappedFromToolDetail(url: URL, exitLink: ExitLinkModel)
     
     // learnToShareTool
     case closeTappedFromLearnToShareTool(resource: ResourceModel)
@@ -53,13 +53,13 @@ enum FlowStep {
     // tool
     case homeTappedFromTool(isScreenSharing: Bool)
     case shareMenuTappedFromTool(tractRemoteShareSubscriber: TractRemoteShareSubscriber, tractRemoteSharePublisher: TractRemoteSharePublisher, resource: ResourceModel, selectedLanguage: LanguageModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, pageNumber: Int)    
-    case buttonWithUrlTappedFromMobileContentRenderer(url: String)
+    case buttonWithUrlTappedFromMobileContentRenderer(url: String, exitLink: ExitLinkModel)
     case trainingTipTappedFromMobileContentRenderer(event: TrainingTipEvent)
     case errorOccurredFromMobileContentRenderer(error: MobileContentErrorViewModel)
     
     // tool training
     case closeTappedFromToolTraining
-    case urlLinkTappedFromToolTraining(url: URL)
+    case urlLinkTappedFromToolTraining(url: URL, exitLink: ExitLinkModel)
     
     // share tool menu
     case shareToolTappedFromShareToolMenu
