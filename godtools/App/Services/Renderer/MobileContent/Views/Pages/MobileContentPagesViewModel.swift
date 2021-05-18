@@ -199,7 +199,15 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     }
     
     func buttonWithUrlTapped(url: String) {
-        flowDelegate?.navigate(step: .buttonWithUrlTappedFromMobileContentRenderer(url: url))
+        guard let exitLinkUrl = URL(string: url), let resource = currentRenderer?.resource else { return }
+        
+        let analyticsScreenName = resource.abbreviation + "-" + "tool-training"
+        let siteSection = resource.abbreviation
+        let siteSubSection = "tool-training"
+        
+        let exitLink = ExitLinkModel(screenName: analyticsScreenName, siteSection: siteSection, siteSubSection: siteSubSection, url: exitLinkUrl)
+        
+        flowDelegate?.navigate(step: .buttonWithUrlTappedFromMobileContentRenderer(url: url, exitLink: exitLink))
     }
     
     func trainingTipTapped(event: TrainingTipEvent) {

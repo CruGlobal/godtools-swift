@@ -85,15 +85,15 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         )
     }
     
-    func trackExitLink(screenName: String, siteSection: String, siteSubSection: String, url: URL) {
+    func trackExitLink(exitLink: ExitLinkModel) {
         internalTrackEvent(
-            screenName: screenName,
-            siteSection: siteSection,
-            siteSubSection: siteSubSection,
+            screenName: exitLink.screenName,
+            siteSection: exitLink.siteSection,
+            siteSubSection: exitLink.siteSubSection,
             previousScreenName: previousTrackedScreenName,
             eventName: AnalyticsConstants.Values.exitLink,
             data: [
-                AnalyticsConstants.Keys.exitLink: url.absoluteString
+                AnalyticsConstants.Keys.exitLink: exitLink.url.absoluteString
             ]
         )
     }

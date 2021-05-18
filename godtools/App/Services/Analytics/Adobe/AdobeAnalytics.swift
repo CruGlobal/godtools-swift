@@ -129,15 +129,15 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
         }
     }
     
-    func trackExitLink(screenName: String, siteSection: String, siteSubSection: String, url: URL) {
+    func trackExitLink(exitLink: ExitLinkModel) {
            
         assertFailureIfNotConfigured()
         
-        createDefaultPropertiesOnConcurrentQueue(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: previousTrackedScreenName) { [weak self] (defaultProperties: AdobeAnalyticsProperties) in
+        createDefaultPropertiesOnConcurrentQueue(screenName: exitLink.screenName, siteSection: exitLink.siteSection, siteSubSection: exitLink.siteSubSection, previousScreenName: previousTrackedScreenName) { [weak self] (defaultProperties: AdobeAnalyticsProperties) in
             
             var properties = defaultProperties
             
-            properties.exitLink = url.absoluteString
+            properties.exitLink = exitLink.url.absoluteString
             
             let actionName: String = "Exit Link Engaged"
             

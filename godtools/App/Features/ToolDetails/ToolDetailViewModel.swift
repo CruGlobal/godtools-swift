@@ -181,7 +181,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     }
     
     private var siteSubSection: String {
-        return ""
+        return "tool-info"
     }
     
     private func downloadResourceTranslation() {

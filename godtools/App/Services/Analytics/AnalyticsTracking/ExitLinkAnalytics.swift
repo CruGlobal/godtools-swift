@@ -20,8 +20,8 @@ class ExitLinkAnalytics {
     
     func trackExitLink(exitLink: ExitLinkModel) {
         
-        adobeAnalytics.trackExitLink(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, url: url)
+        adobeAnalytics.trackExitLink(exitLink: exitLink)
         
-        firebaseAnalytics.trackExitLink(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, url: url)
+        firebaseAnalytics.trackExitLink(exitLink: exitLink)
     }
 }
