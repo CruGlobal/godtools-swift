@@ -14,17 +14,17 @@ class LessonPageViewModel: MobileContentPageViewModel, LessonPageViewModelType {
     private let pageModel: MobileContentRendererPageModel
     private let analytics: AnalyticsContainer
     
-    required init(pageNode: PageNode, pageModel: MobileContentRendererPageModel, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, pageNode: PageNode, pageModel: MobileContentRendererPageModel, analytics: AnalyticsContainer) {
             
         self.pageNode = pageNode
         self.pageModel = pageModel
         self.analytics = analytics
         
-        super.init(pageNode: pageNode, pageModel: pageModel, hidesBackgroundImage: false)
+        super.init(flowDelegate: flowDelegate, pageNode: pageNode, pageModel: pageModel, hidesBackgroundImage: false)
     }
     
-    required init(pageNode: PageNode, pageModel: MobileContentRendererPageModel, hidesBackgroundImage: Bool) {
-        fatalError("init(pageNode:pageModel:hidesBackgroundImage:) has not been implemented")
+    required init(flowDelegate: FlowDelegate, pageNode: PageNode, pageModel: MobileContentRendererPageModel, hidesBackgroundImage: Bool) {
+        fatalError("init(flowDelegate:pageNode:pageModel:hidesBackgroundImage:) has not been implemented")
     }
     
     var manifestDismissListeners: [String] {

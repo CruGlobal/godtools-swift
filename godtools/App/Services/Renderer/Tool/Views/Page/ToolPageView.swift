@@ -323,6 +323,8 @@ extension ToolPageView: ToolPageCardsViewDelegate {
     func toolPageCardsDidChangeCardPosition(cardsView: ToolPageCardsView, cardPosition: Int?, animated: Bool) {
         
         delegate?.toolPageCardPositionChanged(pageView: self, page: viewModel.page, cardPosition: cardPosition, animated: animated)
+        
+        viewModel.didChangeCardPosition(cardPosition: cardPosition)
     }
     
     func toolPageCardsDidChangeCardState(cardsView: ToolPageCardsView, cardsState: ToolPageCardsState, animated: Bool) {

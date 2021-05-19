@@ -21,8 +21,11 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
     private let viewedTrainingTipsService: ViewedTrainingTipsService
     private let trainingTipsEnabled: Bool
     
-    required init(analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, followUpService: FollowUpsService, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, viewedTrainingTipsService: ViewedTrainingTipsService, trainingTipsEnabled: Bool) {
+    private(set) weak var flowDelegate: FlowDelegate?
+    
+    required init(flowDelegate: FlowDelegate, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, followUpService: FollowUpsService, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, viewedTrainingTipsService: ViewedTrainingTipsService, trainingTipsEnabled: Bool) {
         
+        self.flowDelegate = flowDelegate
         self.analytics = analytics
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
@@ -143,6 +146,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
         else if let pageNode = renderableNode as? PageNode {
                         
             let viewModel = ToolPageViewModel(
+                flowDelegate: getFlowDelegate(),
                 pageNode: pageNode,
                 pageModel: pageModel,
                 analytics: analytics

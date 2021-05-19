@@ -13,8 +13,11 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
     private let mobileContentAnalytics: MobileContentAnalytics
     private let fontService: FontService
     
-    required init(mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
+    private(set) weak var flowDelegate: FlowDelegate?
+    
+    required init(flowDelegate: FlowDelegate, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
         
+        self.flowDelegate = flowDelegate
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
     }

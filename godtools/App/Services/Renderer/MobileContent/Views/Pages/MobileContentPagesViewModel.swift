@@ -197,23 +197,4 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
             numberOfPages.accept(value: pages.count)
         }
     }
-    
-    func buttonWithUrlTapped(url: String) {
-        guard let exitLinkUrl = URL(string: url), let resource = currentRenderer?.resource else { return }
-        
-        let analyticsScreenName = resource.abbreviation + "-" + "tool-page"
-        let siteSection = resource.abbreviation
-        
-        let exitLink = ExitLinkModel(screenName: analyticsScreenName, siteSection: siteSection, url: exitLinkUrl)
-        
-        flowDelegate?.navigate(step: .buttonWithUrlTappedFromMobileContentRenderer(url: url, exitLink: exitLink))
-    }
-    
-    func trainingTipTapped(event: TrainingTipEvent) {
-        flowDelegate?.navigate(step: .trainingTipTappedFromMobileContentRenderer(event: event))
-    }
-    
-    func errorOccurred(error: MobileContentErrorViewModel) {
-        flowDelegate?.navigate(step: .errorOccurredFromMobileContentRenderer(error: error))
-    }
 }

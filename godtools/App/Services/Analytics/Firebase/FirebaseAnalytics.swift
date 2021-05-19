@@ -93,7 +93,7 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
             previousScreenName: previousTrackedScreenName,
             eventName: AnalyticsConstants.Values.exitLink,
             data: [
-                AnalyticsConstants.Keys.exitLink: exitLink.url.absoluteString
+                AnalyticsConstants.Keys.exitLink: exitLink.url
             ]
         )
     }

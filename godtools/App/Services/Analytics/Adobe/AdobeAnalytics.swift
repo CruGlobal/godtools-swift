@@ -137,7 +137,7 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
             
             var properties = defaultProperties
             
-            properties.exitLink = exitLink.url.absoluteString
+            properties.exitLink = exitLink.url
             
             let actionName: String = "Exit Link Engaged"
             

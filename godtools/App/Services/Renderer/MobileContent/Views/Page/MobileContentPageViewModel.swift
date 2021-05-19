@@ -14,15 +14,30 @@ class MobileContentPageViewModel: MobileContentPageViewModelType {
     private let pageModel: MobileContentRendererPageModel
     private let hidesBackgroundImage: Bool
     
-    required init(pageNode: PageNode, pageModel: MobileContentRendererPageModel, hidesBackgroundImage: Bool) {
+    private weak var flowDelegate: FlowDelegate?
+    
+    required init(flowDelegate: FlowDelegate, pageNode: PageNode, pageModel: MobileContentRendererPageModel, hidesBackgroundImage: Bool) {
         
+        self.flowDelegate = flowDelegate
         self.pageNode = pageNode
         self.pageModel = pageModel
         self.hidesBackgroundImage = hidesBackgroundImage
     }
     
+    var analyticsScreenName: String {
+        
+        let resource: ResourceModel = pageModel.resource
+        let page: Int = pageModel.page
+        
+        return resource.abbreviation + "-" + String(page)
+    }
+    
     var backgroundColor: UIColor {
         return pageModel.pageColors.backgroundColor
+    }
+    
+    func getFlowDelegate() -> FlowDelegate? {
+        return flowDelegate
     }
     
     func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel? {
@@ -54,5 +69,29 @@ class MobileContentPageViewModel: MobileContentPageViewModelType {
         }
         
         return nil
+    }
+    
+    func buttonWithUrlTapped(url: String) {
+        
+        let resource: ResourceModel = pageModel.resource
+ 
+        let siteSection = resource.abbreviation
+        
+        let exitLink = ExitLinkModel(
+            screenName: analyticsScreenName,
+            siteSection: siteSection,
+            url: url
+        )
+        
+        flowDelegate?.navigate(step: .buttonWithUrlTappedFromMobileContentRenderer(url: url, exitLink: exitLink))
+    }
+    
+    func trainingTipTapped(event: TrainingTipEvent) {
+        
+        flowDelegate?.navigate(step: .trainingTipTappedFromMobileContentRenderer(event: event))
+    }
+    
+    func errorOccurred(error: MobileContentErrorViewModel) {
+        flowDelegate?.navigate(step: .errorOccurredFromMobileContentRenderer(error: error))
     }
 }

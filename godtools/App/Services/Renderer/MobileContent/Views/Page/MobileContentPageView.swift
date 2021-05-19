@@ -11,9 +11,6 @@ import UIKit
 protocol MobileContentPageViewDelegate: class {
     
     func pageViewDidReceiveEvents(pageView: MobileContentPageView, events: [String])
-    func pageViewDidReceiveUrl(pageView: MobileContentPageView, url: String)
-    func pageViewDidReceiveTrainingTipTap(pageView: MobileContentPageView, event: TrainingTipEvent)
-    func pageViewDidReceiveError(pageView: MobileContentPageView, error: MobileContentErrorViewModel)
 }
 
 class MobileContentPageView: MobileContentView {
@@ -83,18 +80,26 @@ class MobileContentPageView: MobileContentView {
     // MARK: - MobileContentView
     
     override func didReceiveEvents(events: [String]) {
+        super.didReceiveEvents(events: events)
+        
         delegate?.pageViewDidReceiveEvents(pageView: self, events: events)
     }
     
     override func didReceiveButtonWithUrlEvent(url: String) {
-        delegate?.pageViewDidReceiveUrl(pageView: self, url: url)
+        super.didReceiveButtonWithUrlEvent(url: url)
+        
+        viewModel.buttonWithUrlTapped(url: url)
     }
     
     override func didReceiveTrainingTipTap(event: TrainingTipEvent) {
-        delegate?.pageViewDidReceiveTrainingTipTap(pageView: self, event: event)
+        super.didReceiveTrainingTipTap(event: event)
+        
+        viewModel.trainingTipTapped(event: event)
     }
     
     override func didReceiveError(error: MobileContentErrorViewModel) {
-        delegate?.pageViewDidReceiveError(pageView: self, error: error)
+        super.didReceiveError(error: error)
+        
+        viewModel.errorOccurred(error: error)
     }
 }

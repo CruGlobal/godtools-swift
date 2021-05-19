@@ -14,20 +14,39 @@ class ToolPageViewModel: MobileContentPageViewModel, ToolPageViewModelType {
     private let pageModel: MobileContentRendererPageModel
     private let analytics: AnalyticsContainer
     
+    private var cardPosition: Int?
+    
     let hidesCallToAction: Bool
     
-    required init(pageNode: PageNode, pageModel: MobileContentRendererPageModel, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, pageNode: PageNode, pageModel: MobileContentRendererPageModel, analytics: AnalyticsContainer) {
         
         self.pageNode = pageNode
         self.pageModel = pageModel
         self.analytics = analytics
         self.hidesCallToAction = (pageNode.callToActionNode == nil && pageModel.pageNode.heroNode == nil) || pageModel.isLastPage
         
-        super.init(pageNode: pageNode, pageModel: pageModel, hidesBackgroundImage: false)
+        super.init(flowDelegate: flowDelegate, pageNode: pageNode, pageModel: pageModel, hidesBackgroundImage: false)
     }
     
-    required init(pageNode: PageNode, pageModel: MobileContentRendererPageModel, hidesBackgroundImage: Bool) {
-        fatalError("init(pageNode:pageModel:hidesBackgroundImage:) has not been implemented")
+    required init(flowDelegate: FlowDelegate, pageNode: PageNode, pageModel: MobileContentRendererPageModel, hidesBackgroundImage: Bool) {
+        fatalError("init(flowDelegate:pageNode:pageModel:hidesBackgroundImage:) has not been implemented")
+    }
+    
+    override var analyticsScreenName: String {
+        
+        let resource: ResourceModel = pageModel.resource
+        let page: Int = pageModel.page
+        
+        let cardAnalyticsScreenName: String
+        
+        if let cardPosition = self.cardPosition {
+            cardAnalyticsScreenName = ToolPageCardAnalyticsScreenName(cardPosition: cardPosition).screenName
+        }
+        else {
+            cardAnalyticsScreenName = ""
+        }
+                        
+        return resource.abbreviation + "-" + String(page) + cardAnalyticsScreenName
     }
     
     var bottomViewColor: UIColor {
@@ -66,5 +85,9 @@ class ToolPageViewModel: MobileContentPageViewModel, ToolPageViewModelType {
             siteSection: resource.abbreviation,
             siteSubSection: ""
         )
+    }
+    
+    func didChangeCardPosition(cardPosition: Int?) {
+        self.cardPosition = cardPosition
     }
 }

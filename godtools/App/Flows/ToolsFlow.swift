@@ -541,6 +541,7 @@ class ToolsFlow: Flow {
         let cardJumpService: CardJumpService = appDiContainer.getCardJumpService()
         
         let toolPageViewFactory = ToolPageViewFactory(
+            flowDelegate: self,
             analytics: analytics,
             mobileContentAnalytics: mobileContentAnalytics,
             fontService: fontService,
@@ -554,6 +555,7 @@ class ToolsFlow: Flow {
         )
         
         let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
+            flowDelegate: self,
             translationsFileCache: translationsFileCache,
             mobileContentNodeParser: mobileContentNodeParser,
             viewedTrainingTipsService: viewedTrainingTipsService,
@@ -563,6 +565,7 @@ class ToolsFlow: Flow {
         let pageViewFactories: [MobileContentPageViewFactoryType] = [toolPageViewFactory, trainingViewFactory]
         
         let primaryRenderer = MobileContentRenderer(
+            flowDelegate: self,
             resource: resource,
             language: primaryLanguage,
             manifest: MobileContentXmlManifest(translationManifest: primaryTranslationManifest),
@@ -580,6 +583,7 @@ class ToolsFlow: Flow {
         if !trainingTipsEnabled, let parallelLanguage = parallelLanguage, let parallelTranslationManifest = parallelTranslationManifest, parallelLanguage.code != primaryLanguage.code {
             
             let parallelRenderer = MobileContentRenderer(
+                flowDelegate: self,
                 resource: resource,
                 language: parallelLanguage,
                 manifest: MobileContentXmlManifest(translationManifest: parallelTranslationManifest),
@@ -628,6 +632,7 @@ class ToolsFlow: Flow {
         let viewedTrainingTipsService: ViewedTrainingTipsService = appDiContainer.getViewedTrainingTipsService()
         
         let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
+            flowDelegate: self,
             translationsFileCache: translationsFileCache,
             mobileContentNodeParser: mobileContentNodeParser,
             viewedTrainingTipsService: viewedTrainingTipsService,
@@ -637,6 +642,7 @@ class ToolsFlow: Flow {
         let pageViewFactories: [MobileContentPageViewFactoryType] = [trainingViewFactory]
         
         let renderer = MobileContentRenderer(
+            flowDelegate: self,
             resource: event.pageModel.resource,
             language: event.pageModel.language,
             manifest: event.pageModel.manifest,
@@ -675,10 +681,12 @@ class ToolsFlow: Flow {
         let cardJumpService: CardJumpService = appDiContainer.getCardJumpService()
         
         let lessonPageViewFactory = LessonPageViewFactory(
+            flowDelegate: self,
             analytics: analytics
         )
         
         let toolPageViewFactory = ToolPageViewFactory(
+            flowDelegate: self,
             analytics: analytics,
             mobileContentAnalytics: mobileContentAnalytics,
             fontService: fontService,
@@ -692,6 +700,7 @@ class ToolsFlow: Flow {
         )
         
         let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
+            flowDelegate: self,
             translationsFileCache: translationsFileCache,
             mobileContentNodeParser: mobileContentNodeParser,
             viewedTrainingTipsService: viewedTrainingTipsService,
@@ -701,6 +710,7 @@ class ToolsFlow: Flow {
         let pageViewFactories: [MobileContentPageViewFactoryType] = [lessonPageViewFactory, toolPageViewFactory, trainingViewFactory]
         
         let renderer = MobileContentRenderer(
+            flowDelegate: self,
             resource: resource,
             language: primaryLanguage,
             manifest: MobileContentXmlManifest(translationManifest: primaryTranslationManifest),

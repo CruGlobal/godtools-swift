@@ -16,4 +16,5 @@ protocol ToolPageViewModelType: MobileContentPageViewModelType {
     
     func callToActionWillAppear() -> ToolPageCallToActionView?
     func pageDidAppear()
+    func didChangeCardPosition(cardPosition: Int?)
 }

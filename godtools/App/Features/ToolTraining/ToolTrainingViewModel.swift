@@ -137,9 +137,12 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     }
     
     func buttonWithUrlTapped(url: String) {
-        guard let exitLinkUrl = URL(string: url) else { return }
         
-        let exitLink = ExitLinkModel(screenName: analyticsScreenName, siteSection: siteSection, url: exitLinkUrl)
+        let exitLink = ExitLinkModel(
+            screenName: analyticsScreenName,
+            siteSection: siteSection,
+            url: url
+        )
         
         flowDelegate?.navigate(step: .buttonWithUrlTappedFromMobileContentRenderer(url: url, exitLink: exitLink))
     }

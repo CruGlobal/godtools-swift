@@ -12,8 +12,11 @@ class LessonPageViewFactory: MobileContentPageViewFactoryType {
     
     private let analytics: AnalyticsContainer
     
-    required init(analytics: AnalyticsContainer) {
+    private(set) weak var flowDelegate: FlowDelegate?
     
+    required init(flowDelegate: FlowDelegate, analytics: AnalyticsContainer) {
+    
+        self.flowDelegate = flowDelegate
         self.analytics = analytics
     }
     
@@ -22,6 +25,7 @@ class LessonPageViewFactory: MobileContentPageViewFactoryType {
         if let pageNode = renderableNode as? PageNode {
                         
             let viewModel = LessonPageViewModel(
+                flowDelegate: getFlowDelegate(),
                 pageNode: pageNode,
                 pageModel: pageModel,
                 analytics: analytics

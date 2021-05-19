@@ -256,7 +256,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         let exitLink = ExitLinkModel(
             screenName: analyticsScreenName,
             siteSection: siteSection,
-            url: url
+            url: url.absoluteString
         )
         
         flowDelegate?.navigate(step: .urlLinkTappedFromToolDetail(url: url, exitLink: exitLink))

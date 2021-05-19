@@ -32,7 +32,7 @@ class MobileContentRenderer: MobileContentRendererType {
     let resource: ResourceModel
     let language: LanguageModel
     
-    required init(resource: ResourceModel, language: LanguageModel, manifest: MobileContentXmlManifest, pageNodes: [PageNode], translationsFileCache: TranslationsFileCache, pageViewFactories: [MobileContentPageViewFactoryType], mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageModel, manifest: MobileContentXmlManifest, pageNodes: [PageNode], translationsFileCache: TranslationsFileCache, pageViewFactories: [MobileContentPageViewFactoryType], mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
         
         self.translationsFileCache = translationsFileCache
         self.manifest = manifest
@@ -42,6 +42,7 @@ class MobileContentRenderer: MobileContentRendererType {
 
         // pageViewFactories
         let mobileContentPageViewFactory = MobileContentPageViewFactory(
+            flowDelegate: flowDelegate,
             mobileContentAnalytics: mobileContentAnalytics,
             fontService: fontService
         )
