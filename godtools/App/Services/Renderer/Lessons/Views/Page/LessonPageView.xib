@@ -10,8 +10,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LessonPageView" customModule="godtools" customModuleProvider="target">
             <connections>
+                <outlet property="bottomInset" destination="28k-Tw-Kgq" id="XnY-Qh-TuS"/>
                 <outlet property="bottomInsetBottomConstraint" destination="xrp-ok-XS2" id="bUI-oe-x0b"/>
                 <outlet property="contentContainerView" destination="B5f-PM-lOk" id="zVb-YQ-Ffr"/>
+                <outlet property="topInset" destination="Mdh-18-Bok" id="Tlx-7E-tWl"/>
                 <outlet property="topInsetTopConstraint" destination="g3a-RI-Y3f" id="X5V-Nd-xgE"/>
             </connections>
         </placeholder>

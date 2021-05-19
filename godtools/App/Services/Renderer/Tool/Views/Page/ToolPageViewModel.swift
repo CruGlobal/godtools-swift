@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ToolPageViewModel: ToolPageViewModelType {
+class ToolPageViewModel: MobileContentPageViewModel, ToolPageViewModelType {
     
     private let pageNode: PageNode
     private let pageModel: MobileContentRendererPageModel
@@ -22,10 +22,12 @@ class ToolPageViewModel: ToolPageViewModelType {
         self.pageModel = pageModel
         self.analytics = analytics
         self.hidesCallToAction = (pageNode.callToActionNode == nil && pageModel.pageNode.heroNode == nil) || pageModel.isLastPage
+        
+        super.init(pageNode: pageNode, pageModel: pageModel, hidesBackgroundImage: false)
     }
     
-    var backgroundColor: UIColor {
-        return pageModel.pageColors.backgroundColor
+    required init(pageNode: PageNode, pageModel: MobileContentRendererPageModel, hidesBackgroundImage: Bool) {
+        fatalError("init(pageNode:pageModel:hidesBackgroundImage:) has not been implemented")
     }
     
     var bottomViewColor: UIColor {
@@ -38,33 +40,6 @@ class ToolPageViewModel: ToolPageViewModelType {
     
     var page: Int {
         return pageModel.page
-    }
-    
-    func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel? {
-                    
-        let manifestAttributes: MobileContentXmlManifestAttributes = pageModel.manifest.attributes
-        
-        let backgroundImageNode: BackgroundImageNodeType?
-        
-        if pageNode.backgroundImageExists {
-            backgroundImageNode = pageNode
-        }
-        else if manifestAttributes.backgroundImageExists {
-            backgroundImageNode = manifestAttributes
-        }
-        else {
-            backgroundImageNode = nil
-        }
-        
-        if let backgroundImageNode = backgroundImageNode {
-            return MobileContentBackgroundImageViewModel(
-                backgroundImageNode: backgroundImageNode,
-                manifestResourcesCache: pageModel.resourcesCache,
-                languageDirection: pageModel.language.languageDirection
-            )
-        }
-        
-        return nil
     }
     
     func callToActionWillAppear() -> ToolPageCallToActionView? {

@@ -10,7 +10,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ToolPageView" customModule="godtools" customModuleProvider="target">
             <connections>
-                <outlet property="backgroundImageContainer" destination="Vn2-3e-PLp" id="zHt-fd-6sx"/>
                 <outlet property="bottomInsetBottomConstraint" destination="qgs-Bt-zZz" id="V0H-NC-hHr"/>
                 <outlet property="callToActionBottom" destination="r8H-ro-G5J" id="Npo-2i-7gb"/>
                 <outlet property="callToActionContainerView" destination="vNO-5W-ee8" id="hit-dO-uKs"/>
@@ -34,10 +33,6 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="EQW-PC-Itg"/>
                     </constraints>
-                </view>
-                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vn2-3e-PLp" userLabel="backgroundImageContainer">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iQQ-dy-v0D" userLabel="contentStackContainerView">
                     <rect key="frame" x="30" y="0.0" width="354" height="896"/>
@@ -74,16 +69,12 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="Vn2-3e-PLp" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="2KB-MM-xBV"/>
                 <constraint firstItem="W0e-5d-5fy" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" constant="-30" id="7wH-UJ-zda"/>
                 <constraint firstItem="fDq-Oz-qfu" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="8zY-5g-jrY"/>
-                <constraint firstItem="Vn2-3e-PLp" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="9l0-90-uye"/>
-                <constraint firstAttribute="bottom" secondItem="Vn2-3e-PLp" secondAttribute="bottom" id="B4L-po-AUD"/>
                 <constraint firstItem="iQQ-dy-v0D" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" constant="-30" id="Dmf-LY-as3"/>
                 <constraint firstItem="6RN-4u-szb" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="E37-yY-626"/>
                 <constraint firstItem="fDq-Oz-qfu" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" id="JgR-bn-DyX"/>
                 <constraint firstItem="W0e-5d-5fy" firstAttribute="top" secondItem="hSb-LO-Zv1" secondAttribute="top" id="OSS-mG-R5s"/>
-                <constraint firstAttribute="trailing" secondItem="Vn2-3e-PLp" secondAttribute="trailing" id="V8x-YN-Viw"/>
                 <constraint firstItem="W0e-5d-5fy" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="30" id="WM8-QF-Wff"/>
                 <constraint firstAttribute="trailing" secondItem="hSb-LO-Zv1" secondAttribute="trailing" id="YpK-L8-S1b"/>
                 <constraint firstItem="iQQ-dy-v0D" firstAttribute="bottom" secondItem="6RN-4u-szb" secondAttribute="bottom" id="bA1-Wv-U79"/>

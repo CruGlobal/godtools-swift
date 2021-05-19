@@ -15,6 +15,7 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     private var currentRenderer: MobileContentRendererType?
     private var safeArea: UIEdgeInsets?
     private var pages: [PageNode] = Array()
+    
     private weak var window: UIViewController?
     private weak var flowDelegate: FlowDelegate?
     
@@ -42,11 +43,7 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     }
     
     deinit {
-        removeObserversFromCurrentRenderer()
-    }
-    
-    private func removeObserversFromCurrentRenderer() {
-        currentRenderer?.pages.removeObserver(self)
+
     }
     
     private func removePage(pageNode: PageNode) {
@@ -77,12 +74,14 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         }
         
         if let startingPage = startingPage {
+            
             let navigationModel = MobileContentPagesNavigationModel(
                 willReloadData: true,
                 page: startingPage,
                 pagePositions: nil,
                 animated: false
             )
+            
             pageNavigation.accept(value: navigationModel)
         }
         
@@ -91,19 +90,15 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     
     func setRenderer(renderer: MobileContentRendererType) {
         
-        removeObserversFromCurrentRenderer()
-        
         rendererWillChangeSignal.accept()
         
         currentRenderer = renderer
         
-        renderer.pages.addObserver(self) { [weak self] (pages: [PageNode]) in
-            
-            let visiblePages: [PageNode] = pages.filter({!$0.isHidden})
-            
-            self?.pages = visiblePages
-            self?.numberOfPages.accept(value: visiblePages.count)
-        }
+        let visiblePages: [PageNode] = renderer.allPages.filter({!$0.isHidden})
+        
+        pages = visiblePages
+        
+        numberOfPages.accept(value: pages.count)
     }
     
     func pageWillAppear(page: Int) -> MobileContentView? {
@@ -116,9 +111,14 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
             return nil
         }
         
-        let renderPageResult: Result<MobileContentView, Error> = renderer.renderPageFromPageNodes(
-            pageNodes: pages,
+        guard page >= 0 && page < pages.count else {
+            return nil
+        }
+        
+        let renderPageResult: Result<MobileContentView, Error> =  renderer.renderPageNode(
+            pageNode: pages[page],
             page: page,
+            numberOfPages: pages.count,
             window: window,
             safeArea: safeArea,
             primaryRendererLanguage: primaryRenderer.language

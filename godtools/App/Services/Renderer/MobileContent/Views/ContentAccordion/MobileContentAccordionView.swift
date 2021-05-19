@@ -16,6 +16,7 @@ protocol MobileContentAccordionViewDelegate: class {
 class MobileContentAccordionView: MobileContentView {
     
     private let viewModel: MobileContentAccordionViewModelType
+    private let allowsOnlyOneExpandedSectionAtATime: Bool = true
     
     private var sectionViews: [MobileContentSectionView] = Array()
     private var spacingBetweenSections: CGFloat = 15
@@ -201,6 +202,14 @@ extension MobileContentAccordionView {
 extension MobileContentAccordionView: MobileContentSectionViewDelegate {
     
     func sectionViewDidChangeTextHiddenState(sectionView: MobileContentSectionView, textIsHidden: Bool, textHeight: CGFloat) {
+        
+        if allowsOnlyOneExpandedSectionAtATime && !textIsHidden {
+            for otherSectionView in sectionViews {
+                if otherSectionView != sectionView && !otherSectionView.textIsHidden {
+                    otherSectionView.setTextHidden(hidden: true, animated: true)
+                }
+            }
+        }
         
         delegate?.accordionViewDidChangeSectionViewTextHiddenState(
             accordionView: self,
