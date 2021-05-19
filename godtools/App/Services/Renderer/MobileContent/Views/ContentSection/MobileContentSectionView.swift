@@ -110,7 +110,7 @@ class MobileContentSectionView: MobileContentView {
         self.delegate = delegate
     }
     
-    private func setTextHidden(hidden: Bool, animated: Bool) {
+    func setTextHidden(hidden: Bool, animated: Bool) {
         
         textIsHidden = hidden
         
