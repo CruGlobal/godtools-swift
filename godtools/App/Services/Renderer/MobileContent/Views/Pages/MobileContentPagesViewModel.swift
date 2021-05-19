@@ -201,9 +201,9 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     func buttonWithUrlTapped(url: String) {
         guard let exitLinkUrl = URL(string: url), let resource = currentRenderer?.resource else { return }
         
-        let analyticsScreenName = resource.abbreviation + "-" + "tool-training"
+        let analyticsScreenName = resource.abbreviation + "-" + "tool-page"
         let siteSection = resource.abbreviation
-        let siteSubSection = "tool-training"
+        let siteSubSection = "tool-page"
         
         let exitLink = ExitLinkModel(screenName: analyticsScreenName, siteSection: siteSection, siteSubSection: siteSubSection, url: exitLinkUrl)
         
