@@ -23,15 +23,14 @@ class MobileContentRenderer: MobileContentRendererType {
     private let pageViewFactories: [MobileContentPageViewFactoryType]
     private let rendererType: RendererType
     
-    private var allPageNodes: [PageNode] = Array()
     private var pageListeners: [PageListenerEventName: PageNumber] = Dictionary()
-    private var didFinishLoadingAllPageNodes: Bool = false
+    
+    private(set) var allPages: [PageNode] = Array()
     
     let manifest: MobileContentXmlManifest
     let resourcesCache: ManifestResourcesCache
     let resource: ResourceModel
     let language: LanguageModel
-    let pages: ObservableValue<[PageNode]> = ObservableValue(value: [])
     
     required init(resource: ResourceModel, language: LanguageModel, manifest: MobileContentXmlManifest, pageNodes: [PageNode], translationsFileCache: TranslationsFileCache, pageViewFactories: [MobileContentPageViewFactoryType], mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
         
@@ -54,49 +53,51 @@ class MobileContentRenderer: MobileContentRendererType {
             
             rendererType = .builtFromManifest
             
-            asyncParseAllPageNodes(manifest: manifest, translationsFileCache: translationsFileCache) { [weak self] (page: Int, pageNode: PageNode?, error: Error?) in
+            var allPageNodes: [PageNode] = Array()
+        
+            let manifestPages: [MobileContentXmlManifestPage] = manifest.pages
+            
+            var errors: [Error] = Array()
+            
+            for pageIndex in 0 ..< manifestPages.count {
                 
-                if let pageNode = pageNode {
-                    
-                    self?.addPageNodeAndPageListeners(
-                        page: page,
-                        pageNode: pageNode
-                    )
-                }
-            } completion: { [weak self] (errors: [Error]) in
-                DispatchQueue.main.async { [weak self] in
-                    self?.handleCompletedLoadingAllPageNodes()
+                let result = parsePageNode(
+                    manifest: manifest,
+                    translationsFileCache: translationsFileCache,
+                    page: pageIndex
+                )
+                
+                switch result {
+                
+                case .success(let pageNode):
+                    addPageListeners(pageNode: pageNode, page: pageIndex)
+                    allPageNodes.append(pageNode)
+                
+                case .failure(let error):
+                    errors.append(error)
                 }
             }
+            
+            allPages = allPageNodes
         }
         else {
             
             rendererType = .builtFromProvidedPageNodes
             
+            var allPageNodes: [PageNode] = Array()
+            
             for page in 0 ..< pageNodes.count {
-                addPageNodeAndPageListeners(
-                    page: page,
-                    pageNode: pageNodes[page]
-                )
+                
+                let pageNode: PageNode = pageNodes[page]
+                
+                addPageListeners(pageNode: pageNode, page: page)
+                allPageNodes.append(pageNode)
             }
             
-            handleCompletedLoadingAllPageNodes()
+            allPages = allPageNodes
         }
     }
-    
-    private func addPageNodeAndPageListeners(page: Int, pageNode: PageNode) {
         
-        allPageNodes.append(pageNode)
-        addPageListeners(pageNode: pageNode, page: page)
-    }
-    
-    private func handleCompletedLoadingAllPageNodes() {
-        
-        didFinishLoadingAllPageNodes = true
-        
-        pages.accept(value: allPageNodes)
-    }
-    
     // MARK: - Page Listeners
     
     func getPageForListenerEvents(events: [String]) -> Int? {
@@ -118,14 +119,14 @@ class MobileContentRenderer: MobileContentRendererType {
     
     func getPageNode(page: Int) -> PageNode? {
         
-        guard page >= 0 && page < allPageNodes.count else {
+        guard page >= 0 && page < allPages.count else {
             return nil
         }
         
-        return allPageNodes[page]
+        return allPages[page]
     }
     
-    func renderPageFromAllPageNodes(page: Int, window: UIViewController, safeArea: UIEdgeInsets, primaryRendererLanguage: LanguageModel) -> Result<MobileContentView, Error> {
+    func renderPage(page: Int, window: UIViewController, safeArea: UIEdgeInsets, primaryRendererLanguage: LanguageModel) -> Result<MobileContentView, Error> {
         
         let pageNode: PageNode?
         let parseError: Error?
@@ -155,40 +156,15 @@ class MobileContentRenderer: MobileContentRendererType {
         }
         
         if let pageNode = pageNode {
-            
-            let numberOfPages: Int
-            
-            if didFinishLoadingAllPageNodes {
-                numberOfPages = allPageNodes.count
-            }
-            else {
-                switch rendererType {
-                case .builtFromManifest:
-                    numberOfPages = manifest.pages.count
-                case .builtFromProvidedPageNodes:
-                    numberOfPages = allPageNodes.count
-                }
-            }
-            
-            let isLastPage: Bool = page == numberOfPages - 1
-            
-            let pageModel = MobileContentRendererPageModel(
+                        
+            return renderPageNode(
                 pageNode: pageNode,
                 page: page,
-                isLastPage: isLastPage,
+                numberOfPages: allPages.count,
                 window: window,
                 safeArea: safeArea,
-                manifest: manifest,
-                resourcesCache: resourcesCache,
-                resource: resource,
-                language: language,
-                pageViewFactories: pageViewFactories,
                 primaryRendererLanguage: primaryRendererLanguage
             )
-            
-            if let renderableView = recurseAndRender(node: pageNode, pageModel: pageModel, containerNode: nil) {
-                return .success(renderableView)
-            }
         }
         else if let parseError = parseError {
             
@@ -198,21 +174,13 @@ class MobileContentRenderer: MobileContentRendererType {
         let failedToRenderPageError: Error = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to render page node."])
         return .failure(failedToRenderPageError)
     }
+        
+    func renderPageNode(pageNode: PageNode, page: Int, numberOfPages: Int, window: UIViewController, safeArea: UIEdgeInsets, primaryRendererLanguage: LanguageModel) -> Result<MobileContentView, Error> {
     
-    func renderPageFromPageNodes(pageNodes: [PageNode], page: Int, window: UIViewController, safeArea: UIEdgeInsets, primaryRendererLanguage: LanguageModel) -> Result<MobileContentView, Error> {
-                
-        guard page >= 0 && page < pageNodes.count else {
-            let outOfBoundsError: Error = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Page is out of array bounds. page: \(page)  pageNodes.count: \(pageNodes.count)"])
-            return .failure(outOfBoundsError)
-        }
-        
-        let pageNode: PageNode = pageNodes[page]
-        let isLastPage: Bool = page == pageNodes.count - 1
-        
         let pageModel = MobileContentRendererPageModel(
             pageNode: pageNode,
             page: page,
-            isLastPage: isLastPage,
+            isLastPage: page == numberOfPages - 1,
             window: window,
             safeArea: safeArea,
             manifest: manifest,
@@ -284,41 +252,6 @@ class MobileContentRenderer: MobileContentRendererType {
     }
     
     // MARK: - Parsing Page Nodes
-    
-    private func asyncParseAllPageNodes(manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, didParsePageNode: @escaping ((_ page: Int, _ pageNode: PageNode?, _ error: Error?) -> Void), completion: @escaping ((_ errors: [Error]) -> Void)) {
-        
-        let manifestPages: [MobileContentXmlManifestPage] = manifest.pages
-        
-        var errors: [Error] = Array()
-        
-        DispatchQueue.global().async { [weak self] in
-            
-            guard let toolPagesNodeParser = self else {
-                return
-            }
-            
-            for pageIndex in 0 ..< manifestPages.count {
-                
-                let result = toolPagesNodeParser.parsePageNode(
-                    manifest: manifest,
-                    translationsFileCache: translationsFileCache,
-                    page: pageIndex
-                )
-                
-                switch result {
-                
-                case .success(let pageNode):
-                    didParsePageNode(pageIndex, pageNode, nil)
-                
-                case .failure(let error):
-                    didParsePageNode(pageIndex, nil, error)
-                    errors.append(error)
-                }
-            }
-            
-            completion(errors)
-        }
-    }
     
     private func parsePageNode(manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, page: Int) -> Result<PageNode, Error> {
         

@@ -49,18 +49,8 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
             trainingTipViewed: viewedTrainingTips.containsViewedTrainingTip(viewedTrainingTip: ViewedTrainingTip(trainingTipId: trainingTipId, resourceId: resource.id, languageId: language.id))
         )
         
-        renderer.pages.addObserver(self) { [weak self] (pages: [PageNode]) in
-            guard pages.count > 0 else {
-                return
-            }
-            let startingPage: Int = 0
-            self?.numberOfTipPages.accept(value: pages.count)
-            self?.setPage(page: startingPage, animated: false)
-        }
-    }
-    
-    deinit {
-        renderer.pages.removeObserver(self)
+        numberOfTipPages.accept(value: renderer.allPages.count)
+        setPage(page: 0, animated: false)
     }
     
     private func setPage(page: Int, animated: Bool) {
@@ -144,7 +134,7 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     
     func tipPageWillAppear(page: Int, window: UIViewController, safeArea: UIEdgeInsets) -> MobileContentView? {
                 
-        let renderPageResult: Result<MobileContentView, Error> = renderer.renderPageFromAllPageNodes(
+        let renderPageResult: Result<MobileContentView, Error> = renderer.renderPage(
             page: page,
             window: window,
             safeArea: safeArea,
