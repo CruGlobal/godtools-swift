@@ -89,7 +89,7 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         internalTrackEvent(
             screenName: exitLink.screenName,
             siteSection: exitLink.siteSection,
-            siteSubSection: exitLink.siteSubSection,
+            siteSubSection: nil,
             previousScreenName: previousTrackedScreenName,
             eventName: AnalyticsConstants.Values.exitLink,
             data: [

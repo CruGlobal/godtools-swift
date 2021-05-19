@@ -203,9 +203,8 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         
         let analyticsScreenName = resource.abbreviation + "-" + "tool-page"
         let siteSection = resource.abbreviation
-        let siteSubSection = "tool-page"
         
-        let exitLink = ExitLinkModel(screenName: analyticsScreenName, siteSection: siteSection, siteSubSection: siteSubSection, url: exitLinkUrl)
+        let exitLink = ExitLinkModel(screenName: analyticsScreenName, siteSection: siteSection, url: exitLinkUrl)
         
         flowDelegate?.navigate(step: .buttonWithUrlTappedFromMobileContentRenderer(url: url, exitLink: exitLink))
     }

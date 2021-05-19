@@ -133,7 +133,7 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
            
         assertFailureIfNotConfigured()
         
-        createDefaultPropertiesOnConcurrentQueue(screenName: exitLink.screenName, siteSection: exitLink.siteSection, siteSubSection: exitLink.siteSubSection, previousScreenName: previousTrackedScreenName) { [weak self] (defaultProperties: AdobeAnalyticsProperties) in
+        createDefaultPropertiesOnConcurrentQueue(screenName: exitLink.screenName, siteSection: exitLink.siteSection, siteSubSection: nil, previousScreenName: previousTrackedScreenName) { [weak self] (defaultProperties: AdobeAnalyticsProperties) in
             
             var properties = defaultProperties
             
