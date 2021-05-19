@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TrainingPageViewModel: TrainingPageViewModelType {
+class TrainingPageViewModel: MobileContentPageViewModel, TrainingPageViewModelType {
     
     private let pageNode: PageNode
     private let pageModel: MobileContentRendererPageModel
@@ -17,5 +17,11 @@ class TrainingPageViewModel: TrainingPageViewModelType {
         
         self.pageNode = pageNode
         self.pageModel = pageModel
+        
+        super.init(pageNode: pageNode, pageModel: pageModel, hidesBackgroundImage: true)
+    }
+    
+    required init(pageNode: PageNode, pageModel: MobileContentRendererPageModel, hidesBackgroundImage: Bool) {
+        fatalError("init(pageNode:pageModel:hidesBackgroundImage:) has not been implemented")
     }
 }

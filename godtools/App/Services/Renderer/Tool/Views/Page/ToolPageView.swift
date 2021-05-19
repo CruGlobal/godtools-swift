@@ -18,7 +18,6 @@ class ToolPageView: MobileContentPageView {
     private let viewModel: ToolPageViewModelType
     private let safeArea: UIEdgeInsets
     private let panGestureToControlPageCollectionViewPanningSensitivity: UIPanGestureRecognizer = UIPanGestureRecognizer()
-    private let backgroundImageView: MobileContentBackgroundImageView = MobileContentBackgroundImageView()
     
     private var headerView: ToolPageHeaderView?
     private var heroView: ToolPageHeroView?
@@ -28,7 +27,6 @@ class ToolPageView: MobileContentPageView {
     
     private weak var delegate: ToolPageViewDelegate?
         
-    @IBOutlet weak private var backgroundImageContainer: UIView!
     @IBOutlet weak private var contentStackContainerView: UIView!
     @IBOutlet weak private var headerContainerView: UIView!
     @IBOutlet weak private var heroContainerView: UIView!
@@ -46,12 +44,8 @@ class ToolPageView: MobileContentPageView {
         self.viewModel = viewModel
         self.safeArea = safeArea
         
-        super.init(frame: UIScreen.main.bounds)
-        
-        initializeNib()
-        setupLayout()
-        setupBinding()
-        
+        super.init(viewModel: viewModel, nibName: String(describing: ToolPageView.self))
+                
         addGestureRecognizer(panGestureToControlPageCollectionViewPanningSensitivity)
         panGestureToControlPageCollectionViewPanningSensitivity.delegate = self
     }
@@ -60,23 +54,16 @@ class ToolPageView: MobileContentPageView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    required init(viewModel: MobileContentPageViewModelType, nibName: String?) {
+        fatalError("init(viewModel:nibName:) has not been implemented")
+    }
+    
     deinit {
         print("x deinit: \(type(of: self))")
     }
     
-    private func initializeNib() {
-        
-        let nib: UINib = UINib(nibName: String(describing: ToolPageView.self), bundle: nil)
-        let contents: [Any]? = nib.instantiate(withOwner: self, options: nil)
-        if let rootNibView = (contents as? [UIView])?.first {
-            addSubview(rootNibView)
-            rootNibView.backgroundColor = .clear
-            rootNibView.frame = bounds
-            rootNibView.constrainEdgesToSuperview()
-        }
-    }
-    
-    private func setupLayout() {
+    override func setupLayout() {
+        super.setupLayout()
         
         topInsetTopConstraint.constant = safeArea.top
         bottomInsetBottomConstraint.constant = safeArea.bottom
@@ -96,15 +83,8 @@ class ToolPageView: MobileContentPageView {
         setCallToActionHidden(hidden: true, animated: false)
     }
     
-    private func setupBinding() {
-        
-        // backgroundColor
-        backgroundColor = viewModel.backgroundColor
-        
-        // backgroundImageView
-        if let backgroundImageViewModel = viewModel.backgroundImageWillAppear() {
-            backgroundImageView.configure(viewModel: backgroundImageViewModel, parentView: backgroundImageContainer)
-        }
+    override func setupBinding() {
+        super.setupBinding()
     }
     
     override func getPagePositions() -> MobileContentPagePositionsType {
