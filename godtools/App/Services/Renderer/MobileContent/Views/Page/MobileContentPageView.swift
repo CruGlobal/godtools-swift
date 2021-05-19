@@ -18,15 +18,53 @@ protocol MobileContentPageViewDelegate: class {
 
 class MobileContentPageView: MobileContentView {
     
+    private let viewModel: MobileContentPageViewModelType
+    private let backgroundImageView: MobileContentBackgroundImageView = MobileContentBackgroundImageView()
+    
     private weak var delegate: MobileContentPageViewDelegate?
     
-    override init(frame: CGRect) {
+    required init(viewModel: MobileContentPageViewModelType, nibName: String?) {
         
-        super.init(frame: frame)
+        self.viewModel = viewModel
+        
+        super.init(frame: UIScreen.main.bounds)
+        
+        if let nibName = nibName {
+            initializeNib(nibName: nibName)
+        }
+        setupLayout()
+        setupBinding()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func initializeNib(nibName: String) {
+        
+        let nib: UINib = UINib(nibName: nibName, bundle: nil)
+        let contents: [Any]? = nib.instantiate(withOwner: self, options: nil)
+        if let rootNibView = (contents as? [UIView])?.first {
+            addSubview(rootNibView)
+            rootNibView.backgroundColor = .clear
+            rootNibView.frame = bounds
+            rootNibView.constrainEdgesToSuperview()
+        }
+    }
+    
+    func setupLayout() {
+        
+    }
+    
+    func setupBinding() {
+        
+        // backgroundColor
+        backgroundColor = viewModel.backgroundColor
+        
+        // backgroundImageView
+        if let backgroundImageViewModel = viewModel.backgroundImageWillAppear() {
+            backgroundImageView.configure(viewModel: backgroundImageViewModel, parentView: self)
+        }
     }
     
     func setDelegate(delegate: MobileContentPageViewDelegate?) {

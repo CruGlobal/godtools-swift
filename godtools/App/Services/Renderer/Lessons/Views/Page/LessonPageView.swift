@@ -22,7 +22,9 @@ class LessonPageView: MobileContentPageView {
     
     private weak var delegate: LessonPageViewDelegate?
     
+    @IBOutlet weak private var topInset: UIView!
     @IBOutlet weak private var contentContainerView: UIView!
+    @IBOutlet weak private var bottomInset: UIView!
     
     @IBOutlet weak private var topInsetTopConstraint: NSLayoutConstraint!
     @IBOutlet weak private var bottomInsetBottomConstraint: NSLayoutConstraint!
@@ -32,40 +34,41 @@ class LessonPageView: MobileContentPageView {
         self.viewModel = viewModel
         self.safeArea = safeArea
         
-        super.init(frame: UIScreen.main.bounds)
-        
-        initializeNib()
-        setupLayout()
-        setupBinding()
+        super.init(viewModel: viewModel, nibName: String(describing: LessonPageView.self))
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    required init(viewModel: MobileContentPageViewModelType, nibName: String?) {
+        fatalError("init(viewModel:nibName:) has not been implemented")
+    }
+    
     deinit {
         print("x deinit: \(type(of: self))")
     }
     
-    private func initializeNib() {
-        
-        let nib: UINib = UINib(nibName: String(describing: LessonPageView.self), bundle: nil)
-        let contents: [Any]? = nib.instantiate(withOwner: self, options: nil)
-        if let rootNibView = (contents as? [UIView])?.first {
-            addSubview(rootNibView)
-            rootNibView.backgroundColor = .clear
-            rootNibView.frame = bounds
-            rootNibView.constrainEdgesToSuperview()
-        }
-    }
-    
-    private func setupLayout() {
+    override func setupLayout() {
+        super.setupLayout()
         
         topInsetTopConstraint.constant = safeArea.top
         bottomInsetBottomConstraint.constant = safeArea.bottom
+        
+        // topInset
+        topInset.backgroundColor = .clear
+        topInset.isUserInteractionEnabled = false
+        
+        // bottomInset
+        bottomInset.backgroundColor = .clear
+        bottomInset.isUserInteractionEnabled = false
+        
+        // contentContainerView
+        contentContainerView.backgroundColor = .clear
     }
     
-    private func setupBinding() {
+    override func setupBinding() {
+        super.setupBinding()
         
     }
     

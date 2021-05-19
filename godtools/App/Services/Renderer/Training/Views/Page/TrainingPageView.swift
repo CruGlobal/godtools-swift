@@ -27,30 +27,19 @@ class TrainingPageView: MobileContentPageView {
         
         self.viewModel = viewModel
         
-        super.init(frame: UIScreen.main.bounds)
-        
-        initializeNib()
-        setupLayout()
-        setupBinding()
+        super.init(viewModel: viewModel, nibName: String(describing: TrainingPageView.self))
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func initializeNib() {
-        
-        let nib: UINib = UINib(nibName: String(describing: TrainingPageView.self), bundle: nil)
-        let contents: [Any]? = nib.instantiate(withOwner: self, options: nil)
-        if let rootNibView = (contents as? [UIView])?.first {
-            addSubview(rootNibView)
-            rootNibView.backgroundColor = .clear
-            rootNibView.frame = bounds
-            rootNibView.constrainEdgesToSuperview()
-        }
+    required init(viewModel: MobileContentPageViewModelType, nibName: String?) {
+        fatalError("init(viewModel:nibName:) has not been implemented")
     }
     
-    private func setupLayout() {
+    override func setupLayout() {
+        super.setupLayout()
         
         // contentStackView
         contentStackContainerView.addSubview(contentStackView)
@@ -77,7 +66,8 @@ class TrainingPageView: MobileContentPageView {
         bottomGradientView.layer.insertSublayer(bottomGradient, at: 0)
     }
     
-    private func setupBinding() {
+    override func setupBinding() {
+        super.setupBinding()
         
     }
     
