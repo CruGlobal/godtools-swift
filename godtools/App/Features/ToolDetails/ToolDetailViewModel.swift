@@ -173,7 +173,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     }
     
     private var analyticsScreenName: String {
-        return resource.abbreviation + "-" + "tool-info"
+        return resource.abbreviation + "-" + siteSubSection
     }
     
     private var siteSection: String {

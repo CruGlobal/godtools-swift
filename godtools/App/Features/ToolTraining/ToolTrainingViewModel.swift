@@ -54,7 +54,7 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     }
     
     private var analyticsScreenName: String {
-        return resource.abbreviation + "-" + "tool-training"
+        return resource.abbreviation + "-tool-training"
     }
     
     private var siteSection: String {
