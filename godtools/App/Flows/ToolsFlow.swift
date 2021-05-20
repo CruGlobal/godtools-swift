@@ -161,10 +161,7 @@ class ToolsFlow: Flow {
             
         case .closeTappedFromToolTraining:
             navigationController.dismiss(animated: true, completion: nil)
-            
-        case .urlLinkTappedFromToolTraining(let url, let exitLink):
-            navigateToURL(url: url, exitLink: exitLink)
-            
+                        
         case .closeTappedFromShareToolScreenTutorial:
             self.shareToolMenuFlow = nil
                         
