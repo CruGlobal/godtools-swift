@@ -32,6 +32,13 @@ class MobileContentPageViewModel: MobileContentPageViewModelType {
         return resource.abbreviation + "-" + String(page)
     }
     
+    var analyticsSiteSection: String {
+        
+        let resource: ResourceModel = pageModel.resource
+ 
+        return resource.abbreviation
+    }
+    
     var backgroundColor: UIColor {
         return pageModel.pageColors.backgroundColor
     }
@@ -74,12 +81,10 @@ class MobileContentPageViewModel: MobileContentPageViewModelType {
     func buttonWithUrlTapped(url: String) {
         
         let resource: ResourceModel = pageModel.resource
- 
-        let siteSection = resource.abbreviation
         
         let exitLink = ExitLinkModel(
             screenName: analyticsScreenName,
-            siteSection: siteSection,
+            siteSection: analyticsSiteSection,
             url: url
         )
         
