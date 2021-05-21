@@ -11,23 +11,20 @@ import UIKit
 class ToolsMenuView: UIViewController {
     
     private let viewModel: ToolsMenuViewModelType
-    private let startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView
     
     private var lessonsView: LessonsListView?
     private var favoritedToolsView: FavoritedToolsView?
     private var allToolsView: AllToolsView?
     private var chooseLanguageButton: UIBarButtonItem?
     private var didLayoutSubviews: Bool = false
-    private var isFirstViewAppear: Bool = true
                 
     @IBOutlet weak private var toolsNavigationView: PageNavigationCollectionView!
     @IBOutlet weak private var toolbarView: ToolsMenuToolbarView!
     @IBOutlet weak private var bottomView: UIView!
             
-    required init(viewModel: ToolsMenuViewModelType, startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView) {
+    required init(viewModel: ToolsMenuViewModelType) {
         
         self.viewModel = viewModel
-        self.startingToolbarItem = startingToolbarItem
         super.init(nibName: String(describing: ToolsMenuView.self), bundle: nil)
     }
     
@@ -84,16 +81,6 @@ class ToolsMenuView: UIViewController {
         favoritedToolsView?.setDelegate(delegate: self)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        if isFirstViewAppear {
-            isFirstViewAppear = false
-            // NOTE: Had to force view to layout constraints, for some reason this allows the collection view to scroll before the view appears.
-            view.layoutIfNeeded()
-            navigateToToolPageForToolbarItem(toolbarItem: startingToolbarItem, animated: false)
-        }
-    }
     
     func resetMenu() {
         
@@ -110,7 +97,7 @@ class ToolsMenuView: UIViewController {
         }
         
         if toolsNavigationView != nil {
-            navigateToToolPageForToolbarItem(toolbarItem: startingToolbarItem, animated: false)
+            toolsNavigationView.scrollToPage(page: 0, animated: false)
         }
     }
     
@@ -146,7 +133,7 @@ class ToolsMenuView: UIViewController {
             animated: animated
         )
         
-        toolbarView.setSelectedToolbarItem(toolbarItem: startingToolbarItem)
+        toolbarView.setSelectedToolbarItem(toolbarItem: toolbarItem)
     }
     
     private func setChooseLanguageButtonHidden(hidden: Bool) {
