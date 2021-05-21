@@ -19,6 +19,7 @@ import UIKit
     @objc optional func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
     @objc optional func pageNavigationPageWillDisappear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
     @objc optional func pageNavigationPageDidDisappear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
+    @objc optional func pageNavigationDidEndScrollingAnimation(pageNavigation: PageNavigationCollectionView)
 }
 
 class PageNavigationCollectionView: UIView, NibBased {
@@ -28,6 +29,8 @@ class PageNavigationCollectionView: UIView, NibBased {
     private var internalCurrentChangedPage: Int = 0
     private var internalCurrentStoppedOnPage: Int = 0
     private var shouldNotifyPageDidAppearForDataReload: Bool = false
+    
+    private(set) var isAnimatingScroll: Bool = false
     
     @IBOutlet weak private var collectionView: UICollectionView!
     
@@ -105,6 +108,10 @@ class PageNavigationCollectionView: UIView, NibBased {
         
         guard page >= 0 && page < numberOfPages else {
             return
+        }
+        
+        if animated {
+            isAnimatingScroll = true
         }
         
         collectionView.scrollToItem(
@@ -234,7 +241,7 @@ class PageNavigationCollectionView: UIView, NibBased {
             }, completion: nil)
         }
         
-        collectionView.scrollToItem(at: IndexPath(item: pageNumberForDeletedPages, section: 0), at: .centeredHorizontally, animated: false)
+        scrollToPage(page: pageNumberForDeletedPages, animated: false)
     }
     
     func getIndexPathForPageCell(pageCell: UICollectionViewCell) -> IndexPath? {
@@ -372,6 +379,8 @@ extension PageNavigationCollectionView: UIScrollViewDelegate {
     }
     
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        isAnimatingScroll = false
         didEndPageScrolling()
+        delegate?.pageNavigationDidEndScrollingAnimation?(pageNavigation: self)
     }
 }
