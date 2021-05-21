@@ -18,7 +18,6 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     private let localizationServices: LocalizationServices
     private let translationDownloader: TranslationDownloader
     private let analytics: AnalyticsContainer
-    private let exitLinkAnalytics: ExitLinkAnalytics
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -42,7 +41,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     let aboutDetails: ObservableValue<String> = ObservableValue(value: "")
     let languageDetails: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, translationDownloader: TranslationDownloader, analytics: AnalyticsContainer, exitLinkAnalytics: ExitLinkAnalytics) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, translationDownloader: TranslationDownloader, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -52,7 +51,6 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         self.localizationServices = localizationServices
         self.translationDownloader = translationDownloader
         self.analytics = analytics
-        self.exitLinkAnalytics = exitLinkAnalytics
                 
         super.init()
         
@@ -175,7 +173,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     }
     
     private var analyticsScreenName: String {
-        return resource.abbreviation + "-" + "tool-info"
+        return resource.abbreviation + "-" + siteSubSection
     }
     
     private var siteSection: String {
@@ -183,7 +181,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     }
     
     private var siteSubSection: String {
-        return ""
+        return "tool-info"
     }
     
     private func downloadResourceTranslation() {
@@ -255,13 +253,12 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     
     func urlTapped(url: URL) {
                 
-        exitLinkAnalytics.trackExitLink(
+        let exitLink = ExitLinkModel(
             screenName: analyticsScreenName,
             siteSection: siteSection,
-            siteSubSection: siteSubSection,
-            url: url
+            url: url.absoluteString
         )
         
-        flowDelegate?.navigate(step: .urlLinkTappedFromToolDetail(url: url))
+        flowDelegate?.navigate(step: .urlLinkTappedFromToolDetail(url: url, exitLink: exitLink))
     }
 }

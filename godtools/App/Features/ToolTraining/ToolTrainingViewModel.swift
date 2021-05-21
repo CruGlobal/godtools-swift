@@ -53,6 +53,14 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
         setPage(page: 0, animated: false)
     }
     
+    private var analyticsScreenName: String {
+        return resource.abbreviation + "-tool-training"
+    }
+    
+    private var siteSection: String {
+        return resource.abbreviation
+    }
+    
     private func setPage(page: Int, animated: Bool) {
         
         self.page = page
@@ -129,7 +137,14 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     }
     
     func buttonWithUrlTapped(url: String) {
-        flowDelegate?.navigate(step: .buttonWithUrlTappedFromMobileContentRenderer(url: url))
+        
+        let exitLink = ExitLinkModel(
+            screenName: analyticsScreenName,
+            siteSection: siteSection,
+            url: url
+        )
+        
+        flowDelegate?.navigate(step: .buttonWithUrlTappedFromMobileContentRenderer(url: url, exitLink: exitLink))
     }
     
     func tipPageWillAppear(page: Int, window: UIViewController, safeArea: UIEdgeInsets) -> MobileContentView? {

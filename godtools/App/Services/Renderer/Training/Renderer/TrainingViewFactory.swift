@@ -15,8 +15,11 @@ class TrainingViewFactory: MobileContentPageViewFactoryType {
     private let viewedTrainingTipsService: ViewedTrainingTipsService
     private let trainingTipsEnabled: Bool
     
-    required init(translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, viewedTrainingTipsService: ViewedTrainingTipsService, trainingTipsEnabled: Bool) {
+    private(set) weak var flowDelegate: FlowDelegate?
+    
+    required init(flowDelegate: FlowDelegate, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, viewedTrainingTipsService: ViewedTrainingTipsService, trainingTipsEnabled: Bool) {
         
+        self.flowDelegate = flowDelegate
         self.translationsFileCache = translationsFileCache
         self.mobileContentNodeParser = mobileContentNodeParser
         self.viewedTrainingTipsService = viewedTrainingTipsService
@@ -36,6 +39,7 @@ class TrainingViewFactory: MobileContentPageViewFactoryType {
         else if let pageNode = renderableNode as? PageNode {
             
             let viewModel = TrainingPageViewModel(
+                flowDelegate: getFlowDelegate(),
                 pageNode: pageNode,
                 pageModel: pageModel
             )

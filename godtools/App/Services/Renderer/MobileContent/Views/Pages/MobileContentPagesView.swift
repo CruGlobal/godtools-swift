@@ -324,16 +324,4 @@ extension MobileContentPagesView: MobileContentPageViewDelegate {
     func pageViewDidReceiveEvents(pageView: MobileContentPageView, events: [String]) {
         viewModel.pageDidReceiveEvents(events: events)
     }
-    
-    func pageViewDidReceiveUrl(pageView: MobileContentPageView, url: String) {
-        viewModel.buttonWithUrlTapped(url: url)
-    }
-    
-    func pageViewDidReceiveTrainingTipTap(pageView: MobileContentPageView, event: TrainingTipEvent) {
-        viewModel.trainingTipTapped(event: event)
-    }
-    
-    func pageViewDidReceiveError(pageView: MobileContentPageView, error: MobileContentErrorViewModel) {
-        viewModel.errorOccurred(error: error)
-    }
 }
