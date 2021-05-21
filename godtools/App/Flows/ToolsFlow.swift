@@ -39,7 +39,7 @@ class ToolsFlow: Flow {
             openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache
         )
         
-        let view = ToolsMenuView(viewModel: viewModel)
+        let view = ToolsMenuView(viewModel: viewModel, startingToolbarItem: .favoritedTools)
         
         navigationController.setViewControllers([view], animated: false)
     }
@@ -144,11 +144,11 @@ class ToolsFlow: Flow {
             
             self.shareToolMenuFlow = shareToolMenuFlow
 
-        case .buttonWithUrlTappedFromMobileContentRenderer(let url):
+        case .buttonWithUrlTappedFromMobileContentRenderer(let url, let exitLink):
             guard let webUrl = URL(string: url) else {
                 return
             }
-            navigateToURL(url: webUrl)
+            navigateToURL(url: webUrl, exitLink: exitLink)
             
         case .trainingTipTappedFromMobileContentRenderer(let event):
             navigateToToolTraining(event: event)
@@ -161,10 +161,7 @@ class ToolsFlow: Flow {
             
         case .closeTappedFromToolTraining:
             navigationController.dismiss(animated: true, completion: nil)
-            
-        case .urlLinkTappedFromToolTraining(let url):
-            navigateToURL(url: url)
-            
+                        
         case .closeTappedFromShareToolScreenTutorial:
             self.shareToolMenuFlow = nil
                         
@@ -204,8 +201,8 @@ class ToolsFlow: Flow {
             navigateToTool(resource: resource, trainingTipsEnabled: true)
             dismissLearnToShareToolFlow()
             
-        case .urlLinkTappedFromToolDetail(let url):
-            navigateToURL(url: url)
+        case .urlLinkTappedFromToolDetail(let url, let exitLink):
+            navigateToURL(url: url, exitLink: exitLink)
             
         default:
             break
@@ -221,12 +218,11 @@ class ToolsFlow: Flow {
         self.learnToShareToolFlow = nil
     }
     
-    private func navigateToURL(url: URL) {
-        if #available(iOS 10.0, *) {
-            UIApplication.shared.open(url)
-        } else {
-            UIApplication.shared.openURL(url)
-        }
+    private func navigateToURL(url: URL, exitLink: ExitLinkModel) {
+        
+        appDiContainer.exitLinkAnalytics.trackExitLink(exitLink: exitLink)
+        
+        UIApplication.shared.open(url)
     }
     
     private func navigateToToolDetail(resource: ResourceModel) {
@@ -239,8 +235,7 @@ class ToolsFlow: Flow {
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
             translationDownloader: appDiContainer.translationDownloader,
-            analytics: appDiContainer.analytics,
-            exitLinkAnalytics: appDiContainer.exitLinkAnalytics
+            analytics: appDiContainer.analytics
         )
         let view = ToolDetailView(viewModel: viewModel)
         
@@ -543,6 +538,7 @@ class ToolsFlow: Flow {
         let cardJumpService: CardJumpService = appDiContainer.getCardJumpService()
         
         let toolPageViewFactory = ToolPageViewFactory(
+            flowDelegate: self,
             analytics: analytics,
             mobileContentAnalytics: mobileContentAnalytics,
             fontService: fontService,
@@ -556,6 +552,7 @@ class ToolsFlow: Flow {
         )
         
         let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
+            flowDelegate: self,
             translationsFileCache: translationsFileCache,
             mobileContentNodeParser: mobileContentNodeParser,
             viewedTrainingTipsService: viewedTrainingTipsService,
@@ -565,6 +562,7 @@ class ToolsFlow: Flow {
         let pageViewFactories: [MobileContentPageViewFactoryType] = [toolPageViewFactory, trainingViewFactory]
         
         let primaryRenderer = MobileContentRenderer(
+            flowDelegate: self,
             resource: resource,
             language: primaryLanguage,
             manifest: MobileContentXmlManifest(translationManifest: primaryTranslationManifest),
@@ -582,6 +580,7 @@ class ToolsFlow: Flow {
         if !trainingTipsEnabled, let parallelLanguage = parallelLanguage, let parallelTranslationManifest = parallelTranslationManifest, parallelLanguage.code != primaryLanguage.code {
             
             let parallelRenderer = MobileContentRenderer(
+                flowDelegate: self,
                 resource: resource,
                 language: parallelLanguage,
                 manifest: MobileContentXmlManifest(translationManifest: parallelTranslationManifest),
@@ -630,6 +629,7 @@ class ToolsFlow: Flow {
         let viewedTrainingTipsService: ViewedTrainingTipsService = appDiContainer.getViewedTrainingTipsService()
         
         let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
+            flowDelegate: self,
             translationsFileCache: translationsFileCache,
             mobileContentNodeParser: mobileContentNodeParser,
             viewedTrainingTipsService: viewedTrainingTipsService,
@@ -639,6 +639,7 @@ class ToolsFlow: Flow {
         let pageViewFactories: [MobileContentPageViewFactoryType] = [trainingViewFactory]
         
         let renderer = MobileContentRenderer(
+            flowDelegate: self,
             resource: event.pageModel.resource,
             language: event.pageModel.language,
             manifest: event.pageModel.manifest,
@@ -677,10 +678,12 @@ class ToolsFlow: Flow {
         let cardJumpService: CardJumpService = appDiContainer.getCardJumpService()
         
         let lessonPageViewFactory = LessonPageViewFactory(
+            flowDelegate: self,
             analytics: analytics
         )
         
         let toolPageViewFactory = ToolPageViewFactory(
+            flowDelegate: self,
             analytics: analytics,
             mobileContentAnalytics: mobileContentAnalytics,
             fontService: fontService,
@@ -694,6 +697,7 @@ class ToolsFlow: Flow {
         )
         
         let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
+            flowDelegate: self,
             translationsFileCache: translationsFileCache,
             mobileContentNodeParser: mobileContentNodeParser,
             viewedTrainingTipsService: viewedTrainingTipsService,
@@ -703,6 +707,7 @@ class ToolsFlow: Flow {
         let pageViewFactories: [MobileContentPageViewFactoryType] = [lessonPageViewFactory, toolPageViewFactory, trainingViewFactory]
         
         let renderer = MobileContentRenderer(
+            flowDelegate: self,
             resource: resource,
             language: primaryLanguage,
             manifest: MobileContentXmlManifest(translationManifest: primaryTranslationManifest),

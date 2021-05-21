@@ -197,16 +197,4 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
             numberOfPages.accept(value: pages.count)
         }
     }
-    
-    func buttonWithUrlTapped(url: String) {
-        flowDelegate?.navigate(step: .buttonWithUrlTappedFromMobileContentRenderer(url: url))
-    }
-    
-    func trainingTipTapped(event: TrainingTipEvent) {
-        flowDelegate?.navigate(step: .trainingTipTappedFromMobileContentRenderer(event: event))
-    }
-    
-    func errorOccurred(error: MobileContentErrorViewModel) {
-        flowDelegate?.navigate(step: .errorOccurredFromMobileContentRenderer(error: error))
-    }
 }

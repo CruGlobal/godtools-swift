@@ -20,7 +20,4 @@ protocol MobileContentPagesViewModelType {
     func pageWillAppear(page: Int) -> MobileContentView?
     func pageDidDisappear(page: Int)
     func pageDidReceiveEvents(events: [String])
-    func buttonWithUrlTapped(url: String)
-    func trainingTipTapped(event: TrainingTipEvent)
-    func errorOccurred(error: MobileContentErrorViewModel)
 }

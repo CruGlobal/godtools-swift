@@ -11,20 +11,23 @@ import UIKit
 class ToolsMenuView: UIViewController {
     
     private let viewModel: ToolsMenuViewModelType
-
+    private let startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView
+    
     private var lessonsView: LessonsListView?
     private var favoritedToolsView: FavoritedToolsView?
     private var allToolsView: AllToolsView?
     private var chooseLanguageButton: UIBarButtonItem?
     private var didLayoutSubviews: Bool = false
+    private var isFirstViewAppear: Bool = true
                 
     @IBOutlet weak private var toolsNavigationView: PageNavigationCollectionView!
     @IBOutlet weak private var toolbarView: ToolsMenuToolbarView!
     @IBOutlet weak private var bottomView: UIView!
             
-    required init(viewModel: ToolsMenuViewModelType) {
+    required init(viewModel: ToolsMenuViewModelType, startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView) {
         
         self.viewModel = viewModel
+        self.startingToolbarItem = startingToolbarItem
         super.init(nibName: String(describing: ToolsMenuView.self), bundle: nil)
     }
     
@@ -81,6 +84,17 @@ class ToolsMenuView: UIViewController {
         favoritedToolsView?.setDelegate(delegate: self)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if isFirstViewAppear {
+            isFirstViewAppear = false
+            // NOTE: Had to force view to layout constraints, for some reason this allows the collection view to scroll before the view appears.
+            view.layoutIfNeeded()
+            navigateToToolPageForToolbarItem(toolbarItem: startingToolbarItem, animated: false)
+        }
+    }
+    
     func resetMenu() {
         
         if let lessonsView = lessonsView {
@@ -95,7 +109,9 @@ class ToolsMenuView: UIViewController {
             allToolsView.scrollToTopOfTools(animated: false)
         }
         
-        toolsNavigationView.scrollToPage(page: 0, animated: false)
+        if toolsNavigationView != nil {
+            navigateToToolPageForToolbarItem(toolbarItem: startingToolbarItem, animated: false)
+        }
     }
     
     @objc func handleMenu(barButtonItem: UIBarButtonItem) {
@@ -127,8 +143,10 @@ class ToolsMenuView: UIViewController {
         
         toolsNavigationView.scrollToPage(
             page: page,
-            animated: true
+            animated: animated
         )
+        
+        toolbarView.setSelectedToolbarItem(toolbarItem: startingToolbarItem)
     }
     
     private func setChooseLanguageButtonHidden(hidden: Bool) {
@@ -189,9 +207,14 @@ extension ToolsMenuView: PageNavigationCollectionViewDelegate {
     
     func pageNavigationDidChangeMostVisiblePage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
         
-        let toolbarItemView = toolbarView.toolbarItemViews[page]
+        if !toolsNavigationView.isAnimatingScroll {
+            toolbarView.setSelectedToolbarItem(toolbarItem: toolbarView.toolbarItemViews[page])
+        }
+    }
+    
+    func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
         
-        toolbarView.setSelectedToolbarItem(toolbarItem: toolbarItemView)
+        toolbarView.setSelectedToolbarItem(toolbarItem: toolbarView.toolbarItemViews[page])
     }
 }
 

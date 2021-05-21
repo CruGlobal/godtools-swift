@@ -12,6 +12,6 @@ protocol FirebaseAnalyticsType: MobileContentAnalyticsSystem {
     func configure()
     func trackScreenView(screenName: String, siteSection: String, siteSubSection: String)
     func trackAction(screenName: String?, actionName: String, data: [String : Any]?)
-    func trackExitLink(screenName: String, siteSection: String, siteSubSection: String, url: URL)
+    func trackExitLink(exitLink: ExitLinkModel)
     func fetchAttributesThenSetUserId()
 }
