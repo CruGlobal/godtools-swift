@@ -39,7 +39,7 @@ class ToolsFlow: Flow {
             openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache
         )
         
-        let view = ToolsMenuView(viewModel: viewModel)
+        let view = ToolsMenuView(viewModel: viewModel, startingToolbarItem: .favoritedTools)
         
         navigationController.setViewControllers([view], animated: false)
     }
