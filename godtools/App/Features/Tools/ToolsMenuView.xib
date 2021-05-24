@@ -13,7 +13,7 @@
             <connections>
                 <outlet property="bottomView" destination="4Uw-zr-5rw" id="4JP-hU-T45"/>
                 <outlet property="toolbarView" destination="1bv-pO-U7s" id="ztY-eE-98O"/>
-                <outlet property="toolsNavigationView" destination="7ze-Fz-qPr" id="Le3-sT-MvK"/>
+                <outlet property="toolsListsScrollView" destination="t7W-Dh-J7s" id="FPz-xN-dzt"/>
                 <outlet property="view" destination="iN0-l3-epB" id="GxQ-BJ-8w6"/>
             </connections>
         </placeholder>
@@ -22,10 +22,9 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7ze-Fz-qPr" userLabel="toolsNavigationView" customClass="PageNavigationCollectionView" customModule="godtools" customModuleProvider="target">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t7W-Dh-J7s" userLabel="toolsListsScrollView">
                     <rect key="frame" x="0.0" y="44" width="414" height="758"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                </view>
+                </scrollView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1bv-pO-U7s" userLabel="toolbarView" customClass="ToolsMenuToolbarView" customModule="godtools" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="802" width="414" height="60"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -41,15 +40,15 @@
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="7ze-Fz-qPr" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="29j-VP-22m"/>
                 <constraint firstItem="4Uw-zr-5rw" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="A70-Q3-aMO"/>
+                <constraint firstItem="t7W-Dh-J7s" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="A8F-qh-aPf"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="1bv-pO-U7s" secondAttribute="trailing" id="FTG-0u-0nb"/>
-                <constraint firstItem="1bv-pO-U7s" firstAttribute="top" secondItem="7ze-Fz-qPr" secondAttribute="bottom" id="LXn-nc-VPl"/>
                 <constraint firstAttribute="trailing" secondItem="4Uw-zr-5rw" secondAttribute="trailing" id="NxF-mB-gOB"/>
                 <constraint firstItem="4Uw-zr-5rw" firstAttribute="top" secondItem="1bv-pO-U7s" secondAttribute="bottom" id="Rn8-IO-ePC"/>
-                <constraint firstItem="7ze-Fz-qPr" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="SNn-tL-kmD"/>
+                <constraint firstItem="t7W-Dh-J7s" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="RpJ-5j-IFG"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="1bv-pO-U7s" secondAttribute="bottom" id="SWq-MW-iAF"/>
-                <constraint firstItem="7ze-Fz-qPr" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="gcQ-u1-UtF"/>
+                <constraint firstItem="1bv-pO-U7s" firstAttribute="top" secondItem="t7W-Dh-J7s" secondAttribute="bottom" id="U2x-Tg-aU0"/>
+                <constraint firstItem="t7W-Dh-J7s" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="tAN-Lu-yDi"/>
                 <constraint firstItem="1bv-pO-U7s" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="x7R-fF-217"/>
                 <constraint firstAttribute="bottom" secondItem="4Uw-zr-5rw" secondAttribute="bottom" id="yEy-1r-8Wa"/>
             </constraints>
