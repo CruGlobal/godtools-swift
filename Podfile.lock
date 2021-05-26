@@ -117,6 +117,7 @@ PODS:
     - GTMAppAuth
     - Result
   - TTTAttributedLabel (2.0.0)
+  - youtube-ios-player-helper (1.0.3)
   - YoutubePlayer-in-WKWebView (0.3.4)
 
 DEPENDENCIES:
@@ -139,6 +140,7 @@ DEPENDENCIES:
   - SWXMLHash (~> 5.0.1)
   - TheKeyOAuthSwift
   - TTTAttributedLabel (~> 2.0.0)
+  - youtube-ios-player-helper (~> 1.0.3)
   - YoutubePlayer-in-WKWebView (~> 0.3.0)
 
 SPEC REPOS:
@@ -179,6 +181,7 @@ SPEC REPOS:
     - Starscream
     - SWXMLHash
     - TTTAttributedLabel
+    - youtube-ios-player-helper
     - YoutubePlayer-in-WKWebView
 
 SPEC CHECKSUMS:
@@ -217,8 +220,9 @@ SPEC CHECKSUMS:
   SWXMLHash: 9cc0c2e4807926c74377724aa8722ee5707a0485
   TheKeyOAuthSwift: e5e9ba7c9e9a22b4ddfe586c6b30cb91463410c0
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
+  youtube-ios-player-helper: 0185c57db23c80d63d6ca11251d110abb8a4ca61
   YoutubePlayer-in-WKWebView: af2f5929fc78882d94bfdfeea999b661b78d9717
 
-PODFILE CHECKSUM: 675d4c12c4c5f7ac5a287d84ec5f41afe322d905
+PODFILE CHECKSUM: 5c3bda744166b6166d631e9ca8756c88ac52e1cd
 
 COCOAPODS: 1.10.0
