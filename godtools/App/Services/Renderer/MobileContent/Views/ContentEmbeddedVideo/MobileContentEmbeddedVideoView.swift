@@ -27,6 +27,11 @@ class MobileContentEmbeddedVideoView: MobileContentView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+        videoView.stopVideo()
+    }
+    
     private func setupLayout() {
         
         videoView.backgroundColor = .clear
@@ -39,6 +44,7 @@ class MobileContentEmbeddedVideoView: MobileContentView {
     
     private func embedVideo() {
         
+        videoView.delegate = self
         videoView.load(withVideoId: viewModel.videoId, playerVars: viewModel.youtubePlayerParameters)
                 
         addSubview(videoView)
@@ -64,3 +70,54 @@ class MobileContentEmbeddedVideoView: MobileContentView {
         return .constrainedToChildren
     }
 }
+
+
+// MARK: - YTPlayerViewDelegate
+
+extension ToolDetailView: YTPlayerViewDelegate {
+    
+    func playerViewDidBecomeReady(_ playerView: YTPlayerView) {
+        
+        print("\n ToolDetailView player view did become ready")
+        
+    }
+    
+    func playerView(_ playerView: WKYTPlayerView, didChangeTo state: WKYTPlayerState) {
+        
+        print("\n ToolDetailView playerView didChangeTo state")
+        
+        switch state {
+            
+        case .unstarted:
+            print("unstarted")
+        case .ended:
+            print("ended")
+        case .playing:
+            print("playing")
+        case .paused:
+            print("paused")
+        case .buffering:
+            print("buffering")
+        case .queued:
+            print("queued")
+        case .unknown:
+            print("unknown")
+        @unknown default:
+            print("default")
+        }
+    }
+    
+    func playerView(_ playerView: WKYTPlayerView, didChangeTo quality: WKYTPlaybackQuality) {
+        
+        print("\n ToolDetailView playerView didChangeTo quality")
+        
+    }
+    
+    func playerView(_ playerView: WKYTPlayerView, receivedError error: WKYTPlayerError) {
+        
+        print("\n ToolDetailView playerView receivedError error")
+        print("  error: \(error)")
+        
+    }
+}
+
