@@ -2299,6 +2299,7 @@
 				455FF6482603DC690028B95B /* ContentTabNode.swift */,
 				455FF6452603DC690028B95B /* ContentTabsNode.swift */,
 				455FF6522603DC690028B95B /* ContentTextNode.swift */,
+				D1886E5B2660166600886A71 /* ContentVideoNode.swift */,
 				455FF63E2603DC690028B95B /* HeaderNode.swift */,
 				455FF6552603DC690028B95B /* HeadingNode.swift */,
 				455FF63D2603DC690028B95B /* HeroNode.swift */,
@@ -2311,7 +2312,6 @@
 				455FF64E2603DC690028B95B /* TipNode.swift */,
 				455FF6532603DC690028B95B /* TitleNode.swift */,
 				455FF6392603DC690028B95B /* TrainingTipNode.swift */,
-				D1886E5B2660166600886A71 /* ContentVideoNode.swift */,
 			);
 			path = Nodes;
 			sourceTree = "<group>";

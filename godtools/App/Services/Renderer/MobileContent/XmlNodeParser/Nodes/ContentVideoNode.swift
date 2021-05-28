@@ -19,7 +19,7 @@ class ContentVideoNode: MobileContentXmlNode {
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
         provider = attributes["provider"]?.text
-        videoId = attributes["videoId"]?.text
+        videoId = attributes["video-id"]?.text
 
         super.init(xmlElement: xmlElement)
     }
@@ -29,6 +29,11 @@ class ContentVideoNode: MobileContentXmlNode {
 
 extension ContentVideoNode: MobileContentRenderableNode {
     var nodeContentIsRenderable: Bool {
-        return true
+        
+        if videoId != nil {
+            return true
+        }
+        
+        return false
     }
 }

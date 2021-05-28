@@ -34,8 +34,7 @@ class MobileContentEmbeddedVideoView: MobileContentView, YTPlayerViewDelegate {
     
     private func setupLayout() {
         
-        videoView.backgroundColor = .magenta
-        videoView.drawBorder()
+        videoView.backgroundColor = .clear
     }
     
     private func setupBinding() {
@@ -44,76 +43,13 @@ class MobileContentEmbeddedVideoView: MobileContentView, YTPlayerViewDelegate {
     }
     
     private func embedVideo() {
-        
-        //guard let videoId = viewModel.videoId else { return }
-        
-        //videoView.delegate = self
-        //videoView.load(withVideoId: videoId, playerVars: viewModel.youtubePlayerParameters)
                 
         addSubview(videoView)
         
         videoView.constrainEdgesToSuperview()
         
-        /*videoView.translatesAutoresizingMaskIntoConstraints = false
-        
-        let leading: NSLayoutConstraint = NSLayoutConstraint(
-            item: videoView,
-            attribute: .leading,
-            relatedBy: .equal,
-            toItem: self,
-            attribute: .leading,
-            multiplier: 1,
-            constant: 0
-        )
-        
-        let trailing: NSLayoutConstraint = NSLayoutConstraint(
-            item: videoView,
-            attribute: .trailing,
-            relatedBy: .equal,
-            toItem: self,
-            attribute: .trailing,
-            multiplier: 1,
-            constant: 0
-        )
-        
-        let top: NSLayoutConstraint = NSLayoutConstraint(
-            item: videoView,
-            attribute: .top,
-            relatedBy: .equal,
-            toItem: self,
-            attribute: .top,
-            multiplier: 1,
-            constant: 0
-        )
-        
-        addConstraint(leading)
-        addConstraint(trailing)
-        addConstraint(top)*/
-        
-        /*let height: NSLayoutConstraint = NSLayoutConstraint(
-            item: videoView,
-            attribute: .height,
-            relatedBy: .equal,
-            toItem: nil,
-            attribute: .notAnAttribute,
-            multiplier: 1,
-            constant: 300
-        )
-        
-        height.priority = UILayoutPriority(1000)
-        
-        videoView.addConstraint(height)*/
-        /*let aspectRatio: NSLayoutConstraint = NSLayoutConstraint(
-            item: videoView,
-            attribute: .height,
-            relatedBy: .equal,
-            toItem: videoView,
-            attribute: .width,
-            multiplier: CGFloat(1.0),
-            constant: 0
-        )
-        
-        videoView.addConstraint(aspectRatio)*/
+        videoView.delegate = self
+        videoView.load(withVideoId: viewModel.videoId, playerVars: viewModel.youtubePlayerParameters)
     }
     
     // MARK: - MobileContentView
