@@ -62,15 +62,14 @@ class MobileContentEmbeddedVideoView: MobileContentView, YTPlayerViewDelegate {
 
 // MARK: - YTPlayerViewDelegate
 
-/*extension ToolDetailView: YTPlayerViewDelegate {
+extension ToolDetailView: YTPlayerViewDelegate {
     
     func playerViewDidBecomeReady(_ playerView: YTPlayerView) {
         
         print("\n ToolDetailView player view did become ready")
-        
     }
     
-    func playerView(_ playerView: YTPlayerView, didChangeTo state: YTPlayerView) {
+    internal func playerView(_ playerView: YTPlayerView, didChangeTo state: YTPlayerState) {
         
         print("\n ToolDetailView playerView didChangeTo state")
         
@@ -86,8 +85,8 @@ class MobileContentEmbeddedVideoView: MobileContentView, YTPlayerViewDelegate {
             print("paused")
         case .buffering:
             print("buffering")
-        case .queued:
-            print("queued")
+        case .cued:
+            print("cued")
         case .unknown:
             print("unknown")
         @unknown default:
@@ -97,15 +96,13 @@ class MobileContentEmbeddedVideoView: MobileContentView, YTPlayerViewDelegate {
     
     func playerView(_ playerView: YTPlayerView, didChangeTo quality: YTPlaybackQuality) {
         
-        print("\n ToolDetailView playerView didChangeTo quality")
+        print("\n ToolDetailView playerView didChangeTo quality \(quality)")
         
     }
     
-    func playerView(_ playerView: YTPlayerView, receivedError error: WKYTPlayerError) {
+    func playerView(_ playerView: YTPlayerView, receivedError error: YTPlayerError) {
         
-        print("\n ToolDetailView playerView receivedError error")
-        print("  error: \(error)")
-        
+        print("\n ToolDetailView playerView receivedError: \(error)")
     }
-}*/
+}
 
