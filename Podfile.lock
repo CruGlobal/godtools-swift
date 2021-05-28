@@ -118,7 +118,6 @@ PODS:
     - Result
   - TTTAttributedLabel (2.0.0)
   - youtube-ios-player-helper (1.0.3)
-  - YoutubePlayer-in-WKWebView (0.3.5)
 
 DEPENDENCIES:
   - AdobeMobileSDK (~> 4.19)
@@ -141,7 +140,6 @@ DEPENDENCIES:
   - TheKeyOAuthSwift
   - TTTAttributedLabel (~> 2.0.0)
   - youtube-ios-player-helper (~> 1.0.3)
-  - YoutubePlayer-in-WKWebView (~> 0.3.0)
 
 SPEC REPOS:
   https://github.com/CruGlobal/cocoapods-specs.git:
@@ -182,7 +180,6 @@ SPEC REPOS:
     - SWXMLHash
     - TTTAttributedLabel
     - youtube-ios-player-helper
-    - YoutubePlayer-in-WKWebView
 
 SPEC CHECKSUMS:
   AdobeMobileSDK: 0072f212876db078ffefdf42c5e5d6537dd434cb
@@ -221,8 +218,7 @@ SPEC CHECKSUMS:
   TheKeyOAuthSwift: e5e9ba7c9e9a22b4ddfe586c6b30cb91463410c0
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   youtube-ios-player-helper: 0185c57db23c80d63d6ca11251d110abb8a4ca61
-  YoutubePlayer-in-WKWebView: cfbf46da51d7370662a695a8f351e5fa1d3e1008
 
-PODFILE CHECKSUM: 5b3f0d5d984aacd8c8a610c0613e39883b4eb730
+PODFILE CHECKSUM: d338a7eb1f2768af8baad9ccd1f23d41ed0cf72d
 
 COCOAPODS: 1.10.0

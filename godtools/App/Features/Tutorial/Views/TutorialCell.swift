@@ -7,11 +7,11 @@
 //
 
 import UIKit
-import YoutubePlayer_in_WKWebView
+import youtube_ios_player_helper
 import Lottie
 
-protocol TutorialCellDelegate: class {
-    func tutorialCellVideoPlayer(cell: TutorialCell, didChangeTo state: WKYTPlayerState)
+protocol TutorialCellDelegate: AnyObject {
+    func tutorialCellVideoPlayer(cell: TutorialCell, didChangeTo state: YTPlayerState)
 }
 
 class TutorialCell: UICollectionViewCell {
@@ -29,7 +29,7 @@ class TutorialCell: UICollectionViewCell {
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var messageLabel: UILabel!
     @IBOutlet weak private var dynamicMediaView: UIView!
-    @IBOutlet weak private var youTubeVideoPlayer: WKYTPlayerView!
+    @IBOutlet weak private var youTubeVideoPlayer: YTPlayerView!
     @IBOutlet weak private var youTubeVideoPlayerLoadingView: UIView!
     @IBOutlet weak private var youTubeVideoPlayerActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak private var animationView: AnimationView!
@@ -245,13 +245,13 @@ class TutorialCell: UICollectionViewCell {
     func recueVideo() {
         guard let youtubeVideoId = viewModel?.youTubeVideoId else { return }
         
-        youTubeVideoPlayer.cueVideo(byId: youtubeVideoId, startSeconds: 0.0, suggestedQuality: WKYTPlaybackQuality.auto)
+        youTubeVideoPlayer.cueVideo(byId: youtubeVideoId, startSeconds: 0.0)
     }
 }
 
-extension TutorialCell: WKYTPlayerViewDelegate {
+extension TutorialCell: YTPlayerViewDelegate {
     
-    func playerViewDidBecomeReady(_ playerView: WKYTPlayerView) {
+    func playerViewDidBecomeReady(_ playerView: YTPlayerView) {
         
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: { [weak self] in
             self?.youTubeVideoPlayerLoadingView.alpha = 0
@@ -262,19 +262,19 @@ extension TutorialCell: WKYTPlayerViewDelegate {
         }
     }
     
-    func playerView(_ playerView: WKYTPlayerView, didChangeTo state: WKYTPlayerState) {
+    func playerView(_ playerView: YTPlayerView, didChangeTo state: YTPlayerState) {
         delegate?.tutorialCellVideoPlayer(cell: self, didChangeTo: state)
         
-        if state == WKYTPlayerState.ended {
+        if state == YTPlayerState.ended {
            recueVideo()
         }
     }
     
-    func playerView(_ playerView: WKYTPlayerView, didChangeTo quality: WKYTPlaybackQuality) {
+    func playerView(_ playerView: YTPlayerView, didChangeTo quality: YTPlaybackQuality) {
     
     }
     
-    func playerView(_ playerView: WKYTPlayerView, receivedError error: WKYTPlayerError) {
+    private func playerView(_ playerView: YTPlayerError, receivedError error: YTPlayerError) {
         print("\n TutorialCell: youTubeVideoPlayer receivedError")
         print("  error: \(error)")
     }

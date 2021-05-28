@@ -9,7 +9,7 @@
 import UIKit
 import youtube_ios_player_helper
 
-class MobileContentEmbeddedVideoView: MobileContentView, YTPlayerViewDelegate {
+class MobileContentEmbeddedVideoView: MobileContentView {
     private let viewModel: MobileContentEmbeddedVideoViewModelType
     private let videoView: YTPlayerView = YTPlayerView()
     
@@ -62,7 +62,7 @@ class MobileContentEmbeddedVideoView: MobileContentView, YTPlayerViewDelegate {
 
 // MARK: - YTPlayerViewDelegate
 
-extension ToolDetailView: YTPlayerViewDelegate {
+extension MobileContentEmbeddedVideoView: YTPlayerViewDelegate {
     
     func playerViewDidBecomeReady(_ playerView: YTPlayerView) {
         
