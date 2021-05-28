@@ -55,7 +55,7 @@ class MobileContentEmbeddedVideoView: MobileContentView {
     // MARK: - MobileContentView
 
     override var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType {
-        return .equalToHeight(height: 300)
+        return .equalToHeight(height: 240)
     }
 }
 
