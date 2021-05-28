@@ -10,6 +10,6 @@ import UIKit
 
 protocol MobileContentEmbeddedVideoViewModelType {
     
-    var videoId: String { get }
+    var videoId: String? { get }
     var youtubePlayerParameters: [String: Any] { get }
 }

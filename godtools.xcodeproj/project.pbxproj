@@ -887,6 +887,7 @@
 		D129DE6B2543669C00841733 /* onboarding_tutorial_knife.json in Resources */ = {isa = PBXBuildFile; fileRef = D129DE682543669C00841733 /* onboarding_tutorial_knife.json */; };
 		D163EA96254A00BE00BA4EA9 /* share_tool_tutorial_link.json in Resources */ = {isa = PBXBuildFile; fileRef = D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */; };
 		D1838479257E86B3004F5674 /* container in Resources */ = {isa = PBXBuildFile; fileRef = D1838478257E86B3004F5674 /* container */; };
+		D1886E5C2660166600886A71 /* ContentVideoNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1886E5B2660166600886A71 /* ContentVideoNode.swift */; };
 		D196A2002613A5650038ECC5 /* URLDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D196A1FF2613A5650038ECC5 /* URLDeepLinkParser.swift */; };
 		D1982F2125D1EEBD0095EEE2 /* ArticleDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1982F2025D1EEBD0095EEE2 /* ArticleDeepLinkParser.swift */; };
 		D19D00E725AF4B97007C535B /* AppsFlyerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19D00E625AF4B97007C535B /* AppsFlyerType.swift */; };
@@ -1859,6 +1860,7 @@
 		D14F75B925D58B96008749CF /* NotoSansMyanmarUI-CondensedBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansMyanmarUI-CondensedBold.ttf"; sourceTree = "<group>"; };
 		D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = share_tool_tutorial_link.json; sourceTree = "<group>"; };
 		D1838478257E86B3004F5674 /* container */ = {isa = PBXFileReference; lastKnownFileType = folder; path = container; sourceTree = "<group>"; };
+		D1886E5B2660166600886A71 /* ContentVideoNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentVideoNode.swift; sourceTree = "<group>"; };
 		D196A1FF2613A5650038ECC5 /* URLDeepLinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLDeepLinkParser.swift; sourceTree = "<group>"; };
 		D1982F2025D1EEBD0095EEE2 /* ArticleDeepLinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDeepLinkParser.swift; sourceTree = "<group>"; };
 		D19D00E625AF4B97007C535B /* AppsFlyerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsFlyerType.swift; sourceTree = "<group>"; };
@@ -2309,6 +2311,7 @@
 				455FF64E2603DC690028B95B /* TipNode.swift */,
 				455FF6532603DC690028B95B /* TitleNode.swift */,
 				455FF6392603DC690028B95B /* TrainingTipNode.swift */,
+				D1886E5B2660166600886A71 /* ContentVideoNode.swift */,
 			);
 			path = Nodes;
 			sourceTree = "<group>";
@@ -5827,6 +5830,7 @@
 				45AD1AFA25938A4E00A096A0 /* MailViewModelType.swift in Sources */,
 				455FF6F82603DC6A0028B95B /* MobileContentTextViewModelType.swift in Sources */,
 				45AD1BA725938A4F00A096A0 /* ShareToolMenuFlow.swift in Sources */,
+				D1886E5C2660166600886A71 /* ContentVideoNode.swift in Sources */,
 				45AD1AEF25938A4E00A096A0 /* ContactUsWebContent.swift in Sources */,
 				45AD1F7425938A9800A096A0 /* ViewedTrainingTipsCacheType.swift in Sources */,
 				45CBA032261FDF410036BEB3 /* LessonPageViewFactory.swift in Sources */,

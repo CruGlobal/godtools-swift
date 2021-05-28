@@ -9,11 +9,11 @@
 import UIKit
 import youtube_ios_player_helper
 
-class MobileContentEmbeddedVideoView: MobileContentView {
+class MobileContentEmbeddedVideoView: MobileContentView, YTPlayerViewDelegate {
     private let viewModel: MobileContentEmbeddedVideoViewModelType
     private let videoView: YTPlayerView = YTPlayerView()
     
-    required init(viewModel: MobileContentImageViewModelType) {
+    required init(viewModel: MobileContentEmbeddedVideoViewModelType) {
         
         self.viewModel = viewModel
         
@@ -34,7 +34,8 @@ class MobileContentEmbeddedVideoView: MobileContentView {
     
     private func setupLayout() {
         
-        videoView.backgroundColor = .clear
+        videoView.backgroundColor = .magenta
+        videoView.drawBorder()
     }
     
     private func setupBinding() {
@@ -44,14 +45,65 @@ class MobileContentEmbeddedVideoView: MobileContentView {
     
     private func embedVideo() {
         
-        videoView.delegate = self
-        videoView.load(withVideoId: viewModel.videoId, playerVars: viewModel.youtubePlayerParameters)
+        //guard let videoId = viewModel.videoId else { return }
+        
+        //videoView.delegate = self
+        //videoView.load(withVideoId: videoId, playerVars: viewModel.youtubePlayerParameters)
                 
         addSubview(videoView)
         
         videoView.constrainEdgesToSuperview()
         
-        let aspectRatio: NSLayoutConstraint = NSLayoutConstraint(
+        /*videoView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let leading: NSLayoutConstraint = NSLayoutConstraint(
+            item: videoView,
+            attribute: .leading,
+            relatedBy: .equal,
+            toItem: self,
+            attribute: .leading,
+            multiplier: 1,
+            constant: 0
+        )
+        
+        let trailing: NSLayoutConstraint = NSLayoutConstraint(
+            item: videoView,
+            attribute: .trailing,
+            relatedBy: .equal,
+            toItem: self,
+            attribute: .trailing,
+            multiplier: 1,
+            constant: 0
+        )
+        
+        let top: NSLayoutConstraint = NSLayoutConstraint(
+            item: videoView,
+            attribute: .top,
+            relatedBy: .equal,
+            toItem: self,
+            attribute: .top,
+            multiplier: 1,
+            constant: 0
+        )
+        
+        addConstraint(leading)
+        addConstraint(trailing)
+        addConstraint(top)*/
+        
+        /*let height: NSLayoutConstraint = NSLayoutConstraint(
+            item: videoView,
+            attribute: .height,
+            relatedBy: .equal,
+            toItem: nil,
+            attribute: .notAnAttribute,
+            multiplier: 1,
+            constant: 300
+        )
+        
+        height.priority = UILayoutPriority(1000)
+        
+        videoView.addConstraint(height)*/
+        /*let aspectRatio: NSLayoutConstraint = NSLayoutConstraint(
             item: videoView,
             attribute: .height,
             relatedBy: .equal,
@@ -61,20 +113,20 @@ class MobileContentEmbeddedVideoView: MobileContentView {
             constant: 0
         )
         
-        videoView.addConstraint(aspectRatio)
+        videoView.addConstraint(aspectRatio)*/
     }
     
     // MARK: - MobileContentView
 
     override var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType {
-        return .constrainedToChildren
+        return .equalToHeight(height: 300)
     }
 }
 
 
 // MARK: - YTPlayerViewDelegate
 
-extension ToolDetailView: YTPlayerViewDelegate {
+/*extension ToolDetailView: YTPlayerViewDelegate {
     
     func playerViewDidBecomeReady(_ playerView: YTPlayerView) {
         
@@ -82,7 +134,7 @@ extension ToolDetailView: YTPlayerViewDelegate {
         
     }
     
-    func playerView(_ playerView: WKYTPlayerView, didChangeTo state: WKYTPlayerState) {
+    func playerView(_ playerView: YTPlayerView, didChangeTo state: YTPlayerView) {
         
         print("\n ToolDetailView playerView didChangeTo state")
         
@@ -107,17 +159,17 @@ extension ToolDetailView: YTPlayerViewDelegate {
         }
     }
     
-    func playerView(_ playerView: WKYTPlayerView, didChangeTo quality: WKYTPlaybackQuality) {
+    func playerView(_ playerView: YTPlayerView, didChangeTo quality: YTPlaybackQuality) {
         
         print("\n ToolDetailView playerView didChangeTo quality")
         
     }
     
-    func playerView(_ playerView: WKYTPlayerView, receivedError error: WKYTPlayerError) {
+    func playerView(_ playerView: YTPlayerView, receivedError error: WKYTPlayerError) {
         
         print("\n ToolDetailView playerView receivedError error")
         print("  error: \(error)")
         
     }
-}
+}*/
 

@@ -33,6 +33,7 @@ enum MobileContentXmlNodeType: String, CaseIterable {
     case contentTab = "content:tab"
     case contentTabs = "content:tabs"
     case contentText = "content:text"
+    case contentVideo = "content:video"
     case header = "header"
     case heading = "heading"
     case hero = "hero"

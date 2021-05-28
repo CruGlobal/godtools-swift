@@ -10,14 +10,16 @@ import Foundation
 
 class MobileContentEmbeddedVideoViewModel: MobileContentEmbeddedVideoViewModelType {
     
-    private(set) let videoId: String
+    let videoId: String?
+    //let provider: String?
     
-    required init(videoId: String) {
+    required init(videoNode: ContentVideoNode) {
         
-        self.videoId = videoId
+        self.videoId = videoNode.videoId
+        //self.provider = videoNode.provider
     }
     
-    var youtubePlayerParameters: [String : Any]? {
+    var youtubePlayerParameters: [String : Any] {
         return [
             "playsinline": 1
         ]
