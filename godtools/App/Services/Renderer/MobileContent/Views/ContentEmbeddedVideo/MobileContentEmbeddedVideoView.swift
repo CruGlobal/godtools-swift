@@ -35,6 +35,10 @@ class MobileContentEmbeddedVideoView: MobileContentView {
     private func setupLayout() {
         
         videoView.backgroundColor = .clear
+        
+        addSubview(videoView)
+        
+        videoView.constrainEdgesToSuperview()
     }
     
     private func setupBinding() {
@@ -43,10 +47,6 @@ class MobileContentEmbeddedVideoView: MobileContentView {
     }
     
     private func embedVideo() {
-                
-        addSubview(videoView)
-        
-        videoView.constrainEdgesToSuperview()
         
         videoView.delegate = self
         videoView.load(withVideoId: viewModel.videoId, playerVars: viewModel.youtubePlayerParameters)
