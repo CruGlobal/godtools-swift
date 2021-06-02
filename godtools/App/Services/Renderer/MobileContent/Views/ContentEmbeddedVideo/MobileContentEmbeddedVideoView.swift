@@ -55,7 +55,7 @@ class MobileContentEmbeddedVideoView: MobileContentView {
     // MARK: - MobileContentView
 
     override var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType {
-        return .equalToHeight(height: 240)
+        return .setToAspectRatioOfProvidedSize(size: CGSize(width: 5, height: 3))
     }
 }
 
