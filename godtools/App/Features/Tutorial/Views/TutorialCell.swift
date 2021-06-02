@@ -274,7 +274,7 @@ extension TutorialCell: YTPlayerViewDelegate {
     
     }
     
-    private func playerView(_ playerView: YTPlayerError, receivedError error: YTPlayerError) {
+    func playerView(_ playerView: YTPlayerError, receivedError error: YTPlayerError) {
         print("\n TutorialCell: youTubeVideoPlayer receivedError")
         print("  error: \(error)")
     }
