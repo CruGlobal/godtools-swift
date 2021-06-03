@@ -52,7 +52,7 @@ class MobileContentAnalytics {
          for system in event.systems {
              
             if let analyticsSystem = analyticsSystems[system] {
-                analyticsSystem.trackAction(action: action, data: data)
+                analyticsSystem.trackAction(trackAction: TrackActionModel(screenName: event.xmlElementName, actionName: action, siteSection: <#T##String#>, siteSubSection: <#T##String#>, url: <#T##String#>, data: data))
             }
          }
     }

@@ -11,7 +11,7 @@ import AdobeMobileSDK
 import TheKeyOAuthSwift
 import GTMAppAuth
 
-class AdobeAnalytics: NSObject, AdobeAnalyticsType {
+class AdobeAnalytics: NSObject, AdobeAnalyticsType, MobileContentAnalyticsSystem {
     
     private let config: ConfigType
     private let keyAuthClient: TheKeyOAuthClient
@@ -240,13 +240,5 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
 extension AdobeAnalytics: OIDAuthStateChangeDelegate {
     func didChange(_ state: OIDAuthState) {
         fetchAttributesThenSyncIds()
-    }
-}
-
-// MARK: - MobileContentAnalyticsSystem
-
-extension AdobeAnalytics: MobileContentAnalyticsSystem {
-    func trackAction(action: String, data: [String: Any]?) {
-        trackAction(trackAction: TrackActionModel(screenName: nil, actionName: action, siteSection: nil, siteSubSection: nil, url: nil, data: data))
     }
 }

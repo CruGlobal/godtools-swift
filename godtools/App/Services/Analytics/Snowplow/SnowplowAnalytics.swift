@@ -10,7 +10,7 @@ import Foundation
 import SnowplowTracker
 import TheKeyOAuthSwift
 
-class SnowplowAnalytics: SnowplowAnalyticsType  {
+class SnowplowAnalytics: SnowplowAnalyticsType, MobileContentAnalyticsSystem  {
    
     private let serialQueue: DispatchQueue = DispatchQueue(label: "snowplow.serial.queue")
     private let tracker: SPTracker
@@ -176,13 +176,5 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
                 print("  data: \(data)")
             }
         }
-    }
-}
-
-// MARK: - MobileContentAnalyticsSystem
-
-extension SnowplowAnalytics: MobileContentAnalyticsSystem {
-    func trackAction(action: String, data: [String: Any]?) {
-        trackAction(trackAction: TrackActionModel(screenName: nil, actionName: action, siteSection: nil, siteSubSection: nil, url: nil, data: data))
     }
 }

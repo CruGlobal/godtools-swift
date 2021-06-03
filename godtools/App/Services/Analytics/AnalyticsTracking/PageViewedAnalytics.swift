@@ -21,12 +21,12 @@ class PageViewedAnalytics {
         self.snowplowAnalytics = snowplowAnalytics
     }
     
-    func trackPageView(screenName: String, siteSection: String, siteSubSection: String) {
+    func trackPageView(trackScreen: TrackScreenModel) {
         
-        adobeAnalytics.trackScreenView(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection)
+        adobeAnalytics.trackScreenView(trackScreen: trackScreen)
         
-        firebaseAnalytics.trackScreenView(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection)
+        firebaseAnalytics.trackScreenView(trackScreen: trackScreen)
         
-        snowplowAnalytics.trackScreenView(screenName: screenName)
+        snowplowAnalytics.trackScreenView(trackScreen: trackScreen)
     }
 }

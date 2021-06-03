@@ -11,7 +11,7 @@ import FirebaseAnalytics
 import TheKeyOAuthSwift
 import GTMAppAuth
 
-class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
+class FirebaseAnalytics: NSObject, FirebaseAnalyticsType, MobileContentAnalyticsSystem {
     
     private let config: ConfigType
     private let keyAuthClient: TheKeyOAuthClient
@@ -231,13 +231,5 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
 extension FirebaseAnalytics: OIDAuthStateChangeDelegate {
     func didChange(_ state: OIDAuthState) {
         fetchAttributesThenSetUserId()
-    }
-}
-
-// MARK: - MobileContentAnalyticsSystem
-
-extension FirebaseAnalytics: MobileContentAnalyticsSystem {
-    func trackAction(action: String, data: [String: Any]?) {
-        trackAction(screenName: nil, actionName: action, data: data)
     }
 }

@@ -20,9 +20,9 @@ class TrackActionAnalytics {
         self.snowplowAnalytics = snowplowAnalytics
     }
     
-    func trackAction(screenName: String?, actionName: String, data: [String: Any]?) {
-        adobeAnalytics.trackAction(screenName: screenName, actionName: actionName, data: data)
-        firebaseAnalytics.trackAction(screenName: screenName, actionName: actionName, data: data)
-        snowplowAnalytics.trackAction(action: actionName)
+    func trackAction(trackAction: TrackActionModel) {
+        adobeAnalytics.trackAction(trackAction: trackAction)
+        firebaseAnalytics.trackAction(trackAction: trackAction)
+        snowplowAnalytics.trackAction(trackAction: trackAction)
     }
 }

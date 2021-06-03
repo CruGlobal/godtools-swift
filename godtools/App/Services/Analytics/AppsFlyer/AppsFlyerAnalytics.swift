@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AppsFlyerAnalytics: NSObject, AppsFlyerAnalyticsType {
+class AppsFlyerAnalytics: NSObject, AppsFlyerAnalyticsType, MobileContentAnalyticsSystem {
     
     private let serialQueue: DispatchQueue = DispatchQueue(label: "appsflyer.serial.queue")
     private let loggingEnabled: Bool
@@ -88,13 +88,5 @@ class AppsFlyerAnalytics: NSObject, AppsFlyerAnalyticsType {
                 print("  customData: \(customData)")
             }
         }
-    }
-}
-
-// MARK: - MobileContentAnalyticsSystem
-
-extension AppsFlyerAnalytics: MobileContentAnalyticsSystem {
-    func trackAction(action: String, data: [String: Any]?) {
-        trackAction(trackAction: TrackActionModel(screenName: nil, actionName: action, siteSection: nil, siteSubSection: nil, url: nil, data: data))
     }
 }
