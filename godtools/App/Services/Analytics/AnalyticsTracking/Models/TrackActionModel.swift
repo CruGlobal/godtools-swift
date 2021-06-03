@@ -14,6 +14,6 @@ struct TrackActionModel {
     let actionName: String
     let siteSection: String
     let siteSubSection: String
-    let url: String
+    let url: String?
     let data: [String: Any]?
 }

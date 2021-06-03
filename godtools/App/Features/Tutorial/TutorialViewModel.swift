@@ -55,17 +55,16 @@ class TutorialViewModel: TutorialViewModelType {
         
         self.page = page
         
-        analytics.pageViewedAnalytics.trackPageView(
-            screenName: analyticsScreenName,
-            siteSection: "tutorial",
-            siteSubSection: ""
-        )
+        let trackScreenData = TrackScreenModel(screenName: analyticsScreenName, siteSection: "tutorial", siteSubSection: "", url: nil)
+        let trackActionData = TrackActionModel(screenName: analyticsScreenName, actionName: analyticsScreenName, siteSection: "tutorial", siteSubSection: "", url: nil, data: nil)
+        
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreenData)
         
         if isFirstPage {
-            analytics.appsFlyerAnalytics.trackEvent(eventName: analyticsScreenName, data: nil)
+            analytics.appsFlyerAnalytics.trackAction(trackAction: trackActionData)
         }
         else if isLastPage {
-            analytics.appsFlyerAnalytics.trackEvent(eventName: analyticsScreenName, data: nil)
+            analytics.appsFlyerAnalytics.trackAction(trackAction: trackActionData)
         }
     }
     

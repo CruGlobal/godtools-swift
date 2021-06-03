@@ -23,16 +23,16 @@ class MobileContentAnalytics {
         self.analyticsSystems = analyticsSystems
     }
     
-    func trackEvents(events: AnalyticsEventsNode) {
+    func trackEvents(events: AnalyticsEventsNode, page: MobileContentRendererPageModel) {
         
         let events: [AnalyticsEventNode] = events.children as? [AnalyticsEventNode] ?? []
         
         for event in events {
-            trackEvent(event: event)
+            trackEvent(event: event, page: page)
         }
     }
     
-    func trackEvent(event: AnalyticsEventNode) {
+    func trackEvent(event: AnalyticsEventNode, page: MobileContentRendererPageModel) {
         
         guard let action = event.action, !action.isEmpty else {
             return
@@ -52,7 +52,12 @@ class MobileContentAnalytics {
          for system in event.systems {
              
             if let analyticsSystem = analyticsSystems[system] {
-                analyticsSystem.trackAction(trackAction: TrackActionModel(screenName: event.xmlElementName, actionName: action, siteSection: <#T##String#>, siteSubSection: <#T##String#>, url: <#T##String#>, data: data))
+                
+                let resource = page.resource.abbreviation
+                let pageNumber = page.page
+                let screenName = resource + "-" + String(pageNumber)
+                
+                analyticsSystem.trackAction(trackAction: TrackActionModel(screenName: screenName, actionName: action, siteSection: resource, siteSubSection: "", url: nil, data: data))
             }
          }
     }

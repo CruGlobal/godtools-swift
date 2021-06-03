@@ -31,7 +31,7 @@ class MobileContentTabViewModel: MobileContentTabViewModelType {
     
     func tabTapped() {
         if let analyticsEventsNode = tabNode.analyticsEventsNode {
-            mobileContentAnalytics.trackEvents(events: analyticsEventsNode)
+            mobileContentAnalytics.trackEvents(events: analyticsEventsNode, page: pageModel)
         }
     }
 }
