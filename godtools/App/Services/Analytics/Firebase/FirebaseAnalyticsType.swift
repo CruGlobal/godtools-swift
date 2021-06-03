@@ -10,8 +10,8 @@ import Foundation
 
 protocol FirebaseAnalyticsType: MobileContentAnalyticsSystem {
     func configure()
-    func trackScreenView(screenName: String, siteSection: String, siteSubSection: String)
-    func trackAction(screenName: String?, actionName: String, data: [String : Any]?)
+    func trackScreenView(trackScreen: TrackScreenModel)
+    func trackAction(trackAction: TrackActionModel)
     func trackExitLink(exitLink: ExitLinkModel)
     func fetchAttributesThenSetUserId()
 }

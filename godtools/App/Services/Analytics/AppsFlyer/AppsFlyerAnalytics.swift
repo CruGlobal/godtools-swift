@@ -57,14 +57,14 @@ class AppsFlyerAnalytics: NSObject, AppsFlyerAnalyticsType {
         }
     }
     
-    func trackEvent(eventName: String, data: [String: Any]?) {
+    func trackAction(trackAction: TrackActionModel) {
                 
         serialQueue.async { [weak self] in
             
             self?.assertFailureIfNotConfigured()
             
-            self?.appsFlyer.appsFlyerLib.logEvent(eventName, withValues: data)
-            self?.log(method: "trackEvent()", label: "eventName", labelValue: eventName, data: data)
+            self?.appsFlyer.appsFlyerLib.logEvent(trackAction.actionName, withValues: trackAction.data)
+            self?.log(method: "trackEvent()", label: "eventName", labelValue: trackAction.actionName, data: trackAction.data)
         }
     }
     
@@ -95,6 +95,6 @@ class AppsFlyerAnalytics: NSObject, AppsFlyerAnalyticsType {
 
 extension AppsFlyerAnalytics: MobileContentAnalyticsSystem {
     func trackAction(action: String, data: [String: Any]?) {
-        trackEvent(eventName: action, data: data)
+        trackAction(trackAction: TrackActionModel(screenName: nil, actionName: action, siteSection: nil, siteSubSection: nil, url: nil, data: data))
     }
 }

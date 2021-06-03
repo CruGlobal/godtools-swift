@@ -89,7 +89,7 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
         }
     }
 
-    func trackScreenView(screenName: String) {
+    func trackScreenView(trackScreen: TrackScreenModel) {
            
         serialQueue.asyncAfter(deadline: .now() + 1) { [weak self] in
             
@@ -98,18 +98,18 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
             }
             
             snowplow.assertFailureIfNotConfigured()
-            snowplow.log(method: "trackScreenView()", label: "screenName", labelValue: screenName, data: nil)
+            snowplow.log(method: "trackScreenView()", label: "screenName", labelValue: trackScreen.screenName, data: nil)
             
             let event = SPScreenView.build { (builder: SPScreenViewBuilder) in
-                builder.setName(screenName)
-                builder.setContexts([ snowplow.idContext(), snowplow.screenURI(screenName: screenName) ])
+                builder.setName(trackScreen.screenName)
+                builder.setContexts([ snowplow.idContext(), snowplow.screenURI(screenName: trackScreen.screenName) ])
             }
             
             snowplow.tracker.trackScreenViewEvent(event)
         }
     }
     
-    func trackAction(action: String) {
+    func trackAction(trackAction: TrackActionModel) {
         
         serialQueue.asyncAfter(deadline: .now() + 1) { [weak self] in
             
@@ -118,11 +118,11 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
             }
             
             snowplow.assertFailureIfNotConfigured()
-            snowplow.log(method: "trackAction()", label: "action", labelValue: action, data: nil)
+            snowplow.log(method: "trackAction()", label: "action", labelValue: trackAction.actionName, data: nil)
             
             let event = SPStructured.build { (builder: SPStructuredBuilder) in
-                builder.setAction(action)
-                builder.setContexts([ snowplow.idContext(), snowplow.actionURI(action: action) ])
+                builder.setAction(trackAction.actionName)
+                builder.setContexts([ snowplow.idContext(), snowplow.actionURI(action: trackAction.actionName) ])
             }
             
             snowplow.tracker.trackStructuredEvent(event)
@@ -183,6 +183,6 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
 
 extension SnowplowAnalytics: MobileContentAnalyticsSystem {
     func trackAction(action: String, data: [String: Any]?) {
-        trackAction(action: action)
+        trackAction(trackAction: TrackActionModel(screenName: nil, actionName: action, siteSection: nil, siteSubSection: nil, url: nil, data: data))
     }
 }

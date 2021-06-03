@@ -91,41 +91,41 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
         }
     }
     
-    func trackScreenView(screenName: String, siteSection: String, siteSubSection: String) {
+    func trackScreenView(trackScreen: TrackScreenModel) {
         
         assertFailureIfNotConfigured()
         
         let previousScreenName: String = self.previousTrackedScreenName
         
-        previousTrackedScreenName = screenName
+        previousTrackedScreenName = trackScreen.screenName
                 
-        createDefaultPropertiesOnConcurrentQueue(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: previousScreenName) { [weak self] (defaultProperties: AdobeAnalyticsProperties) in
+        createDefaultPropertiesOnConcurrentQueue(screenName: trackScreen.screenName, siteSection: trackScreen.siteSection, siteSubSection: trackScreen.siteSubSection, previousScreenName: previousScreenName) { [weak self] (defaultProperties: AdobeAnalyticsProperties) in
             
             let data: [String: Any] = JsonServices().encode(object: defaultProperties)
             
-            ADBMobile.trackState(screenName, data: data)
+            ADBMobile.trackState(trackScreen.screenName, data: data)
             
-            self?.log(method: "trackScreenView()", label: "screenName", labelValue: screenName, data: data)
+            self?.log(method: "trackScreenView()", label: "screenName", labelValue: trackScreen.screenName, data: data)
         }
     }
     
-    func trackAction(screenName: String?, actionName: String, data: [String: Any]?) {
+    func trackAction(trackAction: TrackActionModel) {
         
         assertFailureIfNotConfigured()
         
-        createDefaultPropertiesOnConcurrentQueue(screenName: screenName, siteSection: nil, siteSubSection: nil, previousScreenName: previousTrackedScreenName) { [weak self] (defaultProperties: AdobeAnalyticsProperties) in
+        createDefaultPropertiesOnConcurrentQueue(screenName: trackAction.screenName, siteSection: trackAction.siteSection, siteSubSection: trackAction.siteSubSection, previousScreenName: previousTrackedScreenName) { [weak self] (defaultProperties: AdobeAnalyticsProperties) in
             
             var trackingData: [String: Any] = JsonServices().encode(object: defaultProperties)
             
-            if let data = data {
+            if let data = trackAction.data {
                 for (key, value) in data {
                     trackingData[key] = value
                 }
             }
             
-            ADBMobile.trackAction(actionName, data: trackingData)
+            ADBMobile.trackAction(trackAction.actionName, data: trackingData)
             
-            self?.log(method: "trackAction()", label: "actionName", labelValue: actionName, data: trackingData)
+            self?.log(method: "trackAction()", label: "actionName", labelValue: trackAction.actionName, data: trackingData)
         }
     }
     
@@ -133,7 +133,7 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
            
         assertFailureIfNotConfigured()
         
-        createDefaultPropertiesOnConcurrentQueue(screenName: exitLink.screenName, siteSection: exitLink.siteSection, siteSubSection: nil, previousScreenName: previousTrackedScreenName) { [weak self] (defaultProperties: AdobeAnalyticsProperties) in
+        createDefaultPropertiesOnConcurrentQueue(screenName: exitLink.screenName, siteSection: exitLink.siteSection, siteSubSection: exitLink.siteSubSection, previousScreenName: previousTrackedScreenName) { [weak self] (defaultProperties: AdobeAnalyticsProperties) in
             
             var properties = defaultProperties
             
@@ -247,6 +247,6 @@ extension AdobeAnalytics: OIDAuthStateChangeDelegate {
 
 extension AdobeAnalytics: MobileContentAnalyticsSystem {
     func trackAction(action: String, data: [String: Any]?) {
-        trackAction(screenName: nil, actionName: action, data: data)
+        trackAction(trackAction: TrackActionModel(screenName: nil, actionName: action, siteSection: nil, siteSubSection: nil, url: nil, data: data))
     }
 }

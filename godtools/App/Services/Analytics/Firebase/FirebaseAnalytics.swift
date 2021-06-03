@@ -62,26 +62,26 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
     
     //MARK: - Public
     
-    func trackScreenView(screenName: String, siteSection: String, siteSubSection: String) {
+    func trackScreenView(trackScreen: TrackScreenModel) {
         internalTrackEvent(
-            screenName: screenName,
-            siteSection: siteSection,
-            siteSubSection: siteSubSection,
+            screenName: trackScreen.screenName,
+            siteSection: trackScreen.siteSection,
+            siteSubSection: trackScreen.siteSubSection,
             previousScreenName: previousTrackedScreenName,
             eventName: AnalyticsEventScreenView,
             data: nil
         )
-        previousTrackedScreenName = screenName
+        previousTrackedScreenName = trackScreen.screenName
     }
 
-    func trackAction(screenName: String?, actionName: String, data: [String : Any]?) {
+    func trackAction(trackAction: TrackActionModel) {
         internalTrackEvent(
-            screenName: screenName,
-            siteSection: nil,
-            siteSubSection: nil,
+            screenName: trackAction.screenName,
+            siteSection: trackAction.siteSection,
+            siteSubSection: trackAction.siteSubSection,
             previousScreenName: previousTrackedScreenName,
-            eventName: actionName,
-            data: data
+            eventName: trackAction.actionName,
+            data: trackAction.data
         )
     }
     
@@ -89,7 +89,7 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         internalTrackEvent(
             screenName: exitLink.screenName,
             siteSection: exitLink.siteSection,
-            siteSubSection: nil,
+            siteSubSection: exitLink.siteSubSection,
             previousScreenName: previousTrackedScreenName,
             eventName: AnalyticsConstants.Values.exitLink,
             data: [
