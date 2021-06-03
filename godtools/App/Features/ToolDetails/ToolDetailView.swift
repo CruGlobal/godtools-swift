@@ -8,7 +8,7 @@
 
 import UIKit
 import TTTAttributedLabel
-import YoutubePlayer_in_WKWebView
+import youtube_ios_player_helper
 
 class ToolDetailView: UIViewController {
     
@@ -20,7 +20,7 @@ class ToolDetailView: UIViewController {
     //topMediaView
     @IBOutlet weak private var topMediaView: UIView!
     @IBOutlet weak private var youTubePlayerContentView: UIView!
-    @IBOutlet weak private var youTubePlayerView: WKYTPlayerView!
+    @IBOutlet weak private var youTubePlayerView: YTPlayerView!
     @IBOutlet weak private var youTubeLoadingView: UIView!
     @IBOutlet weak private var youTubeActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak private var bannerImageView: UIImageView!
@@ -258,7 +258,7 @@ class ToolDetailView: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        youTubePlayerView.getPlayerState { [weak self] (state: WKYTPlayerState, error: Error?) in
+        youTubePlayerView.playerState { [weak self] (state: YTPlayerState, error: Error?) in
             if state == .playing {
                 self?.youTubePlayerView.pauseVideo()
             }
@@ -380,9 +380,11 @@ extension ToolDetailView: GTSegmentedControlDelegate {
     }
 }
 
-extension ToolDetailView: WKYTPlayerViewDelegate {
+//MARK: -- YTPlayerViewDelegate
+
+extension ToolDetailView: YTPlayerViewDelegate {
     
-    func playerViewDidBecomeReady(_ playerView: WKYTPlayerView) {
+    func playerViewDidBecomeReady(_ playerView: YTPlayerView) {
         
         print("\n ToolDetailView player view did become ready")
         
@@ -395,7 +397,7 @@ extension ToolDetailView: WKYTPlayerViewDelegate {
         }
     }
     
-    func playerView(_ playerView: WKYTPlayerView, didChangeTo state: WKYTPlayerState) {
+    func playerView(_ playerView: YTPlayerView, didChangeTo state: YTPlayerState) {
         
         print("\n ToolDetailView playerView didChangeTo state")
         switch state {
@@ -410,8 +412,8 @@ extension ToolDetailView: WKYTPlayerViewDelegate {
             print("paused")
         case .buffering:
             print("buffering")
-        case .queued:
-            print("queued")
+        case .cued:
+            print("cued")
         case .unknown:
             print("unknown")
         @unknown default:
@@ -425,12 +427,12 @@ extension ToolDetailView: WKYTPlayerViewDelegate {
         }
     }
     
-    func playerView(_ playerView: WKYTPlayerView, didChangeTo quality: WKYTPlaybackQuality) {
+    func playerView(_ playerView: YTPlayerView, didChangeTo quality: YTPlaybackQuality) {
         
         print("\n ToolDetailView playerView didChangeTo quality")
     }
     
-    func playerView(_ playerView: WKYTPlayerView, receivedError error: WKYTPlayerError) {
+    func playerView(_ playerView: YTPlayerView, receivedError error: YTPlayerError) {
         
         print("\n ToolDetailView playerView receivedError error")
         print("  error: \(error)")
