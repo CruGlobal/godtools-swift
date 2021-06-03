@@ -34,10 +34,9 @@ class MobileContentEmbeddedVideoView: MobileContentView {
     
     private func setupLayout() {
         
+        // videoView
         videoView.backgroundColor = .clear
-        
         addSubview(videoView)
-        
         videoView.constrainEdgesToSuperview()
     }
     
@@ -55,7 +54,7 @@ class MobileContentEmbeddedVideoView: MobileContentView {
     // MARK: - MobileContentView
 
     override var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType {
-        return .setToAspectRatioOfProvidedSize(size: CGSize(width: 5, height: 3))
+        return .setToAspectRatioOfProvidedSize(size: CGSize(width: 16, height: 9))
     }
 }
 
@@ -66,12 +65,12 @@ extension MobileContentEmbeddedVideoView: YTPlayerViewDelegate {
     
     func playerViewDidBecomeReady(_ playerView: YTPlayerView) {
         
-        print("\n ToolDetailView player view did become ready")
+        print("\n MobileContentEmbeddedVideoView player view did become ready")
     }
     
     internal func playerView(_ playerView: YTPlayerView, didChangeTo state: YTPlayerState) {
         
-        print("\n ToolDetailView playerView didChangeTo state")
+        print("\n MobileContentEmbeddedVideoView playerView didChangeTo state")
         
         switch state {
             
@@ -96,13 +95,13 @@ extension MobileContentEmbeddedVideoView: YTPlayerViewDelegate {
     
     func playerView(_ playerView: YTPlayerView, didChangeTo quality: YTPlaybackQuality) {
         
-        print("\n ToolDetailView playerView didChangeTo quality \(quality)")
+        print("\n MobileContentEmbeddedVideoView playerView didChangeTo quality \(quality)")
         
     }
     
     func playerView(_ playerView: YTPlayerView, receivedError error: YTPlayerError) {
         
-        print("\n ToolDetailView playerView receivedError: \(error)")
+        print("\n MobileContentEmbeddedVideoView playerView receivedError: \(error)")
     }
 }
 
