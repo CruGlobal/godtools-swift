@@ -256,6 +256,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         let exitLink = ExitLinkModel(
             screenName: analyticsScreenName,
             siteSection: siteSection,
+            siteSubSection: nil,
             url: url.absoluteString
         )
         

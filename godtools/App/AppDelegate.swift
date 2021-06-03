@@ -104,13 +104,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
         case .tool:
             
-            appDiContainer.analytics.trackActionAnalytics.trackAction(
-                screenName: nil,
-                actionName: AnalyticsConstants.Values.toolOpenedShortcut,
-                data: [
-                    AnalyticsConstants.ActionNames.toolOpenedShortcutCountKey: 1
-                ]
-            )
+            appDiContainer.analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: nil, actionName: AnalyticsConstants.Values.toolOpenedShortcut, siteSection: nil, siteSubSection: nil, url: nil, data: [
+                AnalyticsConstants.ActionNames.toolOpenedShortcutCountKey: 1
+            ]))
             
             if let tractUrl = ToolShortcutItem.getTractUrl(shortcutItem: shortcutItem) {
                 appDiContainer.deepLinkingService.parseDeepLink(incomingDeepLink: .url(url: tractUrl))

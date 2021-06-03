@@ -18,14 +18,14 @@ class ToolOpenedAnalytics {
     }
     
     func trackToolOpened() {
-        appsFlyerAnalytics.trackAction(trackAction: TrackActionModel(screenName: <#T##String#>, actionName: "tool-opened", siteSection: <#T##String#>, siteSubSection: <#T##String#>, url: <#T##String#>, data: nil))
+        appsFlyerAnalytics.trackAction(trackAction: TrackActionModel(screenName: nil, actionName: "tool-opened", siteSection: nil, siteSubSection: nil, url: nil, data: nil))
     }
     
     func trackFirstToolOpenedIfNeeded() {
         
         if !firstToolOpened {
 
-            appsFlyerAnalytics.trackAction(trackAction: TrackActionModel(screenName: <#T##String#>, actionName: "first-tool-opened", siteSection: <#T##String#>, siteSubSection: <#T##String#>, url: <#T##String#>, data: nil))
+            appsFlyerAnalytics.trackAction(trackAction: TrackActionModel(screenName: nil, actionName: "first-tool-opened", siteSection: nil, siteSubSection: nil, url: nil, data: nil))
                         
             defaults.set(true, forKey: keyFirstToolOpened)
             defaults.synchronize()

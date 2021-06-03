@@ -113,10 +113,7 @@ class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
             AdobeAnalyticsProperties.CodingKeys.siteSection.rawValue: resource.abbreviation
         ]
         
-        analytics.trackActionAnalytics.trackAction(
-            screenName: nil,
-            actionName: AdobeAnalyticsConstants.Values.parallelLanguageToggle,
-            data: data
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: nil, actionName: AdobeAnalyticsConstants.Values.parallelLanguageToggle, siteSection: nil, siteSubSection: nil, url: nil, data: data)
         )
     }
 }
