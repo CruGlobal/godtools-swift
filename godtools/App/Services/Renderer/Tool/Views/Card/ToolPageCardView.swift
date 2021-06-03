@@ -176,6 +176,14 @@ class ToolPageCardView: MobileContentView {
         self.delegate = delegate
     }
     
+    func onCardVisible() {
+        viewModel.cardDidAppear()
+    }
+    
+    func onCardHidden() {
+        viewModel.cardDidDisappear()
+    }
+    
     // MARK: - MobileContentView
 
     override func renderChild(childView: MobileContentView) {
@@ -191,12 +199,7 @@ class ToolPageCardView: MobileContentView {
         }
     }
     
-    override func viewDidAppear() {
-        viewModel.cardDidAppear()
-    }
-    
     override func viewDidDisappear() {
-        viewModel.cardDidDisappear()
         formView?.resignCurrentEditedTextField()
     }
     

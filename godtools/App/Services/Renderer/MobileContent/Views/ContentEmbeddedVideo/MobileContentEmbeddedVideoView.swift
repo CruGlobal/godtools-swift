@@ -52,7 +52,11 @@ class MobileContentEmbeddedVideoView: MobileContentView {
     }
     
     // MARK: - MobileContentView
-
+    
+    override func viewDidDisappear() {
+        videoView.pauseVideo()
+    }
+    
     override var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType {
         return .setToAspectRatioOfProvidedSize(size: CGSize(width: 16, height: 9))
     }
