@@ -179,7 +179,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
         
         let pageAnalyticsScreenName: String = resource.abbreviation + "-" + String(page)
         let screenName: String = pageAnalyticsScreenName + ToolPageCardAnalyticsScreenName(cardPosition: cardPosition).screenName
-        analytics.pageViewedAnalytics.trackPageView(screenName: screenName, siteSection: "", siteSubSection: "")
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: screenName, siteSection: "", siteSubSection: "", url: nil))
     }
     
     func cardDidDisappear() {

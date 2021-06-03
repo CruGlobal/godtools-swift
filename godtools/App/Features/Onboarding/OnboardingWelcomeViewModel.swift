@@ -36,11 +36,7 @@ class OnboardingWelcomeViewModel: OnboardingWelcomeViewModelType {
     
     func pageViewed() {
         
-        analytics.pageViewedAnalytics.trackPageView(
-            screenName: analyticsScreenName,
-            siteSection: "onboarding",
-            siteSubSection: ""
-        )
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: "onboarding", siteSubSection: "", url: nil))
     }
     
     func changeTitleToTagline() {

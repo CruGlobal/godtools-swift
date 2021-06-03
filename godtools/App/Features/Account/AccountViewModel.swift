@@ -57,11 +57,7 @@ class AccountViewModel: AccountViewModelType {
     func accountPageDidAppear(page: Int) {
         
         let accountItem: AccountItem = accountItems.value[page]
-        
-        analytics.pageViewedAnalytics.trackPageView(
-            screenName: accountItem.analyticsScreenName,
-            siteSection: "",
-            siteSubSection: ""
-        )
+
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: accountItem.analyticsScreenName, siteSection: "", siteSubSection: "", url: nil))
     }
 }

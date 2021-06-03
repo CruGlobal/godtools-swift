@@ -52,12 +52,8 @@ class ArticleWebViewModel: ArticleWebViewModelType {
         case .tool(let resource):
             siteSection = resource.abbreviation
         }
-        
-        analytics.pageViewedAnalytics.trackPageView(
-            screenName: "Article : \(aemCacheObject.aemData.articleJcrContent?.title ?? "")",
-            siteSection: siteSection,
-            siteSubSection: "article"
-        )
+                
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: "Article : \(aemCacheObject.aemData.articleJcrContent?.title ?? "")", siteSection: siteSection, siteSubSection: "article", url: nil))
     }
     
     func sharedTapped() {

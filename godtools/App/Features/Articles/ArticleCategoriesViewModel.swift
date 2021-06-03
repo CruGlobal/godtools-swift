@@ -78,7 +78,8 @@ class ArticleCategoriesViewModel: NSObject, ArticleCategoriesViewModelType {
     }
 
     func pageViewed() {
-        analytics.pageViewedAnalytics.trackPageView(screenName: "Categories", siteSection: resource.abbreviation, siteSubSection: "")
+        
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: "Categories", siteSection: resource.abbreviation, siteSubSection: "", url: nil))
     }
     
     func categoryWillAppear(index: Int) -> ArticleCategoryCellViewModelType {

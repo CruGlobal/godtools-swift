@@ -157,7 +157,7 @@ class MenuViewModel: NSObject, MenuViewModelType {
     }
     
     func pageViewed() {
-        analytics.pageViewedAnalytics.trackPageView(screenName: "Menu", siteSection: "", siteSubSection: "")
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: "Menu", siteSection: "", siteSubSection: "", url: nil))
     }
     
     func doneTapped() {
@@ -213,20 +213,16 @@ class MenuViewModel: NSObject, MenuViewModelType {
         
         flowDelegate?.navigate(step: .shareGodToolsTappedFromMenu)
         
-        analytics.trackActionAnalytics.trackAction(
-            screenName: nil,
-            actionName: AdobeAnalyticsConstants.Values.share,
-            data: [AdobeAnalyticsConstants.Keys.shareAction: 1]
-        )
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: nil, actionName: AdobeAnalyticsConstants.Values.share, siteSection: nil, siteSubSection: nil, url: nil, data: [AdobeAnalyticsConstants.Keys.shareAction: 1]))
         
-        analytics.pageViewedAnalytics.trackPageView(screenName: "Share App", siteSection: "", siteSubSection: "")
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: "Share App", siteSection: "", siteSubSection: "", url: nil))
     }
     
     func shareAStoryWithUsTapped() {
         
         flowDelegate?.navigate(step: .shareAStoryWithUsTappedFromMenu)
         
-        analytics.pageViewedAnalytics.trackPageView(screenName: "Share Story", siteSection: "", siteSubSection: "")
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: "Share Story", siteSection: "", siteSubSection: "", url: nil))
     }
     
     func termsOfUseTapped() {
