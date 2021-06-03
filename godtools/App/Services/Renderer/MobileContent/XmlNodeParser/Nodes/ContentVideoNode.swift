@@ -25,15 +25,26 @@ class ContentVideoNode: MobileContentXmlNode {
     }
 }
 
+extension ContentVideoNode {
+    var providerType: MobileContentVideoNodeProvider {
+        return MobileContentVideoNodeProvider(rawValue: provider ?? "") ?? .unknown
+    }
+}
+
 // MARK: - MobileContentRenderableNode
 
 extension ContentVideoNode: MobileContentRenderableNode {
+    
     var nodeContentIsRenderable: Bool {
         
-        if videoId != nil {
-            return true
+        guard let videoId = self.videoId else {
+            return false
         }
         
-        return false
+        guard !videoId.isEmpty else {
+            return false
+        }
+        
+        return true
     }
 }
