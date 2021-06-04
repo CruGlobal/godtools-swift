@@ -54,16 +54,38 @@ class MobileContentView: UIView, MobileContentStackChildViewType {
         
     }
     
-    func viewDidAppear() {
-        for child in children {
-            child.viewDidAppear()
+    // MARK: - View Did Appear
+    
+    func notifyViewAndAllChildrenViewDidAppear() {
+        recurseViewDidAppear(view: self)
+    }
+    
+    private func recurseViewDidAppear(view: MobileContentView) {
+        for childView in view.children {
+            recurseViewDidAppear(view: childView)
         }
+        view.viewDidAppear()
+    }
+    
+    func viewDidAppear() {
+        // NOTE: Subclasses should override and do anything here on view did appear.
+    }
+    
+    // MARK: - View Did Disappear
+    
+    func notifyViewAndAllChildrenViewDidDisappear() {
+        recurseViewDidDisappear(view: self)
+    }
+    
+    private func recurseViewDidDisappear(view: MobileContentView) {
+        for childView in view.children {
+            recurseViewDidDisappear(view: childView)
+        }
+        view.viewDidDisappear()
     }
     
     func viewDidDisappear() {
-        for child in children {
-            child.viewDidDisappear()
-        }
+        // NOTE: Subclasses should override and do any clean up here on view did disappear.
     }
     
     // MARK: - Events

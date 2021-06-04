@@ -30,12 +30,10 @@ class ToolPageHeroView: MobileContentStackView {
     // MARK: - MobileContentView
 
     override func viewDidAppear() {
-
         viewModel.heroDidAppear()
     }
 
     override func viewDidDisappear() {
-
         viewModel.heroDidDisappear()
     }
 }

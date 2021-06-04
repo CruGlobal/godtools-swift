@@ -65,6 +65,6 @@ struct AnalyticsConstants {
         static let parallelLanguageToggle = "cru.parallellanguagetoggle"
         static let toolOpenedShortcutCountKey = "cru.tool-opened-shortcut"
         static let shareScreenEngagedCountKey = "cru.sharescreenengaged"
-        static let shareScreenOpenCountKey = "cru.share_screen_open"
+        static let shareScreenOpenCountKey = "cru.share_screen_opened"
     }
 }

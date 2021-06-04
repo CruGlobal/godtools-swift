@@ -112,7 +112,10 @@ class MobileContentXmlNodeFactory {
         
         case .contentText:
             return ContentTextNode.self
-            
+        
+        case .contentVideo:
+            return ContentVideoNode.self
+        
         case .header:
             return HeaderNode.self
             

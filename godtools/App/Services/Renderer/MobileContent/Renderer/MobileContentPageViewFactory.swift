@@ -116,6 +116,14 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
+        else if let videoNode = renderableNode as? ContentVideoNode {
+            
+            let viewModel = MobileContentEmbeddedVideoViewModel(videoNode: videoNode)
+            
+            let view = MobileContentEmbeddedVideoView(viewModel: viewModel)
+            
+            return view
+        }
         else if let tabNode = renderableNode as? ContentTabNode {
             
             let viewModel = MobileContentTabViewModel(
