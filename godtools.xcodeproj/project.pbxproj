@@ -889,7 +889,6 @@
 		D163EA96254A00BE00BA4EA9 /* share_tool_tutorial_link.json in Resources */ = {isa = PBXBuildFile; fileRef = D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */; };
 		D1838479257E86B3004F5674 /* container in Resources */ = {isa = PBXBuildFile; fileRef = D1838478257E86B3004F5674 /* container */; };
 		D1886E5C2660166600886A71 /* ContentVideoNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1886E5B2660166600886A71 /* ContentVideoNode.swift */; };
-		D196A2002613A5650038ECC5 /* URLDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D196A1FF2613A5650038ECC5 /* URLDeepLinkParser.swift */; };
 		D1982F2125D1EEBD0095EEE2 /* ArticleDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1982F2025D1EEBD0095EEE2 /* ArticleDeepLinkParser.swift */; };
 		D19D00E725AF4B97007C535B /* AppsFlyerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19D00E625AF4B97007C535B /* AppsFlyerType.swift */; };
 		D19D00F925AF51FA007C535B /* AppsFlyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19D00F825AF51FA007C535B /* AppsFlyer.swift */; };
@@ -1863,7 +1862,6 @@
 		D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = share_tool_tutorial_link.json; sourceTree = "<group>"; };
 		D1838478257E86B3004F5674 /* container */ = {isa = PBXFileReference; lastKnownFileType = folder; path = container; sourceTree = "<group>"; };
 		D1886E5B2660166600886A71 /* ContentVideoNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentVideoNode.swift; sourceTree = "<group>"; };
-		D196A1FF2613A5650038ECC5 /* URLDeepLinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLDeepLinkParser.swift; sourceTree = "<group>"; };
 		D1982F2025D1EEBD0095EEE2 /* ArticleDeepLinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDeepLinkParser.swift; sourceTree = "<group>"; };
 		D19D00E625AF4B97007C535B /* AppsFlyerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsFlyerType.swift; sourceTree = "<group>"; };
 		D19D00F825AF51FA007C535B /* AppsFlyer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsFlyer.swift; sourceTree = "<group>"; };
@@ -2597,7 +2595,6 @@
 				456E504A25D0CF7E0075FF6A /* ParsedDeepLinkType.swift */,
 				456E504B25D0CF7E0075FF6A /* ToolDeepLinkParser.swift */,
 				D1982F2025D1EEBD0095EEE2 /* ArticleDeepLinkParser.swift */,
-				D196A1FF2613A5650038ECC5 /* URLDeepLinkParser.swift */,
 			);
 			path = Parsers;
 			sourceTree = "<group>";
@@ -5697,7 +5694,6 @@
 				45D03F692652D89D0011B5F3 /* MobileContentPageViewModelType.swift in Sources */,
 				45AD1F7625938A9800A096A0 /* ViewedTrainingTipType.swift in Sources */,
 				45AD1B2025938A4E00A096A0 /* LearnToShareToolCellViewModel.swift in Sources */,
-				D196A2002613A5650038ECC5 /* URLDeepLinkParser.swift in Sources */,
 				45AD1BDB25938A4F00A096A0 /* ResponseErrorAlertMessage.swift in Sources */,
 				45BFF443262F7ABA002BE732 /* ContentSectionNode.swift in Sources */,
 				45AD1AA525938A4E00A096A0 /* TutorialSupportedLanguages.swift in Sources */,
