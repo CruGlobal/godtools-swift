@@ -57,7 +57,7 @@ class MobileContentAnalyticsEvent: NSObject {
         
         stopDelayTimer()
         
-        mobileContentAnalytics?.trackEvent(event: eventNode)
+        mobileContentAnalytics?.trackEvent(event: eventNode, page: <#MobileContentRendererPageModel#>)
         
         endTrigger()
     }

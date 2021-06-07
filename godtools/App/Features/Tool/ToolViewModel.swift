@@ -116,8 +116,8 @@ class ToolViewModel: MobileContentPagesViewModel, ToolViewModelType {
         
         _ = viewsService.postNewResourceView(resourceId: resource.id)
         
-        toolOpenedAnalytics.trackFirstToolOpenedIfNeeded()
-        toolOpenedAnalytics.trackToolOpened()
+        toolOpenedAnalytics.trackFirstToolOpenedIfNeeded(resource: resource)
+        toolOpenedAnalytics.trackToolOpened(resource: resource)
     }
     
     func subscribedForRemoteSharePublishing(page: Int, pagePositions: ToolPagePositions) {
@@ -151,7 +151,7 @@ extension ToolViewModel {
     
     private func trackShareScreenOpened() {
         
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: nil, actionName: AnalyticsConstants.Values.shareScreenOpen, siteSection: nil, siteSubSection: nil, url: nil, data: [
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: resource.abbreviation, actionName: AnalyticsConstants.Values.shareScreenOpen, siteSection: resource.abbreviation, siteSubSection: "", url: nil, data: [
             AnalyticsConstants.ActionNames.shareScreenOpenCountKey: 1
         ]))
     }

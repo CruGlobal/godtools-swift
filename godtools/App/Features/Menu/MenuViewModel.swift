@@ -213,7 +213,7 @@ class MenuViewModel: NSObject, MenuViewModelType {
         
         flowDelegate?.navigate(step: .shareGodToolsTappedFromMenu)
         
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: nil, actionName: AdobeAnalyticsConstants.Values.share, siteSection: nil, siteSubSection: nil, url: nil, data: [AdobeAnalyticsConstants.Keys.shareAction: 1]))
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: "Share App", actionName: AdobeAnalyticsConstants.Values.share, siteSection: "", siteSubSection: "", url: nil, data: [AdobeAnalyticsConstants.Keys.shareAction: 1]))
         
         analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: "Share App", siteSection: "", siteSubSection: "", url: nil))
     }

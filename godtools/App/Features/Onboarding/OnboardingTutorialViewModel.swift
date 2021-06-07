@@ -79,12 +79,12 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
         openTutorialCalloutCache.disableOpenTutorialCallout()
         flowDelegate?.navigate(step: .showMoreTappedFromOnboardingTutorial)
         
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: "On-Boarding More", siteSection: nil, siteSubSection: nil, url: nil, data: ["cru.onboarding_more": 1]))
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: "On-Boarding More", siteSection: "", siteSubSection: "", url: nil, data: ["cru.onboarding_more": 1]))
     }
     
     func getStartedTapped() {
         flowDelegate?.navigate(step: .getStartedTappedFromOnboardingTutorial)
         
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: "On-Boarding Start", siteSection: nil, siteSubSection: nil, url: nil, data: ["cru.onboarding_start": 1]))
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: "On-Boarding Start", siteSection: "", siteSubSection: "", url: nil, data: ["cru.onboarding_start": 1]))
     }
 }

@@ -141,6 +141,7 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
         let exitLink = ExitLinkModel(
             screenName: analyticsScreenName,
             siteSection: siteSection,
+            siteSubSection: "",
             url: url
         )
         
