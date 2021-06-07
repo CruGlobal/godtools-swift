@@ -55,7 +55,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
         }
         
         if let analyticsEventsNode = cardNode.analyticsEventsNode {
-            analyticsEventsObjects = MobileContentAnalyticsEvent.initEvents(eventsNode: analyticsEventsNode, mobileContentAnalytics: mobileContentAnalytics)
+            analyticsEventsObjects = MobileContentAnalyticsEvent.initEvents(eventsNode: analyticsEventsNode, mobileContentAnalytics: mobileContentAnalytics, page: pageModel)
         }
         else {
             analyticsEventsObjects = []

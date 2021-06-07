@@ -104,7 +104,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
         case .tool:
             
-            appDiContainer.analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: nil, actionName: AnalyticsConstants.Values.toolOpenedShortcut, siteSection: "", siteSubSection: "", url: nil, data: [
+            appDiContainer.analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: "", actionName: AnalyticsConstants.Values.toolOpenedShortcut, siteSection: "", siteSubSection: "", url: nil, data: [
                 AnalyticsConstants.ActionNames.toolOpenedShortcutCountKey: 1
             ]))
             
