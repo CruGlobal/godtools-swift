@@ -48,7 +48,8 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
         return LessonsListViewModel(
             flowDelegate: getFlowDelegate(),
             dataDownloader: initialDataDownloader,
-            languageSettingsService: languageSettingsService
+            languageSettingsService: languageSettingsService,
+            analytics: analytics
         )
     }
     

@@ -14,6 +14,7 @@ protocol LessonsListViewModelType {
     var isLoading: ObservableValue<Bool> { get }
     var didEndRefreshing: Signal { get }
     
+    func pageViewed()
     func lessonWillAppear(index: Int) -> LessonListItemViewModelType
     func lessonTapped(index: Int)
     func refreshLessons()

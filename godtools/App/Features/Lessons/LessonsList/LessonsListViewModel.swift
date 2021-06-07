@@ -12,6 +12,8 @@ class LessonsListViewModel: NSObject, LessonsListViewModelType {
     
     private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
+    private let analytics: AnalyticsContainer
+
     
     private var lessons: [ResourceModel] = Array()
     
@@ -21,11 +23,12 @@ class LessonsListViewModel: NSObject, LessonsListViewModelType {
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     let didEndRefreshing: Signal = Signal()
     
-    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService) {
+    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
+        self.analytics = analytics
         
         super.init()
         
@@ -48,6 +51,10 @@ class LessonsListViewModel: NSObject, LessonsListViewModelType {
         dataDownloader.resourcesUpdatedFromRemoteDatabase.removeObserver(self)
     }
     
+    var analyticsScreenName: String {
+        return "Lessons"
+    }
+    
     private func setupBinding() {
         
         dataDownloader.cachedResourcesAvailable.addObserver(self) { [weak self] (cachedResourcesAvailable: Bool) in
@@ -68,6 +75,11 @@ class LessonsListViewModel: NSObject, LessonsListViewModelType {
             }
         }
     }
+    
+    func pageViewed() {
+        
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: "lessons", siteSubSection: "", url: nil))
+    } 
     
     private func getLessonsFromCache() -> [ResourceModel] {
         
