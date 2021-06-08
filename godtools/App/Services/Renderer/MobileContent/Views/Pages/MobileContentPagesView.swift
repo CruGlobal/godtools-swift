@@ -230,7 +230,9 @@ class MobileContentPagesView: UIViewController {
         }
         else {
             
-            // TODO: For now the animated argument will need to remain true. When scrolling to a page with animated set to false, I noticed pageDidAppear is never called. I will need to investigate this more on the pageNavigationView and ensure that the page life cycle methods are correctly called when scrolling to a page with animated set to false. ~Levi
+            // TODO: For now the animated argument will need to remain true. When scrolling to a page with animated set to false,
+            //  I noticed pageDidAppear is never called. I will need to investigate this more on the pageNavigationView
+            //  and ensure that the page life cycle methods are correctly called when scrolling to a page with animated set to false. ~Levi
             
             pageNavigationView.scrollToPage(
                 page: navigationModel.page,
