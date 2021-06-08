@@ -569,13 +569,15 @@ extension ToolPageCardsView {
         if currentCardPosition != cardPosition {
             
             if let currentCardPosition = currentCardPosition, let currentCardView = getCardView(cardPosition: currentCardPosition) {
-                currentCardView.viewDidDisappear()
+                currentCardView.onCardHidden()
+                currentCardView.notifyViewAndAllChildrenViewDidDisappear()
             }
             
             currentCardPosition = cardPosition
             
             if let cardPosition = cardPosition, let cardView = getCardView(cardPosition: cardPosition) {
-                cardView.viewDidAppear()
+                cardView.onCardVisible()
+                cardView.notifyViewAndAllChildrenViewDidAppear()
             }
             
             delegate?.toolPageCardsDidChangeCardPosition(cardsView: self, cardPosition: cardPosition, animated: animated)

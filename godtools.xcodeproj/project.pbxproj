@@ -756,6 +756,7 @@
 		45B6482925E593110098BAF1 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		45B6482A25E593110098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		45B879CE260C2CA800807821 /* MobileContentPagesNavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B879CD260C2CA800807821 /* MobileContentPagesNavigationModel.swift */; };
+		45BAFCBB266915D5009302C4 /* MobileContentVideoNodeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BAFCBA266915D5009302C4 /* MobileContentVideoNodeProvider.swift */; };
 		45BB7FB925F6BE76000FE44B /* LanguageDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DE725938A9700A096A0 /* LanguageDirection.swift */; };
 		45BFF423262F728A002BE732 /* MobileContentAccordionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BFF422262F728A002BE732 /* MobileContentAccordionView.swift */; };
 		45BFF42D262F72A1002BE732 /* MobileContentAccordionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BFF42C262F72A1002BE732 /* MobileContentAccordionViewModel.swift */; };
@@ -887,13 +888,16 @@
 		D129DE6B2543669C00841733 /* onboarding_tutorial_knife.json in Resources */ = {isa = PBXBuildFile; fileRef = D129DE682543669C00841733 /* onboarding_tutorial_knife.json */; };
 		D163EA96254A00BE00BA4EA9 /* share_tool_tutorial_link.json in Resources */ = {isa = PBXBuildFile; fileRef = D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */; };
 		D1838479257E86B3004F5674 /* container in Resources */ = {isa = PBXBuildFile; fileRef = D1838478257E86B3004F5674 /* container */; };
-		D196A2002613A5650038ECC5 /* URLDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D196A1FF2613A5650038ECC5 /* URLDeepLinkParser.swift */; };
+		D1886E5C2660166600886A71 /* ContentVideoNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1886E5B2660166600886A71 /* ContentVideoNode.swift */; };
 		D1982F2125D1EEBD0095EEE2 /* ArticleDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1982F2025D1EEBD0095EEE2 /* ArticleDeepLinkParser.swift */; };
 		D19D00E725AF4B97007C535B /* AppsFlyerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19D00E625AF4B97007C535B /* AppsFlyerType.swift */; };
 		D19D00F925AF51FA007C535B /* AppsFlyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19D00F825AF51FA007C535B /* AppsFlyer.swift */; };
 		D19D010325AF549B007C535B /* DeepLinkingServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19D010225AF549B007C535B /* DeepLinkingServiceType.swift */; };
 		D19EB5DE259BB39300685156 /* training_tip_callout.json in Resources */ = {isa = PBXBuildFile; fileRef = D19EB5DD259BB39300685156 /* training_tip_callout.json */; };
 		D19EB5E0259BB75900685156 /* training_tip_tips.json in Resources */ = {isa = PBXBuildFile; fileRef = D19EB5DF259BB75900685156 /* training_tip_tips.json */; };
+		D1ADFDF2265EA6E4008AD913 /* MobileContentEmbeddedVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1ADFDF1265EA6E4008AD913 /* MobileContentEmbeddedVideoView.swift */; };
+		D1ADFDF4265EA70C008AD913 /* MobileContentEmbeddedVideoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1ADFDF3265EA70C008AD913 /* MobileContentEmbeddedVideoViewModel.swift */; };
+		D1ADFDF6265EA72B008AD913 /* MobileContentEmbeddedVideoViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1ADFDF5265EA72B008AD913 /* MobileContentEmbeddedVideoViewModelType.swift */; };
 		D1B944E5259E58F5004641DB /* remote_share_active.json in Resources */ = {isa = PBXBuildFile; fileRef = D1B944E4259E58F5004641DB /* remote_share_active.json */; };
 		D1DD79FD26690CAB000F1351 /* TrackScreenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DD79FC26690CAB000F1351 /* TrackScreenModel.swift */; };
 		D1DD79FF26690CBA000F1351 /* TrackActionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DD79FE26690CBA000F1351 /* TrackActionModel.swift */; };
@@ -1667,6 +1671,7 @@
 		45AD22B22593D1FB00A096A0 /* UIImage+CreateImageWithColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+CreateImageWithColor.swift"; sourceTree = "<group>"; };
 		45B116C12625FC6D007A7127 /* LanguageDirection+SemanticContentAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LanguageDirection+SemanticContentAttribute.swift"; sourceTree = "<group>"; };
 		45B879CD260C2CA800807821 /* MobileContentPagesNavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentPagesNavigationModel.swift; sourceTree = "<group>"; };
+		45BAFCBA266915D5009302C4 /* MobileContentVideoNodeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentVideoNodeProvider.swift; sourceTree = "<group>"; };
 		45BFF422262F728A002BE732 /* MobileContentAccordionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAccordionView.swift; sourceTree = "<group>"; };
 		45BFF42C262F72A1002BE732 /* MobileContentAccordionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAccordionViewModel.swift; sourceTree = "<group>"; };
 		45BFF432262F72B4002BE732 /* MobileContentAccordionViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAccordionViewModelType.swift; sourceTree = "<group>"; };
@@ -1858,13 +1863,16 @@
 		D14F75B925D58B96008749CF /* NotoSansMyanmarUI-CondensedBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansMyanmarUI-CondensedBold.ttf"; sourceTree = "<group>"; };
 		D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = share_tool_tutorial_link.json; sourceTree = "<group>"; };
 		D1838478257E86B3004F5674 /* container */ = {isa = PBXFileReference; lastKnownFileType = folder; path = container; sourceTree = "<group>"; };
-		D196A1FF2613A5650038ECC5 /* URLDeepLinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLDeepLinkParser.swift; sourceTree = "<group>"; };
+		D1886E5B2660166600886A71 /* ContentVideoNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentVideoNode.swift; sourceTree = "<group>"; };
 		D1982F2025D1EEBD0095EEE2 /* ArticleDeepLinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDeepLinkParser.swift; sourceTree = "<group>"; };
 		D19D00E625AF4B97007C535B /* AppsFlyerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsFlyerType.swift; sourceTree = "<group>"; };
 		D19D00F825AF51FA007C535B /* AppsFlyer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsFlyer.swift; sourceTree = "<group>"; };
 		D19D010225AF549B007C535B /* DeepLinkingServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkingServiceType.swift; sourceTree = "<group>"; };
 		D19EB5DD259BB39300685156 /* training_tip_callout.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = training_tip_callout.json; sourceTree = "<group>"; };
 		D19EB5DF259BB75900685156 /* training_tip_tips.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = training_tip_tips.json; sourceTree = "<group>"; };
+		D1ADFDF1265EA6E4008AD913 /* MobileContentEmbeddedVideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentEmbeddedVideoView.swift; sourceTree = "<group>"; };
+		D1ADFDF3265EA70C008AD913 /* MobileContentEmbeddedVideoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentEmbeddedVideoViewModel.swift; sourceTree = "<group>"; };
+		D1ADFDF5265EA72B008AD913 /* MobileContentEmbeddedVideoViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentEmbeddedVideoViewModelType.swift; sourceTree = "<group>"; };
 		D1B944E4259E58F5004641DB /* remote_share_active.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = remote_share_active.json; sourceTree = "<group>"; };
 		D1DD79FC26690CAB000F1351 /* TrackScreenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackScreenModel.swift; sourceTree = "<group>"; };
 		D1DD79FE26690CBA000F1351 /* TrackActionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackActionModel.swift; sourceTree = "<group>"; };
@@ -2295,6 +2303,7 @@
 				455FF6482603DC690028B95B /* ContentTabNode.swift */,
 				455FF6452603DC690028B95B /* ContentTabsNode.swift */,
 				455FF6522603DC690028B95B /* ContentTextNode.swift */,
+				D1886E5B2660166600886A71 /* ContentVideoNode.swift */,
 				455FF63E2603DC690028B95B /* HeaderNode.swift */,
 				455FF6552603DC690028B95B /* HeadingNode.swift */,
 				455FF63D2603DC690028B95B /* HeroNode.swift */,
@@ -2326,6 +2335,7 @@
 				4597D6D426442E3C00B569B8 /* MobileContentSpacerMode.swift */,
 				45A5B0D1260E2CCC0021EDAF /* MobileContentTextAlign.swift */,
 				45D5030B2641E3C100772561 /* MobileContentTextScale.swift */,
+				45BAFCBA266915D5009302C4 /* MobileContentVideoNodeProvider.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2338,6 +2348,7 @@
 				455FF68F2603DC690028B95B /* BackgroundImage */,
 				45BFF421262F7271002BE732 /* ContentAccordion */,
 				455FF67C2603DC690028B95B /* ContentButton */,
+				D1ADFDF0265EA646008AD913 /* ContentEmbeddedVideo */,
 				455FF66D2603DC690028B95B /* ContentForm */,
 				45BFF469262F7D7D002BE732 /* ContentHeader */,
 				455FF6822603DC690028B95B /* ContentImage */,
@@ -2588,7 +2599,6 @@
 				456E504A25D0CF7E0075FF6A /* ParsedDeepLinkType.swift */,
 				456E504B25D0CF7E0075FF6A /* ToolDeepLinkParser.swift */,
 				D1982F2025D1EEBD0095EEE2 /* ArticleDeepLinkParser.swift */,
-				D196A1FF2613A5650038ECC5 /* URLDeepLinkParser.swift */,
 			);
 			path = Parsers;
 			sourceTree = "<group>";
@@ -4931,6 +4941,14 @@
 				D1DD79FE26690CBA000F1351 /* TrackActionModel.swift */,
 			);
 			path = Models;
+		D1ADFDF0265EA646008AD913 /* ContentEmbeddedVideo */ = {
+			isa = PBXGroup;
+			children = (
+				D1ADFDF1265EA6E4008AD913 /* MobileContentEmbeddedVideoView.swift */,
+				D1ADFDF3265EA70C008AD913 /* MobileContentEmbeddedVideoViewModel.swift */,
+				D1ADFDF5265EA72B008AD913 /* MobileContentEmbeddedVideoViewModelType.swift */,
+			);
+			path = ContentEmbeddedVideo;
 			sourceTree = "<group>";
 		};
 		D1FF263625BA0BF000C825DB /* FirebaseInAppMessages */ = {
@@ -5414,9 +5432,9 @@
 				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
 				"${BUILT_PRODUCTS_DIR}/TTTAttributedLabel/TTTAttributedLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/TheKeyOAuthSwift/TheKeyOAuthSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/YoutubePlayer-in-WKWebView/YoutubePlayer_in_WKWebView.framework",
 				"${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+				"${BUILT_PRODUCTS_DIR}/youtube-ios-player-helper/youtube_ios_player_helper.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -5445,9 +5463,9 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TTTAttributedLabel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TheKeyOAuthSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YoutubePlayer_in_WKWebView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/youtube_ios_player_helper.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -5628,6 +5646,7 @@
 				455FF75C2603DDD30028B95B /* ToolPageHeroView.swift in Sources */,
 				45AD1B3A25938A4F00A096A0 /* MenuViewModel.swift in Sources */,
 				45BFF46B262F7D88002BE732 /* MobileContentHeaderView.swift in Sources */,
+				D1ADFDF2265EA6E4008AD913 /* MobileContentEmbeddedVideoView.swift in Sources */,
 				45AD1FCE25938A9800A096A0 /* SHA256FileLocation.swift in Sources */,
 				45AD20C925938F3900A096A0 /* CallbackValueHandler.swift in Sources */,
 				45AD201725938A9800A096A0 /* ToolShortcutItem.swift in Sources */,
@@ -5688,7 +5707,6 @@
 				45D03F692652D89D0011B5F3 /* MobileContentPageViewModelType.swift in Sources */,
 				45AD1F7625938A9800A096A0 /* ViewedTrainingTipType.swift in Sources */,
 				45AD1B2025938A4E00A096A0 /* LearnToShareToolCellViewModel.swift in Sources */,
-				D196A2002613A5650038ECC5 /* URLDeepLinkParser.swift in Sources */,
 				45AD1BDB25938A4F00A096A0 /* ResponseErrorAlertMessage.swift in Sources */,
 				45BFF443262F7ABA002BE732 /* ContentSectionNode.swift in Sources */,
 				45AD1AA525938A4E00A096A0 /* TutorialSupportedLanguages.swift in Sources */,
@@ -5822,6 +5840,7 @@
 				45AD1AFA25938A4E00A096A0 /* MailViewModelType.swift in Sources */,
 				455FF6F82603DC6A0028B95B /* MobileContentTextViewModelType.swift in Sources */,
 				45AD1BA725938A4F00A096A0 /* ShareToolMenuFlow.swift in Sources */,
+				D1886E5C2660166600886A71 /* ContentVideoNode.swift in Sources */,
 				45AD1AEF25938A4E00A096A0 /* ContactUsWebContent.swift in Sources */,
 				45AD1F7425938A9800A096A0 /* ViewedTrainingTipsCacheType.swift in Sources */,
 				45CBA032261FDF410036BEB3 /* LessonPageViewFactory.swift in Sources */,
@@ -5920,6 +5939,7 @@
 				45AD1F2E25938A9800A096A0 /* MobileContentXmlManifestResource.swift in Sources */,
 				45AD1ABE25938A4E00A096A0 /* ToolsMenuView.swift in Sources */,
 				45AD1BB125938A4F00A096A0 /* FlowDelegate.swift in Sources */,
+				45BAFCBB266915D5009302C4 /* MobileContentVideoNodeProvider.swift in Sources */,
 				455FF7612603DDD30028B95B /* ToolPageModalViewModel.swift in Sources */,
 				45AD1AB725938A4E00A096A0 /* AllToolsView.swift in Sources */,
 				45AD1AA825938A4E00A096A0 /* TutorialViewModelType.swift in Sources */,
@@ -6038,6 +6058,7 @@
 				456E504D25D0CF7E0075FF6A /* ParsedDeepLinkType.swift in Sources */,
 				45CB9FA5261F8BA80036BEB3 /* ToolsMenuToolbarView.swift in Sources */,
 				45AD208625938B6A00A096A0 /* KeyboardStateChange.swift in Sources */,
+				D1ADFDF6265EA72B008AD913 /* MobileContentEmbeddedVideoViewModelType.swift in Sources */,
 				45AD21362593A47800A096A0 /* ShareToolMenuViewModel.swift in Sources */,
 				45AD1FDB25938A9800A096A0 /* WebArchiveQueue.swift in Sources */,
 				45C93AEB261D310900592FFF /* ArticleJcrContent.swift in Sources */,
@@ -6212,6 +6233,7 @@
 				45C93ADD261D310900592FFF /* ArticleAemWebArchiveFileCache.swift in Sources */,
 				455FF6B92603DC690028B95B /* CardNode.swift in Sources */,
 				45AD1BA825938A4F00A096A0 /* AppRootController.swift in Sources */,
+				D1ADFDF4265EA70C008AD913 /* MobileContentEmbeddedVideoViewModel.swift in Sources */,
 				455FF6F62603DC6A0028B95B /* MobileContentTextView.swift in Sources */,
 				45AD1AA725938A4E00A096A0 /* TutorialItemViewBuilder.swift in Sources */,
 				455FF6F32603DC6A0028B95B /* MobileContentBackgroundImageView.swift in Sources */,
@@ -6460,7 +6482,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 5.7.0;
+				MARKETING_VERSION = 5.7.1;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -6625,7 +6647,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 5.7.0;
+				MARKETING_VERSION = 5.7.1;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -6790,7 +6812,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 5.7.0;
+				MARKETING_VERSION = 5.7.1;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -6955,7 +6977,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 5.7.0;
+				MARKETING_VERSION = 5.7.1;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -7143,7 +7165,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 5.7.0;
+				MARKETING_VERSION = 5.7.1;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DRELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";

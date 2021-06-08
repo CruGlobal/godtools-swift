@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import YoutubePlayer_in_WKWebView
+import youtube_ios_player_helper
 
 class ShareToolScreenTutorialView: UIViewController {
     
@@ -177,7 +177,7 @@ extension ShareToolScreenTutorialView: PageNavigationCollectionViewDelegate {
 // MARK: - TutorialCellDelegate
 
 extension ShareToolScreenTutorialView: TutorialCellDelegate {
-    func tutorialCellVideoPlayer(cell: TutorialCell, didChangeTo state: WKYTPlayerState) {
+    func tutorialCellVideoPlayer(cell: TutorialCell, didChangeTo state: YTPlayerState) {
 
     }
 }

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import YoutubePlayer_in_WKWebView
+import youtube_ios_player_helper
 
 class TutorialView: UIViewController {
     
@@ -176,7 +176,7 @@ extension TutorialView: PageNavigationCollectionViewDelegate {
 // MARK: - TutorialCellDelegate
 
 extension TutorialView: TutorialCellDelegate {
-    func tutorialCellVideoPlayer(cell: TutorialCell, didChangeTo state: WKYTPlayerState) {
+    func tutorialCellVideoPlayer(cell: TutorialCell, didChangeTo state: YTPlayerState) {
         if state == .playing {
             viewModel.tutorialVideoPlayTapped()
         }

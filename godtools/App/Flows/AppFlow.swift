@@ -162,9 +162,6 @@ class AppFlow: NSObject, Flow {
                     )
                     
                     appFlow.articleDeepLinkFlow = articleDeepLinkFlow
-                
-                case .url(let url):
-                    UIApplication.shared.open(url)
                 }
             }
         }

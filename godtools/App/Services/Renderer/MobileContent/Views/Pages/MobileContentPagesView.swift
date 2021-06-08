@@ -293,7 +293,7 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
     func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
                 
         if let contentPageCell = pageCell as? MobileContentPageCell {
-            contentPageCell.mobileContentView?.viewDidAppear()
+            contentPageCell.mobileContentView?.notifyViewAndAllChildrenViewDidAppear()
         }
         
         completeCurrentNavigationIfNeeded()
@@ -306,7 +306,7 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
     func pageNavigationPageDidDisappear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
                 
         if let contentPageCell = pageCell as? MobileContentPageCell {
-            contentPageCell.mobileContentView?.viewDidDisappear()
+            contentPageCell.mobileContentView?.notifyViewAndAllChildrenViewDidDisappear()
         }
         
         viewModel.pageDidDisappear(page: page)
