@@ -4941,6 +4941,8 @@
 				D1DD79FE26690CBA000F1351 /* TrackActionModel.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};	
 		D1ADFDF0265EA646008AD913 /* ContentEmbeddedVideo */ = {
 			isa = PBXGroup;
 			children = (
