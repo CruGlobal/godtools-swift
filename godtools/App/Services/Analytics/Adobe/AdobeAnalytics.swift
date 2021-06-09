@@ -11,7 +11,7 @@ import AdobeMobileSDK
 import TheKeyOAuthSwift
 import GTMAppAuth
 
-class AdobeAnalytics: NSObject, AdobeAnalyticsType, MobileContentAnalyticsSystem {
+class AdobeAnalytics: NSObject, AdobeAnalyticsType {
     
     private let config: ConfigType
     private let keyAuthClient: TheKeyOAuthClient

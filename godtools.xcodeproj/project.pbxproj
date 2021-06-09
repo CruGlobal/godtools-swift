@@ -48,6 +48,10 @@
 		453CD5F22607A0C200B1F9E7 /* MobileContentStackChildViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453CD5F02607A0C200B1F9E7 /* MobileContentStackChildViewType.swift */; };
 		453CD5F32607A0C200B1F9E7 /* MobileContentStackChildViewHeightConstraintType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453CD5F12607A0C200B1F9E7 /* MobileContentStackChildViewHeightConstraintType.swift */; };
 		453D866A24E08461004EA89F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 453D866824E08461004EA89F /* Localizable.strings */; };
+		45428A7B26712A3A0022A66D /* FirebaseAnalytics+MobileContentAnalyticsSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45428A7A26712A3A0022A66D /* FirebaseAnalytics+MobileContentAnalyticsSystem.swift */; };
+		45428A7D26712ABA0022A66D /* SnowplowAnalytics+MobileContentAnalyticsSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45428A7C26712ABA0022A66D /* SnowplowAnalytics+MobileContentAnalyticsSystem.swift */; };
+		45428A7F26712AED0022A66D /* AdobeAnalytics+MobileContentAnalyticsSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45428A7E26712AED0022A66D /* AdobeAnalytics+MobileContentAnalyticsSystem.swift */; };
+		45428A8126712B1C0022A66D /* AppsFlyerAnalytics+MobileContentAnalyticsSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45428A8026712B1C0022A66D /* AppsFlyerAnalytics+MobileContentAnalyticsSystem.swift */; };
 		454637A8260A77A1008AD666 /* ToolPageModalView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 454637A7260A77A0008AD666 /* ToolPageModalView.xib */; };
 		454637DF260AA642008AD666 /* TrainingTipView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 454637D9260AA642008AD666 /* TrainingTipView.xib */; };
 		454637E0260AA642008AD666 /* TrainingTipViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454637DB260AA642008AD666 /* TrainingTipViewType.swift */; };
@@ -979,6 +983,10 @@
 		453D866324E08310004EA89F /* mn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = mn; path = mn.lproj/Localizable.strings; sourceTree = "<group>"; };
 		453D866424E08347004EA89F /* tpi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tpi; path = tpi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		453D866924E08461004EA89F /* no */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = no; path = Localizable.strings; sourceTree = "<group>"; };
+		45428A7A26712A3A0022A66D /* FirebaseAnalytics+MobileContentAnalyticsSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseAnalytics+MobileContentAnalyticsSystem.swift"; sourceTree = "<group>"; };
+		45428A7C26712ABA0022A66D /* SnowplowAnalytics+MobileContentAnalyticsSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SnowplowAnalytics+MobileContentAnalyticsSystem.swift"; sourceTree = "<group>"; };
+		45428A7E26712AED0022A66D /* AdobeAnalytics+MobileContentAnalyticsSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AdobeAnalytics+MobileContentAnalyticsSystem.swift"; sourceTree = "<group>"; };
+		45428A8026712B1C0022A66D /* AppsFlyerAnalytics+MobileContentAnalyticsSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppsFlyerAnalytics+MobileContentAnalyticsSystem.swift"; sourceTree = "<group>"; };
 		454637A7260A77A0008AD666 /* ToolPageModalView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToolPageModalView.xib; sourceTree = "<group>"; };
 		454637D9260AA642008AD666 /* TrainingTipView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TrainingTipView.xib; sourceTree = "<group>"; };
 		454637DB260AA642008AD666 /* TrainingTipViewType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrainingTipViewType.swift; sourceTree = "<group>"; };
@@ -4205,6 +4213,7 @@
 				45AD203F25938AC300A096A0 /* AdobeAnalyticsType.swift */,
 				45AD204025938AC300A096A0 /* AdobeAnalyticsConstants.swift */,
 				45AD203E25938AC300A096A0 /* AdobeAnalyticsProperties.swift */,
+				45428A7E26712AED0022A66D /* AdobeAnalytics+MobileContentAnalyticsSystem.swift */,
 			);
 			path = Adobe;
 			sourceTree = "<group>";
@@ -4214,6 +4223,7 @@
 			children = (
 				45AD204525938AC300A096A0 /* FirebaseAnalytics.swift */,
 				45AD204425938AC300A096A0 /* FirebaseAnalyticsType.swift */,
+				45428A7A26712A3A0022A66D /* FirebaseAnalytics+MobileContentAnalyticsSystem.swift */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -4223,6 +4233,7 @@
 			children = (
 				45AD204825938AC300A096A0 /* SnowplowAnalytics.swift */,
 				45AD204725938AC300A096A0 /* SnowplowAnalyticsType.swift */,
+				45428A7C26712ABA0022A66D /* SnowplowAnalytics+MobileContentAnalyticsSystem.swift */,
 			);
 			path = Snowplow;
 			sourceTree = "<group>";
@@ -4232,6 +4243,7 @@
 			children = (
 				45AD204B25938AC300A096A0 /* AppsFlyerAnalytics.swift */,
 				45AD204A25938AC300A096A0 /* AppsFlyerAnalyticsType.swift */,
+				45428A8026712B1C0022A66D /* AppsFlyerAnalytics+MobileContentAnalyticsSystem.swift */,
 			);
 			path = AppsFlyer;
 			sourceTree = "<group>";
@@ -4933,16 +4945,6 @@
 			path = AppsFlyer;
 			sourceTree = "<group>";
 		};
-		D1DD79FB26690C5F000F1351 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				45A63AB2265441B60090E09D /* ExitLinkModel.swift */,
-				D1DD79FC26690CAB000F1351 /* TrackScreenModel.swift */,
-				D1DD79FE26690CBA000F1351 /* TrackActionModel.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};	
 		D1ADFDF0265EA646008AD913 /* ContentEmbeddedVideo */ = {
 			isa = PBXGroup;
 			children = (
@@ -4951,6 +4953,16 @@
 				D1ADFDF5265EA72B008AD913 /* MobileContentEmbeddedVideoViewModelType.swift */,
 			);
 			path = ContentEmbeddedVideo;
+			sourceTree = "<group>";
+		};
+		D1DD79FB26690C5F000F1351 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				45A63AB2265441B60090E09D /* ExitLinkModel.swift */,
+				D1DD79FC26690CAB000F1351 /* TrackScreenModel.swift */,
+				D1DD79FE26690CBA000F1351 /* TrackActionModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		D1FF263625BA0BF000C825DB /* FirebaseInAppMessages */ = {
@@ -5826,6 +5838,7 @@
 				45AD201225938A9800A096A0 /* TranslationZipFileModelType.swift in Sources */,
 				45AD1AD425938A4E00A096A0 /* OpenTutorialViewModel.swift in Sources */,
 				45AD1B8A25938A4F00A096A0 /* OnboardingTutorialAvailability.swift in Sources */,
+				45428A7F26712AED0022A66D /* AdobeAnalytics+MobileContentAnalyticsSystem.swift in Sources */,
 				45AD1FBD25938A9800A096A0 /* TractRemoteShareNavigationEvent.swift in Sources */,
 				45AD1B9D25938A4F00A096A0 /* Language.swift in Sources */,
 				45AD1B5825938A4F00A096A0 /* AccountViewModelType.swift in Sources */,
@@ -5963,10 +5976,12 @@
 				455FF6BA2603DC690028B95B /* ContentPlaceholderNode.swift in Sources */,
 				455FF6BB2603DC690028B95B /* ContentInputNode.swift in Sources */,
 				45AD1F9225938A9800A096A0 /* AttachmentModelType+SHA256FileLocation.swift in Sources */,
+				45428A7B26712A3A0022A66D /* FirebaseAnalytics+MobileContentAnalyticsSystem.swift in Sources */,
 				45AD20B225938EE500A096A0 /* FileCache.swift in Sources */,
 				45AD1B1D25938A4E00A096A0 /* LearnToShareToolView.swift in Sources */,
 				45AD1ACC25938A4E00A096A0 /* FavoritingToolMessageViewModelType.swift in Sources */,
 				45AD202925938A9800A096A0 /* LocalizationBundleLoader.swift in Sources */,
+				45428A7D26712ABA0022A66D /* SnowplowAnalytics+MobileContentAnalyticsSystem.swift in Sources */,
 				45FF25D7260BD98700D771B6 /* TrainingPageViewModelType.swift in Sources */,
 				45AD1B6725938A4F00A096A0 /* GlobalActivityCellViewModel.swift in Sources */,
 				45AD201625938A9800A096A0 /* ShortcutItemsService.swift in Sources */,
@@ -6059,6 +6074,7 @@
 				455FF6BF2603DC690028B95B /* AnalyticsEventsNode.swift in Sources */,
 				456E504D25D0CF7E0075FF6A /* ParsedDeepLinkType.swift in Sources */,
 				45CB9FA5261F8BA80036BEB3 /* ToolsMenuToolbarView.swift in Sources */,
+				45428A8126712B1C0022A66D /* AppsFlyerAnalytics+MobileContentAnalyticsSystem.swift in Sources */,
 				45AD208625938B6A00A096A0 /* KeyboardStateChange.swift in Sources */,
 				D1ADFDF6265EA72B008AD913 /* MobileContentEmbeddedVideoViewModelType.swift in Sources */,
 				45AD21362593A47800A096A0 /* ShareToolMenuViewModel.swift in Sources */,

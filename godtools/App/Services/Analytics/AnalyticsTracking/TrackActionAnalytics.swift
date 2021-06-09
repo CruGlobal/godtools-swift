@@ -15,14 +15,24 @@ class TrackActionAnalytics {
     private let snowplowAnalytics: SnowplowAnalyticsType
     
     required init(adobeAnalytics: AdobeAnalyticsType, firebaseAnalytics: FirebaseAnalyticsType, snowplowAnalytics: SnowplowAnalyticsType) {
+        
         self.adobeAnalytics = adobeAnalytics
         self.firebaseAnalytics = firebaseAnalytics
         self.snowplowAnalytics = snowplowAnalytics
     }
     
     func trackAction(trackAction: TrackActionModel) {
+        
         adobeAnalytics.trackAction(trackAction: trackAction)
-        firebaseAnalytics.trackAction(trackAction: trackAction)
+        
+        firebaseAnalytics.trackAction(
+            screenName: trackAction.screenName,
+            siteSection: trackAction.siteSection,
+            siteSubSection: trackAction.siteSubSection,
+            actionName: trackAction.actionName,
+            data: trackAction.data
+        )
+        
         snowplowAnalytics.trackAction(trackAction: trackAction)
     }
 }
