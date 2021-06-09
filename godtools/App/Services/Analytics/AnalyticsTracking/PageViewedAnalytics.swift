@@ -25,7 +25,11 @@ class PageViewedAnalytics {
         
         adobeAnalytics.trackScreenView(trackScreen: trackScreen)
         
-        firebaseAnalytics.trackScreenView(trackScreen: trackScreen)
+        firebaseAnalytics.trackScreenView(
+            screenName: trackScreen.screenName,
+            siteSection: trackScreen.siteSection,
+            siteSubSection: trackScreen.siteSubSection
+        )
         
         snowplowAnalytics.trackScreenView(trackScreen: trackScreen)
     }

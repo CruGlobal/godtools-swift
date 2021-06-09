@@ -11,7 +11,7 @@ import FirebaseAnalytics
 import TheKeyOAuthSwift
 import GTMAppAuth
 
-class FirebaseAnalytics: NSObject, FirebaseAnalyticsType, MobileContentAnalyticsSystem {
+class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
     
     private let config: ConfigType
     private let keyAuthClient: TheKeyOAuthClient
@@ -62,38 +62,41 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType, MobileContentAnalytics
     
     //MARK: - Public
     
-    func trackScreenView(trackScreen: TrackScreenModel) {
+    func trackScreenView(screenName: String, siteSection: String, siteSubSection: String) {
+        
         internalTrackEvent(
-            screenName: trackScreen.screenName,
-            siteSection: trackScreen.siteSection,
-            siteSubSection: trackScreen.siteSubSection,
+            screenName: screenName,
+            siteSection: siteSection,
+            siteSubSection: siteSubSection,
             previousScreenName: previousTrackedScreenName,
             eventName: AnalyticsEventScreenView,
             data: nil
         )
-        previousTrackedScreenName = trackScreen.screenName
+        previousTrackedScreenName = screenName
     }
-
-    func trackAction(trackAction: TrackActionModel) {
+    
+    func trackAction(screenName: String, siteSection: String, siteSubSection: String, actionName: String, data: [String : Any]?) {
+        
         internalTrackEvent(
-            screenName: trackAction.screenName,
-            siteSection: trackAction.siteSection,
-            siteSubSection: trackAction.siteSubSection,
+            screenName: screenName,
+            siteSection: siteSection,
+            siteSubSection: siteSubSection,
             previousScreenName: previousTrackedScreenName,
-            eventName: trackAction.actionName,
-            data: trackAction.data
+            eventName: actionName,
+            data: data
         )
     }
     
-    func trackExitLink(exitLink: ExitLinkModel) {
+    func trackExitLink(screenName: String, siteSection: String, siteSubSection: String, url: String) {
+        
         internalTrackEvent(
-            screenName: exitLink.screenName,
-            siteSection: exitLink.siteSection,
-            siteSubSection: exitLink.siteSubSection,
+            screenName: screenName,
+            siteSection: siteSection,
+            siteSubSection: siteSubSection,
             previousScreenName: previousTrackedScreenName,
             eventName: AnalyticsConstants.Values.exitLink,
             data: [
-                AnalyticsConstants.Keys.exitLink: exitLink.url
+                AnalyticsConstants.Keys.exitLink: url
             ]
         )
     }

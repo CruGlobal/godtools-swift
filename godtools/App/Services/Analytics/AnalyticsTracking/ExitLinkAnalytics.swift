@@ -22,6 +22,11 @@ class ExitLinkAnalytics {
         
         adobeAnalytics.trackExitLink(exitLink: exitLink)
         
-        firebaseAnalytics.trackExitLink(exitLink: exitLink)
+        firebaseAnalytics.trackExitLink(
+            screenName: exitLink.screenName,
+            siteSection: exitLink.siteSection,
+            siteSubSection: exitLink.siteSubSection,
+            url: exitLink.url
+        )        
     }
 }

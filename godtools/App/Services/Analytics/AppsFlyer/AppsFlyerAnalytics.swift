@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AppsFlyerAnalytics: NSObject, AppsFlyerAnalyticsType, MobileContentAnalyticsSystem {
+class AppsFlyerAnalytics: NSObject, AppsFlyerAnalyticsType {
     
     private let serialQueue: DispatchQueue = DispatchQueue(label: "appsflyer.serial.queue")
     private let loggingEnabled: Bool

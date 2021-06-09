@@ -10,7 +10,7 @@ import Foundation
 import SnowplowTracker
 import TheKeyOAuthSwift
 
-class SnowplowAnalytics: SnowplowAnalyticsType, MobileContentAnalyticsSystem  {
+class SnowplowAnalytics: SnowplowAnalyticsType  {
    
     private let serialQueue: DispatchQueue = DispatchQueue(label: "snowplow.serial.queue")
     private let tracker: SPTracker

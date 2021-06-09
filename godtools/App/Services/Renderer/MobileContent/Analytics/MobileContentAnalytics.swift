@@ -53,11 +53,16 @@ class MobileContentAnalytics {
              
             if let analyticsSystem = analyticsSystems[system] {
                 
-                let resource = page.resource.abbreviation
+                let resourceAbbreviation = page.resource.abbreviation
                 let pageNumber = page.page
-                let screenName = resource + "-" + String(pageNumber)
+                let screenName = resourceAbbreviation + "-" + String(pageNumber)
                 
-                analyticsSystem.trackAction(trackAction: TrackActionModel(screenName: screenName, actionName: action, siteSection: resource, siteSubSection: "", url: nil, data: data))
+                analyticsSystem.trackMobileContentAction(
+                    screenName: screenName,
+                    siteSection: resourceAbbreviation,
+                    action: action,
+                    data: data
+                )
             }
          }
     }
