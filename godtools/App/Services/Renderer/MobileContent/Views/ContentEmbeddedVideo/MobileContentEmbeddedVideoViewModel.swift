@@ -29,7 +29,7 @@ class MobileContentEmbeddedVideoViewModel: MobileContentEmbeddedVideoViewModelTy
     
     var youtubePlayerParameters: [String : Any] {
         return [
-            "playsinline": 1
+            "playsinline": 0
         ]
     }
 }

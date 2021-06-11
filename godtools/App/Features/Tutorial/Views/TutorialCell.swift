@@ -242,7 +242,7 @@ class TutorialCell: UICollectionViewCell {
         youTubeVideoPlayer.stopVideo()
     }
     
-    func recueVideo() {
+    private func recueVideo() {
         guard let youtubeVideoId = viewModel?.youTubeVideoId else { return }
         
         youTubeVideoPlayer.cueVideo(byId: youtubeVideoId, startSeconds: 0.0)

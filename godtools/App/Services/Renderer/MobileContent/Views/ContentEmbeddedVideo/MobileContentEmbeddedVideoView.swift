@@ -51,6 +51,11 @@ class MobileContentEmbeddedVideoView: MobileContentView {
         videoView.load(withVideoId: viewModel.videoId, playerVars: viewModel.youtubePlayerParameters)
     }
     
+    private func recueVideo() {
+        
+        videoView.cueVideo(byId: viewModel.videoId, startSeconds: 0.0)
+    }
+    
     // MARK: - MobileContentView
     
     override func viewDidDisappear() {
@@ -82,6 +87,7 @@ extension MobileContentEmbeddedVideoView: YTPlayerViewDelegate {
             print("unstarted")
         case .ended:
             print("ended")
+            recueVideo()
         case .playing:
             print("playing")
         case .paused:
