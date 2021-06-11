@@ -153,9 +153,9 @@ extension ToolViewModel {
         
         analytics.trackActionAnalytics.trackAction(
             screenName: nil,
-            actionName: AnalyticsConstants.Values.shareScreenOpen,
+            actionName: AnalyticsConstants.Values.shareScreenOpened,
             data: [
-                AnalyticsConstants.ActionNames.shareScreenOpenCountKey: 1
+                AnalyticsConstants.ActionNames.shareScreenOpenedCountKey: 1
             ]
         )
     }

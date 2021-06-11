@@ -52,7 +52,7 @@ struct AnalyticsConstants {
         static let toolOpenedShortcut = "Tool Opened Shortcut"
         static let shareIconEngaged = "Share Icon Engaged"
         static let shareScreenEngaged = "Share Screen Engaged"
-        static let shareScreenOpen = "Share Screen Open"
+        static let shareScreenOpened = "Share Screen Opened"
     }
     
     struct ActionNames {
@@ -65,6 +65,6 @@ struct AnalyticsConstants {
         static let parallelLanguageToggle = "cru.parallellanguagetoggle"
         static let toolOpenedShortcutCountKey = "cru.tool-opened-shortcut"
         static let shareScreenEngagedCountKey = "cru.sharescreenengaged"
-        static let shareScreenOpenCountKey = "cru.share_screen_opened"
+        static let shareScreenOpenedCountKey = "cru.share_screen_opened"
     }
 }
