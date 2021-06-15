@@ -61,10 +61,10 @@ class TutorialViewModel: TutorialViewModelType {
         analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreenData)
         
         if isFirstPage {
-            analytics.appsFlyerAnalytics.trackAction(trackAction: trackActionData)
+            analytics.appsFlyerAnalytics.trackAction(actionName: trackActionData.actionName, data: trackActionData.data)
         }
         else if isLastPage {
-            analytics.appsFlyerAnalytics.trackAction(trackAction: trackActionData)
+            analytics.appsFlyerAnalytics.trackAction(actionName: trackActionData.actionName, data: trackActionData.data)
         }
     }
     

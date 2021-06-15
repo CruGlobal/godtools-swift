@@ -31,6 +31,6 @@ class PageViewedAnalytics {
             siteSubSection: trackScreen.siteSubSection
         )
         
-        snowplowAnalytics.trackScreenView(trackScreen: trackScreen)
+        snowplowAnalytics.trackScreenView(screenName: trackScreen.screenName)
     }
 }

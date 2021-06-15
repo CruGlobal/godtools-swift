@@ -12,5 +12,5 @@ protocol AppsFlyerAnalyticsType: MobileContentAnalyticsSystem {
     
     func configure(adobeAnalytics: AdobeAnalyticsType)
     func trackAppLaunch()
-    func trackAction(trackAction: TrackActionModel)
+    func trackAction(actionName: String, data: [String : Any]?)
 }

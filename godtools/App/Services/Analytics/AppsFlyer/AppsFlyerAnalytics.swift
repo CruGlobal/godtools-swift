@@ -57,14 +57,14 @@ class AppsFlyerAnalytics: NSObject, AppsFlyerAnalyticsType {
         }
     }
     
-    func trackAction(trackAction: TrackActionModel) {
+    func trackAction(actionName: String, data: [String : Any]?) {
                 
         serialQueue.async { [weak self] in
             
             self?.assertFailureIfNotConfigured()
             
-            self?.appsFlyer.appsFlyerLib.logEvent(trackAction.actionName, withValues: trackAction.data)
-            self?.log(method: "trackEvent()", label: "eventName", labelValue: trackAction.actionName, data: trackAction.data)
+            self?.appsFlyer.appsFlyerLib.logEvent(actionName, withValues: data)
+            self?.log(method: "trackEvent()", label: "eventName", labelValue: actionName, data: data)
         }
     }
     

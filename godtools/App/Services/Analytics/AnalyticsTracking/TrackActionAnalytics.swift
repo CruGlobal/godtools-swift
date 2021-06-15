@@ -33,6 +33,6 @@ class TrackActionAnalytics {
             data: trackAction.data
         )
         
-        snowplowAnalytics.trackAction(trackAction: trackAction)
+        snowplowAnalytics.trackAction(actionName: trackAction.actionName)
     }
 }
