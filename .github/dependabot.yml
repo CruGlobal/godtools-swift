@@ -1,11 +1,4 @@
 version: 2
-registries:
-  rubygems-server-gems-contribsys-com:
-    type: rubygems-server
-    url: https://gems.contribsys.com
-    username: "${{secrets.RUBYGEMS_SERVER_GEMS_CONTRIBSYS_COM_USERNAME}}"
-    password: "${{secrets.RUBYGEMS_SERVER_GEMS_CONTRIBSYS_COM_PASSWORD}}"
-
 updates:
 - package-ecosystem: bundler
   directory: "/"
@@ -17,5 +10,3 @@ updates:
   assignees:
   - frett
   - levieggertcru
-  registries:
-  - rubygems-server-gems-contribsys-com
