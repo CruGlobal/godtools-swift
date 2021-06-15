@@ -11,6 +11,7 @@ import Foundation
 class MobileContentEmbeddedVideoViewModel: MobileContentEmbeddedVideoViewModelType {
     
     private let videoNode: ContentVideoNode
+    private let playsInFullScreen = 0
     
     
     required init(videoNode: ContentVideoNode) {
@@ -28,8 +29,10 @@ class MobileContentEmbeddedVideoViewModel: MobileContentEmbeddedVideoViewModelTy
     }
     
     var youtubePlayerParameters: [String : Any] {
+        let playsInFullScreen = 0
+        
         return [
-            "playsinline": 0
+            "playsinline": playsInFullScreen
         ]
     }
 }

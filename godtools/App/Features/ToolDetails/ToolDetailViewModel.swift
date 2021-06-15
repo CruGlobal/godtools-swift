@@ -81,8 +81,10 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     }
     
     var youtubePlayerParameters: [String : Any]? {
+        let playsInFullScreen = 0
+        
         return [
-            "playsinline": 0
+            "playsinline": playsInFullScreen
         ]
     }
     
