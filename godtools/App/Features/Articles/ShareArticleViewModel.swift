@@ -45,6 +45,6 @@ class ShareArticleViewModel: ShareArticleViewModelType {
     
     func articleShared() {
                 
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AdobeAnalyticsConstants.Values.share, siteSection: "", siteSubSection: "", url: nil, data: [AdobeAnalyticsConstants.Keys.shareAction: 1]))
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.Values.share, siteSection: "", siteSubSection: "", url: nil, data: [AnalyticsConstants.Keys.shareAction: 1]))
     }
 }

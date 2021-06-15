@@ -16,9 +16,7 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
     private let tracker: SPTracker
     private let keyAuthClient: TheKeyOAuthClient
     private let loggingEnabled: Bool
-    
-    private var visitorMarketingCloudID: String = ""
-    
+        
     private let idSchema = "iglu:org.cru/ids/jsonschema/1-0-3"
     private let uriSchema = "iglu:org.cru/content-scoring/jsonschema/1-0-0"
     
@@ -64,7 +62,7 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
         })
     }
     
-    func configure (adobeAnalytics: AdobeAnalyticsType) {
+    func configure () {
         
         if isConfigured || isConfiguring {
             return
@@ -73,9 +71,7 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
         isConfiguring = true
         
         serialQueue.async { [weak self] in
-            
-            self?.visitorMarketingCloudID = adobeAnalytics.visitorMarketingCloudID
-            
+                        
             self?.isConfigured = true
             self?.isConfiguring = false
             
@@ -132,7 +128,6 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
     private func idContext() -> SPSelfDescribingJson {
                 
         let grMasterPersonID: String? = keyAuthClient.isAuthenticated() ? keyAuthClient.grMasterPersonId : nil
-        let marketingCloudID: String? = visitorMarketingCloudID
         let ssoguid: String? = keyAuthClient.isAuthenticated() ? keyAuthClient.guid : nil
         
         log(
@@ -141,7 +136,7 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
             labelValue: nil,
             data: [
                 "grMasterPersonID": grMasterPersonID ?? "",
-                "marketingCloudID": marketingCloudID ?? "",
+                "marketingCloudID": "",
                 "ssoguid": ssoguid ?? "",
                 "isAuthenticated": keyAuthClient.isAuthenticated()
             ]
@@ -149,7 +144,7 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
         
         return SPSelfDescribingJson(schema: idSchema, andData: [
             "gr_master_person_id": grMasterPersonID,
-            "mcid": marketingCloudID,
+            "mcid": "",
             "sso_guid": ssoguid,
         ] as NSObject)
     }

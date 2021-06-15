@@ -194,8 +194,6 @@ class MenuViewModel: NSObject, MenuViewModelType {
         let loggedOutHandler: CallbackHandler = CallbackHandler { [weak self] in
             self?.userAuthentication.signOut()
             self?.reloadMenuDataSource()
-            //on logout, sync Adobe Analytics auth state
-            self?.analytics.adobeAnalytics.fetchAttributesThenSyncIds()
         }
         
         flowDelegate?.navigate(step: .logoutTappedFromMenu(logoutHandler: loggedOutHandler))
@@ -213,7 +211,7 @@ class MenuViewModel: NSObject, MenuViewModelType {
         
         flowDelegate?.navigate(step: .shareGodToolsTappedFromMenu)
         
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: "Share App", actionName: AdobeAnalyticsConstants.Values.share, siteSection: "", siteSubSection: "", url: nil, data: [AdobeAnalyticsConstants.Keys.shareAction: 1]))
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: "Share App", actionName: AnalyticsConstants.Values.share, siteSection: "", siteSubSection: "", url: nil, data: [AnalyticsConstants.Keys.shareAction: 1]))
         
         analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: "Share App", siteSection: "", siteSubSection: "", url: nil))
     }

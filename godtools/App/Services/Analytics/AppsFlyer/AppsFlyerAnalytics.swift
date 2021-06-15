@@ -26,7 +26,7 @@ class AppsFlyerAnalytics: NSObject, AppsFlyerAnalyticsType {
         super.init()
     }
     
-    func configure(adobeAnalytics: AdobeAnalyticsType) {
+    func configure() {
             
         if isConfigured || isConfiguring {
             return
@@ -36,7 +36,7 @@ class AppsFlyerAnalytics: NSObject, AppsFlyerAnalyticsType {
         
         serialQueue.async { [weak self] in
                         
-            self?.appsFlyer.appsFlyerLib.customData = ["marketingCloudID": adobeAnalytics.visitorMarketingCloudID]
+            self?.appsFlyer.appsFlyerLib.customData = [:]
             
             self?.isConfigured = true
             self?.isConfiguring = false

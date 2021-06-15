@@ -19,6 +19,7 @@ struct AnalyticsConstants {
         static let previousScreenName = "cru.previousscreenname"
         static let screenName = "cru.screenname"
         static let screenNameFirebase = "screen_name"
+        static let shareAction = "cru.shareiconengaged"
         static let siteSection = "cru.siteSection"
         static let siteSubSection = "cru.siteSubSection"
         static let ssoguid = "cru.ssoguid"

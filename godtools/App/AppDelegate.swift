@@ -32,17 +32,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.appFlow = appFlow
         
         appDiContainer.appsFlyer.configure()
-                
-        appDiContainer.analytics.adobeAnalytics.configure()
-        appDiContainer.analytics.adobeAnalytics.collectLifecycleData()
         
         appDiContainer.analytics.firebaseAnalytics.configure()
         
-        appDiContainer.analytics.appsFlyerAnalytics.configure(adobeAnalytics: appDiContainer.analytics.adobeAnalytics)
+        appDiContainer.analytics.appsFlyerAnalytics.configure()
         
         appDiContainer.googleAdwordsAnalytics.recordAdwordsConversion()
         
-        appDiContainer.analytics.snowplowAnalytics.configure(adobeAnalytics: appDiContainer.analytics.adobeAnalytics)
+        appDiContainer.analytics.snowplowAnalytics.configure()
                 
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         
@@ -76,8 +73,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppEvents.activateApp()
         appFlow?.applicationDidBecomeActive(application)
         appDiContainer.analytics.appsFlyerAnalytics.trackAppLaunch()
-        //on app launch, sync Adobe Analytics auth state
-        appDiContainer.analytics.adobeAnalytics.fetchAttributesThenSyncIds()
         appDiContainer.analytics.firebaseAnalytics.fetchAttributesThenSetUserId()
     }
 

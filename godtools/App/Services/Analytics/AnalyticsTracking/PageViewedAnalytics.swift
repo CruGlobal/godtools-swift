@@ -10,21 +10,17 @@ import Foundation
 
 class PageViewedAnalytics {
     
-    private let adobeAnalytics: AdobeAnalyticsType
     private let firebaseAnalytics: FirebaseAnalyticsType
     private let snowplowAnalytics: SnowplowAnalyticsType
     
-    required init(adobeAnalytics: AdobeAnalyticsType, firebaseAnalytics: FirebaseAnalyticsType, snowplowAnalytics: SnowplowAnalyticsType) {
+    required init(firebaseAnalytics: FirebaseAnalyticsType, snowplowAnalytics: SnowplowAnalyticsType) {
         
-        self.adobeAnalytics = adobeAnalytics
         self.firebaseAnalytics = firebaseAnalytics
         self.snowplowAnalytics = snowplowAnalytics
     }
     
     func trackPageView(trackScreen: TrackScreenModel) {
-        
-        adobeAnalytics.trackScreenView(trackScreen: trackScreen)
-        
+                
         firebaseAnalytics.trackScreenView(
             screenName: trackScreen.screenName,
             siteSection: trackScreen.siteSection,

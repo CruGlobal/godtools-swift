@@ -50,7 +50,6 @@
 		453D866A24E08461004EA89F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 453D866824E08461004EA89F /* Localizable.strings */; };
 		45428A7B26712A3A0022A66D /* FirebaseAnalytics+MobileContentAnalyticsSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45428A7A26712A3A0022A66D /* FirebaseAnalytics+MobileContentAnalyticsSystem.swift */; };
 		45428A7D26712ABA0022A66D /* SnowplowAnalytics+MobileContentAnalyticsSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45428A7C26712ABA0022A66D /* SnowplowAnalytics+MobileContentAnalyticsSystem.swift */; };
-		45428A7F26712AED0022A66D /* AdobeAnalytics+MobileContentAnalyticsSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45428A7E26712AED0022A66D /* AdobeAnalytics+MobileContentAnalyticsSystem.swift */; };
 		45428A8126712B1C0022A66D /* AppsFlyerAnalytics+MobileContentAnalyticsSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45428A8026712B1C0022A66D /* AppsFlyerAnalytics+MobileContentAnalyticsSystem.swift */; };
 		454637A8260A77A1008AD666 /* ToolPageModalView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 454637A7260A77A0008AD666 /* ToolPageModalView.xib */; };
 		454637DF260AA642008AD666 /* TrainingTipView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 454637D9260AA642008AD666 /* TrainingTipView.xib */; };
@@ -671,10 +670,6 @@
 		45AD204F25938AC300A096A0 /* ExitLinkAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD203A25938AC300A096A0 /* ExitLinkAnalytics.swift */; };
 		45AD205025938AC300A096A0 /* PageViewedAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD203B25938AC300A096A0 /* PageViewedAnalytics.swift */; };
 		45AD205125938AC300A096A0 /* ToolOpenedAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD203C25938AC300A096A0 /* ToolOpenedAnalytics.swift */; };
-		45AD205225938AC300A096A0 /* AdobeAnalyticsProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD203E25938AC300A096A0 /* AdobeAnalyticsProperties.swift */; };
-		45AD205325938AC300A096A0 /* AdobeAnalyticsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD203F25938AC300A096A0 /* AdobeAnalyticsType.swift */; };
-		45AD205425938AC300A096A0 /* AdobeAnalyticsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD204025938AC300A096A0 /* AdobeAnalyticsConstants.swift */; };
-		45AD205525938AC300A096A0 /* AdobeAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD204125938AC300A096A0 /* AdobeAnalytics.swift */; };
 		45AD205625938AC300A096A0 /* AnalyticsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD204225938AC300A096A0 /* AnalyticsConstants.swift */; };
 		45AD205725938AC300A096A0 /* FirebaseAnalyticsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD204425938AC300A096A0 /* FirebaseAnalyticsType.swift */; };
 		45AD205825938AC300A096A0 /* FirebaseAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD204525938AC300A096A0 /* FirebaseAnalytics.swift */; };
@@ -985,7 +980,6 @@
 		453D866924E08461004EA89F /* no */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = no; path = Localizable.strings; sourceTree = "<group>"; };
 		45428A7A26712A3A0022A66D /* FirebaseAnalytics+MobileContentAnalyticsSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseAnalytics+MobileContentAnalyticsSystem.swift"; sourceTree = "<group>"; };
 		45428A7C26712ABA0022A66D /* SnowplowAnalytics+MobileContentAnalyticsSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SnowplowAnalytics+MobileContentAnalyticsSystem.swift"; sourceTree = "<group>"; };
-		45428A7E26712AED0022A66D /* AdobeAnalytics+MobileContentAnalyticsSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AdobeAnalytics+MobileContentAnalyticsSystem.swift"; sourceTree = "<group>"; };
 		45428A8026712B1C0022A66D /* AppsFlyerAnalytics+MobileContentAnalyticsSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppsFlyerAnalytics+MobileContentAnalyticsSystem.swift"; sourceTree = "<group>"; };
 		454637A7260A77A0008AD666 /* ToolPageModalView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToolPageModalView.xib; sourceTree = "<group>"; };
 		454637D9260AA642008AD666 /* TrainingTipView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TrainingTipView.xib; sourceTree = "<group>"; };
@@ -1604,10 +1598,6 @@
 		45AD203A25938AC300A096A0 /* ExitLinkAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExitLinkAnalytics.swift; sourceTree = "<group>"; };
 		45AD203B25938AC300A096A0 /* PageViewedAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageViewedAnalytics.swift; sourceTree = "<group>"; };
 		45AD203C25938AC300A096A0 /* ToolOpenedAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolOpenedAnalytics.swift; sourceTree = "<group>"; };
-		45AD203E25938AC300A096A0 /* AdobeAnalyticsProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdobeAnalyticsProperties.swift; sourceTree = "<group>"; };
-		45AD203F25938AC300A096A0 /* AdobeAnalyticsType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdobeAnalyticsType.swift; sourceTree = "<group>"; };
-		45AD204025938AC300A096A0 /* AdobeAnalyticsConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdobeAnalyticsConstants.swift; sourceTree = "<group>"; };
-		45AD204125938AC300A096A0 /* AdobeAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdobeAnalytics.swift; sourceTree = "<group>"; };
 		45AD204225938AC300A096A0 /* AnalyticsConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsConstants.swift; sourceTree = "<group>"; };
 		45AD204425938AC300A096A0 /* FirebaseAnalyticsType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAnalyticsType.swift; sourceTree = "<group>"; };
 		45AD204525938AC300A096A0 /* FirebaseAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAnalytics.swift; sourceTree = "<group>"; };
@@ -4176,7 +4166,6 @@
 			children = (
 				45AD204C25938AC300A096A0 /* AnalyticsContainer.swift */,
 				45AD204225938AC300A096A0 /* AnalyticsConstants.swift */,
-				45AD203D25938AC300A096A0 /* Adobe */,
 				45AD203825938AC300A096A0 /* AnalyticsTracking */,
 				45AD204925938AC300A096A0 /* AppsFlyer */,
 				45AD204325938AC300A096A0 /* Firebase */,
@@ -4204,18 +4193,6 @@
 				45AD203C25938AC300A096A0 /* ToolOpenedAnalytics.swift */,
 			);
 			path = AnalyticsTracking;
-			sourceTree = "<group>";
-		};
-		45AD203D25938AC300A096A0 /* Adobe */ = {
-			isa = PBXGroup;
-			children = (
-				45AD204125938AC300A096A0 /* AdobeAnalytics.swift */,
-				45AD203F25938AC300A096A0 /* AdobeAnalyticsType.swift */,
-				45AD204025938AC300A096A0 /* AdobeAnalyticsConstants.swift */,
-				45AD203E25938AC300A096A0 /* AdobeAnalyticsProperties.swift */,
-				45428A7E26712AED0022A66D /* AdobeAnalytics+MobileContentAnalyticsSystem.swift */,
-			);
-			path = Adobe;
 			sourceTree = "<group>";
 		};
 		45AD204325938AC300A096A0 /* Firebase */ = {
@@ -5550,7 +5527,6 @@
 				458D354B260A32F000279CE2 /* MobileContentInputNodeType.swift in Sources */,
 				45AD1FDF25938A9800A096A0 /* EmailSignUpModel.swift in Sources */,
 				45D5030C2641E3C100772561 /* MobileContentTextScale.swift in Sources */,
-				45AD205525938AC300A096A0 /* AdobeAnalytics.swift in Sources */,
 				45AD1F6525938A9800A096A0 /* ToolTrainingTipsOnboardingViewsService.swift in Sources */,
 				45AD1B8D25938A4F00A096A0 /* OnboardingTutorialViewedCacheType.swift in Sources */,
 				45AD1BB825938A4F00A096A0 /* ModalNavigationController.swift in Sources */,
@@ -5564,13 +5540,11 @@
 				45AD1BD025938A4F00A096A0 /* LoadingViewModelType.swift in Sources */,
 				45AD1FFB25938A9800A096A0 /* DetermineNewUserIfPrimaryLanguageSet.swift in Sources */,
 				455FF6CD2603DC690028B95B /* MobileContentBackgroundImageAlignType.swift in Sources */,
-				45AD205425938AC300A096A0 /* AdobeAnalyticsConstants.swift in Sources */,
 				45B6480B25E581660098BAF1 /* (null) in Sources */,
 				45AD1F9925938A9800A096A0 /* RealmResource.swift in Sources */,
 				455FF7602603DDD30028B95B /* ToolPageModalView.swift in Sources */,
 				45AD1FF825938A9800A096A0 /* IsNewUserService.swift in Sources */,
 				45AD1F5E25938A9800A096A0 /* StarscreamWebSocket.swift in Sources */,
-				45AD205325938AC300A096A0 /* AdobeAnalyticsType.swift in Sources */,
 				455FF6AB2603DC690028B95B /* CardsNode.swift in Sources */,
 				455FF6F42603DC6A0028B95B /* MobileContentBackgroundImageRenderer.swift in Sources */,
 				45B116C22625FC6D007A7127 /* LanguageDirection+SemanticContentAttribute.swift in Sources */,
@@ -5819,7 +5793,6 @@
 				45CBA073261FE1BB0036BEB3 /* LessonContentViewModelType.swift in Sources */,
 				45BFF45E262F7B33002BE732 /* MobileContentSectionViewModelType.swift in Sources */,
 				45AD1AD625938A4E00A096A0 /* AllToolsViewModel.swift in Sources */,
-				45AD205225938AC300A096A0 /* AdobeAnalyticsProperties.swift in Sources */,
 				45AD1BD225938A4F00A096A0 /* LoadingViewModel.swift in Sources */,
 				454637E1260AA642008AD666 /* TrainingTipViewModel.swift in Sources */,
 				45AD202A25938A9800A096A0 /* CardJumpService.swift in Sources */,
@@ -5838,7 +5811,6 @@
 				45AD201225938A9800A096A0 /* TranslationZipFileModelType.swift in Sources */,
 				45AD1AD425938A4E00A096A0 /* OpenTutorialViewModel.swift in Sources */,
 				45AD1B8A25938A4F00A096A0 /* OnboardingTutorialAvailability.swift in Sources */,
-				45428A7F26712AED0022A66D /* AdobeAnalytics+MobileContentAnalyticsSystem.swift in Sources */,
 				45AD1FBD25938A9800A096A0 /* TractRemoteShareNavigationEvent.swift in Sources */,
 				45AD1B9D25938A4F00A096A0 /* Language.swift in Sources */,
 				45AD1B5825938A4F00A096A0 /* AccountViewModelType.swift in Sources */,

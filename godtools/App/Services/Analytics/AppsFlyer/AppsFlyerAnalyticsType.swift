@@ -10,7 +10,7 @@ import UIKit
 
 protocol AppsFlyerAnalyticsType: MobileContentAnalyticsSystem {
     
-    func configure(adobeAnalytics: AdobeAnalyticsType)
+    func configure()
     func trackAppLaunch()
     func trackAction(actionName: String, data: [String : Any]?)
 }

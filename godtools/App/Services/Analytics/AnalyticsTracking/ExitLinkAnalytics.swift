@@ -10,17 +10,13 @@ import Foundation
 
 class ExitLinkAnalytics {
     
-    private let adobeAnalytics: AdobeAnalyticsType
     private let firebaseAnalytics: FirebaseAnalyticsType
     
-    required init(adobeAnalytics: AdobeAnalyticsType, firebaseAnalytics: FirebaseAnalyticsType) {
-        self.adobeAnalytics = adobeAnalytics
+    required init(firebaseAnalytics: FirebaseAnalyticsType) {
         self.firebaseAnalytics = firebaseAnalytics
     }
     
     func trackExitLink(exitLink: ExitLinkModel) {
-        
-        adobeAnalytics.trackExitLink(exitLink: exitLink)
         
         firebaseAnalytics.trackExitLink(
             screenName: exitLink.screenName,
