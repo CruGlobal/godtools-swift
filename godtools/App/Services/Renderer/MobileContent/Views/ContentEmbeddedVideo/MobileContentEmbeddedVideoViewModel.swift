@@ -10,9 +10,7 @@ import Foundation
 
 class MobileContentEmbeddedVideoViewModel: MobileContentEmbeddedVideoViewModelType {
     
-    private let videoNode: ContentVideoNode
-    private let playsInFullScreen = 0
-    
+    private let videoNode: ContentVideoNode    
     
     required init(videoNode: ContentVideoNode) {
         self.videoNode = videoNode
