@@ -25,8 +25,7 @@ class TutorialCell: UICollectionViewCell {
     private var mainImageView: UIImageView?
     private var customView: UIView?
     private var initialTopSpaceForMessageLabel: CGFloat = 16
-    private let playsInFullScreen = 0
-    
+
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var messageLabel: UILabel!
     @IBOutlet weak private var dynamicMediaView: UIView!
