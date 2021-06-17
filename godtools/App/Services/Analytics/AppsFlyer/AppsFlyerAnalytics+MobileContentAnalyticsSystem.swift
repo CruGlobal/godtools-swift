@@ -11,6 +11,6 @@ import Foundation
 extension AppsFlyerAnalytics: MobileContentAnalyticsSystem {
     
     func trackMobileContentAction(screenName: String, siteSection: String, action: String, data: [String: Any]?) {
-        // TODO: Track action.
+        trackAction(actionName: action, data: data)
     }
 }

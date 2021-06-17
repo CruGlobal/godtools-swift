@@ -151,8 +151,8 @@ extension ToolViewModel {
     
     private func trackShareScreenOpened() {
         
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: resource.abbreviation, actionName: AnalyticsConstants.Values.shareScreenOpen, siteSection: resource.abbreviation, siteSubSection: "", url: nil, data: [
-            AnalyticsConstants.ActionNames.shareScreenOpenCountKey: 1
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: resource.abbreviation, actionName: AnalyticsConstants.Values.shareScreenOpened, siteSection: resource.abbreviation, siteSubSection: "", url: nil, data: [
+            AnalyticsConstants.ActionNames.shareScreenOpenedCountKey: 1
         ]))
     }
     
