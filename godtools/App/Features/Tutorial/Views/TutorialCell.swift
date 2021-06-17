@@ -25,7 +25,7 @@ class TutorialCell: UICollectionViewCell {
     private var mainImageView: UIImageView?
     private var customView: UIView?
     private var initialTopSpaceForMessageLabel: CGFloat = 16
-    
+
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var messageLabel: UILabel!
     @IBOutlet weak private var dynamicMediaView: UIView!
@@ -72,6 +72,14 @@ class TutorialCell: UICollectionViewCell {
         recalculateDynamicMediaHeight()
     }
     
+    var youtubePlayerParameters: [String : Any]? {
+        let playsInFullScreen = 0
+        
+        return [
+            "playsinline": playsInFullScreen
+        ]
+    }
+    
     func configure(viewModel: TutorialCellViewModel, delegate: TutorialCellDelegate?) {
         
         self.delegate = delegate
@@ -102,7 +110,7 @@ class TutorialCell: UICollectionViewCell {
             hidesYouTubeVideoPlayer = false
             youTubeVideoPlayerActivityIndicator.startAnimating()
             youTubeVideoPlayer.delegate = self
-            youTubeVideoPlayer.load(withVideoId: youTubVideoId, playerVars: ["playsinline": 0])
+            youTubeVideoPlayer.load(withVideoId: youTubVideoId, playerVars: youtubePlayerParameters)
         }
         else {
             hidesYouTubeVideoPlayer = true
@@ -242,7 +250,7 @@ class TutorialCell: UICollectionViewCell {
         youTubeVideoPlayer.stopVideo()
     }
     
-    func recueVideo() {
+    private func recueVideo() {
         guard let youtubeVideoId = viewModel?.youTubeVideoId else { return }
         
         youTubeVideoPlayer.cueVideo(byId: youtubeVideoId, startSeconds: 0.0)

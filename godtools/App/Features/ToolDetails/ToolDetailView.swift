@@ -308,6 +308,12 @@ class ToolDetailView: UIViewController {
         youTubePlayerView.delegate = self
         youTubePlayerView.load(withVideoId: videoId, playerVars: viewModel.youtubePlayerParameters)
     }
+    
+    private func recueVideo() {
+        guard let youtubeVideoId = viewModel.youTubePlayerId.value else { return }
+        
+        youTubePlayerView.cueVideo(byId: youtubeVideoId, startSeconds: 0.0)
+    }
 
     private func reloadDetailsTextViews() {
         
@@ -406,6 +412,7 @@ extension ToolDetailView: YTPlayerViewDelegate {
             print("unstarted")
         case .ended:
             print("ended")
+            recueVideo()
         case .playing:
             print("playing")
         case .paused:
