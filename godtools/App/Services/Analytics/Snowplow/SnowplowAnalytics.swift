@@ -136,7 +136,6 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
             labelValue: nil,
             data: [
                 "grMasterPersonID": grMasterPersonID ?? "",
-                "marketingCloudID": "",
                 "ssoguid": ssoguid ?? "",
                 "isAuthenticated": keyAuthClient.isAuthenticated()
             ]

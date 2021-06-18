@@ -12,7 +12,6 @@ use_frameworks!
 
 target 'godtools' do
         
-    pod 'AdobeMobileSDK', '~> 4.19'
     pod 'AppsFlyerFramework', '~> 6.0.0'
     pod 'GoogleConversionTracking', '~> 3.4.0'
     pod 'GoogleTagManager', '~> 7.2.0'
