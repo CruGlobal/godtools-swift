@@ -157,7 +157,7 @@ class MenuViewModel: NSObject, MenuViewModelType {
     }
     
     func pageViewed() {
-        analytics.pageViewedAnalytics.trackPageView(screenName: "Menu", siteSection: "", siteSubSection: "")
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: "Menu", siteSection: "", siteSubSection: ""))
     }
     
     func doneTapped() {
@@ -194,8 +194,6 @@ class MenuViewModel: NSObject, MenuViewModelType {
         let loggedOutHandler: CallbackHandler = CallbackHandler { [weak self] in
             self?.userAuthentication.signOut()
             self?.reloadMenuDataSource()
-            //on logout, sync Adobe Analytics auth state
-            self?.analytics.adobeAnalytics.fetchAttributesThenSyncIds()
         }
         
         flowDelegate?.navigate(step: .logoutTappedFromMenu(logoutHandler: loggedOutHandler))
@@ -213,20 +211,16 @@ class MenuViewModel: NSObject, MenuViewModelType {
         
         flowDelegate?.navigate(step: .shareGodToolsTappedFromMenu)
         
-        analytics.trackActionAnalytics.trackAction(
-            screenName: nil,
-            actionName: AdobeAnalyticsConstants.Values.share,
-            data: [AdobeAnalyticsConstants.Keys.shareAction: 1]
-        )
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: "Share App", actionName: AnalyticsConstants.Values.share, siteSection: "", siteSubSection: "", url: nil, data: [AnalyticsConstants.Keys.shareAction: 1]))
         
-        analytics.pageViewedAnalytics.trackPageView(screenName: "Share App", siteSection: "", siteSubSection: "")
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: "Share App", siteSection: "", siteSubSection: ""))
     }
     
     func shareAStoryWithUsTapped() {
         
         flowDelegate?.navigate(step: .shareAStoryWithUsTappedFromMenu)
         
-        analytics.pageViewedAnalytics.trackPageView(screenName: "Share Story", siteSection: "", siteSubSection: "")
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: "Share Story", siteSection: "", siteSubSection: ""))
     }
     
     func termsOfUseTapped() {

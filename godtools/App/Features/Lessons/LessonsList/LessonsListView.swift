@@ -47,6 +47,11 @@ class LessonsListView: UIViewController {
         )
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        viewModel.pageViewed()
+    }
+    
     private func setupLayout() {
         
         // lessonsTableView

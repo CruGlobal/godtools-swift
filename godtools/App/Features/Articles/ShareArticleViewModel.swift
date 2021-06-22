@@ -40,19 +40,11 @@ class ShareArticleViewModel: ShareArticleViewModelType {
     
     func pageViewed() {
         
-        analytics.pageViewedAnalytics.trackPageView(
-            screenName: analyticsScreenName,
-            siteSection: "",
-            siteSubSection: ""
-        )
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: "", siteSubSection: ""))
     }
     
     func articleShared() {
                 
-        analytics.trackActionAnalytics.trackAction(
-            screenName: nil,
-            actionName: AdobeAnalyticsConstants.Values.share,
-            data: [AdobeAnalyticsConstants.Keys.shareAction: 1]
-        )
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.Values.share, siteSection: "", siteSubSection: "", url: nil, data: [AnalyticsConstants.Keys.shareAction: 1]))
     }
 }

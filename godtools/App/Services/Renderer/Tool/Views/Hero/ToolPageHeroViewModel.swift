@@ -20,7 +20,7 @@ class ToolPageHeroViewModel: ToolPageHeroViewModelType {
         self.pageModel = pageModel
         
         if let analyticsEventsNode = heroNode.analyticsEventsNode {
-            analyticsEventsObjects = MobileContentAnalyticsEvent.initEvents(eventsNode: analyticsEventsNode, mobileContentAnalytics: mobileContentAnalytics)
+            analyticsEventsObjects = MobileContentAnalyticsEvent.initEvents(eventsNode: analyticsEventsNode, mobileContentAnalytics: mobileContentAnalytics, page: pageModel)
         }
         else {
             analyticsEventsObjects = []

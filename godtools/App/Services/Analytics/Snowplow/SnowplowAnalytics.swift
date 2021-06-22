@@ -16,9 +16,7 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
     private let tracker: SPTracker
     private let keyAuthClient: TheKeyOAuthClient
     private let loggingEnabled: Bool
-    
-    private var visitorMarketingCloudID: String = ""
-    
+        
     private let idSchema = "iglu:org.cru/ids/jsonschema/1-0-3"
     private let uriSchema = "iglu:org.cru/content-scoring/jsonschema/1-0-0"
     
@@ -64,7 +62,7 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
         })
     }
     
-    func configure (adobeAnalytics: AdobeAnalyticsType) {
+    func configure () {
         
         if isConfigured || isConfiguring {
             return
@@ -73,9 +71,7 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
         isConfiguring = true
         
         serialQueue.async { [weak self] in
-            
-            self?.visitorMarketingCloudID = adobeAnalytics.visitorMarketingCloudID
-            
+                        
             self?.isConfigured = true
             self?.isConfiguring = false
             
@@ -109,7 +105,7 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
         }
     }
     
-    func trackAction(action: String) {
+    func trackAction(actionName: String) {
         
         serialQueue.asyncAfter(deadline: .now() + 1) { [weak self] in
             
@@ -118,11 +114,11 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
             }
             
             snowplow.assertFailureIfNotConfigured()
-            snowplow.log(method: "trackAction()", label: "action", labelValue: action, data: nil)
+            snowplow.log(method: "trackAction()", label: "action", labelValue: actionName, data: nil)
             
             let event = SPStructured.build { (builder: SPStructuredBuilder) in
-                builder.setAction(action)
-                builder.setContexts([ snowplow.idContext(), snowplow.actionURI(action: action) ])
+                builder.setAction(actionName)
+                builder.setContexts([ snowplow.idContext(), snowplow.actionURI(action: actionName) ])
             }
             
             snowplow.tracker.trackStructuredEvent(event)
@@ -132,7 +128,6 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
     private func idContext() -> SPSelfDescribingJson {
                 
         let grMasterPersonID: String? = keyAuthClient.isAuthenticated() ? keyAuthClient.grMasterPersonId : nil
-        let marketingCloudID: String? = visitorMarketingCloudID
         let ssoguid: String? = keyAuthClient.isAuthenticated() ? keyAuthClient.guid : nil
         
         log(
@@ -141,7 +136,6 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
             labelValue: nil,
             data: [
                 "grMasterPersonID": grMasterPersonID ?? "",
-                "marketingCloudID": marketingCloudID ?? "",
                 "ssoguid": ssoguid ?? "",
                 "isAuthenticated": keyAuthClient.isAuthenticated()
             ]
@@ -149,7 +143,6 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
         
         return SPSelfDescribingJson(schema: idSchema, andData: [
             "gr_master_person_id": grMasterPersonID,
-            "mcid": marketingCloudID,
             "sso_guid": ssoguid,
         ] as NSObject)
     }
@@ -176,13 +169,5 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
                 print("  data: \(data)")
             }
         }
-    }
-}
-
-// MARK: - MobileContentAnalyticsSystem
-
-extension SnowplowAnalytics: MobileContentAnalyticsSystem {
-    func trackAction(action: String, data: [String: Any]?) {
-        trackAction(action: action)
     }
 }

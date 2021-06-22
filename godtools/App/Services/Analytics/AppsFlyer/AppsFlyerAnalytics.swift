@@ -26,7 +26,7 @@ class AppsFlyerAnalytics: NSObject, AppsFlyerAnalyticsType {
         super.init()
     }
     
-    func configure(adobeAnalytics: AdobeAnalyticsType) {
+    func configure() {
             
         if isConfigured || isConfiguring {
             return
@@ -36,7 +36,7 @@ class AppsFlyerAnalytics: NSObject, AppsFlyerAnalyticsType {
         
         serialQueue.async { [weak self] in
                         
-            self?.appsFlyer.appsFlyerLib.customData = ["marketingCloudID": adobeAnalytics.visitorMarketingCloudID]
+            self?.appsFlyer.appsFlyerLib.customData = [:]
             
             self?.isConfigured = true
             self?.isConfiguring = false
@@ -57,14 +57,14 @@ class AppsFlyerAnalytics: NSObject, AppsFlyerAnalyticsType {
         }
     }
     
-    func trackEvent(eventName: String, data: [String: Any]?) {
+    func trackAction(actionName: String, data: [String : Any]?) {
                 
         serialQueue.async { [weak self] in
             
             self?.assertFailureIfNotConfigured()
             
-            self?.appsFlyer.appsFlyerLib.logEvent(eventName, withValues: data)
-            self?.log(method: "trackEvent()", label: "eventName", labelValue: eventName, data: data)
+            self?.appsFlyer.appsFlyerLib.logEvent(actionName, withValues: data)
+            self?.log(method: "trackEvent()", label: "eventName", labelValue: actionName, data: data)
         }
     }
     
@@ -88,13 +88,5 @@ class AppsFlyerAnalytics: NSObject, AppsFlyerAnalyticsType {
                 print("  customData: \(customData)")
             }
         }
-    }
-}
-
-// MARK: - MobileContentAnalyticsSystem
-
-extension AppsFlyerAnalytics: MobileContentAnalyticsSystem {
-    func trackAction(action: String, data: [String: Any]?) {
-        trackEvent(eventName: action, data: data)
     }
 }

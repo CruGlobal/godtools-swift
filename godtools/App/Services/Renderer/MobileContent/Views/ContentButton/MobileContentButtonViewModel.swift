@@ -77,7 +77,7 @@ class MobileContentButtonViewModel: MobileContentButtonViewModelType {
     
     func buttonTapped() {
         if let analyticsEventsNode = buttonNode.analyticsEventsNode {
-            mobileContentAnalytics.trackEvents(events: analyticsEventsNode)
+            mobileContentAnalytics.trackEvents(events: analyticsEventsNode, page: pageModel)
         }
     }
 }

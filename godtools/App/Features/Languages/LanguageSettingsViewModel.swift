@@ -120,7 +120,7 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
     }
     
     func pageViewed() {
-        analytics.pageViewedAnalytics.trackPageView(screenName: "Language Settings", siteSection: "menu", siteSubSection: "")
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: "Language Settings", siteSection: "menu", siteSubSection: ""))
     }
     
     func choosePrimaryLanguageTapped() {

@@ -179,7 +179,6 @@ class AppDiContainer {
                 
         let analyticsLoggingEnabled: Bool = config.build == .analyticsLogging
         analytics = AnalyticsContainer(
-            adobeAnalytics: AdobeAnalytics(config: config, keyAuthClient: loginClient, languageSettingsService: languageSettingsService, loggingEnabled: analyticsLoggingEnabled),
             appsFlyerAnalytics: AppsFlyerAnalytics(appsFlyer: appsFlyer, loggingEnabled: analyticsLoggingEnabled),
             firebaseAnalytics: FirebaseAnalytics(config: config, keyAuthClient: loginClient, languageSettingsService: languageSettingsService, loggingEnabled: analyticsLoggingEnabled),
             snowplowAnalytics: SnowplowAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: analyticsLoggingEnabled)
@@ -272,7 +271,7 @@ class AppDiContainer {
     }
     
     var exitLinkAnalytics: ExitLinkAnalytics {
-        return ExitLinkAnalytics(adobeAnalytics: analytics.adobeAnalytics, firebaseAnalytics: analytics.firebaseAnalytics)
+        return ExitLinkAnalytics(firebaseAnalytics: analytics.firebaseAnalytics)
     }
     
     var onboardingTutorialAvailability: OnboardingTutorialAvailabilityType {

@@ -27,6 +27,6 @@ class AboutViewModel: AboutViewModelType {
     }
     
     func pageViewed() {
-        analytics.pageViewedAnalytics.trackPageView(screenName: "About", siteSection: "menu", siteSubSection: "")
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: "About", siteSection: "menu", siteSubSection: ""))
     }
 }

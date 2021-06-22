@@ -139,7 +139,7 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     
     func pageViewed() {
         
-        analytics.pageViewedAnalytics.trackPageView(screenName: analyticsScreenName, siteSection: "", siteSubSection: "")
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: "tools", siteSubSection: ""))
     }
     
     func openTutorialWillAppear() -> OpenTutorialViewModelType {

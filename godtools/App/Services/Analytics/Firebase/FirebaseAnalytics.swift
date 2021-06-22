@@ -63,6 +63,7 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
     //MARK: - Public
     
     func trackScreenView(screenName: String, siteSection: String, siteSubSection: String) {
+        
         internalTrackEvent(
             screenName: screenName,
             siteSection: siteSection,
@@ -73,27 +74,29 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         )
         previousTrackedScreenName = screenName
     }
-
-    func trackAction(screenName: String?, actionName: String, data: [String : Any]?) {
+    
+    func trackAction(screenName: String, siteSection: String, siteSubSection: String, actionName: String, data: [String : Any]?) {
+        
         internalTrackEvent(
             screenName: screenName,
-            siteSection: nil,
-            siteSubSection: nil,
+            siteSection: siteSection,
+            siteSubSection: siteSubSection,
             previousScreenName: previousTrackedScreenName,
             eventName: actionName,
             data: data
         )
     }
     
-    func trackExitLink(exitLink: ExitLinkModel) {
+    func trackExitLink(screenName: String, siteSection: String, siteSubSection: String, url: String) {
+        
         internalTrackEvent(
-            screenName: exitLink.screenName,
-            siteSection: exitLink.siteSection,
-            siteSubSection: nil,
+            screenName: screenName,
+            siteSection: siteSection,
+            siteSubSection: siteSubSection,
             previousScreenName: previousTrackedScreenName,
             eventName: AnalyticsConstants.Values.exitLink,
             data: [
-                AnalyticsConstants.Keys.exitLink: exitLink.url
+                AnalyticsConstants.Keys.exitLink: url
             ]
         )
     }
@@ -231,13 +234,5 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
 extension FirebaseAnalytics: OIDAuthStateChangeDelegate {
     func didChange(_ state: OIDAuthState) {
         fetchAttributesThenSetUserId()
-    }
-}
-
-// MARK: - MobileContentAnalyticsSystem
-
-extension FirebaseAnalytics: MobileContentAnalyticsSystem {
-    func trackAction(action: String, data: [String: Any]?) {
-        trackAction(screenName: nil, actionName: action, data: data)
     }
 }

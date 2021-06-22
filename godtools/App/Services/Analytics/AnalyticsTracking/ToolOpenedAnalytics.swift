@@ -17,16 +17,16 @@ class ToolOpenedAnalytics {
         self.appsFlyerAnalytics = appsFlyerAnalytics
     }
     
-    func trackToolOpened() {
-        appsFlyerAnalytics.trackEvent(eventName: "tool-opened", data: nil)
+    func trackToolOpened(resource: ResourceModel) {
+        appsFlyerAnalytics.trackAction(actionName: "tool-opened", data: nil)
     }
     
-    func trackFirstToolOpenedIfNeeded() {
+    func trackFirstToolOpenedIfNeeded(resource: ResourceModel) {
         
         if !firstToolOpened {
 
-            appsFlyerAnalytics.trackEvent(eventName: "first-tool-opened", data: nil)
-            
+            appsFlyerAnalytics.trackAction(actionName: "first-tool-opened", data: nil)
+                        
             defaults.set(true, forKey: keyFirstToolOpened)
             defaults.synchronize()
         }

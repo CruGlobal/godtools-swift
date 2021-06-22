@@ -46,7 +46,7 @@ class MobileContentLinkViewModel: MobileContentLinkViewModelType {
     
     func linkTapped() {
         if let analyticsEventsNode = linkNode.analyticsEventsNode {
-            mobileContentAnalytics.trackEvents(events: analyticsEventsNode)
+            mobileContentAnalytics.trackEvents(events: analyticsEventsNode, page: pageModel)
         }
     }
 }
