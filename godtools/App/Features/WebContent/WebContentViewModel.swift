@@ -27,6 +27,6 @@ class WebContentViewModel: WebContentViewModelType {
     
     func pageViewed() {
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: webContent.analyticsScreenName, siteSection: "", siteSubSection: "", url: nil))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: webContent.analyticsScreenName, siteSection: "", siteSubSection: ""))
     }
 }

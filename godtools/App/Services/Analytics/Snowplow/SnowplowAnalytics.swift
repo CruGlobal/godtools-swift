@@ -143,7 +143,6 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
         
         return SPSelfDescribingJson(schema: idSchema, andData: [
             "gr_master_person_id": grMasterPersonID,
-            "mcid": "",
             "sso_guid": ssoguid,
         ] as NSObject)
     }

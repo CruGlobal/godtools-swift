@@ -58,6 +58,6 @@ class AccountViewModel: AccountViewModelType {
         
         let accountItem: AccountItem = accountItems.value[page]
 
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: accountItem.analyticsScreenName, siteSection: "", siteSubSection: "", url: nil))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: accountItem.analyticsScreenName, siteSection: "", siteSubSection: ""))
     }
 }

@@ -80,7 +80,7 @@ class ToolPageViewModel: MobileContentPageViewModel, ToolPageViewModelType {
         let resource: ResourceModel = pageModel.resource
         let page: Int = pageModel.page
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: resource.abbreviation + "-" + String(page), siteSection: resource.abbreviation, siteSubSection: "", url: nil))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: resource.abbreviation + "-" + String(page), siteSection: resource.abbreviation, siteSubSection: ""))
     }
     
     func didChangeCardPosition(cardPosition: Int?) {

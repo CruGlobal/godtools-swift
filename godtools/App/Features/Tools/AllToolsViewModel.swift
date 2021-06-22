@@ -102,7 +102,7 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     
     func pageViewed() {
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: "tools", siteSubSection: "", url: nil))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: "tools", siteSubSection: ""))
     }
     
     func favoritingToolMessageWillAppear() -> FavoritingToolMessageViewModelType {

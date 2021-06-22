@@ -12,7 +12,7 @@ class MobileContentAnalyticsEvent: NSObject {
     
     private var delayTimer: Timer?
     private var triggered: Bool = false
-    private var page: MobileContentRendererPageModel
+    private let page: MobileContentRendererPageModel
     
     let eventNode: AnalyticsEventNode
     

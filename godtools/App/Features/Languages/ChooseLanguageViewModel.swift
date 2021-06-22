@@ -184,7 +184,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
     
     func pageViewed() {
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: "Select Language", siteSection: "menu", siteSubSection: "language settings", url: nil))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: "Select Language", siteSection: "menu", siteSubSection: "language settings"))
     }
     
     func deleteLanguageTapped() {

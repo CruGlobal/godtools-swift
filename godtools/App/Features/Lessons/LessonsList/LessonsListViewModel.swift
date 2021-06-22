@@ -78,7 +78,7 @@ class LessonsListViewModel: NSObject, LessonsListViewModelType {
     
     func pageViewed() {
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: "lessons", siteSubSection: "", url: nil))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: "lessons", siteSubSection: ""))
     } 
     
     private func getLessonsFromCache() -> [ResourceModel] {

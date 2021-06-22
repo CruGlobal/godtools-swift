@@ -167,7 +167,7 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
     
     func pageViewed() {
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: "Category : \(category.title)", siteSection: resource.abbreviation, siteSubSection: "articles-list", url: nil))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: "Category : \(category.title)", siteSection: resource.abbreviation, siteSubSection: "articles-list"))
     }
     
     func articleTapped(index: Int) {

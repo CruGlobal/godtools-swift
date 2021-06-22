@@ -55,7 +55,7 @@ class TutorialViewModel: TutorialViewModelType {
         
         self.page = page
         
-        let trackScreenData = TrackScreenModel(screenName: analyticsScreenName, siteSection: "tutorial", siteSubSection: "", url: nil)
+        let trackScreenData = TrackScreenModel(screenName: analyticsScreenName, siteSection: "tutorial", siteSubSection: "")
         let trackActionData = TrackActionModel(screenName: analyticsScreenName, actionName: analyticsScreenName, siteSection: "tutorial", siteSubSection: "", url: nil, data: nil)
         
         analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreenData)

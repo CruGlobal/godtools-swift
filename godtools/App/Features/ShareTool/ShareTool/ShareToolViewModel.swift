@@ -40,7 +40,7 @@ class ShareToolViewModel: ShareToolViewModelType {
         
         let analyticsScreenName: String = resource.abbreviation + "-" + String(pageNumber)
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: resource.abbreviation, siteSubSection: "", url: nil))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: resource.abbreviation, siteSubSection: ""))
                 
         analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.Values.shareIconEngaged, siteSection: resource.abbreviation, siteSubSection: "", url: nil, data: [
             AnalyticsConstants.ActionNames.shareIconEngagedCountKey: 1
