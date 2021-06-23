@@ -141,6 +141,7 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
         let exitLink = ExitLinkModel(
             screenName: analyticsScreenName,
             siteSection: siteSection,
+            siteSubSection: "",
             url: url
         )
         
@@ -175,6 +176,6 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
         
         let tipPage: Int = page
         let analyticsScreenName: String = "\(resource.abbreviation)-tip-\(trainingTipId)-\(tipPage)"
-        analytics.pageViewedAnalytics.trackPageView(screenName: analyticsScreenName, siteSection: "", siteSubSection: "")
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: "", siteSubSection: ""))
     }
 }

@@ -12,5 +12,6 @@ struct ExitLinkModel {
     
     let screenName: String
     let siteSection: String
+    let siteSubSection: String
     let url: String
 }

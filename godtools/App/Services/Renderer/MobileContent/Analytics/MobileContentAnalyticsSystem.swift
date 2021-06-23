@@ -10,5 +10,5 @@ import Foundation
 
 protocol MobileContentAnalyticsSystem {
     
-    func trackAction(action: String, data: [String: Any]?)
+    func trackMobileContentAction(screenName: String, siteSection: String, action: String, data: [String: Any]?)
 }

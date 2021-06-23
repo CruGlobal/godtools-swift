@@ -100,11 +100,11 @@ extension ToolsViewModelType {
     }
     
     func trackToolTappedAnalytics() {
-        analytics.trackActionAnalytics.trackAction(screenName: analyticsScreenName, actionName: "Tool Open Tap", data: ["cru.tool_open_tap": 1])
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: "Tool Open Tap", siteSection: "", siteSubSection: "", url: nil, data: ["cru.tool_open_tap": 1]))
     }
     
     func trackOpenToolButtonAnalytics() {
-        analytics.trackActionAnalytics.trackAction(screenName: analyticsScreenName, actionName: "Tool Open Button", data: ["cru.tool_open_button": 1])
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: "Tool Open Button", siteSection: "", siteSubSection: "", url: nil, data: ["cru.tool_open_button": 1]))
     }
     
     func refreshTools() {

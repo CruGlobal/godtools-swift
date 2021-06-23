@@ -55,17 +55,16 @@ class TutorialViewModel: TutorialViewModelType {
         
         self.page = page
         
-        analytics.pageViewedAnalytics.trackPageView(
-            screenName: analyticsScreenName,
-            siteSection: "tutorial",
-            siteSubSection: ""
-        )
+        let trackScreenData = TrackScreenModel(screenName: analyticsScreenName, siteSection: "tutorial", siteSubSection: "")
+        let trackActionData = TrackActionModel(screenName: analyticsScreenName, actionName: analyticsScreenName, siteSection: "tutorial", siteSubSection: "", url: nil, data: nil)
+        
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreenData)
         
         if isFirstPage {
-            analytics.appsFlyerAnalytics.trackEvent(eventName: analyticsScreenName, data: nil)
+            analytics.appsFlyerAnalytics.trackAction(actionName: trackActionData.actionName, data: trackActionData.data)
         }
         else if isLastPage {
-            analytics.appsFlyerAnalytics.trackEvent(eventName: analyticsScreenName, data: nil)
+            analytics.appsFlyerAnalytics.trackAction(actionName: trackActionData.actionName, data: trackActionData.data)
         }
     }
     
@@ -91,7 +90,7 @@ class TutorialViewModel: TutorialViewModelType {
         
         if !youTubeVideoTracked {
             trackedAnalyticsForYouTubeVideoIds.append(youTubeVideoId)
-            analytics.trackActionAnalytics.trackAction(screenName: analyticsScreenName, actionName: "Tutorial Video", data: ["cru.tutorial_video": 1, "video_id": youTubeVideoId])
+            analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: "Tutorial Video", siteSection: "", siteSubSection: "", url: nil, data: ["cru.tutorial_video": 1, "video_id": youTubeVideoId]))
         }
     }
 }

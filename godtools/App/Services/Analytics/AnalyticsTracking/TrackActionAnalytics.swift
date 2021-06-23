@@ -10,19 +10,25 @@ import Foundation
 
 class TrackActionAnalytics {
     
-    private let adobeAnalytics: AdobeAnalyticsType
     private let firebaseAnalytics: FirebaseAnalyticsType
     private let snowplowAnalytics: SnowplowAnalyticsType
     
-    required init(adobeAnalytics: AdobeAnalyticsType, firebaseAnalytics: FirebaseAnalyticsType, snowplowAnalytics: SnowplowAnalyticsType) {
-        self.adobeAnalytics = adobeAnalytics
+    required init(firebaseAnalytics: FirebaseAnalyticsType, snowplowAnalytics: SnowplowAnalyticsType) {
+        
         self.firebaseAnalytics = firebaseAnalytics
         self.snowplowAnalytics = snowplowAnalytics
     }
     
-    func trackAction(screenName: String?, actionName: String, data: [String: Any]?) {
-        adobeAnalytics.trackAction(screenName: screenName, actionName: actionName, data: data)
-        firebaseAnalytics.trackAction(screenName: screenName, actionName: actionName, data: data)
-        snowplowAnalytics.trackAction(action: actionName)
+    func trackAction(trackAction: TrackActionModel) {
+                
+        firebaseAnalytics.trackAction(
+            screenName: trackAction.screenName,
+            siteSection: trackAction.siteSection,
+            siteSubSection: trackAction.siteSubSection,
+            actionName: trackAction.actionName,
+            data: trackAction.data
+        )
+        
+        snowplowAnalytics.trackAction(actionName: trackAction.actionName)
     }
 }

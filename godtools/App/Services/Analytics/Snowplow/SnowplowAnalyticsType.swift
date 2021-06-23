@@ -10,8 +10,8 @@ import Foundation
 
 protocol SnowplowAnalyticsType: MobileContentAnalyticsSystem {
 
-    func configure(adobeAnalytics: AdobeAnalyticsType)
+    func configure()
     func trackScreenView(screenName: String)
-    func trackAction(action: String)
+    func trackAction(actionName: String)
 }
 

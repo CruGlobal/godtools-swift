@@ -19,6 +19,7 @@ struct AnalyticsConstants {
         static let previousScreenName = "cru.previousscreenname"
         static let screenName = "cru.screenname"
         static let screenNameFirebase = "screen_name"
+        static let shareAction = "cru.shareiconengaged"
         static let siteSection = "cru.siteSection"
         static let siteSubSection = "cru.siteSubSection"
         static let ssoguid = "cru.ssoguid"
@@ -52,7 +53,7 @@ struct AnalyticsConstants {
         static let toolOpenedShortcut = "Tool Opened Shortcut"
         static let shareIconEngaged = "Share Icon Engaged"
         static let shareScreenEngaged = "Share Screen Engaged"
-        static let shareScreenOpen = "Share Screen Open"
+        static let shareScreenOpened = "Share Screen Opened"
     }
     
     struct ActionNames {
@@ -65,6 +66,6 @@ struct AnalyticsConstants {
         static let parallelLanguageToggle = "cru.parallellanguagetoggle"
         static let toolOpenedShortcutCountKey = "cru.tool-opened-shortcut"
         static let shareScreenEngagedCountKey = "cru.sharescreenengaged"
-        static let shareScreenOpenCountKey = "cru.share_screen_opened"
+        static let shareScreenOpenedCountKey = "cru.share_screen_opened"
     }
 }

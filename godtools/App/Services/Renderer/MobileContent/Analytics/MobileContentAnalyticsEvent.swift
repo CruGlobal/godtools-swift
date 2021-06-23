@@ -12,23 +12,25 @@ class MobileContentAnalyticsEvent: NSObject {
     
     private var delayTimer: Timer?
     private var triggered: Bool = false
+    private let page: MobileContentRendererPageModel
     
     let eventNode: AnalyticsEventNode
     
     private weak var mobileContentAnalytics: MobileContentAnalytics?
     
-    required init(eventNode: AnalyticsEventNode, mobileContentAnalytics: MobileContentAnalytics) {
+    required init(eventNode: AnalyticsEventNode, mobileContentAnalytics: MobileContentAnalytics, page: MobileContentRendererPageModel) {
         
         self.eventNode = eventNode
         self.mobileContentAnalytics = mobileContentAnalytics
+        self.page = page
         
         super.init()
     }
     
-    static func initEvents(eventsNode: AnalyticsEventsNode, mobileContentAnalytics: MobileContentAnalytics) -> [MobileContentAnalyticsEvent] {
+    static func initEvents(eventsNode: AnalyticsEventsNode, mobileContentAnalytics: MobileContentAnalytics, page: MobileContentRendererPageModel) -> [MobileContentAnalyticsEvent] {
         
         let eventNodes: [AnalyticsEventNode] = eventsNode.children as? [AnalyticsEventNode] ?? []
-        let events: [MobileContentAnalyticsEvent] = eventNodes.map({MobileContentAnalyticsEvent(eventNode: $0, mobileContentAnalytics: mobileContentAnalytics)})
+        let events: [MobileContentAnalyticsEvent] = eventNodes.map({MobileContentAnalyticsEvent(eventNode: $0, mobileContentAnalytics: mobileContentAnalytics, page: page)})
         
         return events
     }
@@ -57,7 +59,7 @@ class MobileContentAnalyticsEvent: NSObject {
         
         stopDelayTimer()
         
-        mobileContentAnalytics?.trackEvent(event: eventNode)
+        mobileContentAnalytics?.trackEvent(event: eventNode, page: page)
         
         endTrigger()
     }

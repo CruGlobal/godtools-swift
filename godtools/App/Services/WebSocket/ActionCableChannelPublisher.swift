@@ -16,7 +16,9 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherType {
     private var channelIdToCreate: String?
     private var publishingToSubscriberChannelId: String?
     private var isObservingTextSignal: Bool = false
+    private var appResignedActive: Bool = false
     
+    private(set) var websocketUrl: URL?
     private(set) var channelId: String?
     private(set) var publishChannelIdentifier: String?
     
@@ -28,9 +30,16 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherType {
         self.loggingEnabled = loggingEnabled
         
         super.init()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(appWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     deinit {
+        
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+        
         webSocket.didConnectSignal.removeObserver(self)
         removeTextSignalObserver()
         webSocket.disconnect()
@@ -48,6 +57,7 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherType {
                 
         removeTextSignalObserver()
         
+        self.websocketUrl = url
         self.channelId = channelId
         
         channelIdToCreate = channelId
@@ -181,5 +191,28 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherType {
         channelIdToCreate = nil
         publishingToSubscriberChannelId = subscriberChannelId
         didCreateChannelForPublish.accept(value: subscriberChannelId)
+    }
+}
+
+extension ActionCableChannelPublisher {
+    
+    @objc private func appWillResignActive() {
+        appResignedActive = true
+        webSocket.disconnect()
+    }
+    
+    @objc private func appDidBecomeActive() {
+        
+        guard appResignedActive else {
+            return
+        }
+        
+        appResignedActive = false
+        
+        guard let websocketUrl = self.websocketUrl, let channelId = self.channelId else {
+            return
+        }
+        
+        createChannelForPublish(url: websocketUrl, channelId: channelId)
     }
 }

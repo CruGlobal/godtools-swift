@@ -81,8 +81,10 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     }
     
     var youtubePlayerParameters: [String : Any]? {
+        let playsInFullScreen = 0
+        
         return [
-            "playsinline": 1
+            "playsinline": playsInFullScreen
         ]
     }
     
@@ -225,11 +227,11 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     
     func pageViewed() {
         
-        analytics.pageViewedAnalytics.trackPageView(screenName: analyticsScreenName, siteSection: siteSection, siteSubSection: siteSubSection)
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: siteSection, siteSubSection: siteSubSection))
     }
     
     func openToolTapped() {
-        analytics.trackActionAnalytics.trackAction(screenName: analyticsScreenName, actionName: "About Tool Open Button", data: ["cru.tool_about_button": 1])
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: "About Tool Open Button", siteSection: siteSection, siteSubSection: siteSubSection, url: nil, data: ["cru.tool_about_button": 1]))
         flowDelegate?.navigate(step: .openToolTappedFromToolDetails(resource: resource))
     }
     
@@ -256,6 +258,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         let exitLink = ExitLinkModel(
             screenName: analyticsScreenName,
             siteSection: siteSection,
+            siteSubSection: siteSubSection,
             url: url.absoluteString
         )
         

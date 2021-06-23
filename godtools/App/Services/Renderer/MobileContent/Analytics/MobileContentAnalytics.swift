@@ -23,16 +23,16 @@ class MobileContentAnalytics {
         self.analyticsSystems = analyticsSystems
     }
     
-    func trackEvents(events: AnalyticsEventsNode) {
+    func trackEvents(events: AnalyticsEventsNode, page: MobileContentRendererPageModel) {
         
         let events: [AnalyticsEventNode] = events.children as? [AnalyticsEventNode] ?? []
         
         for event in events {
-            trackEvent(event: event)
+            trackEvent(event: event, page: page)
         }
     }
     
-    func trackEvent(event: AnalyticsEventNode) {
+    func trackEvent(event: AnalyticsEventNode, page: MobileContentRendererPageModel) {
         
         guard let action = event.action, !action.isEmpty else {
             return
@@ -52,7 +52,17 @@ class MobileContentAnalytics {
          for system in event.systems {
              
             if let analyticsSystem = analyticsSystems[system] {
-                analyticsSystem.trackAction(action: action, data: data)
+                
+                let resourceAbbreviation = page.resource.abbreviation
+                let pageNumber = page.page
+                let screenName = resourceAbbreviation + "-" + String(pageNumber)
+                
+                analyticsSystem.trackMobileContentAction(
+                    screenName: screenName,
+                    siteSection: resourceAbbreviation,
+                    action: action,
+                    data: data
+                )
             }
          }
     }

@@ -62,11 +62,7 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
         
         self.page = page
         
-        analytics.pageViewedAnalytics.trackPageView(
-            screenName: analyticsScreenName,
-            siteSection: "onboarding",
-            siteSubSection: ""
-        )
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: "onboarding", siteSubSection: ""))
     }
     
     func continueTapped() {
@@ -83,12 +79,12 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
         openTutorialCalloutCache.disableOpenTutorialCallout()
         flowDelegate?.navigate(step: .showMoreTappedFromOnboardingTutorial)
         
-        analytics.trackActionAnalytics.trackAction(screenName: analyticsScreenName, actionName: "On-Boarding More", data: ["cru.onboarding_more": 1])
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: "On-Boarding More", siteSection: "", siteSubSection: "", url: nil, data: ["cru.onboarding_more": 1]))
     }
     
     func getStartedTapped() {
         flowDelegate?.navigate(step: .getStartedTappedFromOnboardingTutorial)
         
-        analytics.trackActionAnalytics.trackAction(screenName: analyticsScreenName, actionName: "On-Boarding Start", data: ["cru.onboarding_start": 1])
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: "On-Boarding Start", siteSection: "", siteSubSection: "", url: nil, data: ["cru.onboarding_start": 1]))
     }
 }

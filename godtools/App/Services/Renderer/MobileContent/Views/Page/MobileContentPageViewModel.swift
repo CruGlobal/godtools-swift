@@ -85,6 +85,7 @@ class MobileContentPageViewModel: MobileContentPageViewModelType {
         let exitLink = ExitLinkModel(
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
+            siteSubSection: "",
             url: url
         )
         
