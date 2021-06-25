@@ -27,9 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
         appDiContainer.firebaseConfiguration.configure()
         
-        let appFlow = AppFlow(appDiContainer: appDiContainer)
-        
-        self.appFlow = appFlow
+        let window = UIWindow(frame: UIScreen.main.bounds)
+        appFlow = AppFlow(appDiContainer: appDiContainer, window: window)
         
         appDiContainer.appsFlyer.configure()
         
@@ -43,9 +42,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         
-        let window = UIWindow(frame: UIScreen.main.bounds)
+        // window
         window.backgroundColor = UIColor.white
-        window.rootViewController = appFlow.rootController
+        window.rootViewController = appFlow?.rootController
         window.makeKeyAndVisible()
         self.window = window
         
@@ -56,7 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillResignActive(_ application: UIApplication) {
         
-        appFlow?.applicationWillResignActive(application)
+        appDiContainer.shortcutItemsService.reloadShortcutItems(application: application)
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -66,27 +65,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-        appFlow?.applicationWillEnterForeground(application)
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         AppEvents.activateApp()
-        appFlow?.applicationDidBecomeActive(application)
         appDiContainer.analytics.appsFlyerAnalytics.trackAppLaunch()
         appDiContainer.analytics.firebaseAnalytics.fetchAttributesThenSetUserId()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
     
-    }
-    
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        
-        appDiContainer.deepLinkingService.parseDeepLink(incomingDeepLink: .url(url: url))
-        
-        appDiContainer.appsFlyer.handleOpenUrl(url: url, options: options)
-        
-        return ApplicationDelegate.shared.application(app, open: url, options: options)
     }
     
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
@@ -143,5 +131,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
         appDiContainer.appsFlyer.handlePushNotification(userInfo: userInfo)
+    }
+}
+
+// MARK: - Open Url (Asks the delegate to open a resource specified by a URL, and provides a dictionary of launch options.)
+
+extension AppDelegate {
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        
+        appDiContainer.deepLinkingService.parseDeepLink(incomingDeepLink: .url(url: url))
+        
+        appDiContainer.appsFlyer.handleOpenUrl(url: url, options: options)
+        
+        return ApplicationDelegate.shared.application(app, open: url, options: options)
     }
 }

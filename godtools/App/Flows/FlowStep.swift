@@ -11,6 +11,8 @@ import Foundation
 enum FlowStep {
     
     // app
+    case appLaunchedFromTerminatedState
+    case appLaunchedFromBackgroundState
     case showTools(animated: Bool, shouldCreateNewInstance: Bool)
     case showMenu
     case showLanguageSettings

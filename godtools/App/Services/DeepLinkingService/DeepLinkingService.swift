@@ -21,9 +21,7 @@ class DeepLinkingService: NSObject, DeepLinkingServiceType {
         
         super.init()
     }
-    
-    //MARK: - Public
-    
+        
     func parseDeepLink(incomingDeepLink: IncomingDeepLinkType) -> Bool {
         
         if loggingEnabled {

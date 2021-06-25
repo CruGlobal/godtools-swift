@@ -11,6 +11,7 @@ import MessageUI
 
 class AppFlow: NSObject, Flow {
     
+    private let window: UIWindow
     private let dataDownloader: InitialDataDownloader
     private let followUpsService: FollowUpsService
     private let viewsService: ViewsService
@@ -24,15 +25,18 @@ class AppFlow: NSObject, Flow {
     private var articleDeepLinkFlow: ArticleDeepLinkFlow?
     private var resignedActiveDate: Date?
     private var navigationStarted: Bool = false
+    private var observersAdded: Bool = false
+    private var appIsInBackground: Bool = false
     private var isObservingDeepLinking: Bool = false
     
     let appDiContainer: AppDiContainer
     let rootController: AppRootController = AppRootController(nibName: nil, bundle: nil)
     let navigationController: UINavigationController
         
-    init(appDiContainer: AppDiContainer) {
+    init(appDiContainer: AppDiContainer, window: UIWindow) {
         
         self.appDiContainer = appDiContainer
+        self.window = window
         self.navigationController = UINavigationController()
         self.dataDownloader = appDiContainer.initialDataDownloader
         self.followUpsService = appDiContainer.followUpsService
@@ -49,11 +53,38 @@ class AppFlow: NSObject, Flow {
         navigationController.setViewControllers([], animated: false)
         
         rootController.addChildController(child: navigationController)
+        
+        addObservers()
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+        removeObservers()
         removeDeepLinkingObservers()
+    }
+    
+    private func addObservers() {
+              
+        guard !observersAdded else {
+            return
+        }
+        observersAdded = true
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleNotification(notification:)), name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleNotification(notification:)), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleNotification(notification:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
+    }
+    
+    private func removeObservers() {
+        
+        guard observersAdded else {
+            return
+        }
+        observersAdded = false
+        
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
     
     private func resetFlowToToolsFlow(animated: Bool) {
@@ -176,6 +207,42 @@ class AppFlow: NSObject, Flow {
     func navigate(step: FlowStep) {
 
         switch step {
+        
+        case .appLaunchedFromTerminatedState:
+           
+            setupInitialNavigation()
+            loadInitialData()
+            
+        case .appLaunchedFromBackgroundState:
+            
+            if let resignedActiveDate = resignedActiveDate {
+                
+                let currentDate: Date = Date()
+                let elapsedTimeInSeconds: TimeInterval = currentDate.timeIntervalSince(resignedActiveDate)
+                let elapsedTimeInMinutes: TimeInterval = elapsedTimeInSeconds / 60
+                
+                if elapsedTimeInMinutes >= 120 {
+
+                    let loadingView: UIView = UIView(frame: UIScreen.main.bounds)
+                    let loadingImage: UIImageView = UIImageView(frame: UIScreen.main.bounds)
+                    loadingImage.contentMode = .scaleAspectFit
+                    loadingView.addSubview(loadingImage)
+                    loadingImage.image = UIImage(named: "LaunchImage")
+                    loadingView.backgroundColor = .white
+                    window.addSubview(loadingView)
+                    
+                    resetFlowToToolsFlow(animated: false)
+                    loadInitialData()
+                    
+                    UIView.animate(withDuration: 0.4, delay: 1.5, options: .curveEaseOut, animations: {
+                        loadingView.alpha = 0
+                    }, completion: {(finished: Bool) in
+                        loadingView.removeFromSuperview()
+                    })
+                }
+            }
+            
+            resignedActiveDate = nil
         
         case .showTools(let animated, let shouldCreateNewInstance):
             
@@ -387,53 +454,29 @@ class AppFlow: NSObject, Flow {
     }
 }
 
-extension AppFlow: UIApplicationDelegate {
-    
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        
-        if navigationStarted, let resignedActiveDate = resignedActiveDate {
-            
-            let currentDate: Date = Date()
-            let elapsedTimeInSeconds: TimeInterval = currentDate.timeIntervalSince(resignedActiveDate)
-            let elapsedTimeInMinutes: TimeInterval = elapsedTimeInSeconds / 60
-            
-            if elapsedTimeInMinutes >= 120 {
+// MARK: - Notifications
 
-                let loadingView: UIView = UIView(frame: UIScreen.main.bounds)
-                let loadingImage: UIImageView = UIImageView(frame: UIScreen.main.bounds)
-                loadingView.addSubview(loadingImage)
-                loadingImage.image = UIImage(named: "LaunchImage")
-                loadingView.backgroundColor = .white
-                application.keyWindow?.addSubview(loadingView)
-                
-                resetFlowToToolsFlow(animated: false)
-                loadInitialData()
-                
-                UIView.animate(withDuration: 0.4, delay: 1.5, options: .curveEaseOut, animations: {
-                    loadingView.alpha = 0
-                }, completion: {(finished: Bool) in
-                    loadingView.removeFromSuperview()
-                })
+extension AppFlow {
+    
+    @objc private func handleNotification(notification: Notification) {
+        
+        if notification.name == UIApplication.willResignActiveNotification {
+            
+            resignedActiveDate = Date()
+        }
+        else if notification.name == UIApplication.didBecomeActiveNotification {
+            
+            if !navigationStarted {
+                navigationStarted = true
+                navigate(step: .appLaunchedFromTerminatedState)
+            }
+            else if appIsInBackground {
+                appIsInBackground = false
+                navigate(step: .appLaunchedFromBackgroundState)
             }
         }
-        
-        resignedActiveDate = nil
-    }
-    
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        
-        if !navigationStarted {
-            
-            navigationStarted = true
-            setupInitialNavigation()
-            loadInitialData()
+        else if notification.name == UIApplication.didEnterBackgroundNotification {
+            appIsInBackground = true
         }
-    }
-    
-    func applicationWillResignActive(_ application: UIApplication) {
-                
-        resignedActiveDate = Date()
-        
-        appDiContainer.shortcutItemsService.reloadShortcutItems(application: application)
     }
 }
