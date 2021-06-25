@@ -104,18 +104,6 @@ class AppFlow: NSObject, Flow {
         }
     }
     
-    private func setupInitialNavigation() {
-        
-        if appDiContainer.onboardingTutorialAvailability.onboardingTutorialIsAvailable {
-            navigate(step: .showOnboardingTutorial(animated: false))
-        }
-        else {
-            navigate(step: .showTools(animated: true, shouldCreateNewInstance: true))
-        }
-        
-        addDeepLinkingObservers()
-    }
-    
     private func loadInitialData() {
         
         dataDownloader.downloadInitialData()
@@ -134,67 +122,10 @@ class AppFlow: NSObject, Flow {
         isObservingDeepLinking = true
         
         deepLinkingService.completed.addObserver(self) { [weak self] (optionalDeepLink: ParsedDeepLinkType?) in
-            
             guard let deepLink = optionalDeepLink else {
                 return
             }
-            
-            DispatchQueue.main.async { [weak self] in
-                
-                switch deepLink {
-                
-                case .tool(let resourceAbbreviation, let primaryLanguageCodes, let parallelLanguageCodes, let liveShareStream, let page):
-                    
-                    guard let dataDownloader = self?.dataDownloader,
-                          let resource = dataDownloader.resourcesCache.getResource(abbreviation: resourceAbbreviation) else {
-                        
-                        return
-                    }
-                    
-                    var fetchedPrimaryLanguage: LanguageModel?
-                    
-                    if let primaryLanguageFromCodes = dataDownloader.fetchFirstSupportedLanguageForResource(resource: resource, codes: primaryLanguageCodes) {
-                        fetchedPrimaryLanguage = primaryLanguageFromCodes
-                    } else if let primaryLanguageFromSettings = self?.appDiContainer.languageSettingsService.primaryLanguage.value {
-                        fetchedPrimaryLanguage = primaryLanguageFromSettings
-                    } else {
-                        fetchedPrimaryLanguage = dataDownloader.getStoredLanguage(code: "en")
-                    }
-                    
-                    guard let primaryLanguage = fetchedPrimaryLanguage else { return }
-                    
-                    let parallelLanguage = dataDownloader.fetchFirstSupportedLanguageForResource(resource: resource, codes: parallelLanguageCodes)
-                    
-                    DispatchQueue.main.async { [weak self] in
-                        
-                        self?.resetFlowToToolsFlow(animated: false)
-                        
-                        self?.toolsFlow?.navigateToTool(
-                            resource: resource,
-                            primaryLanguage: primaryLanguage,
-                            parallelLanguage: parallelLanguage,
-                            liveShareStream: liveShareStream,
-                            trainingTipsEnabled: false,
-                            page: page
-                        )
-                    }
-                
-                case .article(let articleUri):
-                    
-                    guard let appFlow = self else {
-                        return
-                    }
-                    
-                    let articleDeepLinkFlow = ArticleDeepLinkFlow(
-                        flowDelegate: appFlow,
-                        appDiContainer: appFlow.appDiContainer,
-                        sharedNavigationController: appFlow.navigationController,
-                        aemUri: articleUri
-                    )
-                    
-                    appFlow.articleDeepLinkFlow = articleDeepLinkFlow
-                }
-            }
+            self?.navigate(step: .deepLink(deepLinkType: deepLink))
         }
     }
     
@@ -210,8 +141,18 @@ class AppFlow: NSObject, Flow {
         
         case .appLaunchedFromTerminatedState:
            
-            setupInitialNavigation()
+            if appDiContainer.onboardingTutorialAvailability.onboardingTutorialIsAvailable {
+                
+                navigate(step: .showOnboardingTutorial(animated: false))
+            }
+            else {
+                
+                navigate(step: .showTools(animated: true, shouldCreateNewInstance: true))
+            }
+            
             loadInitialData()
+            
+            addDeepLinkingObservers()
             
         case .appLaunchedFromBackgroundState:
             
@@ -243,6 +184,55 @@ class AppFlow: NSObject, Flow {
             }
             
             resignedActiveDate = nil
+            
+        case .deepLink(let deepLink):
+            
+            resetFlowToToolsFlow(animated: false)
+            
+            switch deepLink {
+            
+            case .tool(let resourceAbbreviation, let primaryLanguageCodes, let parallelLanguageCodes, let liveShareStream, let page):
+                
+                guard let resource = dataDownloader.resourcesCache.getResource(abbreviation: resourceAbbreviation) else {
+                    return
+                }
+                
+                var fetchedPrimaryLanguage: LanguageModel?
+                
+                if let primaryLanguageFromCodes = dataDownloader.fetchFirstSupportedLanguageForResource(resource: resource, codes: primaryLanguageCodes) {
+                    fetchedPrimaryLanguage = primaryLanguageFromCodes
+                } else if let primaryLanguageFromSettings = appDiContainer.languageSettingsService.primaryLanguage.value {
+                    fetchedPrimaryLanguage = primaryLanguageFromSettings
+                } else {
+                    fetchedPrimaryLanguage = dataDownloader.getStoredLanguage(code: "en")
+                }
+                
+                guard let primaryLanguage = fetchedPrimaryLanguage else {
+                    return
+                }
+                
+                let parallelLanguage = dataDownloader.fetchFirstSupportedLanguageForResource(resource: resource, codes: parallelLanguageCodes)
+                
+                toolsFlow?.navigateToTool(
+                    resource: resource,
+                    primaryLanguage: primaryLanguage,
+                    parallelLanguage: parallelLanguage,
+                    liveShareStream: liveShareStream,
+                    trainingTipsEnabled: false,
+                    page: page
+                )
+            
+            case .article(let articleUri):
+                
+                let articleDeepLinkFlow = ArticleDeepLinkFlow(
+                    flowDelegate: self,
+                    appDiContainer: appDiContainer,
+                    sharedNavigationController: navigationController,
+                    aemUri: articleUri
+                )
+                
+                self.articleDeepLinkFlow = articleDeepLinkFlow
+            }
         
         case .showTools(let animated, let shouldCreateNewInstance):
             

@@ -13,6 +13,7 @@ enum FlowStep {
     // app
     case appLaunchedFromTerminatedState
     case appLaunchedFromBackgroundState
+    case deepLink(deepLinkType: ParsedDeepLinkType)
     case showTools(animated: Bool, shouldCreateNewInstance: Bool)
     case showMenu
     case showLanguageSettings
