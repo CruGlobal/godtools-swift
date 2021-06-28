@@ -246,6 +246,14 @@ class AppFlow: NSObject, Flow {
             case .lessonsList:
                 
                 resetFlowToToolsFlow(startingToolbarItem: .lessons)
+                
+            case .favoritedToolsList:
+                
+                resetFlowToToolsFlow(startingToolbarItem: .favoritedTools)
+                
+            case .allToolsList:
+                
+                resetFlowToToolsFlow(startingToolbarItem: .allTools)
             }
         
         case .showTools(let animated, let shouldCreateNewInstance, let startingToolbarItem):

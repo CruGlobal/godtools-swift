@@ -863,6 +863,7 @@
 		45F5A044268A2F010081C507 /* DeepLinkSchemeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5A043268A2F010081C507 /* DeepLinkSchemeType.swift */; };
 		45F5A046268A30250081C507 /* URL+DeepLinkScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5A045268A30250081C507 /* URL+DeepLinkScheme.swift */; };
 		45F5A048268A72200081C507 /* IncomingDeepLinkUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5A047268A72200081C507 /* IncomingDeepLinkUrl.swift */; };
+		45F5A04B268A7BD90081C507 /* ToolsDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5A04A268A7BD90081C507 /* ToolsDeepLinkParser.swift */; };
 		45FA4393260983590056FD49 /* MobileContentTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FA4392260983590056FD49 /* MobileContentTabView.swift */; };
 		45FA439D2609837F0056FD49 /* MobileContentTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FA439C2609837F0056FD49 /* MobileContentTabViewModel.swift */; };
 		45FA43A3260983870056FD49 /* MobileContentTabViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FA43A2260983870056FD49 /* MobileContentTabViewModelType.swift */; };
@@ -1784,6 +1785,7 @@
 		45F5A043268A2F010081C507 /* DeepLinkSchemeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkSchemeType.swift; sourceTree = "<group>"; };
 		45F5A045268A30250081C507 /* URL+DeepLinkScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+DeepLinkScheme.swift"; sourceTree = "<group>"; };
 		45F5A047268A72200081C507 /* IncomingDeepLinkUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingDeepLinkUrl.swift; sourceTree = "<group>"; };
+		45F5A04A268A7BD90081C507 /* ToolsDeepLinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsDeepLinkParser.swift; sourceTree = "<group>"; };
 		45FA4392260983590056FD49 /* MobileContentTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentTabView.swift; sourceTree = "<group>"; };
 		45FA439C2609837F0056FD49 /* MobileContentTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentTabViewModel.swift; sourceTree = "<group>"; };
 		45FA43A2260983870056FD49 /* MobileContentTabViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentTabViewModelType.swift; sourceTree = "<group>"; };
@@ -2634,6 +2636,7 @@
 				45585BCD2687BB8F00A21D12 /* Lesson */,
 				45F5A0402689FEC80081C507 /* Lessons */,
 				45585BC92687BB8F00A21D12 /* Tool */,
+				45F5A049268A7BCD0081C507 /* Tools */,
 			);
 			path = Parsers;
 			sourceTree = "<group>";
@@ -4827,6 +4830,14 @@
 			path = Lessons;
 			sourceTree = "<group>";
 		};
+		45F5A049268A7BCD0081C507 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				45F5A04A268A7BD90081C507 /* ToolsDeepLinkParser.swift */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
 		45FA43912609834E0056FD49 /* ContentTab */ = {
 			isa = PBXGroup;
 			children = (
@@ -5940,6 +5951,7 @@
 				45AD1B1F25938A4E00A096A0 /* LearnToShareToolCell.swift in Sources */,
 				45C93ADA261D310900592FFF /* ArticleManifestType.swift in Sources */,
 				455FF6F52603DC6A0028B95B /* MobileContentTextViewModel.swift in Sources */,
+				45F5A04B268A7BD90081C507 /* ToolsDeepLinkParser.swift in Sources */,
 				45AD1AF025938A4E00A096A0 /* WebContentType.swift in Sources */,
 				45AD201C25938A9800A096A0 /* ResponseError.swift in Sources */,
 				45BFF464262F7D01002BE732 /* ContentHeaderNode.swift in Sources */,

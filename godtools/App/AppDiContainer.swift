@@ -172,7 +172,7 @@ class AppDiContainer {
         )
         
         deepLinkingService = DeepLinkingService(
-            deepLinkParsers: [ToolDeepLinkParser(), LessonDeepLinkParser(), LessonsDeepLinkParser(), ArticleDeepLinkParser()],
+            deepLinkParsers: [ToolDeepLinkParser(), ToolsDeepLinkParser(), LessonDeepLinkParser(), LessonsDeepLinkParser(), ArticleDeepLinkParser()],
             loggingEnabled: config.isDebug
         )
         
