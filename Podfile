@@ -20,7 +20,6 @@ target 'godtools' do
     pod 'FirebaseInAppMessaging', '7.3.0-beta'
     pod 'FirebaseAnalytics', '7.3.0'
     pod 'FirebaseCrashlytics', '7.3.0'
-    pod 'FirebaseDynamicLinks', '7.3.0'
     pod 'Fuzi', '~> 3.1.1'
     pod 'lottie-ios', '~> 3.1.8'
     pod 'RealmSwift', '~> 10.7.4'

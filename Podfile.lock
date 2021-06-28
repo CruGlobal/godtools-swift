@@ -33,8 +33,6 @@ PODS:
     - GoogleDataTransport (~> 8.0)
     - nanopb (~> 2.30906.0)
     - PromisesObjC (~> 1.2)
-  - FirebaseDynamicLinks (7.3.0):
-    - FirebaseCore (~> 7.0)
   - FirebaseInAppMessaging (7.3.0-beta):
     - FirebaseABTesting (~> 7.0)
     - FirebaseCore (~> 7.0)
@@ -124,7 +122,6 @@ DEPENDENCIES:
   - FirebaseAnalytics (= 7.3.0)
   - FirebaseCore (= 7.3.0)
   - FirebaseCrashlytics (= 7.3.0)
-  - FirebaseDynamicLinks (= 7.3.0)
   - FirebaseInAppMessaging (= 7.3.0-beta)
   - Fuzi (~> 3.1.1)
   - GoogleConversionTracking (~> 3.4.0)
@@ -152,7 +149,6 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseCoreDiagnostics
     - FirebaseCrashlytics
-    - FirebaseDynamicLinks
     - FirebaseInAppMessaging
     - FirebaseInstallations
     - FMDB
@@ -189,7 +185,6 @@ SPEC CHECKSUMS:
   FirebaseCore: 4d3c72622ce0e2106aaa07bb4b2935ba2c370972
   FirebaseCoreDiagnostics: d50e11039e5984d92c8a512be2395f13df747350
   FirebaseCrashlytics: d31325312c92e2cb2f0386d589b9aa44e303d99b
-  FirebaseDynamicLinks: 8af566648187c9ae60c9bf890251bd5f5c974e09
   FirebaseInAppMessaging: 9436b16bbd1fd02bcb50c25ed485150b3269d611
   FirebaseInstallations: a58d4f72ec5861840b84df489f2668d970df558a
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
@@ -218,6 +213,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   youtube-ios-player-helper: 0185c57db23c80d63d6ca11251d110abb8a4ca61
 
-PODFILE CHECKSUM: 48af8afdd8db181a0438872b4236f7b4d13f4a79
+PODFILE CHECKSUM: b1643dce71b11ebd15f95588c833e0b887a9fa8c
 
 COCOAPODS: 1.10.0

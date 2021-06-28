@@ -91,16 +91,11 @@ class ToolDeepLinkParser: DeepLinkParserType {
         }
         
         var primaryLanguageCodes: [String] = toolQuery?.getPrimaryLanguageCodes() ?? Array()
-        let parallelLanguageCodes: [String] = toolQuery?.getParallelLanguageCodes() ?? Array()
         
         if let primaryLanguageCodeFromUrlPath = primaryLanguageCodeFromUrlPath {
             primaryLanguageCodes.insert(primaryLanguageCodeFromUrlPath, at: 0)
         }
-        
-        if primaryLanguageCodes.isEmpty {
-            primaryLanguageCodes = ["en"]
-        }
-                
+             
         guard let resourceAbbreviation = abbreviationFromUrlPath, !resourceAbbreviation.isEmpty else {
             return nil
         }
@@ -108,7 +103,7 @@ class ToolDeepLinkParser: DeepLinkParserType {
         return .tool(
             resourceAbbreviation: resourceAbbreviation,
             primaryLanguageCodes: primaryLanguageCodes,
-            parallelLanguageCodes: parallelLanguageCodes,
+            parallelLanguageCodes: toolQuery?.getParallelLanguageCodes() ?? [],
             liveShareStream: toolQuery?.liveShareStream,
             page: pageFromUrlPath
         )
@@ -138,7 +133,7 @@ class ToolDeepLinkParser: DeepLinkParserType {
         
         return .tool(
             resourceAbbreviation: resourceAbbreviation,
-            primaryLanguageCodes: toolQuery?.getPrimaryLanguageCodes() ?? ["en"],
+            primaryLanguageCodes: toolQuery?.getPrimaryLanguageCodes() ?? [],
             parallelLanguageCodes: toolQuery?.getParallelLanguageCodes() ?? [],
             liveShareStream: toolQuery?.liveShareStream,
             page: page
