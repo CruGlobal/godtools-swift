@@ -33,12 +33,6 @@ class LessonsDeepLinkParser: DeepLinkParserType {
     
     private func parseDeepLinkFromUrl(url: URL) -> ParsedDeepLinkType? {
         
-        guard url.containsDeepLinkHost(deepLinkHost: .knowGod) ||
-                url.containsDeepLinkHost(deepLinkHost: .godToolsApp) ||
-                url.hostContainsDeepLinkScheme(scheme: .godtools) else {
-            return nil
-        }
-        
         let pathComponents: [String] = getUrlPathComponents(url: url)
         
         guard let rootPath = pathComponents.first, rootPath == "lessons" else {
