@@ -23,10 +23,35 @@ class ToolDeepLinkParser: DeepLinkParserType {
         
         case .url(let url):
             return parseDeepLinkFromUrl(url: url)
-        
-        default:
-            return nil
         }
+    }
+    
+    private func parseDeepLinkFromAppsFlyer(data: [AnyHashable: Any]) -> ParsedDeepLinkType? {
+        
+        if let is_first_launch = data["is_first_launch"] as? Bool,
+            is_first_launch {
+            //Use if we want to trigger different behavior for deep link with fresh install
+        }
+        
+        let resourceAbbreviation: String
+        
+        if let deepLinkValue = data["deep_link_value"] as? String {
+            
+            resourceAbbreviation = deepLinkValue
+        }
+        else {
+            
+            guard let linkParam = data["link"] as? String,
+                  let urlComponents = URLComponents(string: linkParam),
+                  let deepLinkValue = urlComponents.queryItems?.first(where: { $0.name == "deep_link_value" })?.value else {
+                
+                return nil
+            }
+            
+            resourceAbbreviation = deepLinkValue
+        }
+        
+        return .tool(resourceAbbreviation: resourceAbbreviation, primaryLanguageCodes: Array(), parallelLanguageCodes: Array(), liveShareStream: nil, page: nil)
     }
     
     private func parseDeepLinkFromUrl(url: URL) -> ParsedDeepLinkType? {
@@ -60,34 +85,28 @@ class ToolDeepLinkParser: DeepLinkParserType {
             pageFromUrlPath = pageIntegerValue
         }
         
-        var primaryLanguageCodes: [String] = Array()
-        var parallelLanguageCodes: [String] = Array()
-        var liveShareStream: String?
+        let queryResult: Result<ToolQueryParameters?, Error> = JsonServices().decodeUrlQuery(url: url)
+        let toolQueryParameters: ToolQueryParameters?
         
-        let components: URLComponents? = URLComponents(url: url, resolvingAgainstBaseURL: false)
-        let queryItems: [URLQueryItem] = components?.queryItems ?? []
-        
-        for queryItem in queryItems {
-            
-            let key: String = queryItem.name
-            let value: String? = queryItem.value
-                        
-            if key == "primaryLanguage", let value = value {
-                primaryLanguageCodes = value.components(separatedBy: ",")
-            }
-            else if key == "parallelLanguage", let value = value {
-                parallelLanguageCodes = value.components(separatedBy: ",")
-            }
-            else if key == "liveShareStream" {
-                liveShareStream = value
-            }
+        switch queryResult {
+        case .success(let queryParameters):
+            toolQueryParameters = queryParameters
+        case .failure( _):
+            toolQueryParameters = nil
         }
+        
+        var primaryLanguageCodes: [String] = toolQueryParameters?.getPrimaryLanguageCodes() ?? Array()
+        let parallelLanguageCodes: [String] = toolQueryParameters?.getParallelLanguageCodes() ?? Array()
         
         if let primaryLanguageCodeFromUrlPath = primaryLanguageCodeFromUrlPath {
             primaryLanguageCodes.insert(primaryLanguageCodeFromUrlPath, at: 0)
         }
+        
+        if primaryLanguageCodes.isEmpty {
+            primaryLanguageCodes = ["en"]
+        }
                 
-        guard let resourceAbbreviation = resourceAbbreviationFromUrlPath, !resourceAbbreviation.isEmpty, !primaryLanguageCodes.isEmpty else {
+        guard let resourceAbbreviation = resourceAbbreviationFromUrlPath, !resourceAbbreviation.isEmpty else {
             return nil
         }
         
@@ -95,30 +114,8 @@ class ToolDeepLinkParser: DeepLinkParserType {
             resourceAbbreviation: resourceAbbreviation,
             primaryLanguageCodes: primaryLanguageCodes,
             parallelLanguageCodes: parallelLanguageCodes,
-            liveShareStream: liveShareStream,
+            liveShareStream: toolQueryParameters?.liveShareStream,
             page: pageFromUrlPath
         )
-    }
-    
-    private func parseDeepLinkFromAppsFlyer(data: [AnyHashable: Any]) -> ParsedDeepLinkType? {
-        
-        if let is_first_launch = data["is_first_launch"] as? Bool,
-            is_first_launch {
-            //Use if we want to trigger different behavior for deep link with fresh install
-        }
-        
-        let resourceAbbreviation: String
-        
-        if let deepLinkValue = data["deep_link_value"] as? String {
-            
-            resourceAbbreviation = deepLinkValue
-        } else {
-            
-            guard let linkParam = data["link"] as? String, let url = URLComponents(string: linkParam), let deepLinkValue = url.queryItems?.first(where: { $0.name == "deep_link_value" })?.value else { return nil }
-            
-            resourceAbbreviation = deepLinkValue
-        }
-        
-        return .tool(resourceAbbreviation: resourceAbbreviation, primaryLanguageCodes: Array(), parallelLanguageCodes: Array(), liveShareStream: nil, page: nil)
     }
 }

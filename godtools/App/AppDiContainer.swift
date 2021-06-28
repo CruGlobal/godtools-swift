@@ -171,7 +171,10 @@ class AppDiContainer {
             determineNewUser: DetermineNewUserIfPrimaryLanguageSet(languageSettingsCache: languageSettingsCache)
         )
         
-        deepLinkingService = DeepLinkingService(loggingEnabled: config.isDebug)
+        deepLinkingService = DeepLinkingService(
+            deepLinkParsers: [ToolDeepLinkParser(), LessonDeepLinkParser(), ArticleDeepLinkParser()],
+            loggingEnabled: config.isDebug
+        )
         
         appsFlyer = AppsFlyer(config: config, deepLinkingService: deepLinkingService)
         

@@ -18,18 +18,18 @@ class ToolPageViewModel: MobileContentPageViewModel, ToolPageViewModelType {
     
     let hidesCallToAction: Bool
     
-    required init(flowDelegate: FlowDelegate, pageNode: PageNode, pageModel: MobileContentRendererPageModel, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, pageNode: PageNode, pageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, analytics: AnalyticsContainer) {
         
         self.pageNode = pageNode
         self.pageModel = pageModel
         self.analytics = analytics
         self.hidesCallToAction = (pageNode.callToActionNode == nil && pageModel.pageNode.heroNode == nil) || pageModel.isLastPage
         
-        super.init(flowDelegate: flowDelegate, pageNode: pageNode, pageModel: pageModel, hidesBackgroundImage: false)
+        super.init(flowDelegate: flowDelegate, pageNode: pageNode, pageModel: pageModel, deepLinkService: deepLinkService, hidesBackgroundImage: false)
     }
     
-    required init(flowDelegate: FlowDelegate, pageNode: PageNode, pageModel: MobileContentRendererPageModel, hidesBackgroundImage: Bool) {
-        fatalError("init(flowDelegate:pageNode:pageModel:hidesBackgroundImage:) has not been implemented")
+    required init(flowDelegate: FlowDelegate, pageNode: PageNode, pageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, hidesBackgroundImage: Bool) {
+        fatalError("init(flowDelegate:pageNode:pageModel:deepLinkService:hidesBackgroundImage:) has not been implemented")
     }
     
     override var analyticsScreenName: String {

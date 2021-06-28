@@ -224,6 +224,26 @@ struct JsonServices: JsonServicesType {
         }
     }
     
+    func decodeUrlQuery<T>(url: URL, options: JSONSerialization.WritingOptions = []) -> Result<T?, Error> where T : Decodable {
+        
+        let components: URLComponents? = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        let queryItems: [URLQueryItem] = components?.queryItems ?? []
+        
+        var jsonObject: [String: Any] = Dictionary()
+        
+        for queryItem in queryItems {
+            jsonObject[queryItem.name] = queryItem.value
+        }
+        
+        do {
+            let jsonData: Data = try JSONSerialization.data(withJSONObject: jsonObject, options: options)
+            return decodeObject(data: jsonData)
+        }
+        catch let error {
+            return .failure(error)
+        }
+    }
+    
     // MARK: - Encoding
     
     func encode<T>(object: T, options: JSONSerialization.ReadingOptions = []) -> [String : Any] where T : Encodable {

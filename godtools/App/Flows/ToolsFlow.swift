@@ -536,6 +536,7 @@ class ToolsFlow: Flow {
         let localizationServices: LocalizationServices = appDiContainer.localizationServices
         let followUpsService: FollowUpsService = appDiContainer.followUpsService
         let cardJumpService: CardJumpService = appDiContainer.getCardJumpService()
+        let deepLinkService: DeepLinkingServiceType = appDiContainer.deepLinkingService
         
         let toolPageViewFactory = ToolPageViewFactory(
             flowDelegate: self,
@@ -548,6 +549,7 @@ class ToolsFlow: Flow {
             translationsFileCache: translationsFileCache,
             mobileContentNodeParser: mobileContentNodeParser,
             viewedTrainingTipsService: viewedTrainingTipsService,
+            deepLinkService: deepLinkService,
             trainingTipsEnabled: trainingTipsEnabled
         )
         
@@ -556,6 +558,7 @@ class ToolsFlow: Flow {
             translationsFileCache: translationsFileCache,
             mobileContentNodeParser: mobileContentNodeParser,
             viewedTrainingTipsService: viewedTrainingTipsService,
+            deepLinkService: deepLinkService,
             trainingTipsEnabled: trainingTipsEnabled
         )
         
@@ -627,12 +630,14 @@ class ToolsFlow: Flow {
         let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
         let mobileContentNodeParser: MobileContentXmlNodeParser = appDiContainer.getMobileContentNodeParser()
         let viewedTrainingTipsService: ViewedTrainingTipsService = appDiContainer.getViewedTrainingTipsService()
+        let deepLinkService: DeepLinkingServiceType = appDiContainer.deepLinkingService
         
         let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
             flowDelegate: self,
             translationsFileCache: translationsFileCache,
             mobileContentNodeParser: mobileContentNodeParser,
             viewedTrainingTipsService: viewedTrainingTipsService,
+            deepLinkService: deepLinkService,
             trainingTipsEnabled: false
         )
         
@@ -676,9 +681,11 @@ class ToolsFlow: Flow {
         let localizationServices: LocalizationServices = appDiContainer.localizationServices
         let followUpsService: FollowUpsService = appDiContainer.followUpsService
         let cardJumpService: CardJumpService = appDiContainer.getCardJumpService()
+        let deepLinkService: DeepLinkingServiceType = appDiContainer.deepLinkingService
         
         let lessonPageViewFactory = LessonPageViewFactory(
             flowDelegate: self,
+            deepLinkService: deepLinkService,
             analytics: analytics
         )
         
@@ -693,6 +700,7 @@ class ToolsFlow: Flow {
             translationsFileCache: translationsFileCache,
             mobileContentNodeParser: mobileContentNodeParser,
             viewedTrainingTipsService: viewedTrainingTipsService,
+            deepLinkService: deepLinkService,
             trainingTipsEnabled: trainingTipsEnabled
         )
         
@@ -701,6 +709,7 @@ class ToolsFlow: Flow {
             translationsFileCache: translationsFileCache,
             mobileContentNodeParser: mobileContentNodeParser,
             viewedTrainingTipsService: viewedTrainingTipsService,
+            deepLinkService: deepLinkService,
             trainingTipsEnabled: trainingTipsEnabled
         )
         
