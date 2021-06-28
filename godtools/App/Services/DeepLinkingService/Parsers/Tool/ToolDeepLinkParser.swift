@@ -24,13 +24,13 @@ class ToolDeepLinkParser: DeepLinkParserType {
         case .appsFlyer(let data):
             return parseDeepLinkFromAppsFlyer(data: data)
         
-        case .url(let url):
+        case .url(let incomingUrl):
             
-            if url.containsDeepLinkHost(deepLinkHost: .knowGod) {
-                return parseDeepLinkFromKnowGod(url: url)
+            if incomingUrl.url.containsDeepLinkHost(deepLinkHost: .knowGod) {
+                return parseDeepLinkFromKnowGod(incomingUrl: incomingUrl)
             }
             
-            return parseDefaultUrlStructure(url: url)
+            return parseDefaultUrlStructure(incomingUrl: incomingUrl)
         }
     }
     
@@ -62,7 +62,7 @@ class ToolDeepLinkParser: DeepLinkParserType {
         return .tool(resourceAbbreviation: resourceAbbreviation, primaryLanguageCodes: Array(), parallelLanguageCodes: Array(), liveShareStream: nil, page: nil)
     }
     
-    private func parseDeepLinkFromKnowGod(url: URL) -> ParsedDeepLinkType? {
+    private func parseDeepLinkFromKnowGod(incomingUrl: IncomingDeepLinkUrl) -> ParsedDeepLinkType? {
         
         //  Example from KnowGod primary language:
         //    https://knowgod.com/en/teachmetoshare?icid=gtshare&primaryLanguage=en&liveShareStream=acd9bee66b6057476cee-1612666248
@@ -71,8 +71,8 @@ class ToolDeepLinkParser: DeepLinkParserType {
         //  Example from Jesus Film Project:
         //    https://knowgod.com/en/kgp/?primaryLanguage=en&parallelLanguage=en&mcId=58263357509938105951208433145336893265
         
-        let pathComponents: [String] = getUrlPathComponents(url: url)
-        let toolQuery: ToolQueryParameters? = getDecodedUrlQuery(url: url)
+        let pathComponents: [String] = incomingUrl.pathComponents
+        let toolQuery: ToolQueryParameters? = JsonServices().decodeJsonObject(jsonObject: incomingUrl.queryParameters)
         
         var abbreviationFromUrlPath: String?
         var primaryLanguageCodeFromUrlPath: String?
@@ -109,10 +109,10 @@ class ToolDeepLinkParser: DeepLinkParserType {
         )
     }
     
-    private func parseDefaultUrlStructure(url: URL) -> ParsedDeepLinkType? {
+    private func parseDefaultUrlStructure(incomingUrl: IncomingDeepLinkUrl) -> ParsedDeepLinkType? {
         
-        let pathComponents: [String] = getUrlPathComponents(url: url)
-        let toolQuery: ToolQueryParameters? = getDecodedUrlQuery(url: url)
+        let pathComponents: [String] = incomingUrl.pathComponents
+        let toolQuery: ToolQueryParameters? = JsonServices().decodeJsonObject(jsonObject: incomingUrl.queryParameters)
         
         guard let rootPath = pathComponents.first, rootPath == "tract" else {
             return nil

@@ -291,7 +291,8 @@ class ToolsFlow: Flow {
         let dataDownloader: InitialDataDownloader = appDiContainer.initialDataDownloader
         let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
         
-        let primaryTranslation: TranslationModel? = dataDownloader.resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageId: primaryLanguage.id)
+        let primaryTranslation: TranslationModel? = dataDownloader.resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageId: primaryLanguage.id) ?? dataDownloader.resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageCode: "en")
+        
         let parallelTranslation: TranslationModel?
         
         if let parallelLanguage = parallelLanguage {
@@ -350,6 +351,10 @@ class ToolsFlow: Flow {
                 trainingTipsEnabled: trainingTipsEnabled,
                 page: page
             )
+        }
+        else {
+            
+            navigationController.presentAlertMessage(alertMessage: AlertMessage(title: "Internal Error", message: "Failed to fetch primary translation for primary language \(primaryLanguage.name)"))
         }
     }
     

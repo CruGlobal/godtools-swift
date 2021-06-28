@@ -83,7 +83,7 @@ class MobileContentPageViewModel: MobileContentPageViewModelType {
     func buttonWithUrlTapped(url: String) {
                     
         if let webUrl = URL(string: url) {
-            if deepLinkService.parseDeepLink(incomingDeepLink: .url(url: webUrl)) {
+            if deepLinkService.parseDeepLink(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: webUrl))) {
                 return
             }
         }

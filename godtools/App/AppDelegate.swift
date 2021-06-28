@@ -119,7 +119,7 @@ extension AppDelegate {
             ]))
             
             if let tractUrl = ToolShortcutItem.getTractUrl(shortcutItem: shortcutItem) {
-                successfullyHandledQuickAction = appDiContainer.deepLinkingService.parseDeepLink(incomingDeepLink: .url(url: tractUrl))
+                successfullyHandledQuickAction = appDiContainer.deepLinkingService.parseDeepLink(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: tractUrl)))
             }
             else {
                 successfullyHandledQuickAction = false
@@ -140,7 +140,7 @@ extension AppDelegate {
         
         appDiContainer.appsFlyer.handleOpenUrl(url: url, options: options)
         
-        let deepLinkedHandled: Bool = appDiContainer.deepLinkingService.parseDeepLink(incomingDeepLink: .url(url: url))
+        let deepLinkedHandled: Bool = appDiContainer.deepLinkingService.parseDeepLink(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
         
         let facebookHandled: Bool = ApplicationDelegate.shared.application(app, open: url, options: options)
         
@@ -179,7 +179,7 @@ extension AppDelegate {
             }
         }
            
-        let deepLinkHandled: Bool = appDiContainer.deepLinkingService.parseDeepLink(incomingDeepLink: .url(url: url))
+        let deepLinkHandled: Bool = appDiContainer.deepLinkingService.parseDeepLink(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
         
         if deepLinkHandled {
             return true

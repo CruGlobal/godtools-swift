@@ -21,8 +21,8 @@ class LessonDeepLinkParser: DeepLinkParserType {
         case .appsFlyer(let data):
             return parseDeepLinkFromAppsFlyer(data: data)
             
-        case .url(let url):
-            return parseDeepLinkFromUrl(url: url)
+        case .url(let incomingUrl):
+            return parseDeepLinkFromUrl(incomingUrl: incomingUrl)
         }
     }
     
@@ -31,15 +31,15 @@ class LessonDeepLinkParser: DeepLinkParserType {
         return nil
     }
     
-    private func parseDeepLinkFromUrl(url: URL) -> ParsedDeepLinkType? {
+    private func parseDeepLinkFromUrl(incomingUrl: IncomingDeepLinkUrl) -> ParsedDeepLinkType? {
         
-        let pathComponents: [String] = getUrlPathComponents(url: url)
+        let pathComponents: [String] = incomingUrl.pathComponents
         
         guard let rootPath = pathComponents.first, rootPath == "lesson" else {
             return nil
         }
         
-        let lessonQuery: LessonQueryParameters? = getDecodedUrlQuery(url: url)
+        let lessonQuery: LessonQueryParameters? = JsonServices().decodeJsonObject(jsonObject: incomingUrl.queryParameters)
         
         let lessonAbbreviation: String?
         

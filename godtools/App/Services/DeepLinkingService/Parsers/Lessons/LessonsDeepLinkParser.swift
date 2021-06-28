@@ -21,8 +21,8 @@ class LessonsDeepLinkParser: DeepLinkParserType {
         case .appsFlyer(let data):
             return parseDeepLinkFromAppsFlyer(data: data)
             
-        case .url(let url):
-            return parseDeepLinkFromUrl(url: url)
+        case .url(let incomingUrl):
+            return parseDeepLinkFromUrl(incomingUrl: incomingUrl)
         }
     }
     
@@ -31,11 +31,9 @@ class LessonsDeepLinkParser: DeepLinkParserType {
         return nil
     }
     
-    private func parseDeepLinkFromUrl(url: URL) -> ParsedDeepLinkType? {
-        
-        let pathComponents: [String] = getUrlPathComponents(url: url)
-        
-        guard let rootPath = pathComponents.first, rootPath == "lessons" else {
+    private func parseDeepLinkFromUrl(incomingUrl: IncomingDeepLinkUrl) -> ParsedDeepLinkType? {
+                
+        guard let rootPath = incomingUrl.rootPath, rootPath == "lessons" else {
             return nil
         }
         
