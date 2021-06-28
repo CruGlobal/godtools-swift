@@ -10,6 +10,9 @@ import Foundation
 
 class ToolDeepLinkParser: DeepLinkParserType {
     
+    let supportedUrlHosts: [DeepLinkHostType] = [.godToolsApp, .knowGod]
+    let supportedUrlSchemes: [DeepLinkSchemeType] = [.godtools]
+    
     required init() {
         
     }
@@ -22,7 +25,12 @@ class ToolDeepLinkParser: DeepLinkParserType {
             return parseDeepLinkFromAppsFlyer(data: data)
         
         case .url(let url):
-            return parseDeepLinkFromUrl(url: url)
+            
+            if url.containsDeepLinkHost(deepLinkHost: .knowGod) {
+                return parseDeepLinkFromKnowGod(url: url)
+            }
+            
+            return parseDefaultUrlStructure(url: url)
         }
     }
     
@@ -54,7 +62,7 @@ class ToolDeepLinkParser: DeepLinkParserType {
         return .tool(resourceAbbreviation: resourceAbbreviation, primaryLanguageCodes: Array(), parallelLanguageCodes: Array(), liveShareStream: nil, page: nil)
     }
     
-    private func parseDeepLinkFromUrl(url: URL) -> ParsedDeepLinkType? {
+    private func parseDeepLinkFromKnowGod(url: URL) -> ParsedDeepLinkType? {
         
         //  Example from KnowGod primary language:
         //    https://knowgod.com/en/teachmetoshare?icid=gtshare&primaryLanguage=en&liveShareStream=acd9bee66b6057476cee-1612666248
@@ -63,40 +71,27 @@ class ToolDeepLinkParser: DeepLinkParserType {
         //  Example from Jesus Film Project:
         //    https://knowgod.com/en/kgp/?primaryLanguage=en&parallelLanguage=en&mcId=58263357509938105951208433145336893265
         
-        guard url.containsDeepLinkHost(deepLinkHost: .knowGod) else {
-            return nil
-        }
+        let pathComponents: [String] = getUrlPathComponents(url: url)
+        let toolQuery: ToolQueryParameters? = getDecodedUrlQuery(url: url)
         
+        var abbreviationFromUrlPath: String?
         var primaryLanguageCodeFromUrlPath: String?
-        var resourceAbbreviationFromUrlPath: String?
         var pageFromUrlPath: Int?
         
-        let pathComponents: [String] = url.pathComponents.filter({$0 != "/"})
+        if pathComponents.count > 1 {
+            abbreviationFromUrlPath = pathComponents[1]
+        }
         
         if pathComponents.count > 0 {
             primaryLanguageCodeFromUrlPath = pathComponents[0]
-        }
-        
-        if pathComponents.count > 1 {
-            resourceAbbreviationFromUrlPath = pathComponents[1]
         }
         
         if pathComponents.count > 2, let pageIntegerValue = Int(pathComponents[2]) {
             pageFromUrlPath = pageIntegerValue
         }
         
-        let queryResult: Result<ToolQueryParameters?, Error> = JsonServices().decodeUrlQuery(url: url)
-        let toolQueryParameters: ToolQueryParameters?
-        
-        switch queryResult {
-        case .success(let queryParameters):
-            toolQueryParameters = queryParameters
-        case .failure( _):
-            toolQueryParameters = nil
-        }
-        
-        var primaryLanguageCodes: [String] = toolQueryParameters?.getPrimaryLanguageCodes() ?? Array()
-        let parallelLanguageCodes: [String] = toolQueryParameters?.getParallelLanguageCodes() ?? Array()
+        var primaryLanguageCodes: [String] = toolQuery?.getPrimaryLanguageCodes() ?? Array()
+        let parallelLanguageCodes: [String] = toolQuery?.getParallelLanguageCodes() ?? Array()
         
         if let primaryLanguageCodeFromUrlPath = primaryLanguageCodeFromUrlPath {
             primaryLanguageCodes.insert(primaryLanguageCodeFromUrlPath, at: 0)
@@ -106,7 +101,7 @@ class ToolDeepLinkParser: DeepLinkParserType {
             primaryLanguageCodes = ["en"]
         }
                 
-        guard let resourceAbbreviation = resourceAbbreviationFromUrlPath, !resourceAbbreviation.isEmpty else {
+        guard let resourceAbbreviation = abbreviationFromUrlPath, !resourceAbbreviation.isEmpty else {
             return nil
         }
         
@@ -114,8 +109,39 @@ class ToolDeepLinkParser: DeepLinkParserType {
             resourceAbbreviation: resourceAbbreviation,
             primaryLanguageCodes: primaryLanguageCodes,
             parallelLanguageCodes: parallelLanguageCodes,
-            liveShareStream: toolQueryParameters?.liveShareStream,
+            liveShareStream: toolQuery?.liveShareStream,
             page: pageFromUrlPath
+        )
+    }
+    
+    private func parseDefaultUrlStructure(url: URL) -> ParsedDeepLinkType? {
+        
+        let pathComponents: [String] = getUrlPathComponents(url: url)
+        let toolQuery: ToolQueryParameters? = getDecodedUrlQuery(url: url)
+        
+        guard let rootPath = pathComponents.first, rootPath == "tract" else {
+            return nil
+        }
+        
+        guard let resourceAbbreviation = toolQuery?.abbreviation, !resourceAbbreviation.isEmpty else {
+            return nil
+        }
+        
+        let page: Int?
+        
+        if let pageString = toolQuery?.page, let pageInt = Int(pageString) {
+            page = pageInt
+        }
+        else {
+            page = nil
+        }
+        
+        return .tool(
+            resourceAbbreviation: resourceAbbreviation,
+            primaryLanguageCodes: toolQuery?.getPrimaryLanguageCodes() ?? ["en"],
+            parallelLanguageCodes: toolQuery?.getParallelLanguageCodes() ?? [],
+            liveShareStream: toolQuery?.liveShareStream,
+            page: page
         )
     }
 }

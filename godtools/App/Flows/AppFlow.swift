@@ -87,21 +87,20 @@ class AppFlow: NSObject, Flow {
         NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
     
-    private func resetFlowToToolsFlow(animated: Bool) {
+    private func resetFlowToToolsFlow(startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView?) {
         configureNavigationBar()
-        toolsFlow?.navigationController.popToRootViewController(animated: animated)
-        toolsFlow?.resetToolsMenu()
-        navigationController.popToRootViewController(animated: animated)
-        closeMenu(animated: animated)
-        navigationController.dismiss(animated: animated, completion: nil)
+        closeMenu(animated: false)
+        navigationController.dismiss(animated: false, completion: nil)
+        navigationController.setViewControllers([], animated: false)
+        
+        toolsFlow = nil
+        onboardingFlow = nil
         menuFlow = nil
         languageSettingsFlow = nil
         articleDeepLinkFlow = nil
         tutorialFlow = nil
         
-        if toolsFlow == nil {
-            navigate(step: .showTools(animated: animated, shouldCreateNewInstance: true))
-        }
+        navigate(step: .showTools(animated: false, shouldCreateNewInstance: true, startingToolbarItem: startingToolbarItem))
     }
     
     private func loadInitialData() {
@@ -147,7 +146,7 @@ class AppFlow: NSObject, Flow {
             }
             else {
                 
-                navigate(step: .showTools(animated: true, shouldCreateNewInstance: true))
+                navigate(step: .showTools(animated: true, shouldCreateNewInstance: true, startingToolbarItem: nil))
             }
             
             loadInitialData()
@@ -172,7 +171,7 @@ class AppFlow: NSObject, Flow {
                     loadingView.backgroundColor = .white
                     window.addSubview(loadingView)
                     
-                    resetFlowToToolsFlow(animated: false)
+                    resetFlowToToolsFlow(startingToolbarItem: nil)
                     loadInitialData()
                     
                     UIView.animate(withDuration: 0.4, delay: 1.5, options: .curveEaseOut, animations: {
@@ -186,8 +185,6 @@ class AppFlow: NSObject, Flow {
             resignedActiveDate = nil
             
         case .deepLink(let deepLink):
-            
-            resetFlowToToolsFlow(animated: false)
             
             switch deepLink {
             
@@ -213,6 +210,17 @@ class AppFlow: NSObject, Flow {
                 
                 let parallelLanguage = dataDownloader.fetchFirstSupportedLanguageForResource(resource: resource, codes: parallelLanguageCodes)
                 
+                let startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView?
+                
+                if resource.resourceTypeEnum == .lesson {
+                    startingToolbarItem = .lessons
+                }
+                else {
+                    startingToolbarItem = nil
+                }
+                
+                resetFlowToToolsFlow(startingToolbarItem: startingToolbarItem)
+                
                 toolsFlow?.navigateToTool(
                     resource: resource,
                     primaryLanguage: primaryLanguage,
@@ -224,6 +232,8 @@ class AppFlow: NSObject, Flow {
             
             case .article(let articleUri):
                 
+                resetFlowToToolsFlow(startingToolbarItem: nil)
+                
                 let articleDeepLinkFlow = ArticleDeepLinkFlow(
                     flowDelegate: self,
                     appDiContainer: appDiContainer,
@@ -232,9 +242,13 @@ class AppFlow: NSObject, Flow {
                 )
                 
                 self.articleDeepLinkFlow = articleDeepLinkFlow
+            
+            case .lessonsList:
+                
+                resetFlowToToolsFlow(startingToolbarItem: .lessons)
             }
         
-        case .showTools(let animated, let shouldCreateNewInstance):
+        case .showTools(let animated, let shouldCreateNewInstance, let startingToolbarItem):
             
             navigationController.setNavigationBarHidden(false, animated: false)
 
@@ -245,7 +259,8 @@ class AppFlow: NSObject, Flow {
                 let toolsFlow: ToolsFlow = ToolsFlow(
                     flowDelegate: self,
                     appDiContainer: appDiContainer,
-                    sharedNavigationController: navigationController
+                    sharedNavigationController: navigationController,
+                    startingToolbarItem: startingToolbarItem
                 )
 
                 self.toolsFlow = toolsFlow
@@ -271,7 +286,7 @@ class AppFlow: NSObject, Flow {
             
         case .dismissOnboardingTutorial:
             
-            navigate(step: .showTools(animated: false, shouldCreateNewInstance: false))
+            navigate(step: .showTools(animated: false, shouldCreateNewInstance: false, startingToolbarItem: nil))
             navigationController.dismiss(animated: true, completion: nil)
             onboardingFlow = nil
                             
@@ -359,7 +374,7 @@ class AppFlow: NSObject, Flow {
     
     private func dismissTutorial() {
         closeMenu(animated: true)
-        navigate(step: .showTools(animated: false, shouldCreateNewInstance: false))
+        navigate(step: .showTools(animated: false, shouldCreateNewInstance: false, startingToolbarItem: nil))
         navigationController.dismiss(animated: true, completion: nil)
         tutorialFlow = nil
     }

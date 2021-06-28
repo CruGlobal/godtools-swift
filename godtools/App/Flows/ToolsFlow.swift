@@ -10,6 +10,8 @@ import UIKit
 
 class ToolsFlow: Flow {
     
+    private static let defaultStartingToolsMenu: ToolsMenuToolbarView.ToolbarItemView = .favoritedTools
+    
     private var articleToolFlow: ArticleToolFlow?
     private var shareToolMenuFlow: ShareToolMenuFlow?
     private var learnToShareToolFlow: LearnToShareToolFlow?
@@ -19,7 +21,7 @@ class ToolsFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController) {
+    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView?) {
         print("init: \(type(of: self))")
         
         self.flowDelegate = flowDelegate
@@ -39,19 +41,16 @@ class ToolsFlow: Flow {
             openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache
         )
         
-        let view = ToolsMenuView(viewModel: viewModel, startingToolbarItem: .favoritedTools)
+        let view = ToolsMenuView(
+            viewModel: viewModel,
+            startingToolbarItem: startingToolbarItem ?? ToolsFlow.defaultStartingToolsMenu
+        )
         
         navigationController.setViewControllers([view], animated: false)
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
-    }
-    
-    func resetToolsMenu() {
-        if let toolsMenu = navigationController.viewControllers.first as? ToolsMenuView {
-            toolsMenu.resetMenu()
-        }
     }
     
     func navigate(step: FlowStep) {

@@ -9,7 +9,7 @@
 import Foundation
 
 class LessonDeepLinkParser: DeepLinkParserType {
-    
+        
     required init() {
         
     }
@@ -33,22 +33,36 @@ class LessonDeepLinkParser: DeepLinkParserType {
     
     private func parseDeepLinkFromUrl(url: URL) -> ParsedDeepLinkType? {
         
-        guard url.containsDeepLinkHost(deepLinkHost: .godToolsApp) else {
-            return nil
-        }
-        
-        let pathComponents: [String] = url.pathComponents.filter({$0 != "/"})
+        let pathComponents: [String] = getUrlPathComponents(url: url)
         
         guard let rootPath = pathComponents.first, rootPath == "lesson" else {
             return nil
         }
         
-        guard pathComponents.count > 1 else {
+        let lessonQuery: LessonQueryParameters? = getDecodedUrlQuery(url: url)
+        
+        let lessonAbbreviation: String?
+        
+        if let abbreviation = lessonQuery?.abbreviation {
+            lessonAbbreviation = abbreviation
+        }
+        else if pathComponents.count > 1 {
+            lessonAbbreviation = pathComponents[1]
+        }
+        else {
+            lessonAbbreviation = nil
+        }
+        
+        guard let resourceAbbreviation = lessonAbbreviation else {
             return nil
         }
         
-        let lessonAbbreviation: String = pathComponents[1]
+        var primaryLanguageCodes: [String] = lessonQuery?.getPrimaryLanguageCodes() ?? []
         
-        return .tool(resourceAbbreviation: lessonAbbreviation, primaryLanguageCodes: ["en"], parallelLanguageCodes: [], liveShareStream: nil, page: nil)
+        if primaryLanguageCodes.isEmpty {
+            primaryLanguageCodes = ["en"]
+        }
+                
+        return .tool(resourceAbbreviation: resourceAbbreviation, primaryLanguageCodes: primaryLanguageCodes, parallelLanguageCodes: [], liveShareStream: nil, page: nil)
     }
 }

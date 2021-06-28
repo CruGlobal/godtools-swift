@@ -10,16 +10,20 @@ import Foundation
 
 struct ToolQueryParameters: Codable {
     
+    let abbreviation: String?
     let icid: String?
     let liveShareStream: String?
     let parallelLanguageCodesString: String?
     let primaryLanguageCodesString: String?
+    let page: String?
     
     enum CodingKeys: String, CodingKey {
+        case abbreviation = "abbreviation"
         case icid = "icid"
         case liveShareStream = "liveShareStream"
         case parallelLanguageCodesString = "parallelLanguage"
         case primaryLanguageCodesString = "primaryLanguage"
+        case page = "page"
     }
 }
 

@@ -88,26 +88,6 @@ class ToolsMenuView: UIViewController {
         navigateToToolsListForToolbarItem(toolbarItem: startingToolbarItem, animated: false)
     }
     
-    
-    func resetMenu() {
-        
-        if let lessonsView = lessonsView {
-            lessonsView.scrollToTopOfLessons(animated: false)
-        }
-        
-        if let favoritedToolsView = favoritedToolsView {
-            favoritedToolsView.scrollToTopOfTools(animated: false)
-        }
-        
-        if let allToolsView = allToolsView {
-            allToolsView.scrollToTopOfTools(animated: false)
-        }
-        
-        if toolsListsScrollView != nil {
-            navigateToToolsListForToolbarItem(toolbarItem: startingToolbarItem, animated: false)
-        }
-    }
-    
     @objc func handleMenu(barButtonItem: UIBarButtonItem) {
         viewModel.menuTapped()
     }

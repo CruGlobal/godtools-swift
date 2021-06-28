@@ -10,6 +10,7 @@ import Foundation
 
 enum ParsedDeepLinkType {
     
-    case tool(resourceAbbreviation: String, primaryLanguageCodes: [String], parallelLanguageCodes: [String], liveShareStream: String?, page: Int?)
     case article(articleURI: String)
+    case lessonsList
+    case tool(resourceAbbreviation: String, primaryLanguageCodes: [String], parallelLanguageCodes: [String], liveShareStream: String?, page: Int?)
 }

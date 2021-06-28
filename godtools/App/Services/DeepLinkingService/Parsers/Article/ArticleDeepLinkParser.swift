@@ -28,9 +28,13 @@ class ArticleDeepLinkParser: DeepLinkParserType {
         // Example url:
         //  https://godtoolsapp.com/article/aem?uri=https://www.cru.org/content/experience-fragments/shared-library/language-masters/en/how-to-know-god/what-is-christianity/does-god-answer-our-prayers-/godtools
         
-        let pathComponents: [String] = url.pathComponents.filter({$0 != "/"})
+        guard url.containsDeepLinkHost(deepLinkHost: .godToolsApp) else {
+            return nil
+        }
         
-        guard url.containsDeepLinkHost(deepLinkHost: .godToolsApp), pathComponents.count >= 2, pathComponents[0] == "article", pathComponents[1] == "aem"  else {
+        let pathComponents: [String] = getUrlPathComponents(url: url)
+        
+        guard pathComponents.count >= 2, pathComponents[0] == "article", pathComponents[1] == "aem"  else {
             return nil
         }
         
