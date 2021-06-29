@@ -10,13 +10,15 @@ import Foundation
 
 class LessonPageViewFactory: MobileContentPageViewFactoryType {
     
+    private let deepLinkService: DeepLinkingServiceType
     private let analytics: AnalyticsContainer
     
     private(set) weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, deepLinkService: DeepLinkingServiceType, analytics: AnalyticsContainer) {
     
         self.flowDelegate = flowDelegate
+        self.deepLinkService = deepLinkService
         self.analytics = analytics
     }
     
@@ -28,6 +30,7 @@ class LessonPageViewFactory: MobileContentPageViewFactoryType {
                 flowDelegate: getFlowDelegate(),
                 pageNode: pageNode,
                 pageModel: pageModel,
+                deepLinkService: deepLinkService,
                 analytics: analytics
             )
             

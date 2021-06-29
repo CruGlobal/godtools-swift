@@ -70,12 +70,6 @@ class AllToolsView: UIViewController {
         }
     }
     
-    func scrollToTopOfTools(animated: Bool) {
-        if toolsView != nil {
-            toolsView.scrollToTopOfTools(animated: animated)
-        }
-    }
-    
     private func setFavoritingToolMessageHidden(_ hidden: Bool, animated: Bool) {
                 
         favoritingToolMessageViewTop.constant = hidden ? (favoritingToolMessageView.frame.size.height * -1) : 0

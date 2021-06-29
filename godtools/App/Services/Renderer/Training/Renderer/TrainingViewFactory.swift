@@ -13,16 +13,18 @@ class TrainingViewFactory: MobileContentPageViewFactoryType {
     private let translationsFileCache: TranslationsFileCache
     private let mobileContentNodeParser: MobileContentXmlNodeParser
     private let viewedTrainingTipsService: ViewedTrainingTipsService
+    private let deepLinkService: DeepLinkingServiceType
     private let trainingTipsEnabled: Bool
     
     private(set) weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, viewedTrainingTipsService: ViewedTrainingTipsService, trainingTipsEnabled: Bool) {
+    required init(flowDelegate: FlowDelegate, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, viewedTrainingTipsService: ViewedTrainingTipsService, deepLinkService: DeepLinkingServiceType, trainingTipsEnabled: Bool) {
         
         self.flowDelegate = flowDelegate
         self.translationsFileCache = translationsFileCache
         self.mobileContentNodeParser = mobileContentNodeParser
         self.viewedTrainingTipsService = viewedTrainingTipsService
+        self.deepLinkService = deepLinkService
         self.trainingTipsEnabled = trainingTipsEnabled
     }
     
@@ -41,7 +43,8 @@ class TrainingViewFactory: MobileContentPageViewFactoryType {
             let viewModel = TrainingPageViewModel(
                 flowDelegate: getFlowDelegate(),
                 pageNode: pageNode,
-                pageModel: pageModel
+                pageModel: pageModel,
+                deepLinkService: deepLinkService
             )
             
             let view = TrainingPageView(viewModel: viewModel)

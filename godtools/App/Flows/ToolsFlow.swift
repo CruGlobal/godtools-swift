@@ -10,6 +10,8 @@ import UIKit
 
 class ToolsFlow: Flow {
     
+    private static let defaultStartingToolsMenu: ToolsMenuToolbarView.ToolbarItemView = .favoritedTools
+    
     private var articleToolFlow: ArticleToolFlow?
     private var shareToolMenuFlow: ShareToolMenuFlow?
     private var learnToShareToolFlow: LearnToShareToolFlow?
@@ -19,7 +21,7 @@ class ToolsFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController) {
+    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView?) {
         print("init: \(type(of: self))")
         
         self.flowDelegate = flowDelegate
@@ -39,19 +41,16 @@ class ToolsFlow: Flow {
             openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache
         )
         
-        let view = ToolsMenuView(viewModel: viewModel, startingToolbarItem: .favoritedTools)
+        let view = ToolsMenuView(
+            viewModel: viewModel,
+            startingToolbarItem: startingToolbarItem ?? ToolsFlow.defaultStartingToolsMenu
+        )
         
         navigationController.setViewControllers([view], animated: false)
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
-    }
-    
-    func resetToolsMenu() {
-        if let toolsMenu = navigationController.viewControllers.first as? ToolsMenuView {
-            toolsMenu.resetMenu()
-        }
     }
     
     func navigate(step: FlowStep) {
@@ -292,7 +291,8 @@ class ToolsFlow: Flow {
         let dataDownloader: InitialDataDownloader = appDiContainer.initialDataDownloader
         let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
         
-        let primaryTranslation: TranslationModel? = dataDownloader.resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageId: primaryLanguage.id)
+        let primaryTranslation: TranslationModel? = dataDownloader.resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageId: primaryLanguage.id) ?? dataDownloader.resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageCode: "en")
+        
         let parallelTranslation: TranslationModel?
         
         if let parallelLanguage = parallelLanguage {
@@ -351,6 +351,10 @@ class ToolsFlow: Flow {
                 trainingTipsEnabled: trainingTipsEnabled,
                 page: page
             )
+        }
+        else {
+            
+            navigationController.presentAlertMessage(alertMessage: AlertMessage(title: "Internal Error", message: "Failed to fetch primary translation for primary language \(primaryLanguage.name)"))
         }
     }
     
@@ -536,6 +540,7 @@ class ToolsFlow: Flow {
         let localizationServices: LocalizationServices = appDiContainer.localizationServices
         let followUpsService: FollowUpsService = appDiContainer.followUpsService
         let cardJumpService: CardJumpService = appDiContainer.getCardJumpService()
+        let deepLinkService: DeepLinkingServiceType = appDiContainer.deepLinkingService
         
         let toolPageViewFactory = ToolPageViewFactory(
             flowDelegate: self,
@@ -548,6 +553,7 @@ class ToolsFlow: Flow {
             translationsFileCache: translationsFileCache,
             mobileContentNodeParser: mobileContentNodeParser,
             viewedTrainingTipsService: viewedTrainingTipsService,
+            deepLinkService: deepLinkService,
             trainingTipsEnabled: trainingTipsEnabled
         )
         
@@ -556,6 +562,7 @@ class ToolsFlow: Flow {
             translationsFileCache: translationsFileCache,
             mobileContentNodeParser: mobileContentNodeParser,
             viewedTrainingTipsService: viewedTrainingTipsService,
+            deepLinkService: deepLinkService,
             trainingTipsEnabled: trainingTipsEnabled
         )
         
@@ -627,12 +634,14 @@ class ToolsFlow: Flow {
         let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
         let mobileContentNodeParser: MobileContentXmlNodeParser = appDiContainer.getMobileContentNodeParser()
         let viewedTrainingTipsService: ViewedTrainingTipsService = appDiContainer.getViewedTrainingTipsService()
+        let deepLinkService: DeepLinkingServiceType = appDiContainer.deepLinkingService
         
         let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
             flowDelegate: self,
             translationsFileCache: translationsFileCache,
             mobileContentNodeParser: mobileContentNodeParser,
             viewedTrainingTipsService: viewedTrainingTipsService,
+            deepLinkService: deepLinkService,
             trainingTipsEnabled: false
         )
         
@@ -676,9 +685,11 @@ class ToolsFlow: Flow {
         let localizationServices: LocalizationServices = appDiContainer.localizationServices
         let followUpsService: FollowUpsService = appDiContainer.followUpsService
         let cardJumpService: CardJumpService = appDiContainer.getCardJumpService()
+        let deepLinkService: DeepLinkingServiceType = appDiContainer.deepLinkingService
         
         let lessonPageViewFactory = LessonPageViewFactory(
             flowDelegate: self,
+            deepLinkService: deepLinkService,
             analytics: analytics
         )
         
@@ -693,6 +704,7 @@ class ToolsFlow: Flow {
             translationsFileCache: translationsFileCache,
             mobileContentNodeParser: mobileContentNodeParser,
             viewedTrainingTipsService: viewedTrainingTipsService,
+            deepLinkService: deepLinkService,
             trainingTipsEnabled: trainingTipsEnabled
         )
         
@@ -701,6 +713,7 @@ class ToolsFlow: Flow {
             translationsFileCache: translationsFileCache,
             mobileContentNodeParser: mobileContentNodeParser,
             viewedTrainingTipsService: viewedTrainingTipsService,
+            deepLinkService: deepLinkService,
             trainingTipsEnabled: trainingTipsEnabled
         )
         
