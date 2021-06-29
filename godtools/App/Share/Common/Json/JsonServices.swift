@@ -224,6 +224,30 @@ struct JsonServices: JsonServicesType {
         }
     }
     
+    func decodeJsonObject<T>(jsonObject: [String: Any], options: JSONSerialization.WritingOptions = []) -> T? where T : Decodable {
+          
+        let result: Result<T?, Error> = decodeJsonObject(jsonObject: jsonObject, options: options)
+        
+        switch result {
+        case .success(let object):
+            return object
+        case .failure(let error):
+            assertionFailure(error.localizedDescription)
+            return nil
+        }
+    }
+    
+    func decodeJsonObject<T>(jsonObject: [String: Any], options: JSONSerialization.WritingOptions = []) -> Result<T?, Error> where T : Decodable {
+                
+        do {
+            let jsonData: Data = try JSONSerialization.data(withJSONObject: jsonObject, options: options)
+            return decodeObject(data: jsonData)
+        }
+        catch let error {
+            return .failure(error)
+        }
+    }
+    
     // MARK: - Encoding
     
     func encode<T>(object: T, options: JSONSerialization.ReadingOptions = []) -> [String : Any] where T : Encodable {

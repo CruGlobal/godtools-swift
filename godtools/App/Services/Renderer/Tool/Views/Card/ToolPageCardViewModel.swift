@@ -51,7 +51,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
             let isLastCard: Bool = cardPosition >= numberOfCards - 1
             hidesCardPositionLabel = false
             hidesPreviousButton = false
-            hidesNextButton = (pageModel.isLastPage || isLastCard) ? true : false
+            hidesNextButton = isLastCard ? true : false
         }
         
         if let analyticsEventsNode = cardNode.analyticsEventsNode {

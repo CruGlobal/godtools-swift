@@ -10,20 +10,19 @@ import Foundation
 
 class DeepLinkingService: NSObject, DeepLinkingServiceType {
     
-    private let deepLinkingParsers: DeepLinkParsersContainer = DeepLinkParsersContainer()
+    private let deepLinkParsers: [DeepLinkParserType]
     private let loggingEnabled: Bool
         
     let completed: ObservableValue<ParsedDeepLinkType?> = ObservableValue(value: nil)
     
-    required init(loggingEnabled: Bool) {
+    required init(deepLinkParsers: [DeepLinkParserType], loggingEnabled: Bool) {
         
+        self.deepLinkParsers = deepLinkParsers
         self.loggingEnabled = loggingEnabled
         
         super.init()
     }
-    
-    //MARK: - Public
-    
+        
     func parseDeepLink(incomingDeepLink: IncomingDeepLinkType) -> Bool {
         
         if loggingEnabled {
@@ -31,7 +30,7 @@ class DeepLinkingService: NSObject, DeepLinkingServiceType {
             print("  incomingDeepLink: \(incomingDeepLink)")
         }
                 
-        for deepLinkParser in deepLinkingParsers.parsers {
+        for deepLinkParser in deepLinkParsers {
             if let deepLink = deepLinkParser.parse(incomingDeepLink: incomingDeepLink) {
                 completed.accept(value: deepLink)
                 return true

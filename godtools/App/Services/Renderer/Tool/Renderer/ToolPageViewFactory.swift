@@ -19,11 +19,12 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
     private let translationsFileCache: TranslationsFileCache
     private let mobileContentNodeParser: MobileContentXmlNodeParser
     private let viewedTrainingTipsService: ViewedTrainingTipsService
+    private let deepLinkService: DeepLinkingServiceType
     private let trainingTipsEnabled: Bool
     
     private(set) weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, followUpService: FollowUpsService, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, viewedTrainingTipsService: ViewedTrainingTipsService, trainingTipsEnabled: Bool) {
+    required init(flowDelegate: FlowDelegate, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, followUpService: FollowUpsService, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, viewedTrainingTipsService: ViewedTrainingTipsService, deepLinkService: DeepLinkingServiceType, trainingTipsEnabled: Bool) {
         
         self.flowDelegate = flowDelegate
         self.analytics = analytics
@@ -35,6 +36,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
         self.translationsFileCache = translationsFileCache
         self.mobileContentNodeParser = mobileContentNodeParser
         self.viewedTrainingTipsService = viewedTrainingTipsService
+        self.deepLinkService = deepLinkService
         self.trainingTipsEnabled = trainingTipsEnabled
     }
     
@@ -149,6 +151,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
                 flowDelegate: getFlowDelegate(),
                 pageNode: pageNode,
                 pageModel: pageModel,
+                deepLinkService: deepLinkService,
                 analytics: analytics
             )
             

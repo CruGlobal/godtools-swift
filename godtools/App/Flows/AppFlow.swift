@@ -11,6 +11,7 @@ import MessageUI
 
 class AppFlow: NSObject, Flow {
     
+    private let window: UIWindow
     private let dataDownloader: InitialDataDownloader
     private let followUpsService: FollowUpsService
     private let viewsService: ViewsService
@@ -24,15 +25,18 @@ class AppFlow: NSObject, Flow {
     private var articleDeepLinkFlow: ArticleDeepLinkFlow?
     private var resignedActiveDate: Date?
     private var navigationStarted: Bool = false
+    private var observersAdded: Bool = false
+    private var appIsInBackground: Bool = false
     private var isObservingDeepLinking: Bool = false
     
     let appDiContainer: AppDiContainer
     let rootController: AppRootController = AppRootController(nibName: nil, bundle: nil)
     let navigationController: UINavigationController
         
-    init(appDiContainer: AppDiContainer) {
+    init(appDiContainer: AppDiContainer, window: UIWindow) {
         
         self.appDiContainer = appDiContainer
+        self.window = window
         self.navigationController = UINavigationController()
         self.dataDownloader = appDiContainer.initialDataDownloader
         self.followUpsService = appDiContainer.followUpsService
@@ -49,40 +53,54 @@ class AppFlow: NSObject, Flow {
         navigationController.setViewControllers([], animated: false)
         
         rootController.addChildController(child: navigationController)
+        
+        addObservers()
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+        removeObservers()
         removeDeepLinkingObservers()
     }
     
-    private func resetFlowToToolsFlow(animated: Bool) {
+    private func addObservers() {
+              
+        guard !observersAdded else {
+            return
+        }
+        observersAdded = true
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleNotification(notification:)), name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleNotification(notification:)), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleNotification(notification:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
+    }
+    
+    private func removeObservers() {
+        
+        guard observersAdded else {
+            return
+        }
+        observersAdded = false
+        
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
+    }
+    
+    private func resetFlowToToolsFlow(startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView?) {
         configureNavigationBar()
-        toolsFlow?.navigationController.popToRootViewController(animated: animated)
-        toolsFlow?.resetToolsMenu()
-        navigationController.popToRootViewController(animated: animated)
-        closeMenu(animated: animated)
-        navigationController.dismiss(animated: animated, completion: nil)
+        closeMenu(animated: false)
+        navigationController.dismiss(animated: false, completion: nil)
+        navigationController.setViewControllers([], animated: false)
+        
+        toolsFlow = nil
+        onboardingFlow = nil
         menuFlow = nil
         languageSettingsFlow = nil
         articleDeepLinkFlow = nil
         tutorialFlow = nil
         
-        if toolsFlow == nil {
-            navigate(step: .showTools(animated: animated, shouldCreateNewInstance: true))
-        }
-    }
-    
-    private func setupInitialNavigation() {
-        
-        if appDiContainer.onboardingTutorialAvailability.onboardingTutorialIsAvailable {
-            navigate(step: .showOnboardingTutorial(animated: false))
-        }
-        else {
-            navigate(step: .showTools(animated: true, shouldCreateNewInstance: true))
-        }
-        
-        addDeepLinkingObservers()
+        navigate(step: .showTools(animated: false, shouldCreateNewInstance: true, startingToolbarItem: startingToolbarItem))
     }
     
     private func loadInitialData() {
@@ -103,67 +121,10 @@ class AppFlow: NSObject, Flow {
         isObservingDeepLinking = true
         
         deepLinkingService.completed.addObserver(self) { [weak self] (optionalDeepLink: ParsedDeepLinkType?) in
-            
             guard let deepLink = optionalDeepLink else {
                 return
             }
-            
-            DispatchQueue.main.async { [weak self] in
-                
-                switch deepLink {
-                
-                case .tool(let resourceAbbreviation, let primaryLanguageCodes, let parallelLanguageCodes, let liveShareStream, let page):
-                    
-                    guard let dataDownloader = self?.dataDownloader,
-                          let resource = dataDownloader.resourcesCache.getResource(abbreviation: resourceAbbreviation) else {
-                        
-                        return
-                    }
-                    
-                    var fetchedPrimaryLanguage: LanguageModel?
-                    
-                    if let primaryLanguageFromCodes = dataDownloader.fetchFirstSupportedLanguageForResource(resource: resource, codes: primaryLanguageCodes) {
-                        fetchedPrimaryLanguage = primaryLanguageFromCodes
-                    } else if let primaryLanguageFromSettings = self?.appDiContainer.languageSettingsService.primaryLanguage.value {
-                        fetchedPrimaryLanguage = primaryLanguageFromSettings
-                    } else {
-                        fetchedPrimaryLanguage = dataDownloader.getStoredLanguage(code: "en")
-                    }
-                    
-                    guard let primaryLanguage = fetchedPrimaryLanguage else { return }
-                    
-                    let parallelLanguage = dataDownloader.fetchFirstSupportedLanguageForResource(resource: resource, codes: parallelLanguageCodes)
-                    
-                    DispatchQueue.main.async { [weak self] in
-                        
-                        self?.resetFlowToToolsFlow(animated: false)
-                        
-                        self?.toolsFlow?.navigateToTool(
-                            resource: resource,
-                            primaryLanguage: primaryLanguage,
-                            parallelLanguage: parallelLanguage,
-                            liveShareStream: liveShareStream,
-                            trainingTipsEnabled: false,
-                            page: page
-                        )
-                    }
-                
-                case .article(let articleUri):
-                    
-                    guard let appFlow = self else {
-                        return
-                    }
-                    
-                    let articleDeepLinkFlow = ArticleDeepLinkFlow(
-                        flowDelegate: appFlow,
-                        appDiContainer: appFlow.appDiContainer,
-                        sharedNavigationController: appFlow.navigationController,
-                        aemUri: articleUri
-                    )
-                    
-                    appFlow.articleDeepLinkFlow = articleDeepLinkFlow
-                }
-            }
+            self?.navigate(step: .deepLink(deepLinkType: deepLink))
         }
     }
     
@@ -177,7 +138,125 @@ class AppFlow: NSObject, Flow {
 
         switch step {
         
-        case .showTools(let animated, let shouldCreateNewInstance):
+        case .appLaunchedFromTerminatedState:
+           
+            if appDiContainer.onboardingTutorialAvailability.onboardingTutorialIsAvailable {
+                
+                navigate(step: .showOnboardingTutorial(animated: false))
+            }
+            else {
+                
+                navigate(step: .showTools(animated: true, shouldCreateNewInstance: true, startingToolbarItem: nil))
+            }
+            
+            loadInitialData()
+            
+            addDeepLinkingObservers()
+            
+        case .appLaunchedFromBackgroundState:
+            
+            if let resignedActiveDate = resignedActiveDate {
+                
+                let currentDate: Date = Date()
+                let elapsedTimeInSeconds: TimeInterval = currentDate.timeIntervalSince(resignedActiveDate)
+                let elapsedTimeInMinutes: TimeInterval = elapsedTimeInSeconds / 60
+                
+                if elapsedTimeInMinutes >= 120 {
+
+                    let loadingView: UIView = UIView(frame: UIScreen.main.bounds)
+                    let loadingImage: UIImageView = UIImageView(frame: UIScreen.main.bounds)
+                    loadingImage.contentMode = .scaleAspectFit
+                    loadingView.addSubview(loadingImage)
+                    loadingImage.image = UIImage(named: "LaunchImage")
+                    loadingView.backgroundColor = .white
+                    window.addSubview(loadingView)
+                    
+                    resetFlowToToolsFlow(startingToolbarItem: nil)
+                    loadInitialData()
+                    
+                    UIView.animate(withDuration: 0.4, delay: 1.5, options: .curveEaseOut, animations: {
+                        loadingView.alpha = 0
+                    }, completion: {(finished: Bool) in
+                        loadingView.removeFromSuperview()
+                    })
+                }
+            }
+            
+            resignedActiveDate = nil
+            
+        case .deepLink(let deepLink):
+            
+            switch deepLink {
+            
+            case .tool(let resourceAbbreviation, let primaryLanguageCodes, let parallelLanguageCodes, let liveShareStream, let page):
+                
+                guard let resource = dataDownloader.resourcesCache.getResource(abbreviation: resourceAbbreviation) else {
+                    return
+                }
+                
+                var fetchedPrimaryLanguage: LanguageModel?
+                
+                if let primaryLanguageFromCodes = dataDownloader.fetchFirstSupportedLanguageForResource(resource: resource, codes: primaryLanguageCodes) {
+                    fetchedPrimaryLanguage = primaryLanguageFromCodes
+                } else if let primaryLanguageFromSettings = appDiContainer.languageSettingsService.primaryLanguage.value {
+                    fetchedPrimaryLanguage = primaryLanguageFromSettings
+                } else {
+                    fetchedPrimaryLanguage = dataDownloader.getStoredLanguage(code: "en")
+                }
+                
+                guard let primaryLanguage = fetchedPrimaryLanguage else {
+                    return
+                }
+                
+                let parallelLanguage = dataDownloader.fetchFirstSupportedLanguageForResource(resource: resource, codes: parallelLanguageCodes)
+                
+                let startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView?
+                
+                if resource.resourceTypeEnum == .lesson {
+                    startingToolbarItem = .lessons
+                }
+                else {
+                    startingToolbarItem = nil
+                }
+                
+                resetFlowToToolsFlow(startingToolbarItem: startingToolbarItem)
+                
+                toolsFlow?.navigateToTool(
+                    resource: resource,
+                    primaryLanguage: primaryLanguage,
+                    parallelLanguage: parallelLanguage,
+                    liveShareStream: liveShareStream,
+                    trainingTipsEnabled: false,
+                    page: page
+                )
+            
+            case .article(let articleUri):
+                
+                resetFlowToToolsFlow(startingToolbarItem: nil)
+                
+                let articleDeepLinkFlow = ArticleDeepLinkFlow(
+                    flowDelegate: self,
+                    appDiContainer: appDiContainer,
+                    sharedNavigationController: navigationController,
+                    aemUri: articleUri
+                )
+                
+                self.articleDeepLinkFlow = articleDeepLinkFlow
+            
+            case .lessonsList:
+                
+                resetFlowToToolsFlow(startingToolbarItem: .lessons)
+                
+            case .favoritedToolsList:
+                
+                resetFlowToToolsFlow(startingToolbarItem: .favoritedTools)
+                
+            case .allToolsList:
+                
+                resetFlowToToolsFlow(startingToolbarItem: .allTools)
+            }
+        
+        case .showTools(let animated, let shouldCreateNewInstance, let startingToolbarItem):
             
             navigationController.setNavigationBarHidden(false, animated: false)
 
@@ -188,7 +267,8 @@ class AppFlow: NSObject, Flow {
                 let toolsFlow: ToolsFlow = ToolsFlow(
                     flowDelegate: self,
                     appDiContainer: appDiContainer,
-                    sharedNavigationController: navigationController
+                    sharedNavigationController: navigationController,
+                    startingToolbarItem: startingToolbarItem
                 )
 
                 self.toolsFlow = toolsFlow
@@ -214,7 +294,7 @@ class AppFlow: NSObject, Flow {
             
         case .dismissOnboardingTutorial:
             
-            navigate(step: .showTools(animated: false, shouldCreateNewInstance: false))
+            navigate(step: .showTools(animated: false, shouldCreateNewInstance: false, startingToolbarItem: nil))
             navigationController.dismiss(animated: true, completion: nil)
             onboardingFlow = nil
                             
@@ -302,7 +382,7 @@ class AppFlow: NSObject, Flow {
     
     private func dismissTutorial() {
         closeMenu(animated: true)
-        navigate(step: .showTools(animated: false, shouldCreateNewInstance: false))
+        navigate(step: .showTools(animated: false, shouldCreateNewInstance: false, startingToolbarItem: nil))
         navigationController.dismiss(animated: true, completion: nil)
         tutorialFlow = nil
     }
@@ -387,53 +467,29 @@ class AppFlow: NSObject, Flow {
     }
 }
 
-extension AppFlow: UIApplicationDelegate {
-    
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        
-        if navigationStarted, let resignedActiveDate = resignedActiveDate {
-            
-            let currentDate: Date = Date()
-            let elapsedTimeInSeconds: TimeInterval = currentDate.timeIntervalSince(resignedActiveDate)
-            let elapsedTimeInMinutes: TimeInterval = elapsedTimeInSeconds / 60
-            
-            if elapsedTimeInMinutes >= 120 {
+// MARK: - Notifications
 
-                let loadingView: UIView = UIView(frame: UIScreen.main.bounds)
-                let loadingImage: UIImageView = UIImageView(frame: UIScreen.main.bounds)
-                loadingView.addSubview(loadingImage)
-                loadingImage.image = UIImage(named: "LaunchImage")
-                loadingView.backgroundColor = .white
-                application.keyWindow?.addSubview(loadingView)
-                
-                resetFlowToToolsFlow(animated: false)
-                loadInitialData()
-                
-                UIView.animate(withDuration: 0.4, delay: 1.5, options: .curveEaseOut, animations: {
-                    loadingView.alpha = 0
-                }, completion: {(finished: Bool) in
-                    loadingView.removeFromSuperview()
-                })
+extension AppFlow {
+    
+    @objc private func handleNotification(notification: Notification) {
+        
+        if notification.name == UIApplication.willResignActiveNotification {
+            
+            resignedActiveDate = Date()
+        }
+        else if notification.name == UIApplication.didBecomeActiveNotification {
+            
+            if !navigationStarted {
+                navigationStarted = true
+                navigate(step: .appLaunchedFromTerminatedState)
+            }
+            else if appIsInBackground {
+                appIsInBackground = false
+                navigate(step: .appLaunchedFromBackgroundState)
             }
         }
-        
-        resignedActiveDate = nil
-    }
-    
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        
-        if !navigationStarted {
-            
-            navigationStarted = true
-            setupInitialNavigation()
-            loadInitialData()
+        else if notification.name == UIApplication.didEnterBackgroundNotification {
+            appIsInBackground = true
         }
-    }
-    
-    func applicationWillResignActive(_ application: UIApplication) {
-                
-        resignedActiveDate = Date()
-        
-        appDiContainer.shortcutItemsService.reloadShortcutItems(application: application)
     }
 }

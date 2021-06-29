@@ -11,7 +11,10 @@ import Foundation
 enum FlowStep {
     
     // app
-    case showTools(animated: Bool, shouldCreateNewInstance: Bool)
+    case appLaunchedFromTerminatedState
+    case appLaunchedFromBackgroundState
+    case deepLink(deepLinkType: ParsedDeepLinkType)
+    case showTools(animated: Bool, shouldCreateNewInstance: Bool, startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView?)
     case showMenu
     case showLanguageSettings
     case showOnboardingTutorial(animated: Bool)
