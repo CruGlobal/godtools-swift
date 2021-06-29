@@ -33,7 +33,7 @@ class LessonsDeepLinkParser: DeepLinkParserType {
     
     private func parseDeepLinkFromUrl(incomingUrl: IncomingDeepLinkUrl) -> ParsedDeepLinkType? {
                 
-        guard let rootPath = incomingUrl.rootPath, rootPath == "lessons" else {
+        guard let rootPath = incomingUrl.rootPath, rootPath == DeepLinkPathType.lessons.rawValue else {
             return nil
         }
         

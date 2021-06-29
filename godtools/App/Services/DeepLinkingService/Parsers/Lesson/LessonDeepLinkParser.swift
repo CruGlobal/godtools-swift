@@ -35,7 +35,7 @@ class LessonDeepLinkParser: DeepLinkParserType {
         
         let pathComponents: [String] = incomingUrl.pathComponents
         
-        guard let rootPath = pathComponents.first, rootPath == "lesson" else {
+        guard let rootPath = pathComponents.first, rootPath == DeepLinkPathType.lessons.rawValue else {
             return nil
         }
         

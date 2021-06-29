@@ -30,10 +30,14 @@ class ToolsDeepLinkParser: DeepLinkParserType {
         
         let rootPath: String? = incomingUrl.rootPath
         
-        if rootPath == "favorited_tools" {
+        if rootPath == DeepLinkPathType.favoritedTools.rawValue {
             return .favoritedToolsList
         }
-        else if rootPath == "all_tools" {
+        else if rootPath == DeepLinkPathType.allTools.rawValue {
+            return .allToolsList
+        }
+        
+        if incomingUrl.url.containsDeepLinkHost(deepLinkHost: .knowGod) && incomingUrl.rootPath == nil {
             return .allToolsList
         }
         

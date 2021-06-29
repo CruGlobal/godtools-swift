@@ -114,7 +114,7 @@ class ToolDeepLinkParser: DeepLinkParserType {
         let pathComponents: [String] = incomingUrl.pathComponents
         let toolQuery: ToolQueryParameters? = JsonServices().decodeJsonObject(jsonObject: incomingUrl.queryParameters)
         
-        guard let rootPath = pathComponents.first, rootPath == "tract" else {
+        guard let rootPath = pathComponents.first, rootPath == DeepLinkPathType.tract.rawValue else {
             return nil
         }
         

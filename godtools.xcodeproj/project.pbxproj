@@ -20,6 +20,7 @@
 		4511A9EE2607C51500686E43 /* ToolPageCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4511A9E82607C51500686E43 /* ToolPageCardView.swift */; };
 		4511A9EF2607C51500686E43 /* ToolPageCardAnalyticsScreenName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4511A9EA2607C51500686E43 /* ToolPageCardAnalyticsScreenName.swift */; };
 		4511A9F02607C51500686E43 /* ToolPageCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4511A9EB2607C51500686E43 /* ToolPageCardView.xib */; };
+		45163635268B7F950010876B /* DeepLinkPathType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45163634268B7F950010876B /* DeepLinkPathType.swift */; };
 		451EBE2724AD968B00C4D6DD /* languages.json in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE0D24AD968A00C4D6DD /* languages.json */; };
 		451EBE2824AD968B00C4D6DD /* resources.json in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE0E24AD968A00C4D6DD /* resources.json */; };
 		451EBE2924AD968B00C4D6DD /* bae08d104b5ad1e9d7f97a25a88800adbce94cf36c508deaf3a2067f45919a36.png in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE1024AD968A00C4D6DD /* bae08d104b5ad1e9d7f97a25a88800adbce94cf36c508deaf3a2067f45919a36.png */; };
@@ -953,6 +954,7 @@
 		4511A9E82607C51500686E43 /* ToolPageCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageCardView.swift; sourceTree = "<group>"; };
 		4511A9EA2607C51500686E43 /* ToolPageCardAnalyticsScreenName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPageCardAnalyticsScreenName.swift; sourceTree = "<group>"; };
 		4511A9EB2607C51500686E43 /* ToolPageCardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToolPageCardView.xib; sourceTree = "<group>"; };
+		45163634268B7F950010876B /* DeepLinkPathType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkPathType.swift; sourceTree = "<group>"; };
 		451EBE0D24AD968A00C4D6DD /* languages.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = languages.json; sourceTree = "<group>"; };
 		451EBE0E24AD968A00C4D6DD /* resources.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = resources.json; sourceTree = "<group>"; };
 		451EBE1024AD968A00C4D6DD /* bae08d104b5ad1e9d7f97a25a88800adbce94cf36c508deaf3a2067f45919a36.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bae08d104b5ad1e9d7f97a25a88800adbce94cf36c508deaf3a2067f45919a36.png; sourceTree = "<group>"; };
@@ -2631,6 +2633,7 @@
 			isa = PBXGroup;
 			children = (
 				456E504925D0CF7E0075FF6A /* DeepLinkParserType.swift */,
+				45163634268B7F950010876B /* DeepLinkPathType.swift */,
 				456E504A25D0CF7E0075FF6A /* ParsedDeepLinkType.swift */,
 				45585BCB2687BB8F00A21D12 /* Article */,
 				45585BCD2687BB8F00A21D12 /* Lesson */,
@@ -6042,6 +6045,7 @@
 				45AD1BB625938A4F00A096A0 /* LanguageViewModel.swift in Sources */,
 				455FF74C2603DDD30028B95B /* ToolPageViewModel.swift in Sources */,
 				45AD1B4025938A4F00A096A0 /* MenuItem.swift in Sources */,
+				45163635268B7F950010876B /* DeepLinkPathType.swift in Sources */,
 				45AD1F9D25938A9800A096A0 /* ResourcesCache.swift in Sources */,
 				D1FF263825BA0C0E00C825DB /* FirebaseInAppMessagingType.swift in Sources */,
 				45AD1AEB25938A4E00A096A0 /* WebContentViewModelType.swift in Sources */,
