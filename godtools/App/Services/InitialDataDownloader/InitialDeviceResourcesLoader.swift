@@ -265,7 +265,8 @@ class InitialDeviceResourcesLoader {
     func choosePrimaryLanguageIfNeeded(realm: Realm) {
                 
         let cachedPrimaryLanguageId: String = languageSettingsCache.primaryLanguageId.value ?? ""
-        let primaryLanguageIsCached: Bool = !cachedPrimaryLanguageId.isEmpty
+        let cachedLanguage: RealmLanguage? = languagesCache.getLanguage(realm: realm, id: cachedPrimaryLanguageId)
+        let primaryLanguageIsCached: Bool = cachedLanguage != nil
         
         if primaryLanguageIsCached {
             return

@@ -117,8 +117,7 @@ class InitialDataDownloader: NSObject {
                         
                         self?.downloadLatestTranslations(realm: realm)
                         
-                        // TODO: Will need to implement clean up of resources. ~Levi
-                        //self?.resourcesCleanUp.bulkDeleteResourcesIfNeeded(realm: realm, cacheResult: resourcesCacheResult)
+                        self?.resourcesCleanUp.bulkDeleteResourcesIfNeeded(realm: realm, cacheResult: resourcesCacheResult)
                         
                     case .failure(let cacheError):
                         self?.handleDownloadInitialDataCompleted(error: .failedToCacheResources(error: cacheError))
