@@ -111,6 +111,8 @@ class InitialDataDownloader: NSObject {
                         
                         self?.initialDeviceResourcesLoader.choosePrimaryLanguageIfNeeded(realm: realm)
                         
+                        self?.initialDeviceResourcesLoader.chooseParallelLanguageIfNeeded(realm: realm)
+                        
                         self?.handleDownloadInitialDataCompleted(error: nil)
                         
                         self?.downloadLatestAttachments(resourcesCacheResult: resourcesCacheResult)
