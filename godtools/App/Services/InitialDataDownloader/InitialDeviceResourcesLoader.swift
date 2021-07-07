@@ -265,8 +265,8 @@ class InitialDeviceResourcesLoader {
     func choosePrimaryLanguageIfNeeded(realm: Realm) {
                 
         let cachedPrimaryLanguageId: String = languageSettingsCache.primaryLanguageId.value ?? ""
-        let cachedLanguage: RealmLanguage? = languagesCache.getLanguage(realm: realm, id: cachedPrimaryLanguageId)
-        let primaryLanguageIsCached: Bool = cachedLanguage != nil
+        let cachedPrimaryLanguage: RealmLanguage? = languagesCache.getLanguage(realm: realm, id: cachedPrimaryLanguageId)
+        let primaryLanguageIsCached: Bool = cachedPrimaryLanguage != nil
         
         if primaryLanguageIsCached {
             return
@@ -297,44 +297,6 @@ class InitialDeviceResourcesLoader {
         
         if let primaryLanguage = primaryLanguage {
             languageSettingsCache.cachePrimaryLanguageId(languageId: primaryLanguage.id)
-        }
-    }
-    
-    func chooseParallelLanguageIfNeeded(realm: Realm) {
-                
-        let cachedParallelLanguageId: String = languageSettingsCache.parallelLanguageId.value ?? ""
-        let cachedLanguage: RealmLanguage? = languagesCache.getLanguage(realm: realm, id: cachedParallelLanguageId)
-        let parallelLanguageIsCached: Bool = cachedLanguage != nil
-        
-        if parallelLanguageIsCached {
-            return
-        }
-                
-        let preferredDeviceLanguageCodes: [String] = deviceLanguage.possibleLocaleCodes(locale: Locale.current)
-        
-        var deviceLanguage: LanguageModel?
-        
-        for languageCode in preferredDeviceLanguageCodes {
-            if let cachedLanguage = languagesCache.getLanguage(realm: realm, code: languageCode) {
-                deviceLanguage = LanguageModel(model: cachedLanguage)
-                break
-            }
-        }
-        
-        let parallelLanguage: LanguageModel?
-        
-        if let deviceLanguage = deviceLanguage {
-            parallelLanguage = deviceLanguage
-        }
-        else if let cachedEnglishLanguage = languagesCache.getLanguage(realm: realm, code: "en") {
-            parallelLanguage = LanguageModel(model: cachedEnglishLanguage)
-        }
-        else {
-            parallelLanguage = nil
-        }
-        
-        if let parallelLanguage = parallelLanguage {
-            languageSettingsCache.cachePrimaryLanguageId(languageId: parallelLanguage.id)
         }
     }
 }

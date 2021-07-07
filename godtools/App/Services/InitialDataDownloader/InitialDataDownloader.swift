@@ -111,7 +111,7 @@ class InitialDataDownloader: NSObject {
                         
                         self?.initialDeviceResourcesLoader.choosePrimaryLanguageIfNeeded(realm: realm)
                         
-                        self?.initialDeviceResourcesLoader.chooseParallelLanguageIfNeeded(realm: realm)
+                        self?.checkForParallelLanguageDeletedAndClearFromSettings(realm: realm)
                         
                         self?.handleDownloadInitialDataCompleted(error: nil)
                         
@@ -152,6 +152,20 @@ class InitialDataDownloader: NSObject {
         let downloadTranslationsReceipts: DownloadResourceTranslationsReceipts = favoritedResourceTranslationDownloader.downloadAllDownloadedLanguagesTranslationsForAllFavoritedResources(realm: realm)
         
         latestTranslationsDownload.accept(value: downloadTranslationsReceipts)
+    }
+    
+    private func checkForParallelLanguageDeletedAndClearFromSettings(realm: Realm) {
+        
+        guard let settingsParallelLanguageId = languageSettingsCache.parallelLanguageId.value, !settingsParallelLanguageId.isEmpty else {
+            return
+        }
+        
+        let cachedParallelLanguage: RealmLanguage? = languagesCache.getLanguage(realm: realm, id: settingsParallelLanguageId)
+        let parallelLanguageRemoved: Bool = cachedParallelLanguage == nil
+        
+        if parallelLanguageRemoved {
+            languageSettingsCache.deleteParallelLanguageId()
+        }
     }
 }
 
