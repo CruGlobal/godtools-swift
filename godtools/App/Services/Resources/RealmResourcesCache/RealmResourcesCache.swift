@@ -190,6 +190,8 @@ class RealmResourcesCache {
                 realm.add(realmObjectsToCache, update: .all)
                 // TODO: Will need to implement clean up of deleted resources. ~Levi
                 //realm.delete(realmObjectsToRemove)
+                // TODO: Only deleting languages.  Will need to delete resources, attachments, translations and test. ~Levi
+                realm.delete(languagesToRemove)
             }
             
             let cacheResult = ResourcesCacheResult(
