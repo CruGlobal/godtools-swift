@@ -12,7 +12,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     
     private static let numberFormatter: NumberFormatter = NumberFormatter()
     
-    private let textNode: ContentTextNode
+    private let textModel: ContentTextModelType
     private let pageModel: MobileContentRendererPageModel
     private let containerNode: MobileContentContainerNode?
     private let fontService: FontService
@@ -22,9 +22,9 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
         
     let textColor: UIColor
     
-    required init(textNode: ContentTextNode, pageModel: MobileContentRendererPageModel, containerNode: MobileContentContainerNode?, fontService: FontService) {
+    required init(textModel: ContentTextModelType, pageModel: MobileContentRendererPageModel, containerNode: MobileContentContainerNode?, fontService: FontService) {
         
-        self.textNode = textNode
+        self.textModel = textModel
         self.pageModel = pageModel
         self.containerNode = containerNode
         self.fontService = fontService
@@ -37,12 +37,12 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
             containerTextColor = containerNode?.textColor?.color
         }
         
-        self.textColor = textNode.getTextColor()?.color ?? containerTextColor ?? pageModel.pageColors.textColor
+        self.textColor = textModel.getTextColor()?.color ?? containerTextColor ?? pageModel.pageColors.textColor
     }
     
     var startImage: UIImage? {
         
-        guard let resource = textNode.startImage, !resource.isEmpty else {
+        guard let resource = textModel.startImage, !resource.isEmpty else {
             return nil
         }
         
@@ -54,12 +54,12 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     }
     
     var startImageSize: CGSize {
-        let floatValue: CGFloat = CGFloat(Float(textNode.startImageSize) ?? defaultImagePointSize)
+        let floatValue: CGFloat = CGFloat(Float(textModel.startImageSize) ?? defaultImagePointSize)
         return CGSize(width: floatValue, height: floatValue)
     }
     
     var hidesStartImage: Bool {
-        guard let resource = textNode.startImage else {
+        guard let resource = textModel.startImage else {
             return true
         }
         return resource.isEmpty
@@ -74,12 +74,12 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     }
     
     var text: String? {
-        return textNode.text
+        return textModel.text
     }
     
     var textAlignment: NSTextAlignment {
                
-        let nodeTextAlignment: MobileContentTextAlign? = textNode.textAlignment ?? containerNode?.textAlignment
+        let nodeTextAlignment: MobileContentTextAlign? = textModel.textAlignment ?? containerNode?.textAlignment
         
         if let nodeTextAlignment = nodeTextAlignment {
             
@@ -98,7 +98,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     
     var endImage: UIImage? {
         
-        guard let resource = textNode.endImage, !resource.isEmpty else {
+        guard let resource = textModel.endImage, !resource.isEmpty else {
             return nil
         }
         
@@ -110,12 +110,12 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     }
     
     var endImageSize: CGSize {
-        let floatValue: CGFloat = CGFloat(Float(textNode.endImageSize) ?? defaultImagePointSize)
+        let floatValue: CGFloat = CGFloat(Float(textModel.endImageSize) ?? defaultImagePointSize)
         return CGSize(width: floatValue, height: floatValue)
     }
     
     var hidesEndImage: Bool {
-        guard let resource = textNode.endImage else {
+        guard let resource = textModel.endImage else {
             return true
         }
         return resource.isEmpty
@@ -125,7 +125,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
         
         let fontWeight: UIFont.Weight
         
-        if let textStyle = textNode.textStyle, !textStyle.isEmpty {
+        if let textStyle = textModel.textStyle, !textStyle.isEmpty {
             if textStyle == "bold" {
                 fontWeight = .bold
             }
@@ -152,7 +152,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
         
         let manifestTextScale = MobileContentTextScale(textScale: pageModel.manifest.attributes.textScale)
         let pageTextScale = MobileContentTextScale(textScale: pageModel.pageNode.textScale)
-        let textScale = MobileContentTextScale(textScale: textNode.textScale)
+        let textScale = MobileContentTextScale(textScale: textModel.textScale)
         
         fontScale = manifestTextScale.floatValue * pageTextScale.floatValue * textScale.floatValue
         

@@ -32,10 +32,10 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 scrollIsEnabled: false
             )
         }
-        else if let textNode = renderableNode as? ContentTextNode {
+        else if let textModel = renderableNode as? ContentTextModelType {
                           
             let viewModel = MobileContentTextViewModel(
-                textNode: textNode,
+                textModel: textModel,
                 pageModel: pageModel,
                 containerNode: containerNode,
                 fontService: fontService

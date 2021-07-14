@@ -49,17 +49,15 @@ class ContentTextNode: MobileContentXmlNode, ContentTextModelType {
         super.init(xmlElement: xmlElement)
     }
     
+    var textAlignment: MobileContentTextAlign? {
+        return MobileContentTextAlign(rawValue: textAlign ?? "")
+    }
+    
     func getTextColor() -> MobileContentRGBAColor? {
         if let stringColor = textColor {
             return MobileContentRGBAColor(stringColor: stringColor)
         }
         return nil
-    }
-}
-
-extension ContentTextNode {
-    var textAlignment: MobileContentTextAlign? {
-        return MobileContentTextAlign(rawValue: textAlign ?? "")
     }
 }
 

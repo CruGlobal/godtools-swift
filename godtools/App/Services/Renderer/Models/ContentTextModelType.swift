@@ -19,4 +19,7 @@ protocol ContentTextModelType {
     var textColor: String? { get }
     var textScale: String? { get }
     var textStyle: String? { get }
+    var textAlignment: MobileContentTextAlign? { get }
+    
+    func getTextColor() -> MobileContentRGBAColor?
 }
