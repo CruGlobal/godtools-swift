@@ -15,4 +15,8 @@ class AnalyticsEventsNode: MobileContentXmlNode {
     
         super.init(xmlElement: xmlElement)
     }
+    
+    var analyticsEventNodes: [AnalyticsEventNode] {
+        return children as? [AnalyticsEventNode] ?? []
+    }
 }

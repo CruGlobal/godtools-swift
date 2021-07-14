@@ -18,6 +18,8 @@ class MobileContentAnalyticsEvent: NSObject {
     
     private weak var mobileContentAnalytics: MobileContentAnalytics?
     
+    // TODO: Remove AnalyticsEventNode and AnalyticsEventsNode and replace with AnalyticsEventModelType. ~Levi
+    
     required init(eventNode: AnalyticsEventNode, mobileContentAnalytics: MobileContentAnalytics, page: MobileContentRendererPageModel) {
         
         self.eventNode = eventNode

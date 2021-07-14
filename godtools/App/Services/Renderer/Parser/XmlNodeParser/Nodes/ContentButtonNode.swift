@@ -8,10 +8,10 @@
 import Foundation
 import SWXMLHash
 
-class ContentButtonNode: MobileContentXmlNode {
+class ContentButtonNode: MobileContentXmlNode, ContentButtonModelType {
     
-    private(set) var textNode: ContentTextNode?
-    private(set) var analyticsEventsNode: AnalyticsEventsNode?
+    private var textNode: ContentTextNode?
+    private var analyticsEventsNode: AnalyticsEventsNode?
     
     let backgroundColor: String?
     let color: String?
@@ -57,6 +57,23 @@ class ContentButtonNode: MobileContentXmlNode {
         super.addChild(childNode: childNode)
     }
     
+    var buttonStyle: MobileContentButtonNodeStyle? {
+        return MobileContentButtonNodeStyle(rawValue: style ?? "")
+    }
+    
+    var buttonType: MobileContentButtonNodeType {
+    
+        guard let type = self.type else {
+            return .unknown
+        }
+        
+        return MobileContentButtonNodeType(rawValue: type) ?? .unknown
+    }
+    
+    var text: String? {
+        return textNode?.text
+    }
+    
     func getBackgroundColor() -> MobileContentRGBAColor? {
         if let stringColor = backgroundColor {
             return MobileContentRGBAColor(stringColor: stringColor)
@@ -70,21 +87,13 @@ class ContentButtonNode: MobileContentXmlNode {
         }
         return nil
     }
-}
-
-extension ContentButtonNode {
     
-    var buttonStyle: MobileContentButtonNodeStyle? {
-        return MobileContentButtonNodeStyle(rawValue: style ?? "")
+    func getTextColor() -> MobileContentRGBAColor? {
+        return textNode?.getTextColor()
     }
     
-    var buttonType: MobileContentButtonNodeType {
-    
-        guard let type = self.type else {
-            return .unknown
-        }
-        
-        return MobileContentButtonNodeType(rawValue: type) ?? .unknown
+    func getAnalyticsEvents() -> [AnalyticsEventModelType] {
+        return analyticsEventsNode?.analyticsEventNodes ?? []
     }
 }
 

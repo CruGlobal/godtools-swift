@@ -9,7 +9,7 @@
 import Foundation
 import SWXMLHash
 
-class AnalyticsEventNode: MobileContentXmlNode {
+class AnalyticsEventNode: MobileContentXmlNode, AnalyticsEventModelType {
         
     let action: String?
     let delay: String?
@@ -26,5 +26,14 @@ class AnalyticsEventNode: MobileContentXmlNode {
         trigger = attributes["trigger"]?.text
         
         super.init(xmlElement: xmlElement)
+    }
+    
+    var attribute: AnalyticsAttributeModel? {
+        
+        if let attributeNode = children.first as? AnalyticsAttributeNode {
+            return AnalyticsAttributeModel(key: attributeNode.key, value: attributeNode.value)
+        }
+        
+        return nil
     }
 }

@@ -9,7 +9,7 @@
 import Foundation
 import SWXMLHash
 
-class AnalyticsAttributeNode: MobileContentXmlNode {
+class AnalyticsAttributeNode: MobileContentXmlNode, AnalyticsAttributeModelType {
         
     let key: String?
     let value: String?
