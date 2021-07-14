@@ -9,7 +9,7 @@
 import Foundation
 import SWXMLHash
 
-class PageNode: MobileContentXmlNode, BackgroundImageNodeType {
+class PageNode: MobileContentXmlNode, PageModelType {
     
     private(set) var headerNode: HeaderNode?
     private(set) var heroNode: HeroNode?

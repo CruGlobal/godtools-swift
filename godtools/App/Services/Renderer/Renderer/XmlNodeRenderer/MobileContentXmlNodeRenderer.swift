@@ -1,15 +1,15 @@
 //
-//  MobileContentRenderer.swift
+//  MobileContentXmlNodeRenderer.swift
 //  godtools
 //
-//  Created by Levi Eggert on 1/24/21.
+//  Created by Levi Eggert on 7/14/21.
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
 import UIKit
 
-class MobileContentRenderer: MobileContentRendererType {
-      
+class MobileContentXmlNodeRenderer: MobileContentRendererType {
+    
     enum RendererType {
         case builtFromManifest
         case builtFromProvidedPageNodes

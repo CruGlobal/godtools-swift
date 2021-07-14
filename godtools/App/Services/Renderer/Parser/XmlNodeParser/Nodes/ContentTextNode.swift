@@ -9,7 +9,7 @@
 import Foundation
 import SWXMLHash
 
-class ContentTextNode: MobileContentXmlNode {
+class ContentTextNode: MobileContentXmlNode, ContentTextModelType {
     
     private static let defaultImagePointSize: String = "40"
     

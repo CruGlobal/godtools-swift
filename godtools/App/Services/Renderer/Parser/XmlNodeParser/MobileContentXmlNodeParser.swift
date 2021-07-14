@@ -9,7 +9,7 @@
 import Foundation
 import SWXMLHash
 
-protocol MobileContentXmlNodeParserDelegate: class {
+protocol MobileContentXmlNodeParserDelegate: AnyObject {
     
     func mobileContentXmlNodeParserDidParseNode(parser: MobileContentXmlNodeParser, node: MobileContentXmlNode)
 }
