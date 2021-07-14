@@ -9,15 +9,19 @@
 import Foundation
 import SWXMLHash
 
-class HeadingNode: MobileContentXmlNode {
+class HeadingNode: MobileContentXmlNode, HeadingModelType {
         
     required init(xmlElement: XMLElement) {
     
         super.init(xmlElement: xmlElement)
     }
     
-    var textNode: ContentTextNode? {
+    private var textNode: ContentTextNode? {
         return children.first as? ContentTextNode
+    }
+    
+    func getTextColor() -> MobileContentRGBAColor? {
+        return textNode?.getTextColor()
     }
 }
 

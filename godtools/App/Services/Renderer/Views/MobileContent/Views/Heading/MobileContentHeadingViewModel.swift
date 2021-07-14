@@ -10,12 +10,12 @@ import UIKit
 
 class MobileContentHeadingViewModel: MobileContentHeadingViewModelType {
     
-    private let headingNode: HeadingNode
+    private let headingModel: HeadingModelType
     private let pageModel: MobileContentRendererPageModel
     
-    required init(headingNode: HeadingNode, pageModel: MobileContentRendererPageModel) {
+    required init(headingModel: HeadingModelType, pageModel: MobileContentRendererPageModel) {
         
-        self.headingNode = headingNode
+        self.headingModel = headingModel
         self.pageModel = pageModel
     }
     
@@ -29,6 +29,6 @@ class MobileContentHeadingViewModel: MobileContentHeadingViewModelType {
     
     var textColor: UIColor {
         
-        return headingNode.textNode?.getTextColor()?.color ?? pageModel.pageColors.primaryColor
+        return headingModel.getTextColor()?.color ?? pageModel.pageColors.primaryColor
     }
 }

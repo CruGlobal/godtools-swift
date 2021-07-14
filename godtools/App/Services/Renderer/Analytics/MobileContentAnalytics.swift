@@ -69,6 +69,8 @@ class MobileContentAnalytics {
          }
     }
     
+    // TODO: Remove above two functions. ~Levi
+    
     func trackEvents(events: [AnalyticsEventModelType], page: MobileContentRendererPageModel) {
         
         for event in events {

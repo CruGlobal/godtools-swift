@@ -10,4 +10,5 @@ import Foundation
 
 protocol HeadingModelType {
     
+    func getTextColor() -> MobileContentRGBAColor?
 }
