@@ -9,10 +9,10 @@
 import Foundation
 import SWXMLHash
 
-class ContentLinkNode: MobileContentXmlNode {
+class ContentLinkNode: MobileContentXmlNode, ContentLinkModelType {
         
-    private(set) var textNode: ContentTextNode?
-    private(set) var analyticsEventsNode: AnalyticsEventsNode?
+    private var textNode: ContentTextNode?
+    private var analyticsEventsNode: AnalyticsEventsNode?
     
     let events: [String]
     
@@ -35,6 +35,18 @@ class ContentLinkNode: MobileContentXmlNode {
         }
         
         super.addChild(childNode: childNode)
+    }
+    
+    var text: String? {
+        return textNode?.text
+    }
+    
+    func getTextColor() -> MobileContentRGBAColor? {
+        return textNode?.getTextColor()
+    }
+    
+    func getAnalyticsEvents() -> [AnalyticsEventModelType] {
+        return analyticsEventsNode?.analyticsEventNodes ?? []
     }
 }
 

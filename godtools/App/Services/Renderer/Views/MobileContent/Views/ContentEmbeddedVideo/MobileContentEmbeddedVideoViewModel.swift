@@ -10,14 +10,16 @@ import Foundation
 
 class MobileContentEmbeddedVideoViewModel: MobileContentEmbeddedVideoViewModelType {
     
-    private let videoNode: ContentVideoNode    
+    private let videoModel: ContentVideoModelType
     
-    required init(videoNode: ContentVideoNode) {
-        self.videoNode = videoNode
+    required init(videoModel: ContentVideoModelType) {
+        
+        self.videoModel = videoModel
     }
     
     var videoId: String {
-        guard let id = videoNode.videoId else {
+        
+        guard let id = videoModel.videoId else {
             assertionFailure("videoId should not be nil")
             
             return ""
@@ -27,6 +29,7 @@ class MobileContentEmbeddedVideoViewModel: MobileContentEmbeddedVideoViewModelTy
     }
     
     var youtubePlayerParameters: [String : Any] {
+        
         let playsInFullScreen = 0
         
         return [

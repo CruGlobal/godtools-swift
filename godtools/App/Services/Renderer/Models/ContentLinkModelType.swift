@@ -10,4 +10,9 @@ import Foundation
 
 protocol ContentLinkModelType {
     
+    var events: [String] { get }
+    var text: String? { get }
+    
+    func getTextColor() -> MobileContentRGBAColor?
+    func getAnalyticsEvents() -> [AnalyticsEventModelType]
 }

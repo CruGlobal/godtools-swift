@@ -10,12 +10,12 @@ import UIKit
 
 class MobileContentNumberViewModel: MobileContentNumberViewModelType {
     
-    private let numberNode: NumberNode
+    private let numberModel: NumberModelType
     private let pageModel: MobileContentRendererPageModel
     
-    required init(numberNode: NumberNode, pageModel: MobileContentRendererPageModel) {
+    required init(numberModel: NumberModelType, pageModel: MobileContentRendererPageModel) {
         
-        self.numberNode = numberNode
+        self.numberModel = numberModel
         self.pageModel = pageModel
     }
     

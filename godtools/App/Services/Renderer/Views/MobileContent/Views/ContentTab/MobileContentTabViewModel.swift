@@ -10,28 +10,26 @@ import Foundation
 
 class MobileContentTabViewModel: MobileContentTabViewModelType {
     
-    private let tabNode: ContentTabNode
+    private let tabModel: ContentTabModelType
     private let pageModel: MobileContentRendererPageModel
     private let mobileContentAnalytics: MobileContentAnalytics
     
-    required init(tabNode: ContentTabNode, pageModel: MobileContentRendererPageModel, mobileContentAnalytics: MobileContentAnalytics) {
+    required init(tabModel: ContentTabModelType, pageModel: MobileContentRendererPageModel, mobileContentAnalytics: MobileContentAnalytics) {
         
-        self.tabNode = tabNode
+        self.tabModel = tabModel
         self.pageModel = pageModel
         self.mobileContentAnalytics = mobileContentAnalytics
     }
     
     var labelText: String? {
-        return tabNode.contentLabelNode?.textNode?.text
+        return tabModel.text
     }
     
     var tabListeners: [String] {
-        return tabNode.listeners
+        return tabModel.listeners
     }
     
     func tabTapped() {
-        if let analyticsEventsNode = tabNode.analyticsEventsNode {
-            mobileContentAnalytics.trackEvents(events: analyticsEventsNode, page: pageModel)
-        }
+        mobileContentAnalytics.trackEvents(events: tabModel.getAnalyticsEvents(), page: pageModel)
     }
 }

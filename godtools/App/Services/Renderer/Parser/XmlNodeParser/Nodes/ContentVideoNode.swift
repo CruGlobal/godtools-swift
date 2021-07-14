@@ -9,7 +9,7 @@
 import Foundation
 import SWXMLHash
 
-class ContentVideoNode: MobileContentXmlNode {
+class ContentVideoNode: MobileContentXmlNode, ContentVideoModelType {
     
     let provider: String?
     let videoId: String?
@@ -23,9 +23,7 @@ class ContentVideoNode: MobileContentXmlNode {
 
         super.init(xmlElement: xmlElement)
     }
-}
-
-extension ContentVideoNode {
+    
     var providerType: MobileContentVideoNodeProvider {
         return MobileContentVideoNodeProvider(rawValue: provider ?? "") ?? .unknown
     }

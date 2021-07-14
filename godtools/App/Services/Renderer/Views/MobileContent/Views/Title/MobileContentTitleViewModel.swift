@@ -10,12 +10,12 @@ import UIKit
 
 class MobileContentTitleViewModel: MobileContentTitleViewModelType {
     
-    private let titleNode: TitleNode
+    private let titleModel: TitleModelType
     private let pageModel: MobileContentRendererPageModel
     
-    required init(titleNode: TitleNode, pageModel: MobileContentRendererPageModel) {
+    required init(titleModel: TitleModelType, pageModel: MobileContentRendererPageModel) {
         
-        self.titleNode = titleNode
+        self.titleModel = titleModel
         self.pageModel = pageModel
     }
     
@@ -28,8 +28,7 @@ class MobileContentTitleViewModel: MobileContentTitleViewModelType {
     }
     
     var textColor: UIColor {
-        
-        return titleNode.textNode?.getTextColor()?.color ?? pageModel.pageColors.primaryTextColor
+        return titleModel.getTextColor()?.color ?? pageModel.pageColors.primaryTextColor
     }
     
     var lineSpacing: CGFloat {

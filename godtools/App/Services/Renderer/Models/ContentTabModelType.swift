@@ -10,4 +10,8 @@ import Foundation
 
 protocol ContentTabModelType {
     
+    var listeners: [String] { get }
+    var text: String? { get }
+    
+    func getAnalyticsEvents() -> [AnalyticsEventModelType]
 }

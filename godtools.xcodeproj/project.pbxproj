@@ -257,6 +257,7 @@
 		455584C2269F4E6200C3FF14 /* AnalyticsAttributeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455584C1269F4E6200C3FF14 /* AnalyticsAttributeModel.swift */; };
 		455584C4269F55D800C3FF14 /* ContentTabModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455584C3269F55D800C3FF14 /* ContentTabModelType.swift */; };
 		455584C6269F560600C3FF14 /* ContentImageModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455584C5269F560600C3FF14 /* ContentImageModelType.swift */; };
+		455584C8269F80F400C3FF14 /* ContentVideoModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455584C7269F80F400C3FF14 /* ContentVideoModelType.swift */; };
 		4556AECD23E22185002C15E8 /* SF-Pro-Display-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AECA23E22185002C15E8 /* SF-Pro-Display-Light.otf */; };
 		4556AECE23E22185002C15E8 /* SF-Pro-Text-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AECB23E22185002C15E8 /* SF-Pro-Text-Light.otf */; };
 		4556AECF23E22185002C15E8 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AECC23E22185002C15E8 /* SF-Pro-Text-Regular.otf */; };
@@ -1210,6 +1211,7 @@
 		455584C1269F4E6200C3FF14 /* AnalyticsAttributeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsAttributeModel.swift; sourceTree = "<group>"; };
 		455584C3269F55D800C3FF14 /* ContentTabModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTabModelType.swift; sourceTree = "<group>"; };
 		455584C5269F560600C3FF14 /* ContentImageModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentImageModelType.swift; sourceTree = "<group>"; };
+		455584C7269F80F400C3FF14 /* ContentVideoModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentVideoModelType.swift; sourceTree = "<group>"; };
 		4556AECA23E22185002C15E8 /* SF-Pro-Display-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Light.otf"; sourceTree = "<group>"; };
 		4556AECB23E22185002C15E8 /* SF-Pro-Text-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Light.otf"; sourceTree = "<group>"; };
 		4556AECC23E22185002C15E8 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
@@ -2855,6 +2857,7 @@
 				455584B3269F425F00C3FF14 /* ContentPlaceholderModelType.swift */,
 				455584C3269F55D800C3FF14 /* ContentTabModelType.swift */,
 				455584A1269F3B1D00C3FF14 /* ContentTextModelType.swift */,
+				455584C7269F80F400C3FF14 /* ContentVideoModelType.swift */,
 				455584B5269F426B00C3FF14 /* HeadingModelType.swift */,
 				455584A9269F40A700C3FF14 /* LabelModelType.swift */,
 				455584B7269F427400C3FF14 /* NumberModelType.swift */,
@@ -6097,6 +6100,7 @@
 				45AD205A25938AC300A096A0 /* SnowplowAnalytics.swift in Sources */,
 				45AD1B6325938A4F00A096A0 /* AccountActivityView.swift in Sources */,
 				45558489269F2F9E00C3FF14 /* MobileContentSpacerMode.swift in Sources */,
+				455584C8269F80F400C3FF14 /* ContentVideoModelType.swift in Sources */,
 				45AD208525938B6A00A096A0 /* KeyboardState.swift in Sources */,
 				4555845E269F2F9E00C3FF14 /* LabelNode.swift in Sources */,
 				45558461269F2F9E00C3FF14 /* PagesNode.swift in Sources */,

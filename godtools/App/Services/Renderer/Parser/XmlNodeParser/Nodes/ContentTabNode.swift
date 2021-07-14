@@ -9,9 +9,9 @@
 import Foundation
 import SWXMLHash
 
-class ContentTabNode: MobileContentXmlNode {
+class ContentTabNode: MobileContentXmlNode, ContentTabModelType {
     
-    private(set) var analyticsEventsNode: AnalyticsEventsNode?
+    private var analyticsEventsNode: AnalyticsEventsNode?
     
     let listeners: [String]
     
@@ -24,7 +24,7 @@ class ContentTabNode: MobileContentXmlNode {
         super.init(xmlElement: xmlElement)
     }
     
-    var contentLabelNode: ContentLabelNode? {
+    private var contentLabelNode: ContentLabelNode? {
         return children.first as? ContentLabelNode
     }
     
@@ -35,6 +35,14 @@ class ContentTabNode: MobileContentXmlNode {
         }
         
         super.addChild(childNode: childNode)
+    }
+    
+    var text: String? {
+        return contentLabelNode?.textNode?.text
+    }
+    
+    func getAnalyticsEvents() -> [AnalyticsEventModelType] {
+        return analyticsEventsNode?.analyticsEventNodes ?? []
     }
 }
 

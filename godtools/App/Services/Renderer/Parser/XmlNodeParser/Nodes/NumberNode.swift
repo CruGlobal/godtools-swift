@@ -9,14 +9,14 @@
 import Foundation
 import SWXMLHash
 
-class NumberNode: MobileContentXmlNode {
+class NumberNode: MobileContentXmlNode, NumberModelType {
     
     required init(xmlElement: XMLElement) {
     
         super.init(xmlElement: xmlElement)
     }
     
-    var textNode: ContentTextNode? {
+    private var textNode: ContentTextNode? {
         return children.first as? ContentTextNode
     }
 }

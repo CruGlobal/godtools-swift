@@ -70,10 +70,10 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let linkNode = renderableNode as? ContentLinkNode {
+        else if let linkModel = renderableNode as? ContentLinkModelType {
                         
             let viewModel = MobileContentLinkViewModel(
-                linkNode: linkNode,
+                linkModel: linkModel,
                 pageModel: pageModel,
                 mobileContentAnalytics: mobileContentAnalytics,
                 fontService: fontService
@@ -94,10 +94,10 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let titleNode = renderableNode as? TitleNode {
+        else if let titleModel = renderableNode as? TitleModelType {
                   
             let viewModel = MobileContentTitleViewModel(
-                titleNode: titleNode,
+                titleModel: titleModel,
                 pageModel: pageModel
             )
             
@@ -105,10 +105,10 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let numberNode = renderableNode as? NumberNode {
+        else if let numberModel = renderableNode as? NumberModelType {
             
             let viewModel = MobileContentNumberViewModel(
-                numberNode: numberNode,
+                numberModel: numberModel,
                 pageModel: pageModel
             )
             
@@ -116,18 +116,18 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let videoNode = renderableNode as? ContentVideoNode {
+        else if let videoModel = renderableNode as? ContentVideoModelType {
             
-            let viewModel = MobileContentEmbeddedVideoViewModel(videoNode: videoNode)
+            let viewModel = MobileContentEmbeddedVideoViewModel(videoModel: videoModel)
             
             let view = MobileContentEmbeddedVideoView(viewModel: viewModel)
             
             return view
         }
-        else if let tabNode = renderableNode as? ContentTabNode {
+        else if let tabModel = renderableNode as? ContentTabModelType {
             
             let viewModel = MobileContentTabViewModel(
-                tabNode: tabNode,
+                tabModel: tabModel,
                 pageModel: pageModel,
                 mobileContentAnalytics: mobileContentAnalytics
             )

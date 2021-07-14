@@ -10,7 +10,7 @@ import UIKit
 
 class MobileContentLinkViewModel: MobileContentLinkViewModelType {
     
-    private let linkNode: ContentLinkNode
+    private let linkModel: ContentLinkModelType
     private let pageModel: MobileContentRendererPageModel
     private let mobileContentAnalytics: MobileContentAnalytics
     private let fontService: FontService
@@ -19,13 +19,13 @@ class MobileContentLinkViewModel: MobileContentLinkViewModelType {
     
     let titleColor: UIColor
     
-    required init(linkNode: ContentLinkNode, pageModel: MobileContentRendererPageModel, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
+    required init(linkModel: ContentLinkModelType, pageModel: MobileContentRendererPageModel, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
         
-        self.linkNode = linkNode
+        self.linkModel = linkModel
         self.pageModel = pageModel
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
-        self.titleColor = linkNode.textNode?.getTextColor()?.color ?? pageModel.pageColors.primaryColor
+        self.titleColor = linkModel.getTextColor()?.color ?? pageModel.pageColors.primaryColor
     }
     
     var backgroundColor: UIColor {
@@ -37,16 +37,14 @@ class MobileContentLinkViewModel: MobileContentLinkViewModelType {
     }
     
     var title: String? {
-        return linkNode.textNode?.text
+        return linkModel.text
     }
     
     var linkEvents: [String] {
-        return linkNode.events
+        return linkModel.events
     }
     
     func linkTapped() {
-        if let analyticsEventsNode = linkNode.analyticsEventsNode {
-            mobileContentAnalytics.trackEvents(events: analyticsEventsNode, page: pageModel)
-        }
+        mobileContentAnalytics.trackEvents(events: linkModel.getAnalyticsEvents(), page: pageModel)
     }
 }
