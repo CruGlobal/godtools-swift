@@ -45,10 +45,10 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let imageNode = renderableNode as? ContentImageNode {
+        else if let imageModel = renderableNode as? ContentImageModelType {
             
             let viewModel = MobileContentImageViewModel(
-                imageNode: imageNode,
+                imageModel: imageModel,
                 pageModel: pageModel
             )
             

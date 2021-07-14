@@ -10,18 +10,18 @@ import UIKit
 
 class MobileContentImageViewModel: MobileContentImageViewModelType {
     
-    private let imageNode: ContentImageNode
+    private let imageModel: ContentImageModelType
     private let pageModel: MobileContentRendererPageModel
     
-    required init(imageNode: ContentImageNode, pageModel: MobileContentRendererPageModel) {
+    required init(imageModel: ContentImageModelType, pageModel: MobileContentRendererPageModel) {
         
-        self.imageNode = imageNode
+        self.imageModel = imageModel
         self.pageModel = pageModel
     }
     
     var image: UIImage? {
         
-        guard let resource = imageNode.resource else {
+        guard let resource = imageModel.resource else {
             return nil
         }
         
@@ -29,6 +29,6 @@ class MobileContentImageViewModel: MobileContentImageViewModelType {
     }
     
     var imageEvents: [String] {
-        return imageNode.events
+        return imageModel.events
     }
 }
