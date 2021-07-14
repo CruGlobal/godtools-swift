@@ -263,6 +263,7 @@
 		455584CE269F8D2900C3FF14 /* ContentFormModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455584CD269F8D2900C3FF14 /* ContentFormModelType.swift */; };
 		455584D0269F8D9600C3FF14 /* ContentSpacerModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455584CF269F8D9600C3FF14 /* ContentSpacerModelType.swift */; };
 		455584D2269F94F000C3FF14 /* ContentHeaderModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455584D1269F94F000C3FF14 /* ContentHeaderModelType.swift */; };
+		455584D4269F959200C3FF14 /* ContentSectionModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455584D3269F959200C3FF14 /* ContentSectionModelType.swift */; };
 		4556AECD23E22185002C15E8 /* SF-Pro-Display-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AECA23E22185002C15E8 /* SF-Pro-Display-Light.otf */; };
 		4556AECE23E22185002C15E8 /* SF-Pro-Text-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AECB23E22185002C15E8 /* SF-Pro-Text-Light.otf */; };
 		4556AECF23E22185002C15E8 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AECC23E22185002C15E8 /* SF-Pro-Text-Regular.otf */; };
@@ -1222,6 +1223,7 @@
 		455584CD269F8D2900C3FF14 /* ContentFormModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentFormModelType.swift; sourceTree = "<group>"; };
 		455584CF269F8D9600C3FF14 /* ContentSpacerModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentSpacerModelType.swift; sourceTree = "<group>"; };
 		455584D1269F94F000C3FF14 /* ContentHeaderModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentHeaderModelType.swift; sourceTree = "<group>"; };
+		455584D3269F959200C3FF14 /* ContentSectionModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentSectionModelType.swift; sourceTree = "<group>"; };
 		4556AECA23E22185002C15E8 /* SF-Pro-Display-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Light.otf"; sourceTree = "<group>"; };
 		4556AECB23E22185002C15E8 /* SF-Pro-Text-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Light.otf"; sourceTree = "<group>"; };
 		4556AECC23E22185002C15E8 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
@@ -2868,6 +2870,7 @@
 				455584AF269F424C00C3FF14 /* ContentLabelModelType.swift */,
 				455584B1269F425300C3FF14 /* ContentLinkModelType.swift */,
 				455584B3269F425F00C3FF14 /* ContentPlaceholderModelType.swift */,
+				455584D3269F959200C3FF14 /* ContentSectionModelType.swift */,
 				455584CF269F8D9600C3FF14 /* ContentSpacerModelType.swift */,
 				455584C3269F55D800C3FF14 /* ContentTabModelType.swift */,
 				455584C9269F886300C3FF14 /* ContentTabsModelType.swift */,
@@ -5814,6 +5817,7 @@
 				45AD1F9A25938A9800A096A0 /* RealmAttachment.swift in Sources */,
 				455583FD269F2DA500C3FF14 /* MobileContentInputViewModel.swift in Sources */,
 				45AD1B7B25938A4F00A096A0 /* OnboardingWelcomeViewModelType.swift in Sources */,
+				455584D4269F959200C3FF14 /* ContentSectionModelType.swift in Sources */,
 				45558488269F2F9E00C3FF14 /* MobileContentVideoNodeProvider.swift in Sources */,
 				45AD1F7725938A9800A096A0 /* ViewedTrainingTip.swift in Sources */,
 				45AD206425938B1300A096A0 /* AlertMessageType.swift in Sources */,

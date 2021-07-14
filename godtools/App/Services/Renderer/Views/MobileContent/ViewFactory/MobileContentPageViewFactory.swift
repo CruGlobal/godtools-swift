@@ -192,10 +192,10 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let sectionNode = renderableNode as? ContentSectionNode {
+        else if let sectionModel = renderableNode as? ContentSectionModelType {
             
             let viewModel = MobileContentSectionViewModel(
-                sectionNode: sectionNode,
+                sectionModel: sectionModel,
                 pageModel: pageModel
             )
             
