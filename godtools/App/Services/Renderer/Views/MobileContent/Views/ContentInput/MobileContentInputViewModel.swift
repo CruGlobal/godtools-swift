@@ -10,7 +10,7 @@ import UIKit
 
 class MobileContentInputViewModel: MobileContentInputViewModelType {
     
-    private let inputNode: ContentInputNode
+    private let inputModel: ContentInputModelType
     private let pageModel: MobileContentRendererPageModel
     private let fontService: FontService
     
@@ -19,22 +19,22 @@ class MobileContentInputViewModel: MobileContentInputViewModelType {
     let inputLabel: String?
     let placeholder: String?
     
-    required init(inputNode: ContentInputNode, pageModel: MobileContentRendererPageModel, fontService: FontService) {
+    required init(inputModel: ContentInputModelType, pageModel: MobileContentRendererPageModel, fontService: FontService) {
         
-        self.inputNode = inputNode
+        self.inputModel = inputModel
         self.pageModel = pageModel
         self.fontService = fontService
         
-        inputLabel = inputNode.labelNode?.textNode?.text
-        placeholder = inputNode.placeholderNode?.textNode?.text
+        inputLabel = inputModel.text
+        placeholder = inputModel.placeholderText
     }
     
     var isHidden: Bool {
-        return inputNode.inputType == .hidden
+        return inputModel.inputType == .hidden
     }
     
     var isRequired: Bool {
-        return inputNode.isRequired
+        return inputModel.isRequired
     }
     
     func inputChanged(text: String?) {
@@ -42,13 +42,13 @@ class MobileContentInputViewModel: MobileContentInputViewModelType {
     }
     
     func getInputName() -> String? {
-        return inputNode.name
+        return inputModel.name
     }
     
     func getInputValue() -> String? {
         
-        if inputNode.inputType == .hidden {
-            return inputNode.value
+        if inputModel.inputType == .hidden {
+            return inputModel.value
         }
         
         return inputValue

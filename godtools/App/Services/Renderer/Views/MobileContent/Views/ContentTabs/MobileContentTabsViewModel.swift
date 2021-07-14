@@ -10,12 +10,12 @@ import UIKit
 
 class MobileContentTabsViewModel: MobileContentTabsViewModelType {
     
-    private let tabsNode: ContentTabsNode
+    private let tabsModel: ContentTabsModelType
     private let pageModel: MobileContentRendererPageModel
         
-    required init(tabsNode: ContentTabsNode, pageModel: MobileContentRendererPageModel) {
+    required init(tabsModel: ContentTabsModelType, pageModel: MobileContentRendererPageModel) {
         
-        self.tabsNode = tabsNode
+        self.tabsModel = tabsModel
         self.pageModel = pageModel
     }
     

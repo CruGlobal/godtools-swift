@@ -136,10 +136,10 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let tabsNode = renderableNode as? ContentTabsNode {
+        else if let tabsModel = renderableNode as? ContentTabsModelType {
 
             let viewModel = MobileContentTabsViewModel(
-                tabsNode: tabsNode,
+                tabsModel: tabsModel,
                 pageModel: pageModel
             )
             
@@ -147,10 +147,10 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let inputNode = renderableNode as? ContentInputNode {
+        else if let inputModel = renderableNode as? ContentInputModelType {
             
             let viewModel = MobileContentInputViewModel(
-                inputNode: inputNode,
+                inputModel: inputModel,
                 pageModel: pageModel,
                 fontService: fontService
             )

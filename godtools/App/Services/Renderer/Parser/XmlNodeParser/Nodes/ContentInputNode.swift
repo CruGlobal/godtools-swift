@@ -9,10 +9,10 @@
 import Foundation
 import SWXMLHash
 
-class ContentInputNode: MobileContentXmlNode {
+class ContentInputNode: MobileContentXmlNode, ContentInputModelType {
         
-    private(set) var labelNode: ContentLabelNode?
-    private(set) var placeholderNode: ContentPlaceholderNode?
+    private var labelNode: ContentLabelNode?
+    private var placeholderNode: ContentPlaceholderNode?
     
     let name: String?
     let required: String?
@@ -42,9 +42,6 @@ class ContentInputNode: MobileContentXmlNode {
         
         super.addChild(childNode: childNode)
     }
-}
-
-extension ContentInputNode {
     
     var inputType: MobileContentInputNodeType {
         
@@ -57,6 +54,14 @@ extension ContentInputNode {
     
     var isRequired: Bool {
         return required == "true"
+    }
+    
+    var text: String? {
+        return labelNode?.textNode?.text
+    }
+    
+    var placeholderText: String? {
+        return placeholderNode?.textNode?.text
     }
 }
 
