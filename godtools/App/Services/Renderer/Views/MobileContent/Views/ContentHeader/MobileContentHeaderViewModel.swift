@@ -10,12 +10,12 @@ import Foundation
 
 class MobileContentHeaderViewModel: MobileContentHeaderViewModelType {
     
-    private let headerNode: ContentHeaderNode
+    private let headerModel: ContentHeaderModelType
     private let pageModel: MobileContentRendererPageModel
     
-    required init(headerNode: ContentHeaderNode, pageModel: MobileContentRendererPageModel) {
+    required init(headerModel: ContentHeaderModelType, pageModel: MobileContentRendererPageModel) {
         
-        self.headerNode = headerNode
+        self.headerModel = headerModel
         self.pageModel = pageModel
     }
     

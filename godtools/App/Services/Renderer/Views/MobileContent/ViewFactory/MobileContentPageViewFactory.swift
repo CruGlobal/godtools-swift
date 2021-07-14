@@ -181,10 +181,10 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let headerNode = renderableNode as? ContentHeaderNode {
+        else if let headerModel = renderableNode as? ContentHeaderModelType {
             
             let viewModel = MobileContentHeaderViewModel(
-                headerNode: headerNode,
+                headerModel: headerModel,
                 pageModel: pageModel
             )
             
