@@ -159,10 +159,10 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let formNode = renderableNode as? ContentFormNode {
+        else if let formModel = renderableNode as? ContentFormModelType {
             
             let viewModel = MobileContentFormViewModel(
-                formNode: formNode,
+                formModel: formModel,
                 pageModel: pageModel
             )
             
@@ -170,10 +170,10 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let spacerNode = renderableNode as? ContentSpacerNode {
+        else if let spacerModel = renderableNode as? ContentSpacerModelType {
                 
             let viewModel = MobileContentSpacerViewModel(
-                spacerNode: spacerNode,
+                spacerModel: spacerModel,
                 pageModel: pageModel
             )
             

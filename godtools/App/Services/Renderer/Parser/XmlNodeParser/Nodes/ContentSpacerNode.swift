@@ -9,7 +9,7 @@
 import Foundation
 import SWXMLHash
 
-class ContentSpacerNode: MobileContentXmlNode {
+class ContentSpacerNode: MobileContentXmlNode, ContentSpacerModelType {
     
     let mode: String?
     let height: String?
@@ -23,19 +23,6 @@ class ContentSpacerNode: MobileContentXmlNode {
         
         super.init(xmlElement: xmlElement)
     }
-}
-
-// MARK: - MobileContentRenderableNode
-
-extension ContentSpacerNode: MobileContentRenderableNode {
-    var nodeContentIsRenderable: Bool {
-        return true
-    }
-}
-
-// MARK: -
-
-extension ContentSpacerNode {
     
     var spacerMode: MobileContentSpacerMode {
         
@@ -46,5 +33,13 @@ extension ContentSpacerNode {
         }
         
         return MobileContentSpacerMode(rawValue: modeValue) ?? defaultMode
+    }
+}
+
+// MARK: - MobileContentRenderableNode
+
+extension ContentSpacerNode: MobileContentRenderableNode {
+    var nodeContentIsRenderable: Bool {
+        return true
     }
 }

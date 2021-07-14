@@ -10,22 +10,22 @@ import Foundation
 
 class MobileContentSpacerViewModel: MobileContentSpacerViewModelType {
     
-    private let spacerNode: ContentSpacerNode
+    private let spacerModel: ContentSpacerModelType
     private let pageModel: MobileContentRendererPageModel
     
-    required init(spacerNode: ContentSpacerNode, pageModel: MobileContentRendererPageModel) {
+    required init(spacerModel: ContentSpacerModelType, pageModel: MobileContentRendererPageModel) {
         
-        self.spacerNode = spacerNode
+        self.spacerModel = spacerModel
         self.pageModel = pageModel
     }
     
     var mode: MobileContentSpacerMode {
-        return spacerNode.spacerMode
+        return spacerModel.spacerMode
     }
     
     var height: CGFloat {
         
-        if let height = spacerNode.height, !height.isEmpty, let floatValue = Float(height) {
+        if let height = spacerModel.height, !height.isEmpty, let floatValue = Float(height) {
             return CGFloat(floatValue)
         }
         

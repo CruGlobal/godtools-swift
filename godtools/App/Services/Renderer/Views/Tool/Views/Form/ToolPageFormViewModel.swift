@@ -17,17 +17,17 @@ class ToolPageFormViewModel: MobileContentFormViewModel {
     let didSendFollowUpSignal: SignalValue<[String]> = SignalValue()
     let error: ObservableValue<MobileContentErrorViewModel?> = ObservableValue(value: nil)
     
-    required init(formNode: ContentFormNode, pageModel: MobileContentRendererPageModel, followUpService: FollowUpsService, localizationServices: LocalizationServices) {
+    required init(formModel: ContentFormModelType, pageModel: MobileContentRendererPageModel, followUpService: FollowUpsService, localizationServices: LocalizationServices) {
         
         self.pageModel = pageModel
         self.followUpService = followUpService
         self.localizationServices = localizationServices
         
-        super.init(formNode: formNode, pageModel: pageModel)
+        super.init(formModel: formModel, pageModel: pageModel)
     }
     
-    required init(formNode: ContentFormNode, pageModel: MobileContentRendererPageModel) {
-        fatalError("init(formNode:pageModel:) has not been implemented")
+    required init(formModel: ContentFormModelType, pageModel: MobileContentRendererPageModel) {
+        fatalError("init(formModel:pageModel:) has not been implemented")
     }
     
     // MARK: - Follow Up
