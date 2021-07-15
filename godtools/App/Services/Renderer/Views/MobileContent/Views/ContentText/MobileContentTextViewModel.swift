@@ -13,7 +13,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     private static let numberFormatter: NumberFormatter = NumberFormatter()
     
     private let textModel: ContentTextModelType
-    private let pageModel: MobileContentRendererPageModel
+    private let rendererPageModel: MobileContentRendererPageModel
     private let containerNode: MobileContentContainerNode?
     private let fontService: FontService
     private let fontSize: CGFloat = 18
@@ -22,22 +22,22 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
         
     let textColor: UIColor
     
-    required init(textModel: ContentTextModelType, pageModel: MobileContentRendererPageModel, containerNode: MobileContentContainerNode?, fontService: FontService) {
+    required init(textModel: ContentTextModelType, rendererPageModel: MobileContentRendererPageModel, containerNode: MobileContentContainerNode?, fontService: FontService) {
         
         self.textModel = textModel
-        self.pageModel = pageModel
+        self.rendererPageModel = rendererPageModel
         self.containerNode = containerNode
         self.fontService = fontService
         
         let containerTextColor: UIColor?
         if containerNode is CardNode {
-            containerTextColor = pageModel.pageColors.cardTextColor
+            containerTextColor = rendererPageModel.pageColors.cardTextColor
         }
         else {
             containerTextColor = containerNode?.textColor?.color
         }
         
-        self.textColor = textModel.getTextColor()?.color ?? containerTextColor ?? pageModel.pageColors.textColor
+        self.textColor = textModel.getTextColor()?.color ?? containerTextColor ?? rendererPageModel.pageColors.textColor
     }
     
     var startImage: UIImage? {
@@ -46,7 +46,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
             return nil
         }
         
-        guard let resourceImage = pageModel.resourcesCache.getImage(resource: resource) else {
+        guard let resourceImage = rendererPageModel.resourcesCache.getImage(resource: resource) else {
             return nil
         }
         
@@ -102,7 +102,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
             return nil
         }
         
-        guard let resourceImage = pageModel.resourcesCache.getImage(resource: resource) else {
+        guard let resourceImage = rendererPageModel.resourcesCache.getImage(resource: resource) else {
             return nil
         }
         
@@ -150,8 +150,8 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
         
         let fontScale: CGFloat
         
-        let manifestTextScale = MobileContentTextScale(textScale: pageModel.manifest.attributes.textScale)
-        let pageTextScale = MobileContentTextScale(textScale: pageModel.pageNode.textScale)
+        let manifestTextScale = MobileContentTextScale(textScale: rendererPageModel.manifest.attributes.textScale)
+        let pageTextScale = MobileContentTextScale(textScale: rendererPageModel.pageModel.textScale)
         let textScale = MobileContentTextScale(textScale: textModel.textScale)
         
         fontScale = manifestTextScale.floatValue * pageTextScale.floatValue * textScale.floatValue
@@ -173,7 +173,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
 extension MobileContentTextViewModel: MobileContentViewModelType {
     
     var language: LanguageModel {
-        return pageModel.language
+        return rendererPageModel.language
     }
     
     var analyticsEvents: [MobileContentAnalyticsEvent] {

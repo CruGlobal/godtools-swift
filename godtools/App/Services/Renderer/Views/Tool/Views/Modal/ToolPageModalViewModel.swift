@@ -11,12 +11,12 @@ import UIKit
 class ToolPageModalViewModel: ToolPageModalViewModelType {
     
     private let modalModel: ModalModelType
-    private let pageModel: MobileContentRendererPageModel
+    private let rendererPageModel: MobileContentRendererPageModel
             
-    required init(modalModel: ModalModelType, pageModel: MobileContentRendererPageModel) {
+    required init(modalModel: ModalModelType, rendererPageModel: MobileContentRendererPageModel) {
         
         self.modalModel = modalModel
-        self.pageModel = pageModel
+        self.rendererPageModel = rendererPageModel
     }
     
     var backgroundColor: UIColor {

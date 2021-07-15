@@ -11,11 +11,11 @@ import Foundation
 class MobileContentAccordionViewModel: MobileContentAccordionViewModelType {
     
     private let accordionModel: ContentAccordionModelType
-    private let pageModel: MobileContentRendererPageModel
+    private let rendererPageModel: MobileContentRendererPageModel
     
-    required init(accordionModel: ContentAccordionModelType, pageModel: MobileContentRendererPageModel) {
+    required init(accordionModel: ContentAccordionModelType, rendererPageModel: MobileContentRendererPageModel) {
         
         self.accordionModel = accordionModel
-        self.pageModel = pageModel
+        self.rendererPageModel = rendererPageModel
     }
 }

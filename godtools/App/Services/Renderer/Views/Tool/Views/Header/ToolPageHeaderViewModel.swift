@@ -11,23 +11,23 @@ import UIKit
 class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
     
     private let headerModel: HeaderModelType
-    private let pageModel: MobileContentRendererPageModel
+    private let rendererPageModel: MobileContentRendererPageModel
     
     let trainingTipView: TrainingTipView?
     
-    required init(headerModel: HeaderModelType, pageModel: MobileContentRendererPageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, viewedTrainingTipsService: ViewedTrainingTipsService) {
+    required init(headerModel: HeaderModelType, rendererPageModel: MobileContentRendererPageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, viewedTrainingTipsService: ViewedTrainingTipsService) {
         
         self.headerModel = headerModel
-        self.pageModel = pageModel
+        self.rendererPageModel = rendererPageModel
         
         var trainingTipView: TrainingTipView? = nil
         
         if let trainingTipId = headerModel.trainingTip {
-            for pageViewFactory in pageModel.pageViewFactories {
+            for pageViewFactory in rendererPageModel.pageViewFactories {
                 if let trainingViewFactory = pageViewFactory as? TrainingViewFactory {
                     trainingTipView = trainingViewFactory.getTrainingTipView(
                         trainingTipId: trainingTipId,
-                        pageModel: pageModel,
+                        rendererPageModel: rendererPageModel,
                         trainingTipViewType: .upArrow
                     )
                 }
@@ -38,11 +38,11 @@ class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return pageModel.language.languageDirection.semanticContentAttribute
+        return rendererPageModel.language.languageDirection.semanticContentAttribute
     }
     
     var backgroundColor: UIColor {
-        return pageModel.pageColors.primaryColor
+        return rendererPageModel.pageColors.primaryColor
     }
 }
 
@@ -51,7 +51,7 @@ class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
 extension ToolPageHeaderViewModel: MobileContentViewModelType {
     
     var language: LanguageModel {
-        return pageModel.language
+        return rendererPageModel.language
     }
     
     var analyticsEvents: [MobileContentAnalyticsEvent] {

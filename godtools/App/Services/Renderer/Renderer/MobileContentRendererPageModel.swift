@@ -10,7 +10,7 @@ import UIKit
 
 class MobileContentRendererPageModel {
     
-    let pageNode: PageNode
+    let pageModel: PageModelType
     let page: Int
     let isLastPage: Bool
     let pageColors: MobileContentPageColors
@@ -24,12 +24,12 @@ class MobileContentRendererPageModel {
     
     private weak var weakWindow: UIViewController?
     
-    required init(pageNode: PageNode, page: Int, isLastPage: Bool, window: UIViewController, safeArea: UIEdgeInsets, manifest: MobileContentXmlManifest, resourcesCache: ManifestResourcesCache, resource: ResourceModel, language: LanguageModel, pageViewFactories: [MobileContentPageViewFactoryType], primaryRendererLanguage: LanguageModel) {
+    required init(pageModel: PageModelType, page: Int, isLastPage: Bool, window: UIViewController, safeArea: UIEdgeInsets, manifest: MobileContentXmlManifest, resourcesCache: ManifestResourcesCache, resource: ResourceModel, language: LanguageModel, pageViewFactories: [MobileContentPageViewFactoryType], primaryRendererLanguage: LanguageModel) {
         
-        self.pageNode = pageNode
+        self.pageModel = pageModel
         self.page = page
         self.isLastPage = isLastPage
-        self.pageColors = MobileContentPageColors(pageNode: pageNode, manifest: manifest)
+        self.pageColors = MobileContentPageColors(pageModel: pageModel, manifest: manifest)
         self.weakWindow = window
         self.safeArea = safeArea
         self.manifest = manifest

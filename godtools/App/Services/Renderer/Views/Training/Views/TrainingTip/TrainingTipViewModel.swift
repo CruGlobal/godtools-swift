@@ -11,7 +11,7 @@ import UIKit
 class TrainingTipViewModel: TrainingTipViewModelType {
     
     private let trainingTipId: String
-    private let pageModel: MobileContentRendererPageModel
+    private let rendererPageModel: MobileContentRendererPageModel
     private let viewedTrainingTipsService: ViewedTrainingTipsService
     
     private var tipNode: TipNode?
@@ -20,14 +20,14 @@ class TrainingTipViewModel: TrainingTipViewModelType {
     let trainingTipBackgroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     let trainingTipForegroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     
-    required init(trainingTipId: String, pageModel: MobileContentRendererPageModel, viewType: TrainingTipViewType, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, viewedTrainingTipsService: ViewedTrainingTipsService) {
+    required init(trainingTipId: String, rendererPageModel: MobileContentRendererPageModel, viewType: TrainingTipViewType, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, viewedTrainingTipsService: ViewedTrainingTipsService) {
         
         self.trainingTipId = trainingTipId
-        self.pageModel = pageModel
+        self.rendererPageModel = rendererPageModel
         self.viewType = viewType
         self.viewedTrainingTipsService = viewedTrainingTipsService
                 
-        parseTrainingTip(trainingTipId: trainingTipId, manifest: pageModel.manifest, translationsFileCache: translationsFileCache, mobileContentNodeParser: mobileContentNodeParser) { [weak self] (result: Result<TipNode, Error>) in
+        parseTrainingTip(trainingTipId: trainingTipId, manifest: rendererPageModel.manifest, translationsFileCache: translationsFileCache, mobileContentNodeParser: mobileContentNodeParser) { [weak self] (result: Result<TipNode, Error>) in
             
             guard let viewModel = self else {
                 return
@@ -57,8 +57,8 @@ class TrainingTipViewModel: TrainingTipViewModelType {
         
         let viewedTrainingTip = ViewedTrainingTip(
             trainingTipId: trainingTipId,
-            resourceId: pageModel.resource.id,
-            languageId: pageModel.language.id
+            resourceId: rendererPageModel.resource.id,
+            languageId: rendererPageModel.language.id
         )
         
         let trainingTipViewed: Bool = viewedTrainingTipsService.containsViewedTrainingTip(viewedTrainingTip: viewedTrainingTip)
@@ -163,6 +163,6 @@ class TrainingTipViewModel: TrainingTipViewModelType {
                 
         reloadTipIcon(tipNode: tipNode, viewType: viewType, trainingTipViewed: true)
         
-        return TrainingTipEvent(pageModel: pageModel, trainingTipId: trainingTipId, tipNode: tipNode)
+        return TrainingTipEvent(rendererPageModel: rendererPageModel, trainingTipId: trainingTipId, tipNode: tipNode)
     }
 }

@@ -11,12 +11,12 @@ import UIKit
 class MobileContentNumberViewModel: MobileContentNumberViewModelType {
     
     private let numberModel: NumberModelType
-    private let pageModel: MobileContentRendererPageModel
+    private let rendererPageModel: MobileContentRendererPageModel
     
-    required init(numberModel: NumberModelType, pageModel: MobileContentRendererPageModel) {
+    required init(numberModel: NumberModelType, rendererPageModel: MobileContentRendererPageModel) {
         
         self.numberModel = numberModel
-        self.pageModel = pageModel
+        self.rendererPageModel = rendererPageModel
     }
     
     var fontSize: CGFloat {
@@ -28,7 +28,7 @@ class MobileContentNumberViewModel: MobileContentNumberViewModelType {
     }
     
     var textColor: UIColor {
-        return pageModel.pageColors.primaryTextColor
+        return rendererPageModel.pageColors.primaryTextColor
     }
 }
 
@@ -37,7 +37,7 @@ class MobileContentNumberViewModel: MobileContentNumberViewModelType {
 extension MobileContentNumberViewModel: MobileContentViewModelType {
     
     var language: LanguageModel {
-        return pageModel.language
+        return rendererPageModel.language
     }
     
     var analyticsEvents: [MobileContentAnalyticsEvent] {

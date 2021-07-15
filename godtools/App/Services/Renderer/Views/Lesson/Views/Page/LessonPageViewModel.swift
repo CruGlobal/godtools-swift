@@ -10,31 +10,31 @@ import Foundation
 
 class LessonPageViewModel: MobileContentPageViewModel, LessonPageViewModelType {
     
-    private let pageNode: PageNode
-    private let pageModel: MobileContentRendererPageModel
+    private let pageModel: PageModelType
+    private let rendererPageModel: MobileContentRendererPageModel
     private let analytics: AnalyticsContainer
     
-    required init(flowDelegate: FlowDelegate, pageNode: PageNode, pageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, pageModel: PageModelType, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, analytics: AnalyticsContainer) {
             
-        self.pageNode = pageNode
         self.pageModel = pageModel
+        self.rendererPageModel = rendererPageModel
         self.analytics = analytics
         
-        super.init(flowDelegate: flowDelegate, pageNode: pageNode, pageModel: pageModel, deepLinkService: deepLinkService, hidesBackgroundImage: false)
+        super.init(flowDelegate: flowDelegate, pageModel: pageModel, rendererPageModel: rendererPageModel, deepLinkService: deepLinkService, hidesBackgroundImage: false)
     }
     
-    required init(flowDelegate: FlowDelegate, pageNode: PageNode, pageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, hidesBackgroundImage: Bool) {
-        fatalError("init(flowDelegate:pageNode:pageModel:deepLinkService:hidesBackgroundImage:) has not been implemented")
+    required init(flowDelegate: FlowDelegate, pageModel: PageModelType, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, hidesBackgroundImage: Bool) {
+        fatalError("init(flowDelegate:pageModel:rendererPageModel:deepLinkService:hidesBackgroundImage:) has not been implemented")
     }
     
     var manifestDismissListeners: [String] {
-        return pageModel.manifest.attributes.dismissListeners
+        return rendererPageModel.manifest.attributes.dismissListeners
     }
     
     func pageDidAppear() {
         
-        let resource: ResourceModel = pageModel.resource
-        let page: Int = pageModel.page
+        let resource: ResourceModel = rendererPageModel.resource
+        let page: Int = rendererPageModel.page
         
         analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: resource.abbreviation + "-" + String(page), siteSection: resource.abbreviation, siteSubSection: ""))
     }

@@ -11,12 +11,12 @@ import UIKit
 class MobileContentHeadingViewModel: MobileContentHeadingViewModelType {
     
     private let headingModel: HeadingModelType
-    private let pageModel: MobileContentRendererPageModel
+    private let rendererPageModel: MobileContentRendererPageModel
     
-    required init(headingModel: HeadingModelType, pageModel: MobileContentRendererPageModel) {
+    required init(headingModel: HeadingModelType, rendererPageModel: MobileContentRendererPageModel) {
         
         self.headingModel = headingModel
-        self.pageModel = pageModel
+        self.rendererPageModel = rendererPageModel
     }
     
     var fontSize: CGFloat {
@@ -29,6 +29,6 @@ class MobileContentHeadingViewModel: MobileContentHeadingViewModelType {
     
     var textColor: UIColor {
         
-        return headingModel.getTextColor()?.color ?? pageModel.pageColors.primaryColor
+        return headingModel.getTextColor()?.color ?? rendererPageModel.pageColors.primaryColor
     }
 }

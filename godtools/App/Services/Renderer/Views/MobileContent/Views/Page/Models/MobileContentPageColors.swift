@@ -16,12 +16,12 @@ class MobileContentPageColors {
     let primaryTextColor: UIColor
     let textColor: UIColor
     
-    required init(pageNode: PageNode, manifest: MobileContentXmlManifest) {
+    required init(pageModel: PageModelType, manifest: MobileContentXmlManifest) {
         
-        backgroundColor = pageNode.getBackgroundColor()?.color ?? manifest.attributes.getBackgroundColor().color
-        cardTextColor = pageNode.getCardTextColor()?.color
-        primaryColor = pageNode.getPrimaryColor()?.color ?? manifest.attributes.getPrimaryColor().color
-        primaryTextColor = pageNode.getPrimaryTextColor()?.color ?? manifest.attributes.getPrimaryTextColor().color
-        textColor = pageNode.getTextColor()?.color ?? manifest.attributes.getTextColor().color
+        backgroundColor = pageModel.getBackgroundColor()?.color ?? manifest.attributes.getBackgroundColor().color
+        cardTextColor = pageModel.getCardTextColor()?.color
+        primaryColor = pageModel.getPrimaryColor()?.color ?? manifest.attributes.getPrimaryColor().color
+        primaryTextColor = pageModel.getPrimaryTextColor()?.color ?? manifest.attributes.getPrimaryTextColor().color
+        textColor = pageModel.getTextColor()?.color ?? manifest.attributes.getTextColor().color
     }
 }

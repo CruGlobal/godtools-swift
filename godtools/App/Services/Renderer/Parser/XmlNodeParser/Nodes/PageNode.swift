@@ -11,11 +11,11 @@ import SWXMLHash
 
 class PageNode: MobileContentXmlNode, PageModelType {
     
-    private(set) var headerNode: HeaderNode?
-    private(set) var heroNode: HeroNode?
-    private(set) var cardsNode: CardsNode?
-    private(set) var callToActionNode: CallToActionNode?
-    private(set) var modalsNode: ModalsNode?
+    private var headerNode: HeaderNode?
+    private var heroNode: HeroNode?
+    private var cardsNode: CardsNode?
+    private var callToActionNode: CallToActionNode?
+    private var modalsNode: ModalsNode?
     
     let backgroundColor: String?
     let backgroundImage: String?
@@ -76,6 +76,14 @@ class PageNode: MobileContentXmlNode, PageModelType {
     
     var isHidden: Bool {
         return hidden == "true"
+    }
+    
+    var hero: HeroModelType? {
+        return heroNode
+    }
+    
+    var callToAction: CallToActionModelType? {
+        return callToActionNode
     }
     
     func getBackgroundColor() -> MobileContentRGBAColor? {

@@ -11,7 +11,7 @@ import UIKit
 class MobileContentLinkViewModel: MobileContentLinkViewModelType {
     
     private let linkModel: ContentLinkModelType
-    private let pageModel: MobileContentRendererPageModel
+    private let rendererPageModel: MobileContentRendererPageModel
     private let mobileContentAnalytics: MobileContentAnalytics
     private let fontService: FontService
     private let fontSize: CGFloat = 18
@@ -19,13 +19,13 @@ class MobileContentLinkViewModel: MobileContentLinkViewModelType {
     
     let titleColor: UIColor
     
-    required init(linkModel: ContentLinkModelType, pageModel: MobileContentRendererPageModel, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
+    required init(linkModel: ContentLinkModelType, rendererPageModel: MobileContentRendererPageModel, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
         
         self.linkModel = linkModel
-        self.pageModel = pageModel
+        self.rendererPageModel = rendererPageModel
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
-        self.titleColor = linkModel.getTextColor()?.color ?? pageModel.pageColors.primaryColor
+        self.titleColor = linkModel.getTextColor()?.color ?? rendererPageModel.pageColors.primaryColor
     }
     
     var backgroundColor: UIColor {
@@ -45,6 +45,6 @@ class MobileContentLinkViewModel: MobileContentLinkViewModelType {
     }
     
     func linkTapped() {
-        mobileContentAnalytics.trackEvents(events: linkModel.getAnalyticsEvents(), page: pageModel)
+        mobileContentAnalytics.trackEvents(events: linkModel.getAnalyticsEvents(), rendererPageModel: rendererPageModel)
     }
 }

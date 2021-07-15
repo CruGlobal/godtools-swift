@@ -11,12 +11,12 @@ import Foundation
 class MobileContentHeaderViewModel: MobileContentHeaderViewModelType {
     
     private let headerModel: ContentHeaderModelType
-    private let pageModel: MobileContentRendererPageModel
+    private let rendererPageModel: MobileContentRendererPageModel
     
-    required init(headerModel: ContentHeaderModelType, pageModel: MobileContentRendererPageModel) {
+    required init(headerModel: ContentHeaderModelType, rendererPageModel: MobileContentRendererPageModel) {
         
         self.headerModel = headerModel
-        self.pageModel = pageModel
+        self.rendererPageModel = rendererPageModel
     }
     
     var fontSize: CGFloat {

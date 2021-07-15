@@ -11,17 +11,17 @@ import Foundation
 class ToolPageCardsViewModel: NSObject, ToolPageCardsViewModelType {
     
     private let cardsModel: CardsModelType
-    private let pageModel: MobileContentRendererPageModel
+    private let rendererPageModel: MobileContentRendererPageModel
     private let cardJumpService: CardJumpService
     
     let hidesCardJump: ObservableValue<Bool> = ObservableValue(value: true)
     let numberOfCards: Int
     let numberOfVisibleCards: Int
     
-    required init(cardsModel: CardsModelType, pageModel: MobileContentRendererPageModel, cardJumpService: CardJumpService) {
+    required init(cardsModel: CardsModelType, rendererPageModel: MobileContentRendererPageModel, cardJumpService: CardJumpService) {
         
         self.cardsModel = cardsModel
-        self.pageModel = pageModel
+        self.rendererPageModel = rendererPageModel
         self.cardJumpService = cardJumpService
         self.numberOfCards = cardsModel.numberOfCards
         self.numberOfVisibleCards = cardsModel.numberOfVisibleCards

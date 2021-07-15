@@ -23,4 +23,12 @@ protocol PageModelType: BackgroundImageNodeType {
     var textColor: String? { get }
     var textScale: String? { get }
     var isHidden: Bool { get }
+    var hero: HeroModelType? { get }
+    var callToAction: CallToActionModelType? { get }
+    
+    func getBackgroundColor() -> MobileContentRGBAColor?
+    func getCardTextColor() -> MobileContentRGBAColor?
+    func getPrimaryColor() -> MobileContentRGBAColor?
+    func getPrimaryTextColor() -> MobileContentRGBAColor?
+    func getTextColor() -> MobileContentRGBAColor?
 }

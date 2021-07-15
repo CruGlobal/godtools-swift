@@ -12,24 +12,24 @@ class MobileContentAnalyticsEvent: NSObject {
     
     private var delayTimer: Timer?
     private var triggered: Bool = false
-    private let page: MobileContentRendererPageModel
+    private let rendererPageModel: MobileContentRendererPageModel
     
     let analyticsEvent: AnalyticsEventModelType
     
     private weak var mobileContentAnalytics: MobileContentAnalytics?
         
-    required init(analyticsEvent: AnalyticsEventModelType, mobileContentAnalytics: MobileContentAnalytics, page: MobileContentRendererPageModel) {
+    required init(analyticsEvent: AnalyticsEventModelType, mobileContentAnalytics: MobileContentAnalytics, rendererPageModel: MobileContentRendererPageModel) {
         
         self.analyticsEvent = analyticsEvent
         self.mobileContentAnalytics = mobileContentAnalytics
-        self.page = page
+        self.rendererPageModel = rendererPageModel
         
         super.init()
     }
     
-    static func initAnalyticsEvents(analyticsEvents: [AnalyticsEventModelType], mobileContentAnalytics: MobileContentAnalytics, page: MobileContentRendererPageModel) -> [MobileContentAnalyticsEvent] {
+    static func initAnalyticsEvents(analyticsEvents: [AnalyticsEventModelType], mobileContentAnalytics: MobileContentAnalytics, rendererPageModel: MobileContentRendererPageModel) -> [MobileContentAnalyticsEvent] {
         
-        let events: [MobileContentAnalyticsEvent] = analyticsEvents.map({MobileContentAnalyticsEvent(analyticsEvent: $0, mobileContentAnalytics: mobileContentAnalytics, page: page)})
+        let events: [MobileContentAnalyticsEvent] = analyticsEvents.map({MobileContentAnalyticsEvent(analyticsEvent: $0, mobileContentAnalytics: mobileContentAnalytics, rendererPageModel: rendererPageModel)})
         
         return events
     }
@@ -58,7 +58,7 @@ class MobileContentAnalyticsEvent: NSObject {
         
         stopDelayTimer()
         
-        mobileContentAnalytics?.trackEvents(events: [analyticsEvent], page: page)
+        mobileContentAnalytics?.trackEvents(events: [analyticsEvent], rendererPageModel: rendererPageModel)
         
         endTrigger()
     }

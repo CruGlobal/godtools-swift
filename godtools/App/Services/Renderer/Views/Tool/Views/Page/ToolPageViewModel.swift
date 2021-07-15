@@ -10,32 +10,32 @@ import UIKit
 
 class ToolPageViewModel: MobileContentPageViewModel, ToolPageViewModelType {
     
-    private let pageNode: PageNode
-    private let pageModel: MobileContentRendererPageModel
+    private let pageModel: PageModelType
+    private let rendererPageModel: MobileContentRendererPageModel
     private let analytics: AnalyticsContainer
     
     private var cardPosition: Int?
     
     let hidesCallToAction: Bool
     
-    required init(flowDelegate: FlowDelegate, pageNode: PageNode, pageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, pageModel: PageModelType, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, analytics: AnalyticsContainer) {
         
-        self.pageNode = pageNode
         self.pageModel = pageModel
+        self.rendererPageModel = rendererPageModel
         self.analytics = analytics
-        self.hidesCallToAction = (pageNode.callToActionNode == nil && pageModel.pageNode.heroNode == nil) || pageModel.isLastPage
+        self.hidesCallToAction = (pageModel.callToAction == nil && rendererPageModel.pageModel.hero == nil) || rendererPageModel.isLastPage
         
-        super.init(flowDelegate: flowDelegate, pageNode: pageNode, pageModel: pageModel, deepLinkService: deepLinkService, hidesBackgroundImage: false)
+        super.init(flowDelegate: flowDelegate, pageModel: pageModel, rendererPageModel: rendererPageModel, deepLinkService: deepLinkService, hidesBackgroundImage: false)
     }
     
-    required init(flowDelegate: FlowDelegate, pageNode: PageNode, pageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, hidesBackgroundImage: Bool) {
-        fatalError("init(flowDelegate:pageNode:pageModel:deepLinkService:hidesBackgroundImage:) has not been implemented")
+    required init(flowDelegate: FlowDelegate, pageModel: PageModelType, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, hidesBackgroundImage: Bool) {
+        fatalError("init(flowDelegate:pageModel:rendererPageModel:deepLinkService:hidesBackgroundImage:) has not been implemented")
     }
     
     override var analyticsScreenName: String {
         
-        let resource: ResourceModel = pageModel.resource
-        let page: Int = pageModel.page
+        let resource: ResourceModel = rendererPageModel.resource
+        let page: Int = rendererPageModel.page
         
         let cardAnalyticsScreenName: String
         
@@ -51,23 +51,23 @@ class ToolPageViewModel: MobileContentPageViewModel, ToolPageViewModelType {
     
     var bottomViewColor: UIColor {
         
-        let manifestAttributes: MobileContentXmlManifestAttributes = pageModel.manifest.attributes
+        let manifestAttributes: MobileContentXmlManifestAttributes = rendererPageModel.manifest.attributes
         let color: UIColor = manifestAttributes.getNavBarColor()?.color ?? manifestAttributes.getPrimaryColor().color
         
         return color.withAlphaComponent(0.1)
     }
     
     var page: Int {
-        return pageModel.page
+        return rendererPageModel.page
     }
     
     func callToActionWillAppear() -> ToolPageCallToActionView? {
         
-        if !hidesCallToAction && pageNode.callToActionNode == nil {
+        if !hidesCallToAction && pageModel.callToAction == nil {
             
-            for viewFactory in pageModel.pageViewFactories {
+            for viewFactory in rendererPageModel.pageViewFactories {
                 if let toolPageViewFactory = viewFactory as? ToolPageViewFactory {
-                    return toolPageViewFactory.getCallToActionView(callToActionModel: nil, pageModel: pageModel)
+                    return toolPageViewFactory.getCallToActionView(callToActionModel: nil, rendererPageModel: rendererPageModel)
                 }
             }
         }
@@ -77,8 +77,8 @@ class ToolPageViewModel: MobileContentPageViewModel, ToolPageViewModelType {
     
     func pageDidAppear() {
         
-        let resource: ResourceModel = pageModel.resource
-        let page: Int = pageModel.page
+        let resource: ResourceModel = rendererPageModel.resource
+        let page: Int = rendererPageModel.page
         
         analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: resource.abbreviation + "-" + String(page), siteSection: resource.abbreviation, siteSubSection: ""))
     }

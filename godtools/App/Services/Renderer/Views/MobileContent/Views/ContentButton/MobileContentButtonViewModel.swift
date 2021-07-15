@@ -11,7 +11,7 @@ import UIKit
 class MobileContentButtonViewModel: MobileContentButtonViewModelType {
     
     private let buttonModel: ContentButtonModelType
-    private let pageModel: MobileContentRendererPageModel
+    private let rendererPageModel: MobileContentRendererPageModel
     private let containerNode: MobileContentContainerNode?
     private let mobileContentAnalytics: MobileContentAnalytics
     private let fontService: FontService
@@ -22,15 +22,15 @@ class MobileContentButtonViewModel: MobileContentButtonViewModelType {
     let titleColor: UIColor
     let borderColor: UIColor?
     
-    required init(buttonModel: ContentButtonModelType, pageModel: MobileContentRendererPageModel, containerNode: MobileContentContainerNode?, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
+    required init(buttonModel: ContentButtonModelType, rendererPageModel: MobileContentRendererPageModel, containerNode: MobileContentContainerNode?, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
         
         self.buttonModel = buttonModel
-        self.pageModel = pageModel
+        self.rendererPageModel = rendererPageModel
         self.containerNode = containerNode
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
         
-        let buttonColor: UIColor = buttonModel.getColor()?.color ?? containerNode?.buttonColor?.color ?? pageModel.pageColors.primaryColor
+        let buttonColor: UIColor = buttonModel.getColor()?.color ?? containerNode?.buttonColor?.color ?? rendererPageModel.pageColors.primaryColor
         let buttonTitleColor: UIColor? = buttonModel.getTextColor()?.color
         
         let buttonStyle: MobileContentButtonNodeStyle = buttonModel.buttonStyle ?? containerNode?.buttonStyle ?? .contained
@@ -39,7 +39,7 @@ class MobileContentButtonViewModel: MobileContentButtonViewModelType {
         
         case .contained:
             backgroundColor = buttonColor
-            titleColor = buttonTitleColor ?? pageModel.pageColors.primaryTextColor
+            titleColor = buttonTitleColor ?? rendererPageModel.pageColors.primaryTextColor
             borderColor = UIColor.clear
         case .outlined:
             backgroundColor = buttonModel.getBackgroundColor()?.color ?? .clear
@@ -76,6 +76,6 @@ class MobileContentButtonViewModel: MobileContentButtonViewModelType {
     }
     
     func buttonTapped() {
-        mobileContentAnalytics.trackEvents(events: buttonModel.getAnalyticsEvents(), page: pageModel)
+        mobileContentAnalytics.trackEvents(events: buttonModel.getAnalyticsEvents(), rendererPageModel: rendererPageModel)
     }
 }

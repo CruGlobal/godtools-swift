@@ -11,12 +11,12 @@ import Foundation
 class MobileContentSpacerViewModel: MobileContentSpacerViewModelType {
     
     private let spacerModel: ContentSpacerModelType
-    private let pageModel: MobileContentRendererPageModel
+    private let rendererPageModel: MobileContentRendererPageModel
     
-    required init(spacerModel: ContentSpacerModelType, pageModel: MobileContentRendererPageModel) {
+    required init(spacerModel: ContentSpacerModelType, rendererPageModel: MobileContentRendererPageModel) {
         
         self.spacerModel = spacerModel
-        self.pageModel = pageModel
+        self.rendererPageModel = rendererPageModel
     }
     
     var mode: MobileContentSpacerMode {

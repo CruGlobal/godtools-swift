@@ -11,11 +11,11 @@ import Foundation
 class ToolPageModalsViewModel: ToolPageModalsViewModelType {
     
     private let modalsModel: ModalsModelType
-    private let pageModel: MobileContentRendererPageModel
+    private let rendererPageModel: MobileContentRendererPageModel
     
-    required init(modalsModel: ModalsModelType, pageModel: MobileContentRendererPageModel) {
+    required init(modalsModel: ModalsModelType, rendererPageModel: MobileContentRendererPageModel) {
         
         self.modalsModel = modalsModel
-        self.pageModel = pageModel
+        self.rendererPageModel = rendererPageModel
     }
 }

@@ -11,12 +11,12 @@ import UIKit
 class MobileContentTitleViewModel: MobileContentTitleViewModelType {
     
     private let titleModel: TitleModelType
-    private let pageModel: MobileContentRendererPageModel
+    private let rendererPageModel: MobileContentRendererPageModel
     
-    required init(titleModel: TitleModelType, pageModel: MobileContentRendererPageModel) {
+    required init(titleModel: TitleModelType, rendererPageModel: MobileContentRendererPageModel) {
         
         self.titleModel = titleModel
-        self.pageModel = pageModel
+        self.rendererPageModel = rendererPageModel
     }
     
     var fontSize: CGFloat {
@@ -28,7 +28,7 @@ class MobileContentTitleViewModel: MobileContentTitleViewModelType {
     }
     
     var textColor: UIColor {
-        return titleModel.getTextColor()?.color ?? pageModel.pageColors.primaryTextColor
+        return titleModel.getTextColor()?.color ?? rendererPageModel.pageColors.primaryTextColor
     }
     
     var lineSpacing: CGFloat {
@@ -41,7 +41,7 @@ class MobileContentTitleViewModel: MobileContentTitleViewModelType {
 extension MobileContentTitleViewModel: MobileContentViewModelType {
     
     var language: LanguageModel {
-        return pageModel.language
+        return rendererPageModel.language
     }
     
     var analyticsEvents: [MobileContentAnalyticsEvent] {

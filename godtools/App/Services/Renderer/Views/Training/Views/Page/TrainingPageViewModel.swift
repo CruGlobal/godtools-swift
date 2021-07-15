@@ -10,18 +10,18 @@ import Foundation
 
 class TrainingPageViewModel: MobileContentPageViewModel, TrainingPageViewModelType {
     
-    private let pageNode: PageNode
-    private let pageModel: MobileContentRendererPageModel
+    private let pageModel: PageModelType
+    private let rendererPageModel: MobileContentRendererPageModel
     
-    required init(flowDelegate: FlowDelegate, pageNode: PageNode, pageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType) {
+    required init(flowDelegate: FlowDelegate, pageModel: PageModelType, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType) {
         
-        self.pageNode = pageNode
         self.pageModel = pageModel
+        self.rendererPageModel = rendererPageModel
         
-        super.init(flowDelegate: flowDelegate, pageNode: pageNode, pageModel: pageModel, deepLinkService: deepLinkService, hidesBackgroundImage: true)
+        super.init(flowDelegate: flowDelegate, pageModel: pageModel, rendererPageModel: rendererPageModel, deepLinkService: deepLinkService, hidesBackgroundImage: true)
     }
     
-    required init(flowDelegate: FlowDelegate, pageNode: PageNode, pageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, hidesBackgroundImage: Bool) {
-        fatalError("init(flowDelegate:pageNode:pageModel:deepLinkService:hidesBackgroundImage:) has not been implemented")
+    required init(flowDelegate: FlowDelegate, pageModel: PageModelType, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, hidesBackgroundImage: Bool) {
+        fatalError("init(flowDelegate:pageModel:rendererPageModel:deepLinkService:hidesBackgroundImage:) has not been implemented")
     }
 }

@@ -28,22 +28,22 @@ class TrainingViewFactory: MobileContentPageViewFactoryType {
         self.trainingTipsEnabled = trainingTipsEnabled
     }
     
-    func viewForRenderableNode(renderableNode: MobileContentRenderableNode, pageModel: MobileContentRendererPageModel, containerNode: MobileContentContainerNode?) -> MobileContentView? {
+    func viewForRenderableNode(renderableNode: MobileContentRenderableNode, rendererPageModel: MobileContentRendererPageModel, containerNode: MobileContentContainerNode?) -> MobileContentView? {
         
         if let trainingTipNode = renderableNode as? TrainingTipNode {
             
             return getTrainingTipView(
                 trainingTipId: trainingTipNode.id ?? "",
-                pageModel: pageModel,
+                rendererPageModel: rendererPageModel,
                 trainingTipViewType: .rounded
             )
         }
-        else if let pageNode = renderableNode as? PageNode {
+        else if let pageModel = renderableNode as? PageModelType {
             
             let viewModel = TrainingPageViewModel(
                 flowDelegate: getFlowDelegate(),
-                pageNode: pageNode,
                 pageModel: pageModel,
+                rendererPageModel: rendererPageModel,
                 deepLinkService: deepLinkService
             )
             
@@ -55,7 +55,7 @@ class TrainingViewFactory: MobileContentPageViewFactoryType {
         return nil
     }
     
-    func getTrainingTipView(trainingTipId: String, pageModel: MobileContentRendererPageModel, trainingTipViewType: TrainingTipViewType) -> TrainingTipView? {
+    func getTrainingTipView(trainingTipId: String, rendererPageModel: MobileContentRendererPageModel, trainingTipViewType: TrainingTipViewType) -> TrainingTipView? {
         
         guard !trainingTipId.isEmpty && trainingTipsEnabled else {
             return nil
@@ -63,7 +63,7 @@ class TrainingViewFactory: MobileContentPageViewFactoryType {
         
         let viewModel = TrainingTipViewModel(
             trainingTipId: trainingTipId,
-            pageModel: pageModel,
+            rendererPageModel: rendererPageModel,
             viewType: trainingTipViewType,
             translationsFileCache: translationsFileCache,
             mobileContentNodeParser: mobileContentNodeParser,

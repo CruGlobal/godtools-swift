@@ -10,39 +10,39 @@ import Foundation
 
 class MobileContentPageViewModel: MobileContentPageViewModelType {
     
-    private let pageNode: PageNode
-    private let pageModel: MobileContentRendererPageModel
+    private let pageModel: PageModelType
+    private let rendererPageModel: MobileContentRendererPageModel
     private let deepLinkService: DeepLinkingServiceType
     private let hidesBackgroundImage: Bool
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, pageNode: PageNode, pageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, hidesBackgroundImage: Bool) {
+    required init(flowDelegate: FlowDelegate, pageModel: PageModelType, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, hidesBackgroundImage: Bool) {
         
         self.flowDelegate = flowDelegate
-        self.pageNode = pageNode
         self.pageModel = pageModel
+        self.rendererPageModel = rendererPageModel
         self.deepLinkService = deepLinkService
         self.hidesBackgroundImage = hidesBackgroundImage
     }
     
     var analyticsScreenName: String {
         
-        let resource: ResourceModel = pageModel.resource
-        let page: Int = pageModel.page
+        let resource: ResourceModel = rendererPageModel.resource
+        let page: Int = rendererPageModel.page
         
         return resource.abbreviation + "-" + String(page)
     }
     
     var analyticsSiteSection: String {
         
-        let resource: ResourceModel = pageModel.resource
+        let resource: ResourceModel = rendererPageModel.resource
  
         return resource.abbreviation
     }
     
     var backgroundColor: UIColor {
-        return pageModel.pageColors.backgroundColor
+        return rendererPageModel.pageColors.backgroundColor
     }
     
     func getFlowDelegate() -> FlowDelegate? {
@@ -55,12 +55,12 @@ class MobileContentPageViewModel: MobileContentPageViewModelType {
             return nil
         }
         
-        let manifestAttributes: MobileContentXmlManifestAttributes = pageModel.manifest.attributes
+        let manifestAttributes: MobileContentXmlManifestAttributes = rendererPageModel.manifest.attributes
         
         let backgroundImageNode: BackgroundImageNodeType?
         
-        if pageNode.backgroundImageExists {
-            backgroundImageNode = pageNode
+        if pageModel.backgroundImageExists {
+            backgroundImageNode = pageModel
         }
         else if manifestAttributes.backgroundImageExists {
             backgroundImageNode = manifestAttributes
@@ -72,8 +72,8 @@ class MobileContentPageViewModel: MobileContentPageViewModelType {
         if let backgroundImageNode = backgroundImageNode {
             return MobileContentBackgroundImageViewModel(
                 backgroundImageNode: backgroundImageNode,
-                manifestResourcesCache: pageModel.resourcesCache,
-                languageDirection: pageModel.language.languageDirection
+                manifestResourcesCache: rendererPageModel.resourcesCache,
+                languageDirection: rendererPageModel.language.languageDirection
             )
         }
         

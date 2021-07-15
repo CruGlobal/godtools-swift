@@ -11,18 +11,18 @@ import UIKit
 class ToolPageCallToActionViewModel: ToolPageCallToActionViewModelType {
     
     private let callToActionModel: CallToActionModelType?
-    private let pageModel: MobileContentRendererPageModel
+    private let rendererPageModel: MobileContentRendererPageModel
     private let fontService: FontService
         
-    required init(callToActionModel: CallToActionModelType?, pageModel: MobileContentRendererPageModel, fontService: FontService) {
+    required init(callToActionModel: CallToActionModelType?, rendererPageModel: MobileContentRendererPageModel, fontService: FontService) {
         
         self.callToActionModel = callToActionModel
-        self.pageModel = pageModel
+        self.rendererPageModel = rendererPageModel
         self.fontService = fontService
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return pageModel.primaryRendererLanguage.languageDirection.semanticContentAttribute
+        return rendererPageModel.primaryRendererLanguage.languageDirection.semanticContentAttribute
     }
     
     var title: String? {
@@ -35,7 +35,7 @@ class ToolPageCallToActionViewModel: ToolPageCallToActionViewModelType {
     
     var titleTextAlignment: NSTextAlignment {
         
-        switch pageModel.language.languageDirection {
+        switch rendererPageModel.language.languageDirection {
         case .leftToRight:
             return .left
         case .rightToLeft:
@@ -44,11 +44,11 @@ class ToolPageCallToActionViewModel: ToolPageCallToActionViewModelType {
     }
     
     var titleColor: UIColor {
-        return callToActionModel?.getTextColor()?.color ?? pageModel.pageColors.textColor
+        return callToActionModel?.getTextColor()?.color ?? rendererPageModel.pageColors.textColor
     }
     
     var nextButtonColor: UIColor {
-        return callToActionModel?.getControlColor()?.color ?? pageModel.pageColors.primaryColor
+        return callToActionModel?.getControlColor()?.color ?? rendererPageModel.pageColors.primaryColor
     }
     
     var nextButtonImage: UIImage? {

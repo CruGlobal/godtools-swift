@@ -11,15 +11,15 @@ import UIKit
 class MobileContentTabsViewModel: MobileContentTabsViewModelType {
     
     private let tabsModel: ContentTabsModelType
-    private let pageModel: MobileContentRendererPageModel
+    private let rendererPageModel: MobileContentRendererPageModel
         
-    required init(tabsModel: ContentTabsModelType, pageModel: MobileContentRendererPageModel) {
+    required init(tabsModel: ContentTabsModelType, rendererPageModel: MobileContentRendererPageModel) {
         
         self.tabsModel = tabsModel
-        self.pageModel = pageModel
+        self.rendererPageModel = rendererPageModel
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return pageModel.language.languageDirection.semanticContentAttribute
+        return rendererPageModel.language.languageDirection.semanticContentAttribute
     }
 }

@@ -22,21 +22,21 @@ class LessonPageViewFactory: MobileContentPageViewFactoryType {
         self.analytics = analytics
     }
     
-    func viewForRenderableNode(renderableNode: MobileContentRenderableNode, pageModel: MobileContentRendererPageModel, containerNode: MobileContentContainerNode?) -> MobileContentView? {
+    func viewForRenderableNode(renderableNode: MobileContentRenderableNode, rendererPageModel: MobileContentRendererPageModel, containerNode: MobileContentContainerNode?) -> MobileContentView? {
         
-        if let pageNode = renderableNode as? PageNode {
+        if let pageModel = renderableNode as? PageModelType {
                         
             let viewModel = LessonPageViewModel(
                 flowDelegate: getFlowDelegate(),
-                pageNode: pageNode,
                 pageModel: pageModel,
+                rendererPageModel: rendererPageModel,
                 deepLinkService: deepLinkService,
                 analytics: analytics
             )
             
             let view = LessonPageView(
                 viewModel: viewModel,
-                safeArea: pageModel.safeArea
+                safeArea: rendererPageModel.safeArea
             )
             
             return view
@@ -45,7 +45,7 @@ class LessonPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = LessonContentViewModel(
                 contentNode: contentNode,
-                pageModel: pageModel
+                rendererPageModel: rendererPageModel
             )
             
             let view = LessonContentView(viewModel: viewModel)

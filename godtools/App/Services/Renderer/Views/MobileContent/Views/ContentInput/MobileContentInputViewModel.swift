@@ -11,7 +11,7 @@ import UIKit
 class MobileContentInputViewModel: MobileContentInputViewModelType {
     
     private let inputModel: ContentInputModelType
-    private let pageModel: MobileContentRendererPageModel
+    private let rendererPageModel: MobileContentRendererPageModel
     private let fontService: FontService
     
     private var inputValue: String?
@@ -19,10 +19,10 @@ class MobileContentInputViewModel: MobileContentInputViewModelType {
     let inputLabel: String?
     let placeholder: String?
     
-    required init(inputModel: ContentInputModelType, pageModel: MobileContentRendererPageModel, fontService: FontService) {
+    required init(inputModel: ContentInputModelType, rendererPageModel: MobileContentRendererPageModel, fontService: FontService) {
         
         self.inputModel = inputModel
-        self.pageModel = pageModel
+        self.rendererPageModel = rendererPageModel
         self.fontService = fontService
         
         inputLabel = inputModel.text

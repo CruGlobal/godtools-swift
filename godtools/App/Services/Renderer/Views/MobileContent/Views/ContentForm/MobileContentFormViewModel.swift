@@ -11,11 +11,11 @@ import UIKit
 class MobileContentFormViewModel: MobileContentFormViewModelType {
     
     private let formModel: ContentFormModelType
-    private let pageModel: MobileContentRendererPageModel
+    private let rendererPageModel: MobileContentRendererPageModel
             
-    required init(formModel: ContentFormModelType, pageModel: MobileContentRendererPageModel) {
+    required init(formModel: ContentFormModelType, rendererPageModel: MobileContentRendererPageModel) {
         
         self.formModel = formModel
-        self.pageModel = pageModel
+        self.rendererPageModel = rendererPageModel
     }
 }

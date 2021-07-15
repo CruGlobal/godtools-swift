@@ -10,13 +10,13 @@ import Foundation
 
 class TrainingTipEvent {
     
-    let pageModel: MobileContentRendererPageModel
+    let rendererPageModel: MobileContentRendererPageModel
     let trainingTipId: String
     let tipNode: TipNode
     
-    required init(pageModel: MobileContentRendererPageModel, trainingTipId: String, tipNode: TipNode) {
+    required init(rendererPageModel: MobileContentRendererPageModel, trainingTipId: String, tipNode: TipNode) {
         
-        self.pageModel = pageModel
+        self.rendererPageModel = rendererPageModel
         self.trainingTipId = trainingTipId
         self.tipNode = tipNode
     }

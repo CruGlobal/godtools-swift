@@ -10,24 +10,24 @@ import Foundation
 
 class ToolPageFormViewModel: MobileContentFormViewModel {
     
-    private let pageModel: MobileContentRendererPageModel
+    private let rendererPageModel: MobileContentRendererPageModel
     private let followUpService: FollowUpsService
     private let localizationServices: LocalizationServices
     
     let didSendFollowUpSignal: SignalValue<[String]> = SignalValue()
     let error: ObservableValue<MobileContentErrorViewModel?> = ObservableValue(value: nil)
     
-    required init(formModel: ContentFormModelType, pageModel: MobileContentRendererPageModel, followUpService: FollowUpsService, localizationServices: LocalizationServices) {
+    required init(formModel: ContentFormModelType, rendererPageModel: MobileContentRendererPageModel, followUpService: FollowUpsService, localizationServices: LocalizationServices) {
         
-        self.pageModel = pageModel
+        self.rendererPageModel = rendererPageModel
         self.followUpService = followUpService
         self.localizationServices = localizationServices
         
-        super.init(formModel: formModel, pageModel: pageModel)
+        super.init(formModel: formModel, rendererPageModel: rendererPageModel)
     }
     
-    required init(formModel: ContentFormModelType, pageModel: MobileContentRendererPageModel) {
-        fatalError("init(formModel:pageModel:) has not been implemented")
+    required init(formModel: ContentFormModelType, rendererPageModel: MobileContentRendererPageModel) {
+        fatalError("init(formModel:rendererPageModel:) has not been implemented")
     }
     
     // MARK: - Follow Up
@@ -70,7 +70,7 @@ class ToolPageFormViewModel: MobileContentFormViewModel {
         }
         
         
-        let languageId: Int = Int(pageModel.language.id) ?? 0
+        let languageId: Int = Int(rendererPageModel.language.id) ?? 0
         
         let followUpModel = FollowUpModel(
             name: name,

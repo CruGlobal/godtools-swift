@@ -11,11 +11,11 @@ import Foundation
 class MobileContentSectionViewModel: MobileContentSectionViewModelType {
     
     private let sectionModel: ContentSectionModelType
-    private let pageModel: MobileContentRendererPageModel
+    private let rendererPageModel: MobileContentRendererPageModel
     
-    required init(sectionModel: ContentSectionModelType, pageModel: MobileContentRendererPageModel) {
+    required init(sectionModel: ContentSectionModelType, rendererPageModel: MobileContentRendererPageModel) {
         
         self.sectionModel = sectionModel
-        self.pageModel = pageModel
+        self.rendererPageModel = rendererPageModel
     }
 }

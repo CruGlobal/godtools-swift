@@ -11,12 +11,12 @@ import UIKit
 class MobileContentImageViewModel: MobileContentImageViewModelType {
     
     private let imageModel: ContentImageModelType
-    private let pageModel: MobileContentRendererPageModel
+    private let rendererPageModel: MobileContentRendererPageModel
     
-    required init(imageModel: ContentImageModelType, pageModel: MobileContentRendererPageModel) {
+    required init(imageModel: ContentImageModelType, rendererPageModel: MobileContentRendererPageModel) {
         
         self.imageModel = imageModel
-        self.pageModel = pageModel
+        self.rendererPageModel = rendererPageModel
     }
     
     var image: UIImage? {
@@ -25,7 +25,7 @@ class MobileContentImageViewModel: MobileContentImageViewModelType {
             return nil
         }
         
-        return pageModel.resourcesCache.getImage(resource: resource)
+        return rendererPageModel.resourcesCache.getImage(resource: resource)
     }
     
     var imageEvents: [String] {

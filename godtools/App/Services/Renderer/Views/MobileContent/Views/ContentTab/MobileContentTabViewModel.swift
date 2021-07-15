@@ -11,13 +11,13 @@ import Foundation
 class MobileContentTabViewModel: MobileContentTabViewModelType {
     
     private let tabModel: ContentTabModelType
-    private let pageModel: MobileContentRendererPageModel
+    private let rendererPageModel: MobileContentRendererPageModel
     private let mobileContentAnalytics: MobileContentAnalytics
     
-    required init(tabModel: ContentTabModelType, pageModel: MobileContentRendererPageModel, mobileContentAnalytics: MobileContentAnalytics) {
+    required init(tabModel: ContentTabModelType, rendererPageModel: MobileContentRendererPageModel, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.tabModel = tabModel
-        self.pageModel = pageModel
+        self.rendererPageModel = rendererPageModel
         self.mobileContentAnalytics = mobileContentAnalytics
     }
     
@@ -30,6 +30,6 @@ class MobileContentTabViewModel: MobileContentTabViewModelType {
     }
     
     func tabTapped() {
-        mobileContentAnalytics.trackEvents(events: tabModel.getAnalyticsEvents(), page: pageModel)
+        mobileContentAnalytics.trackEvents(events: tabModel.getAnalyticsEvents(), rendererPageModel: rendererPageModel)
     }
 }
