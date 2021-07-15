@@ -10,4 +10,6 @@ import Foundation
 
 protocol CardsModelType {
     
+    var numberOfCards: Int { get }
+    var numberOfVisibleCards: Int { get }
 }

@@ -89,7 +89,7 @@ class CardNode: MobileContentXmlNode, CardModelType {
         
         let defaultValue: Int = 0
         
-        guard let visibleCards: [CardNode] = cardsNode?.visibleCards else {
+        guard let visibleCards: [CardNode] = cardsNode?.visibleCardNodes else {
             return defaultValue
         }
         
@@ -97,7 +97,7 @@ class CardNode: MobileContentXmlNode, CardModelType {
     }
     
     var numberOfVisibleCards: Int {
-        return cardsNode?.visibleCards.count ?? 0
+        return cardsNode?.visibleCardNodes.count ?? 0
     }
     
     func getTextColor() -> MobileContentRGBAColor? {

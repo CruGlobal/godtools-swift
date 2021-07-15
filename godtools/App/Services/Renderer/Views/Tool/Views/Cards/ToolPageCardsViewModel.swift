@@ -10,7 +10,7 @@ import Foundation
 
 class ToolPageCardsViewModel: NSObject, ToolPageCardsViewModelType {
     
-    private let cardsNode: CardsNode
+    private let cardsModel: CardsModelType
     private let pageModel: MobileContentRendererPageModel
     private let cardJumpService: CardJumpService
     
@@ -18,13 +18,13 @@ class ToolPageCardsViewModel: NSObject, ToolPageCardsViewModelType {
     let numberOfCards: Int
     let numberOfVisibleCards: Int
     
-    required init(cardsNode: CardsNode, pageModel: MobileContentRendererPageModel, cardJumpService: CardJumpService) {
+    required init(cardsModel: CardsModelType, pageModel: MobileContentRendererPageModel, cardJumpService: CardJumpService) {
         
-        self.cardsNode = cardsNode
+        self.cardsModel = cardsModel
         self.pageModel = pageModel
         self.cardJumpService = cardJumpService
-        self.numberOfCards = cardsNode.cards.count
-        self.numberOfVisibleCards = cardsNode.visibleCards.count
+        self.numberOfCards = cardsModel.numberOfCards
+        self.numberOfVisibleCards = cardsModel.numberOfVisibleCards
         
         super.init()
         

@@ -16,28 +16,38 @@ class CardsNode: MobileContentXmlNode, CardsModelType {
         super.init(xmlElement: xmlElement)
     }
     
-    var cards: [CardNode] {
+    var cardNodes: [CardNode] {
         return children as? [CardNode] ?? []
     }
     
-    var visibleCards: [CardNode] {
-        return cards.filter({!$0.isHidden})
+    var visibleCardNodes: [CardNode] {
+        return cardNodes.filter({!$0.isHidden})
     }
     
-    var hiddenCards: [CardNode] {
-        return cards.filter({$0.isHidden})
+    var hiddenCardNodes: [CardNode] {
+        return cardNodes.filter({$0.isHidden})
     }
     
     func getCardPosition(cardNode: CardNode) -> Int? {
-        return cards.firstIndex(of: cardNode)
+        return cardNodes.firstIndex(of: cardNode)
     }
     
     func getCardVisiblePosition(cardNode: CardNode) -> Int? {
-        return visibleCards.firstIndex(of: cardNode)
+        return visibleCardNodes.firstIndex(of: cardNode)
     }
     
     func getCardHiddenPosition(cardNode: CardNode) -> Int? {
-        return hiddenCards.firstIndex(of: cardNode)
+        return hiddenCardNodes.firstIndex(of: cardNode)
+    }
+    
+    // MARK: - CardsModelType
+    
+    var numberOfCards: Int {
+        return cardNodes.count
+    }
+    
+    var numberOfVisibleCards: Int {
+        return visibleCardNodes.count
     }
 }
 

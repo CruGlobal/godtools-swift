@@ -91,10 +91,10 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let cardsNode = renderableNode as? CardsNode {
+        else if let cardsModel = renderableNode as? CardsModelType {
             
             let viewModel = ToolPageCardsViewModel(
-                cardsNode: cardsNode,
+                cardsModel: cardsModel,
                 pageModel: pageModel,
                 cardJumpService: cardJumpService
             )
