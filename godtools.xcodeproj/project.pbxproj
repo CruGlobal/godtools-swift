@@ -284,6 +284,8 @@
 		458AA38425D4252000E71B32 /* LocalizationBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458AA38325D4252000E71B32 /* LocalizationBundle.swift */; };
 		459C56D225FF954F00F15967 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		459C56D325FF954F00F15967 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		45A2B29726A0A2CC0021C779 /* ModalModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A2B29626A0A2CC0021C779 /* ModalModelType.swift */; };
+		45A2B29926A0A4000021C779 /* ModalsModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A2B29826A0A4000021C779 /* ModalsModelType.swift */; };
 		45A63AB3265441B60090E09D /* ExitLinkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A63AB2265441B60090E09D /* ExitLinkModel.swift */; };
 		45A73E4C25CF19E600B7533F /* IncomingDeepLinkType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A73E4B25CF19E600B7533F /* IncomingDeepLinkType.swift */; };
 		45A7BAF5252CBC5B00D70465 /* LocaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A7BAF4252CBC5B00D70465 /* LocaleTests.swift */; };
@@ -1249,6 +1251,8 @@
 		45714AD4262100E000EF41FB /* LessonProgressView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LessonProgressView.xib; sourceTree = "<group>"; };
 		457C8585242E50D70025E079 /* GoogleService-Info-Debug.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Debug.plist"; sourceTree = "<group>"; };
 		458AA38325D4252000E71B32 /* LocalizationBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationBundle.swift; sourceTree = "<group>"; };
+		45A2B29626A0A2CC0021C779 /* ModalModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalModelType.swift; sourceTree = "<group>"; };
+		45A2B29826A0A4000021C779 /* ModalsModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalsModelType.swift; sourceTree = "<group>"; };
 		45A63AB2265441B60090E09D /* ExitLinkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitLinkModel.swift; sourceTree = "<group>"; };
 		45A73E4B25CF19E600B7533F /* IncomingDeepLinkType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingDeepLinkType.swift; sourceTree = "<group>"; };
 		45A7BAF4252CBC5B00D70465 /* LocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleTests.swift; sourceTree = "<group>"; };
@@ -2873,8 +2877,8 @@
 			children = (
 				455584C1269F4E6200C3FF14 /* AnalyticsAttributeModel.swift */,
 				455584BF269F4D1500C3FF14 /* AnalyticsAttributeModelType.swift */,
-				455584BD269F4C3700C3FF14 /* AnalyticsEventModelType.swift */,
 				45B1D38326A08DA700B931D0 /* AnalyticsEventModelTriggerType.swift */,
+				455584BD269F4C3700C3FF14 /* AnalyticsEventModelType.swift */,
 				455584AB269F423100C3FF14 /* CallToActionModelType.swift */,
 				45B1D37D26A07E8700B931D0 /* CardModelType.swift */,
 				45B1D37F26A0804700B931D0 /* CardsModelType.swift */,
@@ -2898,6 +2902,8 @@
 				455584B5269F426B00C3FF14 /* HeadingModelType.swift */,
 				45B1D37B26A07BF900B931D0 /* HeroModelType.swift */,
 				455584A9269F40A700C3FF14 /* LabelModelType.swift */,
+				45A2B29626A0A2CC0021C779 /* ModalModelType.swift */,
+				45A2B29826A0A4000021C779 /* ModalsModelType.swift */,
 				455584B7269F427400C3FF14 /* NumberModelType.swift */,
 				4555849F269F334600C3FF14 /* PageModelType.swift */,
 				455584B9269F427D00C3FF14 /* TitleModelType.swift */,
@@ -5974,6 +5980,7 @@
 				45AD1B7425938A4F00A096A0 /* OnboardingTutorialUsageListItem.swift in Sources */,
 				45558325269F2C7B00C3FF14 /* ToolPageFormViewModel.swift in Sources */,
 				45AD1FDD25938A9800A096A0 /* EmailSignUpApi.swift in Sources */,
+				45A2B29926A0A4000021C779 /* ModalsModelType.swift in Sources */,
 				455583C3269F2DA500C3FF14 /* MobileContentPageViewFactory.swift in Sources */,
 				4555847A269F2F9E00C3FF14 /* ContentParagraphNode.swift in Sources */,
 				45AD1B1525938A4E00A096A0 /* ArticleCategoryCellViewModel.swift in Sources */,
@@ -6419,6 +6426,7 @@
 				45AD1BB225938A4F00A096A0 /* LanguageSettingsFlow.swift in Sources */,
 				45C93B27261D31B900592FFF /* LoadingArticleViewModel.swift in Sources */,
 				455583DE269F2DA500C3FF14 /* MobileContentStackChildViewHeightConstraintType.swift in Sources */,
+				45A2B29726A0A2CC0021C779 /* ModalModelType.swift in Sources */,
 				45AD1B7925938A4F00A096A0 /* OnboardingTutorialUsageItem.swift in Sources */,
 				45AD1BAD25938A4F00A096A0 /* MenuFlow.swift in Sources */,
 				45AD1B4425938A4F00A096A0 /* MenuSectionHeaderView.swift in Sources */,

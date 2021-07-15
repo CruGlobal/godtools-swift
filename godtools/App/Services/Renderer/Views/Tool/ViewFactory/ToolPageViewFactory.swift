@@ -119,10 +119,10 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let modalNode = renderableNode as? ModalNode {
+        else if let modalModel = renderableNode as? ModalModelType {
             
             let viewModel = ToolPageModalViewModel(
-                modalNode: modalNode,
+                modalModel: modalModel,
                 pageModel: pageModel
             )
             
@@ -130,10 +130,10 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let modalsNode = renderableNode as? ModalsNode {
+        else if let modalsModel = renderableNode as? ModalsModelType {
             
             let viewModel = ToolPageModalsViewModel(
-                modalsNode: modalsNode,
+                modalsModel: modalsModel,
                 pageModel: pageModel
             )
             

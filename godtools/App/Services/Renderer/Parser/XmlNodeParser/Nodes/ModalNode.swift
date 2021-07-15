@@ -9,7 +9,7 @@
 import Foundation
 import SWXMLHash
 
-class ModalNode: MobileContentXmlNode {
+class ModalNode: MobileContentXmlNode, ModalModelType {
     
     let dismissListeners: [String]
     let listeners: [String]

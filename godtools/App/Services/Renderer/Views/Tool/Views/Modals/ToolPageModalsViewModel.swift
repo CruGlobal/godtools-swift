@@ -10,12 +10,12 @@ import Foundation
 
 class ToolPageModalsViewModel: ToolPageModalsViewModelType {
     
-    private let modalsNode: ModalsNode
+    private let modalsModel: ModalsModelType
     private let pageModel: MobileContentRendererPageModel
     
-    required init(modalsNode: ModalsNode, pageModel: MobileContentRendererPageModel) {
+    required init(modalsModel: ModalsModelType, pageModel: MobileContentRendererPageModel) {
         
-        self.modalsNode = modalsNode
+        self.modalsModel = modalsModel
         self.pageModel = pageModel
     }
 }

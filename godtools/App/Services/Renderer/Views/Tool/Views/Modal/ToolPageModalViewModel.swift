@@ -10,12 +10,12 @@ import UIKit
 
 class ToolPageModalViewModel: ToolPageModalViewModelType {
     
-    private let modalNode: ModalNode
+    private let modalModel: ModalModelType
     private let pageModel: MobileContentRendererPageModel
             
-    required init(modalNode: ModalNode, pageModel: MobileContentRendererPageModel) {
+    required init(modalModel: ModalModelType, pageModel: MobileContentRendererPageModel) {
         
-        self.modalNode = modalNode
+        self.modalModel = modalModel
         self.pageModel = pageModel
     }
     
@@ -24,10 +24,10 @@ class ToolPageModalViewModel: ToolPageModalViewModelType {
     }
     
     var listeners: [String] {
-        return modalNode.listeners
+        return modalModel.listeners
     }
     
     var dismissListeners: [String] {
-        return modalNode.dismissListeners
+        return modalModel.dismissListeners
     }
 }

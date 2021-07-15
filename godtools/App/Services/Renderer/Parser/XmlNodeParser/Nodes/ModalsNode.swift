@@ -9,14 +9,14 @@
 import Foundation
 import SWXMLHash
 
-class ModalsNode: MobileContentXmlNode {
+class ModalsNode: MobileContentXmlNode, ModalsModelType {
     
     required init(xmlElement: XMLElement) {
     
         super.init(xmlElement: xmlElement)
     }
     
-    var modals: [ModalNode] {
+    private var modalNodes: [ModalNode] {
         return children as? [ModalNode] ?? []
     }
 }
