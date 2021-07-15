@@ -154,9 +154,7 @@ class ToolPageCardView: MobileContentView {
         titleLabel.textColor = viewModel.titleColor
         titleLabel.textAlignment = viewModel.titleAlignment
         
-        viewModel.hidesHeaderTrainingTip.addObserver(self) { [weak self] (hidesHeaderTrainingTip: Bool) in
-            self?.setHeaderTrainingTipIconHidden(hidden: hidesHeaderTrainingTip)
-        }
+        setHeaderTrainingTipIconHidden(hidden: viewModel.hidesHeaderTrainingTip)
         
         cardPositionLabel.text = viewModel.cardPositionLabel
         cardPositionLabel.textColor = viewModel.cardPositionLabelTextColor

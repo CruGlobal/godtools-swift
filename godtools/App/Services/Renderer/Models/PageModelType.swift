@@ -8,6 +8,7 @@
 
 import Foundation
 
+// TODO: Change or remove BackgroundImageNodeType protocol here, maybe BackgroundImageModelType? ~Levi
 protocol PageModelType: BackgroundImageNodeType {
         
     var backgroundColor: String? { get }

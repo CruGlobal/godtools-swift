@@ -14,7 +14,7 @@ protocol ToolPageCardViewModelType: MobileContentViewModelType {
     var titleColor: UIColor { get }
     var titleFont: UIFont { get }
     var titleAlignment: NSTextAlignment { get }
-    var hidesHeaderTrainingTip: ObservableValue<Bool> { get }
+    var hidesHeaderTrainingTip: Bool { get }
     var cardPositionLabel: String? { get }
     var cardPositionLabelTextColor: UIColor { get }
     var cardPositionLabelFont: UIFont { get }

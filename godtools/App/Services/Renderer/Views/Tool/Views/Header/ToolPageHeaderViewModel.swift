@@ -10,17 +10,19 @@ import UIKit
 
 class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
     
+    private let headerModel: HeaderModelType
     private let pageModel: MobileContentRendererPageModel
     
     let trainingTipView: TrainingTipView?
     
-    required init(headerNode: HeaderNode, pageModel: MobileContentRendererPageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, viewedTrainingTipsService: ViewedTrainingTipsService) {
+    required init(headerModel: HeaderModelType, pageModel: MobileContentRendererPageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, viewedTrainingTipsService: ViewedTrainingTipsService) {
         
+        self.headerModel = headerModel
         self.pageModel = pageModel
         
         var trainingTipView: TrainingTipView? = nil
         
-        if let trainingTipId = headerNode.trainingTip {
+        if let trainingTipId = headerModel.trainingTip {
             for pageViewFactory in pageModel.pageViewFactories {
                 if let trainingViewFactory = pageViewFactory as? TrainingViewFactory {
                     trainingTipView = trainingViewFactory.getTrainingTipView(

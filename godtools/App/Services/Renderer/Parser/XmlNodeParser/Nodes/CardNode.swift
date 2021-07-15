@@ -9,10 +9,10 @@
 import Foundation
 import SWXMLHash
 
-class CardNode: MobileContentXmlNode, BackgroundImageNodeType {
+class CardNode: MobileContentXmlNode, CardModelType {
         
-    private(set) var labelNode: LabelNode?
-    private(set) var analyticsEventsNode: AnalyticsEventsNode?
+    private var labelNode: LabelNode?
+    private var analyticsEventsNode: AnalyticsEventsNode?
     
     let backgroundImage: String?
     let backgroundImageAlign: [String]
@@ -51,11 +51,61 @@ class CardNode: MobileContentXmlNode, BackgroundImageNodeType {
         
         super.addChild(childNode: childNode)
     }
-}
-
-extension CardNode {
+    
+    private var cardsNode: CardsNode? {
+        return parent as? CardsNode
+    }
+    
+    private func recurseForFirstTrainingTipNode(nodes: [MobileContentXmlNode]) -> TrainingTipNode? {
+        
+        for node in nodes {
+            
+            if let trainingTipNode = node as? TrainingTipNode {
+                return trainingTipNode
+            }
+            
+            if let trainingTipNode: TrainingTipNode = recurseForFirstTrainingTipNode(nodes: node.children) {
+                return trainingTipNode
+            }
+        }
+        
+        return nil
+    }
+    
     var isHidden: Bool {
         return hidden == "true"
+    }
+    
+    var hasTrainingTip: Bool {
+        let trainingTipNode: TrainingTipNode? = recurseForFirstTrainingTipNode(nodes: [self])
+        return trainingTipNode != nil
+    }
+    
+    var text: String? {
+        return labelNode?.textNode?.text
+    }
+    
+    var cardPositionInVisibleCards: Int {
+        
+        let defaultValue: Int = 0
+        
+        guard let visibleCards: [CardNode] = cardsNode?.visibleCards else {
+            return defaultValue
+        }
+        
+        return visibleCards.firstIndex(of: self) ?? defaultValue
+    }
+    
+    var numberOfVisibleCards: Int {
+        return cardsNode?.visibleCards.count ?? 0
+    }
+    
+    func getTextColor() -> MobileContentRGBAColor? {
+        return labelNode?.textNode?.getTextColor()
+    }
+    
+    func getAnalyticsEvents() -> [AnalyticsEventModelType] {
+        return analyticsEventsNode?.analyticsEventNodes ?? []
     }
 }
 

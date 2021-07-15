@@ -27,8 +27,8 @@ extension MobileContentViewModelType {
     func mobileContentDidAppear() {
         
         for event in analyticsEvents {
-            let eventTrigger: AnalyticsEventNodeTrigger = event.eventNode.getTrigger()
-            if eventTrigger == .visible || (eventTrigger == .dependentOnContainingElement && defaultAnalyticsEventsTrigger == .visible) {
+            let trigger: AnalyticsEventModelTriggerType = event.analyticsEvent.getTriggerType()
+            if trigger == .visible || (trigger == .dependentOnContainingElement && defaultAnalyticsEventsTrigger == .visible) {
                 event.trigger()
             }
         }
@@ -37,8 +37,8 @@ extension MobileContentViewModelType {
     func mobileContentDidDisappear() {
         
         for event in analyticsEvents {
-            let eventTrigger: AnalyticsEventNodeTrigger = event.eventNode.getTrigger()
-            if eventTrigger == .visible || (eventTrigger == .dependentOnContainingElement && defaultAnalyticsEventsTrigger == .visible) {
+            let trigger: AnalyticsEventModelTriggerType = event.analyticsEvent.getTriggerType()
+            if trigger == .visible || (trigger == .dependentOnContainingElement && defaultAnalyticsEventsTrigger == .visible) {
                 event.cancel()
             }
         }

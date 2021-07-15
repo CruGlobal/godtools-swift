@@ -14,25 +14,22 @@ class MobileContentAnalyticsEvent: NSObject {
     private var triggered: Bool = false
     private let page: MobileContentRendererPageModel
     
-    let eventNode: AnalyticsEventNode
+    let analyticsEvent: AnalyticsEventModelType
     
     private weak var mobileContentAnalytics: MobileContentAnalytics?
-    
-    // TODO: Remove AnalyticsEventNode and AnalyticsEventsNode and replace with AnalyticsEventModelType. ~Levi
-    
-    required init(eventNode: AnalyticsEventNode, mobileContentAnalytics: MobileContentAnalytics, page: MobileContentRendererPageModel) {
         
-        self.eventNode = eventNode
+    required init(analyticsEvent: AnalyticsEventModelType, mobileContentAnalytics: MobileContentAnalytics, page: MobileContentRendererPageModel) {
+        
+        self.analyticsEvent = analyticsEvent
         self.mobileContentAnalytics = mobileContentAnalytics
         self.page = page
         
         super.init()
     }
     
-    static func initEvents(eventsNode: AnalyticsEventsNode, mobileContentAnalytics: MobileContentAnalytics, page: MobileContentRendererPageModel) -> [MobileContentAnalyticsEvent] {
+    static func initAnalyticsEvents(analyticsEvents: [AnalyticsEventModelType], mobileContentAnalytics: MobileContentAnalytics, page: MobileContentRendererPageModel) -> [MobileContentAnalyticsEvent] {
         
-        let eventNodes: [AnalyticsEventNode] = eventsNode.children as? [AnalyticsEventNode] ?? []
-        let events: [MobileContentAnalyticsEvent] = eventNodes.map({MobileContentAnalyticsEvent(eventNode: $0, mobileContentAnalytics: mobileContentAnalytics, page: page)})
+        let events: [MobileContentAnalyticsEvent] = analyticsEvents.map({MobileContentAnalyticsEvent(analyticsEvent: $0, mobileContentAnalytics: mobileContentAnalytics, page: page)})
         
         return events
     }
@@ -61,7 +58,7 @@ class MobileContentAnalyticsEvent: NSObject {
         
         stopDelayTimer()
         
-        mobileContentAnalytics?.trackEvent(event: eventNode, page: page)
+        mobileContentAnalytics?.trackEvents(events: [analyticsEvent], page: page)
         
         endTrigger()
     }
@@ -82,7 +79,7 @@ class MobileContentAnalyticsEvent: NSObject {
         triggered = true
         
         let delaySeconds: Double
-        if let delayString = eventNode.delay, !delayString.isEmpty {
+        if let delayString = analyticsEvent.delay, !delayString.isEmpty {
             delaySeconds = Double(delayString) ?? 0
         }
         else {

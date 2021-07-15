@@ -10,21 +10,20 @@ import UIKit
 
 class ToolPageHeroViewModel: ToolPageHeroViewModelType {
     
+    private let heroModel: HeroModelType
     private let pageModel: MobileContentRendererPageModel
-    private let heroNode: HeroNode
     private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
     
-    required init(heroNode: HeroNode, pageModel: MobileContentRendererPageModel, mobileContentAnalytics: MobileContentAnalytics) {
+    required init(heroModel: HeroModelType, pageModel: MobileContentRendererPageModel, mobileContentAnalytics: MobileContentAnalytics) {
         
-        self.heroNode = heroNode
+        self.heroModel = heroModel
         self.pageModel = pageModel
         
-        if let analyticsEventsNode = heroNode.analyticsEventsNode {
-            analyticsEventsObjects = MobileContentAnalyticsEvent.initEvents(eventsNode: analyticsEventsNode, mobileContentAnalytics: mobileContentAnalytics, page: pageModel)
-        }
-        else {
-            analyticsEventsObjects = []
-        }
+        analyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
+            analyticsEvents: heroModel.getAnalyticsEvents(),
+            mobileContentAnalytics: mobileContentAnalytics,
+            page: pageModel
+        )
     }
     
     deinit {

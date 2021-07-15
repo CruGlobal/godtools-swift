@@ -11,8 +11,7 @@ import UIKit
 class ToolPageCardViewModel: ToolPageCardViewModelType {
     
     private let pageModel: MobileContentRendererPageModel
-    private let cardNode: CardNode
-    private let cardsNode: CardsNode
+    private let cardModel: CardModelType
     private let analytics: AnalyticsContainer
     private let fontService: FontService
     private let localizationServices: LocalizationServices
@@ -21,26 +20,23 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     private let cardPosition: Int
     private let numberOfCards: Int
      
-    let hidesHeaderTrainingTip: ObservableValue<Bool> = ObservableValue(value: true)
+    let hidesHeaderTrainingTip: Bool
     let hidesCardPositionLabel: Bool
     let hidesPreviousButton: Bool
     let hidesNextButton: Bool
     let isHiddenCard: Bool
     
-    required init(cardNode: CardNode, cardsNode: CardsNode, pageModel: MobileContentRendererPageModel, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, trainingTipsEnabled: Bool) {
-                
-        let visibleCards: [CardNode] = cardsNode.visibleCards
-        
-        self.cardNode = cardNode
-        self.cardsNode = cardsNode
+    required init(cardModel: CardModelType, pageModel: MobileContentRendererPageModel, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, trainingTipsEnabled: Bool) {
+                        
+        self.cardModel = cardModel
         self.pageModel = pageModel
         self.analytics = analytics
         self.fontService = fontService
         self.localizationServices = localizationServices
         self.trainingTipsEnabled = trainingTipsEnabled
-        self.cardPosition = visibleCards.firstIndex(of: cardNode) ?? 0
-        self.numberOfCards = visibleCards.count
-        self.isHiddenCard = cardNode.isHidden
+        self.cardPosition = cardModel.cardPositionInVisibleCards
+        self.numberOfCards = cardModel.numberOfVisibleCards
+        self.isHiddenCard = cardModel.isHidden
         
         if isHiddenCard {
             hidesCardPositionLabel = true
@@ -54,57 +50,21 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
             hidesNextButton = isLastCard ? true : false
         }
         
-        if let analyticsEventsNode = cardNode.analyticsEventsNode {
-            analyticsEventsObjects = MobileContentAnalyticsEvent.initEvents(eventsNode: analyticsEventsNode, mobileContentAnalytics: mobileContentAnalytics, page: pageModel)
-        }
-        else {
-            analyticsEventsObjects = []
-        }
-                        
-        checkIfHeaderTrainingTipShouldBeEnabled()
-    }
-    
-    private func checkIfHeaderTrainingTipShouldBeEnabled() {
+        analyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
+            analyticsEvents: cardModel.getAnalyticsEvents(),
+            mobileContentAnalytics: mobileContentAnalytics,
+            page: pageModel
+        )
         
-        guard trainingTipsEnabled else {
-            return
-        }
-        
-        let cardNode: MobileContentXmlNode = self.cardNode
-        
-        DispatchQueue.global().async { [weak self] in
-            let trainingTipNode: TrainingTipNode? = self?.recurseForTrainingTipNode(nodes: [cardNode])
-            DispatchQueue.main.async { [weak self] in
-                if trainingTipNode != nil {
-                    self?.hidesHeaderTrainingTip.accept(value: false)
-                }
-            }
-        }
-    }
-    
-    private func recurseForTrainingTipNode(nodes: [MobileContentXmlNode]) -> TrainingTipNode? {
-        
-        for node in nodes {
-            
-            if let trainingTipNode = node as? TrainingTipNode {
-                return trainingTipNode
-            }
-            
-            if let trainingTipNode: TrainingTipNode = recurseForTrainingTipNode(nodes: node.children) {
-                return trainingTipNode
-            }
-        }
-        
-        return nil
+        hidesHeaderTrainingTip = !cardModel.hasTrainingTip
     }
     
     var title: String? {
-        let title: String? = cardNode.labelNode?.textNode?.text
-        return title
+        return cardModel.text
     }
     
     var titleColor: UIColor {
-        return cardNode.labelNode?.textNode?.getTextColor()?.color ?? pageModel.pageColors.primaryColor
+        return cardModel.getTextColor()?.color ?? pageModel.pageColors.primaryColor
     }
     
     var titleFont: UIFont {
@@ -156,16 +116,16 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     }
     
     var dismissListeners: [String] {
-        return cardNode.dismissListeners
+        return cardModel.dismissListeners
     }
     
     var listeners: [String] {
-        return cardNode.listeners
+        return cardModel.listeners
     }
     
     func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel {
         return MobileContentBackgroundImageViewModel(
-            backgroundImageNode: cardNode,
+            backgroundImageNode: cardModel,
             manifestResourcesCache: pageModel.resourcesCache,
             languageDirection: pageModel.language.languageDirection
         )

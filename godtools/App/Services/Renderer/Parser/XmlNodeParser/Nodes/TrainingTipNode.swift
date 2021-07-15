@@ -9,7 +9,7 @@
 import Foundation
 import SWXMLHash
 
-class TrainingTipNode: MobileContentXmlNode {
+class TrainingTipNode: MobileContentXmlNode, TrainingTipModelType {
     
     let id: String?
     

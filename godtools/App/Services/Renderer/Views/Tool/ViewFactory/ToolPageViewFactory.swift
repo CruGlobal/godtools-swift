@@ -42,11 +42,10 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
     
     func viewForRenderableNode(renderableNode: MobileContentRenderableNode, pageModel: MobileContentRendererPageModel, containerNode: MobileContentContainerNode?) -> MobileContentView? {
         
-        if let cardNode = renderableNode as? CardNode, let cardsNode = cardNode.parent as? CardsNode {
+        if let cardModel = renderableNode as? CardModelType {
             
             let viewModel = ToolPageCardViewModel(
-                cardNode: cardNode,
-                cardsNode: cardsNode,
+                cardModel: cardModel,
                 pageModel: pageModel,
                 analytics: analytics,
                 mobileContentAnalytics: mobileContentAnalytics,
@@ -66,10 +65,10 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
                 pageModel: pageModel
             )
         }
-        else if let headerNode = renderableNode as? HeaderNode {
+        else if let headerModel = renderableNode as? HeaderModelType {
             
             let viewModel = ToolPageHeaderViewModel(
-                headerNode: headerNode,
+                headerModel: headerModel,
                 pageModel: pageModel,
                 translationsFileCache: translationsFileCache,
                 mobileContentNodeParser: mobileContentNodeParser,
@@ -80,10 +79,10 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let heroNode = renderableNode as? HeroNode {
+        else if let heroModel = renderableNode as? HeroModelType {
             
             let viewModel = ToolPageHeroViewModel(
-                heroNode: heroNode,
+                heroModel: heroModel,
                 pageModel: pageModel,
                 mobileContentAnalytics: mobileContentAnalytics
             )

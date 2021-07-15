@@ -9,9 +9,9 @@
 import Foundation
 import SWXMLHash
 
-class HeroNode: MobileContentXmlNode {
+class HeroNode: MobileContentXmlNode, HeroModelType {
         
-    private(set) var analyticsEventsNode: AnalyticsEventsNode?
+    private var analyticsEventsNode: AnalyticsEventsNode?
     
     required init(xmlElement: XMLElement) {
     
@@ -25,6 +25,10 @@ class HeroNode: MobileContentXmlNode {
         }
         
         super.addChild(childNode: childNode)
+    }
+    
+    func getAnalyticsEvents() -> [AnalyticsEventModelType] {
+        return analyticsEventsNode?.analyticsEventNodes ?? []
     }
 }
 

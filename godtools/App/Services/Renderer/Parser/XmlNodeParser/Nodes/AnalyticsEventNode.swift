@@ -36,4 +36,31 @@ class AnalyticsEventNode: MobileContentXmlNode, AnalyticsEventModelType {
         
         return nil
     }
+    
+    func getTrigger() -> AnalyticsEventNodeTrigger {
+        
+        guard let triggerValue = trigger?.lowercased() else {
+            return .dependentOnContainingElement
+        }
+        
+        guard let trigger =  AnalyticsEventNodeTrigger(rawValue: triggerValue) else {
+            return .dependentOnContainingElement
+        }
+        
+        return trigger
+    }
+    
+    func getTriggerType() -> AnalyticsEventModelTriggerType {
+        
+        switch getTrigger() {
+        case .dependentOnContainingElement:
+            return .dependentOnContainingElement
+        case .hidden:
+            return .hidden
+        case .selected:
+            return .selected
+        case .visible:
+            return .visible
+        }
+    }
 }

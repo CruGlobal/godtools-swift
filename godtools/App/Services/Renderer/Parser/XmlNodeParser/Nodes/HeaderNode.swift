@@ -9,10 +9,10 @@
 import Foundation
 import SWXMLHash
 
-class HeaderNode: MobileContentXmlNode {
+class HeaderNode: MobileContentXmlNode, HeaderModelType {
     
-    private(set) var numberNode: NumberNode?
-    private(set) var titleNode: TitleNode?
+    private var numberNode: NumberNode?
+    private var titleNode: TitleNode?
     
     let trainingTip: String?
     
