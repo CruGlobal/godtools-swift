@@ -24,7 +24,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
     
     func viewForRenderableNode(renderableNode: MobileContentRenderableNode, pageModel: MobileContentRendererPageModel, containerNode: MobileContentContainerNode?) -> MobileContentView? {
         
-        if renderableNode is ContentParagraphNode {
+        if renderableNode is ContentParagraphModelType {
         
             return MobileContentStackView(
                 itemHorizontalInsets: 0,
