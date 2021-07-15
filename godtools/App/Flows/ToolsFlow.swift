@@ -625,9 +625,6 @@ class ToolsFlow: Flow {
     
     private func navigateToToolTraining(event: TrainingTipEvent) {
         
-        // TODO: Implement back in. ~Levi
-        
-        /*
         let pageNodes: [PageNode] = event.tipNode.pages?.pages ?? []
         
         if pageNodes.isEmpty {
@@ -652,9 +649,9 @@ class ToolsFlow: Flow {
         
         let renderer = MobileContentXmlNodeRenderer(
             flowDelegate: self,
-            resource: event.pageModel.resource,
-            language: event.pageModel.language,
-            manifest: event.pageModel.manifest,
+            resource: event.rendererPageModel.resource,
+            language: event.rendererPageModel.language,
+            manifest: event.rendererPageModel.manifest,
             pageNodes: pageNodes,
             translationsFileCache: appDiContainer.translationsFileCache,
             pageViewFactories: pageViewFactories,
@@ -674,14 +671,11 @@ class ToolsFlow: Flow {
         
         let view = ToolTrainingView(viewModel: viewModel)
         
-        navigationController.present(view, animated: true, completion: nil)*/
+        navigationController.present(view, animated: true, completion: nil)
     }
     
     private func navigateToLesson(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, trainingTipsEnabled: Bool, page: Int?) {
         
-        // TODO: Implement back in. ~Levi
-        
-        /*
         let analytics: AnalyticsContainer = appDiContainer.analytics
         let mobileContentAnalytics: MobileContentAnalytics = appDiContainer.getMobileContentAnalytics()
         let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
@@ -747,6 +741,6 @@ class ToolsFlow: Flow {
         
         let view = LessonView(viewModel: viewModel)
         
-        navigationController.pushViewController(view, animated: true)*/
+        navigationController.pushViewController(view, animated: true)
     }
 }
