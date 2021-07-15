@@ -286,6 +286,7 @@
 		459C56D325FF954F00F15967 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		45A2B29726A0A2CC0021C779 /* ModalModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A2B29626A0A2CC0021C779 /* ModalModelType.swift */; };
 		45A2B29926A0A4000021C779 /* ModalsModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A2B29826A0A4000021C779 /* ModalsModelType.swift */; };
+		45A2B29B26A0AE1C0021C779 /* ContentModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A2B29A26A0AE1C0021C779 /* ContentModelType.swift */; };
 		45A63AB3265441B60090E09D /* ExitLinkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A63AB2265441B60090E09D /* ExitLinkModel.swift */; };
 		45A73E4C25CF19E600B7533F /* IncomingDeepLinkType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A73E4B25CF19E600B7533F /* IncomingDeepLinkType.swift */; };
 		45A7BAF5252CBC5B00D70465 /* LocaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A7BAF4252CBC5B00D70465 /* LocaleTests.swift */; };
@@ -1253,6 +1254,7 @@
 		458AA38325D4252000E71B32 /* LocalizationBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationBundle.swift; sourceTree = "<group>"; };
 		45A2B29626A0A2CC0021C779 /* ModalModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalModelType.swift; sourceTree = "<group>"; };
 		45A2B29826A0A4000021C779 /* ModalsModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalsModelType.swift; sourceTree = "<group>"; };
+		45A2B29A26A0AE1C0021C779 /* ContentModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentModelType.swift; sourceTree = "<group>"; };
 		45A63AB2265441B60090E09D /* ExitLinkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitLinkModel.swift; sourceTree = "<group>"; };
 		45A73E4B25CF19E600B7533F /* IncomingDeepLinkType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingDeepLinkType.swift; sourceTree = "<group>"; };
 		45A7BAF4252CBC5B00D70465 /* LocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleTests.swift; sourceTree = "<group>"; };
@@ -2890,6 +2892,7 @@
 				455584CB269F890D00C3FF14 /* ContentInputModelType.swift */,
 				455584AF269F424C00C3FF14 /* ContentLabelModelType.swift */,
 				455584B1269F425300C3FF14 /* ContentLinkModelType.swift */,
+				45A2B29A26A0AE1C0021C779 /* ContentModelType.swift */,
 				45DA4FC726A073750018AE40 /* ContentParagraphModelType.swift */,
 				455584B3269F425F00C3FF14 /* ContentPlaceholderModelType.swift */,
 				455584D3269F959200C3FF14 /* ContentSectionModelType.swift */,
@@ -6356,6 +6359,7 @@
 				45AD205725938AC300A096A0 /* FirebaseAnalyticsType.swift in Sources */,
 				45558350269F2D1000C3FF14 /* LessonPageViewFactory.swift in Sources */,
 				4555845D269F2F9E00C3FF14 /* MobileContentXmlNodeFactory.swift in Sources */,
+				45A2B29B26A0AE1C0021C779 /* ContentModelType.swift in Sources */,
 				45AD1AAF25938A4E00A096A0 /* TutorialCell.swift in Sources */,
 				45AD1B5625938A4F00A096A0 /* GlobalActivityResults.swift in Sources */,
 				45AD1B7C25938A4F00A096A0 /* OnboardingTutorialViewModelType.swift in Sources */,

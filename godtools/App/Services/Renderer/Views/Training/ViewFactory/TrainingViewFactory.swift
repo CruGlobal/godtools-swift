@@ -30,10 +30,10 @@ class TrainingViewFactory: MobileContentPageViewFactoryType {
     
     func viewForRenderableNode(renderableNode: MobileContentRenderableNode, rendererPageModel: MobileContentRendererPageModel, containerNode: MobileContentContainerNode?) -> MobileContentView? {
         
-        if let trainingTipNode = renderableNode as? TrainingTipNode {
+        if let trainingTipModel = renderableNode as? TrainingTipModelType {
             
             return getTrainingTipView(
-                trainingTipId: trainingTipNode.id ?? "",
+                trainingTipId: trainingTipModel.id ?? "",
                 rendererPageModel: rendererPageModel,
                 trainingTipViewType: .rounded
             )

@@ -10,12 +10,12 @@ import UIKit
 
 class LessonContentViewModel: LessonContentViewModelType {
     
-    private let contentNode: ContentNode
+    private let contentModel: ContentModelType
     private let rendererPageModel: MobileContentRendererPageModel
     
-    required init(contentNode: ContentNode, rendererPageModel: MobileContentRendererPageModel) {
+    required init(contentModel: ContentModelType, rendererPageModel: MobileContentRendererPageModel) {
         
-        self.contentNode = contentNode
+        self.contentModel = contentModel
         self.rendererPageModel = rendererPageModel
     }
     

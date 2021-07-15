@@ -41,10 +41,10 @@ class LessonPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let contentNode = renderableNode as? ContentNode {
+        else if let contentModel = renderableNode as? ContentModelType {
             
             let viewModel = LessonContentViewModel(
-                contentNode: contentNode,
+                contentModel: contentModel,
                 rendererPageModel: rendererPageModel
             )
             
