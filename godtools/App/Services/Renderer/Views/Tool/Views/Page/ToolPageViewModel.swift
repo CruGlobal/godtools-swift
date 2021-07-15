@@ -67,7 +67,7 @@ class ToolPageViewModel: MobileContentPageViewModel, ToolPageViewModelType {
             
             for viewFactory in pageModel.pageViewFactories {
                 if let toolPageViewFactory = viewFactory as? ToolPageViewFactory {
-                    return toolPageViewFactory.getCallToActionView(callToActionNode: nil, pageModel: pageModel)
+                    return toolPageViewFactory.getCallToActionView(callToActionModel: nil, pageModel: pageModel)
                 }
             }
         }

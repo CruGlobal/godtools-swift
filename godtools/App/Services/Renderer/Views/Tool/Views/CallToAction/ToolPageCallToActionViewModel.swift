@@ -10,13 +10,13 @@ import UIKit
 
 class ToolPageCallToActionViewModel: ToolPageCallToActionViewModelType {
     
-    private let callToActionNode: CallToActionNode?
+    private let callToActionModel: CallToActionModelType?
     private let pageModel: MobileContentRendererPageModel
     private let fontService: FontService
         
-    required init(callToActionNode: CallToActionNode?, pageModel: MobileContentRendererPageModel, fontService: FontService) {
+    required init(callToActionModel: CallToActionModelType?, pageModel: MobileContentRendererPageModel, fontService: FontService) {
         
-        self.callToActionNode = callToActionNode
+        self.callToActionModel = callToActionModel
         self.pageModel = pageModel
         self.fontService = fontService
     }
@@ -26,7 +26,7 @@ class ToolPageCallToActionViewModel: ToolPageCallToActionViewModelType {
     }
     
     var title: String? {
-        return callToActionNode?.textNode?.text
+        return callToActionModel?.text
     }
     
     var titleFont: UIFont {
@@ -44,11 +44,11 @@ class ToolPageCallToActionViewModel: ToolPageCallToActionViewModelType {
     }
     
     var titleColor: UIColor {
-        return callToActionNode?.textNode?.getTextColor()?.color ?? pageModel.pageColors.textColor
+        return callToActionModel?.getTextColor()?.color ?? pageModel.pageColors.textColor
     }
     
     var nextButtonColor: UIColor {
-        return callToActionNode?.getControlColor()?.color ?? pageModel.pageColors.primaryColor
+        return callToActionModel?.getControlColor()?.color ?? pageModel.pageColors.primaryColor
     }
     
     var nextButtonImage: UIImage? {

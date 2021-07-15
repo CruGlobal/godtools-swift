@@ -58,10 +58,10 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let callToActionNode = renderableNode as? CallToActionNode {
+        else if let callToActionModel = renderableNode as? CallToActionModelType {
             
             return getCallToActionView(
-                callToActionNode: callToActionNode,
+                callToActionModel: callToActionModel,
                 pageModel: pageModel
             )
         }
@@ -165,10 +165,10 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
         return nil
     }
     
-    func getCallToActionView(callToActionNode: CallToActionNode?, pageModel: MobileContentRendererPageModel) -> ToolPageCallToActionView {
+    func getCallToActionView(callToActionModel: CallToActionModelType?, pageModel: MobileContentRendererPageModel) -> ToolPageCallToActionView {
         
         let viewModel = ToolPageCallToActionViewModel(
-            callToActionNode: callToActionNode,
+            callToActionModel: callToActionModel,
             pageModel: pageModel,
             fontService: fontService
         )

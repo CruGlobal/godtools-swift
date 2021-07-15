@@ -10,4 +10,9 @@ import Foundation
 
 protocol CallToActionModelType {
     
+    var controlColor: String? { get }
+    var text: String? { get }
+    
+    func getTextColor() -> MobileContentRGBAColor?
+    func getControlColor() -> MobileContentRGBAColor?
 }

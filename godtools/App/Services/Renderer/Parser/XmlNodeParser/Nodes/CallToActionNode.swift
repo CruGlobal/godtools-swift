@@ -9,7 +9,7 @@
 import Foundation
 import SWXMLHash
 
-class CallToActionNode: MobileContentXmlNode {
+class CallToActionNode: MobileContentXmlNode, CallToActionModelType {
         
     let controlColor: String?
     
@@ -22,8 +22,16 @@ class CallToActionNode: MobileContentXmlNode {
         super.init(xmlElement: xmlElement)
     }
     
-    var textNode: ContentTextNode? {
+    private var textNode: ContentTextNode? {
         return children.first as? ContentTextNode
+    }
+    
+    var text: String? {
+        return textNode?.text
+    }
+    
+    func getTextColor() -> MobileContentRGBAColor? {
+        return textNode?.getTextColor()
     }
     
     func getControlColor() -> MobileContentRGBAColor? {
