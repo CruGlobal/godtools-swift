@@ -203,9 +203,12 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if renderableNode is ContentAccordionNode {
+        else if let accordionModel = renderableNode as? ContentAccordionModelType {
             
-            let viewModel = MobileContentAccordionViewModel()
+            let viewModel = MobileContentAccordionViewModel(
+                accordionModel: accordionModel,
+                pageModel: pageModel
+            )
             
             let view = MobileContentAccordionView(viewModel: viewModel)
             

@@ -9,7 +9,7 @@
 import Foundation
 import SWXMLHash
 
-class ContentAccordionNode: MobileContentXmlNode {
+class ContentAccordionNode: MobileContentXmlNode, ContentAccordionModelType {
     
     required init(xmlElement: XMLElement) {
     

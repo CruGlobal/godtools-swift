@@ -264,6 +264,7 @@
 		455584D0269F8D9600C3FF14 /* ContentSpacerModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455584CF269F8D9600C3FF14 /* ContentSpacerModelType.swift */; };
 		455584D2269F94F000C3FF14 /* ContentHeaderModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455584D1269F94F000C3FF14 /* ContentHeaderModelType.swift */; };
 		455584D4269F959200C3FF14 /* ContentSectionModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455584D3269F959200C3FF14 /* ContentSectionModelType.swift */; };
+		455584D6269F964F00C3FF14 /* ContentAccordionModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455584D5269F964F00C3FF14 /* ContentAccordionModelType.swift */; };
 		4556AECD23E22185002C15E8 /* SF-Pro-Display-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AECA23E22185002C15E8 /* SF-Pro-Display-Light.otf */; };
 		4556AECE23E22185002C15E8 /* SF-Pro-Text-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AECB23E22185002C15E8 /* SF-Pro-Text-Light.otf */; };
 		4556AECF23E22185002C15E8 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AECC23E22185002C15E8 /* SF-Pro-Text-Regular.otf */; };
@@ -1224,6 +1225,7 @@
 		455584CF269F8D9600C3FF14 /* ContentSpacerModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentSpacerModelType.swift; sourceTree = "<group>"; };
 		455584D1269F94F000C3FF14 /* ContentHeaderModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentHeaderModelType.swift; sourceTree = "<group>"; };
 		455584D3269F959200C3FF14 /* ContentSectionModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentSectionModelType.swift; sourceTree = "<group>"; };
+		455584D5269F964F00C3FF14 /* ContentAccordionModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentAccordionModelType.swift; sourceTree = "<group>"; };
 		4556AECA23E22185002C15E8 /* SF-Pro-Display-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Light.otf"; sourceTree = "<group>"; };
 		4556AECB23E22185002C15E8 /* SF-Pro-Text-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Light.otf"; sourceTree = "<group>"; };
 		4556AECC23E22185002C15E8 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
@@ -2862,6 +2864,7 @@
 				455584BF269F4D1500C3FF14 /* AnalyticsAttributeModelType.swift */,
 				455584BD269F4C3700C3FF14 /* AnalyticsEventModelType.swift */,
 				455584AB269F423100C3FF14 /* CallToActionModelType.swift */,
+				455584D5269F964F00C3FF14 /* ContentAccordionModelType.swift */,
 				455584AD269F424300C3FF14 /* ContentButtonModelType.swift */,
 				455584CD269F8D2900C3FF14 /* ContentFormModelType.swift */,
 				455584D1269F94F000C3FF14 /* ContentHeaderModelType.swift */,
@@ -6318,6 +6321,7 @@
 				45AD1FEB25938A9800A096A0 /* InitialDeviceResourcesLoader.swift in Sources */,
 				45AD1AFD25938A4E00A096A0 /* DownloadArticlesErrorViewModel.swift in Sources */,
 				45C93AEC261D310900592FFF /* ArticleJcrContentType.swift in Sources */,
+				455584D6269F964F00C3FF14 /* ContentAccordionModelType.swift in Sources */,
 				45558465269F2F9E00C3FF14 /* HeroNode.swift in Sources */,
 				45AD1B0D25938A4E00A096A0 /* ArticlesErrorMessageView.swift in Sources */,
 				45AD201525938A9800A096A0 /* RealmTranslationZipFile.swift in Sources */,
@@ -7366,7 +7370,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.cru.godtools";
+				PROVISIONING_PROFILE_SPECIFIER = "GodTools Release Profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "godtools/godtools-Bridging-Header.h";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
