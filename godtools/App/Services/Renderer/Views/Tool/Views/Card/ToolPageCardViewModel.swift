@@ -125,7 +125,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     
     func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel {
         return MobileContentBackgroundImageViewModel(
-            backgroundImageNode: cardModel,
+            backgroundImageModel: cardModel,
             manifestResourcesCache: rendererPageModel.resourcesCache,
             languageDirection: rendererPageModel.language.languageDirection
         )

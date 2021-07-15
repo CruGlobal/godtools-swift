@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol MobileContentManifestAttributesType: BackgroundImageNodeType {
+protocol MobileContentManifestAttributesType: BackgroundImageModelType {
     
     var backgroundColor: String { get }
     var backgroundImage: String? { get }

@@ -8,8 +8,7 @@
 
 import Foundation
 
-// TODO: Change or remove BackgroundImageNodeType protocol here, maybe BackgroundImageModelType? ~Levi
-protocol CardModelType: BackgroundImageNodeType {
+protocol CardModelType: BackgroundImageModelType {
     
     var backgroundImage: String? { get }
     var backgroundImageAlign: [String] { get }

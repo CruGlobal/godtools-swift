@@ -1,21 +1,21 @@
 //
-//  BackgroundImageNodeType.swift
+//  BackgroundImageModelType.swift
 //  godtools
 //
-//  Created by Levi Eggert on 11/18/20.
-//  Copyright © 2020 Cru. All rights reserved.
+//  Created by Levi Eggert on 7/15/21.
+//  Copyright © 2021 Cru. All rights reserved.
 //
 
 import Foundation
 
-protocol BackgroundImageNodeType {
+protocol BackgroundImageModelType {
     
     var backgroundImage: String? { get }
     var backgroundImageAlign: [String] { get }
     var backgroundImageScaleType: String { get }
 }
 
-extension BackgroundImageNodeType {
+extension BackgroundImageModelType {
     
     var backgroundImageExists: Bool {
         if let backgroundImage = self.backgroundImage {

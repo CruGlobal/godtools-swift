@@ -10,7 +10,7 @@ import UIKit
 
 class MobileContentBackgroundImageViewModel {
     
-    private let backgroundImageNode: BackgroundImageNodeType
+    private let backgroundImageModel: BackgroundImageModelType
     private let manifestResourcesCache: ManifestResourcesCache
     private let languageDirection: LanguageDirection
     private let backgroundImageRenderer: MobileContentBackgroundImageRenderer = MobileContentBackgroundImageRenderer()
@@ -18,18 +18,18 @@ class MobileContentBackgroundImageViewModel {
     let align: [MobileContentBackgroundImageAlignType]
     let scale: MobileContentBackgroundImageScaleType
     
-    required init(backgroundImageNode: BackgroundImageNodeType, manifestResourcesCache: ManifestResourcesCache, languageDirection: LanguageDirection) {
+    required init(backgroundImageModel: BackgroundImageModelType, manifestResourcesCache: ManifestResourcesCache, languageDirection: LanguageDirection) {
         
-        self.backgroundImageNode = backgroundImageNode
+        self.backgroundImageModel = backgroundImageModel
         self.manifestResourcesCache = manifestResourcesCache
         self.languageDirection = languageDirection
         
-        align = backgroundImageNode.backgroundImageAlign.compactMap({MobileContentBackgroundImageAlignType(rawValue: $0)})
-        scale = MobileContentBackgroundImageScaleType(rawValue: backgroundImageNode.backgroundImageScaleType) ?? .fillHorizontally
+        align = backgroundImageModel.backgroundImageAlign.compactMap({MobileContentBackgroundImageAlignType(rawValue: $0)})
+        scale = MobileContentBackgroundImageScaleType(rawValue: backgroundImageModel.backgroundImageScaleType) ?? .fillHorizontally
     }
     
     var backgroundImage: UIImage? {
-        guard let resource = backgroundImageNode.backgroundImage else {
+        guard let resource = backgroundImageModel.backgroundImage else {
             return nil
         }
         return manifestResourcesCache.getImage(resource: resource)
@@ -58,7 +58,7 @@ class MobileContentBackgroundImageViewModel {
     
     func backgroundImageWillAppear(container: CGRect) -> UIImageView? {
         
-        guard let resource = backgroundImageNode.backgroundImage else {
+        guard let resource = backgroundImageModel.backgroundImage else {
             return nil
         }
         

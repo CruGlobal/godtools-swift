@@ -57,21 +57,21 @@ class MobileContentPageViewModel: MobileContentPageViewModelType {
         
         let manifestAttributes: MobileContentXmlManifestAttributes = rendererPageModel.manifest.attributes
         
-        let backgroundImageNode: BackgroundImageNodeType?
+        let backgroundImageModel: BackgroundImageModelType?
         
         if pageModel.backgroundImageExists {
-            backgroundImageNode = pageModel
+            backgroundImageModel = pageModel
         }
         else if manifestAttributes.backgroundImageExists {
-            backgroundImageNode = manifestAttributes
+            backgroundImageModel = manifestAttributes
         }
         else {
-            backgroundImageNode = nil
+            backgroundImageModel = nil
         }
         
-        if let backgroundImageNode = backgroundImageNode {
+        if let backgroundImageModel = backgroundImageModel {
             return MobileContentBackgroundImageViewModel(
-                backgroundImageNode: backgroundImageNode,
+                backgroundImageModel: backgroundImageModel,
                 manifestResourcesCache: rendererPageModel.resourcesCache,
                 languageDirection: rendererPageModel.language.languageDirection
             )

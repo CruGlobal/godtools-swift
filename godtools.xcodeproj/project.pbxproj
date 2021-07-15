@@ -201,7 +201,6 @@
 		45558471269F2F9E00C3FF14 /* AnalyticsAttributeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4555842F269F2F9E00C3FF14 /* AnalyticsAttributeNode.swift */; };
 		45558472269F2F9E00C3FF14 /* NumberNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45558430269F2F9E00C3FF14 /* NumberNode.swift */; };
 		45558473269F2F9E00C3FF14 /* ContentTabNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45558431269F2F9E00C3FF14 /* ContentTabNode.swift */; };
-		45558474269F2F9E00C3FF14 /* BackgroundImageNodeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45558432269F2F9E00C3FF14 /* BackgroundImageNodeType.swift */; };
 		45558475269F2F9E00C3FF14 /* CardNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45558433269F2F9E00C3FF14 /* CardNode.swift */; };
 		45558476269F2F9E00C3FF14 /* ContentPlaceholderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45558434269F2F9E00C3FF14 /* ContentPlaceholderNode.swift */; };
 		45558477269F2F9E00C3FF14 /* ContentInputNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45558435269F2F9E00C3FF14 /* ContentInputNode.swift */; };
@@ -287,6 +286,7 @@
 		45A2B29726A0A2CC0021C779 /* ModalModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A2B29626A0A2CC0021C779 /* ModalModelType.swift */; };
 		45A2B29926A0A4000021C779 /* ModalsModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A2B29826A0A4000021C779 /* ModalsModelType.swift */; };
 		45A2B29B26A0AE1C0021C779 /* ContentModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A2B29A26A0AE1C0021C779 /* ContentModelType.swift */; };
+		45A2B29D26A0AFE30021C779 /* BackgroundImageModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A2B29C26A0AFE30021C779 /* BackgroundImageModelType.swift */; };
 		45A63AB3265441B60090E09D /* ExitLinkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A63AB2265441B60090E09D /* ExitLinkModel.swift */; };
 		45A73E4C25CF19E600B7533F /* IncomingDeepLinkType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A73E4B25CF19E600B7533F /* IncomingDeepLinkType.swift */; };
 		45A7BAF5252CBC5B00D70465 /* LocaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A7BAF4252CBC5B00D70465 /* LocaleTests.swift */; };
@@ -1171,7 +1171,6 @@
 		4555842F269F2F9E00C3FF14 /* AnalyticsAttributeNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsAttributeNode.swift; sourceTree = "<group>"; };
 		45558430269F2F9E00C3FF14 /* NumberNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberNode.swift; sourceTree = "<group>"; };
 		45558431269F2F9E00C3FF14 /* ContentTabNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentTabNode.swift; sourceTree = "<group>"; };
-		45558432269F2F9E00C3FF14 /* BackgroundImageNodeType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundImageNodeType.swift; sourceTree = "<group>"; };
 		45558433269F2F9E00C3FF14 /* CardNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardNode.swift; sourceTree = "<group>"; };
 		45558434269F2F9E00C3FF14 /* ContentPlaceholderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentPlaceholderNode.swift; sourceTree = "<group>"; };
 		45558435269F2F9E00C3FF14 /* ContentInputNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentInputNode.swift; sourceTree = "<group>"; };
@@ -1255,6 +1254,7 @@
 		45A2B29626A0A2CC0021C779 /* ModalModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalModelType.swift; sourceTree = "<group>"; };
 		45A2B29826A0A4000021C779 /* ModalsModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalsModelType.swift; sourceTree = "<group>"; };
 		45A2B29A26A0AE1C0021C779 /* ContentModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentModelType.swift; sourceTree = "<group>"; };
+		45A2B29C26A0AFE30021C779 /* BackgroundImageModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundImageModelType.swift; sourceTree = "<group>"; };
 		45A63AB2265441B60090E09D /* ExitLinkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitLinkModel.swift; sourceTree = "<group>"; };
 		45A73E4B25CF19E600B7533F /* IncomingDeepLinkType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingDeepLinkType.swift; sourceTree = "<group>"; };
 		45A7BAF4252CBC5B00D70465 /* LocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleTests.swift; sourceTree = "<group>"; };
@@ -2786,7 +2786,6 @@
 				4555842F269F2F9E00C3FF14 /* AnalyticsAttributeNode.swift */,
 				45558428269F2F9E00C3FF14 /* AnalyticsEventNode.swift */,
 				45558439269F2F9E00C3FF14 /* AnalyticsEventsNode.swift */,
-				45558432269F2F9E00C3FF14 /* BackgroundImageNodeType.swift */,
 				45558421269F2F9E00C3FF14 /* CallToActionNode.swift */,
 				45558433269F2F9E00C3FF14 /* CardNode.swift */,
 				45558422269F2F9E00C3FF14 /* CardsNode.swift */,
@@ -2881,6 +2880,7 @@
 				455584BF269F4D1500C3FF14 /* AnalyticsAttributeModelType.swift */,
 				45B1D38326A08DA700B931D0 /* AnalyticsEventModelTriggerType.swift */,
 				455584BD269F4C3700C3FF14 /* AnalyticsEventModelType.swift */,
+				45A2B29C26A0AFE30021C779 /* BackgroundImageModelType.swift */,
 				455584AB269F423100C3FF14 /* CallToActionModelType.swift */,
 				45B1D37D26A07E8700B931D0 /* CardModelType.swift */,
 				45B1D37F26A0804700B931D0 /* CardsModelType.swift */,
@@ -5883,7 +5883,6 @@
 				45AD1AA125938A4E00A096A0 /* TutorialItemProvider.swift in Sources */,
 				455584AA269F40A700C3FF14 /* LabelModelType.swift in Sources */,
 				45AD1B0525938A4E00A096A0 /* ArticlesErrorMessage.swift in Sources */,
-				45558474269F2F9E00C3FF14 /* BackgroundImageNodeType.swift in Sources */,
 				455583C8269F2DA500C3FF14 /* MobileContentSectionViewModelType.swift in Sources */,
 				45AD1FFE25938A9800A096A0 /* ResourceViewModelType.swift in Sources */,
 				45AD1F9025938A9800A096A0 /* TranslationModel.swift in Sources */,
@@ -5977,6 +5976,7 @@
 				458AA38425D4252000E71B32 /* LocalizationBundle.swift in Sources */,
 				45AD1FBB25938A9800A096A0 /* TractRemoteShareSubscriberError.swift in Sources */,
 				45AD1B5A25938A4F00A096A0 /* AccountView.swift in Sources */,
+				45A2B29D26A0AFE30021C779 /* BackgroundImageModelType.swift in Sources */,
 				45AD1B8E25938A4F00A096A0 /* OnboardingWelcomeViewModel.swift in Sources */,
 				45AD1BDD25938A4F00A096A0 /* GTSegmentType.swift in Sources */,
 				45AC60192624BAB100253217 /* ToolItemInitialDownloadProgress.swift in Sources */,
