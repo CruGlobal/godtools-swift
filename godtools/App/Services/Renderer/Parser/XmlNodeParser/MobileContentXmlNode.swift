@@ -14,10 +14,12 @@ class MobileContentXmlNode: NSObject {
     private(set) var children: [MobileContentXmlNode] = Array()
     
     let xmlElement: XMLElement
+    let position: Int
     
-    required init(xmlElement: XMLElement) {
+    required init(xmlElement: XMLElement, position: Int) {
         
         self.xmlElement = xmlElement
+        self.position = position
         
         super.init()
     }

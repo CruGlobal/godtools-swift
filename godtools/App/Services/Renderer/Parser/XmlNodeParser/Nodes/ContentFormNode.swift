@@ -11,9 +11,9 @@ import SWXMLHash
 
 class ContentFormNode: MobileContentXmlNode, ContentFormModelType {
         
-    required init(xmlElement: XMLElement) {
+    required init(xmlElement: XMLElement, position: Int) {
     
-        super.init(xmlElement: xmlElement)
+        super.init(xmlElement: xmlElement, position: position)
     }
 }
 

@@ -14,14 +14,14 @@ class ContentVideoNode: MobileContentXmlNode, ContentVideoModelType {
     let provider: String?
     let videoId: String?
     
-    required init(xmlElement: XMLElement) {
+    required init(xmlElement: XMLElement, position: Int) {
     
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
         provider = attributes["provider"]?.text
         videoId = attributes["video-id"]?.text
 
-        super.init(xmlElement: xmlElement)
+        super.init(xmlElement: xmlElement, position: position)
     }
     
     var providerType: MobileContentVideoNodeProvider {

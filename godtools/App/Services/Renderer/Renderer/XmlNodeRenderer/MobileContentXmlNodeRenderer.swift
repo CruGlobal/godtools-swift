@@ -25,12 +25,16 @@ class MobileContentXmlNodeRenderer: MobileContentRendererType {
     
     private var pageListeners: [PageListenerEventName: PageNumber] = Dictionary()
     
-    private(set) var allPages: [PageNode] = Array()
+    private(set) var allPageNodes: [PageNode] = Array()
     
     let manifest: MobileContentXmlManifest
     let resourcesCache: ManifestResourcesCache
     let resource: ResourceModel
     let language: LanguageModel
+    
+    var allPageModels: [PageModelType] {
+        return allPageNodes
+    }
     
     required init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageModel, manifest: MobileContentXmlManifest, pageNodes: [PageNode], translationsFileCache: TranslationsFileCache, pageViewFactories: [MobileContentPageViewFactoryType], mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
         
@@ -79,7 +83,7 @@ class MobileContentXmlNodeRenderer: MobileContentRendererType {
                 }
             }
             
-            allPages = allPageNodes
+            self.allPageNodes = allPageNodes
         }
         else {
             
@@ -95,7 +99,7 @@ class MobileContentXmlNodeRenderer: MobileContentRendererType {
                 allPageNodes.append(pageNode)
             }
             
-            allPages = allPageNodes
+            self.allPageNodes = allPageNodes
         }
     }
         
@@ -118,13 +122,13 @@ class MobileContentXmlNodeRenderer: MobileContentRendererType {
     
     // MARK: - Rendering
     
-    func getPageNode(page: Int) -> PageNode? {
+    private func getPageNode(page: Int) -> PageNode? {
         
-        guard page >= 0 && page < allPages.count else {
+        guard page >= 0 && page < allPageNodes.count else {
             return nil
         }
         
-        return allPages[page]
+        return allPageNodes[page]
     }
     
     func renderPage(page: Int, window: UIViewController, safeArea: UIEdgeInsets, primaryRendererLanguage: LanguageModel) -> Result<MobileContentView, Error> {
@@ -158,10 +162,10 @@ class MobileContentXmlNodeRenderer: MobileContentRendererType {
         
         if let pageNode = pageNode {
                         
-            return renderPageNode(
-                pageNode: pageNode,
+            return renderPageModel(
+                pageModel: pageNode,
                 page: page,
-                numberOfPages: allPages.count,
+                numberOfPages: allPageNodes.count,
                 window: window,
                 safeArea: safeArea,
                 primaryRendererLanguage: primaryRendererLanguage
@@ -176,8 +180,14 @@ class MobileContentXmlNodeRenderer: MobileContentRendererType {
         return .failure(failedToRenderPageError)
     }
         
-    func renderPageNode(pageNode: PageNode, page: Int, numberOfPages: Int, window: UIViewController, safeArea: UIEdgeInsets, primaryRendererLanguage: LanguageModel) -> Result<MobileContentView, Error> {
+    func renderPageModel(pageModel: PageModelType, page: Int, numberOfPages: Int, window: UIViewController, safeArea: UIEdgeInsets, primaryRendererLanguage: LanguageModel) -> Result<MobileContentView, Error> {
     
+        guard let pageNode = pageModel as? PageNode else {
+            assertionFailure("Expected pageModel: PageModelType to be type PageNode.")
+            let failedToRenderPageError: Error = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to render page node.  PageModel is not of type PageNode."])
+            return .failure(failedToRenderPageError)
+        }
+        
         let rendererPageModel = MobileContentRendererPageModel(
             pageModel: pageNode,
             page: page,

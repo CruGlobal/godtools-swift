@@ -13,7 +13,7 @@ class TipNode: MobileContentXmlNode {
         
     let tipType: String?
     
-    required init(xmlElement: XMLElement) {
+    required init(xmlElement: XMLElement, position: Int) {
     
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         if let tipTypeAttribute = attributes["type"] {
@@ -23,7 +23,7 @@ class TipNode: MobileContentXmlNode {
             tipType = nil
         }
         
-        super.init(xmlElement: xmlElement)
+        super.init(xmlElement: xmlElement, position: position)
     }
     
     var pages: PagesNode? {

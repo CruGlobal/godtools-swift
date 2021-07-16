@@ -11,9 +11,9 @@ import SWXMLHash
 
 class ContentNode: MobileContentXmlNode, ContentModelType {
     
-    required init(xmlElement: XMLElement) {
+    required init(xmlElement: XMLElement, position: Int) {
     
-        super.init(xmlElement: xmlElement)
+        super.init(xmlElement: xmlElement, position: position)
     }
 }
 

@@ -14,7 +14,7 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     
     private var currentRenderer: MobileContentRendererType?
     private var safeArea: UIEdgeInsets?
-    private var pages: [PageNode] = Array()
+    private var pageModels: [PageModelType] = Array()
     
     private weak var window: UIViewController?
     private weak var flowDelegate: FlowDelegate?
@@ -46,10 +46,25 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
 
     }
     
-    private func removePage(pageNode: PageNode) {
-        if let pageIndex = pages.firstIndex(of: pageNode) {
-            pages.remove(at: pageIndex)
-            numberOfPages.setValue(value: pages.count)
+    private func getPageModelIndex(pageModel: PageModelType) -> Int? {
+                
+        for index in 0 ..< pageModels.count {
+            
+            let contentPageModel: PageModelType = pageModels[index]
+    
+            if contentPageModel.position == pageModel.position {
+                return index
+            }
+        }
+        
+        return nil
+    }
+    
+    private func removePage(pageModel: PageModelType) {
+        
+        if let pageIndex = getPageModelIndex(pageModel: pageModel) {
+            pageModels.remove(at: pageIndex)
+            numberOfPages.setValue(value: pageModels.count)
             pagesRemoved.accept(value: [IndexPath(item: pageIndex, section: 0)])
         }
     }
@@ -94,11 +109,11 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         
         currentRenderer = renderer
         
-        let visiblePages: [PageNode] = renderer.allPages.filter({!$0.isHidden})
+        let visiblePageModels: [PageModelType] = renderer.getVisiblePageModels()
         
-        pages = visiblePages
+        pageModels = visiblePageModels
         
-        numberOfPages.accept(value: pages.count)
+        numberOfPages.accept(value: pageModels.count)
     }
     
     func pageWillAppear(page: Int) -> MobileContentView? {
@@ -111,14 +126,14 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
             return nil
         }
         
-        guard page >= 0 && page < pages.count else {
+        guard page >= 0 && page < pageModels.count else {
             return nil
         }
         
-        let renderPageResult: Result<MobileContentView, Error> =  renderer.renderPageNode(
-            pageNode: pages[page],
+        let renderPageResult: Result<MobileContentView, Error> =  renderer.renderPageModel(
+            pageModel: pageModels[page],
             page: page,
-            numberOfPages: pages.count,
+            numberOfPages: pageModels.count,
             window: window,
             safeArea: safeArea,
             primaryRendererLanguage: primaryRenderer.language
@@ -138,12 +153,12 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     
     func pageDidDisappear(page: Int) {
                 
-        guard let pageNode = currentRenderer?.getPageNode(page: page) else {
+        guard let pageModel = currentRenderer?.getPageModel(page: page) else {
             return
         }
         
-        if pages.contains(pageNode) && pageNode.isHidden {
-            removePage(pageNode: pageNode)
+        if pageModel.isHidden {
+            removePage(pageModel: pageModel)
         }
     }
     
@@ -153,27 +168,27 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
             return
         }
         
-        guard let didReceivePageListenerEventForPageNode = currentRenderer?.getPageNode(page: didReceivePageListenerForPageNumber) else {
+        guard let didReceivePageListenerEventForPageModel = currentRenderer?.getPageModel(page: didReceivePageListenerForPageNumber) else {
             return
         }
         
         let pageNumber: Int
         let willReloadData: Bool
         
-        if let pageNumberExistsInActivatePages = pages.firstIndex(of: didReceivePageListenerEventForPageNode) {
+        if let pageNumberExistsInActivatePages = getPageModelIndex(pageModel: didReceivePageListenerEventForPageModel) {
             
             pageNumber = pageNumberExistsInActivatePages
             willReloadData = false
         }
-        else if didReceivePageListenerEventForPageNode.isHidden {
+        else if didReceivePageListenerEventForPageModel.isHidden {
             
-            if didReceivePageListenerForPageNumber < pages.count {
-                pages.insert(didReceivePageListenerEventForPageNode, at: didReceivePageListenerForPageNumber)
+            if didReceivePageListenerForPageNumber < pageModels.count {
+                pageModels.insert(didReceivePageListenerEventForPageModel, at: didReceivePageListenerForPageNumber)
                 pageNumber = didReceivePageListenerForPageNumber
             }
             else {
-                pages.append(didReceivePageListenerEventForPageNode)
-                pageNumber = pages.count - 1
+                pageModels.append(didReceivePageListenerEventForPageModel)
+                pageNumber = pageModels.count - 1
             }
             
             willReloadData = true
@@ -194,7 +209,7 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         pageNavigation.accept(value: pageNavigationForReceivedPageListener)
         
         if willReloadData {
-            numberOfPages.accept(value: pages.count)
+            numberOfPages.accept(value: pageModels.count)
         }
     }
 }

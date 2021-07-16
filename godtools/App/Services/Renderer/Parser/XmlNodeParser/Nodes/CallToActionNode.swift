@@ -13,13 +13,13 @@ class CallToActionNode: MobileContentXmlNode, CallToActionModelType {
         
     let controlColor: String?
     
-    required init(xmlElement: XMLElement) {
+    required init(xmlElement: XMLElement, position: Int) {
     
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
         controlColor = attributes["control-color"]?.text
         
-        super.init(xmlElement: xmlElement)
+        super.init(xmlElement: xmlElement, position: position)
     }
     
     private var textNode: ContentTextNode? {

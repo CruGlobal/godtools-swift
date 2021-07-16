@@ -20,7 +20,7 @@ class ContentButtonNode: MobileContentXmlNode, ContentButtonModelType {
     let type: String?
     let url: String?
     
-    required init(xmlElement: XMLElement) {
+    required init(xmlElement: XMLElement, position: Int) {
     
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
@@ -42,7 +42,7 @@ class ContentButtonNode: MobileContentXmlNode, ContentButtonModelType {
             url = nil
         }
         
-        super.init(xmlElement: xmlElement)
+        super.init(xmlElement: xmlElement, position: position)
     }
     
     override func addChild(childNode: MobileContentXmlNode) {

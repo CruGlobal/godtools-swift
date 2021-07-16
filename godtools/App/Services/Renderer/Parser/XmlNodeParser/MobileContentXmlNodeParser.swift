@@ -32,10 +32,10 @@ class MobileContentXmlNodeParser {
         }
     }
     
-    func asyncParseXmlElement(xmlElement: XMLElement, complete: @escaping ((_ node: MobileContentXmlNode?) -> Void)) {
+    func asyncParseXmlElement(xmlElement: XMLElement, position: Int, complete: @escaping ((_ node: MobileContentXmlNode?) -> Void)) {
         
         DispatchQueue.global().async { [weak self] in
-            let node: MobileContentXmlNode? = self?.parseXmlElement(xmlElement: xmlElement, delegate: nil)
+            let node: MobileContentXmlNode? = self?.parseXmlElement(xmlElement: xmlElement, delegate: nil, position: position)
             complete(node)
         }
     }
@@ -50,10 +50,10 @@ class MobileContentXmlNodeParser {
             return nil
         }
         
-        return parseXmlElement(xmlElement: rootXmlElement, delegate: delegate)
+        return parseXmlElement(xmlElement: rootXmlElement, delegate: delegate, position: 0)
     }
     
-    func parseXmlElement(xmlElement: XMLElement, delegate: MobileContentXmlNodeParserDelegate?) -> MobileContentXmlNode? {
+    func parseXmlElement(xmlElement: XMLElement, delegate: MobileContentXmlNodeParserDelegate?, position: Int) -> MobileContentXmlNode? {
         
         self.delegate = delegate
         
@@ -61,7 +61,7 @@ class MobileContentXmlNodeParser {
             return nil
         }
         
-        guard let node = nodeFactory.getNode(nodeType: nodeType, xmlElement: xmlElement) else {
+        guard let node = nodeFactory.getNode(nodeType: nodeType, xmlElement: xmlElement, position: position) else {
             return nil
         }
         
@@ -80,17 +80,21 @@ class MobileContentXmlNodeParser {
                 
         let childElements: [XMLContent] = xmlElement.children
                 
+        var childPosition: Int = 0
+        
         for childElement in childElements {
             
             if let childXmlElement = childElement as? XMLElement {
                 
                 let childNodeType: MobileContentXmlNodeType? = MobileContentXmlNodeType(rawValue: childXmlElement.name)
                 
-                if let childNodeType = childNodeType, let childNode = nodeFactory.getNode(nodeType: childNodeType, xmlElement: childXmlElement) {
+                if let childNodeType = childNodeType, let childNode = nodeFactory.getNode(nodeType: childNodeType, xmlElement: childXmlElement, position: childPosition) {
                                     
                     recurseXmlElementAndNode(xmlElement: childXmlElement, node: childNode, nodeParent: node)
                     
                     node.addChild(childNode: childNode)
+                    
+                    childPosition += 1
                 }
             }
         }

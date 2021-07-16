@@ -15,13 +15,13 @@ class ContentTabNode: MobileContentXmlNode, ContentTabModelType {
     
     let listeners: [String]
     
-    required init(xmlElement: XMLElement) {
+    required init(xmlElement: XMLElement, position: Int) {
     
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
         listeners = attributes["listeners"]?.text.components(separatedBy: " ") ?? []
         
-        super.init(xmlElement: xmlElement)
+        super.init(xmlElement: xmlElement, position: position)
     }
     
     private var contentLabelNode: ContentLabelNode? {

@@ -29,7 +29,7 @@ class PageNode: MobileContentXmlNode, PageModelType {
     let textColor: String?
     let textScale: String?
     
-    required init(xmlElement: XMLElement) {
+    required init(xmlElement: XMLElement, position: Int) {
    
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
@@ -51,7 +51,7 @@ class PageNode: MobileContentXmlNode, PageModelType {
         textColor = attributes["text-color"]?.text
         textScale = attributes["text-scale"]?.text
 
-        super.init(xmlElement: xmlElement)
+        super.init(xmlElement: xmlElement, position: position)
     }
     
     override func addChild(childNode: MobileContentXmlNode) {
