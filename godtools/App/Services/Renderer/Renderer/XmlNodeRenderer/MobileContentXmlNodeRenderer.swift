@@ -60,7 +60,7 @@ class MobileContentXmlNodeRenderer: MobileContentRendererType {
             
             var allPageNodes: [PageNode] = Array()
         
-            let manifestPages: [MobileContentXmlManifestPage] = manifest.pages
+            let manifestPages: [MobileContentManifestPageType] = manifest.pages
             
             var errors: [Error] = Array()
             
@@ -266,7 +266,7 @@ class MobileContentXmlNodeRenderer: MobileContentRendererType {
     
     private func parsePageNode(manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, page: Int) -> Result<PageNode, Error> {
         
-        let manifestPage: MobileContentXmlManifestPage = manifest.pages[page]
+        let manifestPage: MobileContentManifestPageType = manifest.pages[page]
         let pageXmlCacheLocation: SHA256FileLocation = SHA256FileLocation(sha256WithPathExtension: manifestPage.src)
                 
         switch translationsFileCache.getData(location: pageXmlCacheLocation) {

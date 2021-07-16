@@ -11,11 +11,11 @@ import SWXMLHash
 
 class MobileContentXmlManifest: MobileContentManifestType {
       
-    let attributes: MobileContentXmlManifestAttributes
+    let attributes: MobileContentManifestAttributesType
     let title: String?
-    let pages: [MobileContentXmlManifestPage]
-    let tips: [TipId: MobileContentXmlManifestTip]
-    let resources: [ResourceFilename: MobileContentXmlManifestResource]
+    let pages: [MobileContentManifestPageType]
+    let tips: [TipId: MobileContentManifestTipType]
+    let resources: [ResourceFilename: MobileContentManifestResourceType]
         
     required init(translationManifest: TranslationManifestData) {
            
@@ -33,10 +33,10 @@ class MobileContentXmlManifest: MobileContentManifestType {
         }
         
         let tipsIndexer: [XMLIndexer] = manifest["tips"]["tip"].all
-        var tipsDictionary: [TipId: MobileContentManifestTip] = Dictionary()
+        var tipsDictionary: [TipId: MobileContentManifestTipType] = Dictionary()
         
         for tipXml in tipsIndexer {
-            let tip = MobileContentManifestTip(tip: tipXml)
+            let tip = MobileContentXmlManifestTip(tip: tipXml)
             tipsDictionary[tip.id] = tip
         }
         

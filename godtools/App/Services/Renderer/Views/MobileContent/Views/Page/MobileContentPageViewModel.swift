@@ -55,7 +55,7 @@ class MobileContentPageViewModel: MobileContentPageViewModelType {
             return nil
         }
         
-        let manifestAttributes: MobileContentXmlManifestAttributes = rendererPageModel.manifest.attributes
+        let manifestAttributes: MobileContentManifestAttributesType = rendererPageModel.manifest.attributes
         
         let backgroundImageModel: BackgroundImageModelType?
         

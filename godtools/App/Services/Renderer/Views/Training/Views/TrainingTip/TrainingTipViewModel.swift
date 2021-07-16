@@ -68,7 +68,7 @@ class TrainingTipViewModel: TrainingTipViewModelType {
     
     private func parseTrainingTip(trainingTipId: String, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, complete: @escaping ((_ result: Result<TipNode, Error>) -> Void)) {
         
-        let manifestTip: MobileContentXmlManifestTip? = manifest.tips[trainingTipId]
+        let manifestTip: MobileContentManifestTipType? = manifest.tips[trainingTipId]
         let manifestTipSrc: String = manifestTip?.src ?? ""
         let translationsFileCache: TranslationsFileCache = translationsFileCache
         let location: SHA256FileLocation = SHA256FileLocation(sha256WithPathExtension: manifestTipSrc)
