@@ -530,53 +530,22 @@ class ToolsFlow: Flow {
     }
     
     private func navigateToTract(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
-                
-        let analytics: AnalyticsContainer = appDiContainer.analytics
-        let mobileContentAnalytics: MobileContentAnalytics = appDiContainer.getMobileContentAnalytics()
+           
         let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
-        let mobileContentNodeParser: MobileContentXmlNodeParser = appDiContainer.getMobileContentNodeParser()
-        let viewedTrainingTipsService: ViewedTrainingTipsService = appDiContainer.getViewedTrainingTipsService()
-        let fontService: FontService = appDiContainer.getFontService()
-        let localizationServices: LocalizationServices = appDiContainer.localizationServices
-        let followUpsService: FollowUpsService = appDiContainer.followUpsService
-        let cardJumpService: CardJumpService = appDiContainer.getCardJumpService()
-        let deepLinkService: DeepLinkingServiceType = appDiContainer.deepLinkingService
         
-        let toolPageViewFactory = ToolPageViewFactory(
+        let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
+            type: .tract,
             flowDelegate: self,
-            analytics: analytics,
-            mobileContentAnalytics: mobileContentAnalytics,
-            fontService: fontService,
-            localizationServices: localizationServices,
-            cardJumpService: cardJumpService,
-            followUpService: followUpsService,
-            translationsFileCache: translationsFileCache,
-            mobileContentNodeParser: mobileContentNodeParser,
-            viewedTrainingTipsService: viewedTrainingTipsService,
-            deepLinkService: deepLinkService,
+            appDiContainer: appDiContainer,
             trainingTipsEnabled: trainingTipsEnabled
         )
-        
-        let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
-            flowDelegate: self,
-            translationsFileCache: translationsFileCache,
-            mobileContentNodeParser: mobileContentNodeParser,
-            viewedTrainingTipsService: viewedTrainingTipsService,
-            deepLinkService: deepLinkService,
-            trainingTipsEnabled: trainingTipsEnabled
-        )
-        
-        let pageViewFactories: [MobileContentPageViewFactoryType] = [toolPageViewFactory, trainingViewFactory]
-        
+                
         let primaryRenderer = MobileContentXmlNodeRenderer(
-            flowDelegate: self,
             resource: resource,
             language: primaryLanguage,
             xmlParser: MobileContentXmlParser(translationManifestData: primaryTranslationManifest, translationsFileCache: translationsFileCache),
             pageViewFactories: pageViewFactories,
-            translationsFileCache: translationsFileCache,
-            mobileContentAnalytics: mobileContentAnalytics,
-            fontService: fontService
+            translationsFileCache: translationsFileCache
         )
         
         var renderers: [MobileContentRendererType] = Array()
@@ -586,14 +555,11 @@ class ToolsFlow: Flow {
         if !trainingTipsEnabled, let parallelLanguage = parallelLanguage, let parallelTranslationManifest = parallelTranslationManifest, parallelLanguage.code != primaryLanguage.code {
             
             let parallelRenderer = MobileContentXmlNodeRenderer(
-                flowDelegate: self,
                 resource: resource,
                 language: parallelLanguage,
                 xmlParser: MobileContentXmlParser(translationManifestData: parallelTranslationManifest, translationsFileCache: translationsFileCache),
                 pageViewFactories: pageViewFactories,
-                translationsFileCache: translationsFileCache,
-                mobileContentAnalytics: mobileContentAnalytics,
-                fontService: fontService
+                translationsFileCache: translationsFileCache
             )
             
             renderers.append(parallelRenderer)
@@ -606,10 +572,10 @@ class ToolsFlow: Flow {
             primaryLanguage: primaryLanguage,
             tractRemoteSharePublisher: appDiContainer.tractRemoteSharePublisher,
             tractRemoteShareSubscriber: appDiContainer.tractRemoteShareSubscriber,
-            localizationServices: localizationServices,
-            fontService: fontService,
+            localizationServices: appDiContainer.localizationServices,
+            fontService: appDiContainer.getFontService(),
             viewsService: appDiContainer.viewsService,
-            analytics: analytics,
+            analytics: appDiContainer.analytics,
             toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics,
             liveShareStream: liveShareStream,
             trainingTipsEnabled: trainingTipsEnabled,
@@ -628,32 +594,20 @@ class ToolsFlow: Flow {
         if pageNodes.isEmpty {
             // TODO: Page nodes should not be empty. ~Levi
         }
-                
-        let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
-        let mobileContentNodeParser: MobileContentXmlNodeParser = appDiContainer.getMobileContentNodeParser()
-        let viewedTrainingTipsService: ViewedTrainingTipsService = appDiContainer.getViewedTrainingTipsService()
-        let deepLinkService: DeepLinkingServiceType = appDiContainer.deepLinkingService
-        
-        let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
+                        
+        let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
+            type: .trainingTip,
             flowDelegate: self,
-            translationsFileCache: translationsFileCache,
-            mobileContentNodeParser: mobileContentNodeParser,
-            viewedTrainingTipsService: viewedTrainingTipsService,
-            deepLinkService: deepLinkService,
+            appDiContainer: appDiContainer,
             trainingTipsEnabled: false
         )
-        
-        let pageViewFactories: [MobileContentPageViewFactoryType] = [trainingViewFactory]
-        
+                
         let renderer = MobileContentXmlNodeRenderer(
-            flowDelegate: self,
             resource: event.rendererPageModel.resource,
             language: event.rendererPageModel.language,
             xmlParser: MobileContentXmlParser(manifest: event.rendererPageModel.manifest, pageNodes: pageNodes),
             pageViewFactories: pageViewFactories,
-            translationsFileCache: appDiContainer.translationsFileCache,
-            mobileContentAnalytics: appDiContainer.getMobileContentAnalytics(),
-            fontService: appDiContainer.getFontService()
+            translationsFileCache: appDiContainer.translationsFileCache
         )
                 
         let viewModel = ToolTrainingViewModel(
@@ -673,58 +627,21 @@ class ToolsFlow: Flow {
     
     private func navigateToLesson(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, trainingTipsEnabled: Bool, page: Int?) {
         
-        let analytics: AnalyticsContainer = appDiContainer.analytics
-        let mobileContentAnalytics: MobileContentAnalytics = appDiContainer.getMobileContentAnalytics()
+        let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
+            type: .lesson,
+            flowDelegate: self,
+            appDiContainer: appDiContainer,
+            trainingTipsEnabled: trainingTipsEnabled
+        )
+        
         let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
-        let mobileContentNodeParser: MobileContentXmlNodeParser = appDiContainer.getMobileContentNodeParser()
-        let viewedTrainingTipsService: ViewedTrainingTipsService = appDiContainer.getViewedTrainingTipsService()
-        let fontService: FontService = appDiContainer.getFontService()
-        let localizationServices: LocalizationServices = appDiContainer.localizationServices
-        let followUpsService: FollowUpsService = appDiContainer.followUpsService
-        let cardJumpService: CardJumpService = appDiContainer.getCardJumpService()
-        let deepLinkService: DeepLinkingServiceType = appDiContainer.deepLinkingService
-        
-        let lessonPageViewFactory = LessonPageViewFactory(
-            flowDelegate: self,
-            deepLinkService: deepLinkService,
-            analytics: analytics
-        )
-        
-        let toolPageViewFactory = ToolPageViewFactory(
-            flowDelegate: self,
-            analytics: analytics,
-            mobileContentAnalytics: mobileContentAnalytics,
-            fontService: fontService,
-            localizationServices: localizationServices,
-            cardJumpService: cardJumpService,
-            followUpService: followUpsService,
-            translationsFileCache: translationsFileCache,
-            mobileContentNodeParser: mobileContentNodeParser,
-            viewedTrainingTipsService: viewedTrainingTipsService,
-            deepLinkService: deepLinkService,
-            trainingTipsEnabled: trainingTipsEnabled
-        )
-        
-        let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
-            flowDelegate: self,
-            translationsFileCache: translationsFileCache,
-            mobileContentNodeParser: mobileContentNodeParser,
-            viewedTrainingTipsService: viewedTrainingTipsService,
-            deepLinkService: deepLinkService,
-            trainingTipsEnabled: trainingTipsEnabled
-        )
-        
-        let pageViewFactories: [MobileContentPageViewFactoryType] = [lessonPageViewFactory, toolPageViewFactory, trainingViewFactory]
-        
+                
         let renderer = MobileContentXmlNodeRenderer(
-            flowDelegate: self,
             resource: resource,
             language: primaryLanguage,
             xmlParser: MobileContentXmlParser(translationManifestData: primaryTranslationManifest, translationsFileCache: translationsFileCache),
             pageViewFactories: pageViewFactories,
-            translationsFileCache: translationsFileCache,
-            mobileContentAnalytics: mobileContentAnalytics,
-            fontService: fontService
+            translationsFileCache: translationsFileCache
         )
         
         let viewModel = LessonViewModel(

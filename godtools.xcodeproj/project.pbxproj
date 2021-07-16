@@ -843,6 +843,8 @@
 		45BD7A6726A21FDA0007426B /* MobileContentMultiplatformParserFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BD7A2E26A21FDA0007426B /* MobileContentMultiplatformParserFactory.swift */; };
 		45BD7A6826A21FDA0007426B /* MobileContentMultiplatformParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BD7A2F26A21FDA0007426B /* MobileContentMultiplatformParser.swift */; };
 		45BD7A6E26A226160007426B /* MobileContentXmlParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BD7A6D26A226160007426B /* MobileContentXmlParser.swift */; };
+		45BD7A7026A235780007426B /* MobileContentRendererPageViewFactories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BD7A6F26A235780007426B /* MobileContentRendererPageViewFactories.swift */; };
+		45BD7A7226A235F60007426B /* MobileContentRendererPageViewFactoriesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BD7A7126A235F60007426B /* MobileContentRendererPageViewFactoriesType.swift */; };
 		45C5386124B8EFA700CABDAC /* godtoolsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C5386024B8EFA700CABDAC /* godtoolsUITests.swift */; };
 		45C93AD6261D310900592FFF /* ArticleManifestXmlParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C93AA4261D310900592FFF /* ArticleManifestXmlParser.swift */; };
 		45C93AD7261D310900592FFF /* ArticleCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C93AA6261D310900592FFF /* ArticleCategory.swift */; };
@@ -1801,6 +1803,8 @@
 		45BD7A2E26A21FDA0007426B /* MobileContentMultiplatformParserFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentMultiplatformParserFactory.swift; sourceTree = "<group>"; };
 		45BD7A2F26A21FDA0007426B /* MobileContentMultiplatformParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentMultiplatformParser.swift; sourceTree = "<group>"; };
 		45BD7A6D26A226160007426B /* MobileContentXmlParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentXmlParser.swift; sourceTree = "<group>"; };
+		45BD7A6F26A235780007426B /* MobileContentRendererPageViewFactories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRendererPageViewFactories.swift; sourceTree = "<group>"; };
+		45BD7A7126A235F60007426B /* MobileContentRendererPageViewFactoriesType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRendererPageViewFactoriesType.swift; sourceTree = "<group>"; };
 		45C5386024B8EFA700CABDAC /* godtoolsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = godtoolsUITests.swift; sourceTree = "<group>"; };
 		45C93AA4261D310900592FFF /* ArticleManifestXmlParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleManifestXmlParser.swift; sourceTree = "<group>"; };
 		45C93AA6261D310900592FFF /* ArticleCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleCategory.swift; sourceTree = "<group>"; };
@@ -2784,6 +2788,8 @@
 				45558459269F2F9E00C3FF14 /* MobileContentRendererPageModel.swift */,
 				45558457269F2F9E00C3FF14 /* MobileContentRendererType.swift */,
 				4555845A269F2F9E00C3FF14 /* MobileContentRendererVersion.swift */,
+				45BD7A6F26A235780007426B /* MobileContentRendererPageViewFactories.swift */,
+				45BD7A7126A235F60007426B /* MobileContentRendererPageViewFactoriesType.swift */,
 				4555845B269F2F9E00C3FF14 /* Events */,
 				455584A6269F3CD000C3FF14 /* MultiplatformRenderer */,
 				455584A3269F3C6500C3FF14 /* XmlNodeRenderer */,
@@ -5820,6 +5826,7 @@
 				45AD1B4225938A4F00A096A0 /* MenuViewModelType.swift in Sources */,
 				45558404269F2DA500C3FF14 /* MobileContentPagesViewModelType.swift in Sources */,
 				45AD1B3325938A4F00A096A0 /* LanguageSettingsView.swift in Sources */,
+				45BD7A7226A235F60007426B /* MobileContentRendererPageViewFactoriesType.swift in Sources */,
 				45AD1F9C25938A9800A096A0 /* ResourcesCacheResult.swift in Sources */,
 				45AD1AE925938A4E00A096A0 /* ShareToolScreenTutorialNumberOfViewsCache.swift in Sources */,
 				45AD1F2C25938A9800A096A0 /* MobileContentXmlManifestPage.swift in Sources */,
@@ -6486,6 +6493,7 @@
 				45C93B27261D31B900592FFF /* LoadingArticleViewModel.swift in Sources */,
 				455583DE269F2DA500C3FF14 /* MobileContentStackChildViewHeightConstraintType.swift in Sources */,
 				45AD1B7925938A4F00A096A0 /* OnboardingTutorialUsageItem.swift in Sources */,
+				45BD7A7026A235780007426B /* MobileContentRendererPageViewFactories.swift in Sources */,
 				45BD79CE26A20EEA0007426B /* AnalyticsEventModelType.swift in Sources */,
 				45AD1BAD25938A4F00A096A0 /* MenuFlow.swift in Sources */,
 				45AD1B4425938A4F00A096A0 /* MenuSectionHeaderView.swift in Sources */,

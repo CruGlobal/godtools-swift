@@ -14,7 +14,6 @@ class MobileContentMultiplatformRenderer: MobileContentRendererType {
     
     let resource: ResourceModel
     let language: LanguageModel
-    let allPageModels: [PageModelType] = Array()
     
     required init(flowDelegate: FlowDelegate, multiplatformParser: MobileContentMultiplatformParser, resource: ResourceModel, language: LanguageModel) {
         
@@ -25,6 +24,10 @@ class MobileContentMultiplatformRenderer: MobileContentRendererType {
     
     var manifest: MobileContentManifestType {
         return multiplatformParser.manifest
+    }
+    
+    var allPageModels: [PageModelType] {
+        return Array()
     }
     
     func getPageForListenerEvents(events: [String]) -> Int? {

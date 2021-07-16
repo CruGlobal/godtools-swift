@@ -17,22 +17,13 @@ class MobileContentXmlNodeRenderer: MobileContentRendererType {
     let resource: ResourceModel
     let language: LanguageModel
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageModel, xmlParser: MobileContentXmlParser, pageViewFactories: [MobileContentPageViewFactoryType], translationsFileCache: TranslationsFileCache, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
+    required init(resource: ResourceModel, language: LanguageModel, xmlParser: MobileContentXmlParser, pageViewFactories: MobileContentRendererPageViewFactories, translationsFileCache: TranslationsFileCache) {
         
         self.xmlParser = xmlParser
+        self.pageViewFactories = pageViewFactories.factories
         self.resourcesCache = ManifestResourcesCache(manifest: xmlParser.manifest, translationsFileCache: translationsFileCache)
         self.resource = resource
         self.language = language
-
-        // pageViewFactories
-        let mobileContentPageViewFactory = MobileContentPageViewFactory(
-            flowDelegate: flowDelegate,
-            mobileContentAnalytics: mobileContentAnalytics,
-            fontService: fontService
-        )
-        var mutablePageViewFactories: [MobileContentPageViewFactoryType] = pageViewFactories
-        mutablePageViewFactories.append(mobileContentPageViewFactory)
-        self.pageViewFactories = mutablePageViewFactories
     }
     
     var manifest: MobileContentManifestType {
@@ -54,7 +45,8 @@ class MobileContentXmlNodeRenderer: MobileContentRendererType {
     func renderPage(page: Int, window: UIViewController, safeArea: UIEdgeInsets, primaryRendererLanguage: LanguageModel) -> Result<MobileContentView, Error> {
         
         if let pageNode = xmlParser.getPageNode(page: page) {
-                        
+                    
+            // TODO: Could this get moved to MobileContentRendererType? ~Levi
             return renderPageModel(
                 pageModel: pageNode,
                 page: page,
