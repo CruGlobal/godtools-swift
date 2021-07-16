@@ -66,7 +66,7 @@ class TrainingTipViewModel: TrainingTipViewModelType {
         return trainingTipViewed
     }
     
-    private func parseTrainingTip(trainingTipId: String, manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, complete: @escaping ((_ result: Result<TipNode, Error>) -> Void)) {
+    private func parseTrainingTip(trainingTipId: String, manifest: MobileContentManifestType, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, complete: @escaping ((_ result: Result<TipNode, Error>) -> Void)) {
         
         let manifestTip: MobileContentManifestTipType? = manifest.tips[trainingTipId]
         let manifestTipSrc: String = manifestTip?.src ?? ""

@@ -10,10 +10,10 @@ import UIKit
 
 class ManifestResourcesCache {
     
-    private let manifest: MobileContentXmlManifest
+    private let manifest: MobileContentManifestType
     private let translationsFileCache: TranslationsFileCache
     
-    required init(manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache) {
+    required init(manifest: MobileContentManifestType, translationsFileCache: TranslationsFileCache) {
         
         self.manifest = manifest
         self.translationsFileCache = translationsFileCache

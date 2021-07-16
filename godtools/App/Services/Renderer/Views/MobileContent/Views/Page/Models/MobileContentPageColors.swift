@@ -16,7 +16,7 @@ class MobileContentPageColors {
     let primaryTextColor: UIColor
     let textColor: UIColor
     
-    required init(pageModel: PageModelType, manifest: MobileContentXmlManifest) {
+    required init(pageModel: PageModelType, manifest: MobileContentManifestType) {
         
         backgroundColor = pageModel.getBackgroundColor()?.color ?? manifest.attributes.getBackgroundColor().color
         cardTextColor = pageModel.getCardTextColor()?.color

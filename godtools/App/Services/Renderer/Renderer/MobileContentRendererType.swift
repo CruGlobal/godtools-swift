@@ -10,7 +10,7 @@ import Foundation
 
 protocol MobileContentRendererType {
     
-    var manifest: MobileContentXmlManifest { get }
+    var manifest: MobileContentManifestType { get }
     var resource: ResourceModel { get }
     var language: LanguageModel { get }
     var allPageModels: [PageModelType] { get }

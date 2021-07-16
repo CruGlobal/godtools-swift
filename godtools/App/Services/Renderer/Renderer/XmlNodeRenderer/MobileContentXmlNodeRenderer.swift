@@ -27,7 +27,7 @@ class MobileContentXmlNodeRenderer: MobileContentRendererType {
     
     private(set) var allPageNodes: [PageNode] = Array()
     
-    let manifest: MobileContentXmlManifest
+    let manifest: MobileContentManifestType
     let resourcesCache: ManifestResourcesCache
     let resource: ResourceModel
     let language: LanguageModel
@@ -36,7 +36,7 @@ class MobileContentXmlNodeRenderer: MobileContentRendererType {
         return allPageNodes
     }
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageModel, manifest: MobileContentXmlManifest, pageNodes: [PageNode], translationsFileCache: TranslationsFileCache, pageViewFactories: [MobileContentPageViewFactoryType], mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageModel, manifest: MobileContentManifestType, pageNodes: [PageNode], translationsFileCache: TranslationsFileCache, pageViewFactories: [MobileContentPageViewFactoryType], mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
         
         self.translationsFileCache = translationsFileCache
         self.manifest = manifest
@@ -264,7 +264,7 @@ class MobileContentXmlNodeRenderer: MobileContentRendererType {
     
     // MARK: - Parsing Page Nodes
     
-    private func parsePageNode(manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache, page: Int) -> Result<PageNode, Error> {
+    private func parsePageNode(manifest: MobileContentManifestType, translationsFileCache: TranslationsFileCache, page: Int) -> Result<PageNode, Error> {
         
         let manifestPage: MobileContentManifestPageType = manifest.pages[page]
         let pageXmlCacheLocation: SHA256FileLocation = SHA256FileLocation(sha256WithPathExtension: manifestPage.src)
