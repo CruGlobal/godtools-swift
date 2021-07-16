@@ -14,24 +14,86 @@ class MobileContentXmlParser {
     typealias PageNumber = Int
     
     private let mobileContentNodeParser: MobileContentXmlNodeParser = MobileContentXmlNodeParser()
-    private let translationsFileCache: TranslationsFileCache
     private let pageListeners: [PageListenerEventName: PageNumber]
     
-    let manifest: MobileContentXmlManifest
+    let manifest: MobileContentManifestType
     let pageNodes: [PageNode]
     let errors: [Error]
     
     required init(translationManifestData: TranslationManifestData, translationsFileCache: TranslationsFileCache) {
         
-        self.translationsFileCache = translationsFileCache
-        self.manifest = MobileContentXmlManifest(translationManifestData: translationManifestData)
+        let manifest: MobileContentXmlManifest = MobileContentXmlManifest(translationManifestData: translationManifestData)
         
-        var pageNodes: [PageNode] = Array()
+        let pageNodesResult = MobileContentXmlParser.getPageNodesFromManifest(
+            manifest: manifest,
+            mobileContentNodeParser: mobileContentNodeParser,
+            translationsFileCache: translationsFileCache
+        )
+        
+        switch pageNodesResult {
+        
+        case .success(let pageNodes):
+            self.pageNodes = pageNodes
+            self.pageListeners = MobileContentXmlParser.getPageListeners(pageNodes: pageNodes)
+            self.errors = Array()
+        
+        case .failure(let error):
+            self.pageNodes = Array()
+            self.pageListeners = Dictionary()
+            self.errors = [error]
+        }
+        
+        self.manifest = manifest
+    }
+    
+    required init(manifest: MobileContentManifestType, pageNodes: [PageNode]) {
+        
+        self.manifest = manifest
+        self.pageNodes = pageNodes
+        self.pageListeners = MobileContentXmlParser.getPageListeners(pageNodes: pageNodes)
+        self.errors = Array()
+    }
+    
+    func getPageForListenerEvents(events: [String]) -> Int? {
+        for event in events {
+            if let page = pageListeners[event] {
+                return page
+            }
+        }
+        return nil
+    }
+    
+    func getPageNode(page: Int) -> PageNode? {
+        
+        guard page >= 0 && page < pageNodes.count else {
+            return nil
+        }
+        
+        return pageNodes[page]
+    }
+    
+    private static func getPageListeners(pageNodes: [PageNode]) -> [PageListenerEventName: PageNumber] {
+        
         var pageListeners: [PageListenerEventName: PageNumber] = Dictionary()
+        
+        for pageIndex in 0 ..< pageNodes.count {
+            let pageNode: PageNode = pageNodes[pageIndex]
+            for listener in pageNode.listeners {
+                pageListeners[listener] = pageIndex
+            }
+        }
+        
+        return pageListeners
+    }
+        
+    // MARK: - Parsing Page Nodes
+    
+    private static func getPageNodesFromManifest(manifest: MobileContentXmlManifest, mobileContentNodeParser: MobileContentXmlNodeParser, translationsFileCache: TranslationsFileCache) -> Result<[PageNode], Error> {
+        
+        var allPageNodes: [PageNode] = Array()
+        var errors: [Error] = Array()
     
         let manifestPages: [MobileContentManifestPageType] = manifest.pages
-        
-        var errors: [Error] = Array()
         
         for pageIndex in 0 ..< manifestPages.count {
             
@@ -45,37 +107,22 @@ class MobileContentXmlParser {
             switch result {
             
             case .success(let pageNode):
-                
-                for listener in pageNode.listeners {
-                    pageListeners[listener] = pageIndex
-                }
-                
-                pageNodes.append(pageNode)
+                allPageNodes.append(pageNode)
             
             case .failure(let error):
                 errors.append(error)
             }
         }
         
-        self.pageNodes = pageNodes
-        self.pageListeners = pageListeners
-        self.errors = errors
-    }
-    
-    // MARK: - Page Listeners
-    
-    func getPageForListenerEvents(events: [String]) -> Int? {
-        for event in events {
-            if let page = pageListeners[event] {
-                return page
-            }
+        if let error = errors.first {
+            return .failure(error)
         }
-        return nil
+        else {
+            return .success(allPageNodes)
+        }
     }
     
-    // MARK: - Parsing Page Nodes
-    
-    private static func parsePageNode(manifest: MobileContentXmlManifest, mobileContentNodeParser: MobileContentXmlNodeParser, translationsFileCache: TranslationsFileCache, page: Int) -> Result<PageNode, Error> {
+    private static func parsePageNode(manifest: MobileContentManifestType, mobileContentNodeParser: MobileContentXmlNodeParser, translationsFileCache: TranslationsFileCache, page: Int) -> Result<PageNode, Error> {
         
         let manifestPage: MobileContentManifestPageType = manifest.pages[page]
         let pageXmlCacheLocation: SHA256FileLocation = SHA256FileLocation(sha256WithPathExtension: manifestPage.src)

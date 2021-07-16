@@ -572,10 +572,9 @@ class ToolsFlow: Flow {
             flowDelegate: self,
             resource: resource,
             language: primaryLanguage,
-            manifest: MobileContentXmlManifest(translationManifestData: primaryTranslationManifest),
-            pageNodes: [],
-            translationsFileCache: translationsFileCache,
+            xmlParser: MobileContentXmlParser(translationManifestData: primaryTranslationManifest, translationsFileCache: translationsFileCache),
             pageViewFactories: pageViewFactories,
+            translationsFileCache: translationsFileCache,
             mobileContentAnalytics: mobileContentAnalytics,
             fontService: fontService
         )
@@ -590,10 +589,9 @@ class ToolsFlow: Flow {
                 flowDelegate: self,
                 resource: resource,
                 language: parallelLanguage,
-                manifest: MobileContentXmlManifest(translationManifestData: parallelTranslationManifest),
-                pageNodes: [],
-                translationsFileCache: translationsFileCache,
+                xmlParser: MobileContentXmlParser(translationManifestData: parallelTranslationManifest, translationsFileCache: translationsFileCache),
                 pageViewFactories: pageViewFactories,
+                translationsFileCache: translationsFileCache,
                 mobileContentAnalytics: mobileContentAnalytics,
                 fontService: fontService
             )
@@ -651,10 +649,9 @@ class ToolsFlow: Flow {
             flowDelegate: self,
             resource: event.rendererPageModel.resource,
             language: event.rendererPageModel.language,
-            manifest: event.rendererPageModel.manifest,
-            pageNodes: pageNodes,
-            translationsFileCache: appDiContainer.translationsFileCache,
+            xmlParser: MobileContentXmlParser(manifest: event.rendererPageModel.manifest, pageNodes: pageNodes),
             pageViewFactories: pageViewFactories,
+            translationsFileCache: appDiContainer.translationsFileCache,
             mobileContentAnalytics: appDiContainer.getMobileContentAnalytics(),
             fontService: appDiContainer.getFontService()
         )
@@ -723,10 +720,9 @@ class ToolsFlow: Flow {
             flowDelegate: self,
             resource: resource,
             language: primaryLanguage,
-            manifest: MobileContentXmlManifest(translationManifestData: primaryTranslationManifest),
-            pageNodes: [],
-            translationsFileCache: translationsFileCache,
+            xmlParser: MobileContentXmlParser(translationManifestData: primaryTranslationManifest, translationsFileCache: translationsFileCache),
             pageViewFactories: pageViewFactories,
+            translationsFileCache: translationsFileCache,
             mobileContentAnalytics: mobileContentAnalytics,
             fontService: fontService
         )
