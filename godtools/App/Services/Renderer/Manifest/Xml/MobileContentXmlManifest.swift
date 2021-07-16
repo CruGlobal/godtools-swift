@@ -17,9 +17,9 @@ class MobileContentXmlManifest: MobileContentManifestType {
     let tips: [TipId: MobileContentManifestTipType]
     let resources: [ResourceFilename: MobileContentManifestResourceType]
         
-    required init(translationManifest: TranslationManifestData) {
+    required init(translationManifestData: TranslationManifestData) {
            
-        let xmlHash: XMLIndexer = SWXMLHash.parse(translationManifest.manifestXmlData)
+        let xmlHash: XMLIndexer = SWXMLHash.parse(translationManifestData.manifestXmlData)
         
         let manifest: XMLIndexer = xmlHash["manifest"]
 

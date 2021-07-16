@@ -530,7 +530,7 @@ class ToolsFlow: Flow {
     }
     
     private func navigateToTract(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
-        
+                
         let analytics: AnalyticsContainer = appDiContainer.analytics
         let mobileContentAnalytics: MobileContentAnalytics = appDiContainer.getMobileContentAnalytics()
         let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
@@ -572,7 +572,7 @@ class ToolsFlow: Flow {
             flowDelegate: self,
             resource: resource,
             language: primaryLanguage,
-            manifest: MobileContentXmlManifest(translationManifest: primaryTranslationManifest),
+            manifest: MobileContentXmlManifest(translationManifestData: primaryTranslationManifest),
             pageNodes: [],
             translationsFileCache: translationsFileCache,
             pageViewFactories: pageViewFactories,
@@ -590,7 +590,7 @@ class ToolsFlow: Flow {
                 flowDelegate: self,
                 resource: resource,
                 language: parallelLanguage,
-                manifest: MobileContentXmlManifest(translationManifest: parallelTranslationManifest),
+                manifest: MobileContentXmlManifest(translationManifestData: parallelTranslationManifest),
                 pageNodes: [],
                 translationsFileCache: translationsFileCache,
                 pageViewFactories: pageViewFactories,
@@ -723,7 +723,7 @@ class ToolsFlow: Flow {
             flowDelegate: self,
             resource: resource,
             language: primaryLanguage,
-            manifest: MobileContentXmlManifest(translationManifest: primaryTranslationManifest),
+            manifest: MobileContentXmlManifest(translationManifestData: primaryTranslationManifest),
             pageNodes: [],
             translationsFileCache: translationsFileCache,
             pageViewFactories: pageViewFactories,

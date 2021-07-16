@@ -16,7 +16,7 @@ class AppDiContainer {
         
     private let legacyRealmMigration: LegacyRealmMigration
     private let realmDatabase: RealmDatabase
-    private let resourcesSHA256FileCache: ResourcesSHA256FileCache = ResourcesSHA256FileCache()
+    private let resourcesSHA256FileCache: ResourcesSHA256FileCache = ResourcesSHA256FileCache() // TODO: Make private. ~Levi
     private let sharedIgnoringCacheSession: SharedIgnoreCacheSession = SharedIgnoreCacheSession()
     private let languagesApi: LanguagesApiType
     private let resourcesApi: ResourcesApiType
@@ -247,6 +247,26 @@ class AppDiContainer {
     
     func getMobileContentNodeParser() -> MobileContentXmlNodeParser {
         return MobileContentXmlNodeParser()
+    }
+    
+    func getMobileContentRenderer(manifestFilename: String, flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageModel) -> MobileContentMultiplatformRenderer {
+        
+        // TODO: Change return type to MobileContentRendererType. ~Levi
+        
+        let multiplatformParser: MobileContentMultiplatformParser? = MobileContentMultiplatformParser(
+            manifestFilename: manifestFilename,
+            sha256FileCache: resourcesSHA256FileCache
+        )
+        
+        // TODO: Don't force unwrap multiplatform parser. Return node parser?   ~Levi
+        let multiplatformRenderer = MobileContentMultiplatformRenderer(
+            flowDelegate: flowDelegate,
+            multiplatformParser: multiplatformParser!,
+            resource: resource,
+            language: language
+        )
+        
+        return multiplatformRenderer
     }
     
     func getToolTrainingTipsOnboardingViews() -> ToolTrainingTipsOnboardingViewsService {

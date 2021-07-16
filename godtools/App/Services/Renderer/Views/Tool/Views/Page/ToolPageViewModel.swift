@@ -52,7 +52,7 @@ class ToolPageViewModel: MobileContentPageViewModel, ToolPageViewModelType {
     var bottomViewColor: UIColor {
         
         let manifestAttributes: MobileContentManifestAttributesType = rendererPageModel.manifest.attributes
-        let color: UIColor = manifestAttributes.getNavBarColor()?.color ?? manifestAttributes.getPrimaryColor().color
+        let color: UIColor = manifestAttributes.navbarColor ?? manifestAttributes.primaryColor
         
         return color.withAlphaComponent(0.1)
     }
