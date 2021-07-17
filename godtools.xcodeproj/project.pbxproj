@@ -12,6 +12,8 @@
 		1737DFDF22FDB48000223CB0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1737DFDE22FDB48000223CB0 /* GoogleService-Info.plist */; };
 		1E06EB6DA916BEF9C627866F /* Pods_godtools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D61FF360D11F854476B6E206 /* Pods_godtools.framework */; };
 		450EF834247EB3D300978926 /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 450EF833247EB3D300978926 /* SF-Pro-Text-Bold.otf */; };
+		451172AE26A35425001AD628 /* MockMobileContentManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451172AC26A35425001AD628 /* MockMobileContentManifest.swift */; };
+		451172AF26A35425001AD628 /* MockMobileContentManifestAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451172AD26A35425001AD628 /* MockMobileContentManifestAttributes.swift */; };
 		45163635268B7F950010876B /* DeepLinkPathType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45163634268B7F950010876B /* DeepLinkPathType.swift */; };
 		451EBE2724AD968B00C4D6DD /* languages.json in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE0D24AD968A00C4D6DD /* languages.json */; };
 		451EBE2824AD968B00C4D6DD /* resources.json in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE0E24AD968A00C4D6DD /* resources.json */; };
@@ -988,6 +990,8 @@
 		1767C18E62BAF2E86AA37734 /* Pods-godtoolsTests.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsTests.production.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests.production.xcconfig"; sourceTree = "<group>"; };
 		3795EC9D424F0613AD8AF610 /* Pods-godtools.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.release.xcconfig"; sourceTree = "<group>"; };
 		450EF833247EB3D300978926 /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
+		451172AC26A35425001AD628 /* MockMobileContentManifest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockMobileContentManifest.swift; sourceTree = "<group>"; };
+		451172AD26A35425001AD628 /* MockMobileContentManifestAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockMobileContentManifestAttributes.swift; sourceTree = "<group>"; };
 		45163634268B7F950010876B /* DeepLinkPathType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkPathType.swift; sourceTree = "<group>"; };
 		451EBE0D24AD968A00C4D6DD /* languages.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = languages.json; sourceTree = "<group>"; };
 		451EBE0E24AD968A00C4D6DD /* resources.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = resources.json; sourceTree = "<group>"; };
@@ -2062,6 +2066,15 @@
 				0B35785ED952890E2E07F786 /* Pods_godtools_Tests_godtoolsTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		451172AB26A35425001AD628 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				451172AC26A35425001AD628 /* MockMobileContentManifest.swift */,
+				451172AD26A35425001AD628 /* MockMobileContentManifestAttributes.swift */,
+			);
+			path = Mock;
 			sourceTree = "<group>";
 		};
 		451EBE0C24AD968A00C4D6DD /* InitialResources */ = {
@@ -3849,6 +3862,7 @@
 			isa = PBXGroup;
 			children = (
 				45AD1D9725938A9700A096A0 /* Protocol */,
+				451172AB26A35425001AD628 /* Mock */,
 				45BD79EA26A214E70007426B /* Multiplatform */,
 				45AD1D9D25938A9700A096A0 /* Xml */,
 			);
@@ -6064,6 +6078,7 @@
 				45AD1BDC25938A4F00A096A0 /* AlertMessageViewModel.swift in Sources */,
 				45AD21142593958E00A096A0 /* RealmLanguage.swift in Sources */,
 				45AD1ABD25938A4E00A096A0 /* LoadingToolView.swift in Sources */,
+				451172AE26A35425001AD628 /* MockMobileContentManifest.swift in Sources */,
 				45AD1AD625938A4E00A096A0 /* AllToolsViewModel.swift in Sources */,
 				45AD1BD225938A4F00A096A0 /* LoadingViewModel.swift in Sources */,
 				45AD202A25938A9800A096A0 /* CardJumpService.swift in Sources */,
@@ -6204,6 +6219,7 @@
 				45585BD32687BD7900A21D12 /* ToolQueryParameters.swift in Sources */,
 				45AD1F8E25938A9800A096A0 /* ResourceModelType.swift in Sources */,
 				45AD1FFD25938A9800A096A0 /* FailedResourceViewsCache.swift in Sources */,
+				451172AF26A35425001AD628 /* MockMobileContentManifestAttributes.swift in Sources */,
 				45AD1EF225938A9800A096A0 /* ManifestResourcesCache.swift in Sources */,
 				45C93AE3261D310900592FFF /* ArticleAemCache.swift in Sources */,
 				45AD1F6625938A9800A096A0 /* ToolTrainingTipsOnboardingViewsCacheType.swift in Sources */,

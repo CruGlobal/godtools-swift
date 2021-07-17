@@ -249,26 +249,6 @@ class AppDiContainer {
         return MobileContentXmlNodeParser()
     }
     
-    func getMobileContentRenderer(manifestFilename: String, flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageModel) -> MobileContentMultiplatformRenderer {
-        
-        // TODO: Change return type to MobileContentRendererType. ~Levi
-        
-        let multiplatformParser: MobileContentMultiplatformParser? = MobileContentMultiplatformParser(
-            manifestFilename: manifestFilename,
-            sha256FileCache: resourcesSHA256FileCache
-        )
-        
-        // TODO: Don't force unwrap multiplatform parser. Return node parser?   ~Levi
-        let multiplatformRenderer = MobileContentMultiplatformRenderer(
-            flowDelegate: flowDelegate,
-            multiplatformParser: multiplatformParser!,
-            resource: resource,
-            language: language
-        )
-        
-        return multiplatformRenderer
-    }
-    
     func getToolTrainingTipsOnboardingViews() -> ToolTrainingTipsOnboardingViewsService {
         return ToolTrainingTipsOnboardingViewsService(
             cache: ToolTrainingTipsOnboardingViewsUserDefaultsCache(userDefaultsCache: sharedUserDefaultsCache)

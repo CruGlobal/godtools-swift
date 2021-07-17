@@ -11,11 +11,11 @@ import GodToolsToolParser
 
 class MobileContentMultiplatformParserFactory: IosXmlPullParserFactory {
         
-    private let sha256FileCache: ResourcesSHA256FileCache
+    private let translationsFileCache: TranslationsFileCache
     
-    required init(sha256FileCache: ResourcesSHA256FileCache) {
+    required init(translationsFileCache: TranslationsFileCache) {
         
-        self.sha256FileCache = sha256FileCache
+        self.translationsFileCache = translationsFileCache
         
         super.init()
     }
@@ -24,7 +24,7 @@ class MobileContentMultiplatformParserFactory: IosXmlPullParserFactory {
                 
         let location = SHA256FileLocation(sha256WithPathExtension: fileName)
         
-        let result = sha256FileCache.getData(location: location)
+        let result = translationsFileCache.getData(location: location)
         
         switch result {
         

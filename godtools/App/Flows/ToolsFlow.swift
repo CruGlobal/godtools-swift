@@ -605,7 +605,7 @@ class ToolsFlow: Flow {
         let renderer = MobileContentXmlNodeRenderer(
             resource: event.rendererPageModel.resource,
             language: event.rendererPageModel.language,
-            xmlParser: MobileContentXmlParser(manifest: event.rendererPageModel.manifest, pageNodes: pageNodes),
+            xmlParser: MobileContentXmlParser(manifest: event.rendererPageModel.manifest, pageModels: pageNodes),
             pageViewFactories: pageViewFactories,
             translationsFileCache: appDiContainer.translationsFileCache
         )

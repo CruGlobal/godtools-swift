@@ -9,17 +9,17 @@
 import Foundation
 
 protocol MobileContentParserType {
-    
+        
     var manifest: MobileContentManifestType { get }
     var pageModels: [PageModelType] { get }
     var errors: [Error] { get }
     
     init(translationManifestData: TranslationManifestData, translationsFileCache: TranslationsFileCache)
-    init(manifest: MobileContentManifestType, pageNodes: [PageNode])
+    init(manifest: MobileContentManifestType, pageModels: [PageModelType])
     
-    func getPageForListenerEvents(events: [String]) -> Int?
     func getPageModel(page: Int) -> PageModelType?
     func getVisiblePageModels() -> [PageModelType]
+    func getPageForListenerEvents(events: [String]) -> Int?
 }
 
 extension MobileContentParserType {
@@ -33,5 +33,21 @@ extension MobileContentParserType {
     
     func getVisiblePageModels() -> [PageModelType] {
         return pageModels.filter({!$0.isHidden})
+    }
+    
+    func getPageForListenerEvents(events: [String]) -> Int? {
+        
+        return nil // TODO: Remove this line. ~Levi
+        
+        for pageIndex in 0 ..< pageModels.count {
+            let pageModel: PageModelType = pageModels[pageIndex]
+            for listener in pageModel.listeners {
+                if events.contains(listener) {
+                    return pageIndex
+                }
+            }
+        }
+        
+        return nil
     }
 }
