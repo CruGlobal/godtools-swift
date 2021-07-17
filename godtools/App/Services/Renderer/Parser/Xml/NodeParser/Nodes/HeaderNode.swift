@@ -16,13 +16,13 @@ class HeaderNode: MobileContentXmlNode, HeaderModelType {
     
     let trainingTip: String?
     
-    required init(xmlElement: XMLElement, position: Int) {
+    required init(xmlElement: XMLElement) {
     
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
         trainingTip = attributes["training:tip"]?.text
         
-        super.init(xmlElement: xmlElement, position: position)
+        super.init(xmlElement: xmlElement)
     }
     
     override func addChild(childNode: MobileContentXmlNode) {

@@ -11,9 +11,9 @@ import SWXMLHash
 
 class ContentAccordionNode: MobileContentXmlNode, ContentAccordionModelType {
     
-    required init(xmlElement: XMLElement, position: Int) {
+    required init(xmlElement: XMLElement) {
     
-        super.init(xmlElement: xmlElement, position: position)
+        super.init(xmlElement: xmlElement)
     }
 }
 

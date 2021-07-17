@@ -16,7 +16,7 @@ class AnalyticsEventNode: MobileContentXmlNode, AnalyticsEventModelType {
     let systems: [String]
     let trigger: String?
     
-    required init(xmlElement: XMLElement, position: Int) {
+    required init(xmlElement: XMLElement) {
     
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
@@ -25,7 +25,7 @@ class AnalyticsEventNode: MobileContentXmlNode, AnalyticsEventModelType {
         systems = attributes["system"]?.text.components(separatedBy: " ") ?? []
         trigger = attributes["trigger"]?.text
         
-        super.init(xmlElement: xmlElement, position: position)
+        super.init(xmlElement: xmlElement)
     }
     
     var attribute: AnalyticsAttributeModel? {

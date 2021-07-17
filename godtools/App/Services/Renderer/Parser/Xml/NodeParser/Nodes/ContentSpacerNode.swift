@@ -14,14 +14,14 @@ class ContentSpacerNode: MobileContentXmlNode, ContentSpacerModelType {
     let mode: String?
     let height: String?
     
-    required init(xmlElement: XMLElement, position: Int) {
+    required init(xmlElement: XMLElement) {
         
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
         mode = attributes["mode"]?.text
         height = attributes["height"]?.text
         
-        super.init(xmlElement: xmlElement, position: position)
+        super.init(xmlElement: xmlElement)
     }
     
     var spacerMode: MobileContentSpacerMode {

@@ -27,17 +27,17 @@ class MobileContentXmlNodeFactory {
         self.factory = factory
     }
     
-    func getNode(nodeType: MobileContentXmlNodeType, xmlElement: XMLElement, position: Int) -> MobileContentXmlNode? {
+    func getNode(nodeType: MobileContentXmlNodeType, xmlElement: XMLElement) -> MobileContentXmlNode? {
         
         if xmlElement.name == MobileContentXmlNodeType.contentParagraph.rawValue, let fallback = xmlElement.allAttributes["fallback"]?.text, fallback == "true" {
-            return ContentFallbackNode(xmlElement: xmlElement, position: position)
+            return ContentFallbackNode(xmlElement: xmlElement)
         }
         
         guard let RendererNodeClass = factory[nodeType] else {
             return nil
         }
         
-        return RendererNodeClass.init(xmlElement: xmlElement, position: position)
+        return RendererNodeClass.init(xmlElement: xmlElement)
     }
     
     private static func getNodeClass(nodeType: MobileContentXmlNodeType) -> MobileContentXmlNode.Type {

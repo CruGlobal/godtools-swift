@@ -46,27 +46,14 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
 
     }
     
-    private func getPageModelIndex(pageModel: PageModelType) -> Int? {
-                
-        for index in 0 ..< pageModels.count {
-            
-            let contentPageModel: PageModelType = pageModels[index]
-    
-            if contentPageModel.position == pageModel.position {
-                return index
-            }
-        }
-        
-        return nil
-    }
-    
     private func removePage(pageModel: PageModelType) {
         
+        /*
         if let pageIndex = getPageModelIndex(pageModel: pageModel) {
             pageModels.remove(at: pageIndex)
             numberOfPages.setValue(value: pageModels.count)
             pagesRemoved.accept(value: [IndexPath(item: pageIndex, section: 0)])
-        }
+        }*/
     }
     
     var primaryRenderer: MobileContentRendererType {
@@ -164,6 +151,7 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     
     func pageDidReceiveEvents(events: [String]) {
         
+        /*
         guard let didReceivePageListenerForPageNumber = currentRenderer?.parser.getPageForListenerEvents(events: events) else {
             return
         }
@@ -210,6 +198,6 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         
         if willReloadData {
             numberOfPages.accept(value: pageModels.count)
-        }
+        }*/
     }
 }

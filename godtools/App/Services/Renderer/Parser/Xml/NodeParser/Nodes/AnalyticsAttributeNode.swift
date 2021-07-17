@@ -14,13 +14,13 @@ class AnalyticsAttributeNode: MobileContentXmlNode, AnalyticsAttributeModelType 
     let key: String?
     let value: String?
     
-    required init(xmlElement: XMLElement, position: Int) {
+    required init(xmlElement: XMLElement) {
     
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
         key = attributes["key"]?.text
         value = attributes["value"]?.text
         
-        super.init(xmlElement: xmlElement, position: position)
+        super.init(xmlElement: xmlElement)
     }
 }

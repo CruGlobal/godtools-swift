@@ -11,9 +11,9 @@ import SWXMLHash
 
 class ContentParagraphNode: MobileContentXmlNode, ContentParagraphModelType {
         
-    required init(xmlElement: XMLElement, position: Int) {
+    required init(xmlElement: XMLElement) {
         
-        super.init(xmlElement: xmlElement, position: position)
+        super.init(xmlElement: xmlElement)
     }
 }
 

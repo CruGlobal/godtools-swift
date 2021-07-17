@@ -15,7 +15,7 @@ class ContentImageNode: MobileContentXmlNode {
     let resource: String?
     let restrictTo: String?
     
-    required init(xmlElement: XMLElement, position: Int) {
+    required init(xmlElement: XMLElement) {
     
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
@@ -23,7 +23,7 @@ class ContentImageNode: MobileContentXmlNode {
         resource = attributes["resource"]?.text
         restrictTo = attributes["restrictTo"]?.text
         
-        super.init(xmlElement: xmlElement, position: position)
+        super.init(xmlElement: xmlElement)
     }
 }
 

@@ -11,9 +11,9 @@ import SWXMLHash
 
 class CardsNode: MobileContentXmlNode, CardsModelType {
         
-    required init(xmlElement: XMLElement, position: Int) {
+    required init(xmlElement: XMLElement) {
     
-        super.init(xmlElement: xmlElement, position: position)
+        super.init(xmlElement: xmlElement)
     }
     
     var cardNodes: [CardNode] {

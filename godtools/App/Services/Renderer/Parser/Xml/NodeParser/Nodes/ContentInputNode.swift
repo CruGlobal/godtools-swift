@@ -19,7 +19,7 @@ class ContentInputNode: MobileContentXmlNode, ContentInputModelType {
     let type: String?
     let value: String?
     
-    required init(xmlElement: XMLElement, position: Int) {
+    required init(xmlElement: XMLElement) {
     
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
@@ -28,7 +28,7 @@ class ContentInputNode: MobileContentXmlNode, ContentInputModelType {
         type = attributes["type"]?.text
         value = attributes["value"]?.text
         
-        super.init(xmlElement: xmlElement, position: position)
+        super.init(xmlElement: xmlElement)
     }
     
     override func addChild(childNode: MobileContentXmlNode) {

@@ -13,9 +13,9 @@ class HeroNode: MobileContentXmlNode, HeroModelType {
         
     private var analyticsEventsNode: AnalyticsEventsNode?
     
-    required init(xmlElement: XMLElement, position: Int) {
+    required init(xmlElement: XMLElement) {
     
-        super.init(xmlElement: xmlElement, position: position)
+        super.init(xmlElement: xmlElement)
     }
     
     override func addChild(childNode: MobileContentXmlNode) {

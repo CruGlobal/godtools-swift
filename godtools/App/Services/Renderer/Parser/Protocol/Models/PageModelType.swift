@@ -22,7 +22,6 @@ protocol PageModelType: BackgroundImageModelType {
     var textColor: String? { get }
     var textScale: String? { get }
     var isHidden: Bool { get }
-    var position: Int { get }
     var hero: HeroModelType? { get }
     var callToAction: CallToActionModelType? { get }
     

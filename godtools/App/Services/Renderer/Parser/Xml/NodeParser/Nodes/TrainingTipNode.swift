@@ -13,13 +13,13 @@ class TrainingTipNode: MobileContentXmlNode, TrainingTipModelType {
     
     let id: String?
     
-    required init(xmlElement: XMLElement, position: Int) {
+    required init(xmlElement: XMLElement) {
     
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
         id = attributes["id"]?.text
         
-        super.init(xmlElement: xmlElement, position: position)
+        super.init(xmlElement: xmlElement)
     }
 }
 

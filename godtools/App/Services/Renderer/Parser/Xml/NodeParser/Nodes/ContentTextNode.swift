@@ -23,7 +23,7 @@ class ContentTextNode: MobileContentXmlNode, ContentTextModelType {
     let textScale: String?
     let textStyle: String?
     
-    required init(xmlElement: XMLElement, position: Int) {
+    required init(xmlElement: XMLElement) {
     
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
@@ -46,7 +46,7 @@ class ContentTextNode: MobileContentXmlNode, ContentTextModelType {
             text = nil
         }
         
-        super.init(xmlElement: xmlElement, position: position)
+        super.init(xmlElement: xmlElement)
     }
     
     var textAlignment: MobileContentTextAlign? {

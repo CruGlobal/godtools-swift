@@ -16,13 +16,13 @@ class ContentLinkNode: MobileContentXmlNode, ContentLinkModelType {
     
     let events: [String]
     
-    required init(xmlElement: XMLElement, position: Int) {
+    required init(xmlElement: XMLElement) {
     
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
         events = attributes["events"]?.text.components(separatedBy: " ") ?? []
         
-        super.init(xmlElement: xmlElement, position: position)
+        super.init(xmlElement: xmlElement)
     }
     
     override func addChild(childNode: MobileContentXmlNode) {

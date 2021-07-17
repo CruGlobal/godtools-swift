@@ -11,9 +11,9 @@ import SWXMLHash
 
 class ModalsNode: MobileContentXmlNode, ModalsModelType {
     
-    required init(xmlElement: XMLElement, position: Int) {
+    required init(xmlElement: XMLElement) {
     
-        super.init(xmlElement: xmlElement, position: position)
+        super.init(xmlElement: xmlElement)
     }
     
     private var modalNodes: [ModalNode] {
