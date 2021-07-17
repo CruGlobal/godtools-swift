@@ -17,6 +17,7 @@ class PageNode: MobileContentXmlNode, PageModelType {
     private var callToActionNode: CallToActionNode?
     private var modalsNode: ModalsNode?
     
+    let uuid: String = UUID().uuidString
     let backgroundColor: String?
     let backgroundImage: String?
     let backgroundImageAlign: [String]

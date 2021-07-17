@@ -10,6 +10,7 @@ import Foundation
 
 protocol PageModelType: BackgroundImageModelType {
         
+    var uuid: String { get }
     var backgroundColor: String? { get }
     var backgroundImage: String? { get }
     var backgroundImageAlign: [String] { get }

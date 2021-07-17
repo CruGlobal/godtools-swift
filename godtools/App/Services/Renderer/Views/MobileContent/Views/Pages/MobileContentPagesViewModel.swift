@@ -46,14 +46,14 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
 
     }
     
-    private func removePage(pageModel: PageModelType) {
-        
-        /*
-        if let pageIndex = getPageModelIndex(pageModel: pageModel) {
-            pageModels.remove(at: pageIndex)
-            numberOfPages.setValue(value: pageModels.count)
-            pagesRemoved.accept(value: [IndexPath(item: pageIndex, section: 0)])
-        }*/
+    private func getIndexForFirstPageModel(pageModel: PageModelType) -> Int? {
+        for index in 0 ..< pageModels.count {
+            let activePageModel: PageModelType = pageModels[index]
+            if activePageModel.uuid == pageModel.uuid {
+                return index
+            }
+        }
+        return nil
     }
     
     var primaryRenderer: MobileContentRendererType {
@@ -139,19 +139,21 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     }
     
     func pageDidDisappear(page: Int) {
-                
-        guard let pageModel = currentRenderer?.parser.getPageModel(page: page) else {
+              
+        let lastViewedPageModel: PageModelType = pageModels[page]
+        
+        guard lastViewedPageModel.isHidden else {
             return
         }
         
-        if pageModel.isHidden {
-            removePage(pageModel: pageModel)
-        }
+        // remove page
+        pageModels.remove(at: page)
+        numberOfPages.setValue(value: pageModels.count)
+        pagesRemoved.accept(value: [IndexPath(item: page, section: 0)])
     }
     
     func pageDidReceiveEvents(events: [String]) {
         
-        /*
         guard let didReceivePageListenerForPageNumber = currentRenderer?.parser.getPageForListenerEvents(events: events) else {
             return
         }
@@ -163,7 +165,7 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         let pageNumber: Int
         let willReloadData: Bool
         
-        if let pageNumberExistsInActivatePages = getPageModelIndex(pageModel: didReceivePageListenerEventForPageModel) {
+        if let pageNumberExistsInActivatePages = getIndexForFirstPageModel(pageModel: didReceivePageListenerEventForPageModel) {
             
             pageNumber = pageNumberExistsInActivatePages
             willReloadData = false
@@ -198,6 +200,6 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         
         if willReloadData {
             numberOfPages.accept(value: pageModels.count)
-        }*/
+        }
     }
 }
