@@ -11,14 +11,14 @@ import UIKit
 class MobileContentBackgroundImageViewModel {
     
     private let backgroundImageModel: BackgroundImageModelType
-    private let manifestResourcesCache: ManifestResourcesCache
+    private let manifestResourcesCache: ManifestResourcesCacheType
     private let languageDirection: LanguageDirection
     private let backgroundImageRenderer: MobileContentBackgroundImageRenderer = MobileContentBackgroundImageRenderer()
     
     let align: [MobileContentBackgroundImageAlignType]
     let scale: MobileContentBackgroundImageScaleType
     
-    required init(backgroundImageModel: BackgroundImageModelType, manifestResourcesCache: ManifestResourcesCache, languageDirection: LanguageDirection) {
+    required init(backgroundImageModel: BackgroundImageModelType, manifestResourcesCache: ManifestResourcesCacheType, languageDirection: LanguageDirection) {
         
         self.backgroundImageModel = backgroundImageModel
         self.manifestResourcesCache = manifestResourcesCache

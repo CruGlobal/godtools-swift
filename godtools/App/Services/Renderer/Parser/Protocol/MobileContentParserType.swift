@@ -11,11 +11,12 @@ import Foundation
 protocol MobileContentParserType {
         
     var manifest: MobileContentManifestType { get }
+    var manifestResourcesCache: ManifestResourcesCacheType { get }
     var pageModels: [PageModelType] { get }
     var errors: [Error] { get }
     
     init(translationManifestData: TranslationManifestData, translationsFileCache: TranslationsFileCache)
-    init(manifest: MobileContentManifestType, pageModels: [PageModelType])
+    init(manifest: MobileContentManifestType, pageModels: [PageModelType], translationsFileCache: TranslationsFileCache)
     
     func getPageModel(page: Int) -> PageModelType?
     func getVisiblePageModels() -> [PageModelType]

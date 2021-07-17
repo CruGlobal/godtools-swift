@@ -13,6 +13,7 @@ class MobileContentXmlParser: MobileContentParserType {
     private let mobileContentNodeParser: MobileContentXmlNodeParser = MobileContentXmlNodeParser()
     
     let manifest: MobileContentManifestType
+    let manifestResourcesCache: ManifestResourcesCacheType
     let pageNodes: [PageNode]
     let errors: [Error]
     
@@ -38,9 +39,10 @@ class MobileContentXmlParser: MobileContentParserType {
         }
         
         self.manifest = manifest
+        self.manifestResourcesCache = ManifestResourcesCache(manifest: manifest, translationsFileCache: translationsFileCache)
     }
     
-    required init(manifest: MobileContentManifestType, pageModels: [PageModelType]) {
+    required init(manifest: MobileContentManifestType, pageModels: [PageModelType], translationsFileCache: TranslationsFileCache) {
         
         let pageNodes: [PageNode]
         
@@ -53,6 +55,7 @@ class MobileContentXmlParser: MobileContentParserType {
         }
         
         self.manifest = manifest
+        self.manifestResourcesCache = ManifestResourcesCache(manifest: manifest, translationsFileCache: translationsFileCache)
         self.pageNodes = pageNodes
         self.errors = Array()
     }

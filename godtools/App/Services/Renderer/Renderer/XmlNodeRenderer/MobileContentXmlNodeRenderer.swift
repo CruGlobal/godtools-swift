@@ -13,15 +13,13 @@ class MobileContentXmlNodeRenderer: MobileContentRendererType {
     private let xmlParser: MobileContentXmlParser
     private let pageViewFactories: [MobileContentPageViewFactoryType]
             
-    let resourcesCache: ManifestResourcesCache
     let resource: ResourceModel
     let language: LanguageModel
     
-    required init(resource: ResourceModel, language: LanguageModel, xmlParser: MobileContentXmlParser, pageViewFactories: MobileContentRendererPageViewFactories, translationsFileCache: TranslationsFileCache) {
+    required init(resource: ResourceModel, language: LanguageModel, xmlParser: MobileContentXmlParser, pageViewFactories: MobileContentRendererPageViewFactories) {
         
         self.xmlParser = xmlParser
         self.pageViewFactories = pageViewFactories.factories
-        self.resourcesCache = ManifestResourcesCache(manifest: xmlParser.manifest, translationsFileCache: translationsFileCache)
         self.resource = resource
         self.language = language
     }
@@ -68,7 +66,7 @@ class MobileContentXmlNodeRenderer: MobileContentRendererType {
             window: window,
             safeArea: safeArea,
             manifest: parser.manifest,
-            resourcesCache: resourcesCache,
+            resourcesCache: parser.manifestResourcesCache,
             resource: resource,
             language: language,
             pageViewFactories: pageViewFactories,

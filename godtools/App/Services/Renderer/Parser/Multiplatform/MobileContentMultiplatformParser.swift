@@ -12,6 +12,7 @@ import GodToolsToolParser
 class MobileContentMultiplatformParser: MobileContentParserType {
     
     let manifest: MobileContentManifestType
+    let manifestResourcesCache: ManifestResourcesCacheType
     var pageModels: [PageModelType]
     var errors: [Error]
     
@@ -32,13 +33,15 @@ class MobileContentMultiplatformParser: MobileContentParserType {
             self.manifest = MockMobileContentManifest()
         }
 
+        self.manifestResourcesCache = ManifestResourcesCache(manifest: manifest, translationsFileCache: translationsFileCache)
         self.pageModels = Array()
         self.errors = errors
     }
     
-    required init(manifest: MobileContentManifestType, pageModels: [PageModelType]) {
+    required init(manifest: MobileContentManifestType, pageModels: [PageModelType], translationsFileCache: TranslationsFileCache) {
         
         self.manifest = manifest
+        self.manifestResourcesCache = ManifestResourcesCache(manifest: manifest, translationsFileCache: translationsFileCache)
         self.pageModels = pageModels
         self.errors = Array()
     }

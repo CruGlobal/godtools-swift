@@ -544,8 +544,7 @@ class ToolsFlow: Flow {
             resource: resource,
             language: primaryLanguage,
             xmlParser: MobileContentXmlParser(translationManifestData: primaryTranslationManifest, translationsFileCache: translationsFileCache),
-            pageViewFactories: pageViewFactories,
-            translationsFileCache: translationsFileCache
+            pageViewFactories: pageViewFactories
         )
         
         var renderers: [MobileContentRendererType] = Array()
@@ -558,8 +557,7 @@ class ToolsFlow: Flow {
                 resource: resource,
                 language: parallelLanguage,
                 xmlParser: MobileContentXmlParser(translationManifestData: parallelTranslationManifest, translationsFileCache: translationsFileCache),
-                pageViewFactories: pageViewFactories,
-                translationsFileCache: translationsFileCache
+                pageViewFactories: pageViewFactories
             )
             
             renderers.append(parallelRenderer)
@@ -605,9 +603,8 @@ class ToolsFlow: Flow {
         let renderer = MobileContentXmlNodeRenderer(
             resource: event.rendererPageModel.resource,
             language: event.rendererPageModel.language,
-            xmlParser: MobileContentXmlParser(manifest: event.rendererPageModel.manifest, pageModels: pageNodes),
-            pageViewFactories: pageViewFactories,
-            translationsFileCache: appDiContainer.translationsFileCache
+            xmlParser: MobileContentXmlParser(manifest: event.rendererPageModel.manifest, pageModels: pageNodes, translationsFileCache: appDiContainer.translationsFileCache),
+            pageViewFactories: pageViewFactories
         )
                 
         let viewModel = ToolTrainingViewModel(
@@ -640,8 +637,7 @@ class ToolsFlow: Flow {
             resource: resource,
             language: primaryLanguage,
             xmlParser: MobileContentXmlParser(translationManifestData: primaryTranslationManifest, translationsFileCache: translationsFileCache),
-            pageViewFactories: pageViewFactories,
-            translationsFileCache: translationsFileCache
+            pageViewFactories: pageViewFactories
         )
         
         let viewModel = LessonViewModel(

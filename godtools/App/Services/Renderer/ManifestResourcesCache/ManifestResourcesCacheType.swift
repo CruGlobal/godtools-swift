@@ -10,5 +10,7 @@ import Foundation
 
 protocol ManifestResourcesCacheType {
     
+    init(manifest: MobileContentManifestType, translationsFileCache: TranslationsFileCache)
+    
     func getImageFromManifestResources(resource: String) -> UIImage?
 }
