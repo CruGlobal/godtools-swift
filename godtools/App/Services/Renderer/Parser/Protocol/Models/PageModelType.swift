@@ -6,29 +6,22 @@
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol PageModelType: BackgroundImageModelType {
         
     var uuid: String { get }
-    var backgroundColor: String? { get }
+    var backgroundColor: UIColor? { get }
     var backgroundImage: String? { get }
     var backgroundImageAlign: [String] { get }
     var backgroundImageScaleType: String { get }
-    var cardTextColor: String? { get }
-    var hidden: String? { get }
+    var cardTextColor: UIColor? { get }
     var listeners: [String] { get }
-    var primaryColor: String? { get }
-    var primaryTextColor: String? { get }
-    var textColor: String? { get }
-    var textScale: String? { get }
+    var primaryColor: UIColor? { get }
+    var primaryTextColor: UIColor? { get }
+    var textColor: UIColor? { get }
+    var textScale: Double { get }
     var isHidden: Bool { get }
     var hero: HeroModelType? { get }
     var callToAction: CallToActionModelType? { get }
-    
-    func getBackgroundColor() -> MobileContentRGBAColor?
-    func getCardTextColor() -> MobileContentRGBAColor?
-    func getPrimaryColor() -> MobileContentRGBAColor?
-    func getPrimaryTextColor() -> MobileContentRGBAColor?
-    func getTextColor() -> MobileContentRGBAColor?
 }

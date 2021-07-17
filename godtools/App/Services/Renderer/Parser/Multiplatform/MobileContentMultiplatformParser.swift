@@ -10,11 +10,11 @@ import Foundation
 import GodToolsToolParser
 
 class MobileContentMultiplatformParser: MobileContentParserType {
-    
+        
     let manifest: MobileContentManifestType
     let manifestResourcesCache: ManifestResourcesCacheType
-    var pageModels: [PageModelType]
-    var errors: [Error]
+    let pageModels: [PageModelType]
+    let errors: [Error]
     
     required init(translationManifestData: TranslationManifestData, translationsFileCache: TranslationsFileCache) {
         
@@ -25,16 +25,20 @@ class MobileContentMultiplatformParser: MobileContentParserType {
         var errors: [Error] = Array()
         
         if let resultData = result as? Result.Data {
-            self.manifest = MultiplatformManifest(manifest: resultData.manifest)
+            
+            let manifest: Manifest = resultData.manifest
+            
+            self.manifest = MultiplatformManifest(manifest: manifest)
+            self.pageModels = manifest.tractPages.map({MultiplatformTractPage(tractPage: $0)})
         }
         else {
             let failedToParseManifest: Error = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Multiplatform failed to parse manifest."])
             errors.append(failedToParseManifest)
             self.manifest = MockMobileContentManifest()
+            self.pageModels = Array()
         }
 
         self.manifestResourcesCache = ManifestResourcesCache(manifest: manifest, translationsFileCache: translationsFileCache)
-        self.pageModels = Array()
         self.errors = errors
     }
     

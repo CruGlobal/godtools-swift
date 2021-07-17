@@ -18,10 +18,10 @@ class MobileContentPageColors {
     
     required init(pageModel: PageModelType, manifest: MobileContentManifestType) {
         
-        backgroundColor = pageModel.getBackgroundColor()?.color ?? manifest.attributes.backgroundColor
-        cardTextColor = pageModel.getCardTextColor()?.color
-        primaryColor = pageModel.getPrimaryColor()?.color ?? manifest.attributes.primaryColor
-        primaryTextColor = pageModel.getPrimaryTextColor()?.color ?? manifest.attributes.primaryTextColor
-        textColor = pageModel.getTextColor()?.color ?? manifest.attributes.textColor
+        backgroundColor = pageModel.backgroundColor ?? manifest.attributes.backgroundColor
+        cardTextColor = pageModel.cardTextColor
+        primaryColor = pageModel.primaryColor ?? manifest.attributes.primaryColor
+        primaryTextColor = pageModel.primaryTextColor ?? manifest.attributes.primaryTextColor
+        textColor = pageModel.textColor ?? manifest.attributes.textColor
     }
 }

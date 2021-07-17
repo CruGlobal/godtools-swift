@@ -11,10 +11,10 @@ import UIKit
 class MobileContentXmlNodeRenderer: MobileContentRendererType {
             
     private let xmlParser: MobileContentXmlParser
-    private let pageViewFactories: [MobileContentPageViewFactoryType]
             
     let resource: ResourceModel
     let language: LanguageModel
+    let pageViewFactories: [MobileContentPageViewFactoryType]
     
     required init(resource: ResourceModel, language: LanguageModel, xmlParser: MobileContentXmlParser, pageViewFactories: MobileContentRendererPageViewFactories) {
         
@@ -118,18 +118,5 @@ class MobileContentXmlNodeRenderer: MobileContentRendererType {
         mobileContentView?.finishedRenderingChildren()
         
         return mobileContentView
-    }
-    
-    private func getViewFromViewFactory(renderableNode: MobileContentRenderableNode, rendererPageModel: MobileContentRendererPageModel, containerNode: MobileContentContainerNode?) -> MobileContentView? {
-        
-        for viewFactory in pageViewFactories {
-            
-            if let view = viewFactory.viewForRenderableNode(renderableNode: renderableNode, rendererPageModel: rendererPageModel, containerNode: containerNode) {
-            
-                return view
-            }
-        }
-        
-        return nil
     }
 }

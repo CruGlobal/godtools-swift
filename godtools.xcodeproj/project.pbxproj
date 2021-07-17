@@ -920,6 +920,8 @@
 		45DEF22E2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json in Resources */ = {isa = PBXBuildFile; fileRef = 45DEF22D2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json */; };
 		45E998D623FD7B090088DD0C /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */; };
 		45F506DA26A3822E00EC04A9 /* ManifestResourcesCacheType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F506D926A3822E00EC04A9 /* ManifestResourcesCacheType.swift */; };
+		45F506DF26A3883000EC04A9 /* MultiplatformTractPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F506DE26A3883000EC04A9 /* MultiplatformTractPage.swift */; };
+		45F506E226A3914600EC04A9 /* MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F506E126A3914600EC04A9 /* MobileContentRenderableModel.swift */; };
 		45F5A03F2689FD7E0081C507 /* LessonQueryParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5A03E2689FD7E0081C507 /* LessonQueryParameters.swift */; };
 		45F5A0422689FEDE0081C507 /* LessonsDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5A0412689FEDE0081C507 /* LessonsDeepLinkParser.swift */; };
 		45F5A044268A2F010081C507 /* DeepLinkSchemeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5A043268A2F010081C507 /* DeepLinkSchemeType.swift */; };
@@ -1888,6 +1890,8 @@
 		45DEF4BC24DEF6FA00996695 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Semibold.otf"; sourceTree = "<group>"; };
 		45F506D926A3822E00EC04A9 /* ManifestResourcesCacheType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManifestResourcesCacheType.swift; sourceTree = "<group>"; };
+		45F506DE26A3883000EC04A9 /* MultiplatformTractPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplatformTractPage.swift; sourceTree = "<group>"; };
+		45F506E126A3914600EC04A9 /* MobileContentRenderableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRenderableModel.swift; sourceTree = "<group>"; };
 		45F5A03E2689FD7E0081C507 /* LessonQueryParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonQueryParameters.swift; sourceTree = "<group>"; };
 		45F5A0412689FEDE0081C507 /* LessonsDeepLinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsDeepLinkParser.swift; sourceTree = "<group>"; };
 		45F5A043268A2F010081C507 /* DeepLinkSchemeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkSchemeType.swift; sourceTree = "<group>"; };
@@ -4720,6 +4724,7 @@
 			children = (
 				45B35F3C26A269DB00208A3E /* MobileContentParserType.swift */,
 				45BD799D26A20EEA0007426B /* Models */,
+				45F506E026A3913800EC04A9 /* Protocols */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -4875,6 +4880,7 @@
 			children = (
 				45BD7A2F26A21FDA0007426B /* MobileContentMultiplatformParser.swift */,
 				45BD7A2E26A21FDA0007426B /* MobileContentMultiplatformParserFactory.swift */,
+				45F506DB26A387D400EC04A9 /* Models */,
 			);
 			path = Multiplatform;
 			sourceTree = "<group>";
@@ -5103,6 +5109,22 @@
 				45CB9FF4261FB0BE0036BEB3 /* LessonListItemViewModelType.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		45F506DB26A387D400EC04A9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				45F506DE26A3883000EC04A9 /* MultiplatformTractPage.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		45F506E026A3913800EC04A9 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				45F506E126A3914600EC04A9 /* MobileContentRenderableModel.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		45F5A0402689FEC80081C507 /* Lessons */ = {
@@ -6300,6 +6322,7 @@
 				45163635268B7F950010876B /* DeepLinkPathType.swift in Sources */,
 				45AD1F9D25938A9800A096A0 /* ResourcesCache.swift in Sources */,
 				D1FF263825BA0C0E00C825DB /* FirebaseInAppMessagingType.swift in Sources */,
+				45F506DF26A3883000EC04A9 /* MultiplatformTractPage.swift in Sources */,
 				45AD1AEB25938A4E00A096A0 /* WebContentViewModelType.swift in Sources */,
 				45AD1F5F25938A9800A096A0 /* WebSocketChannelSubscriberType.swift in Sources */,
 				45AD223C2593C90000A096A0 /* CrashReportingType.swift in Sources */,
@@ -6363,6 +6386,7 @@
 				45AD1B6925938A4F00A096A0 /* ToolDetailViewModel.swift in Sources */,
 				45AD1F6B25938A9800A096A0 /* LanguageSettingsUserDefaultsCache.swift in Sources */,
 				45C93AD7261D310900592FFF /* ArticleCategory.swift in Sources */,
+				45F506E226A3914600EC04A9 /* MobileContentRenderableModel.swift in Sources */,
 				45AD1B5E25938A4F00A096A0 /* AccountItemCell.swift in Sources */,
 				45AD1BAA25938A4F00A096A0 /* Flow.swift in Sources */,
 				455583F7269F2DA500C3FF14 /* MobileContentLinkView.swift in Sources */,

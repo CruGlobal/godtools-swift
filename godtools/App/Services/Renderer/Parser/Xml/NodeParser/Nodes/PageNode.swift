@@ -11,6 +11,14 @@ import SWXMLHash
 
 class PageNode: MobileContentXmlNode, PageModelType {
     
+    private let backgroundColorString: String?
+    private let cardTextColorString: String?
+    private let hiddenString: String?
+    private let primaryColorString: String?
+    private let primaryTextColorString: String?
+    private let textColorString: String?
+    private let textScaleString: String?
+    
     private var headerNode: HeaderNode?
     private var heroNode: HeroNode?
     private var cardsNode: CardsNode?
@@ -18,23 +26,16 @@ class PageNode: MobileContentXmlNode, PageModelType {
     private var modalsNode: ModalsNode?
     
     let uuid: String = UUID().uuidString
-    let backgroundColor: String?
     let backgroundImage: String?
     let backgroundImageAlign: [String]
     let backgroundImageScaleType: String
-    let cardTextColor: String?
-    let hidden: String?
     let listeners: [String]
-    let primaryColor: String?
-    let primaryTextColor: String?
-    let textColor: String?
-    let textScale: String?
         
     required init(xmlElement: XMLElement) {
    
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
-        backgroundColor = attributes["background-color"]?.text
+        backgroundColorString = attributes["background-color"]?.text
         backgroundImage = attributes["background-image"]?.text
         
         if let backgroundImageAlignValues = attributes["background-image-align"]?.text, !backgroundImageAlignValues.isEmpty {
@@ -44,13 +45,13 @@ class PageNode: MobileContentXmlNode, PageModelType {
             backgroundImageAlign = [MobileContentBackgroundImageAlignType.center.rawValue]
         }
         backgroundImageScaleType = attributes["background-image-scale-type"]?.text ?? MobileContentBackgroundImageScaleType.fillHorizontally.rawValue
-        cardTextColor = attributes["card-text-color"]?.text
-        hidden = attributes["hidden"]?.text
+        cardTextColorString = attributes["card-text-color"]?.text
+        hiddenString = attributes["hidden"]?.text
         listeners = attributes["listeners"]?.text.components(separatedBy: " ") ?? []
-        primaryColor = attributes["primary-color"]?.text
-        primaryTextColor = attributes["primary-text-color"]?.text
-        textColor = attributes["text-color"]?.text
-        textScale = attributes["text-scale"]?.text
+        primaryColorString = attributes["primary-color"]?.text
+        primaryTextColorString = attributes["primary-text-color"]?.text
+        textColorString = attributes["text-color"]?.text
+        textScaleString = attributes["text-scale"]?.text
 
         super.init(xmlElement: xmlElement)
     }
@@ -75,8 +76,15 @@ class PageNode: MobileContentXmlNode, PageModelType {
         }
     }
     
+    var textScale: Double {
+        if let stringValue = textScaleString, let doubleValue = Double(stringValue) {
+            return doubleValue
+        }
+        return 1
+    }
+    
     var isHidden: Bool {
-        return hidden == "true"
+        return hiddenString == "true"
     }
     
     var hero: HeroModelType? {
@@ -87,37 +95,37 @@ class PageNode: MobileContentXmlNode, PageModelType {
         return callToActionNode
     }
     
-    func getBackgroundColor() -> MobileContentRGBAColor? {
-        if let stringColor = backgroundColor {
-            return MobileContentRGBAColor(stringColor: stringColor)
+    var backgroundColor: UIColor? {
+        if let stringColor = backgroundColorString {
+            return MobileContentRGBAColor(stringColor: stringColor).color
         }
         return nil
     }
     
-    func getCardTextColor() -> MobileContentRGBAColor? {
-        if let stringColor = cardTextColor {
-            return MobileContentRGBAColor(stringColor: stringColor)
+    var cardTextColor: UIColor? {
+        if let stringColor = cardTextColorString {
+            return MobileContentRGBAColor(stringColor: stringColor).color
         }
         return nil
     }
     
-    func getPrimaryColor() -> MobileContentRGBAColor? {
-        if let stringColor = primaryColor {
-            return MobileContentRGBAColor(stringColor: stringColor)
+    var primaryColor: UIColor? {
+        if let stringColor = primaryColorString {
+            return MobileContentRGBAColor(stringColor: stringColor).color
         }
         return nil
     }
     
-    func getPrimaryTextColor() -> MobileContentRGBAColor? {
-        if let stringColor = primaryTextColor {
-            return MobileContentRGBAColor(stringColor: stringColor)
+    var primaryTextColor: UIColor? {
+        if let stringColor = primaryTextColorString {
+            return MobileContentRGBAColor(stringColor: stringColor).color
         }
         return nil
     }
     
-    func getTextColor() -> MobileContentRGBAColor? {
-        if let stringColor = textColor {
-            return MobileContentRGBAColor(stringColor: stringColor)
+    var textColor: UIColor? {
+        if let stringColor = textColorString {
+            return MobileContentRGBAColor(stringColor: stringColor).color
         }
         return nil
     }
