@@ -26,18 +26,8 @@ class MobileContentXmlNodeRenderer: MobileContentRendererType {
         self.language = language
     }
     
-    var manifest: MobileContentManifestType {
-        return xmlParser.manifest
-    }
-    
-    var allPageModels: [PageModelType] {
-        return xmlParser.pageNodes
-    }
-        
-    // MARK: - Page Listeners
-    
-    func getPageForListenerEvents(events: [String]) -> Int? {
-        return xmlParser.getPageForListenerEvents(events: events)
+    var parser: MobileContentParserType {
+        return xmlParser
     }
     
     // MARK: - Rendering
@@ -50,7 +40,7 @@ class MobileContentXmlNodeRenderer: MobileContentRendererType {
             return renderPageModel(
                 pageModel: pageNode,
                 page: page,
-                numberOfPages: allPageModels.count,
+                numberOfPages: parser.pageModels.count,
                 window: window,
                 safeArea: safeArea,
                 primaryRendererLanguage: primaryRendererLanguage
@@ -77,7 +67,7 @@ class MobileContentXmlNodeRenderer: MobileContentRendererType {
             isLastPage: page == numberOfPages - 1,
             window: window,
             safeArea: safeArea,
-            manifest: manifest,
+            manifest: parser.manifest,
             resourcesCache: resourcesCache,
             resource: resource,
             language: language,

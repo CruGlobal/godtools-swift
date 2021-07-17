@@ -49,7 +49,7 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
             trainingTipViewed: viewedTrainingTips.containsViewedTrainingTip(viewedTrainingTip: ViewedTrainingTip(trainingTipId: trainingTipId, resourceId: resource.id, languageId: language.id))
         )
         
-        numberOfTipPages.accept(value: renderer.allPageModels.count)
+        numberOfTipPages.accept(value: renderer.parser.pageModels.count)
         setPage(page: 0, animated: false)
     }
     

@@ -109,7 +109,7 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         
         currentRenderer = renderer
         
-        let visiblePageModels: [PageModelType] = renderer.getVisiblePageModels()
+        let visiblePageModels: [PageModelType] = renderer.parser.getVisiblePageModels()
         
         pageModels = visiblePageModels
         
@@ -153,7 +153,7 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     
     func pageDidDisappear(page: Int) {
                 
-        guard let pageModel = currentRenderer?.getPageModel(page: page) else {
+        guard let pageModel = currentRenderer?.parser.getPageModel(page: page) else {
             return
         }
         
@@ -164,11 +164,11 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     
     func pageDidReceiveEvents(events: [String]) {
         
-        guard let didReceivePageListenerForPageNumber = currentRenderer?.getPageForListenerEvents(events: events) else {
+        guard let didReceivePageListenerForPageNumber = currentRenderer?.parser.getPageForListenerEvents(events: events) else {
             return
         }
         
-        guard let didReceivePageListenerEventForPageModel = currentRenderer?.getPageModel(page: didReceivePageListenerForPageNumber) else {
+        guard let didReceivePageListenerEventForPageModel = currentRenderer?.parser.getPageModel(page: didReceivePageListenerForPageNumber) else {
             return
         }
         

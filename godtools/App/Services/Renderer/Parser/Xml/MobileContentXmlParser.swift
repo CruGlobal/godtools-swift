@@ -8,7 +8,7 @@
 
 import Foundation
 
-class MobileContentXmlParser {
+class MobileContentXmlParser: MobileContentParserType {
     
     typealias PageListenerEventName = String
     typealias PageNumber = Int
@@ -52,6 +52,10 @@ class MobileContentXmlParser {
         self.pageNodes = pageNodes
         self.pageListeners = MobileContentXmlParser.getPageListeners(pageNodes: pageNodes)
         self.errors = Array()
+    }
+    
+    var pageModels: [PageModelType] {
+        return pageNodes
     }
     
     func getPageForListenerEvents(events: [String]) -> Int? {

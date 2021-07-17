@@ -22,16 +22,8 @@ class MobileContentMultiplatformRenderer: MobileContentRendererType {
         self.language = language
     }
     
-    var manifest: MobileContentManifestType {
-        return multiplatformParser.manifest
-    }
-    
-    var allPageModels: [PageModelType] {
-        return Array()
-    }
-    
-    func getPageForListenerEvents(events: [String]) -> Int? {
-        return nil
+    var parser: MobileContentParserType {
+        return multiplatformParser
     }
     
     func renderPage(page: Int, window: UIViewController, safeArea: UIEdgeInsets, primaryRendererLanguage: LanguageModel) -> Result<MobileContentView, Error> {

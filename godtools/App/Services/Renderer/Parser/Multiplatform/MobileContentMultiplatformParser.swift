@@ -9,9 +9,23 @@
 import Foundation
 import GodToolsToolParser
 
-class MobileContentMultiplatformParser {
-        
+class MobileContentMultiplatformParser: MobileContentParserType {
+    
     let manifest: MobileContentManifestType
+    var pageModels: [PageModelType] = Array()
+    var errors: [Error] = Array()
+    
+    required init(translationManifestData: TranslationManifestData, translationsFileCache: TranslationsFileCache) {
+        fatalError("not yet implemented")
+    }
+    
+    required init(manifest: MobileContentManifestType, pageNodes: [PageNode]) {
+        fatalError("not yet implemented")
+    }
+    
+    func getPageForListenerEvents(events: [String]) -> Int? {
+        return nil
+    }
     
     required init?(manifestFilename: String, sha256FileCache: ResourcesSHA256FileCache) {
                         
