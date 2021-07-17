@@ -46,17 +46,7 @@ class MobileContentXmlParser: MobileContentParserType {
         self.manifest = manifest
     }
     
-    required init(manifest: MobileContentManifestType, pageModels: [PageModelType]) {
-        
-        let pageNodes: [PageNode]
-        
-        if let pageNodesList = pageModels as? [PageNode] {
-            pageNodes = pageNodesList
-        }
-        else {
-            assertionFailure("Incorrect PageModelType.  Expected type PageNode.")
-            pageNodes = Array()
-        }
+    required init(manifest: MobileContentManifestType, pageNodes: [PageNode]) {
         
         self.manifest = manifest
         self.pageNodes = pageNodes

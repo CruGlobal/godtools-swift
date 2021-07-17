@@ -739,8 +739,6 @@
 		45AD22E42593E68D00A096A0 /* TutorialSupportedLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175625938A4D00A096A0 /* TutorialSupportedLanguages.swift */; };
 		45B116C22625FC6D007A7127 /* LanguageDirection+SemanticContentAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B116C12625FC6D007A7127 /* LanguageDirection+SemanticContentAttribute.swift */; };
 		45B35F3D26A269DB00208A3E /* MobileContentParserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B35F3C26A269DB00208A3E /* MobileContentParserType.swift */; };
-		45B35F4026A2738600208A3E /* MockMobileContentManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B35F3F26A2738600208A3E /* MockMobileContentManifest.swift */; };
-		45B35F4226A2739500208A3E /* MockMobileContentManifestAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B35F4126A2739500208A3E /* MockMobileContentManifestAttributes.swift */; };
 		45B6480925E581660098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		45B6480A25E581660098BAF1 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		45B6480B25E581660098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -1712,8 +1710,6 @@
 		45AD22B22593D1FB00A096A0 /* UIImage+CreateImageWithColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+CreateImageWithColor.swift"; sourceTree = "<group>"; };
 		45B116C12625FC6D007A7127 /* LanguageDirection+SemanticContentAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LanguageDirection+SemanticContentAttribute.swift"; sourceTree = "<group>"; };
 		45B35F3C26A269DB00208A3E /* MobileContentParserType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentParserType.swift; sourceTree = "<group>"; };
-		45B35F3F26A2738600208A3E /* MockMobileContentManifest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMobileContentManifest.swift; sourceTree = "<group>"; };
-		45B35F4126A2739500208A3E /* MockMobileContentManifestAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMobileContentManifestAttributes.swift; sourceTree = "<group>"; };
 		45BD799E26A20EEA0007426B /* PageModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageModelType.swift; sourceTree = "<group>"; };
 		45BD799F26A20EEA0007426B /* NumberModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberModelType.swift; sourceTree = "<group>"; };
 		45BD79A026A20EEA0007426B /* HeadingModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadingModelType.swift; sourceTree = "<group>"; };
@@ -3853,7 +3849,6 @@
 			isa = PBXGroup;
 			children = (
 				45AD1D9725938A9700A096A0 /* Protocol */,
-				45B35F3E26A2736400208A3E /* Mock */,
 				45BD79EA26A214E70007426B /* Multiplatform */,
 				45AD1D9D25938A9700A096A0 /* Xml */,
 			);
@@ -4676,15 +4671,6 @@
 				45AD223B2593C90000A096A0 /* FirebaseCrashlyticsService.swift */,
 			);
 			path = CrashReporting;
-			sourceTree = "<group>";
-		};
-		45B35F3E26A2736400208A3E /* Mock */ = {
-			isa = PBXGroup;
-			children = (
-				45B35F4126A2739500208A3E /* MockMobileContentManifestAttributes.swift */,
-				45B35F3F26A2738600208A3E /* MockMobileContentManifest.swift */,
-			);
-			path = Mock;
 			sourceTree = "<group>";
 		};
 		45B59D7A242434F700F9D594 /* Features */ = {
@@ -6078,7 +6064,6 @@
 				45AD1BDC25938A4F00A096A0 /* AlertMessageViewModel.swift in Sources */,
 				45AD21142593958E00A096A0 /* RealmLanguage.swift in Sources */,
 				45AD1ABD25938A4E00A096A0 /* LoadingToolView.swift in Sources */,
-				45B35F4026A2738600208A3E /* MockMobileContentManifest.swift in Sources */,
 				45AD1AD625938A4E00A096A0 /* AllToolsViewModel.swift in Sources */,
 				45AD1BD225938A4F00A096A0 /* LoadingViewModel.swift in Sources */,
 				45AD202A25938A9800A096A0 /* CardJumpService.swift in Sources */,
@@ -6219,7 +6204,6 @@
 				45585BD32687BD7900A21D12 /* ToolQueryParameters.swift in Sources */,
 				45AD1F8E25938A9800A096A0 /* ResourceModelType.swift in Sources */,
 				45AD1FFD25938A9800A096A0 /* FailedResourceViewsCache.swift in Sources */,
-				45B35F4226A2739500208A3E /* MockMobileContentManifestAttributes.swift in Sources */,
 				45AD1EF225938A9800A096A0 /* ManifestResourcesCache.swift in Sources */,
 				45C93AE3261D310900592FFF /* ArticleAemCache.swift in Sources */,
 				45AD1F6625938A9800A096A0 /* ToolTrainingTipsOnboardingViewsCacheType.swift in Sources */,

@@ -249,28 +249,24 @@ class AppDiContainer {
         return MobileContentXmlNodeParser()
     }
     
-    func getMobileContentRenderer(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageModel, translationManifestData: TranslationManifestData, viewRendererFactoryType: MobileContentRendererPageViewFactoriesType, trainingTipsEnabled: Bool) -> MobileContentRendererType {
-            
-        let pageViewFactories = MobileContentRendererPageViewFactories(
-            type: viewRendererFactoryType,
+    func getMobileContentRenderer(manifestFilename: String, flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageModel) -> MobileContentMultiplatformRenderer {
+        
+        // TODO: Change return type to MobileContentRendererType. ~Levi
+        
+        let multiplatformParser: MobileContentMultiplatformParser? = MobileContentMultiplatformParser(
+            manifestFilename: manifestFilename,
+            sha256FileCache: resourcesSHA256FileCache
+        )
+        
+        // TODO: Don't force unwrap multiplatform parser. Return node parser?   ~Levi
+        let multiplatformRenderer = MobileContentMultiplatformRenderer(
             flowDelegate: flowDelegate,
-            appDiContainer: self,
-            trainingTipsEnabled: trainingTipsEnabled
-        )
-        
-        let parser: MobileContentXmlParser = MobileContentXmlParser(
-            translationManifestData: translationManifestData,
-            translationsFileCache: translationsFileCache
-        )
-        
-        let renderer: MobileContentRendererType = MobileContentXmlNodeRenderer(
+            multiplatformParser: multiplatformParser!,
             resource: resource,
-            language: language,
-            xmlParser: parser,
-            pageViewFactories: pageViewFactories,
-            translationsFileCache: translationsFileCache)
+            language: language
+        )
         
-        return renderer
+        return multiplatformRenderer
     }
     
     func getToolTrainingTipsOnboardingViews() -> ToolTrainingTipsOnboardingViewsService {

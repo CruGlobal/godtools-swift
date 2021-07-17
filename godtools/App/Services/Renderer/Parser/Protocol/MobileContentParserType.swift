@@ -15,7 +15,7 @@ protocol MobileContentParserType {
     var errors: [Error] { get }
     
     init(translationManifestData: TranslationManifestData, translationsFileCache: TranslationsFileCache)
-    init(manifest: MobileContentManifestType, pageModels: [PageModelType])
+    init(manifest: MobileContentManifestType, pageNodes: [PageNode])
     
     func getPageForListenerEvents(events: [String]) -> Int?
     func getPageModel(page: Int) -> PageModelType?
