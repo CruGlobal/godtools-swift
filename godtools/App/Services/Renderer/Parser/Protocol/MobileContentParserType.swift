@@ -36,12 +36,13 @@ extension MobileContentParserType {
     }
     
     func getPageForListenerEvents(events: [String]) -> Int? {
-        
-        return nil // TODO: Remove this line. ~Levi
-        
+                
         for pageIndex in 0 ..< pageModels.count {
+            
             let pageModel: PageModelType = pageModels[pageIndex]
+            
             for listener in pageModel.listeners {
+               
                 if events.contains(listener) {
                     return pageIndex
                 }

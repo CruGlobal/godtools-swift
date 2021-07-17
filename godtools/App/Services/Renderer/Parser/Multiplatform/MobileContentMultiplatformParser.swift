@@ -42,8 +42,4 @@ class MobileContentMultiplatformParser: MobileContentParserType {
         self.pageModels = pageModels
         self.errors = Array()
     }
-    
-    func getPageForListenerEvents(events: [String]) -> Int? {
-        return nil
-    }
 }

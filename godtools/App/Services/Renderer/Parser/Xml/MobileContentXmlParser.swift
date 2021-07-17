@@ -9,12 +9,8 @@
 import Foundation
 
 class MobileContentXmlParser: MobileContentParserType {
-    
-    typealias PageListenerEventName = String
-    typealias PageNumber = Int
-    
+        
     private let mobileContentNodeParser: MobileContentXmlNodeParser = MobileContentXmlNodeParser()
-    private let pageListeners: [PageListenerEventName: PageNumber]
     
     let manifest: MobileContentManifestType
     let pageNodes: [PageNode]
@@ -34,12 +30,10 @@ class MobileContentXmlParser: MobileContentParserType {
         
         case .success(let pageNodes):
             self.pageNodes = pageNodes
-            self.pageListeners = MobileContentXmlParser.getPageListeners(pageNodes: pageNodes)
             self.errors = Array()
         
         case .failure(let error):
             self.pageNodes = Array()
-            self.pageListeners = Dictionary()
             self.errors = [error]
         }
         
@@ -60,21 +54,11 @@ class MobileContentXmlParser: MobileContentParserType {
         
         self.manifest = manifest
         self.pageNodes = pageNodes
-        self.pageListeners = MobileContentXmlParser.getPageListeners(pageNodes: pageNodes)
         self.errors = Array()
     }
     
     var pageModels: [PageModelType] {
         return pageNodes
-    }
-    
-    func getPageForListenerEvents(events: [String]) -> Int? {
-        for event in events {
-            if let page = pageListeners[event] {
-                return page
-            }
-        }
-        return nil
     }
     
     func getPageNode(page: Int) -> PageNode? {
@@ -84,20 +68,6 @@ class MobileContentXmlParser: MobileContentParserType {
         }
         
         return pageNodes[page]
-    }
-    
-    private static func getPageListeners(pageNodes: [PageNode]) -> [PageListenerEventName: PageNumber] {
-        
-        var pageListeners: [PageListenerEventName: PageNumber] = Dictionary()
-        
-        for pageIndex in 0 ..< pageNodes.count {
-            let pageNode: PageNode = pageNodes[pageIndex]
-            for listener in pageNode.listeners {
-                pageListeners[listener] = pageIndex
-            }
-        }
-        
-        return pageListeners
     }
         
     // MARK: - Parsing Page Nodes
