@@ -11,13 +11,15 @@ import Foundation
 class MobileContentMultiplatformRenderer: MobileContentRendererType {
     
     private let multiplatformParser: MobileContentMultiplatformParser
+    private let pageViewFactories: [MobileContentPageViewFactoryType]
     
     let resource: ResourceModel
     let language: LanguageModel
     
-    required init(flowDelegate: FlowDelegate, multiplatformParser: MobileContentMultiplatformParser, resource: ResourceModel, language: LanguageModel) {
+    required init(resource: ResourceModel, language: LanguageModel, multiplatformParser: MobileContentMultiplatformParser, pageViewFactories: MobileContentRendererPageViewFactories) {
         
         self.multiplatformParser = multiplatformParser
+        self.pageViewFactories = pageViewFactories.factories
         self.resource = resource
         self.language = language
     }
