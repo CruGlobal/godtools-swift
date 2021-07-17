@@ -249,24 +249,28 @@ class AppDiContainer {
         return MobileContentXmlNodeParser()
     }
     
-    func getMobileContentRenderer(manifestFilename: String, flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageModel) -> MobileContentMultiplatformRenderer {
-        
-        // TODO: Change return type to MobileContentRendererType. ~Levi
-        
-        let multiplatformParser: MobileContentMultiplatformParser? = MobileContentMultiplatformParser(
-            manifestFilename: manifestFilename,
-            sha256FileCache: resourcesSHA256FileCache
-        )
-        
-        // TODO: Don't force unwrap multiplatform parser. Return node parser?   ~Levi
-        let multiplatformRenderer = MobileContentMultiplatformRenderer(
+    func getMobileContentRenderer(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageModel, translationManifestData: TranslationManifestData, viewRendererFactoryType: MobileContentRendererPageViewFactoriesType, trainingTipsEnabled: Bool) -> MobileContentRendererType {
+            
+        let pageViewFactories = MobileContentRendererPageViewFactories(
+            type: viewRendererFactoryType,
             flowDelegate: flowDelegate,
-            multiplatformParser: multiplatformParser!,
-            resource: resource,
-            language: language
+            appDiContainer: self,
+            trainingTipsEnabled: trainingTipsEnabled
         )
         
-        return multiplatformRenderer
+        let parser: MobileContentXmlParser = MobileContentXmlParser(
+            translationManifestData: translationManifestData,
+            translationsFileCache: translationsFileCache
+        )
+        
+        let renderer: MobileContentRendererType = MobileContentXmlNodeRenderer(
+            resource: resource,
+            language: language,
+            xmlParser: parser,
+            pageViewFactories: pageViewFactories,
+            translationsFileCache: translationsFileCache)
+        
+        return renderer
     }
     
     func getToolTrainingTipsOnboardingViews() -> ToolTrainingTipsOnboardingViewsService {

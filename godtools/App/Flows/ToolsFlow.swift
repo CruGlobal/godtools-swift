@@ -530,39 +530,34 @@ class ToolsFlow: Flow {
     }
     
     private func navigateToTract(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
-           
-        let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
         
-        let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
-            type: .tract,
+        let renderers: [MobileContentRendererType]
+        
+        let primaryRenderer = appDiContainer.getMobileContentRenderer(
             flowDelegate: self,
-            appDiContainer: appDiContainer,
-            trainingTipsEnabled: trainingTipsEnabled
-        )
-                
-        let primaryRenderer = MobileContentXmlNodeRenderer(
             resource: resource,
             language: primaryLanguage,
-            xmlParser: MobileContentXmlParser(translationManifestData: primaryTranslationManifest, translationsFileCache: translationsFileCache),
-            pageViewFactories: pageViewFactories,
-            translationsFileCache: translationsFileCache
+            translationManifestData: primaryTranslationManifest,
+            viewRendererFactoryType: .tract,
+            trainingTipsEnabled: trainingTipsEnabled
         )
-        
-        var renderers: [MobileContentRendererType] = Array()
-        
-        renderers.append(primaryRenderer)
         
         if !trainingTipsEnabled, let parallelLanguage = parallelLanguage, let parallelTranslationManifest = parallelTranslationManifest, parallelLanguage.code != primaryLanguage.code {
             
-            let parallelRenderer = MobileContentXmlNodeRenderer(
+            let parallelRenderer = appDiContainer.getMobileContentRenderer(
+                flowDelegate: self,
                 resource: resource,
                 language: parallelLanguage,
-                xmlParser: MobileContentXmlParser(translationManifestData: parallelTranslationManifest, translationsFileCache: translationsFileCache),
-                pageViewFactories: pageViewFactories,
-                translationsFileCache: translationsFileCache
+                translationManifestData: parallelTranslationManifest,
+                viewRendererFactoryType: .tract,
+                trainingTipsEnabled: trainingTipsEnabled
             )
             
-            renderers.append(parallelRenderer)
+            renderers = [primaryRenderer, parallelRenderer]
+        }
+        else {
+            
+            renderers = [primaryRenderer]
         }
         
         let viewModel = ToolViewModel(
@@ -605,7 +600,7 @@ class ToolsFlow: Flow {
         let renderer = MobileContentXmlNodeRenderer(
             resource: event.rendererPageModel.resource,
             language: event.rendererPageModel.language,
-            xmlParser: MobileContentXmlParser(manifest: event.rendererPageModel.manifest, pageNodes: pageNodes),
+            xmlParser: MobileContentXmlParser(manifest: event.rendererPageModel.manifest, pageModels: pageNodes),
             pageViewFactories: pageViewFactories,
             translationsFileCache: appDiContainer.translationsFileCache
         )
@@ -627,21 +622,13 @@ class ToolsFlow: Flow {
     
     private func navigateToLesson(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, trainingTipsEnabled: Bool, page: Int?) {
         
-        let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
-            type: .lesson,
+        let renderer = appDiContainer.getMobileContentRenderer(
             flowDelegate: self,
-            appDiContainer: appDiContainer,
-            trainingTipsEnabled: trainingTipsEnabled
-        )
-        
-        let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
-                
-        let renderer = MobileContentXmlNodeRenderer(
             resource: resource,
             language: primaryLanguage,
-            xmlParser: MobileContentXmlParser(translationManifestData: primaryTranslationManifest, translationsFileCache: translationsFileCache),
-            pageViewFactories: pageViewFactories,
-            translationsFileCache: translationsFileCache
+            translationManifestData: primaryTranslationManifest,
+            viewRendererFactoryType: .lesson,
+            trainingTipsEnabled: trainingTipsEnabled
         )
         
         let viewModel = LessonViewModel(
