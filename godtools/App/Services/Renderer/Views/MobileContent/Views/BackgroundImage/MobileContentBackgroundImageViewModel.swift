@@ -32,7 +32,7 @@ class MobileContentBackgroundImageViewModel {
         guard let resource = backgroundImageModel.backgroundImage else {
             return nil
         }
-        return manifestResourcesCache.getImage(resource: resource)
+        return manifestResourcesCache.getImageFromManifestResources(resource: resource)
     }
     
     func getRenderPositionForBackgroundImage(container: CGRect, backgroundImage: UIImage) -> CGRect {
@@ -62,7 +62,7 @@ class MobileContentBackgroundImageViewModel {
             return nil
         }
         
-        guard let backgroundImage = manifestResourcesCache.getImage(resource: resource) else {
+        guard let backgroundImage = manifestResourcesCache.getImageFromManifestResources(resource: resource) else {
             return nil
         }
         

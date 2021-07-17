@@ -919,6 +919,7 @@
 		45CBA01B261FB0EA0036BEB3 /* LessonViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CBA01A261FB0EA0036BEB3 /* LessonViewModelType.swift */; };
 		45DEF22E2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json in Resources */ = {isa = PBXBuildFile; fileRef = 45DEF22D2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json */; };
 		45E998D623FD7B090088DD0C /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */; };
+		45F506DA26A3822E00EC04A9 /* ManifestResourcesCacheType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F506D926A3822E00EC04A9 /* ManifestResourcesCacheType.swift */; };
 		45F5A03F2689FD7E0081C507 /* LessonQueryParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5A03E2689FD7E0081C507 /* LessonQueryParameters.swift */; };
 		45F5A0422689FEDE0081C507 /* LessonsDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5A0412689FEDE0081C507 /* LessonsDeepLinkParser.swift */; };
 		45F5A044268A2F010081C507 /* DeepLinkSchemeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5A043268A2F010081C507 /* DeepLinkSchemeType.swift */; };
@@ -1886,6 +1887,7 @@
 		45DEF4BB24DEF6E700996695 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/Localizable.strings; sourceTree = "<group>"; };
 		45DEF4BC24DEF6FA00996695 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Semibold.otf"; sourceTree = "<group>"; };
+		45F506D926A3822E00EC04A9 /* ManifestResourcesCacheType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManifestResourcesCacheType.swift; sourceTree = "<group>"; };
 		45F5A03E2689FD7E0081C507 /* LessonQueryParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonQueryParameters.swift; sourceTree = "<group>"; };
 		45F5A0412689FEDE0081C507 /* LessonsDeepLinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsDeepLinkParser.swift; sourceTree = "<group>"; };
 		45F5A043268A2F010081C507 /* DeepLinkSchemeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkSchemeType.swift; sourceTree = "<group>"; };
@@ -3854,6 +3856,7 @@
 			isa = PBXGroup;
 			children = (
 				45AD1D4F25938A9700A096A0 /* ManifestResourcesCache.swift */,
+				45F506D926A3822E00EC04A9 /* ManifestResourcesCacheType.swift */,
 			);
 			path = ManifestResourcesCache;
 			sourceTree = "<group>";
@@ -6384,6 +6387,7 @@
 				45CBA015261FB0E30036BEB3 /* LessonViewModel.swift in Sources */,
 				45AD1B6E25938A4F00A096A0 /* ToolDetailViewModelType.swift in Sources */,
 				45AD1AB225938A4E00A096A0 /* TutorialView.swift in Sources */,
+				45F506DA26A3822E00EC04A9 /* ManifestResourcesCacheType.swift in Sources */,
 				45558499269F2F9E00C3FF14 /* MobileContentRendererVersion.swift in Sources */,
 				45AD20A525938CF100A096A0 /* ConfigType.swift in Sources */,
 				45AD1AF425938A4E00A096A0 /* WebContentView.swift in Sources */,
