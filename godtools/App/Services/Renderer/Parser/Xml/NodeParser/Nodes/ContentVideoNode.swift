@@ -11,20 +11,28 @@ import SWXMLHash
 
 class ContentVideoNode: MobileContentXmlNode, ContentVideoModelType {
     
-    let provider: String?
+    private let providerString: String?
+    
     let videoId: String?
     
     required init(xmlElement: XMLElement) {
     
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
-        provider = attributes["provider"]?.text
+        providerString = attributes["provider"]?.text
         videoId = attributes["video-id"]?.text
 
         super.init(xmlElement: xmlElement)
     }
     
-    var providerType: MobileContentVideoNodeProvider {
-        return MobileContentVideoNodeProvider(rawValue: provider ?? "") ?? .unknown
+    var provider: MobileContentVideoProvider {
+        
+        let defaultProvider: MobileContentVideoProvider = .unknown
+        
+        guard let providerString = self.providerString?.lowercased() else {
+            return defaultProvider
+        }
+        
+        return MobileContentVideoProvider(rawValue: providerString) ?? defaultProvider
     }
 }

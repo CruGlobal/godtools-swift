@@ -58,17 +58,7 @@ class ContentTextNode: MobileContentXmlNode, ContentTextModelType {
             return defaultTextAlignment
         }
         
-        if textAlignString == "left" {
-            return .left
-        }
-        else if textAlignString == "center" {
-            return .center
-        }
-        else if textAlignString == "right" {
-            return .right
-        }
-        
-        return defaultTextAlignment
+        return MobileContentTextAlignment(rawValue: textAlignString) ?? defaultTextAlignment
     }
     
     func getTextColor() -> MobileContentRGBAColor? {

@@ -8,9 +8,9 @@
 
 import Foundation
 
-enum MobileContentTextAlignment {
+enum MobileContentTextAlignment: String {
     
-    case center
-    case left
-    case right
+    case center = "center"
+    case left = "left"
+    case right = "right"
 }

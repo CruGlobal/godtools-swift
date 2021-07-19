@@ -10,14 +10,15 @@ import SWXMLHash
 
 class ContentButtonNode: MobileContentXmlNode, ContentButtonModelType {
     
+    private let styleString: String?
+    private let typeString: String?
+    
     private var textNode: ContentTextNode?
     private var analyticsEventsNode: AnalyticsEventsNode?
     
     let backgroundColor: String?
     let color: String?
     let events: [String]
-    let style: String?
-    let type: String?
     let url: String?
     
     required init(xmlElement: XMLElement) {
@@ -27,8 +28,8 @@ class ContentButtonNode: MobileContentXmlNode, ContentButtonModelType {
         backgroundColor = attributes["background-color"]?.text
         color = attributes["color"]?.text
         events = attributes["events"]?.text.components(separatedBy: " ") ?? []
-        style = attributes["style"]?.text
-        type = attributes["type"]?.text
+        styleString = attributes["style"]?.text
+        typeString = attributes["type"]?.text
         
         if var urlString = attributes["url"]?.text {
             let urlIsHttps: Bool = urlString.contains("https://")
@@ -57,40 +58,26 @@ class ContentButtonNode: MobileContentXmlNode, ContentButtonModelType {
         super.addChild(childNode: childNode)
     }
     
-    var buttonStyle: MobileContentButtonStyle? {
+    var style: MobileContentButtonStyle? {
         
         let defaultStyle: MobileContentButtonStyle? = nil
         
-        guard let style = self.style?.lowercased() else {
+        guard let styleString = self.styleString?.lowercased() else {
             return defaultStyle
         }
         
-        if style == "contained" {
-            return .contained
-        }
-        else if style == "outlined" {
-            return .outlined
-        }
-        
-        return defaultStyle
+        return MobileContentButtonStyle(rawValue: styleString) ?? defaultStyle
     }
     
-    var buttonType: MobileContentButtonType {
+    var type: MobileContentButtonType {
     
         let defaultType: MobileContentButtonType = .unknown
         
-        guard let type = self.type?.lowercased() else {
+        guard let typeString = self.typeString?.lowercased() else {
             return defaultType
         }
         
-        if type == "event" {
-            return .event
-        }
-        else if type == "url" {
-            return .url
-        }
-        
-        return defaultType
+        return MobileContentButtonType(rawValue: typeString) ?? defaultType
     }
     
     var text: String? {

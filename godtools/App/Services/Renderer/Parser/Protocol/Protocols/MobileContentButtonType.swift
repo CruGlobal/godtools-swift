@@ -8,9 +8,9 @@
 
 import Foundation
 
-enum MobileContentButtonType {
+enum MobileContentButtonType: String {
     
-    case event
-    case url
-    case unknown
+    case event = "event"
+    case url = "url"
+    case unknown = "unknown"
 }

@@ -159,7 +159,7 @@ extension ToolPageCardViewModel: MobileContentViewModelType {
         return analyticsEventsObjects
     }
     
-    var defaultAnalyticsEventsTrigger: AnalyticsEventNodeTrigger {
+    var defaultAnalyticsEventsTrigger: MobileContentAnalyticsEventTrigger {
         return .visible
     }
 }

@@ -12,7 +12,7 @@ protocol MobileContentViewModelType {
     
     var language: LanguageModel { get }
     var analyticsEvents: [MobileContentAnalyticsEvent] { get }
-    var defaultAnalyticsEventsTrigger: AnalyticsEventNodeTrigger { get }
+    var defaultAnalyticsEventsTrigger: MobileContentAnalyticsEventTrigger { get }
     
     func mobileContentDidAppear()
     func mobileContentDidDisappear()
@@ -27,7 +27,7 @@ extension MobileContentViewModelType {
     func mobileContentDidAppear() {
         
         for event in analyticsEvents {
-            let trigger: AnalyticsEventModelTriggerType = event.analyticsEvent.getTriggerType()
+            let trigger: MobileContentAnalyticsEventTrigger = event.analyticsEvent.trigger
             if trigger == .visible || (trigger == .dependentOnContainingElement && defaultAnalyticsEventsTrigger == .visible) {
                 event.trigger()
             }
@@ -37,7 +37,7 @@ extension MobileContentViewModelType {
     func mobileContentDidDisappear() {
         
         for event in analyticsEvents {
-            let trigger: AnalyticsEventModelTriggerType = event.analyticsEvent.getTriggerType()
+            let trigger: MobileContentAnalyticsEventTrigger = event.analyticsEvent.trigger
             if trigger == .visible || (trigger == .dependentOnContainingElement && defaultAnalyticsEventsTrigger == .visible) {
                 event.cancel()
             }

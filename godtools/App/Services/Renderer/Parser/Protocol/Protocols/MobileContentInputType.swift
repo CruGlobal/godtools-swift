@@ -1,14 +1,14 @@
 //
-//  MobileContentInputNodeType.swift
+//  MobileContentInputType.swift
 //  godtools
 //
-//  Created by Levi Eggert on 3/23/21.
+//  Created by Levi Eggert on 7/19/21.
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
 import Foundation
 
-enum MobileContentInputNodeType: String {
+enum MobileContentInputType: String {
     
     case email = "email"
     case hidden = "hidden"

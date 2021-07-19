@@ -14,7 +14,5 @@ protocol AnalyticsEventModelType {
     var action: String? { get }
     var delay: String? { get }
     var systems: [String] { get }
-    var trigger: String? { get }
-    
-    func getTriggerType() -> AnalyticsEventModelTriggerType
+    var trigger: MobileContentAnalyticsEventTrigger { get }
 }

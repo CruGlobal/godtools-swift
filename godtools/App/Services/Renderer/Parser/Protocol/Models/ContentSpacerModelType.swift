@@ -10,9 +10,8 @@ import Foundation
 
 protocol ContentSpacerModelType: MobileContentRenderableModel {
     
-    var mode: String? { get }
     var height: String? { get }
-    var spacerMode: MobileContentSpacerMode { get }
+    var mode: MobileContentSpacerMode { get }
 }
 
 extension ContentSpacerModelType {

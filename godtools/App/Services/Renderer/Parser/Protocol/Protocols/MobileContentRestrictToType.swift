@@ -1,4 +1,3 @@
-
 //
 //  MobileContentRestrictToType.swift
 //  godtools

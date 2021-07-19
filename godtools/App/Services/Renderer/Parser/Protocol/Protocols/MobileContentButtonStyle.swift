@@ -8,8 +8,8 @@
 
 import Foundation
 
-enum MobileContentButtonStyle {
+enum MobileContentButtonStyle: String {
     
-    case contained
-    case outlined
+    case contained = "contained"
+    case outlined = "outlined"
 }

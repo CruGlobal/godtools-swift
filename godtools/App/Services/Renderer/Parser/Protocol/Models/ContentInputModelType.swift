@@ -12,9 +12,8 @@ protocol ContentInputModelType: MobileContentRenderableModel {
     
     var name: String? { get }
     var required: String? { get }
-    var type: String? { get }
     var value: String? { get }
-    var inputType: MobileContentInputNodeType { get }
+    var type: MobileContentInputType { get }
     var isRequired: Bool { get }
     var text: String? { get }
     var placeholderText: String? { get }

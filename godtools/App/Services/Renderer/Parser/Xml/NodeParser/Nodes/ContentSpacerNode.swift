@@ -11,27 +11,28 @@ import SWXMLHash
 
 class ContentSpacerNode: MobileContentXmlNode, ContentSpacerModelType {
     
-    let mode: String?
+    private let modeString: String?
+    
     let height: String?
     
     required init(xmlElement: XMLElement) {
         
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
-        mode = attributes["mode"]?.text
         height = attributes["height"]?.text
+        modeString = attributes["mode"]?.text
         
         super.init(xmlElement: xmlElement)
     }
     
-    var spacerMode: MobileContentSpacerMode {
+    var mode: MobileContentSpacerMode {
         
         let defaultMode: MobileContentSpacerMode = .auto
         
-        guard let modeValue = self.mode, !modeValue.isEmpty else {
+        guard let modeString = self.modeString?.lowercased() else {
             return defaultMode
         }
         
-        return MobileContentSpacerMode(rawValue: modeValue) ?? defaultMode
+        return MobileContentSpacerMode(rawValue: modeString) ?? defaultMode
     }
 }

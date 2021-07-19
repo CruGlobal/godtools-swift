@@ -180,7 +180,7 @@ extension MobileContentTextViewModel: MobileContentViewModelType {
         return []
     }
     
-    var defaultAnalyticsEventsTrigger: AnalyticsEventNodeTrigger {
+    var defaultAnalyticsEventsTrigger: MobileContentAnalyticsEventTrigger {
         return .visible
     }
 }

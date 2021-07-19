@@ -51,7 +51,7 @@ extension ToolPageHeroViewModel: MobileContentViewModelType {
         return analyticsEventsObjects
     }
     
-    var defaultAnalyticsEventsTrigger: AnalyticsEventNodeTrigger {
+    var defaultAnalyticsEventsTrigger: MobileContentAnalyticsEventTrigger {
         return .visible
     }
 }

@@ -11,10 +11,11 @@ import SWXMLHash
 
 class AnalyticsEventNode: MobileContentXmlNode, AnalyticsEventModelType {
         
+    private let triggerString: String?
+    
     let action: String?
     let delay: String?
     let systems: [String]
-    let trigger: String?
     
     required init(xmlElement: XMLElement) {
     
@@ -23,7 +24,7 @@ class AnalyticsEventNode: MobileContentXmlNode, AnalyticsEventModelType {
         action = attributes["action"]?.text
         delay = attributes["delay"]?.text
         systems = attributes["system"]?.text.components(separatedBy: " ") ?? []
-        trigger = attributes["trigger"]?.text
+        triggerString = attributes["trigger"]?.text
         
         super.init(xmlElement: xmlElement)
     }
@@ -37,30 +38,14 @@ class AnalyticsEventNode: MobileContentXmlNode, AnalyticsEventModelType {
         return nil
     }
     
-    func getTrigger() -> AnalyticsEventNodeTrigger {
+    var trigger: MobileContentAnalyticsEventTrigger {
         
-        guard let triggerValue = trigger?.lowercased() else {
-            return .dependentOnContainingElement
+        let defaultTrigger: MobileContentAnalyticsEventTrigger = .dependentOnContainingElement
+        
+        guard let triggerString = self.triggerString?.lowercased() else {
+            return defaultTrigger
         }
         
-        guard let trigger =  AnalyticsEventNodeTrigger(rawValue: triggerValue) else {
-            return .dependentOnContainingElement
-        }
-        
-        return trigger
-    }
-    
-    func getTriggerType() -> AnalyticsEventModelTriggerType {
-        
-        switch getTrigger() {
-        case .dependentOnContainingElement:
-            return .dependentOnContainingElement
-        case .hidden:
-            return .hidden
-        case .selected:
-            return .selected
-        case .visible:
-            return .visible
-        }
+        return MobileContentAnalyticsEventTrigger(rawValue: triggerString) ?? defaultTrigger
     }
 }

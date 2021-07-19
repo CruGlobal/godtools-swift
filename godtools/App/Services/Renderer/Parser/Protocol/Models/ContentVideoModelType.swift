@@ -10,9 +10,8 @@ import Foundation
 
 protocol ContentVideoModelType: MobileContentRenderableModel {
     
-    var provider: String? { get }
+    var provider: MobileContentVideoProvider { get }
     var videoId: String? { get }
-    var providerType: MobileContentVideoNodeProvider { get }
 }
 
 extension ContentVideoModelType {
