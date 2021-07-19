@@ -40,7 +40,7 @@ class ToolViewModel: MobileContentPagesViewModel, ToolViewModelType {
         self.toolOpenedAnalytics = toolOpenedAnalytics
         self.liveShareStream = liveShareStream
         
-        let primaryManifest: MobileContentXmlManifest = renderers.first!.manifest
+        let primaryManifest: MobileContentManifestType = renderers.first!.parser.manifest
         let languages: [LanguageModel] = renderers.map({$0.language})
         
         navBarViewModel = ToolNavBarViewModel(

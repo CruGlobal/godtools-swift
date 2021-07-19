@@ -28,9 +28,9 @@ class TrainingViewFactory: MobileContentPageViewFactoryType {
         self.trainingTipsEnabled = trainingTipsEnabled
     }
     
-    func viewForRenderableNode(renderableNode: MobileContentRenderableNode, rendererPageModel: MobileContentRendererPageModel, containerNode: MobileContentContainerNode?) -> MobileContentView? {
+    func viewForRenderableModel(renderableModel: MobileContentRenderableModel, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) -> MobileContentView? {
         
-        if let trainingTipModel = renderableNode as? TrainingTipModelType {
+        if let trainingTipModel = renderableModel as? TrainingTipModelType {
             
             return getTrainingTipView(
                 trainingTipId: trainingTipModel.id ?? "",
@@ -38,7 +38,7 @@ class TrainingViewFactory: MobileContentPageViewFactoryType {
                 trainingTipViewType: .rounded
             )
         }
-        else if let pageModel = renderableNode as? PageModelType {
+        else if let pageModel = renderableModel as? PageModelType {
             
             let viewModel = TrainingPageViewModel(
                 flowDelegate: getFlowDelegate(),

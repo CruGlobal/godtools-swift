@@ -9,12 +9,12 @@
 import Foundation
 import SWXMLHash
 
-struct MobileContentXmlManifestPage: MobileContentManifestPageType {
+class MobileContentXmlManifestPage: MobileContentManifestPageType {
     
     let filename: String
     let src: String
     
-    init(page: XMLIndexer) {
+    required init(page: XMLIndexer) {
         
         filename = page.element?.attribute(by: "filename")?.text ?? ""
         src = page.element?.attribute(by: "src")?.text ?? ""

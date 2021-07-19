@@ -15,8 +15,8 @@ class MobileContentRendererPageModel {
     let isLastPage: Bool
     let pageColors: MobileContentPageColors
     let safeArea: UIEdgeInsets
-    let manifest: MobileContentXmlManifest
-    let resourcesCache: ManifestResourcesCache
+    let manifest: MobileContentManifestType
+    let resourcesCache: ManifestResourcesCacheType
     let resource: ResourceModel
     let language: LanguageModel
     let pageViewFactories: [MobileContentPageViewFactoryType]
@@ -24,7 +24,7 @@ class MobileContentRendererPageModel {
     
     private weak var weakWindow: UIViewController?
     
-    required init(pageModel: PageModelType, page: Int, isLastPage: Bool, window: UIViewController, safeArea: UIEdgeInsets, manifest: MobileContentXmlManifest, resourcesCache: ManifestResourcesCache, resource: ResourceModel, language: LanguageModel, pageViewFactories: [MobileContentPageViewFactoryType], primaryRendererLanguage: LanguageModel) {
+    required init(pageModel: PageModelType, page: Int, isLastPage: Bool, window: UIViewController, safeArea: UIEdgeInsets, manifest: MobileContentManifestType, resourcesCache: ManifestResourcesCacheType, resource: ResourceModel, language: LanguageModel, pageViewFactories: [MobileContentPageViewFactoryType], primaryRendererLanguage: LanguageModel) {
         
         self.pageModel = pageModel
         self.page = page

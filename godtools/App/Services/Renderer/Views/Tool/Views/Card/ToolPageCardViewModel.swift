@@ -56,7 +56,12 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
             rendererPageModel: rendererPageModel
         )
         
-        hidesHeaderTrainingTip = !cardModel.hasTrainingTip
+        if !trainingTipsEnabled {
+            hidesHeaderTrainingTip = true
+        }
+        else {
+            hidesHeaderTrainingTip = !cardModel.hasTrainingTip
+        }
     }
     
     var title: String? {
@@ -64,7 +69,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     }
     
     var titleColor: UIColor {
-        return cardModel.getTextColor()?.color ?? rendererPageModel.pageColors.primaryColor
+        return cardModel.getTextColor()?.uiColor ?? rendererPageModel.pageColors.primaryColor.uiColor
     }
     
     var titleFont: UIFont {
@@ -159,7 +164,7 @@ extension ToolPageCardViewModel: MobileContentViewModelType {
         return analyticsEventsObjects
     }
     
-    var defaultAnalyticsEventsTrigger: AnalyticsEventNodeTrigger {
+    var defaultAnalyticsEventsTrigger: MobileContentAnalyticsEventTrigger {
         return .visible
     }
 }

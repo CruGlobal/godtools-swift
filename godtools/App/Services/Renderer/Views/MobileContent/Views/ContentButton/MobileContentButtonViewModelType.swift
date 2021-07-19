@@ -16,7 +16,7 @@ protocol MobileContentButtonViewModelType {
     var titleColor: UIColor { get }
     var borderColor: UIColor? { get }
     var borderWidth: CGFloat? { get }
-    var buttonType: MobileContentButtonNodeType { get }
+    var buttonType: MobileContentButtonType { get }
     var buttonEvents: [String] { get }
     var buttonUrl: String { get }
     

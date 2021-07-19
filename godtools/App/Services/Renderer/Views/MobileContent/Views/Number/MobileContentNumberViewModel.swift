@@ -28,7 +28,7 @@ class MobileContentNumberViewModel: MobileContentNumberViewModelType {
     }
     
     var textColor: UIColor {
-        return rendererPageModel.pageColors.primaryTextColor
+        return rendererPageModel.pageColors.primaryTextColor.uiColor
     }
 }
 
@@ -44,7 +44,7 @@ extension MobileContentNumberViewModel: MobileContentViewModelType {
         return []
     }
     
-    var defaultAnalyticsEventsTrigger: AnalyticsEventNodeTrigger {
+    var defaultAnalyticsEventsTrigger: MobileContentAnalyticsEventTrigger {
         return .visible
     }
 }

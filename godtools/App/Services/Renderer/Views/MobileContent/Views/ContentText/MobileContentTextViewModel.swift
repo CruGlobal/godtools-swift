@@ -14,7 +14,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     
     private let textModel: ContentTextModelType
     private let rendererPageModel: MobileContentRendererPageModel
-    private let containerNode: MobileContentContainerNode?
+    private let containerModel: MobileContentRenderableModelContainer?
     private let fontService: FontService
     private let fontSize: CGFloat = 18
     private let defaultFontWeight: UIFont.Weight = .regular
@@ -22,22 +22,22 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
         
     let textColor: UIColor
     
-    required init(textModel: ContentTextModelType, rendererPageModel: MobileContentRendererPageModel, containerNode: MobileContentContainerNode?, fontService: FontService) {
+    required init(textModel: ContentTextModelType, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?, fontService: FontService) {
         
         self.textModel = textModel
         self.rendererPageModel = rendererPageModel
-        self.containerNode = containerNode
+        self.containerModel = containerModel
         self.fontService = fontService
         
         let containerTextColor: UIColor?
-        if containerNode is CardNode {
-            containerTextColor = rendererPageModel.pageColors.cardTextColor
+        if containerModel is CardModelType {
+            containerTextColor = rendererPageModel.pageColors.cardTextColor?.uiColor
         }
         else {
-            containerTextColor = containerNode?.textColor?.color
+            containerTextColor = containerModel?.textColor?.uiColor
         }
         
-        self.textColor = textModel.getTextColor()?.color ?? containerTextColor ?? rendererPageModel.pageColors.textColor
+        self.textColor = textModel.getTextColor()?.uiColor ?? containerTextColor ?? rendererPageModel.pageColors.textColor.uiColor
     }
     
     var startImage: UIImage? {
@@ -46,7 +46,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
             return nil
         }
         
-        guard let resourceImage = rendererPageModel.resourcesCache.getImage(resource: resource) else {
+        guard let resourceImage = rendererPageModel.resourcesCache.getImageFromManifestResources(resource: resource) else {
             return nil
         }
         
@@ -79,11 +79,11 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     
     var textAlignment: NSTextAlignment {
                
-        let nodeTextAlignment: MobileContentTextAlign? = textModel.textAlignment ?? containerNode?.textAlignment
+        let modelTextAlignment: MobileContentTextAlignment? = textModel.textAlignment ?? containerModel?.textAlignment
         
-        if let nodeTextAlignment = nodeTextAlignment {
+        if let textAlignment = modelTextAlignment {
             
-            switch nodeTextAlignment {
+            switch textAlignment {
             case .left:
                 return .left
             case .center:
@@ -102,7 +102,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
             return nil
         }
         
-        guard let resourceImage = rendererPageModel.resourcesCache.getImage(resource: resource) else {
+        guard let resourceImage = rendererPageModel.resourcesCache.getImageFromManifestResources(resource: resource) else {
             return nil
         }
         
@@ -147,14 +147,14 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     }
     
     private func getFontScale() -> CGFloat {
-        
+                
         let fontScale: CGFloat
         
-        let manifestTextScale = MobileContentTextScale(textScale: rendererPageModel.manifest.attributes.textScale)
-        let pageTextScale = MobileContentTextScale(textScale: rendererPageModel.pageModel.textScale)
-        let textScale = MobileContentTextScale(textScale: textModel.textScale)
+        let manifestTextScale: Double = rendererPageModel.manifest.attributes.textScale.doubleValue
+        let pageTextScale: Double = rendererPageModel.pageModel.textScale.doubleValue
+        let textScale: Double = textModel.textScale.doubleValue
         
-        fontScale = manifestTextScale.floatValue * pageTextScale.floatValue * textScale.floatValue
+        fontScale = CGFloat(manifestTextScale * pageTextScale * textScale)
         
         return fontScale
     }
@@ -180,7 +180,7 @@ extension MobileContentTextViewModel: MobileContentViewModelType {
         return []
     }
     
-    var defaultAnalyticsEventsTrigger: AnalyticsEventNodeTrigger {
+    var defaultAnalyticsEventsTrigger: MobileContentAnalyticsEventTrigger {
         return .visible
     }
 }

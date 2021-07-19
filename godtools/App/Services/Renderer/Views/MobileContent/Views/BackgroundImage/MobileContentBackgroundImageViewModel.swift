@@ -11,28 +11,30 @@ import UIKit
 class MobileContentBackgroundImageViewModel {
     
     private let backgroundImageModel: BackgroundImageModelType
-    private let manifestResourcesCache: ManifestResourcesCache
+    private let manifestResourcesCache: ManifestResourcesCacheType
     private let languageDirection: LanguageDirection
     private let backgroundImageRenderer: MobileContentBackgroundImageRenderer = MobileContentBackgroundImageRenderer()
-    
-    let align: [MobileContentBackgroundImageAlignType]
-    let scale: MobileContentBackgroundImageScaleType
-    
-    required init(backgroundImageModel: BackgroundImageModelType, manifestResourcesCache: ManifestResourcesCache, languageDirection: LanguageDirection) {
+        
+    required init(backgroundImageModel: BackgroundImageModelType, manifestResourcesCache: ManifestResourcesCacheType, languageDirection: LanguageDirection) {
         
         self.backgroundImageModel = backgroundImageModel
         self.manifestResourcesCache = manifestResourcesCache
         self.languageDirection = languageDirection
-        
-        align = backgroundImageModel.backgroundImageAlign.compactMap({MobileContentBackgroundImageAlignType(rawValue: $0)})
-        scale = MobileContentBackgroundImageScaleType(rawValue: backgroundImageModel.backgroundImageScaleType) ?? .fillHorizontally
     }
     
     var backgroundImage: UIImage? {
         guard let resource = backgroundImageModel.backgroundImage else {
             return nil
         }
-        return manifestResourcesCache.getImage(resource: resource)
+        return manifestResourcesCache.getImageFromManifestResources(resource: resource)
+    }
+    
+    var alignments: [MobileContentBackgroundImageAlignment] {
+        return backgroundImageModel.backgroundImageAlignments
+    }
+    
+    var scale: MobileContentBackgroundImageScale {
+        return backgroundImageModel.backgroundImageScale
     }
     
     func getRenderPositionForBackgroundImage(container: CGRect, backgroundImage: UIImage) -> CGRect {
@@ -51,7 +53,7 @@ class MobileContentBackgroundImageViewModel {
             container: container,
             backgroundImageSizePixels: imageSizePixels,
             scale: scale,
-            align: align,
+            align: alignments,
             languageDirection: languageDirection
         )
     }
@@ -62,7 +64,7 @@ class MobileContentBackgroundImageViewModel {
             return nil
         }
         
-        guard let backgroundImage = manifestResourcesCache.getImage(resource: resource) else {
+        guard let backgroundImage = manifestResourcesCache.getImageFromManifestResources(resource: resource) else {
             return nil
         }
         

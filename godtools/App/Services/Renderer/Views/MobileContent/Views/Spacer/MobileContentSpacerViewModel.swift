@@ -20,7 +20,7 @@ class MobileContentSpacerViewModel: MobileContentSpacerViewModelType {
     }
     
     var mode: MobileContentSpacerMode {
-        return spacerModel.spacerMode
+        return spacerModel.mode
     }
     
     var height: CGFloat {

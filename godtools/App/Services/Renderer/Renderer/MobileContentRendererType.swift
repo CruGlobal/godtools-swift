@@ -10,13 +10,27 @@ import Foundation
 
 protocol MobileContentRendererType {
     
-    var manifest: MobileContentXmlManifest { get }
     var resource: ResourceModel { get }
     var language: LanguageModel { get }
-    var allPages: [PageNode] { get }
+    var parser: MobileContentParserType { get }
+    var pageViewFactories: [MobileContentPageViewFactoryType] { get }
     
-    func getPageForListenerEvents(events: [String]) -> Int?
-    func getPageNode(page: Int) -> PageNode?
     func renderPage(page: Int, window: UIViewController, safeArea: UIEdgeInsets, primaryRendererLanguage: LanguageModel) -> Result<MobileContentView, Error>
-    func renderPageNode(pageNode: PageNode, page: Int, numberOfPages: Int, window: UIViewController, safeArea: UIEdgeInsets, primaryRendererLanguage: LanguageModel) -> Result<MobileContentView, Error>
+    func renderPageModel(pageModel: PageModelType, page: Int, numberOfPages: Int, window: UIViewController, safeArea: UIEdgeInsets, primaryRendererLanguage: LanguageModel) -> Result<MobileContentView, Error>
+}
+
+extension MobileContentRendererType {
+    
+    func getViewFromViewFactory(renderableModel: MobileContentRenderableModel, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) -> MobileContentView? {
+        
+        for viewFactory in pageViewFactories {
+            
+            if let view = viewFactory.viewForRenderableModel(renderableModel: renderableModel, rendererPageModel: rendererPageModel, containerModel: containerModel) {
+            
+                return view
+            }
+        }
+        
+        return nil
+    }
 }

@@ -9,12 +9,12 @@
 import Foundation
 import SWXMLHash
 
-struct MobileContentXmlManifestTip: MobileContentManifestTipType {
+class MobileContentXmlManifestTip: MobileContentManifestTipType {
     
     let id: String
     let src: String
     
-    init(tip: XMLIndexer) {
+    required init(tip: XMLIndexer) {
         
         id = tip.element?.attribute(by: "id")?.text ?? ""
         src = tip.element?.attribute(by: "src")?.text ?? ""

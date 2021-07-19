@@ -28,7 +28,7 @@ class MobileContentTitleViewModel: MobileContentTitleViewModelType {
     }
     
     var textColor: UIColor {
-        return titleModel.getTextColor()?.color ?? rendererPageModel.pageColors.primaryTextColor
+        return titleModel.getTextColor()?.uiColor ?? rendererPageModel.pageColors.primaryTextColor.uiColor
     }
     
     var lineSpacing: CGFloat {
@@ -48,7 +48,7 @@ extension MobileContentTitleViewModel: MobileContentViewModelType {
         return []
     }
     
-    var defaultAnalyticsEventsTrigger: AnalyticsEventNodeTrigger {
+    var defaultAnalyticsEventsTrigger: MobileContentAnalyticsEventTrigger {
         return .visible
     }
 }

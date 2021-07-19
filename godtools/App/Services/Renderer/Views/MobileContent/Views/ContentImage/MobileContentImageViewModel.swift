@@ -25,7 +25,7 @@ class MobileContentImageViewModel: MobileContentImageViewModelType {
             return nil
         }
         
-        return rendererPageModel.resourcesCache.getImage(resource: resource)
+        return rendererPageModel.resourcesCache.getImageFromManifestResources(resource: resource)
     }
     
     var imageEvents: [String] {

@@ -30,7 +30,7 @@ class MobileContentInputViewModel: MobileContentInputViewModelType {
     }
     
     var isHidden: Bool {
-        return inputModel.inputType == .hidden
+        return inputModel.type == .hidden
     }
     
     var isRequired: Bool {
@@ -47,7 +47,7 @@ class MobileContentInputViewModel: MobileContentInputViewModelType {
     
     func getInputValue() -> String? {
         
-        if inputModel.inputType == .hidden {
+        if inputModel.type == .hidden {
             return inputModel.value
         }
         

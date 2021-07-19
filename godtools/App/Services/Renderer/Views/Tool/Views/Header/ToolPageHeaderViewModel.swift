@@ -42,7 +42,7 @@ class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
     }
     
     var backgroundColor: UIColor {
-        return rendererPageModel.pageColors.primaryColor
+        return rendererPageModel.pageColors.primaryColor.uiColor
     }
 }
 
@@ -58,7 +58,7 @@ extension ToolPageHeaderViewModel: MobileContentViewModelType {
         return []
     }
     
-    var defaultAnalyticsEventsTrigger: AnalyticsEventNodeTrigger {
+    var defaultAnalyticsEventsTrigger: MobileContentAnalyticsEventTrigger {
         return .visible
     }
 }
