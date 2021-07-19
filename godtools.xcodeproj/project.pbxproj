@@ -844,7 +844,7 @@
 		45BEC51226A5CDF3005D8CA1 /* MobileContentTextAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BEC51126A5CDF3005D8CA1 /* MobileContentTextAlignment.swift */; };
 		45BEC51426A5D0BB005D8CA1 /* MobileContentRestrictToType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BEC51326A5D0BB005D8CA1 /* MobileContentRestrictToType.swift */; };
 		45BEC51726A5D0E2005D8CA1 /* MobileContentBackgroundImageScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BEC51526A5D0E2005D8CA1 /* MobileContentBackgroundImageScale.swift */; };
-		45BEC51826A5D0E2005D8CA1 /* MobileContentBackgroundImageAlignType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BEC51626A5D0E2005D8CA1 /* MobileContentBackgroundImageAlignType.swift */; };
+		45BEC51826A5D0E2005D8CA1 /* MobileContentBackgroundImageAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BEC51626A5D0E2005D8CA1 /* MobileContentBackgroundImageAlignment.swift */; };
 		45C5386124B8EFA700CABDAC /* godtoolsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C5386024B8EFA700CABDAC /* godtoolsUITests.swift */; };
 		45C93AD6261D310900592FFF /* ArticleManifestXmlParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C93AA4261D310900592FFF /* ArticleManifestXmlParser.swift */; };
 		45C93AD7261D310900592FFF /* ArticleCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C93AA6261D310900592FFF /* ArticleCategory.swift */; };
@@ -1809,7 +1809,7 @@
 		45BEC51126A5CDF3005D8CA1 /* MobileContentTextAlignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentTextAlignment.swift; sourceTree = "<group>"; };
 		45BEC51326A5D0BB005D8CA1 /* MobileContentRestrictToType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentRestrictToType.swift; sourceTree = "<group>"; };
 		45BEC51526A5D0E2005D8CA1 /* MobileContentBackgroundImageScale.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentBackgroundImageScale.swift; sourceTree = "<group>"; };
-		45BEC51626A5D0E2005D8CA1 /* MobileContentBackgroundImageAlignType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentBackgroundImageAlignType.swift; sourceTree = "<group>"; };
+		45BEC51626A5D0E2005D8CA1 /* MobileContentBackgroundImageAlignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentBackgroundImageAlignment.swift; sourceTree = "<group>"; };
 		45C5386024B8EFA700CABDAC /* godtoolsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = godtoolsUITests.swift; sourceTree = "<group>"; };
 		45C93AA4261D310900592FFF /* ArticleManifestXmlParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleManifestXmlParser.swift; sourceTree = "<group>"; };
 		45C93AA6261D310900592FFF /* ArticleCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleCategory.swift; sourceTree = "<group>"; };
@@ -5113,7 +5113,7 @@
 		45F506E026A3913800EC04A9 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				45BEC51626A5D0E2005D8CA1 /* MobileContentBackgroundImageAlignType.swift */,
+				45BEC51626A5D0E2005D8CA1 /* MobileContentBackgroundImageAlignment.swift */,
 				45BEC51526A5D0E2005D8CA1 /* MobileContentBackgroundImageScale.swift */,
 				45F1000526A5C6F100D4B86A /* MobileContentButtonStyle.swift */,
 				45F1000726A5C70600D4B86A /* MobileContentButtonType.swift */,
@@ -6521,7 +6521,7 @@
 				45AD1F2B25938A9800A096A0 /* MobileContentXmlManifest.swift in Sources */,
 				45C93AF5261D310900592FFF /* ArticleManifestAemRepository.swift in Sources */,
 				45AD1BDE25938A4F00A096A0 /* GTSegment.swift in Sources */,
-				45BEC51826A5D0E2005D8CA1 /* MobileContentBackgroundImageAlignType.swift in Sources */,
+				45BEC51826A5D0E2005D8CA1 /* MobileContentBackgroundImageAlignment.swift in Sources */,
 				45C93AEE261D310900592FFF /* ArticleAemData.swift in Sources */,
 				45AD208425938B6A00A096A0 /* KeyboardObserverType.swift in Sources */,
 				45AD1FD525938A9800A096A0 /* WebArchiveError.swift in Sources */,

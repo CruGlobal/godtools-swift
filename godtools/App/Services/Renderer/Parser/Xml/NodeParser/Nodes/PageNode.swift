@@ -12,6 +12,7 @@ import SWXMLHash
 class PageNode: MobileContentXmlNode, PageModelType {
     
     private let backgroundColorString: String?
+    private let backgroundImageAlignmentStrings: [String]
     private let backgroundImageScaleString: String?
     private let cardTextColorString: String?
     private let hiddenString: String?
@@ -28,7 +29,6 @@ class PageNode: MobileContentXmlNode, PageModelType {
     
     let uuid: String = UUID().uuidString
     let backgroundImage: String?
-    let backgroundImageAlign: [String]
     let listeners: [String]
         
     required init(xmlElement: XMLElement) {
@@ -37,13 +37,7 @@ class PageNode: MobileContentXmlNode, PageModelType {
         
         backgroundColorString = attributes["background-color"]?.text
         backgroundImage = attributes["background-image"]?.text
-        
-        if let backgroundImageAlignValues = attributes["background-image-align"]?.text, !backgroundImageAlignValues.isEmpty {
-            backgroundImageAlign = backgroundImageAlignValues.components(separatedBy: " ")
-        }
-        else {
-            backgroundImageAlign = [MobileContentBackgroundImageAlignType.center.rawValue]
-        }
+        backgroundImageAlignmentStrings = attributes["background-image-align"]?.text.components(separatedBy: " ") ?? []
         backgroundImageScaleString = attributes["background-image-scale-type"]?.text
         cardTextColorString = attributes["card-text-color"]?.text
         hiddenString = attributes["hidden"]?.text
@@ -73,6 +67,16 @@ class PageNode: MobileContentXmlNode, PageModelType {
         }
         else if let modalsNode = childNode as? ModalsNode {
             self.modalsNode = modalsNode
+        }
+    }
+    
+    var backgroundImageAlignments: [MobileContentBackgroundImageAlignment] {
+        let backgroundImageAlignments: [MobileContentBackgroundImageAlignment] = backgroundImageAlignmentStrings.compactMap({MobileContentBackgroundImageAlignment(rawValue: $0.lowercased())})
+        if !backgroundImageAlignments.isEmpty {
+            return backgroundImageAlignments
+        }
+        else {
+            return [.center]
         }
     }
     

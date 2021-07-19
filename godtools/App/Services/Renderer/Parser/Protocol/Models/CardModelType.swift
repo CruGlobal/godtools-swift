@@ -11,7 +11,7 @@ import Foundation
 protocol CardModelType: BackgroundImageModelType, MobileContentRenderableModel {
     
     var backgroundImage: String? { get }
-    var backgroundImageAlign: [String] { get }
+    var backgroundImageAlignments: [MobileContentBackgroundImageAlignment] { get }
     var backgroundImageScale: MobileContentBackgroundImageScale { get }
     var dismissListeners: [String] { get }
     var hidden: String? { get }

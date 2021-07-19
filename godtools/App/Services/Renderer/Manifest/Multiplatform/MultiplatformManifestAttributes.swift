@@ -27,7 +27,7 @@ class MultiplatformManifestAttributes: MobileContentManifestAttributesType {
         return nil
     }
     
-    var backgroundImageAlign: [String] {
+    var backgroundImageAlignments: [MobileContentBackgroundImageAlignment] {
         // TODO: Need to set this. ~Levi
         return []
     }

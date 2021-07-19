@@ -12,6 +12,7 @@ import SWXMLHash
 class MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
         
     private let backgroundColorString: String
+    private let backgroundImageAlignmentStrings: [String]
     private let backgroundImageScaleString: String?
     private let navbarColorString: String?
     private let navbarControlColorString: String?
@@ -20,7 +21,6 @@ class MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
     private let textColorString: String
     
     let backgroundImage: String?
-    let backgroundImageAlign: [String]
     let categoryLabelColor: String?
     let dismissListeners: [String]
     let locale: String?
@@ -34,13 +34,7 @@ class MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
         
         backgroundColorString = attributes["background-color"]?.text ?? "rgba(255,255,255,1)"
         backgroundImage = attributes["background-image"]?.text
-        
-        if let backgroundImageAlignValues = attributes["background-image-align"]?.text, !backgroundImageAlignValues.isEmpty {
-            backgroundImageAlign = backgroundImageAlignValues.components(separatedBy: " ")
-        }
-        else {
-            backgroundImageAlign = [MobileContentBackgroundImageAlignType.center.rawValue]
-        }
+        backgroundImageAlignmentStrings = attributes["background-image-align"]?.text.components(separatedBy: " ") ?? []
         backgroundImageScaleString = attributes["background-image-scale-type"]?.text
         categoryLabelColor = attributes["category-label-color"]?.text
         dismissListeners = attributes["dismiss-listeners"]?.text.components(separatedBy: " ") ?? []
@@ -57,6 +51,16 @@ class MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
     
     var backgroundColor: UIColor {
         return MobileContentRGBAColor(stringColor: backgroundColorString).color
+    }
+    
+    var backgroundImageAlignments: [MobileContentBackgroundImageAlignment] {
+        let backgroundImageAlignments: [MobileContentBackgroundImageAlignment] = backgroundImageAlignmentStrings.compactMap({MobileContentBackgroundImageAlignment(rawValue: $0.lowercased())})
+        if !backgroundImageAlignments.isEmpty {
+            return backgroundImageAlignments
+        }
+        else {
+            return [.center]
+        }
     }
     
     var backgroundImageScale: MobileContentBackgroundImageScale {

@@ -11,13 +11,13 @@ import SWXMLHash
 
 class CardNode: MobileContentXmlNode, CardModelType {
         
+    private let backgroundImageAlignmentStrings: [String]
     private let backgroundImageScaleString: String?
     
     private var labelNode: LabelNode?
     private var analyticsEventsNode: AnalyticsEventsNode?
     
     let backgroundImage: String?
-    let backgroundImageAlign: [String]
     let dismissListeners: [String]
     let hidden: String?
     let listeners: [String]
@@ -27,12 +27,7 @@ class CardNode: MobileContentXmlNode, CardModelType {
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
         backgroundImage = attributes["background-image"]?.text
-        if let backgroundImageAlignValues = attributes["background-image-align"]?.text, !backgroundImageAlignValues.isEmpty {
-            backgroundImageAlign = backgroundImageAlignValues.components(separatedBy: " ")
-        }
-        else {
-            backgroundImageAlign = [MobileContentBackgroundImageAlignType.center.rawValue]
-        }
+        backgroundImageAlignmentStrings = attributes["background-image-align"]?.text.components(separatedBy: " ") ?? []
         backgroundImageScaleString = attributes["background-image-scale-type"]?.text
         dismissListeners = attributes["dismiss-listeners"]?.text.components(separatedBy: " ") ?? []
         hidden = attributes["hidden"]?.text
@@ -71,6 +66,16 @@ class CardNode: MobileContentXmlNode, CardModelType {
         }
         
         return nil
+    }
+    
+    var backgroundImageAlignments: [MobileContentBackgroundImageAlignment] {
+        let backgroundImageAlignments: [MobileContentBackgroundImageAlignment] = backgroundImageAlignmentStrings.compactMap({MobileContentBackgroundImageAlignment(rawValue: $0.lowercased())})
+        if !backgroundImageAlignments.isEmpty {
+            return backgroundImageAlignments
+        }
+        else {
+            return [.center]
+        }
     }
     
     var backgroundImageScale: MobileContentBackgroundImageScale {

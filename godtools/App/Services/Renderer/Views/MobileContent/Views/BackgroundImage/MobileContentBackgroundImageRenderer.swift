@@ -14,7 +14,7 @@ class MobileContentBackgroundImageRenderer {
         
     }
     
-    func getBackgroundImageRectForRenderingInContainer(container: CGRect, backgroundImageSizePixels: CGSize, scale: MobileContentBackgroundImageScale, align: [MobileContentBackgroundImageAlignType], languageDirection: LanguageDirection) -> CGRect {
+    func getBackgroundImageRectForRenderingInContainer(container: CGRect, backgroundImageSizePixels: CGSize, scale: MobileContentBackgroundImageScale, align: [MobileContentBackgroundImageAlignment], languageDirection: LanguageDirection) -> CGRect {
         
         let scaledRect: CGRect = scaleRectToContainer(
             container: container,
@@ -136,9 +136,9 @@ class MobileContentBackgroundImageRenderer {
     
     // MARK: - Position
     
-    func positionRectInContainer(container: CGRect, rect: CGRect, alignments: [MobileContentBackgroundImageAlignType], languageDirection: LanguageDirection) -> CGRect {
+    func positionRectInContainer(container: CGRect, rect: CGRect, alignments: [MobileContentBackgroundImageAlignment], languageDirection: LanguageDirection) -> CGRect {
         
-        guard let firstAlignment: MobileContentBackgroundImageAlignType = alignments.first else {
+        guard let firstAlignment: MobileContentBackgroundImageAlignment = alignments.first else {
             return rect
         }
                 
@@ -189,7 +189,7 @@ class MobileContentBackgroundImageRenderer {
         return positionedRect
     }
     
-    private func positionRectInContainer(container: CGRect, rect: CGRect, align: MobileContentBackgroundImageAlignType, languageDirection: LanguageDirection) -> CGRect {
+    private func positionRectInContainer(container: CGRect, rect: CGRect, align: MobileContentBackgroundImageAlignment, languageDirection: LanguageDirection) -> CGRect {
         
         switch align {
             

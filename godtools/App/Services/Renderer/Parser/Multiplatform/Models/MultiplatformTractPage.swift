@@ -28,7 +28,7 @@ class MultiplatformTractPage: PageModelType {
         return nil // TODO: Need to set this. ~Levi
     }
     
-    var backgroundImageAlign: [String] {
+    var backgroundImageAlignments: [MobileContentBackgroundImageAlignment] {
         return [] // TODO: Need to set this. ~Levi
     }
     

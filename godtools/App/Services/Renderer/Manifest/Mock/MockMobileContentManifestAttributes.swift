@@ -12,7 +12,7 @@ class MockMobileContentManifestAttributes: MobileContentManifestAttributesType {
     
     let backgroundColor: UIColor = .lightGray
     let backgroundImage: String? = nil
-    let backgroundImageAlign: [String] = []
+    let backgroundImageAlignments: [MobileContentBackgroundImageAlignment] = []
     let backgroundImageScale: MobileContentBackgroundImageScale = .fill
     let categoryLabelColor: String? = nil
     let dismissListeners: [String] = []
