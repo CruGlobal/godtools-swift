@@ -6,7 +6,7 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import SWXMLHash
 
 class ContentTextNode: MobileContentXmlNode, ContentTextModelType {
@@ -14,13 +14,13 @@ class ContentTextNode: MobileContentXmlNode, ContentTextModelType {
     private static let defaultImagePointSize: String = "40"
     
     private let textAlignString: String?
+    private let textColorString: String?
     
     let endImage: String?
     let endImageSize: String
     let startImage: String?
     let startImageSize: String
     let text: String?
-    let textColor: String?
     let textScale: String?
     let textStyle: String?
     
@@ -33,7 +33,7 @@ class ContentTextNode: MobileContentXmlNode, ContentTextModelType {
         startImage = attributes["start-image"]?.text
         startImageSize = attributes["start-image-size"]?.text ?? ContentTextNode.defaultImagePointSize
         textAlignString = attributes["text-align"]?.text
-        textColor = attributes["text-color"]?.text
+        textColorString = attributes["text-color"]?.text
         textScale = attributes["text-scale"]?.text
         textStyle = attributes["text-style"]?.text
                 
@@ -61,10 +61,10 @@ class ContentTextNode: MobileContentXmlNode, ContentTextModelType {
         return MobileContentTextAlignment(rawValue: textAlignString) ?? defaultTextAlignment
     }
     
-    func getTextColor() -> MobileContentRGBAColor? {
-        if let stringColor = textColor {
-            return MobileContentRGBAColor(stringColor: stringColor)
+    func getTextColor() -> UIColor? {
+        guard let stringColor = textColorString else {
+            return nil
         }
-        return nil
+        return MobileContentRGBAColor(stringColor: stringColor).color
     }
 }

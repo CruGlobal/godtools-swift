@@ -6,20 +6,20 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import SWXMLHash
 
 class CardNode: MobileContentXmlNode, CardModelType {
         
     private let backgroundImageAlignmentStrings: [String]
     private let backgroundImageScaleString: String?
+    private let hiddenString: String?
     
     private var labelNode: LabelNode?
     private var analyticsEventsNode: AnalyticsEventsNode?
     
     let backgroundImage: String?
     let dismissListeners: [String]
-    let hidden: String?
     let listeners: [String]
     
     required init(xmlElement: XMLElement) {
@@ -30,7 +30,7 @@ class CardNode: MobileContentXmlNode, CardModelType {
         backgroundImageAlignmentStrings = attributes["background-image-align"]?.text.components(separatedBy: " ") ?? []
         backgroundImageScaleString = attributes["background-image-scale-type"]?.text
         dismissListeners = attributes["dismiss-listeners"]?.text.components(separatedBy: " ") ?? []
-        hidden = attributes["hidden"]?.text
+        hiddenString = attributes["hidden"]?.text
         listeners = attributes["listeners"]?.text.components(separatedBy: " ") ?? []
         
         super.init(xmlElement: xmlElement)
@@ -87,7 +87,7 @@ class CardNode: MobileContentXmlNode, CardModelType {
     }
     
     var isHidden: Bool {
-        return hidden == "true"
+        return hiddenString == "true"
     }
     
     var hasTrainingTip: Bool {
@@ -114,7 +114,7 @@ class CardNode: MobileContentXmlNode, CardModelType {
         return cardsNode?.visibleCardNodes.count ?? 0
     }
     
-    func getTextColor() -> MobileContentRGBAColor? {
+    func getTextColor() -> UIColor? {
         return labelNode?.textNode?.getTextColor()
     }
     

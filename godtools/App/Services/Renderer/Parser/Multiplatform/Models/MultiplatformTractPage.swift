@@ -36,24 +36,8 @@ class MultiplatformTractPage: PageModelType {
         return .fill // TODO: Need to set this. ~Levi
     }
     
-    var cardTextColor: UIColor? {
-        return tractPage.cardTextColor
-    }
-    
     var listeners: [String] {
         return [] // TODO: Need to set this. ~Levi
-    }
-    
-    var primaryColor: UIColor? {
-        return tractPage.primaryColor
-    }
-    
-    var primaryTextColor: UIColor? {
-        return tractPage.primaryTextColor
-    }
-    
-    var textColor: UIColor? {
-        return tractPage.textColor
     }
     
     var textScale: Double {
@@ -70,6 +54,26 @@ class MultiplatformTractPage: PageModelType {
     
     var callToAction: CallToActionModelType? {
         return nil // TODO: Need to set this. ~Levi
+    }
+    
+    func getBackgroundColor() -> UIColor? {
+        return tractPage.backgroundColor
+    }
+    
+    func getCardTextColor() -> UIColor? {
+        return tractPage.cardTextColor
+    }
+    
+    func getPrimaryColor() -> UIColor? {
+        return tractPage.primaryColor
+    }
+    
+    func getPrimaryTextColor() -> UIColor? {
+        return tractPage.primaryTextColor
+    }
+    
+    func getTextColor() -> UIColor? {
+        return tractPage.textColor
     }
 }
 

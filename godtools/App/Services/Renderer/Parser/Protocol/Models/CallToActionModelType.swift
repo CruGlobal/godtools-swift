@@ -6,15 +6,14 @@
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol CallToActionModelType: MobileContentRenderableModel {
     
-    var controlColor: String? { get }
     var text: String? { get }
     
-    func getTextColor() -> MobileContentRGBAColor?
-    func getControlColor() -> MobileContentRGBAColor?
+    func getTextColor() -> UIColor?
+    func getControlColor() -> UIColor?
 }
 
 extension CallToActionModelType {

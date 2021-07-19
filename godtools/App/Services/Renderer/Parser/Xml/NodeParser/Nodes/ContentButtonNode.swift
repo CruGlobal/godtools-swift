@@ -5,19 +5,19 @@
 //  Created by Levi Eggert on 10/27/20.
 //  Copyright © 2020 Cru. All rights reserved.
 //
-import Foundation
+import UIKit
 import SWXMLHash
 
 class ContentButtonNode: MobileContentXmlNode, ContentButtonModelType {
     
+    private let backgroundColorString: String?
+    private let colorString: String?
     private let styleString: String?
     private let typeString: String?
     
     private var textNode: ContentTextNode?
     private var analyticsEventsNode: AnalyticsEventsNode?
     
-    let backgroundColor: String?
-    let color: String?
     let events: [String]
     let url: String?
     
@@ -25,8 +25,8 @@ class ContentButtonNode: MobileContentXmlNode, ContentButtonModelType {
     
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
-        backgroundColor = attributes["background-color"]?.text
-        color = attributes["color"]?.text
+        backgroundColorString = attributes["background-color"]?.text
+        colorString = attributes["color"]?.text
         events = attributes["events"]?.text.components(separatedBy: " ") ?? []
         styleString = attributes["style"]?.text
         typeString = attributes["type"]?.text
@@ -84,21 +84,21 @@ class ContentButtonNode: MobileContentXmlNode, ContentButtonModelType {
         return textNode?.text
     }
     
-    func getBackgroundColor() -> MobileContentRGBAColor? {
-        if let stringColor = backgroundColor {
-            return MobileContentRGBAColor(stringColor: stringColor)
+    func getBackgroundColor() -> UIColor? {
+        if let stringColor = backgroundColorString {
+            return MobileContentRGBAColor(stringColor: stringColor).color
         }
         return nil
     }
     
-    func getColor() -> MobileContentRGBAColor? {
-        if let stringColor = color {
-            return MobileContentRGBAColor(stringColor: stringColor)
+    func getColor() -> UIColor? {
+        if let stringColor = colorString {
+            return MobileContentRGBAColor(stringColor: stringColor).color
         }
         return nil
     }
     
-    func getTextColor() -> MobileContentRGBAColor? {
+    func getTextColor() -> UIColor? {
         return textNode?.getTextColor()
     }
     

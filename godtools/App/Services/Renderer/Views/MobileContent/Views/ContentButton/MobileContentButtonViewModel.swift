@@ -30,8 +30,8 @@ class MobileContentButtonViewModel: MobileContentButtonViewModelType {
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
         
-        let buttonColor: UIColor = buttonModel.getColor()?.color ?? containerNode?.buttonColor?.color ?? rendererPageModel.pageColors.primaryColor
-        let buttonTitleColor: UIColor? = buttonModel.getTextColor()?.color
+        let buttonColor: UIColor = buttonModel.getColor() ?? containerNode?.buttonColor?.color ?? rendererPageModel.pageColors.primaryColor
+        let buttonTitleColor: UIColor? = buttonModel.getTextColor()
         
         let buttonStyle: MobileContentButtonStyle = buttonModel.style ?? containerNode?.buttonStyle ?? .contained
         
@@ -42,7 +42,7 @@ class MobileContentButtonViewModel: MobileContentButtonViewModelType {
             titleColor = buttonTitleColor ?? rendererPageModel.pageColors.primaryTextColor
             borderColor = UIColor.clear
         case .outlined:
-            backgroundColor = buttonModel.getBackgroundColor()?.color ?? .clear
+            backgroundColor = buttonModel.getBackgroundColor() ?? .clear
             titleColor = buttonColor
             borderColor = buttonColor
         }

@@ -6,7 +6,7 @@
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol CardModelType: BackgroundImageModelType, MobileContentRenderableModel {
     
@@ -14,7 +14,6 @@ protocol CardModelType: BackgroundImageModelType, MobileContentRenderableModel {
     var backgroundImageAlignments: [MobileContentBackgroundImageAlignment] { get }
     var backgroundImageScale: MobileContentBackgroundImageScale { get }
     var dismissListeners: [String] { get }
-    var hidden: String? { get }
     var listeners: [String] { get }
     var isHidden: Bool { get }
     var text: String? { get }
@@ -22,7 +21,7 @@ protocol CardModelType: BackgroundImageModelType, MobileContentRenderableModel {
     var cardPositionInVisibleCards: Int { get }
     var numberOfVisibleCards: Int { get }
     
-    func getTextColor() -> MobileContentRGBAColor?
+    func getTextColor() -> UIColor?
     func getAnalyticsEvents() -> [AnalyticsEventModelType]
 }
 

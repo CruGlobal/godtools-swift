@@ -6,7 +6,7 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import SWXMLHash
 
 class ContentLinkNode: MobileContentXmlNode, ContentLinkModelType {
@@ -41,7 +41,7 @@ class ContentLinkNode: MobileContentXmlNode, ContentLinkModelType {
         return textNode?.text
     }
     
-    func getTextColor() -> MobileContentRGBAColor? {
+    func getTextColor() -> UIColor? {
         return textNode?.getTextColor()
     }
     

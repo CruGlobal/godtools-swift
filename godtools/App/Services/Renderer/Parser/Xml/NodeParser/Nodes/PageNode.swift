@@ -107,35 +107,35 @@ class PageNode: MobileContentXmlNode, PageModelType {
         return callToActionNode
     }
     
-    var backgroundColor: UIColor? {
+    func getBackgroundColor() -> UIColor? {
         if let stringColor = backgroundColorString {
             return MobileContentRGBAColor(stringColor: stringColor).color
         }
         return nil
     }
-    
-    var cardTextColor: UIColor? {
+        
+    func getCardTextColor() -> UIColor? {
         if let stringColor = cardTextColorString {
             return MobileContentRGBAColor(stringColor: stringColor).color
         }
         return nil
     }
     
-    var primaryColor: UIColor? {
+    func getPrimaryColor() -> UIColor? {
         if let stringColor = primaryColorString {
             return MobileContentRGBAColor(stringColor: stringColor).color
         }
         return nil
     }
     
-    var primaryTextColor: UIColor? {
+    func getPrimaryTextColor() -> UIColor? {
         if let stringColor = primaryTextColorString {
             return MobileContentRGBAColor(stringColor: stringColor).color
         }
         return nil
     }
-    
-    var textColor: UIColor? {
+
+    func getTextColor() -> UIColor? {
         if let stringColor = textColorString {
             return MobileContentRGBAColor(stringColor: stringColor).color
         }

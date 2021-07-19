@@ -11,19 +11,20 @@ import UIKit
 protocol PageModelType: BackgroundImageModelType, MobileContentRenderableModel {
         
     var uuid: String { get }
-    var backgroundColor: UIColor? { get }
     var backgroundImage: String? { get }
     var backgroundImageAlignments: [MobileContentBackgroundImageAlignment] { get }
     var backgroundImageScale: MobileContentBackgroundImageScale { get }
-    var cardTextColor: UIColor? { get }
     var listeners: [String] { get }
-    var primaryColor: UIColor? { get }
-    var primaryTextColor: UIColor? { get }
-    var textColor: UIColor? { get }
     var textScale: Double { get }
     var isHidden: Bool { get }
     var hero: HeroModelType? { get }
     var callToAction: CallToActionModelType? { get }
+    
+    func getBackgroundColor() -> UIColor?
+    func getCardTextColor() -> UIColor?
+    func getPrimaryColor() -> UIColor?
+    func getPrimaryTextColor() -> UIColor?
+    func getTextColor() -> UIColor?
 }
 
 extension PageModelType {

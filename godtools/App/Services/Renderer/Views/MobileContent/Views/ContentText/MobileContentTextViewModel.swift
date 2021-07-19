@@ -37,7 +37,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
             containerTextColor = containerNode?.textColor?.color
         }
         
-        self.textColor = textModel.getTextColor()?.color ?? containerTextColor ?? rendererPageModel.pageColors.textColor
+        self.textColor = textModel.getTextColor() ?? containerTextColor ?? rendererPageModel.pageColors.textColor
     }
     
     var startImage: UIImage? {
