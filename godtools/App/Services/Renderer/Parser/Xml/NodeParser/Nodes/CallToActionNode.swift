@@ -6,7 +6,7 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import SWXMLHash
 
 class CallToActionNode: MobileContentXmlNode, CallToActionModelType {
@@ -30,13 +30,13 @@ class CallToActionNode: MobileContentXmlNode, CallToActionModelType {
         return textNode?.text
     }
     
-    func getTextColor() -> UIColor? {
+    func getTextColor() -> MobileContentColor? {
         return textNode?.getTextColor()
     }
     
-    func getControlColor() -> UIColor? {
+    func getControlColor() -> MobileContentColor? {
         if let stringColor = controlColorString {
-            return MobileContentRGBAColor(stringColor: stringColor).color
+            return MobileContentColor(stringColor: stringColor)
         }
         return nil
     }

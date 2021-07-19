@@ -6,14 +6,14 @@
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 protocol ContentLinkModelType: MobileContentRenderableModel {
     
     var events: [String] { get }
     var text: String? { get }
     
-    func getTextColor() -> UIColor?
+    func getTextColor() -> MobileContentColor?
     func getAnalyticsEvents() -> [AnalyticsEventModelType]
 }
 

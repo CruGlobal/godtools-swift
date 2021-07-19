@@ -49,8 +49,8 @@ class MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
         type = attributes["type"]?.text
     }
     
-    var backgroundColor: UIColor {
-        return MobileContentRGBAColor(stringColor: backgroundColorString).color
+    var backgroundColor: MobileContentColor {
+        return MobileContentColor(stringColor: backgroundColorString)
     }
     
     var backgroundImageAlignments: [MobileContentBackgroundImageAlignment] {
@@ -71,30 +71,30 @@ class MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
         return MobileContentBackgroundImageScale(rawValue: backgroundImageScaleString) ?? defaultValue
     }
     
-    var navbarColor: UIColor? {
-        if let navbarColorString = self.navbarColorString {
-            return MobileContentRGBAColor(stringColor: navbarColorString).color
+    var navbarColor: MobileContentColor? {
+        if let stringColor = self.navbarColorString {
+            return MobileContentColor(stringColor: stringColor)
         }
         return nil
     }
     
-    var navbarControlColor: UIColor? {
-        if let navbarControlColorString = self.navbarControlColorString {
-            return MobileContentRGBAColor(stringColor: navbarControlColorString).color
+    var navbarControlColor: MobileContentColor? {
+        if let stringColor = self.navbarControlColorString {
+            return MobileContentColor(stringColor: stringColor)
         }
         return nil
     }
     
-    var primaryColor: UIColor {
-        return MobileContentRGBAColor(stringColor: primaryColorString).color
+    var primaryColor: MobileContentColor {
+        return MobileContentColor(stringColor: primaryColorString)
     }
     
-    var primaryTextColor: UIColor {
-        return MobileContentRGBAColor(stringColor: primaryTextColorString).color
+    var primaryTextColor: MobileContentColor {
+        return MobileContentColor(stringColor: primaryTextColorString)
     }
     
-    var textColor: UIColor {
-        return MobileContentRGBAColor(stringColor: textColorString).color
+    var textColor: MobileContentColor {
+        return MobileContentColor(stringColor: textColorString)
     }
     
     var textScale: MobileContentTextScale {

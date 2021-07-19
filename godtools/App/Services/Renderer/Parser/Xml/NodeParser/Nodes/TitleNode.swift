@@ -6,7 +6,7 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import SWXMLHash
 
 class TitleNode: MobileContentXmlNode, TitleModelType {
@@ -20,7 +20,7 @@ class TitleNode: MobileContentXmlNode, TitleModelType {
         return children.first as? ContentTextNode
     }
     
-    func getTextColor() -> UIColor? {
+    func getTextColor() -> MobileContentColor? {
         return textNode?.getTextColor()
     }
 }

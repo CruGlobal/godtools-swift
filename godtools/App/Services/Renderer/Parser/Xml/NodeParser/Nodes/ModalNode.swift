@@ -25,31 +25,31 @@ class ModalNode: MobileContentXmlNode, ModalModelType {
     }
 }
 
-// MARK: - MobileContentContainerNode
+// MARK: - MobileContentRenderableModelContainer
 
-extension ModalNode: MobileContentContainerNode {
+extension ModalNode: MobileContentRenderableModelContainer {
     
-    var buttonColor: MobileContentRGBAColor? {
-        return MobileContentRGBAColor(stringColor: "rgba(255,255,255,1)")
+    var buttonColor: MobileContentColor? {
+        return MobileContentColor(stringColor: "rgba(255,255,255,1)")
     }
     
     var buttonStyle: MobileContentButtonStyle? {
         return .outlined
     }
     
-    var primaryColor: MobileContentRGBAColor? {
-        return MobileContentRGBAColor(stringColor: "rgba(0,0,0,0)")
+    var primaryColor: MobileContentColor? {
+        return MobileContentColor(stringColor: "rgba(0,0,0,0)")
     }
     
-    var primaryTextColor: MobileContentRGBAColor? {
-        return MobileContentRGBAColor(stringColor: "rgba(255,255,255,1)")
+    var primaryTextColor: MobileContentColor? {
+        return MobileContentColor(stringColor: "rgba(255,255,255,1)")
     }
     
     var textAlignment: MobileContentTextAlignment? {
         return .center
     }
     
-    var textColor: MobileContentRGBAColor? {
-        return MobileContentRGBAColor(stringColor: "rgba(255,255,255,1)")
+    var textColor: MobileContentColor? {
+        return MobileContentColor(stringColor: "rgba(255,255,255,1)")
     }
 }

@@ -6,7 +6,7 @@
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 protocol ContentTextModelType: MobileContentRenderableModel {
     
@@ -19,7 +19,7 @@ protocol ContentTextModelType: MobileContentRenderableModel {
     var textAlignment: MobileContentTextAlignment? { get }
     var textScale: MobileContentTextScale { get }
     
-    func getTextColor() -> UIColor?
+    func getTextColor() -> MobileContentColor?
 }
 
 extension ContentTextModelType {

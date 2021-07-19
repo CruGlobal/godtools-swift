@@ -6,7 +6,7 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import SWXMLHash
 
 class CardNode: MobileContentXmlNode, CardModelType {
@@ -114,7 +114,7 @@ class CardNode: MobileContentXmlNode, CardModelType {
         return cardsNode?.visibleCardNodes.count ?? 0
     }
     
-    func getTextColor() -> UIColor? {
+    func getTextColor() -> MobileContentColor? {
         return labelNode?.textNode?.getTextColor()
     }
     
@@ -123,11 +123,11 @@ class CardNode: MobileContentXmlNode, CardModelType {
     }
 }
 
-// MARK: - MobileContentContainerNode
+// MARK: - MobileContentRenderableModelContainer
 
-extension CardNode: MobileContentContainerNode {
+extension CardNode: MobileContentRenderableModelContainer {
     
-    var buttonColor: MobileContentRGBAColor? {
+    var buttonColor: MobileContentColor? {
         return nil
     }
     
@@ -135,11 +135,11 @@ extension CardNode: MobileContentContainerNode {
         return nil
     }
     
-    var primaryColor: MobileContentRGBAColor? {
+    var primaryColor: MobileContentColor? {
         return nil
     }
     
-    var primaryTextColor: MobileContentRGBAColor? {
+    var primaryTextColor: MobileContentColor? {
         return nil
     }
     
@@ -147,7 +147,7 @@ extension CardNode: MobileContentContainerNode {
         return nil
     }
     
-    var textColor: MobileContentRGBAColor? {
+    var textColor: MobileContentColor? {
         return nil
     }
 }

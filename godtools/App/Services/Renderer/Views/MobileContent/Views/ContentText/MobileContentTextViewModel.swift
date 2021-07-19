@@ -14,7 +14,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     
     private let textModel: ContentTextModelType
     private let rendererPageModel: MobileContentRendererPageModel
-    private let containerNode: MobileContentContainerNode?
+    private let containerModel: MobileContentRenderableModelContainer?
     private let fontService: FontService
     private let fontSize: CGFloat = 18
     private let defaultFontWeight: UIFont.Weight = .regular
@@ -22,22 +22,22 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
         
     let textColor: UIColor
     
-    required init(textModel: ContentTextModelType, rendererPageModel: MobileContentRendererPageModel, containerNode: MobileContentContainerNode?, fontService: FontService) {
+    required init(textModel: ContentTextModelType, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?, fontService: FontService) {
         
         self.textModel = textModel
         self.rendererPageModel = rendererPageModel
-        self.containerNode = containerNode
+        self.containerModel = containerModel
         self.fontService = fontService
         
         let containerTextColor: UIColor?
-        if containerNode is CardNode {
-            containerTextColor = rendererPageModel.pageColors.cardTextColor
+        if containerModel is CardModelType {
+            containerTextColor = rendererPageModel.pageColors.cardTextColor?.uiColor
         }
         else {
-            containerTextColor = containerNode?.textColor?.color
+            containerTextColor = containerModel?.textColor?.uiColor
         }
         
-        self.textColor = textModel.getTextColor() ?? containerTextColor ?? rendererPageModel.pageColors.textColor
+        self.textColor = textModel.getTextColor()?.uiColor ?? containerTextColor ?? rendererPageModel.pageColors.textColor.uiColor
     }
     
     var startImage: UIImage? {
@@ -79,7 +79,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     
     var textAlignment: NSTextAlignment {
                
-        let modelTextAlignment: MobileContentTextAlignment? = textModel.textAlignment ?? containerNode?.textAlignment
+        let modelTextAlignment: MobileContentTextAlignment? = textModel.textAlignment ?? containerModel?.textAlignment
         
         if let textAlignment = modelTextAlignment {
             

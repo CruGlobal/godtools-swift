@@ -25,7 +25,7 @@ class MobileContentLinkViewModel: MobileContentLinkViewModelType {
         self.rendererPageModel = rendererPageModel
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
-        self.titleColor = linkModel.getTextColor() ?? rendererPageModel.pageColors.primaryColor
+        self.titleColor = linkModel.getTextColor()?.uiColor ?? rendererPageModel.pageColors.primaryColor.uiColor
     }
     
     var backgroundColor: UIColor {

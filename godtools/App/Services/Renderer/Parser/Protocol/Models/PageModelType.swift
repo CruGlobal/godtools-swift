@@ -6,7 +6,7 @@
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 protocol PageModelType: BackgroundImageModelType, MobileContentRenderableModel {
         
@@ -20,11 +20,11 @@ protocol PageModelType: BackgroundImageModelType, MobileContentRenderableModel {
     var hero: HeroModelType? { get }
     var callToAction: CallToActionModelType? { get }
     
-    func getBackgroundColor() -> UIColor?
-    func getCardTextColor() -> UIColor?
-    func getPrimaryColor() -> UIColor?
-    func getPrimaryTextColor() -> UIColor?
-    func getTextColor() -> UIColor?
+    func getBackgroundColor() -> MobileContentColor?
+    func getCardTextColor() -> MobileContentColor?
+    func getPrimaryColor() -> MobileContentColor?
+    func getPrimaryTextColor() -> MobileContentColor?
+    func getTextColor() -> MobileContentColor?
 }
 
 extension PageModelType {

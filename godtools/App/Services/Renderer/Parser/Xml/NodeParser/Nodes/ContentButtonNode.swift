@@ -5,7 +5,7 @@
 //  Created by Levi Eggert on 10/27/20.
 //  Copyright © 2020 Cru. All rights reserved.
 //
-import UIKit
+import Foundation
 import SWXMLHash
 
 class ContentButtonNode: MobileContentXmlNode, ContentButtonModelType {
@@ -84,21 +84,21 @@ class ContentButtonNode: MobileContentXmlNode, ContentButtonModelType {
         return textNode?.text
     }
     
-    func getBackgroundColor() -> UIColor? {
+    func getBackgroundColor() -> MobileContentColor? {
         if let stringColor = backgroundColorString {
-            return MobileContentRGBAColor(stringColor: stringColor).color
+            return MobileContentColor(stringColor: stringColor)
         }
         return nil
     }
     
-    func getColor() -> UIColor? {
+    func getColor() -> MobileContentColor? {
         if let stringColor = colorString {
-            return MobileContentRGBAColor(stringColor: stringColor).color
+            return MobileContentColor(stringColor: stringColor)
         }
         return nil
     }
     
-    func getTextColor() -> UIColor? {
+    func getTextColor() -> MobileContentColor? {
         return textNode?.getTextColor()
     }
     

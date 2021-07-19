@@ -42,7 +42,7 @@ class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
     }
     
     var backgroundColor: UIColor {
-        return rendererPageModel.pageColors.primaryColor
+        return rendererPageModel.pageColors.primaryColor.uiColor
     }
 }
 

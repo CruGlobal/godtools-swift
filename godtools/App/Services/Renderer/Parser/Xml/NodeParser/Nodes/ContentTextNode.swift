@@ -6,7 +6,7 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import SWXMLHash
 
 class ContentTextNode: MobileContentXmlNode, ContentTextModelType {
@@ -65,10 +65,10 @@ class ContentTextNode: MobileContentXmlNode, ContentTextModelType {
         return MobileContentTextScale(textScaleString: textScaleString)
     }
     
-    func getTextColor() -> UIColor? {
+    func getTextColor() -> MobileContentColor? {
         guard let stringColor = textColorString else {
             return nil
         }
-        return MobileContentRGBAColor(stringColor: stringColor).color
+        return MobileContentColor(stringColor: stringColor)
     }
 }

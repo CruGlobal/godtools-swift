@@ -6,7 +6,7 @@
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 protocol CardModelType: BackgroundImageModelType, MobileContentRenderableModel {
     
@@ -21,7 +21,7 @@ protocol CardModelType: BackgroundImageModelType, MobileContentRenderableModel {
     var cardPositionInVisibleCards: Int { get }
     var numberOfVisibleCards: Int { get }
     
-    func getTextColor() -> UIColor?
+    func getTextColor() -> MobileContentColor?
     func getAnalyticsEvents() -> [AnalyticsEventModelType]
 }
 

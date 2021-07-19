@@ -6,7 +6,7 @@
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 protocol ContentButtonModelType: MobileContentRenderableModel {
     
@@ -16,9 +16,9 @@ protocol ContentButtonModelType: MobileContentRenderableModel {
     var type: MobileContentButtonType { get }
     var text: String? { get }
     
-    func getBackgroundColor() -> UIColor?
-    func getColor() -> UIColor?
-    func getTextColor() -> UIColor?
+    func getBackgroundColor() -> MobileContentColor?
+    func getColor() -> MobileContentColor?
+    func getTextColor() -> MobileContentColor?
     func getAnalyticsEvents() -> [AnalyticsEventModelType]
 }
 

@@ -6,7 +6,7 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import SWXMLHash
 
 class HeadingNode: MobileContentXmlNode, HeadingModelType {
@@ -20,7 +20,7 @@ class HeadingNode: MobileContentXmlNode, HeadingModelType {
         return children.first as? ContentTextNode
     }
     
-    func getTextColor() -> UIColor? {
+    func getTextColor() -> MobileContentColor? {
         return textNode?.getTextColor()
     }
 }

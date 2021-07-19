@@ -10,11 +10,11 @@ import Foundation
 
 class MobileContentPageColors {
     
-    let backgroundColor: UIColor
-    let cardTextColor: UIColor?
-    let primaryColor: UIColor
-    let primaryTextColor: UIColor
-    let textColor: UIColor
+    let backgroundColor: MobileContentColor
+    let cardTextColor: MobileContentColor?
+    let primaryColor: MobileContentColor
+    let primaryTextColor: MobileContentColor
+    let textColor: MobileContentColor
     
     required init(pageModel: PageModelType, manifest: MobileContentManifestType) {
         

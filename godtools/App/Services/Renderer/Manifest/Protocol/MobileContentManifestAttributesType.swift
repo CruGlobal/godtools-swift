@@ -6,22 +6,22 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 protocol MobileContentManifestAttributesType: BackgroundImageModelType {
     
-    var backgroundColor: UIColor { get }
+    var backgroundColor: MobileContentColor { get }
     var backgroundImage: String? { get }
     var backgroundImageAlignments: [MobileContentBackgroundImageAlignment] { get }
     var backgroundImageScale: MobileContentBackgroundImageScale { get }
     var categoryLabelColor: String? { get }
     var dismissListeners: [String] { get }
     var locale: String? { get }
-    var navbarColor: UIColor? { get }
-    var navbarControlColor: UIColor? { get }
-    var primaryColor: UIColor { get }
-    var primaryTextColor: UIColor { get }
-    var textColor: UIColor { get }
+    var navbarColor: MobileContentColor? { get }
+    var navbarControlColor: MobileContentColor? { get }
+    var primaryColor: MobileContentColor { get }
+    var primaryTextColor: MobileContentColor { get }
+    var textColor: MobileContentColor { get }
     var textScale: MobileContentTextScale { get }
     var tool: String? { get }
     var type: String? { get }

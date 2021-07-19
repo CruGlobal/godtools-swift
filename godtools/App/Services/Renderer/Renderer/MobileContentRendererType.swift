@@ -21,11 +21,11 @@ protocol MobileContentRendererType {
 
 extension MobileContentRendererType {
     
-    func getViewFromViewFactory(renderableModel: MobileContentRenderableModel, rendererPageModel: MobileContentRendererPageModel, containerNode: MobileContentContainerNode?) -> MobileContentView? {
+    func getViewFromViewFactory(renderableModel: MobileContentRenderableModel, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) -> MobileContentView? {
         
         for viewFactory in pageViewFactories {
             
-            if let view = viewFactory.viewForRenderableModel(renderableModel: renderableModel, rendererPageModel: rendererPageModel, containerNode: containerNode) {
+            if let view = viewFactory.viewForRenderableModel(renderableModel: renderableModel, rendererPageModel: rendererPageModel, containerModel: containerModel) {
             
                 return view
             }
