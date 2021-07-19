@@ -568,7 +568,7 @@ class ToolsFlow: Flow {
         
         let pageViewFactories: [MobileContentPageViewFactoryType] = [toolPageViewFactory, trainingViewFactory]
         
-        let primaryRenderer = MobileContentRenderer(
+        let primaryRenderer = MobileContentXmlNodeRenderer(
             flowDelegate: self,
             resource: resource,
             language: primaryLanguage,
@@ -586,7 +586,7 @@ class ToolsFlow: Flow {
         
         if !trainingTipsEnabled, let parallelLanguage = parallelLanguage, let parallelTranslationManifest = parallelTranslationManifest, parallelLanguage.code != primaryLanguage.code {
             
-            let parallelRenderer = MobileContentRenderer(
+            let parallelRenderer = MobileContentXmlNodeRenderer(
                 flowDelegate: self,
                 resource: resource,
                 language: parallelLanguage,
@@ -647,11 +647,11 @@ class ToolsFlow: Flow {
         
         let pageViewFactories: [MobileContentPageViewFactoryType] = [trainingViewFactory]
         
-        let renderer = MobileContentRenderer(
+        let renderer = MobileContentXmlNodeRenderer(
             flowDelegate: self,
-            resource: event.pageModel.resource,
-            language: event.pageModel.language,
-            manifest: event.pageModel.manifest,
+            resource: event.rendererPageModel.resource,
+            language: event.rendererPageModel.language,
+            manifest: event.rendererPageModel.manifest,
             pageNodes: pageNodes,
             translationsFileCache: appDiContainer.translationsFileCache,
             pageViewFactories: pageViewFactories,
@@ -719,7 +719,7 @@ class ToolsFlow: Flow {
         
         let pageViewFactories: [MobileContentPageViewFactoryType] = [lessonPageViewFactory, toolPageViewFactory, trainingViewFactory]
         
-        let renderer = MobileContentRenderer(
+        let renderer = MobileContentXmlNodeRenderer(
             flowDelegate: self,
             resource: resource,
             language: primaryLanguage,
