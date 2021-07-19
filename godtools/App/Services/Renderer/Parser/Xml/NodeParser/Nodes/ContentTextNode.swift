@@ -13,12 +13,13 @@ class ContentTextNode: MobileContentXmlNode, ContentTextModelType {
     
     private static let defaultImagePointSize: String = "40"
     
+    private let textAlignString: String?
+    
     let endImage: String?
     let endImageSize: String
     let startImage: String?
     let startImageSize: String
     let text: String?
-    let textAlign: String?
     let textColor: String?
     let textScale: String?
     let textStyle: String?
@@ -31,7 +32,7 @@ class ContentTextNode: MobileContentXmlNode, ContentTextModelType {
         endImageSize = attributes["end-image-size"]?.text ?? ContentTextNode.defaultImagePointSize
         startImage = attributes["start-image"]?.text
         startImageSize = attributes["start-image-size"]?.text ?? ContentTextNode.defaultImagePointSize
-        textAlign = attributes["text-align"]?.text
+        textAlignString = attributes["text-align"]?.text
         textColor = attributes["text-color"]?.text
         textScale = attributes["text-scale"]?.text
         textStyle = attributes["text-style"]?.text
@@ -49,8 +50,25 @@ class ContentTextNode: MobileContentXmlNode, ContentTextModelType {
         super.init(xmlElement: xmlElement)
     }
     
-    var textAlignment: MobileContentTextAlign? {
-        return MobileContentTextAlign(rawValue: textAlign ?? "")
+    var textAlignment: MobileContentTextAlignment? {
+        
+        let defaultTextAlignment: MobileContentTextAlignment? = nil
+        
+        guard let textAlignString = self.textAlignString?.lowercased() else {
+            return defaultTextAlignment
+        }
+        
+        if textAlignString == "left" {
+            return .left
+        }
+        else if textAlignString == "center" {
+            return .center
+        }
+        else if textAlignString == "right" {
+            return .right
+        }
+        
+        return defaultTextAlignment
     }
     
     func getTextColor() -> MobileContentRGBAColor? {

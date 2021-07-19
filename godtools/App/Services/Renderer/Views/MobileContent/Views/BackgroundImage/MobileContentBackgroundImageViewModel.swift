@@ -16,7 +16,6 @@ class MobileContentBackgroundImageViewModel {
     private let backgroundImageRenderer: MobileContentBackgroundImageRenderer = MobileContentBackgroundImageRenderer()
     
     let align: [MobileContentBackgroundImageAlignType]
-    let scale: MobileContentBackgroundImageScaleType
     
     required init(backgroundImageModel: BackgroundImageModelType, manifestResourcesCache: ManifestResourcesCacheType, languageDirection: LanguageDirection) {
         
@@ -25,7 +24,6 @@ class MobileContentBackgroundImageViewModel {
         self.languageDirection = languageDirection
         
         align = backgroundImageModel.backgroundImageAlign.compactMap({MobileContentBackgroundImageAlignType(rawValue: $0)})
-        scale = MobileContentBackgroundImageScaleType(rawValue: backgroundImageModel.backgroundImageScaleType) ?? .fillHorizontally
     }
     
     var backgroundImage: UIImage? {
@@ -33,6 +31,10 @@ class MobileContentBackgroundImageViewModel {
             return nil
         }
         return manifestResourcesCache.getImageFromManifestResources(resource: resource)
+    }
+    
+    var scale: MobileContentBackgroundImageScale {
+        return backgroundImageModel.backgroundImageScale
     }
     
     func getRenderPositionForBackgroundImage(container: CGRect, backgroundImage: UIImage) -> CGRect {

@@ -12,6 +12,7 @@ import SWXMLHash
 class PageNode: MobileContentXmlNode, PageModelType {
     
     private let backgroundColorString: String?
+    private let backgroundImageScaleString: String?
     private let cardTextColorString: String?
     private let hiddenString: String?
     private let primaryColorString: String?
@@ -28,7 +29,6 @@ class PageNode: MobileContentXmlNode, PageModelType {
     let uuid: String = UUID().uuidString
     let backgroundImage: String?
     let backgroundImageAlign: [String]
-    let backgroundImageScaleType: String
     let listeners: [String]
         
     required init(xmlElement: XMLElement) {
@@ -44,7 +44,7 @@ class PageNode: MobileContentXmlNode, PageModelType {
         else {
             backgroundImageAlign = [MobileContentBackgroundImageAlignType.center.rawValue]
         }
-        backgroundImageScaleType = attributes["background-image-scale-type"]?.text ?? MobileContentBackgroundImageScaleType.fillHorizontally.rawValue
+        backgroundImageScaleString = attributes["background-image-scale-type"]?.text
         cardTextColorString = attributes["card-text-color"]?.text
         hiddenString = attributes["hidden"]?.text
         listeners = attributes["listeners"]?.text.components(separatedBy: " ") ?? []
@@ -74,6 +74,14 @@ class PageNode: MobileContentXmlNode, PageModelType {
         else if let modalsNode = childNode as? ModalsNode {
             self.modalsNode = modalsNode
         }
+    }
+    
+    var backgroundImageScale: MobileContentBackgroundImageScale {
+        let defaultValue: MobileContentBackgroundImageScale = .fillHorizontally
+        guard let backgroundImageScaleString = self.backgroundImageScaleString else {
+            return defaultValue
+        }
+        return MobileContentBackgroundImageScale(rawValue: backgroundImageScaleString) ?? defaultValue
     }
     
     var textScale: Double {

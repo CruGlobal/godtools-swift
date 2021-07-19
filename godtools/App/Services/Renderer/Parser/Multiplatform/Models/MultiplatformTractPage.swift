@@ -32,8 +32,8 @@ class MultiplatformTractPage: PageModelType {
         return [] // TODO: Need to set this. ~Levi
     }
     
-    var backgroundImageScaleType: String {
-        return "" // TODO: Need to set this. ~Levi
+    var backgroundImageScale: MobileContentBackgroundImageScale {
+        return .fill // TODO: Need to set this. ~Levi
     }
     
     var cardTextColor: UIColor? {

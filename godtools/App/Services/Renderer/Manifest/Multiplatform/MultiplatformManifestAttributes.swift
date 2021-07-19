@@ -32,9 +32,9 @@ class MultiplatformManifestAttributes: MobileContentManifestAttributesType {
         return []
     }
     
-    var backgroundImageScaleType: String {
+    var backgroundImageScale: MobileContentBackgroundImageScale {
         // TODO: Need to set this. ~Levi
-        return ""
+        return .fill
     }
     
     var categoryLabelColor: String? {

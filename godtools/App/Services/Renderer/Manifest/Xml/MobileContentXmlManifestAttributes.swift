@@ -12,6 +12,7 @@ import SWXMLHash
 class MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
         
     private let backgroundColorString: String
+    private let backgroundImageScaleString: String?
     private let navbarColorString: String?
     private let navbarControlColorString: String?
     private let primaryColorString: String
@@ -20,7 +21,6 @@ class MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
     
     let backgroundImage: String?
     let backgroundImageAlign: [String]
-    let backgroundImageScaleType: String
     let categoryLabelColor: String?
     let dismissListeners: [String]
     let locale: String?
@@ -41,7 +41,7 @@ class MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
         else {
             backgroundImageAlign = [MobileContentBackgroundImageAlignType.center.rawValue]
         }
-        backgroundImageScaleType = attributes["background-image-scale-type"]?.text ?? MobileContentBackgroundImageScaleType.fill.rawValue
+        backgroundImageScaleString = attributes["background-image-scale-type"]?.text
         categoryLabelColor = attributes["category-label-color"]?.text
         dismissListeners = attributes["dismiss-listeners"]?.text.components(separatedBy: " ") ?? []
         locale = attributes["locale"]?.text
@@ -57,6 +57,14 @@ class MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
     
     var backgroundColor: UIColor {
         return MobileContentRGBAColor(stringColor: backgroundColorString).color
+    }
+    
+    var backgroundImageScale: MobileContentBackgroundImageScale {
+        let defaultValue: MobileContentBackgroundImageScale = .fill
+        guard let backgroundImageScaleString = self.backgroundImageScaleString else {
+            return defaultValue
+        }
+        return MobileContentBackgroundImageScale(rawValue: backgroundImageScaleString) ?? defaultValue
     }
     
     var primaryColor: UIColor {

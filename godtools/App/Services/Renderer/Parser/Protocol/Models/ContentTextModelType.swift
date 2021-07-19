@@ -15,11 +15,10 @@ protocol ContentTextModelType: MobileContentRenderableModel {
     var startImage: String? { get }
     var startImageSize: String { get }
     var text: String? { get }
-    var textAlign: String? { get }
     var textColor: String? { get }
     var textScale: String? { get }
     var textStyle: String? { get }
-    var textAlignment: MobileContentTextAlign? { get }
+    var textAlignment: MobileContentTextAlignment? { get }
     
     func getTextColor() -> MobileContentRGBAColor?
 }

@@ -1,5 +1,5 @@
 //
-//  MobileContentBackgroundImageScaleType.swift
+//  MobileContentBackgroundImageScale.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/18/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum MobileContentBackgroundImageScaleType: String {
+enum MobileContentBackgroundImageScale: String {
     
     case fit = "fit"
     case fill = "fill"

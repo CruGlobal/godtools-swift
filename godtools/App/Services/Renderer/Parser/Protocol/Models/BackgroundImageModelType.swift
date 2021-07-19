@@ -12,7 +12,7 @@ protocol BackgroundImageModelType {
     
     var backgroundImage: String? { get }
     var backgroundImageAlign: [String] { get }
-    var backgroundImageScaleType: String { get }
+    var backgroundImageScale: MobileContentBackgroundImageScale { get }
 }
 
 extension BackgroundImageModelType {

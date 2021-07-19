@@ -11,12 +11,13 @@ import SWXMLHash
 
 class CardNode: MobileContentXmlNode, CardModelType {
         
+    private let backgroundImageScaleString: String?
+    
     private var labelNode: LabelNode?
     private var analyticsEventsNode: AnalyticsEventsNode?
     
     let backgroundImage: String?
     let backgroundImageAlign: [String]
-    let backgroundImageScaleType: String
     let dismissListeners: [String]
     let hidden: String?
     let listeners: [String]
@@ -32,7 +33,7 @@ class CardNode: MobileContentXmlNode, CardModelType {
         else {
             backgroundImageAlign = [MobileContentBackgroundImageAlignType.center.rawValue]
         }
-        backgroundImageScaleType = attributes["background-image-scale-type"]?.text ?? MobileContentBackgroundImageScaleType.fillHorizontally.rawValue
+        backgroundImageScaleString = attributes["background-image-scale-type"]?.text
         dismissListeners = attributes["dismiss-listeners"]?.text.components(separatedBy: " ") ?? []
         hidden = attributes["hidden"]?.text
         listeners = attributes["listeners"]?.text.components(separatedBy: " ") ?? []
@@ -70,6 +71,14 @@ class CardNode: MobileContentXmlNode, CardModelType {
         }
         
         return nil
+    }
+    
+    var backgroundImageScale: MobileContentBackgroundImageScale {
+        let defaultValue: MobileContentBackgroundImageScale = .fillHorizontally
+        guard let backgroundImageScaleString = self.backgroundImageScaleString else {
+            return defaultValue
+        }
+        return MobileContentBackgroundImageScale(rawValue: backgroundImageScaleString) ?? defaultValue
     }
     
     var isHidden: Bool {
@@ -129,7 +138,7 @@ extension CardNode: MobileContentContainerNode {
         return nil
     }
     
-    var textAlignment: MobileContentTextAlign? {
+    var textAlignment: MobileContentTextAlignment? {
         return nil
     }
     

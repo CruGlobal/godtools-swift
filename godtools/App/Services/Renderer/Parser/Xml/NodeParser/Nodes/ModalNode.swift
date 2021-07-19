@@ -45,7 +45,7 @@ extension ModalNode: MobileContentContainerNode {
         return MobileContentRGBAColor(stringColor: "rgba(255,255,255,1)")
     }
     
-    var textAlignment: MobileContentTextAlign? {
+    var textAlignment: MobileContentTextAlignment? {
         return .center
     }
     

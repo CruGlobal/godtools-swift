@@ -14,6 +14,6 @@ protocol MobileContentNodeStyles {
     var buttonStyle: MobileContentButtonStyle? { get }
     var primaryColor: MobileContentRGBAColor? { get }
     var primaryTextColor: MobileContentRGBAColor? { get }
-    var textAlignment: MobileContentTextAlign? { get }
+    var textAlignment: MobileContentTextAlignment? { get }
     var textColor: MobileContentRGBAColor? { get }
 }

@@ -539,21 +539,22 @@ class ToolsFlow: Flow {
             appDiContainer: appDiContainer,
             trainingTipsEnabled: trainingTipsEnabled
         )
-              
+          
+        /*
         let primaryRenderer = MobileContentMultiplatformRenderer(
             resource: resource,
             language: primaryLanguage,
             multiplatformParser: MobileContentMultiplatformParser(translationManifestData: primaryTranslationManifest, translationsFileCache: translationsFileCache),
             pageViewFactories: pageViewFactories
         )
+        */
         
-        /*
         let primaryRenderer = MobileContentXmlNodeRenderer(
             resource: resource,
             language: primaryLanguage,
             xmlParser: MobileContentXmlParser(translationManifestData: primaryTranslationManifest, translationsFileCache: translationsFileCache),
             pageViewFactories: pageViewFactories
-        )*/
+        )
         
         var renderers: [MobileContentRendererType] = Array()
         
@@ -561,20 +562,20 @@ class ToolsFlow: Flow {
         
         if !trainingTipsEnabled, let parallelLanguage = parallelLanguage, let parallelTranslationManifest = parallelTranslationManifest, parallelLanguage.code != primaryLanguage.code {
             
+            /*
             let parallelRenderer = MobileContentMultiplatformRenderer(
                 resource: resource,
                 language: parallelLanguage,
                 multiplatformParser: MobileContentMultiplatformParser(translationManifestData: parallelTranslationManifest, translationsFileCache: translationsFileCache),
                 pageViewFactories: pageViewFactories
-            )
+            )*/
             
-            /*
             let parallelRenderer = MobileContentXmlNodeRenderer(
                 resource: resource,
                 language: parallelLanguage,
                 xmlParser: MobileContentXmlParser(translationManifestData: parallelTranslationManifest, translationsFileCache: translationsFileCache),
                 pageViewFactories: pageViewFactories
-            )*/
+            )
             
             renderers.append(parallelRenderer)
         }
