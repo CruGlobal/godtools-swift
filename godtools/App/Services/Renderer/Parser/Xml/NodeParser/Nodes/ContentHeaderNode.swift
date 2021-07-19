@@ -16,11 +16,3 @@ class ContentHeaderNode: MobileContentXmlNode, ContentHeaderModelType {
         super.init(xmlElement: xmlElement)
     }
 }
-
-// MARK: - MobileContentRenderableNode
-
-extension ContentHeaderNode: MobileContentRenderableNode {
-    var nodeContentIsRenderable: Bool {
-        return true
-    }
-}

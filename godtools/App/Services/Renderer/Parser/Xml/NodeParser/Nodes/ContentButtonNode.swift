@@ -57,17 +57,40 @@ class ContentButtonNode: MobileContentXmlNode, ContentButtonModelType {
         super.addChild(childNode: childNode)
     }
     
-    var buttonStyle: MobileContentButtonNodeStyle? {
-        return MobileContentButtonNodeStyle(rawValue: style ?? "")
-    }
-    
-    var buttonType: MobileContentButtonNodeType {
-    
-        guard let type = self.type else {
-            return .unknown
+    var buttonStyle: MobileContentButtonStyle? {
+        
+        let defaultStyle: MobileContentButtonStyle? = nil
+        
+        guard let style = self.style?.lowercased() else {
+            return defaultStyle
         }
         
-        return MobileContentButtonNodeType(rawValue: type) ?? .unknown
+        if style == "contained" {
+            return .contained
+        }
+        else if style == "outlined" {
+            return .outlined
+        }
+        
+        return defaultStyle
+    }
+    
+    var buttonType: MobileContentButtonType {
+    
+        let defaultType: MobileContentButtonType = .unknown
+        
+        guard let type = self.type?.lowercased() else {
+            return defaultType
+        }
+        
+        if type == "event" {
+            return .event
+        }
+        else if type == "url" {
+            return .url
+        }
+        
+        return defaultType
     }
     
     var text: String? {
@@ -94,14 +117,5 @@ class ContentButtonNode: MobileContentXmlNode, ContentButtonModelType {
     
     func getAnalyticsEvents() -> [AnalyticsEventModelType] {
         return analyticsEventsNode?.analyticsEventNodes ?? []
-    }
-}
-
-// MARK: - MobileContentRenderableNode
-
-extension ContentButtonNode: MobileContentRenderableNode {
-    
-    var nodeContentIsRenderable: Bool {
-        return buttonType != .unknown
     }
 }

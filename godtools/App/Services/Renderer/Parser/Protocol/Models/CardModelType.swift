@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol CardModelType: BackgroundImageModelType {
+protocol CardModelType: BackgroundImageModelType, MobileContentRenderableModel {
     
     var backgroundImage: String? { get }
     var backgroundImageAlign: [String] { get }
@@ -24,4 +24,10 @@ protocol CardModelType: BackgroundImageModelType {
     
     func getTextColor() -> MobileContentRGBAColor?
     func getAnalyticsEvents() -> [AnalyticsEventModelType]
+}
+
+extension CardModelType {
+    var modelContentIsRenderable: Bool {
+        return true
+    }
 }

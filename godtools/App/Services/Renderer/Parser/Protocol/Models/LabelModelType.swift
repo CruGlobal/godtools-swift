@@ -8,6 +8,12 @@
 
 import Foundation
 
-protocol LabelModelType {
+protocol LabelModelType: MobileContentRenderableModel {
     
+}
+
+extension LabelModelType {
+    var modelContentIsRenderable: Bool {
+        return true
+    }
 }

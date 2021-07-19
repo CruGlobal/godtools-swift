@@ -49,11 +49,3 @@ class ContentLinkNode: MobileContentXmlNode, ContentLinkModelType {
         return analyticsEventsNode?.analyticsEventNodes ?? []
     }
 }
-
-// MARK: - MobileContentRenderableNode
-
-extension ContentLinkNode: MobileContentRenderableNode {
-    var nodeContentIsRenderable: Bool {
-        return true
-    }
-}

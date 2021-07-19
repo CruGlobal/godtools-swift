@@ -8,10 +8,16 @@
 
 import Foundation
 
-protocol ContentTabModelType {
+protocol ContentTabModelType: MobileContentRenderableModel {
     
     var listeners: [String] { get }
     var text: String? { get }
     
     func getAnalyticsEvents() -> [AnalyticsEventModelType]
+}
+
+extension ContentTabModelType {
+    var modelContentIsRenderable: Bool {
+        return true
+    }
 }

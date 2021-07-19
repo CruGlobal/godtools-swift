@@ -13,7 +13,6 @@ class ContentImageNode: MobileContentXmlNode {
         
     let events: [String]
     let resource: String?
-    let restrictTo: String?
     
     required init(xmlElement: XMLElement) {
     
@@ -21,16 +20,7 @@ class ContentImageNode: MobileContentXmlNode {
         
         events = attributes["events"]?.text.components(separatedBy: " ") ?? []
         resource = attributes["resource"]?.text
-        restrictTo = attributes["restrictTo"]?.text
         
         super.init(xmlElement: xmlElement)
-    }
-}
-
-// MARK: - MobileContentRenderableNode
-
-extension ContentImageNode: MobileContentRenderableNode {
-    var nodeContentIsRenderable: Bool {
-        return true
     }
 }

@@ -22,12 +22,3 @@ class TrainingTipNode: MobileContentXmlNode, TrainingTipModelType {
         super.init(xmlElement: xmlElement)
     }
 }
-
-// MARK: - MobileContentRenderableNode
-
-extension TrainingTipNode: MobileContentRenderableNode {
-    
-    var nodeContentIsRenderable: Bool {
-        return true
-    }
-}

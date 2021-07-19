@@ -64,11 +64,3 @@ class ContentInputNode: MobileContentXmlNode, ContentInputModelType {
         return placeholderNode?.textNode?.text
     }
 }
-
-// MARK: - MobileContentRenderableNode
-
-extension ContentInputNode: MobileContentRenderableNode {
-    var nodeContentIsRenderable: Bool {
-        return true
-    }
-}

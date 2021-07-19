@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ContentInputModelType {
+protocol ContentInputModelType: MobileContentRenderableModel {
     
     var name: String? { get }
     var required: String? { get }
@@ -18,4 +18,10 @@ protocol ContentInputModelType {
     var isRequired: Bool { get }
     var text: String? { get }
     var placeholderText: String? { get }
+}
+
+extension ContentInputModelType {
+    var modelContentIsRenderable: Bool {
+        return true
+    }
 }

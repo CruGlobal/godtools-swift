@@ -60,11 +60,3 @@ class ContentTextNode: MobileContentXmlNode, ContentTextModelType {
         return nil
     }
 }
-
-// MARK: - MobileContentRenderableNode
-
-extension ContentTextNode: MobileContentRenderableNode {
-    var nodeContentIsRenderable: Bool {
-        return true
-    }
-}

@@ -16,11 +16,3 @@ class ContentAccordionNode: MobileContentXmlNode, ContentAccordionModelType {
         super.init(xmlElement: xmlElement)
     }
 }
-
-// MARK: - MobileContentRenderableNode
-
-extension ContentAccordionNode: MobileContentRenderableNode {
-    var nodeContentIsRenderable: Bool {
-        return true
-    }
-}

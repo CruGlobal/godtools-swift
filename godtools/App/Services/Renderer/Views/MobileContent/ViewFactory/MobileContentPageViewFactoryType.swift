@@ -12,7 +12,7 @@ protocol MobileContentPageViewFactoryType {
     
     var flowDelegate: FlowDelegate? { get }
     
-    func viewForRenderableNode(renderableNode: MobileContentRenderableNode, rendererPageModel: MobileContentRendererPageModel, containerNode: MobileContentContainerNode?) -> MobileContentView?
+    func viewForRenderableModel(renderableModel: MobileContentRenderableModel, rendererPageModel: MobileContentRendererPageModel, containerNode: MobileContentContainerNode?) -> MobileContentView?
 }
 
 extension MobileContentPageViewFactoryType {

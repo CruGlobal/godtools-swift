@@ -8,6 +8,12 @@
 
 import Foundation
 
-protocol NumberModelType {
+protocol NumberModelType: MobileContentRenderableModel {
     
+}
+
+extension NumberModelType {
+    var modelContentIsRenderable: Bool {
+        return true
+    }
 }

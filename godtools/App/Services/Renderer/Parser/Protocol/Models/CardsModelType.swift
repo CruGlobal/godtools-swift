@@ -8,8 +8,14 @@
 
 import Foundation
 
-protocol CardsModelType {
+protocol CardsModelType: MobileContentRenderableModel {
     
     var numberOfCards: Int { get }
     var numberOfVisibleCards: Int { get }
+}
+
+extension CardsModelType {
+    var modelContentIsRenderable: Bool {
+        return true
+    }
 }

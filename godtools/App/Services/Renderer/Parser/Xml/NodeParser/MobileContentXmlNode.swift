@@ -26,6 +26,14 @@ class MobileContentXmlNode: NSObject {
         return xmlElement.name
     }
     
+    var restrictTo: String? {
+        return xmlElement.allAttributes["restrictTo"]?.text
+    }
+    
+    var version: String? {
+        return xmlElement.allAttributes["version"]?.text
+    }
+    
     func addChild(childNode: MobileContentXmlNode) {
         
         children.append(childNode)

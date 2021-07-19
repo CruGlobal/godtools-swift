@@ -22,9 +22,9 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         self.fontService = fontService
     }
     
-    func viewForRenderableNode(renderableNode: MobileContentRenderableNode, rendererPageModel: MobileContentRendererPageModel, containerNode: MobileContentContainerNode?) -> MobileContentView? {
+    func viewForRenderableModel(renderableModel: MobileContentRenderableModel, rendererPageModel: MobileContentRendererPageModel, containerNode: MobileContentContainerNode?) -> MobileContentView? {
         
-        if renderableNode is ContentParagraphModelType {
+        if renderableModel is ContentParagraphModelType {
         
             return MobileContentStackView(
                 itemHorizontalInsets: 0,
@@ -32,7 +32,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 scrollIsEnabled: false
             )
         }
-        else if let textModel = renderableNode as? ContentTextModelType {
+        else if let textModel = renderableModel as? ContentTextModelType {
                           
             let viewModel = MobileContentTextViewModel(
                 textModel: textModel,
@@ -45,7 +45,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let imageModel = renderableNode as? ContentImageModelType {
+        else if let imageModel = renderableModel as? ContentImageModelType {
             
             let viewModel = MobileContentImageViewModel(
                 imageModel: imageModel,
@@ -56,7 +56,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view            
         }
-        else if let buttonModel = renderableNode as? ContentButtonModelType {
+        else if let buttonModel = renderableModel as? ContentButtonModelType {
                         
             let viewModel = MobileContentButtonViewModel(
                 buttonModel: buttonModel,
@@ -70,7 +70,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let linkModel = renderableNode as? ContentLinkModelType {
+        else if let linkModel = renderableModel as? ContentLinkModelType {
                         
             let viewModel = MobileContentLinkViewModel(
                 linkModel: linkModel,
@@ -83,7 +83,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let headingModel = renderableNode as? HeadingModelType {
+        else if let headingModel = renderableModel as? HeadingModelType {
             
             let viewModel = MobileContentHeadingViewModel(
                 headingModel: headingModel,
@@ -94,7 +94,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let titleModel = renderableNode as? TitleModelType {
+        else if let titleModel = renderableModel as? TitleModelType {
                   
             let viewModel = MobileContentTitleViewModel(
                 titleModel: titleModel,
@@ -105,7 +105,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let numberModel = renderableNode as? NumberModelType {
+        else if let numberModel = renderableModel as? NumberModelType {
             
             let viewModel = MobileContentNumberViewModel(
                 numberModel: numberModel,
@@ -116,7 +116,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let videoModel = renderableNode as? ContentVideoModelType {
+        else if let videoModel = renderableModel as? ContentVideoModelType {
             
             let viewModel = MobileContentEmbeddedVideoViewModel(videoModel: videoModel)
             
@@ -124,7 +124,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let tabModel = renderableNode as? ContentTabModelType {
+        else if let tabModel = renderableModel as? ContentTabModelType {
             
             let viewModel = MobileContentTabViewModel(
                 tabModel: tabModel,
@@ -136,7 +136,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let tabsModel = renderableNode as? ContentTabsModelType {
+        else if let tabsModel = renderableModel as? ContentTabsModelType {
 
             let viewModel = MobileContentTabsViewModel(
                 tabsModel: tabsModel,
@@ -147,7 +147,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let inputModel = renderableNode as? ContentInputModelType {
+        else if let inputModel = renderableModel as? ContentInputModelType {
             
             let viewModel = MobileContentInputViewModel(
                 inputModel: inputModel,
@@ -159,7 +159,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let formModel = renderableNode as? ContentFormModelType {
+        else if let formModel = renderableModel as? ContentFormModelType {
             
             let viewModel = MobileContentFormViewModel(
                 formModel: formModel,
@@ -170,7 +170,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let spacerModel = renderableNode as? ContentSpacerModelType {
+        else if let spacerModel = renderableModel as? ContentSpacerModelType {
                 
             let viewModel = MobileContentSpacerViewModel(
                 spacerModel: spacerModel,
@@ -181,7 +181,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let headerModel = renderableNode as? ContentHeaderModelType {
+        else if let headerModel = renderableModel as? ContentHeaderModelType {
             
             let viewModel = MobileContentHeaderViewModel(
                 headerModel: headerModel,
@@ -192,7 +192,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let sectionModel = renderableNode as? ContentSectionModelType {
+        else if let sectionModel = renderableModel as? ContentSectionModelType {
             
             let viewModel = MobileContentSectionViewModel(
                 sectionModel: sectionModel,
@@ -203,7 +203,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let accordionModel = renderableNode as? ContentAccordionModelType {
+        else if let accordionModel = renderableModel as? ContentAccordionModelType {
             
             let viewModel = MobileContentAccordionViewModel(
                 accordionModel: accordionModel,

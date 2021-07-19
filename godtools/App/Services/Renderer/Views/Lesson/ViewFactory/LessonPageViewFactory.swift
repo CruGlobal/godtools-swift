@@ -22,9 +22,9 @@ class LessonPageViewFactory: MobileContentPageViewFactoryType {
         self.analytics = analytics
     }
     
-    func viewForRenderableNode(renderableNode: MobileContentRenderableNode, rendererPageModel: MobileContentRendererPageModel, containerNode: MobileContentContainerNode?) -> MobileContentView? {
+    func viewForRenderableModel(renderableModel: MobileContentRenderableModel, rendererPageModel: MobileContentRendererPageModel, containerNode: MobileContentContainerNode?) -> MobileContentView? {
         
-        if let pageModel = renderableNode as? PageModelType {
+        if let pageModel = renderableModel as? PageModelType {
                         
             let viewModel = LessonPageViewModel(
                 flowDelegate: getFlowDelegate(),
@@ -41,7 +41,7 @@ class LessonPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let contentModel = renderableNode as? ContentModelType {
+        else if let contentModel = renderableModel as? ContentModelType {
             
             let viewModel = LessonContentViewModel(
                 contentModel: contentModel,

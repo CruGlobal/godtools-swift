@@ -8,7 +8,13 @@
 
 import Foundation
 
-protocol HeadingModelType {
+protocol HeadingModelType: MobileContentRenderableModel {
     
     func getTextColor() -> MobileContentRGBAColor?
+}
+
+extension HeadingModelType {
+    var modelContentIsRenderable: Bool {
+        return true
+    }
 }

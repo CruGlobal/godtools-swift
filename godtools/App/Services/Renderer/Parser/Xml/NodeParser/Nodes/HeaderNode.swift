@@ -38,11 +38,3 @@ class HeaderNode: MobileContentXmlNode, HeaderModelType {
         }
     }
 }
-
-// MARK: - MobileContentRenderableNode
-
-extension HeaderNode: MobileContentRenderableNode {
-    var nodeContentIsRenderable: Bool {
-        return true
-    }
-}

@@ -8,7 +8,13 @@
 
 import Foundation
 
-protocol TrainingTipModelType {
+protocol TrainingTipModelType: MobileContentRenderableModel {
     
     var id: String? { get }
+}
+
+extension TrainingTipModelType {
+    var modelContentIsRenderable: Bool {
+        return true
+    }
 }

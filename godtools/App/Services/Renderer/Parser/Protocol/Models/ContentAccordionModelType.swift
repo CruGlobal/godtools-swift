@@ -8,6 +8,12 @@
 
 import Foundation
 
-protocol ContentAccordionModelType {
+protocol ContentAccordionModelType: MobileContentRenderableModel {
     
+}
+
+extension ContentAccordionModelType {
+    var modelContentIsRenderable: Bool {
+        return true
+    }
 }

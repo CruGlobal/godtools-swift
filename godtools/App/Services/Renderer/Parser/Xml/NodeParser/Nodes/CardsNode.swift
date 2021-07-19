@@ -50,11 +50,3 @@ class CardsNode: MobileContentXmlNode, CardsModelType {
         return visibleCardNodes.count
     }
 }
-
-// MARK: - MobileContentRenderableNode
-
-extension CardsNode: MobileContentRenderableNode {
-    var nodeContentIsRenderable: Bool {
-        return true
-    }
-}

@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ContentButtonModelType {
+protocol ContentButtonModelType: MobileContentRenderableModel {
     
     var backgroundColor: String? { get }
     var color: String? { get }
@@ -16,12 +16,18 @@ protocol ContentButtonModelType {
     var style: String? { get }
     var type: String? { get }
     var url: String? { get }
-    var buttonStyle: MobileContentButtonNodeStyle? { get }
-    var buttonType: MobileContentButtonNodeType { get }
+    var buttonStyle: MobileContentButtonStyle? { get }
+    var buttonType: MobileContentButtonType { get }
     var text: String? { get }
     
     func getBackgroundColor() -> MobileContentRGBAColor?
     func getColor() -> MobileContentRGBAColor?
     func getTextColor() -> MobileContentRGBAColor?
     func getAnalyticsEvents() -> [AnalyticsEventModelType]
+}
+
+extension ContentButtonModelType {
+    var modelContentIsRenderable: Bool {
+        return buttonType != .unknown
+    }
 }

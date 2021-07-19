@@ -8,6 +8,12 @@
 
 import Foundation
 
-protocol ModalsModelType {
+protocol ModalsModelType: MobileContentRenderableModel {
     
+}
+
+extension ModalsModelType {
+    var modelContentIsRenderable: Bool {
+        return true
+    }
 }

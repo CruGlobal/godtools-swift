@@ -25,14 +25,6 @@ class ModalNode: MobileContentXmlNode, ModalModelType {
     }
 }
 
-// MARK: - MobileContentRenderableNode
-
-extension ModalNode: MobileContentRenderableNode {
-    var nodeContentIsRenderable: Bool {
-        return true
-    }
-}
-
 // MARK: - MobileContentContainerNode
 
 extension ModalNode: MobileContentContainerNode {
@@ -41,7 +33,7 @@ extension ModalNode: MobileContentContainerNode {
         return MobileContentRGBAColor(stringColor: "rgba(255,255,255,1)")
     }
     
-    var buttonStyle: MobileContentButtonNodeStyle? {
+    var buttonStyle: MobileContentButtonStyle? {
         return .outlined
     }
     

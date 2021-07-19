@@ -16,11 +16,3 @@ class ContentParagraphNode: MobileContentXmlNode, ContentParagraphModelType {
         super.init(xmlElement: xmlElement)
     }
 }
-
-// MARK: - MobileContentRenderableNode
-
-extension ContentParagraphNode: MobileContentRenderableNode {
-    var nodeContentIsRenderable: Bool {
-        return true
-    }
-}

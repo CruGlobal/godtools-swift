@@ -8,7 +8,13 @@
 
 import Foundation
 
-protocol HeroModelType {
+protocol HeroModelType: MobileContentRenderableModel {
     
     func getAnalyticsEvents() -> [AnalyticsEventModelType]
+}
+
+extension HeroModelType {
+    var modelContentIsRenderable: Bool {
+        return true
+    }
 }

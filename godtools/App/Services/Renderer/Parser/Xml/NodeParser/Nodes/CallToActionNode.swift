@@ -41,11 +41,3 @@ class CallToActionNode: MobileContentXmlNode, CallToActionModelType {
         return nil
     }
 }
-
-// MARK: - MobileContentRenderableNode
-
-extension CallToActionNode: MobileContentRenderableNode {
-    var nodeContentIsRenderable: Bool {
-        return true
-    }
-}

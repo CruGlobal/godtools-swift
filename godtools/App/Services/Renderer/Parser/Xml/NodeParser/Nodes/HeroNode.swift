@@ -31,11 +31,3 @@ class HeroNode: MobileContentXmlNode, HeroModelType {
         return analyticsEventsNode?.analyticsEventNodes ?? []
     }
 }
-
-// MARK: - MobileContentRenderableNode
-
-extension HeroNode: MobileContentRenderableNode {
-    var nodeContentIsRenderable: Bool {
-        return true
-    }
-}

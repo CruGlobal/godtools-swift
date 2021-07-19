@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol PageModelType: BackgroundImageModelType {
+protocol PageModelType: BackgroundImageModelType, MobileContentRenderableModel {
         
     var uuid: String { get }
     var backgroundColor: UIColor? { get }
@@ -24,4 +24,10 @@ protocol PageModelType: BackgroundImageModelType {
     var isHidden: Bool { get }
     var hero: HeroModelType? { get }
     var callToAction: CallToActionModelType? { get }
+}
+
+extension PageModelType {
+    var modelContentIsRenderable: Bool {
+        return true
+    }
 }

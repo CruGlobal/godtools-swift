@@ -72,3 +72,19 @@ class MultiplatformTractPage: PageModelType {
         return nil // TODO: Need to set this. ~Levi
     }
 }
+
+// MARK: - MobileContentRenderableModel
+
+extension MultiplatformTractPage {
+    var restrictTo: String? {
+        return nil
+    }
+    
+    var version: String? {
+        return nil
+    }
+    
+    var modelContentIsRenderable: Bool {
+        return true
+    }
+}

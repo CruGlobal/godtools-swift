@@ -109,14 +109,6 @@ class CardNode: MobileContentXmlNode, CardModelType {
     }
 }
 
-// MARK: - MobileContentRenderableNode
-
-extension CardNode: MobileContentRenderableNode {
-    var nodeContentIsRenderable: Bool {
-        return true
-    }
-}
-
 // MARK: - MobileContentContainerNode
 
 extension CardNode: MobileContentContainerNode {
@@ -125,7 +117,7 @@ extension CardNode: MobileContentContainerNode {
         return nil
     }
     
-    var buttonStyle: MobileContentButtonNodeStyle? {
+    var buttonStyle: MobileContentButtonStyle? {
         return nil
     }
     

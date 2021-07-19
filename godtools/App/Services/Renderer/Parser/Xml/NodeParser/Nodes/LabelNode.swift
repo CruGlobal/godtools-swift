@@ -20,11 +20,3 @@ class LabelNode: MobileContentXmlNode {
         return children.first as? ContentTextNode
     }
 }
-
-// MARK: - MobileContentRenderableNode
-
-extension LabelNode: MobileContentRenderableNode {
-    var nodeContentIsRenderable: Bool {
-        return true
-    }
-}

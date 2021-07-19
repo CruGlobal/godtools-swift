@@ -130,11 +130,3 @@ class PageNode: MobileContentXmlNode, PageModelType {
         return nil
     }
 }
-
-// MARK: - MobileContentRenderableNode
-
-extension PageNode: MobileContentRenderableNode {
-    var nodeContentIsRenderable: Bool {
-        return true
-    }
-}

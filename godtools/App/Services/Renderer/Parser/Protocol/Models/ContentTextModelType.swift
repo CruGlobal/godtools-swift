@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ContentTextModelType {
+protocol ContentTextModelType: MobileContentRenderableModel {
     
     var endImage: String? { get }
     var endImageSize: String { get }
@@ -22,4 +22,10 @@ protocol ContentTextModelType {
     var textAlignment: MobileContentTextAlign? { get }
     
     func getTextColor() -> MobileContentRGBAColor?
+}
+
+extension ContentTextModelType {
+    var modelContentIsRenderable: Bool {
+        return true
+    }
 }

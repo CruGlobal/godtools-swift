@@ -8,11 +8,17 @@
 
 import Foundation
 
-protocol CallToActionModelType {
+protocol CallToActionModelType: MobileContentRenderableModel {
     
     var controlColor: String? { get }
     var text: String? { get }
     
     func getTextColor() -> MobileContentRGBAColor?
     func getControlColor() -> MobileContentRGBAColor?
+}
+
+extension CallToActionModelType {
+    var modelContentIsRenderable: Bool {
+        return true
+    }
 }

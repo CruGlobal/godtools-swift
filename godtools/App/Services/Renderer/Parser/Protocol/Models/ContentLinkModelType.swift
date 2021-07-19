@@ -8,11 +8,17 @@
 
 import Foundation
 
-protocol ContentLinkModelType {
+protocol ContentLinkModelType: MobileContentRenderableModel {
     
     var events: [String] { get }
     var text: String? { get }
     
     func getTextColor() -> MobileContentRGBAColor?
     func getAnalyticsEvents() -> [AnalyticsEventModelType]
+}
+
+extension ContentLinkModelType {
+    var modelContentIsRenderable: Bool {
+        return true
+    }
 }

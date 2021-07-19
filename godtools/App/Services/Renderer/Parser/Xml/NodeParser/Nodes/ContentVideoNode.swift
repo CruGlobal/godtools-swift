@@ -28,21 +28,3 @@ class ContentVideoNode: MobileContentXmlNode, ContentVideoModelType {
         return MobileContentVideoNodeProvider(rawValue: provider ?? "") ?? .unknown
     }
 }
-
-// MARK: - MobileContentRenderableNode
-
-extension ContentVideoNode: MobileContentRenderableNode {
-    
-    var nodeContentIsRenderable: Bool {
-        
-        guard let videoId = self.videoId else {
-            return false
-        }
-        
-        guard !videoId.isEmpty else {
-            return false
-        }
-        
-        return true
-    }
-}

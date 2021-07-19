@@ -8,8 +8,14 @@
 
 import Foundation
 
-protocol ModalModelType {
+protocol ModalModelType: MobileContentRenderableModel {
     
     var dismissListeners: [String] { get }
     var listeners: [String] { get }
+}
+
+extension ModalModelType {
+    var modelContentIsRenderable: Bool {
+        return true
+    }
 }

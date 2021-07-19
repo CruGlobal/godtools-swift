@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol MobileContentContainerNode: MobileContentRenderableNode, MobileContentNodeStyles {
+protocol MobileContentContainerNode: MobileContentRenderableModel, MobileContentNodeStyles {
     
 }

@@ -8,6 +8,12 @@
 
 import Foundation
 
-protocol ContentTabsModelType {
+protocol ContentTabsModelType: MobileContentRenderableModel {
     
+}
+
+extension ContentTabsModelType {
+    var modelContentIsRenderable: Bool {
+        return true
+    }
 }

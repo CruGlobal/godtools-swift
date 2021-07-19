@@ -33,7 +33,7 @@ class MobileContentButtonViewModel: MobileContentButtonViewModelType {
         let buttonColor: UIColor = buttonModel.getColor()?.color ?? containerNode?.buttonColor?.color ?? rendererPageModel.pageColors.primaryColor
         let buttonTitleColor: UIColor? = buttonModel.getTextColor()?.color
         
-        let buttonStyle: MobileContentButtonNodeStyle = buttonModel.buttonStyle ?? containerNode?.buttonStyle ?? .contained
+        let buttonStyle: MobileContentButtonStyle = buttonModel.buttonStyle ?? containerNode?.buttonStyle ?? .contained
         
         switch buttonStyle {
         
@@ -63,7 +63,7 @@ class MobileContentButtonViewModel: MobileContentButtonViewModelType {
         return 1
     }
     
-    var buttonType: MobileContentButtonNodeType {
+    var buttonType: MobileContentButtonType {
         return buttonModel.buttonType
     }
     

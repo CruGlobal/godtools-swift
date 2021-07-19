@@ -24,11 +24,3 @@ class HeadingNode: MobileContentXmlNode, HeadingModelType {
         return textNode?.getTextColor()
     }
 }
-
-// MARK: - MobileContentRenderableNode
-
-extension HeadingNode: MobileContentRenderableNode {
-    var nodeContentIsRenderable: Bool {
-        return true
-    }
-}

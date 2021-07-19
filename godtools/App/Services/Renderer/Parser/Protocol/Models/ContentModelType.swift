@@ -8,6 +8,12 @@
 
 import Foundation
 
-protocol ContentModelType {
+protocol ContentModelType: MobileContentRenderableModel {
     
+}
+
+extension ContentModelType {
+    var modelContentIsRenderable: Bool {
+        return true
+    }
 }

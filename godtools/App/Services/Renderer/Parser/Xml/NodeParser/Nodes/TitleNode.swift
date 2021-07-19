@@ -24,11 +24,3 @@ class TitleNode: MobileContentXmlNode, TitleModelType {
         return textNode?.getTextColor()
     }
 }
-
-// MARK: - MobileContentRenderableNode
-
-extension TitleNode: MobileContentRenderableNode {
-    var nodeContentIsRenderable: Bool {
-        return true
-    }
-}

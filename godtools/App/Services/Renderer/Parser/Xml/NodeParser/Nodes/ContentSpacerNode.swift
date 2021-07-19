@@ -35,11 +35,3 @@ class ContentSpacerNode: MobileContentXmlNode, ContentSpacerModelType {
         return MobileContentSpacerMode(rawValue: modeValue) ?? defaultMode
     }
 }
-
-// MARK: - MobileContentRenderableNode
-
-extension ContentSpacerNode: MobileContentRenderableNode {
-    var nodeContentIsRenderable: Bool {
-        return true
-    }
-}

@@ -8,7 +8,13 @@
 
 import Foundation
 
-protocol HeaderModelType {
+protocol HeaderModelType: MobileContentRenderableModel {
     
     var trainingTip: String? { get }
+}
+
+extension HeaderModelType {
+    var modelContentIsRenderable: Bool {
+        return true
+    }
 }

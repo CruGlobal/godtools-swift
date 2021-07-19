@@ -20,11 +20,3 @@ class NumberNode: MobileContentXmlNode, NumberModelType {
         return children.first as? ContentTextNode
     }
 }
-
-// MARK: - MobileContentRenderableNode
-
-extension NumberNode: MobileContentRenderableNode {
-    var nodeContentIsRenderable: Bool {
-        return true
-    }
-}

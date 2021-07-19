@@ -8,9 +8,14 @@
 
 import Foundation
 
-protocol ContentImageModelType {
+protocol ContentImageModelType: MobileContentRenderableModel {
     
     var events: [String] { get }
     var resource: String? { get }
-    var restrictTo: String? { get }
+}
+
+extension ContentImageModelType {
+    var modelContentIsRenderable: Bool {
+        return true
+    }
 }

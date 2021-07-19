@@ -45,11 +45,3 @@ class ContentTabNode: MobileContentXmlNode, ContentTabModelType {
         return analyticsEventsNode?.analyticsEventNodes ?? []
     }
 }
-
-// MARK: - MobileContentRenderableNode
-
-extension ContentTabNode: MobileContentRenderableNode {
-    var nodeContentIsRenderable: Bool {
-        return true
-    }
-}

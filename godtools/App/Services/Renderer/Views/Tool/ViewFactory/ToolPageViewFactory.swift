@@ -40,9 +40,9 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
         self.trainingTipsEnabled = trainingTipsEnabled
     }
     
-    func viewForRenderableNode(renderableNode: MobileContentRenderableNode, rendererPageModel: MobileContentRendererPageModel, containerNode: MobileContentContainerNode?) -> MobileContentView? {
+    func viewForRenderableModel(renderableModel: MobileContentRenderableModel, rendererPageModel: MobileContentRendererPageModel, containerNode: MobileContentContainerNode?) -> MobileContentView? {
         
-        if let cardModel = renderableNode as? CardModelType {
+        if let cardModel = renderableModel as? CardModelType {
             
             let viewModel = ToolPageCardViewModel(
                 cardModel: cardModel,
@@ -58,14 +58,14 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let callToActionModel = renderableNode as? CallToActionModelType {
+        else if let callToActionModel = renderableModel as? CallToActionModelType {
             
             return getCallToActionView(
                 callToActionModel: callToActionModel,
                 rendererPageModel: rendererPageModel
             )
         }
-        else if let headerModel = renderableNode as? HeaderModelType {
+        else if let headerModel = renderableModel as? HeaderModelType {
             
             let viewModel = ToolPageHeaderViewModel(
                 headerModel: headerModel,
@@ -79,7 +79,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let heroModel = renderableNode as? HeroModelType {
+        else if let heroModel = renderableModel as? HeroModelType {
             
             let viewModel = ToolPageHeroViewModel(
                 heroModel: heroModel,
@@ -91,7 +91,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let cardsModel = renderableNode as? CardsModelType {
+        else if let cardsModel = renderableModel as? CardsModelType {
             
             let viewModel = ToolPageCardsViewModel(
                 cardsModel: cardsModel,
@@ -106,7 +106,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let formModel = renderableNode as? ContentFormModelType {
+        else if let formModel = renderableModel as? ContentFormModelType {
             
             let viewModel = ToolPageFormViewModel(
                 formModel: formModel,
@@ -119,7 +119,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let modalModel = renderableNode as? ModalModelType {
+        else if let modalModel = renderableModel as? ModalModelType {
             
             let viewModel = ToolPageModalViewModel(
                 modalModel: modalModel,
@@ -130,7 +130,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let modalsModel = renderableNode as? ModalsModelType {
+        else if let modalsModel = renderableModel as? ModalsModelType {
             
             let viewModel = ToolPageModalsViewModel(
                 modalsModel: modalsModel,
@@ -144,7 +144,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let pageModel = renderableNode as? PageModelType {
+        else if let pageModel = renderableModel as? PageModelType {
                         
             let viewModel = ToolPageViewModel(
                 flowDelegate: getFlowDelegate(),

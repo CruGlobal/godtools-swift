@@ -85,7 +85,7 @@ class MobileContentXmlNodeRenderer: MobileContentRendererType {
         
         let containerNode: MobileContentContainerNode? = (node as? MobileContentContainerNode) ?? containerNode
         
-        guard let renderableNode = (node as? MobileContentRenderableNode) else {
+        guard let renderableNode = (node as? MobileContentRenderableModel) else {
             return nil
         }
         
@@ -104,7 +104,7 @@ class MobileContentXmlNodeRenderer: MobileContentRendererType {
             return viewToRender
         }
          
-        let mobileContentView: MobileContentView? = getViewFromViewFactory(renderableNode: renderableNode, rendererPageModel: rendererPageModel, containerNode: containerNode)
+        let mobileContentView: MobileContentView? = getViewFromViewFactory(renderableModel: renderableNode, rendererPageModel: rendererPageModel, containerNode: containerNode)
         
         for childNode in node.children {
             
