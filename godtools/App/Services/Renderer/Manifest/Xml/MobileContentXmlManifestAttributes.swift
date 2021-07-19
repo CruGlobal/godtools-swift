@@ -19,12 +19,12 @@ class MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
     private let primaryColorString: String
     private let primaryTextColorString: String
     private let textColorString: String
+    private let textScaleString: String?
     
     let backgroundImage: String?
     let categoryLabelColor: String?
     let dismissListeners: [String]
     let locale: String?
-    let textScale: String?
     let tool: String?
     let type: String?
     
@@ -44,7 +44,7 @@ class MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
         primaryColorString = attributes["primary-color"]?.text ?? "rgba(59,164,219,1)"
         primaryTextColorString = attributes["primary-text-color"]?.text ?? "rgba(255,255,255,1)"
         textColorString = attributes["text-color"]?.text ?? "rgba(90,90,90,1)"
-        textScale = attributes["text-scale"]?.text
+        textScaleString = attributes["text-scale"]?.text
         tool = attributes["tool"]?.text
         type = attributes["type"]?.text
     }
@@ -71,18 +71,6 @@ class MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
         return MobileContentBackgroundImageScale(rawValue: backgroundImageScaleString) ?? defaultValue
     }
     
-    var primaryColor: UIColor {
-        return MobileContentRGBAColor(stringColor: primaryColorString).color
-    }
-    
-    var primaryTextColor: UIColor {
-        return MobileContentRGBAColor(stringColor: primaryTextColorString).color
-    }
-    
-    var textColor: UIColor {
-        return MobileContentRGBAColor(stringColor: textColorString).color
-    }
-    
     var navbarColor: UIColor? {
         if let navbarColorString = self.navbarColorString {
             return MobileContentRGBAColor(stringColor: navbarColorString).color
@@ -95,5 +83,21 @@ class MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
             return MobileContentRGBAColor(stringColor: navbarControlColorString).color
         }
         return nil
+    }
+    
+    var primaryColor: UIColor {
+        return MobileContentRGBAColor(stringColor: primaryColorString).color
+    }
+    
+    var primaryTextColor: UIColor {
+        return MobileContentRGBAColor(stringColor: primaryTextColorString).color
+    }
+    
+    var textColor: UIColor {
+        return MobileContentRGBAColor(stringColor: textColorString).color
+    }
+    
+    var textScale: MobileContentTextScale {
+        return MobileContentTextScale(textScaleString: textScaleString)
     }
 }

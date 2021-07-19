@@ -40,8 +40,8 @@ class MultiplatformTractPage: PageModelType {
         return [] // TODO: Need to set this. ~Levi
     }
     
-    var textScale: Double {
-        return tractPage.textScale
+    var textScale: MobileContentTextScale {
+        return MobileContentTextScale(doubleValue: tractPage.textScale)
     }
     
     var isHidden: Bool {

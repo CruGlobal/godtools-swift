@@ -22,7 +22,7 @@ protocol MobileContentManifestAttributesType: BackgroundImageModelType {
     var primaryColor: UIColor { get }
     var primaryTextColor: UIColor { get }
     var textColor: UIColor { get }
-    var textScale: String? { get }
+    var textScale: MobileContentTextScale { get }
     var tool: String? { get }
     var type: String? { get }
 }

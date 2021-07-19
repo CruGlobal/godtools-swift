@@ -22,7 +22,7 @@ class MockMobileContentManifestAttributes: MobileContentManifestAttributesType {
     let primaryColor: UIColor = .darkGray
     let primaryTextColor: UIColor = .black
     let textColor: UIColor = .black
-    let textScale: String? = nil
+    let textScale: MobileContentTextScale = MobileContentTextScale(textScaleString: nil)
     let tool: String? = nil
     let type: String? = nil
     

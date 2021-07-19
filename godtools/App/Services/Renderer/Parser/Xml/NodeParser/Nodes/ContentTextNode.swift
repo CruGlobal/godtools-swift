@@ -15,13 +15,13 @@ class ContentTextNode: MobileContentXmlNode, ContentTextModelType {
     
     private let textAlignString: String?
     private let textColorString: String?
+    private let textScaleString: String?
     
     let endImage: String?
     let endImageSize: String
     let startImage: String?
     let startImageSize: String
     let text: String?
-    let textScale: String?
     let textStyle: String?
     
     required init(xmlElement: XMLElement) {
@@ -34,7 +34,7 @@ class ContentTextNode: MobileContentXmlNode, ContentTextModelType {
         startImageSize = attributes["start-image-size"]?.text ?? ContentTextNode.defaultImagePointSize
         textAlignString = attributes["text-align"]?.text
         textColorString = attributes["text-color"]?.text
-        textScale = attributes["text-scale"]?.text
+        textScaleString = attributes["text-scale"]?.text
         textStyle = attributes["text-style"]?.text
                 
         if xmlElement.text.trimmingCharacters(in: .whitespaces) != "" {
@@ -59,6 +59,10 @@ class ContentTextNode: MobileContentXmlNode, ContentTextModelType {
         }
         
         return MobileContentTextAlignment(rawValue: textAlignString) ?? defaultTextAlignment
+    }
+    
+    var textScale: MobileContentTextScale {
+        return MobileContentTextScale(textScaleString: textScaleString)
     }
     
     func getTextColor() -> UIColor? {

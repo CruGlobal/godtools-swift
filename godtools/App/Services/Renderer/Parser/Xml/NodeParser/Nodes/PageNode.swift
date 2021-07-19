@@ -88,11 +88,8 @@ class PageNode: MobileContentXmlNode, PageModelType {
         return MobileContentBackgroundImageScale(rawValue: backgroundImageScaleString) ?? defaultValue
     }
     
-    var textScale: Double {
-        if let stringValue = textScaleString, let doubleValue = Double(stringValue) {
-            return doubleValue
-        }
-        return 1
+    var textScale: MobileContentTextScale {
+        return MobileContentTextScale(textScaleString: textScaleString)
     }
     
     var isHidden: Bool {

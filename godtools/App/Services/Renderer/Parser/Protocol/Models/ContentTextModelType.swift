@@ -15,9 +15,9 @@ protocol ContentTextModelType: MobileContentRenderableModel {
     var startImage: String? { get }
     var startImageSize: String { get }
     var text: String? { get }
-    var textScale: String? { get }
     var textStyle: String? { get }
     var textAlignment: MobileContentTextAlignment? { get }
+    var textScale: MobileContentTextScale { get }
     
     func getTextColor() -> UIColor?
 }

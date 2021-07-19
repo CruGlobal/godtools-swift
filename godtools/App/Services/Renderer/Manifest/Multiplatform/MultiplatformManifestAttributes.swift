@@ -72,9 +72,9 @@ class MultiplatformManifestAttributes: MobileContentManifestAttributesType {
         return manifest.textColor
     }
     
-    var textScale: String? {
+    var textScale: MobileContentTextScale {
         // TODO: Need to set this. ~Levi
-        return nil
+        return MobileContentTextScale(textScaleString: nil)
     }
     
     var tool: String? {
