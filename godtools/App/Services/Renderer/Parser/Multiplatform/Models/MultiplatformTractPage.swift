@@ -76,6 +76,7 @@ class MultiplatformTractPage: PageModelType {
 // MARK: - MobileContentRenderableModel
 
 extension MultiplatformTractPage {
+    
     var restrictTo: String? {
         return nil
     }
@@ -86,5 +87,21 @@ extension MultiplatformTractPage {
     
     var modelContentIsRenderable: Bool {
         return true
+    }
+    
+    func getRenderableChildModels() -> [MobileContentRenderableModel] {
+        
+        var childModels: [MobileContentRenderableModel] = Array()
+        
+        if let header = tractPage.header {
+            childModels.append(MultiplatformHeader(header: header))
+        }
+        
+        if let hero = tractPage.hero {
+            childModels.append(MultiplatformHero(hero: hero))
+        }
+        
+        // TODO: Return children to render. ~Levi
+        return childModels
     }
 }
