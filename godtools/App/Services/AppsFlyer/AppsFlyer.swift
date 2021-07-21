@@ -46,6 +46,7 @@ class AppsFlyer: NSObject, AppsFlyerType {
                 
         appsFlyerLib.appsFlyerDevKey = config.appsFlyerDevKey
         appsFlyerLib.appleAppID = config.appleAppId
+        AppsFlyerLib.shared().oneLinkCustomDomains = ["get.godtoolsapp.com"]
         appsFlyerLib.delegate = self
         
         if config.isDebug {
