@@ -42,7 +42,7 @@ class MenuViewModel: NSObject, MenuViewModelType {
         
         super.init()
         
-        navTitle.accept(value: localizationServices.stringForMainBundle(key: "menu"))
+        navTitle.accept(value: localizationServices.stringForMainBundle(key: "settings"))
                 
         reloadMenuDataSource()
         
