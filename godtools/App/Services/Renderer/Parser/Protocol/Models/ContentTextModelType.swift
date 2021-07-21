@@ -11,9 +11,9 @@ import Foundation
 protocol ContentTextModelType: MobileContentRenderableModel {
     
     var endImage: String? { get }
-    var endImageSize: String { get }
+    var endImageSize: Int32 { get }
     var startImage: String? { get }
-    var startImageSize: String { get }
+    var startImageSize: Int32 { get }
     var text: String? { get }
     var textStyle: String? { get }
     var textAlignment: MobileContentTextAlignment? { get }

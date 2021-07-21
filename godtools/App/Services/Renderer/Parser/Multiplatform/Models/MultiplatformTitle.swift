@@ -43,7 +43,7 @@ extension MultiplatformTitle {
         
         var childModels: [MobileContentRenderableModel] = Array()
                 
-        childModels.append(MultiplatformText(text: contentText))
+        childModels.append(MultiplatformContentText(text: contentText))
         
         return childModels
     }

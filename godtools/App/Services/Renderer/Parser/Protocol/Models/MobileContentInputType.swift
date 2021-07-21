@@ -12,6 +12,7 @@ enum MobileContentInputType: String {
     
     case email = "email"
     case hidden = "hidden"
+    case phone = "phone"
     case text = "text"
     case unknown = "unknown"
 }

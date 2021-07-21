@@ -11,7 +11,6 @@ import Foundation
 protocol ContentInputModelType: MobileContentRenderableModel {
     
     var name: String? { get }
-    var required: String? { get }
     var value: String? { get }
     var type: MobileContentInputType { get }
     var isRequired: Bool { get }

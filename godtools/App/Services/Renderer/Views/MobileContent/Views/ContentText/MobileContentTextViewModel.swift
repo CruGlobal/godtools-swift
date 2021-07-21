@@ -18,7 +18,6 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     private let fontService: FontService
     private let fontSize: CGFloat = 18
     private let defaultFontWeight: UIFont.Weight = .regular
-    private let defaultImagePointSize: Float = 40
         
     let textColor: UIColor
     
@@ -54,7 +53,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     }
     
     var startImageSize: CGSize {
-        let floatValue: CGFloat = CGFloat(Float(textModel.startImageSize) ?? defaultImagePointSize)
+        let floatValue: CGFloat = CGFloat(textModel.startImageSize)
         return CGSize(width: floatValue, height: floatValue)
     }
     
@@ -110,7 +109,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     }
     
     var endImageSize: CGSize {
-        let floatValue: CGFloat = CGFloat(Float(textModel.endImageSize) ?? defaultImagePointSize)
+        let floatValue: CGFloat = CGFloat(textModel.endImageSize)
         return CGSize(width: floatValue, height: floatValue)
     }
     

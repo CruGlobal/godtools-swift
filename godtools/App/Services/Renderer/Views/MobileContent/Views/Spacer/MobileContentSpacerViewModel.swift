@@ -24,11 +24,6 @@ class MobileContentSpacerViewModel: MobileContentSpacerViewModelType {
     }
     
     var height: CGFloat {
-        
-        if let height = spacerModel.height, !height.isEmpty, let floatValue = Float(height) {
-            return CGFloat(floatValue)
-        }
-        
-        return 20
+        return CGFloat(spacerModel.height)
     }
 }

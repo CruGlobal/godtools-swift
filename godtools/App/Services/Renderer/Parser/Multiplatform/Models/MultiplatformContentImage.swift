@@ -1,27 +1,35 @@
 //
-//  MultiplatformNumber.swift
+//  MultiplatformContentImage.swift
 //  godtools
 //
-//  Created by Levi Eggert on 7/20/21.
+//  Created by Levi Eggert on 7/21/21.
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
 import Foundation
 import GodToolsToolParser
 
-class MultiplatformNumber: NumberModelType {
+class MultiplatformContentImage: ContentImageModelType {
     
-    private let contentText: Text
+    private let image: Image
     
-    required init(text: Text) {
+    required init(image: Image) {
         
-        self.contentText = text
+        self.image = image
+    }
+    
+    var events: [String] {
+        return [] // TODO: Set this. ~Levi
+    }
+    
+    var resource: String? {
+        return nil // TODO: Set this. ~Levi
     }
 }
 
 // MARK: - MobileContentRenderableModel
 
-extension MultiplatformNumber {
+extension MultiplatformContentImage {
     
     var restrictTo: String? {
         return nil
@@ -36,11 +44,6 @@ extension MultiplatformNumber {
     }
     
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
-        
-        var childModels: [MobileContentRenderableModel] = Array()
-                
-        childModels.append(MultiplatformContentText(text: contentText))
-        
-        return childModels
+        return Array()
     }
 }

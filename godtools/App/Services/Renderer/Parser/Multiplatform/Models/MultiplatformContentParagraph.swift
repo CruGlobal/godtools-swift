@@ -1,5 +1,5 @@
 //
-//  MultiplatformParagraph.swift
+//  MultiplatformContentParagraph.swift
 //  godtools
 //
 //  Created by Levi Eggert on 7/20/21.
@@ -9,10 +9,10 @@
 import Foundation
 import GodToolsToolParser
 
-class MultiplatformParagraph: ContentParagraphModelType {
+class MultiplatformContentParagraph: ContentParagraphModelType {
     
     private let paragraph: Paragraph
-    
+        
     required init(paragraph: Paragraph) {
         
         self.paragraph = paragraph
@@ -21,7 +21,7 @@ class MultiplatformParagraph: ContentParagraphModelType {
 
 // MARK: - MobileContentRenderableModel
 
-extension MultiplatformParagraph {
+extension MultiplatformContentParagraph {
     
     var restrictTo: String? {
         return nil
@@ -38,7 +38,7 @@ extension MultiplatformParagraph {
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
         
         var childModels: [MobileContentRenderableModel] = Array()
-                
+        
         addContentToChildModels(childModels: &childModels, content: paragraph.content)
         
         return childModels

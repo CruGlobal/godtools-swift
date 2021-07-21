@@ -16,6 +16,10 @@ class CardsNode: MobileContentXmlNode, CardsModelType {
         super.init(xmlElement: xmlElement)
     }
     
+    var cards: [CardModelType] {
+        return cardNodes
+    }
+    
     var cardNodes: [CardNode] {
         return children as? [CardNode] ?? []
     }
@@ -38,15 +42,5 @@ class CardsNode: MobileContentXmlNode, CardsModelType {
     
     func getCardHiddenPosition(cardNode: CardNode) -> Int? {
         return hiddenCardNodes.firstIndex(of: cardNode)
-    }
-    
-    // MARK: - CardsModelType
-    
-    var numberOfCards: Int {
-        return cardNodes.count
-    }
-    
-    var numberOfVisibleCards: Int {
-        return visibleCardNodes.count
     }
 }

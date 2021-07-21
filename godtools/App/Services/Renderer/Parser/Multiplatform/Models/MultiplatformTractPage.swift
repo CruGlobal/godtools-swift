@@ -21,15 +21,54 @@ class MultiplatformTractPage: PageModelType {
     }
     
     var backgroundImage: String? {
-        return nil // TODO: Need to set this. ~Levi
+        return tractPage.backgroundImage?.name
     }
     
     var backgroundImageAlignments: [MobileContentBackgroundImageAlignment] {
-        return [] // TODO: Need to set this. ~Levi
+        
+        // TODO: Not sure this is right? ~ Levi
+        // ImageGravity also supports isCenterX and isCenterY
+        
+        let imageGravity: ImageGravity = tractPage.backgroundImageGravity
+        
+        var alignment: [MobileContentBackgroundImageAlignment] = Array()
+        
+        if imageGravity.isBottom {
+            alignment.append(.bottom)
+        }
+        
+        if imageGravity.isCenter {
+            alignment.append(.center)
+        }
+        
+        if imageGravity.isEnd {
+            alignment.append(.end)
+        }
+        
+        if imageGravity.isStart {
+            alignment.append(.start)
+        }
+        
+        if imageGravity.isTop {
+            alignment.append(.top)
+        }
+            
+        return alignment
     }
     
     var backgroundImageScale: MobileContentBackgroundImageScale {
-        return .fill // TODO: Need to set this. ~Levi
+        switch tractPage.backgroundImageScaleType {
+        case .fill:
+            return .fill
+        case .fit:
+            return .fit
+        case .fillX:
+            return .fillHorizontally
+        case .fillY:
+            return .fillVertically
+        default:
+            return .fill
+        }
     }
     
     var listeners: [String] {
@@ -100,6 +139,12 @@ extension MultiplatformTractPage {
         if let hero = tractPage.hero {
             childModels.append(MultiplatformHero(hero: hero))
         }
+        
+        if tractPage.cards.count > 0 {
+            childModels.append(MultiplatformCards(cards: tractPage.cards))
+        }
+        
+        childModels.append(MultiplatformCallToAction(callToAction: tractPage.callToAction))
         
         // TODO: Return children to render. ~Levi
         return childModels

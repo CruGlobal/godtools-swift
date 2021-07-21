@@ -1,5 +1,5 @@
 //
-//  MultiplatformNumber.swift
+//  MultiplatformCards.swift
 //  godtools
 //
 //  Created by Levi Eggert on 7/20/21.
@@ -9,19 +9,21 @@
 import Foundation
 import GodToolsToolParser
 
-class MultiplatformNumber: NumberModelType {
+class MultiplatformCards: CardsModelType {
     
-    private let contentText: Text
+    let cards: [CardModelType]
     
-    required init(text: Text) {
+    required init(cards: [Card]) {
         
-        self.contentText = text
+        let numberOfVisibleCards: Int = cards.filter({!$0.isHidden}).count
+        
+        self.cards = cards.map({MultiplatformCard(card: $0, numberOfVisibleCards: numberOfVisibleCards)})
     }
 }
 
 // MARK: - MobileContentRenderableModel
 
-extension MultiplatformNumber {
+extension MultiplatformCards {
     
     var restrictTo: String? {
         return nil
@@ -36,11 +38,6 @@ extension MultiplatformNumber {
     }
     
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
-        
-        var childModels: [MobileContentRenderableModel] = Array()
-                
-        childModels.append(MultiplatformContentText(text: contentText))
-        
-        return childModels
+        return cards
     }
 }

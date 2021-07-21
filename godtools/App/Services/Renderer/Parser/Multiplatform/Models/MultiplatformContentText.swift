@@ -1,5 +1,5 @@
 //
-//  MultiplatformText.swift
+//  MultiplatformContentText.swift
 //  godtools
 //
 //  Created by Levi Eggert on 7/20/21.
@@ -9,7 +9,7 @@
 import Foundation
 import GodToolsToolParser
 
-class MultiplatformText: ContentTextModelType {
+class MultiplatformContentText: ContentTextModelType {
     
     private let contentText: Text
     
@@ -22,16 +22,16 @@ class MultiplatformText: ContentTextModelType {
         return nil // TODO: Implement. ~Levi
     }
     
-    var endImageSize: String {
-        return "" // TODO: Implement. ~Levi
+    var endImageSize: Int32 {
+        return contentText.endImageSize
     }
     
     var startImage: String? {
         return nil // TODO: Implement. ~Levi
     }
     
-    var startImageSize: String {
-        return "" // TODO: Implement. ~Levi
+    var startImageSize: Int32 {
+        return contentText.startImageSize
     }
     
     var text: String? {
@@ -57,7 +57,7 @@ class MultiplatformText: ContentTextModelType {
 
 // MARK: - MobileContentRenderableModel
 
-extension MultiplatformText {
+extension MultiplatformContentText {
     
     var restrictTo: String? {
         return nil
