@@ -23,6 +23,7 @@
 "click_here" = "Click Here";
 
 // Menu
+"menu" = "Menu";
 "menu_general" = "General";
 "menu_account" = "Account";
 "menu_share" = "Share";
