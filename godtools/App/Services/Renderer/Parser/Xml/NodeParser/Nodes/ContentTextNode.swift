@@ -10,17 +10,17 @@ import Foundation
 import SWXMLHash
 
 class ContentTextNode: MobileContentXmlNode, ContentTextModelType {
+        
+    private static let defaultImagePointSize: Int32 = 40
     
-    private static let defaultImagePointSize: String = "40"
-    
+    private let endImageSizeString: String?
+    private let startImageSizeString: String?
     private let textAlignString: String?
     private let textColorString: String?
     private let textScaleString: String?
     
     let endImage: String?
-    let endImageSize: String
     let startImage: String?
-    let startImageSize: String
     let text: String?
     let textStyle: String?
     
@@ -29,9 +29,9 @@ class ContentTextNode: MobileContentXmlNode, ContentTextModelType {
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
         endImage = attributes["end-image"]?.text
-        endImageSize = attributes["end-image-size"]?.text ?? ContentTextNode.defaultImagePointSize
+        endImageSizeString = attributes["end-image-size"]?.text
         startImage = attributes["start-image"]?.text
-        startImageSize = attributes["start-image-size"]?.text ?? ContentTextNode.defaultImagePointSize
+        startImageSizeString = attributes["start-image-size"]?.text
         textAlignString = attributes["text-align"]?.text
         textColorString = attributes["text-color"]?.text
         textScaleString = attributes["text-scale"]?.text
@@ -48,6 +48,24 @@ class ContentTextNode: MobileContentXmlNode, ContentTextModelType {
         }
         
         super.init(xmlElement: xmlElement)
+    }
+    
+    var endImageSize: Int32 {
+        
+        if let sizeString = endImageSizeString, let sizeValue = Int32(sizeString) {
+            return sizeValue
+        }
+        
+        return ContentTextNode.defaultImagePointSize
+    }
+    
+    var startImageSize: Int32 {
+        
+        if let sizeString = startImageSizeString, let sizeValue = Int32(sizeString) {
+            return sizeValue
+        }
+        
+        return ContentTextNode.defaultImagePointSize
     }
     
     var textAlignment: MobileContentTextAlignment? {

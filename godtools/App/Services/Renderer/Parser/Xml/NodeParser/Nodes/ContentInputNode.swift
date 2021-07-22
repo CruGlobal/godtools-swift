@@ -11,13 +11,13 @@ import SWXMLHash
 
 class ContentInputNode: MobileContentXmlNode, ContentInputModelType {
         
+    private let requiredString: String?
     private let typeString: String?
     
     private var labelNode: ContentLabelNode?
     private var placeholderNode: ContentPlaceholderNode?
     
     let name: String?
-    let required: String?
     let value: String?
     
     required init(xmlElement: XMLElement) {
@@ -25,7 +25,7 @@ class ContentInputNode: MobileContentXmlNode, ContentInputModelType {
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
         name = attributes["name"]?.text
-        required = attributes["required"]?.text
+        requiredString = attributes["required"]?.text
         typeString = attributes["type"]?.text
         value = attributes["value"]?.text
         
@@ -56,7 +56,7 @@ class ContentInputNode: MobileContentXmlNode, ContentInputModelType {
     }
     
     var isRequired: Bool {
-        return required == "true"
+        return requiredString == "true"
     }
     
     var text: String? {

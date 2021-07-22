@@ -546,8 +546,7 @@ class ToolsFlow: Flow {
             language: primaryLanguage,
             multiplatformParser: MobileContentMultiplatformParser(translationManifestData: primaryTranslationManifest, translationsFileCache: translationsFileCache),
             pageViewFactories: pageViewFactories
-        )
-        */
+        )*/
         
         let primaryRenderer = MobileContentXmlNodeRenderer(
             resource: resource,

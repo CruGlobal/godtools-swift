@@ -17,8 +17,8 @@ protocol PageModelType: BackgroundImageModelType, MobileContentRenderableModel {
     var listeners: [String] { get }
     var textScale: MobileContentTextScale { get }
     var isHidden: Bool { get }
-    var hero: HeroModelType? { get }
-    var callToAction: CallToActionModelType? { get }
+    var hero: HeroModelType? { get } // TODO: Does this need to be exposed? ~Levi
+    var callToAction: CallToActionModelType? { get } // TODO: Does this need to be exposed? ~Levi
     
     func getBackgroundColor() -> MobileContentColor?
     func getCardTextColor() -> MobileContentColor?

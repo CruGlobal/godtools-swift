@@ -1,0 +1,152 @@
+//
+//  MultiplatformTractPage.swift
+//  godtools
+//
+//  Created by Levi Eggert on 7/17/21.
+//  Copyright © 2021 Cru. All rights reserved.
+//
+
+import UIKit
+import GodToolsToolParser
+
+class MultiplatformTractPage: PageModelType {
+    
+    private let tractPage: TractPage
+    
+    let uuid: String = UUID().uuidString
+    
+    required init(tractPage: TractPage) {
+        
+        self.tractPage = tractPage
+    }
+    
+    var backgroundImage: String? {
+        return tractPage.backgroundImage?.name
+    }
+    
+    var backgroundImageAlignments: [MobileContentBackgroundImageAlignment] {
+        
+        // TODO: Not sure this is right? ~ Levi
+        // ImageGravity also supports isCenterX and isCenterY
+        
+        let imageGravity: ImageGravity = tractPage.backgroundImageGravity
+        
+        var alignment: [MobileContentBackgroundImageAlignment] = Array()
+        
+        if imageGravity.isBottom {
+            alignment.append(.bottom)
+        }
+        
+        if imageGravity.isCenter {
+            alignment.append(.center)
+        }
+        
+        if imageGravity.isEnd {
+            alignment.append(.end)
+        }
+        
+        if imageGravity.isStart {
+            alignment.append(.start)
+        }
+        
+        if imageGravity.isTop {
+            alignment.append(.top)
+        }
+            
+        return alignment
+    }
+    
+    var backgroundImageScale: MobileContentBackgroundImageScale {
+        switch tractPage.backgroundImageScaleType {
+        case .fill:
+            return .fill
+        case .fit:
+            return .fit
+        case .fillX:
+            return .fillHorizontally
+        case .fillY:
+            return .fillVertically
+        default:
+            return .fill
+        }
+    }
+    
+    var listeners: [String] {
+        return [] // TODO: Need to set this. ~Levi
+    }
+    
+    var textScale: MobileContentTextScale {
+        return MobileContentTextScale(doubleValue: tractPage.textScale)
+    }
+    
+    var isHidden: Bool {
+        return false // TODO: Need to set this. ~Levi
+    }
+    
+    var hero: HeroModelType? {
+        return nil // TODO: Need to set this. ~Levi
+    }
+    
+    var callToAction: CallToActionModelType? {
+        return nil // TODO: Need to set this. ~Levi
+    }
+    
+    func getBackgroundColor() -> MobileContentColor? {
+        return MobileContentColor(color: tractPage.backgroundColor)
+    }
+    
+    func getCardTextColor() -> MobileContentColor? {
+        return MobileContentColor(color: tractPage.cardTextColor)
+    }
+    
+    func getPrimaryColor() -> MobileContentColor? {
+        return MobileContentColor(color: tractPage.primaryColor)
+    }
+    
+    func getPrimaryTextColor() -> MobileContentColor? {
+        return MobileContentColor(color: tractPage.primaryTextColor)
+    }
+    
+    func getTextColor() -> MobileContentColor? {
+        return MobileContentColor(color: tractPage.textColor)
+    }
+}
+
+// MARK: - MobileContentRenderableModel
+
+extension MultiplatformTractPage {
+    
+    var restrictTo: String? {
+        return nil
+    }
+    
+    var version: String? {
+        return nil
+    }
+    
+    var modelContentIsRenderable: Bool {
+        return true
+    }
+    
+    func getRenderableChildModels() -> [MobileContentRenderableModel] {
+        
+        var childModels: [MobileContentRenderableModel] = Array()
+        
+        if let header = tractPage.header {
+            childModels.append(MultiplatformHeader(header: header))
+        }
+        
+        if let hero = tractPage.hero {
+            childModels.append(MultiplatformHero(hero: hero))
+        }
+        
+        if tractPage.cards.count > 0 {
+            childModels.append(MultiplatformCards(cards: tractPage.cards))
+        }
+        
+        childModels.append(MultiplatformCallToAction(callToAction: tractPage.callToAction))
+        
+        // TODO: Return children to render. ~Levi
+        return childModels
+    }
+}

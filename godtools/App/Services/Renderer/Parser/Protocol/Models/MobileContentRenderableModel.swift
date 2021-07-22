@@ -14,6 +14,8 @@ protocol MobileContentRenderableModel {
     var version: String? { get }
     var modelContentIsRenderable: Bool { get }
     var isRenderable: Bool { get }
+    
+    func getRenderableChildModels() -> [MobileContentRenderableModel]
 }
 
 extension MobileContentRenderableModel {
@@ -44,5 +46,10 @@ extension MobileContentRenderableModel {
     var isRenderable: Bool {
         
         return modelContentIsRenderable && meetsRestrictToTypeForRendering && meetsVersionRequirementForRendering
+    }
+    
+    // TODO: Should I override this here or force concrete types to provide this or can this be shared between xml nodes and multiplatform. ~Levi
+    func getRenderableChildModels() -> [MobileContentRenderableModel] {
+        return Array()
     }
 }
