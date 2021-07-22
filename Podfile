@@ -31,8 +31,7 @@ target 'godtools' do
     pod 'youtube-ios-player-helper', '~> 1.0.3'
     
     # CruGlobal pods
-    #pod 'godtools_tool_parser', '0.1.1-SNAPSHOT'
-    pod 'godtools_tool_parser', :path => '~/Git-Sourcetree/GodToolsParser-KotlinMpp'
+    pod 'godtools_tool_parser', '0.1.1-SNAPSHOT'
     
     # TheKeyOAuthSwift requires dependency GTMAppAuth and pulls the latest version of GTMAppAuth.  Must force GTMAppAuth to version 0.7.0 because the latest version of GTMAppAuth pulls a version of AppAuth that is deprececated in TheKeyOAuthSwift causing errors in TheKeyOAuthSwift.
     pod 'TheKeyOAuthSwift'
