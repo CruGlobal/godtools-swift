@@ -9,12 +9,12 @@
 import Foundation
 import SWXMLHash
 
-struct MobileContentXmlManifestResource: MobileContentManifestResourceType {
+class MobileContentXmlManifestResource: MobileContentManifestResourceType {
     
     let filename: String
     let src: String
     
-    init(resource: XMLIndexer) {
+    required init(resource: XMLIndexer) {
         
         filename = resource.element?.attribute(by: "filename")?.text ?? ""
         src = resource.element?.attribute(by: "src")?.text ?? ""

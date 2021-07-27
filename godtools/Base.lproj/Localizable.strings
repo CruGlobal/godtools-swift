@@ -67,7 +67,7 @@ An online version can be found at https://knowgod.com/";
 "not_every_tool_is_available" = "Not every tool is available in every language";
 
 // Settings
-"settings" = "Settings";
+"settings" = "Menu";
 
 // Alert & Info Controllers
 "download_error" = "Download Error";

@@ -6,81 +6,98 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import SWXMLHash
 
-struct MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
+class MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
         
-    let backgroundColor: String
+    private let backgroundColorString: String
+    private let backgroundImageAlignmentStrings: [String]
+    private let backgroundImageScaleString: String?
+    private let navbarColorString: String?
+    private let navbarControlColorString: String?
+    private let primaryColorString: String
+    private let primaryTextColorString: String
+    private let textColorString: String
+    private let textScaleString: String?
+    
     let backgroundImage: String?
-    let backgroundImageAlign: [String]
-    let backgroundImageScaleType: String
     let categoryLabelColor: String?
     let dismissListeners: [String]
     let locale: String?
-    let navbarColor: String?
-    let navbarControlColor: String?
-    let primaryColor: String
-    let primaryTextColor: String
-    let textColor: String
-    let textScale: String?
     let tool: String?
     let type: String?
     
-    init(manifest: XMLIndexer) {
+    required init(manifest: XMLIndexer) {
         
         let attributes: [String: XMLAttribute] = manifest.element?.allAttributes ?? [:]
         
-        backgroundColor = attributes["background-color"]?.text ?? "rgba(255,255,255,1)"
+        backgroundColorString = attributes["background-color"]?.text ?? "rgba(255,255,255,1)"
         backgroundImage = attributes["background-image"]?.text
-        
-        if let backgroundImageAlignValues = attributes["background-image-align"]?.text, !backgroundImageAlignValues.isEmpty {
-            backgroundImageAlign = backgroundImageAlignValues.components(separatedBy: " ")
-        }
-        else {
-            backgroundImageAlign = [MobileContentBackgroundImageAlignType.center.rawValue]
-        }
-        backgroundImageScaleType = attributes["background-image-scale-type"]?.text ?? MobileContentBackgroundImageScaleType.fill.rawValue
+        backgroundImageAlignmentStrings = attributes["background-image-align"]?.text.components(separatedBy: " ") ?? []
+        backgroundImageScaleString = attributes["background-image-scale-type"]?.text
         categoryLabelColor = attributes["category-label-color"]?.text
         dismissListeners = attributes["dismiss-listeners"]?.text.components(separatedBy: " ") ?? []
         locale = attributes["locale"]?.text
-        navbarColor = attributes["navbar-color"]?.text
-        navbarControlColor = attributes["navbar-control-color"]?.text
-        primaryColor = attributes["primary-color"]?.text ?? "rgba(59,164,219,1)"
-        primaryTextColor = attributes["primary-text-color"]?.text ?? "rgba(255,255,255,1)"
-        textColor = attributes["text-color"]?.text ?? "rgba(90,90,90,1)"
-        textScale = attributes["text-scale"]?.text
+        navbarColorString = attributes["navbar-color"]?.text
+        navbarControlColorString = attributes["navbar-control-color"]?.text
+        primaryColorString = attributes["primary-color"]?.text ?? "rgba(59,164,219,1)"
+        primaryTextColorString = attributes["primary-text-color"]?.text ?? "rgba(255,255,255,1)"
+        textColorString = attributes["text-color"]?.text ?? "rgba(90,90,90,1)"
+        textScaleString = attributes["text-scale"]?.text
         tool = attributes["tool"]?.text
         type = attributes["type"]?.text
     }
     
-    func getBackgroundColor() -> MobileContentRGBAColor {
-        return MobileContentRGBAColor(stringColor: backgroundColor)
+    var backgroundColor: MobileContentColor {
+        return MobileContentColor(stringColor: backgroundColorString)
     }
     
-    func getNavBarColor() -> MobileContentRGBAColor? {
-        if let navBarColor = self.navbarColor {
-            return MobileContentRGBAColor(stringColor: navBarColor)
+    var backgroundImageAlignments: [MobileContentBackgroundImageAlignment] {
+        let backgroundImageAlignments: [MobileContentBackgroundImageAlignment] = backgroundImageAlignmentStrings.compactMap({MobileContentBackgroundImageAlignment(rawValue: $0.lowercased())})
+        if !backgroundImageAlignments.isEmpty {
+            return backgroundImageAlignments
+        }
+        else {
+            return [.center]
+        }
+    }
+    
+    var backgroundImageScale: MobileContentBackgroundImageScale {
+        let defaultValue: MobileContentBackgroundImageScale = .fill
+        guard let backgroundImageScaleString = self.backgroundImageScaleString else {
+            return defaultValue
+        }
+        return MobileContentBackgroundImageScale(rawValue: backgroundImageScaleString) ?? defaultValue
+    }
+    
+    var navbarColor: MobileContentColor? {
+        if let stringColor = self.navbarColorString {
+            return MobileContentColor(stringColor: stringColor)
         }
         return nil
     }
     
-    func getNavBarControlColor() -> MobileContentRGBAColor? {
-        if let navbarControlColor = self.navbarControlColor {
-            return MobileContentRGBAColor(stringColor: navbarControlColor)
+    var navbarControlColor: MobileContentColor? {
+        if let stringColor = self.navbarControlColorString {
+            return MobileContentColor(stringColor: stringColor)
         }
         return nil
     }
     
-    func getPrimaryColor() -> MobileContentRGBAColor {
-        return MobileContentRGBAColor(stringColor: primaryColor)
+    var primaryColor: MobileContentColor {
+        return MobileContentColor(stringColor: primaryColorString)
     }
     
-    func getPrimaryTextColor() -> MobileContentRGBAColor {
-        return MobileContentRGBAColor(stringColor: primaryTextColor)
+    var primaryTextColor: MobileContentColor {
+        return MobileContentColor(stringColor: primaryTextColorString)
     }
     
-    func getTextColor() -> MobileContentRGBAColor {
-        return MobileContentRGBAColor(stringColor: textColor)
+    var textColor: MobileContentColor {
+        return MobileContentColor(stringColor: textColorString)
+    }
+    
+    var textScale: MobileContentTextScale {
+        return MobileContentTextScale(textScaleString: textScaleString)
     }
 }

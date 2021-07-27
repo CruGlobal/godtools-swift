@@ -1,0 +1,34 @@
+//
+//  PageModelType.swift
+//  godtools
+//
+//  Created by Levi Eggert on 7/14/21.
+//  Copyright © 2021 Cru. All rights reserved.
+//
+
+import Foundation
+
+protocol PageModelType: BackgroundImageModelType, MobileContentRenderableModel {
+        
+    var uuid: String { get }
+    var backgroundImage: String? { get }
+    var backgroundImageAlignments: [MobileContentBackgroundImageAlignment] { get }
+    var backgroundImageScale: MobileContentBackgroundImageScale { get }
+    var listeners: [String] { get }
+    var textScale: MobileContentTextScale { get }
+    var isHidden: Bool { get }
+    var hero: HeroModelType? { get } // TODO: Does this need to be exposed? ~Levi
+    var callToAction: CallToActionModelType? { get } // TODO: Does this need to be exposed? ~Levi
+    
+    func getBackgroundColor() -> MobileContentColor?
+    func getCardTextColor() -> MobileContentColor?
+    func getPrimaryColor() -> MobileContentColor?
+    func getPrimaryTextColor() -> MobileContentColor?
+    func getTextColor() -> MobileContentColor?
+}
+
+extension PageModelType {
+    var modelContentIsRenderable: Bool {
+        return true
+    }
+}

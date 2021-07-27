@@ -8,18 +8,18 @@
 
 import UIKit
 
-class ManifestResourcesCache {
+class ManifestResourcesCache: ManifestResourcesCacheType {
     
-    private let manifest: MobileContentXmlManifest
+    private let manifest: MobileContentManifestType
     private let translationsFileCache: TranslationsFileCache
     
-    required init(manifest: MobileContentXmlManifest, translationsFileCache: TranslationsFileCache) {
+    required init(manifest: MobileContentManifestType, translationsFileCache: TranslationsFileCache) {
         
         self.manifest = manifest
         self.translationsFileCache = translationsFileCache
     }
     
-    func getImage(resource: String) -> UIImage? {
+    func getImageFromManifestResources(resource: String) -> UIImage? {
         
         guard let resourceSrc = manifest.resources[resource]?.src else {
             return nil

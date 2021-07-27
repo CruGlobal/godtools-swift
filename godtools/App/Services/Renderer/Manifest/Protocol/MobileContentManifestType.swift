@@ -12,15 +12,10 @@ protocol MobileContentManifestType {
     
     typealias TipId = String
     typealias ResourceFilename = String
-    
-    associatedtype MobileContentManifestAttributes: MobileContentManifestAttributesType
-    associatedtype MobileContentManifestPage: MobileContentManifestPageType
-    associatedtype MobileContentManifestTip: MobileContentManifestTipType
-    associatedtype MobileContentManifestResource: MobileContentManifestResourceType
-    
-    var attributes: MobileContentManifestAttributes { get }
+        
+    var attributes: MobileContentManifestAttributesType { get }
     var title: String? { get }
-    var pages: [MobileContentManifestPage] { get }
-    var tips: [TipId: MobileContentManifestTip] { get }
-    var resources: [ResourceFilename: MobileContentManifestResource] { get }
+    var pages: [MobileContentManifestPageType] { get }
+    var tips: [TipId: MobileContentManifestTipType] { get }
+    var resources: [ResourceFilename: MobileContentManifestResourceType] { get }
 }

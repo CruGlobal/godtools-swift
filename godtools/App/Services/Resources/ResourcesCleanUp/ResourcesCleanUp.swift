@@ -36,22 +36,25 @@ class ResourcesCleanUp {
     
     func bulkDeleteResourcesIfNeeded(realm: Realm, cacheResult: ResourcesCacheResult) {
         
+        // TODO: Need to finish resources clean up.  Currently only languages are cleaned up. ~Levi
+        
         print("\nResourcesCleanUp: bulkDeleteResourcesIfNeeded()")
         
+        /*
         translationsFileCache.bulkDeleteTranslationZipFiles(
             realm: realm,
             resourceIds: cacheResult.resourceIdsRemoved,
             languageIds: cacheResult.languageIdsRemoved,
             translationIds: cacheResult.translationIdsRemoved
-        )
+        )*/
 
-        resourcesSHA256FileCache.deleteUnusedSHA256ResourceFiles(realm: realm)
+        //resourcesSHA256FileCache.deleteUnusedSHA256ResourceFiles(realm: realm)
 
-        favoritedResourcesCache.bulkDeleteFavoritedResources(realm: realm, resourceIds: cacheResult.resourceIdsRemoved)
+        //favoritedResourcesCache.bulkDeleteFavoritedResources(realm: realm, resourceIds: cacheResult.resourceIdsRemoved)
 
         downloadedLanguagesCache.bulkDeleteDownloadedLanguages(realm: realm, languageIds: cacheResult.languageIdsRemoved)
         
-        translationsFileCache.deleteUnusedTranslationZipFiles(realm: realm)
+        //translationsFileCache.deleteUnusedTranslationZipFiles(realm: realm)
         
         print("   total realm translation zip files: \(realm.objects(RealmTranslationZipFile.self).count)")
         print("   total realm sha256 resource files: \(realm.objects(RealmSHA256File.self).count)")

@@ -111,14 +111,15 @@ class InitialDataDownloader: NSObject {
                         
                         self?.initialDeviceResourcesLoader.choosePrimaryLanguageIfNeeded(realm: realm)
                         
+                        self?.checkForParallelLanguageDeletedAndClearFromSettings(realm: realm)
+                        
                         self?.handleDownloadInitialDataCompleted(error: nil)
                         
                         self?.downloadLatestAttachments(resourcesCacheResult: resourcesCacheResult)
                         
                         self?.downloadLatestTranslations(realm: realm)
                         
-                        // TODO: Will need to implement clean up of resources. ~Levi
-                        //self?.resourcesCleanUp.bulkDeleteResourcesIfNeeded(realm: realm, cacheResult: resourcesCacheResult)
+                        self?.resourcesCleanUp.bulkDeleteResourcesIfNeeded(realm: realm, cacheResult: resourcesCacheResult)
                         
                     case .failure(let cacheError):
                         self?.handleDownloadInitialDataCompleted(error: .failedToCacheResources(error: cacheError))
@@ -151,6 +152,20 @@ class InitialDataDownloader: NSObject {
         let downloadTranslationsReceipts: DownloadResourceTranslationsReceipts = favoritedResourceTranslationDownloader.downloadAllDownloadedLanguagesTranslationsForAllFavoritedResources(realm: realm)
         
         latestTranslationsDownload.accept(value: downloadTranslationsReceipts)
+    }
+    
+    private func checkForParallelLanguageDeletedAndClearFromSettings(realm: Realm) {
+        
+        guard let settingsParallelLanguageId = languageSettingsCache.parallelLanguageId.value, !settingsParallelLanguageId.isEmpty else {
+            return
+        }
+        
+        let cachedParallelLanguage: RealmLanguage? = languagesCache.getLanguage(realm: realm, id: settingsParallelLanguageId)
+        let parallelLanguageRemoved: Bool = cachedParallelLanguage == nil
+        
+        if parallelLanguageRemoved {
+            languageSettingsCache.deleteParallelLanguageId()
+        }
     }
 }
 

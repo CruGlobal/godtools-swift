@@ -1,0 +1,57 @@
+//
+//  MultiplatformContentLink.swift
+//  godtools
+//
+//  Created by Levi Eggert on 7/21/21.
+//  Copyright © 2021 Cru. All rights reserved.
+//
+
+import Foundation
+import GodToolsToolParser
+
+class MultiplatformContentLink: ContentLinkModelType {
+    
+    private let link: Link
+    
+    required init(link: Link) {
+        
+        self.link = link
+    }
+    
+    var events: [String] {
+        return [] // TODO: Set this. ~Levi
+    }
+    
+    var text: String? {
+        return link.text?.text
+    }
+    
+    func getTextColor() -> MobileContentColor? {
+        return MobileContentColor(color: link.textColor)
+    }
+    
+    func getAnalyticsEvents() -> [AnalyticsEventModelType] {
+        return [] // TODO: Set this. ~Levi
+    }
+}
+
+// MARK: - MobileContentRenderableModel
+
+extension MultiplatformContentLink {
+    
+    var restrictTo: String? {
+        return nil
+    }
+    
+    var version: String? {
+        return nil
+    }
+    
+    var modelContentIsRenderable: Bool {
+        return true
+    }
+    
+    func getRenderableChildModels() -> [MobileContentRenderableModel] {
+        return Array()
+    }
+}
