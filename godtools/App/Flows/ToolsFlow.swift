@@ -8,13 +8,16 @@
 
 import UIKit
 
-class ToolsFlow: Flow {
+class ToolsFlow: NSObject, Flow {
     
     private static let defaultStartingToolsMenu: ToolsMenuToolbarView.ToolbarItemView = .favoritedTools
+    
+    private let deepLinkingService: DeepLinkingServiceType
     
     private var articleToolFlow: ArticleToolFlow?
     private var shareToolMenuFlow: ShareToolMenuFlow?
     private var learnToShareToolFlow: LearnToShareToolFlow?
+    private var presentingToolsFlow: ToolsFlow?
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -27,6 +30,9 @@ class ToolsFlow: Flow {
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
+        self.deepLinkingService = appDiContainer.getDeepLinkingService()
+        
+        super.init()
         
         let viewModel = ToolsMenuViewModel(
             flowDelegate: self,
@@ -47,10 +53,25 @@ class ToolsFlow: Flow {
         )
         
         navigationController.setViewControllers([view], animated: false)
+        
+        addDeepLinkingObserver()
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+        deepLinkingService.completed.removeObserver(self)
+    }
+    
+    private func addDeepLinkingObserver() {
+        
+        deepLinkingService.completed.addObserver(self) { [weak self] (parsedDeepLink: ParsedDeepLinkType?) in
+            
+            guard let deepLink = parsedDeepLink else {
+                return
+            }
+            
+            self?.navigate(step: .deepLink(deepLinkType: deepLink))
+        }
     }
     
     func navigate(step: FlowStep) {
@@ -202,6 +223,47 @@ class ToolsFlow: Flow {
             
         case .urlLinkTappedFromToolDetail(let url, let exitLink):
             navigateToURL(url: url, exitLink: exitLink)
+            
+        case .deepLink(let deepLink):
+            
+            switch deepLink {
+            
+            case .allToolsList:
+                break
+            
+            case .article(let articleURI):
+                break
+            
+            case .tool(let resourceAbbreviation, let primaryLanguageCodes, let parallelLanguageCodes, let liveShareStream, let page):
+                
+                guard let toolDeepLinkData = getDataForToolDeepLink(
+                    dataDownloader: appDiContainer.initialDataDownloader,
+                    resourceAbbreviation: resourceAbbreviation,
+                    primaryLanguageCodes: primaryLanguageCodes,
+                    parallelLanguageCodes: parallelLanguageCodes
+                ) else {
+                    return
+                }
+                
+                print("Present tool...")
+                
+                let toolsFlow = ToolsFlow(
+                    flowDelegate: self,
+                    appDiContainer: appDiContainer,
+                    sharedNavigationController: UINavigationController(),
+                    startingToolbarItem: nil
+                )
+                
+                self.presentingToolsFlow = toolsFlow
+                
+                navigationController.present(toolsFlow.navigationController, animated: true, completion: nil)
+                
+            case .favoritedToolsList:
+                break
+                
+            case .lessonsList:
+                break
+            }
             
         default:
             break
@@ -537,7 +599,8 @@ class ToolsFlow: Flow {
             type: .tract,
             flowDelegate: self,
             appDiContainer: appDiContainer,
-            trainingTipsEnabled: trainingTipsEnabled
+            trainingTipsEnabled: trainingTipsEnabled,
+            toolsFlowDeepLinkingService: deepLinkingService
         )
           
         /*
@@ -613,7 +676,8 @@ class ToolsFlow: Flow {
             type: .trainingTip,
             flowDelegate: self,
             appDiContainer: appDiContainer,
-            trainingTipsEnabled: false
+            trainingTipsEnabled: false,
+            toolsFlowDeepLinkingService: deepLinkingService
         )
                 
         let renderer = MobileContentXmlNodeRenderer(
@@ -644,7 +708,8 @@ class ToolsFlow: Flow {
             type: .lesson,
             flowDelegate: self,
             appDiContainer: appDiContainer,
-            trainingTipsEnabled: trainingTipsEnabled
+            trainingTipsEnabled: trainingTipsEnabled,
+            toolsFlowDeepLinkingService: deepLinkingService
         )
         
         let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache

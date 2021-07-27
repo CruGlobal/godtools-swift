@@ -74,7 +74,7 @@ class AppsFlyer: NSObject, AppsFlyerType {
 extension AppsFlyer: AppsFlyerLibDelegate {
     func onAppOpenAttribution(_ data: [AnyHashable : Any]) {
         
-        deepLinkingService.parseDeepLink(incomingDeepLink: .appsFlyer(data: data))
+        deepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .appsFlyer(data: data))
     }
     
     func onAppOpenAttributionFailure(_ error: Error) {
@@ -83,7 +83,7 @@ extension AppsFlyer: AppsFlyerLibDelegate {
     
     func onConversionDataSuccess(_ data: [AnyHashable : Any]) {
         
-        deepLinkingService.parseDeepLink(incomingDeepLink: .appsFlyer(data: data))
+        deepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .appsFlyer(data: data))
     }
     
     func onConversionDataFail(_ error: Error) {

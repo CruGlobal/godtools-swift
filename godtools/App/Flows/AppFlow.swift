@@ -190,29 +190,19 @@ class AppFlow: NSObject, Flow {
             
             case .tool(let resourceAbbreviation, let primaryLanguageCodes, let parallelLanguageCodes, let liveShareStream, let page):
                 
-                guard let resource = dataDownloader.resourcesCache.getResource(abbreviation: resourceAbbreviation) else {
+                guard let toolDeepLinkData = getDataForToolDeepLink(
+                        dataDownloader: dataDownloader,
+                        resourceAbbreviation: resourceAbbreviation,
+                        primaryLanguageCodes: primaryLanguageCodes,
+                        parallelLanguageCodes: parallelLanguageCodes
+                ) else {
+                    
                     return
                 }
-                
-                var fetchedPrimaryLanguage: LanguageModel?
-                
-                if let primaryLanguageFromCodes = dataDownloader.fetchFirstSupportedLanguageForResource(resource: resource, codes: primaryLanguageCodes) {
-                    fetchedPrimaryLanguage = primaryLanguageFromCodes
-                } else if let primaryLanguageFromSettings = appDiContainer.languageSettingsService.primaryLanguage.value {
-                    fetchedPrimaryLanguage = primaryLanguageFromSettings
-                } else {
-                    fetchedPrimaryLanguage = dataDownloader.getStoredLanguage(code: "en")
-                }
-                
-                guard let primaryLanguage = fetchedPrimaryLanguage else {
-                    return
-                }
-                
-                let parallelLanguage = dataDownloader.fetchFirstSupportedLanguageForResource(resource: resource, codes: parallelLanguageCodes)
-                
+                                
                 let startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView?
                 
-                if resource.resourceTypeEnum == .lesson {
+                if toolDeepLinkData.resource.resourceTypeEnum == .lesson {
                     startingToolbarItem = .lessons
                 }
                 else {
@@ -222,9 +212,9 @@ class AppFlow: NSObject, Flow {
                 resetFlowToToolsFlow(startingToolbarItem: startingToolbarItem)
                 
                 toolsFlow?.navigateToTool(
-                    resource: resource,
-                    primaryLanguage: primaryLanguage,
-                    parallelLanguage: parallelLanguage,
+                    resource: toolDeepLinkData.resource,
+                    primaryLanguage: toolDeepLinkData.primaryLanguage,
+                    parallelLanguage: toolDeepLinkData.parallelLanguage,
                     liveShareStream: liveShareStream,
                     trainingTipsEnabled: false,
                     page: page

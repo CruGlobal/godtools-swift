@@ -171,10 +171,7 @@ class AppDiContainer {
             determineNewUser: DetermineNewUserIfPrimaryLanguageSet(languageSettingsCache: languageSettingsCache)
         )
         
-        sharedDeepLinkingService = DeepLinkingService(
-            deepLinkParsers: [ToolDeepLinkParser(), ToolsDeepLinkParser(), LessonDeepLinkParser(), LessonsDeepLinkParser(), ArticleDeepLinkParser()],
-            loggingEnabled: config.isDebug
-        )
+        sharedDeepLinkingService = AppDiContainer.getNewDeepLinkingService(loggingEnabled: config.isDebug)
         
         appsFlyer = AppsFlyer(config: config, deepLinkingService: sharedDeepLinkingService)
         
@@ -214,6 +211,13 @@ class AppDiContainer {
         emailSignUpService = EmailSignUpService(sharedSession: sharedIgnoringCacheSession, realmDatabase: realmDatabase, userAuthentication: userAuthentication)
     }
     
+    private static func getNewDeepLinkingService(loggingEnabled: Bool) -> DeepLinkingServiceType {
+        return DeepLinkingService(
+            deepLinkParsers: [ToolDeepLinkParser(), ToolsDeepLinkParser(), LessonDeepLinkParser(), LessonsDeepLinkParser(), ArticleDeepLinkParser()],
+            loggingEnabled: loggingEnabled
+        )
+    }
+    
     func getArticleAemRepository() -> ArticleAemRepository {
         return ArticleAemRepository(
             downloader: ArticleAemDownloader(sharedSession: sharedIgnoringCacheSession),
@@ -231,6 +235,10 @@ class AppDiContainer {
     
     func getCardJumpService() -> CardJumpService {
         return CardJumpService(cardJumpCache: CardJumpUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache))
+    }
+    
+    func getDeepLinkingService() -> DeepLinkingServiceType {
+        return AppDiContainer.getNewDeepLinkingService(loggingEnabled: false)
     }
     
     func getFirebaseDebugArguments() -> FirebaseDebugArguments {

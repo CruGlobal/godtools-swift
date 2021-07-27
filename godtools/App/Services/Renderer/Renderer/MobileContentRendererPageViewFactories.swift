@@ -12,7 +12,7 @@ class MobileContentRendererPageViewFactories {
     
     let factories: [MobileContentPageViewFactoryType]
     
-    required init(type: MobileContentRendererPageViewFactoriesType, flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, trainingTipsEnabled: Bool) {
+    required init(type: MobileContentRendererPageViewFactoriesType, flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, trainingTipsEnabled: Bool, toolsFlowDeepLinkingService: DeepLinkingServiceType) {
         
         var pageViewFactories: [MobileContentPageViewFactoryType] = Array()
         
@@ -25,7 +25,7 @@ class MobileContentRendererPageViewFactories {
         let localizationServices: LocalizationServices = appDiContainer.localizationServices
         let followUpsService: FollowUpsService = appDiContainer.followUpsService
         let cardJumpService: CardJumpService = appDiContainer.getCardJumpService()
-        let deepLinkService: DeepLinkingServiceType = appDiContainer.sharedDeepLinkingService
+        let deepLinkService: DeepLinkingServiceType = toolsFlowDeepLinkingService
                 
         switch type {
         
