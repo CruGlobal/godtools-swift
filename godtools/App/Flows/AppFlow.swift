@@ -41,7 +41,7 @@ class AppFlow: NSObject, Flow {
         self.dataDownloader = appDiContainer.initialDataDownloader
         self.followUpsService = appDiContainer.followUpsService
         self.viewsService = appDiContainer.viewsService
-        self.deepLinkingService = appDiContainer.deepLinkingService
+        self.deepLinkingService = appDiContainer.sharedDeepLinkingService
         
         super.init()
         

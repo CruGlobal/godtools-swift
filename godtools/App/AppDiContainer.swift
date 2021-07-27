@@ -56,7 +56,7 @@ class AppDiContainer {
     let followUpsService: FollowUpsService
     let viewsService: ViewsService
     let shortcutItemsService: ShortcutItemsService
-    let deepLinkingService: DeepLinkingServiceType
+    let sharedDeepLinkingService: DeepLinkingServiceType
     let deviceAttachmentBanners: DeviceAttachmentBanners = DeviceAttachmentBanners()
     let favoritingToolMessageCache: FavoritingToolMessageCache
     let emailSignUpService: EmailSignUpService
@@ -171,12 +171,12 @@ class AppDiContainer {
             determineNewUser: DetermineNewUserIfPrimaryLanguageSet(languageSettingsCache: languageSettingsCache)
         )
         
-        deepLinkingService = DeepLinkingService(
+        sharedDeepLinkingService = DeepLinkingService(
             deepLinkParsers: [ToolDeepLinkParser(), ToolsDeepLinkParser(), LessonDeepLinkParser(), LessonsDeepLinkParser(), ArticleDeepLinkParser()],
             loggingEnabled: config.isDebug
         )
         
-        appsFlyer = AppsFlyer(config: config, deepLinkingService: deepLinkingService)
+        appsFlyer = AppsFlyer(config: config, deepLinkingService: sharedDeepLinkingService)
         
         firebaseInAppMessaging = FirebaseInAppMessaging()
                 

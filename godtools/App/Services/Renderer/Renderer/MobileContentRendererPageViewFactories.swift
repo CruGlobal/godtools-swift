@@ -25,7 +25,7 @@ class MobileContentRendererPageViewFactories {
         let localizationServices: LocalizationServices = appDiContainer.localizationServices
         let followUpsService: FollowUpsService = appDiContainer.followUpsService
         let cardJumpService: CardJumpService = appDiContainer.getCardJumpService()
-        let deepLinkService: DeepLinkingServiceType = appDiContainer.deepLinkingService
+        let deepLinkService: DeepLinkingServiceType = appDiContainer.sharedDeepLinkingService
                 
         switch type {
         
