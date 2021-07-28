@@ -75,8 +75,11 @@ class TractFlow: Flow {
             renderers.append(parallelRenderer)
         }
         
+        let parentFlowIsHomeFlow: Bool = flowDelegate is ToolsFlow
+        
         let viewModel = ToolViewModel(
             flowDelegate: self,
+            backButtonImageType: (parentFlowIsHomeFlow) ? .home : .backArrow,
             renderers: renderers,
             resource: resource,
             primaryLanguage: primaryLanguage,
