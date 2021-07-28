@@ -33,7 +33,7 @@ class ToolsFlow: ToolNavigationFlow, Flow {
         self.navigationController = sharedNavigationController
         self.dataDownloader = appDiContainer.initialDataDownloader
                 
-        configureNavigationBar()
+        configureNavigationBar(shouldAnimateNavigationBarHiddenState: false)
         
         let viewModel = ToolsMenuViewModel(
             flowDelegate: self,
@@ -56,12 +56,12 @@ class ToolsFlow: ToolNavigationFlow, Flow {
         navigationController.setViewControllers([view], animated: false)
     }
     
-    private func configureNavigationBar() {
+    private func configureNavigationBar(shouldAnimateNavigationBarHiddenState: Bool) {
                 
         let fontService: FontService = appDiContainer.getFontService()
         let font: UIFont = fontService.getFont(size: 17, weight: .semibold)
         
-        navigationController.setNavigationBarHidden(false, animated: true)
+        navigationController.setNavigationBarHidden(false, animated: shouldAnimateNavigationBarHiddenState)
         navigationController.navigationBar.setBackgroundImage(nil, for: .default)
         navigationController.navigationBar.isTranslucent = false
         navigationController.navigationBar.barTintColor = ColorPalette.gtBlue.color
@@ -187,7 +187,7 @@ class ToolsFlow: ToolNavigationFlow, Flow {
             }
             
             _ = navigationController.popViewController(animated: true)
-            configureNavigationBar()
+            configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
             
             articleFlow = nil
             
@@ -198,7 +198,7 @@ class ToolsFlow: ToolNavigationFlow, Flow {
             }
             
             _ = navigationController.popViewController(animated: true)
-            configureNavigationBar()
+            configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
             
             lessonFlow = nil
             
@@ -209,7 +209,7 @@ class ToolsFlow: ToolNavigationFlow, Flow {
             }
             
             _ = navigationController.popViewController(animated: true)
-            configureNavigationBar()
+            configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
             
             tractFlow = nil
             

@@ -242,8 +242,6 @@ class AppFlow: NSObject, Flow {
         
         case .showTools(let animated, let shouldCreateNewInstance, let startingToolbarItem):
             
-            navigationController.setNavigationBarHidden(false, animated: false)
-
             if shouldCreateNewInstance || toolsFlow == nil {
 
                 let toolsFlow: ToolsFlow = ToolsFlow(
