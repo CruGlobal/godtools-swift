@@ -88,7 +88,7 @@ class AppFlow: NSObject, Flow {
     }
     
     private func resetFlowToToolsFlow(startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView?) {
-        configureNavigationBar()
+
         closeMenu(animated: false)
         navigationController.dismiss(animated: false, completion: nil)
         navigationController.setViewControllers([], animated: false)
@@ -188,21 +188,31 @@ class AppFlow: NSObject, Flow {
             
             switch deepLink {
             
-            case .tool(let resourceAbbreviation, let primaryLanguageCodes, let parallelLanguageCodes, let liveShareStream, let page):
-                
-                guard let toolDeepLinkData = getDataForToolDeepLink(
-                        dataDownloader: dataDownloader,
-                        resourceAbbreviation: resourceAbbreviation,
-                        primaryLanguageCodes: primaryLanguageCodes,
-                        parallelLanguageCodes: parallelLanguageCodes
-                ) else {
-                    
+            case .tool(let toolDeepLink):
+                               
+                guard let resource = dataDownloader.resourcesCache.getResource(abbreviation: toolDeepLink.resourceAbbreviation) else {
                     return
                 }
-                                
+                
+                var fetchedPrimaryLanguage: LanguageModel?
+                
+                if let primaryLanguageFromCodes = dataDownloader.fetchFirstSupportedLanguageForResource(resource: resource, codes: toolDeepLink.primaryLanguageCodes) {
+                    fetchedPrimaryLanguage = primaryLanguageFromCodes
+                } else if let primaryLanguageFromSettings = appDiContainer.languageSettingsService.primaryLanguage.value {
+                    fetchedPrimaryLanguage = primaryLanguageFromSettings
+                } else {
+                    fetchedPrimaryLanguage = dataDownloader.getStoredLanguage(code: "en")
+                }
+                
+                guard let primaryLanguage = fetchedPrimaryLanguage else {
+                    return
+                }
+                
+                let parallelLanguage = dataDownloader.fetchFirstSupportedLanguageForResource(resource: resource, codes: toolDeepLink.parallelLanguageCodes)
+                
                 let startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView?
                 
-                if toolDeepLinkData.resource.resourceTypeEnum == .lesson {
+                if resource.resourceTypeEnum == .lesson {
                     startingToolbarItem = .lessons
                 }
                 else {
@@ -212,12 +222,12 @@ class AppFlow: NSObject, Flow {
                 resetFlowToToolsFlow(startingToolbarItem: startingToolbarItem)
                 
                 toolsFlow?.navigateToTool(
-                    resource: toolDeepLinkData.resource,
-                    primaryLanguage: toolDeepLinkData.primaryLanguage,
-                    parallelLanguage: toolDeepLinkData.parallelLanguage,
-                    liveShareStream: liveShareStream,
+                    resource: resource,
+                    primaryLanguage: primaryLanguage,
+                    parallelLanguage: parallelLanguage,
+                    liveShareStream: toolDeepLink.liveShareStream,
                     trainingTipsEnabled: false,
-                    page: page
+                    page: toolDeepLink.page
                 )
             
             case .article(let articleUri):
@@ -249,8 +259,6 @@ class AppFlow: NSObject, Flow {
         case .showTools(let animated, let shouldCreateNewInstance, let startingToolbarItem):
             
             navigationController.setNavigationBarHidden(false, animated: false)
-
-            configureNavigationBar()
 
             if shouldCreateNewInstance || toolsFlow == nil {
 
@@ -329,47 +337,12 @@ class AppFlow: NSObject, Flow {
             )
             
             self.languageSettingsFlow = languageSettingsFlow
-                   
-        case .homeTappedFromTool(let isScreenSharing):
-            
-            if isScreenSharing {
-                
-                let acceptHandler = CallbackHandler { [weak self] in
-                    self?.closeTool()
-                }
-                
-                let localizationServices: LocalizationServices = appDiContainer.localizationServices
-                                
-                let viewModel = AlertMessageViewModel(
-                    title: nil,
-                    message: localizationServices.stringForMainBundle(key: "exit_tract_remote_share_session.message"),
-                    cancelTitle: localizationServices.stringForMainBundle(key: "no").uppercased(),
-                    acceptTitle: localizationServices.stringForMainBundle(key: "yes").uppercased(),
-                    acceptHandler: acceptHandler
-                )
-                
-                let view = AlertMessageView(viewModel: viewModel)
-                
-                navigationController.present(view.controller, animated: true, completion: nil)
-            }
-            else {
-                
-                closeTool()
-            }
-            
-        case .closeTappedFromLesson:
-            closeTool()
-            
+                        
         default:
             break
         }
     }
-    
-    private func closeTool() {
-        _ = navigationController.popToRootViewController(animated: true)
-        configureNavigationBar()
-    }
-    
+        
     private func dismissTutorial() {
         closeMenu(animated: true)
         navigate(step: .showTools(animated: false, shouldCreateNewInstance: false, startingToolbarItem: nil))
@@ -434,26 +407,6 @@ class AppFlow: NSObject, Flow {
                 self.menuFlow = nil
             }
         }
-    }
-        
-    // MARK: - Navigation Bar
-    
-    private func configureNavigationBar() {
-                
-        let fontService: FontService = appDiContainer.getFontService()
-        let font: UIFont = fontService.getFont(size: 17, weight: .semibold)
-        
-        navigationController.setNavigationBarHidden(false, animated: true)
-        navigationController.navigationBar.setBackgroundImage(nil, for: .default)
-        navigationController.navigationBar.isTranslucent = false
-        navigationController.navigationBar.barTintColor = ColorPalette.gtBlue.color
-        navigationController.navigationBar.tintColor = .white
-        navigationController.navigationBar.shadowImage = UIImage()
-        
-        navigationController.navigationBar.titleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.white,
-            NSAttributedString.Key.font: font
-        ]
     }
 }
 

@@ -12,7 +12,7 @@ class MobileContentRendererPageViewFactories {
     
     let factories: [MobileContentPageViewFactoryType]
     
-    required init(type: MobileContentRendererPageViewFactoriesType, flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, trainingTipsEnabled: Bool, toolsFlowDeepLinkingService: DeepLinkingServiceType) {
+    required init(type: MobileContentRendererPageViewFactoriesType, flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, trainingTipsEnabled: Bool, deepLinkingService: DeepLinkingServiceType) {
         
         var pageViewFactories: [MobileContentPageViewFactoryType] = Array()
         
@@ -25,7 +25,6 @@ class MobileContentRendererPageViewFactories {
         let localizationServices: LocalizationServices = appDiContainer.localizationServices
         let followUpsService: FollowUpsService = appDiContainer.followUpsService
         let cardJumpService: CardJumpService = appDiContainer.getCardJumpService()
-        let deepLinkService: DeepLinkingServiceType = toolsFlowDeepLinkingService
                 
         switch type {
         
@@ -33,7 +32,7 @@ class MobileContentRendererPageViewFactories {
             
             let lessonPageViewFactory = LessonPageViewFactory(
                 flowDelegate: flowDelegate,
-                deepLinkService: deepLinkService,
+                deepLinkService: deepLinkingService,
                 analytics: analytics
             )
             
@@ -48,7 +47,7 @@ class MobileContentRendererPageViewFactories {
                 translationsFileCache: translationsFileCache,
                 mobileContentNodeParser: mobileContentNodeParser,
                 viewedTrainingTipsService: viewedTrainingTipsService,
-                deepLinkService: deepLinkService,
+                deepLinkService: deepLinkingService,
                 trainingTipsEnabled: trainingTipsEnabled
             )
             
@@ -57,7 +56,7 @@ class MobileContentRendererPageViewFactories {
                 translationsFileCache: translationsFileCache,
                 mobileContentNodeParser: mobileContentNodeParser,
                 viewedTrainingTipsService: viewedTrainingTipsService,
-                deepLinkService: deepLinkService,
+                deepLinkService: deepLinkingService,
                 trainingTipsEnabled: trainingTipsEnabled
             )
             
@@ -76,7 +75,7 @@ class MobileContentRendererPageViewFactories {
                 translationsFileCache: translationsFileCache,
                 mobileContentNodeParser: mobileContentNodeParser,
                 viewedTrainingTipsService: viewedTrainingTipsService,
-                deepLinkService: deepLinkService,
+                deepLinkService: deepLinkingService,
                 trainingTipsEnabled: trainingTipsEnabled
             )
             
@@ -85,7 +84,7 @@ class MobileContentRendererPageViewFactories {
                 translationsFileCache: translationsFileCache,
                 mobileContentNodeParser: mobileContentNodeParser,
                 viewedTrainingTipsService: viewedTrainingTipsService,
-                deepLinkService: deepLinkService,
+                deepLinkService: deepLinkingService,
                 trainingTipsEnabled: trainingTipsEnabled
             )
             
@@ -98,7 +97,7 @@ class MobileContentRendererPageViewFactories {
                 translationsFileCache: translationsFileCache,
                 mobileContentNodeParser: mobileContentNodeParser,
                 viewedTrainingTipsService: viewedTrainingTipsService,
-                deepLinkService: deepLinkService,
+                deepLinkService: deepLinkingService,
                 trainingTipsEnabled: false
             )
             

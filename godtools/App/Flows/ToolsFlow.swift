@@ -8,16 +8,16 @@
 
 import UIKit
 
-class ToolsFlow: NSObject, Flow {
+class ToolsFlow: Flow {
     
     private static let defaultStartingToolsMenu: ToolsMenuToolbarView.ToolbarItemView = .favoritedTools
-    
-    private let deepLinkingService: DeepLinkingServiceType
+        
+    private let dataDownloader: InitialDataDownloader
     
     private var articleToolFlow: ArticleToolFlow?
-    private var shareToolMenuFlow: ShareToolMenuFlow?
+    private var lessonFlow: LessonFlow?
+    private var tractFlow: TractFlow?
     private var learnToShareToolFlow: LearnToShareToolFlow?
-    private var presentingToolsFlow: ToolsFlow?
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -30,9 +30,9 @@ class ToolsFlow: NSObject, Flow {
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
-        self.deepLinkingService = appDiContainer.getDeepLinkingService()
-        
-        super.init()
+        self.dataDownloader = appDiContainer.initialDataDownloader
+                
+        configureNavigationBar()
         
         let viewModel = ToolsMenuViewModel(
             flowDelegate: self,
@@ -53,30 +53,32 @@ class ToolsFlow: NSObject, Flow {
         )
         
         navigationController.setViewControllers([view], animated: false)
-        
-        addDeepLinkingObserver()
     }
     
-    deinit {
-        print("x deinit: \(type(of: self))")
-        deepLinkingService.completed.removeObserver(self)
-    }
-    
-    private func addDeepLinkingObserver() {
+    private func configureNavigationBar() {
+                
+        let fontService: FontService = appDiContainer.getFontService()
+        let font: UIFont = fontService.getFont(size: 17, weight: .semibold)
         
-        deepLinkingService.completed.addObserver(self) { [weak self] (parsedDeepLink: ParsedDeepLinkType?) in
-            
-            guard let deepLink = parsedDeepLink else {
-                return
-            }
-            
-            self?.navigate(step: .deepLink(deepLinkType: deepLink))
-        }
+        navigationController.setNavigationBarHidden(false, animated: true)
+        navigationController.navigationBar.setBackgroundImage(nil, for: .default)
+        navigationController.navigationBar.isTranslucent = false
+        navigationController.navigationBar.barTintColor = ColorPalette.gtBlue.color
+        navigationController.navigationBar.tintColor = .white
+        navigationController.navigationBar.shadowImage = UIImage()
+        
+        navigationController.navigationBar.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.white,
+            NSAttributedString.Key.font: font
+        ]
     }
     
     func navigate(step: FlowStep) {
         
         switch step {
+        
+        case .openTutorialTapped:
+            flowDelegate?.navigate(step: .openTutorialTapped)
            
         case .menuTappedFromTools:
             flowDelegate?.navigate(step: .showMenu)
@@ -87,11 +89,15 @@ class ToolsFlow: NSObject, Flow {
         case .lessonTappedFromLessonsList(let resource):
             navigateToTool(resource: resource, trainingTipsEnabled: false)
             
-        case .closeTappedFromLesson:
-            flowDelegate?.navigate(step: .closeTappedFromLesson)
+        case .lessonFlowCompleted(let state):
             
-        case .openTutorialTapped:
-            flowDelegate?.navigate(step: .openTutorialTapped)
+            switch state {
+            case .userClosedLesson:
+                break
+            }
+            
+            _ = navigationController.popViewController(animated: true)
+            configureNavigationBar()
             
         case .toolTappedFromFavoritedTools(let resource):
             navigateToTool(resource: resource, trainingTipsEnabled: false)
@@ -143,50 +149,26 @@ class ToolsFlow: NSObject, Flow {
             
         case .aboutToolTappedFromAllTools(let resource):
             navigateToToolDetail(resource: resource)
-            
-        case .homeTappedFromTool(let isScreenSharing):
-            flowDelegate?.navigate(step: .homeTappedFromTool(isScreenSharing: isScreenSharing))
-            
-        case .shareMenuTappedFromTool(let tractRemoteShareSubscriber, let tractRemoteSharePublisher, let resource, let selectedLanguage, let primaryLanguage, let parallelLanguage, let pageNumber):
-            
-            let shareToolMenuFlow = ShareToolMenuFlow(
-                flowDelegate: self,
-                appDiContainer: appDiContainer,
-                navigationController: navigationController,
-                tractRemoteSharePublisher: tractRemoteSharePublisher,
-                resource: resource,
-                selectedLanguage: selectedLanguage,
-                primaryLanguage: primaryLanguage,
-                parallelLanguage: parallelLanguage,
-                pageNumber: pageNumber,
-                hidesRemoteShareToolAction: tractRemoteShareSubscriber.isSubscribedToChannel
-            )
-            
-            self.shareToolMenuFlow = shareToolMenuFlow
-
-        case .buttonWithUrlTappedFromMobileContentRenderer(let url, let exitLink):
-            guard let webUrl = URL(string: url) else {
-                return
-            }
-            navigateToURL(url: webUrl, exitLink: exitLink)
-            
-        case .trainingTipTappedFromMobileContentRenderer(let event):
-            navigateToToolTraining(event: event)
-            
-        case .errorOccurredFromMobileContentRenderer(let error):
-            
-            let view = MobileContentErrorView(viewModel: error)
-            
-            navigationController.present(view.controller, animated: true, completion: nil)
-            
-        case .closeTappedFromToolTraining:
-            navigationController.dismiss(animated: true, completion: nil)
-                        
-        case .closeTappedFromShareToolScreenTutorial:
-            self.shareToolMenuFlow = nil
                         
         case .openToolTappedFromToolDetails(let resource):
             navigateToTool(resource: resource, trainingTipsEnabled: false)
+            
+        case .tractFlowCompleted(let state):
+            
+            guard tractFlow != nil else {
+                return
+            }
+            
+            switch state {
+            case .userClosedTract:
+                break
+            }
+            
+            _ = navigationController.popViewController(animated: true)
+            
+            tractFlow = nil
+            
+            configureNavigationBar()
             
         case .learnToShareToolTappedFromToolDetails(let resource):
             
@@ -224,47 +206,6 @@ class ToolsFlow: NSObject, Flow {
         case .urlLinkTappedFromToolDetail(let url, let exitLink):
             navigateToURL(url: url, exitLink: exitLink)
             
-        case .deepLink(let deepLink):
-            
-            switch deepLink {
-            
-            case .allToolsList:
-                break
-            
-            case .article(let articleURI):
-                break
-            
-            case .tool(let resourceAbbreviation, let primaryLanguageCodes, let parallelLanguageCodes, let liveShareStream, let page):
-                
-                guard let toolDeepLinkData = getDataForToolDeepLink(
-                    dataDownloader: appDiContainer.initialDataDownloader,
-                    resourceAbbreviation: resourceAbbreviation,
-                    primaryLanguageCodes: primaryLanguageCodes,
-                    parallelLanguageCodes: parallelLanguageCodes
-                ) else {
-                    return
-                }
-                
-                print("Present tool...")
-                
-                let toolsFlow = ToolsFlow(
-                    flowDelegate: self,
-                    appDiContainer: appDiContainer,
-                    sharedNavigationController: UINavigationController(),
-                    startingToolbarItem: nil
-                )
-                
-                self.presentingToolsFlow = toolsFlow
-                
-                navigationController.present(toolsFlow.navigationController, animated: true, completion: nil)
-                
-            case .favoritedToolsList:
-                break
-                
-            case .lessonsList:
-                break
-            }
-            
         default:
             break
         }
@@ -277,13 +218,6 @@ class ToolsFlow: NSObject, Flow {
         }
         
         self.learnToShareToolFlow = nil
-    }
-    
-    private func navigateToURL(url: URL, exitLink: ExitLinkModel) {
-        
-        appDiContainer.exitLinkAnalytics.trackExitLink(exitLink: exitLink)
-        
-        UIApplication.shared.open(url)
     }
     
     private func navigateToToolDetail(resource: ResourceModel) {
@@ -553,7 +487,7 @@ class ToolsFlow: NSObject, Flow {
             )
             
         case .lesson:
-            navigateToLesson(
+            navigateToLessonFlow(
                 resource: resource,
                 primaryLanguage: primaryLanguage,
                 primaryTranslationManifest: primaryTranslationManifest,
@@ -562,7 +496,7 @@ class ToolsFlow: NSObject, Flow {
             )
             
         case .tract:
-            navigateToTract(
+            navigateToTractFlow(
                 resource: resource,
                 primaryLanguage: primaryLanguage,
                 primaryTranslationManifest: primaryTranslationManifest,
@@ -591,146 +525,38 @@ class ToolsFlow: NSObject, Flow {
         self.articleToolFlow = articleToolFlow
     }
     
-    private func navigateToTract(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
-           
-        let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
+    private func navigateToLessonFlow(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, trainingTipsEnabled: Bool, page: Int?) {
         
-        let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
-            type: .tract,
+        let lessonFlow = LessonFlow(
             flowDelegate: self,
             appDiContainer: appDiContainer,
-            trainingTipsEnabled: trainingTipsEnabled,
-            toolsFlowDeepLinkingService: deepLinkingService
-        )
-          
-        /*
-        let primaryRenderer = MobileContentMultiplatformRenderer(
-            resource: resource,
-            language: primaryLanguage,
-            multiplatformParser: MobileContentMultiplatformParser(translationManifestData: primaryTranslationManifest, translationsFileCache: translationsFileCache),
-            pageViewFactories: pageViewFactories
-        )*/
-        
-        let primaryRenderer = MobileContentXmlNodeRenderer(
-            resource: resource,
-            language: primaryLanguage,
-            xmlParser: MobileContentXmlParser(translationManifestData: primaryTranslationManifest, translationsFileCache: translationsFileCache),
-            pageViewFactories: pageViewFactories
-        )
-        
-        var renderers: [MobileContentRendererType] = Array()
-        
-        renderers.append(primaryRenderer)
-        
-        if !trainingTipsEnabled, let parallelLanguage = parallelLanguage, let parallelTranslationManifest = parallelTranslationManifest, parallelLanguage.code != primaryLanguage.code {
-            
-            /*
-            let parallelRenderer = MobileContentMultiplatformRenderer(
-                resource: resource,
-                language: parallelLanguage,
-                multiplatformParser: MobileContentMultiplatformParser(translationManifestData: parallelTranslationManifest, translationsFileCache: translationsFileCache),
-                pageViewFactories: pageViewFactories
-            )*/
-            
-            let parallelRenderer = MobileContentXmlNodeRenderer(
-                resource: resource,
-                language: parallelLanguage,
-                xmlParser: MobileContentXmlParser(translationManifestData: parallelTranslationManifest, translationsFileCache: translationsFileCache),
-                pageViewFactories: pageViewFactories
-            )
-            
-            renderers.append(parallelRenderer)
-        }
-        
-        let viewModel = ToolViewModel(
-            flowDelegate: self,
-            renderers: renderers,
+            sharedNavigationController: navigationController,
             resource: resource,
             primaryLanguage: primaryLanguage,
-            tractRemoteSharePublisher: appDiContainer.tractRemoteSharePublisher,
-            tractRemoteShareSubscriber: appDiContainer.tractRemoteShareSubscriber,
-            localizationServices: appDiContainer.localizationServices,
-            fontService: appDiContainer.getFontService(),
-            viewsService: appDiContainer.viewsService,
-            analytics: appDiContainer.analytics,
-            toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics,
+            primaryTranslationManifest: primaryTranslationManifest,
+            trainingTipsEnabled: trainingTipsEnabled,
+            page: page
+        )
+        
+        self.lessonFlow = lessonFlow
+    }
+    
+    private func navigateToTractFlow(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
+           
+        let tractFlow = TractFlow(
+            flowDelegate: self,
+            appDiContainer: appDiContainer,
+            sharedNavigationController: navigationController,
+            resource: resource,
+            primaryLanguage: primaryLanguage,
+            primaryTranslationManifest: primaryTranslationManifest,
+            parallelLanguage: parallelLanguage,
+            parallelTranslationManifest: parallelTranslationManifest,
             liveShareStream: liveShareStream,
             trainingTipsEnabled: trainingTipsEnabled,
             page: page
         )
         
-        let view = ToolView(viewModel: viewModel)
-        
-        navigationController.pushViewController(view, animated: true)
-    }
-    
-    private func navigateToToolTraining(event: TrainingTipEvent) {
-        
-        let pageNodes: [PageNode] = event.tipNode.pages?.pages ?? []
-        
-        if pageNodes.isEmpty {
-            // TODO: Page nodes should not be empty. ~Levi
-        }
-                        
-        let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
-            type: .trainingTip,
-            flowDelegate: self,
-            appDiContainer: appDiContainer,
-            trainingTipsEnabled: false,
-            toolsFlowDeepLinkingService: deepLinkingService
-        )
-                
-        let renderer = MobileContentXmlNodeRenderer(
-            resource: event.rendererPageModel.resource,
-            language: event.rendererPageModel.language,
-            xmlParser: MobileContentXmlParser(manifest: event.rendererPageModel.manifest, pageModels: pageNodes, translationsFileCache: appDiContainer.translationsFileCache),
-            pageViewFactories: pageViewFactories
-        )
-                
-        let viewModel = ToolTrainingViewModel(
-            flowDelegate: self,
-            renderer: renderer,
-            trainingTipId: event.trainingTipId,
-            tipNode: event.tipNode,
-            analytics: appDiContainer.analytics,
-            localizationServices: appDiContainer.localizationServices,
-            viewedTrainingTips: appDiContainer.getViewedTrainingTipsService()
-        )
-        
-        let view = ToolTrainingView(viewModel: viewModel)
-        
-        navigationController.present(view, animated: true, completion: nil)
-    }
-    
-    private func navigateToLesson(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, trainingTipsEnabled: Bool, page: Int?) {
-        
-        let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
-            type: .lesson,
-            flowDelegate: self,
-            appDiContainer: appDiContainer,
-            trainingTipsEnabled: trainingTipsEnabled,
-            toolsFlowDeepLinkingService: deepLinkingService
-        )
-        
-        let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
-                
-        let renderer = MobileContentXmlNodeRenderer(
-            resource: resource,
-            language: primaryLanguage,
-            xmlParser: MobileContentXmlParser(translationManifestData: primaryTranslationManifest, translationsFileCache: translationsFileCache),
-            pageViewFactories: pageViewFactories
-        )
-        
-        let viewModel = LessonViewModel(
-            flowDelegate: self,
-            renderers: [renderer],
-            resource: resource,
-            primaryLanguage: primaryLanguage,
-            page: page
-        )
-        
-        let view = LessonView(viewModel: viewModel)
-        
-        navigationController.pushViewController(view, animated: true)
+        self.tractFlow = tractFlow
     }
 }

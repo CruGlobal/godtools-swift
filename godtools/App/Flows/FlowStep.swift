@@ -31,9 +31,12 @@ enum FlowStep {
     case showMoreTappedFromOnboardingTutorial
     case getStartedTappedFromOnboardingTutorial
     
-    // lessons
+    // lessons list
     case lessonTappedFromLessonsList(resource: ResourceModel)
+    
+    // lesson
     case closeTappedFromLesson
+    case lessonFlowCompleted(state: LessonFlowCompletedState)
     
     // favoritedTools
     case toolTappedFromFavoritedTools(resource: ResourceModel)
@@ -55,10 +58,11 @@ enum FlowStep {
         
     // tool
     case homeTappedFromTool(isScreenSharing: Bool)
-    case shareMenuTappedFromTool(tractRemoteShareSubscriber: TractRemoteShareSubscriber, tractRemoteSharePublisher: TractRemoteSharePublisher, resource: ResourceModel, selectedLanguage: LanguageModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, pageNumber: Int)    
+    case shareMenuTappedFromTool(tractRemoteShareSubscriber: TractRemoteShareSubscriber, tractRemoteSharePublisher: TractRemoteSharePublisher, resource: ResourceModel, selectedLanguage: LanguageModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, pageNumber: Int)
     case buttonWithUrlTappedFromMobileContentRenderer(url: String, exitLink: ExitLinkModel)
     case trainingTipTappedFromMobileContentRenderer(event: TrainingTipEvent)
     case errorOccurredFromMobileContentRenderer(error: MobileContentErrorViewModel)
+    case tractFlowCompleted(state: TractFlowCompletedState)
     
     // tool training
     case closeTappedFromToolTraining
