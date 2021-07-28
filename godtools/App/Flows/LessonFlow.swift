@@ -59,12 +59,18 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
         
         navigationController.pushViewController(view, animated: true)
         
+        configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
+        
         addDeepLinkingObserver()
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
         deepLinkingService.completed.removeObserver(self)
+    }
+    
+    private func configureNavigationBar(shouldAnimateNavigationBarHiddenState: Bool) {
+        navigationController.setNavigationBarHidden(true, animated: shouldAnimateNavigationBarHiddenState)
     }
     
     private func addDeepLinkingObserver() {
@@ -133,6 +139,7 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
             }
             
             _ = navigationController.popViewController(animated: true)
+            configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
             
             articleFlow = nil
             
@@ -143,6 +150,7 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
             }
 
             _ = navigationController.popViewController(animated: true)
+            configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
             
             tractFlow = nil
                     

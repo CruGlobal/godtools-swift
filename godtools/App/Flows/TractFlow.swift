@@ -100,10 +100,16 @@ class TractFlow: Flow {
         else {
             navigationController.setViewControllers([view], animated: false)
         }
+        
+        configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+    }
+    
+    private func configureNavigationBar(shouldAnimateNavigationBarHiddenState: Bool) {
+        navigationController.setNavigationBarHidden(false, animated: shouldAnimateNavigationBarHiddenState)
     }
     
     func navigate(step: FlowStep) {
