@@ -17,7 +17,7 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
-    var articleToolFlow: ArticleToolFlow?
+    var articleFlow: ArticleFlow?
     var lessonFlow: LessonFlow?
     var tractFlow: TractFlow?
     

@@ -10,7 +10,7 @@ import Foundation
 
 protocol ToolNavigationFlow: Flow {
     
-    var articleToolFlow: ArticleToolFlow? { get set }
+    var articleFlow: ArticleFlow? { get set }
     var lessonFlow: LessonFlow? { get set }
     var tractFlow: TractFlow? { get set }
 }
@@ -249,7 +249,7 @@ extension ToolNavigationFlow {
     
     private func navigateToArticleToolFlow(resource: ResourceModel, translationManifest: TranslationManifestData) {
         
-        let articleToolFlow = ArticleToolFlow(
+        let articleFlow = ArticleFlow(
             flowDelegate: self,
             appDiContainer: appDiContainer,
             sharedNavigationController: navigationController,
@@ -257,7 +257,7 @@ extension ToolNavigationFlow {
             translationManifest: translationManifest
         )
         
-        self.articleToolFlow = articleToolFlow
+        self.articleFlow = articleFlow
     }
     
     private func navigateToLessonFlow(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, trainingTipsEnabled: Bool, page: Int?) {

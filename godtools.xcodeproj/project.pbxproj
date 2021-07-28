@@ -923,7 +923,7 @@
 		45C93AF9261D310900592FFF /* CategoryArticleModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C93AD2261D310900592FFF /* CategoryArticleModelType.swift */; };
 		45C93AFA261D310900592FFF /* RealmCategoryArticlesCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C93AD4261D310900592FFF /* RealmCategoryArticlesCache.swift */; };
 		45C93AFB261D310900592FFF /* RealmCategoryArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C93AD5261D310900592FFF /* RealmCategoryArticle.swift */; };
-		45C93B12261D314C00592FFF /* ArticleToolFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C93B10261D314C00592FFF /* ArticleToolFlow.swift */; };
+		45C93B12261D314C00592FFF /* ArticleFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C93B10261D314C00592FFF /* ArticleFlow.swift */; };
 		45C93B13261D314C00592FFF /* ArticleDeepLinkFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C93B11261D314C00592FFF /* ArticleDeepLinkFlow.swift */; };
 		45C93B1D261D319500592FFF /* ArticleWebViewModelFlowType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C93B1C261D319500592FFF /* ArticleWebViewModelFlowType.swift */; };
 		45C93B27261D31B900592FFF /* LoadingArticleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C93B26261D31B900592FFF /* LoadingArticleViewModel.swift */; };
@@ -1926,7 +1926,7 @@
 		45C93AD2261D310900592FFF /* CategoryArticleModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryArticleModelType.swift; sourceTree = "<group>"; };
 		45C93AD4261D310900592FFF /* RealmCategoryArticlesCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmCategoryArticlesCache.swift; sourceTree = "<group>"; };
 		45C93AD5261D310900592FFF /* RealmCategoryArticle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmCategoryArticle.swift; sourceTree = "<group>"; };
-		45C93B10261D314C00592FFF /* ArticleToolFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleToolFlow.swift; sourceTree = "<group>"; };
+		45C93B10261D314C00592FFF /* ArticleFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleFlow.swift; sourceTree = "<group>"; };
 		45C93B11261D314C00592FFF /* ArticleDeepLinkFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleDeepLinkFlow.swift; sourceTree = "<group>"; };
 		45C93B1C261D319500592FFF /* ArticleWebViewModelFlowType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleWebViewModelFlowType.swift; sourceTree = "<group>"; };
 		45C93B26261D31B900592FFF /* LoadingArticleViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingArticleViewModel.swift; sourceTree = "<group>"; };
@@ -3753,7 +3753,7 @@
 				45AD189225938A4E00A096A0 /* AppFlow.swift */,
 				45AD188E25938A4E00A096A0 /* AppRootController.swift */,
 				45C93B11261D314C00592FFF /* ArticleDeepLinkFlow.swift */,
-				45C93B10261D314C00592FFF /* ArticleToolFlow.swift */,
+				45C93B10261D314C00592FFF /* ArticleFlow.swift */,
 				45AD189025938A4E00A096A0 /* Flow.swift */,
 				45A3A0C726B0BD54005DA490 /* Flow+NavigateToUrl.swift */,
 				45AD189725938A4E00A096A0 /* FlowDelegate.swift */,
@@ -6219,7 +6219,7 @@
 				45AD202525938A9800A096A0 /* RequestResponse+Log.swift in Sources */,
 				45AD202725938A9800A096A0 /* LocaleLocalizationBundle.swift in Sources */,
 				45558335269F2C7B00C3FF14 /* ToolPageCallToActionViewModelType.swift in Sources */,
-				45C93B12261D314C00592FFF /* ArticleToolFlow.swift in Sources */,
+				45C93B12261D314C00592FFF /* ArticleFlow.swift in Sources */,
 				45BD79CC26A20EEA0007426B /* ContentImageModelType.swift in Sources */,
 				45AD1AC525938A4E00A096A0 /* LoadingToolViewModelType.swift in Sources */,
 				45BEC53426A604E4005D8CA1 /* MobileContentRenderableModel.swift in Sources */,

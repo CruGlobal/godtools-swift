@@ -1,5 +1,5 @@
 //
-//  ArticleToolFlow.swift
+//  ArticleFlow.swift
 //  godtools
 //
 //  Created by Levi Eggert on 4/20/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ArticleToolFlow: Flow {
+class ArticleFlow: Flow {
     
     private weak var flowDelegate: FlowDelegate?
     
