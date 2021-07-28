@@ -18,6 +18,7 @@ class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
     private let analytics: AnalyticsContainer
     
     let languages: [LanguageModel]
+    let backButtonImage: UIImage
     let navBarColor: UIColor
     let navBarControlColor: UIColor
     let hidesChooseLanguageControl: Bool
@@ -36,6 +37,7 @@ class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
         self.analytics = analytics
         self.hidesShareButton = hidesShareButton
         
+        backButtonImage = ImageCatalog.navHome.image ?? UIImage()
         navBarColor = manifestAttributes.navbarColor?.uiColor ?? manifestAttributes.primaryColor.uiColor
         navBarControlColor = manifestAttributes.navbarControlColor?.uiColor ?? manifestAttributes.primaryTextColor.uiColor
         hidesChooseLanguageControl = languages.count <= 1
