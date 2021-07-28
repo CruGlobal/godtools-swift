@@ -189,30 +189,14 @@ class AppFlow: NSObject, Flow {
             switch deepLink {
             
             case .tool(let toolDeepLink):
-                               
-                guard let resource = dataDownloader.resourcesCache.getResource(abbreviation: toolDeepLink.resourceAbbreviation) else {
+                      
+                guard let toolDeepLinkResources = ToolDeepLinkResources(dataDownloader: dataDownloader, languageSettingsService: appDiContainer.languageSettingsService, toolDeepLink: toolDeepLink) else {
                     return
                 }
-                
-                var fetchedPrimaryLanguage: LanguageModel?
-                
-                if let primaryLanguageFromCodes = dataDownloader.fetchFirstSupportedLanguageForResource(resource: resource, codes: toolDeepLink.primaryLanguageCodes) {
-                    fetchedPrimaryLanguage = primaryLanguageFromCodes
-                } else if let primaryLanguageFromSettings = appDiContainer.languageSettingsService.primaryLanguage.value {
-                    fetchedPrimaryLanguage = primaryLanguageFromSettings
-                } else {
-                    fetchedPrimaryLanguage = dataDownloader.getStoredLanguage(code: "en")
-                }
-                
-                guard let primaryLanguage = fetchedPrimaryLanguage else {
-                    return
-                }
-                
-                let parallelLanguage = dataDownloader.fetchFirstSupportedLanguageForResource(resource: resource, codes: toolDeepLink.parallelLanguageCodes)
                 
                 let startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView?
                 
-                if resource.resourceTypeEnum == .lesson {
+                if toolDeepLinkResources.resource.resourceTypeEnum == .lesson {
                     startingToolbarItem = .lessons
                 }
                 else {
@@ -222,9 +206,9 @@ class AppFlow: NSObject, Flow {
                 resetFlowToToolsFlow(startingToolbarItem: startingToolbarItem)
                 
                 toolsFlow?.navigateToTool(
-                    resource: resource,
-                    primaryLanguage: primaryLanguage,
-                    parallelLanguage: parallelLanguage,
+                    resource: toolDeepLinkResources.resource,
+                    primaryLanguage: toolDeepLinkResources.primaryLanguage,
+                    parallelLanguage: toolDeepLinkResources.parallelLanguage,
                     liveShareStream: toolDeepLink.liveShareStream,
                     trainingTipsEnabled: false,
                     page: toolDeepLink.page

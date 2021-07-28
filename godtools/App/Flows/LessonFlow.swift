@@ -8,16 +8,18 @@
 
 import Foundation
 
-class LessonFlow: NSObject, Flow {
+class LessonFlow: NSObject, ToolNavigationFlow, Flow {
     
     private let deepLinkingService: DeepLinkingServiceType
-    
-    private var tractFlow: TractFlow?
-    
+        
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
+    
+    var articleToolFlow: ArticleToolFlow?
+    var lessonFlow: LessonFlow?
+    var tractFlow: TractFlow?
     
     required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, trainingTipsEnabled: Bool, page: Int?) {
         
@@ -94,7 +96,19 @@ class LessonFlow: NSObject, Flow {
                 break
             
             case .tool(let toolDeepLink):
-                break
+                
+                guard let toolDeepLinkResources = ToolDeepLinkResources(dataDownloader: appDiContainer.initialDataDownloader, languageSettingsService: appDiContainer.languageSettingsService, toolDeepLink: toolDeepLink) else {
+                    return
+                }
+                
+                navigateToTool(
+                    resource: toolDeepLinkResources.resource,
+                    primaryLanguage: toolDeepLinkResources.primaryLanguage,
+                    parallelLanguage: toolDeepLinkResources.parallelLanguage,
+                    liveShareStream: toolDeepLink.liveShareStream,
+                    trainingTipsEnabled: false,
+                    page: toolDeepLink.page
+                )
             }
         
         case .closeTappedFromLesson:
