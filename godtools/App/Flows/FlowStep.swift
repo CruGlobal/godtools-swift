@@ -102,9 +102,11 @@ enum FlowStep {
     case deleteLanguageTappedFromChooseLanguage
     
     // article
+    case backTappedFromArticleCategories
     case articleCategoryTappedFromArticleCategories(resource: ResourceModel, translationZipFile: TranslationZipFileModel, category: ArticleCategory, articleManifest: ArticleManifestXmlParser, currentArticleDownloadReceipt: ArticleManifestDownloadArticlesReceipt?)
     case articleTappedFromArticles(resource: ResourceModel, aemCacheObject: ArticleAemCacheObject)
     case sharedTappedFromArticle(articleAemData: ArticleAemData)
+    case articleFlowCompleted(state: ArticleFlowCompletedState)
     
     // article deep link
     case didDownloadArticleFromLoadingArticle(aemCacheObject: ArticleAemCacheObject)

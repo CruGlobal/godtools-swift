@@ -244,6 +244,7 @@
 		458EFECF26B0FAC7009EEB03 /* ToolDeepLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458EFECE26B0FAC7009EEB03 /* ToolDeepLink.swift */; };
 		458EFED326B19A2C009EEB03 /* ToolNavigationFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458EFED226B19A2C009EEB03 /* ToolNavigationFlow.swift */; };
 		458EFED726B1A1C5009EEB03 /* ToolDeepLinkResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458EFED626B1A1C5009EEB03 /* ToolDeepLinkResources.swift */; };
+		458EFED926B1A6CC009EEB03 /* ArticleFlowCompletedState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458EFED826B1A6CC009EEB03 /* ArticleFlowCompletedState.swift */; };
 		459C56D225FF954F00F15967 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		459C56D325FF954F00F15967 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		45A3A0C626B0B497005DA490 /* TractFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A3A0C526B0B497005DA490 /* TractFlow.swift */; };
@@ -1264,6 +1265,7 @@
 		458EFECE26B0FAC7009EEB03 /* ToolDeepLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolDeepLink.swift; sourceTree = "<group>"; };
 		458EFED226B19A2C009EEB03 /* ToolNavigationFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolNavigationFlow.swift; sourceTree = "<group>"; };
 		458EFED626B1A1C5009EEB03 /* ToolDeepLinkResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolDeepLinkResources.swift; sourceTree = "<group>"; };
+		458EFED826B1A6CC009EEB03 /* ArticleFlowCompletedState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleFlowCompletedState.swift; sourceTree = "<group>"; };
 		45A3A0C526B0B497005DA490 /* TractFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractFlow.swift; sourceTree = "<group>"; };
 		45A3A0C726B0BD54005DA490 /* Flow+NavigateToUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Flow+NavigateToUrl.swift"; sourceTree = "<group>"; };
 		45A3A0C926B0BE50005DA490 /* TractFlowCompletedState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractFlowCompletedState.swift; sourceTree = "<group>"; };
@@ -3754,6 +3756,7 @@
 				45AD188E25938A4E00A096A0 /* AppRootController.swift */,
 				45C93B11261D314C00592FFF /* ArticleDeepLinkFlow.swift */,
 				45C93B10261D314C00592FFF /* ArticleFlow.swift */,
+				458EFED826B1A6CC009EEB03 /* ArticleFlowCompletedState.swift */,
 				45AD189025938A4E00A096A0 /* Flow.swift */,
 				45A3A0C726B0BD54005DA490 /* Flow+NavigateToUrl.swift */,
 				45AD189725938A4E00A096A0 /* FlowDelegate.swift */,
@@ -6036,6 +6039,7 @@
 				45AD1B1A25938A4E00A096A0 /* InMemoryLearnToShareToolItems.swift in Sources */,
 				45AD1F7925938A9800A096A0 /* DeviceLanguageType.swift in Sources */,
 				45CB9FFC261FB0BE0036BEB3 /* LessonListItemViewModelType.swift in Sources */,
+				458EFED926B1A6CC009EEB03 /* ArticleFlowCompletedState.swift in Sources */,
 				45AD1AD125938A4E00A096A0 /* OpenTutorialViewModelType.swift in Sources */,
 				45AD207E25938B6A00A096A0 /* AnimatableValue.swift in Sources */,
 				45AD1F8325938A9800A096A0 /* FavoritedResourceModelType.swift in Sources */,

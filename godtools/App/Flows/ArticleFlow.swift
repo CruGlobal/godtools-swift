@@ -36,10 +36,17 @@ class ArticleFlow: Flow {
         sharedNavigationController.pushViewController(view, animated: true)
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     func navigate(step: FlowStep) {
         
         switch step {
-            
+        
+        case .backTappedFromArticleCategories:
+            flowDelegate?.navigate(step: .articleFlowCompleted(state: .userClosedArticle))
+        
         case .articleCategoryTappedFromArticleCategories(let resource, let translationZipFile, let category, let articleManifest, let currentArticleDownloadReceipt):
             
             let viewModel = ArticlesViewModel(

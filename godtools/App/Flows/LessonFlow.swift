@@ -125,6 +125,26 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
             let view = MobileContentErrorView(viewModel: error)
             
             navigationController.present(view.controller, animated: true, completion: nil)
+            
+        case .articleFlowCompleted(let state):
+            
+            guard articleFlow != nil else {
+                return
+            }
+            
+            _ = navigationController.popViewController(animated: true)
+            
+            articleFlow = nil
+            
+        case .tractFlowCompleted(let state):
+            
+            guard tractFlow != nil else {
+                return
+            }
+
+            _ = navigationController.popViewController(animated: true)
+            
+            tractFlow = nil
                     
         default:
             break

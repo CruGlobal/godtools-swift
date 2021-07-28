@@ -90,16 +90,6 @@ class ToolsFlow: ToolNavigationFlow, Flow {
         case .lessonTappedFromLessonsList(let resource):
             navigateToTool(resource: resource, trainingTipsEnabled: false)
             
-        case .lessonFlowCompleted(let state):
-            
-            switch state {
-            case .userClosedLesson:
-                break
-            }
-            
-            _ = navigationController.popViewController(animated: true)
-            configureNavigationBar()
-            
         case .toolTappedFromFavoritedTools(let resource):
             navigateToTool(resource: resource, trainingTipsEnabled: false)
             
@@ -154,23 +144,6 @@ class ToolsFlow: ToolNavigationFlow, Flow {
         case .openToolTappedFromToolDetails(let resource):
             navigateToTool(resource: resource, trainingTipsEnabled: false)
             
-        case .tractFlowCompleted(let state):
-            
-            guard tractFlow != nil else {
-                return
-            }
-            
-            switch state {
-            case .userClosedTract:
-                break
-            }
-            
-            _ = navigationController.popViewController(animated: true)
-            
-            tractFlow = nil
-            
-            configureNavigationBar()
-            
         case .learnToShareToolTappedFromToolDetails(let resource):
             
             let toolTrainingTipsOnboardingViews: ToolTrainingTipsOnboardingViewsService = appDiContainer.getToolTrainingTipsOnboardingViews()
@@ -206,6 +179,39 @@ class ToolsFlow: ToolNavigationFlow, Flow {
             
         case .urlLinkTappedFromToolDetail(let url, let exitLink):
             navigateToURL(url: url, exitLink: exitLink)
+            
+        case .articleFlowCompleted(let state):
+            
+            guard articleFlow != nil else {
+                return
+            }
+            
+            _ = navigationController.popViewController(animated: true)
+            configureNavigationBar()
+            
+            articleFlow = nil
+            
+        case .lessonFlowCompleted(let state):
+            
+            guard lessonFlow != nil else {
+                return
+            }
+            
+            _ = navigationController.popViewController(animated: true)
+            configureNavigationBar()
+            
+            lessonFlow = nil
+            
+        case .tractFlowCompleted(let state):
+            
+            guard tractFlow != nil else {
+                return
+            }
+            
+            _ = navigationController.popViewController(animated: true)
+            configureNavigationBar()
+            
+            tractFlow = nil
             
         default:
             break
