@@ -12,5 +12,5 @@ protocol DeepLinkingServiceType {
     
     var completed: ObservableValue<ParsedDeepLinkType?> { get }
     
-    func parseDeepLink(incomingDeepLink: IncomingDeepLinkType) -> Bool
+    func parseDeepLinkAndNotify(incomingDeepLink: IncomingDeepLinkType) -> Bool
 }

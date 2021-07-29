@@ -10,6 +10,7 @@ import UIKit
 
 class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
     
+    private let backButtonImageType: ToolBackButtonImageType
     private let resource: ResourceModel
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
     private let tractRemoteShareSubscriber: TractRemoteShareSubscriber
@@ -18,6 +19,7 @@ class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
     private let analytics: AnalyticsContainer
     
     let languages: [LanguageModel]
+    let backButtonImage: UIImage
     let navBarColor: UIColor
     let navBarControlColor: UIColor
     let hidesChooseLanguageControl: Bool
@@ -25,8 +27,9 @@ class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
     let selectedLanguage: ObservableValue<Int> = ObservableValue(value: 0)
     let hidesShareButton: Bool
     
-    required init(resource: ResourceModel, manifestAttributes: MobileContentManifestAttributesType, languages: [LanguageModel], tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, localizationServices: LocalizationServices, fontService: FontService, analytics: AnalyticsContainer, hidesShareButton: Bool) {
+    required init(backButtonImageType: ToolBackButtonImageType, resource: ResourceModel, manifestAttributes: MobileContentManifestAttributesType, languages: [LanguageModel], tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, localizationServices: LocalizationServices, fontService: FontService, analytics: AnalyticsContainer, hidesShareButton: Bool) {
         
+        self.backButtonImageType = backButtonImageType
         self.resource = resource
         self.languages = languages
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
@@ -36,6 +39,7 @@ class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
         self.analytics = analytics
         self.hidesShareButton = hidesShareButton
         
+        backButtonImage = backButtonImageType.getImage()
         navBarColor = manifestAttributes.navbarColor?.uiColor ?? manifestAttributes.primaryColor.uiColor
         navBarControlColor = manifestAttributes.navbarControlColor?.uiColor ?? manifestAttributes.primaryTextColor.uiColor
         hidesChooseLanguageControl = languages.count <= 1

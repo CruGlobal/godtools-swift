@@ -102,4 +102,8 @@ class ArticleCategoriesViewModel: NSObject, ArticleCategoriesViewModelType {
     func refreshArticles() {
         downloadArticles(forceDownload: true)
     }
+    
+    func backButtonTapped() {
+        flowDelegate?.navigate(step: .backTappedFromArticleCategories)
+    }
 }

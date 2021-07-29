@@ -71,10 +71,10 @@ class ToolNavBarView: NSObject {
         
         _ = parentViewController.addBarButtonItem(
             to: .left,
-            image: ImageCatalog.navHome.image,
+            image: viewModel.backButtonImage,
             color: navBarControlColor,
             target: self,
-            action: #selector(handleHome(barButtonItem:))
+            action: #selector(backButtonTapped)
         )
         
         if !viewModel.hidesShareButton {
@@ -85,7 +85,7 @@ class ToolNavBarView: NSObject {
                 image: ImageCatalog.navShare.image,
                 color: navBarControlColor,
                 target: self,
-                action: #selector(handleShare(barButtonItem:))
+                action: #selector(shareButtonTapped)
             )
         }
         
@@ -138,7 +138,7 @@ class ToolNavBarView: NSObject {
         }
     }
     
-    @objc func handleHome(barButtonItem: UIBarButtonItem) {
+    @objc func backButtonTapped() {
         
         guard let viewModel = self.viewModel else {
             return
@@ -149,8 +149,8 @@ class ToolNavBarView: NSObject {
             remoteShareIsActive: viewModel.remoteShareIsActive.value
         )
     }
-    
-    @objc func handleShare(barButtonItem: UIBarButtonItem) {
+
+    @objc func shareButtonTapped() {
         
         guard let viewModel = self.viewModel else {
             return
@@ -161,7 +161,7 @@ class ToolNavBarView: NSObject {
             selectedLanguage: viewModel.language
         )
     }
-    
+
     @objc func didChooseLanguage(segmentedControl: UISegmentedControl) {
         
         guard let viewModel = self.viewModel else {

@@ -10,21 +10,33 @@ import UIKit
 
 extension UIViewController {
     
-    func addDefaultNavBackItem() {
+    // TODO: (DEPRECATED) Eventually I want this to be removed and instead use addDefaultNavBackItem(target: Any, selector: Selector). This way back navigation can be wired through flows. ~Levi
+    @available(*, deprecated)
+    func addDefaultNavBackItem() -> UIBarButtonItem? {
+          
+        return addDefaultNavBackItem(
+            target: self,
+            action: #selector(handleNavBackItem(barButtonItem:))
+        )
+    }
+    
+    func addDefaultNavBackItem(target: Any, action: Selector) -> UIBarButtonItem? {
             
         guard let navigationController = navigationController else {
-            return
+            return nil
         }
         
-        if navigationController.viewControllers.count > 1 {
-            _ = addBarButtonItem(
-                to: .left,
-                image: UIImage(named: "nav_item_back"),
-                color: nil,
-                target: self,
-                action: #selector(handleNavBackItem(barButtonItem:))
-            )
+        guard navigationController.viewControllers.count > 1 else {
+            return nil
         }
+        
+        return addBarButtonItem(
+            to: .left,
+            image: ImageCatalog.navBack.image,
+            color: nil,
+            target: target,
+            action: action
+        )
     }
     
     @objc func handleNavBackItem(barButtonItem: UIBarButtonItem) {

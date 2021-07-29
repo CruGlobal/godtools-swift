@@ -59,7 +59,15 @@ class ToolDeepLinkParser: DeepLinkParserType {
             resourceAbbreviation = deepLinkValue
         }
         
-        return .tool(resourceAbbreviation: resourceAbbreviation, primaryLanguageCodes: Array(), parallelLanguageCodes: Array(), liveShareStream: nil, page: nil)
+        let toolDeepLink = ToolDeepLink(
+            resourceAbbreviation: resourceAbbreviation,
+            primaryLanguageCodes: [],
+            parallelLanguageCodes: [],
+            liveShareStream: nil,
+            page: nil
+        )
+        
+        return .tool(toolDeepLink: toolDeepLink)
     }
     
     private func parseDeepLinkFromKnowGod(incomingUrl: IncomingDeepLinkUrl) -> ParsedDeepLinkType? {
@@ -100,13 +108,15 @@ class ToolDeepLinkParser: DeepLinkParserType {
             return nil
         }
         
-        return .tool(
+        let toolDeepLink = ToolDeepLink(
             resourceAbbreviation: resourceAbbreviation,
             primaryLanguageCodes: primaryLanguageCodes,
             parallelLanguageCodes: toolQuery?.getParallelLanguageCodes() ?? [],
             liveShareStream: toolQuery?.liveShareStream,
             page: pageFromUrlPath
         )
+        
+        return .tool(toolDeepLink: toolDeepLink)
     }
     
     private func parseDefaultUrlStructure(incomingUrl: IncomingDeepLinkUrl) -> ParsedDeepLinkType? {
@@ -131,12 +141,14 @@ class ToolDeepLinkParser: DeepLinkParserType {
             page = nil
         }
         
-        return .tool(
+        let toolDeepLink = ToolDeepLink(
             resourceAbbreviation: resourceAbbreviation,
             primaryLanguageCodes: toolQuery?.getPrimaryLanguageCodes() ?? [],
             parallelLanguageCodes: toolQuery?.getParallelLanguageCodes() ?? [],
             liveShareStream: toolQuery?.liveShareStream,
             page: page
         )
+        
+        return .tool(toolDeepLink: toolDeepLink)
     }
 }
