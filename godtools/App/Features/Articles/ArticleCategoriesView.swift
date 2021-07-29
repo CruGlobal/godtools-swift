@@ -36,8 +36,8 @@ class ArticleCategoriesView: UIViewController {
         setupLayout()
         setupBinding()
         
-        addDefaultNavBackItem()
-                
+        _ = addDefaultNavBackItem(target: self, action: #selector(backButtonTapped))
+                        
         categoriesTableView.delegate = self
         categoriesTableView.dataSource = self
         
@@ -96,6 +96,10 @@ class ArticleCategoriesView: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.pageViewed()
+    }
+    
+    @objc func backButtonTapped() {
+        viewModel.backButtonTapped()
     }
     
     @objc func handleRefreshArticleCategoriesControl() {

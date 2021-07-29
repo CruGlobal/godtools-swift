@@ -56,13 +56,15 @@ class LessonDeepLinkParser: DeepLinkParserType {
         guard let resourceAbbreviation = lessonAbbreviation else {
             return nil
         }
-                       
-        return .tool(
+        
+        let toolDeepLink = ToolDeepLink(
             resourceAbbreviation: resourceAbbreviation,
             primaryLanguageCodes: lessonQuery?.getPrimaryLanguageCodes() ?? [],
             parallelLanguageCodes: [],
             liveShareStream: nil,
             page: nil
         )
+                       
+        return .tool(toolDeepLink: toolDeepLink)
     }
 }

@@ -18,4 +18,5 @@ protocol ArticleCategoriesViewModelType {
     func categoryWillAppear(index: Int) -> ArticleCategoryCellViewModelType
     func categoryTapped(index: Int)
     func refreshArticles()
+    func backButtonTapped()
 }

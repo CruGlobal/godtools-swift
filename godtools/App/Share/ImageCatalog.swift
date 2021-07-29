@@ -16,6 +16,7 @@ enum ImageCatalog: String {
     case lessonPageLeftArrow = "lesson_page_left_arrow"
     case lessonPageRightArrow = "lesson_page_right_arrow"
     case navClose = "nav_item_close"
+    case navBack = "nav_item_back"
     case navHome = "home"
     case navLanguage = "nav_language"
     case navMenu = "nav_menu"

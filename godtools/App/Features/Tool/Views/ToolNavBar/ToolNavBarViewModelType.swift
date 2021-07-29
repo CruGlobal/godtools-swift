@@ -10,6 +10,7 @@ import UIKit
 
 protocol ToolNavBarViewModelType {
     
+    var backButtonImage: UIImage { get }
     var navBarColor: UIColor { get }
     var navBarControlColor: UIColor { get }
     var navBarFont: UIFont { get }

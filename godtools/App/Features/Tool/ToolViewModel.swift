@@ -10,6 +10,7 @@ import UIKit
 
 class ToolViewModel: MobileContentPagesViewModel, ToolViewModelType {
     
+    private let backButtonImageType: ToolBackButtonImageType
     private let resource: ResourceModel
     private let primaryLanguage: LanguageModel
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
@@ -26,9 +27,10 @@ class ToolViewModel: MobileContentPagesViewModel, ToolViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, renderers: [MobileContentRendererType], resource: ResourceModel, primaryLanguage: LanguageModel, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, localizationServices: LocalizationServices, fontService: FontService, viewsService: ViewsService, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
+    required init(flowDelegate: FlowDelegate, backButtonImageType: ToolBackButtonImageType, renderers: [MobileContentRendererType], resource: ResourceModel, primaryLanguage: LanguageModel, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, localizationServices: LocalizationServices, fontService: FontService, viewsService: ViewsService, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
         
         self.flowDelegate = flowDelegate
+        self.backButtonImageType = backButtonImageType
         self.resource = resource
         self.primaryLanguage = primaryLanguage
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
@@ -44,6 +46,7 @@ class ToolViewModel: MobileContentPagesViewModel, ToolViewModelType {
         let languages: [LanguageModel] = renderers.map({$0.language})
         
         navBarViewModel = ToolNavBarViewModel(
+            backButtonImageType: backButtonImageType,
             resource: resource,
             manifestAttributes: primaryManifest.attributes,
             languages: languages,

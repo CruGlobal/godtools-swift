@@ -98,7 +98,7 @@ class TutorialView: UIViewController {
         if backButton == nil && !hidden {
             backButton = addBarButtonItem(
                 to: backButtonPosition,
-                image: UIImage(named: "nav_item_back"),
+                image: ImageCatalog.navBack.image,
                 color: nil,
                 target: self,
                 action: #selector(handleBack(barButtonItem:))
