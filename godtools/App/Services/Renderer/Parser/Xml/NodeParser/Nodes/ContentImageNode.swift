@@ -9,7 +9,7 @@
 import Foundation
 import SWXMLHash
 
-class ContentImageNode: MobileContentXmlNode {
+class ContentImageNode: MobileContentXmlNode, ContentImageModelType {
         
     let events: [String]
     let resource: String?
