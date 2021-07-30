@@ -8,7 +8,7 @@
 import Foundation
 import SWXMLHash
 
-class ContentFallbackNode: MobileContentXmlNode {
+class ContentFallbackNode: MobileContentXmlNode, ContentFallbackModelType {
  
     required init(xmlElement: XMLElement) {
     
