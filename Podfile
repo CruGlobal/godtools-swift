@@ -12,7 +12,7 @@ use_frameworks!
 
 target 'godtools' do
         
-    pod 'AppsFlyerFramework', '~> 6.0.0'
+    pod 'AppsFlyerFramework', '~> 6.3.0'
     pod 'GoogleConversionTracking', '~> 3.4.0'
     pod 'GoogleTagManager', '~> 7.2.0'
     pod 'FBSDKCoreKit', '~> 8.0.0'

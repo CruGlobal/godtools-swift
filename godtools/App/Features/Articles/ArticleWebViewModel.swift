@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import WebKit
 
-class ArticleWebViewModel: ArticleWebViewModelType {
+class ArticleWebViewModel: NSObject, ArticleWebViewModelType {
     
     private let aemCacheObject: ArticleAemCacheObject
     private let analytics: AnalyticsContainer
@@ -18,8 +19,7 @@ class ArticleWebViewModel: ArticleWebViewModelType {
     
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
     let hidesShareButton: ObservableValue<Bool> = ObservableValue(value: false)
-    let webUrl: ObservableValue<URL?> = ObservableValue(value: nil)
-    let webArchiveUrl: ObservableValue<URL?> = ObservableValue(value: nil)
+    let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     
     required init(flowDelegate: FlowDelegate, aemCacheObject: ArticleAemCacheObject, analytics: AnalyticsContainer, flowType: ArticleWebViewModelFlowType) {
         
@@ -28,15 +28,10 @@ class ArticleWebViewModel: ArticleWebViewModelType {
         self.analytics = analytics
         self.flowType = flowType
         
+        super.init()
+        
         navTitle.accept(value: aemCacheObject.aemData.articleJcrContent?.title ?? "")
-        
-        if let webArchiveUrl = aemCacheObject.webArchiveFileUrl {
-            self.webArchiveUrl.accept(value: webArchiveUrl)
-        }
-        else if let webUrl = URL(string: aemCacheObject.aemData.webUrl) {
-            self.webUrl.accept(value: webUrl)
-        }
-        
+                
         hidesShareButton.accept(value: aemCacheObject.aemData.articleJcrContent?.canonical == nil)
     }
 
@@ -58,5 +53,42 @@ class ArticleWebViewModel: ArticleWebViewModelType {
     
     func sharedTapped() {
         flowDelegate?.navigate(step: .sharedTappedFromArticle(articleAemData: aemCacheObject.aemData))
+    }
+    
+    func loadWebPage(webView: WKWebView) {
+        loadWebPage(webView: webView, shouldLoadFromFile: false)
+    }
+    
+    private func loadWebPage(webView: WKWebView, shouldLoadFromFile: Bool) {
+        
+        isLoading.accept(value: true)
+        
+        webView.navigationDelegate = self
+        
+        if let webUrl = URL(string: aemCacheObject.aemData.webUrl), !shouldLoadFromFile {
+            webView.load(URLRequest(url: webUrl))
+        }
+        else if let webFileUrl = aemCacheObject.webArchiveFileUrl {
+            webView.loadFileURL(webFileUrl, allowingReadAccessTo: webFileUrl)
+        }
+    }
+}
+
+extension ArticleWebViewModel: WKNavigationDelegate {
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+                
+        isLoading.accept(value: false)
+    }
+    
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+                
+        let errorCode: Int = (error as NSError).code
+        let notConnectedToNetwork: Bool = errorCode == Int(CFNetworkErrors.cfurlErrorNotConnectedToInternet.rawValue)
+        
+        if notConnectedToNetwork {
+            webView.stopLoading()
+            loadWebPage(webView: webView, shouldLoadFromFile: true)
+        }
     }
 }
