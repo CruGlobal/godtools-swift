@@ -18,7 +18,7 @@ target 'godtools' do
     pod 'FBSDKCoreKit', '~> 8.0.0'
     pod 'FirebaseCore', '7.3.0'
     pod 'FirebaseInAppMessaging', '7.3.0-beta'
-    pod 'FirebaseAnalytics', '7.3.0'
+    pod 'FirebaseAnalytics', '7.11.0'
     pod 'FirebaseCrashlytics', '7.3.0'
     pod 'Fuzi', '~> 3.1.1'
     pod 'lottie-ios', '~> 3.1.8'
