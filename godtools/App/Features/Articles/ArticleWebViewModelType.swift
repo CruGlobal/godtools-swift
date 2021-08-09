@@ -7,14 +7,15 @@
 //
 
 import Foundation
+import WebKit
 
 protocol ArticleWebViewModelType {
     
     var navTitle: ObservableValue<String> { get }
     var hidesShareButton: ObservableValue<Bool> { get }
-    var webUrl: ObservableValue<URL?> { get }
-    var webArchiveUrl: ObservableValue<URL?> { get }
+    var isLoading: ObservableValue<Bool> { get }
     
     func pageViewed()
     func sharedTapped()
+    func loadWebPage(webView: WKWebView)
 }
