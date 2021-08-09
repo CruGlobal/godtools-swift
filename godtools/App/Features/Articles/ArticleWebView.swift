@@ -86,39 +86,24 @@ class ArticleWebView: UIViewController {
             }
         }
         
-        viewModel.webUrl.addObserver(self) { [weak self] (url: URL?) in
-            if let url = url {
-                self?.webView.navigationDelegate = self
-                self?.webView.load(URLRequest(url: url))
+        viewModel.isLoading.addObserver(self) { [weak self] (isLoading: Bool) in
+            
+            if isLoading {
+                self?.webView.alpha = 0
+                self?.loadingView.startAnimating()
+            }
+            else {
+                self?.loadingView.stopAnimating()
+                UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+                    self?.webView.alpha = 1
+                }, completion: nil)
             }
         }
         
-        viewModel.webArchiveUrl.addObserver(self) { [weak self] (url: URL?) in
-            if let url = url {
-                self?.webView.navigationDelegate = self
-                self?.webView.loadFileURL(url, allowingReadAccessTo: url)
-            }
-        }
+        viewModel.loadWebPage(webView: webView)
     }
     
     @objc func handleShare(barButtonItem: UIBarButtonItem) {
         viewModel.sharedTapped()
-    }
-    
-    private func finishedLoadingWebView() {
-        
-        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: { [weak self] in
-            self?.webView.alpha = 1
-        }) { [weak self] ( _) in
-            self?.loadingView.stopAnimating()
-        }
-    }
-}
-
-extension ArticleWebView: WKNavigationDelegate {
-    
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-                
-        finishedLoadingWebView()
     }
 }
