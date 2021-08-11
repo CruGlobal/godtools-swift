@@ -19,9 +19,9 @@ class ManifestResourcesCache: ManifestResourcesCacheType {
         self.translationsFileCache = translationsFileCache
     }
     
-    func getImageFromManifestResources(resource: String) -> UIImage? {
+    func getImageFromManifestResources(fileName: String) -> UIImage? {
         
-        guard let resourceSrc = manifest.resources[resource]?.src else {
+        guard let resourceSrc = manifest.resources[fileName]?.src else {
             return nil
         }
         

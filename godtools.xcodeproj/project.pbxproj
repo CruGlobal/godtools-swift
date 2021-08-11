@@ -253,6 +253,8 @@
 		45A3A0C626B0B497005DA490 /* TractFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A3A0C526B0B497005DA490 /* TractFlow.swift */; };
 		45A3A0C826B0BD54005DA490 /* Flow+NavigateToUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A3A0C726B0BD54005DA490 /* Flow+NavigateToUrl.swift */; };
 		45A3A0CA26B0BE50005DA490 /* TractFlowCompletedState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A3A0C926B0BE50005DA490 /* TractFlowCompletedState.swift */; };
+		45A5200A26C4746F009B68D4 /* MultiplatformLessonPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A5200926C4746F009B68D4 /* MultiplatformLessonPage.swift */; };
+		45A5200E26C481DB009B68D4 /* ManifestResourcesCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A5200D26C481DB009B68D4 /* ManifestResourcesCache.swift */; };
 		45A63AB3265441B60090E09D /* ExitLinkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A63AB2265441B60090E09D /* ExitLinkModel.swift */; };
 		45A73E4C25CF19E600B7533F /* IncomingDeepLinkType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A73E4B25CF19E600B7533F /* IncomingDeepLinkType.swift */; };
 		45A7BAF5252CBC5B00D70465 /* LocaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A7BAF4252CBC5B00D70465 /* LocaleTests.swift */; };
@@ -541,7 +543,6 @@
 		45AD1BE325938A4F00A096A0 /* NibBased.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD18D825938A4E00A096A0 /* NibBased.swift */; };
 		45AD1BE425938A4F00A096A0 /* CustomViewBuilderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD18D925938A4E00A096A0 /* CustomViewBuilderType.swift */; };
 		45AD1EEA25938A9800A096A0 /* FontService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1D4325938A9700A096A0 /* FontService.swift */; };
-		45AD1EF225938A9800A096A0 /* ManifestResourcesCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1D4F25938A9700A096A0 /* ManifestResourcesCache.swift */; };
 		45AD1F2525938A9800A096A0 /* MobileContentManifestPageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1D9825938A9700A096A0 /* MobileContentManifestPageType.swift */; };
 		45AD1F2625938A9800A096A0 /* MobileContentManifestAttributesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1D9925938A9700A096A0 /* MobileContentManifestAttributesType.swift */; };
 		45AD1F2725938A9800A096A0 /* MobileContentManifestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1D9A25938A9700A096A0 /* MobileContentManifestType.swift */; };
@@ -1275,6 +1276,8 @@
 		45A3A0C526B0B497005DA490 /* TractFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractFlow.swift; sourceTree = "<group>"; };
 		45A3A0C726B0BD54005DA490 /* Flow+NavigateToUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Flow+NavigateToUrl.swift"; sourceTree = "<group>"; };
 		45A3A0C926B0BE50005DA490 /* TractFlowCompletedState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractFlowCompletedState.swift; sourceTree = "<group>"; };
+		45A5200926C4746F009B68D4 /* MultiplatformLessonPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplatformLessonPage.swift; sourceTree = "<group>"; };
+		45A5200D26C481DB009B68D4 /* ManifestResourcesCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManifestResourcesCache.swift; sourceTree = "<group>"; };
 		45A63AB2265441B60090E09D /* ExitLinkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitLinkModel.swift; sourceTree = "<group>"; };
 		45A73E4B25CF19E600B7533F /* IncomingDeepLinkType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingDeepLinkType.swift; sourceTree = "<group>"; };
 		45A7BAF4252CBC5B00D70465 /* LocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleTests.swift; sourceTree = "<group>"; };
@@ -1563,7 +1566,6 @@
 		45AD18D825938A4E00A096A0 /* NibBased.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibBased.swift; sourceTree = "<group>"; };
 		45AD18D925938A4E00A096A0 /* CustomViewBuilderType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomViewBuilderType.swift; sourceTree = "<group>"; };
 		45AD1D4325938A9700A096A0 /* FontService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontService.swift; sourceTree = "<group>"; };
-		45AD1D4F25938A9700A096A0 /* ManifestResourcesCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManifestResourcesCache.swift; sourceTree = "<group>"; };
 		45AD1D9825938A9700A096A0 /* MobileContentManifestPageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentManifestPageType.swift; sourceTree = "<group>"; };
 		45AD1D9925938A9700A096A0 /* MobileContentManifestAttributesType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentManifestAttributesType.swift; sourceTree = "<group>"; };
 		45AD1D9A25938A9700A096A0 /* MobileContentManifestType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentManifestType.swift; sourceTree = "<group>"; };
@@ -3010,6 +3012,7 @@
 				4526529D26A7339E00E703F7 /* MultiplatformHeading.swift */,
 				4526528926A706AC00E703F7 /* MultiplatformHero.swift */,
 				453AF09F26A87A58002D4AB1 /* MultiplatformLabel.swift */,
+				45A5200926C4746F009B68D4 /* MultiplatformLessonPage.swift */,
 				453AF0A126A87A70002D4AB1 /* MultiplatformModal.swift */,
 				453AF0A326A87A80002D4AB1 /* MultiplatformModals.swift */,
 				4526529926A7294500E703F7 /* MultiplatformNumber.swift */,
@@ -4010,7 +4013,7 @@
 		45AD1D4E25938A9700A096A0 /* ManifestResourcesCache */ = {
 			isa = PBXGroup;
 			children = (
-				45AD1D4F25938A9700A096A0 /* ManifestResourcesCache.swift */,
+				45A5200D26C481DB009B68D4 /* ManifestResourcesCache.swift */,
 				45F506D926A3822E00EC04A9 /* ManifestResourcesCacheType.swift */,
 			);
 			path = ManifestResourcesCache;
@@ -5949,6 +5952,7 @@
 				45C93AF2261D310900592FFF /* ArticleAemDownloader.swift in Sources */,
 				45AD1BD025938A4F00A096A0 /* LoadingViewModelType.swift in Sources */,
 				45BD7A4226A21FDA0007426B /* ContentLinkNode.swift in Sources */,
+				45A5200A26C4746F009B68D4 /* MultiplatformLessonPage.swift in Sources */,
 				45AD1FFB25938A9800A096A0 /* DetermineNewUserIfPrimaryLanguageSet.swift in Sources */,
 				455583ED269F2DA500C3FF14 /* MobileContentSpacerViewModel.swift in Sources */,
 				45B6480B25E581660098BAF1 /* (null) in Sources */,
@@ -6340,6 +6344,7 @@
 				45BD79D926A20EEA0007426B /* ContentParagraphModelType.swift in Sources */,
 				45BEC53226A604E4005D8CA1 /* MobileContentButtonType.swift in Sources */,
 				45AD1FB725938A9800A096A0 /* TractRemoteSharePublisherError.swift in Sources */,
+				45A5200E26C481DB009B68D4 /* ManifestResourcesCache.swift in Sources */,
 				45AD20A725938CF100A096A0 /* AppConfig.swift in Sources */,
 				45AD1B1F25938A4E00A096A0 /* LearnToShareToolCell.swift in Sources */,
 				45C93ADA261D310900592FFF /* ArticleManifestType.swift in Sources */,
@@ -6378,7 +6383,6 @@
 				45AD1F8E25938A9800A096A0 /* ResourceModelType.swift in Sources */,
 				45AD1FFD25938A9800A096A0 /* FailedResourceViewsCache.swift in Sources */,
 				451172AF26A35425001AD628 /* MockMobileContentManifestAttributes.swift in Sources */,
-				45AD1EF225938A9800A096A0 /* ManifestResourcesCache.swift in Sources */,
 				45C93AE3261D310900592FFF /* ArticleAemCache.swift in Sources */,
 				45AD1F6625938A9800A096A0 /* ToolTrainingTipsOnboardingViewsCacheType.swift in Sources */,
 				45AD1F6325938A9800A096A0 /* WebSocketType.swift in Sources */,
