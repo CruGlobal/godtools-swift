@@ -50,7 +50,7 @@ class MultiplatformCard: CardModelType {
     }
     
     var hasTrainingTip: Bool {
-        return false  // TODO: Set this. ~Levi
+        return card.tips.count > 0
     }
     
     var cardPositionInVisibleCards: Int {
