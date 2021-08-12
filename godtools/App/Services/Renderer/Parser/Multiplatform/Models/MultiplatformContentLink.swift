@@ -19,7 +19,7 @@ class MultiplatformContentLink: ContentLinkModelType {
     }
     
     var events: [String] {
-        return [] // TODO: Set this. ~Levi
+        return link.events.map({$0.name})
     }
     
     var text: String? {
