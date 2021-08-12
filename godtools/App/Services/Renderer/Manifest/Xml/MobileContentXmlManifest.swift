@@ -11,11 +11,12 @@ import SWXMLHash
 
 class MobileContentXmlManifest: MobileContentManifestType {
       
+    private let resources: [String: MobileContentManifestResourceType]
+    
     let attributes: MobileContentManifestAttributesType
     let title: String?
     let pages: [MobileContentManifestPageType]
     let tips: [TipId: MobileContentManifestTipType]
-    let resources: [ResourceFilename: MobileContentManifestResourceType]
         
     required init(translationManifestData: TranslationManifestData) {
            
@@ -43,7 +44,7 @@ class MobileContentXmlManifest: MobileContentManifestType {
         self.tips = tipsDictionary
         
         let resourcesIndexer: [XMLIndexer] = manifest["resources"]["resource"].all
-        var resourcesDictionary: [ResourceFilename: MobileContentXmlManifestResource] = Dictionary()
+        var resourcesDictionary: [String: MobileContentXmlManifestResource] = Dictionary()
         
         for resourceXml in resourcesIndexer {
             let resource = MobileContentXmlManifestResource(resource: resourceXml)
@@ -51,5 +52,10 @@ class MobileContentXmlManifest: MobileContentManifestType {
         }
         
         self.resources = resourcesDictionary        
+    }
+    
+    func getResource(fileName: String) -> MobileContentManifestResourceType? {
+        
+        return resources[fileName]
     }
 }

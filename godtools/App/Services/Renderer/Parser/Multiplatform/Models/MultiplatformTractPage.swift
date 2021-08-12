@@ -72,7 +72,7 @@ class MultiplatformTractPage: PageModelType {
     }
     
     var listeners: [String] {
-        return [] // TODO: Need to set this. ~Levi
+        return tractPage.listeners.map({$0.name})
     }
     
     var textScale: MobileContentTextScale {
@@ -84,11 +84,14 @@ class MultiplatformTractPage: PageModelType {
     }
     
     var hero: HeroModelType? {
-        return nil // TODO: Need to set this. ~Levi
+        guard let hero = tractPage.hero else {
+            return nil
+        }
+        return MultiplatformHero(hero: hero)
     }
     
     var callToAction: CallToActionModelType? {
-        return nil // TODO: Need to set this. ~Levi
+        return MultiplatformCallToAction(callToAction: tractPage.callToAction)
     }
     
     func getBackgroundColor() -> MobileContentColor? {

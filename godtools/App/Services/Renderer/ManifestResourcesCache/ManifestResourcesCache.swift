@@ -21,11 +21,11 @@ class ManifestResourcesCache: ManifestResourcesCacheType {
     
     func getImageFromManifestResources(fileName: String) -> UIImage? {
         
-        guard let resourceSrc = manifest.resources[fileName]?.src else {
+        guard let resource = manifest.getResource(fileName: fileName) else {
             return nil
         }
         
-        let location: SHA256FileLocation = SHA256FileLocation(sha256WithPathExtension: resourceSrc)
+        let location: SHA256FileLocation = SHA256FileLocation(sha256WithPathExtension: resource.src)
         
         let imageData: Data?
         

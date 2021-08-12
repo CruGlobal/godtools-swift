@@ -34,11 +34,11 @@ class MultiplatformCard: CardModelType {
     }
     
     var dismissListeners: [String] {
-        return [] // TODO: Set this. ~Levi
+        return card.dismissListeners.map({$0.name})
     }
     
     var listeners: [String] {
-        return [] // TODO: Set this. ~Levi
+        return card.listeners.map({$0.name})
     }
     
     var isHidden: Bool {
@@ -54,7 +54,7 @@ class MultiplatformCard: CardModelType {
     }
     
     var cardPositionInVisibleCards: Int {
-        return 0 // TODO: Set this. ~Levi
+        return card.visiblePosition?.intValue ?? 0
     }
     
     func getTextColor() -> MobileContentColor? {

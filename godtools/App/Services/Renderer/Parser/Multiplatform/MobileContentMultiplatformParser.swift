@@ -29,7 +29,19 @@ class MobileContentMultiplatformParser: MobileContentParserType {
             let manifest: Manifest = resultData.manifest
             
             self.manifest = MultiplatformManifest(manifest: manifest)
-            self.pageModels = manifest.tractPages.map({MultiplatformTractPage(tractPage: $0)})
+            
+            if manifest.tractPages.count > 0 {
+                
+                self.pageModels = manifest.tractPages.map({MultiplatformTractPage(tractPage: $0)})
+            }
+            else if manifest.lessonPages.count > 0 {
+                // TODO: Initialize with lesson pages. ~Levi
+                self.pageModels = Array()
+            }
+            else {
+                assertionFailure("Failed to parse multiplatform manifest.  Didn't find any tract or lesson pages.")
+                self.pageModels = Array()
+            }
         }
         else {
             let failedToParseManifest: Error = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Multiplatform failed to parse manifest."])
