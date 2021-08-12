@@ -22,7 +22,8 @@ class MultiplatformCard: CardModelType {
     }
     
     var backgroundImage: String? {
-        return card.backgroundImage?.name
+        let fileName: String? = card.backgroundImage?.name
+        return fileName
     }
     
     var backgroundImageAlignments: [MobileContentBackgroundImageAlignment] {

@@ -19,11 +19,12 @@ class MultiplatformContentImage: ContentImageModelType {
     }
     
     var events: [String] {
-        return [] // TODO: Set this. ~Levi
+        return image.events.map({$0.name})
     }
     
     var resource: String? {
-        return nil // TODO: Set this. ~Levi
+        let fileName: String? = image.resource?.name
+        return fileName
     }
 }
 
