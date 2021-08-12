@@ -27,11 +27,11 @@ class MultiplatformAnalyticsEvent: AnalyticsEventModelType {
     }
     
     var systems: [String] {
-        return Array() // TODO: Set this. ~Levi
+        return analyticsEvent.systems.map({$0.name})
     }
     
-    var trigger: MobileContentAnalyticsEventTrigger {
-        return .visible// TODO: Set this. ~Levi
+    var triggerName: String? {
+        return analyticsEvent.trigger.name
     }
     
     func getAttributes() -> [String : String] {

@@ -29,15 +29,8 @@ class AnalyticsEventNode: MobileContentXmlNode, AnalyticsEventModelType {
         super.init(xmlElement: xmlElement)
     }
     
-    var trigger: MobileContentAnalyticsEventTrigger {
-        
-        let defaultTrigger: MobileContentAnalyticsEventTrigger = .dependentOnContainingElement
-        
-        guard let triggerString = self.triggerString?.lowercased() else {
-            return defaultTrigger
-        }
-        
-        return MobileContentAnalyticsEventTrigger(rawValue: triggerString) ?? defaultTrigger
+    var triggerName: String? {
+        return triggerString
     }
     
     func getAttributes() -> [String: String] {
