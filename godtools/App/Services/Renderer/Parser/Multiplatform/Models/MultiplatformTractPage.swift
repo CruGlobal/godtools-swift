@@ -67,6 +67,7 @@ class MultiplatformTractPage: PageModelType {
         case .fillY:
             return .fillVertically
         default:
+            assertionFailure("Found unsupported type, returning fill.  Ensure case is supported.")
             return .fill
         }
     }
@@ -80,7 +81,8 @@ class MultiplatformTractPage: PageModelType {
     }
     
     var isHidden: Bool {
-        return false // TODO: Need to set this. ~Levi
+        // NOTE: I believe this concept hasn't been introduced to TractPage, but is part of LessonPage. ~Levi
+        return false
     }
     
     var hero: HeroModelType? {

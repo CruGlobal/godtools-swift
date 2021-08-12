@@ -17,7 +17,7 @@ class MultiplatformContentFactory {
     
     static func getRenderableModel(content: Content) -> MobileContentRenderableModel? {
         
-        // TODO: Add InlineTip from GodToolsToolParser. Link 917. ~Levi
+        // TODO: Add InlineTip from GodToolsToolParser. Line 917. ~Levi
         
         let renderableModel: MobileContentRenderableModel?
         
