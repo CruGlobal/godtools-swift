@@ -10,9 +10,10 @@ import Foundation
 
 protocol AnalyticsEventModelType {
         
-    var attribute: AnalyticsAttributeModel? { get }
     var action: String? { get }
     var delay: String? { get }
     var systems: [String] { get }
     var trigger: MobileContentAnalyticsEventTrigger { get }
+    
+    func getAttributes() -> [String: String]
 }

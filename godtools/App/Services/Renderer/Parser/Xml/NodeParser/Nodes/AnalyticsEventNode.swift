@@ -29,15 +29,6 @@ class AnalyticsEventNode: MobileContentXmlNode, AnalyticsEventModelType {
         super.init(xmlElement: xmlElement)
     }
     
-    var attribute: AnalyticsAttributeModel? {
-        
-        if let attributeNode = children.first as? AnalyticsAttributeNode {
-            return AnalyticsAttributeModel(key: attributeNode.key, value: attributeNode.value)
-        }
-        
-        return nil
-    }
-    
     var trigger: MobileContentAnalyticsEventTrigger {
         
         let defaultTrigger: MobileContentAnalyticsEventTrigger = .dependentOnContainingElement
@@ -47,5 +38,18 @@ class AnalyticsEventNode: MobileContentXmlNode, AnalyticsEventModelType {
         }
         
         return MobileContentAnalyticsEventTrigger(rawValue: triggerString) ?? defaultTrigger
+    }
+    
+    func getAttributes() -> [String: String] {
+        
+        var attributes: [String: String] = Dictionary()
+        
+        for childNode in children {
+            if let attributeNode = childNode as? AnalyticsAttributeNode, let key = attributeNode.key, let value = attributeNode.value, !key.isEmpty, !value.isEmpty {
+                attributes[key] = value
+            }
+        }
+        
+        return attributes
     }
 }

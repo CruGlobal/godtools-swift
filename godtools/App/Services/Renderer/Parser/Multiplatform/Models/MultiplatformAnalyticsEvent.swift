@@ -18,10 +18,6 @@ class MultiplatformAnalyticsEvent: AnalyticsEventModelType {
         self.analyticsEvent = analyticsEvent
     }
     
-    var attribute: AnalyticsAttributeModel? {
-        return nil // TODO: Set this. ~Levi
-    }
-    
     var action: String? {
         return analyticsEvent.action
     }
@@ -36,5 +32,9 @@ class MultiplatformAnalyticsEvent: AnalyticsEventModelType {
     
     var trigger: MobileContentAnalyticsEventTrigger {
         return .visible// TODO: Set this. ~Levi
+    }
+    
+    func getAttributes() -> [String : String] {
+        return analyticsEvent.attributes
     }
 }
