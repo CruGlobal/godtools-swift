@@ -75,7 +75,7 @@ class MultiplatformContentButton: ContentButtonModelType {
     }
     
     func getAnalyticsEvents() -> [AnalyticsEventModelType] {
-        return [] // TODO: Set this. ~Levi
+        return button.analyticsEvents.map({MultiplatformAnalyticsEvent(analyticsEvent: $0)})
     }
 }
 
