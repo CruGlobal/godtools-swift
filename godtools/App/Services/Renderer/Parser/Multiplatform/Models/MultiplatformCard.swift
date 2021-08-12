@@ -62,7 +62,7 @@ class MultiplatformCard: CardModelType {
     }
     
     func getAnalyticsEvents() -> [AnalyticsEventModelType] {
-        return []  // TODO: Set this. ~Levi
+        return card.analyticsEvents.map({MultiplatformAnalyticsEvent(analyticsEvent: $0)})
     }
 }
 
