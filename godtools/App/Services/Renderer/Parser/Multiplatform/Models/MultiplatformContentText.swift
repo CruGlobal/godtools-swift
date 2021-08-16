@@ -38,10 +38,6 @@ class MultiplatformContentText: ContentTextModelType {
         return contentText.text
     }
     
-    var textStyle: String? {
-        return nil // TODO: Implement. ~Levi
-    }
-    
     var textAlignment: MobileContentTextAlignment? {
        
         switch contentText.textAlign {
