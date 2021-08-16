@@ -32,8 +32,19 @@ class MultiplatformManifestAttributes: MobileContentManifestAttributesType {
     }
     
     var backgroundImageScale: MobileContentBackgroundImageScale {
-        // TODO: Need to set this. ~Levi
-        return .fill
+        switch manifest.backgroundImageScaleType {
+        case .fill:
+            return .fill
+        case .fit:
+            return .fit
+        case .fillX:
+            return .fillHorizontally
+        case .fillY:
+            return .fillVertically
+        default:
+            assertionFailure("Found unsupported type, returning fill.  Ensure case is supported.")
+            return .fill
+        }
     }
     
     var categoryLabelColor: MobileContentColor? {
