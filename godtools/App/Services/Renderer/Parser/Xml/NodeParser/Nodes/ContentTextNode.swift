@@ -18,11 +18,11 @@ class ContentTextNode: MobileContentXmlNode, ContentTextModelType {
     private let textAlignString: String?
     private let textColorString: String?
     private let textScaleString: String?
+    private let textStyleString: String?
     
     let endImage: String?
     let startImage: String?
     let text: String?
-    let textStyle: String?
     
     required init(xmlElement: XMLElement) {
     
@@ -35,7 +35,7 @@ class ContentTextNode: MobileContentXmlNode, ContentTextModelType {
         textAlignString = attributes["text-align"]?.text
         textColorString = attributes["text-color"]?.text
         textScaleString = attributes["text-scale"]?.text
-        textStyle = attributes["text-style"]?.text
+        textStyleString = attributes["text-style"]?.text
                 
         if xmlElement.text.trimmingCharacters(in: .whitespaces) != "" {
             text = xmlElement.text
@@ -88,5 +88,23 @@ class ContentTextNode: MobileContentXmlNode, ContentTextModelType {
             return nil
         }
         return MobileContentColor(stringColor: stringColor)
+    }
+    
+    func getTextStyles() -> [MobileContentTextStyle] {
+        
+        let defaultTextStyles: [MobileContentTextStyle] = Array()
+        
+        guard let textStyleString = self.textStyleString else {
+            return defaultTextStyles
+        }
+        
+        let textStylesArray: [String] = textStyleString.components(separatedBy: " ")
+        let textStyles: [MobileContentTextStyle] = textStylesArray.compactMap({MobileContentTextStyle(rawValue: $0.lowercased())})
+            
+        guard !textStyles.isEmpty else {
+            return defaultTextStyles
+        }
+        
+        return textStyles
     }
 }

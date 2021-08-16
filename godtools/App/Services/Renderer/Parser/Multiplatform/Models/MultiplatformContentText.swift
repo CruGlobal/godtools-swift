@@ -67,6 +67,32 @@ class MultiplatformContentText: ContentTextModelType {
     func getTextColor() -> MobileContentColor? {
         return MobileContentColor(color: contentText.textColor)
     }
+    
+    func getTextStyles() -> [MobileContentTextStyle] {
+       
+        return contentText.textStyles.compactMap({
+            
+            let textStyle: MobileContentTextStyle?
+            
+            switch $0 {
+            
+            case .bold:
+                textStyle = .bold
+            
+            case .italic:
+                textStyle = .italic
+            
+            case .underline:
+                textStyle = .underline
+            
+            default:
+                assertionFailure("Found unsupported textStyle \($0). Ensure all textStyles are supported.")
+                textStyle = nil
+            }
+            
+            return textStyle
+        })
+    }
 }
 
 // MARK: - MobileContentRenderableModel
