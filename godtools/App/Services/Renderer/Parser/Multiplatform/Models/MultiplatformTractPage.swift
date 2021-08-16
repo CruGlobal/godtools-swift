@@ -151,7 +151,6 @@ extension MultiplatformTractPage {
         
         childModels.append(MultiplatformCallToAction(callToAction: tractPage.callToAction))
         
-        // TODO: Return children to render. ~Levi
         return childModels
     }
 }
