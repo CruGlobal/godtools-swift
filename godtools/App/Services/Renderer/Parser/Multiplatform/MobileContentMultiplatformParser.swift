@@ -30,16 +30,25 @@ class MobileContentMultiplatformParser: MobileContentParserType {
             
             self.manifest = MultiplatformManifest(manifest: manifest)
             
-            if manifest.tractPages.count > 0 {
-                
+            switch manifest.type {
+            
+            case .tract:
                 self.pageModels = manifest.tractPages.map({MultiplatformTractPage(tractPage: $0)})
-            }
-            else if manifest.lessonPages.count > 0 {
+            
+            case .lesson:
                 // TODO: Initialize with lesson pages. ~Levi
                 self.pageModels = Array()
-            }
-            else {
-                assertionFailure("Failed to parse multiplatform manifest.  Didn't find any tract or lesson pages.")
+                
+            case .article:
+                // TODO: I think eventually we can update articles manifest parser to use this. ~Levi
+                assertionFailure("Not implemented for articles.")
+                self.pageModels = Array()
+                
+            case .unknown:
+                self.pageModels = Array()
+                
+            default:
+                assertionFailure("Found unsupported manifest type.  Ensure all types are supported.")
                 self.pageModels = Array()
             }
         }

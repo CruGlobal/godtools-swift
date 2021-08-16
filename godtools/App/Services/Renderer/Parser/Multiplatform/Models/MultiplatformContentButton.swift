@@ -19,7 +19,7 @@ class MultiplatformContentButton: ContentButtonModelType {
     }
     
     var events: [String] {
-        return [] // TODO: Set this. ~Levi
+        return button.events.map({$0.description()})
     }
     
     var url: String? {
