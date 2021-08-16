@@ -29,23 +29,20 @@ class AnalyticsEventNode: MobileContentXmlNode, AnalyticsEventModelType {
         super.init(xmlElement: xmlElement)
     }
     
-    var attribute: AnalyticsAttributeModel? {
-        
-        if let attributeNode = children.first as? AnalyticsAttributeNode {
-            return AnalyticsAttributeModel(key: attributeNode.key, value: attributeNode.value)
-        }
-        
-        return nil
+    var triggerName: String? {
+        return triggerString
     }
     
-    var trigger: MobileContentAnalyticsEventTrigger {
+    func getAttributes() -> [String: String] {
         
-        let defaultTrigger: MobileContentAnalyticsEventTrigger = .dependentOnContainingElement
+        var attributes: [String: String] = Dictionary()
         
-        guard let triggerString = self.triggerString?.lowercased() else {
-            return defaultTrigger
+        for childNode in children {
+            if let attributeNode = childNode as? AnalyticsAttributeNode, let key = attributeNode.key, let value = attributeNode.value, !key.isEmpty, !value.isEmpty {
+                attributes[key] = value
+            }
         }
         
-        return MobileContentAnalyticsEventTrigger(rawValue: triggerString) ?? defaultTrigger
+        return attributes
     }
 }

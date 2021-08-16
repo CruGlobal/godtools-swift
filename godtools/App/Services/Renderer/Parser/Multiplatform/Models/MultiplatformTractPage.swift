@@ -67,12 +67,13 @@ class MultiplatformTractPage: PageModelType {
         case .fillY:
             return .fillVertically
         default:
+            assertionFailure("Found unsupported type, returning fill.  Ensure case is supported.")
             return .fill
         }
     }
     
     var listeners: [String] {
-        return [] // TODO: Need to set this. ~Levi
+        return tractPage.listeners.map({$0.name})
     }
     
     var textScale: MobileContentTextScale {
@@ -80,15 +81,19 @@ class MultiplatformTractPage: PageModelType {
     }
     
     var isHidden: Bool {
-        return false // TODO: Need to set this. ~Levi
+        // NOTE: I believe this concept hasn't been introduced to TractPage, but is part of LessonPage. ~Levi
+        return false
     }
     
     var hero: HeroModelType? {
-        return nil // TODO: Need to set this. ~Levi
+        guard let hero = tractPage.hero else {
+            return nil
+        }
+        return MultiplatformHero(hero: hero)
     }
     
     var callToAction: CallToActionModelType? {
-        return nil // TODO: Need to set this. ~Levi
+        return MultiplatformCallToAction(callToAction: tractPage.callToAction)
     }
     
     func getBackgroundColor() -> MobileContentColor? {

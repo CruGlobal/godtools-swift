@@ -11,16 +11,19 @@ import GodToolsToolParser
 
 class MultiplatformModal: ModalModelType {
     
-    required init() {
+    private let modal: Modal
+    
+    required init(modal: Modal) {
         
+        self.modal = modal
     }
     
     var dismissListeners: [String] {
-        return [] // TODO: Set this. ~Levi
+        return modal.dismissListeners.map({$0.name})
     }
     
     var listeners: [String] {
-        return [] // TODO: Set this. ~Levi
+        return modal.listeners.map({$0.name})
     }
 }
 

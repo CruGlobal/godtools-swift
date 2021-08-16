@@ -35,17 +35,8 @@ class MobileContentAnalytics {
         guard let action = event.action, !action.isEmpty else {
             return
         }
-        
-        let attribute: AnalyticsAttributeModel? = event.attribute
-        
-        let data: [String: Any]?
-         
-         if let key = attribute?.key, let value = attribute?.value {
-             data = [key: value]
-         }
-         else {
-             data = nil
-         }
+                
+        let data: [String: String] = event.getAttributes()
          
         for system in event.systems {
              

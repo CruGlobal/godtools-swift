@@ -26,7 +26,7 @@ class MobileContentBackgroundImageViewModel {
         guard let resource = backgroundImageModel.backgroundImage else {
             return nil
         }
-        return manifestResourcesCache.getImageFromManifestResources(resource: resource)
+        return manifestResourcesCache.getImageFromManifestResources(fileName: resource)
     }
     
     var alignments: [MobileContentBackgroundImageAlignment] {
@@ -64,7 +64,7 @@ class MobileContentBackgroundImageViewModel {
             return nil
         }
         
-        guard let backgroundImage = manifestResourcesCache.getImageFromManifestResources(resource: resource) else {
+        guard let backgroundImage = manifestResourcesCache.getImageFromManifestResources(fileName: resource) else {
             return nil
         }
         

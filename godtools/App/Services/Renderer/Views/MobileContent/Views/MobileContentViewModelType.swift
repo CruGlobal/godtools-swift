@@ -27,7 +27,7 @@ extension MobileContentViewModelType {
     func mobileContentDidAppear() {
         
         for event in analyticsEvents {
-            let trigger: MobileContentAnalyticsEventTrigger = event.analyticsEvent.trigger
+            let trigger: MobileContentAnalyticsEventTrigger = event.analyticsEvent.getTrigger()
             if trigger == .visible || (trigger == .dependentOnContainingElement && defaultAnalyticsEventsTrigger == .visible) {
                 event.trigger()
             }
@@ -37,7 +37,7 @@ extension MobileContentViewModelType {
     func mobileContentDidDisappear() {
         
         for event in analyticsEvents {
-            let trigger: MobileContentAnalyticsEventTrigger = event.analyticsEvent.trigger
+            let trigger: MobileContentAnalyticsEventTrigger = event.analyticsEvent.getTrigger()
             if trigger == .visible || (trigger == .dependentOnContainingElement && defaultAnalyticsEventsTrigger == .visible) {
                 event.cancel()
             }
