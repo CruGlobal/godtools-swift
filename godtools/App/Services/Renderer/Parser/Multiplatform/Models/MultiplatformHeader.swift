@@ -19,7 +19,7 @@ class MultiplatformHeader: HeaderModelType {
     }
     
     var trainingTip: String? {
-        return nil // TODO: Implement. ~Levi
+        return header.tip?.id
     }
 }
 
