@@ -44,6 +44,11 @@ extension MultiplatformModal {
     }
     
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
-        return Array()
+        
+        var childModels: [MobileContentRenderableModel] = Array()
+        
+        addContentToChildModels(childModels: &childModels, content: modal.content)
+        
+        return childModels
     }
 }
