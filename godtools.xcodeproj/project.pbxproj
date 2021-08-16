@@ -77,6 +77,7 @@
 		45428A8126712B1C0022A66D /* AppsFlyerAnalytics+MobileContentAnalyticsSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45428A8026712B1C0022A66D /* AppsFlyerAnalytics+MobileContentAnalyticsSystem.swift */; };
 		4543ACCE26CAEE040002F6F7 /* MobileContentTextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543ACCD26CAEE040002F6F7 /* MobileContentTextStyle.swift */; };
 		4543ACD026CB14E10002F6F7 /* MultiplatformContentFallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543ACCF26CB14E10002F6F7 /* MultiplatformContentFallback.swift */; };
+		4543ACD226CB24500002F6F7 /* MultiplatformTipPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543ACD126CB24500002F6F7 /* MultiplatformTipPage.swift */; };
 		45557AEA252D094100ACFA95 /* LocaleLocalizationBundleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45557AE9252D094000ACFA95 /* LocaleLocalizationBundleTests.swift */; };
 		455582E1269F2C1000C3FF14 /* TrainingViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455582D3269F2C1000C3FF14 /* TrainingViewFactory.swift */; };
 		455582E2269F2C1000C3FF14 /* TrainingTipView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 455582D6269F2C1000C3FF14 /* TrainingTipView.xib */; };
@@ -1105,6 +1106,7 @@
 		45428A8026712B1C0022A66D /* AppsFlyerAnalytics+MobileContentAnalyticsSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppsFlyerAnalytics+MobileContentAnalyticsSystem.swift"; sourceTree = "<group>"; };
 		4543ACCD26CAEE040002F6F7 /* MobileContentTextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentTextStyle.swift; sourceTree = "<group>"; };
 		4543ACCF26CB14E10002F6F7 /* MultiplatformContentFallback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplatformContentFallback.swift; sourceTree = "<group>"; };
+		4543ACD126CB24500002F6F7 /* MultiplatformTipPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplatformTipPage.swift; sourceTree = "<group>"; };
 		45557AE9252D094000ACFA95 /* LocaleLocalizationBundleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocaleLocalizationBundleTests.swift; sourceTree = "<group>"; };
 		455582D3269F2C1000C3FF14 /* TrainingViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrainingViewFactory.swift; sourceTree = "<group>"; };
 		455582D6269F2C1000C3FF14 /* TrainingTipView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TrainingTipView.xib; sourceTree = "<group>"; };
@@ -3025,6 +3027,7 @@
 				453AF0A126A87A70002D4AB1 /* MultiplatformModal.swift */,
 				453AF0A326A87A80002D4AB1 /* MultiplatformModals.swift */,
 				4526529926A7294500E703F7 /* MultiplatformNumber.swift */,
+				4543ACD126CB24500002F6F7 /* MultiplatformTipPage.swift */,
 				4526529726A7205A00E703F7 /* MultiplatformTitle.swift */,
 				455E799326A6204A00972EC0 /* MultiplatformTractPage.swift */,
 				453AF0A726A87A9B002D4AB1 /* MultiplatformTrainingTip.swift */,
@@ -5929,6 +5932,7 @@
 				455583CF269F2DA500C3FF14 /* MobileContentFormView.swift in Sources */,
 				455583C4269F2DA500C3FF14 /* MobileContentPageViewFactoryType.swift in Sources */,
 				459C56D225FF954F00F15967 /* (null) in Sources */,
+				4543ACD226CB24500002F6F7 /* MultiplatformTipPage.swift in Sources */,
 				45AD1B6225938A4F00A096A0 /* GlobalActivityCell.swift in Sources */,
 				455583D0269F2DA500C3FF14 /* MobileContentFormViewModelType.swift in Sources */,
 				45AD1AB425938A4E00A096A0 /* TutorialLanguageAvailability.swift in Sources */,
