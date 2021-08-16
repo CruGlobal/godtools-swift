@@ -76,6 +76,7 @@
 		45428A7D26712ABA0022A66D /* SnowplowAnalytics+MobileContentAnalyticsSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45428A7C26712ABA0022A66D /* SnowplowAnalytics+MobileContentAnalyticsSystem.swift */; };
 		45428A8126712B1C0022A66D /* AppsFlyerAnalytics+MobileContentAnalyticsSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45428A8026712B1C0022A66D /* AppsFlyerAnalytics+MobileContentAnalyticsSystem.swift */; };
 		4543ACCE26CAEE040002F6F7 /* MobileContentTextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543ACCD26CAEE040002F6F7 /* MobileContentTextStyle.swift */; };
+		4543ACD026CB14E10002F6F7 /* MultiplatformContentFallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543ACCF26CB14E10002F6F7 /* MultiplatformContentFallback.swift */; };
 		45557AEA252D094100ACFA95 /* LocaleLocalizationBundleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45557AE9252D094000ACFA95 /* LocaleLocalizationBundleTests.swift */; };
 		455582E1269F2C1000C3FF14 /* TrainingViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455582D3269F2C1000C3FF14 /* TrainingViewFactory.swift */; };
 		455582E2269F2C1000C3FF14 /* TrainingTipView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 455582D6269F2C1000C3FF14 /* TrainingTipView.xib */; };
@@ -1103,6 +1104,7 @@
 		45428A7C26712ABA0022A66D /* SnowplowAnalytics+MobileContentAnalyticsSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SnowplowAnalytics+MobileContentAnalyticsSystem.swift"; sourceTree = "<group>"; };
 		45428A8026712B1C0022A66D /* AppsFlyerAnalytics+MobileContentAnalyticsSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppsFlyerAnalytics+MobileContentAnalyticsSystem.swift"; sourceTree = "<group>"; };
 		4543ACCD26CAEE040002F6F7 /* MobileContentTextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentTextStyle.swift; sourceTree = "<group>"; };
+		4543ACCF26CB14E10002F6F7 /* MultiplatformContentFallback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplatformContentFallback.swift; sourceTree = "<group>"; };
 		45557AE9252D094000ACFA95 /* LocaleLocalizationBundleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocaleLocalizationBundleTests.swift; sourceTree = "<group>"; };
 		455582D3269F2C1000C3FF14 /* TrainingViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrainingViewFactory.swift; sourceTree = "<group>"; };
 		455582D6269F2C1000C3FF14 /* TrainingTipView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TrainingTipView.xib; sourceTree = "<group>"; };
@@ -3000,6 +3002,7 @@
 				452652A126A7540A00E703F7 /* MultiplatformCards.swift */,
 				453AF08726A8788F002D4AB1 /* MultiplatformContentAccordion.swift */,
 				452652A526A763E500E703F7 /* MultiplatformContentButton.swift */,
+				4543ACCF26CB14E10002F6F7 /* MultiplatformContentFallback.swift */,
 				453AF08926A8789D002D4AB1 /* MultiplatformContentForm.swift */,
 				453AF0A926A87DC3002D4AB1 /* MultiplatformContentHeader.swift */,
 				453AF08B26A878B3002D4AB1 /* MultiplatformContentImage.swift */,
@@ -6450,6 +6453,7 @@
 				45AD1B8F25938A4F00A096A0 /* OnboardingTutorialView.swift in Sources */,
 				45AD1FBC25938A9800A096A0 /* TractRemoteShareSubscriber.swift in Sources */,
 				45A3A0C826B0BD54005DA490 /* Flow+NavigateToUrl.swift in Sources */,
+				4543ACD026CB14E10002F6F7 /* MultiplatformContentFallback.swift in Sources */,
 				45AD200325938A9800A096A0 /* UserAuthenticationType.swift in Sources */,
 				D19D010325AF549B007C535B /* DeepLinkingServiceType.swift in Sources */,
 				45AD1FCD25938A9800A096A0 /* SHA256FilesCache.swift in Sources */,
