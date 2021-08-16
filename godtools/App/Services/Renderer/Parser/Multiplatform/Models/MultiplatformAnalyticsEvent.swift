@@ -27,7 +27,7 @@ class MultiplatformAnalyticsEvent: AnalyticsEventModelType {
     }
     
     var systems: [String] {
-        return analyticsEvent.systems.map({$0.name})
+        return analyticsEvent.systems.map({$0.description()})
     }
     
     var triggerName: String? {

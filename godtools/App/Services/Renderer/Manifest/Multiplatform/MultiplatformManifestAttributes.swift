@@ -23,8 +23,7 @@ class MultiplatformManifestAttributes: MobileContentManifestAttributesType {
     }
     
     var backgroundImage: String? {
-        // TODO: Need to set this. ~Levi
-        return nil
+        manifest.backgroundImage?.localName
     }
     
     var backgroundImageAlignments: [MobileContentBackgroundImageAlignment] {
@@ -43,13 +42,11 @@ class MultiplatformManifestAttributes: MobileContentManifestAttributesType {
     }
     
     var dismissListeners: [String] {
-        // TODO: Need to set this. ~Levi
-        return []
+        return manifest.dismissListeners.map({$0.description()})
     }
     
     var locale: String? {
-        // TODO: Need to set this. ~Levi
-        return nil
+        return manifest.locale?.description
     }
     
     var navbarColor: MobileContentColor? {
@@ -73,17 +70,6 @@ class MultiplatformManifestAttributes: MobileContentManifestAttributesType {
     }
     
     var textScale: MobileContentTextScale {
-        // TODO: Need to set this. ~Levi
-        return MobileContentTextScale(textScaleString: nil)
-    }
-    
-    var tool: String? {
-        // TODO: Need to set this. ~Levi
-        return nil
-    }
-    
-    var type: String? {
-        // TODO: Need to set this. ~Levi
-        return nil
+        return MobileContentTextScale(doubleValue: manifest.textScale)
     }
 }

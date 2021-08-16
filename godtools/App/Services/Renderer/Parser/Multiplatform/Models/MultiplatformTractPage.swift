@@ -73,7 +73,7 @@ class MultiplatformTractPage: PageModelType {
     }
     
     var listeners: [String] {
-        return tractPage.listeners.map({$0.name})
+        return tractPage.listeners.map({$0.description()})
     }
     
     var textScale: MobileContentTextScale {

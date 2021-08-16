@@ -19,7 +19,7 @@ class MultiplatformContentTab: ContentTabModelType {
     }
     
     var listeners: [String] {
-        return tab.listeners.map({$0.name})
+        return tab.listeners.map({$0.description()})
     }
     
     var text: String? {
