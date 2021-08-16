@@ -25,8 +25,6 @@ class MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
     let categoryLabelColor: String?
     let dismissListeners: [String]
     let locale: String?
-    let tool: String?
-    let type: String?
     
     required init(manifest: XMLIndexer) {
         
@@ -45,8 +43,6 @@ class MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
         primaryTextColorString = attributes["primary-text-color"]?.text ?? "rgba(255,255,255,1)"
         textColorString = attributes["text-color"]?.text ?? "rgba(90,90,90,1)"
         textScaleString = attributes["text-scale"]?.text
-        tool = attributes["tool"]?.text
-        type = attributes["type"]?.text
     }
     
     var backgroundColor: MobileContentColor {

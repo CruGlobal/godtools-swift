@@ -23,8 +23,6 @@ class MockMobileContentManifestAttributes: MobileContentManifestAttributesType {
     let primaryTextColor: MobileContentColor = MobileContentColor(color: .black)
     let textColor: MobileContentColor = MobileContentColor(color: .black)
     let textScale: MobileContentTextScale = MobileContentTextScale(textScaleString: nil)
-    let tool: String? = nil
-    let type: String? = nil
     
     required init() {
         
