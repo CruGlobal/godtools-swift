@@ -23,6 +23,4 @@ protocol MobileContentManifestAttributesType: BackgroundImageModelType {
     var primaryTextColor: MobileContentColor { get }
     var textColor: MobileContentColor { get }
     var textScale: MobileContentTextScale { get }
-    //var tool: String? { get }
-    //var type: String? { get }
 }
