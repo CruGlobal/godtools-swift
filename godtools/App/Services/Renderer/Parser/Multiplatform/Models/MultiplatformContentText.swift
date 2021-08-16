@@ -19,7 +19,7 @@ class MultiplatformContentText: ContentTextModelType {
     }
     
     var endImage: String? {
-        return nil // TODO: Implement. ~Levi
+        return contentText.endImage?.localName
     }
     
     var endImageSize: Int32 {
@@ -27,7 +27,7 @@ class MultiplatformContentText: ContentTextModelType {
     }
     
     var startImage: String? {
-        return nil // TODO: Implement. ~Levi
+        return contentText.startImage?.localName
     }
     
     var startImageSize: Int32 {
@@ -43,7 +43,21 @@ class MultiplatformContentText: ContentTextModelType {
     }
     
     var textAlignment: MobileContentTextAlignment? {
-        return nil // TODO: Implement. ~Levi
+       
+        switch contentText.textAlign {
+        case .start:
+            return .left
+    
+        case .center:
+            return .center
+            
+        case .end:
+            return .right
+            
+        default:
+            assertionFailure("Found unsupported Text.Align. Ensure all alignments are supported.")
+            return .left
+        }
     }
     
     var textScale: MobileContentTextScale {
@@ -51,7 +65,7 @@ class MultiplatformContentText: ContentTextModelType {
     }
     
     func getTextColor() -> MobileContentColor? {
-        return nil // TODO: Implement. ~Levi
+        return MobileContentColor(color: contentText.textColor)
     }
 }
 
