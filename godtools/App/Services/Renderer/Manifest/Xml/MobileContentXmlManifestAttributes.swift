@@ -14,6 +14,7 @@ class MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
     private let backgroundColorString: String
     private let backgroundImageAlignmentStrings: [String]
     private let backgroundImageScaleString: String?
+    private let categoryLabelColorString: String?
     private let navbarColorString: String?
     private let navbarControlColorString: String?
     private let primaryColorString: String
@@ -22,7 +23,6 @@ class MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
     private let textScaleString: String?
     
     let backgroundImage: String?
-    let categoryLabelColor: String?
     let dismissListeners: [String]
     let locale: String?
     
@@ -34,7 +34,7 @@ class MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
         backgroundImage = attributes["background-image"]?.text
         backgroundImageAlignmentStrings = attributes["background-image-align"]?.text.components(separatedBy: " ") ?? []
         backgroundImageScaleString = attributes["background-image-scale-type"]?.text
-        categoryLabelColor = attributes["category-label-color"]?.text
+        categoryLabelColorString = attributes["category-label-color"]?.text
         dismissListeners = attributes["dismiss-listeners"]?.text.components(separatedBy: " ") ?? []
         locale = attributes["locale"]?.text
         navbarColorString = attributes["navbar-color"]?.text
@@ -65,6 +65,13 @@ class MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
             return defaultValue
         }
         return MobileContentBackgroundImageScale(rawValue: backgroundImageScaleString) ?? defaultValue
+    }
+    
+    var categoryLabelColor: MobileContentColor? {
+        if let stringColor = self.categoryLabelColorString {
+            return MobileContentColor(stringColor: stringColor)
+        }
+        return nil
     }
     
     var navbarColor: MobileContentColor? {

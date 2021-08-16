@@ -36,9 +36,8 @@ class MultiplatformManifestAttributes: MobileContentManifestAttributesType {
         return .fill
     }
     
-    var categoryLabelColor: String? {
-        // TODO: Need to set this. ~Levi
-        return nil
+    var categoryLabelColor: MobileContentColor? {
+        return MobileContentColor(color: manifest.categoryLabelColor)
     }
     
     var dismissListeners: [String] {

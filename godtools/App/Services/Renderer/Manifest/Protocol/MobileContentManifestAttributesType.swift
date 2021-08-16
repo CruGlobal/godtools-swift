@@ -14,7 +14,7 @@ protocol MobileContentManifestAttributesType: BackgroundImageModelType {
     var backgroundImage: String? { get }
     var backgroundImageAlignments: [MobileContentBackgroundImageAlignment] { get }
     var backgroundImageScale: MobileContentBackgroundImageScale { get }
-    var categoryLabelColor: String? { get }
+    var categoryLabelColor: MobileContentColor? { get }
     var dismissListeners: [String] { get }
     var locale: String? { get }
     var navbarColor: MobileContentColor? { get }
