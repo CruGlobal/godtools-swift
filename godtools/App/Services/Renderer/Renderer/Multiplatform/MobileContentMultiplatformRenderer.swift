@@ -36,11 +36,6 @@ class MobileContentMultiplatformRenderer: MobileContentRendererType {
     
     func renderPageModel(pageModel: PageModelType, page: Int, numberOfPages: Int, window: UIViewController, safeArea: UIEdgeInsets, primaryRendererLanguage: LanguageModel) -> Result<MobileContentView, Error> {
         
-        guard let multiplatformPage = pageModel as? MultiplatformTractPage else {
-            let failedToRenderPageError: Error = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to render page."])
-            return .failure(failedToRenderPageError)
-        }
-        
         let rendererPageModel = MobileContentRendererPageModel(
             pageModel: pageModel,
             page: page,
