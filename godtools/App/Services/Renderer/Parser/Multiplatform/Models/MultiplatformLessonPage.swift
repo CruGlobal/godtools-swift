@@ -11,4 +11,10 @@ import GodToolsToolParser
 
 class MultiplatformLessonPage {
     
+    private let lessonPage: LessonPage
+    
+    required init(lessonPage: LessonPage) {
+        
+        self.lessonPage = lessonPage
+    }
 }
