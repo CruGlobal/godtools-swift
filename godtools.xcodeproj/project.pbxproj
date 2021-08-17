@@ -51,6 +51,7 @@
 		452652A226A7540A00E703F7 /* MultiplatformCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452652A126A7540A00E703F7 /* MultiplatformCards.swift */; };
 		452652A426A7543A00E703F7 /* MultiplatformCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452652A326A7543A00E703F7 /* MultiplatformCard.swift */; };
 		452652A626A763E500E703F7 /* MultiplatformContentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452652A526A763E500E703F7 /* MultiplatformContentButton.swift */; };
+		4526539226CC28EE00AC0FBD /* MultiplatformContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4526539126CC28EE00AC0FBD /* MultiplatformContent.swift */; };
 		45267B7725F19709004DB4C4 /* MobileContentBackgroundImageRendererTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45267B7625F19709004DB4C4 /* MobileContentBackgroundImageRendererTests.swift */; };
 		45267B8125F198B8004DB4C4 /* TestBackgroundImageNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45267B8025F198B8004DB4C4 /* TestBackgroundImageNode.swift */; };
 		453AF08626A8787E002D4AB1 /* MultiplatformCallToAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453AF08526A8787E002D4AB1 /* MultiplatformCallToAction.swift */; };
@@ -1078,6 +1079,7 @@
 		452652A126A7540A00E703F7 /* MultiplatformCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplatformCards.swift; sourceTree = "<group>"; };
 		452652A326A7543A00E703F7 /* MultiplatformCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplatformCard.swift; sourceTree = "<group>"; };
 		452652A526A763E500E703F7 /* MultiplatformContentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplatformContentButton.swift; sourceTree = "<group>"; };
+		4526539126CC28EE00AC0FBD /* MultiplatformContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplatformContent.swift; sourceTree = "<group>"; };
 		45267B7625F19709004DB4C4 /* MobileContentBackgroundImageRendererTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentBackgroundImageRendererTests.swift; sourceTree = "<group>"; };
 		45267B8025F198B8004DB4C4 /* TestBackgroundImageNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestBackgroundImageNode.swift; sourceTree = "<group>"; };
 		453AF08526A8787E002D4AB1 /* MultiplatformCallToAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplatformCallToAction.swift; sourceTree = "<group>"; };
@@ -3002,6 +3004,7 @@
 				453AF08526A8787E002D4AB1 /* MultiplatformCallToAction.swift */,
 				452652A326A7543A00E703F7 /* MultiplatformCard.swift */,
 				452652A126A7540A00E703F7 /* MultiplatformCards.swift */,
+				4526539126CC28EE00AC0FBD /* MultiplatformContent.swift */,
 				453AF08726A8788F002D4AB1 /* MultiplatformContentAccordion.swift */,
 				452652A526A763E500E703F7 /* MultiplatformContentButton.swift */,
 				4543ACCF26CB14E10002F6F7 /* MultiplatformContentFallback.swift */,
@@ -6062,6 +6065,7 @@
 				D19D00F925AF51FA007C535B /* AppsFlyer.swift in Sources */,
 				45C93AF1261D310900592FFF /* ArticleAemDownloadOperationError.swift in Sources */,
 				453AF09626A87901002D4AB1 /* MultiplatformContentSection.swift in Sources */,
+				4526539226CC28EE00AC0FBD /* MultiplatformContent.swift in Sources */,
 				45AD1B3A25938A4F00A096A0 /* MenuViewModel.swift in Sources */,
 				45558355269F2D1000C3FF14 /* LessonContentViewModelType.swift in Sources */,
 				45558330269F2C7B00C3FF14 /* ToolPageCardsViewModel.swift in Sources */,

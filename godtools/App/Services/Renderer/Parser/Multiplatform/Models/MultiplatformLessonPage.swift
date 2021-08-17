@@ -104,8 +104,8 @@ extension MultiplatformLessonPage {
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
         
         var childModels: [MobileContentRenderableModel] = Array()
-        
-        addContentToChildModels(childModels: &childModels, content: lessonPage.content)
+
+        childModels.append(MultiplatformContent(content: lessonPage.content))
         
         return childModels
     }
