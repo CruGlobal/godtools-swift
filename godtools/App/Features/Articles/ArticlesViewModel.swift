@@ -150,13 +150,15 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
             languageCode: languageCode
         )
         
-        var aemUris: [AemUri] = Array()
+        var aemUris: Set<String> = Set()
         
         for article in categoryArticles {
-            aemUris.append(contentsOf: article.aemUris)
+            for uri in article.aemUris {
+                aemUris.insert(uri)
+            }
         }
         
-        return aemUris
+        return aemUris.sorted()
     }
     
     private func reloadArticles(aemUris: [AemUri]) {
