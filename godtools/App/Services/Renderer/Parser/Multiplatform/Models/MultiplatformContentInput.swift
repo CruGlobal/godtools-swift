@@ -44,7 +44,7 @@ class MultiplatformContentInput: ContentInputModelType {
     }
     
     var isRequired: Bool {
-        return !input.isIgnored
+        return input.isRequired
     }
     
     var text: String? {
