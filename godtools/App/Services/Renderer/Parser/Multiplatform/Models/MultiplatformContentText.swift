@@ -19,7 +19,7 @@ class MultiplatformContentText: ContentTextModelType {
     }
     
     var endImage: String? {
-        return contentText.endImage?.localName
+        return contentText.endImage?.name
     }
     
     var endImageSize: Int32 {
@@ -27,7 +27,7 @@ class MultiplatformContentText: ContentTextModelType {
     }
     
     var startImage: String? {
-        return contentText.startImage?.localName
+        return contentText.startImage?.name
     }
     
     var startImageSize: Int32 {

@@ -23,7 +23,7 @@ class MultiplatformManifestAttributes: MobileContentManifestAttributesType {
     }
     
     var backgroundImage: String? {
-        manifest.backgroundImage?.localName
+        manifest.backgroundImage?.name
     }
     
     var backgroundImageAlignments: [MobileContentBackgroundImageAlignment] {
