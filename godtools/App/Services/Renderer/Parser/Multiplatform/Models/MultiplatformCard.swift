@@ -48,11 +48,11 @@ class MultiplatformCard: CardModelType {
     }
     
     var dismissListeners: [String] {
-        return card.dismissListeners.map({$0.name})
+        return card.dismissListeners.map({$0.description()})
     }
     
     var listeners: [String] {
-        return card.listeners.map({$0.name})
+        return card.listeners.map({$0.description()})
     }
     
     var isHidden: Bool {

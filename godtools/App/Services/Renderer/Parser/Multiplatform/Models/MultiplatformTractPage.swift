@@ -73,7 +73,7 @@ class MultiplatformTractPage: PageModelType {
     }
     
     var listeners: [String] {
-        return tractPage.listeners.map({$0.name})
+        return tractPage.listeners.map({$0.description()})
     }
     
     var textScale: MobileContentTextScale {
@@ -151,7 +151,8 @@ extension MultiplatformTractPage {
         
         childModels.append(MultiplatformCallToAction(callToAction: tractPage.callToAction))
         
-        // TODO: Return children to render. ~Levi
+        childModels.append(MultiplatformModals(modals: tractPage.modals))
+        
         return childModels
     }
 }

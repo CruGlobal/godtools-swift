@@ -36,6 +36,11 @@ extension MultiplatformContentForm {
     }
     
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
-        return Array()
+        
+        var childModels: [MobileContentRenderableModel] = Array()
+        
+        addContentToChildModels(childModels: &childModels, content: form.content)
+        
+        return childModels
     }
 }

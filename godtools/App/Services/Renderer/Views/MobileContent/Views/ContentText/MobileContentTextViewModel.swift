@@ -124,14 +124,18 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
         
         let fontWeight: UIFont.Weight
         
-        if let textStyle = textModel.textStyle, !textStyle.isEmpty {
-            if textStyle == "bold" {
+        let textStyles: [MobileContentTextStyle] = textModel.getTextStyles()
+        
+        // TODO: Need to add support for multiple textStyles. ~Levi
+        if let textStyle = textStyles.first {
+            
+            if textStyle == .bold {
                 fontWeight = .bold
             }
-            else if textStyle == "italic" {
+            else if textStyle == .italic {
                 fontWeight = defaultFontWeight
             }
-            else if textStyle == "underline" {
+            else if textStyle == .underline {
                 fontWeight = defaultFontWeight
             }
             else {
@@ -139,6 +143,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
             }
         }
         else {
+            
             fontWeight = defaultFontWeight
         }
         

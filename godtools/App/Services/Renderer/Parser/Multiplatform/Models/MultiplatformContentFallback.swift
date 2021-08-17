@@ -1,31 +1,27 @@
 //
-//  MultiplatformHeader.swift
+//  MultiplatformContentFallback.swift
 //  godtools
 //
-//  Created by Levi Eggert on 7/20/21.
+//  Created by Levi Eggert on 8/16/21.
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
 import Foundation
 import GodToolsToolParser
 
-class MultiplatformHeader: HeaderModelType {
+class MultiplatformContentFallback: ContentFallbackModelType {
     
-    private let header: Header
+    private let fallback: Fallback
     
-    required init(header: Header) {
+    required init(fallback: Fallback) {
         
-        self.header = header
-    }
-    
-    var trainingTip: String? {
-        return header.tip?.id
+        self.fallback = fallback
     }
 }
 
 // MARK: - MobileContentRenderableModel
 
-extension MultiplatformHeader {
+extension MultiplatformContentFallback {
     
     var restrictTo: String? {
         return nil
@@ -42,14 +38,8 @@ extension MultiplatformHeader {
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
         
         var childModels: [MobileContentRenderableModel] = Array()
-         
-        if let number = header.number {
-            childModels.append(MultiplatformNumber(text: number))
-        }
         
-        if let title = header.title {
-            childModels.append(MultiplatformTitle(text: title))
-        }
+        addContentToChildModels(childModels: &childModels, content: fallback.content)
         
         return childModels
     }

@@ -11,8 +11,11 @@ import GodToolsToolParser
 
 class MultiplatformModals: ModalsModelType {
     
-    required init() {
+    private let modals: [Modal]
+    
+    required init(modals: [Modal]) {
         
+        self.modals = modals
     }
 }
 
@@ -33,6 +36,13 @@ extension MultiplatformModals {
     }
     
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
-        return Array()
+        
+        var childModels: [MobileContentRenderableModel] = Array()
+        
+        for modal in modals {
+            childModels.append(MultiplatformModal(modal: modal))
+        }
+        
+        return childModels
     }
 }

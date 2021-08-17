@@ -14,6 +14,7 @@ class MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
     private let backgroundColorString: String
     private let backgroundImageAlignmentStrings: [String]
     private let backgroundImageScaleString: String?
+    private let categoryLabelColorString: String?
     private let navbarColorString: String?
     private let navbarControlColorString: String?
     private let primaryColorString: String
@@ -22,11 +23,8 @@ class MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
     private let textScaleString: String?
     
     let backgroundImage: String?
-    let categoryLabelColor: String?
     let dismissListeners: [String]
     let locale: String?
-    let tool: String?
-    let type: String?
     
     required init(manifest: XMLIndexer) {
         
@@ -36,7 +34,7 @@ class MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
         backgroundImage = attributes["background-image"]?.text
         backgroundImageAlignmentStrings = attributes["background-image-align"]?.text.components(separatedBy: " ") ?? []
         backgroundImageScaleString = attributes["background-image-scale-type"]?.text
-        categoryLabelColor = attributes["category-label-color"]?.text
+        categoryLabelColorString = attributes["category-label-color"]?.text
         dismissListeners = attributes["dismiss-listeners"]?.text.components(separatedBy: " ") ?? []
         locale = attributes["locale"]?.text
         navbarColorString = attributes["navbar-color"]?.text
@@ -45,8 +43,6 @@ class MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
         primaryTextColorString = attributes["primary-text-color"]?.text ?? "rgba(255,255,255,1)"
         textColorString = attributes["text-color"]?.text ?? "rgba(90,90,90,1)"
         textScaleString = attributes["text-scale"]?.text
-        tool = attributes["tool"]?.text
-        type = attributes["type"]?.text
     }
     
     var backgroundColor: MobileContentColor {
@@ -69,6 +65,13 @@ class MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
             return defaultValue
         }
         return MobileContentBackgroundImageScale(rawValue: backgroundImageScaleString) ?? defaultValue
+    }
+    
+    var categoryLabelColor: MobileContentColor? {
+        if let stringColor = self.categoryLabelColorString {
+            return MobileContentColor(stringColor: stringColor)
+        }
+        return nil
     }
     
     var navbarColor: MobileContentColor? {

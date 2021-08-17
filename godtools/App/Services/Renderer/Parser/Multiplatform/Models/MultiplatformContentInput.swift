@@ -44,7 +44,7 @@ class MultiplatformContentInput: ContentInputModelType {
     }
     
     var isRequired: Bool {
-        return false // TODO: Set this. ~Levi
+        return input.isRequired
     }
     
     var text: String? {

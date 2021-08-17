@@ -19,11 +19,11 @@ class MultiplatformModal: ModalModelType {
     }
     
     var dismissListeners: [String] {
-        return modal.dismissListeners.map({$0.name})
+        return modal.dismissListeners.map({$0.description()})
     }
     
     var listeners: [String] {
-        return modal.listeners.map({$0.name})
+        return modal.listeners.map({$0.description()})
     }
 }
 
@@ -44,6 +44,11 @@ extension MultiplatformModal {
     }
     
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
-        return Array()
+        
+        var childModels: [MobileContentRenderableModel] = Array()
+        
+        addContentToChildModels(childModels: &childModels, content: modal.content)
+        
+        return childModels
     }
 }
