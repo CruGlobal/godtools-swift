@@ -11,8 +11,11 @@ import GodToolsToolParser
 
 class MultiplatformLabel: LabelModelType {
     
-    required init() {
+    private let text: Text
+    
+    required init(text: Text) {
         
+        self.text = text
     }
 }
 
@@ -33,6 +36,11 @@ extension MultiplatformLabel {
     }
     
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
-        return Array()
+        
+        var childModels: [MobileContentRenderableModel] = Array()
+        
+        childModels.append(MultiplatformContentText(text: text))
+        
+        return childModels
     }
 }
