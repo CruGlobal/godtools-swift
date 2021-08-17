@@ -11,8 +11,11 @@ import GodToolsToolParser
 
 class MultiplatformContentSection: ContentSectionModelType {
     
-    required init() {
+    private let section: Accordion.Section
+    
+    required init(section: Accordion.Section) {
         
+        self.section = section
     }
 }
 
@@ -33,6 +36,15 @@ extension MultiplatformContentSection {
     }
     
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
-        return Array()
+        
+        var childModels: [MobileContentRenderableModel] = Array()
+        
+        if let headerText = section.header {
+            childModels.append(MultiplatformContentHeader(text: headerText))
+        }
+                
+        addContentToChildModels(childModels: &childModels, content: section.content)
+        
+        return childModels
     }
 }
