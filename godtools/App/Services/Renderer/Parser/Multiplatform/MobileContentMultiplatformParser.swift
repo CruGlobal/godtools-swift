@@ -36,8 +36,7 @@ class MobileContentMultiplatformParser: MobileContentParserType {
                 self.pageModels = manifest.tractPages.map({MultiplatformTractPage(tractPage: $0)})
             
             case .lesson:
-                // TODO: Initialize with lesson pages. ~Levi
-                self.pageModels = Array()
+                self.pageModels = manifest.lessonPages.map({MultiplatformLessonPage(lessonPage: $0)})
                 
             case .article:
                 // TODO: I think eventually we can update articles manifest parser to use this. ~Levi
