@@ -14,13 +14,13 @@ class HeaderNode: MobileContentXmlNode, HeaderModelType {
     private var numberNode: NumberNode?
     private var titleNode: TitleNode?
     
-    let trainingTip: String?
+    let trainingTipId: String?
     
     required init(xmlElement: XMLElement) {
     
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
-        trainingTip = attributes["training:tip"]?.text
+        trainingTipId = attributes["training:tip"]?.text
         
         super.init(xmlElement: xmlElement)
     }

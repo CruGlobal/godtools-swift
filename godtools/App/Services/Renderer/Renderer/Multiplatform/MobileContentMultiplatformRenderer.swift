@@ -79,6 +79,20 @@ class MobileContentMultiplatformRenderer: MobileContentRendererType {
             }
         }
         
+        if let headerModel = renderableModel as? HeaderModelType, let trainingTipId = headerModel.trainingTipId {
+            for pageViewFactory in pageViewFactories {
+                if let trainingViewFactory = pageViewFactory as? TrainingViewFactory {
+                    if let trainingTipView = trainingViewFactory.getTrainingTipView(
+                        trainingTipId: trainingTipId,
+                        rendererPageModel: rendererPageModel,
+                        trainingTipViewType: .upArrow
+                    ) {
+                        mobileContentView?.renderChild(childView: trainingTipView)
+                    }
+                }
+            }
+        }
+        
         mobileContentView?.finishedRenderingChildren()
         
         return mobileContentView

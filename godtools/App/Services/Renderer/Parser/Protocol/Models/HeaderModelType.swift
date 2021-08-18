@@ -10,7 +10,7 @@ import Foundation
 
 protocol HeaderModelType: MobileContentRenderableModel {
     
-    var trainingTip: String? { get }
+    var trainingTipId: String? { get }
 }
 
 extension HeaderModelType {

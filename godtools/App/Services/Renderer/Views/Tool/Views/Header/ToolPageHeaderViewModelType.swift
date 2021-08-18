@@ -12,5 +12,4 @@ protocol ToolPageHeaderViewModelType: MobileContentViewModelType {
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute { get }
     var backgroundColor: UIColor { get }
-    var trainingTipView: TrainingTipView? { get }
 }
