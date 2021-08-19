@@ -36,20 +36,20 @@ class TractFlow: Flow {
             deepLinkingService: deepLinkingService
         )
           
+        /*
         let primaryRenderer = MobileContentMultiplatformRenderer(
             resource: resource,
             language: primaryLanguage,
             multiplatformParser: MobileContentMultiplatformParser(translationManifestData: primaryTranslationManifest, translationsFileCache: translationsFileCache),
             pageViewFactories: pageViewFactories
-        )
+        )*/
         
-        /*
         let primaryRenderer = MobileContentXmlNodeRenderer(
             resource: resource,
             language: primaryLanguage,
             xmlParser: MobileContentXmlParser(translationManifestData: primaryTranslationManifest, translationsFileCache: translationsFileCache),
             pageViewFactories: pageViewFactories
-        )*/
+        )
         
         var renderers: [MobileContentRendererType] = Array()
         
@@ -204,20 +204,20 @@ class TractFlow: Flow {
             deepLinkingService: deepLinkingService
         )
         
+        /*
         let renderer = MobileContentMultiplatformRenderer(
             resource: event.rendererPageModel.resource,
             language: event.rendererPageModel.language,
             multiplatformParser: MobileContentMultiplatformParser(manifest: event.rendererPageModel.manifest, pageModels: pageModels, translationsFileCache: appDiContainer.translationsFileCache),
             pageViewFactories: pageViewFactories
-        )
+        )*/
            
-        /*
         let renderer = MobileContentXmlNodeRenderer(
             resource: event.rendererPageModel.resource,
             language: event.rendererPageModel.language,
             xmlParser: MobileContentXmlParser(manifest: event.rendererPageModel.manifest, pageModels: pageModels, translationsFileCache: appDiContainer.translationsFileCache),
             pageViewFactories: pageViewFactories
-        )*/
+        )
                 
         let viewModel = ToolTrainingViewModel(
             flowDelegate: self,
