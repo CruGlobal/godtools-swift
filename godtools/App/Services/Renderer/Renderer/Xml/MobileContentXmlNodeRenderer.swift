@@ -103,8 +103,10 @@ class MobileContentXmlNodeRenderer: MobileContentRendererType {
             }
             return viewToRender
         }
-         
-        let mobileContentView: MobileContentView? = getViewFromViewFactory(renderableModel: renderableNode, rendererPageModel: rendererPageModel, containerModel: containerModel)
+        
+        // TODO: Set renderableModelParent. ~Levi
+        
+        let mobileContentView: MobileContentView? = getViewFromViewFactory(renderableModel: renderableNode, renderableModelParent: nil, rendererPageModel: rendererPageModel, containerModel: containerModel)
         
         for childNode in node.children {
             
@@ -114,21 +116,7 @@ class MobileContentXmlNodeRenderer: MobileContentRendererType {
                 mobileContentView.renderChild(childView: childMobileContentView)
             }
         }
-        
-        if let headerModel = renderableNode as? HeaderModelType, let trainingTipId = headerModel.trainingTipId {
-            for pageViewFactory in pageViewFactories {
-                if let trainingViewFactory = pageViewFactory as? TrainingViewFactory {
-                    if let trainingTipView = trainingViewFactory.getTrainingTipView(
-                        trainingTipId: trainingTipId,
-                        rendererPageModel: rendererPageModel,
-                        trainingTipViewType: .upArrow
-                    ) {
-                        mobileContentView?.renderChild(childView: trainingTipView)
-                    }
-                }
-            }
-        }
-        
+                
         mobileContentView?.finishedRenderingChildren()
         
         return mobileContentView

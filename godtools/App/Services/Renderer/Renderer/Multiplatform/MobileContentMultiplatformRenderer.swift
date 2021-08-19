@@ -30,8 +30,23 @@ class MobileContentMultiplatformRenderer: MobileContentRendererType {
     
     func renderPage(page: Int, window: UIViewController, safeArea: UIEdgeInsets, primaryRendererLanguage: LanguageModel) -> Result<MobileContentView, Error> {
         
-        let failedToRenderPageError: Error = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to render page."])
-        return .failure(failedToRenderPageError)
+        if let pageModel = multiplatformParser.getPageModel(page: page) {
+                    
+            // TODO: Could this get moved to MobileContentRendererType? ~Levi
+            return renderPageModel(
+                pageModel: pageModel,
+                page: page,
+                numberOfPages: parser.pageModels.count,
+                window: window,
+                safeArea: safeArea,
+                primaryRendererLanguage: primaryRendererLanguage
+            )
+        }
+        else {
+            
+            let failedToRenderPageError: Error = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to render page."])
+            return .failure(failedToRenderPageError)
+        }
     }
     
     func renderPageModel(pageModel: PageModelType, page: Int, numberOfPages: Int, window: UIViewController, safeArea: UIEdgeInsets, primaryRendererLanguage: LanguageModel) -> Result<MobileContentView, Error> {
@@ -65,31 +80,19 @@ class MobileContentMultiplatformRenderer: MobileContentRendererType {
         guard renderableModel.isRenderable else {
             return nil
         }
+        
+        // TODO: Set renderableModelParent. ~Levi
          
-        let mobileContentView: MobileContentView? = getViewFromViewFactory(renderableModel: renderableModel, rendererPageModel: rendererPageModel, containerModel: containerModel)
+        let mobileContentView: MobileContentView? = getViewFromViewFactory(renderableModel: renderableModel, renderableModelParent: nil, rendererPageModel: rendererPageModel, containerModel: containerModel)
         
         let childModels: [MobileContentRenderableModel] = renderableModel.getRenderableChildModels()
-        
+                
         for childModel in childModels {
             
             let childMobileContentView: MobileContentView? = recurseAndRender(renderableModel: childModel, rendererPageModel: rendererPageModel, containerModel: containerModel)
             
             if let childMobileContentView = childMobileContentView, let mobileContentView = mobileContentView {
                 mobileContentView.renderChild(childView: childMobileContentView)
-            }
-        }
-        
-        if let headerModel = renderableModel as? HeaderModelType, let trainingTipId = headerModel.trainingTipId {
-            for pageViewFactory in pageViewFactories {
-                if let trainingViewFactory = pageViewFactory as? TrainingViewFactory {
-                    if let trainingTipView = trainingViewFactory.getTrainingTipView(
-                        trainingTipId: trainingTipId,
-                        rendererPageModel: rendererPageModel,
-                        trainingTipViewType: .upArrow
-                    ) {
-                        mobileContentView?.renderChild(childView: trainingTipView)
-                    }
-                }
             }
         }
         

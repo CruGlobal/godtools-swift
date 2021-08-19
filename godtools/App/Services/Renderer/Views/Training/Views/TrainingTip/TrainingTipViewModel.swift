@@ -20,37 +20,44 @@ class TrainingTipViewModel: TrainingTipViewModelType {
     let trainingTipBackgroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     let trainingTipForegroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     
-    required init(trainingTipId: String, rendererPageModel: MobileContentRendererPageModel, viewType: TrainingTipViewType, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, viewedTrainingTipsService: ViewedTrainingTipsService) {
+    required init(trainingTipId: String, tipModel: TipModelType?, rendererPageModel: MobileContentRendererPageModel, viewType: TrainingTipViewType, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, viewedTrainingTipsService: ViewedTrainingTipsService) {
         
         self.trainingTipId = trainingTipId
         self.rendererPageModel = rendererPageModel
         self.viewType = viewType
         self.viewedTrainingTipsService = viewedTrainingTipsService
-                
-        parseTrainingTip(trainingTipId: trainingTipId, manifest: rendererPageModel.manifest, translationsFileCache: translationsFileCache, mobileContentNodeParser: mobileContentNodeParser) { [weak self] (result: Result<TipNode, Error>) in
             
-            guard let viewModel = self else {
-                return
-            }
+        if let tipModel = tipModel {
             
-            switch result {
+            didParseTrainingTip(tipModel: tipModel)
+        }
+        else {
             
-            case .success(let tipNode):
+            parseTrainingTip(trainingTipId: trainingTipId, manifest: rendererPageModel.manifest, translationsFileCache: translationsFileCache, mobileContentNodeParser: mobileContentNodeParser) { [weak self] (result: Result<TipNode, Error>) in
                 
-                let trainingTipViewed: Bool = viewModel.getTrainingTipViewed()
+                switch result {
                 
-                viewModel.reloadTipIcon(
-                    tipModel: tipNode,
-                    viewType: viewModel.viewType,
-                    trainingTipViewed: trainingTipViewed
-                )
+                case .success(let tipNode):
+                    self?.didParseTrainingTip(tipModel: tipNode)
                 
-                viewModel.tipModel = tipNode
-            
-            case .failure(let error):
-                break
+                case .failure(let error):
+                    break
+                }
             }
         }
+    }
+    
+    private func didParseTrainingTip(tipModel: TipModelType) {
+        
+        let trainingTipViewed: Bool = getTrainingTipViewed()
+        
+        reloadTipIcon(
+            tipModel: tipModel,
+            viewType: viewType,
+            trainingTipViewed: trainingTipViewed
+        )
+        
+        self.tipModel = tipModel
     }
     
     private func getTrainingTipViewed() -> Bool {

@@ -11,6 +11,8 @@ import SWXMLHash
 
 class HeaderNode: MobileContentXmlNode, HeaderModelType {
     
+    private let trainingTipNode: TrainingTipNode?
+    
     private var numberNode: NumberNode?
     private var titleNode: TitleNode?
     
@@ -20,9 +22,24 @@ class HeaderNode: MobileContentXmlNode, HeaderModelType {
     
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
-        trainingTipId = attributes["training:tip"]?.text
+        let trainingTipId: String? = attributes["training:tip"]?.text
+        let trainingTipNode: TrainingTipNode?
+        
+        if let trainingTipId = trainingTipId {
+            trainingTipNode = TrainingTipNode(trainingTipId: trainingTipId, xmlElement: xmlElement)
+        }
+        else {
+            trainingTipNode = nil
+        }
+        
+        self.trainingTipId = trainingTipId
+        self.trainingTipNode = trainingTipNode
         
         super.init(xmlElement: xmlElement)
+        
+        if let trainingTipNode = trainingTipNode {
+            addChild(childNode: trainingTipNode)
+        }
     }
     
     override func addChild(childNode: MobileContentXmlNode) {
@@ -36,5 +53,9 @@ class HeaderNode: MobileContentXmlNode, HeaderModelType {
         if let titleNode = children.last as? TitleNode {
             self.titleNode = titleNode
         }
+    }
+    
+    var trainingTip: TrainingTipModelType? {
+        return trainingTipNode
     }
 }

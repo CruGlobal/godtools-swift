@@ -203,13 +203,21 @@ class TractFlow: Flow {
             trainingTipsEnabled: false,
             deepLinkingService: deepLinkingService
         )
-                
+        
+        let renderer = MobileContentMultiplatformRenderer(
+            resource: event.rendererPageModel.resource,
+            language: event.rendererPageModel.language,
+            multiplatformParser: MobileContentMultiplatformParser(manifest: event.rendererPageModel.manifest, pageModels: pageModels, translationsFileCache: appDiContainer.translationsFileCache),
+            pageViewFactories: pageViewFactories
+        )
+           
+        /*
         let renderer = MobileContentXmlNodeRenderer(
             resource: event.rendererPageModel.resource,
             language: event.rendererPageModel.language,
             xmlParser: MobileContentXmlParser(manifest: event.rendererPageModel.manifest, pageModels: pageModels, translationsFileCache: appDiContainer.translationsFileCache),
             pageViewFactories: pageViewFactories
-        )
+        )*/
                 
         let viewModel = ToolTrainingViewModel(
             flowDelegate: self,
