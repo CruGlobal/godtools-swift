@@ -92,8 +92,8 @@ extension MultiplatformTipPage {
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
         
         var childModels: [MobileContentRenderableModel] = Array()
-
-        childModels.append(MultiplatformContent(content: tipPage.content))
+        
+        addContentToChildModels(childModels: &childModels, content: tipPage.content)
         
         return childModels
     }
