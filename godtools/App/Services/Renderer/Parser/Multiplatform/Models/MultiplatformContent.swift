@@ -1,27 +1,27 @@
 //
-//  MultiplatformContentSection.swift
+//  MultiplatformContent.swift
 //  godtools
 //
-//  Created by Levi Eggert on 7/21/21.
+//  Created by Levi Eggert on 8/17/21.
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
 import Foundation
 import GodToolsToolParser
 
-class MultiplatformContentSection: ContentSectionModelType {
+class MultiplatformContent: ContentModelType {
     
-    private let section: Accordion.Section
+    private let content: [Content]
     
-    required init(section: Accordion.Section) {
+    required init(content: [Content]) {
         
-        self.section = section
+        self.content = content
     }
 }
 
 // MARK: - MobileContentRenderableModel
 
-extension MultiplatformContentSection {
+extension MultiplatformContent {
     
     var restrictTo: String? {
         return nil
@@ -39,11 +39,7 @@ extension MultiplatformContentSection {
         
         var childModels: [MobileContentRenderableModel] = Array()
         
-        if let headerText = section.header {
-            childModels.append(MultiplatformContentHeader(text: headerText))
-        }
-                
-        addContentToChildModels(childModels: &childModels, content: section.content)
+        addContentToChildModels(childModels: &childModels, content: content)
         
         return childModels
     }
