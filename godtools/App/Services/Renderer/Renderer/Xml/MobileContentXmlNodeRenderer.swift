@@ -103,9 +103,7 @@ class MobileContentXmlNodeRenderer: MobileContentRendererType {
             }
             return viewToRender
         }
-        
-        // TODO: Set renderableModelParent. ~Levi
-        
+                
         let mobileContentView: MobileContentView? = getViewFromViewFactory(renderableModel: renderableModel, renderableModelParent: renderableModelParent, rendererPageModel: rendererPageModel, containerModel: containerModel)
         
         for childNode in node.children {
