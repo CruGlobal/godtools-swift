@@ -26,8 +26,8 @@ class MultiplatformCard: CardModelType {
         return fileName
     }
     
-    var backgroundImageAlignments: [MobileContentBackgroundImageAlignment] {
-        return [] // TODO: Set this. ~Levi
+    var backgroundImageAlignment: MobileContentImageAlignmentType {
+        return MultiplatformImageAlignment(imageGravity: card.backgroundImageGravity)
     }
     
     var backgroundImageScale: MobileContentBackgroundImageScale {

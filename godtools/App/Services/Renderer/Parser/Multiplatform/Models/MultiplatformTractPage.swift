@@ -24,36 +24,8 @@ class MultiplatformTractPage: PageModelType {
         return tractPage.backgroundImage?.name
     }
     
-    var backgroundImageAlignments: [MobileContentBackgroundImageAlignment] {
-        
-        // TODO: Not sure this is right? ~ Levi
-        // ImageGravity also supports isCenterX and isCenterY
-        
-        let imageGravity: ImageGravity = tractPage.backgroundImageGravity
-        
-        var alignment: [MobileContentBackgroundImageAlignment] = Array()
-        
-        if imageGravity.isBottom {
-            alignment.append(.bottom)
-        }
-        
-        if imageGravity.isCenter {
-            alignment.append(.center)
-        }
-        
-        if imageGravity.isEnd {
-            alignment.append(.end)
-        }
-        
-        if imageGravity.isStart {
-            alignment.append(.start)
-        }
-        
-        if imageGravity.isTop {
-            alignment.append(.top)
-        }
-            
-        return alignment
+    var backgroundImageAlignment: MobileContentImageAlignmentType {
+        return MultiplatformImageAlignment(imageGravity: tractPage.backgroundImageGravity)
     }
     
     var backgroundImageScale: MobileContentBackgroundImageScale {
