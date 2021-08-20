@@ -14,7 +14,7 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     private let resource: ResourceModel
     private let language: LanguageModel
     private let trainingTipId: String
-    private let tipNode: TipNode
+    private let tipModel: TipModelType
     private let analytics: AnalyticsContainer
     private let localizationServices: LocalizationServices
     private let viewedTrainingTips: ViewedTrainingTipsService
@@ -30,14 +30,14 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     let continueButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     let numberOfTipPages: ObservableValue<Int> = ObservableValue(value: 0)
     
-    required init(flowDelegate: FlowDelegate, renderer: MobileContentRendererType, trainingTipId: String, tipNode: TipNode, analytics: AnalyticsContainer, localizationServices: LocalizationServices, viewedTrainingTips: ViewedTrainingTipsService) {
+    required init(flowDelegate: FlowDelegate, renderer: MobileContentRendererType, trainingTipId: String, tipModel: TipModelType, analytics: AnalyticsContainer, localizationServices: LocalizationServices, viewedTrainingTips: ViewedTrainingTipsService) {
         
         self.flowDelegate = flowDelegate
         self.renderer = renderer
         self.resource = renderer.resource
         self.language = renderer.language
         self.trainingTipId = trainingTipId
-        self.tipNode = tipNode
+        self.tipModel = tipModel
         self.analytics = analytics
         self.localizationServices = localizationServices
         self.viewedTrainingTips = viewedTrainingTips
@@ -45,7 +45,7 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
         super.init()
         
         reloadTitleAndTipIcon(
-            tipNode: tipNode,
+            tipModel: tipModel,
             trainingTipViewed: viewedTrainingTips.containsViewedTrainingTip(viewedTrainingTip: ViewedTrainingTip(trainingTipId: trainingTipId, resourceId: resource.id, languageId: language.id))
         )
         
@@ -80,38 +80,39 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
         }
     }
     
-    private func reloadTitleAndTipIcon(tipNode: TipNode, trainingTipViewed: Bool) {
+    private func reloadTitleAndTipIcon(tipModel: TipModelType, trainingTipViewed: Bool) {
         
-        if let tipTypeValue = tipNode.tipType, let trainingTipType = TrainingTipType(rawValue: tipTypeValue) {
+        let trainingTipType: MobileContentTrainingTipType = tipModel.tipType
+        let tipBackgroundImageName: String = trainingTipViewed ? "training_tip_red_square_bg" : "training_tip_square_bg"
+        let tipImageName: String
+        let localizedTipTitle: String
         
-            let tipBackgroundImageName: String = trainingTipViewed ? "training_tip_red_square_bg" : "training_tip_square_bg"
-            let tipImageName: String
-            let localizedTipTitle: String
-            
-            switch trainingTipType {
-            case .ask:
-                tipImageName = trainingTipViewed ? "training_tip_ask_filled_red" : "training_tip_ask"
-                localizedTipTitle = "training_tip_ask"
-            case .consider:
-                tipImageName = trainingTipViewed ? "training_tip_consider_filled_red" : "training_tip_consider"
-                localizedTipTitle = "training_tip_consider"
-            case .prepare:
-                tipImageName = trainingTipViewed ? "training_tip_prepare_filled_red" : "training_tip_prepare"
-                localizedTipTitle = "training_tip_prepare"
-            case .quote:
-                tipImageName = trainingTipViewed ? "training_tip_quote_filled_red" : "training_tip_quote"
-                localizedTipTitle = "training_tip_quote"
-            case .tip:
-                tipImageName = trainingTipViewed ? "training_tip_tip_filled_red" : "training_tip_tip"
-                localizedTipTitle = "training_tip_tip"
-            }
-            
-            let tipTitle: String = localizationServices.stringForMainBundle(key: localizedTipTitle)
-            
-            trainingTipBackgroundImage.accept(value: UIImage(named: tipBackgroundImageName))
-            trainingTipForegroundImage.accept(value: UIImage(named: tipImageName))
-            title.accept(value: tipTitle)
+        switch trainingTipType {
+        case .ask:
+            tipImageName = trainingTipViewed ? "training_tip_ask_filled_red" : "training_tip_ask"
+            localizedTipTitle = "training_tip_ask"
+        case .consider:
+            tipImageName = trainingTipViewed ? "training_tip_consider_filled_red" : "training_tip_consider"
+            localizedTipTitle = "training_tip_consider"
+        case .prepare:
+            tipImageName = trainingTipViewed ? "training_tip_prepare_filled_red" : "training_tip_prepare"
+            localizedTipTitle = "training_tip_prepare"
+        case .quote:
+            tipImageName = trainingTipViewed ? "training_tip_quote_filled_red" : "training_tip_quote"
+            localizedTipTitle = "training_tip_quote"
+        case .tip:
+            tipImageName = trainingTipViewed ? "training_tip_tip_filled_red" : "training_tip_tip"
+            localizedTipTitle = "training_tip_tip"
+        case .unknown:
+            tipImageName = ""
+            localizedTipTitle = ""
         }
+        
+        let tipTitle: String = localizationServices.stringForMainBundle(key: localizedTipTitle)
+        
+        trainingTipBackgroundImage.accept(value: UIImage(named: tipBackgroundImageName))
+        trainingTipForegroundImage.accept(value: UIImage(named: tipImageName))
+        title.accept(value: tipTitle)
     }
     
     func viewLoaded() {

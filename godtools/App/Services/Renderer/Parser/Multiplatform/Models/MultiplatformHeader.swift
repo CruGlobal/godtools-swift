@@ -13,13 +13,21 @@ class MultiplatformHeader: HeaderModelType {
     
     private let header: Header
     
+    let trainingTipId: String?
+    let trainingTip: TrainingTipModelType?
+    
     required init(header: Header) {
         
         self.header = header
-    }
-    
-    var trainingTip: String? {
-        return header.tip?.id
+        
+        self.trainingTipId = header.tip?.id
+        
+        if let tip = header.tip {
+            self.trainingTip = MultiplatformTrainingTip(tip: tip)
+        }
+        else {
+            self.trainingTip = nil
+        }
     }
 }
 
@@ -49,6 +57,10 @@ extension MultiplatformHeader {
         
         if let title = header.title {
             childModels.append(MultiplatformTitle(text: title))
+        }
+        
+        if let trainingTip = self.trainingTip {
+            childModels.append(trainingTip)
         }
         
         return childModels

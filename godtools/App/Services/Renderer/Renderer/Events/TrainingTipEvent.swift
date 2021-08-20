@@ -12,12 +12,12 @@ class TrainingTipEvent {
     
     let rendererPageModel: MobileContentRendererPageModel
     let trainingTipId: String
-    let tipNode: TipNode
+    let tipModel: TipModelType
     
-    required init(rendererPageModel: MobileContentRendererPageModel, trainingTipId: String, tipNode: TipNode) {
+    required init(rendererPageModel: MobileContentRendererPageModel, trainingTipId: String, tipModel: TipModelType) {
         
         self.rendererPageModel = rendererPageModel
         self.trainingTipId = trainingTipId
-        self.tipNode = tipNode
+        self.tipModel = tipModel
     }
 }

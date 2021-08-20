@@ -11,15 +11,19 @@ import GodToolsToolParser
 
 class MultiplatformTrainingTip: TrainingTipModelType {
     
-    private let tip: Tip
+    private let mpTip: Tip
     
     required init(tip: Tip) {
         
-        self.tip = tip
+        self.mpTip = tip
     }
     
     var id: String? {
-        return tip.id
+        return mpTip.id
+    }
+    
+    var tip: TipModelType? {
+        return MultiplatformTip(tip: mpTip)
     }
 }
 

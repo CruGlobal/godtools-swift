@@ -190,10 +190,10 @@ class TractFlow: Flow {
     
     private func navigateToToolTraining(event: TrainingTipEvent) {
         
-        let pageNodes: [PageNode] = event.tipNode.pages?.pages ?? []
+        let pageModels: [PageModelType] = event.tipModel.pages
         
-        if pageNodes.isEmpty {
-            // TODO: Page nodes should not be empty. ~Levi
+        if pageModels.isEmpty {
+            assertionFailure("Pages should not be empty for training tip.")
         }
                         
         let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
@@ -203,11 +203,19 @@ class TractFlow: Flow {
             trainingTipsEnabled: false,
             deepLinkingService: deepLinkingService
         )
-                
+        
+        /*
+        let renderer = MobileContentMultiplatformRenderer(
+            resource: event.rendererPageModel.resource,
+            language: event.rendererPageModel.language,
+            multiplatformParser: MobileContentMultiplatformParser(manifest: event.rendererPageModel.manifest, pageModels: pageModels, translationsFileCache: appDiContainer.translationsFileCache),
+            pageViewFactories: pageViewFactories
+        )*/
+           
         let renderer = MobileContentXmlNodeRenderer(
             resource: event.rendererPageModel.resource,
             language: event.rendererPageModel.language,
-            xmlParser: MobileContentXmlParser(manifest: event.rendererPageModel.manifest, pageModels: pageNodes, translationsFileCache: appDiContainer.translationsFileCache),
+            xmlParser: MobileContentXmlParser(manifest: event.rendererPageModel.manifest, pageModels: pageModels, translationsFileCache: appDiContainer.translationsFileCache),
             pageViewFactories: pageViewFactories
         )
                 
@@ -215,7 +223,7 @@ class TractFlow: Flow {
             flowDelegate: self,
             renderer: renderer,
             trainingTipId: event.trainingTipId,
-            tipNode: event.tipNode,
+            tipModel: event.tipModel,
             analytics: appDiContainer.analytics,
             localizationServices: appDiContainer.localizationServices,
             viewedTrainingTips: appDiContainer.getViewedTrainingTipsService()

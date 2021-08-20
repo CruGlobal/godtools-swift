@@ -45,11 +45,6 @@ class ToolPageHeaderView: MobileContentView {
         
         backgroundColor = .clear
         backgroundView.backgroundColor = viewModel.backgroundColor
-        
-        if let trainingTipView = viewModel.trainingTipView {
-            setParentAndAddChild(childView: trainingTipView)
-            self.trainingTipView = trainingTipView
-        }
     }
     
     // MARK: - MobileContentView
@@ -63,6 +58,9 @@ class ToolPageHeaderView: MobileContentView {
         }
         else if let titleView = childView as? MobileContentTitleView {
             self.titleView = titleView
+        }
+        else if let trainingTipView = childView as? TrainingTipView {
+            self.trainingTipView = trainingTipView
         }
     }
     
