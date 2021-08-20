@@ -27,6 +27,8 @@ class MultiplatformTip: TipModelType {
             return .consider
         case .prepare:
             return .prepare
+        case .quote:
+            return .quote
         case .tip:
             return .tip
         default:
