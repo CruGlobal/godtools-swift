@@ -30,11 +30,7 @@ extension MobileContentBackgroundImageRendererType {
     func floorValue(value: CGFloat) -> CGFloat {
         
         if value < 0 {
-            
-            let positiveValue: CGFloat = value * -1
-            let flooredPositiveValue: CGFloat = floor(positiveValue)
-            
-            return flooredPositiveValue * -1
+            return ceil(value)
         }
         
         return floor(value)
@@ -197,7 +193,7 @@ extension MobileContentBackgroundImageRendererType {
     
     func centerRectHorizontallyInContainer(container: CGRect, rect: CGRect) -> CGRect {
         
-        let xPosition: CGFloat = (container.size.width / 2) - (rect.size.width / 2)
+        let xPosition: CGFloat = (container.size.width - rect.size.width) / 2
         
         return CGRect(
             x: xPosition,
@@ -209,7 +205,7 @@ extension MobileContentBackgroundImageRendererType {
     
     func centerRectVerticallyInContainer(container: CGRect, rect: CGRect) -> CGRect {
         
-        let yPosition: CGFloat = (container.size.height / 2) - (rect.size.height / 2)
+        let yPosition: CGFloat = (container.size.height - rect.size.height) / 2
         
         return CGRect(
             x: rect.origin.x,
