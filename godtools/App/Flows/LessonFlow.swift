@@ -50,6 +50,7 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
             pageViewFactories: pageViewFactories
         )
         
+        // TODO: Remove when removing xml node renderer. ~Levi
         /*
         let primaryRenderer = MobileContentXmlNodeRenderer(
             resource: resource,

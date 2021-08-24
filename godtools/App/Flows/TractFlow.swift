@@ -43,6 +43,7 @@ class TractFlow: Flow {
             pageViewFactories: pageViewFactories
         )
         
+        // TODO: Remove when removing xml node renderer. ~Levi
         /*
         let primaryRenderer = MobileContentXmlNodeRenderer(
             resource: resource,
@@ -64,6 +65,7 @@ class TractFlow: Flow {
                 pageViewFactories: pageViewFactories
             )
             
+            // TODO: Remove when removing xml node renderer. ~Levi
             /*
             let parallelRenderer = MobileContentXmlNodeRenderer(
                 resource: resource,
@@ -211,6 +213,7 @@ class TractFlow: Flow {
             pageViewFactories: pageViewFactories
         )
            
+        // TODO: Remove when removing xml node renderer. ~Levi
         /*
         let renderer = MobileContentXmlNodeRenderer(
             resource: event.rendererPageModel.resource,
