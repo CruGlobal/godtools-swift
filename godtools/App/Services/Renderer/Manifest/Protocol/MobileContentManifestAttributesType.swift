@@ -12,7 +12,7 @@ protocol MobileContentManifestAttributesType: BackgroundImageModelType {
     
     var backgroundColor: MobileContentColor { get }
     var backgroundImage: String? { get }
-    var backgroundImageAlignments: [MobileContentBackgroundImageAlignment] { get }
+    var backgroundImageAlignment: MobileContentImageAlignmentType { get }
     var backgroundImageScale: MobileContentBackgroundImageScale { get }
     var categoryLabelColor: MobileContentColor? { get }
     var dismissListeners: [String] { get }

@@ -12,7 +12,7 @@ protocol PageModelType: BackgroundImageModelType, MobileContentRenderableModel {
         
     var uuid: String { get }
     var backgroundImage: String? { get }
-    var backgroundImageAlignments: [MobileContentBackgroundImageAlignment] { get }
+    var backgroundImageAlignment: MobileContentImageAlignmentType { get }
     var backgroundImageScale: MobileContentBackgroundImageScale { get }
     var listeners: [String] { get }
     var textScale: MobileContentTextScale { get }

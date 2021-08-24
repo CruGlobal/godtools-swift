@@ -24,8 +24,8 @@ class MultiplatformLessonPage: PageModelType {
         return lessonPage.backgroundImage?.name
     }
     
-    var backgroundImageAlignments: [MobileContentBackgroundImageAlignment] {
-        return [.center] // TODO: Need to set this. ~Levi
+    var backgroundImageAlignment: MobileContentImageAlignmentType {
+        return MultiplatformImageAlignment(imageGravity: lessonPage.backgroundImageGravity)
     }
     
     var backgroundImageScale: MobileContentBackgroundImageScale {
