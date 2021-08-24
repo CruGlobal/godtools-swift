@@ -26,9 +26,8 @@ class MultiplatformManifestAttributes: MobileContentManifestAttributesType {
         manifest.backgroundImage?.name
     }
     
-    var backgroundImageAlignments: [MobileContentBackgroundImageAlignment] {
-        // TODO: Need to set this. ~Levi
-        return []
+    var backgroundImageAlignment: MobileContentImageAlignmentType {
+        return MultiplatformImageAlignment(imageGravity: manifest.backgroundImageGravity)
     }
     
     var backgroundImageScale: MobileContentBackgroundImageScale {

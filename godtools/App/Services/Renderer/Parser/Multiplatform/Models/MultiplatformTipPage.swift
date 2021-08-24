@@ -24,8 +24,8 @@ class MultiplatformTipPage: PageModelType {
         return nil
     }
     
-    var backgroundImageAlignments: [MobileContentBackgroundImageAlignment] {
-        return [.center]
+    var backgroundImageAlignment: MobileContentImageAlignmentType {
+        return MobileContentImageAlignment(isCenter: false, isCenterX: false, isCenterY: false, isStart: true, isEnd: false, isTop: true, isBottom: false)
     }
     
     var backgroundImageScale: MobileContentBackgroundImageScale {

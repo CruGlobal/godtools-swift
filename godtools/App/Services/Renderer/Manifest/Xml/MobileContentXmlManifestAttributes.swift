@@ -49,6 +49,10 @@ class MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
         return MobileContentColor(stringColor: backgroundColorString)
     }
     
+    var backgroundImageAlignment: MobileContentImageAlignmentType {
+        return getImageAlignment(alignments: backgroundImageAlignments)
+    }
+    
     var backgroundImageAlignments: [MobileContentBackgroundImageAlignment] {
         let backgroundImageAlignments: [MobileContentBackgroundImageAlignment] = backgroundImageAlignmentStrings.compactMap({MobileContentBackgroundImageAlignment(rawValue: $0.lowercased())})
         if !backgroundImageAlignments.isEmpty {
