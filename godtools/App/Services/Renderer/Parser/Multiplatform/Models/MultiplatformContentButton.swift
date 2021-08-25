@@ -61,12 +61,10 @@ class MultiplatformContentButton: ContentButtonModelType {
     }
     
     func getBackgroundColor() -> MobileContentColor? {
-        // TODO: What to use for background color? ~Levi
-        return MobileContentColor(color: button.buttonColor)
+        return MobileContentColor(color: button.backgroundColor)
     }
     
     func getColor() -> MobileContentColor? {
-        // TODO: Is this used for color? ~Levi
         return MobileContentColor(color: button.buttonColor)
     }
     

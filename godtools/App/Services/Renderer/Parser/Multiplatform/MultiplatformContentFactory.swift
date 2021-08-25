@@ -45,9 +45,6 @@ class MultiplatformContentFactory {
         else if let link = content as? Link {
             renderableModel = MultiplatformContentLink(link: link)
         }
-        else if let fallback = content as? Fallback {
-            renderableModel = MultiplatformContentFallback(fallback: fallback)
-        }
         else if let accordion = content as? Accordion {
             renderableModel = MultiplatformContentAccordion(accordion: accordion)
         }

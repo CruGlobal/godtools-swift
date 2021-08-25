@@ -40,7 +40,6 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
         
         let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
            
-        /*
         let primaryRenderer = MobileContentMultiplatformRenderer(
             resource: resource,
             language: primaryLanguage,
@@ -49,8 +48,10 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
                 translationsFileCache: translationsFileCache
             ),
             pageViewFactories: pageViewFactories
-        )*/
+        )
         
+        // TODO: Remove when removing xml node renderer. ~Levi
+        /*
         let primaryRenderer = MobileContentXmlNodeRenderer(
             resource: resource,
             language: primaryLanguage,
@@ -59,7 +60,7 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
                 translationsFileCache: translationsFileCache
             ),
             pageViewFactories: pageViewFactories
-        )
+        )*/
         
         let viewModel = LessonViewModel(
             flowDelegate: self,
