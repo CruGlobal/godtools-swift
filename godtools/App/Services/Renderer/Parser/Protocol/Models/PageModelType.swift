@@ -12,13 +12,13 @@ protocol PageModelType: BackgroundImageModelType, MobileContentRenderableModel {
         
     var uuid: String { get }
     var backgroundImage: String? { get }
-    var backgroundImageAlignments: [MobileContentBackgroundImageAlignment] { get }
+    var backgroundImageAlignment: MobileContentImageAlignmentType { get }
     var backgroundImageScale: MobileContentBackgroundImageScale { get }
     var listeners: [String] { get }
     var textScale: MobileContentTextScale { get }
     var isHidden: Bool { get }
-    var hero: HeroModelType? { get } // TODO: Does this need to be exposed? ~Levi
-    var callToAction: CallToActionModelType? { get } // TODO: Does this need to be exposed? ~Levi
+    var hero: HeroModelType? { get }
+    var callToAction: CallToActionModelType? { get }
     
     func getBackgroundColor() -> MobileContentColor?
     func getCardTextColor() -> MobileContentColor?

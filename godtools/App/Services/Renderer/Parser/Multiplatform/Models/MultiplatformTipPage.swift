@@ -1,78 +1,81 @@
 //
-//  MultiplatformPage.swift
+//  MultiplatformTipPage.swift
 //  godtools
 //
-//  Created by Levi Eggert on 7/21/21.
+//  Created by Levi Eggert on 8/16/21.
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
 import Foundation
 import GodToolsToolParser
 
-class MultiplatformPage: PageModelType {
+class MultiplatformTipPage: PageModelType {
+    
+    private let tipPage: TipPage
     
     let uuid: String = UUID().uuidString
     
-    required init() {
+    required init(tipPage: TipPage) {
         
+        self.tipPage = tipPage
     }
     
     var backgroundImage: String? {
-        return nil // TODO: Set this. ~Levi
+        return nil
     }
     
-    var backgroundImageAlignments: [MobileContentBackgroundImageAlignment] {
-        return [] // TODO: Set this. ~Levi
+    var backgroundImageAlignment: MobileContentImageAlignmentType {
+        return MobileContentImageAlignment(isCenter: false, isCenterX: false, isCenterY: false, isStart: true, isEnd: false, isTop: true, isBottom: false)
     }
     
     var backgroundImageScale: MobileContentBackgroundImageScale {
-        return .fill // TODO: Set this. ~Levi
+        return .fill
     }
     
     var listeners: [String] {
-        return [] // TODO: Set this. ~Levi
+        return Array()
     }
     
     var textScale: MobileContentTextScale {
-        return MobileContentTextScale(doubleValue: 1) // TODO: Set this. ~Levi
+        return MobileContentTextScale(doubleValue: 1)
     }
     
     var isHidden: Bool {
-        return false // TODO: Set this. ~Levi
+        return false
     }
     
     var hero: HeroModelType? {
-        return nil // TODO: Set this. ~Levi
+        return nil
     }
     
     var callToAction: CallToActionModelType? {
-        return nil // TODO: Set this. ~Levi
+        return nil
     }
     
     func getBackgroundColor() -> MobileContentColor? {
-        return nil // TODO: Set this. ~Levi
+        return nil
     }
     
     func getCardTextColor() -> MobileContentColor? {
-        return nil // TODO: Set this. ~Levi
+        return nil
     }
     
     func getPrimaryColor() -> MobileContentColor? {
-        return nil // TODO: Set this. ~Levi
+        return nil
     }
     
     func getPrimaryTextColor() -> MobileContentColor? {
-        return nil // TODO: Set this. ~Levi
+        return nil
     }
     
     func getTextColor() -> MobileContentColor? {
-        return nil // TODO: Set this. ~Levi
+        return nil
     }
 }
 
 // MARK: - MobileContentRenderableModel
 
-extension MultiplatformPage {
+extension MultiplatformTipPage {
     
     var restrictTo: String? {
         return nil
@@ -87,6 +90,11 @@ extension MultiplatformPage {
     }
     
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
-        return Array()
+        
+        var childModels: [MobileContentRenderableModel] = Array()
+        
+        addContentToChildModels(childModels: &childModels, content: tipPage.content)
+        
+        return childModels
     }
 }

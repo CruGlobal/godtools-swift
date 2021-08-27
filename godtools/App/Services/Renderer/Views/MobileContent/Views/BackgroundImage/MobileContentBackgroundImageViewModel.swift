@@ -26,15 +26,7 @@ class MobileContentBackgroundImageViewModel {
         guard let resource = backgroundImageModel.backgroundImage else {
             return nil
         }
-        return manifestResourcesCache.getImageFromManifestResources(resource: resource)
-    }
-    
-    var alignments: [MobileContentBackgroundImageAlignment] {
-        return backgroundImageModel.backgroundImageAlignments
-    }
-    
-    var scale: MobileContentBackgroundImageScale {
-        return backgroundImageModel.backgroundImageScale
+        return manifestResourcesCache.getImageFromManifestResources(fileName: resource)
     }
     
     func getRenderPositionForBackgroundImage(container: CGRect, backgroundImage: UIImage) -> CGRect {
@@ -52,8 +44,8 @@ class MobileContentBackgroundImageViewModel {
         return backgroundImageRenderer.getBackgroundImageRectForRenderingInContainer(
             container: container,
             backgroundImageSizePixels: imageSizePixels,
-            scale: scale,
-            align: alignments,
+            scale: backgroundImageModel.backgroundImageScale,
+            alignment: backgroundImageModel.backgroundImageAlignment,
             languageDirection: languageDirection
         )
     }
@@ -64,7 +56,7 @@ class MobileContentBackgroundImageViewModel {
             return nil
         }
         
-        guard let backgroundImage = manifestResourcesCache.getImageFromManifestResources(resource: resource) else {
+        guard let backgroundImage = manifestResourcesCache.getImageFromManifestResources(fileName: resource) else {
             return nil
         }
         

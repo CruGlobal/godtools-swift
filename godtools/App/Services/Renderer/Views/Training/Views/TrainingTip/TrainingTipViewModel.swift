@@ -14,43 +14,50 @@ class TrainingTipViewModel: TrainingTipViewModelType {
     private let rendererPageModel: MobileContentRendererPageModel
     private let viewedTrainingTipsService: ViewedTrainingTipsService
     
-    private var tipNode: TipNode?
+    private var tipModel: TipModelType?
     private var viewType: TrainingTipViewType = .rounded
     
     let trainingTipBackgroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     let trainingTipForegroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     
-    required init(trainingTipId: String, rendererPageModel: MobileContentRendererPageModel, viewType: TrainingTipViewType, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, viewedTrainingTipsService: ViewedTrainingTipsService) {
+    required init(trainingTipId: String, tipModel: TipModelType?, rendererPageModel: MobileContentRendererPageModel, viewType: TrainingTipViewType, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, viewedTrainingTipsService: ViewedTrainingTipsService) {
         
         self.trainingTipId = trainingTipId
         self.rendererPageModel = rendererPageModel
         self.viewType = viewType
         self.viewedTrainingTipsService = viewedTrainingTipsService
-                
-        parseTrainingTip(trainingTipId: trainingTipId, manifest: rendererPageModel.manifest, translationsFileCache: translationsFileCache, mobileContentNodeParser: mobileContentNodeParser) { [weak self] (result: Result<TipNode, Error>) in
             
-            guard let viewModel = self else {
-                return
-            }
+        if let tipModel = tipModel {
             
-            switch result {
+            didParseTrainingTip(tipModel: tipModel)
+        }
+        else {
             
-            case .success(let tipNode):
+            parseTrainingTip(trainingTipId: trainingTipId, manifest: rendererPageModel.manifest, translationsFileCache: translationsFileCache, mobileContentNodeParser: mobileContentNodeParser) { [weak self] (result: Result<TipNode, Error>) in
                 
-                let trainingTipViewed: Bool = viewModel.getTrainingTipViewed()
+                switch result {
                 
-                viewModel.reloadTipIcon(
-                    tipNode: tipNode,
-                    viewType: viewModel.viewType,
-                    trainingTipViewed: trainingTipViewed
-                )
+                case .success(let tipNode):
+                    self?.didParseTrainingTip(tipModel: tipNode)
                 
-                viewModel.tipNode = tipNode
-            
-            case .failure(let error):
-                break
+                case .failure(let error):
+                    break
+                }
             }
         }
+    }
+    
+    private func didParseTrainingTip(tipModel: TipModelType) {
+        
+        let trainingTipViewed: Bool = getTrainingTipViewed()
+        
+        reloadTipIcon(
+            tipModel: tipModel,
+            viewType: viewType,
+            trainingTipViewed: trainingTipViewed
+        )
+        
+        self.tipModel = tipModel
     }
     
     private func getTrainingTipViewed() -> Bool {
@@ -109,47 +116,47 @@ class TrainingTipViewModel: TrainingTipViewModelType {
         }
     }
     
-    private func reloadTipIcon(tipNode: TipNode, viewType: TrainingTipViewType, trainingTipViewed: Bool) {
+    private func reloadTipIcon(tipModel: TipModelType, viewType: TrainingTipViewType, trainingTipViewed: Bool) {
         
-        if let tipTypeValue = tipNode.tipType, let trainingTipType = TrainingTipType(rawValue: tipTypeValue) {
-            
-            let backgroundImageName: String
-            switch viewType {
-            case .upArrow:
-                backgroundImageName = trainingTipViewed ? "training_tip_red_arrow_up_bg" : "training_tip_arrow_up_bg"
-            case .rounded:
-                backgroundImageName = trainingTipViewed ? "training_tip_red_square_bg" : "training_tip_square_bg"
-            }
-            
-            let imageName: String
-            switch trainingTipType {
-            case .ask:
-                imageName = trainingTipViewed ? "training_tip_ask_filled_red" : "training_tip_ask"
-            case .consider:
-                imageName = trainingTipViewed ? "training_tip_consider_filled_red" : "training_tip_consider"
-            case .prepare:
-                imageName = trainingTipViewed ? "training_tip_prepare_filled_red" : "training_tip_prepare"
-            case .quote:
-                imageName = trainingTipViewed ? "training_tip_quote_filled_red" : "training_tip_quote"
-            case .tip:
-                imageName = trainingTipViewed ? "training_tip_tip_filled_red" : "training_tip_tip"
-            }
-            
-            trainingTipBackgroundImage.accept(value: UIImage(named: backgroundImageName))
-            trainingTipForegroundImage.accept(value: UIImage(named: imageName))
+        let backgroundImageName: String
+        switch viewType {
+        case .upArrow:
+            backgroundImageName = trainingTipViewed ? "training_tip_red_arrow_up_bg" : "training_tip_arrow_up_bg"
+        case .rounded:
+            backgroundImageName = trainingTipViewed ? "training_tip_red_square_bg" : "training_tip_square_bg"
         }
+        
+        let trainingTipType: MobileContentTrainingTipType = tipModel.tipType
+        let imageName: String
+        switch trainingTipType {
+        case .ask:
+            imageName = trainingTipViewed ? "training_tip_ask_filled_red" : "training_tip_ask"
+        case .consider:
+            imageName = trainingTipViewed ? "training_tip_consider_filled_red" : "training_tip_consider"
+        case .prepare:
+            imageName = trainingTipViewed ? "training_tip_prepare_filled_red" : "training_tip_prepare"
+        case .quote:
+            imageName = trainingTipViewed ? "training_tip_quote_filled_red" : "training_tip_quote"
+        case .tip:
+            imageName = trainingTipViewed ? "training_tip_tip_filled_red" : "training_tip_tip"
+        case .unknown:
+            imageName = ""
+        }
+        
+        trainingTipBackgroundImage.accept(value: UIImage(named: backgroundImageName))
+        trainingTipForegroundImage.accept(value: UIImage(named: imageName))
     }
     
     func setViewType(viewType: TrainingTipViewType) {
         
         self.viewType = viewType
         
-        guard let tipNode = self.tipNode else {
+        guard let tipModel = self.tipModel else {
             return
         }
         
         reloadTipIcon(
-            tipNode: tipNode,
+            tipModel: tipModel,
             viewType: viewType,
             trainingTipViewed: getTrainingTipViewed()
         )
@@ -157,12 +164,12 @@ class TrainingTipViewModel: TrainingTipViewModelType {
     
     func tipTapped() -> TrainingTipEvent? {
         
-        guard let tipNode = self.tipNode else {
+        guard let tipModel = self.tipModel else {
             return nil
         }
                 
-        reloadTipIcon(tipNode: tipNode, viewType: viewType, trainingTipViewed: true)
+        reloadTipIcon(tipModel: tipModel, viewType: viewType, trainingTipViewed: true)
         
-        return TrainingTipEvent(rendererPageModel: rendererPageModel, trainingTipId: trainingTipId, tipNode: tipNode)
+        return TrainingTipEvent(rendererPageModel: rendererPageModel, trainingTipId: trainingTipId, tipModel: tipModel)
     }
 }

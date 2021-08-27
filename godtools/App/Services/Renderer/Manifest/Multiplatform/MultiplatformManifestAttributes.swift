@@ -23,33 +23,39 @@ class MultiplatformManifestAttributes: MobileContentManifestAttributesType {
     }
     
     var backgroundImage: String? {
-        // TODO: Need to set this. ~Levi
-        return nil
+        manifest.backgroundImage?.name
     }
     
-    var backgroundImageAlignments: [MobileContentBackgroundImageAlignment] {
-        // TODO: Need to set this. ~Levi
-        return []
+    var backgroundImageAlignment: MobileContentImageAlignmentType {
+        return MultiplatformImageAlignment(imageGravity: manifest.backgroundImageGravity)
     }
     
     var backgroundImageScale: MobileContentBackgroundImageScale {
-        // TODO: Need to set this. ~Levi
-        return .fill
+        switch manifest.backgroundImageScaleType {
+        case .fill:
+            return .fill
+        case .fit:
+            return .fit
+        case .fillX:
+            return .fillHorizontally
+        case .fillY:
+            return .fillVertically
+        default:
+            assertionFailure("Found unsupported type, returning fill.  Ensure case is supported.")
+            return .fill
+        }
     }
     
-    var categoryLabelColor: String? {
-        // TODO: Need to set this. ~Levi
-        return nil
+    var categoryLabelColor: MobileContentColor? {
+        return MobileContentColor(color: manifest.categoryLabelColor)
     }
     
     var dismissListeners: [String] {
-        // TODO: Need to set this. ~Levi
-        return []
+        return manifest.dismissListeners.map({$0.description()})
     }
     
     var locale: String? {
-        // TODO: Need to set this. ~Levi
-        return nil
+        return manifest.locale?.description
     }
     
     var navbarColor: MobileContentColor? {
@@ -73,17 +79,6 @@ class MultiplatformManifestAttributes: MobileContentManifestAttributesType {
     }
     
     var textScale: MobileContentTextScale {
-        // TODO: Need to set this. ~Levi
-        return MobileContentTextScale(textScaleString: nil)
-    }
-    
-    var tool: String? {
-        // TODO: Need to set this. ~Levi
-        return nil
-    }
-    
-    var type: String? {
-        // TODO: Need to set this. ~Levi
-        return nil
+        return MobileContentTextScale(doubleValue: manifest.textScale)
     }
 }

@@ -12,9 +12,9 @@ protocol MobileContentManifestAttributesType: BackgroundImageModelType {
     
     var backgroundColor: MobileContentColor { get }
     var backgroundImage: String? { get }
-    var backgroundImageAlignments: [MobileContentBackgroundImageAlignment] { get }
+    var backgroundImageAlignment: MobileContentImageAlignmentType { get }
     var backgroundImageScale: MobileContentBackgroundImageScale { get }
-    var categoryLabelColor: String? { get }
+    var categoryLabelColor: MobileContentColor? { get }
     var dismissListeners: [String] { get }
     var locale: String? { get }
     var navbarColor: MobileContentColor? { get }
@@ -23,6 +23,4 @@ protocol MobileContentManifestAttributesType: BackgroundImageModelType {
     var primaryTextColor: MobileContentColor { get }
     var textColor: MobileContentColor { get }
     var textScale: MobileContentTextScale { get }
-    var tool: String? { get }
-    var type: String? { get }
 }

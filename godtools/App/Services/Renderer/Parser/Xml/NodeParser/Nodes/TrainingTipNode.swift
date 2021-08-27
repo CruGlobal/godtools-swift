@@ -21,4 +21,15 @@ class TrainingTipNode: MobileContentXmlNode, TrainingTipModelType {
         
         super.init(xmlElement: xmlElement)
     }
+    
+    required init(trainingTipId: String, xmlElement: XMLElement) {
+        
+        self.id = trainingTipId
+        
+        super.init(xmlElement: xmlElement)
+    }
+    
+    var tip: TipModelType? {
+        return nil
+    }
 }

@@ -14,14 +14,23 @@ class MultiplatformManifest: MobileContentManifestType {
     private let manifest: Manifest
     
     let attributes: MobileContentManifestAttributesType
-    let title: String? = nil // TODO: Set this. ~Levi
+    let title: String?
     let pages: [MobileContentManifestPageType] = Array() // TODO: Set this. ~Levi
     let tips: [TipId : MobileContentManifestTipType] = Dictionary() // TODO: Set this. ~Levi
-    let resources: [ResourceFilename : MobileContentManifestResourceType] = Dictionary() // TODO: Set this. ~Levi
     
     required init(manifest: Manifest) {
         
         self.manifest = manifest
         self.attributes = MultiplatformManifestAttributes(manifest: manifest)
+        self.title = manifest.title
+    }
+    
+    func getResource(fileName: String) -> MobileContentManifestResourceType? {
+        
+        guard let resource = manifest.resources[fileName] else {
+            return nil
+        }
+        
+        return MultiplatformManifestResource(resource: resource)
     }
 }

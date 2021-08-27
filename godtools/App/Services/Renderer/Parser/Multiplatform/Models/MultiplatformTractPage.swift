@@ -24,36 +24,8 @@ class MultiplatformTractPage: PageModelType {
         return tractPage.backgroundImage?.name
     }
     
-    var backgroundImageAlignments: [MobileContentBackgroundImageAlignment] {
-        
-        // TODO: Not sure this is right? ~ Levi
-        // ImageGravity also supports isCenterX and isCenterY
-        
-        let imageGravity: ImageGravity = tractPage.backgroundImageGravity
-        
-        var alignment: [MobileContentBackgroundImageAlignment] = Array()
-        
-        if imageGravity.isBottom {
-            alignment.append(.bottom)
-        }
-        
-        if imageGravity.isCenter {
-            alignment.append(.center)
-        }
-        
-        if imageGravity.isEnd {
-            alignment.append(.end)
-        }
-        
-        if imageGravity.isStart {
-            alignment.append(.start)
-        }
-        
-        if imageGravity.isTop {
-            alignment.append(.top)
-        }
-            
-        return alignment
+    var backgroundImageAlignment: MobileContentImageAlignmentType {
+        return MultiplatformImageAlignment(imageGravity: tractPage.backgroundImageGravity)
     }
     
     var backgroundImageScale: MobileContentBackgroundImageScale {
@@ -67,12 +39,13 @@ class MultiplatformTractPage: PageModelType {
         case .fillY:
             return .fillVertically
         default:
+            assertionFailure("Found unsupported type, returning fill.  Ensure case is supported.")
             return .fill
         }
     }
     
     var listeners: [String] {
-        return [] // TODO: Need to set this. ~Levi
+        return tractPage.listeners.map({$0.description()})
     }
     
     var textScale: MobileContentTextScale {
@@ -80,15 +53,19 @@ class MultiplatformTractPage: PageModelType {
     }
     
     var isHidden: Bool {
-        return false // TODO: Need to set this. ~Levi
+        // NOTE: I believe this concept hasn't been introduced to TractPage, but is part of LessonPage. ~Levi
+        return false
     }
     
     var hero: HeroModelType? {
-        return nil // TODO: Need to set this. ~Levi
+        guard let hero = tractPage.hero else {
+            return nil
+        }
+        return MultiplatformHero(hero: hero)
     }
     
     var callToAction: CallToActionModelType? {
-        return nil // TODO: Need to set this. ~Levi
+        return MultiplatformCallToAction(callToAction: tractPage.callToAction)
     }
     
     func getBackgroundColor() -> MobileContentColor? {
@@ -146,7 +123,8 @@ extension MultiplatformTractPage {
         
         childModels.append(MultiplatformCallToAction(callToAction: tractPage.callToAction))
         
-        // TODO: Return children to render. ~Levi
+        childModels.append(MultiplatformModals(modals: tractPage.modals))
+        
         return childModels
     }
 }

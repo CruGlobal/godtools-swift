@@ -19,11 +19,16 @@ class MultiplatformCallToAction: CallToActionModelType {
     }
     
     var text: String? {
-        return nil // TODO: Need to set this. ~Levi
+        return callToAction.label?.text
     }
     
     func getTextColor() -> MobileContentColor? {
-        return nil // TODO: Need to set this. ~Levi
+        
+        guard let textColor = callToAction.label?.textColor else {
+            return nil
+        }
+
+        return MobileContentColor(color: textColor)
     }
     
     func getControlColor() -> MobileContentColor? {

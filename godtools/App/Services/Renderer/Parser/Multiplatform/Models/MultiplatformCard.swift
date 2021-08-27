@@ -22,23 +22,37 @@ class MultiplatformCard: CardModelType {
     }
     
     var backgroundImage: String? {
-        return card.backgroundImage?.name
+        let fileName: String? = card.backgroundImage?.name
+        return fileName
     }
     
-    var backgroundImageAlignments: [MobileContentBackgroundImageAlignment] {
-        return [] // TODO: Set this. ~Levi
+    var backgroundImageAlignment: MobileContentImageAlignmentType {
+        return MultiplatformImageAlignment(imageGravity: card.backgroundImageGravity)
     }
     
     var backgroundImageScale: MobileContentBackgroundImageScale {
-        return .fill  // TODO: Set this. ~Levi
+        
+        switch card.backgroundImageScaleType {
+        case .fit:
+            return .fit
+        case .fill:
+            return .fill
+        case .fillX:
+            return .fillHorizontally
+        case .fillY:
+            return .fillVertically
+        default:
+            assertionFailure("Found unsupported type, returning fill.  Ensure case is supported.")
+            return .fill
+        }
     }
     
     var dismissListeners: [String] {
-        return [] // TODO: Set this. ~Levi
+        return card.dismissListeners.map({$0.description()})
     }
     
     var listeners: [String] {
-        return [] // TODO: Set this. ~Levi
+        return card.listeners.map({$0.description()})
     }
     
     var isHidden: Bool {
@@ -50,11 +64,11 @@ class MultiplatformCard: CardModelType {
     }
     
     var hasTrainingTip: Bool {
-        return false  // TODO: Set this. ~Levi
+        return card.tips.count > 0
     }
     
     var cardPositionInVisibleCards: Int {
-        return 0 // TODO: Set this. ~Levi
+        return card.visiblePosition?.intValue ?? 0
     }
     
     func getTextColor() -> MobileContentColor? {
@@ -62,7 +76,7 @@ class MultiplatformCard: CardModelType {
     }
     
     func getAnalyticsEvents() -> [AnalyticsEventModelType] {
-        return []  // TODO: Set this. ~Levi
+        return card.analyticsEvents.map({MultiplatformAnalyticsEvent(analyticsEvent: $0)})
     }
 }
 
@@ -89,5 +103,34 @@ extension MultiplatformCard {
         addContentToChildModels(childModels: &childModels, content: card.content)
                 
         return childModels
+    }
+}
+
+// MARK: - MobileContentRenderableModelContainer
+
+extension MultiplatformCard: MobileContentRenderableModelContainer {
+    
+    var buttonColor: MobileContentColor? {
+        return nil
+    }
+    
+    var buttonStyle: MobileContentButtonStyle? {
+        return nil
+    }
+    
+    var primaryColor: MobileContentColor? {
+        return nil
+    }
+    
+    var primaryTextColor: MobileContentColor? {
+        return nil
+    }
+    
+    var textAlignment: MobileContentTextAlignment? {
+        return nil
+    }
+    
+    var textColor: MobileContentColor? {
+        return nil
     }
 }

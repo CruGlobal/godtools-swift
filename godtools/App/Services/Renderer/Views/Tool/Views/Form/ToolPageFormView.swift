@@ -42,6 +42,7 @@ class ToolPageFormView: MobileContentFormView {
                 var eventsWithoutFollowUp: [String] = events
                 eventsWithoutFollowUp.remove(at: indexForFollowUpEvent)
                 self?.sendEventsToAllViews(events: eventsWithoutFollowUp)
+                self?.resignCurrentEditedTextField()
             }
         }
         

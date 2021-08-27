@@ -19,8 +19,7 @@ class MultiplatformHero: HeroModelType {
     }
     
     func getAnalyticsEvents() -> [AnalyticsEventModelType] {
-        // TODO: Set analytics events. ~Levi
-        return Array()
+        return hero.analyticsEvents.map({MultiplatformAnalyticsEvent(analyticsEvent: $0)})
     }
 }
 

@@ -52,7 +52,7 @@ class LessonsListViewModel: NSObject, LessonsListViewModelType {
     }
     
     var analyticsScreenName: String {
-        return "Lessons"
+        return "lessons"
     }
     
     private func setupBinding() {
@@ -79,6 +79,7 @@ class LessonsListViewModel: NSObject, LessonsListViewModelType {
     func pageViewed() {
         
         analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: "lessons", siteSubSection: ""))
+        analytics.appsFlyerAnalytics.trackAction(actionName: analyticsScreenName, data:  nil)
     } 
     
     private func getLessonsFromCache() -> [ResourceModel] {

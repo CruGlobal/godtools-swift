@@ -29,7 +29,27 @@ class MobileContentMultiplatformParser: MobileContentParserType {
             let manifest: Manifest = resultData.manifest
             
             self.manifest = MultiplatformManifest(manifest: manifest)
-            self.pageModels = manifest.tractPages.map({MultiplatformTractPage(tractPage: $0)})
+            
+            switch manifest.type {
+            
+            case .tract:
+                self.pageModels = manifest.tractPages.map({MultiplatformTractPage(tractPage: $0)})
+            
+            case .lesson:
+                self.pageModels = manifest.lessonPages.map({MultiplatformLessonPage(lessonPage: $0)})
+                
+            case .article:
+                // TODO: I think eventually we can update articles manifest parser to use this. ~Levi
+                assertionFailure("Not implemented for articles.")
+                self.pageModels = Array()
+                
+            case .unknown:
+                self.pageModels = Array()
+                
+            default:
+                assertionFailure("Found unsupported manifest type.  Ensure all types are supported.")
+                self.pageModels = Array()
+            }
         }
         else {
             let failedToParseManifest: Error = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Multiplatform failed to parse manifest."])

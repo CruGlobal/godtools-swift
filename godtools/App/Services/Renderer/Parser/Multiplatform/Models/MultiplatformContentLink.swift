@@ -19,7 +19,7 @@ class MultiplatformContentLink: ContentLinkModelType {
     }
     
     var events: [String] {
-        return [] // TODO: Set this. ~Levi
+        return link.events.map({$0.description()})
     }
     
     var text: String? {
@@ -31,7 +31,7 @@ class MultiplatformContentLink: ContentLinkModelType {
     }
     
     func getAnalyticsEvents() -> [AnalyticsEventModelType] {
-        return [] // TODO: Set this. ~Levi
+        return link.analyticsEvents.map({MultiplatformAnalyticsEvent(analyticsEvent: $0)})
     }
 }
 

@@ -12,29 +12,11 @@ class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
     
     private let headerModel: HeaderModelType
     private let rendererPageModel: MobileContentRendererPageModel
-    
-    let trainingTipView: TrainingTipView?
-    
+        
     required init(headerModel: HeaderModelType, rendererPageModel: MobileContentRendererPageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, viewedTrainingTipsService: ViewedTrainingTipsService) {
         
         self.headerModel = headerModel
         self.rendererPageModel = rendererPageModel
-        
-        var trainingTipView: TrainingTipView? = nil
-        
-        if let trainingTipId = headerModel.trainingTip {
-            for pageViewFactory in rendererPageModel.pageViewFactories {
-                if let trainingViewFactory = pageViewFactory as? TrainingViewFactory {
-                    trainingTipView = trainingViewFactory.getTrainingTipView(
-                        trainingTipId: trainingTipId,
-                        rendererPageModel: rendererPageModel,
-                        trainingTipViewType: .upArrow
-                    )
-                }
-            }
-        }
-        
-        self.trainingTipView = trainingTipView
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {

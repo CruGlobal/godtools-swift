@@ -28,14 +28,18 @@ class TrainingViewFactory: MobileContentPageViewFactoryType {
         self.trainingTipsEnabled = trainingTipsEnabled
     }
     
-    func viewForRenderableModel(renderableModel: MobileContentRenderableModel, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) -> MobileContentView? {
+    func viewForRenderableModel(renderableModel: MobileContentRenderableModel, renderableModelParent: MobileContentRenderableModel?, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) -> MobileContentView? {
         
         if let trainingTipModel = renderableModel as? TrainingTipModelType {
             
+            let parentIsHeader: Bool = renderableModelParent is HeaderModelType
+            let trainingViewType: TrainingTipViewType = parentIsHeader ? .upArrow : .rounded
+            
             return getTrainingTipView(
                 trainingTipId: trainingTipModel.id ?? "",
+                tipModel: trainingTipModel.tip,
                 rendererPageModel: rendererPageModel,
-                trainingTipViewType: .rounded
+                trainingTipViewType: trainingViewType
             )
         }
         else if let pageModel = renderableModel as? PageModelType {
@@ -55,7 +59,7 @@ class TrainingViewFactory: MobileContentPageViewFactoryType {
         return nil
     }
     
-    func getTrainingTipView(trainingTipId: String, rendererPageModel: MobileContentRendererPageModel, trainingTipViewType: TrainingTipViewType) -> TrainingTipView? {
+    private func getTrainingTipView(trainingTipId: String, tipModel: TipModelType?, rendererPageModel: MobileContentRendererPageModel, trainingTipViewType: TrainingTipViewType) -> TrainingTipView? {
         
         guard !trainingTipId.isEmpty && trainingTipsEnabled else {
             return nil
@@ -63,6 +67,7 @@ class TrainingViewFactory: MobileContentPageViewFactoryType {
         
         let viewModel = TrainingTipViewModel(
             trainingTipId: trainingTipId,
+            tipModel: tipModel,
             rendererPageModel: rendererPageModel,
             viewType: trainingTipViewType,
             translationsFileCache: translationsFileCache,

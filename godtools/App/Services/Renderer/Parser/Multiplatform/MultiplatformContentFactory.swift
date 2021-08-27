@@ -16,8 +16,11 @@ class MultiplatformContentFactory {
     }
     
     static func getRenderableModel(content: Content) -> MobileContentRenderableModel? {
-        
-        // TODO: Add InlineTip from GodToolsToolParser. Link 917. ~Levi
+              
+        // TODO: Need to add the following:
+        //    Animation
+        //    Multiselect
+        //    Multiselect.Option
         
         let renderableModel: MobileContentRenderableModel?
         
@@ -33,15 +36,14 @@ class MultiplatformContentFactory {
         else if let image = content as? Image {
             renderableModel = MultiplatformContentImage(image: image)
         }
+        else if let inlineTip = content as? InlineTip, let tip = inlineTip.tip {
+            return MultiplatformTrainingTip(tip: tip)
+        }
         else if let input = content as? Input {
             renderableModel = MultiplatformContentInput(input: input)
         }
         else if let link = content as? Link {
             renderableModel = MultiplatformContentLink(link: link)
-        }
-        else if let fallback = content as? Fallback {
-            // TODO: What to use for fallback? ~Levi
-            renderableModel = nil
         }
         else if let accordion = content as? Accordion {
             renderableModel = MultiplatformContentAccordion(accordion: accordion)

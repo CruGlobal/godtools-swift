@@ -36,6 +36,13 @@ extension MultiplatformContentAccordion {
     }
     
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
-        return Array()
+        
+        var childModels: [MobileContentRenderableModel] = Array()
+        
+        for section in accordion.sections {
+            childModels.append(MultiplatformContentSection(section: section))
+        }
+        
+        return childModels
     }
 }

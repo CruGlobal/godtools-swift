@@ -12,9 +12,9 @@ class MockMobileContentManifestAttributes: MobileContentManifestAttributesType {
     
     let backgroundColor: MobileContentColor = MobileContentColor(color: .lightGray)
     let backgroundImage: String? = nil
-    let backgroundImageAlignments: [MobileContentBackgroundImageAlignment] = []
+    let backgroundImageAlignment: MobileContentImageAlignmentType = MobileContentImageAlignment(isCenter: false, isCenterX: false, isCenterY: false, isStart: true, isEnd: false, isTop: true, isBottom: false)
     let backgroundImageScale: MobileContentBackgroundImageScale = .fill
-    let categoryLabelColor: String? = nil
+    let categoryLabelColor: MobileContentColor? = nil
     let dismissListeners: [String] = []
     let locale: String? = nil
     let navbarColor: MobileContentColor? = nil
@@ -23,8 +23,6 @@ class MockMobileContentManifestAttributes: MobileContentManifestAttributesType {
     let primaryTextColor: MobileContentColor = MobileContentColor(color: .black)
     let textColor: MobileContentColor = MobileContentColor(color: .black)
     let textScale: MobileContentTextScale = MobileContentTextScale(textScaleString: nil)
-    let tool: String? = nil
-    let type: String? = nil
     
     required init() {
         

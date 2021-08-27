@@ -19,7 +19,7 @@ class MultiplatformContentButton: ContentButtonModelType {
     }
     
     var events: [String] {
-        return [] // TODO: Set this. ~Levi
+        return button.events.map({$0.description()})
     }
     
     var url: String? {
@@ -61,12 +61,10 @@ class MultiplatformContentButton: ContentButtonModelType {
     }
     
     func getBackgroundColor() -> MobileContentColor? {
-        // TODO: What to use for background color? ~Levi
-        return MobileContentColor(color: button.buttonColor)
+        return MobileContentColor(color: button.backgroundColor)
     }
     
     func getColor() -> MobileContentColor? {
-        // TODO: Is this used for color? ~Levi
         return MobileContentColor(color: button.buttonColor)
     }
     
@@ -75,7 +73,7 @@ class MultiplatformContentButton: ContentButtonModelType {
     }
     
     func getAnalyticsEvents() -> [AnalyticsEventModelType] {
-        return [] // TODO: Set this. ~Levi
+        return button.analyticsEvents.map({MultiplatformAnalyticsEvent(analyticsEvent: $0)})
     }
 }
 

@@ -9,24 +9,45 @@
 import Foundation
 import SWXMLHash
 
-class TipNode: MobileContentXmlNode {
+class TipNode: MobileContentXmlNode, TipModelType {
         
-    let tipType: String?
+    private let tipTypeString: String?
     
     required init(xmlElement: XMLElement) {
     
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
+        
         if let tipTypeAttribute = attributes["type"] {
-            tipType = tipTypeAttribute.text
+            tipTypeString = tipTypeAttribute.text
         }
         else {
-            tipType = nil
+            tipTypeString = nil
         }
         
         super.init(xmlElement: xmlElement)
     }
     
-    var pages: PagesNode? {
+    private var pagesNode: PagesNode? {
         return children.first as? PagesNode
+    }
+    
+    var tipType: MobileContentTrainingTipType {
+        
+        let defaultTipType: MobileContentTrainingTipType = .unknown
+        
+        guard let tipTypeString = self.tipTypeString else {
+            return defaultTipType
+        }
+        
+        return MobileContentTrainingTipType(rawValue: tipTypeString) ?? defaultTipType
+    }
+    
+    var pages: [PageModelType] {
+        
+        guard let pagesNode = self.pagesNode else {
+            return Array()
+        }
+        
+        return pagesNode.pages
     }
 }

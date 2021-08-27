@@ -19,7 +19,7 @@ class MultiplatformContentTab: ContentTabModelType {
     }
     
     var listeners: [String] {
-        return [] // TODO: Set this. ~Levi
+        return tab.listeners.map({$0.description()})
     }
     
     var text: String? {
@@ -27,7 +27,7 @@ class MultiplatformContentTab: ContentTabModelType {
     }
     
     func getAnalyticsEvents() -> [AnalyticsEventModelType] {
-        return [] // TODO: Set this. ~Levi
+        return tab.analyticsEvents.map({MultiplatformAnalyticsEvent(analyticsEvent: $0)})
     }
 }
 
@@ -48,6 +48,11 @@ extension MultiplatformContentTab {
     }
     
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
-        return Array()
+        
+        var childModels: [MobileContentRenderableModel] = Array()
+
+        addContentToChildModels(childModels: &childModels, content: tab.content)
+                
+        return childModels
     }
 }

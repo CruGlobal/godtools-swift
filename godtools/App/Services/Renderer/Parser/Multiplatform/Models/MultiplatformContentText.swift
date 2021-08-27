@@ -19,7 +19,7 @@ class MultiplatformContentText: ContentTextModelType {
     }
     
     var endImage: String? {
-        return nil // TODO: Implement. ~Levi
+        return contentText.endImage?.name
     }
     
     var endImageSize: Int32 {
@@ -27,7 +27,7 @@ class MultiplatformContentText: ContentTextModelType {
     }
     
     var startImage: String? {
-        return nil // TODO: Implement. ~Levi
+        return contentText.startImage?.name
     }
     
     var startImageSize: Int32 {
@@ -38,12 +38,22 @@ class MultiplatformContentText: ContentTextModelType {
         return contentText.text
     }
     
-    var textStyle: String? {
-        return nil // TODO: Implement. ~Levi
-    }
-    
     var textAlignment: MobileContentTextAlignment? {
-        return nil // TODO: Implement. ~Levi
+       
+        switch contentText.textAlign {
+        case .start:
+            return .left
+    
+        case .center:
+            return .center
+            
+        case .end:
+            return .right
+            
+        default:
+            assertionFailure("Found unsupported Text.Align. Ensure all alignments are supported.")
+            return .left
+        }
     }
     
     var textScale: MobileContentTextScale {
@@ -51,7 +61,33 @@ class MultiplatformContentText: ContentTextModelType {
     }
     
     func getTextColor() -> MobileContentColor? {
-        return nil // TODO: Implement. ~Levi
+        return MobileContentColor(color: contentText.textColor)
+    }
+    
+    func getTextStyles() -> [MobileContentTextStyle] {
+       
+        return contentText.textStyles.compactMap({
+            
+            let textStyle: MobileContentTextStyle?
+            
+            switch $0 {
+            
+            case .bold:
+                textStyle = .bold
+            
+            case .italic:
+                textStyle = .italic
+            
+            case .underline:
+                textStyle = .underline
+            
+            default:
+                assertionFailure("Found unsupported textStyle \($0). Ensure all textStyles are supported.")
+                textStyle = nil
+            }
+            
+            return textStyle
+        })
     }
 }
 

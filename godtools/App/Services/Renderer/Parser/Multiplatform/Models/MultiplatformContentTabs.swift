@@ -36,6 +36,13 @@ extension MultiplatformContentTabs {
     }
     
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
-        return Array()
+        
+        var childModels: [MobileContentRenderableModel] = Array()
+        
+        for tab in tabs.tabs {
+            childModels.append(MultiplatformContentTab(tab: tab))
+        }
+        
+        return childModels
     }
 }

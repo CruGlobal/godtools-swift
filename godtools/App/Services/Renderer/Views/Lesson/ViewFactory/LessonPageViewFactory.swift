@@ -22,7 +22,7 @@ class LessonPageViewFactory: MobileContentPageViewFactoryType {
         self.analytics = analytics
     }
     
-    func viewForRenderableModel(renderableModel: MobileContentRenderableModel, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) -> MobileContentView? {
+    func viewForRenderableModel(renderableModel: MobileContentRenderableModel, renderableModelParent: MobileContentRenderableModel?, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) -> MobileContentView? {
         
         if let pageModel = renderableModel as? PageModelType {
                         
