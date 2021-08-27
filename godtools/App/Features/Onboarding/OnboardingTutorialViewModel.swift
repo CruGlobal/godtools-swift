@@ -63,6 +63,10 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
         self.page = page
         
         analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: "onboarding", siteSubSection: ""))
+        
+        if page == tutorialItems.value.count - 1 {
+            analytics.appsFlyerAnalytics.trackAction(actionName: analyticsScreenName, data: nil)
+        }
     }
     
     func continueTapped() {
