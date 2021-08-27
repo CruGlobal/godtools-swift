@@ -154,11 +154,13 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
                 
         let fontScale: CGFloat
         
-        let manifestTextScale: Double = rendererPageModel.manifest.attributes.textScale.doubleValue
-        let pageTextScale: Double = rendererPageModel.pageModel.textScale.doubleValue
-        let textScale: Double = textModel.textScale.doubleValue
+        // TODO: Remove commented out code once XmlNodeRenderer is removed. ~Levi
+        //let manifestTextScale: Double = rendererPageModel.manifest.attributes.textScale.doubleValue
+        //let pageTextScale: Double = rendererPageModel.pageModel.textScale.doubleValue
+        //let textScale: Double = textModel.textScale.doubleValue
+        //fontScale = CGFloat(manifestTextScale * pageTextScale * textScale)
         
-        fontScale = CGFloat(manifestTextScale * pageTextScale * textScale)
+        fontScale = CGFloat(textModel.textScale.doubleValue)
         
         return fontScale
     }
