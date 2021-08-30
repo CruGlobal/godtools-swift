@@ -99,7 +99,7 @@ class CardNode: MobileContentXmlNode, CardModelType {
         return trainingTipNode != nil
     }
     
-    var text: String? {
+    var title: String? {
         return labelNode?.textNode?.text
     }
     
@@ -118,7 +118,7 @@ class CardNode: MobileContentXmlNode, CardModelType {
         return cardsNode?.visibleCardNodes.count ?? 0
     }
     
-    func getTextColor() -> MobileContentColor? {
+    func getTitleColor() -> MobileContentColor? {
         return labelNode?.textNode?.getTextColor()
     }
     

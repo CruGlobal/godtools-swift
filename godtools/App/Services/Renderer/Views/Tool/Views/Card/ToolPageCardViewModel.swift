@@ -65,11 +65,11 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     }
     
     var title: String? {
-        return cardModel.text
+        return cardModel.title
     }
     
     var titleColor: UIColor {
-        return cardModel.getTextColor()?.uiColor ?? rendererPageModel.pageColors.primaryColor.uiColor
+        return cardModel.getTitleColor()?.uiColor ?? rendererPageModel.pageColors.primaryColor.uiColor
     }
     
     var titleFont: UIFont {
