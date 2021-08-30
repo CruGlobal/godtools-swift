@@ -69,7 +69,10 @@ class MultiplatformContentButton: ContentButtonModelType {
     }
     
     func getTextColor() -> MobileContentColor? {
-        return MobileContentColor(color: button.textColor)
+        if let textColor = button.text?.textColor {
+            return MobileContentColor(color: textColor)
+        }
+        return nil
     }
     
     func getAnalyticsEvents() -> [AnalyticsEventModelType] {
