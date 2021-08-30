@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ToolPageCardViewDelegate: class {
+protocol ToolPageCardViewDelegate: AnyObject {
     
     func toolPageCardHeaderTapped(cardView: ToolPageCardView)
     func toolPageCardPreviousTapped(cardView: ToolPageCardView)

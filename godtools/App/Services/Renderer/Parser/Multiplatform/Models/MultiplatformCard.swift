@@ -59,7 +59,7 @@ class MultiplatformCard: CardModelType {
         return card.isHidden
     }
     
-    var text: String? {
+    var title: String? {
         return card.label?.text
     }
     
@@ -71,8 +71,12 @@ class MultiplatformCard: CardModelType {
         return card.visiblePosition?.intValue ?? 0
     }
     
-    func getTextColor() -> MobileContentColor? {
-        return MobileContentColor(color: card.textColor)
+    func getTitleColor() -> MobileContentColor? {
+        
+        if let labelTextColor = card.label?.textColor {
+            return MobileContentColor(color: labelTextColor)
+        }
+        return nil
     }
     
     func getAnalyticsEvents() -> [AnalyticsEventModelType] {
