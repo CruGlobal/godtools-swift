@@ -16,12 +16,12 @@ protocol CardModelType: BackgroundImageModelType, MobileContentRenderableModel {
     var dismissListeners: [String] { get }
     var listeners: [String] { get }
     var isHidden: Bool { get }
-    var text: String? { get }
+    var title: String? { get }
     var hasTrainingTip: Bool { get }
     var cardPositionInVisibleCards: Int { get }
     var numberOfVisibleCards: Int { get }
     
-    func getTextColor() -> MobileContentColor?
+    func getTitleColor() -> MobileContentColor?
     func getAnalyticsEvents() -> [AnalyticsEventModelType]
 }
 
