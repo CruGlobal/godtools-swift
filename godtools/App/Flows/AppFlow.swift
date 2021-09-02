@@ -430,6 +430,12 @@ extension AppFlow: FirebaseInAppMessagingDelegate {
     
     func firebaseInAppMessageActionTappedWithUrl(url: URL) {
         
-        UIApplication.shared.open(url)
+        let deepLinkingService: DeepLinkingServiceType = appDiContainer.sharedDeepLinkingService
+        
+        let didParseDeepLinksFromUrl: Bool = deepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
+        
+        if !didParseDeepLinksFromUrl {
+            UIApplication.shared.open(url)
+        }
     }
 }
