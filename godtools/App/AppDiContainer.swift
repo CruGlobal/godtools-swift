@@ -47,6 +47,8 @@ class AppDiContainer {
     let languageDirectionService: LanguageDirectionService
     let languageTranslationsDownloader: LanguageTranslationsDownloader
     let isNewUserService: IsNewUserService
+    let appSecondsInBackground: SecondsInBackground
+    let appLaunchCountRepository: AppLaunchCountRepository
     let analytics: AnalyticsContainer
     let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     let localizationServices: LocalizationServices = LocalizationServices()
@@ -169,6 +171,18 @@ class AppDiContainer {
         isNewUserService = IsNewUserService(
             isNewUserCache: IsNewUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache),
             determineNewUser: DetermineNewUserIfPrimaryLanguageSet(languageSettingsCache: languageSettingsCache)
+        )
+        
+        appSecondsInBackground = SecondsInBackground(
+            sharedUserDefaults: sharedUserDefaultsCache,
+            resignedActiveDateCacheKey: "godtools.userDefaults.resignedActiveDateCacheKey"
+        )
+        
+        appLaunchCountRepository = AppLaunchCountRepository(
+            cache: AppLaunchCountUserDefaultsCache(
+                userDefaultsCache: sharedUserDefaultsCache,
+                appLaunchCountCacheKey: "godtools.userDefaults.appLaunchCountCacheKey"
+            )
         )
         
         sharedDeepLinkingService = AppDiContainer.getNewDeepLinkingService(loggingEnabled: config.isDebug)

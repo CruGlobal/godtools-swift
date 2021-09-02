@@ -60,7 +60,12 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         log(method: "configure()", label: nil, labelValue: nil, data: nil)
     }
     
-    //MARK: - Public
+    func setUserProperty(userProperty: FirebaseAnalyticsUserProperty, value: String?) {
+        
+        let name: String = transformStringForFirebase(userProperty.rawValue)
+        
+        Analytics.setUserProperty(value, forName: name)
+    }
     
     func trackScreenView(screenName: String, siteSection: String, siteSubSection: String) {
         

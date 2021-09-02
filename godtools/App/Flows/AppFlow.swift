@@ -55,6 +55,8 @@ class AppFlow: NSObject, Flow {
         rootController.addChildController(child: navigationController)
         
         addObservers()
+        
+        appDiContainer.firebaseInAppMessaging.setDelegate(delegate: self)
     }
     
     deinit {
@@ -404,11 +406,19 @@ extension AppFlow {
         }
         else if notification.name == UIApplication.didBecomeActiveNotification {
             
-            if !navigationStarted {
+            let appLaunchedFromTerminatedState: Bool = !navigationStarted
+            let appLaunchedFromBackgroundState: Bool = navigationStarted && appIsInBackground
+            
+            userLaunchedApp(
+                appLaunchedFromTerminatedState: appLaunchedFromTerminatedState,
+                appLaunchedFromBackgroundState: appLaunchedFromBackgroundState
+            )
+            
+            if appLaunchedFromTerminatedState {
                 navigationStarted = true
                 navigate(step: .appLaunchedFromTerminatedState)
             }
-            else if appIsInBackground {
+            else if appLaunchedFromBackgroundState {
                 appIsInBackground = false
                 navigate(step: .appLaunchedFromBackgroundState)
             }
@@ -416,5 +426,15 @@ extension AppFlow {
         else if notification.name == UIApplication.didEnterBackgroundNotification {
             appIsInBackground = true
         }
+    }
+}
+
+// MARK: - FirebaseInAppMessagingDelegate
+
+extension AppFlow: FirebaseInAppMessagingDelegate {
+    
+    func firebaseInAppMessageActionTappedWithUrl(url: URL) {
+        
+        UIApplication.shared.open(url)
     }
 }

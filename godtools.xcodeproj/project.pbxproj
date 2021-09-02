@@ -900,6 +900,11 @@
 		45BEC53926A604E4005D8CA1 /* MobileContentButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BEC52D26A604E3005D8CA1 /* MobileContentButtonStyle.swift */; };
 		45BEC53A26A604E4005D8CA1 /* MobileContentRestrictToType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BEC52E26A604E4005D8CA1 /* MobileContentRestrictToType.swift */; };
 		45BEC53C26A606C9005D8CA1 /* MobileContentTextScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BEC53B26A606C9005D8CA1 /* MobileContentTextScale.swift */; };
+		45C403A526E0145E00B16083 /* FirebaseAnalyticsUserProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C403A426E0145E00B16083 /* FirebaseAnalyticsUserProperty.swift */; };
+		45C403A926E016D900B16083 /* AppLaunchCountRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C403A826E016D900B16083 /* AppLaunchCountRepository.swift */; };
+		45C403AB26E016EF00B16083 /* AppLaunchCountUserDefaultsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C403AA26E016EF00B16083 /* AppLaunchCountUserDefaultsCache.swift */; };
+		45C403AE26E024C400B16083 /* SecondsInBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C403AD26E024C400B16083 /* SecondsInBackground.swift */; };
+		45C403B026E0537800B16083 /* AppFlow+UserLaunchedApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C403AF26E0537800B16083 /* AppFlow+UserLaunchedApp.swift */; };
 		45C5386124B8EFA700CABDAC /* godtoolsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C5386024B8EFA700CABDAC /* godtoolsUITests.swift */; };
 		45C93AD6261D310900592FFF /* ArticleManifestXmlParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C93AA4261D310900592FFF /* ArticleManifestXmlParser.swift */; };
 		45C93AD7261D310900592FFF /* ArticleCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C93AA6261D310900592FFF /* ArticleCategory.swift */; };
@@ -1919,6 +1924,11 @@
 		45BEC52D26A604E3005D8CA1 /* MobileContentButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentButtonStyle.swift; sourceTree = "<group>"; };
 		45BEC52E26A604E4005D8CA1 /* MobileContentRestrictToType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentRestrictToType.swift; sourceTree = "<group>"; };
 		45BEC53B26A606C9005D8CA1 /* MobileContentTextScale.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentTextScale.swift; sourceTree = "<group>"; };
+		45C403A426E0145E00B16083 /* FirebaseAnalyticsUserProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAnalyticsUserProperty.swift; sourceTree = "<group>"; };
+		45C403A826E016D900B16083 /* AppLaunchCountRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLaunchCountRepository.swift; sourceTree = "<group>"; };
+		45C403AA26E016EF00B16083 /* AppLaunchCountUserDefaultsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLaunchCountUserDefaultsCache.swift; sourceTree = "<group>"; };
+		45C403AD26E024C400B16083 /* SecondsInBackground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondsInBackground.swift; sourceTree = "<group>"; };
+		45C403AF26E0537800B16083 /* AppFlow+UserLaunchedApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppFlow+UserLaunchedApp.swift"; sourceTree = "<group>"; };
 		45C5386024B8EFA700CABDAC /* godtoolsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = godtoolsUITests.swift; sourceTree = "<group>"; };
 		45C93AA4261D310900592FFF /* ArticleManifestXmlParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleManifestXmlParser.swift; sourceTree = "<group>"; };
 		45C93AA6261D310900592FFF /* ArticleCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleCategory.swift; sourceTree = "<group>"; };
@@ -3799,6 +3809,7 @@
 			isa = PBXGroup;
 			children = (
 				45AD189225938A4E00A096A0 /* AppFlow.swift */,
+				45C403AF26E0537800B16083 /* AppFlow+UserLaunchedApp.swift */,
 				45AD188E25938A4E00A096A0 /* AppRootController.swift */,
 				45C93B11261D314C00592FFF /* ArticleDeepLinkFlow.swift */,
 				45C93B10261D314C00592FFF /* ArticleFlow.swift */,
@@ -3975,6 +3986,7 @@
 				45AD203525938AC200A096A0 /* Analytics */,
 				45AD20A125938CF100A096A0 /* AppConfig */,
 				D19D00E525AF4B79007C535B /* AppsFlyer */,
+				45C403A726E0169E00B16083 /* AppLaunchCount */,
 				45AD1E2A25938A9700A096A0 /* Articles */,
 				45AD1E9925938A9800A096A0 /* Attachments */,
 				45AD1EE525938A9800A096A0 /* CardJumpService */,
@@ -4661,6 +4673,7 @@
 				45AD204525938AC300A096A0 /* FirebaseAnalytics.swift */,
 				45AD204425938AC300A096A0 /* FirebaseAnalyticsType.swift */,
 				45428A7A26712A3A0022A66D /* FirebaseAnalytics+MobileContentAnalyticsSystem.swift */,
+				45C403A426E0145E00B16083 /* FirebaseAnalyticsUserProperty.swift */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -4702,6 +4715,7 @@
 				45AD20E8259391B000A096A0 /* Json */,
 				45AD207725938B6A00A096A0 /* KeyboardObserver */,
 				45AD20B725938F1A00A096A0 /* Oberservables */,
+				45C403AC26E024C400B16083 /* SecondsInBackground */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -5034,6 +5048,23 @@
 				45BD79F726A21FD90007426B /* TrainingTipNode.swift */,
 			);
 			path = Nodes;
+			sourceTree = "<group>";
+		};
+		45C403A726E0169E00B16083 /* AppLaunchCount */ = {
+			isa = PBXGroup;
+			children = (
+				45C403A826E016D900B16083 /* AppLaunchCountRepository.swift */,
+				45C403AA26E016EF00B16083 /* AppLaunchCountUserDefaultsCache.swift */,
+			);
+			path = AppLaunchCount;
+			sourceTree = "<group>";
+		};
+		45C403AC26E024C400B16083 /* SecondsInBackground */ = {
+			isa = PBXGroup;
+			children = (
+				45C403AD26E024C400B16083 /* SecondsInBackground.swift */,
+			);
+			path = SecondsInBackground;
 			sourceTree = "<group>";
 		};
 		45C93AA3261D310900592FFF /* Manifest */ = {
@@ -6128,6 +6159,7 @@
 				45AD1B0E25938A4E00A096A0 /* ArticleCellViewModelType.swift in Sources */,
 				45BD79E026A20EEA0007426B /* ContentVideoModelType.swift in Sources */,
 				4526529426A71FB600E703F7 /* MultiplatformHeader.swift in Sources */,
+				45C403A926E016D900B16083 /* AppLaunchCountRepository.swift in Sources */,
 				4526529C26A7322800E703F7 /* MobileContentRenderableModel+MultiplatformContent.swift in Sources */,
 				45AD1F9825938A9800A096A0 /* RealmResourcesCache.swift in Sources */,
 				452652A626A763E500E703F7 /* MultiplatformContentButton.swift in Sources */,
@@ -6224,6 +6256,7 @@
 				45BD79C626A20EEA0007426B /* TitleModelType.swift in Sources */,
 				45AD1F8D25938A9800A096A0 /* ResourcesPlusLatestTranslationsAndAttachmentsModel.swift in Sources */,
 				45AD201A25938A9800A096A0 /* NoClientApiErrorType.swift in Sources */,
+				45C403AE26E024C400B16083 /* SecondsInBackground.swift in Sources */,
 				45AD1FBA25938A9800A096A0 /* TractRemoteSharePublisher.swift in Sources */,
 				45AD1BC725938A4F00A096A0 /* UIView+Animations.swift in Sources */,
 				45C93AF8261D310900592FFF /* CategoryArticleModel.swift in Sources */,
@@ -6305,6 +6338,7 @@
 				45558342269F2C7B00C3FF14 /* ToolPageHeaderViewModelType.swift in Sources */,
 				45AD21162593958E00A096A0 /* LanguageModel+Direction.swift in Sources */,
 				45AD1AF225938A4E00A096A0 /* HelpWebContent.swift in Sources */,
+				45C403B026E0537800B16083 /* AppFlow+UserLaunchedApp.swift in Sources */,
 				45AD1BB725938A4F00A096A0 /* TranslationDownloaderErrorViewModel.swift in Sources */,
 				459C56D325FF954F00F15967 /* (null) in Sources */,
 				45BD7A6326A21FDA0007426B /* MobileContentXmlNode.swift in Sources */,
@@ -6359,6 +6393,7 @@
 				45AD1B9625938A4F00A096A0 /* ToolNavBarView.swift in Sources */,
 				45B6482A25E593110098BAF1 /* (null) in Sources */,
 				45C93AD6261D310900592FFF /* ArticleManifestXmlParser.swift in Sources */,
+				45C403AB26E016EF00B16083 /* AppLaunchCountUserDefaultsCache.swift in Sources */,
 				45AD1ABA25938A4E00A096A0 /* ToolsMenuViewModel.swift in Sources */,
 				45AD214C2593A4B700A096A0 /* ShareToolView.swift in Sources */,
 				45BD79C826A20EEA0007426B /* ContentAccordionModelType.swift in Sources */,
@@ -6397,6 +6432,7 @@
 				4555833E269F2C7B00C3FF14 /* ToolPageModalView.swift in Sources */,
 				45B6480C25E581660098BAF1 /* (null) in Sources */,
 				455582E5269F2C1000C3FF14 /* TrainingTipView.swift in Sources */,
+				45C403A526E0145E00B16083 /* FirebaseAnalyticsUserProperty.swift in Sources */,
 				45AD201125938A9800A096A0 /* TranslationManifestData.swift in Sources */,
 				45C93B13261D314C00592FFF /* ArticleDeepLinkFlow.swift in Sources */,
 				45AD205925938AC300A096A0 /* SnowplowAnalyticsType.swift in Sources */,
@@ -7192,7 +7228,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.cru.godtools";
+				PROVISIONING_PROFILE_SPECIFIER = "GodTools Beta";
 				SWIFT_OBJC_BRIDGING_HEADER = "godtools/godtools-Bridging-Header.h";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
