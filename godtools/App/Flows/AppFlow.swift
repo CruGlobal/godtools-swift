@@ -228,7 +228,7 @@ class AppFlow: NSObject, Flow {
                 )
                 
                 self.articleDeepLinkFlow = articleDeepLinkFlow
-            
+                            
             case .lessonsList:
                 
                 resetFlowToToolsFlow(startingToolbarItem: .lessons)
@@ -321,6 +321,16 @@ class AppFlow: NSObject, Flow {
             )
             
             self.languageSettingsFlow = languageSettingsFlow
+            
+        case .buttonWithUrlTappedFromFirebaseInAppMessage(let url):
+            
+            let deepLinkingService: DeepLinkingServiceType = appDiContainer.sharedDeepLinkingService
+            
+            let didParseDeepLinksFromUrl: Bool = deepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
+            
+            if !didParseDeepLinksFromUrl {
+                UIApplication.shared.open(url)
+            }
                         
         default:
             break
@@ -429,13 +439,6 @@ extension AppFlow {
 extension AppFlow: FirebaseInAppMessagingDelegate {
     
     func firebaseInAppMessageActionTappedWithUrl(url: URL) {
-        
-        let deepLinkingService: DeepLinkingServiceType = appDiContainer.sharedDeepLinkingService
-        
-        let didParseDeepLinksFromUrl: Bool = deepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
-        
-        if !didParseDeepLinksFromUrl {
-            UIApplication.shared.open(url)
-        }
+        navigate(step: .buttonWithUrlTappedFromFirebaseInAppMessage(url: url))
     }
 }
