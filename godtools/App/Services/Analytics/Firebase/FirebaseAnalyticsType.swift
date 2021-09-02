@@ -11,7 +11,7 @@ import Foundation
 protocol FirebaseAnalyticsType: MobileContentAnalyticsSystem {
     
     func configure()
-    func setUserProperty(userProperty: FirebaseAnalyticsUserProperty, value: String?)
+    func setUserProperty(key: String, value: String?)
     func trackScreenView(screenName: String, siteSection: String, siteSubSection: String)
     func trackAction(screenName: String, siteSection: String, siteSubSection: String, actionName: String, data: [String : Any]?)
     func trackExitLink(screenName: String, siteSection: String, siteSubSection: String, url: String)

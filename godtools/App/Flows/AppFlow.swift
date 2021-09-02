@@ -409,11 +409,6 @@ extension AppFlow {
             let appLaunchedFromTerminatedState: Bool = !navigationStarted
             let appLaunchedFromBackgroundState: Bool = navigationStarted && appIsInBackground
             
-            userLaunchedApp(
-                appLaunchedFromTerminatedState: appLaunchedFromTerminatedState,
-                appLaunchedFromBackgroundState: appLaunchedFromBackgroundState
-            )
-            
             if appLaunchedFromTerminatedState {
                 navigationStarted = true
                 navigate(step: .appLaunchedFromTerminatedState)

@@ -49,22 +49,21 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         }
         
         keyAuthClient.addStateChangeDelegate(delegate: self)
-        
-        if config.isDebug {
-            Analytics.setUserProperty(AnalyticsConstants.Values.debugIsTrue, forName: transformStringForFirebase(AnalyticsConstants.Keys.debug))
-        }
-        else {
-            Analytics.setUserProperty(AnalyticsConstants.Values.debugIsFalse, forName: transformStringForFirebase(AnalyticsConstants.Keys.debug))
-        }
+                
+        setUserProperty(
+            key: AnalyticsConstants.Keys.debug,
+            value: config.isDebug ? AnalyticsConstants.Values.debugIsTrue : AnalyticsConstants.Values.debugIsFalse
+        )
         
         log(method: "configure()", label: nil, labelValue: nil, data: nil)
     }
     
-    func setUserProperty(userProperty: FirebaseAnalyticsUserProperty, value: String?) {
+    func setUserProperty(key: String, value: String?) {
         
-        let name: String = transformStringForFirebase(userProperty.rawValue)
-        
-        Analytics.setUserProperty(value, forName: name)
+        Analytics.setUserProperty(
+            value,
+            forName: transformStringForFirebase(string: key)
+        )
     }
     
     func trackScreenView(screenName: String, siteSection: String, siteSubSection: String) {
@@ -122,7 +121,7 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         }
     }
     
-    //MARK: - Private
+    // MARK: - Private
     
     private func assertFailureIfNotConfigured() {
         if !isConfigured {
@@ -157,7 +156,7 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
                 }
             }
             
-            let transformedEventName: String = firebaseAnalytics.transformStringForFirebase(eventName).lowercased()
+            let transformedEventName: String = firebaseAnalytics.transformStringForFirebase(string: eventName).lowercased()
             let transformedData: [String: Any]? = firebaseAnalytics.transformDataForFirebase(data: parameters)
             
             Analytics.logEvent(transformedEventName, parameters: transformedData)
@@ -174,7 +173,7 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         var transformedData: [String: Any] = Dictionary()
         
         for (key, value) in attributesData {
-            let transformedKey: String = transformStringForFirebase(key).lowercased()
+            let transformedKey: String = transformStringForFirebase(string: key).lowercased()
             let transformedValue: Any = value
             transformedData[transformedKey] = transformedValue
         }
@@ -182,8 +181,8 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         return transformedData
     }
     
-    private func transformStringForFirebase(_ key: String) -> String {
-        return key.replacingOccurrences(of: "(-|\\.|\\ )", with: "_", options: .regularExpression).lowercased()
+    private func transformStringForFirebase(string: String) -> String {
+        return string.replacingOccurrences(of: "(-|\\.|\\ )", with: "_", options: .regularExpression).lowercased()
     }
     
     private func setUserProperties() {
@@ -199,9 +198,9 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         let userId = grMasterPersonID ?? ssoguid
         
         Analytics.setUserID(userId)
-        Analytics.setUserProperty(loggedInStatus, forName: transformStringForFirebase(AnalyticsConstants.Keys.loggedInStatus))
-        Analytics.setUserProperty(grMasterPersonID, forName: transformStringForFirebase(AnalyticsConstants.Keys.grMasterPersonID))
-        Analytics.setUserProperty(ssoguid, forName: transformStringForFirebase(AnalyticsConstants.Keys.ssoguid))
+        setUserProperty(key: AnalyticsConstants.Keys.loggedInStatus, value: loggedInStatus)
+        setUserProperty(key: AnalyticsConstants.Keys.grMasterPersonID, value: grMasterPersonID)
+        setUserProperty(key: AnalyticsConstants.Keys.ssoguid, value: ssoguid)
     }
     
     private func createBaseProperties(screenName: String?, siteSection: String?, siteSubSection: String?, previousScreenName: String?) -> [String: String] {
