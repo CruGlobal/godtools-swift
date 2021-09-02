@@ -323,12 +323,10 @@ class AppFlow: NSObject, Flow {
             self.languageSettingsFlow = languageSettingsFlow
             
         case .buttonWithUrlTappedFromFirebaseInAppMessage(let url):
+                        
+            let didParseDeepLinkFromUrl: Bool = deepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
             
-            let deepLinkingService: DeepLinkingServiceType = appDiContainer.sharedDeepLinkingService
-            
-            let didParseDeepLinksFromUrl: Bool = deepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
-            
-            if !didParseDeepLinksFromUrl {
+            if !didParseDeepLinkFromUrl {
                 UIApplication.shared.open(url)
             }
                         
