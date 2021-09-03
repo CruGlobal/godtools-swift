@@ -10,5 +10,7 @@ import Foundation
 import FirebaseInAppMessaging
 
 protocol FirebaseInAppMessagingType: InAppMessagingDisplayDelegate {
-    func triggerInAppMessage(eventId: String)
+    
+    func setDelegate(delegate: FirebaseInAppMessagingDelegate?)
+    func triggerInAppMessage(eventName: String)
 }

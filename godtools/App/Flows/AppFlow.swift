@@ -55,6 +55,8 @@ class AppFlow: NSObject, Flow {
         rootController.addChildController(child: navigationController)
         
         addObservers()
+        
+        appDiContainer.firebaseInAppMessaging.setDelegate(delegate: self)
     }
     
     deinit {
@@ -226,7 +228,7 @@ class AppFlow: NSObject, Flow {
                 )
                 
                 self.articleDeepLinkFlow = articleDeepLinkFlow
-            
+                            
             case .lessonsList:
                 
                 resetFlowToToolsFlow(startingToolbarItem: .lessons)
@@ -319,6 +321,14 @@ class AppFlow: NSObject, Flow {
             )
             
             self.languageSettingsFlow = languageSettingsFlow
+            
+        case .buttonWithUrlTappedFromFirebaseInAppMessage(let url):
+                        
+            let didParseDeepLinkFromUrl: Bool = deepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
+            
+            if !didParseDeepLinkFromUrl {
+                UIApplication.shared.open(url)
+            }
                         
         default:
             break
@@ -404,11 +414,14 @@ extension AppFlow {
         }
         else if notification.name == UIApplication.didBecomeActiveNotification {
             
-            if !navigationStarted {
+            let appLaunchedFromTerminatedState: Bool = !navigationStarted
+            let appLaunchedFromBackgroundState: Bool = navigationStarted && appIsInBackground
+            
+            if appLaunchedFromTerminatedState {
                 navigationStarted = true
                 navigate(step: .appLaunchedFromTerminatedState)
             }
-            else if appIsInBackground {
+            else if appLaunchedFromBackgroundState {
                 appIsInBackground = false
                 navigate(step: .appLaunchedFromBackgroundState)
             }
@@ -416,5 +429,14 @@ extension AppFlow {
         else if notification.name == UIApplication.didEnterBackgroundNotification {
             appIsInBackground = true
         }
+    }
+}
+
+// MARK: - FirebaseInAppMessagingDelegate
+
+extension AppFlow: FirebaseInAppMessagingDelegate {
+    
+    func firebaseInAppMessageActionTappedWithUrl(url: URL) {
+        navigate(step: .buttonWithUrlTappedFromFirebaseInAppMessage(url: url))
     }
 }
