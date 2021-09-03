@@ -16,10 +16,10 @@ target 'godtools' do
     pod 'GoogleConversionTracking', '~> 3.4.0'
     pod 'GoogleTagManager', '~> 7.2.0'
     pod 'FBSDKCoreKit', '~> 8.0.0'
-    pod 'FirebaseCore', '7.3.0'
-    pod 'FirebaseInAppMessaging', '7.3.0-beta'
-    pod 'FirebaseAnalytics', '7.3.0'
-    pod 'FirebaseCrashlytics', '7.3.0'
+    pod 'FirebaseCore', '7.11.0'
+    pod 'FirebaseInAppMessaging', '7.11.0-beta'
+    pod 'FirebaseAnalytics', '7.11.0'
+    pod 'FirebaseCrashlytics', '7.11.0'
     pod 'Fuzi', '~> 3.1.1'
     pod 'lottie-ios', '~> 3.1.8'
     pod 'RealmSwift', '~> 10.7.4'
@@ -31,7 +31,7 @@ target 'godtools' do
     pod 'youtube-ios-player-helper', '~> 1.0.3'
     
     # CruGlobal pods
-    pod 'GodtoolsToolParser', '0.2.0-SNAPSHOT'
+    pod 'GodtoolsToolParser', '0.2.0'
     
     # TheKeyOAuthSwift requires dependency GTMAppAuth and pulls the latest version of GTMAppAuth.  Must force GTMAppAuth to version 0.7.0 because the latest version of GTMAppAuth pulls a version of AppAuth that is deprececated in TheKeyOAuthSwift causing errors in TheKeyOAuthSwift.
     pod 'TheKeyOAuthSwift'
