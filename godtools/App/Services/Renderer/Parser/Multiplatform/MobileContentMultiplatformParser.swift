@@ -18,6 +18,10 @@ class MobileContentMultiplatformParser: MobileContentParserType {
     
     required init(translationManifestData: TranslationManifestData, translationsFileCache: TranslationsFileCache) {
         
+        // TODO: Add ParserConfigKt.FEATURE_ANIMATION to supportedFeatures when implementing Animations. ~Levi
+                
+        ParserConfig().supportedFeatures = [ParserConfigKt.FEATURE_MULTISELECT]
+        
         let manifestParser = IosManifestParser(parserFactory: MobileContentMultiplatformParserFactory(translationsFileCache: translationsFileCache))
         
         let result = manifestParser.parseManifestBlocking(fileName: translationManifestData.translationZipFile.translationManifestFilename)

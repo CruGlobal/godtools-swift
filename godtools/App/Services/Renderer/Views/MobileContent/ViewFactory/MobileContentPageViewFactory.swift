@@ -192,6 +192,28 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
+        else if let multiSelectOptionModel = renderableModel as? ContentMultiSelectOptionModelType {
+            
+            let viewModel = MobileContentMultiSelectOptionViewModel(
+                multiSelectOptionModel: multiSelectOptionModel,
+                rendererPageModel: rendererPageModel
+            )
+            
+            let view = MobileContentMultiSelectOptionView(viewModel: viewModel)
+            
+            return view
+        }
+        else if let multiSelectModel = renderableModel as? ContentMultiSelectModelType {
+            
+            let viewModel = MobileContentMultiSelectViewModel(
+                multiSelectModel: multiSelectModel,
+                rendererPageModel: rendererPageModel
+            )
+            
+            let view = MobileContentMultiSelectView(viewModel: viewModel)
+            
+            return view
+        }
         else if let sectionModel = renderableModel as? ContentSectionModelType {
             
             let viewModel = MobileContentSectionViewModel(
