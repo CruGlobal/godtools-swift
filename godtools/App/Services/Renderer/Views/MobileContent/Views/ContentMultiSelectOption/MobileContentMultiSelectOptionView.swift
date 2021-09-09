@@ -18,6 +18,7 @@ class MobileContentMultiSelectOptionView: MobileContentView {
     @IBOutlet weak private var shadowView: UIView!
     @IBOutlet weak private var contentView: UIView!
     @IBOutlet weak private var textContainerView: UIView!
+    @IBOutlet weak private var overlayButton: UIButton!
         
     required init(viewModel: MobileContentMultiSelectOptionViewModelType) {
         
@@ -27,6 +28,9 @@ class MobileContentMultiSelectOptionView: MobileContentView {
         
         initializeNib()
         setupLayout()
+        setupBinding()
+        
+        overlayButton.addTarget(self, action: #selector(overlayButtonTapped), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
@@ -61,6 +65,17 @@ class MobileContentMultiSelectOptionView: MobileContentView {
         contentView.backgroundColor = .white
         contentView.layer.cornerRadius = viewCornerRadius
         contentView.clipsToBounds = true
+    }
+    
+    private func setupBinding() {
+        
+        viewModel.backgroundColor.addObserver(self) { [weak self] (backgroundColor: UIColor) in
+            self?.contentView.backgroundColor = backgroundColor
+        }
+    }
+    
+    @objc func overlayButtonTapped() {
+        viewModel.multiSelectOptionTapped()
     }
     
     override func renderChild(childView: MobileContentView) {

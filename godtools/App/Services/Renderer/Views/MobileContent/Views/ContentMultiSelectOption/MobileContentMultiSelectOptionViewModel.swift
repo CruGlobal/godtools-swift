@@ -13,9 +13,18 @@ class MobileContentMultiSelectOptionViewModel: MobileContentMultiSelectOptionVie
     private let multiSelectOptionModel: ContentMultiSelectOptionModelType
     private let rendererPageModel: MobileContentRendererPageModel
     
+    let backgroundColor: ObservableValue<UIColor>
+    
     required init(multiSelectOptionModel: ContentMultiSelectOptionModelType, rendererPageModel: MobileContentRendererPageModel) {
         
         self.multiSelectOptionModel = multiSelectOptionModel
         self.rendererPageModel = rendererPageModel
+        
+        backgroundColor = ObservableValue(value: multiSelectOptionModel.backgroundColor)
+    }
+    
+    func multiSelectOptionTapped() {
+        
+        multiSelectOptionModel.toggleSelected(rendererState: rendererPageModel.rendererState)
     }
 }

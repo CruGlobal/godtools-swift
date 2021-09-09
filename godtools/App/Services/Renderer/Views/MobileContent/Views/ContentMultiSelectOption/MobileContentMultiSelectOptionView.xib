@@ -3,7 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18122"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MobileContentMultiSelectOptionView" customModule="godtools" customModuleProvider="target">
             <connections>
                 <outlet property="contentView" destination="atg-Pp-RLG" id="Tnw-rf-qYZ"/>
+                <outlet property="overlayButton" destination="kTz-xo-eIa" id="Gnq-gi-pht"/>
                 <outlet property="shadowView" destination="UD2-id-7iG" id="4Zt-7k-u8B"/>
                 <outlet property="textContainerView" destination="ucO-0I-9fO" id="Tn3-59-7UD"/>
             </connections>
@@ -40,17 +41,25 @@
                         <constraint firstAttribute="bottom" secondItem="ucO-0I-9fO" secondAttribute="bottom" constant="20" id="qWd-3k-7hU"/>
                     </constraints>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kTz-xo-eIa" userLabel="overlayButton">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="140"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </button>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="UD2-id-7iG" firstAttribute="top" secondItem="uOR-t5-ivc" secondAttribute="top" id="DJZ-th-DjU"/>
                 <constraint firstItem="atg-Pp-RLG" firstAttribute="top" secondItem="uOR-t5-ivc" secondAttribute="top" id="IXY-6u-8HS"/>
                 <constraint firstItem="UD2-id-7iG" firstAttribute="leading" secondItem="uOR-t5-ivc" secondAttribute="leading" id="LOl-ru-hDx"/>
+                <constraint firstItem="kTz-xo-eIa" firstAttribute="top" secondItem="uOR-t5-ivc" secondAttribute="top" id="RH4-hW-N3J"/>
                 <constraint firstAttribute="bottom" secondItem="UD2-id-7iG" secondAttribute="bottom" id="RQC-gh-CZO"/>
                 <constraint firstAttribute="trailing" secondItem="UD2-id-7iG" secondAttribute="trailing" id="VTr-H1-lfO"/>
+                <constraint firstAttribute="trailing" secondItem="kTz-xo-eIa" secondAttribute="trailing" id="b9H-wH-6h8"/>
                 <constraint firstAttribute="trailing" secondItem="atg-Pp-RLG" secondAttribute="trailing" id="fMV-Ka-BaK"/>
                 <constraint firstItem="atg-Pp-RLG" firstAttribute="leading" secondItem="uOR-t5-ivc" secondAttribute="leading" id="g0i-dD-GM4"/>
                 <constraint firstAttribute="bottom" secondItem="atg-Pp-RLG" secondAttribute="bottom" id="g9d-K9-bqy"/>
+                <constraint firstAttribute="bottom" secondItem="kTz-xo-eIa" secondAttribute="bottom" id="hdM-c8-4Dg"/>
+                <constraint firstItem="kTz-xo-eIa" firstAttribute="leading" secondItem="uOR-t5-ivc" secondAttribute="leading" id="kfU-AT-DlO"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="182" y="175"/>

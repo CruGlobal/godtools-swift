@@ -6,7 +6,7 @@
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import GodToolsToolParser
 
 class MultiplatformContentMultiSelectOption: ContentMultiSelectOptionModelType {
@@ -16,6 +16,19 @@ class MultiplatformContentMultiSelectOption: ContentMultiSelectOptionModelType {
     required init(multiSelectOption: Multiselect.Option) {
         
         self.multiSelectOption = multiSelectOption
+    }
+    
+    var backgroundColor: UIColor {
+        return multiSelectOption.backgroundColor
+    }
+    
+    var selectedColor: UIColor {
+        return multiSelectOption.selectedColor
+    }
+    
+    func toggleSelected(rendererState: MobileContentMultiplatformState) {
+        
+        multiSelectOption.toggleSelected(state: rendererState.state)
     }
 }
 

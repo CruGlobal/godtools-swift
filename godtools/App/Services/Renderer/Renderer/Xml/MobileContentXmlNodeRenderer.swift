@@ -11,6 +11,7 @@ import UIKit
 class MobileContentXmlNodeRenderer: MobileContentRendererType {
             
     private let xmlParser: MobileContentXmlParser
+    private let rendererState: MobileContentMultiplatformState = MobileContentMultiplatformState()
             
     let resource: ResourceModel
     let language: LanguageModel
@@ -70,7 +71,8 @@ class MobileContentXmlNodeRenderer: MobileContentRendererType {
             resource: resource,
             language: language,
             pageViewFactories: pageViewFactories,
-            primaryRendererLanguage: primaryRendererLanguage
+            primaryRendererLanguage: primaryRendererLanguage,
+            rendererState: rendererState
         )
         
         if let renderableView = recurseAndRender(node: pageNode, renderableModelParent: nil, rendererPageModel: rendererPageModel, containerModel: nil) {

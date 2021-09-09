@@ -6,8 +6,11 @@
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol MobileContentMultiSelectOptionViewModelType {
     
+    var backgroundColor: ObservableValue<UIColor> { get }
+    
+    func multiSelectOptionTapped()
 }

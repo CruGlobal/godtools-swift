@@ -6,10 +6,14 @@
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol ContentMultiSelectOptionModelType: MobileContentRenderableModel {
     
+    var backgroundColor: UIColor { get }
+    var selectedColor: UIColor { get }
+    
+    func toggleSelected(rendererState: MobileContentMultiplatformState)
 }
 
 extension ContentMultiSelectOptionModelType {
