@@ -85,6 +85,7 @@
 		453F0B6226EA369000436EE4 /* MobileContentMultiSelectOptionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453F0B5F26EA369000436EE4 /* MobileContentMultiSelectOptionViewModel.swift */; };
 		453F0B6426EA371D00436EE4 /* MobileContentMultiSelectOptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 453F0B6326EA371D00436EE4 /* MobileContentMultiSelectOptionView.xib */; };
 		453F0B6626EA6F3D00436EE4 /* MobileContentMultiplatformState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453F0B6526EA6F3D00436EE4 /* MobileContentMultiplatformState.swift */; };
+		453F0B6826EA8F6F00436EE4 /* MultiplatformFlowWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453F0B6726EA8F6F00436EE4 /* MultiplatformFlowWatcher.swift */; };
 		45428A7B26712A3A0022A66D /* FirebaseAnalytics+MobileContentAnalyticsSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45428A7A26712A3A0022A66D /* FirebaseAnalytics+MobileContentAnalyticsSystem.swift */; };
 		45428A7D26712ABA0022A66D /* SnowplowAnalytics+MobileContentAnalyticsSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45428A7C26712ABA0022A66D /* SnowplowAnalytics+MobileContentAnalyticsSystem.swift */; };
 		45428A8126712B1C0022A66D /* AppsFlyerAnalytics+MobileContentAnalyticsSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45428A8026712B1C0022A66D /* AppsFlyerAnalytics+MobileContentAnalyticsSystem.swift */; };
@@ -1133,6 +1134,7 @@
 		453F0B5F26EA369000436EE4 /* MobileContentMultiSelectOptionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentMultiSelectOptionViewModel.swift; sourceTree = "<group>"; };
 		453F0B6326EA371D00436EE4 /* MobileContentMultiSelectOptionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MobileContentMultiSelectOptionView.xib; sourceTree = "<group>"; };
 		453F0B6526EA6F3D00436EE4 /* MobileContentMultiplatformState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentMultiplatformState.swift; sourceTree = "<group>"; };
+		453F0B6726EA8F6F00436EE4 /* MultiplatformFlowWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplatformFlowWatcher.swift; sourceTree = "<group>"; };
 		45428A7A26712A3A0022A66D /* FirebaseAnalytics+MobileContentAnalyticsSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseAnalytics+MobileContentAnalyticsSystem.swift"; sourceTree = "<group>"; };
 		45428A7C26712ABA0022A66D /* SnowplowAnalytics+MobileContentAnalyticsSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SnowplowAnalytics+MobileContentAnalyticsSystem.swift"; sourceTree = "<group>"; };
 		45428A8026712B1C0022A66D /* AppsFlyerAnalytics+MobileContentAnalyticsSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppsFlyerAnalytics+MobileContentAnalyticsSystem.swift"; sourceTree = "<group>"; };
@@ -3072,6 +3074,7 @@
 				453AF09B26A87924002D4AB1 /* MultiplatformContentTabs.swift */,
 				4526528F26A71D2800E703F7 /* MultiplatformContentText.swift */,
 				453AF09D26A8793C002D4AB1 /* MultiplatformContentVideo.swift */,
+				453F0B6726EA8F6F00436EE4 /* MultiplatformFlowWatcher.swift */,
 				4526529326A71FB600E703F7 /* MultiplatformHeader.swift */,
 				4526529D26A7339E00E703F7 /* MultiplatformHeading.swift */,
 				4526528926A706AC00E703F7 /* MultiplatformHero.swift */,
@@ -6270,6 +6273,7 @@
 				45CBA009261FB0D30036BEB3 /* LessonView.swift in Sources */,
 				45AD20A625938CF100A096A0 /* AppBuild.swift in Sources */,
 				455583FA269F2DA500C3FF14 /* MobileContentInputViewModelType.swift in Sources */,
+				453F0B6826EA8F6F00436EE4 /* MultiplatformFlowWatcher.swift in Sources */,
 				45558417269F2F6100C3FF14 /* MobileContentAnalytics.swift in Sources */,
 				45AD1B8C25938A4F00A096A0 /* OnboardingTutorialViewedUserDefaultsCache.swift in Sources */,
 				45AD21622593A62800A096A0 /* AppDelegate.swift in Sources */,

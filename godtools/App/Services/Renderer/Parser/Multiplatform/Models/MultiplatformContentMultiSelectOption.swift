@@ -30,6 +30,15 @@ class MultiplatformContentMultiSelectOption: ContentMultiSelectOptionModelType {
         
         multiSelectOption.toggleSelected(state: rendererState.state)
     }
+    
+    func watchIsSelected(rendererState: MobileContentMultiplatformState, completion: @escaping ((_ isSelected: Bool) -> Void)) -> MultiplatformFlowWatcher {
+        
+        let flowWatcher = multiSelectOption.watchIsSelected(state: rendererState.state) { (boolean: KotlinBoolean) in
+            completion(boolean.boolValue)
+        }
+        
+        return MultiplatformFlowWatcher(flowWatcher: flowWatcher)
+    }
 }
 
 // MARK: - MobileContentRenderableModel

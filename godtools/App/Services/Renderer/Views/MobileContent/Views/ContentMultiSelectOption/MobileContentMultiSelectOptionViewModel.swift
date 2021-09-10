@@ -13,6 +13,8 @@ class MobileContentMultiSelectOptionViewModel: MobileContentMultiSelectOptionVie
     private let multiSelectOptionModel: ContentMultiSelectOptionModelType
     private let rendererPageModel: MobileContentRendererPageModel
     
+    private var isSelectedFlowWatcher: MultiplatformFlowWatcher?
+    
     let backgroundColor: ObservableValue<UIColor>
     
     required init(multiSelectOptionModel: ContentMultiSelectOptionModelType, rendererPageModel: MobileContentRendererPageModel) {
@@ -21,6 +23,20 @@ class MobileContentMultiSelectOptionViewModel: MobileContentMultiSelectOptionVie
         self.rendererPageModel = rendererPageModel
         
         backgroundColor = ObservableValue(value: multiSelectOptionModel.backgroundColor)
+        
+        isSelectedFlowWatcher = multiSelectOptionModel.watchIsSelected(rendererState: rendererPageModel.rendererState) { [weak self] (isSelected: Bool) in
+            
+            guard let weakSelf = self else {
+                return
+            }
+            
+            let backgroundColor: UIColor = isSelected ? weakSelf.multiSelectOptionModel.selectedColor : weakSelf.multiSelectOptionModel.backgroundColor
+            weakSelf.backgroundColor.accept(value: backgroundColor)
+        }
+    }
+    
+    deinit {
+        isSelectedFlowWatcher?.close()
     }
     
     func multiSelectOptionTapped() {

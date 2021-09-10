@@ -14,6 +14,7 @@ protocol ContentMultiSelectOptionModelType: MobileContentRenderableModel {
     var selectedColor: UIColor { get }
     
     func toggleSelected(rendererState: MobileContentMultiplatformState)
+    func watchIsSelected(rendererState: MobileContentMultiplatformState, completion: @escaping ((_ isSelected: Bool) -> Void)) -> MultiplatformFlowWatcher
 }
 
 extension ContentMultiSelectOptionModelType {
