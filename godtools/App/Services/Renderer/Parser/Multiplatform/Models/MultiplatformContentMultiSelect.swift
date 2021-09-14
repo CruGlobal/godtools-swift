@@ -39,6 +39,8 @@ extension MultiplatformContentMultiSelect {
         
         var childModels: [MobileContentRenderableModel] = Array()
         
+        // TODO: Change view to support multiple options.  Create row based options. ~Levi
+        
         let multiSelectOptions: [MultiplatformContentMultiSelectOption] = multiSelect.options.map({MultiplatformContentMultiSelectOption(multiSelectOption: $0)})
                 
         childModels.append(contentsOf: multiSelectOptions)

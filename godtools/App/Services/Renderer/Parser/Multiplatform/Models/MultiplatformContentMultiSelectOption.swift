@@ -61,6 +61,8 @@ extension MultiplatformContentMultiSelectOption {
        
         var childModels: [MobileContentRenderableModel] = Array()
         
+        // TODO: Update to use rows of multi select options added to the parent. ~Levi
+        
         var contentText: Text?
         
         for content in multiSelectOption.content {
