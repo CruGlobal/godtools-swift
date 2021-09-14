@@ -106,16 +106,16 @@ class ToolPageCardsView: MobileContentView {
         }
     }
     
-    override func didReceiveEvents(events: [String]) {
+    override func didReceiveEvents(eventIds: [MultiplatformEventId]) {
                 
-        for event in events {
+        for eventId in eventIds {
             
             for cardView in cardViews {
                 
-                if cardView.viewModel.dismissListeners.contains(event) {
+                if cardView.viewModel.dismissListeners.contains(eventId) {
                     dismissCard(cardView: cardView)
                 }
-                else if cardView.viewModel.listeners.contains(event) {
+                else if cardView.viewModel.listeners.contains(eventId) {
                     presentCard(cardView: cardView)
                 }
             }

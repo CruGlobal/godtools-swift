@@ -28,7 +28,11 @@ class MobileContentImageViewModel: MobileContentImageViewModelType {
         return rendererPageModel.resourcesCache.getImageFromManifestResources(fileName: resource)
     }
     
-    var imageEvents: [String] {
+    var imageEvents: [MultiplatformEventId] {
         return imageModel.events
+    }
+    
+    var rendererState: MobileContentMultiplatformState {
+        return rendererPageModel.rendererState
     }
 }

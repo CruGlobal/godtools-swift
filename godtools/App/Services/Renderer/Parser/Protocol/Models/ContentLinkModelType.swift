@@ -10,7 +10,7 @@ import Foundation
 
 protocol ContentLinkModelType: MobileContentRenderableModel {
     
-    var events: [String] { get }
+    var events: [MultiplatformEventId] { get }
     var text: String? { get }
     
     func getTextColor() -> MobileContentColor?

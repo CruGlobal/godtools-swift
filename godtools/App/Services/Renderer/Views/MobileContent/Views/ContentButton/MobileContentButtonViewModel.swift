@@ -67,12 +67,16 @@ class MobileContentButtonViewModel: MobileContentButtonViewModelType {
         return buttonModel.type
     }
     
-    var buttonEvents: [String] {
+    var buttonEvents: [MultiplatformEventId] {
         return buttonModel.events
     }
     
     var buttonUrl: String {
         return buttonModel.url ?? ""
+    }
+    
+    var rendererState: MobileContentMultiplatformState {
+        return rendererPageModel.rendererState
     }
     
     func buttonTapped() {

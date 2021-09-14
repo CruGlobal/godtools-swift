@@ -11,7 +11,7 @@ import Foundation
 protocol MobileContentTabViewModelType {
     
     var labelText: String? { get }
-    var tabListeners: [String] { get }
+    var tabListeners: [MultiplatformEventId] { get }
     
     func tabTapped()
 }

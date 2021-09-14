@@ -14,7 +14,7 @@ class ToolPageFormViewModel: MobileContentFormViewModel {
     private let followUpService: FollowUpsService
     private let localizationServices: LocalizationServices
     
-    let didSendFollowUpSignal: SignalValue<[String]> = SignalValue()
+    let didSendFollowUpSignal: SignalValue<[MultiplatformEventId]> = SignalValue()
     let error: ObservableValue<MobileContentErrorViewModel?> = ObservableValue(value: nil)
     
     required init(formModel: ContentFormModelType, rendererPageModel: MobileContentRendererPageModel, followUpService: FollowUpsService, localizationServices: LocalizationServices) {
@@ -30,9 +30,13 @@ class ToolPageFormViewModel: MobileContentFormViewModel {
         fatalError("init(formModel:rendererPageModel:) has not been implemented")
     }
     
+    var rendererState: MobileContentMultiplatformState {
+        return rendererPageModel.rendererState
+    }
+    
     // MARK: - Follow Up
     
-    func sendFollowUp(inputModels: [MobileContentFormInputModel], events: [String]) {
+    func sendFollowUp(inputModels: [MobileContentFormInputModel], eventIds: [MultiplatformEventId]) {
            
         let destinationIdField: String = "destination_id"
         let nameField: String = "name"
@@ -81,7 +85,7 @@ class ToolPageFormViewModel: MobileContentFormViewModel {
         
         _ = followUpService.postNewFollowUp(followUp: followUpModel)
         
-        didSendFollowUpSignal.accept(value: events)
+        didSendFollowUpSignal.accept(value: eventIds)
     }
     
     private func notifiyFollowUpsMissingFieldsError(missingFieldsNames: [String]) {

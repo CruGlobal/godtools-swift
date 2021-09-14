@@ -76,15 +76,15 @@ class MobileContentTabsView: MobileContentView {
         return .constrainedToChildren
     }
     
-    override func didReceiveEvents(events: [String]) {
+    override func didReceiveEvents(eventIds: [MultiplatformEventId]) {
                 
-        for event in events {
+        for eventId in eventIds {
             
             for tabIndex in 0 ..< tabViews.count {
                 
-                let tabListeners: [String] = tabViews[tabIndex].viewModel.tabListeners
+                let tabListeners: [MultiplatformEventId] = tabViews[tabIndex].viewModel.tabListeners
                 
-                if tabListeners.contains(event) {
+                if tabListeners.contains(eventId) {
                     setSelectedTabIndex(selectedTabIndex: tabIndex)
                 }
             }

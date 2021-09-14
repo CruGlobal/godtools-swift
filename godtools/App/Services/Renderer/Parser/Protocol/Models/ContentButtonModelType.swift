@@ -10,7 +10,7 @@ import Foundation
 
 protocol ContentButtonModelType: MobileContentRenderableModel {
     
-    var events: [String] { get }
+    var events: [MultiplatformEventId] { get }
     var url: String? { get }
     var style: MobileContentButtonStyle? { get }
     var type: MobileContentButtonType { get }

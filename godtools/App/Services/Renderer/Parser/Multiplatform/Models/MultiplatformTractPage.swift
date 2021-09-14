@@ -44,8 +44,8 @@ class MultiplatformTractPage: PageModelType {
         }
     }
     
-    var listeners: [String] {
-        return tractPage.listeners.map({$0.description()})
+    var listeners: [MultiplatformEventId] {
+        return tractPage.listeners.map({MultiplatformEventId(eventId: $0)})
     }
     
     var textScale: MobileContentTextScale {

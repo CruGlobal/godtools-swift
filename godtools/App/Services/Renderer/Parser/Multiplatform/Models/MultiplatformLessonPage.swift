@@ -44,8 +44,8 @@ class MultiplatformLessonPage: PageModelType {
         }
     }
     
-    var listeners: [String] {
-        return lessonPage.listeners.map({$0.description()})
+    var listeners: [MultiplatformEventId] {
+        return lessonPage.listeners.map({MultiplatformEventId(eventId: $0)})
     }
     
     var textScale: MobileContentTextScale {

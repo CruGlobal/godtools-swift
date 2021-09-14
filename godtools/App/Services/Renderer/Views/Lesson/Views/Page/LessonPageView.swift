@@ -87,12 +87,12 @@ class LessonPageView: MobileContentPageView {
         }
     }
     
-    override func didReceiveEvents(events: [String]) {
+    override func didReceiveEvents(eventIds: [MultiplatformEventId]) {
         
-        super.didReceiveEvents(events: events)
+        super.didReceiveEvents(eventIds: eventIds)
         
-        for event in events {
-            if viewModel.manifestDismissListeners.contains(event) {
+        for eventId in eventIds {
+            if viewModel.manifestDismissListeners.contains(eventId) {
                 delegate?.lessonPageCloseLessonTapped(lessonPage: self)
             }
         }

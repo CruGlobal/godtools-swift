@@ -18,8 +18,8 @@ class MultiplatformContentButton: ContentButtonModelType {
         self.button = button
     }
     
-    var events: [String] {
-        return button.events.map({$0.description()})
+    var events: [MultiplatformEventId] {
+        return button.events.map({MultiplatformEventId(eventId: $0)})
     }
     
     var url: String? {

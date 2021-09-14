@@ -29,16 +29,16 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="140"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ucO-0I-9fO" userLabel="textContainerView">
-                            <rect key="frame" x="15" y="20" width="384" height="100"/>
+                            <rect key="frame" x="0.0" y="10" width="414" height="120"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstItem="ucO-0I-9fO" firstAttribute="leading" secondItem="atg-Pp-RLG" secondAttribute="leading" constant="15" id="Tf4-Nr-wr6"/>
-                        <constraint firstItem="ucO-0I-9fO" firstAttribute="top" secondItem="atg-Pp-RLG" secondAttribute="top" constant="20" id="cqV-8P-lgS"/>
-                        <constraint firstAttribute="trailing" secondItem="ucO-0I-9fO" secondAttribute="trailing" constant="15" id="dKc-T6-ZZM"/>
-                        <constraint firstAttribute="bottom" secondItem="ucO-0I-9fO" secondAttribute="bottom" constant="20" id="qWd-3k-7hU"/>
+                        <constraint firstItem="ucO-0I-9fO" firstAttribute="leading" secondItem="atg-Pp-RLG" secondAttribute="leading" id="Tf4-Nr-wr6"/>
+                        <constraint firstItem="ucO-0I-9fO" firstAttribute="top" secondItem="atg-Pp-RLG" secondAttribute="top" constant="10" id="cqV-8P-lgS"/>
+                        <constraint firstAttribute="trailing" secondItem="ucO-0I-9fO" secondAttribute="trailing" id="dKc-T6-ZZM"/>
+                        <constraint firstAttribute="bottom" secondItem="ucO-0I-9fO" secondAttribute="bottom" constant="10" id="qWd-3k-7hU"/>
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kTz-xo-eIa" userLabel="overlayButton">

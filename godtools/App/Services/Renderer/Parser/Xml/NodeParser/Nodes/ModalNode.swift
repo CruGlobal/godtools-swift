@@ -11,15 +11,18 @@ import SWXMLHash
 
 class ModalNode: MobileContentXmlNode, ModalModelType {
     
-    let dismissListeners: [String]
-    let listeners: [String]
+    let dismissListeners: [MultiplatformEventId]
+    let listeners: [MultiplatformEventId]
     
     required init(xmlElement: XMLElement) {
     
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
-        dismissListeners = attributes["dismiss-listeners"]?.text.components(separatedBy: " ") ?? []
-        listeners = attributes["listeners"]?.text.components(separatedBy: " ") ?? []
+        //let dismissListenerNames: [String] = attributes["dismiss-listeners"]?.text.components(separatedBy: " ") ?? []
+        dismissListeners = Array()
+        
+        //let listenerNames: [String] = attributes["listeners"]?.text.components(separatedBy: " ") ?? []
+        listeners = Array()
         
         super.init(xmlElement: xmlElement)
     }

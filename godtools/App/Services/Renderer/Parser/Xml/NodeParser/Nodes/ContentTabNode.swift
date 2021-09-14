@@ -13,13 +13,14 @@ class ContentTabNode: MobileContentXmlNode, ContentTabModelType {
     
     private var analyticsEventsNode: AnalyticsEventsNode?
     
-    let listeners: [String]
+    let listeners: [MultiplatformEventId]
     
     required init(xmlElement: XMLElement) {
     
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
-        listeners = attributes["listeners"]?.text.components(separatedBy: " ") ?? []
+        //let listenerNames: [String] = attributes["listeners"]?.text.components(separatedBy: " ") ?? []
+        listeners = Array()
         
         super.init(xmlElement: xmlElement)
     }

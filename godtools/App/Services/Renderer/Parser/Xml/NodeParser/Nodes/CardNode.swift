@@ -19,8 +19,8 @@ class CardNode: MobileContentXmlNode, CardModelType {
     private var analyticsEventsNode: AnalyticsEventsNode?
     
     let backgroundImage: String?
-    let dismissListeners: [String]
-    let listeners: [String]
+    let dismissListeners: [MultiplatformEventId]
+    let listeners: [MultiplatformEventId]
     
     required init(xmlElement: XMLElement) {
     
@@ -29,9 +29,11 @@ class CardNode: MobileContentXmlNode, CardModelType {
         backgroundImage = attributes["background-image"]?.text
         backgroundImageAlignmentStrings = attributes["background-image-align"]?.text.components(separatedBy: " ") ?? []
         backgroundImageScaleString = attributes["background-image-scale-type"]?.text
-        dismissListeners = attributes["dismiss-listeners"]?.text.components(separatedBy: " ") ?? []
+        //let dismissListenerNames: [String] = attributes["dismiss-listeners"]?.text.components(separatedBy: " ") ?? []
+        dismissListeners = Array()
         hiddenString = attributes["hidden"]?.text
-        listeners = attributes["listeners"]?.text.components(separatedBy: " ") ?? []
+        //let listenerNames: [String] = attributes["listeners"]?.text.components(separatedBy: " ") ?? []
+        listeners = Array()
         
         super.init(xmlElement: xmlElement)
     }

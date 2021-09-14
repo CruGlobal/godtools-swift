@@ -14,13 +14,14 @@ class ContentLinkNode: MobileContentXmlNode, ContentLinkModelType {
     private var textNode: ContentTextNode?
     private var analyticsEventsNode: AnalyticsEventsNode?
     
-    let events: [String]
+    let events: [MultiplatformEventId]
     
     required init(xmlElement: XMLElement) {
     
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
-        events = attributes["events"]?.text.components(separatedBy: " ") ?? []
+        //let eventNames: [String] = attributes["events"]?.text.components(separatedBy: " ") ?? []
+        events = Array()
         
         super.init(xmlElement: xmlElement)
     }

@@ -90,20 +90,23 @@ class MobileContentView: UIView, MobileContentStackChildViewType {
     
     // MARK: - Events
     
-    func sendEventsToAllViews(events: [String]) {
-        recurseChildrenAndSendEvents(view: getRootView(), events: events)
+    func sendEventsToAllViews(eventIds: [MultiplatformEventId], rendererState: MobileContentMultiplatformState) {
+        
+        let eventIds: [MultiplatformEventId] = eventIds.flatMap({$0.resolve(rendererState: rendererState)})
+        
+        recurseChildrenAndSendEvents(view: getRootView(), eventIds: eventIds)
     }
     
-    private func recurseChildrenAndSendEvents(view: MobileContentView, events: [String]) {
+    private func recurseChildrenAndSendEvents(view: MobileContentView, eventIds: [MultiplatformEventId]) {
         
         for childView in view.children {
-            recurseChildrenAndSendEvents(view: childView, events: events)
+            recurseChildrenAndSendEvents(view: childView, eventIds: eventIds)
         }
         
-        view.didReceiveEvents(events: events)
+        view.didReceiveEvents(eventIds: eventIds)
     }
     
-    func didReceiveEvents(events: [String]) {
+    func didReceiveEvents(eventIds: [MultiplatformEventId]) {
         
     }
     

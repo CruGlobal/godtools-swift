@@ -18,12 +18,12 @@ class MultiplatformModal: ModalModelType {
         self.modal = modal
     }
     
-    var dismissListeners: [String] {
-        return modal.dismissListeners.map({$0.description()})
+    var dismissListeners: [MultiplatformEventId] {
+        return modal.dismissListeners.map({MultiplatformEventId(eventId: $0)})
     }
     
-    var listeners: [String] {
-        return modal.listeners.map({$0.description()})
+    var listeners: [MultiplatformEventId] {
+        return modal.listeners.map({MultiplatformEventId(eventId: $0)})
     }
 }
 

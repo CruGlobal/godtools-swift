@@ -9,9 +9,7 @@
 import UIKit
 
 class ToolPageFormView: MobileContentFormView {
-    
-    static let followUpSendEvent: String = "followup:send"
-    
+        
     private let pageFormViewModel: ToolPageFormViewModel
     
     required init(viewModel: ToolPageFormViewModel) {
@@ -37,12 +35,17 @@ class ToolPageFormView: MobileContentFormView {
     
     private func setupBinding() {
         
-        pageFormViewModel.didSendFollowUpSignal.addObserver(self) { [weak self] (events: [String]) in
-            if let indexForFollowUpEvent = events.firstIndex(of: ToolPageFormView.followUpSendEvent) {
-                var eventsWithoutFollowUp: [String] = events
+        pageFormViewModel.didSendFollowUpSignal.addObserver(self) { [weak self] (eventIds: [MultiplatformEventId]) in
+            
+            guard let formView = self else {
+                return
+            }
+            
+            if let indexForFollowUpEvent = eventIds.firstIndex(of: MultiplatformEventId.followUp) {
+                var eventsWithoutFollowUp: [MultiplatformEventId] = eventIds
                 eventsWithoutFollowUp.remove(at: indexForFollowUpEvent)
-                self?.sendEventsToAllViews(events: eventsWithoutFollowUp)
-                self?.resignCurrentEditedTextField()
+                formView.sendEventsToAllViews(eventIds: eventsWithoutFollowUp, rendererState: formView.pageFormViewModel.rendererState)
+                formView.resignCurrentEditedTextField()
             }
         }
         
@@ -55,10 +58,10 @@ class ToolPageFormView: MobileContentFormView {
     
     // MARK: - MobileContenView
     
-    override func didReceiveEvents(events: [String]) {
+    override func didReceiveEvents(eventIds: [MultiplatformEventId]) {
                       
-        if events.contains(ToolPageFormView.followUpSendEvent) {
-            pageFormViewModel.sendFollowUp(inputModels: super.getInputModels(), events: events)
+        if eventIds.contains(MultiplatformEventId.followUp) {
+            pageFormViewModel.sendFollowUp(inputModels: super.getInputModels(), eventIds: eventIds)
         }
     }
     
