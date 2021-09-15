@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MobileContentButtonViewModel: MobileContentButtonViewModelType {
+class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     
     private let buttonModel: ContentButtonModelType
     private let rendererPageModel: MobileContentRendererPageModel
@@ -17,6 +17,8 @@ class MobileContentButtonViewModel: MobileContentButtonViewModelType {
     private let fontService: FontService
     private let fontSize: CGFloat = 18
     private let fontWeight: UIFont.Weight = .regular
+    
+    private var visibilityFlowWatcher: MultiplatformFlowWatcher?
     
     let backgroundColor: UIColor
     let titleColor: UIColor
@@ -46,6 +48,17 @@ class MobileContentButtonViewModel: MobileContentButtonViewModelType {
             titleColor = buttonColor
             borderColor = buttonColor
         }
+        
+        super.init()
+        
+        visibilityFlowWatcher = buttonModel.watchVisibility(rendererState: rendererPageModel.rendererState, visibilityChanged: { [weak self] (visibility: MobileContentVisibility) in
+            
+            
+        })
+    }
+    
+    deinit {
+        visibilityFlowWatcher?.close()
     }
     
     var font: UIFont {
