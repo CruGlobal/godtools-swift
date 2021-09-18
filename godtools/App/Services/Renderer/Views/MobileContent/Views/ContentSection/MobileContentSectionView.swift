@@ -73,7 +73,6 @@ class MobileContentSectionView: MobileContentView {
         shadowView.layer.shadowColor = UIColor.black.cgColor
         shadowView.layer.shadowRadius = 3
         shadowView.layer.shadowOpacity = 0.3
-        shadowView.clipsToBounds = false
         
         // contentView
         contentView.backgroundColor = .white

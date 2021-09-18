@@ -9,20 +9,41 @@
 import UIKit
 
 class MobileContentMultiSelectView: MobileContentStackView {
-    
-    private static let itemSpacing: CGFloat = 15
-    
+        
     private let viewModel: MobileContentMultiSelectViewModelType
+    private let itemSpacing: CGFloat
+    private let shadowEdgeInsets: UIEdgeInsets
+    private let isSingleColumn: Bool
+    private let supportsShadowsOnOptionsViews: Bool
     
     private var multiSelectOptionRows: [MobileContentRowView] = Array()
-    private var spacingBetweenOptionViews: CGFloat = 15
     private var optionViewsAdded: Bool = false
             
     required init(viewModel: MobileContentMultiSelectViewModelType) {
         
-        self.viewModel = viewModel
+        let itemSpacing: CGFloat
+        let shadowEdgeInsets: UIEdgeInsets
+        let isSingleColumn: Bool = viewModel.numberOfColumnsForOptions == 1
+        let supportsShadowsOnOptionsViews: Bool = true
         
-        super.init(itemHorizontalInsets: 0, itemSpacing: MobileContentMultiSelectView.itemSpacing, scrollIsEnabled: false)
+        if isSingleColumn && supportsShadowsOnOptionsViews {
+            
+            itemSpacing = 35
+            shadowEdgeInsets = UIEdgeInsets(top: -10, left: -10, bottom: -10, right: -10)
+        }
+        else {
+            
+            itemSpacing = 15
+            shadowEdgeInsets = .zero
+        }
+        
+        self.viewModel = viewModel
+        self.itemSpacing = itemSpacing
+        self.shadowEdgeInsets = shadowEdgeInsets
+        self.isSingleColumn = isSingleColumn
+        self.supportsShadowsOnOptionsViews = supportsShadowsOnOptionsViews
+        
+        super.init(itemHorizontalInsets: 0, itemSpacing: itemSpacing, scrollIsEnabled: false)
         
         setupLayout()
     }
@@ -85,13 +106,17 @@ extension MobileContentMultiSelectView {
         }
         
         multiSelectOptionRow.renderChild(childView: optionView)
+        
+        if supportsShadowsOnOptionsViews {
+            optionView.drawShadow(shadowEdgeInsetsToSuperView: shadowEdgeInsets, cornerRadius: 10)
+        }
     }
     
     private func getNewMultiSelectOptionRow() -> MobileContentRowView {
         
         return MobileContentRowView(
             contentInsets: .zero,
-            itemSpacing: MobileContentMultiSelectView.itemSpacing,
+            itemSpacing: itemSpacing,
             numberOfColumns: viewModel.numberOfColumnsForOptions
         )
     }

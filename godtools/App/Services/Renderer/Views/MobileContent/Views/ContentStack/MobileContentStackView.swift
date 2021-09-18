@@ -30,6 +30,10 @@ class MobileContentStackView: MobileContentView {
                 
         backgroundColor = .clear
         contentView.backgroundColor = .clear
+        
+        if scrollIsEnabled && scrollView == nil {
+            assertionFailure("ScrollView should be initialized at this point.")
+        }
         scrollView?.backgroundColor = .clear
         scrollView?.showsVerticalScrollIndicator = false
         scrollView?.showsHorizontalScrollIndicator = false
@@ -84,10 +88,6 @@ class MobileContentStackView: MobileContentView {
         return scrollView?.contentSize ?? contentView.frame.size
     }
     
-    func getContentView() -> UIView {
-        return contentView
-    }
-    
     func setContentSize(size: CGSize) {
         scrollView?.contentSize = size
     }
@@ -116,6 +116,18 @@ class MobileContentStackView: MobileContentView {
         
         scrollView?.showsVerticalScrollIndicator = !hidden
         scrollView?.showsHorizontalScrollIndicator = !hidden
+    }
+    
+    func setContentBackgroundColor(color: UIColor) {
+        contentView.backgroundColor = color
+    }
+    
+    func setContentCornerRadius(cornerRadius: CGFloat) {
+        contentView.layer.cornerRadius = cornerRadius
+    }
+    
+    func setContentClipsToBounds(clipsToBounds: Bool) {
+        contentView.clipsToBounds = clipsToBounds
     }
     
     func setScrollViewDelegate(delegate: UIScrollViewDelegate) {

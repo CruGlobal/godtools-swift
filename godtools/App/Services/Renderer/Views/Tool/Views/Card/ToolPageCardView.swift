@@ -124,12 +124,10 @@ class ToolPageCardView: MobileContentView {
         layer.shadowRadius = 6.0
         layer.shadowOffset = CGSize(width: 1.5, height: 1.5)
         layer.shadowOpacity = 0.3
-        clipsToBounds = false
         
         // background corner radius
         let rootView: UIView? = subviews.first
         rootView?.layer.cornerRadius = cardCornerRadius
-        rootView?.clipsToBounds = true
         
         // bottom gradient
         bottomGradientView.isUserInteractionEnabled = false
