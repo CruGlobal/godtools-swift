@@ -84,6 +84,10 @@ class MobileContentStackView: MobileContentView {
         return scrollView?.contentSize ?? contentView.frame.size
     }
     
+    func getContentView() -> UIView {
+        return contentView
+    }
+    
     func setContentSize(size: CGSize) {
         scrollView?.contentSize = size
     }

@@ -60,21 +60,9 @@ extension MultiplatformContentMultiSelectOption {
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
        
         var childModels: [MobileContentRenderableModel] = Array()
-        
-        // TODO: Update to use rows of multi select options added to the parent. ~Levi
-        
-        var contentText: Text?
-        
-        for content in multiSelectOption.content {
-            if let text = content as? Text, contentText == nil {
-                contentText = text
-            }
-        }
-        
-        if let contentText = contentText {
-            childModels.append(MultiplatformContentText(text: contentText))
-        }
-        
+
+        addContentToChildModels(childModels: &childModels, content: multiSelectOption.content)
+                
         return childModels
     }
 }

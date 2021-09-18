@@ -18,4 +18,8 @@ class MobileContentMultiSelectViewModel: MobileContentMultiSelectViewModelType {
         self.multiSelectModel = multiSelectModel
         self.rendererPageModel = rendererPageModel
     }
+    
+    var numberOfColumnsForOptions: Int {
+        return Int(multiSelectModel.numberOfColumns)
+    }
 }

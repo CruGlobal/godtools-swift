@@ -8,11 +8,14 @@
 
 import UIKit
 
-class MobileContentMultiSelectView: MobileContentView {
+class MobileContentMultiSelectView: MobileContentStackView {
+    
+    private static let itemSpacing: CGFloat = 15
     
     private let viewModel: MobileContentMultiSelectViewModelType
     
     private var optionViews: [MobileContentMultiSelectOptionView] = Array()
+    private var optionViewsColumns: [[MobileContentMultiSelectOptionView]] = Array()
     private var spacingBetweenOptionViews: CGFloat = 15
     private var optionViewsAdded: Bool = false
             
@@ -20,7 +23,7 @@ class MobileContentMultiSelectView: MobileContentView {
         
         self.viewModel = viewModel
         
-        super.init(frame: UIScreen.main.bounds)
+        super.init(itemHorizontalInsets: 0, itemSpacing: MobileContentMultiSelectView.itemSpacing, scrollIsEnabled: false)
         
         setupLayout()
     }
@@ -29,16 +32,21 @@ class MobileContentMultiSelectView: MobileContentView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    required init(itemHorizontalInsets: CGFloat, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
+        fatalError("init(itemHorizontalInsets:itemSpacing:scrollIsEnabled:) has not been implemented")
+    }
+    
     private func setupLayout() {
         
     }
     
     override func renderChild(childView: MobileContentView) {
-        
-        super.renderChild(childView: childView)
-        
+                
         if let optionView = childView as? MobileContentMultiSelectOptionView {
-            optionViews.append(optionView)
+            addOptionViewToArray(optionView: optionView)
+        }
+        else {
+            super.renderChild(childView: childView)
         }
     }
     
@@ -46,7 +54,7 @@ class MobileContentMultiSelectView: MobileContentView {
         
         super.finishedRenderingChildren()
         
-        addOptionViews(views: optionViews, spacingBetweenViews: spacingBetweenOptionViews)
+        addOptionViews(optionViewsColumns: optionViewsColumns)
     }
     
     override var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType {
@@ -56,120 +64,53 @@ class MobileContentMultiSelectView: MobileContentView {
 
 extension MobileContentMultiSelectView {
     
-    private func addOptionViews(views: [MobileContentView], spacingBetweenViews: CGFloat) {
+    private func addOptionViewToArray(optionView: MobileContentMultiSelectOptionView) {
+        
+        optionViews.append(optionView)
+        
+        var numberOfColumns: Int = viewModel.numberOfColumnsForOptions
+        if numberOfColumns <= 0 {
+            numberOfColumns = 1
+        }
+        
+        let optionViewIndex: Int = optionViews.count - 1
+        let columnIndex: Int = optionViewIndex / numberOfColumns
+        
+        if columnIndex >= 0 && columnIndex < optionViewsColumns.count {
+            
+            optionViewsColumns[columnIndex].append(optionView)
+        }
+        else {
+            
+            var optionViewsColumn: [MobileContentMultiSelectOptionView] = Array()
+            optionViewsColumn.append(optionView)
+            optionViewsColumns.append(optionViewsColumn)
+        }
+    }
+    
+    private func addOptionViews(optionViewsColumns: [[MobileContentMultiSelectOptionView]]) {
         
         guard !optionViewsAdded else {
             return
         }
         optionViewsAdded = true
         
-        let parentView: UIView = self
-        let numberOfViews: Int = optionViews.count
-        let lastViewIndex: Int = numberOfViews - 1
-        
-        var previousChildView: MobileContentView?
-        
-        for index in stride(from: lastViewIndex, through: 0, by: -1) {
+        for optionViewsColumn in optionViewsColumns {
             
-            let childView: MobileContentView = views[index]
-            
-            childView.translatesAutoresizingMaskIntoConstraints = false
-            
-            addSubview(childView)
-            
-            let heightConstraint: NSLayoutConstraint = NSLayoutConstraint(
-                item: childView,
-                attribute: .height,
-                relatedBy: .equal,
-                toItem: nil,
-                attribute: .notAnAttribute,
-                multiplier: 1,
-                constant: 10
+            let contentRow: MobileContentRowView = MobileContentRowView(
+                contentInsets: .zero,
+                itemSpacing: MobileContentMultiSelectView.itemSpacing,
+                numberOfColumns: viewModel.numberOfColumnsForOptions
             )
             
-            heightConstraint.priority = UILayoutPriority(500)
+            super.renderChild(childView: contentRow)
             
-            childView.addConstraint(heightConstraint)
-            
-            let leading: NSLayoutConstraint = NSLayoutConstraint(
-                item: childView,
-                attribute: .leading,
-                relatedBy: .equal,
-                toItem: parentView,
-                attribute: .leading,
-                multiplier: 1,
-                constant: 0
-            )
-            
-            let trailing: NSLayoutConstraint = NSLayoutConstraint(
-                item: childView,
-                attribute: .trailing,
-                relatedBy: .equal,
-                toItem: parentView,
-                attribute: .trailing,
-                multiplier: 1,
-                constant: 0
-            )
-            
-            let bottom: NSLayoutConstraint
-            
-            if index == lastViewIndex {
+            for optionView in optionViewsColumn {
                 
-                bottom = NSLayoutConstraint(
-                    item: childView,
-                    attribute: .bottom,
-                    relatedBy: .equal,
-                    toItem: parentView,
-                    attribute: .bottom,
-                    multiplier: 1,
-                    constant: 0
-                )
-            }
-            else if let previousChildView = previousChildView {
-                
-                bottom = NSLayoutConstraint(
-                    item: childView,
-                    attribute: .bottom,
-                    relatedBy: .equal,
-                    toItem: previousChildView,
-                    attribute: .top,
-                    multiplier: 1,
-                    constant: spacingBetweenViews * -1
-                )
-            }
-            else {
-                
-                bottom = NSLayoutConstraint(
-                    item: childView,
-                    attribute: .bottom,
-                    relatedBy: .equal,
-                    toItem: parentView,
-                    attribute: .bottom,
-                    multiplier: 1,
-                    constant: 0
-                )
+                contentRow.renderChild(childView: optionView)
             }
             
-            parentView.addConstraint(leading)
-            parentView.addConstraint(trailing)
-            parentView.addConstraint(bottom)
-            
-            if index == 0 {
-                
-                let top: NSLayoutConstraint = NSLayoutConstraint(
-                    item: childView,
-                    attribute: .top,
-                    relatedBy: .equal,
-                    toItem: parentView,
-                    attribute: .top,
-                    multiplier: 1,
-                    constant: 0
-                )
-                
-                parentView.addConstraint(top)
-            }
-            
-            previousChildView = childView
+            contentRow.finishedRenderingChildren()
         }
     }
 }

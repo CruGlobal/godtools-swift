@@ -10,4 +10,5 @@ import Foundation
 
 protocol MobileContentMultiSelectViewModelType {
     
+    var numberOfColumnsForOptions: Int { get }
 }

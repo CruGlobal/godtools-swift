@@ -106,4 +106,8 @@ class ContentButtonNode: MobileContentXmlNode, ContentButtonModelType {
     func getAnalyticsEvents() -> [AnalyticsEventModelType] {
         return analyticsEventsNode?.analyticsEventNodes ?? []
     }
+    
+    func watchVisibility(rendererState: MobileContentMultiplatformState, visibilityChanged: @escaping ((MobileContentVisibility) -> Void)) -> MobileContentFlowWatcherType {
+        fatalError("Not implemented for xml node parser, moving to multiplatform parser.")
+    }
 }

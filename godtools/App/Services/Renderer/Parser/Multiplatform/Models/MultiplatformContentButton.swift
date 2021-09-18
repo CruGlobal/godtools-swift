@@ -79,7 +79,7 @@ class MultiplatformContentButton: ContentButtonModelType {
         return button.analyticsEvents.map({MultiplatformAnalyticsEvent(analyticsEvent: $0)})
     }
     
-    func watchVisibility(rendererState: MobileContentMultiplatformState, visibilityChanged: @escaping ((_ visibility: MobileContentVisibility) -> Void)) -> MultiplatformFlowWatcher {
+    func watchVisibility(rendererState: MobileContentMultiplatformState, visibilityChanged: @escaping ((_ visibility: MobileContentVisibility) -> Void)) -> MobileContentFlowWatcherType {
         
         let flowWatcher = button.watchVisibility(state: rendererState.state) { (invisible: KotlinBoolean, gone: KotlinBoolean) in
             

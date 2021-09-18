@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol LessonPageViewDelegate: class {
+protocol LessonPageViewDelegate: AnyObject {
     
     func lessonPageCloseLessonTapped(lessonPage: LessonPageView)
 }

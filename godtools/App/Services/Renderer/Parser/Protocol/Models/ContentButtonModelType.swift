@@ -20,7 +20,7 @@ protocol ContentButtonModelType: MobileContentRenderableModel {
     func getColor() -> MobileContentColor?
     func getTextColor() -> MobileContentColor?
     func getAnalyticsEvents() -> [AnalyticsEventModelType]
-    func watchVisibility(rendererState: MobileContentMultiplatformState, visibilityChanged: @escaping ((_ visibility: MobileContentVisibility) -> Void)) -> MultiplatformFlowWatcher
+    func watchVisibility(rendererState: MobileContentMultiplatformState, visibilityChanged: @escaping ((_ visibility: MobileContentVisibility) -> Void)) -> MobileContentFlowWatcherType
 }
 
 extension ContentButtonModelType {

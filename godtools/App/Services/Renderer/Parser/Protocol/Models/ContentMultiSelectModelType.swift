@@ -10,6 +10,7 @@ import Foundation
 
 protocol ContentMultiSelectModelType: MobileContentRenderableModel {
     
+    var numberOfColumns: Int32 { get }
 }
 
 extension ContentMultiSelectModelType {

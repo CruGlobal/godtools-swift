@@ -18,7 +18,7 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     private let fontSize: CGFloat = 18
     private let fontWeight: UIFont.Weight = .regular
     
-    private var visibilityFlowWatcher: MultiplatformFlowWatcher?
+    private var visibilityFlowWatcher: MobileContentFlowWatcherType?
     
     let backgroundColor: UIColor
     let titleColor: UIColor

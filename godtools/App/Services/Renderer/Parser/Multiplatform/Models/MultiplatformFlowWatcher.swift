@@ -9,7 +9,7 @@
 import Foundation
 import GodToolsToolParser
 
-class MultiplatformFlowWatcher {
+class MultiplatformFlowWatcher: MobileContentFlowWatcherType {
     
     private let flowWatcher: FlowWatcher
     
