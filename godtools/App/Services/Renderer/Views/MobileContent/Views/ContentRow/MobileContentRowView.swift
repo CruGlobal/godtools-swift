@@ -30,6 +30,10 @@ class MobileContentRowView: MobileContentView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    var canRenderChildView: Bool {
+        return childViews.count < numberOfColumns
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -44,7 +48,7 @@ class MobileContentRowView: MobileContentView {
             assertionFailure("Only contentStackHeightConstraintType with value .constrainedToChildren is supported on child views.")
         }
         
-        guard childViews.count < numberOfColumns else {
+        guard canRenderChildView else {
             assertionFailure("Failed to add childView.  Number of added childViews already equals numberOfColumns for this view.")
             return
         }
@@ -83,6 +87,10 @@ class MobileContentRowView: MobileContentView {
     override func finishedRenderingChildren() {
         
         super.finishedRenderingChildren()
+        
+        for childView in childViews {
+            childView.finishedRenderingChildren()
+        }
         
         updateChildWidthForBoundsChange()
     }

@@ -40,7 +40,7 @@ class MobileContentMultiSelectOptionView: MobileContentStackView {
     private func setupLayout() {
               
         // shadowView
-        insertSubview(shadowView, at: 0)
+        getContentView().addSubview(shadowView)
         shadowView.constrainEdgesToSuperview()
         shadowView.layer.cornerRadius = viewCornerRadius
         shadowView.layer.shadowOffset = CGSize(width: 1, height: 1)
@@ -77,11 +77,14 @@ class MobileContentMultiSelectOptionView: MobileContentStackView {
         
         super.finishedRenderingChildren()
         
-        // overlay button
-        addSubview(overlayButton)
-        overlayButton.constrainEdgesToSuperview()
-        overlayButton.setTitle(nil, for: .normal)
-        overlayButton.backgroundColor = .clear
+        if !subviews.contains(overlayButton) {
+            
+            addSubview(overlayButton)
+            overlayButton.constrainEdgesToSuperview()
+            overlayButton.setTitle(nil, for: .normal)
+            overlayButton.backgroundColor = .clear
+        }
+        
     }
     
     override var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType {

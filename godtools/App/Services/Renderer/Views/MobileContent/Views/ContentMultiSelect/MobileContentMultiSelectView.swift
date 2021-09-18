@@ -14,8 +14,7 @@ class MobileContentMultiSelectView: MobileContentStackView {
     
     private let viewModel: MobileContentMultiSelectViewModelType
     
-    private var optionViews: [MobileContentMultiSelectOptionView] = Array()
-    private var optionViewsColumns: [[MobileContentMultiSelectOptionView]] = Array()
+    private var multiSelectOptionRows: [MobileContentRowView] = Array()
     private var spacingBetweenOptionViews: CGFloat = 15
     private var optionViewsAdded: Bool = false
             
@@ -43,7 +42,7 @@ class MobileContentMultiSelectView: MobileContentStackView {
     override func renderChild(childView: MobileContentView) {
                 
         if let optionView = childView as? MobileContentMultiSelectOptionView {
-            addOptionViewToArray(optionView: optionView)
+            renderOptionView(optionView: optionView)
         }
         else {
             super.renderChild(childView: childView)
@@ -53,8 +52,10 @@ class MobileContentMultiSelectView: MobileContentStackView {
     override func finishedRenderingChildren() {
         
         super.finishedRenderingChildren()
-        
-        addOptionViews(optionViewsColumns: optionViewsColumns)
+                
+        for multiSelectOptionRow in multiSelectOptionRows {
+            multiSelectOptionRow.finishedRenderingChildren()
+        }
     }
     
     override var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType {
@@ -62,55 +63,36 @@ class MobileContentMultiSelectView: MobileContentStackView {
     }
 }
 
+// MARK: - Rendering MultiSelectOptionViews
+
 extension MobileContentMultiSelectView {
     
-    private func addOptionViewToArray(optionView: MobileContentMultiSelectOptionView) {
+    private func renderOptionView(optionView: MobileContentMultiSelectOptionView) {
         
-        optionViews.append(optionView)
+        let multiSelectOptionRow: MobileContentRowView
         
-        var numberOfColumns: Int = viewModel.numberOfColumnsForOptions
-        if numberOfColumns <= 0 {
-            numberOfColumns = 1
-        }
-        
-        let optionViewIndex: Int = optionViews.count - 1
-        let columnIndex: Int = optionViewIndex / numberOfColumns
-        
-        if columnIndex >= 0 && columnIndex < optionViewsColumns.count {
+        if let currentRow = multiSelectOptionRows.last, currentRow.canRenderChildView {
             
-            optionViewsColumns[columnIndex].append(optionView)
+            multiSelectOptionRow = currentRow
         }
         else {
             
-            var optionViewsColumn: [MobileContentMultiSelectOptionView] = Array()
-            optionViewsColumn.append(optionView)
-            optionViewsColumns.append(optionViewsColumn)
+            multiSelectOptionRow = getNewMultiSelectOptionRow()
+            
+            multiSelectOptionRows.append(multiSelectOptionRow)
+            
+            super.renderChild(childView: multiSelectOptionRow)
         }
+        
+        multiSelectOptionRow.renderChild(childView: optionView)
     }
     
-    private func addOptionViews(optionViewsColumns: [[MobileContentMultiSelectOptionView]]) {
+    private func getNewMultiSelectOptionRow() -> MobileContentRowView {
         
-        guard !optionViewsAdded else {
-            return
-        }
-        optionViewsAdded = true
-        
-        for optionViewsColumn in optionViewsColumns {
-            
-            let contentRow: MobileContentRowView = MobileContentRowView(
-                contentInsets: .zero,
-                itemSpacing: MobileContentMultiSelectView.itemSpacing,
-                numberOfColumns: viewModel.numberOfColumnsForOptions
-            )
-            
-            super.renderChild(childView: contentRow)
-            
-            for optionView in optionViewsColumn {
-                
-                contentRow.renderChild(childView: optionView)
-            }
-            
-            contentRow.finishedRenderingChildren()
-        }
+        return MobileContentRowView(
+            contentInsets: .zero,
+            itemSpacing: MobileContentMultiSelectView.itemSpacing,
+            numberOfColumns: viewModel.numberOfColumnsForOptions
+        )
     }
 }
