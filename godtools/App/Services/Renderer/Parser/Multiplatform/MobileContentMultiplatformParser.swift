@@ -24,7 +24,7 @@ class MobileContentMultiplatformParser: MobileContentParserType {
         
         var errors: [Error] = Array()
         
-        if let resultData = result as? Result.Data {
+        if let resultData = result as? ParserResult.Data {
             
             let manifest: Manifest = resultData.manifest
             
