@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol MobileContentPageViewDelegate: class {
+protocol MobileContentPageViewDelegate: AnyObject {
     
     func pageViewDidReceiveEvents(pageView: MobileContentPageView, events: [String])
 }

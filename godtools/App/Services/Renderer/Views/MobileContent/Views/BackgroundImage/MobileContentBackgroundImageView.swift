@@ -8,67 +8,76 @@
 
 import UIKit
 
-class MobileContentBackgroundImageView: NSObject {
+class MobileContentBackgroundImageView: UIImageView {
     
     private var viewModel: MobileContentBackgroundImageViewModel?
-    private var imageView: UIImageView?
+    private var lastRenderedParentBounds: CGRect = .zero
+    private var isObservingParentBoundsChanges: Bool = false
     
-    private var parentViewBounds: CGRect = .zero
+    required init() {
+        super.init(frame: .zero)
+    }
     
-    private weak var parentView: UIView?
-    
-    override init() {
-        
-        super.init()
+    required init?(coder: NSCoder) {
+        super.init(frame: .zero)
     }
     
     func configure(viewModel: MobileContentBackgroundImageViewModel, parentView: UIView) {
-                
-        if let currentImageView = self.imageView {
-            currentImageView.removeFromSuperview()
-            self.imageView = nil
-        }
         
-        if let currentParentView = self.parentView {
-            removeParentBoundsChangeObserver(parentView: currentParentView)
-            self.parentView = nil
-        }
-        
-        parentView.layoutIfNeeded()
-        
-        parentViewBounds = parentView.bounds
-        
-        self.viewModel = viewModel
-        self.imageView = viewModel.backgroundImageWillAppear(container: parentView.bounds)
-        self.parentView = parentView
-        
-        if let imageView = imageView {
-            parentView.insertSubview(imageView, at: 0)
-        }
-                
-        addParentBoundsChangeObserver(parentView: parentView)
-    }
-    
-    private func renderForBoundsChangeIfNeeded() {
-                
-        guard let parentView = self.parentView else {
+        guard self.viewModel == nil else {
             return
         }
+        
+        self.viewModel = viewModel
+        
+        parentView.insertSubview(self, at: 0)
+        backgroundColor = .clear
+        contentMode = .scaleToFill
+        image = viewModel.backgroundImage
+        
+        renderForBoundsChangeIfNeeded(parentView: parentView)
+    }
+    
+    override func layoutSubviews() {
+        
+        super.layoutSubviews()
+        
+        if let parentView = superview {
+            renderForBoundsChangeIfNeeded(parentView: parentView)
+        }
+    }
+    
+    override func didMoveToSuperview() {
+        
+        if let parentView = superview {
+            renderForBoundsChangeIfNeeded(parentView: parentView)
+        }
+    }
+    
+    func renderForBoundsChangeIfNeeded(parentView: UIView) {
+             
+        let parentBounds: CGRect = parentView.bounds
         
         guard let viewModel = self.viewModel else {
             return
         }
         
-        if !parentView.bounds.equalTo(parentViewBounds) {
-            configure(viewModel: viewModel, parentView: parentView)
+        guard !parentBounds.equalTo(lastRenderedParentBounds)  else{
+            return
         }
+        
+        guard let backgroundImageFrame = viewModel.renderBackgroundImageFrame(container: parentBounds) else {
+            return
+        }
+        
+        frame = backgroundImageFrame
+        
+        lastRenderedParentBounds = parentBounds
     }
     
-    // MARK: - Parent View Bounds Change Observer
-    
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        
-        guard let parentView = self.parentView else {
+            
+        guard let parentView = self.superview else {
             return
         }
         
@@ -77,15 +86,29 @@ class MobileContentBackgroundImageView: NSObject {
         }
         
         if objectValue == parentView && keyPath == "bounds" {
-            renderForBoundsChangeIfNeeded()
+            renderForBoundsChangeIfNeeded(parentView: parentView)
         }
     }
     
-    private func removeParentBoundsChangeObserver(parentView: UIView) {
+    func removeParentBoundsChangeObserver(parentView: UIView) {
+        
+        guard isObservingParentBoundsChanges else {
+            return
+        }
+        
+        isObservingParentBoundsChanges = false
+        
         parentView.removeObserver(self, forKeyPath: "bounds", context: nil)
     }
     
-    private func addParentBoundsChangeObserver(parentView: UIView) {
+    func addParentBoundsChangeObserver(parentView: UIView) {
+        
+        guard !isObservingParentBoundsChanges else {
+            return
+        }
+        
+        isObservingParentBoundsChanges = true
+        
         parentView.addObserver(self, forKeyPath: "bounds", options: [.new], context: nil)
     }
 }
