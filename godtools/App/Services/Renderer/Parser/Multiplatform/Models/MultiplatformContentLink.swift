@@ -18,8 +18,8 @@ class MultiplatformContentLink: ContentLinkModelType {
         self.link = link
     }
     
-    var events: [String] {
-        return link.events.map({$0.description()})
+    var events: [MultiplatformEventId] {
+        return link.events.map({MultiplatformEventId(eventId: $0)})
     }
     
     var text: String? {

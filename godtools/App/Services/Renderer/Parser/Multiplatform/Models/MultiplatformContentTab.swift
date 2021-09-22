@@ -18,8 +18,8 @@ class MultiplatformContentTab: ContentTabModelType {
         self.tab = tab
     }
     
-    var listeners: [String] {
-        return tab.listeners.map({$0.description()})
+    var listeners: [MultiplatformEventId] {
+        return tab.listeners.map({MultiplatformEventId(eventId: $0)})
     }
     
     var text: String? {

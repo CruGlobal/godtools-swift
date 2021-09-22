@@ -11,14 +11,15 @@ import SWXMLHash
 
 class ContentImageNode: MobileContentXmlNode, ContentImageModelType {
         
-    let events: [String]
+    let events: [MultiplatformEventId]
     let resource: String?
     
     required init(xmlElement: XMLElement) {
     
         let attributes: [String: XMLAttribute] = xmlElement.allAttributes
         
-        events = attributes["events"]?.text.components(separatedBy: " ") ?? []
+        //let eventNames: [String] = attributes["events"]?.text.components(separatedBy: " ") ?? []
+        events = Array()
         resource = attributes["resource"]?.text
         
         super.init(xmlElement: xmlElement)

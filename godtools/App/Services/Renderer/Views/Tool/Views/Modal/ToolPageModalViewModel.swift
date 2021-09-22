@@ -23,11 +23,11 @@ class ToolPageModalViewModel: ToolPageModalViewModelType {
         return UIColor.black.withAlphaComponent(0.9)
     }
     
-    var listeners: [String] {
+    var listeners: [MultiplatformEventId] {
         return modalModel.listeners
     }
     
-    var dismissListeners: [String] {
+    var dismissListeners: [MultiplatformEventId] {
         return modalModel.dismissListeners
     }
 }

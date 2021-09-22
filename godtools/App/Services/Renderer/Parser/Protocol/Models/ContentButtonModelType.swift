@@ -10,7 +10,7 @@ import Foundation
 
 protocol ContentButtonModelType: MobileContentRenderableModel {
     
-    var events: [String] { get }
+    var events: [MultiplatformEventId] { get }
     var url: String? { get }
     var style: MobileContentButtonStyle? { get }
     var type: MobileContentButtonType { get }
@@ -20,6 +20,7 @@ protocol ContentButtonModelType: MobileContentRenderableModel {
     func getColor() -> MobileContentColor?
     func getTextColor() -> MobileContentColor?
     func getAnalyticsEvents() -> [AnalyticsEventModelType]
+    func watchVisibility(rendererState: MobileContentMultiplatformState, visibilityChanged: @escaping ((_ visibility: MobileContentVisibility) -> Void)) -> MobileContentFlowWatcherType
 }
 
 extension ContentButtonModelType {

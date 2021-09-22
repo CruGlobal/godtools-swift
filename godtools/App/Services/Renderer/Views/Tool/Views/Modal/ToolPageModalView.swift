@@ -18,7 +18,7 @@ class ToolPageModalView: MobileContentView {
     
     private let viewModel: ToolPageModalViewModelType
     
-    private var contentStackView: MobileContentStackView = MobileContentStackView(itemHorizontalInsets: 0, itemSpacing: 15, scrollIsEnabled: true)
+    private var contentStackView: MobileContentStackView = MobileContentStackView(contentInsets: .zero, itemSpacing: 15, scrollIsEnabled: true)
     
     private weak var delegate: ToolPageModalViewDelegate?
     
@@ -98,14 +98,16 @@ class ToolPageModalView: MobileContentView {
         centerContentStackVerticallyIfNeeded()
     }
     
-    override func didReceiveEvents(events: [String]) {
+    override func didReceiveEvents(eventIds: [MultiplatformEventId]) {
             
-        for event in events {
+        let eventsContainFollowUp: Bool = eventIds.contains(MultiplatformEventId.followUp)
+        
+        for eventId in eventIds {
             
-            if viewModel.listeners.contains(event) && !events.contains(ToolPageFormView.followUpSendEvent) {
+            if viewModel.listeners.contains(eventId) && !eventsContainFollowUp {
                 delegate?.toolPageModalListenerActivated(modalView: self)
             }
-            else if viewModel.dismissListeners.contains(event) {
+            else if viewModel.dismissListeners.contains(eventId) {
                 delegate?.toolPageModalDismissListenerActivated(modalView: self)
             }
         }

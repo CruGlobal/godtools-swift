@@ -40,8 +40,12 @@ class MobileContentLinkViewModel: MobileContentLinkViewModelType {
         return linkModel.text
     }
     
-    var linkEvents: [String] {
+    var linkEvents: [MultiplatformEventId] {
         return linkModel.events
+    }
+    
+    var rendererState: MobileContentMultiplatformState {
+        return rendererPageModel.rendererState
     }
     
     func linkTapped() {

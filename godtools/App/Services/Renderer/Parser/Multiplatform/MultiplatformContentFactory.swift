@@ -19,8 +19,6 @@ class MultiplatformContentFactory {
               
         // TODO: Need to add the following:
         //    Animation
-        //    Multiselect
-        //    Multiselect.Option
         
         let renderableModel: MobileContentRenderableModel?
         
@@ -47,6 +45,9 @@ class MultiplatformContentFactory {
         }
         else if let accordion = content as? Accordion {
             renderableModel = MultiplatformContentAccordion(accordion: accordion)
+        }
+        else if let multiSelect = content as? Multiselect {
+            renderableModel = MultiplatformContentMultiSelect(multiSelect: multiSelect)
         }
         else if let form = content as? Form {
             renderableModel = MultiplatformContentForm(form: form)

@@ -18,8 +18,8 @@ class MultiplatformContentImage: ContentImageModelType {
         self.image = image
     }
     
-    var events: [String] {
-        return image.events.map({$0.description()})
+    var events: [MultiplatformEventId] {
+        return image.events.map({MultiplatformEventId(eventId: $0)})
     }
     
     var resource: String? {

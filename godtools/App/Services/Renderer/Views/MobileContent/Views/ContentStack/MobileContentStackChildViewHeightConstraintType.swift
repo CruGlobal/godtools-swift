@@ -16,4 +16,13 @@ enum MobileContentStackChildViewHeightConstraintType {
     case intrinsic
     case setToAspectRatioOfProvidedSize(size: CGSize)
     case spacer
+    
+    var isConstrainedByChildren: Bool {
+        switch self {
+        case .constrainedToChildren:
+            return true
+        default:
+            return false
+        }
+    }
 }

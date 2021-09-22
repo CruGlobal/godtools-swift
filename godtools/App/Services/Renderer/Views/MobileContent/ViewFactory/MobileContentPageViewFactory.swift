@@ -26,11 +26,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         
         if renderableModel is ContentParagraphModelType {
         
-            return MobileContentStackView(
-                itemHorizontalInsets: 0,
-                itemSpacing: 5,
-                scrollIsEnabled: false
-            )
+            return MobileContentStackView(contentInsets: .zero, itemSpacing: 5, scrollIsEnabled: false)
         }
         else if let textModel = renderableModel as? ContentTextModelType {
                           
@@ -189,6 +185,28 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             )
             
             let view = MobileContentHeaderView(viewModel: viewModel)
+            
+            return view
+        }
+        else if let multiSelectOptionModel = renderableModel as? ContentMultiSelectOptionModelType {
+            
+            let viewModel = MobileContentMultiSelectOptionViewModel(
+                multiSelectOptionModel: multiSelectOptionModel,
+                rendererPageModel: rendererPageModel
+            )
+            
+            let view = MobileContentMultiSelectOptionView(viewModel: viewModel)
+            
+            return view
+        }
+        else if let multiSelectModel = renderableModel as? ContentMultiSelectModelType {
+            
+            let viewModel = MobileContentMultiSelectViewModel(
+                multiSelectModel: multiSelectModel,
+                rendererPageModel: rendererPageModel
+            )
+            
+            let view = MobileContentMultiSelectView(viewModel: viewModel)
             
             return view
         }

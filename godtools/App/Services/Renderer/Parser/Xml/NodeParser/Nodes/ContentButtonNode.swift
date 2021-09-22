@@ -18,7 +18,7 @@ class ContentButtonNode: MobileContentXmlNode, ContentButtonModelType {
     private var textNode: ContentTextNode?
     private var analyticsEventsNode: AnalyticsEventsNode?
     
-    let events: [String]
+    let events: [MultiplatformEventId]
     let url: String?
     
     required init(xmlElement: XMLElement) {
@@ -27,7 +27,8 @@ class ContentButtonNode: MobileContentXmlNode, ContentButtonModelType {
         
         backgroundColorString = attributes["background-color"]?.text
         colorString = attributes["color"]?.text
-        events = attributes["events"]?.text.components(separatedBy: " ") ?? []
+        //let eventNames: [String] = attributes["events"]?.text.components(separatedBy: " ") ?? []
+        events = Array()
         styleString = attributes["style"]?.text
         typeString = attributes["type"]?.text
         
@@ -104,5 +105,9 @@ class ContentButtonNode: MobileContentXmlNode, ContentButtonModelType {
     
     func getAnalyticsEvents() -> [AnalyticsEventModelType] {
         return analyticsEventsNode?.analyticsEventNodes ?? []
+    }
+    
+    func watchVisibility(rendererState: MobileContentMultiplatformState, visibilityChanged: @escaping ((MobileContentVisibility) -> Void)) -> MobileContentFlowWatcherType {
+        fatalError("Not implemented for xml node parser, moving to multiplatform parser.")
     }
 }

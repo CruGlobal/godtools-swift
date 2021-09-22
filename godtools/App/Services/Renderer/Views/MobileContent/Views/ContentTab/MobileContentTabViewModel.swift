@@ -25,7 +25,7 @@ class MobileContentTabViewModel: MobileContentTabViewModelType {
         return tabModel.text
     }
     
-    var tabListeners: [String] {
+    var tabListeners: [MultiplatformEventId] {
         return tabModel.listeners
     }
     

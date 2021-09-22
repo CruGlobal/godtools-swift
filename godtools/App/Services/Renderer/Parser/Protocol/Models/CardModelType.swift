@@ -13,8 +13,8 @@ protocol CardModelType: BackgroundImageModelType, MobileContentRenderableModel {
     var backgroundImage: String? { get }
     var backgroundImageAlignment: MobileContentImageAlignmentType { get }
     var backgroundImageScale: MobileContentBackgroundImageScale { get }
-    var dismissListeners: [String] { get }
-    var listeners: [String] { get }
+    var dismissListeners: [MultiplatformEventId] { get }
+    var listeners: [MultiplatformEventId] { get }
     var isHidden: Bool { get }
     var title: String? { get }
     var hasTrainingTip: Bool { get }

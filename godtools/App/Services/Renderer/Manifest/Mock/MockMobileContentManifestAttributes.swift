@@ -15,7 +15,7 @@ class MockMobileContentManifestAttributes: MobileContentManifestAttributesType {
     let backgroundImageAlignment: MobileContentImageAlignmentType = MobileContentImageAlignment(isCenter: false, isCenterX: false, isCenterY: false, isStart: true, isEnd: false, isTop: true, isBottom: false)
     let backgroundImageScale: MobileContentBackgroundImageScale = .fill
     let categoryLabelColor: MobileContentColor? = nil
-    let dismissListeners: [String] = []
+    let dismissListeners: [MultiplatformEventId] = []
     let locale: String? = nil
     let navbarColor: MobileContentColor? = nil
     let navbarControlColor: MobileContentColor? = nil

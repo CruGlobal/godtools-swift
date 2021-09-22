@@ -10,7 +10,7 @@ import Foundation
 
 protocol LessonPageViewModelType: MobileContentPageViewModelType {
     
-    var manifestDismissListeners: [String] { get }
+    var manifestDismissListeners: [MultiplatformEventId] { get }
     
     func pageDidAppear()
 }

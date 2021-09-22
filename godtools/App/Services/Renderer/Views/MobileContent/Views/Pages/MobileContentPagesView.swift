@@ -329,7 +329,7 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
 
 extension MobileContentPagesView: MobileContentPageViewDelegate {
     
-    func pageViewDidReceiveEvents(pageView: MobileContentPageView, events: [String]) {
-        viewModel.pageDidReceiveEvents(events: events)
+    func pageViewDidReceiveEvents(pageView: MobileContentPageView, eventIds: [MultiplatformEventId]) {
+        viewModel.pageDidReceiveEvents(eventIds: eventIds)
     }
 }

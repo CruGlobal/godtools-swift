@@ -10,7 +10,7 @@ import Foundation
 
 protocol ContentTabModelType: MobileContentRenderableModel {
     
-    var listeners: [String] { get }
+    var listeners: [MultiplatformEventId] { get }
     var text: String? { get }
     
     func getAnalyticsEvents() -> [AnalyticsEventModelType]
