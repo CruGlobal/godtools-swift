@@ -26,11 +26,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         
         if renderableModel is ContentParagraphModelType {
         
-            return MobileContentStackView(
-                itemHorizontalInsets: 0,
-                itemSpacing: 5,
-                scrollIsEnabled: false
-            )
+            return MobileContentStackView(contentInsets: .zero, itemSpacing: 5, scrollIsEnabled: false)
         }
         else if let textModel = renderableModel as? ContentTextModelType {
                           

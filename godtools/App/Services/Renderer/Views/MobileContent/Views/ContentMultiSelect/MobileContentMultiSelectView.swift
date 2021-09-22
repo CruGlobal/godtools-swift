@@ -43,7 +43,7 @@ class MobileContentMultiSelectView: MobileContentStackView {
         self.isSingleColumn = isSingleColumn
         self.supportsShadowsOnOptionsViews = supportsShadowsOnOptionsViews
         
-        super.init(itemHorizontalInsets: 0, itemSpacing: itemSpacing, scrollIsEnabled: false)
+        super.init(contentInsets: .zero, itemSpacing: itemSpacing, scrollIsEnabled: false)
         
         setupLayout()
     }
@@ -52,8 +52,8 @@ class MobileContentMultiSelectView: MobileContentStackView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    required init(itemHorizontalInsets: CGFloat, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
-        fatalError("init(itemHorizontalInsets:itemSpacing:scrollIsEnabled:) has not been implemented")
+    required init(contentInsets: UIEdgeInsets, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
+        fatalError("init(contentInsets:itemSpacing:scrollIsEnabled:) has not been implemented")
     }
     
     private func setupLayout() {

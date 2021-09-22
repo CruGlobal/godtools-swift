@@ -18,7 +18,7 @@ class ToolPageModalView: MobileContentView {
     
     private let viewModel: ToolPageModalViewModelType
     
-    private var contentStackView: MobileContentStackView = MobileContentStackView(itemHorizontalInsets: 0, itemSpacing: 15, scrollIsEnabled: true)
+    private var contentStackView: MobileContentStackView = MobileContentStackView(contentInsets: .zero, itemSpacing: 15, scrollIsEnabled: true)
     
     private weak var delegate: ToolPageModalViewDelegate?
     

@@ -21,7 +21,7 @@ class MobileContentFormView: MobileContentStackView {
         
         self.viewModel = viewModel
             
-        super.init(itemHorizontalInsets: 0, itemSpacing: 15, scrollIsEnabled: false)
+        super.init(contentInsets: .zero, itemSpacing: 15, scrollIsEnabled: false)
         
         setupLayout()
         setupBinding()        
@@ -31,8 +31,8 @@ class MobileContentFormView: MobileContentStackView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    required init(itemHorizontalInsets: CGFloat, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
-        fatalError("init(itemHorizontalInsets:itemSpacing:scrollIsEnabled:) has not been implemented")
+    required init(contentInsets: UIEdgeInsets, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
+        fatalError("init(contentInsets:itemSpacing:scrollIsEnabled:) has not been implemented")
     }
     
     private func setupLayout() {
