@@ -85,6 +85,7 @@ class ToolPageCardView: MobileContentView {
     
     deinit {
         print("x deinit: \(type(of: self))")
+        
         disableKeyboardObserving()
         
         if let backgroundImageParent = self.backgroundImageParent {
@@ -105,8 +106,6 @@ class ToolPageCardView: MobileContentView {
     }
     
     private func setupLayout() {
-        
-        backgroundImageParent = cardBackgroundImageContainer
         
         let cardCornerRadius: CGFloat = 8
         
@@ -154,10 +153,10 @@ class ToolPageCardView: MobileContentView {
     
     private func setupBinding() {
                 
-        if let backgroundImageParent = self.backgroundImageParent {
-            backgroundImageView.configure(viewModel: viewModel.backgroundImageWillAppear(), parentView: backgroundImageParent)
-            backgroundImageView.addParentBoundsChangeObserver(parentView: backgroundImageParent)
-        }
+        let backgroundImageParent: UIView = cardBackgroundImageContainer
+        self.backgroundImageParent = backgroundImageParent
+        backgroundImageView.configure(viewModel: viewModel.backgroundImageWillAppear(), parentView: backgroundImageParent)
+        backgroundImageView.addParentBoundsChangeObserver(parentView: backgroundImageParent)
         
         titleLabel.text = viewModel.title
         titleLabel.font = viewModel.titleFont

@@ -10,6 +10,8 @@ import UIKit
 
 class MobileContentBackgroundImageView: UIImageView {
     
+    private let boundsKeyPath: String = #keyPath(UIView.bounds)
+    
     private var viewModel: MobileContentBackgroundImageViewModel?
     private var lastRenderedParentBounds: CGRect = .zero
     private var isObservingParentBoundsChanges: Bool = false
@@ -85,7 +87,7 @@ class MobileContentBackgroundImageView: UIImageView {
             return
         }
         
-        if objectValue == parentView && keyPath == "bounds" {
+        if objectValue == parentView && keyPath == boundsKeyPath {
             renderForBoundsChangeIfNeeded(parentView: parentView)
         }
     }
@@ -98,7 +100,7 @@ class MobileContentBackgroundImageView: UIImageView {
         
         isObservingParentBoundsChanges = false
         
-        parentView.removeObserver(self, forKeyPath: "bounds", context: nil)
+        parentView.removeObserver(self, forKeyPath: boundsKeyPath, context: nil)
     }
     
     func addParentBoundsChangeObserver(parentView: UIView) {
@@ -109,6 +111,6 @@ class MobileContentBackgroundImageView: UIImageView {
         
         isObservingParentBoundsChanges = true
         
-        parentView.addObserver(self, forKeyPath: "bounds", options: [.new], context: nil)
+        parentView.addObserver(self, forKeyPath: boundsKeyPath, options: [.new], context: nil)
     }
 }
