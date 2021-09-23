@@ -15,18 +15,20 @@ class MobileContentBackgroundImageViewModel {
     private let languageDirection: LanguageDirection
     private let backgroundImageRenderer: MobileContentBackgroundImageRenderer = MobileContentBackgroundImageRenderer()
         
+    let backgroundImage: UIImage?
+    
     required init(backgroundImageModel: BackgroundImageModelType, manifestResourcesCache: ManifestResourcesCacheType, languageDirection: LanguageDirection) {
         
         self.backgroundImageModel = backgroundImageModel
         self.manifestResourcesCache = manifestResourcesCache
         self.languageDirection = languageDirection
-    }
-    
-    var backgroundImage: UIImage? {
-        guard let resource = backgroundImageModel.backgroundImage else {
-            return nil
+        
+        if let resource = backgroundImageModel.backgroundImage, let backgroundImage = manifestResourcesCache.getImageFromManifestResources(fileName: resource) {
+            self.backgroundImage = backgroundImage
         }
-        return manifestResourcesCache.getImageFromManifestResources(fileName: resource)
+        else {
+            self.backgroundImage = nil
+        }
     }
     
     func getRenderPositionForBackgroundImage(container: CGRect, backgroundImage: UIImage) -> CGRect {
@@ -50,23 +52,14 @@ class MobileContentBackgroundImageViewModel {
         )
     }
     
-    func backgroundImageWillAppear(container: CGRect) -> UIImageView? {
+    func renderBackgroundImageFrame(container: CGRect) -> CGRect? {
         
-        guard let resource = backgroundImageModel.backgroundImage else {
+        guard let backgroundImage = self.backgroundImage else {
             return nil
         }
         
-        guard let backgroundImage = manifestResourcesCache.getImageFromManifestResources(fileName: resource) else {
-            return nil
-        }
+        let backgroundImageFrame: CGRect = getRenderPositionForBackgroundImage(container: container, backgroundImage: backgroundImage)
         
-        let backgroundImageRect: CGRect = getRenderPositionForBackgroundImage(container: container, backgroundImage: backgroundImage)
-        
-        let imageView: UIImageView = UIImageView(frame: backgroundImageRect)
-        imageView.backgroundColor = .clear
-        imageView.contentMode = .scaleToFill
-        imageView.image = backgroundImage
-        
-        return imageView
+        return backgroundImageFrame
     }
 }

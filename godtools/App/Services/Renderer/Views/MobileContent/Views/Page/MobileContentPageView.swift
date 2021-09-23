@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol MobileContentPageViewDelegate: class {
+protocol MobileContentPageViewDelegate: AnyObject {
     
     func pageViewDidReceiveEvents(pageView: MobileContentPageView, eventIds: [MultiplatformEventId])
 }
@@ -16,7 +16,9 @@ protocol MobileContentPageViewDelegate: class {
 class MobileContentPageView: MobileContentView {
     
     private let viewModel: MobileContentPageViewModelType
-    private let backgroundImageView: MobileContentBackgroundImageView = MobileContentBackgroundImageView()
+    
+    private var backgroundImageParent: UIView?
+    private var backgroundImageView: MobileContentBackgroundImageView?
     
     private weak var delegate: MobileContentPageViewDelegate?
     
@@ -35,6 +37,13 @@ class MobileContentPageView: MobileContentView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        
+        if let backgroundImageParent = self.backgroundImageParent {
+            backgroundImageView?.removeParentBoundsChangeObserver(parentView: backgroundImageParent)
+        }
     }
     
     private func initializeNib(nibName: String) {
@@ -60,7 +69,15 @@ class MobileContentPageView: MobileContentView {
         
         // backgroundImageView
         if let backgroundImageViewModel = viewModel.backgroundImageWillAppear() {
-            backgroundImageView.configure(viewModel: backgroundImageViewModel, parentView: self)
+            
+            let backgroundImageParent: UIView = self
+            let backgroundImageView: MobileContentBackgroundImageView = MobileContentBackgroundImageView()
+            
+            self.backgroundImageParent = backgroundImageParent
+            self.backgroundImageView = backgroundImageView
+            
+            backgroundImageView.configure(viewModel: backgroundImageViewModel, parentView: backgroundImageParent)
+            backgroundImageView.addParentBoundsChangeObserver(parentView: backgroundImageParent)
         }
     }
     
