@@ -7,7 +7,7 @@
 //
 import UIKit
 
-protocol ToolPageViewDelegate: class {
+protocol ToolPageViewDelegate: AnyObject {
     
     func toolPageCardPositionChanged(pageView: ToolPageView, page: Int, cardPosition: Int?, animated: Bool)
     func toolPageCallToActionNextButtonTapped(pageView: ToolPageView, page: Int)
@@ -60,6 +60,8 @@ class ToolPageView: MobileContentPageView {
     
     deinit {
         print("x deinit: \(type(of: self))")
+        
+        removeGestureRecognizer(panGestureToControlPageCollectionViewPanningSensitivity)
     }
     
     override func setupLayout() {

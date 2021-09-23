@@ -26,6 +26,7 @@ class ToolPageCardView: MobileContentView {
     
     private lazy var keyboardObserver: KeyboardObserverType = KeyboardNotificationObserver(loggingEnabled: false)
     
+    private var backgroundImageParent: UIView?
     private var formView: MobileContentFormView?
     private var startingHeaderTrainingTipIconTrailing: CGFloat = 20
     private var didRenderFirstLabel: Bool = false
@@ -84,7 +85,12 @@ class ToolPageCardView: MobileContentView {
     
     deinit {
         print("x deinit: \(type(of: self))")
+        
         disableKeyboardObserving()
+        
+        if let backgroundImageParent = self.backgroundImageParent {
+            backgroundImageView.removeParentBoundsChangeObserver(parentView: backgroundImageParent)
+        }
     }
     
     private func initializeNib() {
@@ -147,7 +153,10 @@ class ToolPageCardView: MobileContentView {
     
     private func setupBinding() {
                 
-        backgroundImageView.configure(viewModel: viewModel.backgroundImageWillAppear(), parentView: cardBackgroundImageContainer)
+        let backgroundImageParent: UIView = cardBackgroundImageContainer
+        self.backgroundImageParent = backgroundImageParent
+        backgroundImageView.configure(viewModel: viewModel.backgroundImageWillAppear(), parentView: backgroundImageParent)
+        backgroundImageView.addParentBoundsChangeObserver(parentView: backgroundImageParent)
         
         titleLabel.text = viewModel.title
         titleLabel.font = viewModel.titleFont
