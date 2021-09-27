@@ -44,8 +44,8 @@ class MobileContentRowView: MobileContentView {
     
     override func renderChild(childView: MobileContentView) {
         
-        if !childView.contentStackHeightConstraintType.isConstrainedByChildren {
-            assertionFailure("Only contentStackHeightConstraintType with value .constrainedToChildren is supported on child views.")
+        if !childView.heightConstraintType.isConstrainedByChildren {
+            assertionFailure("Only heightConstraintType with value .constrainedToChildren is supported on child views.")
         }
         
         guard canRenderChildView else {
@@ -95,7 +95,7 @@ class MobileContentRowView: MobileContentView {
         updateChildWidthForBoundsChange()
     }
     
-    override var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType {
+    override var heightConstraintType: MobileContentViewHeightConstraintType {
         return .constrainedToChildren
     }
     
@@ -127,9 +127,9 @@ class MobileContentRowView: MobileContentView {
             return
         }
         
-        childView.translatesAutoresizingMaskIntoConstraints = false
-        
         addSubview(childView)
+        
+        childView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     private func addChildViewWidthConstraint(childView: MobileContentView, childWidth: CGFloat) {

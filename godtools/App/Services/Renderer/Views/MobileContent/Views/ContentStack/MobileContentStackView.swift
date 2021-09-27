@@ -15,7 +15,8 @@ class MobileContentStackView: MobileContentView {
     private let itemSpacing: CGFloat
     
     private var scrollView: UIScrollView?
-    private var lastAddedView: UIView?
+    private var childViews: [MobileContentView] = Array()
+    private var lastAddedView: MobileContentView?
     private var lastAddedBottomConstraint: NSLayoutConstraint?
     private var autoSpacerViews: [MobileContentSpacerView] = Array()
             
@@ -70,7 +71,7 @@ class MobileContentStackView: MobileContentView {
         }
     }
     
-    override var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType {
+    override var heightConstraintType: MobileContentViewHeightConstraintType {
         return .constrainedToChildren
     }
     
@@ -155,6 +156,47 @@ class MobileContentStackView: MobileContentView {
         scrollView.setContentOffset(bottomOffset, animated: true)
     }
     
+    override func childViewDidChangeVisibilityState(childView: MobileContentView, previousVisibilityState: MobileContentViewVisibilityState, visibilityState: MobileContentViewVisibilityState) {
+        
+        super.childViewDidChangeVisibilityState(childView: childView, previousVisibilityState: previousVisibilityState, visibilityState: visibilityState)
+        
+        guard previousVisibilityState != visibilityState else {
+            return
+        }
+        
+        switch visibilityState {
+        
+        case .gone:
+            childView.isHidden = true
+            
+        case .hidden:
+            childView.isHidden = true
+            
+        case .visible:
+            childView.isHidden = false
+        }
+        
+        if visibilityState == .gone || previousVisibilityState == .gone {
+            relayoutTopAndBottomConstraintsForChildViews()
+        }
+    }
+    
+    private func addAutoSpacerView(spacerView: MobileContentSpacerView) {
+        
+        guard spacerView.mode == .auto else {
+            assertionFailure("Only spacer's with mode auto can be added.")
+            return
+        }
+        
+        spacerView.setHeight(height: 0)
+        autoSpacerViews.append(spacerView)
+    }
+}
+
+// MARK: - Update Layout For Spacer Views
+
+extension MobileContentStackView {
+    
     func relayoutForSpacerViews() {
                 
         guard let parentView = superview else {
@@ -172,12 +214,13 @@ class MobileContentStackView: MobileContentView {
         
         var heightOfChildrenAndItemSpacing: CGFloat = 0
         
-        for subview in contentView.subviews {
+        for childView in childViews {
             
-            let subviewIsSpacerView: Bool = subview is MobileContentSpacerView
+            let isSpacerView: Bool = childView is MobileContentSpacerView
             
-            if !subviewIsSpacerView {
-                heightOfChildrenAndItemSpacing += subview.frame.size.height
+            if !isSpacerView && childView.visibilityState != .gone {
+                
+                heightOfChildrenAndItemSpacing += childView.frame.size.height
             }
             
             heightOfChildrenAndItemSpacing += itemSpacing
@@ -209,32 +252,64 @@ class MobileContentStackView: MobileContentView {
         
         parentView.layoutIfNeeded()
     }
+}
+
+// MARK: - Content Stack Child Constraints
+
+extension MobileContentStackView {
     
-    private func addAutoSpacerView(spacerView: MobileContentSpacerView) {
+    private func addChildView(childView: MobileContentView) {
+             
+        let childContentView: UIView = childView
+              
+        childContentView.drawBorder(color: .red)
         
-        guard spacerView.mode == .auto else {
-            assertionFailure("Only spacer's with mode auto can be added.")
-            return
-        }
+        contentView.addSubview(childContentView)
         
-        spacerView.setHeight(height: 0)
-        autoSpacerViews.append(spacerView)
+        childViews.append(childView)
+                
+        childContentView.translatesAutoresizingMaskIntoConstraints = false
+           
+        addLeadingTrailingAndHeightConstraintsToChildView(childView: childView)
+        
+        addTopAndBottomConstraintsToChildView(childView: childView)
+        
+        relayoutForSpacerViews()
     }
     
-    private func addChildView(childView: MobileContentStackChildViewType) {
-             
-        if let lastAddedBottomConstraint = self.lastAddedBottomConstraint {
-            contentView.removeConstraint(lastAddedBottomConstraint)
-        }
-                
-        contentView.addSubview(childView.view)
+    private func relayoutTopAndBottomConstraintsForChildViews() {
         
-        childView.view.translatesAutoresizingMaskIntoConstraints = false
-           
+        lastAddedView = nil
+        lastAddedBottomConstraint = nil
+        
+        let contentViewConstraints: [NSLayoutConstraint] = contentView.constraints
+        
+        for index in stride(from: contentViewConstraints.count - 1, through: 0, by: -1) {
+            
+            let constraint: NSLayoutConstraint = contentViewConstraints[index]
+            
+            if constraint.firstAttribute == .top || constraint.firstAttribute == .bottom {
+                contentView.removeConstraint(constraint)
+            }
+        }
+        
+        for childView in childViews {
+            if childView.visibilityState == .visible {
+                addTopAndBottomConstraintsToChildView(childView: childView)
+            }
+        }
+        
+        contentView.layoutIfNeeded()
+        
+        relayoutForSpacerViews()
+    }
+    
+    private func addLeadingTrailingAndHeightConstraintsToChildView(childView: MobileContentView) {
+        
         let constrainLeadingToSuperviewLeading: Bool
         let constrainTrailingToSuperviewTrailing: Bool
         
-        switch childView.contentStackHeightConstraintType {
+        switch childView.heightConstraintType {
             
         case .constrainedToChildren:
             
@@ -242,7 +317,7 @@ class MobileContentStackView: MobileContentView {
             constrainTrailingToSuperviewTrailing = true
             
             let heightConstraint: NSLayoutConstraint = NSLayoutConstraint(
-                item: childView.view,
+                item: childView,
                 attribute: .height,
                 relatedBy: .equal,
                 toItem: nil,
@@ -253,7 +328,7 @@ class MobileContentStackView: MobileContentView {
             
             heightConstraint.priority = UILayoutPriority(500)
             
-            childView.view.addConstraint(heightConstraint)
+            childView.addConstraint(heightConstraint)
             
         case .equalToHeight(let height):
             
@@ -261,7 +336,7 @@ class MobileContentStackView: MobileContentView {
             constrainTrailingToSuperviewTrailing = true
             
             let heightConstraint: NSLayoutConstraint = NSLayoutConstraint(
-                item: childView.view,
+                item: childView,
                 attribute: .height,
                 relatedBy: .equal,
                 toItem: nil,
@@ -272,7 +347,7 @@ class MobileContentStackView: MobileContentView {
             
             heightConstraint.priority = UILayoutPriority(1000)
             
-            childView.view.addConstraint(heightConstraint)
+            childView.addConstraint(heightConstraint)
             
         case .equalToSize(let size):
             
@@ -280,7 +355,7 @@ class MobileContentStackView: MobileContentView {
             constrainTrailingToSuperviewTrailing = false
             
             let widthConstraint: NSLayoutConstraint = NSLayoutConstraint(
-                item: childView.view,
+                item: childView,
                 attribute: .width,
                 relatedBy: .equal,
                 toItem: nil,
@@ -291,10 +366,10 @@ class MobileContentStackView: MobileContentView {
             
             widthConstraint.priority = UILayoutPriority(1000)
             
-            childView.view.addConstraint(widthConstraint)
+            childView.addConstraint(widthConstraint)
             
             let heightConstraint: NSLayoutConstraint = NSLayoutConstraint(
-                item: childView.view,
+                item: childView,
                 attribute: .height,
                 relatedBy: .equal,
                 toItem: nil,
@@ -305,7 +380,7 @@ class MobileContentStackView: MobileContentView {
             
             heightConstraint.priority = UILayoutPriority(1000)
             
-            childView.view.addConstraint(heightConstraint)
+            childView.addConstraint(heightConstraint)
             
         case .intrinsic:
             constrainLeadingToSuperviewLeading = true
@@ -319,23 +394,23 @@ class MobileContentStackView: MobileContentView {
             constrainTrailingToSuperviewTrailing = true
             
             let aspectRatio: NSLayoutConstraint = NSLayoutConstraint(
-                item: childView.view,
+                item: childView,
                 attribute: .height,
                 relatedBy: .equal,
-                toItem: childView.view,
+                toItem: childView,
                 attribute: .width,
                 multiplier: size.height / size.width,
                 constant: 0
             )
             
-            childView.view.addConstraint(aspectRatio)
+            childView.addConstraint(aspectRatio)
             
         case .spacer:
            
             constrainLeadingToSuperviewLeading = true
             constrainTrailingToSuperviewTrailing = true
             
-            if let spacerView = childView.view as? MobileContentSpacerView {
+            if let spacerView = childView as? MobileContentSpacerView {
                                 
                 if spacerView.mode == .auto {
                     addAutoSpacerView(spacerView: spacerView)
@@ -349,7 +424,7 @@ class MobileContentStackView: MobileContentView {
         if constrainLeadingToSuperviewLeading {
             
             let leading: NSLayoutConstraint = NSLayoutConstraint(
-                item: childView.view,
+                item: childView,
                 attribute: .leading,
                 relatedBy: .equal,
                 toItem: contentView,
@@ -364,7 +439,7 @@ class MobileContentStackView: MobileContentView {
         if constrainTrailingToSuperviewTrailing {
             
             let trailing: NSLayoutConstraint = NSLayoutConstraint(
-                item: childView.view,
+                item: childView,
                 attribute: .trailing,
                 relatedBy: .equal,
                 toItem: contentView,
@@ -375,9 +450,12 @@ class MobileContentStackView: MobileContentView {
             
             contentView.addConstraint(trailing)
         }
+    }
+    
+    private func addTopAndBottomConstraintsToChildView(childView: MobileContentView) {
         
         let bottom: NSLayoutConstraint = NSLayoutConstraint(
-            item: childView.view,
+            item: childView,
             attribute: .bottom,
             relatedBy: .equal,
             toItem: contentView,
@@ -386,6 +464,10 @@ class MobileContentStackView: MobileContentView {
             constant: 0
         )
         
+        if let lastAddedBottomConstraint = self.lastAddedBottomConstraint {
+            contentView.removeConstraint(lastAddedBottomConstraint)
+        }
+        
         contentView.addConstraint(bottom)
         
         let top: NSLayoutConstraint
@@ -393,7 +475,7 @@ class MobileContentStackView: MobileContentView {
         if let lastView = lastAddedView {
             
             top = NSLayoutConstraint(
-                item: childView.view,
+                item: childView,
                 attribute: .top,
                 relatedBy: .equal,
                 toItem: lastView,
@@ -405,7 +487,7 @@ class MobileContentStackView: MobileContentView {
         else {
             
             top = NSLayoutConstraint(
-                item: childView.view,
+                item: childView,
                 attribute: .top,
                 relatedBy: .equal,
                 toItem: contentView,
@@ -417,10 +499,8 @@ class MobileContentStackView: MobileContentView {
         
         contentView.addConstraint(top)
         
-        lastAddedView = childView.view
+        lastAddedView = childView
         lastAddedBottomConstraint = bottom
-        
-        relayoutForSpacerViews()
     }
 }
 
