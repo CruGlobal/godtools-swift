@@ -91,7 +91,7 @@ class MobileContentImageView: MobileContentView {
     
     @objc func handleImageTapped() {
         
-        super.sendEventsToAllViews(events: viewModel.imageEvents)
+        super.sendEventsToAllViews(eventIds: viewModel.imageEvents, rendererState: viewModel.rendererState)
     }
     
     // MARK: - MobileContentView

@@ -39,7 +39,6 @@ class MobileContentAccordionView: MobileContentView {
     
     private func setupLayout() {
         
-        clipsToBounds = false
     }
     
     var isRevealingSectionText: Bool {

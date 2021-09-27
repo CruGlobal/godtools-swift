@@ -23,7 +23,7 @@ class MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
     private let textScaleString: String?
     
     let backgroundImage: String?
-    let dismissListeners: [String]
+    let dismissListeners: [MultiplatformEventId]
     let locale: String?
     
     required init(manifest: XMLIndexer) {
@@ -35,7 +35,8 @@ class MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
         backgroundImageAlignmentStrings = attributes["background-image-align"]?.text.components(separatedBy: " ") ?? []
         backgroundImageScaleString = attributes["background-image-scale-type"]?.text
         categoryLabelColorString = attributes["category-label-color"]?.text
-        dismissListeners = attributes["dismiss-listeners"]?.text.components(separatedBy: " ") ?? []
+        //dismissListeners = attributes["dismiss-listeners"]?.text.components(separatedBy: " ") ?? []
+        dismissListeners = Array()
         locale = attributes["locale"]?.text
         navbarColorString = attributes["navbar-color"]?.text
         navbarControlColorString = attributes["navbar-control-color"]?.text

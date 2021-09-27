@@ -20,7 +20,7 @@ protocol MobileContentParserType {
     
     func getPageModel(page: Int) -> PageModelType?
     func getVisiblePageModels() -> [PageModelType]
-    func getPageForListenerEvents(events: [String]) -> Int?
+    func getPageForListenerEvents(eventIds: [MultiplatformEventId]) -> Int?
 }
 
 extension MobileContentParserType {
@@ -36,7 +36,7 @@ extension MobileContentParserType {
         return pageModels.filter({!$0.isHidden})
     }
     
-    func getPageForListenerEvents(events: [String]) -> Int? {
+    func getPageForListenerEvents(eventIds: [MultiplatformEventId]) -> Int? {
                 
         for pageIndex in 0 ..< pageModels.count {
             
@@ -44,7 +44,7 @@ extension MobileContentParserType {
             
             for listener in pageModel.listeners {
                
-                if events.contains(listener) {
+                if eventIds.contains(listener) {
                     return pageIndex
                 }
             }

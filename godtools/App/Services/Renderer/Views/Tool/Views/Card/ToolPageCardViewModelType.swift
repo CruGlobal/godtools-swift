@@ -28,8 +28,8 @@ protocol ToolPageCardViewModelType: MobileContentViewModelType {
     var nextButtonTitleFont: UIFont { get }
     var hidesNextButton: Bool { get }
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute { get }
-    var dismissListeners: [String] { get }
-    var listeners: [String] { get }
+    var dismissListeners: [MultiplatformEventId] { get }
+    var listeners: [MultiplatformEventId] { get }
     var isHiddenCard: Bool { get }
     
     func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel

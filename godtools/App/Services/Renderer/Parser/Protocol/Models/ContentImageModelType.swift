@@ -10,7 +10,7 @@ import Foundation
 
 protocol ContentImageModelType: MobileContentRenderableModel {
     
-    var events: [String] { get }
+    var events: [MultiplatformEventId] { get }
     var resource: String? { get }
 }
 

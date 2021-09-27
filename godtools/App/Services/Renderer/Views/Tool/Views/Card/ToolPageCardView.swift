@@ -22,7 +22,7 @@ class ToolPageCardView: MobileContentView {
     private let backgroundImageView: MobileContentBackgroundImageView = MobileContentBackgroundImageView()
     private let swipeUpGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer()
     private let swipeDownGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer()
-    private let contentStackView: MobileContentStackView = MobileContentStackView(itemHorizontalInsets: 0, itemSpacing: 20, scrollIsEnabled: true)
+    private let contentStackView: MobileContentStackView = MobileContentStackView(contentInsets: UIEdgeInsets(top: 15, left: 15, bottom: 0, right: 15), itemSpacing: 20, scrollIsEnabled: true)
     
     private lazy var keyboardObserver: KeyboardObserverType = KeyboardNotificationObserver(loggingEnabled: false)
     
@@ -130,12 +130,10 @@ class ToolPageCardView: MobileContentView {
         layer.shadowRadius = 6.0
         layer.shadowOffset = CGSize(width: 1.5, height: 1.5)
         layer.shadowOpacity = 0.3
-        clipsToBounds = false
         
         // background corner radius
         let rootView: UIView? = subviews.first
         rootView?.layer.cornerRadius = cardCornerRadius
-        rootView?.clipsToBounds = true
         
         // bottom gradient
         bottomGradientView.isUserInteractionEnabled = false

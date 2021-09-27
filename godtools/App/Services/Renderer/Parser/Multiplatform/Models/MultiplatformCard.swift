@@ -47,12 +47,12 @@ class MultiplatformCard: CardModelType {
         }
     }
     
-    var dismissListeners: [String] {
-        return card.dismissListeners.map({$0.description()})
+    var dismissListeners: [MultiplatformEventId] {
+        return card.dismissListeners.map({MultiplatformEventId(eventId: $0)})
     }
     
-    var listeners: [String] {
-        return card.listeners.map({$0.description()})
+    var listeners: [MultiplatformEventId] {
+        return card.listeners.map({MultiplatformEventId(eventId: $0)})
     }
     
     var isHidden: Bool {

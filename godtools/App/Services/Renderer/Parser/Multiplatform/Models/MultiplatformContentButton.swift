@@ -18,8 +18,8 @@ class MultiplatformContentButton: ContentButtonModelType {
         self.button = button
     }
     
-    var events: [String] {
-        return button.events.map({$0.description()})
+    var events: [MultiplatformEventId] {
+        return button.events.map({MultiplatformEventId(eventId: $0)})
     }
     
     var url: String? {
@@ -77,6 +77,16 @@ class MultiplatformContentButton: ContentButtonModelType {
     
     func getAnalyticsEvents() -> [AnalyticsEventModelType] {
         return button.analyticsEvents.map({MultiplatformAnalyticsEvent(analyticsEvent: $0)})
+    }
+    
+    func watchVisibility(rendererState: MobileContentMultiplatformState, visibilityChanged: @escaping ((_ visibility: MobileContentVisibility) -> Void)) -> MobileContentFlowWatcherType {
+        
+        let flowWatcher = button.watchVisibility(state: rendererState.state) { (invisible: KotlinBoolean, gone: KotlinBoolean) in
+            
+            visibilityChanged(MobileContentVisibility(isInvisible: invisible.boolValue, isGone: gone.boolValue))
+        }
+        
+        return MultiplatformFlowWatcher(flowWatcher: flowWatcher)
     }
 }
 

@@ -11,7 +11,7 @@ import UIKit
 class MobileContentStackView: MobileContentView {
     
     private let contentView: UIView = UIView()
-    private let itemHorizontalInsets: CGFloat
+    private let contentInsets: UIEdgeInsets
     private let itemSpacing: CGFloat
     
     private var scrollView: UIScrollView?
@@ -19,9 +19,9 @@ class MobileContentStackView: MobileContentView {
     private var lastAddedBottomConstraint: NSLayoutConstraint?
     private var autoSpacerViews: [MobileContentSpacerView] = Array()
             
-    required init(itemHorizontalInsets: CGFloat, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
+    required init(contentInsets: UIEdgeInsets, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
                 
-        self.itemHorizontalInsets = itemHorizontalInsets
+        self.contentInsets = contentInsets
         self.itemSpacing = itemSpacing
         
         super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: itemSpacing))
@@ -30,6 +30,10 @@ class MobileContentStackView: MobileContentView {
                 
         backgroundColor = .clear
         contentView.backgroundColor = .clear
+        
+        if scrollIsEnabled && scrollView == nil {
+            assertionFailure("ScrollView should be initialized at this point.")
+        }
         scrollView?.backgroundColor = .clear
         scrollView?.showsVerticalScrollIndicator = false
         scrollView?.showsHorizontalScrollIndicator = false
@@ -112,6 +116,18 @@ class MobileContentStackView: MobileContentView {
         
         scrollView?.showsVerticalScrollIndicator = !hidden
         scrollView?.showsHorizontalScrollIndicator = !hidden
+    }
+    
+    func setContentBackgroundColor(color: UIColor) {
+        contentView.backgroundColor = color
+    }
+    
+    func setContentCornerRadius(cornerRadius: CGFloat) {
+        contentView.layer.cornerRadius = cornerRadius
+    }
+    
+    func setContentClipsToBounds(clipsToBounds: Bool) {
+        contentView.clipsToBounds = clipsToBounds
     }
     
     func setScrollViewDelegate(delegate: UIScrollViewDelegate) {
@@ -339,7 +355,7 @@ class MobileContentStackView: MobileContentView {
                 toItem: contentView,
                 attribute: .leading,
                 multiplier: 1,
-                constant: itemHorizontalInsets
+                constant: contentInsets.left
             )
             
             contentView.addConstraint(leading)
@@ -354,7 +370,7 @@ class MobileContentStackView: MobileContentView {
                 toItem: contentView,
                 attribute: .trailing,
                 multiplier: 1,
-                constant: itemHorizontalInsets * -1
+                constant: contentInsets.right * -1
             )
             
             contentView.addConstraint(trailing)
@@ -395,7 +411,7 @@ class MobileContentStackView: MobileContentView {
                 toItem: contentView,
                 attribute: .top,
                 multiplier: 1,
-                constant: 0
+                constant: contentInsets.top
             )
         }
         

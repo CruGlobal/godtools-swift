@@ -10,7 +10,7 @@ import UIKit
 
 protocol MobileContentPageViewDelegate: AnyObject {
     
-    func pageViewDidReceiveEvents(pageView: MobileContentPageView, events: [String])
+    func pageViewDidReceiveEvents(pageView: MobileContentPageView, eventIds: [MultiplatformEventId])
 }
 
 class MobileContentPageView: MobileContentView {
@@ -96,10 +96,10 @@ class MobileContentPageView: MobileContentView {
     
     // MARK: - MobileContentView
     
-    override func didReceiveEvents(events: [String]) {
-        super.didReceiveEvents(events: events)
+    override func didReceiveEvents(eventIds: [MultiplatformEventId]) {
+        super.didReceiveEvents(eventIds: eventIds)
         
-        delegate?.pageViewDidReceiveEvents(pageView: self, events: events)
+        delegate?.pageViewDidReceiveEvents(pageView: self, eventIds: eventIds)
     }
     
     override func didReceiveButtonWithUrlEvent(url: String) {

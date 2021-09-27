@@ -11,6 +11,6 @@ import UIKit
 protocol ToolPageModalViewModelType {
     
     var backgroundColor: UIColor { get }
-    var listeners: [String] { get }
-    var dismissListeners: [String] { get }
+    var listeners: [MultiplatformEventId] { get }
+    var dismissListeners: [MultiplatformEventId] { get }
 }

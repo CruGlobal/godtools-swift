@@ -10,8 +10,8 @@ import Foundation
 
 protocol ModalModelType: MobileContentRenderableModel {
     
-    var dismissListeners: [String] { get }
-    var listeners: [String] { get }
+    var dismissListeners: [MultiplatformEventId] { get }
+    var listeners: [MultiplatformEventId] { get }
 }
 
 extension ModalModelType {

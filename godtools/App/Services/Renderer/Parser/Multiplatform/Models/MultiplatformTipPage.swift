@@ -32,7 +32,7 @@ class MultiplatformTipPage: PageModelType {
         return .fill
     }
     
-    var listeners: [String] {
+    var listeners: [MultiplatformEventId] {
         return Array()
     }
     

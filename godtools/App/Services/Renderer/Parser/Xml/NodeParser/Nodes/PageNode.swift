@@ -29,7 +29,7 @@ class PageNode: MobileContentXmlNode, PageModelType {
     
     let uuid: String = UUID().uuidString
     let backgroundImage: String?
-    let listeners: [String]
+    let listeners: [MultiplatformEventId]
         
     required init(xmlElement: XMLElement) {
    
@@ -41,7 +41,8 @@ class PageNode: MobileContentXmlNode, PageModelType {
         backgroundImageScaleString = attributes["background-image-scale-type"]?.text
         cardTextColorString = attributes["card-text-color"]?.text
         hiddenString = attributes["hidden"]?.text
-        listeners = attributes["listeners"]?.text.components(separatedBy: " ") ?? []
+        //let listenerNames: [String] = attributes["listeners"]?.text.components(separatedBy: " ") ?? []
+        listeners = Array()
         primaryColorString = attributes["primary-color"]?.text
         primaryTextColorString = attributes["primary-text-color"]?.text
         textColorString = attributes["text-color"]?.text

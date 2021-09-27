@@ -19,5 +19,5 @@ protocol MobileContentPagesViewModelType {
     func viewDidFinishLayout(window: UIViewController, safeArea: UIEdgeInsets)
     func pageWillAppear(page: Int) -> MobileContentView?
     func pageDidDisappear(page: Int)
-    func pageDidReceiveEvents(events: [String])
+    func pageDidReceiveEvents(eventIds: [MultiplatformEventId])
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol MobileContentStackChildViewType: class {
+protocol MobileContentStackChildViewType: AnyObject {
     
     var view: UIView { get }
     var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType { get }

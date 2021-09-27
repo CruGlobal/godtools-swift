@@ -120,11 +120,11 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
         return rendererPageModel.language.languageDirection.semanticContentAttribute
     }
     
-    var dismissListeners: [String] {
+    var dismissListeners: [MultiplatformEventId] {
         return cardModel.dismissListeners
     }
     
-    var listeners: [String] {
+    var listeners: [MultiplatformEventId] {
         return cardModel.listeners
     }
     

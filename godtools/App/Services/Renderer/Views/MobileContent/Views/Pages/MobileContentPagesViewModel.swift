@@ -152,9 +152,9 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         pagesRemoved.accept(value: [IndexPath(item: page, section: 0)])
     }
     
-    func pageDidReceiveEvents(events: [String]) {
+    func pageDidReceiveEvents(eventIds: [MultiplatformEventId]) {
         
-        guard let didReceivePageListenerForPageNumber = currentRenderer?.parser.getPageForListenerEvents(events: events) else {
+        guard let didReceivePageListenerForPageNumber = currentRenderer?.parser.getPageForListenerEvents(eventIds: eventIds) else {
             return
         }
         
