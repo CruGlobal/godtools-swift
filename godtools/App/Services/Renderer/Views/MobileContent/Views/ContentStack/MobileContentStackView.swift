@@ -261,9 +261,7 @@ extension MobileContentStackView {
     private func addChildView(childView: MobileContentView) {
              
         let childContentView: UIView = childView
-              
-        childContentView.drawBorder(color: .red)
-        
+                      
         contentView.addSubview(childContentView)
         
         childViews.append(childView)
