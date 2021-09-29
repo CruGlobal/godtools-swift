@@ -1029,6 +1029,8 @@
 		D1B944E5259E58F5004641DB /* remote_share_active.json in Resources */ = {isa = PBXBuildFile; fileRef = D1B944E4259E58F5004641DB /* remote_share_active.json */; };
 		D1D5691027049C8D00BBE2A6 /* TutorialPagerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D5690F27049C8D00BBE2A6 /* TutorialPagerCell.swift */; };
 		D1D569122704A92B00BBE2A6 /* TutorialPagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D569112704A92B00BBE2A6 /* TutorialPagerView.swift */; };
+		D1D569142704FC7B00BBE2A6 /* TutorialPagerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1D569132704FC7B00BBE2A6 /* TutorialPagerCell.xib */; };
+		D1D56916270502B200BBE2A6 /* TutorialPagerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1D56915270502B200BBE2A6 /* TutorialPagerView.xib */; };
 		D1DD79FD26690CAB000F1351 /* TrackScreenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DD79FC26690CAB000F1351 /* TrackScreenModel.swift */; };
 		D1DD79FF26690CBA000F1351 /* TrackActionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DD79FE26690CBA000F1351 /* TrackActionModel.swift */; };
 		D1FF263825BA0C0E00C825DB /* FirebaseInAppMessagingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FF263725BA0C0E00C825DB /* FirebaseInAppMessagingType.swift */; };
@@ -2134,6 +2136,8 @@
 		D1B944E4259E58F5004641DB /* remote_share_active.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = remote_share_active.json; sourceTree = "<group>"; };
 		D1D5690F27049C8D00BBE2A6 /* TutorialPagerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPagerCell.swift; sourceTree = "<group>"; };
 		D1D569112704A92B00BBE2A6 /* TutorialPagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPagerView.swift; sourceTree = "<group>"; };
+		D1D569132704FC7B00BBE2A6 /* TutorialPagerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TutorialPagerCell.xib; sourceTree = "<group>"; };
+		D1D56915270502B200BBE2A6 /* TutorialPagerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TutorialPagerView.xib; sourceTree = "<group>"; };
 		D1DD79FC26690CAB000F1351 /* TrackScreenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackScreenModel.swift; sourceTree = "<group>"; };
 		D1DD79FE26690CBA000F1351 /* TrackActionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackActionModel.swift; sourceTree = "<group>"; };
 		D1FF263725BA0C0E00C825DB /* FirebaseInAppMessagingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseInAppMessagingType.swift; sourceTree = "<group>"; };
@@ -5464,6 +5468,7 @@
 			isa = PBXGroup;
 			children = (
 				D1D569112704A92B00BBE2A6 /* TutorialPagerView.swift */,
+				D1D56915270502B200BBE2A6 /* TutorialPagerView.xib */,
 				D168FDCB26F92A970083D578 /* TutorialPagerViewModel.swift */,
 				D168FDC726F9224F0083D578 /* TutorialPagerAnalyticsType.swift */,
 				D168FDC926F922650083D578 /* TutorialPagerViewModelType.swift */,
@@ -5486,6 +5491,7 @@
 			isa = PBXGroup;
 			children = (
 				D1D5690F27049C8D00BBE2A6 /* TutorialPagerCell.swift */,
+				D1D569132704FC7B00BBE2A6 /* TutorialPagerCell.xib */,
 				D168FDD326FA2C970083D578 /* TutorialPagerCellViewModel.swift */,
 				D168FDD126FA21610083D578 /* TutorialPagerCellViewModelType.swift */,
 			);
@@ -5795,6 +5801,7 @@
 				455583D9269F2DA500C3FF14 /* MobileContentTabsView.xib in Resources */,
 				45AD1B2C25938A4F00A096A0 /* AboutTextCell.xib in Resources */,
 				45AD1B0925938A4E00A096A0 /* ArticleWebView.xib in Resources */,
+				D1D569142704FC7B00BBE2A6 /* TutorialPagerCell.xib in Resources */,
 				45AD215A2593A4D900A096A0 /* ShareToolScreenTutorialView.xib in Resources */,
 				45AD1AB925938A4E00A096A0 /* ToolsTableView.xib in Resources */,
 				45AD1B0F25938A4E00A096A0 /* ArticleCategoryCell.xib in Resources */,
@@ -5824,6 +5831,7 @@
 				451EBE3424AD968B00C4D6DD /* 2615.zip in Resources */,
 				451EBE3124AD968B00C4D6DD /* 36ec96dc7e53cf2387e448a34740c599fe6fb3c51a597fc49667664ca2828e52.jpg in Resources */,
 				D163EA96254A00BE00BA4EA9 /* share_tool_tutorial_link.json in Resources */,
+				D1D56916270502B200BBE2A6 /* TutorialPagerView.xib in Resources */,
 				D129DE692543669C00841733 /* onboarding_tutorial_rocket.json in Resources */,
 				45AD1B4525938A4F00A096A0 /* MenuSectionHeaderView.xib in Resources */,
 				D105922E252FA2E700F120CA /* share_tool_tutorial_mirrored.json in Resources */,

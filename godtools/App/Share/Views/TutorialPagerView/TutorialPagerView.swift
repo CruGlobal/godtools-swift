@@ -20,7 +20,6 @@ class TutorialPagerView: UIViewController {
     @IBOutlet weak private var pageControl: UIPageControl!
     
     @IBOutlet weak private var continueButtonTop: NSLayoutConstraint!
-    @IBOutlet weak private var footerAreaHeight: NSLayoutConstraint!
     
     required init(viewModel: TutorialPagerViewModelType) {
         
@@ -77,8 +76,12 @@ class TutorialPagerView: UIViewController {
             self?.continueButton.setTitle(title, for: .normal)
         }
         
-        viewModel.footerHidden.addObserver(self) { [weak self] (hidden: Bool) in
-            self?.footerView.isHidden = hidden
+        viewModel.continueButtonHidden.addObserver(self) { [weak self] (hidden: Bool) in
+            self?.continueButton.isHidden = hidden
+        }
+        
+        viewModel.pageControlHidden.addObserver(self) { [weak self] (hidden: Bool) in
+            self?.pageControl.isHidden = hidden
         }
     }
     
