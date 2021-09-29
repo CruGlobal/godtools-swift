@@ -6,9 +6,15 @@
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol TutorialPagerCellViewModelType {
     
-    
+    var title: String { get }
+    var message: String { get }
+    var mainImageName: String? { get }
+    var animationName: String? { get }
+    var customView: UIView? { get }
+    var hideSkip: Bool { get }
+    var hideFooter: Bool { get }
 }

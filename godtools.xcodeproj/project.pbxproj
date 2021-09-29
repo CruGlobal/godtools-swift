@@ -5471,8 +5471,8 @@
 		D168FDC526F921FD0083D578 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				D168FDCD26F92C520083D578 /* TutorialPagerProviderType.swift */,
 				D168FDCF26F92EEB0083D578 /* TutorialPagerItem.swift */,
+				D168FDCD26F92C520083D578 /* TutorialPagerProviderType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
