@@ -14,7 +14,7 @@ class TutorialPagerCell: UICollectionViewCell {
     static let nibName = "TutorialPagerCell"
     static let reuseIdentifier = "TutorialPagerCellReuseIdentifier"
     
-    private var viewModel: TutorialPagerCellViewModel?
+    private var viewModel: TutorialPagerCellViewModelType?
     private var customView: UIView?
     
     @IBOutlet weak private var imageView: UIImageView!
@@ -36,7 +36,7 @@ class TutorialPagerCell: UICollectionViewCell {
         viewModel = nil
     }
     
-    func configure(viewModel: TutorialPagerCellViewModel) {
+    func configure(viewModel: TutorialPagerCellViewModelType) {
         
         self.viewModel = viewModel
         
