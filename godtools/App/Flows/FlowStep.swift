@@ -39,6 +39,9 @@ enum FlowStep {
     case closeTappedFromLesson(page: Int)
     case lessonFlowCompleted(state: LessonFlowCompletedState)
     
+    // lesson evaluation
+    case closeTappedFromLessonEvaluation
+    
     // favoritedTools
     case toolTappedFromFavoritedTools(resource: ResourceModel)
     case aboutToolTappedFromFavoritedTools(resource: ResourceModel)

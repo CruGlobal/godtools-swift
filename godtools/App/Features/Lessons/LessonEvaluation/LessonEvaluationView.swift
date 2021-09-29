@@ -8,13 +8,33 @@
 
 import UIKit
 
-class LessonEvaluationView: UIViewController {
+class LessonEvaluationView: UIView, NibBased {
     
     private let viewModel: LessonEvaluationViewModelType
             
+    @IBOutlet weak private var closeButton: UIButton!
+    @IBOutlet weak private var titleLabel: UILabel!
+    @IBOutlet weak private var wasThisHelpfulLabel: UILabel!
+    @IBOutlet weak private var yesButton: PrimaryEvaluationOptionButton!
+    @IBOutlet weak private var noButton: PrimaryEvaluationOptionButton!
+    @IBOutlet weak private var shareFaithLabel: UILabel!
+    @IBOutlet weak private var chooseScaleSliderView: ChooseScaleSliderView!
+    @IBOutlet weak private var sendButton: UIButton!
+    
     required init(viewModel: LessonEvaluationViewModelType) {
+        
         self.viewModel = viewModel
-        super.init(nibName: String(describing: LessonEvaluationView.self), bundle: nil)
+        
+        super.init(frame: UIScreen.main.bounds)
+        
+        loadNib()
+        setupLayout()
+        setupBinding()
+        
+        closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
+        yesButton.addTarget(self, action: #selector(yesButtonTapped), for: .touchUpInside)
+        noButton.addTarget(self, action: #selector(noButtonTapped), for: .touchUpInside)
+        sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -25,23 +45,34 @@ class LessonEvaluationView: UIViewController {
         print("x deinit: \(type(of: self))")
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        print("view didload: \(type(of: self))")
-        
-        setupLayout()
-        setupBinding()
-    }
-    
     private func setupLayout() {
 
     }
     
     private func setupBinding() {
         
+        titleLabel.text = viewModel.title
+        wasThisHelpfulLabel.text = viewModel.wasThisHelpful
+        yesButton.setTitle(viewModel.yesButtonTitle, for: .normal)
+        noButton.setTitle(viewModel.noButtonTitle, for: .normal)
+        shareFaithLabel.text = viewModel.shareFaith
+        sendButton.setTitle(viewModel.sendButtonTitle, for: .normal)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    @objc func closeButtonTapped() {
+        
+        viewModel.closeTapped()
+    }
+    
+    @objc func yesButtonTapped() {
+        
+    }
+    
+    @objc func noButtonTapped() {
+        
+    }
+    
+    @objc func sendButtonTapped() {
+        
     }
 }

@@ -208,13 +208,21 @@ class ToolsFlow: ToolNavigationFlow, Flow {
                 
                 if page >= 0 {
                     
-                    let viewModel = LessonEvaluationViewModel()
+                    let viewModel = LessonEvaluationViewModel(
+                        flowDelegate: self,
+                        localization: appDiContainer.localizationServices
+                    )
                     
                     let view = LessonEvaluationView(viewModel: viewModel)
                     
-                    navigationController.present(view, animated: true, completion: nil)
+                    let modalView = TransparentModalView(modalView: view)
+                    
+                    navigationController.present(modalView, animated: true, completion: nil)
                 }
             }
+            
+        case .closeTappedFromLessonEvaluation:
+            navigationController.dismiss(animated: true, completion: nil)
             
         case .tractFlowCompleted(let state):
             

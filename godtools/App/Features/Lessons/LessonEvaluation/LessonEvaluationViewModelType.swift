@@ -10,4 +10,12 @@ import Foundation
 
 protocol LessonEvaluationViewModelType {
     
+    var title: String { get }
+    var wasThisHelpful: String { get }
+    var yesButtonTitle: String { get }
+    var noButtonTitle: String { get }
+    var shareFaith: String { get }
+    var sendButtonTitle: String { get }
+    
+    func closeTapped()
 }
