@@ -91,7 +91,7 @@ class LessonView: MobileContentPagesView {
 
 extension LessonView: LessonPageViewDelegate {
     func lessonPageCloseLessonTapped(lessonPage: LessonPageView) {
-        viewModel.closeTapped()
+        viewModel.closeTapped(page: pageNavigationView.currentPage)
     }
 }
 
@@ -99,7 +99,7 @@ extension LessonView: LessonPageViewDelegate {
 
 extension LessonView: LessonProgressViewDelegate {
     func lessonProgressViewCloseTapped(progressView: LessonProgressView) {
-        viewModel.closeTapped()
+        viewModel.closeTapped(page: pageNavigationView.currentPage)
     }
 }
 

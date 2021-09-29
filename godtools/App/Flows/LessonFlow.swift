@@ -132,8 +132,8 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
                 )
             }
         
-        case .closeTappedFromLesson:
-            flowDelegate?.navigate(step: .lessonFlowCompleted(state: .userClosedLesson))
+        case .closeTappedFromLesson(let page):
+            flowDelegate?.navigate(step: .lessonFlowCompleted(state: .userClosedLesson(page: page)))
             
         case .buttonWithUrlTappedFromMobileContentRenderer(let url, let exitLink):
             guard let webUrl = URL(string: url) else {

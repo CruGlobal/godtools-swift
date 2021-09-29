@@ -249,6 +249,12 @@ class AppDiContainer {
         return FontService(languageSettings: languageSettingsService)
     }
     
+    func getLessonsEvaluatedRepository() -> LessonsEvaluatedRepository {
+        return LessonsEvaluatedRepository(
+            cache: LessonsEvaluatedRealmCache(realmDatabase: realmDatabase)
+        )
+    }
+    
     func getMobileContentAnalytics() -> MobileContentAnalytics {
         return MobileContentAnalytics(analytics: analytics)
     }

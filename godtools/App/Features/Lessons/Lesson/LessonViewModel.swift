@@ -45,7 +45,7 @@ class LessonViewModel: MobileContentPagesViewModel, LessonViewModelType {
         updateProgress(page: page)
     }
     
-    func closeTapped() {
-        flowDelegate?.navigate(step: .closeTappedFromLesson)
+    func closeTapped(page: Int) {
+        flowDelegate?.navigate(step: .closeTappedFromLesson(page: page))
     }
 }

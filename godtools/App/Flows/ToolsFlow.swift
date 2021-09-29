@@ -202,6 +202,20 @@ class ToolsFlow: ToolNavigationFlow, Flow {
             
             lessonFlow = nil
             
+            switch state {
+            
+            case .userClosedLesson(let page):
+                
+                if page >= 0 {
+                    
+                    let viewModel = LessonEvaluationViewModel()
+                    
+                    let view = LessonEvaluationView(viewModel: viewModel)
+                    
+                    navigationController.present(view, animated: true, completion: nil)
+                }
+            }
+            
         case .tractFlowCompleted(let state):
             
             guard tractFlow != nil else {
