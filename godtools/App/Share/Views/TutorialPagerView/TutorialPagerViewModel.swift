@@ -14,17 +14,18 @@ class TutorialPagerViewModel {
     private let tutorialItems: [TutorialPagerItem]
     private let customViewBuilder: CustomViewBuilderType
     
-    private var page: Int = 0
-
     private weak var flowDelegate: FlowDelegate?
 
     let analyticsContainer: AnalyticsContainer
     let analyticsScreenName: String
     let pageCount: Int
-    let skipButtonTitle: String
-    let continueButtonTitle: ObservableValue<String>
+    let page: ObservableValue<Int>
+    var skipButtonTitle: String
+    var skipButtonHidden: ObservableValue<Bool>
+    var continueButtonTitle: ObservableValue<String>
+    var footerHidden: ObservableValue<Bool>
     
-    required init(flowDelegate: FlowDelegate, analyticsContainer: AnalyticsContainer, tutorialPagerProvider: TutorialPagerProviderType, onboardingTutorialAvailability: OnboardingTutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, customViewBuilder: CustomViewBuilderType, analyticsScreenName: String, skipButtonTitle: String, continueButtonTitle: String) {
+    required init(flowDelegate: FlowDelegate, analyticsContainer: AnalyticsContainer, tutorialPagerProvider: TutorialPagerProviderType, onboardingTutorialAvailability: OnboardingTutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, customViewBuilder: CustomViewBuilderType, analyticsScreenName: String, skipButtonTitle: String) {
         
         self.flowDelegate = flowDelegate
         self.analyticsContainer = analyticsContainer
@@ -32,8 +33,11 @@ class TutorialPagerViewModel {
         self.customViewBuilder = customViewBuilder
         self.analyticsScreenName = analyticsScreenName
         self.pageCount = tutorialPagerProvider.tutorialItems.count
+        self.page = ObservableValue(value: 0)
         self.skipButtonTitle = skipButtonTitle
-        self.continueButtonTitle = ObservableValue(value: continueButtonTitle)
+        self.skipButtonHidden = ObservableValue(value: false)
+        self.continueButtonTitle = ObservableValue(value: "")
+        self.footerHidden = ObservableValue(value: false)
         self.tutorialItems = tutorialPagerProvider.tutorialItems
         
         onboardingTutorialAvailability.markOnboardingTutorialViewed()
@@ -45,7 +49,7 @@ class TutorialPagerViewModel {
 extension TutorialPagerViewModel: TutorialPagerViewModelType {
     
     func tutorialItemWillAppear(index: Int) -> TutorialPagerCellViewModelType {
-        return TutorialPagerCellViewModel(item: tutorialItems[page], customViewBuilder: customViewBuilder)
+        return TutorialPagerCellViewModel(item: tutorialItems[page.value], customViewBuilder: customViewBuilder)
     }
 
     func skipTapped() {
@@ -55,33 +59,37 @@ extension TutorialPagerViewModel: TutorialPagerViewModelType {
     
     func pageDidChange(page: Int) {
         
-        self.page = page
+        self.page.accept(value: page)
     }
     
     func pageDidAppear(page: Int) {
         
-        self.page = page
+        self.page.accept(value: page)
         
-        continueButtonTitle.accept(value: tutorialItems[page].continueButtonLabel)
+        let item = tutorialItems[page]
+
+        skipButtonHidden.accept(value: item.hideSkip)
+        continueButtonTitle.accept(value: item.continueButtonLabel)
+        footerHidden.accept(value: item.hideFooter)
         
         trackPageDidAppear(page: page)
     }
     
     func continueTapped() {
         
-        let nextPage = page + 1
+        let nextPage = page.value + 1
         let reachedEnd = nextPage >= pageCount
         
         if reachedEnd {
             flowDelegate?.navigate(step: .endTutorialFromOnboardingTutorial)
         }
         
-        trackContinueButtonTapped(page: page)
+        trackContinueButtonTapped(page: page.value)
     }
     
     func tutorialVideoPlayTapped() {
         
-        guard let youTubeVideoId = tutorialItems[page].youTubeVideoId else {
+        guard let youTubeVideoId = tutorialItems[page.value].youTubeVideoId else {
             return
         }
         
