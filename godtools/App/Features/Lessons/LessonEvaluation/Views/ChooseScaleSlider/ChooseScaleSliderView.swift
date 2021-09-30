@@ -11,17 +11,19 @@ import UIKit
 @IBDesignable
 class ChooseScaleSliderView: UIView, NibBased {
     
-    private static let defaultMinScale: CGFloat = 1
-    private static let defaultMaxScale: CGFloat = 10
+    private static let defaultMinScale: Int = 1
+    private static let defaultMaxScale: Int = 10
     
-    private var minScaleValue: CGFloat = ChooseScaleSliderView.defaultMinScale
-    private var maxScaleValue: CGFloat = ChooseScaleSliderView.defaultMaxScale
+    private var minScaleValue: CGFloat = 0
+    private var maxScaleValue: CGFloat = 0
     private var didSetProgressValue: Bool = false
     
     private var sliderViewSize: CGFloat {
         return frame.size.height
     }
     private var isLoaded: Bool = false
+    
+    private(set) var currentScaleValue: Int = 0
     
     @IBInspectable var primaryColor: UIColor = UIColor.red {
         didSet {
@@ -97,7 +99,7 @@ class ChooseScaleSliderView: UIView, NibBased {
         return progressBar.frame.origin.x + progressBar.frame.size.width
     }
     
-    func setMinScaleValue(minScaleValue: CGFloat, maxScaleValue: CGFloat) {
+    func setMinScaleValue(minScaleValue: Int, maxScaleValue: Int) {
         
         if minScaleValue < 0 {
             assertionFailure("minScaleValue must be greater than or equal to 0.")
@@ -107,8 +109,8 @@ class ChooseScaleSliderView: UIView, NibBased {
             assertionFailure("minScaleValue must be less than maxScaleValue")
         }
         
-        self.minScaleValue = minScaleValue
-        self.maxScaleValue = maxScaleValue
+        self.minScaleValue = CGFloat(minScaleValue)
+        self.maxScaleValue = CGFloat(maxScaleValue)
     }
     
     func setProgress(progressValue: CGFloat) {
@@ -145,6 +147,8 @@ class ChooseScaleSliderView: UIView, NibBased {
         let floatScaleValue: CGFloat = floor(((maxScaleValue - minScaleValue) * currentSliderPercentageAlongProgressBar) + minScaleValue)
         let scaleValue: Int = Int(floatScaleValue)
                 
+        currentScaleValue = scaleValue
+        
         scaleValueLabel.text = "\(scaleValue)"
     }
     

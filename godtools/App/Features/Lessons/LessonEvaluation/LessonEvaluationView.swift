@@ -11,6 +11,8 @@ import UIKit
 class LessonEvaluationView: UIView, NibBased {
     
     private let viewModel: LessonEvaluationViewModelType
+    private let chooseScaleMinValue: Int = 1
+    private let chooseScaleMaxValue: Int = 10
     private let chooseScaleInitialProgressValue: CGFloat = 0.5
             
     @IBOutlet weak private var closeButton: UIButton!
@@ -48,6 +50,7 @@ class LessonEvaluationView: UIView, NibBased {
     
     private func setupLayout() {
 
+        chooseScaleSliderView.setMinScaleValue(minScaleValue: chooseScaleMinValue, maxScaleValue: chooseScaleMaxValue)
         chooseScaleSliderView.setProgress(progressValue: chooseScaleInitialProgressValue)
         
         sendButton.layer.cornerRadius = yesButton.layer.cornerRadius
