@@ -1031,6 +1031,11 @@
 		D1D569122704A92B00BBE2A6 /* TutorialPagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D569112704A92B00BBE2A6 /* TutorialPagerView.swift */; };
 		D1D569142704FC7B00BBE2A6 /* TutorialPagerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1D569132704FC7B00BBE2A6 /* TutorialPagerCell.xib */; };
 		D1D56916270502B200BBE2A6 /* TutorialPagerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1D56915270502B200BBE2A6 /* TutorialPagerView.xib */; };
+		D1D56918270632B200BBE2A6 /* OnboardingTutorialCustomViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D56917270632B200BBE2A6 /* OnboardingTutorialCustomViewBuilder.swift */; };
+		D1D5691A2706364200BBE2A6 /* OnboardingTutorialFirstCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D569192706364200BBE2A6 /* OnboardingTutorialFirstCell.swift */; };
+		D1D5691C270636A600BBE2A6 /* OnboardingTutorialFirstCellViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D5691B270636A600BBE2A6 /* OnboardingTutorialFirstCellViewModelType.swift */; };
+		D1D5691E270637AB00BBE2A6 /* OnboardingTutorialFirstCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D5691D270637AB00BBE2A6 /* OnboardingTutorialFirstCellViewModel.swift */; };
+		D1D5692027063B2700BBE2A6 /* OnboardingTutorialFirstCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1D5691F27063B2700BBE2A6 /* OnboardingTutorialFirstCell.xib */; };
 		D1DD79FD26690CAB000F1351 /* TrackScreenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DD79FC26690CAB000F1351 /* TrackScreenModel.swift */; };
 		D1DD79FF26690CBA000F1351 /* TrackActionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DD79FE26690CBA000F1351 /* TrackActionModel.swift */; };
 		D1FF263825BA0C0E00C825DB /* FirebaseInAppMessagingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FF263725BA0C0E00C825DB /* FirebaseInAppMessagingType.swift */; };
@@ -2138,6 +2143,11 @@
 		D1D569112704A92B00BBE2A6 /* TutorialPagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPagerView.swift; sourceTree = "<group>"; };
 		D1D569132704FC7B00BBE2A6 /* TutorialPagerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TutorialPagerCell.xib; sourceTree = "<group>"; };
 		D1D56915270502B200BBE2A6 /* TutorialPagerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TutorialPagerView.xib; sourceTree = "<group>"; };
+		D1D56917270632B200BBE2A6 /* OnboardingTutorialCustomViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialCustomViewBuilder.swift; sourceTree = "<group>"; };
+		D1D569192706364200BBE2A6 /* OnboardingTutorialFirstCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialFirstCell.swift; sourceTree = "<group>"; };
+		D1D5691B270636A600BBE2A6 /* OnboardingTutorialFirstCellViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialFirstCellViewModelType.swift; sourceTree = "<group>"; };
+		D1D5691D270637AB00BBE2A6 /* OnboardingTutorialFirstCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialFirstCellViewModel.swift; sourceTree = "<group>"; };
+		D1D5691F27063B2700BBE2A6 /* OnboardingTutorialFirstCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingTutorialFirstCell.xib; sourceTree = "<group>"; };
 		D1DD79FC26690CAB000F1351 /* TrackScreenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackScreenModel.swift; sourceTree = "<group>"; };
 		D1DD79FE26690CBA000F1351 /* TrackActionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackActionModel.swift; sourceTree = "<group>"; };
 		D1FF263725BA0C0E00C825DB /* FirebaseInAppMessagingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseInAppMessagingType.swift; sourceTree = "<group>"; };
@@ -3781,6 +3791,7 @@
 				45AD185125938A4E00A096A0 /* OnboardingTutorialProviderType.swift */,
 				45AD185225938A4E00A096A0 /* OnboardingTutorialUsageItem.swift */,
 				45AD184D25938A4E00A096A0 /* OnboardingTutorialUsageListItem.swift */,
+				D1D56917270632B200BBE2A6 /* OnboardingTutorialCustomViewBuilder.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3801,6 +3812,10 @@
 				45AD185B25938A4E00A096A0 /* MainOnboardingTutorialCell.swift */,
 				45AD185D25938A4E00A096A0 /* MainOnboardingTutorialCell.xib */,
 				45AD185925938A4E00A096A0 /* MainOboardingTutorialCellViewModel.swift */,
+				D1D569192706364200BBE2A6 /* OnboardingTutorialFirstCell.swift */,
+				D1D5691F27063B2700BBE2A6 /* OnboardingTutorialFirstCell.xib */,
+				D1D5691D270637AB00BBE2A6 /* OnboardingTutorialFirstCellViewModel.swift */,
+				D1D5691B270636A600BBE2A6 /* OnboardingTutorialFirstCellViewModelType.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -5859,6 +5874,7 @@
 				4556AED823E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf in Resources */,
 				45CB9FA6261F8BA80036BEB3 /* ToolCell.xib in Resources */,
 				45714AD5262100E000EF41FB /* LessonProgressView.xib in Resources */,
+				D1D5692027063B2700BBE2A6 /* OnboardingTutorialFirstCell.xib in Resources */,
 				45AD1B3925938A4F00A096A0 /* LanguageSettingsView.xib in Resources */,
 				45AD1B6C25938A4F00A096A0 /* ToolDetailView.xib in Resources */,
 				45AD1B1425938A4E00A096A0 /* ArticleCell.xib in Resources */,
@@ -6166,6 +6182,7 @@
 				45BD79DB26A20EEA0007426B /* ContentLabelModelType.swift in Sources */,
 				45AD21432593A49900A096A0 /* ShareToolRemoteSessionURLView.swift in Sources */,
 				D1D5691027049C8D00BBE2A6 /* TutorialPagerCell.swift in Sources */,
+				D1D5691E270637AB00BBE2A6 /* OnboardingTutorialFirstCellViewModel.swift in Sources */,
 				45AD1B5125938A4F00A096A0 /* ToolTrainingTipView.swift in Sources */,
 				45AD1AA625938A4E00A096A0 /* CustomTutorialViewId.swift in Sources */,
 				458EFEDC26B1D08C009EEB03 /* ToolBackButtonImageType.swift in Sources */,
@@ -6269,6 +6286,7 @@
 				452652A626A763E500E703F7 /* MultiplatformContentButton.swift in Sources */,
 				45BD7A3526A21FDA0007426B /* ContentNode.swift in Sources */,
 				45AD202425938A9800A096A0 /* RequestMethod.swift in Sources */,
+				D1D5691C270636A600BBE2A6 /* OnboardingTutorialFirstCellViewModelType.swift in Sources */,
 				45AD205D25938AC300A096A0 /* AnalyticsContainer.swift in Sources */,
 				45AD1B5725938A4F00A096A0 /* AccountItem.swift in Sources */,
 				45BD7A5126A21FDA0007426B /* ContentButtonNode.swift in Sources */,
@@ -6575,6 +6593,7 @@
 				45AD214E2593A4B700A096A0 /* ShareToolViewModelType.swift in Sources */,
 				D168FDC826F9224F0083D578 /* TutorialPagerAnalyticsType.swift in Sources */,
 				455583EA269F2DA500C3FF14 /* MobileContentView.swift in Sources */,
+				D1D5691A2706364200BBE2A6 /* OnboardingTutorialFirstCell.swift in Sources */,
 				45AD201325938A9800A096A0 /* TranslationsFileCacheError.swift in Sources */,
 				45AD20D325938F6800A096A0 /* FollowUpModel.swift in Sources */,
 				45AD1F7E25938A9800A096A0 /* ResourcesCleanUp.swift in Sources */,
@@ -6923,6 +6942,7 @@
 				45BEC53626A604E4005D8CA1 /* MobileContentVideoProvider.swift in Sources */,
 				45C93AE8261D310900592FFF /* ArticleAemDataParser.swift in Sources */,
 				45AD1B9E25938A4F00A096A0 /* Translation.swift in Sources */,
+				D1D56918270632B200BBE2A6 /* OnboardingTutorialCustomViewBuilder.swift in Sources */,
 				45AD1BCC25938A4F00A096A0 /* UIColor+HexColor.swift in Sources */,
 				45AD1F7F25938A9800A096A0 /* RealmFavoritedResource.swift in Sources */,
 				45AD1F2A25938A9800A096A0 /* MobileContentXmlManifestTip.swift in Sources */,
