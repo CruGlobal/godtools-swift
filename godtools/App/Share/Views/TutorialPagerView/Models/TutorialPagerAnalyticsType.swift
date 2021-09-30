@@ -22,7 +22,7 @@ protocol TutorialPagerAnalyticsType {
 extension TutorialPagerAnalyticsType {
     
     func trackPageDidAppear (page: Int) {
-        analyticsContainer.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: "onboarding", siteSubSection: ""))
+        analyticsContainer.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: "\(analyticsScreenName)-\(page)", siteSection: "onboarding", siteSubSection: ""))
     }
     
     func trackContinueButtonTapped (page: Int) {
@@ -31,7 +31,7 @@ extension TutorialPagerAnalyticsType {
         let reachedEnd = nextPage >= pageCount
         
         if reachedEnd {
-            analyticsContainer.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: "On-Boarding Start", siteSection: "", siteSubSection: "", url: nil, data: ["cru.onboarding_start": 1]))
+            analyticsContainer.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: "\(analyticsScreenName)-\(page)", actionName: "On-Boarding Start", siteSection: "", siteSubSection: "", url: nil, data: ["cru.onboarding_start": 1]))
         }
     }
     
