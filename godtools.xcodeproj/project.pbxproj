@@ -5470,7 +5470,6 @@
 				D1D569112704A92B00BBE2A6 /* TutorialPagerView.swift */,
 				D1D56915270502B200BBE2A6 /* TutorialPagerView.xib */,
 				D168FDCB26F92A970083D578 /* TutorialPagerViewModel.swift */,
-				D168FDC726F9224F0083D578 /* TutorialPagerAnalyticsType.swift */,
 				D168FDC926F922650083D578 /* TutorialPagerViewModelType.swift */,
 				D168FDC526F921FD0083D578 /* Models */,
 				D168FDC626F922030083D578 /* Views */,
@@ -5483,6 +5482,7 @@
 			children = (
 				D168FDCF26F92EEB0083D578 /* TutorialPagerItem.swift */,
 				D168FDCD26F92C520083D578 /* TutorialPagerProviderType.swift */,
+				D168FDC726F9224F0083D578 /* TutorialPagerAnalyticsType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";

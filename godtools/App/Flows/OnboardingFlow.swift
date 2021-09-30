@@ -32,12 +32,20 @@ class OnboardingFlow: Flow {
         navigationController.navigationBar.shadowImage = UIImage()
         navigationController.setNavigationBarHidden(false, animated: false)
         
-        let viewModel = OnboardingWelcomeViewModel(
-            flowDelegate: self,
-            localizationServices: appDiContainer.localizationServices,
-            analytics: appDiContainer.analytics
+        let onboardingTutorialProvider = OnboardingTutorialProvider(localizationServices: appDiContainer.localizationServices)
+        
+        let viewModel = TutorialPagerViewModel(
+            flowDelegate: flowDelegate,
+            analyticsContainer: appDiContainer.analytics,
+            tutorialPagerProvider: onboardingTutorialProvider,
+            onboardingTutorialAvailability: appDiContainer.onboardingTutorialAvailability,
+            openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache,
+            customViewBuilder: <#T##CustomViewBuilderType#>,
+            analyticsScreenName: "onboarding",
+            skipButtonTitle: "Skip"
         )
-        let view = OnboardingWelcomeView(viewModel: viewModel)
+        let view = TutorialPagerView(viewModel: viewModel)
+        
         navigationController.setViewControllers([view], animated: false)
     }
 }
@@ -48,26 +56,10 @@ extension OnboardingFlow: FlowDelegate {
         
         switch step {
             
-        case .beginTappedFromOnboardingWelcome:
-           
-            let viewModel = OnboardingTutorialViewModel(
-                flowDelegate: self,
-                localizationServices: appDiContainer.localizationServices,
-                analytics: appDiContainer.analytics,
-                onboardingTutorialProvider: OnboardingTutorialProvider(localizationServices: appDiContainer.localizationServices),
-                onboardingTutorialAvailability: appDiContainer.onboardingTutorialAvailability,
-                openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache
-            )
-            let view = OnboardingTutorialView(viewModel: viewModel)
-            navigationController.setViewControllers([view], animated: true)
-            
         case .skipTappedFromOnboardingTutorial:
             flowDelegate?.navigate(step: .dismissOnboardingTutorial)
             
-        case .showMoreTappedFromOnboardingTutorial:
-            flowDelegate?.navigate(step: step)
-            
-        case .getStartedTappedFromOnboardingTutorial:
+        case .endTutorialFromOnboardingTutorial:
             flowDelegate?.navigate(step: .dismissOnboardingTutorial)
         
         default:

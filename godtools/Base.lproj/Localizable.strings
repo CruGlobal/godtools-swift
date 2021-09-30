@@ -143,19 +143,16 @@ The app can be downloaded from https://godtoolsapp.com";
 "onboardingWelcome.beginButton" = "Begin";
 
 // OnboardingTutorial
-"onboardingTutorial.aboutAppItem.0.title" = "Share With Others";
-"onboardingTutorial.aboutAppItem.0.message" = "GodTools is built to guide your faith conversations";
-"onboardingTutorial.aboutAppItem.1.title" = "Choose Your Tools";
-"onboardingTutorial.aboutAppItem.1.message" = "GodTools helps you before, during, and after a spiritual conversation";
-"onboardingTutorial.aboutAppItem.2.title" = "Always Ready";
-"onboardingTutorial.aboutAppItem.2.message" = "GodTools is here to help and is ready when you are";
-"onboardingTutorial.appUsageItem.0.message" = "Prepare for any conversation";
-"onboardingTutorial.appUsageItem.1.message" = "Walk someone through the gospel";
-"onboardingTutorial.appUsageItem.2.message" = "Run two languages side by side";
-"onboardingTutorial.appUsageItem.3.message" = "Choose from over 80 languages";
-"onboardingTutorial.appUsageItem.4.message" = "Help someone get started as a Christian";
-"onboardingTutorial.continueButton.title" = "Continue";
-"onboardingTutorial.showMoreButton.title" = "Show Me More";
+"onboardingTutorial.0.title" = "Ready for every conversation";
+"onboardingTutorial.0.videoLink.title" = "Watch Video";
+"onboardingTutorial.1.title" = "Talk about God with anyone";
+"onboardingTutorial.1.message" = "GodTools help you have meaningful conversations about God.";
+"onboardingTutorial.2.title" = "Prepare for the moments that matter";
+"onboardingTutorial.2.message" = "Learn how to make conversations about faith a natural part of your life.";
+"onboardingTutorial.3.title" = "Help someone discover Jesus";
+"onboardingTutorial.3.message" = "GodTools is your guide to communicating he gospel in lear and relevant ways.";
+"onboardingTutorial.beginButton.title" = "Begin";
+"onboardingTutorial.nextButton.title" = "Next";
 "onboardingTutorial.getStartedButton.title" = "Get Started";
 
 // Tutorial

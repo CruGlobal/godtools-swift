@@ -18,5 +18,6 @@ struct TutorialPagerItem {
     let youTubeVideoId: String?
     let customViewId: String?
     let hideSkip: Bool
-    let hideFooter: Bool
+    let hideContinueButton: Bool
+    let hidePageControl: Bool
 }

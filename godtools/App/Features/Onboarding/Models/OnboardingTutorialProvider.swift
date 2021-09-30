@@ -8,59 +8,61 @@
 
 import Foundation
 
-class OnboardingTutorialProvider: OnboardingTutorialProviderType {
+class OnboardingTutorialProvider: TutorialPagerProviderType {
     
-    let aboutTheAppItems: [MainOnboardingTutorialItem]
-    let appUsageListItem: OnboardingTutorialUsageListItem
+    let tutorialItems: [TutorialPagerItem]
     
     required init(localizationServices: LocalizationServices) {
         
-        aboutTheAppItems = [
-            MainOnboardingTutorialItem(
-                backgroundImageName: "onboarding_tutorial_background_0",
-                backgroundCustomViewId: nil,
+        tutorialItems = [
+            /*TutorialPagerItem(
+                title: "",
+                message: "",
+                continueButtonLabel: localizationServices.stringForMainBundle(key: "onboardingTutorial.beginButton.title"),
+                imageName: nil,
+                animationName: nil,
+                youTubeVideoId: nil,
+                customViewId: "onboarding-0",
+                hideSkip: false,
+                hideContinueButton: false,
+                hidePageControl: false
+            ),*/
+            TutorialPagerItem(
+                title: localizationServices.stringForMainBundle(key: "onboardingTutorial.1.title"),
+                message: localizationServices.stringForMainBundle(key: "onboardingTutorial.1.message"),
+                continueButtonLabel: localizationServices.stringForMainBundle(key: "onboardingTutorial.nextButton.title"),
                 imageName: nil,
                 animationName: "onboarding_tutorial_cups",
-                title: localizationServices.stringForMainBundle(key: "onboardingTutorial.aboutAppItem.0.title"),
-                message: localizationServices.stringForMainBundle(key: "onboardingTutorial.aboutAppItem.0.message")
+                youTubeVideoId: nil,
+                customViewId: nil,
+                hideSkip: true,
+                hideContinueButton: false,
+                hidePageControl: false
             ),
-            MainOnboardingTutorialItem(
-                backgroundImageName: "onboarding_tutorial_background_1",
-                backgroundCustomViewId: nil,
+            TutorialPagerItem(
+                title: localizationServices.stringForMainBundle(key: "onboardingTutorial.2.title"),
+                message: localizationServices.stringForMainBundle(key: "onboardingTutorial.2.message"),
+                continueButtonLabel: localizationServices.stringForMainBundle(key: "onboardingTutorial.nextButton.title"),
                 imageName: nil,
                 animationName: "onboarding_tutorial_knife",
-                title: localizationServices.stringForMainBundle(key: "onboardingTutorial.aboutAppItem.1.title"),
-                message: localizationServices.stringForMainBundle(key: "onboardingTutorial.aboutAppItem.1.message")
+                youTubeVideoId: nil,
+                customViewId: nil,
+                hideSkip: false,
+                hideContinueButton: true,
+                hidePageControl: false
             ),
-            MainOnboardingTutorialItem(
-                backgroundImageName: "onboarding_tutorial_background_2",
-                backgroundCustomViewId: nil,
+            TutorialPagerItem(
+                title: localizationServices.stringForMainBundle(key: "onboardingTutorial.3.title"),
+                message: localizationServices.stringForMainBundle(key: "onboardingTutorial.3.message"),
+                continueButtonLabel: localizationServices.stringForMainBundle(key: "onboardingTutorial.getStartedButton.title"),
                 imageName: nil,
                 animationName: "onboarding_tutorial_rocket",
-                title: localizationServices.stringForMainBundle(key: "onboardingTutorial.aboutAppItem.2.title"),
-                message: localizationServices.stringForMainBundle(key: "onboardingTutorial.aboutAppItem.2.message")
+                youTubeVideoId: nil,
+                customViewId: nil,
+                hideSkip: false,
+                hideContinueButton: false,
+                hidePageControl: true
             )
         ]
-        
-        appUsageListItem = OnboardingTutorialUsageListItem(
-            backgroundImageName: nil,
-            backgroundCustomViewId: "onboarding_tutorial_gradient_background",
-            usageItems: [
-            OnboardingTutorialUsageItem(
-                message: localizationServices.stringForMainBundle(key: "onboardingTutorial.appUsageItem.0.message")
-            ),
-            OnboardingTutorialUsageItem(
-                message: localizationServices.stringForMainBundle(key: "onboardingTutorial.appUsageItem.1.message")
-            ),
-            OnboardingTutorialUsageItem(
-                message: localizationServices.stringForMainBundle(key: "onboardingTutorial.appUsageItem.2.message")
-            ),
-            OnboardingTutorialUsageItem(
-                message: localizationServices.stringForMainBundle(key: "onboardingTutorial.appUsageItem.3.message")
-            ),
-            OnboardingTutorialUsageItem(
-                message: localizationServices.stringForMainBundle(key: "onboardingTutorial.appUsageItem.4.message")
-            )]
-        )
     }
 }
