@@ -1,14 +1,14 @@
 //
-//  MobileContentStackChildViewHeightConstraintType.swift
+//  MobileContentViewHeightConstraintType.swift
 //  godtools
 //
-//  Created by Levi Eggert on 2/16/21.
+//  Created by Levi Eggert on 9/27/21.
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
 import Foundation
 
-enum MobileContentStackChildViewHeightConstraintType {
+enum MobileContentViewHeightConstraintType {
     
     case constrainedToChildren
     case equalToHeight(height: CGFloat)
