@@ -11,8 +11,12 @@ import UIKit
 @IBDesignable
 class ChooseScaleSliderView: UIView, NibBased {
     
-    private let minScaleValue: CGFloat = 1
-    private let maxScaleValue: CGFloat = 10
+    private static let defaultMinScale: CGFloat = 1
+    private static let defaultMaxScale: CGFloat = 10
+    
+    private var minScaleValue: CGFloat = ChooseScaleSliderView.defaultMinScale
+    private var maxScaleValue: CGFloat = ChooseScaleSliderView.defaultMaxScale
+    private var didSetProgressValue: Bool = false
     
     private var sliderViewSize: CGFloat {
         return frame.size.height
@@ -58,8 +62,10 @@ class ChooseScaleSliderView: UIView, NibBased {
     private func initialize() {
         
         loadNib()
+        setMinScaleValue(minScaleValue: ChooseScaleSliderView.defaultMinScale, maxScaleValue: ChooseScaleSliderView.defaultMaxScale)
         isLoaded = true
         setupLayout()
+        setProgress(progressValue: 0)
     }
     
     private func setupLayout() {
@@ -83,8 +89,63 @@ class ChooseScaleSliderView: UIView, NibBased {
     
     // MARK: -
     
-    func setScale(scaleValue: CGFloat) {
+    var progressMinX: CGFloat {
+        return progressBar.frame.origin.x
+    }
+    
+    var progressMaxX: CGFloat {
+        return progressBar.frame.origin.x + progressBar.frame.size.width
+    }
+    
+    func setMinScaleValue(minScaleValue: CGFloat, maxScaleValue: CGFloat) {
         
+        if minScaleValue < 0 {
+            assertionFailure("minScaleValue must be greater than or equal to 0.")
+        }
+        
+        if minScaleValue >= maxScaleValue {
+            assertionFailure("minScaleValue must be less than maxScaleValue")
+        }
+        
+        self.minScaleValue = minScaleValue
+        self.maxScaleValue = maxScaleValue
+    }
+    
+    func setProgress(progressValue: CGFloat) {
+        
+        let sliderXPosition: CGFloat = (progressBar.frame.size.width * progressValue) + progressMinX
+        
+        setSliderXPosition(newXPosition: sliderXPosition)
+    }
+    
+    func setSliderXPosition(newXPosition: CGFloat) {
+        
+        var sliderXPosition: CGFloat = 0
+        
+        if newXPosition < progressMinX {
+            sliderXPosition = progressMinX
+        }
+        else if newXPosition > progressMaxX {
+            sliderXPosition = progressMaxX
+        }
+        else {
+            sliderXPosition = newXPosition
+        }
+        
+        sliderXPosition = sliderXPosition - (sliderViewSize / 2)
+        
+        sliderView.frame = CGRect(
+            x: sliderXPosition,
+            y: (frame.size.height - sliderViewSize) / 2,
+            width: sliderViewSize,
+            height: sliderViewSize
+        )
+        
+        let currentSliderPercentageAlongProgressBar: CGFloat = sliderXPosition / progressBar.frame.size.width
+        let floatScaleValue: CGFloat = floor(((maxScaleValue - minScaleValue) * currentSliderPercentageAlongProgressBar) + minScaleValue)
+        let scaleValue: Int = Int(floatScaleValue)
+                
+        scaleValueLabel.text = "\(scaleValue)"
     }
     
     // MARK: - Touches
@@ -93,14 +154,7 @@ class ChooseScaleSliderView: UIView, NibBased {
         
         let touchPoint: CGPoint = touch.location(in: self)
                 
-        sliderView.frame = CGRect(
-            x: touchPoint.x,
-            y: touchPoint.y,
-            width: sliderViewSize,
-            height: sliderViewSize
-        )
-        
-        print("--> touchPoint: \(touchPoint)")
+        setSliderXPosition(newXPosition: touchPoint.x)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -128,9 +182,5 @@ class ChooseScaleSliderView: UIView, NibBased {
         }
         
         handleSliderTouched(touch: touch)
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
     }
 }

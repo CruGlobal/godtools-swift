@@ -11,6 +11,7 @@ import UIKit
 class LessonEvaluationView: UIView, NibBased {
     
     private let viewModel: LessonEvaluationViewModelType
+    private let chooseScaleInitialProgressValue: CGFloat = 0.5
             
     @IBOutlet weak private var closeButton: UIButton!
     @IBOutlet weak private var titleLabel: UILabel!
@@ -47,6 +48,8 @@ class LessonEvaluationView: UIView, NibBased {
     
     private func setupLayout() {
 
+        chooseScaleSliderView.setProgress(progressValue: chooseScaleInitialProgressValue)
+        
         sendButton.layer.cornerRadius = yesButton.layer.cornerRadius
     }
     
@@ -90,5 +93,18 @@ class LessonEvaluationView: UIView, NibBased {
     @objc func sendButtonTapped() {
         
         viewModel.sendTapped()
+    }
+}
+
+// MARK: - TransparentModalCustomView
+
+extension LessonEvaluationView: TransparentModalCustomView {
+    
+    var view: UIView {
+        return self
+    }
+    
+    func transparentModalDidLayout() {
+        chooseScaleSliderView.setProgress(progressValue: chooseScaleInitialProgressValue)
     }
 }

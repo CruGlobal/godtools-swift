@@ -10,13 +10,15 @@ import UIKit
 
 class TransparentModalView: UIViewController {
     
-    private let modalView: UIView
+    private let modalView: TransparentModalCustomView
     private let modalCornerRadius: CGFloat = 12
+    
+    private var didLayoutSubviews: Bool = false
     
     @IBOutlet weak private var overlayButton: UIButton!
     @IBOutlet weak private var customModalView: UIView!
     
-    required init(modalView: UIView) {
+    required init(modalView: TransparentModalCustomView) {
         
         self.modalView = modalView
         
@@ -36,6 +38,15 @@ class TransparentModalView: UIViewController {
         setupLayout()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if !didLayoutSubviews {
+            didLayoutSubviews = true
+            modalView.transparentModalDidLayout()
+        }
+    }
+    
     private func setupLayout() {
         
         view.backgroundColor = .clear
@@ -49,11 +60,13 @@ class TransparentModalView: UIViewController {
         customModalView.layer.shadowColor = UIColor.black.cgColor
         customModalView.layer.shadowRadius = 5
         customModalView.layer.shadowOpacity = 0.6
-        customModalView.addSubview(modalView)
+        customModalView.addSubview(modalView.view)
         
-        modalView.constrainEdgesToSuperview()
-        modalView.layer.cornerRadius = modalCornerRadius
-        modalView.clipsToBounds = true
+        modalView.view.constrainEdgesToSuperview()
+        modalView.view.layoutIfNeeded()
+        modalView.view.layer.cornerRadius = modalCornerRadius
+        modalView.view.clipsToBounds = true
+        modalView.transparentModalDidLayout()
     }
 }
 
