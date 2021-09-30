@@ -23,6 +23,7 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     let backgroundColor: UIColor
     let titleColor: UIColor
     let borderColor: UIColor?
+    let visibilityState: ObservableValue<MobileContentViewVisibilityState> = ObservableValue(value: .visible)
     
     required init(buttonModel: ContentButtonModelType, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
         
@@ -53,7 +54,19 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
         
         visibilityFlowWatcher = buttonModel.watchVisibility(rendererState: rendererPageModel.rendererState, visibilityChanged: { [weak self] (visibility: MobileContentVisibility) in
             
+            let visibilityStateValue: MobileContentViewVisibilityState
             
+            if visibility.isGone {
+                visibilityStateValue = .gone
+            }
+            else if visibility.isInvisible {
+                visibilityStateValue = .hidden
+            }
+            else {
+                visibilityStateValue = .visible
+            }
+            
+            self?.visibilityState.accept(value: visibilityStateValue)
         })
     }
     
