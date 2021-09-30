@@ -31,6 +31,7 @@ enum FlowStep {
     case skipTappedFromOnboardingTutorial
     case showMoreTappedFromOnboardingTutorial
     case getStartedTappedFromOnboardingTutorial
+    case endTutorialFromOnboardingTutorial
     
     // lessons list
     case lessonTappedFromLessonsList(resource: ResourceModel)
