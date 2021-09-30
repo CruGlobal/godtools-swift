@@ -11,7 +11,11 @@ import UIKit
 @IBDesignable
 class PrimaryEvaluationOptionButton: UIButton {
     
+    private let deSelectedColor: UIColor = .white
+    
     private var didPrepareForInterfaceBuilder: Bool = false
+    
+    private(set) var optionState: PrimaryEvaluationOptionState = .deSelected
     
     @IBInspectable var primaryColor: UIColor = UIColor(red: 0.231, green: 0.643, blue: 0.859, alpha: 1) {
         didSet {
@@ -34,6 +38,7 @@ class PrimaryEvaluationOptionButton: UIButton {
     private func initialize() {
         
         setupLayout()
+        setOptionState(optionState: .deSelected)
     }
     
     private func setupLayout() {
@@ -42,7 +47,7 @@ class PrimaryEvaluationOptionButton: UIButton {
             titleLabel?.font = font
         }
 
-        backgroundColor = .white
+        backgroundColor = deSelectedColor
         layer.borderWidth = 1
         layer.cornerRadius = 28
         layer.borderColor = primaryColor.cgColor
@@ -53,5 +58,25 @@ class PrimaryEvaluationOptionButton: UIButton {
         super.prepareForInterfaceBuilder()
         didPrepareForInterfaceBuilder = true
         setupLayout()
+    }
+    
+    func setOptionState(optionState: PrimaryEvaluationOptionState) {
+        
+        let backgroundColor: UIColor
+        let titleColor: UIColor
+        
+        switch optionState {
+        
+        case .deSelected:
+            backgroundColor = deSelectedColor
+            titleColor = primaryColor
+        
+        case .selected:
+            backgroundColor = primaryColor
+            titleColor = deSelectedColor
+        }
+        
+        self.backgroundColor = backgroundColor
+        setTitleColor(titleColor, for: .normal)
     }
 }

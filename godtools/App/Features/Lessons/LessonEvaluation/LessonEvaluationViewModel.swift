@@ -18,6 +18,8 @@ class LessonEvaluationViewModel: LessonEvaluationViewModelType {
     let noButtonTitle: String
     let shareFaith: String
     let sendButtonTitle: String
+    let yesIsSelected: ObservableValue<Bool> = ObservableValue(value: false)
+    let noIsSelected: ObservableValue<Bool> = ObservableValue(value: false)
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -26,15 +28,31 @@ class LessonEvaluationViewModel: LessonEvaluationViewModelType {
         self.flowDelegate = flowDelegate
         self.localization = localization
         
-        title = localization.stringForMainBundle(key: "")
-        wasThisHelpful = localization.stringForMainBundle(key: "")
-        yesButtonTitle = localization.stringForMainBundle(key: "")
-        noButtonTitle = localization.stringForMainBundle(key: "")
-        shareFaith = localization.stringForMainBundle(key: "")
-        sendButtonTitle = localization.stringForMainBundle(key: "")
+        title = localization.stringForMainBundle(key: "lesson_evaluation.title")
+        wasThisHelpful = localization.stringForMainBundle(key: "lesson_evaluation.wasThisHelpful")
+        yesButtonTitle = localization.stringForMainBundle(key: "yes")
+        noButtonTitle = localization.stringForMainBundle(key: "no")
+        shareFaith = localization.stringForMainBundle(key: "lesson_evaluation.shareFaith")
+        sendButtonTitle = localization.stringForMainBundle(key: "lesson_evaluation.sendButtonTitle")
     }
     
     func closeTapped() {
         flowDelegate?.navigate(step: .closeTappedFromLessonEvaluation)
+    }
+    
+    func yesTapped() {
+        
+        yesIsSelected.accept(value: true)
+        noIsSelected.accept(value: false)
+    }
+    
+    func noTapped() {
+        
+        yesIsSelected.accept(value: false)
+        noIsSelected.accept(value: true)
+    }
+    
+    func sendTapped() {
+        
     }
 }

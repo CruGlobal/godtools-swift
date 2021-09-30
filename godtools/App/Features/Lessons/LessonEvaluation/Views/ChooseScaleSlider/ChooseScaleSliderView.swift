@@ -11,6 +11,12 @@ import UIKit
 @IBDesignable
 class ChooseScaleSliderView: UIView, NibBased {
     
+    private let minScaleValue: CGFloat = 1
+    private let maxScaleValue: CGFloat = 10
+    
+    private var sliderViewSize: CGFloat {
+        return frame.size.height
+    }
     private var isLoaded: Bool = false
     
     @IBInspectable var primaryColor: UIColor = UIColor.red {
@@ -58,16 +64,73 @@ class ChooseScaleSliderView: UIView, NibBased {
     
     private func setupLayout() {
         
+        isMultipleTouchEnabled = false
+        
         sliderView.layer.borderWidth = 1
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        let sliderViewSize: CGFloat = frame.size.height
-        
+                
+        // scaleValueLabel
         scaleValueLabel.frame = CGRect(x: 0, y: 0, width: sliderViewSize, height: sliderViewSize)
-        sliderView.frame = CGRect(x: 30, y: 0, width: sliderViewSize, height: sliderViewSize)
+        
+        // sliderView
+        let sliderViewFrame: CGRect = sliderView.frame
+        sliderView.frame = CGRect(x: sliderViewFrame.origin.x, y: sliderViewFrame.origin.y, width: sliderViewSize, height: sliderViewSize)
         sliderView.layer.cornerRadius = sliderViewSize / 2
+    }
+    
+    // MARK: -
+    
+    func setScale(scaleValue: CGFloat) {
+        
+    }
+    
+    // MARK: - Touches
+    
+    private func handleSliderTouched(touch: UITouch) {
+        
+        let touchPoint: CGPoint = touch.location(in: self)
+                
+        sliderView.frame = CGRect(
+            x: touchPoint.x,
+            y: touchPoint.y,
+            width: sliderViewSize,
+            height: sliderViewSize
+        )
+        
+        print("--> touchPoint: \(touchPoint)")
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        guard let touch = touches.first else {
+            return
+        }
+        
+        handleSliderTouched(touch: touch)
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        guard let touch = touches.first else {
+            return
+        }
+        
+        handleSliderTouched(touch: touch)
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        guard let touch = touches.first else {
+            return
+        }
+        
+        handleSliderTouched(touch: touch)
+    }
+    
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
     }
 }

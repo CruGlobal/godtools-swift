@@ -16,6 +16,11 @@ protocol LessonEvaluationViewModelType {
     var noButtonTitle: String { get }
     var shareFaith: String { get }
     var sendButtonTitle: String { get }
+    var yesIsSelected: ObservableValue<Bool> { get }
+    var noIsSelected: ObservableValue<Bool> { get }
     
     func closeTapped()
+    func yesTapped()
+    func noTapped()
+    func sendTapped()
 }

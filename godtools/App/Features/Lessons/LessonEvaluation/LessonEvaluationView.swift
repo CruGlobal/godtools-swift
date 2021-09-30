@@ -47,6 +47,7 @@ class LessonEvaluationView: UIView, NibBased {
     
     private func setupLayout() {
 
+        sendButton.layer.cornerRadius = yesButton.layer.cornerRadius
     }
     
     private func setupBinding() {
@@ -57,6 +58,18 @@ class LessonEvaluationView: UIView, NibBased {
         noButton.setTitle(viewModel.noButtonTitle, for: .normal)
         shareFaithLabel.text = viewModel.shareFaith
         sendButton.setTitle(viewModel.sendButtonTitle, for: .normal)
+        
+        viewModel.yesIsSelected.addObserver(self) { [weak self] (isSelected: Bool) in
+            
+            let optionState: PrimaryEvaluationOptionState = isSelected ? .selected : .deSelected
+            self?.yesButton.setOptionState(optionState: optionState)
+        }
+        
+        viewModel.noIsSelected.addObserver(self) { [weak self] (isSelected: Bool) in
+            
+            let optionState: PrimaryEvaluationOptionState = isSelected ? .selected : .deSelected
+            self?.noButton.setOptionState(optionState: optionState)
+        }
     }
     
     @objc func closeButtonTapped() {
@@ -66,13 +79,16 @@ class LessonEvaluationView: UIView, NibBased {
     
     @objc func yesButtonTapped() {
         
+        viewModel.yesTapped()
     }
     
     @objc func noButtonTapped() {
         
+        viewModel.noTapped()
     }
     
     @objc func sendButtonTapped() {
         
+        viewModel.sendTapped()
     }
 }
