@@ -15,6 +15,4 @@ protocol TutorialPagerCellViewModelType {
     var mainImageName: String? { get }
     var animationName: String? { get }
     var customView: UIView? { get }
-    var hideSkip: Bool { get }
-    var hideFooter: Bool { get }
 }

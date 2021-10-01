@@ -40,7 +40,7 @@ class OnboardingFlow: Flow {
             tutorialPagerProvider: onboardingTutorialProvider,
             onboardingTutorialAvailability: appDiContainer.onboardingTutorialAvailability,
             openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache,
-            customViewBuilder: <#T##CustomViewBuilderType#>,
+            customViewBuilder: appDiContainer.onboardingTutorialCustomViewBuilder(),
             analyticsScreenName: "onboarding",
             skipButtonTitle: "Skip"
         )

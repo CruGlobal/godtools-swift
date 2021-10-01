@@ -23,7 +23,8 @@ class TutorialPagerViewModel {
     var skipButtonTitle: String
     var skipButtonHidden: ObservableValue<Bool>
     var continueButtonTitle: ObservableValue<String>
-    var footerHidden: ObservableValue<Bool>
+    var continueButtonHidden: ObservableValue<Bool>
+    var pageControlHidden: ObservableValue<Bool>
     
     required init(flowDelegate: FlowDelegate, analyticsContainer: AnalyticsContainer, tutorialPagerProvider: TutorialPagerProviderType, onboardingTutorialAvailability: OnboardingTutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, customViewBuilder: CustomViewBuilderType, analyticsScreenName: String, skipButtonTitle: String) {
         
@@ -37,7 +38,8 @@ class TutorialPagerViewModel {
         self.skipButtonTitle = skipButtonTitle
         self.skipButtonHidden = ObservableValue(value: false)
         self.continueButtonTitle = ObservableValue(value: "")
-        self.footerHidden = ObservableValue(value: false)
+        self.continueButtonHidden = ObservableValue(value: false)
+        self.pageControlHidden = ObservableValue(value: false)
         self.tutorialItems = tutorialPagerProvider.tutorialItems
         
         onboardingTutorialAvailability.markOnboardingTutorialViewed()
@@ -70,7 +72,8 @@ extension TutorialPagerViewModel: TutorialPagerViewModelType {
 
         skipButtonHidden.accept(value: item.hideSkip)
         continueButtonTitle.accept(value: item.continueButtonLabel)
-        footerHidden.accept(value: item.hideFooter)
+        continueButtonHidden.accept(value: item.hideContinueButton)
+        pageControlHidden.accept(value: item.hidePageControl)
         
         trackPageDidAppear(page: page)
     }
