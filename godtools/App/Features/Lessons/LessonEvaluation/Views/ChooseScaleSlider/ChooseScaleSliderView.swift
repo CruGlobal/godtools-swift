@@ -26,6 +26,10 @@ class ChooseScaleSliderView: UIView, NibBased {
     private var lastBoundsSize: CGSize = .zero
     private var didSetProgressValue: Bool = false
     
+    private var sliderViewY: CGFloat {
+        return (frame.size.height - sliderViewSize) / 2
+    }
+    
     private var sliderViewSize: CGFloat {
         return frame.size.height
     }
@@ -104,7 +108,7 @@ class ChooseScaleSliderView: UIView, NibBased {
         
         // sliderView
         let sliderViewFrame: CGRect = sliderView.frame
-        sliderView.frame = CGRect(x: sliderViewFrame.origin.x, y: sliderViewFrame.origin.y, width: sliderViewSize, height: sliderViewSize)
+        sliderView.frame = CGRect(x: sliderViewFrame.origin.x, y: sliderViewY, width: sliderViewSize, height: sliderViewSize)
         sliderView.layer.cornerRadius = sliderViewSize / 2
         
         if lastBoundsSize.width != frame.size.width {
@@ -116,12 +120,8 @@ class ChooseScaleSliderView: UIView, NibBased {
     
     // MARK: -
     
-    var progressMinX: CGFloat {
-        return progressBar.frame.origin.x
-    }
-    
-    var progressMaxX: CGFloat {
-        return progressBar.frame.origin.x + progressBar.frame.size.width
+    var progressWidth: CGFloat {
+        return progressBar.frame.size.width
     }
     
     func setDelegate(delegate: ChooseScaleSliderViewDelegate?) {
@@ -158,7 +158,9 @@ class ChooseScaleSliderView: UIView, NibBased {
                 
         if shouldUpdateSliderPosition {
             
-            setProgress(progressValue: getPercentage(scale: scaleValue))
+            let progressValue: CGFloat = getPercentage(scale: scaleValue)
+            
+            setProgress(progressValue: progressValue)
         }
         else {
             
@@ -172,39 +174,47 @@ class ChooseScaleSliderView: UIView, NibBased {
     
     func setProgress(progressValue: CGFloat) {
         
-        if !(progressValue >= 0 && progressValue <= 1) {
-            assertionFailure("progressValue must be greater than or equal to 0 and less than or equal to 1.")
+        let clampedProgressValue: CGFloat
+        
+        if progressValue < 0 {
+            clampedProgressValue = 0
         }
-        
-        let sliderXPosition: CGFloat = (progressBar.frame.size.width * progressValue) + progressMinX
-        
-        setSliderXPosition(newXPosition: sliderXPosition)
-    }
-    
-    func setSliderXPosition(newXPosition: CGFloat) {
-        
-        var sliderXPosition: CGFloat = 0
-        
-        if newXPosition < progressMinX {
-            sliderXPosition = progressMinX
-        }
-        else if newXPosition > progressMaxX {
-            sliderXPosition = progressMaxX
+        else if progressValue > 1 {
+            clampedProgressValue = 1
         }
         else {
-            sliderXPosition = newXPosition
+            clampedProgressValue = progressValue
         }
         
-        sliderXPosition = sliderXPosition - (sliderViewSize / 2)
+        let absoluteXPosition: CGFloat = progressWidth * clampedProgressValue
         
+        setSliderAbsoluteXPosition(absoluteXPosition: absoluteXPosition)
+    }
+    
+    func setSliderAbsoluteXPosition(absoluteXPosition: CGFloat) {
+        
+        // NOTE: absoluteXPosition is based along the progressWidth and assumes that the progressBar x position is starting at 0.
+        
+        let clampedAbsoluteXPosition: CGFloat
+        
+        if absoluteXPosition < 0 {
+            clampedAbsoluteXPosition = 0
+        }
+        else if absoluteXPosition > progressWidth {
+            clampedAbsoluteXPosition = progressWidth
+        }
+        else {
+            clampedAbsoluteXPosition = absoluteXPosition
+        }
+                
         sliderView.frame = CGRect(
-            x: sliderXPosition,
-            y: (frame.size.height - sliderViewSize) / 2,
+            x: clampedAbsoluteXPosition - (sliderViewSize / 2) + progressBar.frame.origin.x,
+            y: sliderViewY,
             width: sliderViewSize,
             height: sliderViewSize
         )
         
-        let currentSliderPercentageAlongProgressBar: CGFloat = sliderXPosition / progressBar.frame.size.width
+        let currentSliderPercentageAlongProgressBar: CGFloat = clampedAbsoluteXPosition / progressWidth
         
         let scaleValue: Int = getScale(percentage: currentSliderPercentageAlongProgressBar)
                 
@@ -217,8 +227,9 @@ class ChooseScaleSliderView: UIView, NibBased {
         let maximumScaleValueBasedOnMinimumScaleToZero: CGFloat = maxScaleValue + minimumScaleToZero
         let floatScale: CGFloat = CGFloat(scale)
         let floatScaleBasedOnMinimumScaleToZero: CGFloat = floatScale + minimumScaleToZero
+        let percentage: CGFloat = floatScaleBasedOnMinimumScaleToZero / maximumScaleValueBasedOnMinimumScaleToZero
         
-        return floatScaleBasedOnMinimumScaleToZero / maximumScaleValueBasedOnMinimumScaleToZero
+        return percentage
     }
     
     private func getScale(percentage: CGFloat) -> Int {
@@ -234,8 +245,10 @@ class ChooseScaleSliderView: UIView, NibBased {
     private func handleSliderTouched(touch: UITouch) {
         
         let touchPoint: CGPoint = touch.location(in: self)
-                
-        setSliderXPosition(newXPosition: touchPoint.x)
+        
+        let absoluteXPosition: CGFloat = touchPoint.x - progressBar.frame.origin.x
+                        
+        setSliderAbsoluteXPosition(absoluteXPosition: absoluteXPosition)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
