@@ -43,6 +43,7 @@ class FadeAnimationTransition: NSObject, UIViewControllerAnimatedTransitioning {
                 
                 if toView.superview == nil {
                     containerView.addSubview(toView)
+                    toView.constrainEdgesToSuperview()
                 }
                 
                 toView.alpha = 0

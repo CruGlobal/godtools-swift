@@ -5,13 +5,11 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TransparentModalView" customModule="godtools" customModuleProvider="target">
             <connections>
-                <outlet property="customModalView" destination="5Mg-Q7-NvL" id="XUG-Ct-thC"/>
                 <outlet property="overlayButton" destination="MH4-0e-G8I" id="BL8-6N-yFh"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Tnn-o5-4JB"/>
             </connections>
@@ -25,31 +23,16 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </button>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Mg-Q7-NvL" userLabel="customModalView">
-                    <rect key="frame" x="20" y="398" width="374" height="100"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    <constraints>
-                        <constraint firstAttribute="height" priority="500" constant="100" id="qFC-Qb-GPr"/>
-                    </constraints>
-                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="5Mg-Q7-NvL" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="7ZH-Ep-6FU"/>
                 <constraint firstItem="MH4-0e-G8I" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="8JU-4C-3Z8"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="5Mg-Q7-NvL" secondAttribute="trailing" constant="20" id="Be7-vS-xsd"/>
                 <constraint firstAttribute="bottom" secondItem="MH4-0e-G8I" secondAttribute="bottom" id="Rvi-pf-38x"/>
                 <constraint firstItem="MH4-0e-G8I" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Zfq-b8-XXM"/>
-                <constraint firstItem="5Mg-Q7-NvL" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="o0S-kL-ht7"/>
                 <constraint firstAttribute="trailing" secondItem="MH4-0e-G8I" secondAttribute="trailing" id="u7x-t3-vbW"/>
             </constraints>
             <point key="canvasLocation" x="139" y="144"/>
         </view>
     </objects>
-    <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-    </resources>
 </document>
