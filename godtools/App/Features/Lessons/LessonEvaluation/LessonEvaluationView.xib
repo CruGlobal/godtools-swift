@@ -30,18 +30,18 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="460"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="416"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p99-n3-72O" userLabel="verticalSpine">
-                    <rect key="frame" x="206.5" y="0.0" width="1" height="460"/>
+                    <rect key="frame" x="206.5" y="0.0" width="1" height="416"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="1" id="xkK-w1-rND"/>
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yzn-8m-ch1" userLabel="closeButton">
-                    <rect key="frame" x="360" y="10" width="44" height="44"/>
+                    <rect key="frame" x="365" y="5" width="44" height="44"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="44" id="Gcv-Al-3Fz"/>
                         <constraint firstAttribute="height" constant="44" id="vR8-15-f2W"/>
@@ -49,36 +49,36 @@
                     <state key="normal" image="nav_item_close"/>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Review" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hW5-Sh-WAm" userLabel="titleLabel">
-                    <rect key="frame" x="30" y="46.5" width="354" height="30"/>
+                    <rect key="frame" x="30" y="30" width="354" height="30"/>
                     <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="25"/>
                     <color key="textColor" red="0.3529411764705882" green="0.3529411764705882" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Was this lesson helpful for you?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lfh-2B-Rgu" userLabel="wasThisHelpfulLabel">
-                    <rect key="frame" x="30" y="108.5" width="354" height="23"/>
+                    <rect key="frame" x="30" y="80" width="354" height="23"/>
                     <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="19"/>
                     <color key="textColor" red="0.35294117650000001" green="0.35294117650000001" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9ei-TW-JYN" userLabel="yesButton" customClass="PrimaryEvaluationOptionButton" customModule="godtools" customModuleProvider="target">
-                    <rect key="frame" x="35" y="145.5" width="166.5" height="55"/>
+                    <rect key="frame" x="35" y="117" width="166.5" height="50"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="55" id="hdD-hJ-ipm"/>
+                        <constraint firstAttribute="height" constant="50" id="hdD-hJ-ipm"/>
                     </constraints>
                     <state key="normal" title="YES"/>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ccN-bB-0iy" userLabel="noButton" customClass="PrimaryEvaluationOptionButton" customModule="godtools" customModuleProvider="target">
-                    <rect key="frame" x="212.5" y="145.5" width="166.5" height="55"/>
+                    <rect key="frame" x="212.5" y="117" width="166.5" height="50"/>
                     <state key="normal" title="NO"/>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="On a scale from 1 to 10 how ready are you to share your faith?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ETv-65-sQh" userLabel="shareFaithLabel">
-                    <rect key="frame" x="30" y="240.5" width="354" height="45.5"/>
+                    <rect key="frame" x="30" y="197" width="354" height="45.5"/>
                     <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="19"/>
                     <color key="textColor" red="0.35294117650000001" green="0.35294117650000001" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wxP-b7-1T5" userLabel="chooseScaleSliderView" customClass="ChooseScaleSliderView" customModule="godtools" customModuleProvider="target">
-                    <rect key="frame" x="30" y="300" width="354" height="50"/>
+                    <rect key="frame" x="30" y="256.5" width="354" height="50"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="rwH-zt-hsw"/>
@@ -90,10 +90,10 @@
                     </userDefinedRuntimeAttributes>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KxH-Ub-t9N" userLabel="sendButton">
-                    <rect key="frame" x="83" y="380" width="248" height="55"/>
+                    <rect key="frame" x="83" y="336.5" width="248" height="50"/>
                     <color key="backgroundColor" red="0.23137254901960785" green="0.64313725490196072" blue="0.85882352941176465" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="55" id="GKj-nA-Wtn"/>
+                        <constraint firstAttribute="height" constant="50" id="GKj-nA-Wtn"/>
                     </constraints>
                     <state key="normal" title="Send Feedback"/>
                 </button>
@@ -101,30 +101,30 @@
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="hW5-Sh-WAm" secondAttribute="trailing" constant="30" id="0cG-SA-4cQ"/>
-                <constraint firstAttribute="bottom" secondItem="KxH-Ub-t9N" secondAttribute="bottom" constant="25" id="10v-2B-hcG"/>
                 <constraint firstItem="wxP-b7-1T5" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="30" id="48B-j0-6ol"/>
                 <constraint firstItem="lfh-2B-Rgu" firstAttribute="trailing" secondItem="hW5-Sh-WAm" secondAttribute="trailing" id="5iB-ki-vHo"/>
                 <constraint firstItem="KxH-Ub-t9N" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="6SR-QI-0P5"/>
                 <constraint firstItem="ETv-65-sQh" firstAttribute="leading" secondItem="lfh-2B-Rgu" secondAttribute="leading" id="9hR-LJ-Ulg"/>
                 <constraint firstItem="ccN-bB-0iy" firstAttribute="leading" secondItem="p99-n3-72O" secondAttribute="trailing" constant="5" id="9wx-ex-Hgi"/>
-                <constraint firstItem="hW5-Sh-WAm" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="46.5" id="BDB-yB-uE1"/>
+                <constraint firstItem="hW5-Sh-WAm" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="30" id="BDB-yB-uE1"/>
                 <constraint firstItem="ETv-65-sQh" firstAttribute="trailing" secondItem="lfh-2B-Rgu" secondAttribute="trailing" id="DjQ-yf-5re"/>
                 <constraint firstItem="ccN-bB-0iy" firstAttribute="top" secondItem="9ei-TW-JYN" secondAttribute="top" id="Dkn-wS-jmg"/>
                 <constraint firstItem="hW5-Sh-WAm" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="30" id="K8S-4E-2tr"/>
                 <constraint firstItem="lfh-2B-Rgu" firstAttribute="leading" secondItem="hW5-Sh-WAm" secondAttribute="leading" id="PbM-ev-N1M"/>
+                <constraint firstAttribute="bottom" secondItem="KxH-Ub-t9N" secondAttribute="bottom" constant="29.5" id="RB8-Be-cot"/>
                 <constraint firstAttribute="trailing" secondItem="wxP-b7-1T5" secondAttribute="trailing" constant="30" id="RbC-K4-mqh"/>
                 <constraint firstItem="KxH-Ub-t9N" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.6" id="V09-G6-8Ho"/>
                 <constraint firstItem="p99-n3-72O" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Yjs-F5-j4N"/>
                 <constraint firstAttribute="bottom" secondItem="p99-n3-72O" secondAttribute="bottom" id="a7i-Ch-0ji"/>
                 <constraint firstItem="KxH-Ub-t9N" firstAttribute="top" secondItem="wxP-b7-1T5" secondAttribute="bottom" constant="30" id="bmH-hF-Rg7"/>
                 <constraint firstItem="9ei-TW-JYN" firstAttribute="top" secondItem="lfh-2B-Rgu" secondAttribute="bottom" constant="14" id="cvW-ma-19a"/>
-                <constraint firstItem="lfh-2B-Rgu" firstAttribute="top" secondItem="hW5-Sh-WAm" secondAttribute="bottom" constant="32" id="es0-F5-TXp"/>
+                <constraint firstItem="lfh-2B-Rgu" firstAttribute="top" secondItem="hW5-Sh-WAm" secondAttribute="bottom" constant="20" id="es0-F5-TXp"/>
                 <constraint firstItem="9ei-TW-JYN" firstAttribute="leading" secondItem="lfh-2B-Rgu" secondAttribute="leading" constant="5" id="fbl-C1-dzD"/>
-                <constraint firstItem="ETv-65-sQh" firstAttribute="top" secondItem="9ei-TW-JYN" secondAttribute="bottom" constant="40" id="hc1-f7-r6n"/>
+                <constraint firstItem="ETv-65-sQh" firstAttribute="top" secondItem="9ei-TW-JYN" secondAttribute="bottom" constant="30" id="hc1-f7-r6n"/>
                 <constraint firstItem="p99-n3-72O" firstAttribute="leading" secondItem="9ei-TW-JYN" secondAttribute="trailing" constant="5" id="ljc-AA-joa"/>
-                <constraint firstItem="yzn-8m-ch1" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="ln2-gx-vBw"/>
+                <constraint firstItem="yzn-8m-ch1" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="ln2-gx-vBw"/>
                 <constraint firstItem="wxP-b7-1T5" firstAttribute="top" secondItem="ETv-65-sQh" secondAttribute="bottom" constant="14" id="oNj-b0-VbJ"/>
-                <constraint firstAttribute="trailing" secondItem="yzn-8m-ch1" secondAttribute="trailing" constant="10" id="rhj-mP-FL3"/>
+                <constraint firstAttribute="trailing" secondItem="yzn-8m-ch1" secondAttribute="trailing" constant="5" id="rhj-mP-FL3"/>
                 <constraint firstItem="ccN-bB-0iy" firstAttribute="trailing" secondItem="lfh-2B-Rgu" secondAttribute="trailing" constant="-5" id="ssn-ZK-5ZG"/>
                 <constraint firstItem="ccN-bB-0iy" firstAttribute="height" secondItem="9ei-TW-JYN" secondAttribute="height" id="tPA-A0-RCM"/>
                 <constraint firstItem="p99-n3-72O" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="yn1-a0-91a"/>

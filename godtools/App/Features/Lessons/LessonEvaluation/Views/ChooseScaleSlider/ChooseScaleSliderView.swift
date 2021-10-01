@@ -19,8 +19,11 @@ class ChooseScaleSliderView: UIView, NibBased {
     private static let defaultMinScale: Int = 1
     private static let defaultMaxScale: Int = 10
     
+    private let minAndMaxScaleLabelWidth: CGFloat = 50
+    
     private var minScaleValue: CGFloat = 0
     private var maxScaleValue: CGFloat = 0
+    private var lastBoundsSize: CGSize = .zero
     private var didSetProgressValue: Bool = false
     
     private var sliderViewSize: CGFloat {
@@ -87,6 +90,15 @@ class ChooseScaleSliderView: UIView, NibBased {
     override func layoutSubviews() {
         super.layoutSubviews()
                 
+        // minScaleLabel
+        minScaleLabel.frame = CGRect(x: 0, y: 0, width: minAndMaxScaleLabelWidth, height: frame.size.height)
+        
+        // maxScaleLabel
+        maxScaleLabel.frame = CGRect(x: frame.size.width - minAndMaxScaleLabelWidth, y: 0, width: minAndMaxScaleLabelWidth, height: frame.size.height)
+        
+        // progressBar
+        progressBar.frame = CGRect(x: minAndMaxScaleLabelWidth, y: frame.size.height / 2, width: frame.size.width - minAndMaxScaleLabelWidth - minAndMaxScaleLabelWidth, height: 1)
+        
         // scaleValueLabel
         scaleValueLabel.frame = CGRect(x: 0, y: 0, width: sliderViewSize, height: sliderViewSize)
         
@@ -94,6 +106,12 @@ class ChooseScaleSliderView: UIView, NibBased {
         let sliderViewFrame: CGRect = sliderView.frame
         sliderView.frame = CGRect(x: sliderViewFrame.origin.x, y: sliderViewFrame.origin.y, width: sliderViewSize, height: sliderViewSize)
         sliderView.layer.cornerRadius = sliderViewSize / 2
+        
+        if lastBoundsSize.width != frame.size.width {
+            setScale(scaleValue: currentScaleValue)
+        }
+        
+        lastBoundsSize = frame.size
     }
     
     // MARK: -
@@ -137,13 +155,7 @@ class ChooseScaleSliderView: UIView, NibBased {
     }
     
     func setScale(scaleValue: Int, shouldUpdateSliderPosition: Bool = true) {
-        
-        let floatScaleValue: CGFloat = CGFloat(scaleValue)
-        
-        if !(floatScaleValue >= minScaleValue && floatScaleValue <= maxScaleValue) {
-            assertionFailure("scaleValue must be greater than or equal to \(minScaleValue) and less than or equal to \(maxScaleValue).")
-        }
-        
+                
         if shouldUpdateSliderPosition {
             
             setProgress(progressValue: getPercentage(scale: scaleValue))

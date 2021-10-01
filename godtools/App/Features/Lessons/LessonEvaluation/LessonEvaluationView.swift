@@ -11,6 +11,8 @@ import UIKit
 class LessonEvaluationView: UIView, NibBased {
     
     private let viewModel: LessonEvaluationViewModelType
+    
+    private let buttonCornerRadius: CGFloat = 24
             
     @IBOutlet weak private var closeButton: UIButton!
     @IBOutlet weak private var titleLabel: UILabel!
@@ -49,7 +51,9 @@ class LessonEvaluationView: UIView, NibBased {
     
     private func setupLayout() {
         
-        sendButton.layer.cornerRadius = yesButton.layer.cornerRadius
+        yesButton.layer.cornerRadius = buttonCornerRadius
+        noButton.layer.cornerRadius = buttonCornerRadius
+        sendButton.layer.cornerRadius = buttonCornerRadius
     }
     
     private func setupBinding() {

@@ -42,6 +42,9 @@ class TransparentModalView: UIViewController {
         
         if !didLayoutSubviews {
             didLayoutSubviews = true
+            if modalView.view.frame.size.height > view.frame.size.height {
+                addModalViewToScrollView()
+            }
             modalView.transparentModalDidLayout()
         }
     }
@@ -76,11 +79,10 @@ extension TransparentModalView {
         guard !view.subviews.contains(modalView.view) else {
             return
         }
-        
+                
         view.addSubview(modalView.view)
-        modalView.view.layoutIfNeeded()
-        
-        let modalInsets: UIEdgeInsets = .zero
+                
+        let modalInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         
         modalView.view.translatesAutoresizingMaskIntoConstraints = false
         
@@ -104,25 +106,19 @@ extension TransparentModalView {
             constant: modalInsets.right * -1
         )
         
-        let top: NSLayoutConstraint = NSLayoutConstraint(
+        let centerVertically: NSLayoutConstraint = NSLayoutConstraint(
             item: modalView.view,
-            attribute: .top,
+            attribute: .centerY,
             relatedBy: .equal,
             toItem: view,
-            attribute: .top,
+            attribute: .centerY,
             multiplier: 1,
-            constant: modalInsets.top
+            constant: 0
         )
         
-        let bottom: NSLayoutConstraint = NSLayoutConstraint(
-            item: modalView.view,
-            attribute: .bottom,
-            relatedBy: .equal,
-            toItem: view,
-            attribute: .bottom,
-            multiplier: 1,
-            constant: modalInsets.bottom * -1
-        )
+        view.addConstraint(leading)
+        view.addConstraint(trailing)
+        view.addConstraint(centerVertically)
                 
         let height: NSLayoutConstraint = NSLayoutConstraint(
             item: modalView.view,
@@ -133,21 +129,44 @@ extension TransparentModalView {
             multiplier: 1,
             constant: 30
         )
-        
         height.priority = UILayoutPriority(500)
-        
         modalView.view.addConstraint(height)
-        
-        view.addConstraint(leading)
-        view.addConstraint(trailing)
-        view.addConstraint(top)
-        //view.addConstraint(bottom)
-        
-        //modalView.view.constrainEdgesToSuperview()
-        modalView.view.layoutIfNeeded()
+
         modalView.view.layer.cornerRadius = modalCornerRadius
         modalView.view.clipsToBounds = true
         modalView.transparentModalDidLayout()
+    }
+    
+    private func addModalViewToScrollView() {
+        
+        modalView.view.removeFromSuperview()
+        let viewConstraints = view.constraints
+        view.removeConstraints(viewConstraints)
+        
+        let scrollView = UIScrollView()
+        scrollView.backgroundColor = .white
+        view.addSubview(scrollView)
+        scrollView.constrainEdgesToSuperview()
+        
+        let contentView = UIView()
+        contentView.backgroundColor = .clear
+        scrollView.addSubview(contentView)
+        contentView.constrainEdgesToSuperview()
+        
+        let equalWidths: NSLayoutConstraint = NSLayoutConstraint(
+            item: scrollView,
+            attribute: .width,
+            relatedBy: .equal,
+            toItem: contentView,
+            attribute: .width,
+            multiplier: 1,
+            constant: 0
+        )
+        
+        scrollView.addConstraint(equalWidths)
+        
+        contentView.addSubview(modalView.view)
+        modalView.view.constrainEdgesToSuperview()
     }
 }
 

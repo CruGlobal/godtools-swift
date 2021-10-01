@@ -27,27 +27,24 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PNo-v3-8Ug" userLabel="minScaleLabel">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PNo-v3-8Ug" userLabel="minScaleLabel">
                     <rect key="frame" x="0.0" y="0.0" width="40" height="50"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="40" id="aPk-NN-OTO"/>
-                    </constraints>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="18"/>
                     <color key="textColor" systemColor="systemRedColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ker-KK-DJ7" userLabel="maxScaleLabel">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ker-KK-DJ7" userLabel="maxScaleLabel">
                     <rect key="frame" x="372" y="0.0" width="42" height="50"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="18"/>
                     <color key="textColor" systemColor="systemRedColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GNn-bL-R6H" userLabel="progressBar">
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GNn-bL-R6H" userLabel="progressBar">
                     <rect key="frame" x="40" y="24.5" width="332" height="1"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" systemColor="systemRedColor"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="1" id="Oht-Mq-Vef"/>
-                    </constraints>
                 </view>
                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9WS-KO-5wf" userLabel="sliderView">
                     <rect key="frame" x="87" y="3" width="44" height="44"/>
@@ -65,18 +62,6 @@
                 </view>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-            <constraints>
-                <constraint firstItem="PNo-v3-8Ug" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="1oC-U8-P8z"/>
-                <constraint firstAttribute="bottom" secondItem="ker-KK-DJ7" secondAttribute="bottom" id="Cfx-yy-KI0"/>
-                <constraint firstAttribute="trailing" secondItem="ker-KK-DJ7" secondAttribute="trailing" id="Dkf-JJ-jEL"/>
-                <constraint firstItem="ker-KK-DJ7" firstAttribute="leading" secondItem="GNn-bL-R6H" secondAttribute="trailing" id="Yqr-mJ-0OA"/>
-                <constraint firstItem="GNn-bL-R6H" firstAttribute="leading" secondItem="PNo-v3-8Ug" secondAttribute="trailing" id="cub-Ab-gZf"/>
-                <constraint firstAttribute="bottom" secondItem="PNo-v3-8Ug" secondAttribute="bottom" id="emB-T6-eGh"/>
-                <constraint firstItem="GNn-bL-R6H" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="hXi-uq-acH"/>
-                <constraint firstItem="ker-KK-DJ7" firstAttribute="width" secondItem="PNo-v3-8Ug" secondAttribute="width" multiplier="1.05" id="jtd-Qp-skt"/>
-                <constraint firstItem="ker-KK-DJ7" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="oF6-oZ-1hx"/>
-                <constraint firstItem="PNo-v3-8Ug" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="tOA-uI-Ox9"/>
-            </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
