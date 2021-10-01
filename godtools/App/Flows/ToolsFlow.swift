@@ -207,22 +207,15 @@ class ToolsFlow: ToolNavigationFlow, Flow {
             case .userClosedLesson(let page):
                 
                 if page >= 0 {
-                    
-                    let viewModel = LessonEvaluationViewModel(
-                        flowDelegate: self,
-                        localization: appDiContainer.localizationServices
-                    )
-                    
-                    let view = LessonEvaluationView(viewModel: viewModel)
-                    
-                    let modalView = TransparentModalView(modalView: view)
-                    
-                    navigationController.present(modalView, animated: true, completion: nil)
+                    presentLessonEvaluation()
                 }
             }
             
         case .closeTappedFromLessonEvaluation:
-            navigationController.dismiss(animated: true, completion: nil)
+            dismissLessonEvaluation()
+            
+        case .sendFeedbackTappedFromLessonEvaluation:
+            dismissLessonEvaluation()
             
         case .tractFlowCompleted(let state):
             
@@ -264,5 +257,28 @@ class ToolsFlow: ToolNavigationFlow, Flow {
         let view = ToolDetailView(viewModel: viewModel)
         
         navigationController.pushViewController(view, animated: true)
+    }
+}
+
+// MARK: - Lesson Evaluation
+
+extension ToolsFlow {
+    
+    private func presentLessonEvaluation() {
+        
+        let viewModel = LessonEvaluationViewModel(
+            flowDelegate: self,
+            localization: appDiContainer.localizationServices
+        )
+        
+        let view = LessonEvaluationView(viewModel: viewModel)
+        
+        let modalView = TransparentModalView(modalView: view)
+        
+        navigationController.present(modalView, animated: true, completion: nil)
+    }
+    
+    private func dismissLessonEvaluation() {
+        navigationController.dismiss(animated: true, completion: nil)
     }
 }

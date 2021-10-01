@@ -67,5 +67,7 @@ class LessonEvaluationViewModel: LessonEvaluationViewModelType {
         print("  yes is selected: \(yesIsSelected.value)")
         print("  no is selected: \(noIsSelected.value)")
         print("  ready to share faith scale: \(readyToShareFaithScale)")
+        
+        flowDelegate?.navigate(step: .sendFeedbackTappedFromLessonEvaluation)
     }
 }

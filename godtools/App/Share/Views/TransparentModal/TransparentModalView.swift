@@ -60,8 +60,8 @@ class TransparentModalView: UIViewController {
         customModalView.layer.shadowColor = UIColor.black.cgColor
         customModalView.layer.shadowRadius = 5
         customModalView.layer.shadowOpacity = 0.6
-        customModalView.addSubview(modalView.view)
         
+        customModalView.addSubview(modalView.view)
         modalView.view.constrainEdgesToSuperview()
         modalView.view.layoutIfNeeded()
         modalView.view.layer.cornerRadius = modalCornerRadius

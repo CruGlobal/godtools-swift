@@ -41,6 +41,7 @@ enum FlowStep {
     
     // lesson evaluation
     case closeTappedFromLessonEvaluation
+    case sendFeedbackTappedFromLessonEvaluation
     
     // favoritedTools
     case toolTappedFromFavoritedTools(resource: ResourceModel)
