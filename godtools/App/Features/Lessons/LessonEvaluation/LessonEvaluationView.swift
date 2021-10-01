@@ -11,9 +11,6 @@ import UIKit
 class LessonEvaluationView: UIView, NibBased {
     
     private let viewModel: LessonEvaluationViewModelType
-    private let chooseScaleMinValue: Int = 1
-    private let chooseScaleMaxValue: Int = 10
-    private let chooseScaleInitialProgressValue: CGFloat = 0.5
             
     @IBOutlet weak private var closeButton: UIButton!
     @IBOutlet weak private var titleLabel: UILabel!
@@ -38,6 +35,8 @@ class LessonEvaluationView: UIView, NibBased {
         yesButton.addTarget(self, action: #selector(yesButtonTapped), for: .touchUpInside)
         noButton.addTarget(self, action: #selector(noButtonTapped), for: .touchUpInside)
         sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
+        
+        chooseScaleSliderView.setDelegate(delegate: self)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -49,14 +48,17 @@ class LessonEvaluationView: UIView, NibBased {
     }
     
     private func setupLayout() {
-
-        chooseScaleSliderView.setMinScaleValue(minScaleValue: chooseScaleMinValue, maxScaleValue: chooseScaleMaxValue)
-        chooseScaleSliderView.setProgress(progressValue: chooseScaleInitialProgressValue)
         
         sendButton.layer.cornerRadius = yesButton.layer.cornerRadius
     }
     
     private func setupBinding() {
+        
+        chooseScaleSliderView.setMinScaleValue(
+            minScaleValue: viewModel.readyToShareFaithMinimumScaleValue,
+            maxScaleValue: viewModel.readyToShareFaithMaximumScaleValue
+        )
+        chooseScaleSliderView.setScale(scaleValue: viewModel.readyToShareFaithScale)
         
         titleLabel.text = viewModel.title
         wasThisHelpfulLabel.text = viewModel.wasThisHelpful
@@ -108,6 +110,16 @@ extension LessonEvaluationView: TransparentModalCustomView {
     }
     
     func transparentModalDidLayout() {
-        chooseScaleSliderView.setProgress(progressValue: chooseScaleInitialProgressValue)
+        chooseScaleSliderView.setScale(scaleValue: viewModel.readyToShareFaithScale)
+    }
+}
+
+// MARK: - ChooseScaleSliderViewDelegate
+
+extension LessonEvaluationView: ChooseScaleSliderViewDelegate {
+    
+    func chooseScaleSliderDidChangeScaleValue(chooseScaleSlider: ChooseScaleSliderView, scaleValue: Int) {
+        
+        viewModel.didSetScaleForReadyToShareFaith(scale: scaleValue)
     }
 }

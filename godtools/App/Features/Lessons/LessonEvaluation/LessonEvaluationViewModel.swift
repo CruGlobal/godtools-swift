@@ -12,11 +12,15 @@ class LessonEvaluationViewModel: LessonEvaluationViewModelType {
     
     private let localization: LocalizationServices
     
+    private(set) var readyToShareFaithScale: Int = 6
+    
     let title: String
     let wasThisHelpful: String
     let yesButtonTitle: String
     let noButtonTitle: String
     let shareFaith: String
+    let readyToShareFaithMinimumScaleValue: Int = 1
+    let readyToShareFaithMaximumScaleValue: Int = 10
     let sendButtonTitle: String
     let yesIsSelected: ObservableValue<Bool> = ObservableValue(value: false)
     let noIsSelected: ObservableValue<Bool> = ObservableValue(value: false)
@@ -52,7 +56,16 @@ class LessonEvaluationViewModel: LessonEvaluationViewModelType {
         noIsSelected.accept(value: true)
     }
     
+    func didSetScaleForReadyToShareFaith(scale: Int) {
+        
+        readyToShareFaithScale = scale
+    }
+    
     func sendTapped() {
         
+        print("\n Send Evaluation")
+        print("  yes is selected: \(yesIsSelected.value)")
+        print("  no is selected: \(noIsSelected.value)")
+        print("  ready to share faith scale: \(readyToShareFaithScale)")
     }
 }

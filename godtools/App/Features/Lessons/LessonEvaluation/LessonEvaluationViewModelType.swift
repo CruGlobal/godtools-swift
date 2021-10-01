@@ -15,6 +15,9 @@ protocol LessonEvaluationViewModelType {
     var yesButtonTitle: String { get }
     var noButtonTitle: String { get }
     var shareFaith: String { get }
+    var readyToShareFaithMinimumScaleValue: Int { get }
+    var readyToShareFaithMaximumScaleValue: Int { get }
+    var readyToShareFaithScale: Int { get }
     var sendButtonTitle: String { get }
     var yesIsSelected: ObservableValue<Bool> { get }
     var noIsSelected: ObservableValue<Bool> { get }
@@ -22,5 +25,6 @@ protocol LessonEvaluationViewModelType {
     func closeTapped()
     func yesTapped()
     func noTapped()
+    func didSetScaleForReadyToShareFaith(scale: Int)
     func sendTapped()
 }

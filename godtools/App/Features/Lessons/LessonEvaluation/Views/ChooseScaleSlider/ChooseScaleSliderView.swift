@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol ChooseScaleSliderViewDelegate: AnyObject {
+    
+    func chooseScaleSliderDidChangeScaleValue(chooseScaleSlider: ChooseScaleSliderView, scaleValue: Int)
+}
+
 @IBDesignable
 class ChooseScaleSliderView: UIView, NibBased {
     
@@ -24,6 +29,8 @@ class ChooseScaleSliderView: UIView, NibBased {
     private var isLoaded: Bool = false
     
     private(set) var currentScaleValue: Int = 0
+    
+    private weak var delegate: ChooseScaleSliderViewDelegate?
     
     @IBInspectable var primaryColor: UIColor = UIColor.red {
         didSet {
@@ -99,21 +106,63 @@ class ChooseScaleSliderView: UIView, NibBased {
         return progressBar.frame.origin.x + progressBar.frame.size.width
     }
     
+    func setDelegate(delegate: ChooseScaleSliderViewDelegate?) {
+        self.delegate = delegate
+    }
+    
+    func setMinScaleText(text: String) {
+        minScaleLabel.text = text
+    }
+    
+    func setMaxScaleText(text: String) {
+        maxScaleLabel.text = text
+    }
+    
+    func setScaleValueText(text: String) {
+        scaleValueLabel.text = text
+    }
+    
     func setMinScaleValue(minScaleValue: Int, maxScaleValue: Int) {
         
         if minScaleValue < 0 {
-            assertionFailure("minScaleValue must be greater than or equal to 0.")
+            assertionFailure("minScaleValue must be greater than or equal to zero.")
         }
         
         if minScaleValue >= maxScaleValue {
-            assertionFailure("minScaleValue must be less than maxScaleValue")
+            assertionFailure("minScaleValue must be less than maxScaleValue.")
         }
         
         self.minScaleValue = CGFloat(minScaleValue)
         self.maxScaleValue = CGFloat(maxScaleValue)
     }
     
+    func setScale(scaleValue: Int, shouldUpdateSliderPosition: Bool = true) {
+        
+        let floatScaleValue: CGFloat = CGFloat(scaleValue)
+        
+        if !(floatScaleValue >= minScaleValue && floatScaleValue <= maxScaleValue) {
+            assertionFailure("scaleValue must be greater than or equal to \(minScaleValue) and less than or equal to \(maxScaleValue).")
+        }
+        
+        if shouldUpdateSliderPosition {
+            
+            setProgress(progressValue: getPercentage(scale: scaleValue))
+        }
+        else {
+            
+            currentScaleValue = scaleValue
+            
+            setScaleValueText(text: "\(scaleValue)")
+            
+            delegate?.chooseScaleSliderDidChangeScaleValue(chooseScaleSlider: self, scaleValue: scaleValue)
+        }
+    }
+    
     func setProgress(progressValue: CGFloat) {
+        
+        if !(progressValue >= 0 && progressValue <= 1) {
+            assertionFailure("progressValue must be greater than or equal to 0 and less than or equal to 1.")
+        }
         
         let sliderXPosition: CGFloat = (progressBar.frame.size.width * progressValue) + progressMinX
         
@@ -144,12 +193,28 @@ class ChooseScaleSliderView: UIView, NibBased {
         )
         
         let currentSliderPercentageAlongProgressBar: CGFloat = sliderXPosition / progressBar.frame.size.width
-        let floatScaleValue: CGFloat = floor(((maxScaleValue - minScaleValue) * currentSliderPercentageAlongProgressBar) + minScaleValue)
-        let scaleValue: Int = Int(floatScaleValue)
-                
-        currentScaleValue = scaleValue
         
-        scaleValueLabel.text = "\(scaleValue)"
+        let scaleValue: Int = getScale(percentage: currentSliderPercentageAlongProgressBar)
+                
+        setScale(scaleValue: scaleValue, shouldUpdateSliderPosition: false)
+    }
+    
+    private func getPercentage(scale: Int) -> CGFloat {
+        
+        let minimumScaleToZero: CGFloat = 0 - minScaleValue
+        let maximumScaleValueBasedOnMinimumScaleToZero: CGFloat = maxScaleValue + minimumScaleToZero
+        let floatScale: CGFloat = CGFloat(scale)
+        let floatScaleBasedOnMinimumScaleToZero: CGFloat = floatScale + minimumScaleToZero
+        
+        return floatScaleBasedOnMinimumScaleToZero / maximumScaleValueBasedOnMinimumScaleToZero
+    }
+    
+    private func getScale(percentage: CGFloat) -> Int {
+        
+        let floatScaleValue: CGFloat = floor(((maxScaleValue - minScaleValue) * percentage) + minScaleValue)
+        let scaleValue: Int = Int(floatScaleValue)
+        
+        return scaleValue
     }
     
     // MARK: - Touches
