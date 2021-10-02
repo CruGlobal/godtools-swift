@@ -10,6 +10,7 @@ import Foundation
 
 class LessonEvaluationViewModel: LessonEvaluationViewModelType {
     
+    private let languageSettings: LanguageSettingsService
     private let localization: LocalizationServices
     
     private(set) var readyToShareFaithScale: Int = 6
@@ -27,17 +28,20 @@ class LessonEvaluationViewModel: LessonEvaluationViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, localization: LocalizationServices) {
+    required init(flowDelegate: FlowDelegate, languageSettings: LanguageSettingsService, localization: LocalizationServices) {
         
         self.flowDelegate = flowDelegate
+        self.languageSettings = languageSettings
         self.localization = localization
         
-        title = localization.stringForMainBundle(key: "lesson_evaluation.title")
-        wasThisHelpful = localization.stringForMainBundle(key: "lesson_evaluation.wasThisHelpful")
-        yesButtonTitle = localization.stringForMainBundle(key: "yes")
-        noButtonTitle = localization.stringForMainBundle(key: "no")
-        shareFaith = localization.stringForMainBundle(key: "lesson_evaluation.shareFaith")
-        sendButtonTitle = localization.stringForMainBundle(key: "lesson_evaluation.sendButtonTitle")
+        let primaryLanguage: LanguageModel? = languageSettings.primaryLanguage.value
+        
+        title = localization.stringForLanguageElseSystem(language: primaryLanguage, key: "lesson_evaluation.title")
+        wasThisHelpful = localization.stringForLanguageElseSystem(language: primaryLanguage, key: "lesson_evaluation.wasThisHelpful")
+        yesButtonTitle = localization.stringForLanguageElseSystem(language: primaryLanguage, key: "yes")
+        noButtonTitle = localization.stringForLanguageElseSystem(language: primaryLanguage, key: "no")
+        shareFaith = localization.stringForLanguageElseSystem(language: primaryLanguage, key: "lesson_evaluation.shareFaith")
+        sendButtonTitle = localization.stringForLanguageElseSystem(language: primaryLanguage, key: "lesson_evaluation.sendButtonTitle")
     }
     
     func closeTapped() {

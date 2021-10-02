@@ -268,6 +268,7 @@ extension ToolsFlow {
         
         let viewModel = LessonEvaluationViewModel(
             flowDelegate: self,
+            languageSettings: appDiContainer.languageSettingsService,
             localization: appDiContainer.localizationServices
         )
         
