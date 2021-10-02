@@ -1,5 +1,5 @@
 //
-//  RealmEvaluatedLesson.swift
+//  RealmLessonEvaluation.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/29/21.
@@ -9,21 +9,27 @@
 import Foundation
 import RealmSwift
 
-class RealmEvaluatedLesson: Object {
+class RealmLessonEvaluation: Object {
     
+    @objc dynamic var lastEvaluationAttempt: Date = Date()
     @objc dynamic var lessonAbbreviation: String = ""
+    @objc dynamic var lessonEvaluated: Bool = false
     @objc dynamic var lessonId: String = ""
+    @objc dynamic var numberOfEvaluationAttempts: Int = 0
     
     override static func primaryKey() -> String? {
         return "lessonId"
     }
     
-    func mapFrom(model: EvaluatedLessonModel, ignorePrimaryKey: Bool) {
+    func mapFrom(model: LessonEvaluationModel, ignorePrimaryKey: Bool) {
         
         if !ignorePrimaryKey {
             lessonId = model.lessonId
         }
         
+        lastEvaluationAttempt = model.lastEvaluationAttempt
         lessonAbbreviation = model.lessonAbbreviation
+        lessonEvaluated = model.lessonEvaluated
+        numberOfEvaluationAttempts = model.numberOfEvaluationAttempts
     }
 }

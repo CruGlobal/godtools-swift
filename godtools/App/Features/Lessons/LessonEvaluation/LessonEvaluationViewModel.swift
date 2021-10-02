@@ -10,6 +10,8 @@ import Foundation
 
 class LessonEvaluationViewModel: LessonEvaluationViewModelType {
     
+    private let lesson: ResourceModel
+    private let lessonEvaluationRepository: LessonEvaluationRepository
     private let languageSettings: LanguageSettingsService
     private let localization: LocalizationServices
     
@@ -28,9 +30,11 @@ class LessonEvaluationViewModel: LessonEvaluationViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, languageSettings: LanguageSettingsService, localization: LocalizationServices) {
+    required init(flowDelegate: FlowDelegate, lesson: ResourceModel, lessonEvaluationRepository: LessonEvaluationRepository, languageSettings: LanguageSettingsService, localization: LocalizationServices) {
         
         self.flowDelegate = flowDelegate
+        self.lesson = lesson
+        self.lessonEvaluationRepository = lessonEvaluationRepository
         self.languageSettings = languageSettings
         self.localization = localization
         
@@ -45,6 +49,9 @@ class LessonEvaluationViewModel: LessonEvaluationViewModelType {
     }
     
     func closeTapped() {
+        
+        lessonEvaluationRepository.storeLessonEvaluation(lesson: lesson, lessonEvaluated: false)
+        
         flowDelegate?.navigate(step: .closeTappedFromLessonEvaluation)
     }
     
@@ -71,6 +78,8 @@ class LessonEvaluationViewModel: LessonEvaluationViewModelType {
         print("  yes is selected: \(yesIsSelected.value)")
         print("  no is selected: \(noIsSelected.value)")
         print("  ready to share faith scale: \(readyToShareFaithScale)")
+        
+        lessonEvaluationRepository.storeLessonEvaluation(lesson: lesson, lessonEvaluated: true)
         
         flowDelegate?.navigate(step: .sendFeedbackTappedFromLessonEvaluation)
     }

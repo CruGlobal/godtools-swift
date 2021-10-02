@@ -249,9 +249,9 @@ class AppDiContainer {
         return FontService(languageSettings: languageSettingsService)
     }
     
-    func getLessonsEvaluatedRepository() -> LessonsEvaluatedRepository {
-        return LessonsEvaluatedRepository(
-            cache: LessonsEvaluatedRealmCache(realmDatabase: realmDatabase)
+    func getLessonsEvaluationRepository() -> LessonEvaluationRepository {
+        return LessonEvaluationRepository(
+            cache: LessonEvaluationRealmCache(realmDatabase: realmDatabase)
         )
     }
     

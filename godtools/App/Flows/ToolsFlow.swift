@@ -204,10 +204,25 @@ class ToolsFlow: ToolNavigationFlow, Flow {
             
             switch state {
             
-            case .userClosedLesson(let page):
+            case .userClosedLesson(let lesson, let page):
                 
-                if page >= 0 {
-                    presentLessonEvaluation()
+                let lessonEvaluationRepository: LessonEvaluationRepository = appDiContainer.getLessonsEvaluationRepository()
+                let lessonEvaluated: Bool
+                let numberOfEvaluationAttempts: Int
+                
+                if let cachedLessonEvaluation = lessonEvaluationRepository.getLessonEvaluation(lessonId: lesson.id) {
+                    lessonEvaluated = cachedLessonEvaluation.lessonEvaluated
+                    numberOfEvaluationAttempts = cachedLessonEvaluation.numberOfEvaluationAttempts
+                }
+                else {
+                    lessonEvaluated = false
+                    numberOfEvaluationAttempts = 0
+                }
+                
+                let lessonMarkedAsEvaluated: Bool = lessonEvaluated || numberOfEvaluationAttempts > 0
+                
+                if page >= 3 && !lessonMarkedAsEvaluated {
+                    presentLessonEvaluation(lesson: lesson)
                 }
             }
             
@@ -264,10 +279,12 @@ class ToolsFlow: ToolNavigationFlow, Flow {
 
 extension ToolsFlow {
     
-    private func presentLessonEvaluation() {
+    private func presentLessonEvaluation(lesson: ResourceModel) {
         
         let viewModel = LessonEvaluationViewModel(
             flowDelegate: self,
+            lesson: lesson,
+            lessonEvaluationRepository: appDiContainer.getLessonsEvaluationRepository(),
             languageSettings: appDiContainer.languageSettingsService,
             localization: appDiContainer.localizationServices
         )

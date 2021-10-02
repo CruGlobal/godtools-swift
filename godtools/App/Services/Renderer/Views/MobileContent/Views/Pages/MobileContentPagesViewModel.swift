@@ -46,6 +46,10 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
 
     }
     
+    func getCurrentRenderer() -> MobileContentRendererType? {
+        return currentRenderer
+    }
+    
     private func getIndexForFirstPageModel(pageModel: PageModelType) -> Int? {
         for index in 0 ..< pageModels.count {
             let activePageModel: PageModelType = pageModels[index]

@@ -10,5 +10,5 @@ import Foundation
 
 enum LessonFlowCompletedState {
     
-    case userClosedLesson(page: Int)
+    case userClosedLesson(lesson: ResourceModel, page: Int)
 }
