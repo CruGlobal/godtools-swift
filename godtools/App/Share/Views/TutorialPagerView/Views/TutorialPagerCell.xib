@@ -9,17 +9,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TutorialPagerCell" customModule="godtools" customModuleProvider="target">
-            <connections>
-                <outlet property="animationView" destination="q9t-uq-Yfc" id="hSO-kp-luN"/>
-                <outlet property="customContentView" destination="6Un-JX-29X" id="lwP-Fh-ScP"/>
-                <outlet property="imageView" destination="iZl-xb-Q6q" id="DeD-Ea-m1u"/>
-                <outlet property="messageLabel" destination="3Sp-7z-rF6" id="E5w-Qu-CzL"/>
-                <outlet property="titleLabel" destination="w2f-Pu-ejk" id="YVq-YG-tBp"/>
-            </connections>
-        </placeholder>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="rnh-ah-EL5">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="rnh-ah-EL5" customClass="TutorialPagerCell" customModule="godtools" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="365" height="588"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="xNA-4a-Fvu">
@@ -73,6 +65,13 @@
                 </constraints>
             </collectionViewCellContentView>
             <size key="customSize" width="365" height="588"/>
+            <connections>
+                <outlet property="animationView" destination="q9t-uq-Yfc" id="i8v-kK-8kR"/>
+                <outlet property="customContentView" destination="6Un-JX-29X" id="LiP-et-nO8"/>
+                <outlet property="imageView" destination="iZl-xb-Q6q" id="sMC-sg-pQF"/>
+                <outlet property="messageLabel" destination="3Sp-7z-rF6" id="Rqn-mM-ZCa"/>
+                <outlet property="titleLabel" destination="w2f-Pu-ejk" id="aY2-YO-Fmp"/>
+            </connections>
             <point key="canvasLocation" x="57.24637681159421" y="82.366071428571431"/>
         </collectionViewCell>
     </objects>
