@@ -305,6 +305,8 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
         }
         
         completeCurrentNavigationIfNeeded()
+        
+        viewModel.pageDidAppear(page: page)
     }
     
     func pageNavigationPageWillDisappear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {

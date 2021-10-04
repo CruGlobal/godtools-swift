@@ -123,8 +123,6 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
             return nil
         }
         
-        highestPageNumberViewed = page
-        
         let renderPageResult: Result<MobileContentView, Error> =  renderer.renderPageModel(
             pageModel: pageModels[page],
             page: page,
@@ -144,6 +142,13 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         }
         
         return nil
+    }
+    
+    func pageDidAppear(page: Int) {
+        
+        if page > highestPageNumberViewed {
+            highestPageNumberViewed = page
+        }
     }
     
     func pageDidDisappear(page: Int) {
