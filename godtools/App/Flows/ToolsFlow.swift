@@ -221,7 +221,7 @@ class ToolsFlow: ToolNavigationFlow, Flow {
                 
                 let lessonMarkedAsEvaluated: Bool = lessonEvaluated || numberOfEvaluationAttempts > 0
                 
-                if highestPageNumberViewed >= 3 && !lessonMarkedAsEvaluated {
+                if highestPageNumberViewed > 2 && !lessonMarkedAsEvaluated {
                     presentLessonEvaluation(lesson: lesson, pageIndexReached: highestPageNumberViewed)
                 }
             }
