@@ -18,26 +18,26 @@
                 <rect key="frame" x="0.0" y="0.0" width="365" height="588"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tutorial Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w2f-Pu-ejk" userLabel="Title Label">
-                        <rect key="frame" x="36" y="36" width="293" height="34"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tutorial Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w2f-Pu-ejk" userLabel="Title Label">
+                        <rect key="frame" x="36" y="36" width="293" height="33.5"/>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="28"/>
                         <color key="textColor" red="0.23137254901960785" green="0.64313725490196072" blue="0.85882352941176465" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tutorial Message" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Sp-7z-rF6" userLabel="Message Label">
-                        <rect key="frame" x="48" y="82" width="269" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tutorial Message" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Sp-7z-rF6" userLabel="Message Label">
+                        <rect key="frame" x="48" y="81.5" width="269" height="20.5"/>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                         <color key="textColor" red="0.3529411764705882" green="0.3529411764705882" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iZl-xb-Q6q">
-                        <rect key="frame" x="36" y="123" width="293" height="293"/>
+                        <rect key="frame" x="36" y="122" width="293" height="293"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="iZl-xb-Q6q" secondAttribute="height" multiplier="1:1" id="A8h-fb-Hrj"/>
                         </constraints>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q9t-uq-Yfc" userLabel="Animation View" customClass="AnimationView" customModule="Lottie">
-                        <rect key="frame" x="36" y="123" width="293" height="293"/>
+                        <rect key="frame" x="36" y="122" width="293" height="293"/>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Un-JX-29X" userLabel="Custom Content View">
                         <rect key="frame" x="0.0" y="0.0" width="365" height="588"/>
