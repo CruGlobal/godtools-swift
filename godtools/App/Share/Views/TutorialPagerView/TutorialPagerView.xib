@@ -31,7 +31,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vSO-cN-tSV" userLabel="Footer View">
                     <rect key="frame" x="0.0" y="744" width="414" height="118"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6by-3M-C0P" userLabel="Continue Button" customClass="OnboardPrimaryButton" customModule="godtools" customModuleProvider="target">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" role="primary" translatesAutoresizingMaskIntoConstraints="NO" id="6by-3M-C0P" userLabel="Continue Button" customClass="OnboardPrimaryButton" customModule="godtools" customModuleProvider="target">
                             <rect key="frame" x="64" y="10" width="286" height="48"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="48" id="Eln-jJ-ncX"/>

@@ -15,7 +15,7 @@ class OnboardingTutorialProvider: TutorialPagerProviderType {
     required init(localizationServices: LocalizationServices) {
         
         tutorialItems = [
-            /*TutorialPagerItem(
+            TutorialPagerItem(
                 title: "",
                 message: "",
                 continueButtonLabel: localizationServices.stringForMainBundle(key: "onboardingTutorial.beginButton.title"),
@@ -26,7 +26,7 @@ class OnboardingTutorialProvider: TutorialPagerProviderType {
                 hideSkip: false,
                 hideContinueButton: false,
                 hidePageControl: false
-            ),*/
+            ),
             TutorialPagerItem(
                 title: localizationServices.stringForMainBundle(key: "onboardingTutorial.1.title"),
                 message: localizationServices.stringForMainBundle(key: "onboardingTutorial.1.message"),
@@ -35,7 +35,7 @@ class OnboardingTutorialProvider: TutorialPagerProviderType {
                 animationName: "onboarding_tutorial_cups",
                 youTubeVideoId: nil,
                 customViewId: nil,
-                hideSkip: true,
+                hideSkip: false,
                 hideContinueButton: false,
                 hidePageControl: false
             ),
@@ -48,7 +48,7 @@ class OnboardingTutorialProvider: TutorialPagerProviderType {
                 youTubeVideoId: nil,
                 customViewId: nil,
                 hideSkip: false,
-                hideContinueButton: true,
+                hideContinueButton: false,
                 hidePageControl: false
             ),
             TutorialPagerItem(
@@ -61,8 +61,20 @@ class OnboardingTutorialProvider: TutorialPagerProviderType {
                 customViewId: nil,
                 hideSkip: false,
                 hideContinueButton: false,
+                hidePageControl: false
+            ),
+            /*TutorialPagerItem(
+                title: "",
+                message: "",
+                continueButtonLabel: localizationServices.stringForMainBundle(key: "onboardingTutorial.jumpInButton.title"),
+                imageName: nil,
+                animationName: nil,
+                youTubeVideoId: nil,
+                customViewId: nil,
+                hideSkip: false,
+                hideContinueButton: false,
                 hidePageControl: true
-            )
+            )*/
         ]
     }
 }

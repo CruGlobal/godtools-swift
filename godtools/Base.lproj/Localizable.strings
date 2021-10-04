@@ -154,6 +154,8 @@ The app can be downloaded from https://godtoolsapp.com";
 "onboardingTutorial.beginButton.title" = "Begin";
 "onboardingTutorial.nextButton.title" = "Next";
 "onboardingTutorial.getStartedButton.title" = "Get Started";
+"onboardingTutorial.jumpInButton.title" = "Jump In";
+
 
 // Tutorial
 "tutorial.tutorialItem.0.title" = "Watch";
