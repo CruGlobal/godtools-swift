@@ -222,7 +222,7 @@ class ToolsFlow: ToolNavigationFlow, Flow {
                 let lessonMarkedAsEvaluated: Bool = lessonEvaluated || numberOfEvaluationAttempts > 0
                 
                 if page >= 3 && !lessonMarkedAsEvaluated {
-                    presentLessonEvaluation(lesson: lesson)
+                    presentLessonEvaluation(lesson: lesson, pageIndexReached: page)
                 }
             }
             
@@ -279,12 +279,14 @@ class ToolsFlow: ToolNavigationFlow, Flow {
 
 extension ToolsFlow {
     
-    private func presentLessonEvaluation(lesson: ResourceModel) {
+    private func presentLessonEvaluation(lesson: ResourceModel, pageIndexReached: Int) {
         
         let viewModel = LessonEvaluationViewModel(
             flowDelegate: self,
             lesson: lesson,
+            pageIndexReached: pageIndexReached,
             lessonEvaluationRepository: appDiContainer.getLessonsEvaluationRepository(),
+            lessonFeedbackAnalytics: appDiContainer.getLessonFeedbackAnalytics(),
             languageSettings: appDiContainer.languageSettingsService,
             localization: appDiContainer.localizationServices
         )

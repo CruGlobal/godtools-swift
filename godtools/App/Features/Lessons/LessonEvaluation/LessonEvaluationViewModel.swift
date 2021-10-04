@@ -11,7 +11,9 @@ import Foundation
 class LessonEvaluationViewModel: LessonEvaluationViewModelType {
     
     private let lesson: ResourceModel
+    private let pageIndexReached: Int
     private let lessonEvaluationRepository: LessonEvaluationRepository
+    private let lessonFeedbackAnalytics: LessonFeedbackAnalytics
     private let languageSettings: LanguageSettingsService
     private let localization: LocalizationServices
     
@@ -30,11 +32,13 @@ class LessonEvaluationViewModel: LessonEvaluationViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, lesson: ResourceModel, lessonEvaluationRepository: LessonEvaluationRepository, languageSettings: LanguageSettingsService, localization: LocalizationServices) {
+    required init(flowDelegate: FlowDelegate, lesson: ResourceModel, pageIndexReached: Int, lessonEvaluationRepository: LessonEvaluationRepository, lessonFeedbackAnalytics: LessonFeedbackAnalytics, languageSettings: LanguageSettingsService, localization: LocalizationServices) {
         
         self.flowDelegate = flowDelegate
         self.lesson = lesson
+        self.pageIndexReached = pageIndexReached
         self.lessonEvaluationRepository = lessonEvaluationRepository
+        self.lessonFeedbackAnalytics = lessonFeedbackAnalytics
         self.languageSettings = languageSettings
         self.localization = localization
         
@@ -50,7 +54,10 @@ class LessonEvaluationViewModel: LessonEvaluationViewModelType {
     
     func closeTapped() {
         
-        lessonEvaluationRepository.storeLessonEvaluation(lesson: lesson, lessonEvaluated: false)
+        lessonEvaluationRepository.storeLessonEvaluation(
+            lesson: lesson,
+            lessonEvaluated: false
+        )
         
         flowDelegate?.navigate(step: .closeTappedFromLessonEvaluation)
     }
@@ -73,13 +80,29 @@ class LessonEvaluationViewModel: LessonEvaluationViewModelType {
     }
     
     func sendTapped() {
+                
+        lessonEvaluationRepository.storeLessonEvaluation(
+            lesson: lesson,
+            lessonEvaluated: true
+        )
         
-        print("\n Send Evaluation")
-        print("  yes is selected: \(yesIsSelected.value)")
-        print("  no is selected: \(noIsSelected.value)")
-        print("  ready to share faith scale: \(readyToShareFaithScale)")
+        let feedbackHelpful: LessonFeedbackHelpful?
         
-        lessonEvaluationRepository.storeLessonEvaluation(lesson: lesson, lessonEvaluated: true)
+        if yesIsSelected.value {
+            feedbackHelpful = .yes
+        }
+        else if noIsSelected.value {
+            feedbackHelpful = .no
+        }
+        else {
+            feedbackHelpful = nil
+        }
+        
+        lessonFeedbackAnalytics.trackLessonFeedback(
+            feedbackHelpful: feedbackHelpful,
+            readinessScaleValue: readyToShareFaithScale,
+            pageIndexReached: pageIndexReached
+        )
         
         flowDelegate?.navigate(step: .sendFeedbackTappedFromLessonEvaluation)
     }
