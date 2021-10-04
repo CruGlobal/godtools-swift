@@ -45,13 +45,13 @@ class LessonViewModel: MobileContentPagesViewModel, LessonViewModelType {
         updateProgress(page: page)
     }
     
-    func closeTapped(page: Int) {
+    func closeTapped() {
         
         guard let lesson = getCurrentRenderer()?.resource else {
             assertionFailure("Internal error, unable to fetch current renderer resource.  Resource should not be nil.")
             return
         }
         
-        flowDelegate?.navigate(step: .closeTappedFromLesson(lesson: lesson, page: page))
+        flowDelegate?.navigate(step: .closeTappedFromLesson(lesson: lesson, highestPageNumberViewed: highestPageNumberViewed))
     }
 }

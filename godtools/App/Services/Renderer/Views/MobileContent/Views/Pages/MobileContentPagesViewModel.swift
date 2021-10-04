@@ -16,6 +16,8 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     private var safeArea: UIEdgeInsets?
     private var pageModels: [PageModelType] = Array()
     
+    private(set) var highestPageNumberViewed: Int = 0
+    
     private weak var window: UIViewController?
     private weak var flowDelegate: FlowDelegate?
     
@@ -120,6 +122,8 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         guard page >= 0 && page < pageModels.count else {
             return nil
         }
+        
+        highestPageNumberViewed = page
         
         let renderPageResult: Result<MobileContentView, Error> =  renderer.renderPageModel(
             pageModel: pageModels[page],

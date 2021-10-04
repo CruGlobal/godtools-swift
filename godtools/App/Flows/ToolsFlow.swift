@@ -204,7 +204,7 @@ class ToolsFlow: ToolNavigationFlow, Flow {
             
             switch state {
             
-            case .userClosedLesson(let lesson, let page):
+            case .userClosedLesson(let lesson, let highestPageNumberViewed):
                 
                 let lessonEvaluationRepository: LessonEvaluationRepository = appDiContainer.getLessonsEvaluationRepository()
                 let lessonEvaluated: Bool
@@ -221,8 +221,8 @@ class ToolsFlow: ToolNavigationFlow, Flow {
                 
                 let lessonMarkedAsEvaluated: Bool = lessonEvaluated || numberOfEvaluationAttempts > 0
                 
-                if page >= 3 && !lessonMarkedAsEvaluated {
-                    presentLessonEvaluation(lesson: lesson, pageIndexReached: page)
+                if highestPageNumberViewed >= 3 && !lessonMarkedAsEvaluated {
+                    presentLessonEvaluation(lesson: lesson, pageIndexReached: highestPageNumberViewed)
                 }
             }
             
