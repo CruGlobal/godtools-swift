@@ -199,6 +199,36 @@ class ToolsFlow: ToolNavigationFlow, Flow {
             
             lessonFlow = nil
             
+            switch state {
+            
+            case .userClosedLesson(let lesson, let highestPageNumberViewed):
+                
+                let lessonEvaluationRepository: LessonEvaluationRepository = appDiContainer.getLessonsEvaluationRepository()
+                let lessonEvaluated: Bool
+                let numberOfEvaluationAttempts: Int
+                
+                if let cachedLessonEvaluation = lessonEvaluationRepository.getLessonEvaluation(lessonId: lesson.id) {
+                    lessonEvaluated = cachedLessonEvaluation.lessonEvaluated
+                    numberOfEvaluationAttempts = cachedLessonEvaluation.numberOfEvaluationAttempts
+                }
+                else {
+                    lessonEvaluated = false
+                    numberOfEvaluationAttempts = 0
+                }
+                
+                let lessonMarkedAsEvaluated: Bool = lessonEvaluated || numberOfEvaluationAttempts > 0
+                
+                if highestPageNumberViewed > 2 && !lessonMarkedAsEvaluated {
+                    presentLessonEvaluation(lesson: lesson, pageIndexReached: highestPageNumberViewed)
+                }
+            }
+            
+        case .closeTappedFromLessonEvaluation:
+            dismissLessonEvaluation()
+            
+        case .sendFeedbackTappedFromLessonEvaluation:
+            dismissLessonEvaluation()
+            
         case .tractFlowCompleted(let state):
             
             guard tractFlow != nil else {
@@ -239,5 +269,33 @@ class ToolsFlow: ToolNavigationFlow, Flow {
         let view = ToolDetailView(viewModel: viewModel)
         
         navigationController.pushViewController(view, animated: true)
+    }
+}
+
+// MARK: - Lesson Evaluation
+
+extension ToolsFlow {
+    
+    private func presentLessonEvaluation(lesson: ResourceModel, pageIndexReached: Int) {
+        
+        let viewModel = LessonEvaluationViewModel(
+            flowDelegate: self,
+            lesson: lesson,
+            pageIndexReached: pageIndexReached,
+            lessonEvaluationRepository: appDiContainer.getLessonsEvaluationRepository(),
+            lessonFeedbackAnalytics: appDiContainer.getLessonFeedbackAnalytics(),
+            languageSettings: appDiContainer.languageSettingsService,
+            localization: appDiContainer.localizationServices
+        )
+        
+        let view = LessonEvaluationView(viewModel: viewModel)
+        
+        let modalView = TransparentModalView(modalView: view)
+        
+        navigationController.present(modalView, animated: true, completion: nil)
+    }
+    
+    private func dismissLessonEvaluation() {
+        navigationController.dismiss(animated: true, completion: nil)
     }
 }

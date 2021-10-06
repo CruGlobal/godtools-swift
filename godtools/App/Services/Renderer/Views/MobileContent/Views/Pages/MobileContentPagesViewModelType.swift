@@ -15,9 +15,11 @@ protocol MobileContentPagesViewModelType {
     var rendererWillChangeSignal: Signal { get }
     var pageNavigation: ObservableValue<MobileContentPagesNavigationModel?> { get }
     var pagesRemoved: ObservableValue<[IndexPath]> { get }
+    var highestPageNumberViewed: Int { get }
     
     func viewDidFinishLayout(window: UIViewController, safeArea: UIEdgeInsets)
     func pageWillAppear(page: Int) -> MobileContentView?
+    func pageDidAppear(page: Int)
     func pageDidDisappear(page: Int)
     func pageDidReceiveEvents(eventIds: [MultiplatformEventId])
 }

@@ -46,6 +46,12 @@ class LessonViewModel: MobileContentPagesViewModel, LessonViewModelType {
     }
     
     func closeTapped() {
-        flowDelegate?.navigate(step: .closeTappedFromLesson)
+        
+        guard let lesson = getCurrentRenderer()?.resource else {
+            assertionFailure("Internal error, unable to fetch current renderer resource.  Resource should not be nil.")
+            return
+        }
+        
+        flowDelegate?.navigate(step: .closeTappedFromLesson(lesson: lesson, highestPageNumberViewed: highestPageNumberViewed))
     }
 }
