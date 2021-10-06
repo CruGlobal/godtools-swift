@@ -27,10 +27,14 @@ class TutorialFlow: Flow {
         self.navigationController = sharedNavigationController ?? UINavigationController(nibName: nil, bundle: nil)
              
         navigationController.modalPresentationStyle = .fullScreen
-        navigationController.navigationBar.barTintColor = UIColor.white
-        navigationController.navigationBar.isTranslucent = false
-        navigationController.navigationBar.shadowImage = UIImage()
         navigationController.setNavigationBarHidden(false, animated: false)
+        navigationController.navigationBar.setupNavigationBarAppearance(
+            backgroundColor: .white,
+            controlColor: nil,
+            titleFont: nil,
+            titleColor: nil,
+            isTranslucent: false
+        )
         
         let viewModel = TutorialViewModel(
             flowDelegate: self,

@@ -27,14 +27,15 @@ class MenuFlow: Flow {
         let fontService: FontService = appDiContainer.getFontService()
         
         navigationController = UINavigationController()
-        navigationController.navigationBar.barTintColor = ColorPalette.gtBlue.color
-        navigationController.navigationBar.tintColor = UIColor.white
-        navigationController.navigationBar.isTranslucent = false
-        navigationController.navigationBar.shadowImage = UIImage()
-        navigationController.navigationBar.titleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.white,
-            NSAttributedString.Key.font: fontService.getFont(size: 17, weight: .semibold)
-        ]
+        navigationController.setNavigationBarHidden(false, animated: false)
+        
+        navigationController.navigationBar.setupNavigationBarAppearance(
+            backgroundColor: ColorPalette.gtBlue.color,
+            controlColor: .white,
+            titleFont: fontService.getFont(size: 17, weight: .semibold),
+            titleColor: .white,
+            isTranslucent: false
+        )
         
         let viewModel = MenuViewModel(
             flowDelegate: self,

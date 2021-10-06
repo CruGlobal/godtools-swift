@@ -56,6 +56,7 @@
 		4526539226CC28EE00AC0FBD /* MultiplatformContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4526539126CC28EE00AC0FBD /* MultiplatformContent.swift */; };
 		45267B7725F19709004DB4C4 /* MobileContentBackgroundImageRendererTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45267B7625F19709004DB4C4 /* MobileContentBackgroundImageRendererTests.swift */; };
 		45267B8125F198B8004DB4C4 /* TestBackgroundImageNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45267B8025F198B8004DB4C4 /* TestBackgroundImageNode.swift */; };
+		4533A926270E0578009B1AF5 /* UINavigationBar+Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4533A925270E0578009B1AF5 /* UINavigationBar+Appearance.swift */; };
 		453AF08626A8787E002D4AB1 /* MultiplatformCallToAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453AF08526A8787E002D4AB1 /* MultiplatformCallToAction.swift */; };
 		453AF08826A8788F002D4AB1 /* MultiplatformContentAccordion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453AF08726A8788F002D4AB1 /* MultiplatformContentAccordion.swift */; };
 		453AF08A26A8789D002D4AB1 /* MultiplatformContentForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453AF08926A8789D002D4AB1 /* MultiplatformContentForm.swift */; };
@@ -1106,6 +1107,7 @@
 		4526539126CC28EE00AC0FBD /* MultiplatformContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplatformContent.swift; sourceTree = "<group>"; };
 		45267B7625F19709004DB4C4 /* MobileContentBackgroundImageRendererTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentBackgroundImageRendererTests.swift; sourceTree = "<group>"; };
 		45267B8025F198B8004DB4C4 /* TestBackgroundImageNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestBackgroundImageNode.swift; sourceTree = "<group>"; };
+		4533A925270E0578009B1AF5 /* UINavigationBar+Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Appearance.swift"; sourceTree = "<group>"; };
 		453AF08526A8787E002D4AB1 /* MultiplatformCallToAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplatformCallToAction.swift; sourceTree = "<group>"; };
 		453AF08726A8788F002D4AB1 /* MultiplatformContentAccordion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplatformContentAccordion.swift; sourceTree = "<group>"; };
 		453AF08926A8789D002D4AB1 /* MultiplatformContentForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplatformContentForm.swift; sourceTree = "<group>"; };
@@ -3941,6 +3943,7 @@
 				45AD18B925938A4E00A096A0 /* UIColor+HexColor.swift */,
 				45AD18B325938A4E00A096A0 /* UIKit+Extensions.swift */,
 				45AD22B22593D1FB00A096A0 /* UIImage+CreateImageWithColor.swift */,
+				4533A925270E0578009B1AF5 /* UINavigationBar+Appearance.swift */,
 				45AD18B425938A4E00A096A0 /* UIView+Animations.swift */,
 				45AD18B725938A4E00A096A0 /* UIView+Constraints.swift */,
 				45AD18B625938A4E00A096A0 /* UIView+ProgressView.swift */,
@@ -6684,6 +6687,7 @@
 				45558499269F2F9E00C3FF14 /* MobileContentRendererVersion.swift in Sources */,
 				45AD20A525938CF100A096A0 /* ConfigType.swift in Sources */,
 				45AD1AF425938A4E00A096A0 /* WebContentView.swift in Sources */,
+				4533A926270E0578009B1AF5 /* UINavigationBar+Appearance.swift in Sources */,
 				45BD7A3C26A21FDA0007426B /* ModalsNode.swift in Sources */,
 				45AD1F8725938A9800A096A0 /* SHA256FileModel.swift in Sources */,
 				45558357269F2D1000C3FF14 /* LessonContentView.swift in Sources */,
