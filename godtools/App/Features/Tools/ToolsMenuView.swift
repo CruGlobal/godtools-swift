@@ -96,11 +96,7 @@ class ToolsMenuView: UIViewController {
         viewModel.languageTapped()
     }
     
-    private func navigateToToolsListForToolbarItem(toolbarItem: ToolsMenuToolbarView.ToolbarItemView, animated: Bool) {
-        
-        guard let page = toolbarView.toolbarItemViews.firstIndex(of: toolbarItem) else {
-            return
-        }
+    private func didChangeToolbarItem(toolbarItem: ToolsMenuToolbarView.ToolbarItemView) {
         
         let hidesChooseLanguageButton: Bool
         
@@ -115,6 +111,15 @@ class ToolsMenuView: UIViewController {
         
         setChooseLanguageButtonHidden(hidden: hidesChooseLanguageButton)
         
+        toolbarView.setSelectedToolbarItem(toolbarItem: toolbarItem)
+    }
+    
+    private func navigateToToolsListForToolbarItem(toolbarItem: ToolsMenuToolbarView.ToolbarItemView, animated: Bool) {
+        
+        guard let page = toolbarView.toolbarItemViews.firstIndex(of: toolbarItem) else {
+            return
+        }
+                
         if animated {
             isAnimatingNavigationToToolsList = true
         }
@@ -124,7 +129,7 @@ class ToolsMenuView: UIViewController {
             animated: animated
         )
         
-        toolbarView.setSelectedToolbarItem(toolbarItem: toolbarItem)
+        didChangeToolbarItem(toolbarItem: toolbarItem)
     }
     
     private func setChooseLanguageButtonHidden(hidden: Bool) {
@@ -206,7 +211,7 @@ extension ToolsMenuView: UIScrollViewDelegate {
            !isAnimatingNavigationToToolsList,
            let mostVisibleItem = getMostVisibleToolsList() {
             
-            toolbarView.setSelectedToolbarItem(toolbarItem: mostVisibleItem)
+            didChangeToolbarItem(toolbarItem: mostVisibleItem)
         }
     }
     
