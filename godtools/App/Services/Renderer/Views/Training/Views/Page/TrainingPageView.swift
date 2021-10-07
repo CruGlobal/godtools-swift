@@ -86,7 +86,7 @@ class TrainingPageView: MobileContentPageView {
         delegate?.trainingPageButtonWithUrlTapped(trainingPage: self, url: url)
     }
     
-    override var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType {
+    override var heightConstraintType: MobileContentViewHeightConstraintType {
         return .constrainedToChildren
     }
 }

@@ -61,6 +61,10 @@ class MobileContentButtonView: MobileContentView {
             button.layer.borderColor = borderColor.cgColor
             button.layer.borderWidth = borderWidth
         }
+        
+        viewModel.visibilityState.addObserver(self) { [weak self] (visibilityState: MobileContentViewVisibilityState) in
+            self?.setVisibilityState(visibilityState: visibilityState)
+        }
     }
     
     @objc func handleButtonTapped() {
@@ -82,7 +86,7 @@ class MobileContentButtonView: MobileContentView {
     
     // MARK: - MobileContentView
     
-    override var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType {
+    override var heightConstraintType: MobileContentViewHeightConstraintType {
         return .constrainedToChildren
     }
 }

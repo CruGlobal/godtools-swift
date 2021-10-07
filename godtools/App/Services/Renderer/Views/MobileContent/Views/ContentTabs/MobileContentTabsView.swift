@@ -72,7 +72,7 @@ class MobileContentTabsView: MobileContentView {
         setSelectedTabIndex(selectedTabIndex: 0)
     }
     
-    override var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType {
+    override var heightConstraintType: MobileContentViewHeightConstraintType {
         return .constrainedToChildren
     }
     

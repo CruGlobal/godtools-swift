@@ -244,3 +244,10 @@ The app can be downloaded from https://godtoolsapp.com";
 
 // Lessons
 "tool_menu_item.lessons" = "Lessons";
+
+// Lesson Evaluation
+
+"lesson_evaluation.title" = "Review";
+"lesson_evaluation.wasThisHelpful" = "Was this lesson helpful for you?";
+"lesson_evaluation.shareFaith" = "How ready do you feel to start a spiritual conversation?";
+"lesson_evaluation.sendButtonTitle" = "Send feedback";

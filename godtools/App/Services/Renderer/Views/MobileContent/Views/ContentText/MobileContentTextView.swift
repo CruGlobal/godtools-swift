@@ -168,7 +168,7 @@ class MobileContentTextView: MobileContentView {
     
     // MARK: - MobileContentView
 
-    override var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType {
+    override var heightConstraintType: MobileContentViewHeightConstraintType {
         return .constrainedToChildren
     }
     

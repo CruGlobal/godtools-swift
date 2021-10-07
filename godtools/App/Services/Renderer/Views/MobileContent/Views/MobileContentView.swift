@@ -8,12 +8,13 @@
 
 import UIKit
 
-class MobileContentView: UIView, MobileContentStackChildViewType {
+class MobileContentView: UIView {
         
     private(set) weak var parent: MobileContentView?
     
     private(set) var children: [MobileContentView] = Array()
-        
+    private(set) var visibilityState: MobileContentViewVisibilityState = .visible
+            
     private func getRootView() -> MobileContentView {
         
         if let parentView = parent {
@@ -38,6 +39,10 @@ class MobileContentView: UIView, MobileContentStackChildViewType {
     
     // MARK: -
     
+    var heightConstraintType: MobileContentViewHeightConstraintType {
+        return .constrainedToChildren
+    }
+    
     func setParentAndAddChild(childView: MobileContentView) {
     
         childView.parent = self
@@ -51,6 +56,27 @@ class MobileContentView: UIView, MobileContentStackChildViewType {
     }
     
     func finishedRenderingChildren() {
+        
+    }
+    
+    func setVisibilityState(visibilityState: MobileContentViewVisibilityState) {
+        
+        guard self.visibilityState != visibilityState else {
+            return
+        }
+        
+        let previousVisibilityState: MobileContentViewVisibilityState = self.visibilityState
+        
+        self.visibilityState = visibilityState
+        
+        parent?.childViewDidChangeVisibilityState(
+            childView: self,
+            previousVisibilityState: previousVisibilityState,
+            visibilityState: visibilityState
+        )
+    }
+    
+    func childViewDidChangeVisibilityState(childView: MobileContentView, previousVisibilityState: MobileContentViewVisibilityState, visibilityState: MobileContentViewVisibilityState) {
         
     }
     
@@ -138,15 +164,5 @@ class MobileContentView: UIView, MobileContentStackChildViewType {
     
     func didReceiveError(error: MobileContentErrorViewModel) {
         
-    }
-    
-    // MARK: - MobileContentStackChildViewType
-    
-    var view: UIView {
-        return self
-    }
-    
-    var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType {
-        return .constrainedToChildren
     }
 }

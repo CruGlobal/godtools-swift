@@ -16,6 +16,8 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     private var safeArea: UIEdgeInsets?
     private var pageModels: [PageModelType] = Array()
     
+    private(set) var highestPageNumberViewed: Int = 0
+    
     private weak var window: UIViewController?
     private weak var flowDelegate: FlowDelegate?
     
@@ -44,6 +46,10 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     
     deinit {
 
+    }
+    
+    func getCurrentRenderer() -> MobileContentRendererType? {
+        return currentRenderer
     }
     
     private func getIndexForFirstPageModel(pageModel: PageModelType) -> Int? {
@@ -136,6 +142,13 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         }
         
         return nil
+    }
+    
+    func pageDidAppear(page: Int) {
+        
+        if page > highestPageNumberViewed {
+            highestPageNumberViewed = page
+        }
     }
     
     func pageDidDisappear(page: Int) {

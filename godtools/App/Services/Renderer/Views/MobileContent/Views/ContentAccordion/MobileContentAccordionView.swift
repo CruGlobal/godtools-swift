@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol MobileContentAccordionViewDelegate: class {
+protocol MobileContentAccordionViewDelegate: AnyObject {
     
     func accordionViewDidChangeSectionViewTextHiddenState(accordionView: MobileContentAccordionView, sectionView: MobileContentSectionView, textIsHidden: Bool, textHeight: CGFloat)
 }
@@ -71,7 +71,7 @@ class MobileContentAccordionView: MobileContentView {
         addSectionViews(sectionViews: sectionViews)
     }
     
-    override var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType {
+    override var heightConstraintType: MobileContentViewHeightConstraintType {
         return .constrainedToChildren
     }
 }
