@@ -57,21 +57,18 @@ class ToolsFlow: ToolNavigationFlow, Flow {
     }
     
     private func configureNavigationBar(shouldAnimateNavigationBarHiddenState: Bool) {
-                
-        let fontService: FontService = appDiContainer.getFontService()
-        let font: UIFont = fontService.getFont(size: 17, weight: .semibold)
         
         navigationController.setNavigationBarHidden(false, animated: shouldAnimateNavigationBarHiddenState)
-        navigationController.navigationBar.setBackgroundImage(nil, for: .default)
-        navigationController.navigationBar.isTranslucent = false
-        navigationController.navigationBar.barTintColor = ColorPalette.gtBlue.color
-        navigationController.navigationBar.tintColor = .white
-        navigationController.navigationBar.shadowImage = UIImage()
         
-        navigationController.navigationBar.titleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.white,
-            NSAttributedString.Key.font: font
-        ]
+        let fontService: FontService = appDiContainer.getFontService()
+        
+        navigationController.navigationBar.setupNavigationBarAppearance(
+            backgroundColor: ColorPalette.gtBlue.color,
+            controlColor: .white,
+            titleFont: fontService.getFont(size: 17, weight: .semibold),
+            titleColor: .white,
+            isTranslucent: false
+        )
     }
     
     func navigate(step: FlowStep) {
