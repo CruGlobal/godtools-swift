@@ -62,7 +62,7 @@ class MobileContentEmbeddedVideoView: MobileContentView {
         videoView.pauseVideo()
     }
     
-    override var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType {
+    override var heightConstraintType: MobileContentViewHeightConstraintType {
         return .setToAspectRatioOfProvidedSize(size: CGSize(width: 16, height: 9))
     }
 }

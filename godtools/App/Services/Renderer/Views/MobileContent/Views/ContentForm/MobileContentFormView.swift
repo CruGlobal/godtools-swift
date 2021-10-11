@@ -90,7 +90,7 @@ class MobileContentFormView: MobileContentStackView {
         super.renderChild(childView: childView)
     }
     
-    override var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType {
+    override var heightConstraintType: MobileContentViewHeightConstraintType {
         return .constrainedToChildren
     }
     

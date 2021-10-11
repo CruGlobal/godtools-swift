@@ -68,7 +68,7 @@ class ToolPageHeaderView: MobileContentView {
         renderChildren()
     }
     
-    override var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType {
+    override var heightConstraintType: MobileContentViewHeightConstraintType {
         return .constrainedToChildren
     }
 }

@@ -58,17 +58,14 @@ class ToolNavBarView: NSObject {
              
         parentViewController.title = viewModel.navTitle
         
-        navigationController?.navigationBar.barTintColor = .clear
-        navigationController?.navigationBar.tintColor = navBarControlColor
-        navigationController?.navigationBar.setBackgroundImage(UIImage.createImageWithColor(color: navBarColor), for: .default)
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.view.backgroundColor = .clear
-        navigationController?.navigationBar.titleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: navBarControlColor,
-            NSAttributedString.Key.font: viewModel.navBarFont
-        ]
-        
+        navigationController?.navigationBar.setupNavigationBarAppearance(
+            backgroundColor: navBarColor,
+            controlColor: navBarControlColor,
+            titleFont: viewModel.navBarFont,
+            titleColor: navBarControlColor,
+            isTranslucent: true
+        )
+                
         _ = parentViewController.addBarButtonItem(
             to: .left,
             image: viewModel.backButtonImage,

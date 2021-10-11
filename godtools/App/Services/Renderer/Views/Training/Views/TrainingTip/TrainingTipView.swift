@@ -75,7 +75,7 @@ class TrainingTipView: MobileContentView {
         super.renderChild(childView: childView)
     }
     
-    override var contentStackHeightConstraintType: MobileContentStackChildViewHeightConstraintType {
+    override var heightConstraintType: MobileContentViewHeightConstraintType {
         return .equalToSize(size: CGSize(width: 50, height: 50))
     }
     

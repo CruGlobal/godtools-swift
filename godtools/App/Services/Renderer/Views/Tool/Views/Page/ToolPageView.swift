@@ -122,7 +122,7 @@ class ToolPageView: MobileContentPageView {
         }
         else if let cardsView = childView as? ToolPageCardsView {
             self.cardsView = cardsView
-            cardsView.setDelegate(delegate: self)
+            cardsView.setCardsViewDelegate(delegate: self)
         }
     }
 

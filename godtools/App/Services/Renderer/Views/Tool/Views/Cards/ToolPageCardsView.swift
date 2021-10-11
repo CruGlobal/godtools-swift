@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ToolPageCardsViewDelegate: class {
+protocol ToolPageCardsViewDelegate: AnyObject {
     
     func toolPageCardsDidChangeCardState(cardsView: ToolPageCardsView, cardsState: ToolPageCardsState, animated: Bool)
     func toolPageCardsDidChangeCardPosition(cardsView: ToolPageCardsView, cardPosition: Int?, animated: Bool)
@@ -124,7 +124,7 @@ class ToolPageCardsView: MobileContentView {
     
     // MARK: -
     
-    func setDelegate(delegate: ToolPageCardsViewDelegate) {
+    func setCardsViewDelegate(delegate: ToolPageCardsViewDelegate) {
         self.delegate = delegate
     }
     

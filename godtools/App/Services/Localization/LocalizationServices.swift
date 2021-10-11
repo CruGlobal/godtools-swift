@@ -18,6 +18,16 @@ class LocalizationServices {
             
     }
     
+    func stringForLanguageElseSystem(language: LanguageModel?, key: String) -> String {
+        
+        if let language = language {
+            
+            return stringForLanguage(language: language, key: key)
+        }
+        
+        return stringForMainBundle(key: key)
+    }
+    
     func stringForLanguage(language: LanguageModel, key: String) -> String {
         
         let localeLocalizationBundle: LocaleLocalizationBundle = LocaleLocalizationBundle(

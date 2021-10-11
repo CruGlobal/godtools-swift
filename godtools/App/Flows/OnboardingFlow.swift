@@ -27,15 +27,21 @@ class OnboardingFlow: Flow {
         self.navigationController = UINavigationController(nibName: nil, bundle: nil)
                 
         navigationController.modalPresentationStyle = .fullScreen
-        navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController.navigationBar.isTranslucent = true
-        navigationController.navigationBar.shadowImage = UIImage()
+        
         navigationController.setNavigationBarHidden(false, animated: false)
+        
+        navigationController.navigationBar.setupNavigationBarAppearance(
+            backgroundColor: .clear,
+            controlColor: nil,
+            titleFont: nil,
+            titleColor: nil,
+            isTranslucent: true
+        )
         
         let onboardingTutorialProvider = OnboardingTutorialProvider(localizationServices: appDiContainer.localizationServices)
         
         let viewModel = TutorialPagerViewModel(
-            flowDelegate: flowDelegate,
+            flowDelegate: self,
             analyticsContainer: appDiContainer.analytics,
             tutorialPagerProvider: onboardingTutorialProvider,
             onboardingTutorialAvailability: appDiContainer.onboardingTutorialAvailability,

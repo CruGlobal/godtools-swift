@@ -100,9 +100,7 @@ class MobileContentPagesView: UIViewController {
     }
     
     func setupLayout() {
-               
-        navigationController?.navigationBar.isTranslucent = true
-        
+                       
         // pageNavigationView
         pageNavigationView.pageBackgroundColor = .clear
         pageNavigationView.registerPageCell(
@@ -305,6 +303,8 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
         }
         
         completeCurrentNavigationIfNeeded()
+        
+        viewModel.pageDidAppear(page: page)
     }
     
     func pageNavigationPageWillDisappear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
