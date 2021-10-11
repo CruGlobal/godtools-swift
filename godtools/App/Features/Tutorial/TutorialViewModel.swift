@@ -19,7 +19,7 @@ class TutorialViewModel: TutorialViewModelType {
     private weak var flowDelegate: FlowDelegate?
     
     let customViewBuilder: CustomViewBuilderType
-    let tutorialItems: ObservableValue<[TutorialItem]> = ObservableValue(value: [])
+    let tutorialItems: ObservableValue<[TutorialItemType]> = ObservableValue(value: [])
     let continueTitle: String
     let startUsingGodToolsTitle: String
     
@@ -80,7 +80,7 @@ class TutorialViewModel: TutorialViewModelType {
     
     func tutorialVideoPlayTapped() {
         
-        let tutorialItem: TutorialItem = tutorialItems.value[page]
+        let tutorialItem: TutorialItemType = tutorialItems.value[page]
         
         guard let youTubeVideoId = tutorialItem.youTubeVideoId else {
             return
