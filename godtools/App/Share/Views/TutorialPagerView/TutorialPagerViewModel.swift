@@ -51,7 +51,7 @@ class TutorialPagerViewModel {
 extension TutorialPagerViewModel: TutorialPagerViewModelType {
     
     func tutorialItemWillAppear(index: Int) -> TutorialPagerCellViewModelType {
-        return TutorialPagerCellViewModel(item: tutorialItems[page.value], customViewBuilder: customViewBuilder)
+         return TutorialPagerCellViewModel(item: tutorialItems[index], customViewBuilder: customViewBuilder)
     }
 
     func skipTapped() {
