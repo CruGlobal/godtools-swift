@@ -981,9 +981,6 @@
 		4FC97EB920D2C37900084A33 /* analytics-test2.xml in Resources */ = {isa = PBXBuildFile; fileRef = 4FC97EB820D2C37900084A33 /* analytics-test2.xml */; };
 		8C8C44BD9B31E90E469C99FF /* Pods_godtoolsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */; };
 		D105922E252FA2E700F120CA /* share_tool_tutorial_mirrored.json in Resources */ = {isa = PBXBuildFile; fileRef = D115A65D25265813007F11AD /* share_tool_tutorial_mirrored.json */; };
-		D129DE692543669C00841733 /* onboarding_tutorial_rocket.json in Resources */ = {isa = PBXBuildFile; fileRef = D129DE662543669C00841733 /* onboarding_tutorial_rocket.json */; };
-		D129DE6A2543669C00841733 /* onboarding_tutorial_cups.json in Resources */ = {isa = PBXBuildFile; fileRef = D129DE672543669C00841733 /* onboarding_tutorial_cups.json */; };
-		D129DE6B2543669C00841733 /* onboarding_tutorial_knife.json in Resources */ = {isa = PBXBuildFile; fileRef = D129DE682543669C00841733 /* onboarding_tutorial_knife.json */; };
 		D163EA96254A00BE00BA4EA9 /* share_tool_tutorial_link.json in Resources */ = {isa = PBXBuildFile; fileRef = D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */; };
 		D168FDC826F9224F0083D578 /* TutorialPagerAnalyticsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D168FDC726F9224F0083D578 /* TutorialPagerAnalyticsType.swift */; };
 		D168FDCA26F922650083D578 /* TutorialPagerViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D168FDC926F922650083D578 /* TutorialPagerViewModelType.swift */; };
@@ -993,6 +990,9 @@
 		D168FDD226FA21620083D578 /* TutorialPagerCellViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D168FDD126FA21610083D578 /* TutorialPagerCellViewModelType.swift */; };
 		D168FDD426FA2C970083D578 /* TutorialPagerCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D168FDD326FA2C970083D578 /* TutorialPagerCellViewModel.swift */; };
 		D1838479257E86B3004F5674 /* container in Resources */ = {isa = PBXBuildFile; fileRef = D1838478257E86B3004F5674 /* container */; };
+		D188EA8127146AB000B10ABA /* onboarding_two_dudes.json in Resources */ = {isa = PBXBuildFile; fileRef = D188EA7E27146AAF00B10ABA /* onboarding_two_dudes.json */; };
+		D188EA8227146AB000B10ABA /* onboarding_dog.json in Resources */ = {isa = PBXBuildFile; fileRef = D188EA7F27146AAF00B10ABA /* onboarding_dog.json */; };
+		D188EA8327146AB000B10ABA /* onboarding_distance.json in Resources */ = {isa = PBXBuildFile; fileRef = D188EA8027146AAF00B10ABA /* onboarding_distance.json */; };
 		D19D00E725AF4B97007C535B /* AppsFlyerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19D00E625AF4B97007C535B /* AppsFlyerType.swift */; };
 		D19D00F925AF51FA007C535B /* AppsFlyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19D00F825AF51FA007C535B /* AppsFlyer.swift */; };
 		D19D010325AF549B007C535B /* DeepLinkingServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19D010225AF549B007C535B /* DeepLinkingServiceType.swift */; };
@@ -2063,9 +2063,6 @@
 		A9BDC99CD6AA5FF3CCAC0E93 /* Pods-godtools.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.staging.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.staging.xcconfig"; sourceTree = "<group>"; };
 		B03BA6AC6918BE450406F1E6 /* Pods-godtools.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.debug.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.debug.xcconfig"; sourceTree = "<group>"; };
 		D115A65D25265813007F11AD /* share_tool_tutorial_mirrored.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = share_tool_tutorial_mirrored.json; sourceTree = "<group>"; };
-		D129DE662543669C00841733 /* onboarding_tutorial_rocket.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding_tutorial_rocket.json; sourceTree = "<group>"; };
-		D129DE672543669C00841733 /* onboarding_tutorial_cups.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding_tutorial_cups.json; sourceTree = "<group>"; };
-		D129DE682543669C00841733 /* onboarding_tutorial_knife.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding_tutorial_knife.json; sourceTree = "<group>"; };
 		D14F75B825D58B96008749CF /* NotoSansMyanmarUI-Condensed.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansMyanmarUI-Condensed.ttf"; sourceTree = "<group>"; };
 		D14F75B925D58B96008749CF /* NotoSansMyanmarUI-CondensedBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansMyanmarUI-CondensedBold.ttf"; sourceTree = "<group>"; };
 		D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = share_tool_tutorial_link.json; sourceTree = "<group>"; };
@@ -2077,6 +2074,9 @@
 		D168FDD126FA21610083D578 /* TutorialPagerCellViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPagerCellViewModelType.swift; sourceTree = "<group>"; };
 		D168FDD326FA2C970083D578 /* TutorialPagerCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPagerCellViewModel.swift; sourceTree = "<group>"; };
 		D1838478257E86B3004F5674 /* container */ = {isa = PBXFileReference; lastKnownFileType = folder; path = container; sourceTree = "<group>"; };
+		D188EA7E27146AAF00B10ABA /* onboarding_two_dudes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding_two_dudes.json; sourceTree = "<group>"; };
+		D188EA7F27146AAF00B10ABA /* onboarding_dog.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding_dog.json; sourceTree = "<group>"; };
+		D188EA8027146AAF00B10ABA /* onboarding_distance.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding_distance.json; sourceTree = "<group>"; };
 		D19D00E625AF4B97007C535B /* AppsFlyerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsFlyerType.swift; sourceTree = "<group>"; };
 		D19D00F825AF51FA007C535B /* AppsFlyer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsFlyer.swift; sourceTree = "<group>"; };
 		D19D010225AF549B007C535B /* DeepLinkingServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkingServiceType.swift; sourceTree = "<group>"; };
@@ -5385,12 +5385,12 @@
 				D19EB5DD259BB39300685156 /* training_tip_callout.json */,
 				D19EB5DF259BB75900685156 /* training_tip_tips.json */,
 				45DEF22D2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json */,
-				D129DE672543669C00841733 /* onboarding_tutorial_cups.json */,
-				D129DE682543669C00841733 /* onboarding_tutorial_knife.json */,
-				D129DE662543669C00841733 /* onboarding_tutorial_rocket.json */,
 				D1B944E4259E58F5004641DB /* remote_share_active.json */,
 				D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */,
 				D115A65D25265813007F11AD /* share_tool_tutorial_mirrored.json */,
+				D188EA8027146AAF00B10ABA /* onboarding_distance.json */,
+				D188EA7F27146AAF00B10ABA /* onboarding_dog.json */,
+				D188EA7E27146AAF00B10ABA /* onboarding_two_dudes.json */,
 			);
 			path = Lottie;
 			sourceTree = "<group>";
@@ -5689,6 +5689,7 @@
 				45AD1AF725938A4E00A096A0 /* PlaygroundView.xib in Resources */,
 				4FAF20781F02933900C43AFC /* Localizable.strings in Resources */,
 				451EBE3024AD968B00C4D6DD /* 2626c83091f11eb08c2bded5d4a237fa986fe3a318d1fb14933906021a7493a7.jpg in Resources */,
+				D188EA8227146AB000B10ABA /* onboarding_dog.json in Resources */,
 				45CB9F9F261F8BA80036BEB3 /* ToolsMenuToolbarView.xib in Resources */,
 				45AD1AC025938A4E00A096A0 /* LoadingToolView.xib in Resources */,
 				45AD1AAA25938A4E00A096A0 /* TutorialToolsView.xib in Resources */,
@@ -5696,7 +5697,6 @@
 				4F57329A1EA69CF00082035C /* LaunchScreen.storyboard in Resources */,
 				45AD1AC825938A4E00A096A0 /* ToolsMenuView.xib in Resources */,
 				45AD1B4925938A4F00A096A0 /* MenuCell.xib in Resources */,
-				D129DE6A2543669C00841733 /* onboarding_tutorial_cups.json in Resources */,
 				451EBE3324AD968B00C4D6DD /* 2351.zip in Resources */,
 				4556AECF23E22185002C15E8 /* SF-Pro-Text-Regular.otf in Resources */,
 				45AD1B0325938A4E00A096A0 /* ArticleCategoriesView.xib in Resources */,
@@ -5712,6 +5712,7 @@
 				455582E2269F2C1000C3FF14 /* TrainingTipView.xib in Resources */,
 				D1838479257E86B3004F5674 /* container in Resources */,
 				1737DFDF22FDB48000223CB0 /* GoogleService-Info.plist in Resources */,
+				D188EA8327146AB000B10ABA /* onboarding_distance.json in Resources */,
 				455583C6269F2DA500C3FF14 /* MobileContentSectionView.xib in Resources */,
 				45CB9FF8261FB0BE0036BEB3 /* LessonsListView.xib in Resources */,
 				45B6482925E593110098BAF1 /* (null) in Resources */,
@@ -5745,7 +5746,6 @@
 				45AD1B3125938A4F00A096A0 /* ChooseLanguageView.xib in Resources */,
 				45AD1B1E25938A4E00A096A0 /* LearnToShareToolView.xib in Resources */,
 				4555833D269F2C7B00C3FF14 /* ToolPageModalView.xib in Resources */,
-				D129DE6B2543669C00841733 /* onboarding_tutorial_knife.json in Resources */,
 				45AD1B2925938A4F00A096A0 /* AboutView.xib in Resources */,
 				45558338269F2C7B00C3FF14 /* ToolPageCallToActionView.xib in Resources */,
 				451EBE3B24AD968B00C4D6DD /* db11fd9214b9a05b5d1e760c707e9db8d4b821dea36bca0c94263efa28e8ac4b.png in Resources */,
@@ -5759,7 +5759,6 @@
 				451EBE3124AD968B00C4D6DD /* 36ec96dc7e53cf2387e448a34740c599fe6fb3c51a597fc49667664ca2828e52.jpg in Resources */,
 				D163EA96254A00BE00BA4EA9 /* share_tool_tutorial_link.json in Resources */,
 				D1D56916270502B200BBE2A6 /* TutorialPagerView.xib in Resources */,
-				D129DE692543669C00841733 /* onboarding_tutorial_rocket.json in Resources */,
 				45AD1B4525938A4F00A096A0 /* MenuSectionHeaderView.xib in Resources */,
 				D105922E252FA2E700F120CA /* share_tool_tutorial_mirrored.json in Resources */,
 				451EBE3524AD968B00C4D6DD /* 2776.zip in Resources */,
@@ -5771,6 +5770,7 @@
 				45AD1B6525938A4F00A096A0 /* GlobalActivityCell.xib in Resources */,
 				45AD1AB825938A4E00A096A0 /* AllToolsView.xib in Resources */,
 				451EBE3C24AD968B00C4D6DD /* 8a2312f958cdf6548a1637347bf89560f6ebf284549669638dfef944d8268a08.jpg in Resources */,
+				D188EA8127146AB000B10ABA /* onboarding_two_dudes.json in Resources */,
 				45AD1B6125938A4F00A096A0 /* AccountItemCell.xib in Resources */,
 				45AD1B5C25938A4F00A096A0 /* AccountActivityView.xib in Resources */,
 				4F0CCC1F1EE73E9D00AE4E45 /* Podfile in Resources */,
