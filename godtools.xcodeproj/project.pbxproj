@@ -300,7 +300,7 @@
 		45AD1AA025938A4E00A096A0 /* TutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175025938A4D00A096A0 /* TutorialViewModel.swift */; };
 		45AD1AA125938A4E00A096A0 /* TutorialItemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175225938A4D00A096A0 /* TutorialItemProvider.swift */; };
 		45AD1AA225938A4E00A096A0 /* TutorialItemProviderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175325938A4D00A096A0 /* TutorialItemProviderType.swift */; };
-		45AD1AA325938A4E00A096A0 /* TutorialItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175425938A4D00A096A0 /* TutorialItem.swift */; };
+		45AD1AA325938A4E00A096A0 /* TutorialItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175425938A4D00A096A0 /* TutorialItemType.swift */; };
 		45AD1AA425938A4E00A096A0 /* SupportedLanguagesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175525938A4D00A096A0 /* SupportedLanguagesType.swift */; };
 		45AD1AA525938A4E00A096A0 /* TutorialSupportedLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175625938A4D00A096A0 /* TutorialSupportedLanguages.swift */; };
 		45AD1AA625938A4E00A096A0 /* CustomTutorialViewId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175725938A4D00A096A0 /* CustomTutorialViewId.swift */; };
@@ -1018,6 +1018,8 @@
 		D19EB5DE259BB39300685156 /* training_tip_callout.json in Resources */ = {isa = PBXBuildFile; fileRef = D19EB5DD259BB39300685156 /* training_tip_callout.json */; };
 		D19EB5E0259BB75900685156 /* training_tip_tips.json in Resources */ = {isa = PBXBuildFile; fileRef = D19EB5DF259BB75900685156 /* training_tip_tips.json */; };
 		D1B944E5259E58F5004641DB /* remote_share_active.json in Resources */ = {isa = PBXBuildFile; fileRef = D1B944E4259E58F5004641DB /* remote_share_active.json */; };
+		D1C8FEB92714E7010071BD07 /* TutorialCellViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C8FEB82714E7000071BD07 /* TutorialCellViewModelType.swift */; };
+		D1C8FEBD2714E9650071BD07 /* OnboardingTutorialItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C8FEBC2714E9650071BD07 /* OnboardingTutorialItem.swift */; };
 		D1D5691027049C8D00BBE2A6 /* TutorialPagerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D5690F27049C8D00BBE2A6 /* TutorialPagerCell.swift */; };
 		D1D569122704A92B00BBE2A6 /* TutorialPagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D569112704A92B00BBE2A6 /* TutorialPagerView.swift */; };
 		D1D569142704FC7B00BBE2A6 /* TutorialPagerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1D569132704FC7B00BBE2A6 /* TutorialPagerCell.xib */; };
@@ -1357,7 +1359,7 @@
 		45AD175025938A4D00A096A0 /* TutorialViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewModel.swift; sourceTree = "<group>"; };
 		45AD175225938A4D00A096A0 /* TutorialItemProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialItemProvider.swift; sourceTree = "<group>"; };
 		45AD175325938A4D00A096A0 /* TutorialItemProviderType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialItemProviderType.swift; sourceTree = "<group>"; };
-		45AD175425938A4D00A096A0 /* TutorialItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialItem.swift; sourceTree = "<group>"; };
+		45AD175425938A4D00A096A0 /* TutorialItemType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialItemType.swift; sourceTree = "<group>"; };
 		45AD175525938A4D00A096A0 /* SupportedLanguagesType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupportedLanguagesType.swift; sourceTree = "<group>"; };
 		45AD175625938A4D00A096A0 /* TutorialSupportedLanguages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialSupportedLanguages.swift; sourceTree = "<group>"; };
 		45AD175725938A4D00A096A0 /* CustomTutorialViewId.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTutorialViewId.swift; sourceTree = "<group>"; };
@@ -2121,6 +2123,8 @@
 		D19EB5DD259BB39300685156 /* training_tip_callout.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = training_tip_callout.json; sourceTree = "<group>"; };
 		D19EB5DF259BB75900685156 /* training_tip_tips.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = training_tip_tips.json; sourceTree = "<group>"; };
 		D1B944E4259E58F5004641DB /* remote_share_active.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = remote_share_active.json; sourceTree = "<group>"; };
+		D1C8FEB82714E7000071BD07 /* TutorialCellViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialCellViewModelType.swift; sourceTree = "<group>"; };
+		D1C8FEBC2714E9650071BD07 /* OnboardingTutorialItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialItem.swift; sourceTree = "<group>"; };
 		D1D5690F27049C8D00BBE2A6 /* TutorialPagerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPagerCell.swift; sourceTree = "<group>"; };
 		D1D569112704A92B00BBE2A6 /* TutorialPagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPagerView.swift; sourceTree = "<group>"; };
 		D1D569132704FC7B00BBE2A6 /* TutorialPagerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TutorialPagerCell.xib; sourceTree = "<group>"; };
@@ -3307,7 +3311,6 @@
 			children = (
 				45AD175725938A4D00A096A0 /* CustomTutorialViewId.swift */,
 				45AD175525938A4D00A096A0 /* SupportedLanguagesType.swift */,
-				45AD175425938A4D00A096A0 /* TutorialItem.swift */,
 				45AD175225938A4D00A096A0 /* TutorialItemProvider.swift */,
 				45AD175325938A4D00A096A0 /* TutorialItemProviderType.swift */,
 				45AD175825938A4D00A096A0 /* TutorialItemViewBuilder.swift */,
@@ -3319,9 +3322,6 @@
 		45AD175A25938A4D00A096A0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				45AD176125938A4D00A096A0 /* TutorialCell.swift */,
-				45AD175D25938A4D00A096A0 /* TutorialCell.xib */,
-				45AD176025938A4D00A096A0 /* TutorialCellViewModel.swift */,
 				45AD175B25938A4D00A096A0 /* TutorialInMenuView.swift */,
 				45AD176325938A4D00A096A0 /* TutorialInMenuView.xib */,
 				45AD176225938A4D00A096A0 /* TutorialInMenuViewModel.swift */,
@@ -3989,8 +3989,8 @@
 		45AD18BD25938A4E00A096A0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D1C8FEB72714E6580071BD07 /* TutorialCell */,
 				D168FDC426F921EB0083D578 /* TutorialPagerView */,
-				45AD18BE25938A4E00A096A0 /* LoadingView */,
 				45AD18C725938A4E00A096A0 /* AlertMessageView */,
 				45AD18CF25938A4E00A096A0 /* GTSegmentControl */,
 				45AD18BE25938A4E00A096A0 /* LoadingView */,
@@ -4099,6 +4099,7 @@
 				45AD1DE825938A9700A096A0 /* LanguageSettings */,
 				45D6D0282708B8FF0063C38A /* LessonEvaluation */,
 				45AD1EE125938A9800A096A0 /* Localization */,
+				D1C8FEBB2714E92E0071BD07 /* OnboardingTutorial */,
 				45AD1E9625938A9800A096A0 /* OpenTutorialCallout */,
 				45AD1E7325938A9800A096A0 /* RealmDatabase */,
 				45AD1D4425938A9700A096A0 /* Renderer */,
@@ -5560,6 +5561,34 @@
 			path = AppsFlyer;
 			sourceTree = "<group>";
 		};
+		D1C8FEB72714E6580071BD07 /* TutorialCell */ = {
+			isa = PBXGroup;
+			children = (
+				45AD176125938A4D00A096A0 /* TutorialCell.swift */,
+				45AD175D25938A4D00A096A0 /* TutorialCell.xib */,
+				45AD176025938A4D00A096A0 /* TutorialCellViewModel.swift */,
+				D1C8FEB82714E7000071BD07 /* TutorialCellViewModelType.swift */,
+				D1C8FEBA2714E8B90071BD07 /* Models */,
+			);
+			path = TutorialCell;
+			sourceTree = "<group>";
+		};
+		D1C8FEBA2714E8B90071BD07 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				45AD175425938A4D00A096A0 /* TutorialItemType.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		D1C8FEBB2714E92E0071BD07 /* OnboardingTutorial */ = {
+			isa = PBXGroup;
+			children = (
+				D1C8FEBC2714E9650071BD07 /* OnboardingTutorialItem.swift */,
+			);
+			path = OnboardingTutorial;
+			sourceTree = "<group>";
+		};
 		D1DD79FB26690C5F000F1351 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -6551,7 +6580,7 @@
 				45CB9FA4261F8BA80036BEB3 /* ToolsMenuToolbarItemViewModel.swift in Sources */,
 				45AD1AC425938A4E00A096A0 /* FavoritedToolsViewModelType.swift in Sources */,
 				45AD1BC425938A4F00A096A0 /* UIViewController+AlertMessage.swift in Sources */,
-				45AD1AA325938A4E00A096A0 /* TutorialItem.swift in Sources */,
+				45AD1AA325938A4E00A096A0 /* TutorialItemType.swift in Sources */,
 				455583DC269F2DA500C3FF14 /* MobileContentAccordionViewModelType.swift in Sources */,
 				45AD1AF925938A4E00A096A0 /* MailView.swift in Sources */,
 				45AD1B9625938A4F00A096A0 /* ToolNavBarView.swift in Sources */,
@@ -6639,6 +6668,7 @@
 				455E798E26A6203F00972EC0 /* MultiplatformManifest.swift in Sources */,
 				45AD1BB125938A4F00A096A0 /* FlowDelegate.swift in Sources */,
 				45AD1AB725938A4E00A096A0 /* AllToolsView.swift in Sources */,
+				D1C8FEBD2714E9650071BD07 /* OnboardingTutorialItem.swift in Sources */,
 				45AD1AA825938A4E00A096A0 /* TutorialViewModelType.swift in Sources */,
 				455582E3269F2C1000C3FF14 /* TrainingTipViewType.swift in Sources */,
 				457032A526D0055A00F5BADC /* MobileContentBackgroundImageRenderer.swift in Sources */,
@@ -6788,6 +6818,7 @@
 				45AD1FDB25938A9800A096A0 /* WebArchiveQueue.swift in Sources */,
 				45C93AEB261D310900592FFF /* ArticleJcrContent.swift in Sources */,
 				45BEC53A26A604E4005D8CA1 /* MobileContentRestrictToType.swift in Sources */,
+				D1C8FEB92714E7010071BD07 /* TutorialCellViewModelType.swift in Sources */,
 				453C385726CD730C0093F3B5 /* TipModelType.swift in Sources */,
 				45AD1F8A25938A9800A096A0 /* TranslationModelType.swift in Sources */,
 				45BEC53526A604E4005D8CA1 /* MobileContentBackgroundImageScale.swift in Sources */,

@@ -20,7 +20,7 @@ class TutorialCell: UICollectionViewCell {
     static let reuseIdentifier: String = "TutorialCellReuseIdentifier"
     
     private weak var delegate: TutorialCellDelegate?
-    private var viewModel: TutorialCellViewModel?
+    private var viewModel: TutorialCellViewModelType?
     private var mainImage: UIImage?
     private var mainImageView: UIImageView?
     private var customView: UIView?
@@ -80,7 +80,7 @@ class TutorialCell: UICollectionViewCell {
         ]
     }
     
-    func configure(viewModel: TutorialCellViewModel, delegate: TutorialCellDelegate?) {
+    func configure(viewModel: TutorialCellViewModelType, delegate: TutorialCellDelegate?) {
         
         self.delegate = delegate
         self.viewModel = viewModel

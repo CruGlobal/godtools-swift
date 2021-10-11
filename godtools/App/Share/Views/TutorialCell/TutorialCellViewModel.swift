@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TutorialCellViewModel {
+class TutorialCellViewModel: TutorialCellViewModelType {
         
     let title: String
     let message: String
@@ -17,7 +17,7 @@ class TutorialCellViewModel {
     let animationName: String?
     let customView: UIView?
     
-    required init(item: TutorialItem, customViewBuilder: CustomViewBuilderType) {
+    required init(item: TutorialItemType, customViewBuilder: CustomViewBuilderType) {
         
         title = item.title
         message = item.message
