@@ -20,6 +20,9 @@ class ContentButtonNode: MobileContentXmlNode, ContentButtonModelType {
     
     let events: [MultiplatformEventId]
     let url: String?
+    let iconName: String?
+    let iconSize: Int?
+    let iconGravity: String?
     
     required init(xmlElement: XMLElement) {
     
@@ -31,6 +34,14 @@ class ContentButtonNode: MobileContentXmlNode, ContentButtonModelType {
         events = Array()
         styleString = attributes["style"]?.text
         typeString = attributes["type"]?.text
+        iconName = attributes["icon"]?.text
+        iconGravity = attributes["icon-gravity"]?.text
+        
+        if let iconSizeString = attributes["icon-size"]?.text, let iconSizeInt = Int(iconSizeString) {
+            iconSize = iconSizeInt
+        } else {
+            iconSize = nil
+        }
         
         if var urlString = attributes["url"]?.text {
             let urlIsHttps: Bool = urlString.contains("https://")

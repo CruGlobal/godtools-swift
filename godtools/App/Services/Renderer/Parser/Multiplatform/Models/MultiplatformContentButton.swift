@@ -60,6 +60,18 @@ class MultiplatformContentButton: ContentButtonModelType {
         return button.text?.text
     }
     
+    var iconName: String? {
+        return nil
+    }
+    
+    var iconSize: Int? {
+        return nil
+    }
+    
+    var iconGravity: String? {
+        return nil
+    }
+    
     func getBackgroundColor() -> MobileContentColor? {
         return MobileContentColor(color: button.backgroundColor)
     }

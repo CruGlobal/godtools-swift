@@ -105,6 +105,27 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
         return rendererPageModel.rendererState
     }
     
+    var image: UIImage? {
+        
+        guard let resource = buttonModel.iconName else {
+            return nil
+        }
+        
+        return rendererPageModel.resourcesCache.getImageFromManifestResources(fileName: resource)
+    }
+    
+    var iconName: String? {
+        return buttonModel.iconName
+    }
+    
+    var iconSize: Int? {
+        return buttonModel.iconSize
+    }
+    
+    var iconGravity: String? {
+        return buttonModel.iconGravity
+    }
+    
     func buttonTapped() {
         mobileContentAnalytics.trackEvents(events: buttonModel.getAnalyticsEvents(), rendererPageModel: rendererPageModel)
     }
