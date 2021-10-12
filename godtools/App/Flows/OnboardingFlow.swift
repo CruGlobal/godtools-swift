@@ -47,6 +47,7 @@ class OnboardingFlow: Flow {
             onboardingTutorialAvailability: appDiContainer.onboardingTutorialAvailability,
             openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache,
             customViewBuilder: appDiContainer.onboardingTutorialCustomViewBuilder(),
+            localizationServices: appDiContainer.localizationServices,
             analyticsScreenName: "onboarding",
             skipButtonTitle: "Skip"
         )

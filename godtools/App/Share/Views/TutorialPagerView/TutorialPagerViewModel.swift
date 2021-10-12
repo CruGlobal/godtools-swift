@@ -13,6 +13,7 @@ class TutorialPagerViewModel {
     private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     private let tutorialItems: [TutorialItemType]
     private let customViewBuilder: CustomViewBuilderType
+    private let localizationServices: LocalizationServices
     
     private weak var flowDelegate: FlowDelegate?
 
@@ -26,12 +27,13 @@ class TutorialPagerViewModel {
     var continueButtonHidden: ObservableValue<Bool>
     var pageControlHidden: ObservableValue<Bool>
     
-    required init(flowDelegate: FlowDelegate, analyticsContainer: AnalyticsContainer, tutorialPagerProvider: TutorialPagerProviderType, onboardingTutorialAvailability: OnboardingTutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, customViewBuilder: CustomViewBuilderType, analyticsScreenName: String, skipButtonTitle: String) {
+    required init(flowDelegate: FlowDelegate, analyticsContainer: AnalyticsContainer, tutorialPagerProvider: TutorialPagerProviderType, onboardingTutorialAvailability: OnboardingTutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, customViewBuilder: CustomViewBuilderType, localizationServices: LocalizationServices, analyticsScreenName: String, skipButtonTitle: String) {
         
         self.flowDelegate = flowDelegate
         self.analyticsContainer = analyticsContainer
         self.openTutorialCalloutCache = openTutorialCalloutCache
         self.customViewBuilder = customViewBuilder
+        self.localizationServices = localizationServices
         self.analyticsScreenName = analyticsScreenName
         self.pageCount = tutorialPagerProvider.tutorialItems.count
         self.page = ObservableValue(value: 0)
@@ -68,12 +70,13 @@ extension TutorialPagerViewModel: TutorialPagerViewModelType {
         
         self.page.accept(value: page)
         
-        let item = tutorialItems[page]
-
-        //skipButtonHidden.accept(value: item.hideSkip)
-        //continueButtonTitle.accept(value: item.continueButtonLabel)
-        //continueButtonHidden.accept(value: item.hideContinueButton)
-        //pageControlHidden.accept(value: item.hidePageControl)
+        switch page {
+        case 0:
+            continueButtonTitle.accept(value: localizationServices.stringForMainBundle(key: "onboardingTutorial.beginButton.title"))
+       
+        default:
+            continueButtonTitle.accept(value: localizationServices.stringForMainBundle(key: "onboardingTutorial.nextButton.title"))
+        }
         
         trackPageDidAppear(page: page)
     }
