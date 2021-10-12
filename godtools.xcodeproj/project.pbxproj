@@ -3780,7 +3780,6 @@
 			isa = PBXGroup;
 			children = (
 				45AD184A25938A4E00A096A0 /* Models */,
-				45AD186425938A4E00A096A0 /* Services */,
 				45AD185625938A4E00A096A0 /* Views */,
 			);
 			path = Onboarding;
@@ -3804,17 +3803,6 @@
 				D1D5691B270636A600BBE2A6 /* OnboardingTutorialFirstCellViewModelType.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		45AD186425938A4E00A096A0 /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				45AD186525938A4E00A096A0 /* OnboardingTutorialAvailability.swift */,
-				45AD186625938A4E00A096A0 /* OnboardingTutorialAvailabilityType.swift */,
-				45AD186825938A4E00A096A0 /* OnboardingTutorialViewedCacheType.swift */,
-				45AD186725938A4E00A096A0 /* OnboardingTutorialViewedUserDefaultsCache.swift */,
-			);
-			path = Services;
 			sourceTree = "<group>";
 		};
 		45AD186B25938A4E00A096A0 /* Tool */ = {
@@ -5564,9 +5552,37 @@
 		D1C8FEBB2714E92E0071BD07 /* OnboardingTutorial */ = {
 			isa = PBXGroup;
 			children = (
-				D1C8FEBC2714E9650071BD07 /* OnboardingTutorialItem.swift */,
+				D1C8FEC12715B9DD0071BD07 /* Availability */,
+				D1C8FEC02715B9450071BD07 /* Repository */,
+				D1C8FEC22715BA430071BD07 /* Viewed */,
 			);
 			path = OnboardingTutorial;
+			sourceTree = "<group>";
+		};
+		D1C8FEC02715B9450071BD07 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				D1C8FEBC2714E9650071BD07 /* OnboardingTutorialItem.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		D1C8FEC12715B9DD0071BD07 /* Availability */ = {
+			isa = PBXGroup;
+			children = (
+				45AD186525938A4E00A096A0 /* OnboardingTutorialAvailability.swift */,
+				45AD186625938A4E00A096A0 /* OnboardingTutorialAvailabilityType.swift */,
+			);
+			path = Availability;
+			sourceTree = "<group>";
+		};
+		D1C8FEC22715BA430071BD07 /* Viewed */ = {
+			isa = PBXGroup;
+			children = (
+				45AD186825938A4E00A096A0 /* OnboardingTutorialViewedCacheType.swift */,
+				45AD186725938A4E00A096A0 /* OnboardingTutorialViewedUserDefaultsCache.swift */,
+			);
+			path = Viewed;
 			sourceTree = "<group>";
 		};
 		D1DD79FB26690C5F000F1351 /* Models */ = {
