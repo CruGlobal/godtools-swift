@@ -18,7 +18,7 @@ class ShareToolScreenTutorialViewModel: ShareToolScreenTutorialViewModelType {
     private weak var flowDelegate: FlowDelegate?
     
     let customViewBuilder: CustomViewBuilderType
-    let tutorialItems: ObservableValue<[TutorialItem]> = ObservableValue(value: [])
+    let tutorialItems: ObservableValue<[TutorialItemType]> = ObservableValue(value: [])
     let skipTitle: String
     let continueTitle: String
     let shareLinkTitle: String

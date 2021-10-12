@@ -11,7 +11,7 @@ import Foundation
 protocol ShareToolScreenTutorialViewModelType {
         
     var customViewBuilder: CustomViewBuilderType { get }
-    var tutorialItems: ObservableValue<[TutorialItem]> { get }
+    var tutorialItems: ObservableValue<[TutorialItemType]> { get }
     var skipTitle: String { get }
     var continueTitle: String { get }
     var shareLinkTitle: String { get }

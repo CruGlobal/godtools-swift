@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import youtube_ios_player_helper
 
 class TutorialPagerView: UIViewController {
     
@@ -54,7 +55,7 @@ class TutorialPagerView: UIViewController {
     private func setupLayout() {
         
         tutorialPagesView.pageBackgroundColor = .clear
-        tutorialPagesView.registerPageCell(nib: UINib(nibName: TutorialPagerCell.nibName, bundle: nil), cellReuseIdentifier: TutorialPagerCell.reuseIdentifier)
+        tutorialPagesView.registerPageCell(nib: UINib(nibName: TutorialCell.nibName, bundle: nil), cellReuseIdentifier: TutorialCell.reuseIdentifier)
         
         handleTutorialPageChange(page: 0)
     }
@@ -169,10 +170,10 @@ extension TutorialPagerView: PageNavigationCollectionViewDelegate {
     
     func pageNavigation(pageNavigation: PageNavigationCollectionView, cellForPageAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = tutorialPagesView.getReusablePageCell(cellReuseIdentifier: TutorialPagerCell.reuseIdentifier, indexPath: indexPath) as! TutorialPagerCell
+        let cell = tutorialPagesView.getReusablePageCell(cellReuseIdentifier: TutorialCell.reuseIdentifier, indexPath: indexPath) as! TutorialCell
         
         let cellViewModel = viewModel.tutorialItemWillAppear(index: indexPath.item)
-        cell.configure(viewModel: cellViewModel)
+        cell.configure(viewModel: cellViewModel, delegate: self)
         
         return cell
     }
@@ -192,6 +193,17 @@ extension TutorialPagerView: PageNavigationCollectionViewDelegate {
         if pageNavigation == tutorialPagesView {
             
             viewModel.pageDidAppear(page: page)
+        }
+    }
+}
+
+// MARK: - TutorialCellDelegate
+
+extension TutorialPagerView: TutorialCellDelegate {
+    
+    func tutorialCellVideoPlayer(cell: TutorialCell, didChangeTo state: YTPlayerState) {
+        if state == .playing {
+            viewModel.tutorialVideoPlayTapped()
         }
     }
 }

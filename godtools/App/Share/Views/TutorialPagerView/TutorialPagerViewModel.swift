@@ -11,7 +11,7 @@ import Foundation
 class TutorialPagerViewModel {
     
     private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
-    private let tutorialItems: [TutorialPagerItem]
+    private let tutorialItems: [TutorialItemType]
     private let customViewBuilder: CustomViewBuilderType
     
     private weak var flowDelegate: FlowDelegate?
@@ -50,8 +50,8 @@ class TutorialPagerViewModel {
 
 extension TutorialPagerViewModel: TutorialPagerViewModelType {
     
-    func tutorialItemWillAppear(index: Int) -> TutorialPagerCellViewModelType {
-         return TutorialPagerCellViewModel(item: tutorialItems[index], customViewBuilder: customViewBuilder)
+    func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType {
+         return TutorialCellViewModel(item: tutorialItems[index], customViewBuilder: customViewBuilder)
     }
 
     func skipTapped() {
@@ -70,10 +70,10 @@ extension TutorialPagerViewModel: TutorialPagerViewModelType {
         
         let item = tutorialItems[page]
 
-        skipButtonHidden.accept(value: item.hideSkip)
-        continueButtonTitle.accept(value: item.continueButtonLabel)
-        continueButtonHidden.accept(value: item.hideContinueButton)
-        pageControlHidden.accept(value: item.hidePageControl)
+        //skipButtonHidden.accept(value: item.hideSkip)
+        //continueButtonTitle.accept(value: item.continueButtonLabel)
+        //continueButtonHidden.accept(value: item.hideContinueButton)
+        //pageControlHidden.accept(value: item.hidePageControl)
         
         trackPageDidAppear(page: page)
     }

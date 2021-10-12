@@ -68,7 +68,7 @@ class ShareToolScreenTutorialView: UIViewController {
     
     private func setupBinding() {
         
-        viewModel.tutorialItems.addObserver(self) { [weak self] (tutorialItems: [TutorialItem]) in
+        viewModel.tutorialItems.addObserver(self) { [weak self] (tutorialItems: [TutorialItemType]) in
             self?.pageControl.numberOfPages = tutorialItems.count
             self?.tutorialPagesView.reloadData()
         }
@@ -146,7 +146,7 @@ extension ShareToolScreenTutorialView: PageNavigationCollectionViewDelegate {
             cellReuseIdentifier: TutorialCell.reuseIdentifier,
             indexPath: indexPath) as! TutorialCell
         
-        let tutorialItem: TutorialItem = viewModel.tutorialItems.value[indexPath.item]
+        let tutorialItem: TutorialItemType = viewModel.tutorialItems.value[indexPath.item]
         let cellViewModel = TutorialCellViewModel(
             item: tutorialItem,
             customViewBuilder: viewModel.customViewBuilder
