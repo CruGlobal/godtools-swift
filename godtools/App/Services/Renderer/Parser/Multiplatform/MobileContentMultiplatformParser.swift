@@ -11,16 +11,27 @@ import GodToolsToolParser
 
 class MobileContentMultiplatformParser: MobileContentParserType {
         
+    private static let animationsEnabled: Bool = false
+    private static let multiSelectEnabled: Bool = false
+    
     let manifest: MobileContentManifestType
     let manifestResourcesCache: ManifestResourcesCacheType
     let pageModels: [PageModelType]
     let errors: [Error]
     
     required init(translationManifestData: TranslationManifestData, translationsFileCache: TranslationsFileCache) {
+                        
+        var supportedFeatures: [String] = Array()
         
-        // TODO: Add ParserConfigKt.FEATURE_ANIMATION to supportedFeatures when implementing Animations. ~Levi
-                
-        ParserConfig().supportedFeatures = [ParserConfigKt.FEATURE_MULTISELECT]
+        if MobileContentMultiplatformParser.animationsEnabled {
+            supportedFeatures.append(ParserConfigKt.FEATURE_ANIMATION)
+        }
+        
+        if MobileContentMultiplatformParser.multiSelectEnabled {
+            supportedFeatures.append(ParserConfigKt.FEATURE_MULTISELECT)
+        }
+        
+        ParserConfig().supportedFeatures = Set(supportedFeatures)
         
         let manifestParser = IosManifestParser(parserFactory: MobileContentMultiplatformParserFactory(translationsFileCache: translationsFileCache))
         
