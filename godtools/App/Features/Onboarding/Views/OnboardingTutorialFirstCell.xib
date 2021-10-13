@@ -32,7 +32,7 @@
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g2I-2Q-yE9" userLabel="Title Label">
-                    <rect key="frame" x="16" y="211.33333333333334" width="382" height="38.333333333333343"/>
+                    <rect key="frame" x="30" y="211.33333333333334" width="354" height="38.333333333333343"/>
                     <fontDescription key="fontDescription" name="SFProDisplay-Light" family="SF Pro Display" pointSize="32"/>
                     <color key="textColor" red="0.23137254900000001" green="0.64313725489999995" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -52,9 +52,9 @@
             <constraints>
                 <constraint firstItem="7RE-rj-898" firstAttribute="top" secondItem="2Ud-wT-1r3" secondAttribute="top" constant="48" id="Fub-4R-Ztb"/>
                 <constraint firstItem="g2I-2Q-yE9" firstAttribute="top" secondItem="7RE-rj-898" secondAttribute="bottom" constant="16" id="Kw4-qQ-Kqr"/>
-                <constraint firstItem="g2I-2Q-yE9" firstAttribute="leading" secondItem="0RB-Aw-hL4" secondAttribute="leading" constant="16" id="MZ5-uE-q9s"/>
+                <constraint firstItem="g2I-2Q-yE9" firstAttribute="leading" secondItem="0RB-Aw-hL4" secondAttribute="leading" constant="30" id="MZ5-uE-q9s"/>
                 <constraint firstItem="0RB-Aw-hL4" firstAttribute="trailing" secondItem="pwO-eC-2Xm" secondAttribute="trailing" constant="30" id="Qzs-9g-wt9"/>
-                <constraint firstItem="0RB-Aw-hL4" firstAttribute="trailing" secondItem="g2I-2Q-yE9" secondAttribute="trailing" constant="16" id="SGC-6s-wom"/>
+                <constraint firstItem="0RB-Aw-hL4" firstAttribute="trailing" secondItem="g2I-2Q-yE9" secondAttribute="trailing" constant="30" id="SGC-6s-wom"/>
                 <constraint firstItem="pwO-eC-2Xm" firstAttribute="leading" secondItem="0RB-Aw-hL4" secondAttribute="leading" constant="30" id="WAH-XY-zL0"/>
                 <constraint firstItem="7RE-rj-898" firstAttribute="width" secondItem="0RB-Aw-hL4" secondAttribute="width" multiplier="0.6" id="ZCi-RI-WQ7"/>
                 <constraint firstItem="pwO-eC-2Xm" firstAttribute="top" secondItem="g2I-2Q-yE9" secondAttribute="bottom" constant="20" id="udr-9g-Sie"/>
