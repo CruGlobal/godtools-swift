@@ -28,14 +28,8 @@ class OnboardingTutorialFirstCell: UIView, NibBased {
 
         titleLabel.text = viewModel.title
 
-        if let logoImageName = viewModel.logoImageName, !logoImageName.isEmpty, let logoImage = UIImage(named: logoImageName) {
-            logoImageView.image = logoImage
-            logoImageView.isHidden = false
-        }
-        else {
-            logoImageView.image = nil
-            logoImageView.isHidden = true
-        }
+        logoImageView.image = viewModel.logoImage
+        logoImageView.isHidden = false
     }
 
     @objc private func handleWatchVideo (button: UIButton) {

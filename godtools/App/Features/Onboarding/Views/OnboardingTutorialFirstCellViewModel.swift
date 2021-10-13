@@ -10,12 +10,13 @@ import Foundation
 
 class OnboardingTutorialFirstCellViewModel: OnboardingTutorialFirstCellViewModelType {
 
-    let logoImageName: String?
+    let logoImage: UIImage
     let title: String
     let videoLinkLabel: String
 
     required init(localizationServices: LocalizationServices) {
-        logoImageName = "onboarding_welcome_logo"
+        
+        logoImage = UIImage(named: "onboarding_welcome_logo")
         title = localizationServices.stringForMainBundle(key: "onboardingTutorial.0.title")
         videoLinkLabel = localizationServices.stringForMainBundle(key: "onboardingTutorial.0.videoLink.title")
     }

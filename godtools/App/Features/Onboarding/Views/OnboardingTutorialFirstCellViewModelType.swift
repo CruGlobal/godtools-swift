@@ -7,10 +7,11 @@
 //
 
 import Foundation
+import UIKit
 
 protocol OnboardingTutorialFirstCellViewModelType {
     
-    var logoImageName: String? { get }
+    var logoImage: UIImage { get }
     var title: String { get }
     var videoLinkLabel: String { get }
 }
