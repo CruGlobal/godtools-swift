@@ -1,5 +1,5 @@
 //
-//  OnboardingTutorialProvider.swift
+//  OnboardingTutorialItemsRepository.swift
 //  godtools
 //
 //  Created by Levi Eggert on 1/24/20.
@@ -8,9 +8,9 @@
 
 import Foundation
 
-class OnboardingTutorialProvider: TutorialPagerProviderType {
+class OnboardingTutorialItemsRepository {
     
-    let tutorialItems: [TutorialItemType]
+    let tutorialItems: [OnboardingTutorialItem]
     
     required init(localizationServices: LocalizationServices) {
         

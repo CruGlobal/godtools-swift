@@ -484,7 +484,7 @@
 		45AD1B6C25938A4F00A096A0 /* ToolDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45AD184325938A4E00A096A0 /* ToolDetailView.xib */; };
 		45AD1B6D25938A4F00A096A0 /* ToolDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD184425938A4E00A096A0 /* ToolDetailView.swift */; };
 		45AD1B6E25938A4F00A096A0 /* ToolDetailViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD184525938A4E00A096A0 /* ToolDetailViewModelType.swift */; };
-		45AD1B7325938A4F00A096A0 /* OnboardingTutorialProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD184C25938A4E00A096A0 /* OnboardingTutorialProvider.swift */; };
+		45AD1B7325938A4F00A096A0 /* OnboardingTutorialItemsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD184C25938A4E00A096A0 /* OnboardingTutorialItemsRepository.swift */; };
 		45AD1B8A25938A4F00A096A0 /* OnboardingTutorialAvailability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD186525938A4E00A096A0 /* OnboardingTutorialAvailability.swift */; };
 		45AD1B8B25938A4F00A096A0 /* OnboardingTutorialAvailabilityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD186625938A4E00A096A0 /* OnboardingTutorialAvailabilityType.swift */; };
 		45AD1B8C25938A4F00A096A0 /* OnboardingTutorialViewedUserDefaultsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD186725938A4E00A096A0 /* OnboardingTutorialViewedUserDefaultsCache.swift */; };
@@ -1539,7 +1539,7 @@
 		45AD184325938A4E00A096A0 /* ToolDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToolDetailView.xib; sourceTree = "<group>"; };
 		45AD184425938A4E00A096A0 /* ToolDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolDetailView.swift; sourceTree = "<group>"; };
 		45AD184525938A4E00A096A0 /* ToolDetailViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolDetailViewModelType.swift; sourceTree = "<group>"; };
-		45AD184C25938A4E00A096A0 /* OnboardingTutorialProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialProvider.swift; sourceTree = "<group>"; };
+		45AD184C25938A4E00A096A0 /* OnboardingTutorialItemsRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialItemsRepository.swift; sourceTree = "<group>"; };
 		45AD186525938A4E00A096A0 /* OnboardingTutorialAvailability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialAvailability.swift; sourceTree = "<group>"; };
 		45AD186625938A4E00A096A0 /* OnboardingTutorialAvailabilityType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialAvailabilityType.swift; sourceTree = "<group>"; };
 		45AD186725938A4E00A096A0 /* OnboardingTutorialViewedUserDefaultsCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialViewedUserDefaultsCache.swift; sourceTree = "<group>"; };
@@ -3788,7 +3788,6 @@
 		45AD184A25938A4E00A096A0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				45AD184C25938A4E00A096A0 /* OnboardingTutorialProvider.swift */,
 				D1D56917270632B200BBE2A6 /* OnboardingTutorialCustomViewBuilder.swift */,
 			);
 			path = Models;
@@ -5563,6 +5562,7 @@
 			isa = PBXGroup;
 			children = (
 				D1C8FEBC2714E9650071BD07 /* OnboardingTutorialItem.swift */,
+				45AD184C25938A4E00A096A0 /* OnboardingTutorialItemsRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -6204,7 +6204,7 @@
 				45AD1F5E25938A9800A096A0 /* StarscreamWebSocket.swift in Sources */,
 				45B116C22625FC6D007A7127 /* LanguageDirection+SemanticContentAttribute.swift in Sources */,
 				45AD1FED25938A9800A096A0 /* OpenTutorialCalloutUserDefaultsCache.swift in Sources */,
-				45AD1B7325938A4F00A096A0 /* OnboardingTutorialProvider.swift in Sources */,
+				45AD1B7325938A4F00A096A0 /* OnboardingTutorialItemsRepository.swift in Sources */,
 				45BD7A5326A21FDA0007426B /* HeadingNode.swift in Sources */,
 				45C93AE6261D310900592FFF /* ArticleAemRepository.swift in Sources */,
 				45AD1B2E25938A4F00A096A0 /* LanguageSettingsViewModel.swift in Sources */,
