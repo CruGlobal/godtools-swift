@@ -16,7 +16,6 @@ protocol TutorialPagerViewModelType: TutorialPagerAnalyticsType {
     var skipButtonHidden: ObservableValue<Bool> { get }
     var continueButtonTitle: ObservableValue<String> { get }
     var continueButtonHidden: ObservableValue<Bool> { get }
-    var pageControlHidden: ObservableValue<Bool> { get }
 
     func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType
     func skipTapped()

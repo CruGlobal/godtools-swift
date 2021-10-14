@@ -25,7 +25,6 @@ class TutorialPagerViewModel {
     var skipButtonHidden: ObservableValue<Bool>
     var continueButtonTitle: ObservableValue<String>
     var continueButtonHidden: ObservableValue<Bool>
-    var pageControlHidden: ObservableValue<Bool>
     
     required init(flowDelegate: FlowDelegate, analyticsContainer: AnalyticsContainer, tutorialPagerProvider: TutorialPagerProviderType, onboardingTutorialAvailability: OnboardingTutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, customViewBuilder: CustomViewBuilderType, localizationServices: LocalizationServices, analyticsScreenName: String, skipButtonTitle: String) {
         
@@ -41,7 +40,6 @@ class TutorialPagerViewModel {
         self.skipButtonHidden = ObservableValue(value: false)
         self.continueButtonTitle = ObservableValue(value: "")
         self.continueButtonHidden = ObservableValue(value: false)
-        self.pageControlHidden = ObservableValue(value: false)
         self.tutorialItems = tutorialPagerProvider.tutorialItems
         
         onboardingTutorialAvailability.markOnboardingTutorialViewed()
@@ -72,9 +70,11 @@ extension TutorialPagerViewModel: TutorialPagerViewModelType {
         
         switch page {
         case 0:
+            skipButtonHidden.accept(value: true)
             continueButtonTitle.accept(value: localizationServices.stringForMainBundle(key: "onboardingTutorial.beginButton.title"))
        
         default:
+            skipButtonHidden.accept(value: false)
             continueButtonTitle.accept(value: localizationServices.stringForMainBundle(key: "onboardingTutorial.nextButton.title"))
         }
         
