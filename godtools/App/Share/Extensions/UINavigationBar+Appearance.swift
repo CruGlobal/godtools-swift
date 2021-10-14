@@ -66,9 +66,7 @@ extension UINavigationBar {
         if #available(iOS 13, *) {
             
             let appearance = UINavigationBarAppearance()
-            
-            appearance.configureWithOpaqueBackground()
-            
+                        
             if isTranslucent {
                 
                 appearance.configureWithTransparentBackground()
