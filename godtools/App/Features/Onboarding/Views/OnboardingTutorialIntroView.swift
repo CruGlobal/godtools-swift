@@ -1,5 +1,5 @@
 //
-//  OnboardingTutorialFirstCell.swift
+//  OnboardingTutorialIntroView.swift
 //  godtools
 //
 //  Created by Robert Eldredge on 9/30/21.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OnboardingTutorialFirstCell: UIView, NibBased {
+class OnboardingTutorialIntroView: UIView, NibBased {
 
     @IBOutlet weak private var logoImageView: UIImageView!
     @IBOutlet weak private var titleLabel: UILabel!
@@ -24,12 +24,12 @@ class OnboardingTutorialFirstCell: UIView, NibBased {
         loadNib()
     }
 
-    func configure(viewModel: OnboardingTutorialFirstCellViewModelType) {
+    func configure(viewModel: OnboardingTutorialIntroViewModelType) {
 
         titleLabel.text = viewModel.title
 
         logoImageView.image = viewModel.logoImage
-        logoImageView.isHidden = false
+        logoImageView.isHidden = viewModel.logoImage == nil
     }
 
     @objc private func handleWatchVideo (button: UIButton) {

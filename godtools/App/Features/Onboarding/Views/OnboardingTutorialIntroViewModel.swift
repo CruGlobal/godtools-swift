@@ -1,16 +1,16 @@
 //
-//  OnboardingTutorialFirstCellViewModel.swift
+//  OnboardingTutorialIntroViewModel.swift
 //  godtools
 //
 //  Created by Robert Eldredge on 9/30/21.
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
-class OnboardingTutorialFirstCellViewModel: OnboardingTutorialFirstCellViewModelType {
+class OnboardingTutorialIntroViewModel: OnboardingTutorialIntroViewModelType {
 
-    let logoImage: UIImage
+    let logoImage: UIImage?
     let title: String
     let videoLinkLabel: String
 
