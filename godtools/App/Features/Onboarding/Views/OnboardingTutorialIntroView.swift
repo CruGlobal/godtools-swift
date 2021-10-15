@@ -29,7 +29,6 @@ class OnboardingTutorialIntroView: UIView, NibBased {
         titleLabel.text = viewModel.title
 
         logoImageView.image = viewModel.logoImage
-        logoImageView.isHidden = viewModel.logoImage == nil
     }
 
     @objc private func handleWatchVideo (button: UIButton) {
