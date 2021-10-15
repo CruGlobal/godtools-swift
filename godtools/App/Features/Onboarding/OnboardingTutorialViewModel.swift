@@ -60,10 +60,13 @@ extension OnboardingTutorialViewModel: TutorialPagerViewModelType {
         flowDelegate?.navigate(step: .skipTappedFromOnboardingTutorial)
     }
     
+    func pageDidChange(page: Int) {
+        
+        onPageDidChange(page: page)
+    }
+    
     func pageDidAppear(page: Int) {
-        
-        self.page.accept(value: page)
-        
+                
         switch page {
         case 0:
             skipButtonHidden.accept(value: true)
@@ -74,7 +77,7 @@ extension OnboardingTutorialViewModel: TutorialPagerViewModelType {
             continueButtonTitle.accept(value: localizationServices.stringForMainBundle(key: "onboardingTutorial.nextButton.title"))
         }
         
-        trackPageDidAppear(page: page)
+        onPageDidAppear(page: page)
     }
     
     func continueTapped() {
@@ -86,7 +89,7 @@ extension OnboardingTutorialViewModel: TutorialPagerViewModelType {
             flowDelegate?.navigate(step: .endTutorialFromOnboardingTutorial)
         }
         
-        trackContinueButtonTapped(page: page.value)
+        onContinue()
     }
     
     func tutorialVideoPlayTapped() {

@@ -19,24 +19,27 @@ protocol TutorialPagerViewModelType: TutorialPagerAnalyticsType {
 
     func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType
     func skipTapped()
+    func pageDidChange(page: Int)
+    func pageDidAppear(page: Int)
+    func continueTapped()
     func tutorialVideoPlayTapped()
 }
 
 extension TutorialPagerViewModelType {
     
-    func pageDidChange(page: Int) {
+    func onPageDidChange(page: Int) {
         
         self.page.accept(value: page)
     }
     
-    func pageDidAppear(page: Int) {
+    func onPageDidAppear(page: Int) {
         
         self.page.accept(value: page)
         
         trackPageDidAppear(page: page)
     }
     
-    func continueTapped() {
+    func onContinue() {
         
         trackContinueButtonTapped(page: page.value)
     }
