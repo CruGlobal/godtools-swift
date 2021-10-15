@@ -11,7 +11,7 @@ import youtube_ios_player_helper
 
 class TutorialPagerView: UIViewController {
     
-    private let viewModel: TutorialPagerViewModelType
+    private let viewModel: TutorialPagerViewModel
     
     private var skipButton: UIBarButtonItem?
     
@@ -22,7 +22,7 @@ class TutorialPagerView: UIViewController {
     
     @IBOutlet weak private var continueButtonTop: NSLayoutConstraint!
     
-    required init(viewModel: TutorialPagerViewModelType) {
+    required init(viewModel: TutorialPagerViewModel) {
         
         self.viewModel = viewModel
         super.init(nibName: String(describing: TutorialPagerView.self), bundle: nil)
@@ -137,7 +137,7 @@ extension TutorialPagerView: PageNavigationCollectionViewDelegate {
         let cell = tutorialPagesView.getReusablePageCell(cellReuseIdentifier: TutorialCell.reuseIdentifier, indexPath: indexPath) as! TutorialCell
         
         let cellViewModel = viewModel.tutorialItemWillAppear(index: indexPath.item)
-        cell.configure(viewModel: cellViewModel, delegate: self)
+        cell.configure(viewModel: cellViewModel)
         
         return cell
     }
@@ -155,17 +155,6 @@ extension TutorialPagerView: PageNavigationCollectionViewDelegate {
         if pageNavigation == tutorialPagesView {
             
             viewModel.pageDidAppear(page: page)
-        }
-    }
-}
-
-// MARK: - TutorialCellDelegate
-
-extension TutorialPagerView: TutorialCellDelegate {
-    
-    func tutorialCellVideoPlayer(cell: TutorialCell, didChangeTo state: YTPlayerState) {
-        if state == .playing {
-            viewModel.tutorialVideoPlayTapped()
         }
     }
 }

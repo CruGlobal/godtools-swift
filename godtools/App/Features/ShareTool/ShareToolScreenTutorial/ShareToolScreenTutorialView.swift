@@ -152,7 +152,7 @@ extension ShareToolScreenTutorialView: PageNavigationCollectionViewDelegate {
             customViewBuilder: viewModel.customViewBuilder
         )
 
-        cell.configure(viewModel: cellViewModel, delegate: self)
+        cell.configure(viewModel: cellViewModel)
         
         return cell
     }
@@ -171,13 +171,5 @@ extension ShareToolScreenTutorialView: PageNavigationCollectionViewDelegate {
     func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
         
         pageControl.currentPage = page
-    }
-}
-
-// MARK: - TutorialCellDelegate
-
-extension ShareToolScreenTutorialView: TutorialCellDelegate {
-    func tutorialCellVideoPlayer(cell: TutorialCell, didChangeTo state: YTPlayerState) {
-
     }
 }

@@ -1000,6 +1000,7 @@
 		4FC97EB920D2C37900084A33 /* analytics-test2.xml in Resources */ = {isa = PBXBuildFile; fileRef = 4FC97EB820D2C37900084A33 /* analytics-test2.xml */; };
 		8C8C44BD9B31E90E469C99FF /* Pods_godtoolsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */; };
 		D105922E252FA2E700F120CA /* share_tool_tutorial_mirrored.json in Resources */ = {isa = PBXBuildFile; fileRef = D115A65D25265813007F11AD /* share_tool_tutorial_mirrored.json */; };
+		D119788F271A090400E08580 /* TutorialPagerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D119788E271A090400E08580 /* TutorialPagerViewModel.swift */; };
 		D163EA96254A00BE00BA4EA9 /* share_tool_tutorial_link.json in Resources */ = {isa = PBXBuildFile; fileRef = D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */; };
 		D168FDC826F9224F0083D578 /* TutorialPagerAnalyticsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D168FDC726F9224F0083D578 /* TutorialPagerAnalyticsType.swift */; };
 		D168FDCA26F922650083D578 /* TutorialPagerViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D168FDC926F922650083D578 /* TutorialPagerViewModelType.swift */; };
@@ -2100,6 +2101,7 @@
 		A9BDC99CD6AA5FF3CCAC0E93 /* Pods-godtools.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.staging.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.staging.xcconfig"; sourceTree = "<group>"; };
 		B03BA6AC6918BE450406F1E6 /* Pods-godtools.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.debug.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.debug.xcconfig"; sourceTree = "<group>"; };
 		D115A65D25265813007F11AD /* share_tool_tutorial_mirrored.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = share_tool_tutorial_mirrored.json; sourceTree = "<group>"; };
+		D119788E271A090400E08580 /* TutorialPagerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPagerViewModel.swift; sourceTree = "<group>"; };
 		D14F75B825D58B96008749CF /* NotoSansMyanmarUI-Condensed.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansMyanmarUI-Condensed.ttf"; sourceTree = "<group>"; };
 		D14F75B925D58B96008749CF /* NotoSansMyanmarUI-CondensedBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansMyanmarUI-CondensedBold.ttf"; sourceTree = "<group>"; };
 		D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = share_tool_tutorial_link.json; sourceTree = "<group>"; };
@@ -5506,6 +5508,7 @@
 			children = (
 				D1D569112704A92B00BBE2A6 /* TutorialPagerView.swift */,
 				D1D56915270502B200BBE2A6 /* TutorialPagerView.xib */,
+				D119788E271A090400E08580 /* TutorialPagerViewModel.swift */,
 				D168FDC926F922650083D578 /* TutorialPagerViewModelType.swift */,
 				D168FDC526F921FD0083D578 /* Models */,
 			);
@@ -6363,6 +6366,7 @@
 				45AD1ACB25938A4E00A096A0 /* FavoritingToolMessageView.swift in Sources */,
 				45AD1AA125938A4E00A096A0 /* TutorialItemProvider.swift in Sources */,
 				458EFECF26B0FAC7009EEB03 /* ToolDeepLink.swift in Sources */,
+				D119788F271A090400E08580 /* TutorialPagerViewModel.swift in Sources */,
 				45AD1B0525938A4E00A096A0 /* ArticlesErrorMessage.swift in Sources */,
 				455583C8269F2DA500C3FF14 /* MobileContentSectionViewModelType.swift in Sources */,
 				45DC914F26A6120A006BDBD0 /* MobileContentRenderableModelContainer.swift in Sources */,

@@ -147,7 +147,7 @@ extension TutorialView: PageNavigationCollectionViewDelegate {
             customViewBuilder: viewModel.customViewBuilder
         )
         
-        cell.configure(viewModel: cellViewModel, delegate: self)
+        cell.configure(viewModel: cellViewModel)
         
         return cell
     }
@@ -170,15 +170,5 @@ extension TutorialView: PageNavigationCollectionViewDelegate {
         pageControl.currentPage = page
         
         viewModel.pageDidAppear(page: page)
-    }
-}
-
-// MARK: - TutorialCellDelegate
-
-extension TutorialView: TutorialCellDelegate {
-    func tutorialCellVideoPlayer(cell: TutorialCell, didChangeTo state: YTPlayerState) {
-        if state == .playing {
-            viewModel.tutorialVideoPlayTapped()
-        }
     }
 }

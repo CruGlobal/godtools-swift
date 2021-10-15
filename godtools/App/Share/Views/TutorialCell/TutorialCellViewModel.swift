@@ -17,7 +17,7 @@ class TutorialCellViewModel: TutorialCellViewModelType {
     let animationName: String?
     let customView: UIView?
     
-    required init(item: TutorialItemType, customViewBuilder: CustomViewBuilderType) {
+    required init(item: TutorialItemType, customViewBuilder: CustomViewBuilderType?) {
         
         title = item.title
         message = item.message
@@ -25,7 +25,7 @@ class TutorialCellViewModel: TutorialCellViewModelType {
         youTubeVideoId = item.youTubeVideoId
         animationName = item.animationName
         
-        if let customViewId = item.customViewId, !customViewId.isEmpty, let builtCustomView = customViewBuilder.buildCustomView(customViewId: customViewId) {
+        if let customViewId = item.customViewId, !customViewId.isEmpty, let builtCustomView = customViewBuilder?.buildCustomView(customViewId: customViewId) {
             customView = builtCustomView
         }
         else {

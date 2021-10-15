@@ -8,64 +8,44 @@
 
 import Foundation
 
-class OnboardingTutorialViewModel {
+class OnboardingTutorialViewModel: TutorialPagerViewModel {
     
     private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
-    private let tutorialItems: [TutorialItemType]
     private let customViewBuilder: CustomViewBuilderType
     private let localizationServices: LocalizationServices
     
     private weak var flowDelegate: FlowDelegate?
-
-    let analyticsContainer: AnalyticsContainer
-    let analyticsScreenName: String
-    let pageCount: Int
-    let page: ObservableValue<Int>
-    var skipButtonTitle: String
-    var skipButtonHidden: ObservableValue<Bool>
-    var continueButtonTitle: ObservableValue<String>
-    var continueButtonHidden: ObservableValue<Bool>
     
-    required init(flowDelegate: FlowDelegate, analyticsContainer: AnalyticsContainer, onboardingTutorialItemsRepository: OnboardingTutorialItemsRepositoryType, onboardingTutorialAvailability: OnboardingTutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, customViewBuilder: CustomViewBuilderType, localizationServices: LocalizationServices, analyticsScreenName: String, skipButtonTitle: String) {
+    required init(flowDelegate: FlowDelegate, analyticsContainer: AnalyticsContainer, onboardingTutorialItemsRepository: OnboardingTutorialItemsRepositoryType, onboardingTutorialAvailability: OnboardingTutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, customViewBuilder: CustomViewBuilderType, localizationServices: LocalizationServices) {
         
         self.flowDelegate = flowDelegate
-        self.analyticsContainer = analyticsContainer
         self.openTutorialCalloutCache = openTutorialCalloutCache
         self.customViewBuilder = customViewBuilder
         self.localizationServices = localizationServices
-        self.analyticsScreenName = analyticsScreenName
-        self.pageCount = onboardingTutorialItemsRepository.tutorialItems.count
-        self.page = ObservableValue(value: 0)
-        self.skipButtonTitle = skipButtonTitle
-        self.skipButtonHidden = ObservableValue(value: false)
-        self.continueButtonTitle = ObservableValue(value: "")
-        self.continueButtonHidden = ObservableValue(value: false)
-        self.tutorialItems = onboardingTutorialItemsRepository.tutorialItems
+        
+        super.init(analyticsContainer: analyticsContainer,  tutorialItems: onboardingTutorialItemsRepository.tutorialItems, skipButtonTitle: localizationServices.stringForMainBundle(key: "navigationBar.navigationItem.skip"))
         
         onboardingTutorialAvailability.markOnboardingTutorialViewed()
     }
-}
-
-
-// MARK: - TutorialPagerViewModelType
-
-extension OnboardingTutorialViewModel: TutorialPagerViewModelType {
     
-    func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType {
+    required init(analyticsContainer: AnalyticsContainer, tutorialItems: [TutorialItemType], skipButtonTitle: String) {
+        fatalError("init(analyticsContainer:localizationServices:tutorialItems:) has not been implemented")
+    }
+    
+    private var analyticsScreenName: String {
+        return "onboarding"
+    }
+    
+    override func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType {
          return TutorialCellViewModel(item: tutorialItems[index], customViewBuilder: customViewBuilder)
     }
-
-    func skipTapped() {
+    
+    override func skipTapped() {
         
         flowDelegate?.navigate(step: .skipTappedFromOnboardingTutorial)
     }
     
-    func pageDidChange(page: Int) {
-        
-        onPageDidChange(page: page)
-    }
-    
-    func pageDidAppear(page: Int) {
+    override func pageDidAppear(page: Int) {
                 
         switch page {
         case 0:
@@ -77,10 +57,10 @@ extension OnboardingTutorialViewModel: TutorialPagerViewModelType {
             continueButtonTitle.accept(value: localizationServices.stringForMainBundle(key: "onboardingTutorial.nextButton.title"))
         }
         
-        onPageDidAppear(page: page)
+        super.pageDidAppear(page: page)
     }
     
-    func continueTapped() {
+    override func continueTapped() {
         
         let nextPage = page.value + 1
         let reachedEnd = nextPage >= pageCount
@@ -89,15 +69,6 @@ extension OnboardingTutorialViewModel: TutorialPagerViewModelType {
             flowDelegate?.navigate(step: .endTutorialFromOnboardingTutorial)
         }
         
-        onContinue()
-    }
-    
-    func tutorialVideoPlayTapped() {
-        
-        guard let youTubeVideoId = tutorialItems[page.value].youTubeVideoId else {
-            return
-        }
-        
-        trackVideoWatched(videoId: youTubeVideoId)
+        super.continueTapped()
     }
 }
