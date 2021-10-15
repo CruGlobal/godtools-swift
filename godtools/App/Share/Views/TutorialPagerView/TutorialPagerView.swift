@@ -56,8 +56,6 @@ class TutorialPagerView: UIViewController {
         
         tutorialPagesView.pageBackgroundColor = .clear
         tutorialPagesView.registerPageCell(nib: UINib(nibName: TutorialCell.nibName, bundle: nil), cellReuseIdentifier: TutorialCell.reuseIdentifier)
-        
-        handleTutorialPageChange(page: 0)
     }
     
     private func setupBinding() {
@@ -87,11 +85,6 @@ class TutorialPagerView: UIViewController {
         tutorialPagesView.reloadData()
     }
     
-    private func handleTutorialPageChange(page: Int) {
-        
-        setContinueButton(animated: true)
-    }
-    
     private func setSkipButton(hidden: Bool) {
         
         let skipButtonPosition: ButtonItemPosition = .right
@@ -110,31 +103,6 @@ class TutorialPagerView: UIViewController {
         }
         else if let skipButton = skipButton {
             hidden ? removeBarButtonItem(item: skipButton, barPosition: skipButtonPosition) : addBarButtonItem(item: skipButton, barPosition: skipButtonPosition)
-        }
-    }
-    
-    private func setContinueButton(animated: Bool) {
-        
-        let layoutView: UIView = footerView
-        let animationDuration: TimeInterval = 0.28
-        let visible: CGFloat = 0
-        
-        if animated {
-            UIView.animate(withDuration: animationDuration, delay: 0, options: .curveEaseOut, animations: {
-                layoutView.layoutIfNeeded()
-            })
-        } else {
-            layoutView.layoutIfNeeded()
-        }
-        
-        continueButtonTop.constant = visible
-        continueButton.alpha = 1
-        if animated {
-            UIView.animate(withDuration: animationDuration, delay: 0.14, options: .curveEaseOut, animations: {
-                layoutView.layoutIfNeeded()
-            }, completion: nil)
-        } else {
-            layoutView.layoutIfNeeded()
         }
     }
     
@@ -177,9 +145,7 @@ extension TutorialPagerView: PageNavigationCollectionViewDelegate {
     func pageNavigationDidChangeMostVisiblePage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
         
         if pageNavigation == tutorialPagesView {
-            
-            handleTutorialPageChange(page: page)
-            
+                        
             viewModel.pageDidChange(page: page)
         }
     }
