@@ -8,8 +8,9 @@
 
 import Foundation
 
-protocol TutorialPagerViewModelType: TutorialPagerAnalyticsType {
+protocol TutorialPagerViewModelType {
    
+    var tutorialItems: [TutorialItemType] { get }
     var pageCount: Int { get }
     var page: ObservableValue<Int> { get }
     var skipButtonTitle: String { get }
@@ -22,25 +23,4 @@ protocol TutorialPagerViewModelType: TutorialPagerAnalyticsType {
     func pageDidChange(page: Int)
     func pageDidAppear(page: Int)
     func continueTapped()
-    func tutorialVideoPlayTapped()
-}
-
-extension TutorialPagerViewModelType {
-    
-    func onPageDidChange(page: Int) {
-        
-        self.page.accept(value: page)
-    }
-    
-    func onPageDidAppear(page: Int) {
-        
-        self.page.accept(value: page)
-        
-        trackPageDidAppear(page: page)
-    }
-    
-    func onContinue() {
-        
-        trackContinueButtonTapped(page: page.value)
-    }
 }

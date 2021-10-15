@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TutorialPagerViewModel {
+class TutorialPagerViewModel: TutorialPagerViewModelType {
     
     private let analyticsContainer: AnalyticsContainer
     
@@ -63,11 +63,11 @@ class TutorialPagerViewModel {
         trackContinueButtonTapped(page: page.value)
     }
     
-    func trackPageDidAppear (page: Int) {
+    private func trackPageDidAppear (page: Int) {
         analyticsContainer.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: "\(analyticsScreenName)-\(page)", siteSection: "onboarding", siteSubSection: ""))
     }
     
-    func trackContinueButtonTapped (page: Int) {
+    private func trackContinueButtonTapped (page: Int) {
         
         let nextPage = page + 1
         let reachedEnd = nextPage >= pageCount
