@@ -40,10 +40,10 @@ class OnboardingFlow: Flow {
         
         let onboardingTutorialItemsRepository = OnboardingTutorialItemsRepository(localizationServices: appDiContainer.localizationServices)
         
-        let viewModel = TutorialPagerViewModel(
+        let viewModel = OnboardingTutorialViewModel(
             flowDelegate: self,
             analyticsContainer: appDiContainer.analytics,
-            tutorialPagerProvider: onboardingTutorialItemsRepository,
+            onboardingTutorialItemsRepository: onboardingTutorialItemsRepository,
             onboardingTutorialAvailability: appDiContainer.onboardingTutorialAvailability,
             openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache,
             customViewBuilder: appDiContainer.onboardingTutorialCustomViewBuilder(),

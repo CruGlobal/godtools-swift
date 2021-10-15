@@ -22,9 +22,9 @@ class OnboardingTutorialCustomViewBuilder: CustomViewBuilderType {
     func buildCustomView(customViewId: String) -> UIView? {
 
         if customViewId == "onboarding-0" {
-            let viewModel = OnboardingTutorialFirstCellViewModel(localizationServices: localizationServices)
+            let viewModel = OnboardingTutorialIntroViewModel(localizationServices: localizationServices)
 
-            let view = OnboardingTutorialFirstCell()
+            let view = OnboardingTutorialIntroView()
 
             view.configure(viewModel: viewModel)
 

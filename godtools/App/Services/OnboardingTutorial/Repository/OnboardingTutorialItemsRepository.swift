@@ -8,7 +8,7 @@
 
 import Foundation
 
-class OnboardingTutorialItemsRepository {
+class OnboardingTutorialItemsRepository: OnboardingTutorialItemsRepositoryType {
     
     let tutorialItems: [OnboardingTutorialItem]
     

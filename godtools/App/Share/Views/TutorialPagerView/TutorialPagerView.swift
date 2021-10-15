@@ -80,10 +80,6 @@ class TutorialPagerView: UIViewController {
         viewModel.continueButtonHidden.addObserver(self) { [weak self] (hidden: Bool) in
             self?.continueButton.isHidden = hidden
         }
-        
-        viewModel.pageControlHidden.addObserver(self) { [weak self] (hidden: Bool) in
-            self?.pageControl.isHidden = hidden
-        }
     }
     
     private func reloadData() {

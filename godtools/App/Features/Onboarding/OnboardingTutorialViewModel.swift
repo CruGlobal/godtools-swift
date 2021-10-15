@@ -1,14 +1,14 @@
 //
-//  TutorialPagerViewModel.swift
+//  OnboardingTutorialViewModel.swift
 //  godtools
 //
-//  Created by Robert Eldredge on 9/20/21.
+//  Created by Robert Eldredge on 10/14/21.
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
 import Foundation
 
-class TutorialPagerViewModel {
+class OnboardingTutorialViewModel {
     
     private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     private let tutorialItems: [TutorialItemType]
@@ -26,7 +26,7 @@ class TutorialPagerViewModel {
     var continueButtonTitle: ObservableValue<String>
     var continueButtonHidden: ObservableValue<Bool>
     
-    required init(flowDelegate: FlowDelegate, analyticsContainer: AnalyticsContainer, tutorialPagerProvider: TutorialPagerProviderType, onboardingTutorialAvailability: OnboardingTutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, customViewBuilder: CustomViewBuilderType, localizationServices: LocalizationServices, analyticsScreenName: String, skipButtonTitle: String) {
+    required init(flowDelegate: FlowDelegate, analyticsContainer: AnalyticsContainer, onboardingTutorialItemsRepository: OnboardingTutorialItemsRepositoryType, onboardingTutorialAvailability: OnboardingTutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, customViewBuilder: CustomViewBuilderType, localizationServices: LocalizationServices, analyticsScreenName: String, skipButtonTitle: String) {
         
         self.flowDelegate = flowDelegate
         self.analyticsContainer = analyticsContainer
@@ -34,21 +34,22 @@ class TutorialPagerViewModel {
         self.customViewBuilder = customViewBuilder
         self.localizationServices = localizationServices
         self.analyticsScreenName = analyticsScreenName
-        self.pageCount = tutorialPagerProvider.tutorialItems.count
+        self.pageCount = onboardingTutorialItemsRepository.tutorialItems.count
         self.page = ObservableValue(value: 0)
         self.skipButtonTitle = skipButtonTitle
         self.skipButtonHidden = ObservableValue(value: false)
         self.continueButtonTitle = ObservableValue(value: "")
         self.continueButtonHidden = ObservableValue(value: false)
-        self.tutorialItems = tutorialPagerProvider.tutorialItems
+        self.tutorialItems = onboardingTutorialItemsRepository.tutorialItems
         
         onboardingTutorialAvailability.markOnboardingTutorialViewed()
     }
 }
 
+
 // MARK: - TutorialPagerViewModelType
 
-extension TutorialPagerViewModel: TutorialPagerViewModelType {
+extension OnboardingTutorialViewModel: TutorialPagerViewModelType {
     
     func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType {
          return TutorialCellViewModel(item: tutorialItems[index], customViewBuilder: customViewBuilder)
@@ -57,11 +58,6 @@ extension TutorialPagerViewModel: TutorialPagerViewModelType {
     func skipTapped() {
         
         flowDelegate?.navigate(step: .skipTappedFromOnboardingTutorial)
-    }
-    
-    func pageDidChange(page: Int) {
-        
-        self.page.accept(value: page)
     }
     
     func pageDidAppear(page: Int) {
@@ -101,5 +97,4 @@ extension TutorialPagerViewModel: TutorialPagerViewModelType {
         
         trackVideoWatched(videoId: youTubeVideoId)
     }
-
 }
