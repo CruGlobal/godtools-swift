@@ -20,12 +20,14 @@ class TutorialPagerViewModel: TutorialPagerViewModelType {
     let continueButtonTitle: ObservableValue<String>
     let continueButtonHidden: ObservableValue<Bool>
     
-    required init(analyticsContainer: AnalyticsContainer,  tutorialItems: [TutorialItemType], skipButtonTitle: String) {
+    private weak var flowDelegate: FlowDelegate?
+    
+    required init(flowDelegate: FlowDelegate, analyticsContainer: AnalyticsContainer,  tutorialItems: [TutorialItemType], skipButtonTitle: String) {
         
+        self.flowDelegate = flowDelegate
         self.analyticsContainer = analyticsContainer
         
         self.tutorialItems = tutorialItems
-        
         self.pageCount = tutorialItems.count
         self.page = ObservableValue(value: 0)
         self.skipButtonTitle = skipButtonTitle
@@ -50,12 +52,24 @@ class TutorialPagerViewModel: TutorialPagerViewModelType {
         return ""
     }
     
+    var navigationStepForSkipTapped: FlowStep? {
+        return nil
+    }
+    
+    var navigationStepForContinueTapped: FlowStep? {
+        return nil
+    }
+    
     func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType {
+        
         return TutorialCellViewModel(item: tutorialItems[index], customViewBuilder: nil)
     }
     
     func skipTapped() {
-        //Implement this
+        
+        if let step = navigationStepForSkipTapped {
+            flowDelegate?.navigate(step: step)
+        }
     }
     
     func pageDidChange(page: Int) {
@@ -72,10 +86,17 @@ class TutorialPagerViewModel: TutorialPagerViewModelType {
     
     func continueTapped() {
         
-        trackContinueButtonTapped(page: page.value)
+        let reachedEnd = page.value >= pageCount - 1
+        
+        if reachedEnd, let step = navigationStepForContinueTapped {
+            flowDelegate?.navigate(step: step)
+            
+            trackContinueButtonTapped(page: page.value)
+        }
     }
     
     private func trackPageDidAppear (page: Int) {
+        
         if !analyticsScreenName.isEmpty {
             analyticsContainer.pageViewedAnalytics.trackPageView(
                 trackScreen: TrackScreenModel(
@@ -89,10 +110,7 @@ class TutorialPagerViewModel: TutorialPagerViewModelType {
     
     private func trackContinueButtonTapped (page: Int) {
         
-        let nextPage = page + 1
-        let reachedEnd = nextPage >= pageCount
-        
-        if reachedEnd, !analyticsScreenName.isEmpty, !analyticsActionName.isEmpty {
+        if !analyticsScreenName.isEmpty, !analyticsActionName.isEmpty {
             analyticsContainer.trackActionAnalytics.trackAction(
                 trackAction: TrackActionModel(
                     screenName: "\(analyticsScreenName)-\(page)",

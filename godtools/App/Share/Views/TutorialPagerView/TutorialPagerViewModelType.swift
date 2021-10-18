@@ -21,6 +21,8 @@ protocol TutorialPagerViewModelType {
     var analyticsSiteSection: String { get }
     var analyticsSiteSubsection: String { get }
     var analyticsActionName: String { get }
+    var navigationStepForSkipTapped: FlowStep? { get }
+    var navigationStepForContinueTapped: FlowStep? { get }
     
     func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType
     func skipTapped()

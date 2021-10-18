@@ -13,22 +13,19 @@ class OnboardingTutorialViewModel: TutorialPagerViewModel {
     private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     private let customViewBuilder: CustomViewBuilderType
     private let localizationServices: LocalizationServices
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     required init(flowDelegate: FlowDelegate, analyticsContainer: AnalyticsContainer, onboardingTutorialItemsRepository: OnboardingTutorialItemsRepositoryType, onboardingTutorialAvailability: OnboardingTutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, customViewBuilder: CustomViewBuilderType, localizationServices: LocalizationServices) {
         
-        self.flowDelegate = flowDelegate
         self.openTutorialCalloutCache = openTutorialCalloutCache
         self.customViewBuilder = customViewBuilder
         self.localizationServices = localizationServices
         
-        super.init(analyticsContainer: analyticsContainer,  tutorialItems: onboardingTutorialItemsRepository.tutorialItems, skipButtonTitle: localizationServices.stringForMainBundle(key: "navigationBar.navigationItem.skip"))
+        super.init(flowDelegate: flowDelegate, analyticsContainer: analyticsContainer,  tutorialItems: onboardingTutorialItemsRepository.tutorialItems, skipButtonTitle: localizationServices.stringForMainBundle(key: "navigationBar.navigationItem.skip"))
         
         onboardingTutorialAvailability.markOnboardingTutorialViewed()
     }
     
-    required init(analyticsContainer: AnalyticsContainer, tutorialItems: [TutorialItemType], skipButtonTitle: String) {
+    required init(flowDelegate: FlowDelegate, analyticsContainer: AnalyticsContainer, tutorialItems: [TutorialItemType], skipButtonTitle: String) {
         fatalError("init(analyticsContainer:localizationServices:tutorialItems:) has not been implemented")
     }
     
@@ -48,13 +45,22 @@ class OnboardingTutorialViewModel: TutorialPagerViewModel {
         return "On-Boarding Start"
     }
     
+    override var navigationStepForSkipTapped: FlowStep? {
+        return .skipTappedFromOnboardingTutorial
+    }
+    
+    override var navigationStepForContinueTapped: FlowStep? {
+        return .endTutorialFromOnboardingTutorial
+    }
+    
     override func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType {
+        
          return TutorialCellViewModel(item: tutorialItems[index], customViewBuilder: customViewBuilder)
     }
     
     override func skipTapped() {
         
-        flowDelegate?.navigate(step: .skipTappedFromOnboardingTutorial)
+        super.skipTapped()
     }
     
     override func pageDidChange(page: Int) {
@@ -73,13 +79,6 @@ class OnboardingTutorialViewModel: TutorialPagerViewModel {
     }
     
     override func continueTapped() {
-        
-        let nextPage = page.value + 1
-        let reachedEnd = nextPage >= pageCount
-        
-        if reachedEnd {
-            flowDelegate?.navigate(step: .endTutorialFromOnboardingTutorial)
-        }
         
         super.continueTapped()
     }
