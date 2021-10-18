@@ -22,7 +22,6 @@ class ContentButtonNode: MobileContentXmlNode, ContentButtonModelType {
     let url: String?
     let iconName: String?
     let iconSize: Int?
-    let iconGravity: String?
     
     required init(xmlElement: XMLElement) {
     
@@ -35,7 +34,6 @@ class ContentButtonNode: MobileContentXmlNode, ContentButtonModelType {
         styleString = attributes["style"]?.text
         typeString = attributes["type"]?.text
         iconName = attributes["icon"]?.text
-        iconGravity = attributes["icon-gravity"]?.text
         
         if let iconSizeString = attributes["icon-size"]?.text, let iconSizeInt = Int(iconSizeString) {
             iconSize = iconSizeInt

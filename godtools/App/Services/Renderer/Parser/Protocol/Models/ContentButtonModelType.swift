@@ -17,7 +17,6 @@ protocol ContentButtonModelType: MobileContentRenderableModel {
     var text: String? { get }
     var iconName: String? { get }
     var iconSize: Int? { get }
-    var iconGravity: String? { get }
     
     func getBackgroundColor() -> MobileContentColor?
     func getColor() -> MobileContentColor?
