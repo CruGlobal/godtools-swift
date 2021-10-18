@@ -36,6 +36,10 @@ class TutorialPagerViewModel: TutorialPagerViewModelType {
         self.continueButtonHidden = ObservableValue(value: false)
     }
     
+    var customViewBuilder: CustomViewBuilderType? {
+        return nil
+    }
+    
     var analyticsScreenName: String {
         return ""
     }
@@ -52,6 +56,10 @@ class TutorialPagerViewModel: TutorialPagerViewModelType {
         return ""
     }
     
+    var analyticsVideoActionName: String {
+        return ""
+    }
+    
     var navigationStepForSkipTapped: FlowStep? {
         return nil
     }
@@ -62,7 +70,7 @@ class TutorialPagerViewModel: TutorialPagerViewModelType {
     
     func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType {
         
-        return TutorialCellViewModel(item: tutorialItems[index], customViewBuilder: nil)
+        return TutorialCellViewModel(item: tutorialItems[index], customViewBuilder: customViewBuilder, analyticsContainer: analyticsContainer, analyticsScreenName: analyticsScreenName, analyticsSiteSection: analyticsSiteSection, analyticsSiteSubsection: analyticsSiteSubsection, analyticsVideoActionName: analyticsVideoActionName)
     }
     
     func skipTapped() {

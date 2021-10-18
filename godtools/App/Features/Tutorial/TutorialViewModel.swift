@@ -9,6 +9,7 @@
 import Foundation
 
 class TutorialViewModel: TutorialViewModelType {
+    //TODO: re-implement this tutorial using TutorialPagerViewModel
     
     private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
@@ -37,6 +38,11 @@ class TutorialViewModel: TutorialViewModelType {
     
     private var analyticsScreenName: String {
         return "tutorial-\(page + 1)"
+    }
+    
+    func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType {
+        
+        return TutorialCellViewModel(item: tutorialItems.value[index], customViewBuilder: customViewBuilder, analyticsContainer: analytics, analyticsScreenName: analyticsScreenName, analyticsSiteSection: "", analyticsSiteSubsection: "", analyticsVideoActionName: "")
     }
     
     func closeTapped() {

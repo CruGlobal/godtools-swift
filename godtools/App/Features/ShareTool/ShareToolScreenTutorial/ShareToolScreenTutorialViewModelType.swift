@@ -16,6 +16,7 @@ protocol ShareToolScreenTutorialViewModelType {
     var continueTitle: String { get }
     var shareLinkTitle: String { get }
     
+    func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType
     func closeTapped()
     func shareLinkTapped()
 }

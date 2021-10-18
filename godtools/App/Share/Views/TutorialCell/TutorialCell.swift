@@ -264,9 +264,10 @@ extension TutorialCell: YTPlayerViewDelegate {
     }
     
     func playerView(_ playerView: YTPlayerView, didChangeTo state: YTPlayerState) {
-        //delegate?.tutorialCellVideoPlayer(cell: self, didChangeTo: state)
         
-        if state == YTPlayerState.ended {
+        if state == .playing {
+            viewModel?.tutorialVideoPlayTapped()
+        } else if state == .ended {
            recueVideo()
         }
     }

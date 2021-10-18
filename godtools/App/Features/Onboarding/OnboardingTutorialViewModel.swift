@@ -11,13 +11,13 @@ import Foundation
 class OnboardingTutorialViewModel: TutorialPagerViewModel {
     
     private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
-    private let customViewBuilder: CustomViewBuilderType
+    private let viewBuilder: CustomViewBuilderType
     private let localizationServices: LocalizationServices
         
     required init(flowDelegate: FlowDelegate, analyticsContainer: AnalyticsContainer, onboardingTutorialItemsRepository: OnboardingTutorialItemsRepositoryType, onboardingTutorialAvailability: OnboardingTutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, customViewBuilder: CustomViewBuilderType, localizationServices: LocalizationServices) {
         
         self.openTutorialCalloutCache = openTutorialCalloutCache
-        self.customViewBuilder = customViewBuilder
+        self.viewBuilder = customViewBuilder
         self.localizationServices = localizationServices
         
         super.init(flowDelegate: flowDelegate, analyticsContainer: analyticsContainer,  tutorialItems: onboardingTutorialItemsRepository.tutorialItems, skipButtonTitle: localizationServices.stringForMainBundle(key: "navigationBar.navigationItem.skip"))
@@ -27,6 +27,10 @@ class OnboardingTutorialViewModel: TutorialPagerViewModel {
     
     required init(flowDelegate: FlowDelegate, analyticsContainer: AnalyticsContainer, tutorialItems: [TutorialItemType], skipButtonTitle: String) {
         fatalError("init(analyticsContainer:localizationServices:tutorialItems:) has not been implemented")
+    }
+    
+    override var customViewBuilder: CustomViewBuilderType? {
+        return viewBuilder
     }
     
     override var analyticsScreenName: String {
@@ -55,7 +59,7 @@ class OnboardingTutorialViewModel: TutorialPagerViewModel {
     
     override func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType {
         
-         return TutorialCellViewModel(item: tutorialItems[index], customViewBuilder: customViewBuilder)
+        super.tutorialItemWillAppear(index: index)
     }
     
     override func skipTapped() {

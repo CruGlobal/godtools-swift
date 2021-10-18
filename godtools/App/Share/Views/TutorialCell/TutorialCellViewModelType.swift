@@ -16,4 +16,6 @@ protocol TutorialCellViewModelType {
     var youTubeVideoId: String? { get }
     var animationName: String? { get }
     var customView: UIView? { get }
+    
+    func tutorialVideoPlayTapped()
 }

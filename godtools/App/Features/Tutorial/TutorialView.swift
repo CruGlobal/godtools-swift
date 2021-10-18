@@ -10,7 +10,8 @@ import UIKit
 import youtube_ios_player_helper
 
 class TutorialView: UIViewController {
-    
+    //TODO: re-implement this tutorial using TutorialPagerView
+
     private let viewModel: TutorialViewModelType
     
     private var backButton: UIBarButtonItem?
@@ -141,11 +142,7 @@ extension TutorialView: PageNavigationCollectionViewDelegate {
             cellReuseIdentifier: TutorialCell.reuseIdentifier,
             indexPath: indexPath) as! TutorialCell
         
-        let tutorialItem: TutorialItemType = viewModel.tutorialItems.value[indexPath.item]
-        let cellViewModel = TutorialCellViewModel(
-            item: tutorialItem,
-            customViewBuilder: viewModel.customViewBuilder
-        )
+        let cellViewModel = viewModel.tutorialItemWillAppear(index: indexPath.item)
         
         cell.configure(viewModel: cellViewModel)
         
