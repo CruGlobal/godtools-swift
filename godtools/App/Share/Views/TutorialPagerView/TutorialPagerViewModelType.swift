@@ -17,7 +17,11 @@ protocol TutorialPagerViewModelType {
     var skipButtonHidden: ObservableValue<Bool> { get }
     var continueButtonTitle: ObservableValue<String> { get }
     var continueButtonHidden: ObservableValue<Bool> { get }
-
+    var analyticsScreenName: String { get }
+    var analyticsSiteSection: String { get }
+    var analyticsSiteSubsection: String { get }
+    var analyticsActionName: String { get }
+    
     func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType
     func skipTapped()
     func pageDidChange(page: Int)

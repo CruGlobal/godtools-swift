@@ -32,8 +32,20 @@ class OnboardingTutorialViewModel: TutorialPagerViewModel {
         fatalError("init(analyticsContainer:localizationServices:tutorialItems:) has not been implemented")
     }
     
-    private var analyticsScreenName: String {
+    override var analyticsScreenName: String {
         return "onboarding"
+    }
+    
+    override var analyticsSiteSection: String {
+        return "onboarding"
+    }
+    
+    override var analyticsSiteSubsection: String {
+        return ""
+    }
+    
+    override var analyticsActionName: String {
+        return "On-Boarding Start"
     }
     
     override func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType {

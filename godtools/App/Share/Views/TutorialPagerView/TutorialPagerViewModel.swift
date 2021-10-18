@@ -34,8 +34,20 @@ class TutorialPagerViewModel: TutorialPagerViewModelType {
         self.continueButtonHidden = ObservableValue(value: false)
     }
     
-    private var analyticsScreenName: String {
-        return "tutorial"
+    var analyticsScreenName: String {
+        return ""
+    }
+    
+    var analyticsSiteSection: String {
+        return ""
+    }
+    
+    var analyticsSiteSubsection: String {
+        return ""
+    }
+    
+    var analyticsActionName: String {
+        return ""
     }
     
     func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType {
@@ -64,7 +76,15 @@ class TutorialPagerViewModel: TutorialPagerViewModelType {
     }
     
     private func trackPageDidAppear (page: Int) {
-        analyticsContainer.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: "\(analyticsScreenName)-\(page)", siteSection: "onboarding", siteSubSection: ""))
+        if !analyticsScreenName.isEmpty {
+            analyticsContainer.pageViewedAnalytics.trackPageView(
+                trackScreen: TrackScreenModel(
+                    screenName: "\(analyticsScreenName)-\(page)",
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: analyticsSiteSubsection
+                )
+            )
+        }
     }
     
     private func trackContinueButtonTapped (page: Int) {
@@ -72,8 +92,17 @@ class TutorialPagerViewModel: TutorialPagerViewModelType {
         let nextPage = page + 1
         let reachedEnd = nextPage >= pageCount
         
-        if reachedEnd {
-            analyticsContainer.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: "\(analyticsScreenName)-\(page)", actionName: "On-Boarding Start", siteSection: "", siteSubSection: "", url: nil, data: ["cru.onboarding_start": 1]))
+        if reachedEnd, !analyticsScreenName.isEmpty, !analyticsActionName.isEmpty {
+            analyticsContainer.trackActionAnalytics.trackAction(
+                trackAction: TrackActionModel(
+                    screenName: "\(analyticsScreenName)-\(page)",
+                    actionName: analyticsActionName,
+                    siteSection: analyticsSiteSection,
+                    siteSubSection: analyticsSiteSubsection,
+                    url: nil,
+                    data: ["cru.onboarding_start": 1]
+                )
+            )
         }
     }
 }
