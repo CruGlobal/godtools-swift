@@ -45,7 +45,7 @@ class OnboardingTutorialViewModel: TutorialPagerViewModel {
         flowDelegate?.navigate(step: .skipTappedFromOnboardingTutorial)
     }
     
-    override func pageDidAppear(page: Int) {
+    override func pageDidChange(page: Int) {
                 
         switch page {
         case 0:
@@ -57,7 +57,7 @@ class OnboardingTutorialViewModel: TutorialPagerViewModel {
             continueButtonTitle.accept(value: localizationServices.stringForMainBundle(key: "onboardingTutorial.nextButton.title"))
         }
         
-        super.pageDidAppear(page: page)
+        super.pageDidChange(page: page)
     }
     
     override func continueTapped() {
