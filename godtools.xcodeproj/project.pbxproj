@@ -1002,9 +1002,7 @@
 		D105922E252FA2E700F120CA /* share_tool_tutorial_mirrored.json in Resources */ = {isa = PBXBuildFile; fileRef = D115A65D25265813007F11AD /* share_tool_tutorial_mirrored.json */; };
 		D119788F271A090400E08580 /* TutorialPagerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D119788E271A090400E08580 /* TutorialPagerViewModel.swift */; };
 		D163EA96254A00BE00BA4EA9 /* share_tool_tutorial_link.json in Resources */ = {isa = PBXBuildFile; fileRef = D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */; };
-		D168FDC826F9224F0083D578 /* TutorialPagerAnalyticsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D168FDC726F9224F0083D578 /* TutorialPagerAnalyticsType.swift */; };
 		D168FDCA26F922650083D578 /* TutorialPagerViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D168FDC926F922650083D578 /* TutorialPagerViewModelType.swift */; };
-		D168FDCE26F92C520083D578 /* TutorialPagerProviderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D168FDCD26F92C520083D578 /* TutorialPagerProviderType.swift */; };
 		D1838479257E86B3004F5674 /* container in Resources */ = {isa = PBXBuildFile; fileRef = D1838478257E86B3004F5674 /* container */; };
 		D1878BC22718CFB000557E0A /* OnboardingTutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1878BC12718CFB000557E0A /* OnboardingTutorialViewModel.swift */; };
 		D1878BC42719BCE500557E0A /* OnboardingTutorialItemsRepositoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1878BC32719BCE500557E0A /* OnboardingTutorialItemsRepositoryType.swift */; };
@@ -2105,9 +2103,7 @@
 		D14F75B825D58B96008749CF /* NotoSansMyanmarUI-Condensed.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansMyanmarUI-Condensed.ttf"; sourceTree = "<group>"; };
 		D14F75B925D58B96008749CF /* NotoSansMyanmarUI-CondensedBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansMyanmarUI-CondensedBold.ttf"; sourceTree = "<group>"; };
 		D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = share_tool_tutorial_link.json; sourceTree = "<group>"; };
-		D168FDC726F9224F0083D578 /* TutorialPagerAnalyticsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPagerAnalyticsType.swift; sourceTree = "<group>"; };
 		D168FDC926F922650083D578 /* TutorialPagerViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPagerViewModelType.swift; sourceTree = "<group>"; };
-		D168FDCD26F92C520083D578 /* TutorialPagerProviderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPagerProviderType.swift; sourceTree = "<group>"; };
 		D1838478257E86B3004F5674 /* container */ = {isa = PBXFileReference; lastKnownFileType = folder; path = container; sourceTree = "<group>"; };
 		D1878BC12718CFB000557E0A /* OnboardingTutorialViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialViewModel.swift; sourceTree = "<group>"; };
 		D1878BC32719BCE500557E0A /* OnboardingTutorialItemsRepositoryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialItemsRepositoryType.swift; sourceTree = "<group>"; };
@@ -5510,18 +5506,8 @@
 				D1D56915270502B200BBE2A6 /* TutorialPagerView.xib */,
 				D119788E271A090400E08580 /* TutorialPagerViewModel.swift */,
 				D168FDC926F922650083D578 /* TutorialPagerViewModelType.swift */,
-				D168FDC526F921FD0083D578 /* Models */,
 			);
 			path = TutorialPagerView;
-			sourceTree = "<group>";
-		};
-		D168FDC526F921FD0083D578 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				D168FDCD26F92C520083D578 /* TutorialPagerProviderType.swift */,
-				D168FDC726F9224F0083D578 /* TutorialPagerAnalyticsType.swift */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		D19D00E525AF4B79007C535B /* AppsFlyer */ = {
@@ -6572,7 +6558,6 @@
 				45AD1B1925938A4E00A096A0 /* LearnToShareToolViewModel.swift in Sources */,
 				45BD7A4F26A21FDA0007426B /* ContentTextNode.swift in Sources */,
 				455E798F26A6203F00972EC0 /* MultiplatformManifestAttributes.swift in Sources */,
-				D168FDCE26F92C520083D578 /* TutorialPagerProviderType.swift in Sources */,
 				45558409269F2DA500C3FF14 /* MobileContentPageCell.swift in Sources */,
 				45AD1F8425938A9800A096A0 /* ResourcesDownloader.swift in Sources */,
 				45AD1F8625938A9800A096A0 /* SHA256FileModelType.swift in Sources */,
@@ -6656,7 +6641,6 @@
 				45AD1F6625938A9800A096A0 /* ToolTrainingTipsOnboardingViewsCacheType.swift in Sources */,
 				45AD1F6325938A9800A096A0 /* WebSocketType.swift in Sources */,
 				45AD214E2593A4B700A096A0 /* ShareToolViewModelType.swift in Sources */,
-				D168FDC826F9224F0083D578 /* TutorialPagerAnalyticsType.swift in Sources */,
 				455583EA269F2DA500C3FF14 /* MobileContentView.swift in Sources */,
 				D1D5691A2706364200BBE2A6 /* OnboardingTutorialIntroView.swift in Sources */,
 				45AD201325938A9800A096A0 /* TranslationsFileCacheError.swift in Sources */,
