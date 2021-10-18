@@ -11,7 +11,7 @@ import youtube_ios_player_helper
 
 class TutorialPagerView: UIViewController {
     
-    private let viewModel: TutorialPagerViewModel
+    private let viewModel: TutorialPagerViewModelType
     
     private var skipButton: UIBarButtonItem?
     
@@ -22,7 +22,7 @@ class TutorialPagerView: UIViewController {
     
     @IBOutlet weak private var continueButtonTop: NSLayoutConstraint!
     
-    required init(viewModel: TutorialPagerViewModel) {
+    required init(viewModel: TutorialPagerViewModelType) {
         
         self.viewModel = viewModel
         super.init(nibName: String(describing: TutorialPagerView.self), bundle: nil)
