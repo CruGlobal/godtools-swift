@@ -10,6 +10,7 @@ import UIKit
 
 class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     
+    private let mobileContentEventAnalytics: MobileContentEventAnalyticsTracking
     private let startingPage: Int?
     
     private var currentRenderer: MobileContentRendererType?
@@ -28,11 +29,12 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     let pageNavigation: ObservableValue<MobileContentPagesNavigationModel?> = ObservableValue(value: nil)
     let pagesRemoved: ObservableValue<[IndexPath]> = ObservableValue(value: [])
     
-    required init(flowDelegate: FlowDelegate, renderers: [MobileContentRendererType], primaryLanguage: LanguageModel, page: Int?) {
+    required init(flowDelegate: FlowDelegate, renderers: [MobileContentRendererType], primaryLanguage: LanguageModel, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking) {
         
         self.flowDelegate = flowDelegate
         self.renderers = renderers
         self.startingPage = page
+        self.mobileContentEventAnalytics = mobileContentEventAnalytics
         
         switch primaryLanguage.languageDirection {
         case .leftToRight:
@@ -60,6 +62,21 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
             }
         }
         return nil
+    }
+    
+    private func trackContentEvents(eventIds: [MultiplatformEventId]) {
+        
+        guard let resource = currentRenderer?.resource else {
+            assertionFailure("Failed to track content event for current renderer.  Resource was not found.")
+            return
+        }
+        
+        guard let language = currentRenderer?.language else {
+            assertionFailure("Failed to track content event for current renderer.  Language was not found.")
+            return
+        }
+        
+        mobileContentEventAnalytics.trackContentEvents(eventIds: eventIds, resource: resource, language: language)
     }
     
     var primaryRenderer: MobileContentRendererType {
@@ -166,6 +183,8 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     }
     
     func pageDidReceiveEvents(eventIds: [MultiplatformEventId]) {
+    
+        trackContentEvents(eventIds: eventIds)
         
         guard let didReceivePageListenerForPageNumber = currentRenderer?.parser.getPageForListenerEvents(eventIds: eventIds) else {
             return
