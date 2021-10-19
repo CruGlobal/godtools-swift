@@ -20,22 +20,23 @@ class MobileContentEventAnalyticsTracking {
         self.firebaseAnalytics = firebaseAnalytics
     }
     
-    func trackContentEvents(eventIds: [MultiplatformEventId]) {
+    func trackContentEvents(eventIds: [MultiplatformEventId], resource: ResourceModel, language: LanguageModel) {
         
         for eventId in eventIds {
-            trackContentEvent(eventId: eventId)
+            trackContentEvent(eventId: eventId, resource: resource, language: language)
         }
     }
     
-    func trackContentEvent(eventId: MultiplatformEventId) {
+    func trackContentEvent(eventId: MultiplatformEventId, resource: ResourceModel, language: LanguageModel) {
         
         let data: [String: Any] = [
-            MobileContentEventAnalyticsTracking.paramEventId: eventId.name
+            MobileContentEventAnalyticsTracking.paramEventId: eventId.name,
+            AnalyticsConstants.Keys.contentLanguage: language.code
         ]
         
         firebaseAnalytics.trackAction(
             screenName: "",
-            siteSection: "",
+            siteSection: resource.abbreviation,
             siteSubSection: "",
             actionName: MobileContentEventAnalyticsTracking.actionContentEvent,
             data: data

@@ -64,6 +64,21 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         return nil
     }
     
+    private func trackContentEvents(eventIds: [MultiplatformEventId]) {
+        
+        guard let resource = currentRenderer?.resource else {
+            assertionFailure("Failed to track content event for current renderer.  Resource was not found.")
+            return
+        }
+        
+        guard let language = currentRenderer?.language else {
+            assertionFailure("Failed to track content event for current renderer.  Language was not found.")
+            return
+        }
+        
+        mobileContentEventAnalytics.trackContentEvents(eventIds: eventIds, resource: resource, language: language)
+    }
+    
     var primaryRenderer: MobileContentRendererType {
         
         guard let primaryRenderer = renderers.first else {
@@ -169,7 +184,7 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     
     func pageDidReceiveEvents(eventIds: [MultiplatformEventId]) {
     
-        mobileContentEventAnalytics.trackContentEvents(eventIds: eventIds)
+        trackContentEvents(eventIds: eventIds)
         
         guard let didReceivePageListenerForPageNumber = currentRenderer?.parser.getPageForListenerEvents(eventIds: eventIds) else {
             return
