@@ -67,7 +67,8 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
             renderers: [primaryRenderer],
             resource: resource,
             primaryLanguage: primaryLanguage,
-            page: page
+            page: page,
+            mobileContentEventAnalytics: appDiContainer.getMobileContentEventAnalyticsTracking()
         )
         
         let view = LessonView(viewModel: viewModel)

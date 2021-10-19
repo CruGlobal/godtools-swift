@@ -91,6 +91,7 @@ class TractFlow: Flow {
             fontService: appDiContainer.getFontService(),
             viewsService: appDiContainer.viewsService,
             analytics: appDiContainer.analytics,
+            mobileContentEventAnalytics: appDiContainer.getMobileContentEventAnalyticsTracking(),
             toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics,
             liveShareStream: liveShareStream,
             trainingTipsEnabled: trainingTipsEnabled,

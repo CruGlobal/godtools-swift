@@ -10,6 +10,7 @@ import UIKit
 
 class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     
+    private let mobileContentEventAnalytics: MobileContentEventAnalyticsTracking
     private let startingPage: Int?
     
     private var currentRenderer: MobileContentRendererType?
@@ -28,11 +29,12 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     let pageNavigation: ObservableValue<MobileContentPagesNavigationModel?> = ObservableValue(value: nil)
     let pagesRemoved: ObservableValue<[IndexPath]> = ObservableValue(value: [])
     
-    required init(flowDelegate: FlowDelegate, renderers: [MobileContentRendererType], primaryLanguage: LanguageModel, page: Int?) {
+    required init(flowDelegate: FlowDelegate, renderers: [MobileContentRendererType], primaryLanguage: LanguageModel, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking) {
         
         self.flowDelegate = flowDelegate
         self.renderers = renderers
         self.startingPage = page
+        self.mobileContentEventAnalytics = mobileContentEventAnalytics
         
         switch primaryLanguage.languageDirection {
         case .leftToRight:
@@ -166,6 +168,8 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     }
     
     func pageDidReceiveEvents(eventIds: [MultiplatformEventId]) {
+    
+        mobileContentEventAnalytics.trackContentEvents(eventIds: eventIds)
         
         guard let didReceivePageListenerForPageNumber = currentRenderer?.parser.getPageForListenerEvents(eventIds: eventIds) else {
             return
