@@ -26,6 +26,10 @@ class MultiplatformContentMultiSelectOption: ContentMultiSelectOptionModelType {
         return multiSelectOption.selectedColor
     }
     
+    func getTappedAnalyticsEvents() -> [AnalyticsEventModelType] {
+        return multiSelectOption.getAnalyticsEvents(type: .clicked).map({MultiplatformAnalyticsEvent(analyticsEvent: $0)})
+    }
+    
     func toggleSelected(rendererState: MobileContentMultiplatformState) {
         
         multiSelectOption.toggleSelected(state: rendererState.state)

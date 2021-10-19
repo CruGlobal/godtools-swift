@@ -192,7 +192,8 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = MobileContentMultiSelectOptionViewModel(
                 multiSelectOptionModel: multiSelectOptionModel,
-                rendererPageModel: rendererPageModel
+                rendererPageModel: rendererPageModel,
+                mobileContentAnalytics: mobileContentAnalytics
             )
             
             let view = MobileContentMultiSelectOptionView(viewModel: viewModel)

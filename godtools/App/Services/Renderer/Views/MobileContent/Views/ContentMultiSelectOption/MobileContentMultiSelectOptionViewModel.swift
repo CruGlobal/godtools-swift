@@ -12,15 +12,17 @@ class MobileContentMultiSelectOptionViewModel: MobileContentMultiSelectOptionVie
     
     private let multiSelectOptionModel: ContentMultiSelectOptionModelType
     private let rendererPageModel: MobileContentRendererPageModel
+    private let mobileContentAnalytics: MobileContentAnalytics
     
     private var isSelectedFlowWatcher: MultiplatformFlowWatcher?
     
     let backgroundColor: ObservableValue<UIColor>
     
-    required init(multiSelectOptionModel: ContentMultiSelectOptionModelType, rendererPageModel: MobileContentRendererPageModel) {
+    required init(multiSelectOptionModel: ContentMultiSelectOptionModelType, rendererPageModel: MobileContentRendererPageModel, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.multiSelectOptionModel = multiSelectOptionModel
         self.rendererPageModel = rendererPageModel
+        self.mobileContentAnalytics = mobileContentAnalytics
         
         backgroundColor = ObservableValue(value: multiSelectOptionModel.backgroundColor)
         
@@ -42,5 +44,9 @@ class MobileContentMultiSelectOptionViewModel: MobileContentMultiSelectOptionVie
     func multiSelectOptionTapped() {
         
         multiSelectOptionModel.toggleSelected(rendererState: rendererPageModel.rendererState)
+        
+        let analyticsEvents: [AnalyticsEventModelType] = multiSelectOptionModel.getTappedAnalyticsEvents()
+                
+        mobileContentAnalytics.trackEvents(events: analyticsEvents, rendererPageModel: rendererPageModel)
     }
 }
