@@ -115,8 +115,6 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
             return nil
         }
         
-        let size = iconSize ?? 18
-        
         return rendererPageModel.resourcesCache.getImageFromManifestResources(fileName: resource)
     }
     
