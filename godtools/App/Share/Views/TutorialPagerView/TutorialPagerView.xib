@@ -36,8 +36,10 @@
                             <constraints>
                                 <constraint firstAttribute="height" constant="48" id="Eln-jJ-ncX"/>
                             </constraints>
-                            <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="plain"/>
+                            <buttonConfiguration key="configuration" style="plain" title="Title">
+                                <fontDescription key="titleFontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
+                                <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </buttonConfiguration>
                         </button>
                         <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="4" translatesAutoresizingMaskIntoConstraints="NO" id="pCY-fy-zD4">
                             <rect key="frame" x="30" y="82" width="354" height="26"/>
@@ -74,7 +76,7 @@
     </objects>
     <designables>
         <designable name="6by-3M-C0P">
-            <size key="intrinsicContentSize" width="24" height="14"/>
+            <size key="intrinsicContentSize" width="55" height="32"/>
         </designable>
     </designables>
     <resources>
