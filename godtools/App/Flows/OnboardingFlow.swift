@@ -49,7 +49,7 @@ class OnboardingFlow: Flow {
             customViewBuilder: appDiContainer.onboardingTutorialCustomViewBuilder(),
             localizationServices: appDiContainer.localizationServices
         )
-        let view = TutorialPagerView(viewModel: viewModel)
+        let view = OnboardingTutorialView(viewModel: viewModel)
         
         navigationController.setViewControllers([view], animated: false)
     }
