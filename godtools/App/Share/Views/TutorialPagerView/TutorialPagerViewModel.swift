@@ -11,6 +11,7 @@ import Foundation
 class TutorialPagerViewModel: TutorialPagerViewModelType {
     
     private let analyticsContainer: AnalyticsContainer
+    private let tutorialPagerAnalyticsModel: TutorialPagerAnalytics
     
     let tutorialItems: [TutorialItemType]
     let pageCount: Int
@@ -22,10 +23,11 @@ class TutorialPagerViewModel: TutorialPagerViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, analyticsContainer: AnalyticsContainer,  tutorialItems: [TutorialItemType], skipButtonTitle: String) {
+    required init(flowDelegate: FlowDelegate, analyticsContainer: AnalyticsContainer,  tutorialItems: [TutorialItemType], tutorialPagerAnalyticsModel: TutorialPagerAnalytics, skipButtonTitle: String) {
         
         self.flowDelegate = flowDelegate
         self.analyticsContainer = analyticsContainer
+        self.tutorialPagerAnalyticsModel = tutorialPagerAnalyticsModel
         
         self.tutorialItems = tutorialItems
         self.pageCount = tutorialItems.count
@@ -40,26 +42,6 @@ class TutorialPagerViewModel: TutorialPagerViewModelType {
         return nil
     }
     
-    var analyticsScreenName: String {
-        return ""
-    }
-    
-    var analyticsSiteSection: String {
-        return ""
-    }
-    
-    var analyticsSiteSubsection: String {
-        return ""
-    }
-    
-    var analyticsActionName: String {
-        return ""
-    }
-    
-    var analyticsVideoActionName: String {
-        return ""
-    }
-    
     var navigationStepForSkipTapped: FlowStep? {
         return nil
     }
@@ -70,7 +52,7 @@ class TutorialPagerViewModel: TutorialPagerViewModelType {
     
     func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType {
         
-        return TutorialCellViewModel(item: tutorialItems[index], customViewBuilder: customViewBuilder, analyticsContainer: analyticsContainer, analyticsScreenName: analyticsScreenName, analyticsSiteSection: analyticsSiteSection, analyticsSiteSubsection: analyticsSiteSubsection, analyticsVideoActionName: analyticsVideoActionName)
+        return TutorialCellViewModel(item: tutorialItems[index], customViewBuilder: customViewBuilder, analyticsContainer: analyticsContainer, tutorialPagerAnalyticsModel: tutorialPagerAnalyticsModel)
     }
     
     func skipTapped() {
@@ -98,19 +80,19 @@ class TutorialPagerViewModel: TutorialPagerViewModelType {
         
         if reachedEnd, let step = navigationStepForContinueTapped {
             flowDelegate?.navigate(step: step)
-            
-            trackContinueButtonTapped(page: page.value)
         }
+        
+        trackContinueButtonTapped(page: page.value)
     }
     
     private func trackPageDidAppear (page: Int) {
         
-        if !analyticsScreenName.isEmpty {
+        if !tutorialPagerAnalyticsModel.screenName.isEmpty {
             analyticsContainer.pageViewedAnalytics.trackPageView(
                 trackScreen: TrackScreenModel(
-                    screenName: "\(analyticsScreenName)-\(page)",
-                    siteSection: analyticsSiteSection,
-                    siteSubSection: analyticsSiteSubsection
+                    screenName: "\(tutorialPagerAnalyticsModel.screenName)-\(page)",
+                    siteSection: tutorialPagerAnalyticsModel.siteSection,
+                    siteSubSection: tutorialPagerAnalyticsModel.siteSubsection
                 )
             )
         }
@@ -118,15 +100,15 @@ class TutorialPagerViewModel: TutorialPagerViewModelType {
     
     private func trackContinueButtonTapped (page: Int) {
         
-        if !analyticsScreenName.isEmpty, !analyticsActionName.isEmpty {
+        if !tutorialPagerAnalyticsModel.screenName.isEmpty, !tutorialPagerAnalyticsModel.continueButtonTappedActionName.isEmpty {
             analyticsContainer.trackActionAnalytics.trackAction(
                 trackAction: TrackActionModel(
-                    screenName: "\(analyticsScreenName)-\(page)",
-                    actionName: analyticsActionName,
-                    siteSection: analyticsSiteSection,
-                    siteSubSection: analyticsSiteSubsection,
+                    screenName: "\(tutorialPagerAnalyticsModel.screenName)-\(page)",
+                    actionName: tutorialPagerAnalyticsModel.continueButtonTappedActionName,
+                    siteSection: tutorialPagerAnalyticsModel.siteSection,
+                    siteSubSection: tutorialPagerAnalyticsModel.siteSubsection,
                     url: nil,
-                    data: ["cru.onboarding_start": 1]
+                    data: tutorialPagerAnalyticsModel.continueButtonTappedData
                 )
             )
         }

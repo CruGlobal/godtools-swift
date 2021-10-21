@@ -20,33 +20,19 @@ class OnboardingTutorialViewModel: TutorialPagerViewModel {
         self.viewBuilder = customViewBuilder
         self.localizationServices = localizationServices
         
-        super.init(flowDelegate: flowDelegate, analyticsContainer: analyticsContainer,  tutorialItems: onboardingTutorialItemsRepository.tutorialItems, skipButtonTitle: localizationServices.stringForMainBundle(key: "navigationBar.navigationItem.skip"))
+        let tutorialPagerAnalyticsModel = TutorialPagerAnalytics(screenName: "onboarding", siteSection: "onboarding", siteSubsection: "", continueButtonTappedActionName: "On-Boarding Start", continueButtonTappedData: ["cru.onboarding_start": 1], videoPlayedActionName: "Tutorial Video", videoPlayedData: ["cru.tutorial_video": 1])
+        
+        super.init(flowDelegate: flowDelegate, analyticsContainer: analyticsContainer,  tutorialItems: onboardingTutorialItemsRepository.tutorialItems, tutorialPagerAnalyticsModel: tutorialPagerAnalyticsModel, skipButtonTitle: localizationServices.stringForMainBundle(key: "navigationBar.navigationItem.skip"))
         
         onboardingTutorialAvailability.markOnboardingTutorialViewed()
     }
     
-    required init(flowDelegate: FlowDelegate, analyticsContainer: AnalyticsContainer, tutorialItems: [TutorialItemType], skipButtonTitle: String) {
+    required init(flowDelegate: FlowDelegate, analyticsContainer: AnalyticsContainer, tutorialItems: [TutorialItemType], tutorialPagerAnalyticsModel: TutorialPagerAnalytics, skipButtonTitle: String) {
         fatalError("init(analyticsContainer:localizationServices:tutorialItems:) has not been implemented")
     }
     
     override var customViewBuilder: CustomViewBuilderType? {
         return viewBuilder
-    }
-    
-    override var analyticsScreenName: String {
-        return "onboarding"
-    }
-    
-    override var analyticsSiteSection: String {
-        return "onboarding"
-    }
-    
-    override var analyticsSiteSubsection: String {
-        return ""
-    }
-    
-    override var analyticsActionName: String {
-        return "On-Boarding Start"
     }
     
     override var navigationStepForSkipTapped: FlowStep? {

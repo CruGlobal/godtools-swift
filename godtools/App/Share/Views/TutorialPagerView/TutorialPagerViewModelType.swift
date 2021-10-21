@@ -18,11 +18,6 @@ protocol TutorialPagerViewModelType {
     var continueButtonTitle: ObservableValue<String> { get }
     var continueButtonHidden: ObservableValue<Bool> { get }
     var customViewBuilder: CustomViewBuilderType? { get }
-    var analyticsScreenName: String { get }
-    var analyticsSiteSection: String { get }
-    var analyticsSiteSubsection: String { get }
-    var analyticsActionName: String { get }
-    var analyticsVideoActionName: String { get }
     var navigationStepForSkipTapped: FlowStep? { get }
     var navigationStepForContinueTapped: FlowStep? { get }
     

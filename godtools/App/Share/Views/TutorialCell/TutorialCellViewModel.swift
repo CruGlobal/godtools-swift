@@ -18,14 +18,11 @@ class TutorialCellViewModel: TutorialCellViewModelType {
     let customView: UIView?
     
     private let analyticsContainer: AnalyticsContainer
-    private let analyticsScreenName: String
-    private let analyticsSiteSection: String
-    private let analyticsSiteSubsection: String
-    private let analyticsVideoActionName: String
+    private let tutorialPagerAnalyticsModel: TutorialPagerAnalytics
     
     private var trackedAnalyticsForYouTubeVideoIds: [String] = Array()
     
-    required init(item: TutorialItemType, customViewBuilder: CustomViewBuilderType?, analyticsContainer: AnalyticsContainer, analyticsScreenName: String, analyticsSiteSection: String, analyticsSiteSubsection: String, analyticsVideoActionName: String) {
+    required init(item: TutorialItemType, customViewBuilder: CustomViewBuilderType?, analyticsContainer: AnalyticsContainer, tutorialPagerAnalyticsModel: TutorialPagerAnalytics) {
         
         title = item.title
         message = item.message
@@ -34,10 +31,7 @@ class TutorialCellViewModel: TutorialCellViewModelType {
         animationName = item.animationName
         
         self.analyticsContainer = analyticsContainer
-        self.analyticsScreenName = analyticsScreenName
-        self.analyticsSiteSection = analyticsSiteSection
-        self.analyticsSiteSubsection = analyticsSiteSubsection
-        self.analyticsVideoActionName = analyticsVideoActionName
+        self.tutorialPagerAnalyticsModel = tutorialPagerAnalyticsModel
         
         if let customViewId = item.customViewId, !customViewId.isEmpty, let builtCustomView = customViewBuilder?.buildCustomView(customViewId: customViewId) {
             customView = builtCustomView
@@ -49,22 +43,26 @@ class TutorialCellViewModel: TutorialCellViewModelType {
     
     func tutorialVideoPlayTapped() {
                 
-        guard let videoId = youTubeVideoId, !analyticsVideoActionName.isEmpty else {
+        guard let videoId = youTubeVideoId, !tutorialPagerAnalyticsModel.videoPlayedActionName.isEmpty else {
             return
         }
         
         let youTubeVideoTracked: Bool = trackedAnalyticsForYouTubeVideoIds.contains(videoId)
         
         if !youTubeVideoTracked {
+            var data = tutorialPagerAnalyticsModel.videoPlayedData ?? [:]
+            
+            data["video_id"] = 1
+            
             trackedAnalyticsForYouTubeVideoIds.append(videoId)
             analyticsContainer.trackActionAnalytics.trackAction(
                 trackAction: TrackActionModel(
-                    screenName: analyticsScreenName,
-                    actionName: analyticsVideoActionName,
-                    siteSection: analyticsSiteSection,
-                    siteSubSection: analyticsSiteSubsection,
+                    screenName: tutorialPagerAnalyticsModel.screenName,
+                    actionName: tutorialPagerAnalyticsModel.videoPlayedActionName,
+                    siteSection: tutorialPagerAnalyticsModel.siteSection,
+                    siteSubSection: tutorialPagerAnalyticsModel.siteSubsection,
                     url: nil,
-                    data: ["cru.tutorial_video": 1, "video_id": videoId]
+                    data: tutorialPagerAnalyticsModel.videoPlayedData
                 )
             )
         }

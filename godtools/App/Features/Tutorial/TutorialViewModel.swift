@@ -13,6 +13,7 @@ class TutorialViewModel: TutorialViewModelType {
     
     private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
+    private let tutorialPagerAnalyticsModel: TutorialPagerAnalytics
     
     private var trackedAnalyticsForYouTubeVideoIds: [String] = Array()
     private var page: Int = 0
@@ -34,15 +35,13 @@ class TutorialViewModel: TutorialViewModelType {
         self.startUsingGodToolsTitle = localizationServices.stringForMainBundle(key: "tutorial.continueButton.title.startUsingGodTools")
         
         tutorialItems.accept(value: tutorialItemsProvider.tutorialItems)
-    }
-    
-    private var analyticsScreenName: String {
-        return "tutorial-\(page + 1)"
+        
+        tutorialPagerAnalyticsModel = TutorialPagerAnalytics(screenName: "tutorial", siteSection: "tutorial", siteSubsection: "", continueButtonTappedActionName: "", continueButtonTappedData: nil, videoPlayedActionName: "Tutorial Video", videoPlayedData: ["cru.tutorial_video": 1])
     }
     
     func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType {
         
-        return TutorialCellViewModel(item: tutorialItems.value[index], customViewBuilder: customViewBuilder, analyticsContainer: analytics, analyticsScreenName: analyticsScreenName, analyticsSiteSection: "", analyticsSiteSubsection: "", analyticsVideoActionName: "")
+        return TutorialCellViewModel(item: tutorialItems.value[index], customViewBuilder: customViewBuilder, analyticsContainer: analytics, tutorialPagerAnalyticsModel: tutorialPagerAnalyticsModel)
     }
     
     func closeTapped() {
@@ -61,8 +60,10 @@ class TutorialViewModel: TutorialViewModelType {
         
         self.page = page
         
-        let trackScreenData = TrackScreenModel(screenName: analyticsScreenName, siteSection: "tutorial", siteSubSection: "")
-        let trackActionData = TrackActionModel(screenName: analyticsScreenName, actionName: analyticsScreenName, siteSection: "tutorial", siteSubSection: "", url: nil, data: nil)
+        let trackedScreenName = "\(tutorialPagerAnalyticsModel.screenName)-\(page + 1)"
+        
+        let trackScreenData = TrackScreenModel(screenName: trackedScreenName, siteSection: tutorialPagerAnalyticsModel.siteSection, siteSubSection: tutorialPagerAnalyticsModel.siteSubsection)
+        let trackActionData = TrackActionModel(screenName: trackedScreenName, actionName: trackedScreenName, siteSection: tutorialPagerAnalyticsModel.siteSection, siteSubSection: tutorialPagerAnalyticsModel.siteSubsection, url: nil, data: nil)
         
         analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreenData)
         
@@ -95,8 +96,12 @@ class TutorialViewModel: TutorialViewModelType {
         let youTubeVideoTracked: Bool = trackedAnalyticsForYouTubeVideoIds.contains(youTubeVideoId)
         
         if !youTubeVideoTracked {
+            var data = tutorialPagerAnalyticsModel.videoPlayedData ?? [:]
+            
+            data["video_id"] = youTubeVideoId
+            
             trackedAnalyticsForYouTubeVideoIds.append(youTubeVideoId)
-            analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: "Tutorial Video", siteSection: "", siteSubSection: "", url: nil, data: ["cru.tutorial_video": 1, "video_id": youTubeVideoId]))
+            analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: "\(tutorialPagerAnalyticsModel.screenName)-\(page + 1)", actionName: tutorialPagerAnalyticsModel.videoPlayedActionName, siteSection: tutorialPagerAnalyticsModel.siteSection, siteSubSection: tutorialPagerAnalyticsModel.siteSubsection, url: nil, data: data))
         }
     }
 }

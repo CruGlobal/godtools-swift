@@ -43,7 +43,9 @@ class ShareToolScreenTutorialViewModel: ShareToolScreenTutorialViewModelType {
     
     func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType {
         
-        return TutorialCellViewModel(item: tutorialItems.value[index], customViewBuilder: customViewBuilder, analyticsContainer: analyticsContainer, analyticsScreenName: "", analyticsSiteSection: "", analyticsSiteSubsection: "", analyticsVideoActionName: "")
+        let tutorialPagerAnalyticsModel = TutorialPagerAnalytics(screenName: "", siteSection: "", siteSubsection: "", continueButtonTappedActionName: "", continueButtonTappedData: nil, videoPlayedActionName: "", videoPlayedData: nil)
+        
+        return TutorialCellViewModel(item: tutorialItems.value[index], customViewBuilder: customViewBuilder, analyticsContainer: analyticsContainer, tutorialPagerAnalyticsModel: tutorialPagerAnalyticsModel)
     }
     
     func closeTapped() {
