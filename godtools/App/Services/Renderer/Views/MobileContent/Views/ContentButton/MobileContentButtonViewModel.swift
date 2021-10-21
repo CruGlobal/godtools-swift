@@ -20,7 +20,6 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     
     private var visibilityFlowWatcher: MobileContentFlowWatcherType?
     
-    let iconName: String?
     let iconSize: Int?
     let backgroundColor: UIColor
     let titleColor: UIColor
@@ -34,7 +33,6 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
         self.containerModel = containerModel
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
-        self.iconName = buttonModel.iconName
         self.iconSize = buttonModel.iconSize
         
         let buttonColor: UIColor = buttonModel.getColor()?.uiColor ?? containerModel?.buttonColor?.uiColor ?? rendererPageModel.pageColors.primaryColor.uiColor
