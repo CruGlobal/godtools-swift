@@ -16,7 +16,7 @@ protocol MobileContentButtonViewModelType {
     var titleColor: UIColor { get }
     var borderColor: UIColor? { get }
     var borderWidth: CGFloat? { get }
-    var iconSize: Int? { get }
+    var iconSize: Int32 { get }
     var buttonType: MobileContentButtonType { get }
     var buttonEvents: [MultiplatformEventId] { get }
     var buttonUrl: String { get }

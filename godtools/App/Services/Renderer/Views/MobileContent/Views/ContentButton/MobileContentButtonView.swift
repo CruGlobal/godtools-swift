@@ -51,7 +51,10 @@ class MobileContentButtonView: MobileContentView {
         
         button.layer.cornerRadius = 5
         
-        if viewModel.iconImage != nil, let iconSize = viewModel.iconSize {
+        if viewModel.iconImage != nil {
+            
+            let iconSize = Int(viewModel.iconSize)
+            
             let imageSize = CGSize(width: iconSize, height: iconSize)
             
             button.imageEdgeInsets = UIEdgeInsets(

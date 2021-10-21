@@ -64,8 +64,8 @@ class MultiplatformContentButton: ContentButtonModelType {
         return button.icon?.name
     }
     
-    var iconSize: Int? {
-        return Int(button.iconSize)
+    var iconSize: Int32 {
+        return button.iconSize
     }
     
     func getBackgroundColor() -> MobileContentColor? {

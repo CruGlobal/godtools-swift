@@ -21,7 +21,7 @@ class ContentButtonNode: MobileContentXmlNode, ContentButtonModelType {
     let events: [MultiplatformEventId]
     let url: String?
     let iconName: String?
-    let iconSize: Int?
+    let iconSize: Int32
     
     required init(xmlElement: XMLElement) {
     
@@ -35,10 +35,10 @@ class ContentButtonNode: MobileContentXmlNode, ContentButtonModelType {
         typeString = attributes["type"]?.text
         iconName = attributes["icon"]?.text
         
-        if let iconSizeString = attributes["icon-size"]?.text, let iconSizeInt = Int(iconSizeString) {
+        if let iconSizeString = attributes["icon-size"]?.text, let iconSizeInt = Int32(iconSizeString) {
             iconSize = iconSizeInt
         } else {
-            iconSize = nil
+            iconSize = 0
         }
         
         if var urlString = attributes["url"]?.text {

@@ -20,7 +20,7 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     
     private var visibilityFlowWatcher: MobileContentFlowWatcherType?
     
-    let iconSize: Int?
+    let iconSize: Int32
     let backgroundColor: UIColor
     let titleColor: UIColor
     let borderColor: UIColor?
@@ -109,7 +109,7 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     
     var iconImage: UIImage? {
         
-        guard let resource = iconName else {
+        guard let resource = buttonModel.iconName else {
             return nil
         }
         
