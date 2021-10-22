@@ -7,6 +7,7 @@
 //
 import Foundation
 import SWXMLHash
+import Network
 
 class ContentButtonNode: MobileContentXmlNode, ContentButtonModelType {
     
@@ -22,6 +23,7 @@ class ContentButtonNode: MobileContentXmlNode, ContentButtonModelType {
     let url: String?
     let iconName: String?
     let iconSize: Int32
+    let iconGravity: IconGravity
     
     required init(xmlElement: XMLElement) {
     
@@ -39,6 +41,12 @@ class ContentButtonNode: MobileContentXmlNode, ContentButtonModelType {
             iconSize = iconSizeInt
         } else {
             iconSize = 0
+        }
+        
+        if let iconGravityString = attributes["icon-gravity"]?.text, iconGravityString == "end" {
+            iconGravity = .end
+        } else {
+            iconGravity = .start
         }
         
         if var urlString = attributes["url"]?.text {
