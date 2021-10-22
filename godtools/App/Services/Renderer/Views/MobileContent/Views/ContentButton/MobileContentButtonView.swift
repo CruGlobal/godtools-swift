@@ -59,10 +59,14 @@ class MobileContentButtonView: MobileContentView {
             
             button.imageEdgeInsets = UIEdgeInsets(
                 top: (button.frame.size.height - imageSize.height) / 2,
-                left: (button.frame.size.width - imageSize.width) / 2,
+                left: 12,
                 bottom: (button.frame.size.height - imageSize.height) / 2,
-                right: 10
+                right: 12
             )
+            
+            if viewModel.iconGravity == .end {
+                button.semanticContentAttribute = UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft ? .forceLeftToRight : .forceRightToLeft
+            }
         }
     }
     

@@ -8,6 +8,11 @@
 
 import Foundation
 
+enum IconGravity {
+    case start
+    case end
+}
+
 protocol ContentButtonModelType: MobileContentRenderableModel {
     
     var events: [MultiplatformEventId] { get }
@@ -17,6 +22,7 @@ protocol ContentButtonModelType: MobileContentRenderableModel {
     var text: String? { get }
     var iconName: String? { get }
     var iconSize: Int32 { get }
+    var iconGravity: IconGravity { get }
     
     func getBackgroundColor() -> MobileContentColor?
     func getColor() -> MobileContentColor?
