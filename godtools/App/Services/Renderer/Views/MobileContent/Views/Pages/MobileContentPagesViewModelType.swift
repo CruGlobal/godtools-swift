@@ -22,4 +22,5 @@ protocol MobileContentPagesViewModelType {
     func pageDidAppear(page: Int)
     func pageDidDisappear(page: Int)
     func pageDidReceiveEvents(eventIds: [MultiplatformEventId])
+    func didChangeMostVisiblePage(page: Int)
 }

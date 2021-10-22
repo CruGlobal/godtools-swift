@@ -12,7 +12,7 @@ import GodToolsToolParser
 class MobileContentMultiplatformParser: MobileContentParserType {
         
     private static let animationsEnabled: Bool = false
-    private static let multiSelectEnabled: Bool = false
+    private static let multiSelectEnabled: Bool = true
     
     let manifest: MobileContentManifestType
     let manifestResourcesCache: ManifestResourcesCacheType
