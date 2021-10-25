@@ -7,7 +7,6 @@
 //
 import Foundation
 import SWXMLHash
-import Network
 
 class ContentButtonNode: MobileContentXmlNode, ContentButtonModelType {
     
@@ -27,41 +26,7 @@ class ContentButtonNode: MobileContentXmlNode, ContentButtonModelType {
     
     required init(xmlElement: XMLElement) {
     
-        let attributes: [String: XMLAttribute] = xmlElement.allAttributes
-        
-        backgroundColorString = attributes["background-color"]?.text
-        colorString = attributes["color"]?.text
-        //let eventNames: [String] = attributes["events"]?.text.components(separatedBy: " ") ?? []
-        events = Array()
-        styleString = attributes["style"]?.text
-        typeString = attributes["type"]?.text
-        iconName = attributes["icon"]?.text
-        
-        if let iconSizeString = attributes["icon-size"]?.text, let iconSizeInt = Int32(iconSizeString) {
-            iconSize = iconSizeInt
-        } else {
-            iconSize = 0
-        }
-        
-        if let iconGravityString = attributes["icon-gravity"]?.text, iconGravityString == "end" {
-            iconGravity = .end
-        } else {
-            iconGravity = .start
-        }
-        
-        if var urlString = attributes["url"]?.text {
-            let urlIsHttps: Bool = urlString.contains("https://")
-            let urlIsHttp: Bool = urlString.contains("http://")
-            if !urlIsHttps && !urlIsHttp {
-                urlString = "http://" + urlString
-            }
-            url  = urlString
-        }
-        else {
-            url = nil
-        }
-        
-        super.init(xmlElement: xmlElement)
+        fatalError("init(xmlElement:) has not been implemented")
     }
     
     override func addChild(childNode: MobileContentXmlNode) {
