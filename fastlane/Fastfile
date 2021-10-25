@@ -1,6 +1,6 @@
 import_from_git(
     url: 'git@github.com:CruGlobal/cru-fastlane-files.git',
-    branch: 'ios-api-key',
+    branch: 'master',
     path: 'Fastfile'
 )
 
