@@ -290,6 +290,8 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
     func pageNavigationDidChangeMostVisiblePage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
         
         view.endEditing(true)
+        
+        viewModel.didChangeMostVisiblePage(page: page)
     }
     
     func pageNavigationPageWillAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {

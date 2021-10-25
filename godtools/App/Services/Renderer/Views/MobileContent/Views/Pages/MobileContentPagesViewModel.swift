@@ -17,6 +17,7 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     private var safeArea: UIEdgeInsets?
     private var pageModels: [PageModelType] = Array()
     
+    private(set) var currentPage: Int = 0
     private(set) var highestPageNumberViewed: Int = 0
     
     private weak var window: UIViewController?
@@ -41,6 +42,10 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
             pageNavigationSemanticContentAttribute = .forceLeftToRight
         case .rightToLeft:
             pageNavigationSemanticContentAttribute = .forceRightToLeft
+        }
+        
+        if let page = page {
+            currentPage = page
         }
         
         super.init()
@@ -77,6 +82,52 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         }
         
         mobileContentEventAnalytics.trackContentEvents(eventIds: eventIds, resource: resource, language: language)
+    }
+    
+    private func didReceivePageListenerForPage(page: Int, pageModel: PageModelType) {
+        
+        let pageNumber: Int
+        let willReloadData: Bool
+        
+        if let pageNumberExistsInActivatePages = getIndexForFirstPageModel(pageModel: pageModel) {
+            
+            pageNumber = pageNumberExistsInActivatePages
+            willReloadData = false
+        }
+        else if pageModel.isHidden {
+            
+            let insertAtPage: Int = currentPage + 1
+            
+            if insertAtPage < pageModels.count {
+                
+                pageModels.insert(pageModel, at: insertAtPage)
+                pageNumber = insertAtPage
+            }
+            else {
+                pageModels.append(pageModel)
+                pageNumber = pageModels.count - 1
+            }
+            
+            willReloadData = true
+        }
+        else {
+            
+            pageNumber = page
+            willReloadData = false
+        }
+        
+        let pageNavigationForReceivedPageListener = MobileContentPagesNavigationModel(
+            willReloadData: willReloadData,
+            page: pageNumber,
+            pagePositions: nil,
+            animated: true
+        )
+        
+        pageNavigation.accept(value: pageNavigationForReceivedPageListener)
+        
+        if willReloadData {
+            numberOfPages.accept(value: pageModels.count)
+        }
     }
     
     var primaryRenderer: MobileContentRendererType {
@@ -163,6 +214,8 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     
     func pageDidAppear(page: Int) {
         
+        currentPage = page
+        
         if page > highestPageNumberViewed {
             highestPageNumberViewed = page
         }
@@ -186,52 +239,18 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     
         trackContentEvents(eventIds: eventIds)
         
-        guard let didReceivePageListenerForPageNumber = currentRenderer?.parser.getPageForListenerEvents(eventIds: eventIds) else {
-            return
-        }
-        
-        guard let didReceivePageListenerEventForPageModel = currentRenderer?.parser.getPageModel(page: didReceivePageListenerForPageNumber) else {
-            return
-        }
-        
-        let pageNumber: Int
-        let willReloadData: Bool
-        
-        if let pageNumberExistsInActivatePages = getIndexForFirstPageModel(pageModel: didReceivePageListenerEventForPageModel) {
+        if let didReceivePageListenerForPageNumber = currentRenderer?.parser.getPageForListenerEvents(eventIds: eventIds),
+           let didReceivePageListenerEventForPageModel = currentRenderer?.parser.getPageModel(page: didReceivePageListenerForPageNumber)  {
             
-            pageNumber = pageNumberExistsInActivatePages
-            willReloadData = false
+            didReceivePageListenerForPage(
+                page: didReceivePageListenerForPageNumber,
+                pageModel: didReceivePageListenerEventForPageModel
+            )
         }
-        else if didReceivePageListenerEventForPageModel.isHidden {
-            
-            if didReceivePageListenerForPageNumber < pageModels.count {
-                pageModels.insert(didReceivePageListenerEventForPageModel, at: didReceivePageListenerForPageNumber)
-                pageNumber = didReceivePageListenerForPageNumber
-            }
-            else {
-                pageModels.append(didReceivePageListenerEventForPageModel)
-                pageNumber = pageModels.count - 1
-            }
-            
-            willReloadData = true
-        }
-        else {
-            
-            pageNumber = didReceivePageListenerForPageNumber
-            willReloadData = false
-        }
+    }
+    
+    func didChangeMostVisiblePage(page: Int) {
         
-        let pageNavigationForReceivedPageListener = MobileContentPagesNavigationModel(
-            willReloadData: willReloadData,
-            page: pageNumber,
-            pagePositions: nil,
-            animated: true
-        )
-        
-        pageNavigation.accept(value: pageNavigationForReceivedPageListener)
-        
-        if willReloadData {
-            numberOfPages.accept(value: pageModels.count)
-        }
+        currentPage = page
     }
 }
