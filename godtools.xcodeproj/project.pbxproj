@@ -1033,6 +1033,7 @@
 		D129DE6B2543669C00841733 /* onboarding_tutorial_knife.json in Resources */ = {isa = PBXBuildFile; fileRef = D129DE682543669C00841733 /* onboarding_tutorial_knife.json */; };
 		D163EA96254A00BE00BA4EA9 /* share_tool_tutorial_link.json in Resources */ = {isa = PBXBuildFile; fileRef = D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */; };
 		D182CA232726E6E900ABAAC8 /* MobileContentButtonIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = D182CA222726E6E900ABAAC8 /* MobileContentButtonIcon.swift */; };
+		D182CA25272745BE00ABAAC8 /* UIImage+ScalePresevingAspectRatio.swift in Sources */ = {isa = PBXBuildFile; fileRef = D182CA24272745BE00ABAAC8 /* UIImage+ScalePresevingAspectRatio.swift */; };
 		D1838479257E86B3004F5674 /* container in Resources */ = {isa = PBXBuildFile; fileRef = D1838478257E86B3004F5674 /* container */; };
 		D19D00E725AF4B97007C535B /* AppsFlyerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19D00E625AF4B97007C535B /* AppsFlyerType.swift */; };
 		D19D00F925AF51FA007C535B /* AppsFlyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19D00F825AF51FA007C535B /* AppsFlyer.swift */; };
@@ -2149,6 +2150,7 @@
 		D14F75B925D58B96008749CF /* NotoSansMyanmarUI-CondensedBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansMyanmarUI-CondensedBold.ttf"; sourceTree = "<group>"; };
 		D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = share_tool_tutorial_link.json; sourceTree = "<group>"; };
 		D182CA222726E6E900ABAAC8 /* MobileContentButtonIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentButtonIcon.swift; sourceTree = "<group>"; };
+		D182CA24272745BE00ABAAC8 /* UIImage+ScalePresevingAspectRatio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+ScalePresevingAspectRatio.swift"; sourceTree = "<group>"; };
 		D1838478257E86B3004F5674 /* container */ = {isa = PBXFileReference; lastKnownFileType = folder; path = container; sourceTree = "<group>"; };
 		D19D00E625AF4B97007C535B /* AppsFlyerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsFlyerType.swift; sourceTree = "<group>"; };
 		D19D00F825AF51FA007C535B /* AppsFlyer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsFlyer.swift; sourceTree = "<group>"; };
@@ -4031,6 +4033,7 @@
 				45AD18B525938A4E00A096A0 /* UIViewController+NavBackItem.swift */,
 				45AD18B225938A4E00A096A0 /* UIViewController+NavItem.swift */,
 				45B116C12625FC6D007A7127 /* LanguageDirection+SemanticContentAttribute.swift */,
+				D182CA24272745BE00ABAAC8 /* UIImage+ScalePresevingAspectRatio.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -6969,6 +6972,7 @@
 				45AD1FFC25938A9800A096A0 /* IsNewUserCacheType.swift in Sources */,
 				45558337269F2C7B00C3FF14 /* ToolPageCallToActionView.swift in Sources */,
 				45AD206C25938B4400A096A0 /* OnboardPrimaryButton.swift in Sources */,
+				D182CA25272745BE00ABAAC8 /* UIImage+ScalePresevingAspectRatio.swift in Sources */,
 				45AD1B6B25938A4F00A096A0 /* ToolDetailControlId.swift in Sources */,
 				45CB9FA1261F8BA80036BEB3 /* ToolsMenuToolbarItemView.swift in Sources */,
 				45AD1BB025938A4F00A096A0 /* LearnToShareToolFlow.swift in Sources */,

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     
@@ -110,11 +111,15 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     
     var iconImage: UIImage? {
         
-        guard let resource = icon?.name else {
+        guard let iconModel = icon, let image = rendererPageModel.resourcesCache.getImageFromManifestResources(fileName: iconModel.name) else {
             return nil
         }
+        
+        let iconSize = min(Int(iconModel.size), 40)
+                
+        let scaledImage = image.scalePreservingAspectRatio(targetSize: CGSize(width: iconSize, height: iconSize))
 
-        return rendererPageModel.resourcesCache.getImageFromManifestResources(fileName: resource)
+        return scaledImage
     }
     
     func buttonTapped() {

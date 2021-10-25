@@ -50,26 +50,6 @@ class MobileContentButtonView: MobileContentView {
         button.addConstraint(heightConstraint)
         
         button.layer.cornerRadius = 5
-        
-        if let icon = viewModel.icon {
-            
-            let iconSize = Int(icon.size)
-            
-            let imageSize = CGSize(width: iconSize, height: iconSize)
-            
-            let verticalInset = max((button.frame.size.height - imageSize.height) / 2, 4)
-            
-            button.imageEdgeInsets = UIEdgeInsets(
-                top: verticalInset,
-                left: 12,
-                bottom: verticalInset,
-                right: 12
-            )
-            
-            if icon.gravity == .end {
-                button.semanticContentAttribute = UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft ? .forceLeftToRight : .forceRightToLeft
-            }
-        }
     }
     
     private func setupBinding() {
@@ -84,7 +64,12 @@ class MobileContentButtonView: MobileContentView {
             button.layer.borderWidth = borderWidth
         }
         
-        if let image = viewModel.iconImage {
+        if let icon = viewModel.icon, let image = viewModel.iconImage {
+            
+            if icon.gravity == .end {
+                button.semanticContentAttribute = UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft ? .forceLeftToRight : .forceRightToLeft
+            }
+            
             button.setImage(image, for: .normal)
         }
         
