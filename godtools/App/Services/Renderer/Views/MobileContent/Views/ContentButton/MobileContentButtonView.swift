@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class MobileContentButtonView: MobileContentView {
     
@@ -71,6 +72,12 @@ class MobileContentButtonView: MobileContentView {
             }
             
             button.setImage(image, for: .normal)
+            
+            button.setInsets(forContentPadding:
+                UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6),
+                imageTitlePadding: 10,
+                iconGravity: icon.gravity
+            )
         }
         
         viewModel.visibilityState.addObserver(self) { [weak self] (visibilityState: MobileContentViewVisibilityState) in

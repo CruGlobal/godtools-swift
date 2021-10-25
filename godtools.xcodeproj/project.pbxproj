@@ -1034,6 +1034,7 @@
 		D163EA96254A00BE00BA4EA9 /* share_tool_tutorial_link.json in Resources */ = {isa = PBXBuildFile; fileRef = D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */; };
 		D182CA232726E6E900ABAAC8 /* MobileContentButtonIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = D182CA222726E6E900ABAAC8 /* MobileContentButtonIcon.swift */; };
 		D182CA25272745BE00ABAAC8 /* UIImage+ScalePresevingAspectRatio.swift in Sources */ = {isa = PBXBuildFile; fileRef = D182CA24272745BE00ABAAC8 /* UIImage+ScalePresevingAspectRatio.swift */; };
+		D182CA2727274B1F00ABAAC8 /* UIButton+SetInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = D182CA2627274B1F00ABAAC8 /* UIButton+SetInsets.swift */; };
 		D1838479257E86B3004F5674 /* container in Resources */ = {isa = PBXBuildFile; fileRef = D1838478257E86B3004F5674 /* container */; };
 		D19D00E725AF4B97007C535B /* AppsFlyerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19D00E625AF4B97007C535B /* AppsFlyerType.swift */; };
 		D19D00F925AF51FA007C535B /* AppsFlyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19D00F825AF51FA007C535B /* AppsFlyer.swift */; };
@@ -2151,6 +2152,7 @@
 		D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = share_tool_tutorial_link.json; sourceTree = "<group>"; };
 		D182CA222726E6E900ABAAC8 /* MobileContentButtonIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentButtonIcon.swift; sourceTree = "<group>"; };
 		D182CA24272745BE00ABAAC8 /* UIImage+ScalePresevingAspectRatio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+ScalePresevingAspectRatio.swift"; sourceTree = "<group>"; };
+		D182CA2627274B1F00ABAAC8 /* UIButton+SetInsets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+SetInsets.swift"; sourceTree = "<group>"; };
 		D1838478257E86B3004F5674 /* container */ = {isa = PBXFileReference; lastKnownFileType = folder; path = container; sourceTree = "<group>"; };
 		D19D00E625AF4B97007C535B /* AppsFlyerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsFlyerType.swift; sourceTree = "<group>"; };
 		D19D00F825AF51FA007C535B /* AppsFlyer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsFlyer.swift; sourceTree = "<group>"; };
@@ -4034,6 +4036,7 @@
 				45AD18B225938A4E00A096A0 /* UIViewController+NavItem.swift */,
 				45B116C12625FC6D007A7127 /* LanguageDirection+SemanticContentAttribute.swift */,
 				D182CA24272745BE00ABAAC8 /* UIImage+ScalePresevingAspectRatio.swift */,
+				D182CA2627274B1F00ABAAC8 /* UIButton+SetInsets.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -6476,6 +6479,7 @@
 				45C93AD9261D310900592FFF /* ArticleResource.swift in Sources */,
 				45AD20F82593950300A096A0 /* DownloadedLanguagesCache.swift in Sources */,
 				45AD1B0025938A4E00A096A0 /* ShareArticleViewModelType.swift in Sources */,
+				D182CA2727274B1F00ABAAC8 /* UIButton+SetInsets.swift in Sources */,
 				45AD201E25938A9800A096A0 /* RequestResponse+ResponseResult.swift in Sources */,
 				4555833C269F2C7B00C3FF14 /* ToolPageModalViewModelType.swift in Sources */,
 				4526529A26A7294500E703F7 /* MultiplatformNumber.swift in Sources */,
