@@ -11,7 +11,7 @@ import Foundation
 protocol TutorialPagerViewModelType {
    
     var tutorialItems: [TutorialItemType] { get }
-    var pageCount: Int { get }
+    var pageCount: ObservableValue<Int> { get }
     var page: ObservableValue<Int> { get }
     var skipButtonTitle: String { get }
     var skipButtonHidden: ObservableValue<Bool> { get }

@@ -14,7 +14,7 @@ class TutorialPagerViewModel: TutorialPagerViewModelType {
     private let tutorialPagerAnalyticsModel: TutorialPagerAnalytics
     
     let tutorialItems: [TutorialItemType]
-    let pageCount: Int
+    let pageCount: ObservableValue<Int>
     let page: ObservableValue<Int>
     let skipButtonTitle: String
     let skipButtonHidden: ObservableValue<Bool>
@@ -30,7 +30,7 @@ class TutorialPagerViewModel: TutorialPagerViewModelType {
         self.tutorialPagerAnalyticsModel = tutorialPagerAnalyticsModel
         
         self.tutorialItems = tutorialItems
-        self.pageCount = tutorialItems.count
+        self.pageCount = ObservableValue(value: tutorialItems.count)
         self.page = ObservableValue(value: 0)
         self.skipButtonTitle = skipButtonTitle
         self.skipButtonHidden = ObservableValue(value: false)
@@ -76,7 +76,7 @@ class TutorialPagerViewModel: TutorialPagerViewModelType {
     
     func continueTapped() {
         
-        let reachedEnd = page.value >= pageCount - 1
+        let reachedEnd = page.value >= pageCount.value - 1
         
         if reachedEnd, let step = navigationStepForContinueTapped {
             flowDelegate?.navigate(step: step)

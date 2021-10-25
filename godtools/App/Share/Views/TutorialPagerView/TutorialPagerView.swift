@@ -60,7 +60,9 @@ class TutorialPagerView: UIViewController {
     
     private func setupBinding() {
         
-        pageControl.numberOfPages = viewModel.pageCount
+        viewModel.pageCount.addObserver(self) { [weak self] (pageCount: Int) in
+            self?.pageControl.currentPage = pageCount
+        }
         
         viewModel.page.addObserver(self) { [weak self] (page: Int) in
             self?.pageControl.currentPage = page
@@ -129,7 +131,7 @@ class TutorialPagerView: UIViewController {
 extension TutorialPagerView: PageNavigationCollectionViewDelegate {
     
     func pageNavigationNumberOfPages(pageNavigation: PageNavigationCollectionView) -> Int {
-        return viewModel.pageCount
+        return viewModel.pageCount.value
     }
     
     func pageNavigation(pageNavigation: PageNavigationCollectionView, cellForPageAt indexPath: IndexPath) -> UICollectionViewCell {
