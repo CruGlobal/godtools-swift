@@ -9,7 +9,7 @@
 import Foundation
 
 extension UIImage {
-    
+    //found here: https://www.advancedswift.com/resize-uiimage-no-stretching-swift/
     func scalePreservingAspectRatio(targetSize: CGSize) -> UIImage {
             // Determine the scale factor that preserves aspect ratio
             let widthRatio = targetSize.width / size.width
