@@ -16,14 +16,12 @@ protocol MobileContentButtonViewModelType {
     var titleColor: UIColor { get }
     var borderColor: UIColor? { get }
     var borderWidth: CGFloat? { get }
-    var iconSize: Int32 { get }
-    var iconGravity: IconGravity { get }
     var buttonType: MobileContentButtonType { get }
     var buttonEvents: [MultiplatformEventId] { get }
     var buttonUrl: String { get }
     var rendererState: MobileContentMultiplatformState { get }
     var visibilityState: ObservableValue<MobileContentViewVisibilityState> { get }
-    var iconImage: UIImage? { get }
+    var iconModel: MobileContentButtonIcon? { get }
     
     func buttonTapped()
 }

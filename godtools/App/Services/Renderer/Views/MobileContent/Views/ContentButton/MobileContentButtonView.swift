@@ -51,9 +51,9 @@ class MobileContentButtonView: MobileContentView {
         
         button.layer.cornerRadius = 5
         
-        if viewModel.iconImage != nil {
+        if let iconModel = viewModel.iconModel {
             
-            let iconSize = Int(viewModel.iconSize)
+            let iconSize = Int(iconModel.size)
             
             let imageSize = CGSize(width: iconSize, height: iconSize)
             
@@ -64,7 +64,7 @@ class MobileContentButtonView: MobileContentView {
                 right: 12
             )
             
-            if viewModel.iconGravity == .end {
+            if iconModel.gravity == .end {
                 button.semanticContentAttribute = UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft ? .forceLeftToRight : .forceRightToLeft
             }
         }
@@ -82,8 +82,8 @@ class MobileContentButtonView: MobileContentView {
             button.layer.borderWidth = borderWidth
         }
         
-        if let iconImage = viewModel.iconImage {
-            button.setImage(iconImage, for: .normal)
+        if let iconModel = viewModel.iconModel {
+            button.setImage(iconModel.image, for: .normal)
         }
         
         viewModel.visibilityState.addObserver(self) { [weak self] (visibilityState: MobileContentViewVisibilityState) in

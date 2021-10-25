@@ -8,11 +8,6 @@
 
 import Foundation
 
-enum IconGravity {
-    case start
-    case end
-}
-
 protocol ContentButtonModelType: MobileContentRenderableModel {
     
     var events: [MultiplatformEventId] { get }
