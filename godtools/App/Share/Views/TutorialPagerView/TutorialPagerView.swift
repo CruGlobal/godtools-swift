@@ -62,6 +62,8 @@ class TutorialPagerView: UIViewController {
         
         viewModel.pageCount.addObserver(self) { [weak self] (pageCount: Int) in
             self?.pageControl.currentPage = pageCount
+            
+            self?.reloadData()
         }
         
         viewModel.page.addObserver(self) { [weak self] (page: Int) in
