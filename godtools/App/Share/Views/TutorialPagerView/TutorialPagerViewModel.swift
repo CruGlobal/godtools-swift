@@ -52,7 +52,7 @@ class TutorialPagerViewModel: TutorialPagerViewModelType {
     
     func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType {
         
-        return TutorialCellViewModel(item: tutorialItems[index], customViewBuilder: customViewBuilder, analyticsContainer: analyticsContainer, tutorialPagerAnalyticsModel: tutorialPagerAnalyticsModel)
+        return TutorialCellViewModel(item: tutorialItems[index], customViewBuilder: customViewBuilder, analyticsContainer: analyticsContainer, analyticsScreenName: tutorialPagerAnalyticsModel.screenName)
     }
     
     func skipTapped() {

@@ -36,12 +36,12 @@ class TutorialViewModel: TutorialViewModelType {
         
         tutorialItems.accept(value: tutorialItemsProvider.tutorialItems)
         
-        tutorialPagerAnalyticsModel = TutorialPagerAnalytics(screenName: "tutorial", siteSection: "tutorial", siteSubsection: "", continueButtonTappedActionName: "", continueButtonTappedData: nil, videoPlayedActionName: "Tutorial Video", videoPlayedData: ["cru.tutorial_video": 1])
+        tutorialPagerAnalyticsModel = TutorialPagerAnalytics(screenName: "tutorial", siteSection: "tutorial", siteSubsection: "", continueButtonTappedActionName: "", continueButtonTappedData: nil)
     }
     
     func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType {
         
-        return TutorialCellViewModel(item: tutorialItems.value[index], customViewBuilder: customViewBuilder, analyticsContainer: analytics, tutorialPagerAnalyticsModel: tutorialPagerAnalyticsModel)
+        return TutorialCellViewModel(item: tutorialItems.value[index], customViewBuilder: customViewBuilder, analyticsContainer: analytics, analyticsScreenName: tutorialPagerAnalyticsModel.screenName)
     }
     
     func closeTapped() {
@@ -96,12 +96,9 @@ class TutorialViewModel: TutorialViewModelType {
         let youTubeVideoTracked: Bool = trackedAnalyticsForYouTubeVideoIds.contains(youTubeVideoId)
         
         if !youTubeVideoTracked {
-            var data = tutorialPagerAnalyticsModel.videoPlayedData ?? [:]
-            
-            data["video_id"] = youTubeVideoId
-            
+                        
             trackedAnalyticsForYouTubeVideoIds.append(youTubeVideoId)
-            analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: "\(tutorialPagerAnalyticsModel.screenName)-\(page + 1)", actionName: tutorialPagerAnalyticsModel.videoPlayedActionName, siteSection: tutorialPagerAnalyticsModel.siteSection, siteSubSection: tutorialPagerAnalyticsModel.siteSubsection, url: nil, data: data))
+            analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: "\(tutorialPagerAnalyticsModel.screenName)-\(page + 1)", actionName: "Tutorial Video", siteSection: tutorialPagerAnalyticsModel.siteSection, siteSubSection: tutorialPagerAnalyticsModel.siteSubsection, url: nil, data: ["cru.tutorial_video": 1, "video_id": youTubeVideoId]))
         }
     }
 }

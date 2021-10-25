@@ -18,11 +18,11 @@ class TutorialCellViewModel: TutorialCellViewModelType {
     let customView: UIView?
     
     private let analyticsContainer: AnalyticsContainer
-    private let tutorialPagerAnalyticsModel: TutorialPagerAnalytics
+    private let analyticsScreenName: String
     
     private var trackedAnalyticsForYouTubeVideoIds: [String] = Array()
     
-    required init(item: TutorialItemType, customViewBuilder: CustomViewBuilderType?, analyticsContainer: AnalyticsContainer, tutorialPagerAnalyticsModel: TutorialPagerAnalytics) {
+    required init(item: TutorialItemType, customViewBuilder: CustomViewBuilderType?, analyticsContainer: AnalyticsContainer, analyticsScreenName: String) {
         
         title = item.title
         message = item.message
@@ -31,7 +31,7 @@ class TutorialCellViewModel: TutorialCellViewModelType {
         animationName = item.animationName
         
         self.analyticsContainer = analyticsContainer
-        self.tutorialPagerAnalyticsModel = tutorialPagerAnalyticsModel
+        self.analyticsScreenName = analyticsScreenName
         
         if let customViewId = item.customViewId, !customViewId.isEmpty, let builtCustomView = customViewBuilder?.buildCustomView(customViewId: customViewId) {
             customView = builtCustomView
@@ -43,26 +43,23 @@ class TutorialCellViewModel: TutorialCellViewModelType {
     
     func tutorialVideoPlayTapped() {
                 
-        guard let videoId = youTubeVideoId, !tutorialPagerAnalyticsModel.videoPlayedActionName.isEmpty else {
+        guard let videoId = youTubeVideoId else {
             return
         }
         
         let youTubeVideoTracked: Bool = trackedAnalyticsForYouTubeVideoIds.contains(videoId)
         
         if !youTubeVideoTracked {
-            var data = tutorialPagerAnalyticsModel.videoPlayedData ?? [:]
-            
-            data["video_id"] = 1
             
             trackedAnalyticsForYouTubeVideoIds.append(videoId)
             analyticsContainer.trackActionAnalytics.trackAction(
                 trackAction: TrackActionModel(
-                    screenName: tutorialPagerAnalyticsModel.screenName,
-                    actionName: tutorialPagerAnalyticsModel.videoPlayedActionName,
-                    siteSection: tutorialPagerAnalyticsModel.siteSection,
-                    siteSubSection: tutorialPagerAnalyticsModel.siteSubsection,
+                    screenName: analyticsScreenName,
+                    actionName: "Tutorial Video",
+                    siteSection: "",
+                    siteSubSection: "",
                     url: nil,
-                    data: tutorialPagerAnalyticsModel.videoPlayedData
+                    data: ["cru.tutorial_video": 1, "video_id": videoId]
                 )
             )
         }
