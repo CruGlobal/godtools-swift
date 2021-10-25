@@ -24,6 +24,7 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     let titleColor: UIColor
     let borderColor: UIColor?
     let visibilityState: ObservableValue<MobileContentViewVisibilityState> = ObservableValue(value: .visible)
+    let icon: MobileContentButtonIcon?
     
     required init(buttonModel: ContentButtonModelType, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
         
@@ -49,6 +50,8 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
             titleColor = buttonColor
             borderColor = buttonColor
         }
+        
+        self.icon = buttonModel.icon
         
         super.init()
         
@@ -105,13 +108,13 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
         return rendererPageModel.rendererState
     }
     
-    var iconModel: MobileContentButtonIcon? {
+    var iconImage: UIImage? {
         
-        guard let resource = buttonModel.iconName, let image = rendererPageModel.resourcesCache.getImageFromManifestResources(fileName: resource) else {
+        guard let resource = icon?.name else {
             return nil
         }
-        
-        return MobileContentButtonIcon(name: resource, size: buttonModel.iconSize, gravity: buttonModel.iconGravity, image: image)
+
+        return rendererPageModel.resourcesCache.getImageFromManifestResources(fileName: resource)
     }
     
     func buttonTapped() {

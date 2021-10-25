@@ -18,6 +18,5 @@ struct MobileContentButtonIcon {
     var name: String
     var size: Int32
     var gravity: IconGravity
-    var image: UIImage
 }
 

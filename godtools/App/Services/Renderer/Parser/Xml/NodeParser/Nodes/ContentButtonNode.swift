@@ -20,9 +20,7 @@ class ContentButtonNode: MobileContentXmlNode, ContentButtonModelType {
     
     let events: [MultiplatformEventId]
     let url: String?
-    let iconName: String?
-    let iconSize: Int32
-    let iconGravity: IconGravity
+    let icon: MobileContentButtonIcon? = nil
     
     required init(xmlElement: XMLElement) {
     
