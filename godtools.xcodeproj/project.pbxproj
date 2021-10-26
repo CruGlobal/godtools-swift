@@ -1035,6 +1035,7 @@
 		D182CA232726E6E900ABAAC8 /* MobileContentButtonIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = D182CA222726E6E900ABAAC8 /* MobileContentButtonIcon.swift */; };
 		D182CA25272745BE00ABAAC8 /* UIImage+ScalePresevingAspectRatio.swift in Sources */ = {isa = PBXBuildFile; fileRef = D182CA24272745BE00ABAAC8 /* UIImage+ScalePresevingAspectRatio.swift */; };
 		D182CA2727274B1F00ABAAC8 /* UIButton+SetInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = D182CA2627274B1F00ABAAC8 /* UIButton+SetInsets.swift */; };
+		D182CA2927286D3100ABAAC8 /* IconGravity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D182CA2827286D3100ABAAC8 /* IconGravity.swift */; };
 		D1838479257E86B3004F5674 /* container in Resources */ = {isa = PBXBuildFile; fileRef = D1838478257E86B3004F5674 /* container */; };
 		D19D00E725AF4B97007C535B /* AppsFlyerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19D00E625AF4B97007C535B /* AppsFlyerType.swift */; };
 		D19D00F925AF51FA007C535B /* AppsFlyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19D00F825AF51FA007C535B /* AppsFlyer.swift */; };
@@ -2153,6 +2154,7 @@
 		D182CA222726E6E900ABAAC8 /* MobileContentButtonIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentButtonIcon.swift; sourceTree = "<group>"; };
 		D182CA24272745BE00ABAAC8 /* UIImage+ScalePresevingAspectRatio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+ScalePresevingAspectRatio.swift"; sourceTree = "<group>"; };
 		D182CA2627274B1F00ABAAC8 /* UIButton+SetInsets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+SetInsets.swift"; sourceTree = "<group>"; };
+		D182CA2827286D3100ABAAC8 /* IconGravity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconGravity.swift; sourceTree = "<group>"; };
 		D1838478257E86B3004F5674 /* container */ = {isa = PBXFileReference; lastKnownFileType = folder; path = container; sourceTree = "<group>"; };
 		D19D00E625AF4B97007C535B /* AppsFlyerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsFlyerType.swift; sourceTree = "<group>"; };
 		D19D00F825AF51FA007C535B /* AppsFlyer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsFlyer.swift; sourceTree = "<group>"; };
@@ -5101,6 +5103,7 @@
 				45BD79BA26A20EEA0007426B /* HeaderModelType.swift */,
 				45BD79A026A20EEA0007426B /* HeadingModelType.swift */,
 				45BD79A426A20EEA0007426B /* HeroModelType.swift */,
+				D182CA2827286D3100ABAAC8 /* IconGravity.swift */,
 				45BD79B726A20EEA0007426B /* LabelModelType.swift */,
 				45BEC52726A604E3005D8CA1 /* MobileContentAnalyticsEventTrigger.swift */,
 				45BEC52B26A604E3005D8CA1 /* MobileContentBackgroundImageAlignment.swift */,
@@ -7000,6 +7003,7 @@
 				45AD200A25938A9800A096A0 /* TranslationDownloaderError.swift in Sources */,
 				45AD1AAC25938A4E00A096A0 /* TutorialToolsView.swift in Sources */,
 				D1DD79FD26690CAB000F1351 /* TrackScreenModel.swift in Sources */,
+				D182CA2927286D3100ABAAC8 /* IconGravity.swift in Sources */,
 				45CB9F9E261F8BA80036BEB3 /* ToolsMenuToolbarViewModelType.swift in Sources */,
 				45AD1B2D25938A4F00A096A0 /* AboutTextCellViewModel.swift in Sources */,
 				45AD1AD725938A4E00A096A0 /* ToolsViewModelType.swift in Sources */,

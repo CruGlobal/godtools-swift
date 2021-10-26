@@ -7,16 +7,12 @@
 //
 
 import Foundation
-
-enum IconGravity {
-    case start
-    case end
-}
+import UIKit
 
 struct MobileContentButtonIcon {
     
-    var name: String
     var size: Int32
     var gravity: IconGravity
+    var image: UIImage
 }
 

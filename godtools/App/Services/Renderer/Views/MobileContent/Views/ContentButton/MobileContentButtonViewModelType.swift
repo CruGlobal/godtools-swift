@@ -22,7 +22,6 @@ protocol MobileContentButtonViewModelType {
     var rendererState: MobileContentMultiplatformState { get }
     var visibilityState: ObservableValue<MobileContentViewVisibilityState> { get }
     var icon: MobileContentButtonIcon? { get }
-    var iconImage: UIImage? { get }
     
     func buttonTapped()
 }

@@ -65,13 +65,13 @@ class MobileContentButtonView: MobileContentView {
             button.layer.borderWidth = borderWidth
         }
         
-        if let icon = viewModel.icon, let image = viewModel.iconImage {
+        if let icon = viewModel.icon {
             
             if icon.gravity == .end {
                 button.semanticContentAttribute = UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft ? .forceLeftToRight : .forceRightToLeft
             }
             
-            button.setImage(image, for: .normal)
+            button.setImage(icon.image, for: .normal)
             
             button.setInsets(forContentPadding:
                 UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6),

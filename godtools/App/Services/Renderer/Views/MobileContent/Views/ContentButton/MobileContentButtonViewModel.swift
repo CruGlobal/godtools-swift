@@ -52,7 +52,17 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
             borderColor = buttonColor
         }
         
-        self.icon = buttonModel.icon
+        if let name = buttonModel.iconName, let image = rendererPageModel.resourcesCache.getImageFromManifestResources(fileName: name)  {
+            
+            let iconSize = min(Int(buttonModel.iconSize), 40)
+                    
+            let scaledImage = image.scalePreservingAspectRatio(targetSize: CGSize(width: iconSize, height: iconSize))
+            
+            self.icon = MobileContentButtonIcon(size: buttonModel.iconSize, gravity: buttonModel.iconGravity, image: scaledImage)
+        } else {
+            
+            self.icon = nil
+        }
         
         super.init()
         
@@ -107,19 +117,6 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     
     var rendererState: MobileContentMultiplatformState {
         return rendererPageModel.rendererState
-    }
-    
-    var iconImage: UIImage? {
-        
-        guard let iconModel = icon, let image = rendererPageModel.resourcesCache.getImageFromManifestResources(fileName: iconModel.name) else {
-            return nil
-        }
-        
-        let iconSize = min(Int(iconModel.size), 40)
-                
-        let scaledImage = image.scalePreservingAspectRatio(targetSize: CGSize(width: iconSize, height: iconSize))
-
-        return scaledImage
     }
     
     func buttonTapped() {
