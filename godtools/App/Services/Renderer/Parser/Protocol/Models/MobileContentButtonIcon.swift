@@ -11,8 +11,8 @@ import UIKit
 
 struct MobileContentButtonIcon {
     
-    var size: Int32
-    var gravity: IconGravity
-    var image: UIImage
+    let size: Int32
+    let gravity: IconGravity
+    let image: UIImage
 }
 
