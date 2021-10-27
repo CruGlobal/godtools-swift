@@ -7,9 +7,10 @@
 //
 
 import UIKit
-import AVFoundation
 
 class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
+    
+    private let maxAllowedIconSize = 40
     
     private let buttonModel: ContentButtonModelType
     private let rendererPageModel: MobileContentRendererPageModel
@@ -54,7 +55,7 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
         
         if let name = buttonModel.iconName, let image = rendererPageModel.resourcesCache.getImageFromManifestResources(fileName: name)  {
             
-            let iconSize = min(Int(buttonModel.iconSize), 40)
+            let iconSize = min(Int(buttonModel.iconSize), maxAllowedIconSize)
                     
             let scaledImage = image.scalePreservingAspectRatio(targetSize: CGSize(width: iconSize, height: iconSize))
             
