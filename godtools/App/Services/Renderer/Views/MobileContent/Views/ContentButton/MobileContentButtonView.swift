@@ -7,8 +7,11 @@
 //
 
 import Foundation
+import UIKit
 
 class MobileContentButtonView: MobileContentView {
+    
+    static let buttonHeight = 50
     
     private let viewModel: MobileContentButtonViewModelType
     private let button: UIButton = UIButton(type: .custom)
@@ -42,7 +45,7 @@ class MobileContentButtonView: MobileContentView {
             toItem: nil,
             attribute: .notAnAttribute,
             multiplier: 1,
-            constant: 50
+            constant: CGFloat(MobileContentButtonView.buttonHeight)
         )
         heightConstraint.priority = UILayoutPriority(1000)
         button.addConstraint(heightConstraint)
@@ -60,6 +63,21 @@ class MobileContentButtonView: MobileContentView {
         if let borderColor = viewModel.borderColor, let borderWidth = viewModel.borderWidth {
             button.layer.borderColor = borderColor.cgColor
             button.layer.borderWidth = borderWidth
+        }
+        
+        if let icon = viewModel.icon {
+            
+            if icon.gravity == .end {
+                button.semanticContentAttribute = UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft ? .forceLeftToRight : .forceRightToLeft
+            }
+            
+            button.setImage(icon.image, for: .normal)
+            
+            button.setInsets(forContentPadding:
+                UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6),
+                imageTitlePadding: 10,
+                iconGravity: icon.gravity
+            )
         }
         
         viewModel.visibilityState.addObserver(self) { [weak self] (visibilityState: MobileContentViewVisibilityState) in

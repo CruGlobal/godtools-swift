@@ -20,31 +20,14 @@ class ContentButtonNode: MobileContentXmlNode, ContentButtonModelType {
     
     let events: [MultiplatformEventId]
     let url: String?
+    let icon: MobileContentButtonIcon? = nil
+    var iconName: String?
+    var iconSize: Int32
+    var iconGravity: IconGravity
     
     required init(xmlElement: XMLElement) {
     
-        let attributes: [String: XMLAttribute] = xmlElement.allAttributes
-        
-        backgroundColorString = attributes["background-color"]?.text
-        colorString = attributes["color"]?.text
-        //let eventNames: [String] = attributes["events"]?.text.components(separatedBy: " ") ?? []
-        events = Array()
-        styleString = attributes["style"]?.text
-        typeString = attributes["type"]?.text
-        
-        if var urlString = attributes["url"]?.text {
-            let urlIsHttps: Bool = urlString.contains("https://")
-            let urlIsHttp: Bool = urlString.contains("http://")
-            if !urlIsHttps && !urlIsHttp {
-                urlString = "http://" + urlString
-            }
-            url  = urlString
-        }
-        else {
-            url = nil
-        }
-        
-        super.init(xmlElement: xmlElement)
+        fatalError("init(xmlElement:) has not been implemented")
     }
     
     override func addChild(childNode: MobileContentXmlNode) {
