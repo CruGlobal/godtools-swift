@@ -104,7 +104,7 @@ class TutorialPagerViewModel: TutorialPagerViewModelType {
         if !tutorialPagerAnalyticsModel.screenName.isEmpty, !tutorialPagerAnalyticsModel.continueButtonTappedActionName.isEmpty {
             analyticsContainer.trackActionAnalytics.trackAction(
                 trackAction: TrackActionModel(
-                    screenName: "\(tutorialPagerAnalyticsModel.screenName)-\(page)",
+                    screenName: "\(tutorialPagerAnalyticsModel.screenName)-\(tutorialPagerAnalyticsModel.screenTrackIndexOffset)",
                     actionName: tutorialPagerAnalyticsModel.continueButtonTappedActionName,
                     siteSection: tutorialPagerAnalyticsModel.siteSection,
                     siteSubSection: tutorialPagerAnalyticsModel.siteSubsection,

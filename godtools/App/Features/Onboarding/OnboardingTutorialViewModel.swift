@@ -20,7 +20,7 @@ class OnboardingTutorialViewModel: TutorialPagerViewModel {
         self.viewBuilder = customViewBuilder
         self.localizationServices = localizationServices
         
-        let tutorialPagerAnalyticsModel = TutorialPagerAnalytics(screenName: "onboarding", siteSection: "onboarding", siteSubsection: "", continueButtonTappedActionName: "On-Boarding Start", continueButtonTappedData: ["cru.onboarding_start": 1])
+        let tutorialPagerAnalyticsModel = TutorialPagerAnalytics(screenName: "onboarding", siteSection: "onboarding", siteSubsection: "", continueButtonTappedActionName: "On-Boarding Start", continueButtonTappedData: ["cru.onboarding_start": 1], screenTrackIndexOffset: 2)
         
         super.init(flowDelegate: flowDelegate, analyticsContainer: analyticsContainer,  tutorialItems: onboardingTutorialItemsRepository.tutorialItems, tutorialPagerAnalyticsModel: tutorialPagerAnalyticsModel, skipButtonTitle: localizationServices.stringForMainBundle(key: "navigationBar.navigationItem.skip"))
         

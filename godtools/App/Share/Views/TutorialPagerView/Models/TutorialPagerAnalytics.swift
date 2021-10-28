@@ -15,4 +15,5 @@ struct TutorialPagerAnalytics {
     var siteSubsection: String
     var continueButtonTappedActionName: String
     var continueButtonTappedData : [String : Any]?
+    var screenTrackIndexOffset: Int
 }
