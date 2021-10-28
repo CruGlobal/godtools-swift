@@ -10,10 +10,10 @@ import Foundation
 
 struct TutorialPagerAnalytics {
     
-    var screenName: String
-    var siteSection: String
-    var siteSubsection: String
-    var continueButtonTappedActionName: String
-    var continueButtonTappedData : [String : Any]?
-    var screenTrackIndexOffset: Int
+    let screenName: String
+    let siteSection: String
+    let siteSubsection: String
+    let continueButtonTappedActionName: String
+    let continueButtonTappedData : [String : Any]?
+    let screenTrackIndexOffset: Int
 }

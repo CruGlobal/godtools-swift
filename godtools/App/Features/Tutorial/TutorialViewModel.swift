@@ -35,7 +35,7 @@ class TutorialViewModel: TutorialViewModelType {
         
         tutorialItems.accept(value: tutorialItemsProvider.tutorialItems)
         
-        tutorialPagerAnalyticsModel = TutorialPagerAnalytics(screenName: "tutorial", siteSection: "tutorial", siteSubsection: "", continueButtonTappedActionName: "", continueButtonTappedData: nil, screenTrackIndexOffset: 0)
+        tutorialPagerAnalyticsModel = TutorialPagerAnalytics(screenName: "tutorial", siteSection: "tutorial", siteSubsection: "", continueButtonTappedActionName: "", continueButtonTappedData: nil, screenTrackIndexOffset: 1)
     }
     
     func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType {

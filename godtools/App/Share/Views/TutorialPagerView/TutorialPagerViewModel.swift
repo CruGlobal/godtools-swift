@@ -52,7 +52,7 @@ class TutorialPagerViewModel: TutorialPagerViewModelType {
     
     func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType {
         
-        return TutorialCellViewModel(item: tutorialItems[index], customViewBuilder: customViewBuilder, analyticsContainer: analyticsContainer, analyticsScreenName: tutorialPagerAnalyticsModel.screenName)
+        return TutorialCellViewModel(item: tutorialItems[index], customViewBuilder: customViewBuilder, analyticsContainer: analyticsContainer, analyticsScreenName: buildAnalyticsScreenName(page: index))
     }
     
     func skipTapped() {
@@ -86,12 +86,16 @@ class TutorialPagerViewModel: TutorialPagerViewModelType {
         
     }
     
+    private func buildAnalyticsScreenName(page: Int) -> String {
+        return "\(tutorialPagerAnalyticsModel.screenName)-\(page + tutorialPagerAnalyticsModel.screenTrackIndexOffset)"
+    }
+    
     private func trackPageDidAppear (page: Int) {
         
         if !tutorialPagerAnalyticsModel.screenName.isEmpty {
             analyticsContainer.pageViewedAnalytics.trackPageView(
                 trackScreen: TrackScreenModel(
-                    screenName: "\(tutorialPagerAnalyticsModel.screenName)-\(page + 2)",
+                    screenName: buildAnalyticsScreenName(page: page),
                     siteSection: tutorialPagerAnalyticsModel.siteSection,
                     siteSubSection: tutorialPagerAnalyticsModel.siteSubsection
                 )
@@ -104,7 +108,7 @@ class TutorialPagerViewModel: TutorialPagerViewModelType {
         if !tutorialPagerAnalyticsModel.screenName.isEmpty, !tutorialPagerAnalyticsModel.continueButtonTappedActionName.isEmpty {
             analyticsContainer.trackActionAnalytics.trackAction(
                 trackAction: TrackActionModel(
-                    screenName: "\(tutorialPagerAnalyticsModel.screenName)-\(tutorialPagerAnalyticsModel.screenTrackIndexOffset)",
+                    screenName: buildAnalyticsScreenName(page: page),
                     actionName: tutorialPagerAnalyticsModel.continueButtonTappedActionName,
                     siteSection: tutorialPagerAnalyticsModel.siteSection,
                     siteSubSection: tutorialPagerAnalyticsModel.siteSubsection,
