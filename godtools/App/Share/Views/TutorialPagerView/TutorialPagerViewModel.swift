@@ -80,9 +80,10 @@ class TutorialPagerViewModel: TutorialPagerViewModelType {
         
         if reachedEnd, let step = navigationStepForContinueTapped {
             flowDelegate?.navigate(step: step)
+            
+            trackContinueButtonTapped(page: page.value)
         }
         
-        trackContinueButtonTapped(page: page.value)
     }
     
     private func trackPageDidAppear (page: Int) {
@@ -90,7 +91,7 @@ class TutorialPagerViewModel: TutorialPagerViewModelType {
         if !tutorialPagerAnalyticsModel.screenName.isEmpty {
             analyticsContainer.pageViewedAnalytics.trackPageView(
                 trackScreen: TrackScreenModel(
-                    screenName: "\(tutorialPagerAnalyticsModel.screenName)-\(page)",
+                    screenName: "\(tutorialPagerAnalyticsModel.screenName)-\(page + 2)",
                     siteSection: tutorialPagerAnalyticsModel.siteSection,
                     siteSubSection: tutorialPagerAnalyticsModel.siteSubsection
                 )
