@@ -265,6 +265,10 @@ class AppDiContainer {
         return MobileContentAnalytics(analytics: analytics)
     }
     
+    func getMobileContentEventAnalyticsTracking() -> MobileContentEventAnalyticsTracking {
+        return MobileContentEventAnalyticsTracking(firebaseAnalytics: analytics.firebaseAnalytics)
+    }
+    
     func getMobileContentNodeParser() -> MobileContentXmlNodeParser {
         return MobileContentXmlNodeParser()
     }

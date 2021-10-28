@@ -13,6 +13,7 @@ protocol ContentMultiSelectOptionModelType: MobileContentRenderableModel {
     var backgroundColor: UIColor { get }
     var selectedColor: UIColor { get }
     
+    func getTappedAnalyticsEvents() -> [AnalyticsEventModelType]
     func toggleSelected(rendererState: MobileContentMultiplatformState)
     func watchIsSelected(rendererState: MobileContentMultiplatformState, completion: @escaping ((_ isSelected: Bool) -> Void)) -> MultiplatformFlowWatcher
 }
