@@ -82,7 +82,7 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
     
     deinit {
         print("x deinit: \(type(of: self))")
-        deepLinkingService.removeDeepLinkObserver(object: self)
+        deepLinkingService.deepLinkObserver.removeObserver(self)
     }
     
     private func configureNavigationBar(shouldAnimateNavigationBarHiddenState: Bool) {
@@ -90,7 +90,7 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
     }
     
     private func addDeepLinkingObserver() {
-        deepLinkingService.addDeepLinkObserver(object: self) { [weak self] (parsedDeepLink: ParsedDeepLinkType?) in
+        deepLinkingService.deepLinkObserver.addObserver(self) { [weak self] (parsedDeepLink: ParsedDeepLinkType?) in
             if let deepLink = parsedDeepLink {
                 self?.navigate(step: .deepLink(deepLinkType: deepLink))
             }

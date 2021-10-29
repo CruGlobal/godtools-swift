@@ -11,11 +11,10 @@ import Foundation
 class DeepLinkingService: NSObject, DeepLinkingServiceType {
     
     private let deepLinkParsers: [DeepLinkParserType]
-    private let deepLinkObserver: PassthroughValue<ParsedDeepLinkType?> = PassthroughValue()
     private let loggingEnabled: Bool
     
-    private var lastNonObservedDeepLink: ParsedDeepLinkType?
-    
+    let deepLinkObserver: PassthroughValue<ParsedDeepLinkType?> = PassthroughValue()
+        
     required init(deepLinkParsers: [DeepLinkParserType], loggingEnabled: Bool) {
         
         self.deepLinkParsers = deepLinkParsers
@@ -23,21 +22,7 @@ class DeepLinkingService: NSObject, DeepLinkingServiceType {
         
         super.init()
     }
-    
-    func addDeepLinkObserver(object: NSObject, onObserve: @escaping PassthroughValue<ParsedDeepLinkType?>.Handler) {
-        
-        deepLinkObserver.addObserver(object, onObserve: onObserve)
-        
-        if let lastDeepLink = lastNonObservedDeepLink {
-            deepLinkObserver.accept(value: lastDeepLink)
-            lastNonObservedDeepLink = nil
-        }
-    }
-    
-    func removeDeepLinkObserver(object: NSObject) {
-        deepLinkObserver.removeObserver(object)
-    }
-        
+     
     func parseDeepLinkAndNotify(incomingDeepLink: IncomingDeepLinkType) -> Bool {
         
         if loggingEnabled {
@@ -47,12 +32,7 @@ class DeepLinkingService: NSObject, DeepLinkingServiceType {
                 
         for deepLinkParser in deepLinkParsers {
             if let deepLink = deepLinkParser.parse(incomingDeepLink: incomingDeepLink) {
-                if deepLinkObserver.numberOfObservers > 0 {
-                    deepLinkObserver.accept(value: deepLink)
-                }
-                else {
-                    lastNonObservedDeepLink = deepLink
-                }
+                deepLinkObserver.accept(value: deepLink)
                 return true
             }
         }

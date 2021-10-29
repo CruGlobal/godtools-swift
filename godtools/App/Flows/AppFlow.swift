@@ -33,7 +33,7 @@ class AppFlow: NSObject, Flow {
     let rootController: AppRootController = AppRootController(nibName: nil, bundle: nil)
     let navigationController: UINavigationController
         
-    init(appDiContainer: AppDiContainer, window: UIWindow) {
+    init(appDiContainer: AppDiContainer, window: UIWindow, appDeepLinkingService: DeepLinkingServiceType) {
         
         self.appDiContainer = appDiContainer
         self.window = window
@@ -41,7 +41,7 @@ class AppFlow: NSObject, Flow {
         self.dataDownloader = appDiContainer.initialDataDownloader
         self.followUpsService = appDiContainer.followUpsService
         self.viewsService = appDiContainer.viewsService
-        self.deepLinkingService = appDiContainer.sharedDeepLinkingService
+        self.deepLinkingService = appDeepLinkingService
         
         super.init()
         
@@ -122,7 +122,7 @@ class AppFlow: NSObject, Flow {
         
         isObservingDeepLinking = true
         
-        deepLinkingService.addDeepLinkObserver(object: self) { [weak self] (optionalDeepLink: ParsedDeepLinkType?) in
+        deepLinkingService.deepLinkObserver.addObserver(self) { [weak self] (optionalDeepLink: ParsedDeepLinkType?) in
             guard let deepLink = optionalDeepLink else {
                 return
             }
@@ -133,7 +133,7 @@ class AppFlow: NSObject, Flow {
     private func removeDeepLinkingObservers() {
         
         isObservingDeepLinking = false
-        deepLinkingService.removeDeepLinkObserver(object: self)
+        deepLinkingService.deepLinkObserver.removeObserver(self)
     }
     
     func navigate(step: FlowStep) {

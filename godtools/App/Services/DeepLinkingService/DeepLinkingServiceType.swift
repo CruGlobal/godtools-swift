@@ -10,7 +10,7 @@ import Foundation
 
 protocol DeepLinkingServiceType {
         
-    func addDeepLinkObserver(object: NSObject, onObserve: @escaping PassthroughValue<ParsedDeepLinkType?>.Handler)
-    func removeDeepLinkObserver(object: NSObject)
+    var deepLinkObserver: PassthroughValue<ParsedDeepLinkType?> { get }
+    
     func parseDeepLinkAndNotify(incomingDeepLink: IncomingDeepLinkType) -> Bool
 }
