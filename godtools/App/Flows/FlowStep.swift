@@ -27,10 +27,8 @@ enum FlowStep {
     case openTutorialTapped
     
     // onboarding
-    case beginTappedFromOnboardingWelcome
     case skipTappedFromOnboardingTutorial
-    case showMoreTappedFromOnboardingTutorial
-    case getStartedTappedFromOnboardingTutorial
+    case endTutorialFromOnboardingTutorial
     
     // lessons list
     case lessonTappedFromLessonsList(resource: ResourceModel)

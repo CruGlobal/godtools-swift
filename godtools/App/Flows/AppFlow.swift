@@ -280,17 +280,6 @@ class AppFlow: NSObject, Flow {
             navigationController.dismiss(animated: true, completion: nil)
             onboardingFlow = nil
                             
-        case .showMoreTappedFromOnboardingTutorial:
-            
-            let tutorialFlow = TutorialFlow(
-                flowDelegate: self,
-                appDiContainer: appDiContainer,
-                sharedNavigationController: onboardingFlow?.navigationController
-            )
-            
-            self.tutorialFlow = tutorialFlow
-            onboardingFlow = nil
-                            
         case .openTutorialTapped:
             let tutorialFlow = TutorialFlow(
                 flowDelegate: self,

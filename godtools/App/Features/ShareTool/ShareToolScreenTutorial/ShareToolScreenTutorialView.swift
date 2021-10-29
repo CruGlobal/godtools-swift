@@ -10,6 +10,7 @@ import UIKit
 import youtube_ios_player_helper
 
 class ShareToolScreenTutorialView: UIViewController {
+    //TODO: re-implement this tutorial using TutorialPagerView
     
     private let viewModel: ShareToolScreenTutorialViewModelType
     
@@ -68,7 +69,7 @@ class ShareToolScreenTutorialView: UIViewController {
     
     private func setupBinding() {
         
-        viewModel.tutorialItems.addObserver(self) { [weak self] (tutorialItems: [TutorialItem]) in
+        viewModel.tutorialItems.addObserver(self) { [weak self] (tutorialItems: [TutorialItemType]) in
             self?.pageControl.numberOfPages = tutorialItems.count
             self?.tutorialPagesView.reloadData()
         }
@@ -146,13 +147,9 @@ extension ShareToolScreenTutorialView: PageNavigationCollectionViewDelegate {
             cellReuseIdentifier: TutorialCell.reuseIdentifier,
             indexPath: indexPath) as! TutorialCell
         
-        let tutorialItem: TutorialItem = viewModel.tutorialItems.value[indexPath.item]
-        let cellViewModel = TutorialCellViewModel(
-            item: tutorialItem,
-            customViewBuilder: viewModel.customViewBuilder
-        )
+        let cellViewModel = viewModel.tutorialItemWillAppear(index: indexPath.item)
 
-        cell.configure(viewModel: cellViewModel, delegate: self)
+        cell.configure(viewModel: cellViewModel)
         
         return cell
     }
@@ -171,13 +168,5 @@ extension ShareToolScreenTutorialView: PageNavigationCollectionViewDelegate {
     func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
         
         pageControl.currentPage = page
-    }
-}
-
-// MARK: - TutorialCellDelegate
-
-extension ShareToolScreenTutorialView: TutorialCellDelegate {
-    func tutorialCellVideoPlayer(cell: TutorialCell, didChangeTo state: YTPlayerState) {
-
     }
 }

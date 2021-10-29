@@ -265,6 +265,10 @@ class AppDiContainer {
         return MobileContentAnalytics(analytics: analytics)
     }
     
+    func getMobileContentEventAnalyticsTracking() -> MobileContentEventAnalyticsTracking {
+        return MobileContentEventAnalyticsTracking(firebaseAnalytics: analytics.firebaseAnalytics)
+    }
+    
     func getMobileContentNodeParser() -> MobileContentXmlNodeParser {
         return MobileContentXmlNodeParser()
     }
@@ -279,6 +283,10 @@ class AppDiContainer {
         return ViewedTrainingTipsService(
             cache: ViewedTrainingTipsUserDefaultsCache(sharedUserDefaults: sharedUserDefaultsCache)
         )
+    }
+    
+    func onboardingTutorialCustomViewBuilder() -> CustomViewBuilderType {
+        return OnboardingTutorialCustomViewBuilder(deviceLanguage: deviceLanguage, localizationServices: localizationServices)
     }
     
     var firebaseConfiguration: FirebaseConfiguration {

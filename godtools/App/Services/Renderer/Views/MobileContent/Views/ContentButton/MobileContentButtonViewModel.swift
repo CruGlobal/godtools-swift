@@ -10,6 +10,8 @@ import UIKit
 
 class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     
+    private let maxAllowedIconSize = 40
+    
     private let buttonModel: ContentButtonModelType
     private let rendererPageModel: MobileContentRendererPageModel
     private let containerModel: MobileContentRenderableModelContainer?
@@ -24,6 +26,7 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     let titleColor: UIColor
     let borderColor: UIColor?
     let visibilityState: ObservableValue<MobileContentViewVisibilityState> = ObservableValue(value: .visible)
+    let icon: MobileContentButtonIcon?
     
     required init(buttonModel: ContentButtonModelType, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
         
@@ -48,6 +51,18 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
             backgroundColor = buttonModel.getBackgroundColor()?.uiColor ?? .clear
             titleColor = buttonColor
             borderColor = buttonColor
+        }
+        
+        if let name = buttonModel.iconName, let image = rendererPageModel.resourcesCache.getImageFromManifestResources(fileName: name)  {
+            
+            let iconSize = min(Int(buttonModel.iconSize), maxAllowedIconSize)
+                    
+            let scaledImage = image.scalePreservingAspectRatio(targetSize: CGSize(width: iconSize, height: iconSize))
+            
+            self.icon = MobileContentButtonIcon(size: buttonModel.iconSize, gravity: buttonModel.iconGravity, image: scaledImage)
+        } else {
+            
+            self.icon = nil
         }
         
         super.init()

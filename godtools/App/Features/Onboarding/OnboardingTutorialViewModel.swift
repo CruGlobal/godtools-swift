@@ -2,93 +2,74 @@
 //  OnboardingTutorialViewModel.swift
 //  godtools
 //
-//  Created by Levi Eggert on 1/24/20.
-//  Copyright © 2020 Cru. All rights reserved.
+//  Created by Robert Eldredge on 10/14/21.
+//  Copyright © 2021 Cru. All rights reserved.
 //
 
 import Foundation
 
-class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
-        
-    private let localizationServices: LocalizationServices
-    private let analytics: AnalyticsContainer
+class OnboardingTutorialViewModel: TutorialPagerViewModel {
+    
     private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
-    
-    private var page: Int = 0
-    
-    private weak var flowDelegate: FlowDelegate?
-    
-    let tutorialItems: ObservableValue<[OnboardingTutorialItem]> = ObservableValue(value: [])
-    let skipButtonTitle: String
-    let continueButtonTitle: String
-    let showMoreButtonTitle: String
-    let getStartedButtonTitle: String
+    private let viewBuilder: CustomViewBuilderType
+    private let localizationServices: LocalizationServices
         
-    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, analytics: AnalyticsContainer, onboardingTutorialProvider: OnboardingTutorialProviderType, onboardingTutorialAvailability: OnboardingTutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType) {
+    required init(flowDelegate: FlowDelegate, analyticsContainer: AnalyticsContainer, onboardingTutorialItemsRepository: OnboardingTutorialItemsRepositoryType, onboardingTutorialAvailability: OnboardingTutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, customViewBuilder: CustomViewBuilderType, localizationServices: LocalizationServices) {
         
-        self.flowDelegate = flowDelegate
-        self.localizationServices = localizationServices
-        self.analytics = analytics
         self.openTutorialCalloutCache = openTutorialCalloutCache
+        self.viewBuilder = customViewBuilder
+        self.localizationServices = localizationServices
         
-        skipButtonTitle = localizationServices.stringForMainBundle(key: "navigationBar.navigationItem.skip")
-        continueButtonTitle = localizationServices.stringForMainBundle(key: "onboardingTutorial.continueButton.title")
-        showMoreButtonTitle = localizationServices.stringForMainBundle(key: "onboardingTutorial.showMoreButton.title")
-        getStartedButtonTitle = localizationServices.stringForMainBundle(key: "onboardingTutorial.getStartedButton.title")
+        let tutorialPagerAnalyticsModel = TutorialPagerAnalytics(screenName: "onboarding", siteSection: "onboarding", siteSubsection: "", continueButtonTappedActionName: "On-Boarding Start", continueButtonTappedData: ["cru.onboarding_start": 1], screenTrackIndexOffset: 2)
         
-        var tutorialItemsArray: [OnboardingTutorialItem] = Array()
-        tutorialItemsArray.append(contentsOf: onboardingTutorialProvider.aboutTheAppItems)
-        tutorialItemsArray.append(onboardingTutorialProvider.appUsageListItem)
+        super.init(flowDelegate: flowDelegate, analyticsContainer: analyticsContainer,  tutorialItems: onboardingTutorialItemsRepository.tutorialItems, tutorialPagerAnalyticsModel: tutorialPagerAnalyticsModel, skipButtonTitle: localizationServices.stringForMainBundle(key: "navigationBar.navigationItem.skip"))
         
-        tutorialItems.accept(value: tutorialItemsArray)
-                        
         onboardingTutorialAvailability.markOnboardingTutorialViewed()
     }
     
-    private var analyticsScreenName: String {
-        return "onboarding-\(page + 2)"
+    required init(flowDelegate: FlowDelegate, analyticsContainer: AnalyticsContainer, tutorialItems: [TutorialItemType], tutorialPagerAnalyticsModel: TutorialPagerAnalytics, skipButtonTitle: String) {
+        fatalError("init(analyticsContainer:localizationServices:tutorialItems:) has not been implemented")
     }
     
-    func skipTapped() {
-        flowDelegate?.navigate(step: .skipTappedFromOnboardingTutorial)
+    override var customViewBuilder: CustomViewBuilderType? {
+        return viewBuilder
     }
     
-    func pageDidChange(page: Int) {
+    override var navigationStepForSkipTapped: FlowStep? {
+        return .skipTappedFromOnboardingTutorial
+    }
+    
+    override var navigationStepForContinueTapped: FlowStep? {
+        return .endTutorialFromOnboardingTutorial
+    }
+    
+    override func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType {
+        
+        super.tutorialItemWillAppear(index: index)
+    }
+    
+    override func skipTapped() {
+        
+        super.skipTapped()
+    }
+    
+    override func pageDidChange(page: Int) {
                 
-        self.page = page
-    }
-    
-    func pageDidAppear(page: Int) {
-        
-        self.page = page
-        
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: "onboarding", siteSubSection: ""))
-        
-        if page == tutorialItems.value.count - 1 {
-            analytics.appsFlyerAnalytics.trackAction(actionName: analyticsScreenName, data: nil)
+        switch page {
+        case 0:
+            skipButtonHidden.accept(value: true)
+            continueButtonTitle.accept(value: localizationServices.stringForMainBundle(key: "onboardingTutorial.beginButton.title"))
+       
+        default:
+            skipButtonHidden.accept(value: false)
+            continueButtonTitle.accept(value: localizationServices.stringForMainBundle(key: "onboardingTutorial.nextButton.title"))
         }
+        
+        super.pageDidChange(page: page)
     }
     
-    func continueTapped() {
-                
-        let nextPage: Int = page + 1
-        let reachedEnd: Bool = nextPage >= tutorialItems.value.count
+    override func continueTapped() {
         
-        if reachedEnd {
-            flowDelegate?.navigate(step: .getStartedTappedFromOnboardingTutorial)
-        }
-    }
-    
-    func showMoreTapped() {
-        openTutorialCalloutCache.disableOpenTutorialCallout()
-        flowDelegate?.navigate(step: .showMoreTappedFromOnboardingTutorial)
-        
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: "On-Boarding More", siteSection: "", siteSubSection: "", url: nil, data: ["cru.onboarding_more": 1]))
-    }
-    
-    func getStartedTapped() {
-        flowDelegate?.navigate(step: .getStartedTappedFromOnboardingTutorial)
-        
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: "On-Boarding Start", siteSection: "", siteSubSection: "", url: nil, data: ["cru.onboarding_start": 1]))
+        super.continueTapped()
     }
 }

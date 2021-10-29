@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TutorialItem {
+struct TutorialItem: TutorialItemType {
     
     let title: String
     let message: String
