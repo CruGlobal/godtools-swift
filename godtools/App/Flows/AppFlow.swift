@@ -122,7 +122,7 @@ class AppFlow: NSObject, Flow {
         
         isObservingDeepLinking = true
         
-        deepLinkingService.completed.addObserver(self) { [weak self] (optionalDeepLink: ParsedDeepLinkType?) in
+        deepLinkingService.addDeepLinkObserver(object: self) { [weak self] (optionalDeepLink: ParsedDeepLinkType?) in
             guard let deepLink = optionalDeepLink else {
                 return
             }
@@ -133,7 +133,7 @@ class AppFlow: NSObject, Flow {
     private func removeDeepLinkingObservers() {
         
         isObservingDeepLinking = false
-        deepLinkingService.completed.removeObserver(self)
+        deepLinkingService.removeDeepLinkObserver(object: self)
     }
     
     func navigate(step: FlowStep) {

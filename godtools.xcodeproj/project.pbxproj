@@ -981,6 +981,7 @@
 		45DC914F26A6120A006BDBD0 /* MobileContentRenderableModelContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DC914E26A6120A006BDBD0 /* MobileContentRenderableModelContainer.swift */; };
 		45DEF22E2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json in Resources */ = {isa = PBXBuildFile; fileRef = 45DEF22D2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json */; };
 		45E998D623FD7B090088DD0C /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */; };
+		45EC429B272C87430052F2AA /* PassthroughValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EC429A272C87430052F2AA /* PassthroughValue.swift */; };
 		45F506DA26A3822E00EC04A9 /* ManifestResourcesCacheType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F506D926A3822E00EC04A9 /* ManifestResourcesCacheType.swift */; };
 		45F5A03F2689FD7E0081C507 /* LessonQueryParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5A03E2689FD7E0081C507 /* LessonQueryParameters.swift */; };
 		45F5A0422689FEDE0081C507 /* LessonsDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5A0412689FEDE0081C507 /* LessonsDeepLinkParser.swift */; };
@@ -2032,6 +2033,7 @@
 		45DEF4BB24DEF6E700996695 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/Localizable.strings; sourceTree = "<group>"; };
 		45DEF4BC24DEF6FA00996695 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Semibold.otf"; sourceTree = "<group>"; };
+		45EC429A272C87430052F2AA /* PassthroughValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassthroughValue.swift; sourceTree = "<group>"; };
 		45F506D926A3822E00EC04A9 /* ManifestResourcesCacheType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManifestResourcesCacheType.swift; sourceTree = "<group>"; };
 		45F5A03E2689FD7E0081C507 /* LessonQueryParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonQueryParameters.swift; sourceTree = "<group>"; };
 		45F5A0412689FEDE0081C507 /* LessonsDeepLinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsDeepLinkParser.swift; sourceTree = "<group>"; };
@@ -4866,6 +4868,7 @@
 			isa = PBXGroup;
 			children = (
 				45AD20B825938F1A00A096A0 /* ObservableValue.swift */,
+				45EC429A272C87430052F2AA /* PassthroughValue.swift */,
 				45AD20BA25938F1A00A096A0 /* Signal.swift */,
 				45AD20B925938F1A00A096A0 /* SignalValue.swift */,
 			);
@@ -6221,6 +6224,7 @@
 				45AD1FFB25938A9800A096A0 /* DetermineNewUserIfPrimaryLanguageSet.swift in Sources */,
 				455583ED269F2DA500C3FF14 /* MobileContentSpacerViewModel.swift in Sources */,
 				45B6480B25E581660098BAF1 /* (null) in Sources */,
+				45EC429B272C87430052F2AA /* PassthroughValue.swift in Sources */,
 				45AD1F9925938A9800A096A0 /* RealmResource.swift in Sources */,
 				45AD1FF825938A9800A096A0 /* IsNewUserService.swift in Sources */,
 				45AD1F5E25938A9800A096A0 /* StarscreamWebSocket.swift in Sources */,
