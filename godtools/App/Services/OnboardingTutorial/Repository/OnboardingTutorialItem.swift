@@ -1,14 +1,14 @@
 //
-//  TutorialItem.swift
+//  OnboardingTutorialItem.swift
 //  godtools
 //
-//  Created by Levi Eggert on 1/27/20.
-//  Copyright © 2020 Cru. All rights reserved.
+//  Created by Robert Eldredge on 10/11/21.
+//  Copyright © 2021 Cru. All rights reserved.
 //
 
 import Foundation
 
-struct TutorialItem: TutorialItemType {
+struct OnboardingTutorialItem: TutorialItemType {
     
     let title: String
     let message: String

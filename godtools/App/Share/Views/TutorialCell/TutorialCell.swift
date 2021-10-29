@@ -10,17 +10,12 @@ import UIKit
 import youtube_ios_player_helper
 import Lottie
 
-protocol TutorialCellDelegate: AnyObject {
-    func tutorialCellVideoPlayer(cell: TutorialCell, didChangeTo state: YTPlayerState)
-}
-
 class TutorialCell: UICollectionViewCell {
     
     static let nibName: String = "TutorialCell"
     static let reuseIdentifier: String = "TutorialCellReuseIdentifier"
     
-    private weak var delegate: TutorialCellDelegate?
-    private var viewModel: TutorialCellViewModel?
+    private var viewModel: TutorialCellViewModelType?
     private var mainImage: UIImage?
     private var mainImageView: UIImageView?
     private var customView: UIView?
@@ -60,7 +55,6 @@ class TutorialCell: UICollectionViewCell {
         customView?.removeFromSuperview()
         customView = nil
         viewModel = nil
-        delegate = nil
     }
     
     override func layoutSubviews() {
@@ -80,9 +74,8 @@ class TutorialCell: UICollectionViewCell {
         ]
     }
     
-    func configure(viewModel: TutorialCellViewModel, delegate: TutorialCellDelegate?) {
+    func configure(viewModel: TutorialCellViewModelType) {
         
-        self.delegate = delegate
         self.viewModel = viewModel
         
         // titleLabel
@@ -271,9 +264,10 @@ extension TutorialCell: YTPlayerViewDelegate {
     }
     
     func playerView(_ playerView: YTPlayerView, didChangeTo state: YTPlayerState) {
-        delegate?.tutorialCellVideoPlayer(cell: self, didChangeTo: state)
         
-        if state == YTPlayerState.ended {
+        if state == .playing {
+            viewModel?.tutorialVideoPlayTapped()
+        } else if state == .ended {
            recueVideo()
         }
     }

@@ -163,7 +163,8 @@ class ShareToolMenuFlow: Flow {
             localizationServices: appDiContainer.localizationServices,
             tutorialItemsProvider: tutorialItemsProvider,
             shareToolScreenTutorialNumberOfViewsCache: appDiContainer.shareToolScreenTutorialNumberOfViewsCache,
-            resource: resource
+            resource: resource,
+            analyticsContainer: appDiContainer.analytics
         )
 
         let view = ShareToolScreenTutorialView(viewModel: viewModel)

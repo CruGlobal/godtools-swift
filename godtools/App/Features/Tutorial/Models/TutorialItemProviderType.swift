@@ -10,5 +10,5 @@ import Foundation
 
 protocol TutorialItemProviderType {
     
-    var tutorialItems: [TutorialItem] { get }
+    var tutorialItems: [TutorialItemType] { get }
 }

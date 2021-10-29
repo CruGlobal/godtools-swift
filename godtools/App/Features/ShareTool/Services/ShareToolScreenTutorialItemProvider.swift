@@ -10,7 +10,7 @@ import Foundation
 
 class ShareToolScreenTutorialItemProvider: TutorialItemProviderType {
     
-    let tutorialItems: [TutorialItem]
+    let tutorialItems: [TutorialItemType]
     
     required init(localizationServices: LocalizationServices) {
         
