@@ -52,7 +52,7 @@ class TutorialPagerViewModel: TutorialPagerViewModelType {
     
     func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType {
         
-        return TutorialCellViewModel(item: tutorialItems[index], customViewBuilder: customViewBuilder, analyticsContainer: analyticsContainer, analyticsScreenName: buildAnalyticsScreenName(page: index))
+        return TutorialCellViewModel(item: tutorialItems[index], customViewBuilder: customViewBuilder, analyticsContainer: analyticsContainer, analyticsScreenName: tutorialPagerAnalyticsModel.analyticsScreenName(page: index))
     }
     
     func skipTapped() {
@@ -83,19 +83,16 @@ class TutorialPagerViewModel: TutorialPagerViewModelType {
             
             trackContinueButtonTapped(page: page.value)
         }
-        
-    }
-    
-    private func buildAnalyticsScreenName(page: Int) -> String {
-        return "\(tutorialPagerAnalyticsModel.screenName)-\(page + tutorialPagerAnalyticsModel.screenTrackIndexOffset)"
     }
     
     private func trackPageDidAppear (page: Int) {
         
-        if !tutorialPagerAnalyticsModel.screenName.isEmpty {
+        let analyticsScreenName = tutorialPagerAnalyticsModel.analyticsScreenName(page: page)
+        
+        if !analyticsScreenName.isEmpty {
             analyticsContainer.pageViewedAnalytics.trackPageView(
                 trackScreen: TrackScreenModel(
-                    screenName: buildAnalyticsScreenName(page: page),
+                    screenName: analyticsScreenName,
                     siteSection: tutorialPagerAnalyticsModel.siteSection,
                     siteSubSection: tutorialPagerAnalyticsModel.siteSubsection
                 )
@@ -105,10 +102,12 @@ class TutorialPagerViewModel: TutorialPagerViewModelType {
     
     private func trackContinueButtonTapped (page: Int) {
         
-        if !tutorialPagerAnalyticsModel.screenName.isEmpty, !tutorialPagerAnalyticsModel.continueButtonTappedActionName.isEmpty {
+        let analyticsScreenName = tutorialPagerAnalyticsModel.analyticsScreenName(page: page)
+        
+        if !analyticsScreenName.isEmpty, !tutorialPagerAnalyticsModel.continueButtonTappedActionName.isEmpty {
             analyticsContainer.trackActionAnalytics.trackAction(
                 trackAction: TrackActionModel(
-                    screenName: buildAnalyticsScreenName(page: page),
+                    screenName: analyticsScreenName,
                     actionName: tutorialPagerAnalyticsModel.continueButtonTappedActionName,
                     siteSection: tutorialPagerAnalyticsModel.siteSection,
                     siteSubSection: tutorialPagerAnalyticsModel.siteSubsection,

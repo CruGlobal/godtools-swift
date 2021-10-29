@@ -40,7 +40,7 @@ class TutorialViewModel: TutorialViewModelType {
     
     func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType {
         
-        return TutorialCellViewModel(item: tutorialItems.value[index], customViewBuilder: customViewBuilder, analyticsContainer: analytics, analyticsScreenName: tutorialPagerAnalyticsModel.screenName)
+        return TutorialCellViewModel(item: tutorialItems.value[index], customViewBuilder: customViewBuilder, analyticsContainer: analytics, analyticsScreenName: tutorialPagerAnalyticsModel.analyticsScreenName(page: index))
     }
     
     func closeTapped() {
@@ -59,10 +59,10 @@ class TutorialViewModel: TutorialViewModelType {
         
         self.page = page
         
-        let trackedScreenName = "\(tutorialPagerAnalyticsModel.screenName)-\(page + 1)"
+        let analyticsScreenName = tutorialPagerAnalyticsModel.analyticsScreenName(page: page)
         
-        let trackScreenData = TrackScreenModel(screenName: trackedScreenName, siteSection: tutorialPagerAnalyticsModel.siteSection, siteSubSection: tutorialPagerAnalyticsModel.siteSubsection)
-        let trackActionData = TrackActionModel(screenName: trackedScreenName, actionName: trackedScreenName, siteSection: tutorialPagerAnalyticsModel.siteSection, siteSubSection: tutorialPagerAnalyticsModel.siteSubsection, url: nil, data: nil)
+        let trackScreenData = TrackScreenModel(screenName: analyticsScreenName, siteSection: tutorialPagerAnalyticsModel.siteSection, siteSubSection: tutorialPagerAnalyticsModel.siteSubsection)
+        let trackActionData = TrackActionModel(screenName: analyticsScreenName, actionName: analyticsScreenName, siteSection: tutorialPagerAnalyticsModel.siteSection, siteSubSection: tutorialPagerAnalyticsModel.siteSubsection, url: nil, data: nil)
         
         analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreenData)
         
