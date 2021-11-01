@@ -23,6 +23,7 @@ class AppFlow: NSObject, Flow {
     private var toolsFlow: ToolsFlow?
     private var tutorialFlow: TutorialFlow?
     private var articleDeepLinkFlow: ArticleDeepLinkFlow?
+    private var appLaunchedFromDeepLink: ParsedDeepLinkType?
     private var resignedActiveDate: Date?
     private var navigationStarted: Bool = false
     private var observersAdded: Bool = false
@@ -55,6 +56,7 @@ class AppFlow: NSObject, Flow {
         rootController.addChildController(child: navigationController)
         
         addObservers()
+        addDeepLinkingObservers()
         
         appDiContainer.firebaseInAppMessaging.setDelegate(delegate: self)
     }
@@ -123,10 +125,21 @@ class AppFlow: NSObject, Flow {
         isObservingDeepLinking = true
         
         deepLinkingService.deepLinkObserver.addObserver(self) { [weak self] (optionalDeepLink: ParsedDeepLinkType?) in
+            
             guard let deepLink = optionalDeepLink else {
                 return
             }
-            self?.navigate(step: .deepLink(deepLinkType: deepLink))
+            
+            guard let weakSelf = self else {
+                return
+            }
+            
+            if !weakSelf.navigationStarted {
+                weakSelf.appLaunchedFromDeepLink = deepLink
+            }
+            else {
+                weakSelf.navigate(step: .deepLink(deepLinkType: deepLink))
+            }
         }
     }
     
@@ -142,6 +155,11 @@ class AppFlow: NSObject, Flow {
         
         case .appLaunchedFromTerminatedState:
            
+            if let deepLink = appLaunchedFromDeepLink {
+                
+                appLaunchedFromDeepLink = nil
+                navigate(step: .deepLink(deepLinkType: deepLink))
+            }
             if appDiContainer.onboardingTutorialAvailability.onboardingTutorialIsAvailable {
                 
                 navigate(step: .showOnboardingTutorial(animated: false))
@@ -152,8 +170,6 @@ class AppFlow: NSObject, Flow {
             }
             
             loadInitialData()
-            
-            addDeepLinkingObservers()
             
         case .appLaunchedFromBackgroundState:
             
@@ -246,16 +262,14 @@ class AppFlow: NSObject, Flow {
             
             if shouldCreateNewInstance || toolsFlow == nil {
 
-                let toolsFlow: ToolsFlow = ToolsFlow(
+                toolsFlow = ToolsFlow(
                     flowDelegate: self,
                     appDiContainer: appDiContainer,
                     sharedNavigationController: navigationController,
                     startingToolbarItem: startingToolbarItem
                 )
 
-                self.toolsFlow = toolsFlow
-
-                if animated, let toolsView = toolsFlow.navigationController.viewControllers.first?.view {
+                if animated, let toolsView = toolsFlow?.navigationController.viewControllers.first?.view {
                     toolsView.alpha = 0
                     UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
                         toolsView.alpha = 1

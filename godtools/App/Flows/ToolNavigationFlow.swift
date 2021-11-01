@@ -249,20 +249,18 @@ extension ToolNavigationFlow {
     
     private func navigateToArticleToolFlow(resource: ResourceModel, translationManifest: TranslationManifestData) {
         
-        let articleFlow = ArticleFlow(
+        articleFlow = ArticleFlow(
             flowDelegate: self,
             appDiContainer: appDiContainer,
             sharedNavigationController: navigationController,
             resource: resource,
             translationManifest: translationManifest
         )
-        
-        self.articleFlow = articleFlow
     }
     
     private func navigateToLessonFlow(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, trainingTipsEnabled: Bool, page: Int?) {
         
-        let lessonFlow = LessonFlow(
+        lessonFlow = LessonFlow(
             flowDelegate: self,
             appDiContainer: appDiContainer,
             sharedNavigationController: navigationController,
@@ -272,13 +270,11 @@ extension ToolNavigationFlow {
             trainingTipsEnabled: trainingTipsEnabled,
             page: page
         )
-        
-        self.lessonFlow = lessonFlow
     }
     
     private func navigateToTractFlow(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
            
-        let tractFlow = TractFlow(
+        tractFlow = TractFlow(
             flowDelegate: self,
             appDiContainer: appDiContainer,
             sharedNavigationController: navigationController,
@@ -291,8 +287,6 @@ extension ToolNavigationFlow {
             trainingTipsEnabled: trainingTipsEnabled,
             page: page
         )
-        
-        self.tractFlow = tractFlow
     }
     
     // MARK: -
