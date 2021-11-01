@@ -169,7 +169,7 @@ class AppFlow: NSObject, Flow {
                 appLaunchedFromDeepLink = nil
                 navigate(step: .deepLink(deepLinkType: deepLink))
             }
-            if appDiContainer.onboardingTutorialAvailability.onboardingTutorialIsAvailable {
+            else if appDiContainer.onboardingTutorialAvailability.onboardingTutorialIsAvailable {
                 
                 navigate(step: .showOnboardingTutorial(animated: false))
             }
