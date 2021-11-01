@@ -12,10 +12,10 @@ import FBSDKCoreKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    let appWindow: UIWindow = UIWindow(frame: UIScreen.main.bounds)
-    let appDeepLinkingService: DeepLinkingServiceType = AppDiContainer.getNewDeepLinkingService(loggingEnabled: false)
-    let appDiContainer: AppDiContainer
-    let appFlow: AppFlow
+    private let appWindow: UIWindow = UIWindow(frame: UIScreen.main.bounds)
+    private let appDeepLinkingService: DeepLinkingServiceType = AppDiContainer.getNewDeepLinkingService(loggingEnabled: false)
+    private let appDiContainer: AppDiContainer
+    private let appFlow: AppFlow
     
     var window: UIWindow?
     
