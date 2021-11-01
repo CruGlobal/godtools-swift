@@ -99,6 +99,7 @@
 		4543ACCE26CAEE040002F6F7 /* MobileContentTextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543ACCD26CAEE040002F6F7 /* MobileContentTextStyle.swift */; };
 		4543ACD026CB14E10002F6F7 /* MultiplatformContentFallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543ACCF26CB14E10002F6F7 /* MultiplatformContentFallback.swift */; };
 		4543ACD226CB24500002F6F7 /* MultiplatformTipPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543ACD126CB24500002F6F7 /* MultiplatformTipPage.swift */; };
+		454B53F527305C7100DDA8F9 /* LessonDeepLinkPathComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454B53F427305C7100DDA8F9 /* LessonDeepLinkPathComponents.swift */; };
 		45557AEA252D094100ACFA95 /* LocaleLocalizationBundleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45557AE9252D094000ACFA95 /* LocaleLocalizationBundleTests.swift */; };
 		455582E1269F2C1000C3FF14 /* TrainingViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455582D3269F2C1000C3FF14 /* TrainingViewFactory.swift */; };
 		455582E2269F2C1000C3FF14 /* TrainingTipView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 455582D6269F2C1000C3FF14 /* TrainingTipView.xib */; };
@@ -1164,6 +1165,7 @@
 		4543ACCD26CAEE040002F6F7 /* MobileContentTextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentTextStyle.swift; sourceTree = "<group>"; };
 		4543ACCF26CB14E10002F6F7 /* MultiplatformContentFallback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplatformContentFallback.swift; sourceTree = "<group>"; };
 		4543ACD126CB24500002F6F7 /* MultiplatformTipPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplatformTipPage.swift; sourceTree = "<group>"; };
+		454B53F427305C7100DDA8F9 /* LessonDeepLinkPathComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDeepLinkPathComponents.swift; sourceTree = "<group>"; };
 		45557AE9252D094000ACFA95 /* LocaleLocalizationBundleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocaleLocalizationBundleTests.swift; sourceTree = "<group>"; };
 		455582D3269F2C1000C3FF14 /* TrainingViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrainingViewFactory.swift; sourceTree = "<group>"; };
 		455582D6269F2C1000C3FF14 /* TrainingTipView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TrainingTipView.xib; sourceTree = "<group>"; };
@@ -3065,6 +3067,7 @@
 			isa = PBXGroup;
 			children = (
 				45585BCE2687BB8F00A21D12 /* LessonDeepLinkParser.swift */,
+				454B53F427305C7100DDA8F9 /* LessonDeepLinkPathComponents.swift */,
 				45F5A03E2689FD7E0081C507 /* LessonQueryParameters.swift */,
 			);
 			path = Lesson;
@@ -6218,6 +6221,7 @@
 				453AF09026A878D3002D4AB1 /* MultiplatformContentLabel.swift in Sources */,
 				45AD1BA025938A4F00A096A0 /* DownloadedResource.swift in Sources */,
 				45C93AF2261D310900592FFF /* ArticleAemDownloader.swift in Sources */,
+				454B53F527305C7100DDA8F9 /* LessonDeepLinkPathComponents.swift in Sources */,
 				45AD1BD025938A4F00A096A0 /* LoadingViewModelType.swift in Sources */,
 				45BD7A4226A21FDA0007426B /* ContentLinkNode.swift in Sources */,
 				45A5200A26C4746F009B68D4 /* MultiplatformLessonPage.swift in Sources */,
