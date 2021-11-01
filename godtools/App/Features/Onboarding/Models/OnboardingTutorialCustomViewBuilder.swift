@@ -12,17 +12,21 @@ class OnboardingTutorialCustomViewBuilder: CustomViewBuilderType {
 
     private let deviceLanguage: DeviceLanguageType
     private let localizationServices: LocalizationServices
-
-    required init(deviceLanguage: DeviceLanguageType, localizationServices: LocalizationServices) {
+    private let analyticsContainer: AnalyticsContainer
+    private let analyticsScreenName: String
+    
+    required init(deviceLanguage: DeviceLanguageType, localizationServices: LocalizationServices, analyticsContainer: AnalyticsContainer, analyticsScreenName: String) {
 
         self.deviceLanguage = deviceLanguage
         self.localizationServices = localizationServices
+        self.analyticsContainer = analyticsContainer
+        self.analyticsScreenName = analyticsScreenName
     }
 
     func buildCustomView(customViewId: String) -> UIView? {
 
         if customViewId == "onboarding-0" {
-            let viewModel = OnboardingTutorialIntroViewModel(localizationServices: localizationServices)
+            let viewModel = OnboardingTutorialIntroViewModel(localizationServices: localizationServices, analyticsContainer: analyticsContainer, analyticsScreenName: analyticsScreenName)
 
             let view = OnboardingTutorialIntroView()
 

@@ -14,4 +14,7 @@ protocol OnboardingTutorialIntroViewModelType {
     var logoImage: UIImage? { get }
     var title: String { get }
     var videoLinkLabel: String { get }
+    var youtubeVideoId: String { get }
+    
+    func videoLinkTapped()
 }
