@@ -12,6 +12,8 @@ class OnboardingFlow: Flow {
     
     private weak var flowDelegate: FlowDelegate?
     
+    private var videoPlayerView: VideoPlayerView?
+    
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
@@ -53,6 +55,25 @@ class OnboardingFlow: Flow {
         
         navigationController.setViewControllers([view], animated: false)
     }
+    
+    private func launchVideoPlayerView(youtubeVideoId: String) {
+        
+        let viewModel = VideoPlayerViewModel(FlowDelegate: self, youtubeVideoId: youtubeVideoId)
+        let view = VideoPlayerView(viewModel: viewModel)
+        
+        navigationController.present(view, animated: true, completion: nil)
+    }
+    
+    private func dismissVideoPlayerView() {
+        
+        navigationController.dismiss(animated: true, completion: nil)
+        videoPlayerView = nil
+    }
+    
+    private func dismissOnboardingFlow() {
+        
+        flowDelegate?.navigate(step: .dismissOnboardingTutorial)
+    }
 }
 
 extension OnboardingFlow: FlowDelegate {
@@ -61,11 +82,20 @@ extension OnboardingFlow: FlowDelegate {
         
         switch step {
             
+        case .videoButtonTappedFromOnboardingTutorial(let youtubeVideoId):
+            launchVideoPlayerView(youtubeVideoId: youtubeVideoId)
+        
+        case .closeVideoPlayerTappedFromOnboardingTutorial:
+            dismissVideoPlayerView()
+            
+        case .videoEndedOnOnboardingTutorial:
+            dismissVideoPlayerView()
+            
         case .skipTappedFromOnboardingTutorial:
-            flowDelegate?.navigate(step: .dismissOnboardingTutorial)
+            dismissOnboardingFlow()
             
         case .endTutorialFromOnboardingTutorial:
-            flowDelegate?.navigate(step: .dismissOnboardingTutorial)
+            dismissOnboardingFlow()
         
         default:
             break

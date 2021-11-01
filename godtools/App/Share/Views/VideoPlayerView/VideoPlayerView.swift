@@ -47,33 +47,22 @@ class VideoPlayerView: UIViewController {
     
     private func loadYoutubePlayerVideo(videoId: String) {
         
-        let hidesYouTubeVideoPlayer: Bool
-        
-        if !viewModel.youtubeVideoId.isEmpty {
-            hidesYouTubeVideoPlayer = false
-            youTubeVideoPlayerActivityIndicator.startAnimating()
-            youTubeVideoPlayer.delegate = self
-            youTubeVideoPlayer.load(withVideoId: viewModel.youtubeVideoId, playerVars: youtubePlayerParameters)
-        }
-        else {
-            hidesYouTubeVideoPlayer = true
+        if viewModel.youtubeVideoId.isEmpty {
             youTubeVideoPlayer.stopVideo()
             youTubeVideoPlayer.delegate = nil
             youTubeVideoPlayerActivityIndicator.stopAnimating()
+            youTubeVideoPlayer.isHidden = true
+            youTubeVideoPlayerLoadingView.isHidden = true
+            
+            return
         }
-
-        youTubeVideoPlayer.isHidden = hidesYouTubeVideoPlayer
-        youTubeVideoPlayerLoadingView.isHidden = hidesYouTubeVideoPlayer
         
-        playVideo()
-    }
-    
-    private func playVideo() {
+        youTubeVideoPlayer.delegate = self
+        youTubeVideoPlayerActivityIndicator.startAnimating()
+        youTubeVideoPlayer.load(withVideoId: viewModel.youtubeVideoId, playerVars: youtubePlayerParameters)
+        youTubeVideoPlayer.isHidden = false
+        youTubeVideoPlayerLoadingView.isHidden = false
         youTubeVideoPlayer.playVideo()
-    }
-    
-    private func stopVideo() {
-        youTubeVideoPlayer.stopVideo()
     }
 }
 

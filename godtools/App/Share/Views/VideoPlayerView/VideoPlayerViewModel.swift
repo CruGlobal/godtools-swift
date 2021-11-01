@@ -10,22 +10,24 @@ import Foundation
 
 class VideoPlayerViewModel: VideoPlayerViewModelType {
     
+    private weak var flowDelegate: FlowDelegate?
+    
     let youtubeVideoId: String
     
-    required init (FlowDelegate: FlowDelegate?, youtubeVideoId: String) {
+    required init (flowDelegate: FlowDelegate?, youtubeVideoId: String) {
+        
+        self.flowDelegate = flowDelegate
         
         self.youtubeVideoId = youtubeVideoId
     }
     
     func closeButtonTapped() {
-        closeVideoPlayerView()
+        
+        flowDelegate?.navigate(step: .closeVideoPlayerTappedFromOnboardingTutorial)
     }
     
     func videoEnded() {
-        closeVideoPlayerView()
-    }
-    
-    private func closeVideoPlayerView() {
-        //TODO: Navigate Back to Onboarding-1
+        
+        flowDelegate?.navigate(step: .videoEndedOnOnboardingTutorial)
     }
 }
