@@ -91,7 +91,7 @@ class AppFlow: NSObject, Flow {
         NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
     
-    private func resetFlowToToolsFlow(startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView?) {
+    private func resetFlowToToolsFlow(startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView?, didFinishSetNavigationStack: (() -> Void)?) {
 
         closeMenu(animated: false)
         navigationController.dismiss(animated: false, completion: nil)
@@ -105,6 +105,15 @@ class AppFlow: NSObject, Flow {
         tutorialFlow = nil
         
         navigate(step: .showTools(animated: false, shouldCreateNewInstance: true, startingToolbarItem: startingToolbarItem))
+        
+        // NOTE: This is here because when we set a new tools flow on the navigation stack, we aren't able to do any further navigation on the stack, such as push until a new render cycle.
+        // So if we reset the flow to ToolsFlow and then want to push something onto the same navigation stack, we have to do it inside of this closure.  Not sure if there is a better way to do this,
+        // it feels a bit messy. ~Levi
+        if let didFinishSetNavigationStack = didFinishSetNavigationStack {
+            DispatchQueue.main.async {
+                didFinishSetNavigationStack()
+            }
+        }
     }
     
     private func loadInitialData() {
@@ -189,7 +198,7 @@ class AppFlow: NSObject, Flow {
                     loadingView.backgroundColor = .white
                     window.addSubview(loadingView)
                     
-                    resetFlowToToolsFlow(startingToolbarItem: nil)
+                    resetFlowToToolsFlow(startingToolbarItem: nil, didFinishSetNavigationStack: nil)
                     loadInitialData()
                     
                     UIView.animate(withDuration: 0.4, delay: 1.5, options: .curveEaseOut, animations: {
@@ -221,41 +230,51 @@ class AppFlow: NSObject, Flow {
                     startingToolbarItem = nil
                 }
                 
-                resetFlowToToolsFlow(startingToolbarItem: startingToolbarItem)
-                
-                toolsFlow?.navigateToTool(
-                    resource: toolDeepLinkResources.resource,
-                    primaryLanguage: toolDeepLinkResources.primaryLanguage,
-                    parallelLanguage: toolDeepLinkResources.parallelLanguage,
-                    liveShareStream: toolDeepLink.liveShareStream,
-                    trainingTipsEnabled: false,
-                    page: toolDeepLink.page
-                )
+                resetFlowToToolsFlow(startingToolbarItem: startingToolbarItem) { [weak self] in
+                    
+                    guard let weakSelf = self else {
+                        return
+                    }
+                    
+                    weakSelf.toolsFlow?.navigateToTool(
+                        resource: toolDeepLinkResources.resource,
+                        primaryLanguage: toolDeepLinkResources.primaryLanguage,
+                        parallelLanguage: toolDeepLinkResources.parallelLanguage,
+                        liveShareStream: toolDeepLink.liveShareStream,
+                        trainingTipsEnabled: false,
+                        page: toolDeepLink.page
+                    )
+                }
             
             case .article(let articleUri):
                 
-                resetFlowToToolsFlow(startingToolbarItem: nil)
+                resetFlowToToolsFlow(startingToolbarItem: nil) { [weak self] in
+                    
+                    guard let weakSelf = self else {
+                        return
+                    }
+                    
+                    let articleDeepLinkFlow = ArticleDeepLinkFlow(
+                        flowDelegate: weakSelf,
+                        appDiContainer: weakSelf.appDiContainer,
+                        sharedNavigationController: weakSelf.navigationController,
+                        aemUri: articleUri
+                    )
+                    
+                    weakSelf.articleDeepLinkFlow = articleDeepLinkFlow
+                }
                 
-                let articleDeepLinkFlow = ArticleDeepLinkFlow(
-                    flowDelegate: self,
-                    appDiContainer: appDiContainer,
-                    sharedNavigationController: navigationController,
-                    aemUri: articleUri
-                )
-                
-                self.articleDeepLinkFlow = articleDeepLinkFlow
-                            
             case .lessonsList:
                 
-                resetFlowToToolsFlow(startingToolbarItem: .lessons)
+                resetFlowToToolsFlow(startingToolbarItem: .lessons, didFinishSetNavigationStack: nil)
                 
             case .favoritedToolsList:
                 
-                resetFlowToToolsFlow(startingToolbarItem: .favoritedTools)
+                resetFlowToToolsFlow(startingToolbarItem: .favoritedTools, didFinishSetNavigationStack: nil)
                 
             case .allToolsList:
                 
-                resetFlowToToolsFlow(startingToolbarItem: .allTools)
+                resetFlowToToolsFlow(startingToolbarItem: .allTools, didFinishSetNavigationStack: nil)
             }
         
         case .showTools(let animated, let shouldCreateNewInstance, let startingToolbarItem):
