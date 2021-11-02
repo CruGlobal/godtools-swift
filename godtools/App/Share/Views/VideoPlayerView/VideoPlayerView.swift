@@ -62,7 +62,6 @@ class VideoPlayerView: UIViewController {
         youTubeVideoPlayer.load(withVideoId: viewModel.youtubeVideoId, playerVars: youtubePlayerParameters)
         youTubeVideoPlayer.isHidden = false
         youTubeVideoPlayerLoadingView.isHidden = false
-        youTubeVideoPlayer.playVideo()
     }
 }
 
@@ -78,6 +77,8 @@ extension VideoPlayerView: YTPlayerViewDelegate {
             self?.youTubeVideoPlayerLoadingView.isHidden = true
             self?.youTubeVideoPlayerLoadingView.alpha = 1
             self?.youTubeVideoPlayerActivityIndicator.stopAnimating()
+            
+            self?.youTubeVideoPlayer.playVideo()
         }
     }
     

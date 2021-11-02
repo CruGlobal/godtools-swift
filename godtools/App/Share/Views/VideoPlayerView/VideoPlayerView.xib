@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -23,7 +22,6 @@
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0J7-7X-WaF" userLabel="youTubeVideoPlayer" customClass="YTPlayerView">
                     <rect key="frame" x="0.0" y="331.5" width="414" height="233"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="0J7-7X-WaF" secondAttribute="height" multiplier="16:9" id="aOP-Xa-DQh"/>
                     </constraints>
@@ -36,14 +34,12 @@
                             <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </activityIndicatorView>
                     </subviews>
-                    <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="yZl-3K-629" firstAttribute="centerY" secondItem="G6d-IV-qBu" secondAttribute="centerY" id="Yph-oQ-f8g"/>
                         <constraint firstItem="yZl-3K-629" firstAttribute="centerX" secondItem="G6d-IV-qBu" secondAttribute="centerX" id="pyY-fu-0cJ"/>
                     </constraints>
                 </view>
             </subviews>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="G6d-IV-qBu" firstAttribute="bottom" secondItem="0J7-7X-WaF" secondAttribute="bottom" id="aAN-ty-9Ja"/>
