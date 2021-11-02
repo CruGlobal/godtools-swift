@@ -41,7 +41,7 @@ class OnboardingTutorialIntroViewModel: OnboardingTutorialIntroViewModelType {
         
         flowDelegate?.navigate(step: .videoButtonTappedFromOnboardingTutorial(youtubeVideoId: youtubeVideoId))
         
-        /*if !youTubeVideoTracked {
+        if !youTubeVideoTracked {
             
             youTubeVideoTracked = true
             
@@ -55,6 +55,6 @@ class OnboardingTutorialIntroViewModel: OnboardingTutorialIntroViewModelType {
                     data: ["cru.tutorial_video": 1, "video_id": youtubeVideoId]
                 )
             )
-        }*/
+        }
     }
 }
