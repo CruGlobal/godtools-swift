@@ -59,7 +59,6 @@
 		452652A626A763E500E703F7 /* MultiplatformContentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452652A526A763E500E703F7 /* MultiplatformContentButton.swift */; };
 		4526539226CC28EE00AC0FBD /* MultiplatformContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4526539126CC28EE00AC0FBD /* MultiplatformContent.swift */; };
 		45267B7725F19709004DB4C4 /* MobileContentBackgroundImageRendererTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45267B7625F19709004DB4C4 /* MobileContentBackgroundImageRendererTests.swift */; };
-		45267B8125F198B8004DB4C4 /* TestBackgroundImageNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45267B8025F198B8004DB4C4 /* TestBackgroundImageNode.swift */; };
 		4533A928270E2567009B1AF5 /* UINavigationBar+Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4533A927270E2567009B1AF5 /* UINavigationBar+Appearance.swift */; };
 		453A93F72705FDB80046B4FC /* PrimaryEvaluationOptionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453A93F62705FDB80046B4FC /* PrimaryEvaluationOptionState.swift */; };
 		453AF08626A8787E002D4AB1 /* MultiplatformCallToAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453AF08526A8787E002D4AB1 /* MultiplatformCallToAction.swift */; };
@@ -291,6 +290,12 @@
 		45A3A0CA26B0BE50005DA490 /* TractFlowCompletedState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A3A0C926B0BE50005DA490 /* TractFlowCompletedState.swift */; };
 		45A3E72626C59D9900A908D4 /* MultiplatformManifestResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A3E72526C59D9900A908D4 /* MultiplatformManifestResource.swift */; };
 		45A3E72826C5AC7D00A908D4 /* MultiplatformAnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A3E72726C5AC7D00A908D4 /* MultiplatformAnalyticsEvent.swift */; };
+		45A45CEB2731B77A005D4E74 /* MobileContentImageAlignmentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AEBA7826D03FD1008DA47A /* MobileContentImageAlignmentType.swift */; };
+		45A45CEC2731B77E005D4E74 /* MobileContentImageAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459D80BE26D04E4A00EC97E9 /* MobileContentImageAlignment.swift */; };
+		45A45CED2731B8C5005D4E74 /* MobileContentBackgroundImageRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457032A426D0055A00F5BADC /* MobileContentBackgroundImageRenderer.swift */; };
+		45A45CEE2731B8C9005D4E74 /* MobileContentBackgroundImageRendererType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457032A626D0056F00F5BADC /* MobileContentBackgroundImageRendererType.swift */; };
+		45A45CEF2731B914005D4E74 /* MobileContentBackgroundImageScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BEC52926A604E3005D8CA1 /* MobileContentBackgroundImageScale.swift */; };
+		45A45CF02731B946005D4E74 /* MobileContentBackgroundImageAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BEC52B26A604E3005D8CA1 /* MobileContentBackgroundImageAlignment.swift */; };
 		45A5200A26C4746F009B68D4 /* MultiplatformLessonPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A5200926C4746F009B68D4 /* MultiplatformLessonPage.swift */; };
 		45A5200E26C481DB009B68D4 /* ManifestResourcesCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A5200D26C481DB009B68D4 /* ManifestResourcesCache.swift */; };
 		45A63AB3265441B60090E09D /* ExitLinkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A63AB2265441B60090E09D /* ExitLinkModel.swift */; };
@@ -1123,7 +1128,6 @@
 		452652A526A763E500E703F7 /* MultiplatformContentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplatformContentButton.swift; sourceTree = "<group>"; };
 		4526539126CC28EE00AC0FBD /* MultiplatformContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplatformContent.swift; sourceTree = "<group>"; };
 		45267B7625F19709004DB4C4 /* MobileContentBackgroundImageRendererTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentBackgroundImageRendererTests.swift; sourceTree = "<group>"; };
-		45267B8025F198B8004DB4C4 /* TestBackgroundImageNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestBackgroundImageNode.swift; sourceTree = "<group>"; };
 		4533A927270E2567009B1AF5 /* UINavigationBar+Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Appearance.swift"; sourceTree = "<group>"; };
 		453A93F62705FDB80046B4FC /* PrimaryEvaluationOptionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryEvaluationOptionState.swift; sourceTree = "<group>"; };
 		453AF08526A8787E002D4AB1 /* MultiplatformCallToAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplatformCallToAction.swift; sourceTree = "<group>"; };
@@ -2335,7 +2339,6 @@
 			isa = PBXGroup;
 			children = (
 				45267B7625F19709004DB4C4 /* MobileContentBackgroundImageRendererTests.swift */,
-				45267B8025F198B8004DB4C4 /* TestBackgroundImageNode.swift */,
 			);
 			path = BackgroundImage;
 			sourceTree = "<group>";
@@ -7060,17 +7063,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45A45CEF2731B914005D4E74 /* MobileContentBackgroundImageScale.swift in Sources */,
 				45AD22D52593E5F900A096A0 /* TutorialLanguageAvailability.swift in Sources */,
 				45FA696F24251D360006878C /* MockSupportedLanguages.swift in Sources */,
 				45AD22D02593E57100A096A0 /* SupportedLanguagesType.swift in Sources */,
 				45AD22DA2593E60900A096A0 /* LanguageAvailabilityType.swift in Sources */,
 				45557AEA252D094100ACFA95 /* LocaleLocalizationBundleTests.swift in Sources */,
+				45A45CEC2731B77E005D4E74 /* MobileContentImageAlignment.swift in Sources */,
 				45AD22DF2593E63D00A096A0 /* Locale+Extensions.swift in Sources */,
 				45BB7FB925F6BE76000FE44B /* LanguageDirection.swift in Sources */,
+				45A45CEE2731B8C9005D4E74 /* MobileContentBackgroundImageRendererType.swift in Sources */,
 				45FA696C24251CA00006878C /* TutorialLanguageAvailabilityTests.swift in Sources */,
+				45A45CF02731B946005D4E74 /* MobileContentBackgroundImageAlignment.swift in Sources */,
 				45AD22E42593E68D00A096A0 /* TutorialSupportedLanguages.swift in Sources */,
 				45267B7725F19709004DB4C4 /* MobileContentBackgroundImageRendererTests.swift in Sources */,
-				45267B8125F198B8004DB4C4 /* TestBackgroundImageNode.swift in Sources */,
+				45A45CEB2731B77A005D4E74 /* MobileContentImageAlignmentType.swift in Sources */,
+				45A45CED2731B8C5005D4E74 /* MobileContentBackgroundImageRenderer.swift in Sources */,
 				45A7BAF5252CBC5B00D70465 /* LocaleTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7279,7 +7287,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 923;
+				CURRENT_PROJECT_VERSION = 927;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				DISPLAY_NAME = GodTools;
 				INFOPLIST_FILE = godtools/Info.plist;
@@ -7444,7 +7452,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 923;
+				CURRENT_PROJECT_VERSION = 927;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				DISPLAY_NAME = "GodTools-Stage";
 				INFOPLIST_FILE = godtools/Info.plist;
@@ -7609,7 +7617,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 923;
+				CURRENT_PROJECT_VERSION = 927;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				DISPLAY_NAME = "GodTools-Stage";
 				INFOPLIST_FILE = godtools/Info.plist;
@@ -7774,7 +7782,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 923;
+				CURRENT_PROJECT_VERSION = 927;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				DISPLAY_NAME = GodTools;
 				INFOPLIST_FILE = godtools/Info.plist;
@@ -7962,7 +7970,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 923;
+				CURRENT_PROJECT_VERSION = 927;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				DISPLAY_NAME = GodTools;
 				INFOPLIST_FILE = godtools/Info.plist;
