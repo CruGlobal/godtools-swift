@@ -1,0 +1,60 @@
+name: Build App
+
+on:
+  push:
+    branches: [ develop, master ]
+  pull_request:
+    branches: [ develop, master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  
+  build:
+    runs-on: macos-11
+    
+    steps:
+
+      - name: Github Event name
+        run: echo "${{ github.event_name }}"
+      
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Bundle Install
+        run: bundle install
+
+      - name: Update Fastlane
+        run: bundle update fastlane
+
+      - name: Pod Install
+        run: bundle exec fastlane cru_shared_lane_pod_install
+
+      - name: Run Tests
+        run: bundle exec fastlane cru_shared_lane_run_tests
+
+      - name: Download And Commit Latest OneSky Localizations
+        if: github.event_name == 'workflow_dispatch'
+        run: bundle exec fastlane cru_shared_lane_download_and_commit_latest_one_sky_localizations
+
+      - name: Decode AppleAppStoreApi.json.enc For Fastlane App Store Connect Access 
+        if: github.event_name == 'workflow_dispatch'
+        env: 
+          KEY: ${{ secrets.ENCRYPTED_CF3A694B4ADE_KEY }}
+          IV: ${{ secrets.ENCRYPTED_CF3A694B4ADE_IV }}
+        run: openssl aes-256-cbc -K ${KEY} -iv ${IV} -in fastlane/AppleAppStoreApi.json.enc -out fastlane/AppleAppStoreApi.json -d
+
+      - name: Increment Xcode Project Build Number
+        if: github.event_name == 'workflow_dispatch'
+        run: bundle exec fastlane cru_shared_lane_increment_xcode_project_build_number
+
+      - name: Build And Deploy From Workflow Dispatch
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          MATCH_GIT_BASIC_AUTHORIZATION_PAT: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION_PAT }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+        run: bundle exec fastlane cru_shared_lane_build_and_deploy is_running_in_ci:true
+
+      - name: Finished
+        run: echo "Finished"
