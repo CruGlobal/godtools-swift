@@ -48,7 +48,7 @@ class OnboardingFlow: Flow {
             onboardingTutorialItemsRepository: onboardingTutorialItemsRepository,
             onboardingTutorialAvailability: appDiContainer.onboardingTutorialAvailability,
             openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache,
-            customViewBuilder: appDiContainer.onboardingTutorialCustomViewBuilder(),
+            customViewBuilder: appDiContainer.onboardingTutorialCustomViewBuilder(flowDelegate: self),
             localizationServices: appDiContainer.localizationServices
         )
         let view = OnboardingTutorialView(viewModel: viewModel)
@@ -58,7 +58,7 @@ class OnboardingFlow: Flow {
     
     private func launchVideoPlayerView(youtubeVideoId: String) {
         
-        let viewModel = VideoPlayerViewModel(FlowDelegate: self, youtubeVideoId: youtubeVideoId)
+        let viewModel = VideoPlayerViewModel(flowDelegate: self, youtubeVideoId: youtubeVideoId)
         let view = VideoPlayerView(viewModel: viewModel)
         
         navigationController.present(view, animated: true, completion: nil)

@@ -10,32 +10,38 @@ import UIKit
 
 class OnboardingTutorialIntroViewModel: OnboardingTutorialIntroViewModelType {
 
-    let logoImage: UIImage?
-    let title: String
-    let videoLinkLabel: String
-    let youtubeVideoId: String
+    private weak var flowDelegate: FlowDelegate?
     
     private let analyticsContainer: AnalyticsContainer
     private let analyticsScreenName: String
     
     private var youTubeVideoTracked: Bool
-
-    required init(localizationServices: LocalizationServices, analyticsContainer: AnalyticsContainer, analyticsScreenName: String) {
+    
+    let logoImage: UIImage?
+    let title: String
+    let videoLinkLabel: String
+    let youtubeVideoId: String
+    
+    required init(flowDelegate: FlowDelegate?, localizationServices: LocalizationServices, analyticsContainer: AnalyticsContainer, analyticsScreenName: String) {
         
-        logoImage = UIImage(named: "onboarding_welcome_logo")
-        title = localizationServices.stringForMainBundle(key: "onboardingTutorial.0.title")
-        videoLinkLabel = localizationServices.stringForMainBundle(key: "onboardingTutorial.0.videoLink.title")
-        youtubeVideoId = "RvhZ_wuxAgE"
+        self.flowDelegate = flowDelegate
         
         self.analyticsContainer = analyticsContainer
         self.analyticsScreenName = analyticsScreenName
         
         youTubeVideoTracked = false
+        
+        logoImage = UIImage(named: "onboarding_welcome_logo")
+        title = localizationServices.stringForMainBundle(key: "onboardingTutorial.0.title")
+        videoLinkLabel = localizationServices.stringForMainBundle(key: "onboardingTutorial.0.videoLink.title")
+        youtubeVideoId = "RvhZ_wuxAgE"
     }
     
     func videoLinkTapped() {
         
-        if !youTubeVideoTracked {
+        flowDelegate?.navigate(step: .videoButtonTappedFromOnboardingTutorial(youtubeVideoId: youtubeVideoId))
+        
+        /*if !youTubeVideoTracked {
             
             youTubeVideoTracked = true
             
@@ -49,6 +55,6 @@ class OnboardingTutorialIntroViewModel: OnboardingTutorialIntroViewModelType {
                     data: ["cru.tutorial_video": 1, "video_id": youtubeVideoId]
                 )
             )
-        }
+        }*/
     }
 }

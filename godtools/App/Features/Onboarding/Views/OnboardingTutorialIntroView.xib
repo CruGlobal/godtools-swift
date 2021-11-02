@@ -20,7 +20,6 @@
                 <outlet property="logoImageView" destination="7RE-rj-898" id="zNc-zT-EJQ"/>
                 <outlet property="titleLabel" destination="g2I-2Q-yE9" id="B3d-mC-Yu0"/>
                 <outlet property="videoButton" destination="pwO-eC-2Xm" id="hNb-QS-DBC"/>
-                <outlet property="youTubeVideoPlayer" destination="7X7-m2-y7n" id="cCH-1o-7pi"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -50,26 +49,15 @@
                         <color key="titleColor" red="0.23137254901960785" green="0.64313725490196072" blue="0.85882352941176465" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                 </button>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7X7-m2-y7n" userLabel="youTubeVideoPlayer" customClass="YTPlayerView">
-                    <rect key="frame" x="103.66666666666669" y="407" width="207" height="116.66666666666663"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstAttribute="width" secondItem="7X7-m2-y7n" secondAttribute="height" multiplier="16:9" id="9w6-L4-zLz"/>
-                    </constraints>
-                </view>
             </subviews>
             <constraints>
-                <constraint firstItem="7X7-m2-y7n" firstAttribute="width" secondItem="2Ud-wT-1r3" secondAttribute="width" multiplier="0.5" id="0KP-ee-Z3L"/>
-                <constraint firstItem="7X7-m2-y7n" firstAttribute="top" secondItem="pwO-eC-2Xm" secondAttribute="bottom" constant="20" id="7KH-G5-rJc"/>
                 <constraint firstItem="7RE-rj-898" firstAttribute="centerY" secondItem="2Ud-wT-1r3" secondAttribute="centerY" multiplier="0.4" id="ETq-yn-rFJ"/>
                 <constraint firstItem="g2I-2Q-yE9" firstAttribute="top" secondItem="7RE-rj-898" secondAttribute="bottom" constant="48" id="Kw4-qQ-Kqr"/>
                 <constraint firstItem="g2I-2Q-yE9" firstAttribute="leading" secondItem="2Ud-wT-1r3" secondAttribute="leading" constant="30" id="MZ5-uE-q9s"/>
                 <constraint firstAttribute="trailing" secondItem="pwO-eC-2Xm" secondAttribute="trailing" constant="30" id="Qzs-9g-wt9"/>
                 <constraint firstAttribute="trailing" secondItem="g2I-2Q-yE9" secondAttribute="trailing" constant="30" id="SGC-6s-wom"/>
-                <constraint firstItem="7X7-m2-y7n" firstAttribute="width" secondItem="7X7-m2-y7n" secondAttribute="height" multiplier="16:9" id="Sa1-cd-Poq"/>
                 <constraint firstItem="pwO-eC-2Xm" firstAttribute="leading" secondItem="2Ud-wT-1r3" secondAttribute="leading" constant="30" id="WAH-XY-zL0"/>
                 <constraint firstItem="7RE-rj-898" firstAttribute="width" secondItem="2Ud-wT-1r3" secondAttribute="width" multiplier="0.7" priority="900" id="ZCi-RI-WQ7"/>
-                <constraint firstItem="7X7-m2-y7n" firstAttribute="centerX" secondItem="2Ud-wT-1r3" secondAttribute="centerX" id="tuy-JS-7TT"/>
                 <constraint firstItem="pwO-eC-2Xm" firstAttribute="top" secondItem="g2I-2Q-yE9" secondAttribute="bottom" constant="20" id="udr-9g-Sie"/>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="pwO-eC-2Xm" secondAttribute="bottom" constant="20" id="xeP-fh-mx3"/>
                 <constraint firstItem="7RE-rj-898" firstAttribute="centerX" secondItem="2Ud-wT-1r3" secondAttribute="centerX" id="zOm-P5-32s"/>

@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VideoPlayerView" customModule="godtools" customModuleProvider="target">
             <connections>
+                <outlet property="view" destination="iN0-l3-epB" id="TiM-hf-IhD"/>
                 <outlet property="youTubeVideoPlayer" destination="0J7-7X-WaF" id="Ssy-8P-W8P"/>
                 <outlet property="youTubeVideoPlayerActivityIndicator" destination="yZl-3K-629" id="EHr-ss-sKN"/>
                 <outlet property="youTubeVideoPlayerLoadingView" destination="G6d-IV-qBu" id="4Tz-om-ZGS"/>

@@ -285,8 +285,8 @@ class AppDiContainer {
         )
     }
     
-    func onboardingTutorialCustomViewBuilder() -> CustomViewBuilderType {
-        return OnboardingTutorialCustomViewBuilder(deviceLanguage: deviceLanguage, localizationServices: localizationServices, analyticsContainer: analytics, analyticsScreenName: "onboarding")
+    func onboardingTutorialCustomViewBuilder(flowDelegate: FlowDelegate?) -> CustomViewBuilderType {
+        return OnboardingTutorialCustomViewBuilder(flowDelegate: flowDelegate, deviceLanguage: deviceLanguage, localizationServices: localizationServices, analyticsContainer: analytics, analyticsScreenName: "onboarding")
     }
     
     var firebaseConfiguration: FirebaseConfiguration {
