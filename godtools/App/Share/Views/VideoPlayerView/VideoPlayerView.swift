@@ -33,9 +33,9 @@ class VideoPlayerView: UIViewController {
     }
     
     var youtubePlayerParameters: [String : Any]? {
-        let playsInFullScreen = 0
+        let disablesFullScreen = 1
         
-        return ["playsinline": playsInFullScreen]
+        return ["playsinline": disablesFullScreen]
     }
     
     override func viewDidLoad() {
