@@ -39,19 +39,31 @@ class LessonDeepLinkParser: DeepLinkParserType {
             return nil
         }
         
+        let lessonPathComponents: LessonDeepLinkPathComponents = LessonDeepLinkPathComponents(pathComponents: pathComponents)
+        
         let lessonQuery: LessonQueryParameters? = JsonServices().decodeJsonObject(jsonObject: incomingUrl.queryParameters)
         
         let lessonAbbreviation: String?
         
-        if let abbreviation = lessonQuery?.abbreviation {
-            lessonAbbreviation = abbreviation
+        if let queryAbbreviation = lessonQuery?.abbreviation {
+            lessonAbbreviation = queryAbbreviation
         }
-        else if pathComponents.count > 1 {
-            lessonAbbreviation = pathComponents[1]
+        else if let pathAbbreviation = lessonPathComponents.abbreviation {
+            lessonAbbreviation = pathAbbreviation
         }
         else {
             lessonAbbreviation = nil
         }
+        
+        var primaryLanguageCodes: [String] = Array()
+        
+        if let pathPrimaryLanguage = lessonPathComponents.primaryLanguageCode {
+            primaryLanguageCodes.append(pathPrimaryLanguage)
+        }
+        
+        let queryPrimaryLanguageCodes: [String] = lessonQuery?.getPrimaryLanguageCodes() ?? []
+        
+        primaryLanguageCodes.append(contentsOf: queryPrimaryLanguageCodes)
         
         guard let resourceAbbreviation = lessonAbbreviation else {
             return nil
@@ -59,7 +71,7 @@ class LessonDeepLinkParser: DeepLinkParserType {
         
         let toolDeepLink = ToolDeepLink(
             resourceAbbreviation: resourceAbbreviation,
-            primaryLanguageCodes: lessonQuery?.getPrimaryLanguageCodes() ?? [],
+            primaryLanguageCodes: primaryLanguageCodes,
             parallelLanguageCodes: [],
             liveShareStream: nil,
             page: nil
