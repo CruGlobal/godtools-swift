@@ -27,8 +27,11 @@ jobs:
         with:
           java-version: '11'
 
-      - name: Pod Install
-        run: bundle exec fastlane cru_shared_lane_pod_install
+      # - name: Pod Install
+      #   run: bundle exec fastlane cru_shared_lane_pod_install
+
+      - name: Pod install
+        run: bundle exec pod install
 
       - name: Run Tests
         run: bundle exec fastlane cru_shared_lane_run_tests
