@@ -40,7 +40,7 @@ jobs:
         if: github.ref == 'refs/heads/master'
         run: bundle exec fastlane cru_shared_lane_download_and_commit_latest_one_sky_localizations
 
-      - name: Decode AppleAppStoreApi.json.enc For Fastlane App Store Connect Access 
+      - name: Decrypt AppleAppStoreApi.json.enc For Fastlane App Store Connect Access 
         if: github.ref == 'refs/heads/master'
         env: 
           KEY: ${{ secrets.ENCRYPTED_CF3A694B4ADE_KEY }}
@@ -57,4 +57,3 @@ jobs:
           MATCH_GIT_BASIC_AUTHORIZATION_PAT: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION_PAT }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
         run: bundle exec fastlane cru_shared_lane_build_and_deploy_for_testflight_release is_running_in_ci:true
-        
