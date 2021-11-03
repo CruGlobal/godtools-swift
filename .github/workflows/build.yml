@@ -7,11 +7,12 @@ on:
     branches: [ develop, master ]
 
 jobs:
-
-  setup:
-    name: Setup
+  
+  build:
     runs-on: macos-11
+    
     steps:
+      
       - name: Checkout code
         uses: actions/checkout@v2
       
@@ -25,37 +26,30 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: '11'
-      
+
       - name: Pod Install
         run: bundle exec fastlane cru_shared_lane_pod_install
 
-  tests:
-    name: Tests
-    runs-on: macos-11
-    needs: [ setup ]
-    steps:
       - name: Run Tests
         run: bundle exec fastlane cru_shared_lane_run_tests
-  
-  testflight_build:
-    name: TestFlight Release
-    runs-on: macos-11
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-    needs: [ setup, tests ]
-    steps:
+
       - name: Download And Commit Latest OneSky Localizations
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: bundle exec fastlane cru_shared_lane_download_and_commit_latest_one_sky_localizations
 
       - name: Decrypt AppleAppStoreApi.json.enc For Fastlane App Store Connect Access 
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         env: 
           KEY: ${{ secrets.ENCRYPTED_CF3A694B4ADE_KEY }}
           IV: ${{ secrets.ENCRYPTED_CF3A694B4ADE_IV }}
         run: openssl aes-256-cbc -K ${KEY} -iv ${IV} -in fastlane/AppleAppStoreApi.json.enc -out fastlane/AppleAppStoreApi.json -d
 
       - name: Increment Xcode Project Build Number
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: bundle exec fastlane cru_shared_lane_increment_xcode_project_build_number
 
       - name: Build And Deploy For TestFlight Release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         env:
           MATCH_GIT_BASIC_AUTHORIZATION_PAT: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION_PAT }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
