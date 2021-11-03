@@ -25,15 +25,15 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: '11'
+      
+      - name: Pod Install
+        run: bundle exec fastlane cru_shared_lane_pod_install
 
   tests:
     name: Tests
     runs-on: macos-11
     needs: [ setup ]
     steps:
-      - name: Pod Install
-        run: bundle exec fastlane cru_shared_lane_pod_install
-
       - name: Run Tests
         run: bundle exec fastlane cru_shared_lane_run_tests
   
