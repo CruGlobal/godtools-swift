@@ -10,14 +10,20 @@ on:
   workflow_dispatch:
 
 jobs:
+
+  cancel-previous:
+      name: Cancel Stale In-progress Builds
+      runs-on: ubuntu-latest
+      steps:
+        - name: Cancel Previous Runs
+          uses: styfle/cancel-workflow-action@0.9.1
+          with:
+            access_token: ${{ github.token }}
   
   build:
     runs-on: macos-11
     
     steps:
-
-      - name: Github Event name
-        run: echo "${{ github.event_name }}"
       
       - name: Checkout code
         uses: actions/checkout@v2
@@ -25,36 +31,34 @@ jobs:
       - name: Bundle Install
         run: bundle install
 
-      - name: Update Fastlane
-        run: bundle update fastlane
+        # Required for KotlinMultiplatform
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '11'
 
-      - name: Pod Install
-        run: bundle exec fastlane cru_shared_lane_pod_install
+      - name: Pod install
+        run: bundle exec pod install
 
       - name: Run Tests
         run: bundle exec fastlane cru_shared_lane_run_tests
 
       - name: Download And Commit Latest OneSky Localizations
-        if: github.event_name == 'workflow_dispatch'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: bundle exec fastlane cru_shared_lane_download_and_commit_latest_one_sky_localizations
 
-      - name: Decode AppleAppStoreApi.json.enc For Fastlane App Store Connect Access 
-        if: github.event_name == 'workflow_dispatch'
-        env: 
-          KEY: ${{ secrets.ENCRYPTED_CF3A694B4ADE_KEY }}
-          IV: ${{ secrets.ENCRYPTED_CF3A694B4ADE_IV }}
-        run: openssl aes-256-cbc -K ${KEY} -iv ${IV} -in fastlane/AppleAppStoreApi.json.enc -out fastlane/AppleAppStoreApi.json -d
+      - name: Import App Store Connect API Key
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        env:
+          APP_STORE_CONNECT_API_JSON_PAYLOAD: ${{ secrets.APP_STORE_CONNECT_API_JSON_PAYLOAD }}
+        run: echo $APP_STORE_CONNECT_API_JSON_PAYLOAD > fastlane/AppleAppStoreApi.json
 
       - name: Increment Xcode Project Build Number
-        if: github.event_name == 'workflow_dispatch'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: bundle exec fastlane cru_shared_lane_increment_xcode_project_build_number
 
-      - name: Build And Deploy From Workflow Dispatch
-        if: github.event_name == 'workflow_dispatch'
+      - name: Build And Deploy For TestFlight Release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         env:
           MATCH_GIT_BASIC_AUTHORIZATION_PAT: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION_PAT }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-        run: bundle exec fastlane cru_shared_lane_build_and_deploy is_running_in_ci:true
-
-      - name: Finished
-        run: echo "Finished"
+        run: bundle exec fastlane cru_shared_lane_build_and_deploy_for_testflight_release is_running_in_ci:true
