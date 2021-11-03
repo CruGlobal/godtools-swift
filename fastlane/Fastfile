@@ -109,8 +109,6 @@ lane :cru_shared_lane_build_and_deploy do |options|
 
     # TestFlight - Release
 
-    # TODO: Testing skip_waiting_for_build_processing set to true, curious if testers will still get a notification from TestFlight?
-
     testflight(
         app_identifier: app_release_bundle_identifier,
         dev_portal_team_id: team_id,
