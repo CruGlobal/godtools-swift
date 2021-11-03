@@ -51,7 +51,7 @@ jobs:
         if: github.ref == 'refs/heads/master'
         run: bundle exec fastlane cru_shared_lane_increment_xcode_project_build_number
 
-      - name: Build And Deploy From Workflow Dispatch
+      - name: Build And Deploy For TestFlight Release
         if: github.ref == 'refs/heads/master'
         env:
           MATCH_GIT_BASIC_AUTHORIZATION_PAT: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION_PAT }}
