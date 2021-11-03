@@ -10,6 +10,15 @@ on:
   workflow_dispatch:
 
 jobs:
+
+  cancel-previous:
+      name: Cancel Stale In-progress Builds
+      runs-on: ubuntu-latest
+      steps:
+        - name: Cancel Previous Runs
+          uses: styfle/cancel-workflow-action@0.9.1
+          with:
+            access_token: ${{ github.token }}
   
   build:
     runs-on: macos-11
@@ -27,9 +36,6 @@ jobs:
         with:
           java-version: '11'
 
-      # - name: Pod Install
-      #   run: bundle exec fastlane cru_shared_lane_pod_install
-
       - name: Pod install
         run: bundle exec pod install
 
@@ -40,12 +46,11 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: bundle exec fastlane cru_shared_lane_download_and_commit_latest_one_sky_localizations
 
-      - name: Decrypt AppleAppStoreApi.json.enc For Fastlane App Store Connect Access 
+      - name: Import App Store Connect API Key
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-        env: 
-          KEY: ${{ secrets.ENCRYPTED_CF3A694B4ADE_KEY }}
-          IV: ${{ secrets.ENCRYPTED_CF3A694B4ADE_IV }}
-        run: openssl aes-256-cbc -K ${KEY} -iv ${IV} -in fastlane/AppleAppStoreApi.json.enc -out fastlane/AppleAppStoreApi.json -d
+        env:
+          APP_STORE_CONNECT_API_JSON_PAYLOAD: ${{ secrets.APP_STORE_CONNECT_API_JSON_PAYLOAD }}
+        run: echo $APP_STORE_CONNECT_API_JSON_PAYLOAD > fastlane/AppleAppStoreApi.json
 
       - name: Increment Xcode Project Build Number
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
