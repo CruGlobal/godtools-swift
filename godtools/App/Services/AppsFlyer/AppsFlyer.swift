@@ -47,7 +47,7 @@ class AppsFlyer: NSObject, AppsFlyerType {
         appsFlyerLib.appsFlyerDevKey = config.appsFlyerDevKey
         appsFlyerLib.appleAppID = config.appleAppId
         appsFlyerLib.oneLinkCustomDomains = ["get.godtoolsapp.com"]
-        appsFlyerLib.delegate = self
+        appsFlyerLib.deepLinkDelegate = self
         
         if config.isDebug {
             appsFlyerLib.useUninstallSandbox = true
@@ -71,22 +71,16 @@ class AppsFlyer: NSObject, AppsFlyerType {
     }
 }
 
-extension AppsFlyer: AppsFlyerLibDelegate {
-    func onAppOpenAttribution(_ data: [AnyHashable : Any]) {
+// MARK: - DeepLinkDelegate
+
+extension AppsFlyer: DeepLinkDelegate {
+    
+    func didResolveDeepLink(_ result: DeepLinkResult) {
         
-        deepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .appsFlyer(data: data))
-    }
-    
-    func onAppOpenAttributionFailure(_ error: Error) {
-        assertionFailure("AppsFlyer Error on Open Deep Link: \(error)")
-    }
-    
-    func onConversionDataSuccess(_ data: [AnyHashable : Any]) {
+        guard let data = result.deepLink?.clickEvent else {
+            return
+        }
         
-        deepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .appsFlyer(data: data))
-    }
-    
-    func onConversionDataFail(_ error: Error) {
-        assertionFailure("AppsFlyer Error on Open Deferred Deep Link: \(error)")
+        _ = deepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .appsFlyer(data: data))
     }
 }
