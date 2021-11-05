@@ -11,14 +11,24 @@ import FBSDKCoreKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-        
-    private let appDiContainer: AppDiContainer = AppDiContainer()
-    private var appFlow: AppFlow?
+    
+    private let appWindow: UIWindow = UIWindow(frame: UIScreen.main.bounds)
+    private let appDeepLinkingService: DeepLinkingServiceType = AppDiContainer.getNewDeepLinkingService(loggingEnabled: false)
+    private let appDiContainer: AppDiContainer
+    private let appFlow: AppFlow
     
     var window: UIWindow?
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    override init() {
         
+        appDiContainer = AppDiContainer(appDeepLinkingService: appDeepLinkingService)
+        appFlow = AppFlow(appDiContainer: appDiContainer, window: appWindow, appDeepLinkingService: appDeepLinkingService)
+        
+        super.init()
+    }
+    
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+                
         appDiContainer.config.logConfiguration()
         
         if appDiContainer.config.build == .analyticsLogging {
@@ -26,10 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
                 
         appDiContainer.firebaseConfiguration.configure()
-        
-        let window = UIWindow(frame: UIScreen.main.bounds)
-        appFlow = AppFlow(appDiContainer: appDiContainer, window: window)
-        
+                
         appDiContainer.appsFlyer.configure()
         
         appDiContainer.analytics.firebaseAnalytics.configure()
@@ -43,8 +50,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         
         // window
+        let window: UIWindow = appWindow
         window.backgroundColor = UIColor.white
-        window.rootViewController = appFlow?.rootController
+        window.rootViewController = appFlow.rootController
         window.makeKeyAndVisible()
         self.window = window
         
@@ -68,7 +76,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
+        
         AppEvents.activateApp()
+        
         appDiContainer.analytics.appsFlyerAnalytics.trackAppLaunch()
         appDiContainer.analytics.firebaseAnalytics.fetchAttributesThenSetUserId()
     }
@@ -119,7 +129,7 @@ extension AppDelegate {
             ]))
             
             if let tractUrl = ToolShortcutItem.getTractUrl(shortcutItem: shortcutItem) {
-                successfullyHandledQuickAction = appDiContainer.sharedDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: tractUrl)))
+                successfullyHandledQuickAction = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: tractUrl)))
             }
             else {
                 successfullyHandledQuickAction = false
@@ -140,7 +150,7 @@ extension AppDelegate {
         
         appDiContainer.appsFlyer.handleOpenUrl(url: url, options: options)
         
-        let deepLinkedHandled: Bool = appDiContainer.sharedDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
+        let deepLinkedHandled: Bool = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
         
         let facebookHandled: Bool = ApplicationDelegate.shared.application(app, open: url, options: options)
         
@@ -179,7 +189,7 @@ extension AppDelegate {
             }
         }
            
-        let deepLinkHandled: Bool = appDiContainer.sharedDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
+        let deepLinkHandled: Bool = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
         
         if deepLinkHandled {
             return true
