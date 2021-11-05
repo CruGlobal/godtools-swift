@@ -1,5 +1,12 @@
 {
   "extends": ["config:base"],
   "dependencyDashboard": true,
-  "labels": ["dependencies"]
+  "labels": ["dependencies"],
+  "packageRules": [
+    {
+      "matchManagers": ["cocoapods"],
+      "enabled": true,
+      "labels": ["dependencies", "cocoapods"],
+    }
+  ]
 }
