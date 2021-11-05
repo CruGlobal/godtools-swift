@@ -21,7 +21,6 @@ target 'godtools' do
     pod 'FirebaseCrashlytics', '7.11.0'
     pod 'Fuzi', '~> 3.1.1'
     pod 'lottie-ios', '~> 3.1.8'
-    pod 'RealmSwift', '~> 10.7.4'
     pod 'SnowplowTracker', '~> 1.3'
     pod 'SSZipArchive', '~> 2.2.2'
     pod 'Starscream', '~> 4.0.0'
