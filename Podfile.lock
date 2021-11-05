@@ -1,10 +1,10 @@
 PODS:
   - AppAuth (0.92.0)
-  - FBSDKCoreKit (8.0.0):
-    - FBSDKCoreKit/Basics (= 8.0.0)
-    - FBSDKCoreKit/Core (= 8.0.0)
-  - FBSDKCoreKit/Basics (8.0.0)
-  - FBSDKCoreKit/Core (8.0.0):
+  - FBSDKCoreKit (8.2.0):
+    - FBSDKCoreKit/Basics (= 8.2.0)
+    - FBSDKCoreKit/Core (= 8.2.0)
+  - FBSDKCoreKit/Basics (8.2.0)
+  - FBSDKCoreKit/Core (8.2.0):
     - FBSDKCoreKit/Basics
   - FirebaseABTesting (7.11.0):
     - FirebaseCore (~> 7.0)
@@ -132,7 +132,7 @@ PODS:
   - youtube-ios-player-helper (1.0.3)
 
 DEPENDENCIES:
-  - FBSDKCoreKit (~> 8.0.0)
+  - FBSDKCoreKit (~> 8.2.0)
   - FirebaseAnalytics (= 7.11.0)
   - FirebaseCore (= 7.11.0)
   - FirebaseCrashlytics (= 7.11.0)
@@ -190,7 +190,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   AppAuth: 3f4f1d6d85ad631d0bbf15ffcdc10c447face97a
-  FBSDKCoreKit: 9d27fe97a2fa2abe5eeefea8240e837623ab88e0
+  FBSDKCoreKit: 4afd6ff53d8133a433dbcda44451c9498f8c6ce4
   FirebaseABTesting: e66f1f80747792630d9b292966de206d5df9853b
   FirebaseAnalytics: cd3bd84d722a24a8923918af8af8e5236f615d77
   FirebaseCore: 907447d8917a4d3eb0cce2829c5a0ad21d90b432
@@ -223,6 +223,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   youtube-ios-player-helper: 0185c57db23c80d63d6ca11251d110abb8a4ca61
 
-PODFILE CHECKSUM: 82339758c9c3b38c7850c2ac1626f40777b9043f
+PODFILE CHECKSUM: ef986cce7e7b4b906770bf1fce0b142cdb5dd93c
 
 COCOAPODS: 1.11.2
