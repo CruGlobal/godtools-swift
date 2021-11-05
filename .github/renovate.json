@@ -5,7 +5,7 @@
   "packageRules": [
     {
       "matchManagers": ["cocoapods"],
-      "enabled": true,
+      "enabled": false,
       "labels": ["dependencies", "cocoapods"],
       "additionalBranchPrefix": "cocoapods/"
     }
