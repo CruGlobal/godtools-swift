@@ -6,7 +6,8 @@
     {
       "matchManagers": ["cocoapods"],
       "enabled": true,
-      "labels": ["dependencies", "cocoapods"]
+      "labels": ["dependencies", "cocoapods"],
+      "additionalBranchPrefix": "cocoapods/"
     }
   ]
 }
