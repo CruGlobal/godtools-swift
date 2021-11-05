@@ -1,8 +1,5 @@
 PODS:
   - AppAuth (0.92.0)
-  - AppsFlyerFramework (6.3.5):
-    - AppsFlyerFramework/Main (= 6.3.5)
-  - AppsFlyerFramework/Main (6.3.5)
   - FBSDKCoreKit (8.0.0):
     - FBSDKCoreKit/Basics (= 8.0.0)
     - FBSDKCoreKit/Core (= 8.0.0)
@@ -140,7 +137,6 @@ PODS:
   - youtube-ios-player-helper (1.0.3)
 
 DEPENDENCIES:
-  - AppsFlyerFramework (~> 6.3.0)
   - FBSDKCoreKit (~> 8.0.0)
   - FirebaseAnalytics (= 7.11.0)
   - FirebaseCore (= 7.11.0)
@@ -167,7 +163,6 @@ SPEC REPOS:
     - TheKeyOAuthSwift
   trunk:
     - AppAuth
-    - AppsFlyerFramework
     - FBSDKCoreKit
     - FirebaseABTesting
     - FirebaseAnalytics
@@ -203,7 +198,6 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   AppAuth: 3f4f1d6d85ad631d0bbf15ffcdc10c447face97a
-  AppsFlyerFramework: fa7e2e8234e6d285256bcb948eb2b77aee84ba81
   FBSDKCoreKit: 9d27fe97a2fa2abe5eeefea8240e837623ab88e0
   FirebaseABTesting: e66f1f80747792630d9b292966de206d5df9853b
   FirebaseAnalytics: cd3bd84d722a24a8923918af8af8e5236f615d77
@@ -239,6 +233,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   youtube-ios-player-helper: 0185c57db23c80d63d6ca11251d110abb8a4ca61
 
-PODFILE CHECKSUM: b885856af60c7e266ba335df25311bb3ae8013f1
+PODFILE CHECKSUM: c8d1d268b81b7254472f2565859ee4458a2a80e6
 
 COCOAPODS: 1.11.2
