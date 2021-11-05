@@ -21,10 +21,14 @@ jobs:
 
       - name: Pod install
         run: bundle exec pod install
+      - name: Configure Deploy Key
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.RENOVATE_REPAIR_DEPLOY_KEY }}
       - name: Commit Podfile.lock
         run: |
           git config --global user.name 'Renovate Repair'
           git config --global user.email 'renovate-repair@users.noreply.github.com'
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git remote set-url origin git@github.com:CruGlobal/godtools-swift.git
           git commit -am "Update Podfile.lock"
           git push
