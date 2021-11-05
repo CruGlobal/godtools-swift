@@ -1,0 +1,30 @@
+name: Renovate Repair
+on:
+  push:
+    branches:
+      - "renovate/cocoapods/*"
+
+jobs:
+  cocoapods:
+    runs-on: macos-11
+    if: ${{ github.actor == 'renovate' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '11'
+      - name: Bundle Install
+        run: bundle install
+
+      - name: Pod install
+        run: bundle exec pod install
+      - name: Commit Podfile.lock
+        run: |
+          git config --global user.name 'Renovate Repair'
+          git config --global user.email 'renovate-repair@users.noreply.github.com'
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git commit -am "Update Podfile.lock"
+          git push
