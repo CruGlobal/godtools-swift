@@ -2,10 +2,12 @@
   "extends": ["config:base"],
   "dependencyDashboard": true,
   "labels": ["dependencies"],
+  "prConcurrentLimit": 2,
+  "prHourlyLimit": 0,
   "packageRules": [
     {
       "matchManagers": ["cocoapods"],
-      "enabled": false,
+      "enabled": true,
       "labels": ["dependencies", "cocoapods"],
       "additionalBranchPrefix": "cocoapods/"
     }
