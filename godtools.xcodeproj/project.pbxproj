@@ -989,6 +989,8 @@
 		45DEF22E2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json in Resources */ = {isa = PBXBuildFile; fileRef = 45DEF22D2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json */; };
 		45E998D623FD7B090088DD0C /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */; };
 		45EC429B272C87430052F2AA /* PassthroughValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EC429A272C87430052F2AA /* PassthroughValue.swift */; };
+		45EDBCF027359CD70099495B /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 45EDBCEF27359CD70099495B /* Realm */; };
+		45EDBCF227359CD70099495B /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 45EDBCF127359CD70099495B /* RealmSwift */; };
 		45F506DA26A3822E00EC04A9 /* ManifestResourcesCacheType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F506D926A3822E00EC04A9 /* ManifestResourcesCacheType.swift */; };
 		45F5A03F2689FD7E0081C507 /* LessonQueryParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5A03E2689FD7E0081C507 /* LessonQueryParameters.swift */; };
 		45F5A0422689FEDE0081C507 /* LessonsDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5A0412689FEDE0081C507 /* LessonsDeepLinkParser.swift */; };
@@ -2193,6 +2195,8 @@
 			files = (
 				4F2500621F0C1E8D00364FBC /* AdSupport.framework in Frameworks */,
 				1E06EB6DA916BEF9C627866F /* Pods_godtools.framework in Frameworks */,
+				45EDBCF027359CD70099495B /* Realm in Frameworks */,
+				45EDBCF227359CD70099495B /* RealmSwift in Frameworks */,
 				45B248582734676F00B7AD5E /* AppsFlyerLib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5694,6 +5698,8 @@
 			name = godtools;
 			packageProductDependencies = (
 				45B248572734676F00B7AD5E /* AppsFlyerLib */,
+				45EDBCEF27359CD70099495B /* Realm */,
+				45EDBCF127359CD70099495B /* RealmSwift */,
 			);
 			productName = godtools;
 			productReference = 4F5732891EA69CF00082035C /* godtools.app */;
@@ -5834,6 +5840,7 @@
 			mainGroup = 4F5732801EA69CF00082035C;
 			packageReferences = (
 				45B248562734676F00B7AD5E /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */,
+				45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa" */,
 			);
 			productRefGroup = 4F57328A1EA69CF00082035C /* Products */;
 			projectDirPath = "";
@@ -6101,8 +6108,6 @@
 				"${BUILT_PRODUCTS_DIR}/GoogleDataTransport/GoogleDataTransport.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
-				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
-				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${BUILT_PRODUCTS_DIR}/SSZipArchive/SSZipArchive.framework",
 				"${BUILT_PRODUCTS_DIR}/SWXMLHash/SWXMLHash.framework",
@@ -6131,8 +6136,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleDataTransport.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SSZipArchive.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SWXMLHash.framework",
@@ -8165,6 +8168,14 @@
 				minimumVersion = 6.4.0;
 			};
 		};
+		45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-cocoa.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 10.19.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -8172,6 +8183,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 45B248562734676F00B7AD5E /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */;
 			productName = AppsFlyerLib;
+		};
+		45EDBCEF27359CD70099495B /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = Realm;
+		};
+		45EDBCF127359CD70099495B /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = RealmSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
