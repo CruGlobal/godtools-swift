@@ -1,5 +1,5 @@
 PODS:
-  - AppAuth (0.92.0)
+  - AppAuth/Core (1.4.0)
   - FBSDKCoreKit (8.0.0):
     - FBSDKCoreKit/Basics (= 8.0.0)
     - FBSDKCoreKit/Core (= 8.0.0)
@@ -104,14 +104,10 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilitiesLegacy (1.3.2):
     - GoogleSymbolUtilities (~> 1.1)
-  - GTMAppAuth (0.7.0):
-    - AppAuth (~> 0.92.0)
-    - GTMSessionFetcher (~> 1.1)
-  - GTMSessionFetcher (1.7.0):
-    - GTMSessionFetcher/Full (= 1.7.0)
+  - GTMAppAuth (1.2.2):
+    - AppAuth/Core (~> 1.4)
+    - GTMSessionFetcher/Core (~> 1.5)
   - GTMSessionFetcher/Core (1.7.0)
-  - GTMSessionFetcher/Full (1.7.0):
-    - GTMSessionFetcher/Core (= 1.7.0)
   - lottie-ios (3.1.9)
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
@@ -141,7 +137,7 @@ DEPENDENCIES:
   - GodtoolsToolParser (= 0.3.2)
   - GoogleConversionTracking (~> 3.4.0)
   - GoogleTagManager (~> 7.2.0)
-  - GTMAppAuth (= 0.7.0)
+  - GTMAppAuth (= 1.2.2)
   - lottie-ios (~> 3.1.8)
   - SnowplowTracker (~> 1.3)
   - SSZipArchive (~> 2.2.2)
@@ -189,7 +185,7 @@ SPEC REPOS:
     - youtube-ios-player-helper
 
 SPEC CHECKSUMS:
-  AppAuth: 3f4f1d6d85ad631d0bbf15ffcdc10c447face97a
+  AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
   FBSDKCoreKit: 9d27fe97a2fa2abe5eeefea8240e837623ab88e0
   FirebaseABTesting: e66f1f80747792630d9b292966de206d5df9853b
   FirebaseAnalytics: cd3bd84d722a24a8923918af8af8e5236f615d77
@@ -209,7 +205,7 @@ SPEC CHECKSUMS:
   GoogleTagManager: 9d8981519a985e37d5d86e46b9a58d404094a814
   GoogleUtilities: 8de2a97a17e15b6b98e38e8770e2d129a57c0040
   GoogleUtilitiesLegacy: 5501bedec1646bd284286eb5fc9453f7e23a12f4
-  GTMAppAuth: 8d724be29ab8f2f6d35b2bf929d76340c9d1f1b1
+  GTMAppAuth: ad5c2b70b9a8689e1a04033c9369c4915bfcbe89
   GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
   lottie-ios: 3a3758ef5a008e762faec9c9d50a39842f26d124
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
@@ -223,6 +219,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   youtube-ios-player-helper: 0185c57db23c80d63d6ca11251d110abb8a4ca61
 
-PODFILE CHECKSUM: 82339758c9c3b38c7850c2ac1626f40777b9043f
+PODFILE CHECKSUM: 8101e907d7f3e71dd49c8679c5f0d272b0eb90c6
 
 COCOAPODS: 1.11.2
