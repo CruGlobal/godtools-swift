@@ -53,6 +53,14 @@ class OnboardingFlow: Flow {
         
         navigationController.setViewControllers([view], animated: false)
     }
+    
+    private func navigateToQuickStart() {
+        
+        let viewModel = OnboardingQuickStartViewModel(flowDelegate: self, localizationServices: appDiContainer.localizationServices)
+        let view = OnboardingQuickStartView(viewModel: viewModel)
+        
+        navigationController.setViewControllers([view], animated: true)
+    }
 }
 
 extension OnboardingFlow: FlowDelegate {
@@ -62,12 +70,10 @@ extension OnboardingFlow: FlowDelegate {
         switch step {
             
         case .skipTappedFromOnboardingTutorial:
-            //TODO: Navigate to Onboarding Quick Start
-            flowDelegate?.navigate(step: .dismissOnboardingTutorial(dismissOnboardingTutorialType: .tryLessons))
+            navigateToQuickStart()
             
         case .endTutorialFromOnboardingTutorial:
-            //TODO: Navigate to Onboarding Quick Start
-            flowDelegate?.navigate(step: .dismissOnboardingTutorial(dismissOnboardingTutorialType: .chooseTool))
+            navigateToQuickStart()
 
         case .skipTappedFromOnboardingQuickStart:
             flowDelegate?.navigate(step: .dismissOnboardingTutorial(dismissOnboardingTutorialType: nil))
