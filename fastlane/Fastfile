@@ -1,47 +1,5 @@
 import_from_git(
-    url: 'git@github.com:CruGlobal/cru-fastlane-files.git',
-    branch: 'master',
-    path: 'Fastfile'
+    url: "https://github.com/CruGlobal/cru-fastlane-files",
+    branch: "master",
+    path: "Fastfile"
 )
-
-platform :ios do
-  desc "Run tests"
-  lane :test do
-    cocoapods(
-        podfile: './Podfile',
-        try_repo_update_on_error: true
-
-    )
-
-    run_tests(
-        workspace: ENV["CRU_XCWORKSPACE"],
-        scheme: ENV["CRU_TEST_SCHEME"],
-        devices: ENV["CRU_TEST_DEVICES"].split(','),
-        slack_only_on_failure: true
-    )
-  end
-
-	lane :refresh_dsyms do
-
-		target = ENV["CRU_TARGET"]
-
-		version_number = get_version_number(
-			target: target
-		)
-
-		build_number = get_build_number
-
-		 # Download dSYM files from iTC
-		download_dsyms(
-			version: version_number, 
-			build_number: build_number, 
-			username: ENV['CRU_FASTLANE_USERNAME'],
-			app_identifier: ENV["CRU_APP_IDENTIFIER"])                 
-		
-		# Upload them to Crashlytics
-		upload_symbols_to_crashlytics
-	
-		 # Delete the local dSYM files
-		clean_build_artifacts
-	end
-end

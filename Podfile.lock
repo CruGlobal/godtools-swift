@@ -1,8 +1,5 @@
 PODS:
   - AppAuth (0.92.0)
-  - AppsFlyerFramework (6.3.5):
-    - AppsFlyerFramework/Main (= 6.3.5)
-  - AppsFlyerFramework/Main (6.3.5)
   - FBSDKCoreKit (8.0.0):
     - FBSDKCoreKit/Basics (= 8.0.0)
     - FBSDKCoreKit/Core (= 8.0.0)
@@ -122,11 +119,6 @@ PODS:
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
   - PromisesObjC (1.2.12)
-  - Realm (10.7.7):
-    - Realm/Headers (= 10.7.7)
-  - Realm/Headers (10.7.7)
-  - RealmSwift (10.7.7):
-    - Realm (= 10.7.7)
   - Result (5.0.0)
   - SnowplowTracker (1.7.1):
     - FMDB (~> 2.6)
@@ -140,7 +132,6 @@ PODS:
   - youtube-ios-player-helper (1.0.3)
 
 DEPENDENCIES:
-  - AppsFlyerFramework (~> 6.3.0)
   - FBSDKCoreKit (~> 8.0.0)
   - FirebaseAnalytics (= 7.11.0)
   - FirebaseCore (= 7.11.0)
@@ -152,7 +143,6 @@ DEPENDENCIES:
   - GoogleTagManager (~> 7.2.0)
   - GTMAppAuth (= 0.7.0)
   - lottie-ios (~> 3.1.8)
-  - RealmSwift (~> 10.7.4)
   - SnowplowTracker (~> 1.3)
   - SSZipArchive (~> 2.2.2)
   - Starscream (~> 4.0.0)
@@ -167,7 +157,6 @@ SPEC REPOS:
     - TheKeyOAuthSwift
   trunk:
     - AppAuth
-    - AppsFlyerFramework
     - FBSDKCoreKit
     - FirebaseABTesting
     - FirebaseAnalytics
@@ -191,8 +180,6 @@ SPEC REPOS:
     - lottie-ios
     - nanopb
     - PromisesObjC
-    - Realm
-    - RealmSwift
     - Result
     - SnowplowTracker
     - SSZipArchive
@@ -203,7 +190,6 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   AppAuth: 3f4f1d6d85ad631d0bbf15ffcdc10c447face97a
-  AppsFlyerFramework: fa7e2e8234e6d285256bcb948eb2b77aee84ba81
   FBSDKCoreKit: 9d27fe97a2fa2abe5eeefea8240e837623ab88e0
   FirebaseABTesting: e66f1f80747792630d9b292966de206d5df9853b
   FirebaseAnalytics: cd3bd84d722a24a8923918af8af8e5236f615d77
@@ -228,8 +214,6 @@ SPEC CHECKSUMS:
   lottie-ios: 3a3758ef5a008e762faec9c9d50a39842f26d124
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
-  Realm: 8010af8b7a576ba501729bcbc54a3cd1f1f7dca3
-  RealmSwift: dc17e6d649c12a8996f9e962c3fe6cef356885c4
   Result: ed341d2f236af425b803e690e9bd8fd0a0cb7c5a
   SnowplowTracker: c393b26c456142ad5a78f4e4d771c71cb194f06c
   SSZipArchive: 62d4947b08730e4cda640473b0066d209ff033c9
@@ -239,6 +223,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   youtube-ios-player-helper: 0185c57db23c80d63d6ca11251d110abb8a4ca61
 
-PODFILE CHECKSUM: b885856af60c7e266ba335df25311bb3ae8013f1
+PODFILE CHECKSUM: 82339758c9c3b38c7850c2ac1626f40777b9043f
 
-COCOAPODS: 1.10.2
+COCOAPODS: 1.11.2

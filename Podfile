@@ -12,7 +12,6 @@ use_frameworks!
 
 target 'godtools' do
         
-    pod 'AppsFlyerFramework', '~> 6.3.0'
     pod 'GoogleConversionTracking', '~> 3.4.0'
     pod 'GoogleTagManager', '~> 7.2.0'
     pod 'FBSDKCoreKit', '~> 8.0.0'
@@ -22,7 +21,6 @@ target 'godtools' do
     pod 'FirebaseCrashlytics', '7.11.0'
     pod 'Fuzi', '~> 3.1.1'
     pod 'lottie-ios', '~> 3.1.8'
-    pod 'RealmSwift', '~> 10.7.4'
     pod 'SnowplowTracker', '~> 1.3'
     pod 'SSZipArchive', '~> 2.2.2'
     pod 'Starscream', '~> 4.0.0'

@@ -56,14 +56,13 @@ class AppDiContainer {
     let followUpsService: FollowUpsService
     let viewsService: ViewsService
     let shortcutItemsService: ShortcutItemsService
-    let sharedDeepLinkingService: DeepLinkingServiceType
     let deviceAttachmentBanners: DeviceAttachmentBanners = DeviceAttachmentBanners()
     let favoritingToolMessageCache: FavoritingToolMessageCache
     let emailSignUpService: EmailSignUpService
     let appsFlyer: AppsFlyerType
     let firebaseInAppMessaging: FirebaseInAppMessagingType
         
-    required init() {
+    required init(appDeepLinkingService: DeepLinkingServiceType) {
         
         config = AppConfig()
         
@@ -170,10 +169,8 @@ class AppDiContainer {
             isNewUserCache: IsNewUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache),
             determineNewUser: DetermineNewUserIfPrimaryLanguageSet(languageSettingsCache: languageSettingsCache)
         )
-        
-        sharedDeepLinkingService = AppDiContainer.getNewDeepLinkingService(loggingEnabled: config.isDebug)
-        
-        appsFlyer = AppsFlyer(config: config, deepLinkingService: sharedDeepLinkingService)
+                
+        appsFlyer = AppsFlyer(config: config, deepLinkingService: appDeepLinkingService)
         
         firebaseInAppMessaging = FirebaseInAppMessaging()
                 
@@ -211,7 +208,7 @@ class AppDiContainer {
         emailSignUpService = EmailSignUpService(sharedSession: sharedIgnoringCacheSession, realmDatabase: realmDatabase, userAuthentication: userAuthentication)
     }
     
-    private static func getNewDeepLinkingService(loggingEnabled: Bool) -> DeepLinkingServiceType {
+    static func getNewDeepLinkingService(loggingEnabled: Bool) -> DeepLinkingServiceType {
         return DeepLinkingService(
             deepLinkParsers: [ToolDeepLinkParser(), ToolsDeepLinkParser(), LessonDeepLinkParser(), LessonsDeepLinkParser(), ArticleDeepLinkParser()],
             loggingEnabled: loggingEnabled
