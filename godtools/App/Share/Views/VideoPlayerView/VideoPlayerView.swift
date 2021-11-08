@@ -15,7 +15,7 @@ class VideoPlayerView: UIViewController {
     @IBOutlet weak private var youTubeVideoPlayerLoadingView: UIView!
     @IBOutlet weak private var youTubeVideoPlayerActivityIndicator: UIActivityIndicatorView!
     
-    private var viewModel: VideoPlayerViewModelType
+    private let viewModel: VideoPlayerViewModelType
     
     required init(viewModel: VideoPlayerViewModelType) {
         
