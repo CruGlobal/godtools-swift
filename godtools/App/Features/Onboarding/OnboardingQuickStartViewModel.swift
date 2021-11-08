@@ -18,11 +18,13 @@ class OnboardingQuickStartViewModel: OnboardingQuickStartViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate?, localizationServices: LocalizationServices) {
+    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices) {
         
         title = localizationServices.stringForMainBundle(key: "onboardingQuickStart.title")
         skipButtonTitle = localizationServices.stringForMainBundle(key: "navigationBar.navigationItem.skip")
         endTutorialButtonTitle = localizationServices.stringForMainBundle(key: "onboardingTutorial.getStartedButton.title")
+        
+        self.flowDelegate = flowDelegate
         
         quickStartItems = [
             OnboardingQuickStartItem(title: "onboardingQuickStart.0.title", linkButtonTitle: "onboardingQuickStart.0.button.title", linkButtonFlowStep: .readArticlesTappedFromOnboardingQuickStart),

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Display-Light.otf">
+            <string>SFProDisplay-Light</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OnboardingQuickStartView" customModule="godtools" customModuleProvider="target">
+            <connections>
+                <outlet property="endTutorialButton" destination="iTx-P7-sod" id="AhT-Gr-AtJ"/>
+                <outlet property="titleLabel" destination="NBq-0r-pAH" id="bMu-JD-NYx"/>
+                <outlet property="view" destination="E6t-b4-0Cf" id="XUF-Fz-5iC"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="E6t-b4-0Cf">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WFX-ff-YxE" userLabel="Tutorial Pages View">
+                    <rect key="frame" x="0.0" y="44" width="414" height="700"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quick Start" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NBq-0r-pAH" userLabel="Title label">
+                            <rect key="frame" x="30" y="70" width="354" height="30.5"/>
+                            <fontDescription key="fontDescription" name="SFProDisplay-Light" family="SF Pro Display" pointSize="26"/>
+                            <color key="textColor" red="0.23137254900000001" green="0.64313725489999995" blue="0.85882352939999995" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="NBq-0r-pAH" firstAttribute="top" secondItem="WFX-ff-YxE" secondAttribute="top" constant="70" id="84I-lT-bib"/>
+                        <constraint firstItem="NBq-0r-pAH" firstAttribute="leading" secondItem="WFX-ff-YxE" secondAttribute="leading" constant="30" id="PU4-xU-xiE"/>
+                        <constraint firstAttribute="trailing" secondItem="NBq-0r-pAH" secondAttribute="trailing" constant="30" id="TB2-lM-0zY"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pke-Cm-Fv3" userLabel="Footer View">
+                    <rect key="frame" x="0.0" y="744" width="414" height="118"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" role="primary" translatesAutoresizingMaskIntoConstraints="NO" id="iTx-P7-sod" userLabel="End Tutorial Button" customClass="OnboardPrimaryButton" customModule="godtools" customModuleProvider="target">
+                            <rect key="frame" x="64" y="10" width="286" height="48"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="48" id="VnL-CA-up7"/>
+                            </constraints>
+                            <buttonConfiguration key="configuration" style="plain" title="Title">
+                                <fontDescription key="titleFontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
+                                <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </buttonConfiguration>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="iTx-P7-sod" secondAttribute="trailing" constant="64" id="fnn-ml-3tl"/>
+                        <constraint firstItem="iTx-P7-sod" firstAttribute="leading" secondItem="Pke-Cm-Fv3" secondAttribute="leading" constant="64" id="mhF-g0-nkW"/>
+                        <constraint firstAttribute="bottom" secondItem="iTx-P7-sod" secondAttribute="bottom" constant="60" id="qfj-jp-OM1"/>
+                        <constraint firstItem="iTx-P7-sod" firstAttribute="top" secondItem="Pke-Cm-Fv3" secondAttribute="top" constant="10" id="vZd-Jd-hce"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="wku-0l-oBB"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="Pke-Cm-Fv3" firstAttribute="trailing" secondItem="wku-0l-oBB" secondAttribute="trailing" id="05G-7K-Vgt"/>
+                <constraint firstItem="WFX-ff-YxE" firstAttribute="leading" secondItem="wku-0l-oBB" secondAttribute="leading" id="3KK-Mh-93Q"/>
+                <constraint firstItem="Pke-Cm-Fv3" firstAttribute="leading" secondItem="wku-0l-oBB" secondAttribute="leading" id="GWJ-mb-3Tk"/>
+                <constraint firstItem="wku-0l-oBB" firstAttribute="trailing" secondItem="WFX-ff-YxE" secondAttribute="trailing" id="Jp4-Tc-Wms"/>
+                <constraint firstItem="Pke-Cm-Fv3" firstAttribute="top" secondItem="WFX-ff-YxE" secondAttribute="bottom" id="NHB-bA-dJt"/>
+                <constraint firstItem="wku-0l-oBB" firstAttribute="trailing" secondItem="Pke-Cm-Fv3" secondAttribute="trailing" id="ZCj-5h-Syr"/>
+                <constraint firstItem="wku-0l-oBB" firstAttribute="bottom" secondItem="Pke-Cm-Fv3" secondAttribute="bottom" id="i1b-fO-XQ6"/>
+                <constraint firstItem="WFX-ff-YxE" firstAttribute="top" secondItem="wku-0l-oBB" secondAttribute="top" id="tw9-yw-ApU"/>
+            </constraints>
+            <point key="canvasLocation" x="327.536231884058" y="108.48214285714285"/>
+        </view>
+    </objects>
+    <designables>
+        <designable name="iTx-P7-sod">
+            <size key="intrinsicContentSize" width="52.5" height="31.5"/>
+        </designable>
+    </designables>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
