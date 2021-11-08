@@ -11,7 +11,7 @@ import UIKit
 
 protocol OnboardingQuickStartCellDelegate: class {
     
-    func buttonTapped(dismissOnboardingTutorialType: OnboardingQuickStartView.DismissOnboardingTutorialType)
+    func buttonTapped(flowStep: FlowStep)
 }
 
 class OnboardingQuickStartCell: UICollectionViewCell {
@@ -21,7 +21,7 @@ class OnboardingQuickStartCell: UICollectionViewCell {
     
     private weak var delegate: OnboardingQuickStartCellDelegate?
     
-    private var viewModel: OnboardingQuickStartCellViewModelType?
+    private var item: OnboardingQuickStartItem?
     
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var linkButton: UIButton!
@@ -41,14 +41,14 @@ class OnboardingQuickStartCell: UICollectionViewCell {
         linkButton.setTitle(nil, for: .normal)
     }
     
-    func configure(viewModel: OnboardingQuickStartCellViewModelType, delegate: OnboardingQuickStartCellDelegate?) {
+    func configure(item: OnboardingQuickStartItem, delegate: OnboardingQuickStartCellDelegate?) {
             
         self.delegate = delegate
         
-        self.viewModel = viewModel
+        self.item = item
         
-        titleLabel.text = viewModel.title
-        linkButton.setTitle(viewModel.buttonTitle, for: .normal)
+        titleLabel.text = item.title
+        linkButton.setTitle(item.linkButtonTitle, for: .normal)
     }
     
     private func setupBinding() {
@@ -58,10 +58,10 @@ class OnboardingQuickStartCell: UICollectionViewCell {
     
     @objc func linkButtonTapped() {
         
-        guard let dismissOnboardingTutorialType = viewModel?.dismissOnboardingTutorialType else {
+        guard let flowStep = item?.linkButtonFlowStep else {
             return
         }
         
-        delegate?.buttonTapped(dismissOnboardingTutorialType: dismissOnboardingTutorialType)
+        delegate?.buttonTapped(flowStep: flowStep)
     }
 }

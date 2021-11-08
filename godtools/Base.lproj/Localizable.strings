@@ -154,8 +154,15 @@ The app can be downloaded from https://godtoolsapp.com";
 "onboardingTutorial.beginButton.title" = "Begin";
 "onboardingTutorial.nextButton.title" = "Next";
 "onboardingTutorial.getStartedButton.title" = "Get Started";
-"onboardingTutorial.jumpInButton.title" = "Jump In";
 
+//OnboardingQuickStart
+"onboardingQuickStart.title" = "Quick start links";
+"onboardingQuickStart.0.title" = "I want to explore Christianity";
+"onboardingQuickStart.0.button.title" = "Read our articles";
+"onboardingQuickStart.1.title" = "I want to learn about having gospel conversations";
+"onboardingQuickStart.1.button.title" = "Try our Lessons";
+"onboardingQuickStart.2.title" = "I want to share the gospel with someone";
+"onboardingQuickStart.2.button.title" = "Choose one of our tools";
 
 // Tutorial
 "tutorial.tutorialItem.0.title" = "Watch";
