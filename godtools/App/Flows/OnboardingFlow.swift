@@ -62,10 +62,27 @@ extension OnboardingFlow: FlowDelegate {
         switch step {
             
         case .skipTappedFromOnboardingTutorial:
-            flowDelegate?.navigate(step: .dismissOnboardingTutorial)
+            //TODO: Navigate to Onboarding Quick Start
+            flowDelegate?.navigate(step: .dismissOnboardingTutorial(dismissOnboardingTutorialType: .tryLessons))
             
         case .endTutorialFromOnboardingTutorial:
-            flowDelegate?.navigate(step: .dismissOnboardingTutorial)
+            //TODO: Navigate to Onboarding Quick Start
+            flowDelegate?.navigate(step: .dismissOnboardingTutorial(dismissOnboardingTutorialType: .chooseTool))
+
+        case .skipTappedFromOnboardingQuickStart:
+            flowDelegate?.navigate(step: .dismissOnboardingTutorial(dismissOnboardingTutorialType: nil))
+            
+        case .endTutorialFromOnboardingQuickStart:
+            flowDelegate?.navigate(step: .dismissOnboardingTutorial(dismissOnboardingTutorialType: nil))
+        
+        case .readArticlesTappedFromOnboardingQuickStart:
+            flowDelegate?.navigate(step: .dismissOnboardingTutorial(dismissOnboardingTutorialType: .readArticles))
+        
+        case .tryLessonsTappedFromOnboardingQuickStart:
+            flowDelegate?.navigate(step: .dismissOnboardingTutorial(dismissOnboardingTutorialType: .tryLessons))
+        
+        case .chooseToolTappedFromOnboardingQuickStart:
+            flowDelegate?.navigate(step: .dismissOnboardingTutorial(dismissOnboardingTutorialType: .chooseTool))
         
         default:
             break
