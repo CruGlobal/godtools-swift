@@ -24,7 +24,7 @@ class LessonFeedbackAnalytics {
         self.firebaseAnalytics = firebaseAnalytics
     }
     
-    func trackLessonFeedback(feedbackHelpful: LessonFeedbackHelpful?, readinessScaleValue: Int, pageIndexReached: Int) {
+    func trackLessonFeedback(siteSection: String, feedbackHelpful: LessonFeedbackHelpful?, readinessScaleValue: Int, pageIndexReached: Int) {
             
         var data: [String: String] = Dictionary()
         
@@ -48,7 +48,7 @@ class LessonFeedbackAnalytics {
         
         firebaseAnalytics.trackAction(
             screenName: "",
-            siteSection: "",
+            siteSection: siteSection,
             siteSubSection: "",
             actionName: LessonFeedbackAnalytics.trackLessonFeedbackActionName,
             data: data
