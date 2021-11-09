@@ -10,7 +10,5 @@ import Foundation
 
 protocol MobileContentAnimationViewModelType {
     
-    var animationJsonFilepath: String { get }
-    var autoPlay: Bool { get }
-    var loop: Bool { get }
+    var animatedViewModel: AnimatedViewModelType { get }
 }

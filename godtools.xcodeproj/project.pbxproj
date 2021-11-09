@@ -810,6 +810,8 @@
 		45AEEBA0273AE8D200EF88BC /* MultiplatformContentAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AEEB9F273AE8D200EF88BC /* MultiplatformContentAnimation.swift */; };
 		45AEEBA4273AEDF800EF88BC /* AnimatedResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AEEBA3273AEDF800EF88BC /* AnimatedResource.swift */; };
 		45AEEBA7273B096300EF88BC /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 45AEEBA6273B096300EF88BC /* Lottie */; };
+		45AEEBAE273B139600EF88BC /* AnimatedViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AEEBAC273B139600EF88BC /* AnimatedViewModelType.swift */; };
+		45AEEBAF273B139600EF88BC /* AnimatedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AEEBAD273B139600EF88BC /* AnimatedViewModel.swift */; };
 		45B116C22625FC6D007A7127 /* LanguageDirection+SemanticContentAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B116C12625FC6D007A7127 /* LanguageDirection+SemanticContentAttribute.swift */; };
 		45B248582734676F00B7AD5E /* AppsFlyerLib in Frameworks */ = {isa = PBXBuildFile; productRef = 45B248572734676F00B7AD5E /* AppsFlyerLib */; };
 		45B35F3D26A269DB00208A3E /* MobileContentParserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B35F3C26A269DB00208A3E /* MobileContentParserType.swift */; };
@@ -1878,6 +1880,8 @@
 		45AEEB9D273AE84D00EF88BC /* ContentAnimationModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentAnimationModelType.swift; sourceTree = "<group>"; };
 		45AEEB9F273AE8D200EF88BC /* MultiplatformContentAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplatformContentAnimation.swift; sourceTree = "<group>"; };
 		45AEEBA3273AEDF800EF88BC /* AnimatedResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedResource.swift; sourceTree = "<group>"; };
+		45AEEBAC273B139600EF88BC /* AnimatedViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedViewModelType.swift; sourceTree = "<group>"; };
+		45AEEBAD273B139600EF88BC /* AnimatedViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedViewModel.swift; sourceTree = "<group>"; };
 		45B116C12625FC6D007A7127 /* LanguageDirection+SemanticContentAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LanguageDirection+SemanticContentAttribute.swift"; sourceTree = "<group>"; };
 		45B35F3C26A269DB00208A3E /* MobileContentParserType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentParserType.swift; sourceTree = "<group>"; };
 		45BD799E26A20EEA0007426B /* PageModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageModelType.swift; sourceTree = "<group>"; };
@@ -5020,6 +5024,8 @@
 			children = (
 				45AEEBA3273AEDF800EF88BC /* AnimatedResource.swift */,
 				45AEEB92273AE1C500EF88BC /* AnimatedView.swift */,
+				45AEEBAD273B139600EF88BC /* AnimatedViewModel.swift */,
+				45AEEBAC273B139600EF88BC /* AnimatedViewModelType.swift */,
 			);
 			path = AnimatedView;
 			sourceTree = "<group>";
@@ -6224,6 +6230,7 @@
 				45C93B31261D31D600592FFF /* WebArchiveUrl.swift in Sources */,
 				45AD1F7B25938A9800A096A0 /* SharedSessionType.swift in Sources */,
 				45C93AF6261D310900592FFF /* ArticleManifestDownloadArticlesReceipt.swift in Sources */,
+				45AEEBAF273B139600EF88BC /* AnimatedViewModel.swift in Sources */,
 				45AD1B4825938A4F00A096A0 /* MenuCell.swift in Sources */,
 				D182CA232726E6E900ABAAC8 /* MobileContentButtonIcon.swift in Sources */,
 				45BD79CF26A20EEA0007426B /* TrainingTipModelType.swift in Sources */,
@@ -7093,6 +7100,7 @@
 				D1D56918270632B200BBE2A6 /* OnboardingTutorialCustomViewBuilder.swift in Sources */,
 				45AD1BCC25938A4F00A096A0 /* UIColor+HexColor.swift in Sources */,
 				45AD1F7F25938A9800A096A0 /* RealmFavoritedResource.swift in Sources */,
+				45AEEBAE273B139600EF88BC /* AnimatedViewModelType.swift in Sources */,
 				45AD1F2A25938A9800A096A0 /* MobileContentXmlManifestTip.swift in Sources */,
 				4533A928270E2567009B1AF5 /* UINavigationBar+Appearance.swift in Sources */,
 				45A3A0CA26B0BE50005DA490 /* TractFlowCompletedState.swift in Sources */,

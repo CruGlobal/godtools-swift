@@ -14,22 +14,18 @@ class MobileContentAnimationViewModel: MobileContentAnimationViewModelType {
     private let rendererPageModel: MobileContentRendererPageModel
     private let containerModel: MobileContentRenderableModelContainer?
     
+    let animatedViewModel: AnimatedViewModelType
+    
     required init(animationModel: ContentAnimationModelType, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) {
         
         self.animationModel = animationModel
         self.rendererPageModel = rendererPageModel
         self.containerModel = containerModel
-    }
-    
-    var animationJsonFilepath: String {
-        return animationModel.resource ?? ""
-    }
-    
-    var autoPlay: Bool {
-        return animationModel.autoPlay
-    }
-    
-    var loop: Bool {
-        return animationModel.loop
+        
+        self.animatedViewModel = AnimatedViewModel(
+            animationDataResource: .filepathJsonFile(filepath: animationModel.resource ?? ""),
+            autoPlay: animationModel.autoPlay,
+            loop: animationModel.loop
+        )
     }
 }

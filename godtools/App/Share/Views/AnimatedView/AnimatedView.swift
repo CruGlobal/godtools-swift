@@ -11,6 +11,7 @@ import Lottie
 
 class AnimatedView: UIView {
     
+    private var viewModel: AnimatedViewModelType?
     private var animationView: AnimationView?
         
     override init(frame: CGRect) {
@@ -18,11 +19,13 @@ class AnimatedView: UIView {
         super.init(frame: frame)
     }
     
-    required init(frame: CGRect, resource: AnimatedResource, shouldAutoPlay: Bool, shouldLoop: Bool) {
+    required init(frame: CGRect, viewModel: AnimatedViewModelType) {
                 
+        self.viewModel = viewModel
+        
         super.init(frame: frame)
         
-        setAnimation(resource: resource, shouldAutoPlay: shouldAutoPlay, shouldLoop: shouldLoop)
+        configure(viewModel: viewModel)
     }
     
     required init?(coder: NSCoder) {
@@ -30,7 +33,9 @@ class AnimatedView: UIView {
         super.init(coder: coder)
     }
     
-    func setAnimation(resource: AnimatedResource, shouldAutoPlay: Bool, shouldLoop: Bool) {
+    func configure(viewModel: AnimatedViewModelType) {
+        
+        self.viewModel = viewModel
         
         if let currentAnimationView = self.animationView {
             
@@ -43,24 +48,15 @@ class AnimatedView: UIView {
         }
         
         let newAnimationView = AnimationView()
-        let loopMode: LottieLoopMode = shouldLoop ? .loop : .playOnce
-        
-        let animationResource: Animation?
-        
-        switch resource {
-        case .filepathJsonFile(let filepath):
-            animationResource = Animation.filepath(filepath, animationCache: nil)
-        case .mainBundleJsonFile(let filename):
-            animationResource = Animation.named(filename)
-        }
+        let loopMode: LottieLoopMode = viewModel.loop ? .loop : .playOnce
                         
-        newAnimationView.animation = animationResource
+        newAnimationView.animation = viewModel.animationData
         newAnimationView.loopMode = loopMode
         
         addSubview(newAnimationView)
         newAnimationView.constrainEdgesToSuperview()
         
-        if shouldAutoPlay {
+        if viewModel.autoPlay {
             newAnimationView.play()
         }
         else {

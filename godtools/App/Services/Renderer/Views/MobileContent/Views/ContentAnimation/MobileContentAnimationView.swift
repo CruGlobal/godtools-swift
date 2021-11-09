@@ -35,10 +35,6 @@ class MobileContentAnimationView: MobileContentView {
     
     private func setupBinding() {
         
-        animatedView.setAnimation(
-            resource: .filepathJsonFile(filepath: viewModel.animationJsonFilepath),
-            shouldAutoPlay: viewModel.autoPlay,
-            shouldLoop: viewModel.loop
-        )
+        animatedView.configure(viewModel: viewModel.animatedViewModel)
     }
 }
