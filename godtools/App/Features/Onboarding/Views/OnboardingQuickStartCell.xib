@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Light.otf">
+            <string>SFProText-Light</string>
+        </array>
+        <array key="SF-Pro-Text-Semibold.otf">
+            <string>SFProText-Semibold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="OnboardingQuickStartCellReuseIdentifier" rowHeight="230" id="qRC-Uh-2Qk" customClass="OnboardingQuickStartCell" customModule="godtools" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="479" height="230"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qRC-Uh-2Qk" id="fao-fZ-EEC">
+                <rect key="frame" x="0.0" y="0.0" width="479" height="230"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JYY-Z6-BmH" userLabel="Link Button">
+                        <rect key="frame" x="15" y="165" width="449" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="MLL-17-1eN"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="16"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" title="Link Button">
+                            <color key="titleColor" red="0.23137254900000001" green="0.64313725489999995" blue="0.85882352939999995" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                        </state>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Sh-4k-T51" userLabel="Title Label">
+                        <rect key="frame" x="15" y="15" width="449" height="142"/>
+                        <fontDescription key="fontDescription" name="SFProText-Light" family="SF Pro Text" pointSize="20"/>
+                        <color key="textColor" red="0.3529411764705882" green="0.3529411764705882" blue="0.3529411764705882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="2Sh-4k-T51" firstAttribute="leading" secondItem="fao-fZ-EEC" secondAttribute="leading" constant="15" id="JYa-vG-COf"/>
+                    <constraint firstAttribute="trailing" secondItem="JYY-Z6-BmH" secondAttribute="trailing" constant="15" id="SHF-ww-Ej9"/>
+                    <constraint firstItem="JYY-Z6-BmH" firstAttribute="leading" secondItem="fao-fZ-EEC" secondAttribute="leading" constant="15" id="TiQ-g4-f1t"/>
+                    <constraint firstAttribute="bottom" secondItem="JYY-Z6-BmH" secondAttribute="bottom" constant="15" id="Z20-Ie-v8o"/>
+                    <constraint firstAttribute="trailing" secondItem="2Sh-4k-T51" secondAttribute="trailing" constant="15" id="sLI-bV-yfe"/>
+                    <constraint firstItem="JYY-Z6-BmH" firstAttribute="top" secondItem="2Sh-4k-T51" secondAttribute="bottom" constant="8" id="v4O-H2-gXw"/>
+                    <constraint firstItem="2Sh-4k-T51" firstAttribute="top" secondItem="fao-fZ-EEC" secondAttribute="top" constant="15" id="w4t-Yd-GZI"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" red="0.95686274510000002" green="0.95686274510000002" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <connections>
+                <outlet property="linkButton" destination="JYY-Z6-BmH" id="2WR-yu-Wrg"/>
+                <outlet property="titleLabel" destination="2Sh-4k-T51" id="Fvr-v3-v7R"/>
+            </connections>
+            <point key="canvasLocation" x="176.08695652173915" y="310.04464285714283"/>
+        </tableViewCell>
+    </objects>
+</document>

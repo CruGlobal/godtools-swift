@@ -20,8 +20,11 @@ class OnboardingQuickStartView: UIViewController {
     
     private var skipButton: UIBarButtonItem?
     
+    weak var delegate: OnboardingQuickStartCellDelegate?
+    
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var endTutorialButton: OnboardPrimaryButton!
+    @IBOutlet weak private var quickStartTableView: UITableView!
     
     required init(viewModel: OnboardingQuickStartViewModelType) {
         
@@ -49,6 +52,9 @@ class OnboardingQuickStartView: UIViewController {
         setupBinding()
         
         endTutorialButton.addTarget(self, action: #selector(handleEndTutorial), for: .touchUpInside)
+        
+        quickStartTableView.delegate = self
+        quickStartTableView.dataSource = self
     }
     
     private func setupLayout() {
@@ -58,6 +64,14 @@ class OnboardingQuickStartView: UIViewController {
         endTutorialButton.setTitle(viewModel.endTutorialButtonTitle, for: .normal)
         
         setSkipButton()
+        
+        quickStartTableView.register(
+            UINib(nibName: OnboardingQuickStartCell.nibName, bundle: nil),
+            forCellReuseIdentifier: OnboardingQuickStartCell.reuseIdentifier
+        )
+        
+        quickStartTableView.separatorStyle = .none
+        quickStartTableView.rowHeight = UITableView.automaticDimension
     }
     
     private func setupBinding() {
@@ -103,7 +117,48 @@ class OnboardingQuickStartView: UIViewController {
 extension OnboardingQuickStartView: OnboardingQuickStartCellDelegate {
     
     func buttonTapped(flowStep: FlowStep) {
+        
         viewModel.quickStartCellLinkButtonTapped(flowStep: flowStep)
     }
 }
 
+// MARK: - UITableViewDelegate, UITableViewDataSource
+
+extension OnboardingQuickStartView: UITableViewDelegate, UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return viewModel.quickStartItemCount
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell: OnboardingQuickStartCell = quickStartTableView.dequeueReusableCell(
+            withIdentifier: OnboardingQuickStartCell.reuseIdentifier,
+            for: indexPath) as! OnboardingQuickStartCell
+                
+        let quickStartItem = viewModel.quickStartCellWillAppear(index: indexPath.row)
+        cell.configure(item: quickStartItem, delegate: self)
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let headerView = UIView()
+        headerView.backgroundColor = view.backgroundColor
+        
+        return headerView
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 2
+    }
+}

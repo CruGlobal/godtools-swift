@@ -13,6 +13,7 @@ class OnboardingQuickStartViewModel: OnboardingQuickStartViewModelType {
     let title: String
     let skipButtonTitle: String
     let endTutorialButtonTitle: String
+    let quickStartItemCount: Int
     
     private let quickStartItems: [OnboardingQuickStartItem]
     
@@ -27,10 +28,24 @@ class OnboardingQuickStartViewModel: OnboardingQuickStartViewModelType {
         self.flowDelegate = flowDelegate
         
         quickStartItems = [
-            OnboardingQuickStartItem(title: "onboardingQuickStart.0.title", linkButtonTitle: "onboardingQuickStart.0.button.title", linkButtonFlowStep: .readArticlesTappedFromOnboardingQuickStart),
-            OnboardingQuickStartItem(title: "onboardingQuickStart.1.title", linkButtonTitle: "onboardingQuickStart.1.button.title", linkButtonFlowStep: .tryLessonsTappedFromOnboardingQuickStart),
-            OnboardingQuickStartItem(title: "onboardingQuickStart.2.title", linkButtonTitle: "onboardingQuickStart.2.button.title", linkButtonFlowStep: .chooseToolTappedFromOnboardingQuickStart),
+            OnboardingQuickStartItem(
+                title: localizationServices.stringForMainBundle(key: "onboardingQuickStart.0.title"),
+                linkButtonTitle: localizationServices.stringForMainBundle(key:  "onboardingQuickStart.0.button.title"),
+                linkButtonFlowStep: .readArticlesTappedFromOnboardingQuickStart
+            ),
+            OnboardingQuickStartItem(
+                title: localizationServices.stringForMainBundle(key: "onboardingQuickStart.1.title"),
+                linkButtonTitle: localizationServices.stringForMainBundle(key:  "onboardingQuickStart.1.button.title"),
+                linkButtonFlowStep: .readArticlesTappedFromOnboardingQuickStart
+            ),
+            OnboardingQuickStartItem(
+                title: localizationServices.stringForMainBundle(key: "onboardingQuickStart.2.title"),
+                linkButtonTitle: localizationServices.stringForMainBundle(key:  "onboardingQuickStart.2.button.title"),
+                linkButtonFlowStep: .readArticlesTappedFromOnboardingQuickStart
+            ),
         ]
+        
+        quickStartItemCount = quickStartItems.count
     }
     
     func quickStartCellWillAppear(index: Int) -> OnboardingQuickStartItem {

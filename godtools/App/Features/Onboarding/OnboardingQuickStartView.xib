@@ -17,6 +17,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OnboardingQuickStartView" customModule="godtools" customModuleProvider="target">
             <connections>
                 <outlet property="endTutorialButton" destination="iTx-P7-sod" id="AhT-Gr-AtJ"/>
+                <outlet property="quickStartTableView" destination="l4Q-zP-eGG" id="cvU-zu-fiV"/>
                 <outlet property="titleLabel" destination="NBq-0r-pAH" id="bMu-JD-NYx"/>
                 <outlet property="view" destination="E6t-b4-0Cf" id="XUF-Fz-5iC"/>
             </connections>
@@ -30,17 +31,25 @@
                     <rect key="frame" x="0.0" y="44" width="414" height="700"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quick Start" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NBq-0r-pAH" userLabel="Title label">
-                            <rect key="frame" x="30" y="70" width="354" height="30.5"/>
+                            <rect key="frame" x="30" y="40" width="354" height="31.5"/>
                             <fontDescription key="fontDescription" name="SFProDisplay-Light" family="SF Pro Display" pointSize="26"/>
                             <color key="textColor" red="0.23137254900000001" green="0.64313725489999995" blue="0.85882352939999995" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="l4Q-zP-eGG">
+                            <rect key="frame" x="30" y="91.5" width="354" height="584.5"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        </tableView>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstItem="NBq-0r-pAH" firstAttribute="top" secondItem="WFX-ff-YxE" secondAttribute="top" constant="70" id="84I-lT-bib"/>
+                        <constraint firstItem="NBq-0r-pAH" firstAttribute="top" secondItem="WFX-ff-YxE" secondAttribute="top" constant="40" id="84I-lT-bib"/>
+                        <constraint firstAttribute="trailing" secondItem="l4Q-zP-eGG" secondAttribute="trailing" constant="30" id="Ca8-FY-dOM"/>
                         <constraint firstItem="NBq-0r-pAH" firstAttribute="leading" secondItem="WFX-ff-YxE" secondAttribute="leading" constant="30" id="PU4-xU-xiE"/>
                         <constraint firstAttribute="trailing" secondItem="NBq-0r-pAH" secondAttribute="trailing" constant="30" id="TB2-lM-0zY"/>
+                        <constraint firstAttribute="bottom" secondItem="l4Q-zP-eGG" secondAttribute="bottom" constant="24" id="dAa-O5-HTa"/>
+                        <constraint firstItem="l4Q-zP-eGG" firstAttribute="top" secondItem="NBq-0r-pAH" secondAttribute="bottom" constant="20" id="kHf-Hq-wIh"/>
+                        <constraint firstItem="l4Q-zP-eGG" firstAttribute="leading" secondItem="WFX-ff-YxE" secondAttribute="leading" constant="30" id="vFo-B7-pe3"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pke-Cm-Fv3" userLabel="Footer View">
@@ -83,7 +92,7 @@
     </objects>
     <designables>
         <designable name="iTx-P7-sod">
-            <size key="intrinsicContentSize" width="52.5" height="31.5"/>
+            <size key="intrinsicContentSize" width="55" height="32"/>
         </designable>
     </designables>
     <resources>

@@ -13,6 +13,7 @@ protocol OnboardingQuickStartViewModelType {
     var title: String { get }
     var skipButtonTitle: String { get }
     var endTutorialButtonTitle: String { get }
+    var quickStartItemCount: Int { get }
     
     func quickStartCellWillAppear(index: Int) -> OnboardingQuickStartItem
     func quickStartCellLinkButtonTapped(flowStep: FlowStep)

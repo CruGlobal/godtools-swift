@@ -14,7 +14,7 @@ protocol OnboardingQuickStartCellDelegate: class {
     func buttonTapped(flowStep: FlowStep)
 }
 
-class OnboardingQuickStartCell: UICollectionViewCell {
+class OnboardingQuickStartCell: UITableViewCell {
     
     static let nibName: String = "OnboardingQuickStartCell"
     static let reuseIdentifier: String = "OnboardingQuickStartCellReuseIdentifier"
@@ -30,6 +30,7 @@ class OnboardingQuickStartCell: UICollectionViewCell {
         
         super.awakeFromNib()
         
+        setupLayout()
         setupBinding()
     }
     
@@ -49,6 +50,23 @@ class OnboardingQuickStartCell: UICollectionViewCell {
         
         titleLabel.text = item.title
         linkButton.setTitle(item.linkButtonTitle, for: .normal)
+    }
+    
+    private func setupLayout() {
+        
+        guard let buttonImage = UIImage(named: "arrow.forward") else  {
+            return
+        }
+        
+        linkButton.semanticContentAttribute = UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft ? .forceLeftToRight : .forceRightToLeft
+        
+        linkButton.setImage(buttonImage, for: .normal)
+        
+        linkButton.setInsets(forContentPadding:
+            UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6),
+            imageTitlePadding: 10,
+            iconGravity: .end
+        )
     }
     
     private func setupBinding() {
