@@ -12,6 +12,5 @@ protocol VideoPlayerViewModelType {
     
     var youtubeVideoId: String { get }
     
-    func closeButtonTapped()
     func videoEnded()
 }

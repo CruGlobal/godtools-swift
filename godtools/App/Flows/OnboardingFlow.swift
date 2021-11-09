@@ -58,7 +58,7 @@ class OnboardingFlow: Flow {
     
     private func launchVideoPlayerView(youtubeVideoId: String) {
         
-        let viewModel = VideoPlayerViewModel(flowDelegate: self, youtubeVideoId: youtubeVideoId)
+        let viewModel = VideoPlayerViewModel(flowDelegate: self, youtubeVideoId: youtubeVideoId, videoEndedFlowStep: .videoEndedOnOnboardingTutorial)
         let view = VideoPlayerView(viewModel: viewModel)
         
         navigationController.present(view, animated: true, completion: nil)

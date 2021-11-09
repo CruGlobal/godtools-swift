@@ -14,20 +14,18 @@ class VideoPlayerViewModel: VideoPlayerViewModelType {
     
     let youtubeVideoId: String
     
-    required init (flowDelegate: FlowDelegate?, youtubeVideoId: String) {
+    private let videoEndedFlowStep: FlowStep
+    
+    required init (flowDelegate: FlowDelegate?, youtubeVideoId: String, videoEndedFlowStep: FlowStep) {
         
         self.flowDelegate = flowDelegate
         
         self.youtubeVideoId = youtubeVideoId
-    }
-    
-    func closeButtonTapped() {
-        
-        flowDelegate?.navigate(step: .closeVideoPlayerTappedFromOnboardingTutorial)
+        self.videoEndedFlowStep = videoEndedFlowStep
     }
     
     func videoEnded() {
         
-        flowDelegate?.navigate(step: .videoEndedOnOnboardingTutorial)
+        flowDelegate?.navigate(step: videoEndedFlowStep)
     }
 }
