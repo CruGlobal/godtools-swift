@@ -11,9 +11,7 @@ import UIKit
 class OnboardingFlow: Flow {
     
     private weak var flowDelegate: FlowDelegate?
-    
-    private var videoPlayerView: VideoPlayerView?
-    
+        
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
@@ -67,7 +65,6 @@ class OnboardingFlow: Flow {
     private func dismissVideoPlayerView() {
         
         navigationController.dismiss(animated: true, completion: nil)
-        videoPlayerView = nil
     }
     
     private func dismissOnboardingFlow() {
