@@ -99,6 +99,7 @@ class LessonEvaluationViewModel: LessonEvaluationViewModelType {
         }
         
         lessonFeedbackAnalytics.trackLessonFeedback(
+            siteSection: lesson.abbreviation,
             feedbackHelpful: feedbackHelpful,
             readinessScaleValue: readyToShareFaithScale,
             pageIndexReached: pageIndexReached
