@@ -313,11 +313,7 @@ class AppFlow: NSObject, Flow {
             switch dismissOnboardingTutorialType {
             
             case .readArticles:
-                
-                resetFlowToToolsFlow(animatedDismissal: true, startingToolbarItem: nil) { [weak self] in
-                    
-                    //TODO: Open Articles list ("Questions About God" tool?)
-                }
+                navigate(step: .deepLink(deepLinkType: .tool(toolDeepLink: ToolDeepLink(resourceAbbreviation: "es", primaryLanguageCodes: ["en"], parallelLanguageCodes: [], liveShareStream: nil, page: nil))))
             
             case .tryLessons:
                 resetFlowToToolsFlow(animatedDismissal: true, startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView.lessons, didFinishSetNavigationStack: nil)
