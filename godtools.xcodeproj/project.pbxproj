@@ -803,6 +803,12 @@
 		45AD22E42593E68D00A096A0 /* TutorialSupportedLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175625938A4D00A096A0 /* TutorialSupportedLanguages.swift */; };
 		45AEBA7926D03FD1008DA47A /* MobileContentImageAlignmentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AEBA7826D03FD1008DA47A /* MobileContentImageAlignmentType.swift */; };
 		45AEEB93273AE1C500EF88BC /* AnimatedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AEEB92273AE1C500EF88BC /* AnimatedView.swift */; };
+		45AEEB98273AE71E00EF88BC /* MobileContentAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AEEB97273AE71E00EF88BC /* MobileContentAnimationView.swift */; };
+		45AEEB9A273AE74700EF88BC /* MobileContentAnimationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AEEB99273AE74700EF88BC /* MobileContentAnimationViewModel.swift */; };
+		45AEEB9C273AE75600EF88BC /* MobileContentAnimationViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AEEB9B273AE75600EF88BC /* MobileContentAnimationViewModelType.swift */; };
+		45AEEB9E273AE84D00EF88BC /* ContentAnimationModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AEEB9D273AE84D00EF88BC /* ContentAnimationModelType.swift */; };
+		45AEEBA0273AE8D200EF88BC /* MultiplatformContentAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AEEB9F273AE8D200EF88BC /* MultiplatformContentAnimation.swift */; };
+		45AEEBA4273AEDF800EF88BC /* AnimatedResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AEEBA3273AEDF800EF88BC /* AnimatedResource.swift */; };
 		45B116C22625FC6D007A7127 /* LanguageDirection+SemanticContentAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B116C12625FC6D007A7127 /* LanguageDirection+SemanticContentAttribute.swift */; };
 		45B248582734676F00B7AD5E /* AppsFlyerLib in Frameworks */ = {isa = PBXBuildFile; productRef = 45B248572734676F00B7AD5E /* AppsFlyerLib */; };
 		45B35F3D26A269DB00208A3E /* MobileContentParserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B35F3C26A269DB00208A3E /* MobileContentParserType.swift */; };
@@ -1865,6 +1871,12 @@
 		45AD22B22593D1FB00A096A0 /* UIImage+CreateImageWithColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+CreateImageWithColor.swift"; sourceTree = "<group>"; };
 		45AEBA7826D03FD1008DA47A /* MobileContentImageAlignmentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentImageAlignmentType.swift; sourceTree = "<group>"; };
 		45AEEB92273AE1C500EF88BC /* AnimatedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedView.swift; sourceTree = "<group>"; };
+		45AEEB97273AE71E00EF88BC /* MobileContentAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAnimationView.swift; sourceTree = "<group>"; };
+		45AEEB99273AE74700EF88BC /* MobileContentAnimationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAnimationViewModel.swift; sourceTree = "<group>"; };
+		45AEEB9B273AE75600EF88BC /* MobileContentAnimationViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAnimationViewModelType.swift; sourceTree = "<group>"; };
+		45AEEB9D273AE84D00EF88BC /* ContentAnimationModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentAnimationModelType.swift; sourceTree = "<group>"; };
+		45AEEB9F273AE8D200EF88BC /* MultiplatformContentAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplatformContentAnimation.swift; sourceTree = "<group>"; };
+		45AEEBA3273AEDF800EF88BC /* AnimatedResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedResource.swift; sourceTree = "<group>"; };
 		45B116C12625FC6D007A7127 /* LanguageDirection+SemanticContentAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LanguageDirection+SemanticContentAttribute.swift"; sourceTree = "<group>"; };
 		45B35F3C26A269DB00208A3E /* MobileContentParserType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentParserType.swift; sourceTree = "<group>"; };
 		45BD799E26A20EEA0007426B /* PageModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageModelType.swift; sourceTree = "<group>"; };
@@ -2700,6 +2712,7 @@
 				45F7E75F2701F1AA00CC9FB9 /* MobileContentViewVisibilityState.swift */,
 				455583AC269F2DA500C3FF14 /* BackgroundImage */,
 				45558379269F2DA400C3FF14 /* ContentAccordion */,
+				45AEEB96273AE70E00EF88BC /* ContentAnimation */,
 				4555838A269F2DA500C3FF14 /* ContentButton */,
 				455583A8269F2DA500C3FF14 /* ContentEmbeddedVideo */,
 				4555836A269F2DA400C3FF14 /* ContentForm */,
@@ -3124,6 +3137,7 @@
 				452652A126A7540A00E703F7 /* MultiplatformCards.swift */,
 				4526539126CC28EE00AC0FBD /* MultiplatformContent.swift */,
 				453AF08726A8788F002D4AB1 /* MultiplatformContentAccordion.swift */,
+				45AEEB9F273AE8D200EF88BC /* MultiplatformContentAnimation.swift */,
 				452652A526A763E500E703F7 /* MultiplatformContentButton.swift */,
 				4543ACCF26CB14E10002F6F7 /* MultiplatformContentFallback.swift */,
 				453AF08926A8789D002D4AB1 /* MultiplatformContentForm.swift */,
@@ -5002,9 +5016,20 @@
 		45AEEB91273AE1B700EF88BC /* AnimatedView */ = {
 			isa = PBXGroup;
 			children = (
+				45AEEBA3273AEDF800EF88BC /* AnimatedResource.swift */,
 				45AEEB92273AE1C500EF88BC /* AnimatedView.swift */,
 			);
 			path = AnimatedView;
+			sourceTree = "<group>";
+		};
+		45AEEB96273AE70E00EF88BC /* ContentAnimation */ = {
+			isa = PBXGroup;
+			children = (
+				45AEEB97273AE71E00EF88BC /* MobileContentAnimationView.swift */,
+				45AEEB99273AE74700EF88BC /* MobileContentAnimationViewModel.swift */,
+				45AEEB9B273AE75600EF88BC /* MobileContentAnimationViewModelType.swift */,
+			);
+			path = ContentAnimation;
 			sourceTree = "<group>";
 		};
 		45B59D7A242434F700F9D594 /* Features */ = {
@@ -5052,6 +5077,7 @@
 				45BD79C026A20EEA0007426B /* CardModelType.swift */,
 				45BD79BC26A20EEA0007426B /* CardsModelType.swift */,
 				45BD79A526A20EEA0007426B /* ContentAccordionModelType.swift */,
+				45AEEB9D273AE84D00EF88BC /* ContentAnimationModelType.swift */,
 				45BD79B926A20EEA0007426B /* ContentButtonModelType.swift */,
 				450D4BF126B469F400D81552 /* ContentFallbackModelType.swift */,
 				45BD79A826A20EEA0007426B /* ContentFormModelType.swift */,
@@ -6231,6 +6257,7 @@
 				455582E8269F2C1000C3FF14 /* TrainingPageViewModelType.swift in Sources */,
 				4559D67C270B5600006C015C /* LessonFeedbackHelpful.swift in Sources */,
 				455583D7269F2DA500C3FF14 /* MobileContentTabsView.swift in Sources */,
+				45AEEBA0273AE8D200EF88BC /* MultiplatformContentAnimation.swift in Sources */,
 				455583CC269F2DA500C3FF14 /* MobileContentPagePositionsType.swift in Sources */,
 				45AD1F6D25938A9800A096A0 /* LanguageSettingsService.swift in Sources */,
 				45DC914D26A6112A006BDBD0 /* MobileContentStyles.swift in Sources */,
@@ -6408,6 +6435,7 @@
 				45BD7A5126A21FDA0007426B /* ContentButtonNode.swift in Sources */,
 				456E504325D0CEEE0075FF6A /* URL+DeepLinkHost.swift in Sources */,
 				45AD1FFA25938A9800A096A0 /* DetermineIfNewUserType.swift in Sources */,
+				45AEEB98273AE71E00EF88BC /* MobileContentAnimationView.swift in Sources */,
 				4555833F269F2C7B00C3FF14 /* ToolPageModalViewModel.swift in Sources */,
 				45AD20BC25938F1A00A096A0 /* SignalValue.swift in Sources */,
 				45AD20E32593915300A096A0 /* GlobalActivityAnalytics.swift in Sources */,
@@ -6640,6 +6668,7 @@
 				45B6482A25E593110098BAF1 /* (null) in Sources */,
 				45C93AD6261D310900592FFF /* ArticleManifestXmlParser.swift in Sources */,
 				45AD1ABA25938A4E00A096A0 /* ToolsMenuViewModel.swift in Sources */,
+				45AEEBA4273AEDF800EF88BC /* AnimatedResource.swift in Sources */,
 				45AD214C2593A4B700A096A0 /* ShareToolView.swift in Sources */,
 				45BD79C826A20EEA0007426B /* ContentAccordionModelType.swift in Sources */,
 				45AD1F7D25938A9800A096A0 /* ResourcesCleanUpError.swift in Sources */,
@@ -6830,6 +6859,7 @@
 				45BD79C126A20EEA0007426B /* PageModelType.swift in Sources */,
 				D19D00E725AF4B97007C535B /* AppsFlyerType.swift in Sources */,
 				45AD1B0B25938A4E00A096A0 /* ArticleWebViewModelType.swift in Sources */,
+				45AEEB9C273AE75600EF88BC /* MobileContentAnimationViewModelType.swift in Sources */,
 				453F0B5726EA27A500436EE4 /* ContentMultiSelectModelType.swift in Sources */,
 				455583C7269F2DA500C3FF14 /* MobileContentSectionViewModel.swift in Sources */,
 				4555840C269F2DA500C3FF14 /* MobileContentErrorViewModel.swift in Sources */,
@@ -6846,6 +6876,7 @@
 				45BD79D226A20EEA0007426B /* ContentTextModelType.swift in Sources */,
 				4555833A269F2C7B00C3FF14 /* ToolPageHeroView.swift in Sources */,
 				455583F8269F2DA500C3FF14 /* MobileContentLinkViewModel.swift in Sources */,
+				45AEEB9A273AE74700EF88BC /* MobileContentAnimationViewModel.swift in Sources */,
 				45AD223D2593C90000A096A0 /* FirebaseCrashlyticsService.swift in Sources */,
 				45AD1BAC25938A4F00A096A0 /* AppFlow.swift in Sources */,
 				45BEC53726A604E4005D8CA1 /* MobileContentBackgroundImageAlignment.swift in Sources */,
@@ -6870,6 +6901,7 @@
 				45AD21362593A47800A096A0 /* ShareToolMenuViewModel.swift in Sources */,
 				45AD1FDB25938A9800A096A0 /* WebArchiveQueue.swift in Sources */,
 				45C93AEB261D310900592FFF /* ArticleJcrContent.swift in Sources */,
+				45AEEB9E273AE84D00EF88BC /* ContentAnimationModelType.swift in Sources */,
 				45BEC53A26A604E4005D8CA1 /* MobileContentRestrictToType.swift in Sources */,
 				D1C8FEB92714E7010071BD07 /* TutorialCellViewModelType.swift in Sources */,
 				453C385726CD730C0093F3B5 /* TipModelType.swift in Sources */,

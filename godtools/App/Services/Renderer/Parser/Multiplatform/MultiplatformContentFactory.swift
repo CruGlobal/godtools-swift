@@ -16,9 +16,6 @@ class MultiplatformContentFactory {
     }
     
     static func getRenderableModel(content: Content) -> MobileContentRenderableModel? {
-              
-        // TODO: Need to add the following:
-        //    Animation
         
         let renderableModel: MobileContentRenderableModel?
         
@@ -57,6 +54,9 @@ class MultiplatformContentFactory {
         }
         else if let spacer = content as? Spacer {
             renderableModel = MultiplatformContentSpacer(spacer: spacer)
+        }
+        else if let animation = content as? Animation {
+            renderableModel = MultiplatformContentAnimation(animation: animation)
         }
         else if let video = content as? Video {
             renderableModel = MultiplatformContentVideo(video: video)

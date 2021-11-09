@@ -12,12 +12,17 @@ import Lottie
 class AnimatedView: UIView {
     
     private var animationView: AnimationView?
+        
+    override init(frame: CGRect) {
+        
+        super.init(frame: frame)
+    }
     
-    required init(frame: CGRect, animationName: String) {
+    required init(frame: CGRect, resource: AnimatedResource, shouldAutoPlay: Bool, shouldLoop: Bool) {
                 
         super.init(frame: frame)
         
-        setAnimation(animationName: animationName)
+        setAnimation(resource: resource, shouldAutoPlay: shouldAutoPlay, shouldLoop: shouldLoop)
     }
     
     required init?(coder: NSCoder) {
@@ -25,7 +30,7 @@ class AnimatedView: UIView {
         super.init(coder: coder)
     }
     
-    func setAnimation(animationName: String) {
+    func setAnimation(resource: AnimatedResource, shouldAutoPlay: Bool, shouldLoop: Bool) {
         
         if let currentAnimationView = self.animationView {
             
@@ -38,12 +43,29 @@ class AnimatedView: UIView {
         }
         
         let newAnimationView = AnimationView()
+        let loopMode: LottieLoopMode = shouldLoop ? .loop : .playOnce
         
-        newAnimationView.animation = Animation.named(animationName)
-        newAnimationView.loopMode = .loop
+        let animationResource: Animation?
+        
+        switch resource {
+        case .filepathJsonFile(let filepath):
+            animationResource = Animation.filepath(filepath, animationCache: nil)
+        case .mainBundleJsonFile(let filename):
+            animationResource = Animation.named(filename)
+        }
+                        
+        newAnimationView.animation = animationResource
+        newAnimationView.loopMode = loopMode
+        
         addSubview(newAnimationView)
         newAnimationView.constrainEdgesToSuperview()
-        newAnimationView.play()
+        
+        if shouldAutoPlay {
+            newAnimationView.play()
+        }
+        else {
+            newAnimationView.stop()
+        }
         
         self.animationView = newAnimationView
     }
