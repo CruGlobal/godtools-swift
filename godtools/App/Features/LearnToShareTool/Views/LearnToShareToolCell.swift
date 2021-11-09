@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Lottie
 
 class LearnToShareToolCell: UICollectionViewCell {
     
@@ -17,7 +16,7 @@ class LearnToShareToolCell: UICollectionViewCell {
     private var viewModel: LearnToShareToolCellViewModelType?
     
     @IBOutlet weak private var featuredImageView: UIImageView!
-    @IBOutlet weak private var animationView: AnimationView!
+    @IBOutlet weak private var animatedView: AnimatedView!
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var messageTextView: UITextView!
     
@@ -25,36 +24,31 @@ class LearnToShareToolCell: UICollectionViewCell {
         super.prepareForReuse()
         
         viewModel = nil
+        featuredImageView.isHidden = true
         featuredImageView.image = nil
-        animationView.stop()
-        animationView.animation = nil
+        animatedView.isHidden = true
+        animatedView.stop()
+        animatedView.destroyAnimation()
     }
     
     func configure(viewModel: LearnToShareToolCellViewModelType) {
         
         self.viewModel = viewModel
-                
-        if let imageName = viewModel.imageName {
-            featuredImageView.image = UIImage(named: imageName)
+               
+        switch viewModel.assetContent {
+            
+        case .animation(let animatedViewModel):
+            animatedView.configure(viewModel: animatedViewModel)
+            animatedView.isHidden = false
+        
+        case .image(let image):
+            featuredImageView.image = image
             featuredImageView.isHidden = false
+            
+        case .none:
+            break
         }
-        else {
-            featuredImageView.image = nil
-            featuredImageView.isHidden = true
-        }
-        
-        if let animationName = viewModel.animationName, !animationName.isEmpty {
-            let animation = Animation.named(animationName)
-            animationView.animation = animation
-            animationView.loopMode = .loop
-            animationView.play()
-            animationView.isHidden = false
-        }
-        else {
-            animationView.stop()
-            animationView.isHidden = true
-        }
-        
+                
         titleLabel.text = viewModel.title
         titleLabel.setLineSpacing(lineSpacing: 1)
         titleLabel.textAlignment = .center

@@ -33,19 +33,15 @@ class AnimatedView: UIView {
         super.init(coder: coder)
     }
     
+    deinit {
+        destroyAnimation()
+    }
+    
     func configure(viewModel: AnimatedViewModelType) {
         
         self.viewModel = viewModel
         
-        if let currentAnimationView = self.animationView {
-            
-            currentAnimationView.stop()
-            currentAnimationView.removeFromSuperview()
-            animationView = nil
-            
-            let viewConstraints: [NSLayoutConstraint] = constraints
-            removeConstraints(viewConstraints)
-        }
+        destroyAnimation()
         
         let newAnimationView = AnimationView()
         let loopMode: LottieLoopMode = viewModel.loop ? .loop : .playOnce
@@ -64,5 +60,28 @@ class AnimatedView: UIView {
         }
         
         self.animationView = newAnimationView
+    }
+    
+    func destroyAnimation() {
+        
+        guard let currentAnimationView = self.animationView else {
+            return
+        }
+        
+        currentAnimationView.stop()
+        currentAnimationView.animation = nil
+        currentAnimationView.removeFromSuperview()
+        animationView = nil
+        
+        let viewConstraints: [NSLayoutConstraint] = constraints
+        removeConstraints(viewConstraints)
+    }
+    
+    func play() {
+        animationView?.play()
+    }
+    
+    func stop() {
+        animationView?.stop()
     }
 }
