@@ -19,8 +19,8 @@ class MultiplatformContentAnimation: ContentAnimationModelType {
     }
     
     var resource: String? {
-        let resource: String? = animation.resource?.name
-        return resource
+        let resourceName: String? = animation.resource?.name
+        return resourceName
     }
     
     var autoPlay: Bool {
