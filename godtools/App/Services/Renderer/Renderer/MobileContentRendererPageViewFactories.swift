@@ -12,7 +12,7 @@ class MobileContentRendererPageViewFactories {
     
     let factories: [MobileContentPageViewFactoryType]
     
-    required init(type: MobileContentRendererPageViewFactoriesType, flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, trainingTipsEnabled: Bool, deepLinkingService: DeepLinkingServiceType) {
+    required init(type: MobileContentRendererPageViewFactoriesType, flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, trainingTipsEnabled: Bool, deepLinkingService: DeepLinkingServiceType, animationCache: AnimationCache) {
         
         var pageViewFactories: [MobileContentPageViewFactoryType] = Array()
         
@@ -107,7 +107,8 @@ class MobileContentRendererPageViewFactories {
         let mobileContentPageViewFactory = MobileContentPageViewFactory(
             flowDelegate: flowDelegate,
             mobileContentAnalytics: mobileContentAnalytics,
-            fontService: fontService
+            fontService: fontService,
+            animationCache: animationCache
         )
         
         pageViewFactories.append(mobileContentPageViewFactory)

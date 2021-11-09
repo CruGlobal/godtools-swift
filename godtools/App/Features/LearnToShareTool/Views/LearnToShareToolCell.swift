@@ -27,7 +27,6 @@ class LearnToShareToolCell: UICollectionViewCell {
         featuredImageView.isHidden = true
         featuredImageView.image = nil
         animatedView.isHidden = true
-        animatedView.stop()
         animatedView.destroyAnimation()
     }
     

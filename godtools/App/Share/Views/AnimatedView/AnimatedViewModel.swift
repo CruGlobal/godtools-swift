@@ -15,13 +15,13 @@ class AnimatedViewModel: AnimatedViewModelType {
     let autoPlay: Bool
     let loop: Bool
     
-    required init(animationDataResource: AnimatedResource, autoPlay: Bool, loop: Bool) {
+    required init(animationDataResource: AnimatedResource, animationCache: AnimationCacheProvider?, autoPlay: Bool, loop: Bool) {
         
         switch animationDataResource {
         case .filepathJsonFile(let filepath):
-            animationData = Animation.filepath(filepath, animationCache: nil)
+            animationData = Animation.filepath(filepath, animationCache: animationCache)
         case .mainBundleJsonFile(let filename):
-            animationData = Animation.named(filename)
+            animationData = Animation.named(filename, bundle: Bundle.main, subdirectory: nil, animationCache: animationCache)
         }
         
         self.autoPlay = autoPlay

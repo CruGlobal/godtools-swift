@@ -10,6 +10,7 @@ import Foundation
 
 class TutorialPagerViewModel: TutorialPagerViewModelType {
     
+    private let animationCache: AnimationCache
     private let analyticsContainer: AnalyticsContainer
     private let tutorialPagerAnalyticsModel: TutorialPagerAnalytics
     
@@ -23,9 +24,10 @@ class TutorialPagerViewModel: TutorialPagerViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, analyticsContainer: AnalyticsContainer,  tutorialItems: [TutorialItemType], tutorialPagerAnalyticsModel: TutorialPagerAnalytics, skipButtonTitle: String) {
+    required init(flowDelegate: FlowDelegate, animationCache: AnimationCache, analyticsContainer: AnalyticsContainer,  tutorialItems: [TutorialItemType], tutorialPagerAnalyticsModel: TutorialPagerAnalytics, skipButtonTitle: String) {
         
         self.flowDelegate = flowDelegate
+        self.animationCache = animationCache
         self.analyticsContainer = analyticsContainer
         self.tutorialPagerAnalyticsModel = tutorialPagerAnalyticsModel
         
@@ -52,7 +54,13 @@ class TutorialPagerViewModel: TutorialPagerViewModelType {
     
     func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType {
         
-        return TutorialCellViewModel(item: tutorialItems[index], customViewBuilder: customViewBuilder, analyticsContainer: analyticsContainer, analyticsScreenName: tutorialPagerAnalyticsModel.analyticsScreenName(page: index))
+        return TutorialCellViewModel(
+            item: tutorialItems[index],
+            customViewBuilder: customViewBuilder,
+            animationCache: animationCache,
+            analyticsContainer: analyticsContainer,
+            analyticsScreenName: tutorialPagerAnalyticsModel.analyticsScreenName(page: index)
+        )
     }
     
     func skipTapped() {

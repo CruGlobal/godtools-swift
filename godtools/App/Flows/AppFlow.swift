@@ -164,6 +164,9 @@ class AppFlow: NSObject, Flow {
         
         case .appLaunchedFromTerminatedState:
            
+            navigate(step: .showOnboardingTutorial(animated: false))
+            return
+            
             if let deepLink = appLaunchedFromDeepLink {
                 
                 appLaunchedFromDeepLink = nil

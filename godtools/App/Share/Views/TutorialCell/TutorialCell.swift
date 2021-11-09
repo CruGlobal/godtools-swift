@@ -8,7 +8,6 @@
 
 import UIKit
 import youtube_ios_player_helper
-import Lottie
 
 class TutorialCell: UICollectionViewCell {
     
@@ -27,7 +26,7 @@ class TutorialCell: UICollectionViewCell {
     @IBOutlet weak private var youTubeVideoPlayer: YTPlayerView!
     @IBOutlet weak private var youTubeVideoPlayerLoadingView: UIView!
     @IBOutlet weak private var youTubeVideoPlayerActivityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak private var animationView: AnimationView!
+    @IBOutlet weak private var animatedView: AnimatedView!
     
     @IBOutlet weak private var messageLabelTop: NSLayoutConstraint!
     @IBOutlet weak private var dynamicMediaHeight: NSLayoutConstraint!
@@ -36,7 +35,7 @@ class TutorialCell: UICollectionViewCell {
         
         super.awakeFromNib()
         
-        initialTopSpaceForMessageLabel = messageLabelTop.constant
+        setupLayout()
     }
     
     override func prepareForReuse() {
@@ -45,15 +44,7 @@ class TutorialCell: UICollectionViewCell {
         
         titleLabel.text = nil
         setMessageLabelHidden(hidden: false)
-        mainImageView?.removeFromSuperview()
-        mainImage = nil
-        mainImageView = nil
-        stopVideo()
-        youTubeVideoPlayerLoadingView.alpha = 1
-        animationView.stop()
-        animationView.animation = nil
-        customView?.removeFromSuperview()
-        customView = nil
+        resetAssetContent()
         viewModel = nil
     }
     
@@ -66,12 +57,11 @@ class TutorialCell: UICollectionViewCell {
         recalculateDynamicMediaHeight()
     }
     
-    var youtubePlayerParameters: [String : Any]? {
-        let playsInFullScreen = 0
+    private func setupLayout() {
         
-        return [
-            "playsinline": playsInFullScreen
-        ]
+        initialTopSpaceForMessageLabel = messageLabelTop.constant
+        
+        resetAssetContent()
     }
     
     func configure(viewModel: TutorialCellViewModelType) {
@@ -86,57 +76,66 @@ class TutorialCell: UICollectionViewCell {
         messageLabel.setLineSpacing(lineSpacing: 2)
         setMessageLabelHidden(hidden: viewModel.message.isEmpty)
         
-        // mainImage
-        if let mainImageName = viewModel.mainImageName, !mainImageName.isEmpty, let mainImage = UIImage(named: mainImageName) {
-            self.mainImage = mainImage
-            renderMainImage(mainImage: mainImage, mainImageView: nil)
-        }
-        else {
-            mainImageView?.removeFromSuperview()
-            mainImageView = nil
-            mainImage = nil
-        }
-        
-        // youTubeVideo
-        let hidesYouTubeVideoPlayer: Bool
-        if let youTubVideoId = viewModel.youTubeVideoId, !youTubVideoId.isEmpty {
-            hidesYouTubeVideoPlayer = false
-            youTubeVideoPlayerActivityIndicator.startAnimating()
-            youTubeVideoPlayer.delegate = self
-            youTubeVideoPlayer.load(withVideoId: youTubVideoId, playerVars: youtubePlayerParameters)
-        }
-        else {
-            hidesYouTubeVideoPlayer = true
-            youTubeVideoPlayer.stopVideo()
-            youTubeVideoPlayer.delegate = nil
-            youTubeVideoPlayerActivityIndicator.stopAnimating()
-        }
-
-        youTubeVideoPlayer.isHidden = hidesYouTubeVideoPlayer
-        youTubeVideoPlayerLoadingView.isHidden = hidesYouTubeVideoPlayer
-        
-        // animation
-        if let animationName = viewModel.animationName, !animationName.isEmpty {
-            let animation = Animation.named(animationName)
-            animationView.animation = animation
-            animationView.loopMode = .loop
-            animationView.play()
-            animationView.isHidden = false
-        }
-        else {
-            animationView.stop()
-            animationView.isHidden = true
-        }
-        
-        // customView
-        if let customView = viewModel.customView {
+        switch viewModel.assetContent {
+            
+        case .animation(let animatedViewModel):
+            
+            animatedView.configure(viewModel: animatedViewModel)
+            animatedView.isHidden = false
+            
+        case .customView(let customView):
+            
             self.customView = customView
             dynamicMediaView.addSubview(customView)
+        
+        case .image(let image):
+            
+            self.mainImage = image
+            renderMainImage(mainImage: image, mainImageView: nil)
+            
+        case .video(let youTubeVideoId, let youTubeVideoParameters):
+            
+            youTubeVideoPlayerActivityIndicator.startAnimating()
+            youTubeVideoPlayer.delegate = self
+            youTubeVideoPlayer.load(withVideoId: youTubeVideoId, playerVars: youTubeVideoParameters)
+            youTubeVideoPlayer.isHidden = false
+            youTubeVideoPlayerLoadingView.isHidden = false
+            
+        case .none:
+            break
         }
-        else {
-            customView?.removeFromSuperview()
-            self.customView = nil
-        }
+    }
+    
+    private func resetAssetContent() {
+        resetMainImage()
+        resetAnimation()
+        resetVideo()
+        resetCustomView()
+    }
+    
+    private func resetMainImage() {
+        mainImageView?.removeFromSuperview()
+        mainImage = nil
+        mainImageView = nil
+    }
+    
+    private func resetAnimation() {
+        animatedView.destroyAnimation()
+        animatedView.isHidden = true
+    }
+    
+    private func resetVideo() {
+        youTubeVideoPlayer.stopVideo()
+        youTubeVideoPlayer.isHidden = true
+        youTubeVideoPlayer.delegate = nil
+        youTubeVideoPlayerLoadingView.isHidden = true
+        youTubeVideoPlayerActivityIndicator.stopAnimating()
+        youTubeVideoPlayerLoadingView.alpha = 1
+    }
+    
+    private func resetCustomView() {
+        customView?.removeFromSuperview()
+        customView = nil
     }
     
     private func setMessageLabelHidden(hidden: Bool) {
@@ -244,7 +243,10 @@ class TutorialCell: UICollectionViewCell {
     }
     
     private func recueVideo() {
-        guard let youtubeVideoId = viewModel?.youTubeVideoId else { return }
+        
+        guard let youtubeVideoId = viewModel?.getYouTubeVideoId() else {
+            return
+        }
         
         youTubeVideoPlayer.cueVideo(byId: youtubeVideoId, startSeconds: 0.0)
     }

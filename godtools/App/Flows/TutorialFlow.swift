@@ -41,7 +41,8 @@ class TutorialFlow: Flow {
             localizationServices: appDiContainer.localizationServices,
             analytics: appDiContainer.analytics,
             tutorialItemsProvider: appDiContainer.tutorialItemsProvider,
-            deviceLanguage: appDiContainer.deviceLanguage
+            deviceLanguage: appDiContainer.deviceLanguage,
+            animationCache: appDiContainer.getAnimationCache()
         )
         let view = TutorialView(viewModel: viewModel)
         

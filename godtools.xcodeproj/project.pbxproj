@@ -249,6 +249,8 @@
 		4559D67A270B55F8006C015C /* LessonFeedbackAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4559D679270B55F8006C015C /* LessonFeedbackAnalytics.swift */; };
 		4559D67C270B5600006C015C /* LessonFeedbackHelpful.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4559D67B270B5600006C015C /* LessonFeedbackHelpful.swift */; };
 		455B2B2D273B1C0400BA67DF /* LearnToShareToolAssetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455B2B2C273B1C0400BA67DF /* LearnToShareToolAssetContent.swift */; };
+		455B2B31273B1F0600BA67DF /* TutorialAssetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455B2B30273B1F0600BA67DF /* TutorialAssetContent.swift */; };
+		455B2B3A273B36BE00BA67DF /* AnimationCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455B2B39273B36BE00BA67DF /* AnimationCache.swift */; };
 		455E798E26A6203F00972EC0 /* MultiplatformManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455E798C26A6203F00972EC0 /* MultiplatformManifest.swift */; };
 		455E798F26A6203F00972EC0 /* MultiplatformManifestAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455E798D26A6203F00972EC0 /* MultiplatformManifestAttributes.swift */; };
 		455E799526A6204A00972EC0 /* MobileContentMultiplatformParserFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455E799126A6204A00972EC0 /* MobileContentMultiplatformParserFactory.swift */; };
@@ -1334,6 +1336,8 @@
 		4559D679270B55F8006C015C /* LessonFeedbackAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LessonFeedbackAnalytics.swift; sourceTree = "<group>"; };
 		4559D67B270B5600006C015C /* LessonFeedbackHelpful.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonFeedbackHelpful.swift; sourceTree = "<group>"; };
 		455B2B2C273B1C0400BA67DF /* LearnToShareToolAssetContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnToShareToolAssetContent.swift; sourceTree = "<group>"; };
+		455B2B30273B1F0600BA67DF /* TutorialAssetContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialAssetContent.swift; sourceTree = "<group>"; };
+		455B2B39273B36BE00BA67DF /* AnimationCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationCache.swift; sourceTree = "<group>"; };
 		455E798C26A6203F00972EC0 /* MultiplatformManifest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiplatformManifest.swift; sourceTree = "<group>"; };
 		455E798D26A6203F00972EC0 /* MultiplatformManifestAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiplatformManifestAttributes.swift; sourceTree = "<group>"; };
 		455E799126A6204A00972EC0 /* MobileContentMultiplatformParserFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentMultiplatformParserFactory.swift; sourceTree = "<group>"; };
@@ -3114,6 +3118,14 @@
 			path = LessonFeedback;
 			sourceTree = "<group>";
 		};
+		455B2B38273B36BE00BA67DF /* AnimationCache */ = {
+			isa = PBXGroup;
+			children = (
+				455B2B39273B36BE00BA67DF /* AnimationCache.swift */,
+			);
+			path = AnimationCache;
+			sourceTree = "<group>";
+		};
 		455E798B26A6203F00972EC0 /* Multiplatform */ = {
 			isa = PBXGroup;
 			children = (
@@ -4115,6 +4127,7 @@
 			isa = PBXGroup;
 			children = (
 				45AD203525938AC200A096A0 /* Analytics */,
+				455B2B38273B36BE00BA67DF /* AnimationCache */,
 				45AD20A125938CF100A096A0 /* AppConfig */,
 				D19D00E525AF4B79007C535B /* AppsFlyer */,
 				45AD1E2A25938A9700A096A0 /* Articles */,
@@ -5626,6 +5639,7 @@
 		D1C8FEBA2714E8B90071BD07 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				455B2B30273B1F0600BA67DF /* TutorialAssetContent.swift */,
 				45AD175425938A4D00A096A0 /* TutorialItemType.swift */,
 			);
 			path = Models;
@@ -6555,6 +6569,7 @@
 				45AD1B6425938A4F00A096A0 /* GlobalActivityHeaderViewModel.swift in Sources */,
 				45CBA01B261FB0EA0036BEB3 /* LessonViewModelType.swift in Sources */,
 				455E799626A6204A00972EC0 /* MultiplatformTractPage.swift in Sources */,
+				455B2B31273B1F0600BA67DF /* TutorialAssetContent.swift in Sources */,
 				45AD1AF325938A4E00A096A0 /* ShareAStoryWithUsWebContent.swift in Sources */,
 				45AD200925938A9800A096A0 /* TranslationDownloader.swift in Sources */,
 				458AA38425D4252000E71B32 /* LocalizationBundle.swift in Sources */,
@@ -6600,6 +6615,7 @@
 				45AD202725938A9800A096A0 /* LocaleLocalizationBundle.swift in Sources */,
 				453F0B6226EA369000436EE4 /* MobileContentMultiSelectOptionViewModel.swift in Sources */,
 				45558335269F2C7B00C3FF14 /* ToolPageCallToActionViewModelType.swift in Sources */,
+				455B2B3A273B36BE00BA67DF /* AnimationCache.swift in Sources */,
 				45C93B12261D314C00592FFF /* ArticleFlow.swift in Sources */,
 				45BD79CC26A20EEA0007426B /* ContentImageModelType.swift in Sources */,
 				45AD1AC525938A4E00A096A0 /* LoadingToolViewModelType.swift in Sources */,

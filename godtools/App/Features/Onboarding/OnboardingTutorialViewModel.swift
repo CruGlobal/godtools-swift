@@ -14,7 +14,7 @@ class OnboardingTutorialViewModel: TutorialPagerViewModel {
     private let viewBuilder: CustomViewBuilderType
     private let localizationServices: LocalizationServices
         
-    required init(flowDelegate: FlowDelegate, analyticsContainer: AnalyticsContainer, onboardingTutorialItemsRepository: OnboardingTutorialItemsRepositoryType, onboardingTutorialAvailability: OnboardingTutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, customViewBuilder: CustomViewBuilderType, localizationServices: LocalizationServices) {
+    required init(flowDelegate: FlowDelegate, animationCache: AnimationCache, analyticsContainer: AnalyticsContainer, onboardingTutorialItemsRepository: OnboardingTutorialItemsRepositoryType, onboardingTutorialAvailability: OnboardingTutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, customViewBuilder: CustomViewBuilderType, localizationServices: LocalizationServices) {
         
         self.openTutorialCalloutCache = openTutorialCalloutCache
         self.viewBuilder = customViewBuilder
@@ -22,13 +22,13 @@ class OnboardingTutorialViewModel: TutorialPagerViewModel {
         
         let tutorialPagerAnalyticsModel = TutorialPagerAnalytics(screenName: "onboarding", siteSection: "onboarding", siteSubsection: "", continueButtonTappedActionName: "On-Boarding Start", continueButtonTappedData: ["cru.onboarding_start": 1], screenTrackIndexOffset: 2)
         
-        super.init(flowDelegate: flowDelegate, analyticsContainer: analyticsContainer,  tutorialItems: onboardingTutorialItemsRepository.tutorialItems, tutorialPagerAnalyticsModel: tutorialPagerAnalyticsModel, skipButtonTitle: localizationServices.stringForMainBundle(key: "navigationBar.navigationItem.skip"))
+        super.init(flowDelegate: flowDelegate, animationCache: animationCache, analyticsContainer: analyticsContainer,  tutorialItems: onboardingTutorialItemsRepository.tutorialItems, tutorialPagerAnalyticsModel: tutorialPagerAnalyticsModel, skipButtonTitle: localizationServices.stringForMainBundle(key: "navigationBar.navigationItem.skip"))
         
         onboardingTutorialAvailability.markOnboardingTutorialViewed()
     }
     
-    required init(flowDelegate: FlowDelegate, analyticsContainer: AnalyticsContainer, tutorialItems: [TutorialItemType], tutorialPagerAnalyticsModel: TutorialPagerAnalytics, skipButtonTitle: String) {
-        fatalError("init(analyticsContainer:localizationServices:tutorialItems:) has not been implemented")
+    required init(flowDelegate: FlowDelegate, animationCache: AnimationCache, analyticsContainer: AnalyticsContainer, tutorialItems: [TutorialItemType], tutorialPagerAnalyticsModel: TutorialPagerAnalytics, skipButtonTitle: String) {
+        fatalError("init(flowDelegate:animationCache:analyticsContainer:tutorialItems:tutorialPagerAnalyticsModel:skipButtonTitle:) has not been implemented")
     }
     
     override var customViewBuilder: CustomViewBuilderType? {

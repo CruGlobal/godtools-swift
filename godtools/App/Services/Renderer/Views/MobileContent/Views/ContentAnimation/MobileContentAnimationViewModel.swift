@@ -16,7 +16,7 @@ class MobileContentAnimationViewModel: MobileContentAnimationViewModelType {
     
     let animatedViewModel: AnimatedViewModelType
     
-    required init(animationModel: ContentAnimationModelType, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) {
+    required init(animationModel: ContentAnimationModelType, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?, animationCache: AnimationCache) {
         
         self.animationModel = animationModel
         self.rendererPageModel = rendererPageModel
@@ -24,6 +24,7 @@ class MobileContentAnimationViewModel: MobileContentAnimationViewModelType {
         
         self.animatedViewModel = AnimatedViewModel(
             animationDataResource: .filepathJsonFile(filepath: animationModel.resource ?? ""),
+            animationCache: animationCache,
             autoPlay: animationModel.autoPlay,
             loop: animationModel.loop
         )

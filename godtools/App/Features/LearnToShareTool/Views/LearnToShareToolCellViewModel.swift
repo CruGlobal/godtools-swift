@@ -14,7 +14,7 @@ class LearnToShareToolCellViewModel: LearnToShareToolCellViewModelType {
     let title: String
     let message: String
     
-    required init(learnToShareToolItem: LearnToShareToolItem) {
+    required init(learnToShareToolItem: LearnToShareToolItem, animationCache: AnimationCache) {
         
         title = learnToShareToolItem.title
         message = learnToShareToolItem.message
@@ -23,6 +23,7 @@ class LearnToShareToolCellViewModel: LearnToShareToolCellViewModelType {
             
             let animatedViewModel: AnimatedViewModel = AnimatedViewModel(
                 animationDataResource: .mainBundleJsonFile(filename: animationName),
+                animationCache: animationCache,
                 autoPlay: true,
                 loop: true
             )

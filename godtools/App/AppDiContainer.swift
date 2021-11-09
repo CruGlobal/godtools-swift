@@ -215,6 +215,10 @@ class AppDiContainer {
         )
     }
     
+    func getAnimationCache() -> AnimationCache {
+        return AnimationCache()
+    }
+    
     func getArticleAemRepository() -> ArticleAemRepository {
         return ArticleAemRepository(
             downloader: ArticleAemDownloader(sharedSession: sharedIgnoringCacheSession),

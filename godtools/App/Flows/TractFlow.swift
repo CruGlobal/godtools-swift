@@ -33,7 +33,8 @@ class TractFlow: Flow {
             flowDelegate: self,
             appDiContainer: appDiContainer,
             trainingTipsEnabled: trainingTipsEnabled,
-            deepLinkingService: deepLinkingService
+            deepLinkingService: deepLinkingService,
+            animationCache: appDiContainer.getAnimationCache()
         )
           
         let primaryRenderer = MobileContentMultiplatformRenderer(
@@ -204,7 +205,8 @@ class TractFlow: Flow {
             flowDelegate: self,
             appDiContainer: appDiContainer,
             trainingTipsEnabled: false,
-            deepLinkingService: deepLinkingService
+            deepLinkingService: deepLinkingService,
+            animationCache: appDiContainer.getAnimationCache()
         )
         
         let renderer = MobileContentMultiplatformRenderer(
