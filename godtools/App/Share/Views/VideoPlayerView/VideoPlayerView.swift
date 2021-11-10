@@ -17,6 +17,8 @@ class VideoPlayerView: UIViewController {
     
     private let viewModel: VideoPlayerViewModelType
     
+    private var closeButton: UIBarButtonItem?
+    
     required init(viewModel: VideoPlayerViewModelType) {
         
         self.viewModel = viewModel
@@ -43,6 +45,14 @@ class VideoPlayerView: UIViewController {
         super.viewDidLoad()
         
         loadYoutubePlayerVideo(videoId: viewModel.youtubeVideoId)
+        
+        closeButton = addBarButtonItem(
+            to: .left,
+            image: UIImage(named: "nav_item_close"),
+            color: UIColor.white,
+            target: self,
+            action: #selector(handleClose)
+        )
     }
     
     private func loadYoutubePlayerVideo(videoId: String) {
@@ -62,6 +72,10 @@ class VideoPlayerView: UIViewController {
         youTubeVideoPlayer.load(withVideoId: viewModel.youtubeVideoId, playerVars: youtubePlayerParameters)
         youTubeVideoPlayer.isHidden = false
         youTubeVideoPlayerLoadingView.isHidden = false
+    }
+    
+    @objc func handleClose(barButtonItem: UIBarButtonItem) {
+        viewModel.closeButtonTapped()
     }
 }
 

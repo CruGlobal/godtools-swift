@@ -31,7 +31,7 @@ class ModalNavigationController: UINavigationController {
         super.viewDidLoad()
             
         navigationBar.barTintColor = UIColor.white
-        navigationBar.isTranslucent = false
+        navigationBar.isTranslucent = true
         navigationBar.shadowImage = UIImage()
                                 
         setViewControllers([rootView], animated: false)
