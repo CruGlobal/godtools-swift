@@ -11,4 +11,6 @@ import Foundation
 protocol MobileContentAnimationViewModelType {
     
     var animatedViewModel: AnimatedViewModelType { get }
+    
+    func animationTapped()
 }

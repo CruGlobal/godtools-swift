@@ -12,6 +12,7 @@ class MobileContentAnimationView: MobileContentView {
     
     private let viewModel: MobileContentAnimationViewModelType
     private let animatedView: AnimatedView = AnimatedView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+    private let touchAreaButton: UIButton = UIButton(type: .custom)
     
     required init(viewModel: MobileContentAnimationViewModelType) {
         
@@ -21,6 +22,8 @@ class MobileContentAnimationView: MobileContentView {
         
         setupLayout()
         setupBinding()
+        
+        touchAreaButton.addTarget(self, action: #selector(touchAreaTapped), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
@@ -29,13 +32,24 @@ class MobileContentAnimationView: MobileContentView {
     
     private func setupLayout() {
         
+        // animatedView
         addSubview(animatedView)
         animatedView.constrainEdgesToSuperview()
+        
+        // touchAreaButton
+        addSubview(touchAreaButton)
+        touchAreaButton.constrainEdgesToSuperview()
+        touchAreaButton.backgroundColor = .clear
     }
     
     private func setupBinding() {
         
         animatedView.configure(viewModel: viewModel.animatedViewModel)
+    }
+    
+    @objc private func touchAreaTapped() {
+        
+        viewModel.animationTapped()
     }
     
     override var heightConstraintType: MobileContentViewHeightConstraintType {

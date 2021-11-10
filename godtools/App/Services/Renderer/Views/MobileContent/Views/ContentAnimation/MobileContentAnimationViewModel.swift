@@ -40,4 +40,8 @@ class MobileContentAnimationViewModel: MobileContentAnimationViewModelType {
             loop: animationModel.loop
         )
     }
+    
+    func animationTapped() {
+        
+    }
 }

@@ -76,6 +76,10 @@ class AnimatedView: UIView {
         animationView.play()
     }
     
+    func pause() {
+        animationView.pause()
+    }
+    
     func stop() {
         animationView.stop()
     }
