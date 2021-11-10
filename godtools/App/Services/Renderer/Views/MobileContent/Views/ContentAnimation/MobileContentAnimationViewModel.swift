@@ -22,8 +22,19 @@ class MobileContentAnimationViewModel: MobileContentAnimationViewModelType {
         self.rendererPageModel = rendererPageModel
         self.containerModel = containerModel
         
+        let animationFilepath: String
+        
+        let animationfileResult: Result<URL, Error> = rendererPageModel.resourcesCache.getFile(fileName: animationModel.resource ?? "")
+        
+        switch animationfileResult {
+        case .success(let fileUrl):
+            animationFilepath = fileUrl.path
+        case .failure(let error):
+            animationFilepath = ""
+        }
+        
         self.animatedViewModel = AnimatedViewModel(
-            animationDataResource: .filepathJsonFile(filepath: animationModel.resource ?? ""),
+            animationDataResource: .filepathJsonFile(filepath: animationFilepath),
             animationCache: animationCache,
             autoPlay: animationModel.autoPlay,
             loop: animationModel.loop

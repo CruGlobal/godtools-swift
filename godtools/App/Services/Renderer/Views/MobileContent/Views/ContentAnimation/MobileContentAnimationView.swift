@@ -31,8 +31,6 @@ class MobileContentAnimationView: MobileContentView {
         
         addSubview(animatedView)
         animatedView.constrainEdgesToSuperview()
-        
-        drawBorder(color: .red)
     }
     
     private func setupBinding() {
@@ -41,6 +39,6 @@ class MobileContentAnimationView: MobileContentView {
     }
     
     override var heightConstraintType: MobileContentViewHeightConstraintType {
-        return .equalToHeight(height: 220)
+        return .setToAspectRatioOfProvidedSize(size: CGSize(width: 16, height: 9))
     }
 }
