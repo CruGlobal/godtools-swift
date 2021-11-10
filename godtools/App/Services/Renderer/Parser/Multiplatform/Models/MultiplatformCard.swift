@@ -11,11 +11,11 @@ import GodToolsToolParser
 
 class MultiplatformCard: CardModelType {
     
-    private let card: Card
+    private let card: TractPage.Card
     
     let numberOfVisibleCards: Int
     
-    required init(card: Card, numberOfVisibleCards: Int) {
+    required init(card: TractPage.Card, numberOfVisibleCards: Int) {
         
         self.card = card
         self.numberOfVisibleCards = numberOfVisibleCards
