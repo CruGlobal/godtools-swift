@@ -14,11 +14,11 @@ class OnboardingTutorialIntroViewModel: OnboardingTutorialIntroViewModelType {
     
     private let analyticsContainer: AnalyticsContainer
     private let analyticsScreenName: String
+    private let youtubeVideoId: String
     
     let logoImage: UIImage?
     let title: String
     let videoLinkLabel: String
-    let youtubeVideoId: String
     
     required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, analyticsContainer: AnalyticsContainer, analyticsScreenName: String) {
         
