@@ -35,7 +35,7 @@ class OnboardingTutorialIntroView: UIView, NibBased {
         videoButton.addTarget(self, action: #selector(videoLinkTapped(button:)), for: .touchUpInside)
     }
     
-    var youtubePlayerParameters: [String : Any]? {
+    private var youtubePlayerParameters: [String : Any]? {
         
         let playsInFullScreen = 0
         
