@@ -20,7 +20,7 @@ class OnboardingTutorialIntroViewModel: OnboardingTutorialIntroViewModelType {
     let videoLinkLabel: String
     let youtubeVideoId: String
     
-    required init(flowDelegate: FlowDelegate?, localizationServices: LocalizationServices, analyticsContainer: AnalyticsContainer, analyticsScreenName: String) {
+    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, analyticsContainer: AnalyticsContainer, analyticsScreenName: String) {
         
         self.flowDelegate = flowDelegate
         

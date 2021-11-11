@@ -282,7 +282,7 @@ class AppDiContainer {
         )
     }
     
-    func onboardingTutorialCustomViewBuilder(flowDelegate: FlowDelegate?) -> CustomViewBuilderType {
+    func onboardingTutorialCustomViewBuilder(flowDelegate: FlowDelegate) -> CustomViewBuilderType {
         return OnboardingTutorialCustomViewBuilder(flowDelegate: flowDelegate, deviceLanguage: deviceLanguage, localizationServices: localizationServices, analyticsContainer: analytics, analyticsScreenName: "onboarding")
     }
     
