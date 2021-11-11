@@ -17,7 +17,7 @@ class VideoPlayerViewModel: VideoPlayerViewModelType {
     private let closeVideoPlayerFlowStep: FlowStep
     private let videoEndedFlowStep: FlowStep
     
-    required init (flowDelegate: FlowDelegate?, youtubeVideoId: String, closeVideoPlayerFlowStep: FlowStep, videoEndedFlowStep: FlowStep) {
+    required init (flowDelegate: FlowDelegate, youtubeVideoId: String, closeVideoPlayerFlowStep: FlowStep, videoEndedFlowStep: FlowStep) {
         
         self.flowDelegate = flowDelegate
         
