@@ -18,16 +18,25 @@ class OnboardingTutorialIntroView: UIView, NibBased {
     private var viewModel: OnboardingTutorialIntroViewModelType?
     
     required init() {
+        
         super.init(frame: UIScreen.main.bounds)
-        loadNib()
+        initialize()
     }
     
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func initialize() {
+        
         loadNib()
+        
+        videoButton.addTarget(self, action: #selector(videoLinkTapped(button:)), for: .touchUpInside)
     }
     
     var youtubePlayerParameters: [String : Any]? {
+        
         let playsInFullScreen = 0
         
         return ["playsinline": playsInFullScreen]
@@ -38,15 +47,7 @@ class OnboardingTutorialIntroView: UIView, NibBased {
         self.viewModel = viewModel
         
         titleLabel.text = viewModel.title
-
         logoImageView.image = viewModel.logoImage
-                
-        setupBinding()
-    }
-    
-    private func setupBinding() {
-        
-        videoButton.addTarget(self, action: #selector(videoLinkTapped(button:)), for: .touchUpInside)
     }
     
     @objc private func videoLinkTapped (button: UIButton) {
