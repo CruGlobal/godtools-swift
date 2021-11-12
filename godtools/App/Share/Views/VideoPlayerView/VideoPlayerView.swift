@@ -47,7 +47,7 @@ class VideoPlayerView: UIViewController {
         loadYoutubePlayerVideo(videoId: viewModel.youtubeVideoId)
         
         closeButton = addBarButtonItem(
-            to: .left,
+            to: .right,
             image: UIImage(named: "nav_item_close"),
             color: UIColor.white,
             target: self,
