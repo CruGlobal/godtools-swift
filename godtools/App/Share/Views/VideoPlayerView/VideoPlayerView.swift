@@ -65,16 +65,6 @@ class VideoPlayerView: UIViewController {
     
     private func loadYoutubePlayerVideo(videoId: String) {
         
-        if viewModel.youtubeVideoId.isEmpty {
-            youTubeVideoPlayer.stopVideo()
-            youTubeVideoPlayer.delegate = nil
-            youTubeVideoPlayerActivityIndicator.stopAnimating()
-            youTubeVideoPlayer.isHidden = true
-            youTubeVideoPlayerLoadingView.isHidden = true
-            
-            return
-        }
-        
         youTubeVideoPlayer.delegate = self
         youTubeVideoPlayerActivityIndicator.startAnimating()
         youTubeVideoPlayer.load(withVideoId: viewModel.youtubeVideoId, playerVars: youtubePlayerParameters)
