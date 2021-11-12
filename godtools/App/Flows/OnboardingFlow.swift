@@ -43,6 +43,7 @@ class OnboardingFlow: Flow {
         let viewModel = OnboardingTutorialViewModel(
             flowDelegate: self,
             analyticsContainer: appDiContainer.analytics,
+            tutorialVideoAnalytics: appDiContainer.getTutorialVideoAnalytics(),
             onboardingTutorialItemsRepository: onboardingTutorialItemsRepository,
             onboardingTutorialAvailability: appDiContainer.onboardingTutorialAvailability,
             openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache,

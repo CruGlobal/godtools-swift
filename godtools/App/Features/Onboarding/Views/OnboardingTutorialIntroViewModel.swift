@@ -12,7 +12,7 @@ class OnboardingTutorialIntroViewModel: OnboardingTutorialIntroViewModelType {
 
     private weak var flowDelegate: FlowDelegate?
     
-    private let analyticsContainer: AnalyticsContainer
+    private let tutorialVideoAnalytics: TutorialVideoAnalytics
     private let analyticsScreenName: String
     private let youtubeVideoId: String
     
@@ -20,11 +20,11 @@ class OnboardingTutorialIntroViewModel: OnboardingTutorialIntroViewModelType {
     let title: String
     let videoLinkLabel: String
     
-    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, analyticsContainer: AnalyticsContainer, analyticsScreenName: String) {
+    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, tutorialVideoAnalytics: TutorialVideoAnalytics, analyticsScreenName: String) {
         
         self.flowDelegate = flowDelegate
         
-        self.analyticsContainer = analyticsContainer
+        self.tutorialVideoAnalytics = tutorialVideoAnalytics
         self.analyticsScreenName = analyticsScreenName
                 
         logoImage = UIImage(named: "onboarding_welcome_logo")
@@ -37,15 +37,6 @@ class OnboardingTutorialIntroViewModel: OnboardingTutorialIntroViewModelType {
         
         flowDelegate?.navigate(step: .videoButtonTappedFromOnboardingTutorial(youtubeVideoId: youtubeVideoId))
         
-        analyticsContainer.trackActionAnalytics.trackAction(
-            trackAction: TrackActionModel(
-                screenName: analyticsScreenName,
-                actionName: "Tutorial Video",
-                siteSection: "",
-                siteSubSection: "",
-                url: nil,
-                data: ["cru.tutorial_video": 1, "video_id": youtubeVideoId]
-            )
-        )
+        tutorialVideoAnalytics.trackVideoPlayed(videoId: youtubeVideoId, screenName: analyticsScreenName)
     }
 }

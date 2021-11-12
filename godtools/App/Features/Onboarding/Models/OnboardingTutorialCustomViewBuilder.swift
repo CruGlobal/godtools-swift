@@ -15,23 +15,23 @@ class OnboardingTutorialCustomViewBuilder: CustomViewBuilderType {
     
     private let deviceLanguage: DeviceLanguageType
     private let localizationServices: LocalizationServices
-    private let analyticsContainer: AnalyticsContainer
+    private let tutorialVideoAnalytics: TutorialVideoAnalytics
     private let analyticsScreenName: String
     
-    required init(flowDelegate: FlowDelegate, deviceLanguage: DeviceLanguageType, localizationServices: LocalizationServices, analyticsContainer: AnalyticsContainer, analyticsScreenName: String) {
+    required init(flowDelegate: FlowDelegate, deviceLanguage: DeviceLanguageType, localizationServices: LocalizationServices, tutorialVideoAnalytics: TutorialVideoAnalytics, analyticsScreenName: String) {
         
         self.flowDelegate = flowDelegate
 
         self.deviceLanguage = deviceLanguage
         self.localizationServices = localizationServices
-        self.analyticsContainer = analyticsContainer
+        self.tutorialVideoAnalytics = tutorialVideoAnalytics
         self.analyticsScreenName = analyticsScreenName
     }
 
     func buildCustomView(customViewId: String) -> UIView? {
 
         if let onboardingFlowDelegate = flowDelegate, customViewId == "onboarding-0" {
-            let viewModel = OnboardingTutorialIntroViewModel(flowDelegate: onboardingFlowDelegate, localizationServices: localizationServices, analyticsContainer: analyticsContainer, analyticsScreenName: analyticsScreenName)
+            let viewModel = OnboardingTutorialIntroViewModel(flowDelegate: onboardingFlowDelegate, localizationServices: localizationServices, tutorialVideoAnalytics: tutorialVideoAnalytics, analyticsScreenName: analyticsScreenName)
 
             let view = OnboardingTutorialIntroView()
 

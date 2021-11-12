@@ -1039,6 +1039,7 @@
 		D1C8FEB92714E7010071BD07 /* TutorialCellViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C8FEB82714E7000071BD07 /* TutorialCellViewModelType.swift */; };
 		D1C8FEBD2714E9650071BD07 /* OnboardingTutorialItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C8FEBC2714E9650071BD07 /* OnboardingTutorialItem.swift */; };
 		D1C8FEBF2714EB8D0071BD07 /* TutorialItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C8FEBE2714EB8D0071BD07 /* TutorialItem.swift */; };
+		D1CE0959273EACCC00C8832C /* TutorialVideoAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CE0958273EACCC00C8832C /* TutorialVideoAnalytics.swift */; };
 		D1D569122704A92B00BBE2A6 /* TutorialPagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D569112704A92B00BBE2A6 /* TutorialPagerView.swift */; };
 		D1D56916270502B200BBE2A6 /* TutorialPagerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1D56915270502B200BBE2A6 /* TutorialPagerView.xib */; };
 		D1D56918270632B200BBE2A6 /* OnboardingTutorialCustomViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D56917270632B200BBE2A6 /* OnboardingTutorialCustomViewBuilder.swift */; };
@@ -2152,6 +2153,7 @@
 		D1C8FEB82714E7000071BD07 /* TutorialCellViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialCellViewModelType.swift; sourceTree = "<group>"; };
 		D1C8FEBC2714E9650071BD07 /* OnboardingTutorialItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialItem.swift; sourceTree = "<group>"; };
 		D1C8FEBE2714EB8D0071BD07 /* TutorialItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialItem.swift; sourceTree = "<group>"; };
+		D1CE0958273EACCC00C8832C /* TutorialVideoAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialVideoAnalytics.swift; sourceTree = "<group>"; };
 		D1D569112704A92B00BBE2A6 /* TutorialPagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPagerView.swift; sourceTree = "<group>"; };
 		D1D56915270502B200BBE2A6 /* TutorialPagerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TutorialPagerView.xib; sourceTree = "<group>"; };
 		D1D56917270632B200BBE2A6 /* OnboardingTutorialCustomViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialCustomViewBuilder.swift; sourceTree = "<group>"; };
@@ -4773,6 +4775,7 @@
 		45AD203825938AC300A096A0 /* AnalyticsTracking */ = {
 			isa = PBXGroup;
 			children = (
+				D1CE0957273EAC0D00C8832C /* TutorialVideoAnalytics */,
 				4559D678270B55F8006C015C /* LessonFeedback */,
 				D1DD79FB26690C5F000F1351 /* Models */,
 				45AD203A25938AC300A096A0 /* ExitLinkAnalytics.swift */,
@@ -5639,6 +5642,14 @@
 				45AD186725938A4E00A096A0 /* OnboardingTutorialViewedUserDefaultsCache.swift */,
 			);
 			path = Viewed;
+			sourceTree = "<group>";
+		};
+		D1CE0957273EAC0D00C8832C /* TutorialVideoAnalytics */ = {
+			isa = PBXGroup;
+			children = (
+				D1CE0958273EACCC00C8832C /* TutorialVideoAnalytics.swift */,
+			);
+			path = TutorialVideoAnalytics;
 			sourceTree = "<group>";
 		};
 		D1DD79FB26690C5F000F1351 /* Models */ = {
@@ -6722,6 +6733,7 @@
 				45AD214E2593A4B700A096A0 /* ShareToolViewModelType.swift in Sources */,
 				455583EA269F2DA500C3FF14 /* MobileContentView.swift in Sources */,
 				D1D5691A2706364200BBE2A6 /* OnboardingTutorialIntroView.swift in Sources */,
+				D1CE0959273EACCC00C8832C /* TutorialVideoAnalytics.swift in Sources */,
 				45AD201325938A9800A096A0 /* TranslationsFileCacheError.swift in Sources */,
 				45AD20D325938F6800A096A0 /* FollowUpModel.swift in Sources */,
 				45AD1F7E25938A9800A096A0 /* ResourcesCleanUp.swift in Sources */,
