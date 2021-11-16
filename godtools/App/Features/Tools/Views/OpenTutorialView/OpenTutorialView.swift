@@ -25,7 +25,7 @@ class OpenTutorialView: UIView, NibBased {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        openTutorialButton.centerTitleAndSetImageRightOfTitleWithSpacing(spacing: 16)
+        openTutorialButton.centerTitleAndSetImageRightOfTitleWithSpacing(spacing: 7)
     }
     
     func configure(viewModel: OpenTutorialViewModelType) {

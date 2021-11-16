@@ -25,7 +25,7 @@ extension UIButton {
             let titleLeft: CGFloat = (buttonWidth / 2 - titleWidth / 2) - imageWidth
             
             titleEdgeInsets = UIEdgeInsets(top: 0, left: titleLeft, bottom: 0, right: 0)
-            imageEdgeInsets = UIEdgeInsets(top: 0, left: titleLeft + titleWidth + spacing, bottom: 0, right: 0)
+            imageEdgeInsets = UIEdgeInsets(top: 0, left: titleLeft + titleWidth + imageWidth + spacing, bottom: 0, right: 0)
         }
     }
     
