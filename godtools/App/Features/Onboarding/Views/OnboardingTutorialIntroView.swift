@@ -51,6 +51,8 @@ class OnboardingTutorialIntroView: UIView, NibBased {
     
     override func didMoveToSuperview() {
         
+        super.didMoveToSuperview()
+        
         guard superview != nil else {
             return
         }
