@@ -61,8 +61,7 @@ class OnboardingFlow: Flow {
         
         let view = VideoPlayerView(viewModel: viewModel)
         
-        let modal = ModalNavigationController(rootView: view)
-        modal.navigationBar.setupNavigationBarAppearance(backgroundColor: UIColor.black, controlColor: nil, titleFont: nil, titleColor: nil, isTranslucent: true)
+        let modal = ModalNavigationController(rootView: view, navBarColor: .black, navBarIsTranslucent: true)
         
         navigationController.present(modal, animated: true, completion: nil)
     }
