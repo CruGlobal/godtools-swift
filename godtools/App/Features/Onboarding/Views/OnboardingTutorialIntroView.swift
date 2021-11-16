@@ -42,12 +42,24 @@ class OnboardingTutorialIntroView: UIView, NibBased {
         return ["playsinline": playsInFullScreen]
     }
     
+    override func layoutSubviews() {
+        
+        super.layoutSubviews()
+        
+        videoButton.centerTitleAndSetImageRightOfTitleWithSpacing(spacing: 16)
+    }
+    
     func configure(viewModel: OnboardingTutorialIntroViewModelType) {
 
         self.viewModel = viewModel
         
         titleLabel.text = viewModel.title
+        videoButton.setTitle(viewModel.videoLinkLabel, for: .normal)
+        videoButton.setImage(UIImage(named: "play_icon"), for: .normal)
+        videoButton.setImageColor(color: UIColor(red: 0.23, green: 0.64, blue: 0.86, alpha: 1.0))
         logoImageView.image = viewModel.logoImage
+        
+        layoutIfNeeded()
     }
     
     @objc private func videoLinkTapped (button: UIButton) {
