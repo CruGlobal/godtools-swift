@@ -56,10 +56,14 @@ class VideoPlayerView: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
         youTubeVideoPlayer.playVideo()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
         youTubeVideoPlayer.pauseVideo()
     }
     
