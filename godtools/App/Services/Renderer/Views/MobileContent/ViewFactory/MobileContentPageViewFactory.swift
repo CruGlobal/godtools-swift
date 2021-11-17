@@ -12,16 +12,14 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
     
     private let mobileContentAnalytics: MobileContentAnalytics
     private let fontService: FontService
-    private let animationCache: AnimationCache
     
     private(set) weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, animationCache: AnimationCache) {
+    required init(flowDelegate: FlowDelegate, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
         
         self.flowDelegate = flowDelegate
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
-        self.animationCache = animationCache
     }
     
     func viewForRenderableModel(renderableModel: MobileContentRenderableModel, renderableModelParent: MobileContentRenderableModel?, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) -> MobileContentView? {
@@ -119,8 +117,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             let viewModel = MobileContentAnimationViewModel(
                 animationModel: animationModel,
                 rendererPageModel: rendererPageModel,
-                containerModel: containerModel,
-                animationCache: animationCache
+                containerModel: containerModel
             )
             
             let view = MobileContentAnimationView(viewModel: viewModel)

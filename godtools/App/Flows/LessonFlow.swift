@@ -35,8 +35,7 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
             flowDelegate: self,
             appDiContainer: appDiContainer,
             trainingTipsEnabled: trainingTipsEnabled,
-            deepLinkingService: deepLinkingService,
-            animationCache: appDiContainer.getAnimationCache()
+            deepLinkingService: deepLinkingService
         )
         
         let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache

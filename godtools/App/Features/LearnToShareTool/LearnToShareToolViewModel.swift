@@ -12,7 +12,6 @@ class LearnToShareToolViewModel: NSObject, LearnToShareToolViewModelType {
     
     private let resource: ResourceModel
     private let learnToShareToolItemsProvider: LearnToShareToolItemsProviderType
-    private let animationCache: AnimationCache
     
     private var currentPage: Int = 0
     
@@ -22,12 +21,11 @@ class LearnToShareToolViewModel: NSObject, LearnToShareToolViewModelType {
     let startTrainingTitle: String
     let numberOfLearnToShareToolItems: ObservableValue<Int> = ObservableValue(value: 0)
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, learnToShareToolItemsProvider: LearnToShareToolItemsProviderType, localizationServices: LocalizationServices, animationCache: AnimationCache) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, learnToShareToolItemsProvider: LearnToShareToolItemsProviderType, localizationServices: LocalizationServices) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.learnToShareToolItemsProvider = learnToShareToolItemsProvider
-        self.animationCache = animationCache
         self.continueTitle = localizationServices.stringForMainBundle(key: "tutorial.continueButton.title.continue")
         self.startTrainingTitle = localizationServices.stringForMainBundle(key: "start_training")
         
@@ -69,8 +67,7 @@ class LearnToShareToolViewModel: NSObject, LearnToShareToolViewModelType {
     func willDisplayLearnToShareToolPage(index: Int) -> LearnToShareToolCellViewModelType {
         
         return LearnToShareToolCellViewModel(
-            learnToShareToolItem: learnToShareToolItemsProvider.learnToShareToolItems.value[index],
-            animationCache: animationCache
+            learnToShareToolItem: learnToShareToolItemsProvider.learnToShareToolItems.value[index]
         )
     }
 }

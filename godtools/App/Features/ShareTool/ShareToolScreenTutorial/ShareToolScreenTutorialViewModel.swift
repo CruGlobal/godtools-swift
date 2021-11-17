@@ -15,8 +15,8 @@ class ShareToolScreenTutorialViewModel: ShareToolScreenTutorialViewModelType {
     private let tutorialItemsProvider: TutorialItemProviderType
     private let shareToolScreenTutorialNumberOfViewsCache: ShareToolScreenTutorialNumberOfViewsCache
     private let resource: ResourceModel
-    private let animationCache: AnimationCache
     private let analyticsContainer: AnalyticsContainer
+    private let tutorialVideoAnalytics: TutorialVideoAnalytics
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -26,15 +26,15 @@ class ShareToolScreenTutorialViewModel: ShareToolScreenTutorialViewModelType {
     let continueTitle: String
     let shareLinkTitle: String
     
-    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, tutorialItemsProvider: TutorialItemProviderType, shareToolScreenTutorialNumberOfViewsCache: ShareToolScreenTutorialNumberOfViewsCache, resource: ResourceModel, animationCache: AnimationCache, analyticsContainer: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, tutorialItemsProvider: TutorialItemProviderType, shareToolScreenTutorialNumberOfViewsCache: ShareToolScreenTutorialNumberOfViewsCache, resource: ResourceModel, analyticsContainer: AnalyticsContainer, tutorialVideoAnalytics: TutorialVideoAnalytics) {
         
         self.flowDelegate = flowDelegate
         self.localizationServices = localizationServices
         self.tutorialItemsProvider = tutorialItemsProvider
         self.shareToolScreenTutorialNumberOfViewsCache = shareToolScreenTutorialNumberOfViewsCache
         self.resource = resource
-        self.animationCache = animationCache
         self.analyticsContainer = analyticsContainer
+        self.tutorialVideoAnalytics = tutorialVideoAnalytics
         self.customViewBuilder = ShareToolScreenCustomTutorialViewBuilder()
         self.skipTitle = localizationServices.stringForMainBundle(key: "navigationBar.navigationItem.skip")
         self.continueTitle = localizationServices.stringForMainBundle(key: "tutorial.continueButton.title.continue")
@@ -49,13 +49,7 @@ class ShareToolScreenTutorialViewModel: ShareToolScreenTutorialViewModelType {
     
     func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType {
                 
-        return TutorialCellViewModel(
-            item: tutorialItems.value[index],
-            customViewBuilder: customViewBuilder,
-            animationCache: animationCache,
-            analyticsContainer: analyticsContainer,
-            analyticsScreenName: analyticsScreenName
-        )
+        return TutorialCellViewModel(item: tutorialItems.value[index], customViewBuilder: customViewBuilder, tutorialVideoAnalytics: tutorialVideoAnalytics, analyticsScreenName: analyticsScreenName)
     }
     
     func closeTapped() {

@@ -11,7 +11,7 @@ import UIKit
 class TutorialCellViewModel: TutorialCellViewModelType {
         
     private let item: TutorialItemType
-    private let analyticsContainer: AnalyticsContainer
+    private let tutorialVideoAnalytics: TutorialVideoAnalytics
     private let analyticsScreenName: String
     
     private var trackedAnalyticsForYouTubeVideoIds: [String] = Array()
@@ -20,10 +20,10 @@ class TutorialCellViewModel: TutorialCellViewModelType {
     let title: String
     let message: String
     
-    required init(item: TutorialItemType, customViewBuilder: CustomViewBuilderType?, animationCache: AnimationCache, analyticsContainer: AnalyticsContainer, analyticsScreenName: String) {
+    required init(item: TutorialItemType, customViewBuilder: CustomViewBuilderType?, tutorialVideoAnalytics: TutorialVideoAnalytics, analyticsScreenName: String) {
         
         self.item = item
-        self.analyticsContainer = analyticsContainer
+        self.tutorialVideoAnalytics = tutorialVideoAnalytics
         self.analyticsScreenName = analyticsScreenName
         
         if let imageName = item.imageName, !imageName.isEmpty, let image = UIImage(named: imageName) {
@@ -34,7 +34,6 @@ class TutorialCellViewModel: TutorialCellViewModelType {
             
             let animatedViewModel = AnimatedViewModel(
                 animationDataResource: .mainBundleJsonFile(filename: animationName),
-                animationCache: animationCache,
                 autoPlay: true,
                 loop: true
             )
@@ -65,8 +64,8 @@ class TutorialCellViewModel: TutorialCellViewModelType {
     }
     
     func getYouTubeVideoId() -> String? {
-        return item.youTubeVideoId
-    }
+            return item.youTubeVideoId
+        }
     
     func tutorialVideoPlayTapped() {
                 
@@ -79,16 +78,8 @@ class TutorialCellViewModel: TutorialCellViewModelType {
         if !youTubeVideoTracked {
             
             trackedAnalyticsForYouTubeVideoIds.append(videoId)
-            analyticsContainer.trackActionAnalytics.trackAction(
-                trackAction: TrackActionModel(
-                    screenName: analyticsScreenName,
-                    actionName: "Tutorial Video",
-                    siteSection: "",
-                    siteSubSection: "",
-                    url: nil,
-                    data: ["cru.tutorial_video": 1, "video_id": videoId]
-                )
-            )
+            
+            tutorialVideoAnalytics.trackVideoPlayed(videoId: videoId, screenName: analyticsScreenName)
         }
     }
 }

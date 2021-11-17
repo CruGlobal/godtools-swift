@@ -37,8 +37,7 @@ class LearnToShareToolFlow: Flow {
             flowDelegate: self,
             resource: resource,
             learnToShareToolItemsProvider: appDiContainer.learnToShareToolItemsProvider,
-            localizationServices: appDiContainer.localizationServices,
-            animationCache: appDiContainer.getAnimationCache()
+            localizationServices: appDiContainer.localizationServices
         )
         let view = LearnToShareToolView(viewModel: viewModel)
         navigationController.setViewControllers([view], animated: false)

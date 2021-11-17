@@ -40,9 +40,9 @@ class TutorialFlow: Flow {
             flowDelegate: self,
             localizationServices: appDiContainer.localizationServices,
             analytics: appDiContainer.analytics,
+            tutorialVideoAnalytics: appDiContainer.getTutorialVideoAnalytics(),
             tutorialItemsProvider: appDiContainer.tutorialItemsProvider,
-            deviceLanguage: appDiContainer.deviceLanguage,
-            animationCache: appDiContainer.getAnimationCache()
+            deviceLanguage: appDiContainer.deviceLanguage
         )
         let view = TutorialView(viewModel: viewModel)
         
