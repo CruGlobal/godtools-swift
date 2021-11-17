@@ -13,7 +13,7 @@ class MultiplatformCards: CardsModelType {
     
     let cards: [CardModelType]
     
-    required init(cards: [Card]) {
+    required init(cards: [TractPage.Card]) {
         
         let numberOfVisibleCards: Int = cards.filter({!$0.isHidden}).count
         

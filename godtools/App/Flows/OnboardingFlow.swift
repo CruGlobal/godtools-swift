@@ -11,7 +11,7 @@ import UIKit
 class OnboardingFlow: Flow {
     
     private weak var flowDelegate: FlowDelegate?
-    
+        
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
@@ -43,15 +43,37 @@ class OnboardingFlow: Flow {
         let viewModel = OnboardingTutorialViewModel(
             flowDelegate: self,
             analyticsContainer: appDiContainer.analytics,
+            tutorialVideoAnalytics: appDiContainer.getTutorialVideoAnalytics(),
             onboardingTutorialItemsRepository: onboardingTutorialItemsRepository,
             onboardingTutorialAvailability: appDiContainer.onboardingTutorialAvailability,
             openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache,
-            customViewBuilder: appDiContainer.onboardingTutorialCustomViewBuilder(),
+            customViewBuilder: appDiContainer.onboardingTutorialCustomViewBuilder(flowDelegate: self),
             localizationServices: appDiContainer.localizationServices
         )
         let view = OnboardingTutorialView(viewModel: viewModel)
         
         navigationController.setViewControllers([view], animated: false)
+    }
+    
+    private func launchVideoPlayerView(youtubeVideoId: String) {
+        
+        let viewModel = VideoPlayerViewModel(flowDelegate: self, youtubeVideoId: youtubeVideoId, closeVideoPlayerFlowStep: .closeVideoPlayerTappedFromOnboardingTutorial, videoEndedFlowStep: .videoEndedOnOnboardingTutorial)
+        
+        let view = VideoPlayerView(viewModel: viewModel)
+        
+        let modal = ModalNavigationController(rootView: view, navBarColor: .black, navBarIsTranslucent: true)
+        
+        navigationController.present(modal, animated: true, completion: nil)
+    }
+    
+    private func dismissVideoPlayerView() {
+        
+        navigationController.dismiss(animated: true, completion: nil)
+    }
+    
+    private func dismissOnboardingFlow() {
+        
+        flowDelegate?.navigate(step: .dismissOnboardingTutorial)
     }
 }
 
@@ -61,11 +83,20 @@ extension OnboardingFlow: FlowDelegate {
         
         switch step {
             
+        case .videoButtonTappedFromOnboardingTutorial(let youtubeVideoId):
+            launchVideoPlayerView(youtubeVideoId: youtubeVideoId)
+        
+        case .closeVideoPlayerTappedFromOnboardingTutorial:
+            dismissVideoPlayerView()
+            
+        case .videoEndedOnOnboardingTutorial:
+            dismissVideoPlayerView()
+            
         case .skipTappedFromOnboardingTutorial:
-            flowDelegate?.navigate(step: .dismissOnboardingTutorial)
+            dismissOnboardingFlow()
             
         case .endTutorialFromOnboardingTutorial:
-            flowDelegate?.navigate(step: .dismissOnboardingTutorial)
+            dismissOnboardingFlow()
         
         default:
             break

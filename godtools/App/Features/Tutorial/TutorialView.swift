@@ -22,7 +22,9 @@ class TutorialView: UIViewController {
     @IBOutlet weak private var pageControl: UIPageControl!
     
     required init(viewModel: TutorialViewModelType) {
+        
         self.viewModel = viewModel
+        
         super.init(nibName: String(describing: TutorialView.self), bundle: nil)
     }
     
