@@ -17,12 +17,12 @@ class TutorialCellViewModel: TutorialCellViewModelType {
     let animationName: String?
     let customView: UIView?
     
-    private let analyticsContainer: AnalyticsContainer
+    private let tutorialVideoAnalytics: TutorialVideoAnalytics
     private let analyticsScreenName: String
     
     private var trackedAnalyticsForYouTubeVideoIds: [String] = Array()
     
-    required init(item: TutorialItemType, customViewBuilder: CustomViewBuilderType?, analyticsContainer: AnalyticsContainer, analyticsScreenName: String) {
+    required init(item: TutorialItemType, customViewBuilder: CustomViewBuilderType?, tutorialVideoAnalytics: TutorialVideoAnalytics, analyticsScreenName: String) {
         
         title = item.title
         message = item.message
@@ -30,7 +30,7 @@ class TutorialCellViewModel: TutorialCellViewModelType {
         youTubeVideoId = item.youTubeVideoId
         animationName = item.animationName
         
-        self.analyticsContainer = analyticsContainer
+        self.tutorialVideoAnalytics = tutorialVideoAnalytics
         self.analyticsScreenName = analyticsScreenName
         
         if let customViewId = item.customViewId, !customViewId.isEmpty, let builtCustomView = customViewBuilder?.buildCustomView(customViewId: customViewId) {
@@ -52,16 +52,8 @@ class TutorialCellViewModel: TutorialCellViewModelType {
         if !youTubeVideoTracked {
             
             trackedAnalyticsForYouTubeVideoIds.append(videoId)
-            analyticsContainer.trackActionAnalytics.trackAction(
-                trackAction: TrackActionModel(
-                    screenName: analyticsScreenName,
-                    actionName: "Tutorial Video",
-                    siteSection: "",
-                    siteSubSection: "",
-                    url: nil,
-                    data: ["cru.tutorial_video": 1, "video_id": videoId]
-                )
-            )
+            
+            tutorialVideoAnalytics.trackVideoPlayed(videoId: videoId, screenName: analyticsScreenName)
         }
     }
 }

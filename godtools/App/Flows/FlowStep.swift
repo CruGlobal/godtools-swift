@@ -27,6 +27,9 @@ enum FlowStep {
     case openTutorialTapped
     
     // onboarding
+    case videoButtonTappedFromOnboardingTutorial(youtubeVideoId: String)
+    case closeVideoPlayerTappedFromOnboardingTutorial
+    case videoEndedOnOnboardingTutorial
     case skipTappedFromOnboardingTutorial
     case endTutorialFromOnboardingTutorial
     

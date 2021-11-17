@@ -252,6 +252,12 @@ class AppDiContainer {
         )
     }
     
+    func getTutorialVideoAnalytics() -> TutorialVideoAnalytics {
+        return TutorialVideoAnalytics(
+            trackActionAnalytics: analytics.trackActionAnalytics
+        )
+    }
+    
     func getLessonsEvaluationRepository() -> LessonEvaluationRepository {
         return LessonEvaluationRepository(
             cache: LessonEvaluationRealmCache(realmDatabase: realmDatabase)
@@ -282,8 +288,8 @@ class AppDiContainer {
         )
     }
     
-    func onboardingTutorialCustomViewBuilder() -> CustomViewBuilderType {
-        return OnboardingTutorialCustomViewBuilder(deviceLanguage: deviceLanguage, localizationServices: localizationServices)
+    func onboardingTutorialCustomViewBuilder(flowDelegate: FlowDelegate) -> CustomViewBuilderType {
+        return OnboardingTutorialCustomViewBuilder(flowDelegate: flowDelegate, deviceLanguage: deviceLanguage, localizationServices: localizationServices, tutorialVideoAnalytics: getTutorialVideoAnalytics(), analyticsScreenName: "onboarding")
     }
     
     var firebaseConfiguration: FirebaseConfiguration {

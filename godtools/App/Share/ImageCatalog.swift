@@ -23,6 +23,7 @@ enum ImageCatalog: String {
     case navSettings = "nav_gear"
     case navShare = "share"
     case notFavorited = "not_favorited"
+    case playIcon = "play_icon"
     case toolsMenuLessons = "tools_menu_lessons"
     case toolsMenuFavorites = "tools_menu_favorites"
     case toolsMenuAllTools = "tools_menu_all_tools"
