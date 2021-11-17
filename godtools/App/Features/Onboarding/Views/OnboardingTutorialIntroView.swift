@@ -46,7 +46,18 @@ class OnboardingTutorialIntroView: UIView, NibBased {
         
         super.layoutSubviews()
         
-        videoButton.centerTitleAndSetImageRightOfTitleWithSpacing(spacing: 16)
+        layoutVideoButtonTitleAndImage()
+    }
+    
+    override func didMoveToSuperview() {
+        
+        super.didMoveToSuperview()
+        
+        guard superview != nil else {
+            return
+        }
+        
+        layoutVideoButtonTitleAndImage()
     }
     
     func configure(viewModel: OnboardingTutorialIntroViewModelType) {
@@ -54,16 +65,23 @@ class OnboardingTutorialIntroView: UIView, NibBased {
         self.viewModel = viewModel
         
         titleLabel.text = viewModel.title
-        videoButton.setTitle(viewModel.videoLinkLabel, for: .normal)
-        videoButton.setImage(UIImage(named: "play_icon"), for: .normal)
-        videoButton.setImageColor(color: UIColor(red: 0.23, green: 0.64, blue: 0.86, alpha: 1.0))
-        logoImageView.image = viewModel.logoImage
         
-        layoutIfNeeded()
+        videoButton.setTitle(viewModel.videoLinkLabel, for: .normal)
+        videoButton.setImage(ImageCatalog.playIcon.image, for: .normal)
+        videoButton.setImageColor(color: UIColor(red: 0.23, green: 0.64, blue: 0.86, alpha: 1.0))
+        layoutVideoButtonTitleAndImage()
+        
+        logoImageView.image = viewModel.logoImage
     }
     
     @objc private func videoLinkTapped (button: UIButton) {
         
         viewModel?.videoLinkTapped()
+    }
+    
+    private func layoutVideoButtonTitleAndImage() {
+        
+        videoButton.layoutIfNeeded()
+        videoButton.centerTitleAndSetImageRightOfTitleWithSpacing(spacing: 7)
     }
 }
