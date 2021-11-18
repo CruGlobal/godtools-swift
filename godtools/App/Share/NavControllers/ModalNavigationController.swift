@@ -10,34 +10,46 @@ import UIKit
 
 class ModalNavigationController: UINavigationController {
     
-    private let rootView: UIViewController
+    private static let defaultNavBarColor: UIColor = .white
+    private static let defaultNavBarisTranslucent = false
     
-    required init(rootView: UIViewController) {
+    private let rootView: UIViewController
+    private let navBarColor: UIColor
+    private let navBarIsTranslucent: Bool
+    
+    required init(rootView: UIViewController, navBarColor: UIColor = ModalNavigationController.defaultNavBarColor, navBarIsTranslucent: Bool = ModalNavigationController.defaultNavBarisTranslucent) {
+        
         self.rootView = rootView
+        self.navBarColor = navBarColor
+        self.navBarIsTranslucent = navBarIsTranslucent
+        
         super.init(nibName: nil, bundle: nil)
+        
         modalPresentationStyle = .fullScreen
     }
     
     required init?(coder aDecoder: NSCoder) {
+        
         fatalError("init(coder:) has not been implemented")
     }
     
     deinit {
+        
         print("x deinit: \(type(of: self))")
     }
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
-            
-        navigationBar.barTintColor = UIColor.white
-        navigationBar.isTranslucent = false
+        
+        navigationBar.setupNavigationBarAppearance(backgroundColor: navBarColor, controlColor: nil, titleFont: nil, titleColor: nil, isTranslucent: navBarIsTranslucent)
         navigationBar.shadowImage = UIImage()
                                 
         setViewControllers([rootView], animated: false)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
+        
         return .default
     }
 }

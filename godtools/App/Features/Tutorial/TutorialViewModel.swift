@@ -12,6 +12,7 @@ class TutorialViewModel: TutorialViewModelType {
     //TODO: re-implement this tutorial using TutorialPagerViewModel
     
     private let localizationServices: LocalizationServices
+    private let tutorialVideoAnalytics: TutorialVideoAnalytics
     private let analytics: AnalyticsContainer
     private let tutorialPagerAnalyticsModel: TutorialPagerAnalytics
     
@@ -24,11 +25,12 @@ class TutorialViewModel: TutorialViewModelType {
     let continueTitle: String
     let startUsingGodToolsTitle: String
     
-    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, analytics: AnalyticsContainer, tutorialItemsProvider: TutorialItemProviderType, deviceLanguage: DeviceLanguageType) {
+    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, analytics: AnalyticsContainer, tutorialVideoAnalytics: TutorialVideoAnalytics, tutorialItemsProvider: TutorialItemProviderType, deviceLanguage: DeviceLanguageType) {
         
         self.flowDelegate = flowDelegate
         self.localizationServices = localizationServices
         self.analytics = analytics
+        self.tutorialVideoAnalytics = tutorialVideoAnalytics
         self.customViewBuilder = TutorialItemViewBuilder(deviceLanguage: deviceLanguage)
         self.continueTitle = localizationServices.stringForMainBundle(key: "tutorial.continueButton.title.continue")
         self.startUsingGodToolsTitle = localizationServices.stringForMainBundle(key: "tutorial.continueButton.title.startUsingGodTools")
@@ -40,7 +42,7 @@ class TutorialViewModel: TutorialViewModelType {
     
     func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType {
         
-        return TutorialCellViewModel(item: tutorialItems.value[index], customViewBuilder: customViewBuilder, analyticsContainer: analytics, analyticsScreenName: tutorialPagerAnalyticsModel.analyticsScreenName(page: index))
+        return TutorialCellViewModel(item: tutorialItems.value[index], customViewBuilder: customViewBuilder, tutorialVideoAnalytics: tutorialVideoAnalytics, analyticsScreenName: tutorialPagerAnalyticsModel.analyticsScreenName(page: index))
     }
     
     func closeTapped() {

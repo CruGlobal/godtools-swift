@@ -10,19 +10,28 @@ import UIKit
 
 class OnboardingTutorialCustomViewBuilder: CustomViewBuilderType {
 
+    
+    private weak var flowDelegate: FlowDelegate?
+    
     private let deviceLanguage: DeviceLanguageType
     private let localizationServices: LocalizationServices
-
-    required init(deviceLanguage: DeviceLanguageType, localizationServices: LocalizationServices) {
+    private let tutorialVideoAnalytics: TutorialVideoAnalytics
+    private let analyticsScreenName: String
+    
+    required init(flowDelegate: FlowDelegate, deviceLanguage: DeviceLanguageType, localizationServices: LocalizationServices, tutorialVideoAnalytics: TutorialVideoAnalytics, analyticsScreenName: String) {
+        
+        self.flowDelegate = flowDelegate
 
         self.deviceLanguage = deviceLanguage
         self.localizationServices = localizationServices
+        self.tutorialVideoAnalytics = tutorialVideoAnalytics
+        self.analyticsScreenName = analyticsScreenName
     }
 
     func buildCustomView(customViewId: String) -> UIView? {
 
-        if customViewId == "onboarding-0" {
-            let viewModel = OnboardingTutorialIntroViewModel(localizationServices: localizationServices)
+        if let onboardingFlowDelegate = flowDelegate, customViewId == "onboarding-0" {
+            let viewModel = OnboardingTutorialIntroViewModel(flowDelegate: onboardingFlowDelegate, localizationServices: localizationServices, tutorialVideoAnalytics: tutorialVideoAnalytics, analyticsScreenName: analyticsScreenName)
 
             let view = OnboardingTutorialIntroView()
 
