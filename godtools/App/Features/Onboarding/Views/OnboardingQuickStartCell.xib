@@ -31,18 +31,27 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Smm-9D-5JX">
-                        <rect key="frame" x="15" y="54.5" width="449" height="19.5"/>
+                        <rect key="frame" x="15" y="54.5" width="61.5" height="19.5"/>
                         <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="16"/>
                         <color key="textColor" red="0.23137254900000001" green="0.64313725489999995" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right_arrow_blue" translatesAutoresizingMaskIntoConstraints="NO" id="gbG-HC-jBs">
+                        <rect key="frame" x="82.5" y="58.5" width="12" height="12"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="12" id="KyS-Dw-x6F"/>
+                            <constraint firstAttribute="width" constant="12" id="sxi-hs-1dO"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="gbG-HC-jBs" firstAttribute="leading" secondItem="Smm-9D-5JX" secondAttribute="trailing" constant="6" id="3Ce-rd-gca"/>
                     <constraint firstItem="Smm-9D-5JX" firstAttribute="leading" secondItem="fao-fZ-EEC" secondAttribute="leading" constant="15" id="E1b-9X-mie"/>
+                    <constraint firstItem="gbG-HC-jBs" firstAttribute="centerY" secondItem="Smm-9D-5JX" secondAttribute="centerY" id="FvB-gn-Txr"/>
                     <constraint firstItem="2Sh-4k-T51" firstAttribute="leading" secondItem="fao-fZ-EEC" secondAttribute="leading" constant="15" id="JYa-vG-COf"/>
                     <constraint firstAttribute="bottom" secondItem="Smm-9D-5JX" secondAttribute="bottom" constant="20" id="fAL-Cv-QEK"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="gbG-HC-jBs" secondAttribute="trailing" constant="15" id="mcz-Oy-6pS"/>
                     <constraint firstAttribute="trailing" secondItem="2Sh-4k-T51" secondAttribute="trailing" constant="15" id="sLI-bV-yfe"/>
-                    <constraint firstAttribute="trailing" secondItem="Smm-9D-5JX" secondAttribute="trailing" constant="15" id="u6y-E1-Fj1"/>
                     <constraint firstItem="2Sh-4k-T51" firstAttribute="top" secondItem="fao-fZ-EEC" secondAttribute="top" constant="15" id="w4t-Yd-GZI"/>
                     <constraint firstItem="Smm-9D-5JX" firstAttribute="top" secondItem="2Sh-4k-T51" secondAttribute="bottom" constant="15.5" id="z0u-r9-W29"/>
                 </constraints>
@@ -52,7 +61,10 @@
                 <outlet property="subtitleLabel" destination="Smm-9D-5JX" id="id2-zs-CFh"/>
                 <outlet property="titleLabel" destination="2Sh-4k-T51" id="Fvr-v3-v7R"/>
             </connections>
-            <point key="canvasLocation" x="176.08695652173915" y="271.20535714285711"/>
+            <point key="canvasLocation" x="176.08695652173915" y="270.53571428571428"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="right_arrow_blue" width="22" height="22"/>
+    </resources>
 </document>

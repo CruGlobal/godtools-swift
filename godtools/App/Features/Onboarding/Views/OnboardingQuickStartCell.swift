@@ -21,8 +21,6 @@ class OnboardingQuickStartCell: UITableViewCell {
     override func awakeFromNib() {
         
         super.awakeFromNib()
-        
-        setupLayout()
     }
     
     override func prepareForReuse() {
@@ -39,12 +37,5 @@ class OnboardingQuickStartCell: UITableViewCell {
         
         titleLabel.text = item.title
         subtitleLabel.text = item.linkButtonTitle
-    }
-    
-    private func setupLayout() {
-        
-        guard let buttonImage = UIImage(named: "arrow.forward") else  {
-            return
-        }
     }
 }
