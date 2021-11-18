@@ -16,7 +16,7 @@ class OnboardingQuickStartCell: UITableViewCell {
     private var item: OnboardingQuickStartItem?
     
     @IBOutlet weak private var titleLabel: UILabel!
-    @IBOutlet weak private var linkButton: UIButton!
+    @IBOutlet weak private var subtitleLabel: UILabel!
     
     override func awakeFromNib() {
         
@@ -30,7 +30,7 @@ class OnboardingQuickStartCell: UITableViewCell {
         super.prepareForReuse()
         
         titleLabel.text = nil
-        linkButton.setTitle(nil, for: .normal)
+        subtitleLabel.text = nil
     }
     
     func configure(item: OnboardingQuickStartItem) {
@@ -38,7 +38,7 @@ class OnboardingQuickStartCell: UITableViewCell {
         self.item = item
         
         titleLabel.text = item.title
-        linkButton.setTitle(item.linkButtonTitle, for: .normal)
+        subtitleLabel.text = item.linkButtonTitle
     }
     
     private func setupLayout() {
@@ -46,15 +46,5 @@ class OnboardingQuickStartCell: UITableViewCell {
         guard let buttonImage = UIImage(named: "arrow.forward") else  {
             return
         }
-        
-        linkButton.semanticContentAttribute = UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft ? .forceLeftToRight : .forceRightToLeft
-        
-        linkButton.setImage(buttonImage, for: .normal)
-        
-        linkButton.setInsets(forContentPadding:
-            UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6),
-            imageTitlePadding: 10,
-            iconGravity: .end
-        )
     }
 }
