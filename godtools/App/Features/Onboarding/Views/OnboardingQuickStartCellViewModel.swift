@@ -11,14 +11,11 @@ import Foundation
 class OnboardingQuickStartCellViewModel: OnboardingQuickStartCellViewModelType {
     
     let title: String
-    let buttonTitle: String
-    let dismissOnboardingTutorialType: OnboardingQuickStartView.DismissOnboardingTutorialType
+    let buttonTitle: String    
     
-    
-    required init(title: String, buttonTitle: String, dismissOnboardingTutorialType: OnboardingQuickStartView.DismissOnboardingTutorialType) {
+    required init(title: String, buttonTitle: String) {
         
         self.title = title
         self.buttonTitle = buttonTitle
-        self.dismissOnboardingTutorialType = dismissOnboardingTutorialType
     }
 }

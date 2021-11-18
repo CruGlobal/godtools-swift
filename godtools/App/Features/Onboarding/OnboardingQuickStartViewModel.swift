@@ -36,12 +36,12 @@ class OnboardingQuickStartViewModel: OnboardingQuickStartViewModelType {
             OnboardingQuickStartItem(
                 title: localizationServices.stringForMainBundle(key: "onboardingQuickStart.1.title"),
                 linkButtonTitle: localizationServices.stringForMainBundle(key:  "onboardingQuickStart.1.button.title"),
-                linkButtonFlowStep: .readArticlesTappedFromOnboardingQuickStart
+                linkButtonFlowStep: .tryLessonsTappedFromOnboardingQuickStart
             ),
             OnboardingQuickStartItem(
                 title: localizationServices.stringForMainBundle(key: "onboardingQuickStart.2.title"),
                 linkButtonTitle: localizationServices.stringForMainBundle(key:  "onboardingQuickStart.2.button.title"),
-                linkButtonFlowStep: .readArticlesTappedFromOnboardingQuickStart
+                linkButtonFlowStep: .chooseToolTappedFromOnboardingQuickStart
             ),
         ]
         
@@ -53,7 +53,8 @@ class OnboardingQuickStartViewModel: OnboardingQuickStartViewModelType {
         return quickStartItems[index]
     }
     
-    func quickStartCellLinkButtonTapped(flowStep: FlowStep) {
+    func quickStartCellTapped(index: Int) {
+        let flowStep = quickStartItems[index].linkButtonFlowStep
         
         flowDelegate?.navigate(step: flowStep)
     }

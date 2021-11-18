@@ -19,9 +19,7 @@ class OnboardingQuickStartView: UIViewController {
     private let viewModel: OnboardingQuickStartViewModelType
     
     private var skipButton: UIBarButtonItem?
-    
-    weak var delegate: OnboardingQuickStartCellDelegate?
-    
+        
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var endTutorialButton: OnboardPrimaryButton!
     @IBOutlet weak private var quickStartTableView: UITableView!
@@ -112,16 +110,6 @@ class OnboardingQuickStartView: UIViewController {
     }
 }
 
-// MARK: - OnboardingQuickStartCellDelegate
-
-extension OnboardingQuickStartView: OnboardingQuickStartCellDelegate {
-    
-    func buttonTapped(flowStep: FlowStep) {
-        
-        viewModel.quickStartCellLinkButtonTapped(flowStep: flowStep)
-    }
-}
-
 // MARK: - UITableViewDelegate, UITableViewDataSource
 
 extension OnboardingQuickStartView: UITableViewDelegate, UITableViewDataSource {
@@ -136,6 +124,7 @@ extension OnboardingQuickStartView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        viewModel.quickStartCellTapped(index: indexPath.section)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -144,8 +133,8 @@ extension OnboardingQuickStartView: UITableViewDelegate, UITableViewDataSource {
             withIdentifier: OnboardingQuickStartCell.reuseIdentifier,
             for: indexPath) as! OnboardingQuickStartCell
                 
-        let quickStartItem = viewModel.quickStartCellWillAppear(index: indexPath.row)
-        cell.configure(item: quickStartItem, delegate: self)
+        let quickStartItem = viewModel.quickStartCellWillAppear(index: indexPath.section)
+        cell.configure(item: quickStartItem)
         
         return cell
     }
@@ -159,6 +148,10 @@ extension OnboardingQuickStartView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 2
+        return 0
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0
     }
 }

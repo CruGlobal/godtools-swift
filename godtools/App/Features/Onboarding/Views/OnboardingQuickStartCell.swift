@@ -8,19 +8,11 @@
 
 import UIKit
 
-
-protocol OnboardingQuickStartCellDelegate: class {
-    
-    func buttonTapped(flowStep: FlowStep)
-}
-
 class OnboardingQuickStartCell: UITableViewCell {
     
     static let nibName: String = "OnboardingQuickStartCell"
     static let reuseIdentifier: String = "OnboardingQuickStartCellReuseIdentifier"
-    
-    private weak var delegate: OnboardingQuickStartCellDelegate?
-    
+        
     private var item: OnboardingQuickStartItem?
     
     @IBOutlet weak private var titleLabel: UILabel!
@@ -31,7 +23,6 @@ class OnboardingQuickStartCell: UITableViewCell {
         super.awakeFromNib()
         
         setupLayout()
-        setupBinding()
     }
     
     override func prepareForReuse() {
@@ -42,9 +33,7 @@ class OnboardingQuickStartCell: UITableViewCell {
         linkButton.setTitle(nil, for: .normal)
     }
     
-    func configure(item: OnboardingQuickStartItem, delegate: OnboardingQuickStartCellDelegate?) {
-            
-        self.delegate = delegate
+    func configure(item: OnboardingQuickStartItem) {
         
         self.item = item
         
@@ -67,19 +56,5 @@ class OnboardingQuickStartCell: UITableViewCell {
             imageTitlePadding: 10,
             iconGravity: .end
         )
-    }
-    
-    private func setupBinding() {
-        
-        linkButton.addTarget(self, action: #selector(linkButtonTapped), for: .touchUpInside)
-    }
-    
-    @objc func linkButtonTapped() {
-        
-        guard let flowStep = item?.linkButtonFlowStep else {
-            return
-        }
-        
-        delegate?.buttonTapped(flowStep: flowStep)
     }
 }

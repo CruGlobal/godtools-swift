@@ -78,11 +78,6 @@ class OnboardingFlow: Flow {
         
         navigationController.setViewControllers([view], animated: true)
     }
-    
-    private func dismissOnboardingFlow() {
-        
-        flowDelegate?.navigate(step: .dismissOnboardingTutorial)
-    }
 }
 
 extension OnboardingFlow: FlowDelegate {

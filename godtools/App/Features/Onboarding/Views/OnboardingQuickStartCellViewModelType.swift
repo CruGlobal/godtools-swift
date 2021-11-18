@@ -12,5 +12,4 @@ protocol OnboardingQuickStartCellViewModelType {
     
     var title: String { get }
     var buttonTitle: String { get }
-    var dismissOnboardingTutorialType: OnboardingQuickStartView.DismissOnboardingTutorialType { get }
 }
