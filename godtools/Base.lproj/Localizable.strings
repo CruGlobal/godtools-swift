@@ -58,6 +58,14 @@ An online version can be found at https://knowgod.com/";
 "total_views" = "%d views";
 "total_languages" = "%d languages";
 
+//Setup Parallel Language
+"parellelLanguage.prompt" = "Would you like to choose a parallel language?";
+"parallelLanguage.languagePicker.title" = "Select a language";
+"parallelLanguage.yesButton.title" = "Yes";
+"parallelLanguage.noButton.title" = "No";
+"parallelLanguage.selectButton.title" = "Select";
+"parallelLanguage.getStartedButton.title" = "Get Started";
+
 // Language Settings
 "primary_language" = "Primary Language";
 "select_primary_language" = "Select a Primary Language";
