@@ -327,6 +327,22 @@ class AppFlow: NSObject, Flow {
             
         case .startUsingGodToolsTappedFromTutorial:
             dismissTutorial()
+        
+        case .openSetupParallelLanguage:
+            
+            let viewModel = SetupParallelLanguageViewModel(flowDelegate: self, localizationServices: appDiContainer.localizationServices)
+            let view = SetupParallelLanguageView(viewModel: viewModel)
+            
+            navigationController.present(view, animated: true, completion: nil)
+        
+        case .noThanksTappedFromSetupParallelLanguage:
+            closeMenu(animated: false)
+            navigationController.dismiss(animated: true, completion: nil)
+
+        
+        case .getStartedTappedFromSetupParallelLanguage:
+            closeMenu(animated: false)
+            navigationController.dismiss(animated: true, completion: nil)
             
         case .showMenu:
             navigateToMenu(animated: true)

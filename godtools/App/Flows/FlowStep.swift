@@ -19,6 +19,7 @@ enum FlowStep {
     case showLanguageSettings
     case showOnboardingTutorial(animated: Bool)
     case dismissOnboardingTutorial
+    case openSetupParallelLanguage
     case buttonWithUrlTappedFromFirebaseInAppMessage(url: URL)
     
     // tools
@@ -72,6 +73,10 @@ enum FlowStep {
     
     // tool training
     case closeTappedFromToolTraining
+    
+    // setup parallel language
+    case noThanksTappedFromSetupParallelLanguage
+    case getStartedTappedFromSetupParallelLanguage
     
     // share tool menu
     case shareToolTappedFromShareToolMenu
