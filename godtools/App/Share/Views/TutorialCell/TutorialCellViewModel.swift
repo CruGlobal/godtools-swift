@@ -10,40 +10,66 @@ import UIKit
 
 class TutorialCellViewModel: TutorialCellViewModelType {
         
-    let title: String
-    let message: String
-    let mainImageName: String?
-    let youTubeVideoId: String?
-    let animationName: String?
-    let customView: UIView?
-    
+    private let item: TutorialItemType
     private let tutorialVideoAnalytics: TutorialVideoAnalytics
     private let analyticsScreenName: String
     
     private var trackedAnalyticsForYouTubeVideoIds: [String] = Array()
     
+    let assetContent: TutorialAssetContent
+    let title: String
+    let message: String
+    
     required init(item: TutorialItemType, customViewBuilder: CustomViewBuilderType?, tutorialVideoAnalytics: TutorialVideoAnalytics, analyticsScreenName: String) {
         
-        title = item.title
-        message = item.message
-        mainImageName = item.imageName
-        youTubeVideoId = item.youTubeVideoId
-        animationName = item.animationName
-        
+        self.item = item
         self.tutorialVideoAnalytics = tutorialVideoAnalytics
         self.analyticsScreenName = analyticsScreenName
         
-        if let customViewId = item.customViewId, !customViewId.isEmpty, let builtCustomView = customViewBuilder?.buildCustomView(customViewId: customViewId) {
-            customView = builtCustomView
+        if let imageName = item.imageName, !imageName.isEmpty, let image = UIImage(named: imageName) {
+            
+            assetContent = .image(image: image)
+        }
+        else if let animationName = item.animationName, !animationName.isEmpty {
+            
+            let animatedViewModel = AnimatedViewModel(
+                animationDataResource: .mainBundleJsonFile(filename: animationName),
+                autoPlay: true,
+                loop: true
+            )
+            
+            assetContent = .animation(viewModel: animatedViewModel)
+        }
+        else if let youTubeVideoId = item.youTubeVideoId, !youTubeVideoId.isEmpty {
+            
+            let playsInFullScreen = 0
+            
+            let youTubeVideoParameters: [String : Any] = [
+                "playsinline": playsInFullScreen
+            ]
+            
+            assetContent = .video(youTubeVideoId: youTubeVideoId, youTubeVideoParameters: youTubeVideoParameters)
+        }
+        else if let customViewId = item.customViewId, !customViewId.isEmpty, let builtCustomView = customViewBuilder?.buildCustomView(customViewId: customViewId) {
+            
+            assetContent = .customView(customView: builtCustomView)
         }
         else {
-            customView = nil
+            
+            assetContent = .none
         }
+        
+        title = item.title
+        message = item.message
     }
+    
+    func getYouTubeVideoId() -> String? {
+            return item.youTubeVideoId
+        }
     
     func tutorialVideoPlayTapped() {
                 
-        guard let videoId = youTubeVideoId else {
+        guard let videoId = getYouTubeVideoId() else {
             return
         }
         

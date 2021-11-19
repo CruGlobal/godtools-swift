@@ -112,6 +112,18 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
+        else if let animationModel = renderableModel as? ContentAnimationModelType {
+            
+            let viewModel = MobileContentAnimationViewModel(
+                animationModel: animationModel,
+                rendererPageModel: rendererPageModel,
+                containerModel: containerModel
+            )
+            
+            let view = MobileContentAnimationView(viewModel: viewModel)
+            
+            return view
+        }
         else if let videoModel = renderableModel as? ContentVideoModelType {
             
             let viewModel = MobileContentEmbeddedVideoViewModel(videoModel: videoModel)

@@ -22,6 +22,10 @@ class TranslationsFileCache {
         self.sha256FileCache = sha256FileCache
     }
     
+    func getFile(location: SHA256FileLocation) -> Result<URL, Error> {
+        return sha256FileCache.getFile(location: location)
+    }
+    
     func getImage(location: SHA256FileLocation) -> UIImage? {
         
         switch sha256FileCache.getImage(location: location) {

@@ -163,7 +163,7 @@ class AppFlow: NSObject, Flow {
         switch step {
         
         case .appLaunchedFromTerminatedState:
-           
+                       
             if let deepLink = appLaunchedFromDeepLink {
                 
                 appLaunchedFromDeepLink = nil
