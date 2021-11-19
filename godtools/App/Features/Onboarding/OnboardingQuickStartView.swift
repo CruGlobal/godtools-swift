@@ -115,16 +115,16 @@ class OnboardingQuickStartView: UIViewController {
 extension OnboardingQuickStartView: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.quickStartItemCount
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return viewModel.quickStartItemCount
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        viewModel.quickStartCellTapped(index: indexPath.section)
+        viewModel.quickStartCellTapped(index: indexPath.row)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -133,7 +133,7 @@ extension OnboardingQuickStartView: UITableViewDelegate, UITableViewDataSource {
             withIdentifier: OnboardingQuickStartCell.reuseIdentifier,
             for: indexPath) as! OnboardingQuickStartCell
                 
-        let quickStartItem = viewModel.quickStartCellWillAppear(index: indexPath.section)
+        let quickStartItem = viewModel.quickStartCellWillAppear(index: indexPath.row)
         cell.configure(item: quickStartItem)
         
         return cell
@@ -145,13 +145,5 @@ extension OnboardingQuickStartView: UITableViewDelegate, UITableViewDataSource {
         headerView.backgroundColor = view.backgroundColor
         
         return headerView
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 0
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 0
     }
 }
