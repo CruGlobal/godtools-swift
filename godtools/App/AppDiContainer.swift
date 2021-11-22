@@ -359,8 +359,4 @@ class AppDiContainer {
     var learnToShareToolItemsProvider: LearnToShareToolItemsProviderType {
         return InMemoryLearnToShareToolItems(localization: localizationServices)
     }
-    
-    var tutorialItemsProvider: TutorialItemProviderType {
-        return TutorialItemProvider(localizationServices: localizationServices, deviceLanguage: deviceLanguage)
-    }
 }

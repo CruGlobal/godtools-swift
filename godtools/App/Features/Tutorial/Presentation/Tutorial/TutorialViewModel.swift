@@ -9,8 +9,10 @@
 import Foundation
 
 class TutorialViewModel: TutorialViewModelType {
+    
     //TODO: re-implement this tutorial using TutorialPagerViewModel
     
+    private let getTutorialItemsUseCase: GetTutorialItemsUseCase
     private let localizationServices: LocalizationServices
     private let tutorialVideoAnalytics: TutorialVideoAnalytics
     private let analytics: AnalyticsContainer
@@ -25,9 +27,10 @@ class TutorialViewModel: TutorialViewModelType {
     let continueTitle: String
     let startUsingGodToolsTitle: String
     
-    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, analytics: AnalyticsContainer, tutorialVideoAnalytics: TutorialVideoAnalytics, tutorialItemsProvider: TutorialItemProviderType, deviceLanguage: DeviceLanguageType) {
+    required init(flowDelegate: FlowDelegate, getTutorialItemsUseCase: GetTutorialItemsUseCase, localizationServices: LocalizationServices, analytics: AnalyticsContainer, tutorialVideoAnalytics: TutorialVideoAnalytics, deviceLanguage: DeviceLanguageType) {
         
         self.flowDelegate = flowDelegate
+        self.getTutorialItemsUseCase = getTutorialItemsUseCase
         self.localizationServices = localizationServices
         self.analytics = analytics
         self.tutorialVideoAnalytics = tutorialVideoAnalytics
@@ -35,7 +38,7 @@ class TutorialViewModel: TutorialViewModelType {
         self.continueTitle = localizationServices.stringForMainBundle(key: "tutorial.continueButton.title.continue")
         self.startUsingGodToolsTitle = localizationServices.stringForMainBundle(key: "tutorial.continueButton.title.startUsingGodTools")
         
-        tutorialItems.accept(value: tutorialItemsProvider.tutorialItems)
+        tutorialItems.accept(value: getTutorialItemsUseCase.getTutorialItems())
         
         tutorialPagerAnalyticsModel = TutorialPagerAnalytics(screenName: "tutorial", siteSection: "tutorial", siteSubsection: "", continueButtonTappedActionName: "", continueButtonTappedData: nil, screenTrackIndexOffset: 1)
     }
