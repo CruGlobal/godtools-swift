@@ -1038,6 +1038,8 @@
 		D19D010325AF549B007C535B /* DeepLinkingServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19D010225AF549B007C535B /* DeepLinkingServiceType.swift */; };
 		D19EB5DE259BB39300685156 /* training_tip_callout.json in Resources */ = {isa = PBXBuildFile; fileRef = D19EB5DD259BB39300685156 /* training_tip_callout.json */; };
 		D19EB5E0259BB75900685156 /* training_tip_tips.json in Resources */ = {isa = PBXBuildFile; fileRef = D19EB5DF259BB75900685156 /* training_tip_tips.json */; };
+		D1AC148F274C1AA8003510AC /* OnboardingQuickStartCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AC148E274C1AA8003510AC /* OnboardingQuickStartCellViewModel.swift */; };
+		D1AC1491274C1ADF003510AC /* OnboardingQuickStartCellViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AC1490274C1ADF003510AC /* OnboardingQuickStartCellViewModelType.swift */; };
 		D1AF02ED2730763700BEC921 /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AF02EC2730763600BEC921 /* VideoPlayerView.swift */; };
 		D1AF02EF2730767D00BEC921 /* VideoPlayerViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AF02EE2730767D00BEC921 /* VideoPlayerViewModelType.swift */; };
 		D1AF02F1273076E700BEC921 /* VideoPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AF02F0273076E700BEC921 /* VideoPlayerViewModel.swift */; };
@@ -2159,6 +2161,8 @@
 		D19D010225AF549B007C535B /* DeepLinkingServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkingServiceType.swift; sourceTree = "<group>"; };
 		D19EB5DD259BB39300685156 /* training_tip_callout.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = training_tip_callout.json; sourceTree = "<group>"; };
 		D19EB5DF259BB75900685156 /* training_tip_tips.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = training_tip_tips.json; sourceTree = "<group>"; };
+		D1AC148E274C1AA8003510AC /* OnboardingQuickStartCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingQuickStartCellViewModel.swift; sourceTree = "<group>"; };
+		D1AC1490274C1ADF003510AC /* OnboardingQuickStartCellViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingQuickStartCellViewModelType.swift; sourceTree = "<group>"; };
 		D1AF02EC2730763600BEC921 /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
 		D1AF02EE2730767D00BEC921 /* VideoPlayerViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerViewModelType.swift; sourceTree = "<group>"; };
 		D1AF02F0273076E700BEC921 /* VideoPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerViewModel.swift; sourceTree = "<group>"; };
@@ -3862,6 +3866,8 @@
 				D1D5691B270636A600BBE2A6 /* OnboardingTutorialIntroViewModelType.swift */,
 				D133071F27398BBB0058450B /* OnboardingQuickStartCell.swift */,
 				D1330727273ABFF20058450B /* OnboardingQuickStartCell.xib */,
+				D1AC148E274C1AA8003510AC /* OnboardingQuickStartCellViewModel.swift */,
+				D1AC1490274C1ADF003510AC /* OnboardingQuickStartCellViewModelType.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -6340,6 +6346,7 @@
 				45BD79DB26A20EEA0007426B /* ContentLabelModelType.swift in Sources */,
 				45AD21432593A49900A096A0 /* ShareToolRemoteSessionURLView.swift in Sources */,
 				D1D5691E270637AB00BBE2A6 /* OnboardingTutorialIntroViewModel.swift in Sources */,
+				D1AC148F274C1AA8003510AC /* OnboardingQuickStartCellViewModel.swift in Sources */,
 				45AD1B5125938A4F00A096A0 /* ToolTrainingTipView.swift in Sources */,
 				45AD1AA625938A4E00A096A0 /* CustomTutorialViewId.swift in Sources */,
 				458EFEDC26B1D08C009EEB03 /* ToolBackButtonImageType.swift in Sources */,
@@ -6617,6 +6624,7 @@
 				45AD1B8A25938A4F00A096A0 /* OnboardingTutorialAvailability.swift in Sources */,
 				45AD1FBD25938A9800A096A0 /* TractRemoteShareNavigationEvent.swift in Sources */,
 				45AD1B9D25938A4F00A096A0 /* Language.swift in Sources */,
+				D1AC1491274C1ADF003510AC /* OnboardingQuickStartCellViewModelType.swift in Sources */,
 				45BEC53C26A606C9005D8CA1 /* MobileContentTextScale.swift in Sources */,
 				452652A426A7543A00E703F7 /* MultiplatformCard.swift in Sources */,
 				45BD79DC26A20EEA0007426B /* ContentButtonModelType.swift in Sources */,

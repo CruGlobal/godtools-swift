@@ -12,8 +12,6 @@ class OnboardingQuickStartCell: UITableViewCell {
     
     static let nibName: String = "OnboardingQuickStartCell"
     static let reuseIdentifier: String = "OnboardingQuickStartCellReuseIdentifier"
-        
-    private var item: OnboardingQuickStartItem?
     
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var subtitleLabel: UILabel!
@@ -31,9 +29,7 @@ class OnboardingQuickStartCell: UITableViewCell {
         subtitleLabel.text = nil
     }
     
-    func configure(item: OnboardingQuickStartItem) {
-        
-        self.item = item
+    func configure(item: OnboardingQuickStartCellViewModelType) {
         
         titleLabel.text = item.title
         subtitleLabel.text = item.linkButtonTitle

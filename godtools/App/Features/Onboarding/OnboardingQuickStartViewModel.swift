@@ -48,9 +48,9 @@ class OnboardingQuickStartViewModel: OnboardingQuickStartViewModelType {
         quickStartItemCount = quickStartItems.count
     }
     
-    func quickStartCellWillAppear(index: Int) -> OnboardingQuickStartItem {
+    func quickStartCellWillAppear(index: Int) -> OnboardingQuickStartCellViewModelType {
         
-        return quickStartItems[index]
+        return OnboardingQuickStartCellViewModel(item: quickStartItems[index])
     }
     
     func quickStartCellTapped(index: Int) {

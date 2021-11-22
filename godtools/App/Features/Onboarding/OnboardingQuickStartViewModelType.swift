@@ -15,7 +15,7 @@ protocol OnboardingQuickStartViewModelType {
     var endTutorialButtonTitle: String { get }
     var quickStartItemCount: Int { get }
     
-    func quickStartCellWillAppear(index: Int) -> OnboardingQuickStartItem
+    func quickStartCellWillAppear(index: Int) -> OnboardingQuickStartCellViewModelType
     func quickStartCellTapped(index: Int)
     func skipButtonTapped()
     func endTutorialButtonTapped()

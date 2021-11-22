@@ -2,7 +2,7 @@
 //  OnboardingQuickStartCellViewModel.swift
 //  godtools
 //
-//  Created by Robert Eldredge on 11/8/21.
+//  Created by Robert Eldredge on 11/22/21.
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
@@ -11,11 +11,11 @@ import Foundation
 class OnboardingQuickStartCellViewModel: OnboardingQuickStartCellViewModelType {
     
     let title: String
-    let buttonTitle: String    
+    let linkButtonTitle: String
     
-    required init(title: String, buttonTitle: String) {
+    required init (item: OnboardingQuickStartItem) {
         
-        self.title = title
-        self.buttonTitle = buttonTitle
+        title = item.title
+        linkButtonTitle = item.title
     }
 }
