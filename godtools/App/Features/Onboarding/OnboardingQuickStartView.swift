@@ -57,10 +57,6 @@ class OnboardingQuickStartView: UIViewController {
     
     private func setupLayout() {
         
-        titleLabel.text = viewModel.title
-        
-        endTutorialButton.setTitle(viewModel.endTutorialButtonTitle, for: .normal)
-        
         setSkipButton()
         
         quickStartTableView.register(
@@ -74,10 +70,9 @@ class OnboardingQuickStartView: UIViewController {
     
     private func setupBinding() {
         
-    }
-    
-    private func reloadData() {
+        titleLabel.text = viewModel.title
         
+        endTutorialButton.setTitle(viewModel.endTutorialButtonTitle, for: .normal)
     }
     
     private func setSkipButton() {
@@ -137,13 +132,5 @@ extension OnboardingQuickStartView: UITableViewDelegate, UITableViewDataSource {
         cell.configure(item: quickStartItem)
         
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
-        let headerView = UIView()
-        headerView.backgroundColor = view.backgroundColor
-        
-        return headerView
     }
 }
