@@ -102,19 +102,19 @@ extension OnboardingFlow: FlowDelegate {
             navigateToQuickStart()
 
         case .skipTappedFromOnboardingQuickStart:
-            flowDelegate?.navigate(step: .dismissOnboardingTutorial(dismissOnboardingTutorialType: nil))
+            flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: nil))
             
         case .endTutorialFromOnboardingQuickStart:
-            flowDelegate?.navigate(step: .dismissOnboardingTutorial(dismissOnboardingTutorialType: nil))
+            flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: nil))
         
         case .readArticlesTappedFromOnboardingQuickStart:
-            flowDelegate?.navigate(step: .dismissOnboardingTutorial(dismissOnboardingTutorialType: .readArticles))
+            flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: .readArticles))
         
         case .tryLessonsTappedFromOnboardingQuickStart:
-            flowDelegate?.navigate(step: .dismissOnboardingTutorial(dismissOnboardingTutorialType: .tryLessons))
+            flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: .tryLessons))
         
         case .chooseToolTappedFromOnboardingQuickStart:
-            flowDelegate?.navigate(step: .dismissOnboardingTutorial(dismissOnboardingTutorialType: .chooseTool))
+            flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: .chooseTool))
         
         default:
             break

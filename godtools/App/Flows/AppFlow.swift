@@ -307,10 +307,10 @@ class AppFlow: NSObject, Flow {
             
             self.onboardingFlow = onboardingFlow
             
-        case .dismissOnboardingTutorial(let dismissOnboardingTutorialType):
+        case .onboardingFlowCompleted(let onboardingFlowCompletedState):
             
             
-            switch dismissOnboardingTutorialType {
+            switch onboardingFlowCompletedState {
             
             case .readArticles:
                 navigate(step: .deepLink(deepLinkType: .tool(toolDeepLink: ToolDeepLink(resourceAbbreviation: "es", primaryLanguageCodes: ["en"], parallelLanguageCodes: [], liveShareStream: nil, page: nil))))

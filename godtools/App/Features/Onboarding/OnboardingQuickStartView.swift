@@ -10,12 +10,6 @@ import UIKit
 
 class OnboardingQuickStartView: UIViewController {
     
-    enum DismissOnboardingTutorialType {
-        case readArticles
-        case tryLessons
-        case chooseTool
-    }
-    
     private let viewModel: OnboardingQuickStartViewModelType
     
     private var skipButton: UIBarButtonItem?
