@@ -8,8 +8,13 @@
 
 import Foundation
 
-struct TutorialModel {
+class TutorialModel {
     
     let tutorialItems: [TutorialItemType]
+    
+    required init(tutorialItems: [TutorialItemType]) {
+        
+        self.tutorialItems = tutorialItems
+    }
 }
 
