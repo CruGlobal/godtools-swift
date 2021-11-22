@@ -17,9 +17,9 @@ class TutorialFlowDiContainer {
         self.appDiContainer = appDiContainer
     }
     
-    func getTutorialItemsUseCase() -> GetTutorialItemsUseCase {
+    func getTutorialUseCase() -> GetTutorialUseCase {
         
-        return GetTutorialItemsUseCase(
+        return GetTutorialUseCase(
             localizationServices: appDiContainer.localizationServices,
             deviceLanguage: appDiContainer.deviceLanguage
         )
