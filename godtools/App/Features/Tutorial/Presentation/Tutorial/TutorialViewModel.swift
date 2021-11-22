@@ -9,21 +9,20 @@
 import Foundation
 
 class TutorialViewModel: TutorialViewModelType {
-    
-    //TODO: re-implement this tutorial using TutorialPagerViewModel
-    
+        
     private let getTutorialItemsUseCase: GetTutorialItemsUseCase
     private let localizationServices: LocalizationServices
     private let tutorialVideoAnalytics: TutorialVideoAnalytics
     private let analytics: AnalyticsContainer
     private let tutorialPagerAnalyticsModel: TutorialPagerAnalytics
+    private let customViewBuilder: TutorialItemViewBuilder
     
+    private var tutorialItems: [TutorialItemType] = Array()
     private var page: Int = 0
     
     private weak var flowDelegate: FlowDelegate?
     
-    let customViewBuilder: CustomViewBuilderType
-    let tutorialItems: ObservableValue<[TutorialItemType]> = ObservableValue(value: [])
+    let numberOfTutorialItems: ObservableValue<Int> = ObservableValue(value: 0)
     let continueTitle: String
     let startUsingGodToolsTitle: String
     
@@ -37,15 +36,33 @@ class TutorialViewModel: TutorialViewModelType {
         self.customViewBuilder = TutorialItemViewBuilder(deviceLanguage: deviceLanguage)
         self.continueTitle = localizationServices.stringForMainBundle(key: "tutorial.continueButton.title.continue")
         self.startUsingGodToolsTitle = localizationServices.stringForMainBundle(key: "tutorial.continueButton.title.startUsingGodTools")
+                
+        tutorialPagerAnalyticsModel = TutorialPagerAnalytics(
+            screenName: "tutorial",
+            siteSection: "tutorial",
+            siteSubsection: "",
+            continueButtonTappedActionName: "",
+            continueButtonTappedData: nil,
+            screenTrackIndexOffset: 1
+        )
         
-        tutorialItems.accept(value: getTutorialItemsUseCase.getTutorialItems())
+        getTutorialItems()
+    }
+    
+    private func getTutorialItems() {
         
-        tutorialPagerAnalyticsModel = TutorialPagerAnalytics(screenName: "tutorial", siteSection: "tutorial", siteSubsection: "", continueButtonTappedActionName: "", continueButtonTappedData: nil, screenTrackIndexOffset: 1)
+        tutorialItems = getTutorialItemsUseCase.getTutorialItems()
+        numberOfTutorialItems.accept(value: tutorialItems.count)
     }
     
     func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType {
         
-        return TutorialCellViewModel(item: tutorialItems.value[index], customViewBuilder: customViewBuilder, tutorialVideoAnalytics: tutorialVideoAnalytics, analyticsScreenName: tutorialPagerAnalyticsModel.analyticsScreenName(page: index))
+        return TutorialCellViewModel(
+            item: tutorialItems[index],
+            customViewBuilder: customViewBuilder,
+            tutorialVideoAnalytics: tutorialVideoAnalytics,
+            analyticsScreenName: tutorialPagerAnalyticsModel.analyticsScreenName(page: index)
+        )
     }
     
     func closeTapped() {
@@ -60,7 +77,7 @@ class TutorialViewModel: TutorialViewModelType {
     func pageDidAppear(page: Int) {
                     
         let isFirstPage: Bool = page == 0
-        let isLastPage: Bool = page == tutorialItems.value.count - 1
+        let isLastPage: Bool = page == tutorialItems.count - 1
         
         self.page = page
         
@@ -82,7 +99,7 @@ class TutorialViewModel: TutorialViewModelType {
     func continueTapped() {
         
         let nextPage: Int = page + 1
-        let reachedEnd: Bool = nextPage >= tutorialItems.value.count
+        let reachedEnd: Bool = nextPage >= tutorialItems.count
         
         if reachedEnd {
             flowDelegate?.navigate(step: .startUsingGodToolsTappedFromTutorial)

@@ -10,8 +10,7 @@ import Foundation
 
 protocol TutorialViewModelType {
     
-    var customViewBuilder: CustomViewBuilderType { get }
-    var tutorialItems: ObservableValue<[TutorialItemType]> { get }
+    var numberOfTutorialItems: ObservableValue<Int> { get }
     var continueTitle: String { get }
     var startUsingGodToolsTitle: String { get }
     
