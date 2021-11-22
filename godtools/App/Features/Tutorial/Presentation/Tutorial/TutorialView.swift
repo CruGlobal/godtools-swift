@@ -63,33 +63,26 @@ class TutorialView: UIViewController {
             nib: UINib(nibName: TutorialCell.nibName, bundle: nil),
             cellReuseIdentifier: TutorialCell.reuseIdentifier
         )
-        
-        handleTutorialPageChange(page: 0)
     }
     
     private func setupBinding() {
         
-        viewModel.numberOfTutorialItems.addObserver(self) { [weak self] (numberOfTutorialItems: Int) in
-            self?.pageControl.numberOfPages = numberOfTutorialItems
+        viewModel.hidesBackButton.addObserver(self) { [weak self] (value: Bool) in
+            self?.setBackButton(hidden: value)
+        }
+        
+        viewModel.currentPage.addObserver(self) { [weak self] (value: Int) in
+            self?.pageControl.currentPage = value
+        }
+        
+        viewModel.numberOfPages.addObserver(self) { [weak self] (value: Int) in
+            self?.pageControl.numberOfPages = value
             self?.tutorialPagesView.reloadData()
         }
-    }
-    
-    private func handleTutorialPageChange(page: Int) {
         
-        pageControl.currentPage = page
-        
-        setBackButton(hidden: page == 0)
-              
-        let continueTitle: String
-        if tutorialPagesView.isOnLastPage {
-            continueTitle = viewModel.startUsingGodToolsTitle
+        viewModel.continueTitle.addObserver(self) { [weak self] (value: String) in
+            self?.continueButton.setTitle(value, for: .normal)
         }
-        else {
-            continueTitle = viewModel.continueTitle
-        }
-        
-        continueButton.setTitle(continueTitle, for: .normal)
     }
     
     private func setBackButton(hidden: Bool) {
@@ -133,7 +126,7 @@ class TutorialView: UIViewController {
 extension TutorialView: PageNavigationCollectionViewDelegate {
     
     func pageNavigationNumberOfPages(pageNavigation: PageNavigationCollectionView) -> Int {
-        return viewModel.numberOfTutorialItems.value
+        return viewModel.numberOfPages.value
     }
     
     func pageNavigation(pageNavigation: PageNavigationCollectionView, cellForPageAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -142,7 +135,7 @@ extension TutorialView: PageNavigationCollectionViewDelegate {
             cellReuseIdentifier: TutorialCell.reuseIdentifier,
             indexPath: indexPath) as! TutorialCell
         
-        let cellViewModel = viewModel.tutorialItemWillAppear(index: indexPath.item)
+        let cellViewModel = viewModel.tutorialPageWillAppear(index: indexPath.item)
         
         cell.configure(viewModel: cellViewModel)
         
@@ -156,16 +149,12 @@ extension TutorialView: PageNavigationCollectionViewDelegate {
     }
     
     func pageNavigationDidChangeMostVisiblePage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
-
-        handleTutorialPageChange(page: page)
         
         viewModel.pageDidChange(page: page)
     }
     
     func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
-        
-        pageControl.currentPage = page
-        
+                
         viewModel.pageDidAppear(page: page)
     }
 }

@@ -18,13 +18,13 @@ class TutorialViewModel: TutorialViewModelType {
     private let customViewBuilder: TutorialItemViewBuilder
     
     private var tutorialItems: [TutorialItemType] = Array()
-    private var page: Int = 0
     
     private weak var flowDelegate: FlowDelegate?
     
-    let numberOfTutorialItems: ObservableValue<Int> = ObservableValue(value: 0)
-    let continueTitle: String
-    let startUsingGodToolsTitle: String
+    let hidesBackButton: ObservableValue<Bool> = ObservableValue(value: false)
+    let currentPage: ObservableValue<Int> = ObservableValue(value: 0)
+    let numberOfPages: ObservableValue<Int> = ObservableValue(value: 0)
+    let continueTitle: ObservableValue<String> = ObservableValue(value: "")
     
     required init(flowDelegate: FlowDelegate, getTutorialItemsUseCase: GetTutorialItemsUseCase, localizationServices: LocalizationServices, analytics: AnalyticsContainer, tutorialVideoAnalytics: TutorialVideoAnalytics, deviceLanguage: DeviceLanguageType) {
         
@@ -34,8 +34,6 @@ class TutorialViewModel: TutorialViewModelType {
         self.analytics = analytics
         self.tutorialVideoAnalytics = tutorialVideoAnalytics
         self.customViewBuilder = TutorialItemViewBuilder(deviceLanguage: deviceLanguage)
-        self.continueTitle = localizationServices.stringForMainBundle(key: "tutorial.continueButton.title.continue")
-        self.startUsingGodToolsTitle = localizationServices.stringForMainBundle(key: "tutorial.continueButton.title.startUsingGodTools")
                 
         tutorialPagerAnalyticsModel = TutorialPagerAnalytics(
             screenName: "tutorial",
@@ -52,10 +50,10 @@ class TutorialViewModel: TutorialViewModelType {
     private func getTutorialItems() {
         
         tutorialItems = getTutorialItemsUseCase.getTutorialItems()
-        numberOfTutorialItems.accept(value: tutorialItems.count)
+        numberOfPages.accept(value: tutorialItems.count)
     }
     
-    func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType {
+    func tutorialPageWillAppear(index: Int) -> TutorialCellViewModelType {
         
         return TutorialCellViewModel(
             item: tutorialItems[index],
@@ -70,16 +68,31 @@ class TutorialViewModel: TutorialViewModelType {
     }
     
     func pageDidChange(page: Int) {
+                  
+        currentPage.accept(value: page)
+        
+        let isFirstPage: Bool = page == 0
+        let isOnLastPage: Bool = page >= tutorialItems.count - 1
+        
+        hidesBackButton.accept(value: isFirstPage)
                 
-        self.page = page
+        let continueTitleKey: String
+        if isOnLastPage {
+            continueTitleKey = "tutorial.continueButton.title.startUsingGodTools"
+        }
+        else {
+            continueTitleKey = "tutorial.continueButton.title.continue"
+        }
+        
+        continueTitle.accept(value: localizationServices.stringForMainBundle(key: continueTitleKey))
     }
     
     func pageDidAppear(page: Int) {
                     
         let isFirstPage: Bool = page == 0
         let isLastPage: Bool = page == tutorialItems.count - 1
-        
-        self.page = page
+                
+        currentPage.accept(value: page)
         
         let analyticsScreenName = tutorialPagerAnalyticsModel.analyticsScreenName(page: page)
         
@@ -98,7 +111,7 @@ class TutorialViewModel: TutorialViewModelType {
     
     func continueTapped() {
         
-        let nextPage: Int = page + 1
+        let nextPage: Int = currentPage.value + 1
         let reachedEnd: Bool = nextPage >= tutorialItems.count
         
         if reachedEnd {

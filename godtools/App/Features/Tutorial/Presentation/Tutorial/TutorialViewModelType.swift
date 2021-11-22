@@ -10,11 +10,12 @@ import Foundation
 
 protocol TutorialViewModelType {
     
-    var numberOfTutorialItems: ObservableValue<Int> { get }
-    var continueTitle: String { get }
-    var startUsingGodToolsTitle: String { get }
+    var hidesBackButton: ObservableValue<Bool> { get }
+    var currentPage: ObservableValue<Int> { get }
+    var numberOfPages: ObservableValue<Int> { get }
+    var continueTitle: ObservableValue<String> { get }
     
-    func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType
+    func tutorialPageWillAppear(index: Int) -> TutorialCellViewModelType
     func closeTapped()
     func pageDidChange(page: Int)
     func pageDidAppear(page: Int)
