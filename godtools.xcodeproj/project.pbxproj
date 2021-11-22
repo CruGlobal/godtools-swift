@@ -25,12 +25,6 @@
 		451D8B15274C44460030C6CC /* TutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 451D8B0A274C44460030C6CC /* TutorialView.xib */; };
 		451D8B16274C44460030C6CC /* TutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451D8B0B274C44460030C6CC /* TutorialViewModel.swift */; };
 		451D8B17274C44460030C6CC /* TutorialViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451D8B0C274C44460030C6CC /* TutorialViewModelType.swift */; };
-		451D8B18274C44460030C6CC /* TutorialInMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451D8B0E274C44460030C6CC /* TutorialInMenuView.swift */; };
-		451D8B19274C44460030C6CC /* TutorialToolsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 451D8B0F274C44460030C6CC /* TutorialToolsView.xib */; };
-		451D8B1A274C44460030C6CC /* TutorialToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451D8B10274C44460030C6CC /* TutorialToolsView.swift */; };
-		451D8B1B274C44460030C6CC /* TutorialToolsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451D8B11274C44460030C6CC /* TutorialToolsViewModel.swift */; };
-		451D8B1C274C44460030C6CC /* TutorialInMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451D8B12274C44460030C6CC /* TutorialInMenuViewModel.swift */; };
-		451D8B1D274C44460030C6CC /* TutorialInMenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 451D8B13274C44460030C6CC /* TutorialInMenuView.xib */; };
 		451D8B1E274C44460030C6CC /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451D8B14274C44460030C6CC /* TutorialView.swift */; };
 		451D8B20274C44F50030C6CC /* TutorialFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451D8B1F274C44F50030C6CC /* TutorialFlow.swift */; };
 		451D8B25274C47210030C6CC /* TutorialFlowDiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451D8B24274C47210030C6CC /* TutorialFlowDiContainer.swift */; };
@@ -1115,12 +1109,6 @@
 		451D8B0A274C44460030C6CC /* TutorialView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialView.xib; sourceTree = "<group>"; };
 		451D8B0B274C44460030C6CC /* TutorialViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewModel.swift; sourceTree = "<group>"; };
 		451D8B0C274C44460030C6CC /* TutorialViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewModelType.swift; sourceTree = "<group>"; };
-		451D8B0E274C44460030C6CC /* TutorialInMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialInMenuView.swift; sourceTree = "<group>"; };
-		451D8B0F274C44460030C6CC /* TutorialToolsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialToolsView.xib; sourceTree = "<group>"; };
-		451D8B10274C44460030C6CC /* TutorialToolsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialToolsView.swift; sourceTree = "<group>"; };
-		451D8B11274C44460030C6CC /* TutorialToolsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialToolsViewModel.swift; sourceTree = "<group>"; };
-		451D8B12274C44460030C6CC /* TutorialInMenuViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialInMenuViewModel.swift; sourceTree = "<group>"; };
-		451D8B13274C44460030C6CC /* TutorialInMenuView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialInMenuView.xib; sourceTree = "<group>"; };
 		451D8B14274C44460030C6CC /* TutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
 		451D8B1F274C44F50030C6CC /* TutorialFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialFlow.swift; sourceTree = "<group>"; };
 		451D8B24274C47210030C6CC /* TutorialFlowDiContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialFlowDiContainer.swift; sourceTree = "<group>"; };
@@ -2330,22 +2318,8 @@
 				451D8B0A274C44460030C6CC /* TutorialView.xib */,
 				451D8B0B274C44460030C6CC /* TutorialViewModel.swift */,
 				451D8B0C274C44460030C6CC /* TutorialViewModelType.swift */,
-				451D8B0D274C44460030C6CC /* Views */,
 			);
 			path = Tutorial;
-			sourceTree = "<group>";
-		};
-		451D8B0D274C44460030C6CC /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				451D8B0E274C44460030C6CC /* TutorialInMenuView.swift */,
-				451D8B13274C44460030C6CC /* TutorialInMenuView.xib */,
-				451D8B12274C44460030C6CC /* TutorialInMenuViewModel.swift */,
-				451D8B10274C44460030C6CC /* TutorialToolsView.swift */,
-				451D8B0F274C44460030C6CC /* TutorialToolsView.xib */,
-				451D8B11274C44460030C6CC /* TutorialToolsViewModel.swift */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		451D8B2B274C54930030C6CC /* GetTutorialUseCase */ = {
@@ -6014,7 +5988,6 @@
 				451EBE3A24AD968B00C4D6DD /* 95ad213fe1106f7a12d0f0f7c1f82e53200021d7759bb543eb36cde626e37658.jpg in Resources */,
 				451EBE3624AD968B00C4D6DD /* 2767.zip in Resources */,
 				4599251D2704F37B008F7844 /* ChooseScaleSliderView.xib in Resources */,
-				451D8B19274C44460030C6CC /* TutorialToolsView.xib in Resources */,
 				4556AED923E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf in Resources */,
 				45E998D623FD7B090088DD0C /* SF-Pro-Text-Semibold.otf in Resources */,
 				D1B944E5259E58F5004641DB /* remote_share_active.json in Resources */,
@@ -6051,7 +6024,6 @@
 				45AD217F2593ABC800A096A0 /* README.md in Resources */,
 				4F5732971EA69CF00082035C /* Assets.xcassets in Resources */,
 				451EBE2C24AD968B00C4D6DD /* 057e056ad4c27921d537c74f8e59396214330a1ed084efcb5d265d01cb7f0d4e.jpg in Resources */,
-				451D8B1D274C44460030C6CC /* TutorialInMenuView.xib in Resources */,
 				4555840A269F2DA500C3FF14 /* MobileContentPageCell.xib in Resources */,
 				4555832B269F2C7B00C3FF14 /* ToolPageCardView.xib in Resources */,
 				45AD1B6025938A4F00A096A0 /* GlobalActivityHeaderView.xib in Resources */,
@@ -6436,14 +6408,12 @@
 				45558333269F2C7B00C3FF14 /* ToolPageModalsView.swift in Sources */,
 				45BD79DA26A20EEA0007426B /* LabelModelType.swift in Sources */,
 				45AD1FF925938A9800A096A0 /* IsNewUserDefaultsCache.swift in Sources */,
-				451D8B1C274C44460030C6CC /* TutorialInMenuViewModel.swift in Sources */,
 				45AD1AB525938A4E00A096A0 /* LanguageAvailabilityType.swift in Sources */,
 				45BD7A4C26A21FDA0007426B /* ContentParagraphNode.swift in Sources */,
 				45FF25E7260BED6F00D771B6 /* ToolViewModelType.swift in Sources */,
 				45AD1B3525938A4F00A096A0 /* ChooseLanguageCell.swift in Sources */,
 				455583FE269F2DA500C3FF14 /* MobileContentEmbeddedVideoView.swift in Sources */,
 				45AD1FBE25938A9800A096A0 /* TractRemoteSharePublisherNavigationEvent.swift in Sources */,
-				451D8B18274C44460030C6CC /* TutorialInMenuView.swift in Sources */,
 				45AD206525938B1300A096A0 /* AlertMessage.swift in Sources */,
 				45E39EC327457856006A59E4 /* TutorialAssetContent.swift in Sources */,
 				45558351269F2D1000C3FF14 /* LessonPageViewModel.swift in Sources */,
@@ -6481,7 +6451,6 @@
 				45AD1F8325938A9800A096A0 /* FavoritedResourceModelType.swift in Sources */,
 				45AD1FEE25938A9800A096A0 /* OpenTutorialCalloutCacheType.swift in Sources */,
 				45AD21412593A49900A096A0 /* ShareToolRemoteSessionURLViewModel.swift in Sources */,
-				451D8B1B274C44460030C6CC /* TutorialToolsViewModel.swift in Sources */,
 				456BD2CC27020C75004D7B19 /* MobileContentViewHeightConstraintType.swift in Sources */,
 				45AD1F9A25938A9800A096A0 /* RealmAttachment.swift in Sources */,
 				455583FD269F2DA500C3FF14 /* MobileContentInputViewModel.swift in Sources */,
@@ -6898,7 +6867,6 @@
 				455583D3269F2DA500C3FF14 /* MobileContentHeaderView.swift in Sources */,
 				457032A726D0056F00F5BADC /* MobileContentBackgroundImageRendererType.swift in Sources */,
 				45B6482825E593110098BAF1 /* (null) in Sources */,
-				451D8B1A274C44460030C6CC /* TutorialToolsView.swift in Sources */,
 				45C93AE2261D310900592FFF /* ArticleAemCacheObject.swift in Sources */,
 				45558327269F2C7B00C3FF14 /* ToolPageCardViewModelType.swift in Sources */,
 				45558415269F2F6100C3FF14 /* MobileContentAnalyticsEvent.swift in Sources */,

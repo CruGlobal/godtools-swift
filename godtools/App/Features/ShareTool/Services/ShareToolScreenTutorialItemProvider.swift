@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ShareToolScreenTutorialItemProvider: TutorialItemProviderType {
+class ShareToolScreenTutorialItemProvider {
     
     let tutorialItems: [TutorialItemType]
     
