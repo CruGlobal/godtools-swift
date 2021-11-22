@@ -31,6 +31,7 @@ class OnboardingQuickStartCell: UITableViewCell {
     
     func configure(item: OnboardingQuickStartCellViewModelType) {
         
+        selectionStyle = .none
         titleLabel.text = item.title
         subtitleLabel.text = item.linkButtonTitle
     }
