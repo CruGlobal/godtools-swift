@@ -252,6 +252,10 @@ class AppDiContainer {
         )
     }
     
+    func getTutorialIsAvailableUseCase() -> GetTutorialIsAvailableUseCase {
+        return GetTutorialIsAvailableUseCase(deviceLanguage: deviceLanguage)
+    }
+    
     func getTutorialVideoAnalytics() -> TutorialVideoAnalytics {
         return TutorialVideoAnalytics(
             trackActionAnalytics: analytics.trackActionAnalytics
@@ -274,6 +278,14 @@ class AppDiContainer {
     
     func getMobileContentNodeParser() -> MobileContentXmlNodeParser {
         return MobileContentXmlNodeParser()
+    }
+    
+    func getOnboardingTutorialAvailability() -> OnboardingTutorialAvailabilityType {
+        return OnboardingTutorialAvailability(
+            getTutorialIsAvailableUseCase: getTutorialIsAvailableUseCase(),
+            onboardingTutorialViewedCache: onboardingTutorialViewedCache,
+            isNewUserCache: isNewUserService.isNewUserCache
+        )
     }
     
     func getToolTrainingTipsOnboardingViews() -> ToolTrainingTipsOnboardingViewsService {
@@ -308,26 +320,10 @@ class AppDiContainer {
         return ExitLinkAnalytics(firebaseAnalytics: analytics.firebaseAnalytics)
     }
     
-    var onboardingTutorialAvailability: OnboardingTutorialAvailabilityType {
-        return OnboardingTutorialAvailability(
-            tutorialAvailability: tutorialAvailability,
-            onboardingTutorialViewedCache: onboardingTutorialViewedCache,
-            isNewUserCache: isNewUserService.isNewUserCache
-        )
-    }
-    
     var onboardingTutorialViewedCache: OnboardingTutorialViewedCacheType {
         return OnboardingTutorialViewedUserDefaultsCache()
     }
-    
-    var tutorialSupportedLanguages: SupportedLanguagesType {
-        return TutorialSupportedLanguages()
-    }
-    
-    var tutorialAvailability: TutorialAvailabilityType {
-        return TutorialAvailability(deviceLanguage: deviceLanguage, tutorialSupportedLanguages: tutorialSupportedLanguages)
-    }
-    
+        
     var tractRemoteShareSubscriber: TractRemoteShareSubscriber {
         let webSocket: WebSocketType = StarscreamWebSocket()
         return TractRemoteShareSubscriber(

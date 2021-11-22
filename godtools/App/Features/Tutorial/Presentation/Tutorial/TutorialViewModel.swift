@@ -15,7 +15,6 @@ class TutorialViewModel: TutorialViewModelType {
     private let tutorialVideoAnalytics: TutorialVideoAnalytics
     private let analytics: AnalyticsContainer
     private let tutorialPagerAnalyticsModel: TutorialPagerAnalytics
-    private let customViewBuilder: TutorialItemViewBuilder
     
     private var tutorialModel: TutorialModel = TutorialModel(tutorialItems: [])
     
@@ -26,14 +25,13 @@ class TutorialViewModel: TutorialViewModelType {
     let numberOfPages: ObservableValue<Int> = ObservableValue(value: 0)
     let continueTitle: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(flowDelegate: FlowDelegate, getTutorialUseCase: GetTutorialUseCase, localizationServices: LocalizationServices, analytics: AnalyticsContainer, tutorialVideoAnalytics: TutorialVideoAnalytics, deviceLanguage: DeviceLanguageType) {
+    required init(flowDelegate: FlowDelegate, getTutorialUseCase: GetTutorialUseCase, localizationServices: LocalizationServices, analytics: AnalyticsContainer, tutorialVideoAnalytics: TutorialVideoAnalytics) {
         
         self.flowDelegate = flowDelegate
         self.getTutorialUseCase = getTutorialUseCase
         self.localizationServices = localizationServices
         self.analytics = analytics
         self.tutorialVideoAnalytics = tutorialVideoAnalytics
-        self.customViewBuilder = TutorialItemViewBuilder(deviceLanguage: deviceLanguage)
                 
         tutorialPagerAnalyticsModel = TutorialPagerAnalytics(
             screenName: "tutorial",
@@ -57,7 +55,7 @@ class TutorialViewModel: TutorialViewModelType {
         
         return TutorialCellViewModel(
             item: tutorialModel.tutorialItems[index],
-            customViewBuilder: customViewBuilder,
+            customViewBuilder: nil,
             tutorialVideoAnalytics: tutorialVideoAnalytics,
             analyticsScreenName: tutorialPagerAnalyticsModel.analyticsScreenName(page: index)
         )

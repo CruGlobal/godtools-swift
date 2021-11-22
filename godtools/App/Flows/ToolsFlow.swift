@@ -44,7 +44,7 @@ class ToolsFlow: ToolNavigationFlow, Flow {
             deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
             favoritingToolMessageCache: appDiContainer.favoritingToolMessageCache,
             analytics: appDiContainer.analytics,
-            tutorialAvailability: appDiContainer.tutorialAvailability,
+            getTutorialIsAvailableUseCase: appDiContainer.getTutorialIsAvailableUseCase(),
             openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache
         )
         

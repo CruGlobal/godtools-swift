@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TutorialSupportedLanguages: SupportedLanguagesType {
+class TutorialSupportedLanguages: TutorialSupportedLanguagesType {
     
     let languages: [Locale]
         
