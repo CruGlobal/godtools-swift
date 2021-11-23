@@ -8,13 +8,10 @@
 
 import Foundation
 
-class TutorialModel {
+struct TutorialModel {
     
     let tutorialItems: [TutorialItemType]
-    
-    required init(tutorialItems: [TutorialItemType]) {
-        
-        self.tutorialItems = tutorialItems
-    }
+    let defaultContinueButtonTitle: String
+    let lastPageContinueButtonTitle: String
 }
 

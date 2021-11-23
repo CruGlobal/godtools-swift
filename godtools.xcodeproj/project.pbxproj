@@ -883,6 +883,10 @@
 		45BD7A6E26A226160007426B /* MobileContentXmlParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BD7A6D26A226160007426B /* MobileContentXmlParser.swift */; };
 		45BD7A7026A235780007426B /* MobileContentRendererPageViewFactories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BD7A6F26A235780007426B /* MobileContentRendererPageViewFactories.swift */; };
 		45BD7A7226A235F60007426B /* MobileContentRendererPageViewFactoriesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BD7A7126A235F60007426B /* MobileContentRendererPageViewFactoriesType.swift */; };
+		45BE7485274D9A1D009CAC38 /* tutorial_tooltip.json in Resources */ = {isa = PBXBuildFile; fileRef = 45BE7484274D9A1D009CAC38 /* tutorial_tooltip.json */; };
+		45BE7487274D9AEC009CAC38 /* tutorial_screenshare.json in Resources */ = {isa = PBXBuildFile; fileRef = 45BE7486274D9AEC009CAC38 /* tutorial_screenshare.json */; };
+		45BE7489274D9B4B009CAC38 /* tutorial_lessons.json in Resources */ = {isa = PBXBuildFile; fileRef = 45BE7488274D9B4B009CAC38 /* tutorial_lessons.json */; };
+		45BE748B274D9BF6009CAC38 /* tutorial_tool.json in Resources */ = {isa = PBXBuildFile; fileRef = 45BE748A274D9BF6009CAC38 /* tutorial_tool.json */; };
 		45BEC52F26A604E4005D8CA1 /* MobileContentColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BEC52326A604E2005D8CA1 /* MobileContentColor.swift */; };
 		45BEC53026A604E4005D8CA1 /* MobileContentSpacerMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BEC52426A604E2005D8CA1 /* MobileContentSpacerMode.swift */; };
 		45BEC53126A604E4005D8CA1 /* MobileContentTextAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BEC52526A604E3005D8CA1 /* MobileContentTextAlignment.swift */; };
@@ -1941,6 +1945,10 @@
 		45BD7A6D26A226160007426B /* MobileContentXmlParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentXmlParser.swift; sourceTree = "<group>"; };
 		45BD7A6F26A235780007426B /* MobileContentRendererPageViewFactories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRendererPageViewFactories.swift; sourceTree = "<group>"; };
 		45BD7A7126A235F60007426B /* MobileContentRendererPageViewFactoriesType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRendererPageViewFactoriesType.swift; sourceTree = "<group>"; };
+		45BE7484274D9A1D009CAC38 /* tutorial_tooltip.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tutorial_tooltip.json; sourceTree = "<group>"; };
+		45BE7486274D9AEC009CAC38 /* tutorial_screenshare.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tutorial_screenshare.json; sourceTree = "<group>"; };
+		45BE7488274D9B4B009CAC38 /* tutorial_lessons.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tutorial_lessons.json; sourceTree = "<group>"; };
+		45BE748A274D9BF6009CAC38 /* tutorial_tool.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tutorial_tool.json; sourceTree = "<group>"; };
 		45BEC52326A604E2005D8CA1 /* MobileContentColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentColor.swift; sourceTree = "<group>"; };
 		45BEC52426A604E2005D8CA1 /* MobileContentSpacerMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentSpacerMode.swift; sourceTree = "<group>"; };
 		45BEC52526A604E3005D8CA1 /* MobileContentTextAlignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentTextAlignment.swift; sourceTree = "<group>"; };
@@ -5578,15 +5586,19 @@
 		D115A65C2526580A007F11AD /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
-				D19EB5DD259BB39300685156 /* training_tip_callout.json */,
-				D19EB5DF259BB75900685156 /* training_tip_tips.json */,
 				45DEF22D2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json */,
-				D1B944E4259E58F5004641DB /* remote_share_active.json */,
-				D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */,
-				D115A65D25265813007F11AD /* share_tool_tutorial_mirrored.json */,
 				D188EA8027146AAF00B10ABA /* onboarding_distance.json */,
 				D188EA7F27146AAF00B10ABA /* onboarding_dog.json */,
 				D188EA7E27146AAF00B10ABA /* onboarding_two_dudes.json */,
+				D1B944E4259E58F5004641DB /* remote_share_active.json */,
+				D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */,
+				D115A65D25265813007F11AD /* share_tool_tutorial_mirrored.json */,
+				D19EB5DD259BB39300685156 /* training_tip_callout.json */,
+				D19EB5DF259BB75900685156 /* training_tip_tips.json */,
+				45BE7488274D9B4B009CAC38 /* tutorial_lessons.json */,
+				45BE7486274D9AEC009CAC38 /* tutorial_screenshare.json */,
+				45BE748A274D9BF6009CAC38 /* tutorial_tool.json */,
+				45BE7484274D9A1D009CAC38 /* tutorial_tooltip.json */,
 			);
 			path = Lottie;
 			sourceTree = "<group>";
@@ -5961,6 +5973,7 @@
 				4FAF20781F02933900C43AFC /* Localizable.strings in Resources */,
 				451EBE3024AD968B00C4D6DD /* 2626c83091f11eb08c2bded5d4a237fa986fe3a318d1fb14933906021a7493a7.jpg in Resources */,
 				D188EA8227146AB000B10ABA /* onboarding_dog.json in Resources */,
+				45BE748B274D9BF6009CAC38 /* tutorial_tool.json in Resources */,
 				45CB9F9F261F8BA80036BEB3 /* ToolsMenuToolbarView.xib in Resources */,
 				45AD1AC025938A4E00A096A0 /* LoadingToolView.xib in Resources */,
 				45AD1AF525938A4E00A096A0 /* WebContentView.xib in Resources */,
@@ -6001,6 +6014,7 @@
 				455582E7269F2C1000C3FF14 /* TrainingPageView.xib in Resources */,
 				455583D9269F2DA500C3FF14 /* MobileContentTabsView.xib in Resources */,
 				45AD1B2C25938A4F00A096A0 /* AboutTextCell.xib in Resources */,
+				45BE7487274D9AEC009CAC38 /* tutorial_screenshare.json in Resources */,
 				45AD1B0925938A4E00A096A0 /* ArticleWebView.xib in Resources */,
 				45AD215A2593A4D900A096A0 /* ShareToolScreenTutorialView.xib in Resources */,
 				45AD1AB925938A4E00A096A0 /* ToolsTableView.xib in Resources */,
@@ -6053,7 +6067,9 @@
 				451EBE2B24AD968B00C4D6DD /* e5dd66976d53a69bbd12867079750e14732c5112a254022c038738f7f12953a8.png in Resources */,
 				45AD1ABC25938A4E00A096A0 /* FavoritedToolsView.xib in Resources */,
 				451EBE2A24AD968B00C4D6DD /* a6765002e46cea44dc6245bcb842ce01a0134c147c47cf108134a4c4d1a5c129.jpg in Resources */,
+				45BE7485274D9A1D009CAC38 /* tutorial_tooltip.json in Resources */,
 				D19EB5DE259BB39300685156 /* training_tip_callout.json in Resources */,
+				45BE7489274D9B4B009CAC38 /* tutorial_lessons.json in Resources */,
 				D19EB5E0259BB75900685156 /* training_tip_tips.json in Resources */,
 				4556AED823E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf in Resources */,
 				45CB9FA6261F8BA80036BEB3 /* ToolCell.xib in Resources */,

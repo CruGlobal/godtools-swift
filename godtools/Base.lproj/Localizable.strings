@@ -176,6 +176,7 @@ The app can be downloaded from https://godtoolsapp.com";
 "tutorial.lesson.title" = "Lessons";
 "tutorial.lesson.message" = "In each GodTools lesson you learn something to help you have real conversations about God.";
 "tutorial.findTutorial.title" = "Find this tutorial in the menu whenever you need it.";
+"tutorial.continueButton.title.closeTutorial" = "Close tutorial";
 
 // OpenTutorial
 "openTutorial.showTutorialLabel.text" = "Show Me A Tutorial";

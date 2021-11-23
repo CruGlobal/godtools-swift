@@ -22,17 +22,25 @@ class GetTutorialUseCase {
     func getTutorial() -> TutorialModel {
         
         let tutorialItems: [TutorialItemType]
+        let defaultContinueButtonTitle: String = localizationServices.stringForMainBundle(key: "tutorial.continueButton.title.continue")
+        let lastPageContinueButtonTitle: String
         
         if deviceLanguage.isEnglish {
             
             tutorialItems = getEnglishTutorialItems()
+            lastPageContinueButtonTitle = localizationServices.stringForMainBundle(key: "tutorial.continueButton.title.closeTutorial")
         }
         else {
             
             tutorialItems = getNonEnglishTutorialItems()
+            lastPageContinueButtonTitle = localizationServices.stringForMainBundle(key: "tutorial.continueButton.title.startUsingGodTools")
         }
         
-        return TutorialModel(tutorialItems: tutorialItems)
+        return TutorialModel(
+            tutorialItems: tutorialItems,
+            defaultContinueButtonTitle: defaultContinueButtonTitle,
+            lastPageContinueButtonTitle: lastPageContinueButtonTitle
+        )
     }
     
     private func getEnglishTutorialItems() -> [TutorialItemType] {
@@ -43,7 +51,7 @@ class GetTutorialUseCase {
                 title: localizationServices.stringForMainBundle(key: "tutorial.tool.title"),
                 message: localizationServices.stringForMainBundle(key: "tutorial.tool.message"),
                 imageName: nil,
-                animationName: nil,
+                animationName: "tutorial_tool",
                 youTubeVideoId: nil,
                 customViewId: nil
             ),
@@ -51,7 +59,7 @@ class GetTutorialUseCase {
                 title: localizationServices.stringForMainBundle(key: "tutorial.toolTip.title"),
                 message: localizationServices.stringForMainBundle(key: "tutorial.toolTip.message"),
                 imageName: nil,
-                animationName: nil,
+                animationName: "tutorial_tooltip",
                 youTubeVideoId: nil,
                 customViewId: nil
             ),
@@ -59,7 +67,7 @@ class GetTutorialUseCase {
                 title: localizationServices.stringForMainBundle(key: "tutorial.screenShare.title"),
                 message: localizationServices.stringForMainBundle(key: "tutorial.screenShare.message"),
                 imageName: nil,
-                animationName: nil,
+                animationName: "tutorial_screenshare",
                 youTubeVideoId: nil,
                 customViewId: nil
             ),
@@ -67,7 +75,7 @@ class GetTutorialUseCase {
                 title: localizationServices.stringForMainBundle(key: "tutorial.lesson.title"),
                 message: localizationServices.stringForMainBundle(key: "tutorial.lesson.message"),
                 imageName: nil,
-                animationName: nil,
+                animationName: "tutorial_lessons",
                 youTubeVideoId: nil,
                 customViewId: nil
             ),

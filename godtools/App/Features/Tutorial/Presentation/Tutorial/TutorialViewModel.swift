@@ -11,12 +11,11 @@ import Foundation
 class TutorialViewModel: TutorialViewModelType {
         
     private let getTutorialUseCase: GetTutorialUseCase
-    private let localizationServices: LocalizationServices
     private let tutorialVideoAnalytics: TutorialVideoAnalytics
     private let analytics: AnalyticsContainer
     private let tutorialPagerAnalyticsModel: TutorialPagerAnalytics
     
-    private var tutorialModel: TutorialModel = TutorialModel(tutorialItems: [])
+    private var tutorialModel: TutorialModel?
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -25,11 +24,10 @@ class TutorialViewModel: TutorialViewModelType {
     let numberOfPages: ObservableValue<Int> = ObservableValue(value: 0)
     let continueTitle: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(flowDelegate: FlowDelegate, getTutorialUseCase: GetTutorialUseCase, localizationServices: LocalizationServices, analytics: AnalyticsContainer, tutorialVideoAnalytics: TutorialVideoAnalytics) {
+    required init(flowDelegate: FlowDelegate, getTutorialUseCase: GetTutorialUseCase, analytics: AnalyticsContainer, tutorialVideoAnalytics: TutorialVideoAnalytics) {
         
         self.flowDelegate = flowDelegate
         self.getTutorialUseCase = getTutorialUseCase
-        self.localizationServices = localizationServices
         self.analytics = analytics
         self.tutorialVideoAnalytics = tutorialVideoAnalytics
                 
@@ -42,19 +40,23 @@ class TutorialViewModel: TutorialViewModelType {
             screenTrackIndexOffset: 1
         )
         
-        getTutorial()
+        reloadTutorial(tutorial: getTutorialUseCase.getTutorial())
     }
     
-    private func getTutorial() {
+    private func reloadTutorial(tutorial: TutorialModel) {
         
-        tutorialModel = getTutorialUseCase.getTutorial()
-        numberOfPages.accept(value: tutorialModel.tutorialItems.count)
+        self.tutorialModel = tutorial
+        numberOfPages.accept(value: tutorial.tutorialItems.count)
+    }
+    
+    private var tutorialItems: [TutorialItemType] {
+        return tutorialModel?.tutorialItems ?? []
     }
     
     func tutorialPageWillAppear(index: Int) -> TutorialCellViewModelType {
         
         return TutorialCellViewModel(
-            item: tutorialModel.tutorialItems[index],
+            item: tutorialItems[index],
             customViewBuilder: nil,
             tutorialVideoAnalytics: tutorialVideoAnalytics,
             analyticsScreenName: tutorialPagerAnalyticsModel.analyticsScreenName(page: index)
@@ -70,25 +72,25 @@ class TutorialViewModel: TutorialViewModelType {
         currentPage.accept(value: page)
         
         let isFirstPage: Bool = page == 0
-        let isOnLastPage: Bool = page >= tutorialModel.tutorialItems.count - 1
+        let isOnLastPage: Bool = page >= tutorialItems.count - 1
         
         hidesBackButton.accept(value: isFirstPage)
                 
-        let continueTitleKey: String
+        let continueTitleValue: String
         if isOnLastPage {
-            continueTitleKey = "tutorial.continueButton.title.startUsingGodTools"
+            continueTitleValue = tutorialModel?.lastPageContinueButtonTitle ?? ""
         }
         else {
-            continueTitleKey = "tutorial.continueButton.title.continue"
+            continueTitleValue = tutorialModel?.defaultContinueButtonTitle ?? ""
         }
         
-        continueTitle.accept(value: localizationServices.stringForMainBundle(key: continueTitleKey))
+        continueTitle.accept(value: continueTitleValue)
     }
     
     func pageDidAppear(page: Int) {
                     
         let isFirstPage: Bool = page == 0
-        let isLastPage: Bool = page == tutorialModel.tutorialItems.count - 1
+        let isLastPage: Bool = page == tutorialItems.count - 1
                 
         currentPage.accept(value: page)
         
@@ -110,7 +112,7 @@ class TutorialViewModel: TutorialViewModelType {
     func continueTapped() {
         
         let nextPage: Int = currentPage.value + 1
-        let reachedEnd: Bool = nextPage >= tutorialModel.tutorialItems.count
+        let reachedEnd: Bool = nextPage >= tutorialItems.count
         
         if reachedEnd {
             flowDelegate?.navigate(step: .startUsingGodToolsTappedFromTutorial)
