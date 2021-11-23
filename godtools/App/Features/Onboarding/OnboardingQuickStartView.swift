@@ -17,6 +17,7 @@ class OnboardingQuickStartView: UIViewController {
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var endTutorialButton: OnboardPrimaryButton!
     @IBOutlet weak private var quickStartTableView: UITableView!
+    @IBOutlet weak private var tableContainerView: UIView!
     
     required init(viewModel: OnboardingQuickStartViewModelType) {
         
@@ -60,6 +61,22 @@ class OnboardingQuickStartView: UIViewController {
         
         quickStartTableView.separatorStyle = .none
         quickStartTableView.rowHeight = UITableView.automaticDimension
+        
+        let gradient = CAGradientLayer()
+        gradient.frame = tableContainerView.bounds;
+        gradient.startPoint = CGPoint(x: 0.5, y: 0.0)
+        gradient.endPoint = CGPoint(x: 0.5, y: 1.0)
+        gradient.colors = Array<CGColor>([
+            UIColor.white.withAlphaComponent(0.0).cgColor,
+            UIColor.white.withAlphaComponent(0.0).cgColor,
+            UIColor.white.withAlphaComponent(1.0).cgColor,
+            UIColor.white.withAlphaComponent(1.0).cgColor,
+            UIColor.white.withAlphaComponent(0.0).cgColor,
+            UIColor.white.withAlphaComponent(0.0).cgColor
+        ])
+        gradient.locations = Array<NSNumber>([0.0, 0.0, 0.05, 0.95, 0.1, 1.0])
+        
+        tableContainerView.layer.mask = gradient
     }
     
     private func setupBinding() {

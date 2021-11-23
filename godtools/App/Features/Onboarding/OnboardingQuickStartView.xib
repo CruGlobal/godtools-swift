@@ -18,6 +18,7 @@
             <connections>
                 <outlet property="endTutorialButton" destination="iTx-P7-sod" id="AhT-Gr-AtJ"/>
                 <outlet property="quickStartTableView" destination="l4Q-zP-eGG" id="cvU-zu-fiV"/>
+                <outlet property="tableContainerView" destination="vcx-ay-jPg" id="v9s-3Y-22F"/>
                 <outlet property="titleLabel" destination="NBq-0r-pAH" id="bMu-JD-NYx"/>
                 <outlet property="view" destination="E6t-b4-0Cf" id="XUF-Fz-5iC"/>
             </connections>
@@ -27,7 +28,7 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WFX-ff-YxE" userLabel="Tutorial Pages View">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WFX-ff-YxE" userLabel="Content View">
                     <rect key="frame" x="0.0" y="44" width="414" height="700"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quick Start" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NBq-0r-pAH" userLabel="Title label">
@@ -36,20 +37,32 @@
                             <color key="textColor" red="0.23137254900000001" green="0.64313725489999995" blue="0.85882352939999995" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="l4Q-zP-eGG">
-                            <rect key="frame" x="30" y="91.5" width="354" height="584.5"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vcx-ay-jPg" userLabel="Table Container View">
+                            <rect key="frame" x="30" y="91.5" width="354" height="588.5"/>
+                            <subviews>
+                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="l4Q-zP-eGG">
+                                    <rect key="frame" x="0.0" y="0.0" width="354" height="588.5"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                </tableView>
+                            </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        </tableView>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="l4Q-zP-eGG" secondAttribute="bottom" id="TeZ-4S-96d"/>
+                                <constraint firstItem="l4Q-zP-eGG" firstAttribute="leading" secondItem="vcx-ay-jPg" secondAttribute="leading" id="iUe-WT-cZW"/>
+                                <constraint firstItem="l4Q-zP-eGG" firstAttribute="top" secondItem="vcx-ay-jPg" secondAttribute="top" id="kMl-5h-bMJ"/>
+                                <constraint firstAttribute="trailing" secondItem="l4Q-zP-eGG" secondAttribute="trailing" id="pyD-IF-nyr"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstItem="NBq-0r-pAH" firstAttribute="top" secondItem="WFX-ff-YxE" secondAttribute="top" constant="40" id="84I-lT-bib"/>
-                        <constraint firstAttribute="trailing" secondItem="l4Q-zP-eGG" secondAttribute="trailing" constant="30" id="Ca8-FY-dOM"/>
                         <constraint firstItem="NBq-0r-pAH" firstAttribute="leading" secondItem="WFX-ff-YxE" secondAttribute="leading" constant="30" id="PU4-xU-xiE"/>
                         <constraint firstAttribute="trailing" secondItem="NBq-0r-pAH" secondAttribute="trailing" constant="30" id="TB2-lM-0zY"/>
-                        <constraint firstAttribute="bottom" secondItem="l4Q-zP-eGG" secondAttribute="bottom" constant="24" id="dAa-O5-HTa"/>
-                        <constraint firstItem="l4Q-zP-eGG" firstAttribute="top" secondItem="NBq-0r-pAH" secondAttribute="bottom" constant="20" id="kHf-Hq-wIh"/>
-                        <constraint firstItem="l4Q-zP-eGG" firstAttribute="leading" secondItem="WFX-ff-YxE" secondAttribute="leading" constant="30" id="vFo-B7-pe3"/>
+                        <constraint firstAttribute="trailing" secondItem="vcx-ay-jPg" secondAttribute="trailing" constant="30" id="XAn-dk-W0O"/>
+                        <constraint firstAttribute="bottom" secondItem="vcx-ay-jPg" secondAttribute="bottom" constant="20" id="b22-YQ-eOs"/>
+                        <constraint firstItem="vcx-ay-jPg" firstAttribute="leading" secondItem="WFX-ff-YxE" secondAttribute="leading" constant="30" id="bUx-yM-oLE"/>
+                        <constraint firstItem="vcx-ay-jPg" firstAttribute="top" secondItem="NBq-0r-pAH" secondAttribute="bottom" constant="20" id="gf9-Xg-OpH"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pke-Cm-Fv3" userLabel="Footer View">
