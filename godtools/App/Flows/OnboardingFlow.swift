@@ -71,12 +71,19 @@ class OnboardingFlow: Flow {
         navigationController.dismiss(animated: true, completion: nil)
     }
 
-     private func navigateToQuickStart() {
-        
-        let viewModel = OnboardingQuickStartViewModel(flowDelegate: self, localizationServices: appDiContainer.localizationServices)
-        let view = OnboardingQuickStartView(viewModel: viewModel)
-        
-        navigationController.setViewControllers([view], animated: true)
+     private func navigateToQuickStartOrTools() {
+         
+         if appDiContainer.deviceLanguage.isEnglish {
+             
+             let viewModel = OnboardingQuickStartViewModel(flowDelegate: self, localizationServices: appDiContainer.localizationServices)
+             let view = OnboardingQuickStartView(viewModel: viewModel)
+             
+             navigationController.setViewControllers([view], animated: true)
+         }
+         else {
+             
+             flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: nil))
+         }
     }
 }
 
@@ -96,10 +103,10 @@ extension OnboardingFlow: FlowDelegate {
             dismissVideoPlayerView()
             
         case .skipTappedFromOnboardingTutorial:
-            navigateToQuickStart()
+            navigateToQuickStartOrTools()
             
         case .endTutorialFromOnboardingTutorial:
-            navigateToQuickStart()
+            navigateToQuickStartOrTools()
 
         case .skipTappedFromOnboardingQuickStart:
             flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: nil))
