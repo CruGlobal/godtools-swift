@@ -167,6 +167,15 @@ The app can be downloaded from https://godtoolsapp.com";
 "tutorial.tutorialItem.3.title" = "This tutorial is available to see again in the menu";
 "tutorial.continueButton.title.continue" = "Continue";
 "tutorial.continueButton.title.startUsingGodTools" = "Start Using GodTools";
+"tutorial.tool.title" = "Tools";
+"tutorial.tool.message" = "Each tool is made for a different stage of conversation– before, during or after.";
+"tutorial.toolTip.title" = "Tool tips";
+"tutorial.toolTip.message" = "GodTools tips guide you as you help someone understand the gospel and encounter Jesus.";
+"tutorial.screenShare.title" = "Screen sharing";
+"tutorial.screenShare.message" = "You can now share your screen remotely so the other person can follow as you use a tool to discuss the gospel.";
+"tutorial.lesson.title" = "Lessons";
+"tutorial.lesson.message" = "In each GodTools lesson you learn something to help you have real conversations about God.";
+"tutorial.findTutorial.title" = "Find this tutorial in the menu whenever you need it.";
 
 // OpenTutorial
 "openTutorial.showTutorialLabel.text" = "Show Me A Tutorial";

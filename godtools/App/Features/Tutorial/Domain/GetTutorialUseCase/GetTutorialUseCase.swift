@@ -40,39 +40,39 @@ class GetTutorialUseCase {
         let tutorialItems: [TutorialItem] = [
             
             TutorialItem(
-                title: "Tools",
-                message: "Each tool is made for a different stage of conversation– before, during or after.",
+                title: localizationServices.stringForMainBundle(key: "tutorial.tool.title"),
+                message: localizationServices.stringForMainBundle(key: "tutorial.tool.message"),
                 imageName: nil,
                 animationName: nil,
                 youTubeVideoId: nil,
                 customViewId: nil
             ),
             TutorialItem(
-                title: "Tool tips",
-                message: "GodTools tips guide you as you help someone understand the gospel and encounter Jesus.",
+                title: localizationServices.stringForMainBundle(key: "tutorial.toolTip.title"),
+                message: localizationServices.stringForMainBundle(key: "tutorial.toolTip.message"),
                 imageName: nil,
                 animationName: nil,
                 youTubeVideoId: nil,
                 customViewId: nil
             ),
             TutorialItem(
-                title: "Screen sharing",
-                message: "You can now share your screen remotely so the other person can follow as you use a tool to discuss the gospel.",
+                title: localizationServices.stringForMainBundle(key: "tutorial.screenShare.title"),
+                message: localizationServices.stringForMainBundle(key: "tutorial.screenShare.message"),
                 imageName: nil,
                 animationName: nil,
                 youTubeVideoId: nil,
                 customViewId: nil
             ),
             TutorialItem(
-                title: "Lessons",
-                message: "In each GodTools lesson you learn something to help you have real conversations about God.",
+                title: localizationServices.stringForMainBundle(key: "tutorial.lesson.title"),
+                message: localizationServices.stringForMainBundle(key: "tutorial.lesson.message"),
                 imageName: nil,
                 animationName: nil,
                 youTubeVideoId: nil,
                 customViewId: nil
             ),
             TutorialItem(
-                title: "Find this tutorial in the menu whenever you need it.",
+                title: localizationServices.stringForMainBundle(key: "tutorial.findTutorial.title"),
                 message: "",
                 imageName: ImageCatalog.tutorialInMenuEnglish.name,
                 animationName: nil,
