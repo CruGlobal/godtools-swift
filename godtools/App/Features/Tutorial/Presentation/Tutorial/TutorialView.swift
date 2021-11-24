@@ -8,6 +8,7 @@
 
 import UIKit
 
+// TODO: Look into using TutorialPagerView instead. ~Levi
 class TutorialView: UIViewController {
 
     private let viewModel: TutorialViewModelType
