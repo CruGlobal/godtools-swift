@@ -29,8 +29,9 @@ enum ImageCatalog: String {
     case toolsMenuAllTools = "tools_menu_all_tools"
     case tutorialInMenuEnglish = "tutorial_in_menu_english"
     case tutorialInMenuNonEnglish = "tutorial_in_menu_non_english"
-    case tutorialToolEnglish = "tutorial_tool_english"
+    case tutorialTool = "tutorial_tool"
     case tutorialToolNonEnglish = "tutorial_tool_non_english"
+    case tutorialPeople = "tutorial_people"
     
     var image: UIImage? {
         return UIImage(named: rawValue)

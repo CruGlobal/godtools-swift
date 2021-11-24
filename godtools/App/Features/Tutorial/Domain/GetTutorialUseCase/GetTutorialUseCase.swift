@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Lottie
 
 class GetTutorialUseCase {
     
@@ -50,8 +51,8 @@ class GetTutorialUseCase {
             TutorialItem(
                 title: localizationServices.stringForMainBundle(key: "tutorial.tool.title"),
                 message: localizationServices.stringForMainBundle(key: "tutorial.tool.message"),
-                imageName: nil,
-                animationName: "tutorial_tool",
+                imageName: ImageCatalog.tutorialTool.rawValue,
+                animationName: nil,
                 youTubeVideoId: nil,
                 customViewId: nil
             ),
@@ -115,7 +116,7 @@ class GetTutorialUseCase {
             TutorialItem(
                 title: localizationServices.stringForMainBundle(key: "tutorial.tutorialItem.2.title"),
                 message: localizationServices.stringForMainBundle(key: "tutorial.tutorialItem.2.message"),
-                imageName: "tutorial_people",
+                imageName: ImageCatalog.tutorialPeople.rawValue,
                 animationName: nil,
                 youTubeVideoId: nil,
                 customViewId: nil
