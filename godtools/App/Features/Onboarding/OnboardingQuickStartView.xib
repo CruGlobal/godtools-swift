@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -16,9 +16,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OnboardingQuickStartView" customModule="godtools" customModuleProvider="target">
             <connections>
+                <outlet property="bottomGradientView" destination="pwP-7g-Bzp" id="Sbo-BE-Mm9"/>
                 <outlet property="endTutorialButton" destination="iTx-P7-sod" id="AhT-Gr-AtJ"/>
                 <outlet property="quickStartTableView" destination="l4Q-zP-eGG" id="cvU-zu-fiV"/>
-                <outlet property="tableContainerView" destination="vcx-ay-jPg" id="v9s-3Y-22F"/>
                 <outlet property="titleLabel" destination="NBq-0r-pAH" id="bMu-JD-NYx"/>
                 <outlet property="view" destination="E6t-b4-0Cf" id="XUF-Fz-5iC"/>
             </connections>
@@ -28,77 +28,48 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WFX-ff-YxE" userLabel="Content View">
-                    <rect key="frame" x="0.0" y="44" width="414" height="700"/>
-                    <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quick Start" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NBq-0r-pAH" userLabel="Title label">
-                            <rect key="frame" x="30" y="40" width="354" height="31.5"/>
-                            <fontDescription key="fontDescription" name="SFProDisplay-Light" family="SF Pro Display" pointSize="26"/>
-                            <color key="textColor" red="0.23137254900000001" green="0.64313725489999995" blue="0.85882352939999995" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vcx-ay-jPg" userLabel="Table Container View">
-                            <rect key="frame" x="30" y="91.5" width="354" height="588.5"/>
-                            <subviews>
-                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="l4Q-zP-eGG">
-                                    <rect key="frame" x="0.0" y="0.0" width="354" height="588.5"/>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                </tableView>
-                            </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            <constraints>
-                                <constraint firstAttribute="bottom" secondItem="l4Q-zP-eGG" secondAttribute="bottom" id="TeZ-4S-96d"/>
-                                <constraint firstItem="l4Q-zP-eGG" firstAttribute="leading" secondItem="vcx-ay-jPg" secondAttribute="leading" id="iUe-WT-cZW"/>
-                                <constraint firstItem="l4Q-zP-eGG" firstAttribute="top" secondItem="vcx-ay-jPg" secondAttribute="top" id="kMl-5h-bMJ"/>
-                                <constraint firstAttribute="trailing" secondItem="l4Q-zP-eGG" secondAttribute="trailing" id="pyD-IF-nyr"/>
-                            </constraints>
-                        </view>
-                    </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    <constraints>
-                        <constraint firstItem="NBq-0r-pAH" firstAttribute="top" secondItem="WFX-ff-YxE" secondAttribute="top" constant="40" id="84I-lT-bib"/>
-                        <constraint firstItem="NBq-0r-pAH" firstAttribute="leading" secondItem="WFX-ff-YxE" secondAttribute="leading" constant="30" id="PU4-xU-xiE"/>
-                        <constraint firstAttribute="trailing" secondItem="NBq-0r-pAH" secondAttribute="trailing" constant="30" id="TB2-lM-0zY"/>
-                        <constraint firstAttribute="trailing" secondItem="vcx-ay-jPg" secondAttribute="trailing" constant="30" id="XAn-dk-W0O"/>
-                        <constraint firstAttribute="bottom" secondItem="vcx-ay-jPg" secondAttribute="bottom" constant="20" id="b22-YQ-eOs"/>
-                        <constraint firstItem="vcx-ay-jPg" firstAttribute="leading" secondItem="WFX-ff-YxE" secondAttribute="leading" constant="30" id="bUx-yM-oLE"/>
-                        <constraint firstItem="vcx-ay-jPg" firstAttribute="top" secondItem="NBq-0r-pAH" secondAttribute="bottom" constant="20" id="gf9-Xg-OpH"/>
-                    </constraints>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quick Start" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NBq-0r-pAH" userLabel="titleLabel">
+                    <rect key="frame" x="30" y="76" width="354" height="31.5"/>
+                    <fontDescription key="fontDescription" name="SFProDisplay-Light" family="SF Pro Display" pointSize="26"/>
+                    <color key="textColor" red="0.23137254900000001" green="0.64313725489999995" blue="0.85882352939999995" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="l4Q-zP-eGG" userLabel="quickStartTableView">
+                    <rect key="frame" x="30" y="137.5" width="354" height="614.5"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pwP-7g-Bzp" userLabel="bottomGradientView">
+                    <rect key="frame" x="0.0" y="682" width="414" height="70"/>
+                    <color key="backgroundColor" systemColor="systemPurpleColor"/>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pke-Cm-Fv3" userLabel="Footer View">
-                    <rect key="frame" x="0.0" y="744" width="414" height="118"/>
-                    <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" role="primary" translatesAutoresizingMaskIntoConstraints="NO" id="iTx-P7-sod" userLabel="End Tutorial Button" customClass="OnboardPrimaryButton" customModule="godtools" customModuleProvider="target">
-                            <rect key="frame" x="64" y="10" width="286" height="48"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="48" id="VnL-CA-up7"/>
-                            </constraints>
-                            <buttonConfiguration key="configuration" style="plain" title="Title">
-                                <fontDescription key="titleFontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
-                                <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </buttonConfiguration>
-                        </button>
-                    </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" role="primary" translatesAutoresizingMaskIntoConstraints="NO" id="iTx-P7-sod" userLabel="endTutorialButton" customClass="OnboardPrimaryButton" customModule="godtools" customModuleProvider="target">
+                    <rect key="frame" x="30" y="752" width="354" height="50"/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="iTx-P7-sod" secondAttribute="trailing" constant="64" id="fnn-ml-3tl"/>
-                        <constraint firstItem="iTx-P7-sod" firstAttribute="leading" secondItem="Pke-Cm-Fv3" secondAttribute="leading" constant="64" id="mhF-g0-nkW"/>
-                        <constraint firstAttribute="bottom" secondItem="iTx-P7-sod" secondAttribute="bottom" constant="60" id="qfj-jp-OM1"/>
-                        <constraint firstItem="iTx-P7-sod" firstAttribute="top" secondItem="Pke-Cm-Fv3" secondAttribute="top" constant="10" id="vZd-Jd-hce"/>
+                        <constraint firstAttribute="height" constant="50" id="VnL-CA-up7"/>
                     </constraints>
-                </view>
+                    <buttonConfiguration key="configuration" style="plain" title="Title">
+                        <fontDescription key="titleFontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
+                        <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </buttonConfiguration>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="wku-0l-oBB"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="Pke-Cm-Fv3" firstAttribute="trailing" secondItem="wku-0l-oBB" secondAttribute="trailing" id="05G-7K-Vgt"/>
-                <constraint firstItem="WFX-ff-YxE" firstAttribute="leading" secondItem="wku-0l-oBB" secondAttribute="leading" id="3KK-Mh-93Q"/>
-                <constraint firstItem="Pke-Cm-Fv3" firstAttribute="leading" secondItem="wku-0l-oBB" secondAttribute="leading" id="GWJ-mb-3Tk"/>
-                <constraint firstItem="wku-0l-oBB" firstAttribute="trailing" secondItem="WFX-ff-YxE" secondAttribute="trailing" id="Jp4-Tc-Wms"/>
-                <constraint firstItem="Pke-Cm-Fv3" firstAttribute="top" secondItem="WFX-ff-YxE" secondAttribute="bottom" id="NHB-bA-dJt"/>
-                <constraint firstItem="wku-0l-oBB" firstAttribute="trailing" secondItem="Pke-Cm-Fv3" secondAttribute="trailing" id="ZCj-5h-Syr"/>
-                <constraint firstItem="wku-0l-oBB" firstAttribute="bottom" secondItem="Pke-Cm-Fv3" secondAttribute="bottom" id="i1b-fO-XQ6"/>
-                <constraint firstItem="WFX-ff-YxE" firstAttribute="top" secondItem="wku-0l-oBB" secondAttribute="top" id="tw9-yw-ApU"/>
+                <constraint firstItem="pwP-7g-Bzp" firstAttribute="trailing" secondItem="wku-0l-oBB" secondAttribute="trailing" id="Ano-Ln-X9Q"/>
+                <constraint firstItem="iTx-P7-sod" firstAttribute="leading" secondItem="wku-0l-oBB" secondAttribute="leading" constant="30" id="Foq-3q-RMB"/>
+                <constraint firstItem="wku-0l-oBB" firstAttribute="trailing" secondItem="NBq-0r-pAH" secondAttribute="trailing" constant="30" id="PGh-O4-3Vl"/>
+                <constraint firstItem="NBq-0r-pAH" firstAttribute="top" secondItem="wku-0l-oBB" secondAttribute="top" constant="32" id="UY4-J0-TY6"/>
+                <constraint firstItem="l4Q-zP-eGG" firstAttribute="top" secondItem="NBq-0r-pAH" secondAttribute="bottom" constant="30" id="VM6-0n-emW"/>
+                <constraint firstItem="iTx-P7-sod" firstAttribute="top" secondItem="pwP-7g-Bzp" secondAttribute="bottom" id="Vel-2C-f6t"/>
+                <constraint firstItem="NBq-0r-pAH" firstAttribute="leading" secondItem="wku-0l-oBB" secondAttribute="leading" constant="30" id="Vuy-lv-YRz"/>
+                <constraint firstItem="wku-0l-oBB" firstAttribute="trailing" secondItem="iTx-P7-sod" secondAttribute="trailing" constant="30" id="Z1o-Zq-h4h"/>
+                <constraint firstItem="wku-0l-oBB" firstAttribute="trailing" secondItem="l4Q-zP-eGG" secondAttribute="trailing" constant="30" id="ciY-d2-bNo"/>
+                <constraint firstItem="pwP-7g-Bzp" firstAttribute="top" secondItem="iTx-P7-sod" secondAttribute="top" constant="-70" id="fm6-tU-rNr"/>
+                <constraint firstItem="l4Q-zP-eGG" firstAttribute="leading" secondItem="wku-0l-oBB" secondAttribute="leading" constant="30" id="l4I-DE-uPh"/>
+                <constraint firstItem="pwP-7g-Bzp" firstAttribute="leading" secondItem="wku-0l-oBB" secondAttribute="leading" id="pc6-HJ-48P"/>
+                <constraint firstItem="wku-0l-oBB" firstAttribute="bottom" secondItem="iTx-P7-sod" secondAttribute="bottom" constant="60" id="q0f-y2-H76"/>
+                <constraint firstItem="l4Q-zP-eGG" firstAttribute="bottom" secondItem="pwP-7g-Bzp" secondAttribute="bottom" id="tav-op-5sJ"/>
             </constraints>
             <point key="canvasLocation" x="327.536231884058" y="108.48214285714285"/>
         </view>
@@ -109,8 +80,8 @@
         </designable>
     </designables>
     <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        <systemColor name="systemPurpleColor">
+            <color red="0.68627450980392157" green="0.32156862745098042" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -13,8 +13,10 @@ class OnboardingQuickStartCell: UITableViewCell {
     static let nibName: String = "OnboardingQuickStartCell"
     static let reuseIdentifier: String = "OnboardingQuickStartCellReuseIdentifier"
     
+    @IBOutlet weak private var contentBackgroundView: UIView!
     @IBOutlet weak private var titleLabel: UILabel!
-    @IBOutlet weak private var subtitleLabel: UILabel!
+    @IBOutlet weak private var actionLabel: UILabel!
+    @IBOutlet weak private var actionIcon: UIImageView!
     
     override func awakeFromNib() {
         
@@ -26,13 +28,13 @@ class OnboardingQuickStartCell: UITableViewCell {
         super.prepareForReuse()
         
         titleLabel.text = nil
-        subtitleLabel.text = nil
+        actionLabel.text = nil
     }
     
     func configure(item: OnboardingQuickStartCellViewModelType) {
         
         selectionStyle = .none
         titleLabel.text = item.title
-        subtitleLabel.text = item.linkButtonTitle
+        actionLabel.text = item.linkButtonTitle
     }
 }

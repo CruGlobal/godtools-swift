@@ -15,9 +15,9 @@ class OnboardingQuickStartView: UIViewController {
     private var skipButton: UIBarButtonItem?
         
     @IBOutlet weak private var titleLabel: UILabel!
-    @IBOutlet weak private var endTutorialButton: OnboardPrimaryButton!
     @IBOutlet weak private var quickStartTableView: UITableView!
-    @IBOutlet weak private var tableContainerView: UIView!
+    @IBOutlet weak private var bottomGradientView: UIView!
+    @IBOutlet weak private var endTutorialButton: OnboardPrimaryButton!
     
     required init(viewModel: OnboardingQuickStartViewModelType) {
         
@@ -52,31 +52,40 @@ class OnboardingQuickStartView: UIViewController {
     
     private func setupLayout() {
         
+        // skipButton
         setSkipButton()
         
+        // quickStartTableView
         quickStartTableView.register(
             UINib(nibName: OnboardingQuickStartCell.nibName, bundle: nil),
             forCellReuseIdentifier: OnboardingQuickStartCell.reuseIdentifier
         )
         
+        quickStartTableView.showsVerticalScrollIndicator = false
+        
         quickStartTableView.separatorStyle = .none
         quickStartTableView.rowHeight = UITableView.automaticDimension
         
+        // bottomGradientView
+        bottomGradientView.layoutIfNeeded()
+        bottomGradientView.backgroundColor = .clear
+        bottomGradientView.isUserInteractionEnabled = false
         let gradient = CAGradientLayer()
-        gradient.frame = tableContainerView.bounds;
-        gradient.startPoint = CGPoint(x: 0.5, y: 0.0)
-        gradient.endPoint = CGPoint(x: 0.5, y: 1.0)
-        gradient.colors = Array<CGColor>([
-            UIColor.white.withAlphaComponent(0.0).cgColor,
-            UIColor.white.withAlphaComponent(0.0).cgColor,
-            UIColor.white.withAlphaComponent(1.0).cgColor,
-            UIColor.white.withAlphaComponent(1.0).cgColor,
-            UIColor.white.withAlphaComponent(0.0).cgColor,
-            UIColor.white.withAlphaComponent(0.0).cgColor
-        ])
-        gradient.locations = Array<NSNumber>([0.0, 0.0, 0.05, 0.95, 0.1, 1.0])
-        
-        tableContainerView.layer.mask = gradient
+        gradient.frame = bottomGradientView.bounds
+        gradient.colors = [
+            UIColor.white.withAlphaComponent(0).cgColor,
+            UIColor.white.withAlphaComponent(0.8).cgColor,
+            UIColor.white.withAlphaComponent(1).cgColor
+        ]
+        gradient.locations = [
+            0,
+            0.2,
+            1
+        ]
+        bottomGradientView.layer.insertSublayer(gradient, at: 0)
+        var quickStartContentInsetsForBottomGradient: UIEdgeInsets = quickStartTableView.contentInset
+        quickStartContentInsetsForBottomGradient.bottom = bottomGradientView.bounds.size.height
+        quickStartTableView.contentInset = quickStartContentInsetsForBottomGradient
     }
     
     private func setupBinding() {
