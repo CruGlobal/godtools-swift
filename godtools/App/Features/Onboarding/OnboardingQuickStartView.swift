@@ -74,12 +74,12 @@ class OnboardingQuickStartView: UIViewController {
         gradient.frame = bottomGradientView.bounds
         gradient.colors = [
             UIColor.white.withAlphaComponent(0).cgColor,
-            UIColor.white.withAlphaComponent(0.8).cgColor,
+            UIColor.white.withAlphaComponent(0.85).cgColor,
             UIColor.white.withAlphaComponent(1).cgColor
         ]
         gradient.locations = [
             0,
-            0.2,
+            0.25,
             1
         ]
         bottomGradientView.layer.insertSublayer(gradient, at: 0)

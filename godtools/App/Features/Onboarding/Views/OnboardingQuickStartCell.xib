@@ -49,7 +49,7 @@
                     </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="Smm-9D-5JX" secondAttribute="bottom" constant="25.5" id="2zE-eL-5BA"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="gbG-HC-jBs" secondAttribute="trailing" constant="15" id="29F-Kk-ktv"/>
                     <constraint firstItem="gbG-HC-jBs" firstAttribute="centerY" secondItem="Smm-9D-5JX" secondAttribute="centerY" id="46M-e3-dfl"/>
                     <constraint firstItem="Smm-9D-5JX" firstAttribute="leading" secondItem="2Sh-4k-T51" secondAttribute="leading" id="AQf-Ra-STj"/>
                     <constraint firstItem="Smm-9D-5JX" firstAttribute="top" secondItem="2Sh-4k-T51" secondAttribute="bottom" constant="5" id="F3v-6q-WoJ"/>
@@ -58,8 +58,8 @@
                     <constraint firstItem="JLr-Yh-GwJ" firstAttribute="top" secondItem="fao-fZ-EEC" secondAttribute="top" id="Rep-Zt-R1i"/>
                     <constraint firstAttribute="bottom" secondItem="JLr-Yh-GwJ" secondAttribute="bottom" constant="10" id="U1P-SP-oWq"/>
                     <constraint firstItem="2Sh-4k-T51" firstAttribute="leading" secondItem="JLr-Yh-GwJ" secondAttribute="leading" constant="15" id="Vna-X6-KFc"/>
+                    <constraint firstAttribute="bottom" secondItem="Smm-9D-5JX" secondAttribute="bottom" constant="25.5" id="WpO-sD-unL"/>
                     <constraint firstItem="JLr-Yh-GwJ" firstAttribute="leading" secondItem="fao-fZ-EEC" secondAttribute="leading" id="YGE-qZ-gB9"/>
-                    <constraint firstItem="Smm-9D-5JX" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="JLr-Yh-GwJ" secondAttribute="trailing" constant="-35" id="aee-LO-IkM"/>
                     <constraint firstItem="2Sh-4k-T51" firstAttribute="top" secondItem="fao-fZ-EEC" secondAttribute="top" constant="15" id="fi8-1b-9AE"/>
                     <constraint firstItem="2Sh-4k-T51" firstAttribute="trailing" secondItem="JLr-Yh-GwJ" secondAttribute="trailing" constant="-15" id="qU5-Tz-0oi"/>
                 </constraints>
