@@ -47,7 +47,7 @@ class AppFlow: NSObject, Flow {
         super.init()
         
         rootController.view.frame = UIScreen.main.bounds
-        rootController.view.backgroundColor = UIColor.white
+        rootController.view.backgroundColor = .clear
         
         navigationController.view.backgroundColor = .white
         navigationController.setNavigationBarHidden(true, animated: false)

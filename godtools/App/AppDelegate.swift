@@ -19,6 +19,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
+    static func setWindowBackgroundColorForStatusBarColor(color: UIColor) {
+        (UIApplication.shared.delegate as? AppDelegate)?.window?.backgroundColor = color
+    }
+    
     override init() {
         
         appDiContainer = AppDiContainer(appDeepLinkingService: appDeepLinkingService)
