@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol AccountItemViewDelegate: class {
+protocol AccountItemViewDelegate: AnyObject {
     func accountItemViewDidProcessAlertMessage(itemView: AccountItemViewType, alertMessage: AlertMessageType)
 }
 

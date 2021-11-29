@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol AlertMessageViewModelType: class {
+protocol AlertMessageViewModelType: AnyObject {
     
     var title: String? { get }
     var message: String? { get }

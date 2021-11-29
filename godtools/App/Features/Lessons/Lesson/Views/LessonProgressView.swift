@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol LessonProgressViewDelegate: class {
+protocol LessonProgressViewDelegate: AnyObject {
     
     func lessonProgressViewCloseTapped(progressView: LessonProgressView)
 }

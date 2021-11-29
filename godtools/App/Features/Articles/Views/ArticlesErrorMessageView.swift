@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ArticlesErrorMessageViewDelegate: class {
+protocol ArticlesErrorMessageViewDelegate: AnyObject {
     
     func articlesErrorMessageViewDownloadArticlesButtonTapped(articlesErrorMessageView: ArticlesErrorMessageView)
 }

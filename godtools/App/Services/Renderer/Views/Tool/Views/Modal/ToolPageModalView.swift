@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ToolPageModalViewDelegate: class {
+protocol ToolPageModalViewDelegate: AnyObject {
     
     func toolPageModalListenerActivated(modalView: ToolPageModalView)
     func toolPageModalDismissListenerActivated(modalView: ToolPageModalView)

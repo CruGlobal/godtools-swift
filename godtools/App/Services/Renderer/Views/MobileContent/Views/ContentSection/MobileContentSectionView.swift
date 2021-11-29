@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol MobileContentSectionViewDelegate: class {
+protocol MobileContentSectionViewDelegate: AnyObject {
     
     func sectionViewDidChangeTextHiddenState(sectionView: MobileContentSectionView, textIsHidden: Bool, textHeight: CGFloat)
 }
