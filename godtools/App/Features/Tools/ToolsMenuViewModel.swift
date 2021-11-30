@@ -17,12 +17,12 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
     private let deviceAttachmentBanners: DeviceAttachmentBanners
     private let favoritingToolMessageCache: FavoritingToolMessageCache
     private let analytics: AnalyticsContainer
-    private let tutorialAvailability: TutorialAvailabilityType
+    private let getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase
     private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     
     private weak var flowDelegate: FlowDelegate?
         
-    required init(flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, deviceAttachmentBanners: DeviceAttachmentBanners, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, tutorialAvailability: TutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType) {
+    required init(flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, deviceAttachmentBanners: DeviceAttachmentBanners, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase, openTutorialCalloutCache: OpenTutorialCalloutCacheType) {
         
         self.flowDelegate = flowDelegate
         self.initialDataDownloader = initialDataDownloader
@@ -32,7 +32,7 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
         self.deviceAttachmentBanners = deviceAttachmentBanners
         self.favoritingToolMessageCache = favoritingToolMessageCache
         self.analytics = analytics
-        self.tutorialAvailability = tutorialAvailability
+        self.getTutorialIsAvailableUseCase = getTutorialIsAvailableUseCase
         self.openTutorialCalloutCache = openTutorialCalloutCache
     }
     
@@ -63,7 +63,7 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
             favoritedResourcesCache: favoritedResourcesCache,
             deviceAttachmentBanners: deviceAttachmentBanners,
             analytics: analytics,
-            tutorialAvailability: tutorialAvailability,
+            getTutorialIsAvailableUseCase: getTutorialIsAvailableUseCase,
             openTutorialCalloutCache: openTutorialCalloutCache
         )
     }

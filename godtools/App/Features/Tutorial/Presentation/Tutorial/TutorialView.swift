@@ -7,10 +7,9 @@
 //
 
 import UIKit
-import youtube_ios_player_helper
 
+// TODO: Look into using TutorialPagerView instead. ~Levi
 class TutorialView: UIViewController {
-    //TODO: re-implement this tutorial using TutorialPagerView
 
     private let viewModel: TutorialViewModelType
     
@@ -45,15 +44,15 @@ class TutorialView: UIViewController {
         
         closeButton = addBarButtonItem(
             to: .right,
-            image: UIImage(named: "nav_item_close"),
+            image: ImageCatalog.navClose.image,
             color: nil,
             target: self,
-            action: #selector(handleClose(barButtonItem:))
+            action: #selector(closeButtonTapped)
         )
         
-        pageControl.addTarget(self, action: #selector(handlePageControlChanged), for: .valueChanged)
+        pageControl.addTarget(self, action: #selector(pageControlTapped), for: .valueChanged)
         
-        continueButton.addTarget(self, action: #selector(handleContinue), for: .touchUpInside)
+        continueButton.addTarget(self, action: #selector(continueButtonTapped), for: .touchUpInside)
         
         tutorialPagesView.delegate = self
     }
@@ -65,33 +64,26 @@ class TutorialView: UIViewController {
             nib: UINib(nibName: TutorialCell.nibName, bundle: nil),
             cellReuseIdentifier: TutorialCell.reuseIdentifier
         )
-        
-        handleTutorialPageChange(page: 0)
     }
     
     private func setupBinding() {
         
-        viewModel.tutorialItems.addObserver(self) { [weak self] (tutorialItems: [TutorialItemType]) in
-            self?.pageControl.numberOfPages = tutorialItems.count
+        viewModel.hidesBackButton.addObserver(self) { [weak self] (value: Bool) in
+            self?.setBackButton(hidden: value)
+        }
+        
+        viewModel.currentPage.addObserver(self) { [weak self] (value: Int) in
+            self?.pageControl.currentPage = value
+        }
+        
+        viewModel.numberOfPages.addObserver(self) { [weak self] (value: Int) in
+            self?.pageControl.numberOfPages = value
             self?.tutorialPagesView.reloadData()
         }
-    }
-    
-    private func handleTutorialPageChange(page: Int) {
         
-        pageControl.currentPage = page
-        
-        setBackButton(hidden: page == 0)
-              
-        let continueTitle: String
-        if tutorialPagesView.isOnLastPage {
-            continueTitle = viewModel.startUsingGodToolsTitle
+        viewModel.continueTitle.addObserver(self) { [weak self] (value: String) in
+            self?.continueButton.setTitle(value, for: .normal)
         }
-        else {
-            continueTitle = viewModel.continueTitle
-        }
-        
-        continueButton.setTitle(continueTitle, for: .normal)
     }
     
     private func setBackButton(hidden: Bool) {
@@ -104,7 +96,7 @@ class TutorialView: UIViewController {
                 image: ImageCatalog.navBack.image,
                 color: nil,
                 target: self,
-                action: #selector(handleBack(barButtonItem:))
+                action: #selector(backButtonTapped)
             )
         }
         else if let backButton = backButton {
@@ -112,19 +104,19 @@ class TutorialView: UIViewController {
         }
     }
     
-    @objc func handleBack(barButtonItem: UIBarButtonItem) {
+    @objc private func backButtonTapped() {
         tutorialPagesView.scrollToPreviousPage(animated: true)
     }
     
-    @objc func handleClose(barButtonItem: UIBarButtonItem) {
+    @objc private func closeButtonTapped() {
         viewModel.closeTapped()
     }
     
-    @objc func handlePageControlChanged() {
+    @objc private func pageControlTapped() {
         tutorialPagesView.scrollToPage(page: pageControl.currentPage, animated: true)
     }
     
-    @objc func handleContinue(button: UIButton) {
+    @objc private func continueButtonTapped() {
         tutorialPagesView.scrollToNextPage(animated: true)
         viewModel.continueTapped()
     }
@@ -135,7 +127,7 @@ class TutorialView: UIViewController {
 extension TutorialView: PageNavigationCollectionViewDelegate {
     
     func pageNavigationNumberOfPages(pageNavigation: PageNavigationCollectionView) -> Int {
-        return viewModel.tutorialItems.value.count
+        return viewModel.numberOfPages.value
     }
     
     func pageNavigation(pageNavigation: PageNavigationCollectionView, cellForPageAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -144,7 +136,7 @@ extension TutorialView: PageNavigationCollectionViewDelegate {
             cellReuseIdentifier: TutorialCell.reuseIdentifier,
             indexPath: indexPath) as! TutorialCell
         
-        let cellViewModel = viewModel.tutorialItemWillAppear(index: indexPath.item)
+        let cellViewModel = viewModel.tutorialPageWillAppear(index: indexPath.item)
         
         cell.configure(viewModel: cellViewModel)
         
@@ -158,16 +150,12 @@ extension TutorialView: PageNavigationCollectionViewDelegate {
     }
     
     func pageNavigationDidChangeMostVisiblePage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
-
-        handleTutorialPageChange(page: page)
         
         viewModel.pageDidChange(page: page)
     }
     
     func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
-        
-        pageControl.currentPage = page
-        
+                
         viewModel.pageDidAppear(page: page)
     }
 }

@@ -12,7 +12,7 @@ class ShareToolScreenTutorialViewModel: ShareToolScreenTutorialViewModelType {
     //TODO: re-implement this tutorial using TutorialPagerViewModel
     
     private let localizationServices: LocalizationServices
-    private let tutorialItemsProvider: TutorialItemProviderType
+    private let tutorialItemsProvider: ShareToolScreenTutorialItemProvider
     private let shareToolScreenTutorialNumberOfViewsCache: ShareToolScreenTutorialNumberOfViewsCache
     private let resource: ResourceModel
     private let analyticsContainer: AnalyticsContainer
@@ -26,7 +26,7 @@ class ShareToolScreenTutorialViewModel: ShareToolScreenTutorialViewModelType {
     let continueTitle: String
     let shareLinkTitle: String
     
-    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, tutorialItemsProvider: TutorialItemProviderType, shareToolScreenTutorialNumberOfViewsCache: ShareToolScreenTutorialNumberOfViewsCache, resource: ResourceModel, analyticsContainer: AnalyticsContainer, tutorialVideoAnalytics: TutorialVideoAnalytics) {
+    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, tutorialItemsProvider: ShareToolScreenTutorialItemProvider, shareToolScreenTutorialNumberOfViewsCache: ShareToolScreenTutorialNumberOfViewsCache, resource: ResourceModel, analyticsContainer: AnalyticsContainer, tutorialVideoAnalytics: TutorialVideoAnalytics) {
         
         self.flowDelegate = flowDelegate
         self.localizationServices = localizationServices

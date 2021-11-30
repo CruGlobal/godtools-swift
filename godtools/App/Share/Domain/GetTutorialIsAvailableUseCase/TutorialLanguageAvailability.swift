@@ -8,11 +8,11 @@
 
 import Foundation
 
-class TutorialLanguageAvailability: LanguageAvailabilityType {
+class TutorialLanguageAvailability {
     
-    let supportedLanguages: SupportedLanguagesType
+    let supportedLanguages: TutorialSupportedLanguagesType
        
-    required init(supportedLanguages: SupportedLanguagesType) {
+    required init(supportedLanguages: TutorialSupportedLanguagesType) {
         
         self.supportedLanguages = supportedLanguages
     }
@@ -50,15 +50,6 @@ class TutorialLanguageAvailability: LanguageAvailabilityType {
             }
         }
         
-        return false
-    }
-    
-    func isAvailableInLanguages(identifiers: [String]) -> Bool {
-        for identifier in identifiers {
-            if isAvailableInLanguage(locale: Locale(identifier: identifier)) {
-                return true
-            }
-        }
         return false
     }
 }
