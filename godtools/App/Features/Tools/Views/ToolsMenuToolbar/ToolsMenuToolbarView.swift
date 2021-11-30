@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ToolsMenuToolbarViewDelegate: class {
+protocol ToolsMenuToolbarViewDelegate: AnyObject {
     
     func toolsMenuToolbarLessonsTapped(toolsMenuToolbar: ToolsMenuToolbarView)
     func toolsMenuToolbarFavoritedToolsTapped(toolsMenuToolbar: ToolsMenuToolbarView)

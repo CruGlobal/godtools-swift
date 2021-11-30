@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objc protocol PageNavigationCollectionViewDelegate: class {
+@objc protocol PageNavigationCollectionViewDelegate: AnyObject {
     
     func pageNavigationNumberOfPages(pageNavigation: PageNavigationCollectionView) -> Int
     func pageNavigation(pageNavigation: PageNavigationCollectionView, cellForPageAt indexPath: IndexPath) -> UICollectionViewCell

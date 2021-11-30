@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ToolNavBarViewDelegate: class {
+protocol ToolNavBarViewDelegate: AnyObject {
     
     func navBarHomeTapped(navBar: ToolNavBarView, remoteShareIsActive: Bool)
     func navBarShareTapped(navBar: ToolNavBarView, selectedLanguage: LanguageModel)

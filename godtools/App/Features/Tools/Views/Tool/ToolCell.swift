@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ToolCellDelegate: class {
+protocol ToolCellDelegate: AnyObject {
     func toolCellAboutToolTapped(toolCell: ToolCell)
     func toolCellOpenToolTapped(toolCell: ToolCell)
     func toolCellFavoriteTapped(toolCell: ToolCell)

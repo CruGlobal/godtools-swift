@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol AccountItemCellDelegate: class {
+protocol AccountItemCellDelegate: AnyObject {
     
     func accountItemCellDidProcessAlertMessage(cell: AccountItemCell, alertMessage: AlertMessageType)
 }

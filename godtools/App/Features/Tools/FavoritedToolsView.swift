@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol FavoritedToolsViewDelegate: class {
+protocol FavoritedToolsViewDelegate: AnyObject {
     
     func favoritedToolsViewFindToolsTapped(favoritedToolsView: FavoritedToolsView)
 }

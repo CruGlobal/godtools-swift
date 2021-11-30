@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol TrainingPageViewDelegate: class {
+protocol TrainingPageViewDelegate: AnyObject {
     
     func trainingPageButtonWithUrlTapped(trainingPage: TrainingPageView, url: String)
 }

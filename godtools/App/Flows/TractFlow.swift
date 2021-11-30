@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TractFlow: Flow {
+class TractFlow: NSObject, ToolNavigationFlow, Flow {
     
     private let deepLinkingService: DeepLinkingServiceType
     
@@ -19,6 +19,10 @@ class TractFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
+    var articleFlow: ArticleFlow?
+    var lessonFlow: LessonFlow?
+    var tractFlow: TractFlow?
+    
     required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController?, resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
         
         self.flowDelegate = flowDelegate
@@ -26,6 +30,8 @@ class TractFlow: Flow {
         self.navigationController = sharedNavigationController ?? UINavigationController()
         self.deepLinkingService = appDiContainer.getDeepLinkingService()
         
+        super.init()
+            
         let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
         
         let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
@@ -108,19 +114,62 @@ class TractFlow: Flow {
         }
         
         configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
+        
+        addDeepLinkingObserver()
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+        deepLinkingService.deepLinkObserver.removeObserver(self)
     }
     
     private func configureNavigationBar(shouldAnimateNavigationBarHiddenState: Bool) {
         navigationController.setNavigationBarHidden(false, animated: shouldAnimateNavigationBarHiddenState)
     }
     
+    private func addDeepLinkingObserver() {
+        deepLinkingService.deepLinkObserver.addObserver(self) { [weak self] (parsedDeepLink: ParsedDeepLinkType?) in
+            if let deepLink = parsedDeepLink {
+                self?.navigate(step: .deepLink(deepLinkType: deepLink))
+            }
+        }
+    }
+    
     func navigate(step: FlowStep) {
         
         switch step {
+            
+        case .deepLink(let deepLink):
+            
+            switch deepLink {
+            
+            case .allToolsList:
+                break
+            
+            case .article(let articleURI):
+                break
+            
+            case .favoritedToolsList:
+                break
+            
+            case .lessonsList:
+                break
+            
+            case .tool(let toolDeepLink):
+                
+                guard let toolDeepLinkResources = ToolDeepLinkResources(dataDownloader: appDiContainer.initialDataDownloader, languageSettingsService: appDiContainer.languageSettingsService, toolDeepLink: toolDeepLink) else {
+                    return
+                }
+                
+                navigateToTool(
+                    resource: toolDeepLinkResources.resource,
+                    primaryLanguage: toolDeepLinkResources.primaryLanguage,
+                    parallelLanguage: toolDeepLinkResources.parallelLanguage,
+                    liveShareStream: toolDeepLink.liveShareStream,
+                    trainingTipsEnabled: false,
+                    page: toolDeepLink.page
+                )
+            }
         
         case .homeTappedFromTool(let isScreenSharing):
             

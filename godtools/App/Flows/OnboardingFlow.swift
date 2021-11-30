@@ -45,7 +45,7 @@ class OnboardingFlow: Flow {
             analyticsContainer: appDiContainer.analytics,
             tutorialVideoAnalytics: appDiContainer.getTutorialVideoAnalytics(),
             onboardingTutorialItemsRepository: onboardingTutorialItemsRepository,
-            onboardingTutorialAvailability: appDiContainer.onboardingTutorialAvailability,
+            onboardingTutorialAvailability: appDiContainer.getOnboardingTutorialAvailability(),
             openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache,
             customViewBuilder: appDiContainer.onboardingTutorialCustomViewBuilder(flowDelegate: self),
             localizationServices: appDiContainer.localizationServices
@@ -70,10 +70,20 @@ class OnboardingFlow: Flow {
         
         navigationController.dismiss(animated: true, completion: nil)
     }
-    
-    private func dismissOnboardingFlow() {
-        
-        flowDelegate?.navigate(step: .dismissOnboardingTutorial)
+
+     private func navigateToQuickStartOrTools() {
+         
+         if appDiContainer.deviceLanguage.isEnglish {
+             
+             let viewModel = OnboardingQuickStartViewModel(flowDelegate: self, localizationServices: appDiContainer.localizationServices)
+             let view = OnboardingQuickStartView(viewModel: viewModel)
+             
+             navigationController.setViewControllers([view], animated: true)
+         }
+         else {
+             
+             flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: nil))
+         }
     }
 }
 
@@ -93,10 +103,25 @@ extension OnboardingFlow: FlowDelegate {
             dismissVideoPlayerView()
             
         case .skipTappedFromOnboardingTutorial:
-            dismissOnboardingFlow()
+            navigateToQuickStartOrTools()
             
         case .endTutorialFromOnboardingTutorial:
-            dismissOnboardingFlow()
+            navigateToQuickStartOrTools()
+
+        case .skipTappedFromOnboardingQuickStart:
+            flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: nil))
+            
+        case .endTutorialFromOnboardingQuickStart:
+            flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: nil))
+        
+        case .readArticlesTappedFromOnboardingQuickStart:
+            flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: .readArticles))
+        
+        case .tryLessonsTappedFromOnboardingQuickStart:
+            flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: .tryLessons))
+        
+        case .chooseToolTappedFromOnboardingQuickStart:
+            flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: .chooseTool))
         
         default:
             break

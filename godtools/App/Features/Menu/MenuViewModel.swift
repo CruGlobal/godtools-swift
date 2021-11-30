@@ -13,12 +13,12 @@ class MenuViewModel: NSObject, MenuViewModelType {
     private let config: ConfigType
     private let menuDataProvider: MenuDataProviderType
     private let deviceLanguage: DeviceLanguageType
-    private let tutorialAvailability: TutorialAvailabilityType
     private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     private let supportedLanguageCodesForAccountCreation: [String] = ["en"]
     private let userAuthentication: UserAuthenticationType
     private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
+    private let getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -26,17 +26,17 @@ class MenuViewModel: NSObject, MenuViewModelType {
     let navDoneButtonTitle: String
     let menuDataSource: ObservableValue<MenuDataSource> = ObservableValue(value: MenuDataSource.emptyData)
     
-    required init(flowDelegate: FlowDelegate, config: ConfigType, menuDataProvider: MenuDataProviderType, deviceLanguage: DeviceLanguageType, tutorialAvailability: TutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, userAuthentication: UserAuthenticationType, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, config: ConfigType, menuDataProvider: MenuDataProviderType, deviceLanguage: DeviceLanguageType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, userAuthentication: UserAuthenticationType, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase) {
         
         self.flowDelegate = flowDelegate
         self.config = config
         self.menuDataProvider = menuDataProvider
         self.deviceLanguage = deviceLanguage
-        self.tutorialAvailability = tutorialAvailability
         self.openTutorialCalloutCache = openTutorialCalloutCache
         self.userAuthentication = userAuthentication
         self.localizationServices = localizationServices
         self.analytics = analytics
+        self.getTutorialIsAvailableUseCase = getTutorialIsAvailableUseCase
         
         navDoneButtonTitle = localizationServices.stringForMainBundle(key: "done")
         
@@ -70,7 +70,7 @@ class MenuViewModel: NSObject, MenuViewModelType {
             createMenuDataSource(
                 isAuthorized: userAuthentication.isAuthenticated,
                 accountCreationIsSupported: accountCreationIsSupported,
-                tutorialIsAvailable: tutorialAvailability.tutorialIsAvailable
+                tutorialIsAvailable: getTutorialIsAvailableUseCase.getTutorialIsAvailable()
             )
         )
     }

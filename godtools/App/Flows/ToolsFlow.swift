@@ -44,7 +44,7 @@ class ToolsFlow: ToolNavigationFlow, Flow {
             deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
             favoritingToolMessageCache: appDiContainer.favoritingToolMessageCache,
             analytics: appDiContainer.analytics,
-            tutorialAvailability: appDiContainer.tutorialAvailability,
+            getTutorialIsAvailableUseCase: appDiContainer.getTutorialIsAvailableUseCase(),
             openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache
         )
         
@@ -58,12 +58,14 @@ class ToolsFlow: ToolNavigationFlow, Flow {
     
     private func configureNavigationBar(shouldAnimateNavigationBarHiddenState: Bool) {
         
+        AppDelegate.setWindowBackgroundColorForStatusBarColor(color: ColorPalette.primaryNavBar.color)
+        
         navigationController.setNavigationBarHidden(false, animated: shouldAnimateNavigationBarHiddenState)
         
         let fontService: FontService = appDiContainer.getFontService()
         
         navigationController.navigationBar.setupNavigationBarAppearance(
-            backgroundColor: ColorPalette.gtBlue.color,
+            backgroundColor: ColorPalette.primaryNavBar.color,
             controlColor: .white,
             titleFont: fontService.getFont(size: 17, weight: .semibold),
             titleColor: .white,
