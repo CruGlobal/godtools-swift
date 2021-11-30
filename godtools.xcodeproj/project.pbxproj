@@ -39,6 +39,9 @@
 		45163635268B7F950010876B /* DeepLinkPathType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45163634268B7F950010876B /* DeepLinkPathType.swift */; };
 		4517EDB126F0FAE100F17A84 /* MultiplatformEventId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4517EDB026F0FAE100F17A84 /* MultiplatformEventId.swift */; };
 		4517EDB726F13B3300F17A84 /* MobileContentVisibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4517EDB626F13B3300F17A84 /* MobileContentVisibility.swift */; };
+		451A17522756C10400D35D78 /* tutorial_screenshare.json in Resources */ = {isa = PBXBuildFile; fileRef = 451A174F2756C10400D35D78 /* tutorial_screenshare.json */; };
+		451A17532756C10400D35D78 /* tutorial_lessons.json in Resources */ = {isa = PBXBuildFile; fileRef = 451A17502756C10400D35D78 /* tutorial_lessons.json */; };
+		451A17542756C10400D35D78 /* tutorial_tooltip.json in Resources */ = {isa = PBXBuildFile; fileRef = 451A17512756C10400D35D78 /* tutorial_tooltip.json */; };
 		451EBE2724AD968B00C4D6DD /* languages.json in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE0D24AD968A00C4D6DD /* languages.json */; };
 		451EBE2824AD968B00C4D6DD /* resources.json in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE0E24AD968A00C4D6DD /* resources.json */; };
 		451EBE2924AD968B00C4D6DD /* bae08d104b5ad1e9d7f97a25a88800adbce94cf36c508deaf3a2067f45919a36.png in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE1024AD968A00C4D6DD /* bae08d104b5ad1e9d7f97a25a88800adbce94cf36c508deaf3a2067f45919a36.png */; };
@@ -1125,6 +1128,9 @@
 		45163634268B7F950010876B /* DeepLinkPathType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkPathType.swift; sourceTree = "<group>"; };
 		4517EDB026F0FAE100F17A84 /* MultiplatformEventId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplatformEventId.swift; sourceTree = "<group>"; };
 		4517EDB626F13B3300F17A84 /* MobileContentVisibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentVisibility.swift; sourceTree = "<group>"; };
+		451A174F2756C10400D35D78 /* tutorial_screenshare.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tutorial_screenshare.json; sourceTree = "<group>"; };
+		451A17502756C10400D35D78 /* tutorial_lessons.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tutorial_lessons.json; sourceTree = "<group>"; };
+		451A17512756C10400D35D78 /* tutorial_tooltip.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tutorial_tooltip.json; sourceTree = "<group>"; };
 		451EBE0D24AD968A00C4D6DD /* languages.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = languages.json; sourceTree = "<group>"; };
 		451EBE0E24AD968A00C4D6DD /* resources.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = resources.json; sourceTree = "<group>"; };
 		451EBE1024AD968A00C4D6DD /* bae08d104b5ad1e9d7f97a25a88800adbce94cf36c508deaf3a2067f45919a36.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bae08d104b5ad1e9d7f97a25a88800adbce94cf36c508deaf3a2067f45919a36.png; sourceTree = "<group>"; };
@@ -5608,15 +5614,18 @@
 		D115A65C2526580A007F11AD /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
-				D19EB5DD259BB39300685156 /* training_tip_callout.json */,
-				D19EB5DF259BB75900685156 /* training_tip_tips.json */,
 				45DEF22D2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json */,
-				D1B944E4259E58F5004641DB /* remote_share_active.json */,
-				D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */,
-				D115A65D25265813007F11AD /* share_tool_tutorial_mirrored.json */,
 				D188EA8027146AAF00B10ABA /* onboarding_distance.json */,
 				D188EA7F27146AAF00B10ABA /* onboarding_dog.json */,
 				D188EA7E27146AAF00B10ABA /* onboarding_two_dudes.json */,
+				D1B944E4259E58F5004641DB /* remote_share_active.json */,
+				D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */,
+				D115A65D25265813007F11AD /* share_tool_tutorial_mirrored.json */,
+				D19EB5DD259BB39300685156 /* training_tip_callout.json */,
+				D19EB5DF259BB75900685156 /* training_tip_tips.json */,
+				451A17502756C10400D35D78 /* tutorial_lessons.json */,
+				451A174F2756C10400D35D78 /* tutorial_screenshare.json */,
+				451A17512756C10400D35D78 /* tutorial_tooltip.json */,
 			);
 			path = Lottie;
 			sourceTree = "<group>";
@@ -6013,6 +6022,7 @@
 				455582E2269F2C1000C3FF14 /* TrainingTipView.xib in Resources */,
 				D1838479257E86B3004F5674 /* container in Resources */,
 				D13307262739C5950058450B /* OnboardingQuickStartView.xib in Resources */,
+				451A17522756C10400D35D78 /* tutorial_screenshare.json in Resources */,
 				1737DFDF22FDB48000223CB0 /* GoogleService-Info.plist in Resources */,
 				D188EA8327146AB000B10ABA /* onboarding_distance.json in Resources */,
 				D1330728273ABFF20058450B /* OnboardingQuickStartCell.xib in Resources */,
@@ -6023,6 +6033,7 @@
 				45CB9FA3261F8BA80036BEB3 /* ToolsMenuToolbarItemView.xib in Resources */,
 				451EBE2724AD968B00C4D6DD /* languages.json in Resources */,
 				455583FC269F2DA500C3FF14 /* MobileContentInputView.xib in Resources */,
+				451A17542756C10400D35D78 /* tutorial_tooltip.json in Resources */,
 				451EBE2D24AD968B00C4D6DD /* e999c849242ba4abf20560274f92dd6c77631992d10db0eca5515e80ffb431c6.jpg in Resources */,
 				451EBE3924AD968B00C4D6DD /* 9a8cfa08121f0f0e78dbed54652c2c3f1d51c001a0b81dfdd092d378fd43633c.jpg in Resources */,
 				45AD1B1025938A4E00A096A0 /* ArticlesErrorMessageView.xib in Resources */,
@@ -6056,6 +6067,7 @@
 				45558354269F2D1000C3FF14 /* LessonPageView.xib in Resources */,
 				451EBE3224AD968B00C4D6DD /* 86c8e65bddaa4b889e572aa89714ee846f27294abc62b69d291b52ea1cc05144.jpg in Resources */,
 				45AD1B5925938A4F00A096A0 /* AccountView.xib in Resources */,
+				451A17532756C10400D35D78 /* tutorial_lessons.json in Resources */,
 				451EBE2824AD968B00C4D6DD /* resources.json in Resources */,
 				4556AECE23E22185002C15E8 /* SF-Pro-Text-Light.otf in Resources */,
 				45BF6EBC27050A3F003596A4 /* TransparentModalView.xib in Resources */,
