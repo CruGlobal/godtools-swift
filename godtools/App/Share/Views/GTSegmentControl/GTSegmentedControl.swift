@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol GTSegmentedControlDelegate: class {
+protocol GTSegmentedControlDelegate: AnyObject {
     func segmentedControl(segmentedControl: GTSegmentedControl, didSelect segment: GTSegmentType, at index: Int)
 }
 
