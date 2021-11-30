@@ -156,6 +156,13 @@ class MenuViewModel: NSObject, MenuViewModelType {
         )
     }
     
+    func menuSectionWillAppear(sectionIndex: Int) -> MenuSectionHeaderViewModelType {
+        
+        let menuSection: MenuSection = menuDataSource.value.sections[sectionIndex]
+        
+        return MenuSectionHeaderViewModel(headerTitle: menuSection.title)
+    }
+    
     func menuItemWillAppear(itemSectionIndex: Int, itemIndexRelativeToSection: Int) -> MenuItemViewModelType {
         
         let menuDataSource: MenuDataSource = menuDataSource.value

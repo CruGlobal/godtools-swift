@@ -130,12 +130,10 @@ extension MenuView: UITableViewDataSource {
 extension MenuView: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
-        let section: MenuSection = viewModel.menuDataSource.value.sections[section]
-        
+                
         let menuSectionHeader = MenuSectionHeaderView(
             size: CGSize(width: tableView.frame.size.width, height: headerHeight),
-            viewModel: MenuSectionHeaderViewModel(headerTitle: section.title)
+            viewModel: viewModel.menuSectionWillAppear(sectionIndex: section)
         )
                 
         return menuSectionHeader
