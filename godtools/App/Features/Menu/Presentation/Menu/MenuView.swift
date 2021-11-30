@@ -55,8 +55,8 @@ class MenuView: UIViewController {
         tableView.separatorStyle = .none
         tableView.rowHeight = rowHeight
         tableView.register(
-            UINib(nibName: MenuCell.nibName, bundle: nil),
-            forCellReuseIdentifier: MenuCell.reuseIdentifier
+            UINib(nibName: MenuItemView.nibName, bundle: nil),
+            forCellReuseIdentifier: MenuItemView.reuseIdentifier
         )
     }
     
@@ -109,24 +109,17 @@ extension MenuView: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell: MenuCell = tableView.dequeueReusableCell(
-            withIdentifier: MenuCell.reuseIdentifier,
-            for: indexPath) as! MenuCell
-                
-        cell.selectionStyle = .none
-                
-        let menuItem: MenuItem = viewModel.menuDataSource.value.getMenuItem(at: indexPath)
-        
-        let selectionDisabled: Bool = menuItem.id == .version
+        let cell: MenuItemView = tableView.dequeueReusableCell(
+            withIdentifier: MenuItemView.reuseIdentifier,
+            for: indexPath) as! MenuItemView
+                        
         let numberOfRowsInSection: Int = tableView.numberOfRows(inSection: indexPath.section)
         let isLastRowOfSection: Bool = indexPath.row == numberOfRowsInSection - 1
         
         cell.configure(
-            viewModel: MenuCellViewModel(
-                menuItem: menuItem,
-                selectionDisabled: selectionDisabled,
-                hidesSeparator: isLastRowOfSection
-        ))
+            viewModel: viewModel.menuItemWillAppear(itemSectionIndex: indexPath.section, itemIndexRelativeToSection: indexPath.row),
+            hidesSeparator: isLastRowOfSection
+        )
         
         return cell
     }

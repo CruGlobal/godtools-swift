@@ -14,6 +14,7 @@ protocol MenuViewModelType {
     var navDoneButtonTitle: String { get }
     var menuDataSource: ObservableValue<MenuDataSource> { get }
     
+    func menuItemWillAppear(itemSectionIndex: Int, itemIndexRelativeToSection: Int) -> MenuItemViewModelType
     func pageViewed()
     func doneTapped()
     func reloadMenuDataSource()

@@ -1,19 +1,19 @@
 //
-//  MenuTableViewCell.swift
+//  MenuItemView.swift
 //  godtools
 //
-//  Created by Devserker on 4/25/17.
-//  Copyright © 2017 Cru. All rights reserved.
+//  Created by Levi Eggert on 1/31/20.
+//  Copyright © 2020 Cru. All rights reserved.
 //
 
 import UIKit
 
-class MenuCell: UITableViewCell {
+class MenuItemView: UITableViewCell {
     
-    static let nibName: String = "MenuCell"
-    static let reuseIdentifier: String = "MenuCellReuseIdentifier"
+    static let nibName: String = "MenuItemView"
+    static let reuseIdentifier: String = "MenuItemViewReuseIdentifier"
       
-    private var viewModel: MenuCellViewModel?
+    private var viewModel: MenuItemViewModelType?
     
     @IBOutlet weak private var selectedView: UIView!
     @IBOutlet weak private var titleLabel: UILabel!
@@ -33,13 +33,15 @@ class MenuCell: UITableViewCell {
         titleLabel.text = nil
     }
     
-    func configure(viewModel: MenuCellViewModel) {
+    func configure(viewModel: MenuItemViewModelType, hidesSeparator: Bool) {
         
         self.viewModel = viewModel
         
+        selectionStyle = .none
+        
         titleLabel.text = viewModel.title
         rightArrowImageView.isHidden = viewModel.selectionDisabled
-        separatorLine.isHidden = viewModel.hidesSeparator
+        separatorLine.isHidden = hidesSeparator
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

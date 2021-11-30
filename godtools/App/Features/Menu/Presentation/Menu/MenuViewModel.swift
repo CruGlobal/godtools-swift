@@ -156,6 +156,16 @@ class MenuViewModel: NSObject, MenuViewModelType {
         )
     }
     
+    func menuItemWillAppear(itemSectionIndex: Int, itemIndexRelativeToSection: Int) -> MenuItemViewModelType {
+        
+        let menuDataSource: MenuDataSource = menuDataSource.value
+        let menuItem: MenuItem = menuDataSource.getMenuItem(at: IndexPath(row: itemIndexRelativeToSection, section: itemSectionIndex))
+        
+        let selectionDisabled: Bool = menuItem.id == .version
+        
+        return MenuItemViewModel(menuItem: menuItem, selectionDisabled: selectionDisabled)
+    }
+    
     func pageViewed() {
         analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: "Menu", siteSection: "", siteSubSection: ""))
     }
