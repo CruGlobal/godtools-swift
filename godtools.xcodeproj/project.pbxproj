@@ -25,6 +25,10 @@
 		450E442427565D6F00D4311E /* TutorialSupportedLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E442027565D6F00D4311E /* TutorialSupportedLanguages.swift */; };
 		450E442527565D7000D4311E /* TutorialSupportedLanguagesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E442127565D6F00D4311E /* TutorialSupportedLanguagesType.swift */; };
 		450E442727565DCD00D4311E /* TutorialItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E442627565DCD00D4311E /* TutorialItem.swift */; };
+		450E442B275664B500D4311E /* MockTutorialSupportedLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E442A275664B500D4311E /* MockTutorialSupportedLanguages.swift */; };
+		450E442C2756657E00D4311E /* TutorialSupportedLanguagesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E442127565D6F00D4311E /* TutorialSupportedLanguagesType.swift */; };
+		450E442D2756665C00D4311E /* TutorialLanguageAvailability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E441F27565D6F00D4311E /* TutorialLanguageAvailability.swift */; };
+		450E442E2756669B00D4311E /* TutorialSupportedLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E442027565D6F00D4311E /* TutorialSupportedLanguages.swift */; };
 		450EF834247EB3D300978926 /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 450EF833247EB3D300978926 /* SF-Pro-Text-Bold.otf */; };
 		451172AE26A35425001AD628 /* MockMobileContentManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451172AC26A35425001AD628 /* MockMobileContentManifest.swift */; };
 		451172AF26A35425001AD628 /* MockMobileContentManifestAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451172AD26A35425001AD628 /* MockMobileContentManifestAttributes.swift */; };
@@ -1000,7 +1004,6 @@
 		45F5A04B268A7BD90081C507 /* ToolsDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5A04A268A7BD90081C507 /* ToolsDeepLinkParser.swift */; };
 		45F7E7602701F1AA00CC9FB9 /* MobileContentViewVisibilityState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F7E75F2701F1AA00CC9FB9 /* MobileContentViewVisibilityState.swift */; };
 		45FA696C24251CA00006878C /* TutorialLanguageAvailabilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FA696B24251CA00006878C /* TutorialLanguageAvailabilityTests.swift */; };
-		45FA696F24251D360006878C /* MockSupportedLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FA6960242517590006878C /* MockSupportedLanguages.swift */; };
 		45FF25E7260BED6F00D771B6 /* ToolViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FF25E6260BED6F00D771B6 /* ToolViewModelType.swift */; };
 		4F0CCC1F1EE73E9D00AE4E45 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 4F0CCC1E1EE73E9D00AE4E45 /* Podfile */; };
 		4F2500621F0C1E8D00364FBC /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F2500611F0C1E8D00364FBC /* AdSupport.framework */; };
@@ -1111,6 +1114,7 @@
 		450E442027565D6F00D4311E /* TutorialSupportedLanguages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialSupportedLanguages.swift; sourceTree = "<group>"; };
 		450E442127565D6F00D4311E /* TutorialSupportedLanguagesType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialSupportedLanguagesType.swift; sourceTree = "<group>"; };
 		450E442627565DCD00D4311E /* TutorialItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialItem.swift; sourceTree = "<group>"; };
+		450E442A275664B500D4311E /* MockTutorialSupportedLanguages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockTutorialSupportedLanguages.swift; sourceTree = "<group>"; };
 		450EF833247EB3D300978926 /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
 		451172AC26A35425001AD628 /* MockMobileContentManifest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockMobileContentManifest.swift; sourceTree = "<group>"; };
 		451172AD26A35425001AD628 /* MockMobileContentManifestAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockMobileContentManifestAttributes.swift; sourceTree = "<group>"; };
@@ -2068,7 +2072,6 @@
 		45F5A047268A72200081C507 /* IncomingDeepLinkUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingDeepLinkUrl.swift; sourceTree = "<group>"; };
 		45F5A04A268A7BD90081C507 /* ToolsDeepLinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsDeepLinkParser.swift; sourceTree = "<group>"; };
 		45F7E75F2701F1AA00CC9FB9 /* MobileContentViewVisibilityState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentViewVisibilityState.swift; sourceTree = "<group>"; };
-		45FA6960242517590006878C /* MockSupportedLanguages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSupportedLanguages.swift; sourceTree = "<group>"; };
 		45FA696B24251CA00006878C /* TutorialLanguageAvailabilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialLanguageAvailabilityTests.swift; sourceTree = "<group>"; };
 		45FF25E6260BED6F00D771B6 /* ToolViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolViewModelType.swift; sourceTree = "<group>"; };
 		4F0CCC1E1EE73E9D00AE4E45 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -5077,7 +5080,7 @@
 		45B59D7C242434F700F9D594 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				45FA6960242517590006878C /* MockSupportedLanguages.swift */,
+				450E442A275664B500D4311E /* MockTutorialSupportedLanguages.swift */,
 				45FA696B24251CA00006878C /* TutorialLanguageAvailabilityTests.swift */,
 			);
 			path = Services;
@@ -7197,13 +7200,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				45A45CEF2731B914005D4E74 /* MobileContentBackgroundImageScale.swift in Sources */,
-				45FA696F24251D360006878C /* MockSupportedLanguages.swift in Sources */,
 				45557AEA252D094100ACFA95 /* LocaleLocalizationBundleTests.swift in Sources */,
 				45A45CEC2731B77E005D4E74 /* MobileContentImageAlignment.swift in Sources */,
+				450E442D2756665C00D4311E /* TutorialLanguageAvailability.swift in Sources */,
 				45AD22DF2593E63D00A096A0 /* Locale+Extensions.swift in Sources */,
 				45BB7FB925F6BE76000FE44B /* LanguageDirection.swift in Sources */,
 				45A45CEE2731B8C9005D4E74 /* MobileContentBackgroundImageRendererType.swift in Sources */,
+				450E442B275664B500D4311E /* MockTutorialSupportedLanguages.swift in Sources */,
+				450E442E2756669B00D4311E /* TutorialSupportedLanguages.swift in Sources */,
 				45FA696C24251CA00006878C /* TutorialLanguageAvailabilityTests.swift in Sources */,
+				450E442C2756657E00D4311E /* TutorialSupportedLanguagesType.swift in Sources */,
 				45A45CF02731B946005D4E74 /* MobileContentBackgroundImageAlignment.swift in Sources */,
 				45267B7725F19709004DB4C4 /* MobileContentBackgroundImageRendererTests.swift in Sources */,
 				45A45CEB2731B77A005D4E74 /* MobileContentImageAlignmentType.swift in Sources */,
