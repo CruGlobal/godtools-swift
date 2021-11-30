@@ -18,6 +18,7 @@ class SetupParallelLanguageView: UIViewController {
 
     @IBOutlet weak private var animatedView: AnimatedView!
     @IBOutlet weak private var promptLabel: UILabel!
+    @IBOutlet weak private var selectLanguageButton: UIButton!
     //@IBOutlet weak private var languagePicker: UIPickerView!
     //@IBOutlet weak private var yesButton: UIButton!
     //@IBOutlet weak private var noButton: UIButton!
@@ -43,9 +44,14 @@ class SetupParallelLanguageView: UIViewController {
         
         super.viewDidLoad()
         
+        setupLayout()
+        
         animatedView.configure(viewModel: viewModel.animatedViewModel)
         
         promptLabel.text = viewModel.promptText
+    }
+    
+    private func setupLayout() {
         
         closeButton = addBarButtonItem(
             to: .right,
@@ -54,6 +60,13 @@ class SetupParallelLanguageView: UIViewController {
             target: self,
             action: #selector(handleClose)
         )
+        
+        selectLanguageButton.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
+        selectLanguageButton.layer.shadowOffset = CGSize(width: 2, height: 4)
+        selectLanguageButton.layer.shadowOpacity = 1.0
+        selectLanguageButton.layer.shadowRadius = 0.0
+        selectLanguageButton.layer.masksToBounds = false
+        selectLanguageButton.layer.cornerRadius = 6
     }
     
     @objc func handleClose(barButtonItem: UIBarButtonItem) {

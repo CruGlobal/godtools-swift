@@ -13,12 +13,16 @@
         <array key="SF-Pro-Display-Light.otf">
             <string>SFProDisplay-Light</string>
         </array>
+        <array key="SF-Pro-Text-Light.otf">
+            <string>SFProText-Light</string>
+        </array>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SetupParallelLanguageView" customModule="godtools" customModuleProvider="target">
             <connections>
                 <outlet property="animatedView" destination="okP-RF-fbs" id="Yxq-WC-h7b"/>
                 <outlet property="promptLabel" destination="Tqi-4y-CiJ" id="flu-tr-yxt"/>
+                <outlet property="selectLanguageButton" destination="siV-NL-Hvb" id="aBA-NS-Bod"/>
                 <outlet property="view" destination="3AB-3x-2v2" id="Ont-NA-60H"/>
             </connections>
         </placeholder>
@@ -28,39 +32,50 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="okP-RF-fbs" userLabel="Animated View" customClass="AnimatedView" customModule="godtools" customModuleProvider="target">
-                    <rect key="frame" x="175" y="70" width="64" height="64"/>
+                    <rect key="frame" x="145" y="70" width="124" height="124"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="64" id="9pe-nO-Ulj"/>
-                        <constraint firstAttribute="height" constant="64" id="zUJ-UM-p3G"/>
+                        <constraint firstAttribute="width" constant="124" id="9pe-nO-Ulj"/>
+                        <constraint firstAttribute="height" constant="124" id="zUJ-UM-p3G"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tqi-4y-CiJ" userLabel="Prompt Label">
-                    <rect key="frame" x="175.5" y="160" width="63" height="34"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tqi-4y-CiJ" userLabel="Prompt Label">
+                    <rect key="frame" x="30" y="220" width="354" height="33.5"/>
                     <fontDescription key="fontDescription" name="SFProDisplay-Light" family="SF Pro Display" pointSize="28"/>
                     <color key="textColor" red="0.23137254900000001" green="0.64313725489999995" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="siV-NL-Hvb">
-                    <rect key="frame" x="186.5" y="226" width="41" height="30"/>
+                <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="siV-NL-Hvb" userLabel="Select Language Button">
+                    <rect key="frame" x="30" y="285.5" width="354" height="50"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="Sns-PT-HJ1"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="SFProText-Light" family="SF Pro Text" pointSize="24"/>
                     <menu key="menu" id="lW7-a6-X7i">
                         <children>
                             <command title="Item 1" id="dFP-LN-10j"/>
                             <command title="Item 2" id="GST-ox-uMI"/>
                         </children>
                     </menu>
-                    <state key="normal" title="Button"/>
+                    <state key="normal" title="Button">
+                        <color key="titleColor" red="0.3529411764705882" green="0.3529411764705882" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
                 </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="5Xp-J2-BDq"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="Tqi-4y-CiJ" firstAttribute="top" secondItem="okP-RF-fbs" secondAttribute="bottom" constant="26" id="2MT-fT-xe5"/>
+                <constraint firstItem="5Xp-J2-BDq" firstAttribute="trailing" secondItem="Tqi-4y-CiJ" secondAttribute="trailing" constant="30" id="4Ai-bF-G6q"/>
                 <constraint firstItem="okP-RF-fbs" firstAttribute="top" secondItem="5Xp-J2-BDq" secondAttribute="top" constant="26" id="E5z-WN-Gk3"/>
+                <constraint firstItem="siV-NL-Hvb" firstAttribute="leading" secondItem="5Xp-J2-BDq" secondAttribute="leading" constant="30" id="EwX-f0-gRa"/>
                 <constraint firstItem="Tqi-4y-CiJ" firstAttribute="centerX" secondItem="3AB-3x-2v2" secondAttribute="centerX" id="Ntn-oV-RNX"/>
                 <constraint firstItem="siV-NL-Hvb" firstAttribute="top" secondItem="Tqi-4y-CiJ" secondAttribute="bottom" constant="32" id="R5I-5j-zJV"/>
+                <constraint firstItem="5Xp-J2-BDq" firstAttribute="trailing" secondItem="siV-NL-Hvb" secondAttribute="trailing" constant="30" id="Rc7-jb-gNN"/>
                 <constraint firstItem="okP-RF-fbs" firstAttribute="centerX" secondItem="3AB-3x-2v2" secondAttribute="centerX" id="YeN-CV-c61"/>
                 <constraint firstItem="siV-NL-Hvb" firstAttribute="centerX" secondItem="3AB-3x-2v2" secondAttribute="centerX" id="idt-gX-Uiq"/>
+                <constraint firstItem="Tqi-4y-CiJ" firstAttribute="leading" secondItem="5Xp-J2-BDq" secondAttribute="leading" constant="30" id="trY-wE-0c0"/>
             </constraints>
             <point key="canvasLocation" x="-684.05797101449275" y="57.589285714285708"/>
         </view>
