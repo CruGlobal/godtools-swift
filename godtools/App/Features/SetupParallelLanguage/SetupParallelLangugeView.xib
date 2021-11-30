@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="UIMenu" message="Requires Xcode 11 or later." minToolsVersion="11.0" requiredIntegratedClassName="UICommandDiff"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Display-Light.otf">
+            <string>SFProDisplay-Light</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SetupParallelLanguageView" customModule="godtools" customModuleProvider="target">
+            <connections>
+                <outlet property="animatedView" destination="okP-RF-fbs" id="Yxq-WC-h7b"/>
+                <outlet property="promptLabel" destination="Tqi-4y-CiJ" id="flu-tr-yxt"/>
+                <outlet property="view" destination="3AB-3x-2v2" id="15J-nm-KEU"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="3AB-3x-2v2">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="okP-RF-fbs" userLabel="Animated View" customClass="AnimatedView" customModule="godtools" customModuleProvider="target">
+                    <rect key="frame" x="175" y="26" width="64" height="64"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="64" id="9pe-nO-Ulj"/>
+                        <constraint firstAttribute="height" constant="64" id="zUJ-UM-p3G"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tqi-4y-CiJ" userLabel="Prompt Label">
+                    <rect key="frame" x="175.5" y="116" width="63" height="34"/>
+                    <fontDescription key="fontDescription" name="SFProDisplay-Light" family="SF Pro Display" pointSize="28"/>
+                    <color key="textColor" red="0.23137254900000001" green="0.64313725489999995" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="siV-NL-Hvb">
+                    <rect key="frame" x="186.5" y="182" width="41" height="30"/>
+                    <menu key="menu" id="lW7-a6-X7i">
+                        <children>
+                            <command title="Item 1" id="dFP-LN-10j"/>
+                            <command title="Item 2" id="GST-ox-uMI"/>
+                        </children>
+                    </menu>
+                    <state key="normal" title="Button"/>
+                </button>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="Tqi-4y-CiJ" firstAttribute="top" secondItem="okP-RF-fbs" secondAttribute="bottom" constant="26" id="2MT-fT-xe5"/>
+                <constraint firstItem="okP-RF-fbs" firstAttribute="top" secondItem="3AB-3x-2v2" secondAttribute="top" constant="26" id="E5z-WN-Gk3"/>
+                <constraint firstItem="Tqi-4y-CiJ" firstAttribute="centerX" secondItem="3AB-3x-2v2" secondAttribute="centerX" id="Ntn-oV-RNX"/>
+                <constraint firstItem="siV-NL-Hvb" firstAttribute="top" secondItem="Tqi-4y-CiJ" secondAttribute="bottom" constant="32" id="R5I-5j-zJV"/>
+                <constraint firstItem="okP-RF-fbs" firstAttribute="centerX" secondItem="3AB-3x-2v2" secondAttribute="centerX" id="YeN-CV-c61"/>
+                <constraint firstItem="siV-NL-Hvb" firstAttribute="centerX" secondItem="3AB-3x-2v2" secondAttribute="centerX" id="idt-gX-Uiq"/>
+            </constraints>
+            <point key="canvasLocation" x="-683" y="58"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

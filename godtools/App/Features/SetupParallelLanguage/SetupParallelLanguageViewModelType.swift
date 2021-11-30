@@ -10,16 +10,17 @@ import Foundation
 
 protocol SetupParallelLanguageViewModelType {
     
-    var animationViewModel: AnimatedViewModel { get }
-    var bodyText: String { get }
+    var animatedViewModel: AnimatedViewModel { get }
+    var promptText: String { get }
     var languagePickerLabelText: String { get }
     var yesButtonText: String { get }
     var noButtonText: String { get }
     var selectButtonText: String { get }
     var getStartedButtonText: String { get }
     
-    func handleYesTapped()
-    func handleNoTapped()
-    func handleLanguageSelected(index: Int)
-    func handleGetStartedTapped()
+    func closeButtonTapped()
+    func yesButtonTapped()
+    func noButtonTapped()
+    func languageSelected(index: Int)
+    func getStartedButtonTapped()
 }
