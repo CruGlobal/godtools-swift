@@ -343,9 +343,16 @@ class AppFlow: NSObject, Flow {
         case .openSetupParallelLanguage:
             
             let viewModel = SetupParallelLanguageViewModel(flowDelegate: self, localizationServices: appDiContainer.localizationServices)
+            
             let view = SetupParallelLanguageView(viewModel: viewModel)
             
-            navigationController.present(view, animated: true, completion: nil)
+            let modal = ModalNavigationController(rootView: view)
+            
+            navigationController.present(modal, animated: true, completion: nil)
+        
+        case .dismissSetupParallelLanguage:
+            closeMenu(animated: false)
+            navigationController.dismiss(animated: true, completion: nil)
         
         case .noThanksTappedFromSetupParallelLanguage:
             closeMenu(animated: false)

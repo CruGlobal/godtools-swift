@@ -53,6 +53,8 @@ class ToolsMenuView: UIViewController {
             target: self,
             action: #selector(handleMenu(barButtonItem:))
         )
+        
+        viewModel.openSetupParallelLanguageifAvailable()
     }
     
     private func setupLayout() {

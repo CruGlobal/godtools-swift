@@ -93,4 +93,10 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
     func languageTapped() {
         flowDelegate?.navigate(step: .languageSettingsTappedFromTools)
     }
+    
+    func openSetupParallelLanguageifAvailable() {
+        if tutorialAvailability.tutorialIsAvailable {
+            flowDelegate?.navigate(step: .openSetupParallelLanguage)
+        }
+    }
 }
