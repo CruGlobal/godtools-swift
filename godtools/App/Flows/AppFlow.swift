@@ -91,10 +91,10 @@ class AppFlow: NSObject, Flow {
         NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
     
-    private func resetFlowToToolsFlow(startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView?, didFinishSetNavigationStack: (() -> Void)?) {
+    private func resetFlowToToolsFlow(animatedDismissal: Bool, startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView?, didFinishSetNavigationStack: (() -> Void)?) {
 
         closeMenu(animated: false)
-        navigationController.dismiss(animated: false, completion: nil)
+        navigationController.dismiss(animated: animatedDismissal, completion: nil)
         navigationController.setViewControllers([], animated: false)
         
         toolsFlow = nil
@@ -198,7 +198,7 @@ class AppFlow: NSObject, Flow {
                     loadingView.backgroundColor = .white
                     window.addSubview(loadingView)
                     
-                    resetFlowToToolsFlow(startingToolbarItem: nil, didFinishSetNavigationStack: nil)
+                    resetFlowToToolsFlow(animatedDismissal: false, startingToolbarItem: nil, didFinishSetNavigationStack: nil)
                     loadInitialData()
                     
                     UIView.animate(withDuration: 0.4, delay: 1.5, options: .curveEaseOut, animations: {
@@ -230,7 +230,7 @@ class AppFlow: NSObject, Flow {
                     startingToolbarItem = nil
                 }
                 
-                resetFlowToToolsFlow(startingToolbarItem: startingToolbarItem) { [weak self] in
+                resetFlowToToolsFlow(animatedDismissal: false, startingToolbarItem: startingToolbarItem) { [weak self] in
                     
                     guard let weakSelf = self else {
                         return
@@ -248,7 +248,7 @@ class AppFlow: NSObject, Flow {
             
             case .article(let articleUri):
                 
-                resetFlowToToolsFlow(startingToolbarItem: nil) { [weak self] in
+                resetFlowToToolsFlow(animatedDismissal: false, startingToolbarItem: nil) { [weak self] in
                     
                     guard let weakSelf = self else {
                         return
@@ -266,15 +266,15 @@ class AppFlow: NSObject, Flow {
                 
             case .lessonsList:
                 
-                resetFlowToToolsFlow(startingToolbarItem: .lessons, didFinishSetNavigationStack: nil)
+                resetFlowToToolsFlow(animatedDismissal: false, startingToolbarItem: .lessons, didFinishSetNavigationStack: nil)
                 
             case .favoritedToolsList:
                 
-                resetFlowToToolsFlow(startingToolbarItem: .favoritedTools, didFinishSetNavigationStack: nil)
+                resetFlowToToolsFlow(animatedDismissal: false, startingToolbarItem: .favoritedTools, didFinishSetNavigationStack: nil)
                 
             case .allToolsList:
                 
-                resetFlowToToolsFlow(startingToolbarItem: .allTools, didFinishSetNavigationStack: nil)
+                resetFlowToToolsFlow(animatedDismissal: false, startingToolbarItem: .allTools, didFinishSetNavigationStack: nil)
             }
         
         case .showTools(let animated, let shouldCreateNewInstance, let startingToolbarItem):
@@ -307,11 +307,23 @@ class AppFlow: NSObject, Flow {
             
             self.onboardingFlow = onboardingFlow
             
-        case .dismissOnboardingTutorial:
+        case .onboardingFlowCompleted(let onboardingFlowCompletedState):
             
-            navigate(step: .showTools(animated: false, shouldCreateNewInstance: false, startingToolbarItem: nil))
-            navigationController.dismiss(animated: true, completion: nil)
-            onboardingFlow = nil
+            
+            switch onboardingFlowCompletedState {
+            
+            case .readArticles:
+                navigate(step: .deepLink(deepLinkType: .tool(toolDeepLink: ToolDeepLink(resourceAbbreviation: "es", primaryLanguageCodes: ["en"], parallelLanguageCodes: [], liveShareStream: nil, page: nil))))
+            
+            case .tryLessons:
+                resetFlowToToolsFlow(animatedDismissal: true, startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView.lessons, didFinishSetNavigationStack: nil)
+            
+            case .chooseTool:
+                resetFlowToToolsFlow(animatedDismissal: true, startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView.allTools, didFinishSetNavigationStack: nil)
+                
+            default:
+                resetFlowToToolsFlow(animatedDismissal: true, startingToolbarItem: nil, didFinishSetNavigationStack: nil)
+            }
                             
         case .openTutorialTapped:
             let tutorialFlow = TutorialFlow(

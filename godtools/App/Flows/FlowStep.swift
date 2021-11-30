@@ -18,7 +18,7 @@ enum FlowStep {
     case showMenu
     case showLanguageSettings
     case showOnboardingTutorial(animated: Bool)
-    case dismissOnboardingTutorial
+    case onboardingFlowCompleted(onboardingFlowCompletedState: OnboardingFlowCompletedState?)
     case buttonWithUrlTappedFromFirebaseInAppMessage(url: URL)
     
     // tools
@@ -32,6 +32,11 @@ enum FlowStep {
     case videoEndedOnOnboardingTutorial
     case skipTappedFromOnboardingTutorial
     case endTutorialFromOnboardingTutorial
+    case skipTappedFromOnboardingQuickStart
+    case endTutorialFromOnboardingQuickStart
+    case readArticlesTappedFromOnboardingQuickStart
+    case tryLessonsTappedFromOnboardingQuickStart
+    case chooseToolTappedFromOnboardingQuickStart
     
     // lessons list
     case lessonTappedFromLessonsList(resource: ResourceModel)
