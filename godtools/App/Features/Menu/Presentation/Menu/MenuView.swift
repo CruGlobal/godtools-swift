@@ -107,7 +107,7 @@ extension MenuView: UITableViewDataSource {
         let isLastRowOfSection: Bool = indexPath.row == numberOfRowsInSection - 1
         
         cell.configure(
-            viewModel: viewModel.menuItemWillAppear(itemSectionIndex: indexPath.section, itemIndexRelativeToSection: indexPath.row),
+            viewModel: viewModel.menuItemWillAppear(sectionIndex: indexPath.section, itemIndexRelativeToSection: indexPath.row),
             hidesSeparator: isLastRowOfSection
         )
         

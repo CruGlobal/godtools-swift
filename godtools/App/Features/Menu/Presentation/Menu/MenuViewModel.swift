@@ -131,10 +131,10 @@ class MenuViewModel: NSObject, MenuViewModelType {
         return MenuSectionHeaderViewModel(headerTitle: sectionTitle)
     }
     
-    func menuItemWillAppear(itemSectionIndex: Int, itemIndexRelativeToSection: Int) -> MenuItemViewModelType {
+    func menuItemWillAppear(sectionIndex: Int, itemIndexRelativeToSection: Int) -> MenuItemViewModelType {
         
         let menuDataSource: MenuDataSource = menuDataSource.value
-        let menuItem: MenuItem = menuDataSource.getMenuItem(at: IndexPath(row: itemIndexRelativeToSection, section: itemSectionIndex))
+        let menuItem: MenuItem = menuDataSource.getMenuItem(at: IndexPath(row: itemIndexRelativeToSection, section: sectionIndex))
         let itemTitle: String = getItemTitle(item: menuItem)
         
         let selectionDisabled: Bool = menuItem == .version

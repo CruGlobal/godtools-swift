@@ -15,7 +15,7 @@ protocol MenuViewModelType {
     var menuDataSource: ObservableValue<MenuDataSource> { get }
     
     func menuSectionWillAppear(sectionIndex: Int) -> MenuSectionHeaderViewModelType
-    func menuItemWillAppear(itemSectionIndex: Int, itemIndexRelativeToSection: Int) -> MenuItemViewModelType
+    func menuItemWillAppear(sectionIndex: Int, itemIndexRelativeToSection: Int) -> MenuItemViewModelType
     func pageViewed()
     func doneTapped()
     func languageSettingsTapped()
