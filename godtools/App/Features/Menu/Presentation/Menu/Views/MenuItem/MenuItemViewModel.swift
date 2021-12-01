@@ -1,5 +1,5 @@
 //
-//  MenuCellViewModel.swift
+//  MenuItemViewModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 1/31/20.
@@ -8,15 +8,14 @@
 
 import Foundation
 
-class MenuCellViewModel {
+class MenuItemViewModel: MenuItemViewModelType {
     
     let title: String
     let selectionDisabled: Bool
-    let hidesSeparator: Bool
     
-    required init(menuItem: MenuItem, selectionDisabled: Bool, hidesSeparator: Bool) {
-        title = menuItem.title
+    required init(title: String, selectionDisabled: Bool) {
+        
+        self.title = title
         self.selectionDisabled = selectionDisabled
-        self.hidesSeparator = hidesSeparator
     }
 }

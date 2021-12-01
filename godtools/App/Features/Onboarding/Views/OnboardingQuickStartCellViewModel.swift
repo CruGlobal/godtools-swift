@@ -16,6 +16,6 @@ class OnboardingQuickStartCellViewModel: OnboardingQuickStartCellViewModelType {
     required init (item: OnboardingQuickStartItem) {
         
         title = item.title
-        linkButtonTitle = item.title
+        linkButtonTitle = item.linkButtonTitle
     }
 }

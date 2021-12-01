@@ -55,8 +55,8 @@ class MenuView: UIViewController {
         tableView.separatorStyle = .none
         tableView.rowHeight = rowHeight
         tableView.register(
-            UINib(nibName: MenuCell.nibName, bundle: nil),
-            forCellReuseIdentifier: MenuCell.reuseIdentifier
+            UINib(nibName: MenuItemView.nibName, bundle: nil),
+            forCellReuseIdentifier: MenuItemView.reuseIdentifier
         )
     }
     
@@ -71,19 +71,9 @@ class MenuView: UIViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        viewModel.pageViewed()
-        viewModel.reloadMenuDataSource()
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        // TODO: What is login banner? ~Levi
-        if isComingFromLoginBanner {
-            //openLoginWindow()
-            //isComingFromLoginBanner = false
-        }
+        viewModel.pageViewed()
     }
     
     @objc func handleDone(barButtonItem: UIBarButtonItem) {
@@ -104,29 +94,22 @@ extension MenuView: UITableViewDataSource {
         let menuDataSource: MenuDataSource = viewModel.menuDataSource.value
         let menuSection: MenuSection = menuDataSource.sections[section]
         
-        return menuDataSource.items[menuSection.id]?.count ?? 0
+        return menuDataSource.items[menuSection]?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell: MenuCell = tableView.dequeueReusableCell(
-            withIdentifier: MenuCell.reuseIdentifier,
-            for: indexPath) as! MenuCell
-                
-        cell.selectionStyle = .none
-                
-        let menuItem: MenuItem = viewModel.menuDataSource.value.getMenuItem(at: indexPath)
-        
-        let selectionDisabled: Bool = menuItem.id == .version
+        let cell: MenuItemView = tableView.dequeueReusableCell(
+            withIdentifier: MenuItemView.reuseIdentifier,
+            for: indexPath) as! MenuItemView
+                        
         let numberOfRowsInSection: Int = tableView.numberOfRows(inSection: indexPath.section)
         let isLastRowOfSection: Bool = indexPath.row == numberOfRowsInSection - 1
         
         cell.configure(
-            viewModel: MenuCellViewModel(
-                menuItem: menuItem,
-                selectionDisabled: selectionDisabled,
-                hidesSeparator: isLastRowOfSection
-        ))
+            viewModel: viewModel.menuItemWillAppear(sectionIndex: indexPath.section, itemIndexRelativeToSection: indexPath.row),
+            hidesSeparator: isLastRowOfSection
+        )
         
         return cell
     }
@@ -137,12 +120,10 @@ extension MenuView: UITableViewDataSource {
 extension MenuView: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
-        let section: MenuSection = viewModel.menuDataSource.value.sections[section]
-        
+                
         let menuSectionHeader = MenuSectionHeaderView(
             size: CGSize(width: tableView.frame.size.width, height: headerHeight),
-            viewModel: MenuSectionHeaderViewModel(headerTitle: section.title)
+            viewModel: viewModel.menuSectionWillAppear(sectionIndex: section)
         )
                 
         return menuSectionHeader
@@ -152,7 +133,7 @@ extension MenuView: UITableViewDelegate {
         
         let menuItem: MenuItem = viewModel.menuDataSource.value.getMenuItem(at: indexPath)
         
-        switch menuItem.id {
+        switch menuItem {
             
         case .languageSettings:
             viewModel.languageSettingsTapped()
@@ -200,9 +181,6 @@ extension MenuView: UITableViewDelegate {
             
         case .version:
             break
-            
-        case .playground:
-            viewModel.playgroundTapped()
         }
     }
     
@@ -217,21 +195,4 @@ extension MenuView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         return nil
     }
-    
-}
-
-// MARK: -
-
-extension MenuView {
-    
-    /*
-    fileprivate func openLoginWindow() {
-        if viewModel.loginClient.isAuthenticated() {
-            DispatchQueue.main.async { [weak self] in
-                self?.viewModel.logoutTapped()
-            }
-        } else {
-            initiateLogin()
-        }
-    }*/
 }

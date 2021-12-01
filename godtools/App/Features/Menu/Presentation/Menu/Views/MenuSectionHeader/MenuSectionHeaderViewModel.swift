@@ -8,7 +8,7 @@
 
 import Foundation
 
-class MenuSectionHeaderViewModel {
+class MenuSectionHeaderViewModel: MenuSectionHeaderViewModelType {
     
     let headerTitle: String
     

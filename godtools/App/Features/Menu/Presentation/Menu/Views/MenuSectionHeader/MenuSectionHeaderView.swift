@@ -10,25 +10,21 @@ import UIKit
 
 class MenuSectionHeaderView: UIView, NibBased {
      
-    private let viewModel: MenuSectionHeaderViewModel
+    private let viewModel: MenuSectionHeaderViewModelType
     
     @IBOutlet weak private var headerLabel: UILabel!
     
-    required init(size: CGSize, viewModel: MenuSectionHeaderViewModel) {
+    required init(size: CGSize, viewModel: MenuSectionHeaderViewModelType) {
         self.viewModel = viewModel
         super.init(frame: CGRect(x: 0, y: 0, width: size.width, height: size.height))
         initialize()
     }
     
     override init(frame: CGRect) {
-        viewModel = MenuSectionHeaderViewModel(headerTitle: "")
-        super.init(frame: frame)
         fatalError("init(frame:) has not been implemented")
     }
     
     required init?(coder aDecoder: NSCoder) {
-        viewModel = MenuSectionHeaderViewModel(headerTitle: "")
-        super.init(coder: aDecoder)
         fatalError("init(coder:) has not been implemented")
     }
     
