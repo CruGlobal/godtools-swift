@@ -149,6 +149,11 @@ class MenuViewModel: NSObject, MenuViewModelType {
     func doneTapped() {
         flowDelegate?.navigate(step: .doneTappedFromMenu)
     }
+}
+
+// MARK: - Menu Option Tapped
+
+extension MenuViewModel {
     
     func languageSettingsTapped() {
         flowDelegate?.navigate(step: .languageSettingsTappedFromMenu)
