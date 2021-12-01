@@ -11,7 +11,6 @@ import UIKit
 class MenuViewModel: NSObject, MenuViewModelType {
     
     private let config: ConfigType
-    private let menuDataProvider: MenuDataProviderType
     private let deviceLanguage: DeviceLanguageType
     private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     private let supportedLanguageCodesForAccountCreation: [String] = ["en"]
@@ -24,13 +23,12 @@ class MenuViewModel: NSObject, MenuViewModelType {
     
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
     let navDoneButtonTitle: String
-    let menuDataSource: ObservableValue<MenuDataSource> = ObservableValue(value: MenuDataSource.emptyData)
+    let menuDataSource: ObservableValue<MenuDataSource> = ObservableValue(value: MenuDataSource.createEmptyDataSource())
     
-    required init(flowDelegate: FlowDelegate, config: ConfigType, menuDataProvider: MenuDataProviderType, deviceLanguage: DeviceLanguageType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, userAuthentication: UserAuthenticationType, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase) {
+    required init(flowDelegate: FlowDelegate, config: ConfigType, deviceLanguage: DeviceLanguageType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, userAuthentication: UserAuthenticationType, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase) {
         
         self.flowDelegate = flowDelegate
         self.config = config
-        self.menuDataProvider = menuDataProvider
         self.deviceLanguage = deviceLanguage
         self.openTutorialCalloutCache = openTutorialCalloutCache
         self.userAuthentication = userAuthentication
@@ -62,98 +60,86 @@ class MenuViewModel: NSObject, MenuViewModelType {
         }
     }
     
-    func reloadMenuDataSource() {
+    private func reloadMenuDataSource() {
         
+        let isAuthorized: Bool = userAuthentication.isAuthenticated
         let accountCreationIsSupported: Bool = supportedLanguageCodesForAccountCreation.contains(deviceLanguage.languageCode ?? "unknown_code")
-        
-        menuDataSource.accept(value:
-            createMenuDataSource(
-                isAuthorized: userAuthentication.isAuthenticated,
-                accountCreationIsSupported: accountCreationIsSupported,
-                tutorialIsAvailable: getTutorialIsAvailableUseCase.getTutorialIsAvailable()
-            )
-        )
-    }
-    
-    private func createMenuDataSource(isAuthorized: Bool, accountCreationIsSupported: Bool, tutorialIsAvailable: Bool) -> MenuDataSource {
+        let tutorialIsAvailable: Bool = getTutorialIsAvailableUseCase.getTutorialIsAvailable()
         
         var sections: [MenuSection] = Array()
-        sections.append(menuDataProvider.getMenuSection(id: .general))
+        sections.append(.general)
         if accountCreationIsSupported {
-            sections.append(menuDataProvider.getMenuSection(id: .account))
+            sections.append(.account)
         }
-        sections.append(menuDataProvider.getMenuSection(id: .share))
-        sections.append(menuDataProvider.getMenuSection(id: .legal))
-        sections.append(menuDataProvider.getMenuSection(id: .version))
+        sections.append(.share)
+        sections.append(.legal)
+        sections.append(.version)
         
-        var itemsDictionary: [MenuSectionId: [MenuItem]] = Dictionary()
+        var itemsDictionary: [MenuSection: [MenuItem]] = Dictionary()
         
         for section in sections {
 
             var items: [MenuItem] = Array()
             
-            switch section.id {
+            switch section {
                 
             case .general:
                 
-                items.append(menuDataProvider.getMenuItem(id: .languageSettings))
+                items.append(.languageSettings)
                 if tutorialIsAvailable {
-                    items.append(menuDataProvider.getMenuItem(id: .tutorial))
+                    items.append(.tutorial)
                 }
-                items.append(menuDataProvider.getMenuItem(id: .about))
-                items.append(menuDataProvider.getMenuItem(id: .help))
-                items.append(menuDataProvider.getMenuItem(id: .contactUs))
+                items.append(.about)
+                items.append(.help)
+                items.append(.contactUs)
                 
             case .account:
                 
                 if isAuthorized {
-                    items = [
-                        menuDataProvider.getMenuItem(id: .myAccount),
-                        menuDataProvider.getMenuItem(id: .logout)
-                    ]
+                    items = [.myAccount, .logout]
                 }
                 else {
-                    items = [
-                        menuDataProvider.getMenuItem(id: .createAccount),
-                        menuDataProvider.getMenuItem(id: .login)
-                    ]
+                    items = [.createAccount, .login]
                 }
                 
             case .share:
-                items = [
-                    menuDataProvider.getMenuItem(id: .shareGodTools),
-                    menuDataProvider.getMenuItem(id: .shareAStoryWithUs)
-                ]
+                
+                items = [.shareGodTools, .shareAStoryWithUs]
             
             case .legal:
-                items = [
-                    menuDataProvider.getMenuItem(id: .termsOfUse),
-                    menuDataProvider.getMenuItem(id: .privacyPolicy),
-                    menuDataProvider.getMenuItem(id: .copyrightInfo)
-                ]
+                
+                items = [.termsOfUse, .privacyPolicy, .copyrightInfo]
                 
             case .version:
                 
-                let versionMenuItem = MenuItem(
-                    id: .version,
-                    title: config.versionLabel
-                )
-                
-                if config.isDebug {
-                    items = [versionMenuItem, menuDataProvider.getMenuItem(id: .playground)]
-                }
-                else {
-                    items = [versionMenuItem]
-                }
+                items = [.version]
             }
             
-            itemsDictionary[section.id] = items
+            itemsDictionary[section] = items
         }
         
-        return MenuDataSource(
-            sections: sections,
-            items: itemsDictionary
-        )
+        let menuDataSourceValue: MenuDataSource = MenuDataSource(sections: sections, items: itemsDictionary)
+        
+        menuDataSource.accept(value: menuDataSourceValue)
+    }
+
+    func menuSectionWillAppear(sectionIndex: Int) -> MenuSectionHeaderViewModelType {
+        
+        let menuSection: MenuSection = menuDataSource.value.sections[sectionIndex]
+        let sectionTitle: String = getSectionTitle(section: menuSection)
+        
+        return MenuSectionHeaderViewModel(headerTitle: sectionTitle)
+    }
+    
+    func menuItemWillAppear(sectionIndex: Int, itemIndexRelativeToSection: Int) -> MenuItemViewModelType {
+        
+        let menuDataSource: MenuDataSource = menuDataSource.value
+        let menuItem: MenuItem = menuDataSource.getMenuItem(at: IndexPath(row: itemIndexRelativeToSection, section: sectionIndex))
+        let itemTitle: String = getItemTitle(item: menuItem)
+        
+        let selectionDisabled: Bool = menuItem == .version
+        
+        return MenuItemViewModel(title: itemTitle, selectionDisabled: selectionDisabled)
     }
     
     func pageViewed() {
@@ -163,6 +149,11 @@ class MenuViewModel: NSObject, MenuViewModelType {
     func doneTapped() {
         flowDelegate?.navigate(step: .doneTappedFromMenu)
     }
+}
+
+// MARK: - Menu Option Tapped
+
+extension MenuViewModel {
     
     func languageSettingsTapped() {
         flowDelegate?.navigate(step: .languageSettingsTappedFromMenu)
@@ -237,5 +228,88 @@ class MenuViewModel: NSObject, MenuViewModelType {
     
     func playgroundTapped() {
         flowDelegate?.navigate(step: .playgroundTappedFromMenu)
+    }
+}
+
+extension MenuViewModel {
+    
+    private func getSectionTitle(section: MenuSection) -> String {
+        
+        let localizedKey: String
+        
+        switch section {
+            
+        case .general:
+            localizedKey = "menu_general"
+            
+        case .account:
+            localizedKey = "menu_account"
+            
+        case .share:
+            localizedKey = "menu_share"
+            
+        case .legal:
+            localizedKey = "menu_legal"
+            
+        case .version:
+            localizedKey = "menu_version"
+        }
+        
+        return localizationServices.stringForMainBundle(key: localizedKey)
+    }
+    
+    private func getItemTitle(item: MenuItem) -> String {
+        
+        let localizedKey: String
+        
+        switch item {
+            
+        case .languageSettings:
+            localizedKey = "language_settings"
+            
+        case .about:
+            localizedKey = "about"
+            
+        case .help:
+            localizedKey = "help"
+            
+        case .contactUs:
+            localizedKey = "contact_us"
+            
+        case .logout:
+            localizedKey = "logout"
+            
+        case .login:
+            localizedKey = "login"
+            
+        case .createAccount:
+            localizedKey = "create_account"
+            
+        case .myAccount:
+            localizedKey = "menu.my_account"
+            
+        case .shareGodTools:
+            localizedKey = "share_god_tools"
+            
+        case .shareAStoryWithUs:
+            localizedKey = "share_a_story_with_us"
+            
+        case .termsOfUse:
+            localizedKey = "terms_of_use"
+            
+        case .privacyPolicy:
+            localizedKey = "privacy_policy"
+            
+        case .copyrightInfo:
+            localizedKey = "copyright_info"
+            
+        case .tutorial:
+            localizedKey = "menu.tutorial"
+            
+        case .version:
+            return "v" + config.appVersion + " " + "(" + config.bundleVersion + ")"
+        }
+        
+        return localizationServices.stringForMainBundle(key: localizedKey)
     }
 }
