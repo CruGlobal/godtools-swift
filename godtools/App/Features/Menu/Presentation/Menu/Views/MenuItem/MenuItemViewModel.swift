@@ -13,9 +13,9 @@ class MenuItemViewModel: MenuItemViewModelType {
     let title: String
     let selectionDisabled: Bool
     
-    required init(menuItem: MenuItem, selectionDisabled: Bool) {
+    required init(title: String, selectionDisabled: Bool) {
         
-        title = menuItem.title
+        self.title = title
         self.selectionDisabled = selectionDisabled
     }
 }

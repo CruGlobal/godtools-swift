@@ -44,15 +44,6 @@ class AppConfig: ConfigType {
         }
     }
     
-    var versionLabel: String {
-        if isDebug {
-            return "v" + appVersion + " " + "(" + bundleVersion + ")"
-        }
-        else {
-            return "v" + appVersion
-        }
-    }
-    
     var mobileContentApiBaseUrl: String {
         
         let stagingUrl: String = "https://mobile-content-api-stage.cru.org"
@@ -129,7 +120,7 @@ class AppConfig: ConfigType {
         return info["CFBundleDisplayName"] as? String ?? ""
     }
     
-    private var appVersion: String {
+    var appVersion: String {
         return info["CFBundleShortVersionString"] as? String ?? ""
     }
     
@@ -137,7 +128,7 @@ class AppConfig: ConfigType {
         return info["CFBundleIdentifier"] as? String ?? ""
     }
     
-    private var bundleVersion: String {
+    var bundleVersion: String {
         return info["CFBundleVersion"] as? String ?? ""
     }
     

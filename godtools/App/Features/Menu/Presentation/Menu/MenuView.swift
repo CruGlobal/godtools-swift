@@ -71,19 +71,9 @@ class MenuView: UIViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        viewModel.pageViewed()
-        viewModel.reloadMenuDataSource()
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        // TODO: What is login banner? ~Levi
-        if isComingFromLoginBanner {
-            //openLoginWindow()
-            //isComingFromLoginBanner = false
-        }
+        viewModel.pageViewed()
     }
     
     @objc func handleDone(barButtonItem: UIBarButtonItem) {
@@ -104,7 +94,7 @@ extension MenuView: UITableViewDataSource {
         let menuDataSource: MenuDataSource = viewModel.menuDataSource.value
         let menuSection: MenuSection = menuDataSource.sections[section]
         
-        return menuDataSource.items[menuSection.id]?.count ?? 0
+        return menuDataSource.items[menuSection]?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -143,7 +133,7 @@ extension MenuView: UITableViewDelegate {
         
         let menuItem: MenuItem = viewModel.menuDataSource.value.getMenuItem(at: indexPath)
         
-        switch menuItem.id {
+        switch menuItem {
             
         case .languageSettings:
             viewModel.languageSettingsTapped()
@@ -191,9 +181,6 @@ extension MenuView: UITableViewDelegate {
             
         case .version:
             break
-            
-        case .playground:
-            viewModel.playgroundTapped()
         }
     }
     
@@ -208,21 +195,4 @@ extension MenuView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         return nil
     }
-    
-}
-
-// MARK: -
-
-extension MenuView {
-    
-    /*
-    fileprivate func openLoginWindow() {
-        if viewModel.loginClient.isAuthenticated() {
-            DispatchQueue.main.async { [weak self] in
-                self?.viewModel.logoutTapped()
-            }
-        } else {
-            initiateLogin()
-        }
-    }*/
 }

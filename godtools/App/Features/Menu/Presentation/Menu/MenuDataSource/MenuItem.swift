@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum MenuItemId {
+enum MenuItem {
     
     case languageSettings
     case about
@@ -25,5 +25,4 @@ enum MenuItemId {
     case copyrightInfo
     case tutorial
     case version
-    case playground
 }

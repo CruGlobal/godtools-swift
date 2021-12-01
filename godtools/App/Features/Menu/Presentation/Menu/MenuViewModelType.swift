@@ -18,7 +18,6 @@ protocol MenuViewModelType {
     func menuItemWillAppear(itemSectionIndex: Int, itemIndexRelativeToSection: Int) -> MenuItemViewModelType
     func pageViewed()
     func doneTapped()
-    func reloadMenuDataSource()
     func languageSettingsTapped()
     func tutorialTapped()
     func myAccountTapped()

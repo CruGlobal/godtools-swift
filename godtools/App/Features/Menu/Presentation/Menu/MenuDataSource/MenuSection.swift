@@ -1,5 +1,5 @@
 //
-//  MenuItem.swift
+//  MenuSection.swift
 //  godtools
 //
 //  Created by Levi Eggert on 2/3/20.
@@ -8,8 +8,11 @@
 
 import Foundation
 
-struct MenuItem {
+enum MenuSection: Hashable {
     
-    let id: MenuItemId
-    let title: String
+    case general
+    case account
+    case share
+    case legal
+    case version
 }
