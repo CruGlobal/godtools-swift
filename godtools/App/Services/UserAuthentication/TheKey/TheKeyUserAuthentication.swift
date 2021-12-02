@@ -36,8 +36,8 @@ class TheKeyUserAuthentication: NSObject, UserAuthenticationType {
     
     private var currentAuthorizationFlow: OIDAuthorizationFlowSession?
     
-    let authenticatedUser: ObservableValue<UserAuthModel?> = ObservableValue(value: nil)
-    let didAuthenticateSignal: SignalValue<Result<UserAuthModel, Error>> = SignalValue()
+    let authenticatedUser: ObservableValue<UserAuthModelType?> = ObservableValue(value: nil)
+    let didAuthenticateSignal: SignalValue<Result<UserAuthModelType, Error>> = SignalValue()
     let didSignOutSignal: Signal = Signal()
     
     override init() {

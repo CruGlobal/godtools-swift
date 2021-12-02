@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct UserAuthModel {
+struct UserAuthModel: UserAuthModelType {
     
     let email: String
     let firstName: String?

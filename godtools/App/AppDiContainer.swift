@@ -69,7 +69,8 @@ class AppDiContainer {
         
         crashReporting = FirebaseCrashlyticsService()
         
-        userAuthentication = TheKeyUserAuthentication()
+        let oktaAuthentication: OktaAuthentication = OktaAuthenticationConfiguration().configureAndCreateNewOktaAuthentication(config: config)
+        userAuthentication = OktaUserAuthentication(oktaAuthentication: oktaAuthentication)
         
         loginClient = TheKeyOAuthClient.shared
         
@@ -293,19 +294,6 @@ class AppDiContainer {
         return ToolTrainingTipsOnboardingViewsService(
             cache: ToolTrainingTipsOnboardingViewsUserDefaultsCache(userDefaultsCache: sharedUserDefaultsCache)
         )
-    }
-    
-    func getUserAuthentication() -> UserAuthenticationType {
-        let oktaAuthentication = OktaAuthentication(
-            configModel: ProvidedOktaConfigModel(
-                clientId: "",
-                logoutRedirectUri: "",
-                issuer: "",
-                redirectUri: "",
-                scopes: ""
-            )
-        )
-        return OktaUserAuthentication(oktaAuthentication: oktaAuthentication)
     }
     
     func getViewedTrainingTipsService() -> ViewedTrainingTipsService {

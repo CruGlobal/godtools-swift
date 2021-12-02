@@ -994,6 +994,8 @@
 		45E39ED727457CE9006A59E4 /* ContentAnimationModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E39ED627457CE9006A59E4 /* ContentAnimationModelType.swift */; };
 		45E39ED927457D32006A59E4 /* LearnToShareToolAssetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E39ED827457D32006A59E4 /* LearnToShareToolAssetContent.swift */; };
 		45E39EDC27457E0C006A59E4 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 45E39EDB27457E0C006A59E4 /* Lottie */; };
+		45E3FAAD2759424900D0CAFA /* OktaAuthenticationConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E3FAAC2759424900D0CAFA /* OktaAuthenticationConfiguration.swift */; };
+		45E3FAAF2759469200D0CAFA /* UserAuthModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E3FAAE2759469200D0CAFA /* UserAuthModelType.swift */; };
 		45E998D623FD7B090088DD0C /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */; };
 		45EC429B272C87430052F2AA /* PassthroughValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EC429A272C87430052F2AA /* PassthroughValue.swift */; };
 		45EDBCF027359CD70099495B /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 45EDBCEF27359CD70099495B /* Realm */; };
@@ -2067,6 +2069,8 @@
 		45E39ED227457CB5006A59E4 /* MobileContentAnimationViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentAnimationViewModelType.swift; sourceTree = "<group>"; };
 		45E39ED627457CE9006A59E4 /* ContentAnimationModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentAnimationModelType.swift; sourceTree = "<group>"; };
 		45E39ED827457D32006A59E4 /* LearnToShareToolAssetContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LearnToShareToolAssetContent.swift; sourceTree = "<group>"; };
+		45E3FAAC2759424900D0CAFA /* OktaAuthenticationConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OktaAuthenticationConfiguration.swift; sourceTree = "<group>"; };
+		45E3FAAE2759469200D0CAFA /* UserAuthModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthModelType.swift; sourceTree = "<group>"; };
 		45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Semibold.otf"; sourceTree = "<group>"; };
 		45EC429A272C87430052F2AA /* PassthroughValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassthroughValue.swift; sourceTree = "<group>"; };
 		45F506D926A3822E00EC04A9 /* ManifestResourcesCacheType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManifestResourcesCacheType.swift; sourceTree = "<group>"; };
@@ -3430,6 +3434,7 @@
 		459C93AE27581FC4006207D2 /* Okta */ = {
 			isa = PBXGroup;
 			children = (
+				45E3FAAC2759424900D0CAFA /* OktaAuthenticationConfiguration.swift */,
 				459C93AF27581FD0006207D2 /* OktaUserAuthentication.swift */,
 			);
 			path = Okta;
@@ -4712,6 +4717,7 @@
 			isa = PBXGroup;
 			children = (
 				45AD1EB425938A9800A096A0 /* UserAuthModel.swift */,
+				45E3FAAE2759469200D0CAFA /* UserAuthModelType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -6777,6 +6783,7 @@
 				45C93AE1261D310900592FFF /* ArticleAemCacheResult.swift in Sources */,
 				450E441527565D1C00D4311E /* TutorialFlow.swift in Sources */,
 				45BD79D726A20EEA0007426B /* ContentTabsModelType.swift in Sources */,
+				45E3FAAF2759469200D0CAFA /* UserAuthModelType.swift in Sources */,
 				45AD1BD325938A4F00A096A0 /* LoadingView.swift in Sources */,
 				45CB9FA8261F8BA80036BEB3 /* ToolCell.swift in Sources */,
 				45AD1B1925938A4E00A096A0 /* LearnToShareToolViewModel.swift in Sources */,
@@ -7216,6 +7223,7 @@
 				D182CA2927286D3100ABAAC8 /* IconGravity.swift in Sources */,
 				45CB9F9E261F8BA80036BEB3 /* ToolsMenuToolbarViewModelType.swift in Sources */,
 				45AD1B2D25938A4F00A096A0 /* AboutTextCellViewModel.swift in Sources */,
+				45E3FAAD2759424900D0CAFA /* OktaAuthenticationConfiguration.swift in Sources */,
 				45AD1AD725938A4E00A096A0 /* ToolsViewModelType.swift in Sources */,
 				45BEC53626A604E4005D8CA1 /* MobileContentVideoProvider.swift in Sources */,
 				45C93AE8261D310900592FFF /* ArticleAemDataParser.swift in Sources */,

@@ -53,7 +53,13 @@ class MenuViewModel: NSObject, MenuViewModelType {
     
     private func setupBinding() {
         
-        userAuthentication.didAuthenticateSignal.addObserver(self) { [weak self] (result: Result<UserAuthModel, Error>) in
+        userAuthentication.didAuthenticateSignal.addObserver(self) { [weak self] (result: Result<UserAuthModelType, Error>) in
+            DispatchQueue.main.async { [weak self] in
+                self?.reloadMenuDataSource()
+            }
+        }
+        
+        userAuthentication.didSignOutSignal.addObserver(self) { [weak self] in
             DispatchQueue.main.async { [weak self] in
                 self?.reloadMenuDataSource()
             }
@@ -180,14 +186,17 @@ extension MenuViewModel {
         flowDelegate?.navigate(step: .contactUsTappedFromMenu)
     }
     
-    func logoutTapped() {
+    func logoutTapped(fromViewController: UIViewController) {
         
+        userAuthentication.signOut(fromViewController: fromViewController)
+        
+        // TODO: Remove logoutTappedFromMenu step.
         let loggedOutHandler: CallbackHandler = CallbackHandler { [weak self] in
-            self?.userAuthentication.signOut()
+            self?.userAuthentication.signOut(fromViewController: fromViewController)
             self?.reloadMenuDataSource()
         }
         
-        flowDelegate?.navigate(step: .logoutTappedFromMenu(logoutHandler: loggedOutHandler))
+        //flowDelegate?.navigate(step: .logoutTappedFromMenu(logoutHandler: loggedOutHandler))
     }
     
     func loginTapped(fromViewController: UIViewController) {

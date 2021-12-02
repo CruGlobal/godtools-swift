@@ -15,8 +15,8 @@ class OktaUserAuthentication: UserAuthenticationType {
     
     private(set) var isAuthenticated: Bool = false
     
-    let authenticatedUser: ObservableValue<UserAuthModel?> = ObservableValue(value: nil)
-    let didAuthenticateSignal: SignalValue<Result<UserAuthModel, Error>> = SignalValue()
+    let authenticatedUser: ObservableValue<UserAuthModelType?> = ObservableValue(value: nil)
+    let didAuthenticateSignal: SignalValue<Result<UserAuthModelType, Error>> = SignalValue()
     let didSignOutSignal: Signal = Signal()
     
     required init(oktaAuthentication: OktaAuthentication) {
@@ -59,29 +59,50 @@ class OktaUserAuthentication: UserAuthenticationType {
     
     private func handleAuthenticationCompleteWithAccessToken(accessToken: OktaAccessToken) {
         
-        oktaAuthentication.getAuthorizedUserJsonObject { (result: Result<[String: Any], OktaAuthenticationError>) in
+        oktaAuthentication.getAuthorizedUserJsonObject { [weak self] (result: Result<[String: Any], OktaAuthenticationError>) in
             
             switch result {
+            
             case .success(let userJson):
-                print("did fetch cru user json: \(userJson)")
+                
+                let userAuthModel = UserAuthModel(
+                    email: userJson["email"] as? String ?? "",
+                    firstName: userJson["given_name"] as? String,
+                    grMasterPersonId: userJson["grMasterPersonId"] as? String,
+                    lastName: userJson["family_name"] as? String,
+                    ssoGuid: userJson["ssoguid"] as? String
+                )
+                
+                self?.isAuthenticated = true
+                self?.didAuthenticateSignal.accept(value: .success(userAuthModel))
+                self?.authenticatedUser.accept(value: userAuthModel)
+                
             case .failure(let error):
-                print("Failed to get Cru User with error: \(error)")
-            }
-        }
-        
-        oktaAuthentication.getAuthorizedCruUser { [weak self] (result: Result<CruOktaUser, OktaAuthenticationError>) in
-            
-            switch result {
-            case .success(let cruOktaUser):
-                print("did fetch cru user")
-            case .failure(let error):
-                print("Failed to get Cru User with error: \(error)")
+                self?.isAuthenticated = false
+                self?.didAuthenticateSignal.accept(value: .failure(error))
+                self?.authenticatedUser.accept(value: nil)
             }
         }
     }
     
     private func handleAuthenticationFailedWithError(error: OktaAuthenticationError) {
         
+        switch error {
+        
+        case .internalError( _, let message):
+            
+            let error: Error = NSError(
+                domain: "OktaUserAuthentication",
+                code: -1,
+                userInfo: [NSLocalizedDescriptionKey: "Internal error found with message: \(message)"]
+            )
+            
+            didAuthenticateSignal.accept(value: .failure(error))
+        
+        case .oktaSdkError(let error):
+           
+            didAuthenticateSignal.accept(value: .failure(error))
+        }
     }
         
     func createAccount(fromViewController: UIViewController) {
@@ -99,13 +120,10 @@ class OktaUserAuthentication: UserAuthenticationType {
         oktaAuthentication.signOut(fromViewController: fromViewController) { [weak self] (removeFromSecureStorageError: Error?, signOutError: OktaAuthenticationError?, revokeError: Error?) in
             
             if signOutError == nil {
+                self?.isAuthenticated = false
                 self?.didSignOutSignal.accept()
                 self?.authenticatedUser.accept(value: nil)
             }
         }
-    }
-    
-    func signOut() {
-        fatalError("Not supported by OktaUserAuthentication.  Call signOut(fromVieController: UIViewController)")
     }
 }

@@ -10,13 +10,12 @@ import UIKit
 
 protocol UserAuthenticationType {
     
-    var authenticatedUser: ObservableValue<UserAuthModel?> { get }
-    var didAuthenticateSignal: SignalValue<Result<UserAuthModel, Error>> { get }
+    var authenticatedUser: ObservableValue<UserAuthModelType?> { get }
+    var didAuthenticateSignal: SignalValue<Result<UserAuthModelType, Error>> { get }
     var didSignOutSignal: Signal { get }
     var isAuthenticated: Bool { get }
     
     func createAccount(fromViewController: UIViewController)
     func signIn(fromViewController: UIViewController)
     func signOut(fromViewController: UIViewController)
-    func signOut()
 }
