@@ -87,6 +87,10 @@ class TheKeyUserAuthentication: NSObject, UserAuthenticationType {
         internalAuthenticate(fromViewController: fromViewController, parameters: nil)
     }
     
+    func signOut(fromViewController: UIViewController) {
+        signOut()
+    }
+    
     func signOut() {
         loginClient.logout()
         didSignOutSignal.accept()

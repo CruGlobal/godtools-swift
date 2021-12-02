@@ -17,5 +17,6 @@ protocol UserAuthenticationType {
     
     func createAccount(fromViewController: UIViewController)
     func signIn(fromViewController: UIViewController)
+    func signOut(fromViewController: UIViewController)
     func signOut()
 }

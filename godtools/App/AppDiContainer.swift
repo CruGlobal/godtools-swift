@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import OktaAuthentication
 
 // TODO: Remove these imports once TheKeyOauthClient is replaced. ~Levi
 import TheKeyOAuthSwift
@@ -292,6 +293,19 @@ class AppDiContainer {
         return ToolTrainingTipsOnboardingViewsService(
             cache: ToolTrainingTipsOnboardingViewsUserDefaultsCache(userDefaultsCache: sharedUserDefaultsCache)
         )
+    }
+    
+    func getUserAuthentication() -> UserAuthenticationType {
+        let oktaAuthentication = OktaAuthentication(
+            configModel: ProvidedOktaConfigModel(
+                clientId: "",
+                logoutRedirectUri: "",
+                issuer: "",
+                redirectUri: "",
+                scopes: ""
+            )
+        )
+        return OktaUserAuthentication(oktaAuthentication: oktaAuthentication)
     }
     
     func getViewedTrainingTipsService() -> ViewedTrainingTipsService {

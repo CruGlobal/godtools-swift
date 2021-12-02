@@ -318,6 +318,8 @@
 		4599251D2704F37B008F7844 /* ChooseScaleSliderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4599251C2704F37B008F7844 /* ChooseScaleSliderView.xib */; };
 		459C56D225FF954F00F15967 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		459C56D325FF954F00F15967 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		459C93A427581B23006207D2 /* OktaAuthentication in Frameworks */ = {isa = PBXBuildFile; productRef = 459C93A327581B23006207D2 /* OktaAuthentication */; };
+		459C93B027581FD0006207D2 /* OktaUserAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459C93AF27581FD0006207D2 /* OktaUserAuthentication.swift */; };
 		459D80BD26D04D9400EC97E9 /* MultiplatformImageAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459D80BC26D04D9400EC97E9 /* MultiplatformImageAlignment.swift */; };
 		459D80BF26D04E4A00EC97E9 /* MobileContentImageAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459D80BE26D04E4A00EC97E9 /* MobileContentImageAlignment.swift */; };
 		45A3A0C626B0B497005DA490 /* TractFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A3A0C526B0B497005DA490 /* TractFlow.swift */; };
@@ -1405,6 +1407,7 @@
 		458EFEDD26B1D135009EEB03 /* ToolBackButtonImageType+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ToolBackButtonImageType+Image.swift"; sourceTree = "<group>"; };
 		4599251A2704F36A008F7844 /* ChooseScaleSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseScaleSliderView.swift; sourceTree = "<group>"; };
 		4599251C2704F37B008F7844 /* ChooseScaleSliderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChooseScaleSliderView.xib; sourceTree = "<group>"; };
+		459C93AF27581FD0006207D2 /* OktaUserAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OktaUserAuthentication.swift; sourceTree = "<group>"; };
 		459D80BC26D04D9400EC97E9 /* MultiplatformImageAlignment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplatformImageAlignment.swift; sourceTree = "<group>"; };
 		459D80BE26D04E4A00EC97E9 /* MobileContentImageAlignment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentImageAlignment.swift; sourceTree = "<group>"; };
 		45A3A0C526B0B497005DA490 /* TractFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractFlow.swift; sourceTree = "<group>"; };
@@ -2230,6 +2233,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F2500621F0C1E8D00364FBC /* AdSupport.framework in Frameworks */,
+				459C93A427581B23006207D2 /* OktaAuthentication in Frameworks */,
 				1E06EB6DA916BEF9C627866F /* Pods_godtools.framework in Frameworks */,
 				45EDBCF027359CD70099495B /* Realm in Frameworks */,
 				45EDBCF227359CD70099495B /* RealmSwift in Frameworks */,
@@ -3421,6 +3425,14 @@
 				4599251C2704F37B008F7844 /* ChooseScaleSliderView.xib */,
 			);
 			path = ChooseScaleSlider;
+			sourceTree = "<group>";
+		};
+		459C93AE27581FC4006207D2 /* Okta */ = {
+			isa = PBXGroup;
+			children = (
+				459C93AF27581FD0006207D2 /* OktaUserAuthentication.swift */,
+			);
+			path = Okta;
 			sourceTree = "<group>";
 		};
 		45A7BAF3252CBC5500D70465 /* Extensions */ = {
@@ -4690,6 +4702,7 @@
 			children = (
 				45AD1EB225938A9800A096A0 /* UserAuthenticationType.swift */,
 				45AD1EB325938A9800A096A0 /* Models */,
+				459C93AE27581FC4006207D2 /* Okta */,
 				45AD1EB525938A9800A096A0 /* TheKey */,
 			);
 			path = UserAuthentication;
@@ -5844,6 +5857,7 @@
 				45EDBCEF27359CD70099495B /* Realm */,
 				45EDBCF127359CD70099495B /* RealmSwift */,
 				45E39EDB27457E0C006A59E4 /* Lottie */,
+				459C93A327581B23006207D2 /* OktaAuthentication */,
 			);
 			productName = godtools;
 			productReference = 4F5732891EA69CF00082035C /* godtools.app */;
@@ -5986,6 +6000,7 @@
 				45B248562734676F00B7AD5E /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */,
 				45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa" */,
 				45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				459C93A227581B23006207D2 /* XCRemoteSwiftPackageReference "okta-authentication-ios" */,
 			);
 			productRefGroup = 4F57328A1EA69CF00082035C /* Products */;
 			projectDirPath = "";
@@ -6895,6 +6910,7 @@
 				455583CD269F2DA500C3FF14 /* MobileContentPageView.swift in Sources */,
 				D133071A273989750058450B /* OnboardingQuickStartViewModelType.swift in Sources */,
 				45AD20B225938EE500A096A0 /* FileCache.swift in Sources */,
+				459C93B027581FD0006207D2 /* OktaUserAuthentication.swift in Sources */,
 				45BD79D526A20EEA0007426B /* ContentSectionModelType.swift in Sources */,
 				45AD1B1D25938A4E00A096A0 /* LearnToShareToolView.swift in Sources */,
 				45AD1ACC25938A4E00A096A0 /* FavoritingToolMessageViewModelType.swift in Sources */,
@@ -8320,6 +8336,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		459C93A227581B23006207D2 /* XCRemoteSwiftPackageReference "okta-authentication-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CruGlobal/okta-authentication-ios.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		45B248562734676F00B7AD5E /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AppsFlyerSDK/AppsFlyerFramework.git";
@@ -8347,6 +8371,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		459C93A327581B23006207D2 /* OktaAuthentication */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 459C93A227581B23006207D2 /* XCRemoteSwiftPackageReference "okta-authentication-ios" */;
+			productName = OktaAuthentication;
+		};
 		45B248572734676F00B7AD5E /* AppsFlyerLib */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 45B248562734676F00B7AD5E /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */;
