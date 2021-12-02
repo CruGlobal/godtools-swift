@@ -24,7 +24,7 @@ class OktaUserAuthentication: UserAuthenticationType {
         self.oktaAuthentication = oktaAuthentication
     }
     
-    private func attemptAuthRefreshElseAuthenticate(fromViewController: UIViewController) {
+    private func attemptAuthRefreshElseAuthenticate(authenticatefromViewController: UIViewController?) {
         
         if oktaAuthentication.refreshTokenExists {
             
@@ -33,12 +33,17 @@ class OktaUserAuthentication: UserAuthenticationType {
                 switch result {
                 case .success(let accessToken):
                     self?.handleAuthenticationCompleteWithAccessToken(accessToken: accessToken)
-                case .failure( _):
-                    self?.authenticate(fromViewController: fromViewController)
+                case .failure(let error):
+                    if let fromViewController = authenticatefromViewController {
+                        self?.authenticate(fromViewController: fromViewController)
+                    }
+                    else {
+                        self?.handleAuthenticationFailedWithError(error: error)
+                    }
                 }
             }
         }
-        else {
+        else if let fromViewController = authenticatefromViewController {
             
             authenticate(fromViewController: fromViewController)
         }
@@ -104,15 +109,20 @@ class OktaUserAuthentication: UserAuthenticationType {
             didAuthenticateSignal.accept(value: .failure(error))
         }
     }
+    
+    func refreshAuthenticationIfAvailable() {
+
+        attemptAuthRefreshElseAuthenticate(authenticatefromViewController: nil)
+    }
         
     func createAccount(fromViewController: UIViewController) {
         
-        attemptAuthRefreshElseAuthenticate(fromViewController: fromViewController)
+        attemptAuthRefreshElseAuthenticate(authenticatefromViewController: fromViewController)
     }
     
     func signIn(fromViewController: UIViewController) {
         
-        attemptAuthRefreshElseAuthenticate(fromViewController: fromViewController)
+        attemptAuthRefreshElseAuthenticate(authenticatefromViewController: fromViewController)
     }
     
     func signOut(fromViewController: UIViewController) {

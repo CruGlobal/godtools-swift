@@ -180,6 +180,8 @@ class AppFlow: NSObject, Flow {
             
             loadInitialData()
             
+            appDiContainer.userAuthentication.refreshAuthenticationIfAvailable()
+            
         case .appLaunchedFromBackgroundState:
             
             if let resignedActiveDate = resignedActiveDate {
@@ -200,6 +202,8 @@ class AppFlow: NSObject, Flow {
                     
                     resetFlowToToolsFlow(animatedDismissal: false, startingToolbarItem: nil, didFinishSetNavigationStack: nil)
                     loadInitialData()
+                    
+                    appDiContainer.userAuthentication.refreshAuthenticationIfAvailable()
                     
                     UIView.animate(withDuration: 0.4, delay: 1.5, options: .curveEaseOut, animations: {
                         loadingView.alpha = 0

@@ -77,6 +77,10 @@ class TheKeyUserAuthentication: NSObject, UserAuthenticationType {
         return currentFlow.resumeAuthorizationFlow(with: url)
     }
     
+    func refreshAuthenticationIfAvailable() {
+        
+    }
+    
     func createAccount(fromViewController: UIViewController) {
         
         internalAuthenticate(fromViewController: fromViewController, parameters: ["action":"signup"])

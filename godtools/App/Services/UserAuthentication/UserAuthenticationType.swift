@@ -15,6 +15,7 @@ protocol UserAuthenticationType {
     var didSignOutSignal: Signal { get }
     var isAuthenticated: Bool { get }
     
+    func refreshAuthenticationIfAvailable()
     func createAccount(fromViewController: UIViewController)
     func signIn(fromViewController: UIViewController)
     func signOut(fromViewController: UIViewController)
