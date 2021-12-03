@@ -49,6 +49,7 @@ class MenuViewModel: NSObject, MenuViewModelType {
     
     deinit {
         userAuthentication.didAuthenticateSignal.removeObserver(self)
+        userAuthentication.didSignOutSignal.removeObserver(self)
     }
     
     private func setupBinding() {
