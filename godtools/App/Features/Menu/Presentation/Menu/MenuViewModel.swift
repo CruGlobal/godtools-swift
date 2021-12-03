@@ -49,11 +49,18 @@ class MenuViewModel: NSObject, MenuViewModelType {
     
     deinit {
         userAuthentication.didAuthenticateSignal.removeObserver(self)
+        userAuthentication.didSignOutSignal.removeObserver(self)
     }
     
     private func setupBinding() {
         
-        userAuthentication.didAuthenticateSignal.addObserver(self) { [weak self] (result: Result<UserAuthModel, Error>) in
+        userAuthentication.didAuthenticateSignal.addObserver(self) { [weak self] (result: Result<AuthUserModelType, Error>) in
+            DispatchQueue.main.async { [weak self] in
+                self?.reloadMenuDataSource()
+            }
+        }
+        
+        userAuthentication.didSignOutSignal.addObserver(self) { [weak self] in
             DispatchQueue.main.async { [weak self] in
                 self?.reloadMenuDataSource()
             }
@@ -180,14 +187,8 @@ extension MenuViewModel {
         flowDelegate?.navigate(step: .contactUsTappedFromMenu)
     }
     
-    func logoutTapped() {
-        
-        let loggedOutHandler: CallbackHandler = CallbackHandler { [weak self] in
-            self?.userAuthentication.signOut()
-            self?.reloadMenuDataSource()
-        }
-        
-        flowDelegate?.navigate(step: .logoutTappedFromMenu(logoutHandler: loggedOutHandler))
+    func logoutTapped(fromViewController: UIViewController) {
+        userAuthentication.signOut(fromViewController: fromViewController)
     }
     
     func loginTapped(fromViewController: UIViewController) {
@@ -224,10 +225,6 @@ extension MenuViewModel {
     
     func copyrightInfoTapped() {
         flowDelegate?.navigate(step: .copyrightInfoTappedFromMenu)
-    }
-    
-    func playgroundTapped() {
-        flowDelegate?.navigate(step: .playgroundTappedFromMenu)
     }
 }
 
