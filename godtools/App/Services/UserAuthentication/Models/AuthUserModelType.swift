@@ -1,5 +1,5 @@
 //
-//  UserAuthModelType.swift
+//  AuthUserModelType.swift
 //  godtools
 //
 //  Created by Levi Eggert on 12/2/21.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol UserAuthModelType {
+protocol AuthUserModelType {
     
     var email: String { get }
     var firstName: String? { get }

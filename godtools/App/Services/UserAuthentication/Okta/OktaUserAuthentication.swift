@@ -12,11 +12,9 @@ import OktaAuthentication
 class OktaUserAuthentication: UserAuthenticationType {
     
     private let oktaAuthentication: OktaAuthentication
-    
-    private(set) var isAuthenticated: Bool = false
-    
-    let authenticatedUser: ObservableValue<UserAuthModelType?> = ObservableValue(value: nil)
-    let didAuthenticateSignal: SignalValue<Result<UserAuthModelType, Error>> = SignalValue()
+        
+    let authenticatedUser: ObservableValue<AuthUserModelType?> = ObservableValue(value: nil)
+    let didAuthenticateSignal: SignalValue<Result<AuthUserModelType, Error>> = SignalValue()
     let didSignOutSignal: Signal = Signal()
     
     required init(oktaAuthentication: OktaAuthentication) {
@@ -64,26 +62,17 @@ class OktaUserAuthentication: UserAuthenticationType {
     
     private func handleAuthenticationCompleteWithAccessToken(accessToken: OktaAccessToken) {
         
-        oktaAuthentication.getAuthorizedUserJsonObject { [weak self] (result: Result<[String: Any], OktaAuthenticationError>) in
+        getAuthenticatedUser { [weak self] (result: Result<AuthUserModelType, Error>) in
             
             switch result {
-            
-            case .success(let userJson):
+           
+            case .success(let authUser):
                 
-                let userAuthModel = UserAuthModel(
-                    email: userJson["email"] as? String ?? "",
-                    firstName: userJson["given_name"] as? String,
-                    grMasterPersonId: userJson["grMasterPersonId"] as? String,
-                    lastName: userJson["family_name"] as? String,
-                    ssoGuid: userJson["ssoguid"] as? String
-                )
-                
-                self?.isAuthenticated = true
-                self?.didAuthenticateSignal.accept(value: .success(userAuthModel))
-                self?.authenticatedUser.accept(value: userAuthModel)
+                self?.didAuthenticateSignal.accept(value: .success(authUser))
+                self?.authenticatedUser.accept(value: authUser)
                 
             case .failure(let error):
-                self?.isAuthenticated = false
+                
                 self?.didAuthenticateSignal.accept(value: .failure(error))
                 self?.authenticatedUser.accept(value: nil)
             }
@@ -92,7 +81,12 @@ class OktaUserAuthentication: UserAuthenticationType {
     
     private func handleAuthenticationFailedWithError(error: OktaAuthenticationError) {
         
-        switch error {
+        didAuthenticateSignal.accept(value: .failure(mapOktaAuthenticationErrorToError(oktaAuthenticationError: error)))
+    }
+    
+    private func mapOktaAuthenticationErrorToError(oktaAuthenticationError: OktaAuthenticationError) -> Error {
+        
+        switch oktaAuthenticationError {
         
         case .internalError( _, let message):
             
@@ -102,11 +96,11 @@ class OktaUserAuthentication: UserAuthenticationType {
                 userInfo: [NSLocalizedDescriptionKey: "Internal error found with message: \(message)"]
             )
             
-            didAuthenticateSignal.accept(value: .failure(error))
+            return error
         
         case .oktaSdkError(let error):
            
-            didAuthenticateSignal.accept(value: .failure(error))
+            return error
         }
     }
     
@@ -130,9 +124,37 @@ class OktaUserAuthentication: UserAuthenticationType {
         oktaAuthentication.signOut(fromViewController: fromViewController) { [weak self] (removeFromSecureStorageError: Error?, signOutError: OktaAuthenticationError?, revokeError: Error?) in
             
             if signOutError == nil {
-                self?.isAuthenticated = false
                 self?.didSignOutSignal.accept()
                 self?.authenticatedUser.accept(value: nil)
+            }
+        }
+    }
+    
+    func getAuthenticatedUser(completion: @escaping ((_ result: Result<AuthUserModelType, Error>) -> Void)) {
+        
+        oktaAuthentication.getAuthorizedUserJsonObject { [weak self] (result: Result<[String: Any], OktaAuthenticationError>) in
+            
+            guard let weakSelf = self else {
+                return
+            }
+            
+            switch result {
+            
+            case .success(let userJson):
+                
+                let authUserModel = AuthUserModel(
+                    email: userJson["email"] as? String ?? "",
+                    firstName: userJson["given_name"] as? String,
+                    grMasterPersonId: userJson["grMasterPersonId"] as? String,
+                    lastName: userJson["family_name"] as? String,
+                    ssoGuid: userJson["ssoguid"] as? String
+                )
+                
+                completion(.success(authUserModel))
+                
+            case .failure(let error):
+                
+                completion(.failure(weakSelf.mapOktaAuthenticationErrorToError(oktaAuthenticationError: error)))
             }
         }
     }

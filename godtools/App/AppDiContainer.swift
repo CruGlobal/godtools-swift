@@ -9,10 +9,6 @@
 import Foundation
 import OktaAuthentication
 
-// TODO: Remove these imports once TheKeyOauthClient is replaced. ~Levi
-import TheKeyOAuthSwift
-import GTMAppAuth
-
 class AppDiContainer {
         
     private let legacyRealmMigration: LegacyRealmMigration
@@ -37,7 +33,6 @@ class AppDiContainer {
     let config: ConfigType
     let crashReporting: CrashReportingType
     let userAuthentication: UserAuthenticationType
-    let loginClient: TheKeyOAuthClient
     let translationsFileCache: TranslationsFileCache
     let translationDownloader: TranslationDownloader
     let favoritedResourcesCache: FavoritedResourcesCache
@@ -71,9 +66,7 @@ class AppDiContainer {
         
         let oktaAuthentication: OktaAuthentication = OktaAuthenticationConfiguration().configureAndCreateNewOktaAuthentication(config: config)
         userAuthentication = OktaUserAuthentication(oktaAuthentication: oktaAuthentication)
-        
-        loginClient = TheKeyOAuthClient.shared
-        
+                
         realmDatabase = RealmDatabase()
 
         languagesApi = LanguagesApi(config: config, sharedSession: sharedIgnoringCacheSession)
@@ -179,8 +172,8 @@ class AppDiContainer {
         let analyticsLoggingEnabled: Bool = config.build == .analyticsLogging
         analytics = AnalyticsContainer(
             appsFlyerAnalytics: AppsFlyerAnalytics(appsFlyer: appsFlyer, loggingEnabled: analyticsLoggingEnabled),
-            firebaseAnalytics: FirebaseAnalytics(config: config, keyAuthClient: loginClient, languageSettingsService: languageSettingsService, loggingEnabled: analyticsLoggingEnabled),
-            snowplowAnalytics: SnowplowAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: analyticsLoggingEnabled)
+            firebaseAnalytics: FirebaseAnalytics(config: config, userAuthentication: userAuthentication, languageSettingsService: languageSettingsService, loggingEnabled: analyticsLoggingEnabled),
+            snowplowAnalytics: SnowplowAnalytics(config: config, userAuthentication: userAuthentication, loggingEnabled: analyticsLoggingEnabled)
         )
                                                           
         openTutorialCalloutCache = OpenTutorialCalloutUserDefaultsCache()
