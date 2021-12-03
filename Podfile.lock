@@ -1,5 +1,4 @@
 PODS:
-  - AppAuth (0.92.0)
   - FBSDKCoreKit (8.2.0):
     - FBSDKCoreKit/Basics (= 8.2.0)
     - FBSDKCoreKit/Core (= 8.2.0)
@@ -104,29 +103,17 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilitiesLegacy (1.3.2):
     - GoogleSymbolUtilities (~> 1.1)
-  - GTMAppAuth (0.7.0):
-    - AppAuth (~> 0.92.0)
-    - GTMSessionFetcher (~> 1.1)
-  - GTMSessionFetcher (1.7.0):
-    - GTMSessionFetcher/Full (= 1.7.0)
-  - GTMSessionFetcher/Core (1.7.0)
-  - GTMSessionFetcher/Full (1.7.0):
-    - GTMSessionFetcher/Core (= 1.7.0)
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
     - nanopb/encode (= 2.30908.0)
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
   - PromisesObjC (1.2.12)
-  - Result (5.0.0)
   - SnowplowTracker (1.7.1):
     - FMDB (~> 2.6)
   - SSZipArchive (2.4.2)
   - Starscream (4.0.4)
   - SWXMLHash (5.0.1)
-  - TheKeyOAuthSwift (0.5.5):
-    - GTMAppAuth
-    - Result
   - TTTAttributedLabel (2.0.0)
   - youtube-ios-player-helper (1.0.3)
 
@@ -140,21 +127,17 @@ DEPENDENCIES:
   - GodtoolsToolParser (= 0.4.0)
   - GoogleConversionTracking (~> 3.4.0)
   - GoogleTagManager (~> 7.2.0)
-  - GTMAppAuth (= 0.7.0)
   - SnowplowTracker (~> 1.3)
   - SSZipArchive (~> 2.4.0)
   - Starscream (~> 4.0.0)
   - SWXMLHash (~> 5.0.1)
-  - TheKeyOAuthSwift
   - TTTAttributedLabel (~> 2.0.0)
   - youtube-ios-player-helper (~> 1.0.3)
 
 SPEC REPOS:
   https://github.com/CruGlobal/cocoapods-specs.git:
     - GodtoolsToolParser
-    - TheKeyOAuthSwift
   trunk:
-    - AppAuth
     - FBSDKCoreKit
     - FirebaseABTesting
     - FirebaseAnalytics
@@ -173,11 +156,8 @@ SPEC REPOS:
     - GoogleTagManager
     - GoogleUtilities
     - GoogleUtilitiesLegacy
-    - GTMAppAuth
-    - GTMSessionFetcher
     - nanopb
     - PromisesObjC
-    - Result
     - SnowplowTracker
     - SSZipArchive
     - Starscream
@@ -186,7 +166,6 @@ SPEC REPOS:
     - youtube-ios-player-helper
 
 SPEC CHECKSUMS:
-  AppAuth: 3f4f1d6d85ad631d0bbf15ffcdc10c447face97a
   FBSDKCoreKit: 4afd6ff53d8133a433dbcda44451c9498f8c6ce4
   FirebaseABTesting: e66f1f80747792630d9b292966de206d5df9853b
   FirebaseAnalytics: cd3bd84d722a24a8923918af8af8e5236f615d77
@@ -206,19 +185,15 @@ SPEC CHECKSUMS:
   GoogleTagManager: 9d8981519a985e37d5d86e46b9a58d404094a814
   GoogleUtilities: 8de2a97a17e15b6b98e38e8770e2d129a57c0040
   GoogleUtilitiesLegacy: 5501bedec1646bd284286eb5fc9453f7e23a12f4
-  GTMAppAuth: 8d724be29ab8f2f6d35b2bf929d76340c9d1f1b1
-  GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
-  Result: ed341d2f236af425b803e690e9bd8fd0a0cb7c5a
   SnowplowTracker: c393b26c456142ad5a78f4e4d771c71cb194f06c
   SSZipArchive: e7b4f3d9e780c2acc1764cd88fbf2de28f26e5b2
   Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
   SWXMLHash: 9cc0c2e4807926c74377724aa8722ee5707a0485
-  TheKeyOAuthSwift: e5e9ba7c9e9a22b4ddfe586c6b30cb91463410c0
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   youtube-ios-player-helper: 0185c57db23c80d63d6ca11251d110abb8a4ca61
 
-PODFILE CHECKSUM: 08a8806e730eb073496147dd64b82775bf867be5
+PODFILE CHECKSUM: 851203737df0edb8b6f54f3928c43f1279dd6d05
 
 COCOAPODS: 1.11.2
