@@ -17,6 +17,7 @@ class MobileContentButtonView: MobileContentView {
     private let buttonTitle: UILabel = UILabel()
     private let buttonImagePaddingToButtonTitle: CGFloat = 12
     
+    private var tapGesture: UITapGestureRecognizer?
     private var buttonImageView: UIImageView?
     
     required init(viewModel: MobileContentButtonViewModelType) {
@@ -28,7 +29,10 @@ class MobileContentButtonView: MobileContentView {
         setupLayout()
         setupBinding()
         
-        //button.addTarget(self, action: #selector(handleButtonTapped), for: .touchUpInside)
+        // tapGesture
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(buttonTapped))
+        addGestureRecognizer(tapGesture)
+        self.tapGesture = tapGesture
     }
     
     required init?(coder: NSCoder) {
@@ -42,6 +46,8 @@ class MobileContentButtonView: MobileContentView {
         // buttonTitle
         addButtonTitleAndConstraints(buttonTitle: buttonTitle, buttonIcon: viewModel.icon)
         
+        buttonTitle.isUserInteractionEnabled = false
+        buttonTitle.backgroundColor = .clear
         buttonTitle.numberOfLines = 0
         buttonTitle.lineBreakMode = .byWordWrapping
         buttonTitle.textAlignment = .center
@@ -50,6 +56,8 @@ class MobileContentButtonView: MobileContentView {
         if let buttonIcon = viewModel.icon {
             
             let buttonImageView: UIImageView = UIImageView(image: buttonIcon.image)
+            buttonImageView.isUserInteractionEnabled = false
+            buttonImageView.backgroundColor = .clear
             
             addButtonImageViewAndConstraints(buttonImageView: buttonImageView, buttonIcon: buttonIcon)
             
@@ -75,7 +83,7 @@ class MobileContentButtonView: MobileContentView {
         }
     }
     
-    @objc func handleButtonTapped() {
+    @objc private func buttonTapped() {
         
         switch viewModel.buttonType {
         
