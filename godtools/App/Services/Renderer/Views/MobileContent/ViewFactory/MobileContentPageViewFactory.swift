@@ -24,9 +24,17 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
     
     func viewForRenderableModel(renderableModel: MobileContentRenderableModel, renderableModelParent: MobileContentRenderableModel?, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) -> MobileContentView? {
         
-        if renderableModel is ContentParagraphModelType {
+        if let paragraphModel = renderableModel as? ContentParagraphModelType {
         
-            return MobileContentStackView(contentInsets: .zero, itemSpacing: 5, scrollIsEnabled: false)
+            let viewModel = MobileContentParagraphViewModel(
+                paragraphModel: paragraphModel,
+                rendererPageModel: rendererPageModel,
+                containerModel: containerModel
+            )
+            
+            let view = MobileContentParagraphView(viewModel: viewModel, contentInsets: .zero, itemSpacing: 5, scrollIsEnabled: false)
+            
+            return view
         }
         else if let textModel = renderableModel as? ContentTextModelType {
                           
