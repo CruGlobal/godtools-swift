@@ -15,6 +15,7 @@ class MobileContentButtonView: MobileContentView {
     
     private let viewModel: MobileContentButtonViewModelType
     private let buttonTitle: UILabel = UILabel()
+    private let buttonImagePaddingToButtonTitle: CGFloat = 12
     
     private var buttonImageView: UIImageView?
     
@@ -72,10 +73,6 @@ class MobileContentButtonView: MobileContentView {
         viewModel.visibilityState.addObserver(self) { [weak self] (visibilityState: MobileContentViewVisibilityState) in
             self?.setVisibilityState(visibilityState: visibilityState)
         }
-        
-        drawBorder(color: .green)
-        buttonTitle.drawBorder(color: .blue)
-        buttonImageView?.drawBorder(color: .red)
     }
     
     @objc func handleButtonTapped() {
@@ -112,85 +109,26 @@ extension MobileContentButtonView {
         
         buttonTitle.translatesAutoresizingMaskIntoConstraints = false
         
-        // top
-        let top: NSLayoutConstraint = NSLayoutConstraint(
-            item: buttonTitle,
-            attribute: .top,
-            relatedBy: .equal,
-            toItem: self,
-            attribute: .top,
-            multiplier: 1,
-            constant: 0
-        )
+        buttonTitle.constrainTopToView(view: self)
         
-        addConstraint(top)
-        
-        // bottom
-        let bottom: NSLayoutConstraint = NSLayoutConstraint(
-            item: buttonTitle,
-            attribute: .bottom,
-            relatedBy: .equal,
-            toItem: self,
-            attribute: .bottom,
-            multiplier: 1,
-            constant: 0
-        )
-        
-        addConstraint(bottom)
+        buttonTitle.constrainBottomToView(view: self)
         
         if buttonIcon != nil {
             
-            let centerHorizontally: NSLayoutConstraint = NSLayoutConstraint(
-                item: buttonTitle,
-                attribute: .centerX,
-                relatedBy: .equal,
-                toItem: self,
-                attribute: .centerX,
-                multiplier: 1,
-                constant: 0
-            )
-            
-            addConstraint(centerHorizontally)
+            buttonTitle.constrainCenterHorizontallyInView(view: self)
         }
         else {
             
-            let leading: NSLayoutConstraint = NSLayoutConstraint(
-                item: buttonTitle,
-                attribute: .leading,
-                relatedBy: .equal,
-                toItem: self,
-                attribute: .leading,
-                multiplier: 1,
-                constant: 0
-            )
+            buttonTitle.constrainLeadingToView(view: self)
             
-            addConstraint(leading)
-            
-            let trailing: NSLayoutConstraint = NSLayoutConstraint(
-                item: buttonTitle,
-                attribute: .trailing,
-                relatedBy: .equal,
-                toItem: self,
-                attribute: .trailing,
-                multiplier: 1,
-                constant: 0
-            )
-            
-            addConstraint(trailing)
+            buttonTitle.constrainTrailingToView(view: self)
         }
         
-        // height
-        let heightConstraint: NSLayoutConstraint = NSLayoutConstraint(
-            item: buttonTitle,
-            attribute: .height,
+        buttonTitle.addHeightConstraint(
+            constant: CGFloat(MobileContentButtonView.buttonHeight),
             relatedBy: .greaterThanOrEqual,
-            toItem: nil,
-            attribute: .notAnAttribute,
-            multiplier: 1,
-            constant: CGFloat(MobileContentButtonView.buttonHeight)
+            priority: 1000
         )
-        heightConstraint.priority = UILayoutPriority(1000)
-        buttonTitle.addConstraint(heightConstraint)
     }
     
     private func addButtonImageViewAndConstraints(buttonImageView: UIImageView, buttonIcon: MobileContentButtonIcon) {
@@ -198,19 +136,9 @@ extension MobileContentButtonView {
         addSubview(buttonImageView)
         
         buttonImageView.translatesAutoresizingMaskIntoConstraints = false
-               
-        let centerVertically: NSLayoutConstraint = NSLayoutConstraint(
-            item: buttonImageView,
-            attribute: .centerY,
-            relatedBy: .equal,
-            toItem: self,
-            attribute: .centerY,
-            multiplier: 1,
-            constant: 0
-        )
         
-        addConstraint(centerVertically)
-                
+        buttonImageView.constrainCenterVerticallyInView(view: self)
+                        
         switch buttonIcon.gravity {
         
         case .start:
@@ -222,7 +150,7 @@ extension MobileContentButtonView {
                 toItem: buttonTitle,
                 attribute: .leading,
                 multiplier: 1,
-                constant: 0
+                constant: buttonImagePaddingToButtonTitle * -1
             )
             
             addConstraint(trailing)
@@ -236,13 +164,14 @@ extension MobileContentButtonView {
                 toItem: buttonTitle,
                 attribute: .trailing,
                 multiplier: 1,
-                constant: 0
+                constant: buttonImagePaddingToButtonTitle
             )
             
             addConstraint(leading)
         }
         
         buttonImageView.addWidthConstraint(constant: CGFloat(buttonIcon.size))
+        
         buttonImageView.addHeightConstraint(constant: CGFloat(buttonIcon.size))
     }
 }
