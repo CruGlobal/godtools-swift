@@ -10,6 +10,7 @@ import Foundation
 
 protocol ContentParagraphModelType: MobileContentRenderableModel {
     
+    func watchVisibility(rendererState: MobileContentMultiplatformState, visibilityChanged: @escaping ((_ visibility: MobileContentVisibility) -> Void)) -> MobileContentFlowWatcherType
 }
 
 extension ContentParagraphModelType {
