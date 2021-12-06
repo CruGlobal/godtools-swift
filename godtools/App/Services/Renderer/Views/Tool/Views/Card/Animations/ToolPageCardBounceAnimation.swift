@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ToolPageCardBounceAnimationDelegate: class {
+protocol ToolPageCardBounceAnimationDelegate: AnyObject {
     
     func toolPageCardBounceAnimationDidFinish(cardBounceAnimation: ToolPageCardBounceAnimation, forceStopped: Bool)
 }

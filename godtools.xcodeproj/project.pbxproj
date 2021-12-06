@@ -11,7 +11,38 @@
 		17339885230736DB00A715B4 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17339884230736DB00A715B4 /* SnapshotHelper.swift */; };
 		1737DFDF22FDB48000223CB0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1737DFDE22FDB48000223CB0 /* GoogleService-Info.plist */; };
 		1E06EB6DA916BEF9C627866F /* Pods_godtools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D61FF360D11F854476B6E206 /* Pods_godtools.framework */; };
+		45051205275AA7050081BF56 /* MobileContentParagraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45051204275AA7050081BF56 /* MobileContentParagraphView.swift */; };
+		45051207275AA71F0081BF56 /* MobileContentParagraphViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45051206275AA71F0081BF56 /* MobileContentParagraphViewModel.swift */; };
+		45051209275AA7260081BF56 /* MobileContentParagraphViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45051208275AA7260081BF56 /* MobileContentParagraphViewModelType.swift */; };
 		450D4BF226B469F400D81552 /* ContentFallbackModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450D4BF126B469F400D81552 /* ContentFallbackModelType.swift */; };
+		450E441427565D1C00D4311E /* TutorialFlowDiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E440827565D1C00D4311E /* TutorialFlowDiContainer.swift */; };
+		450E441527565D1C00D4311E /* TutorialFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E440927565D1C00D4311E /* TutorialFlow.swift */; };
+		450E441627565D1C00D4311E /* GetTutorialUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E440C27565D1C00D4311E /* GetTutorialUseCase.swift */; };
+		450E441727565D1C00D4311E /* TutorialModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E440D27565D1C00D4311E /* TutorialModel.swift */; };
+		450E441827565D1C00D4311E /* TutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 450E441027565D1C00D4311E /* TutorialView.xib */; };
+		450E441927565D1C00D4311E /* TutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E441127565D1C00D4311E /* TutorialViewModel.swift */; };
+		450E441A27565D1C00D4311E /* TutorialViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E441227565D1C00D4311E /* TutorialViewModelType.swift */; };
+		450E441B27565D1C00D4311E /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E441327565D1C00D4311E /* TutorialView.swift */; };
+		450E442227565D6F00D4311E /* GetTutorialIsAvailableUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E441E27565D6F00D4311E /* GetTutorialIsAvailableUseCase.swift */; };
+		450E442327565D6F00D4311E /* TutorialLanguageAvailability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E441F27565D6F00D4311E /* TutorialLanguageAvailability.swift */; };
+		450E442427565D6F00D4311E /* TutorialSupportedLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E442027565D6F00D4311E /* TutorialSupportedLanguages.swift */; };
+		450E442527565D7000D4311E /* TutorialSupportedLanguagesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E442127565D6F00D4311E /* TutorialSupportedLanguagesType.swift */; };
+		450E442727565DCD00D4311E /* TutorialItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E442627565DCD00D4311E /* TutorialItem.swift */; };
+		450E442B275664B500D4311E /* MockTutorialSupportedLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E442A275664B500D4311E /* MockTutorialSupportedLanguages.swift */; };
+		450E442C2756657E00D4311E /* TutorialSupportedLanguagesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E442127565D6F00D4311E /* TutorialSupportedLanguagesType.swift */; };
+		450E442D2756665C00D4311E /* TutorialLanguageAvailability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E441F27565D6F00D4311E /* TutorialLanguageAvailability.swift */; };
+		450E442E2756669B00D4311E /* TutorialSupportedLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E442027565D6F00D4311E /* TutorialSupportedLanguages.swift */; };
+		450E44462756B66300D4311E /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E44392756B66300D4311E /* MenuViewModel.swift */; };
+		450E44472756B66300D4311E /* MenuViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E443A2756B66300D4311E /* MenuViewModelType.swift */; };
+		450E44482756B66300D4311E /* MenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 450E443B2756B66300D4311E /* MenuView.xib */; };
+		450E444C2756B66300D4311E /* MenuSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E44422756B66300D4311E /* MenuSectionHeaderView.swift */; };
+		450E444D2756B66300D4311E /* MenuSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 450E44432756B66300D4311E /* MenuSectionHeaderView.xib */; };
+		450E444E2756B66300D4311E /* MenuSectionHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E44442756B66300D4311E /* MenuSectionHeaderViewModel.swift */; };
+		450E444F2756B66300D4311E /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E44452756B66300D4311E /* MenuView.swift */; };
+		450E44532756B6E000D4311E /* MenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E44502756B6E000D4311E /* MenuItemView.swift */; };
+		450E44542756B6E000D4311E /* MenuItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 450E44512756B6E000D4311E /* MenuItemView.xib */; };
+		450E44552756B6E000D4311E /* MenuItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E44522756B6E000D4311E /* MenuItemViewModel.swift */; };
+		450E44572756B6FC00D4311E /* MenuItemViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E44562756B6FC00D4311E /* MenuItemViewModelType.swift */; };
 		450EF834247EB3D300978926 /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 450EF833247EB3D300978926 /* SF-Pro-Text-Bold.otf */; };
 		451172AE26A35425001AD628 /* MockMobileContentManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451172AC26A35425001AD628 /* MockMobileContentManifest.swift */; };
 		451172AF26A35425001AD628 /* MockMobileContentManifestAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451172AD26A35425001AD628 /* MockMobileContentManifestAttributes.swift */; };
@@ -22,6 +53,13 @@
 		45163635268B7F950010876B /* DeepLinkPathType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45163634268B7F950010876B /* DeepLinkPathType.swift */; };
 		4517EDB126F0FAE100F17A84 /* MultiplatformEventId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4517EDB026F0FAE100F17A84 /* MultiplatformEventId.swift */; };
 		4517EDB726F13B3300F17A84 /* MobileContentVisibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4517EDB626F13B3300F17A84 /* MobileContentVisibility.swift */; };
+		451A17522756C10400D35D78 /* tutorial_screenshare.json in Resources */ = {isa = PBXBuildFile; fileRef = 451A174F2756C10400D35D78 /* tutorial_screenshare.json */; };
+		451A17532756C10400D35D78 /* tutorial_lessons.json in Resources */ = {isa = PBXBuildFile; fileRef = 451A17502756C10400D35D78 /* tutorial_lessons.json */; };
+		451A17542756C10400D35D78 /* tutorial_tooltip.json in Resources */ = {isa = PBXBuildFile; fileRef = 451A17512756C10400D35D78 /* tutorial_tooltip.json */; };
+		451A17562756C5B400D35D78 /* MenuSectionHeaderViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451A17552756C5B400D35D78 /* MenuSectionHeaderViewModelType.swift */; };
+		451A175D2757B1FF00D35D78 /* MenuDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451A17582757B1FF00D35D78 /* MenuDataSource.swift */; };
+		451A17602757B1FF00D35D78 /* MenuSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451A175B2757B1FF00D35D78 /* MenuSection.swift */; };
+		451A17612757B1FF00D35D78 /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451A175C2757B1FF00D35D78 /* MenuItem.swift */; };
 		451EBE2724AD968B00C4D6DD /* languages.json in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE0D24AD968A00C4D6DD /* languages.json */; };
 		451EBE2824AD968B00C4D6DD /* resources.json in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE0E24AD968A00C4D6DD /* resources.json */; };
 		451EBE2924AD968B00C4D6DD /* bae08d104b5ad1e9d7f97a25a88800adbce94cf36c508deaf3a2067f45919a36.png in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE1024AD968A00C4D6DD /* bae08d104b5ad1e9d7f97a25a88800adbce94cf36c508deaf3a2067f45919a36.png */; };
@@ -283,6 +321,8 @@
 		4599251D2704F37B008F7844 /* ChooseScaleSliderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4599251C2704F37B008F7844 /* ChooseScaleSliderView.xib */; };
 		459C56D225FF954F00F15967 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		459C56D325FF954F00F15967 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		459C93A427581B23006207D2 /* OktaAuthentication in Frameworks */ = {isa = PBXBuildFile; productRef = 459C93A327581B23006207D2 /* OktaAuthentication */; };
+		459C93B027581FD0006207D2 /* OktaUserAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459C93AF27581FD0006207D2 /* OktaUserAuthentication.swift */; };
 		459D80BD26D04D9400EC97E9 /* MultiplatformImageAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459D80BC26D04D9400EC97E9 /* MultiplatformImageAlignment.swift */; };
 		459D80BF26D04E4A00EC97E9 /* MobileContentImageAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459D80BE26D04E4A00EC97E9 /* MobileContentImageAlignment.swift */; };
 		45A3A0C626B0B497005DA490 /* TractFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A3A0C526B0B497005DA490 /* TractFlow.swift */; };
@@ -302,30 +342,10 @@
 		45A73E4C25CF19E600B7533F /* IncomingDeepLinkType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A73E4B25CF19E600B7533F /* IncomingDeepLinkType.swift */; };
 		45A7BAF5252CBC5B00D70465 /* LocaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A7BAF4252CBC5B00D70465 /* LocaleTests.swift */; };
 		45AC60192624BAB100253217 /* ToolItemInitialDownloadProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AC60182624BAB100253217 /* ToolItemInitialDownloadProgress.swift */; };
-		45AD1A9F25938A4E00A096A0 /* TutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45AD174F25938A4D00A096A0 /* TutorialView.xib */; };
-		45AD1AA025938A4E00A096A0 /* TutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175025938A4D00A096A0 /* TutorialViewModel.swift */; };
-		45AD1AA125938A4E00A096A0 /* TutorialItemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175225938A4D00A096A0 /* TutorialItemProvider.swift */; };
-		45AD1AA225938A4E00A096A0 /* TutorialItemProviderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175325938A4D00A096A0 /* TutorialItemProviderType.swift */; };
 		45AD1AA325938A4E00A096A0 /* TutorialItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175425938A4D00A096A0 /* TutorialItemType.swift */; };
-		45AD1AA425938A4E00A096A0 /* SupportedLanguagesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175525938A4D00A096A0 /* SupportedLanguagesType.swift */; };
-		45AD1AA525938A4E00A096A0 /* TutorialSupportedLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175625938A4D00A096A0 /* TutorialSupportedLanguages.swift */; };
-		45AD1AA625938A4E00A096A0 /* CustomTutorialViewId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175725938A4D00A096A0 /* CustomTutorialViewId.swift */; };
-		45AD1AA725938A4E00A096A0 /* TutorialItemViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175825938A4D00A096A0 /* TutorialItemViewBuilder.swift */; };
-		45AD1AA825938A4E00A096A0 /* TutorialViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175925938A4D00A096A0 /* TutorialViewModelType.swift */; };
-		45AD1AA925938A4E00A096A0 /* TutorialInMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175B25938A4D00A096A0 /* TutorialInMenuView.swift */; };
-		45AD1AAA25938A4E00A096A0 /* TutorialToolsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45AD175C25938A4D00A096A0 /* TutorialToolsView.xib */; };
 		45AD1AAB25938A4E00A096A0 /* TutorialCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45AD175D25938A4D00A096A0 /* TutorialCell.xib */; };
-		45AD1AAC25938A4E00A096A0 /* TutorialToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175E25938A4D00A096A0 /* TutorialToolsView.swift */; };
-		45AD1AAD25938A4E00A096A0 /* TutorialToolsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175F25938A4D00A096A0 /* TutorialToolsViewModel.swift */; };
 		45AD1AAE25938A4E00A096A0 /* TutorialCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD176025938A4D00A096A0 /* TutorialCellViewModel.swift */; };
 		45AD1AAF25938A4E00A096A0 /* TutorialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD176125938A4D00A096A0 /* TutorialCell.swift */; };
-		45AD1AB025938A4E00A096A0 /* TutorialInMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD176225938A4D00A096A0 /* TutorialInMenuViewModel.swift */; };
-		45AD1AB125938A4E00A096A0 /* TutorialInMenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45AD176325938A4D00A096A0 /* TutorialInMenuView.xib */; };
-		45AD1AB225938A4E00A096A0 /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD176425938A4D00A096A0 /* TutorialView.swift */; };
-		45AD1AB325938A4E00A096A0 /* TutorialAvailability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD176625938A4D00A096A0 /* TutorialAvailability.swift */; };
-		45AD1AB425938A4E00A096A0 /* TutorialLanguageAvailability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD176725938A4D00A096A0 /* TutorialLanguageAvailability.swift */; };
-		45AD1AB525938A4E00A096A0 /* LanguageAvailabilityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD176825938A4D00A096A0 /* LanguageAvailabilityType.swift */; };
-		45AD1AB625938A4E00A096A0 /* TutorialAvailabilityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD176925938A4D00A096A0 /* TutorialAvailabilityType.swift */; };
 		45AD1AB725938A4E00A096A0 /* AllToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD176B25938A4D00A096A0 /* AllToolsView.swift */; };
 		45AD1AB825938A4E00A096A0 /* AllToolsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45AD176C25938A4D00A096A0 /* AllToolsView.xib */; };
 		45AD1AB925938A4E00A096A0 /* ToolsTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45AD176D25938A4D00A096A0 /* ToolsTableView.xib */; };
@@ -438,23 +458,6 @@
 		45AD1B3725938A4F00A096A0 /* ChooseLanguageCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD180125938A4D00A096A0 /* ChooseLanguageCellViewModel.swift */; };
 		45AD1B3825938A4F00A096A0 /* ChooseLanguageCellViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD180225938A4D00A096A0 /* ChooseLanguageCellViewModelType.swift */; };
 		45AD1B3925938A4F00A096A0 /* LanguageSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45AD180325938A4D00A096A0 /* LanguageSettingsView.xib */; };
-		45AD1B3A25938A4F00A096A0 /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD180525938A4D00A096A0 /* MenuViewModel.swift */; };
-		45AD1B3B25938A4F00A096A0 /* MenuDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD180725938A4D00A096A0 /* MenuDataSource.swift */; };
-		45AD1B3C25938A4F00A096A0 /* MenuSectionId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD180825938A4D00A096A0 /* MenuSectionId.swift */; };
-		45AD1B3D25938A4F00A096A0 /* MenuItemId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD180925938A4D00A096A0 /* MenuItemId.swift */; };
-		45AD1B3E25938A4F00A096A0 /* MenuSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD180A25938A4D00A096A0 /* MenuSection.swift */; };
-		45AD1B3F25938A4F00A096A0 /* MenuDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD180B25938A4D00A096A0 /* MenuDataProvider.swift */; };
-		45AD1B4025938A4F00A096A0 /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD180C25938A4D00A096A0 /* MenuItem.swift */; };
-		45AD1B4125938A4F00A096A0 /* MenuDataProviderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD180D25938A4D00A096A0 /* MenuDataProviderType.swift */; };
-		45AD1B4225938A4F00A096A0 /* MenuViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD180E25938A4D00A096A0 /* MenuViewModelType.swift */; };
-		45AD1B4325938A4F00A096A0 /* MenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45AD180F25938A4D00A096A0 /* MenuView.xib */; };
-		45AD1B4425938A4F00A096A0 /* MenuSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD181125938A4D00A096A0 /* MenuSectionHeaderView.swift */; };
-		45AD1B4525938A4F00A096A0 /* MenuSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45AD181225938A4D00A096A0 /* MenuSectionHeaderView.xib */; };
-		45AD1B4625938A4F00A096A0 /* MenuCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD181325938A4D00A096A0 /* MenuCellViewModel.swift */; };
-		45AD1B4725938A4F00A096A0 /* MenuSectionHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD181425938A4D00A096A0 /* MenuSectionHeaderViewModel.swift */; };
-		45AD1B4825938A4F00A096A0 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD181525938A4D00A096A0 /* MenuCell.swift */; };
-		45AD1B4925938A4F00A096A0 /* MenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45AD181625938A4D00A096A0 /* MenuCell.xib */; };
-		45AD1B4A25938A4F00A096A0 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD181725938A4D00A096A0 /* MenuView.swift */; };
 		45AD1B4B25938A4F00A096A0 /* ToolTrainingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45AD181925938A4D00A096A0 /* ToolTrainingView.xib */; };
 		45AD1B4C25938A4F00A096A0 /* ToolTrainingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD181A25938A4D00A096A0 /* ToolTrainingViewModel.swift */; };
 		45AD1B4E25938A4F00A096A0 /* ToolTrainingAnimatedTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD181E25938A4D00A096A0 /* ToolTrainingAnimatedTransitioning.swift */; };
@@ -515,7 +518,6 @@
 		45AD1BAA25938A4F00A096A0 /* Flow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD189025938A4E00A096A0 /* Flow.swift */; };
 		45AD1BAC25938A4F00A096A0 /* AppFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD189225938A4E00A096A0 /* AppFlow.swift */; };
 		45AD1BAD25938A4F00A096A0 /* MenuFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD189325938A4E00A096A0 /* MenuFlow.swift */; };
-		45AD1BAE25938A4F00A096A0 /* TutorialFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD189425938A4E00A096A0 /* TutorialFlow.swift */; };
 		45AD1BAF25938A4F00A096A0 /* OnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD189525938A4E00A096A0 /* OnboardingFlow.swift */; };
 		45AD1BB025938A4F00A096A0 /* LearnToShareToolFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD189625938A4E00A096A0 /* LearnToShareToolFlow.swift */; };
 		45AD1BB125938A4F00A096A0 /* FlowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD189725938A4E00A096A0 /* FlowDelegate.swift */; };
@@ -682,8 +684,6 @@
 		45AD200125938A9800A096A0 /* ResourceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EAF25938A9800A096A0 /* ResourceViewModel.swift */; };
 		45AD200225938A9800A096A0 /* RealmResourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EB025938A9800A096A0 /* RealmResourceView.swift */; };
 		45AD200325938A9800A096A0 /* UserAuthenticationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EB225938A9800A096A0 /* UserAuthenticationType.swift */; };
-		45AD200425938A9800A096A0 /* UserAuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EB425938A9800A096A0 /* UserAuthModel.swift */; };
-		45AD200525938A9800A096A0 /* TheKeyUserAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EB625938A9800A096A0 /* TheKeyUserAuthentication.swift */; };
 		45AD200725938A9800A096A0 /* DeepLinkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EBA25938A9800A096A0 /* DeepLinkingService.swift */; };
 		45AD200825938A9800A096A0 /* DownloadedTranslationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EBD25938A9800A096A0 /* DownloadedTranslationResult.swift */; };
 		45AD200925938A9800A096A0 /* TranslationDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EBE25938A9800A096A0 /* TranslationDownloader.swift */; };
@@ -796,11 +796,7 @@
 		45AD223D2593C90000A096A0 /* FirebaseCrashlyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD223B2593C90000A096A0 /* FirebaseCrashlyticsService.swift */; };
 		45AD22A12593CE8900A096A0 /* ColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD22A02593CE8900A096A0 /* ColorPalette.swift */; };
 		45AD22B32593D1FB00A096A0 /* UIImage+CreateImageWithColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD22B22593D1FB00A096A0 /* UIImage+CreateImageWithColor.swift */; };
-		45AD22D02593E57100A096A0 /* SupportedLanguagesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175525938A4D00A096A0 /* SupportedLanguagesType.swift */; };
-		45AD22D52593E5F900A096A0 /* TutorialLanguageAvailability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD176725938A4D00A096A0 /* TutorialLanguageAvailability.swift */; };
-		45AD22DA2593E60900A096A0 /* LanguageAvailabilityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD176825938A4D00A096A0 /* LanguageAvailabilityType.swift */; };
 		45AD22DF2593E63D00A096A0 /* Locale+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD18BB25938A4E00A096A0 /* Locale+Extensions.swift */; };
-		45AD22E42593E68D00A096A0 /* TutorialSupportedLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175625938A4D00A096A0 /* TutorialSupportedLanguages.swift */; };
 		45AEBA7926D03FD1008DA47A /* MobileContentImageAlignmentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AEBA7826D03FD1008DA47A /* MobileContentImageAlignmentType.swift */; };
 		45B116C22625FC6D007A7127 /* LanguageDirection+SemanticContentAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B116C12625FC6D007A7127 /* LanguageDirection+SemanticContentAttribute.swift */; };
 		45B248582734676F00B7AD5E /* AppsFlyerLib in Frameworks */ = {isa = PBXBuildFile; productRef = 45B248572734676F00B7AD5E /* AppsFlyerLib */; };
@@ -999,6 +995,9 @@
 		45E39ED727457CE9006A59E4 /* ContentAnimationModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E39ED627457CE9006A59E4 /* ContentAnimationModelType.swift */; };
 		45E39ED927457D32006A59E4 /* LearnToShareToolAssetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E39ED827457D32006A59E4 /* LearnToShareToolAssetContent.swift */; };
 		45E39EDC27457E0C006A59E4 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 45E39EDB27457E0C006A59E4 /* Lottie */; };
+		45E3FAAD2759424900D0CAFA /* OktaAuthenticationConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E3FAAC2759424900D0CAFA /* OktaAuthenticationConfiguration.swift */; };
+		45E3FABF2759898200D0CAFA /* AuthUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E3FABD2759898200D0CAFA /* AuthUserModel.swift */; };
+		45E3FAC02759898200D0CAFA /* AuthUserModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E3FABE2759898200D0CAFA /* AuthUserModelType.swift */; };
 		45E998D623FD7B090088DD0C /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */; };
 		45EC429B272C87430052F2AA /* PassthroughValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EC429A272C87430052F2AA /* PassthroughValue.swift */; };
 		45EDBCF027359CD70099495B /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 45EDBCEF27359CD70099495B /* Realm */; };
@@ -1012,7 +1011,6 @@
 		45F5A04B268A7BD90081C507 /* ToolsDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5A04A268A7BD90081C507 /* ToolsDeepLinkParser.swift */; };
 		45F7E7602701F1AA00CC9FB9 /* MobileContentViewVisibilityState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F7E75F2701F1AA00CC9FB9 /* MobileContentViewVisibilityState.swift */; };
 		45FA696C24251CA00006878C /* TutorialLanguageAvailabilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FA696B24251CA00006878C /* TutorialLanguageAvailabilityTests.swift */; };
-		45FA696F24251D360006878C /* MockSupportedLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FA6960242517590006878C /* MockSupportedLanguages.swift */; };
 		45FF25E7260BED6F00D771B6 /* ToolViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FF25E6260BED6F00D771B6 /* ToolViewModelType.swift */; };
 		4F0CCC1F1EE73E9D00AE4E45 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 4F0CCC1E1EE73E9D00AE4E45 /* Podfile */; };
 		4F2500621F0C1E8D00364FBC /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F2500611F0C1E8D00364FBC /* AdSupport.framework */; };
@@ -1065,7 +1063,6 @@
 		D1B944E5259E58F5004641DB /* remote_share_active.json in Resources */ = {isa = PBXBuildFile; fileRef = D1B944E4259E58F5004641DB /* remote_share_active.json */; };
 		D1C8FEB92714E7010071BD07 /* TutorialCellViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C8FEB82714E7000071BD07 /* TutorialCellViewModelType.swift */; };
 		D1C8FEBD2714E9650071BD07 /* OnboardingTutorialItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C8FEBC2714E9650071BD07 /* OnboardingTutorialItem.swift */; };
-		D1C8FEBF2714EB8D0071BD07 /* TutorialItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C8FEBE2714EB8D0071BD07 /* TutorialItem.swift */; };
 		D1CE0959273EACCC00C8832C /* TutorialVideoAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CE0958273EACCC00C8832C /* TutorialVideoAnalytics.swift */; };
 		D1D569122704A92B00BBE2A6 /* TutorialPagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D569112704A92B00BBE2A6 /* TutorialPagerView.swift */; };
 		D1D56916270502B200BBE2A6 /* TutorialPagerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1D56915270502B200BBE2A6 /* TutorialPagerView.xib */; };
@@ -1115,7 +1112,35 @@
 		1737DFDE22FDB48000223CB0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1767C18E62BAF2E86AA37734 /* Pods-godtoolsTests.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsTests.production.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests.production.xcconfig"; sourceTree = "<group>"; };
 		3795EC9D424F0613AD8AF610 /* Pods-godtools.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.release.xcconfig"; sourceTree = "<group>"; };
+		45051204275AA7050081BF56 /* MobileContentParagraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentParagraphView.swift; sourceTree = "<group>"; };
+		45051206275AA71F0081BF56 /* MobileContentParagraphViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentParagraphViewModel.swift; sourceTree = "<group>"; };
+		45051208275AA7260081BF56 /* MobileContentParagraphViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentParagraphViewModelType.swift; sourceTree = "<group>"; };
 		450D4BF126B469F400D81552 /* ContentFallbackModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentFallbackModelType.swift; sourceTree = "<group>"; };
+		450E440827565D1C00D4311E /* TutorialFlowDiContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialFlowDiContainer.swift; sourceTree = "<group>"; };
+		450E440927565D1C00D4311E /* TutorialFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialFlow.swift; sourceTree = "<group>"; };
+		450E440C27565D1C00D4311E /* GetTutorialUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetTutorialUseCase.swift; sourceTree = "<group>"; };
+		450E440D27565D1C00D4311E /* TutorialModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialModel.swift; sourceTree = "<group>"; };
+		450E441027565D1C00D4311E /* TutorialView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialView.xib; sourceTree = "<group>"; };
+		450E441127565D1C00D4311E /* TutorialViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewModel.swift; sourceTree = "<group>"; };
+		450E441227565D1C00D4311E /* TutorialViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewModelType.swift; sourceTree = "<group>"; };
+		450E441327565D1C00D4311E /* TutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
+		450E441E27565D6F00D4311E /* GetTutorialIsAvailableUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetTutorialIsAvailableUseCase.swift; sourceTree = "<group>"; };
+		450E441F27565D6F00D4311E /* TutorialLanguageAvailability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialLanguageAvailability.swift; sourceTree = "<group>"; };
+		450E442027565D6F00D4311E /* TutorialSupportedLanguages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialSupportedLanguages.swift; sourceTree = "<group>"; };
+		450E442127565D6F00D4311E /* TutorialSupportedLanguagesType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialSupportedLanguagesType.swift; sourceTree = "<group>"; };
+		450E442627565DCD00D4311E /* TutorialItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialItem.swift; sourceTree = "<group>"; };
+		450E442A275664B500D4311E /* MockTutorialSupportedLanguages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockTutorialSupportedLanguages.swift; sourceTree = "<group>"; };
+		450E44392756B66300D4311E /* MenuViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
+		450E443A2756B66300D4311E /* MenuViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewModelType.swift; sourceTree = "<group>"; };
+		450E443B2756B66300D4311E /* MenuView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuView.xib; sourceTree = "<group>"; };
+		450E44422756B66300D4311E /* MenuSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuSectionHeaderView.swift; sourceTree = "<group>"; };
+		450E44432756B66300D4311E /* MenuSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuSectionHeaderView.xib; sourceTree = "<group>"; };
+		450E44442756B66300D4311E /* MenuSectionHeaderViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuSectionHeaderViewModel.swift; sourceTree = "<group>"; };
+		450E44452756B66300D4311E /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		450E44502756B6E000D4311E /* MenuItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItemView.swift; sourceTree = "<group>"; };
+		450E44512756B6E000D4311E /* MenuItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuItemView.xib; sourceTree = "<group>"; };
+		450E44522756B6E000D4311E /* MenuItemViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItemViewModel.swift; sourceTree = "<group>"; };
+		450E44562756B6FC00D4311E /* MenuItemViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemViewModelType.swift; sourceTree = "<group>"; };
 		450EF833247EB3D300978926 /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
 		451172AC26A35425001AD628 /* MockMobileContentManifest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockMobileContentManifest.swift; sourceTree = "<group>"; };
 		451172AD26A35425001AD628 /* MockMobileContentManifestAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockMobileContentManifestAttributes.swift; sourceTree = "<group>"; };
@@ -1126,6 +1151,13 @@
 		45163634268B7F950010876B /* DeepLinkPathType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkPathType.swift; sourceTree = "<group>"; };
 		4517EDB026F0FAE100F17A84 /* MultiplatformEventId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplatformEventId.swift; sourceTree = "<group>"; };
 		4517EDB626F13B3300F17A84 /* MobileContentVisibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentVisibility.swift; sourceTree = "<group>"; };
+		451A174F2756C10400D35D78 /* tutorial_screenshare.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tutorial_screenshare.json; sourceTree = "<group>"; };
+		451A17502756C10400D35D78 /* tutorial_lessons.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tutorial_lessons.json; sourceTree = "<group>"; };
+		451A17512756C10400D35D78 /* tutorial_tooltip.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tutorial_tooltip.json; sourceTree = "<group>"; };
+		451A17552756C5B400D35D78 /* MenuSectionHeaderViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSectionHeaderViewModelType.swift; sourceTree = "<group>"; };
+		451A17582757B1FF00D35D78 /* MenuDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuDataSource.swift; sourceTree = "<group>"; };
+		451A175B2757B1FF00D35D78 /* MenuSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuSection.swift; sourceTree = "<group>"; };
+		451A175C2757B1FF00D35D78 /* MenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
 		451EBE0D24AD968A00C4D6DD /* languages.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = languages.json; sourceTree = "<group>"; };
 		451EBE0E24AD968A00C4D6DD /* resources.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = resources.json; sourceTree = "<group>"; };
 		451EBE1024AD968A00C4D6DD /* bae08d104b5ad1e9d7f97a25a88800adbce94cf36c508deaf3a2067f45919a36.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bae08d104b5ad1e9d7f97a25a88800adbce94cf36c508deaf3a2067f45919a36.png; sourceTree = "<group>"; };
@@ -1387,6 +1419,7 @@
 		458EFEDD26B1D135009EEB03 /* ToolBackButtonImageType+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ToolBackButtonImageType+Image.swift"; sourceTree = "<group>"; };
 		4599251A2704F36A008F7844 /* ChooseScaleSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseScaleSliderView.swift; sourceTree = "<group>"; };
 		4599251C2704F37B008F7844 /* ChooseScaleSliderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChooseScaleSliderView.xib; sourceTree = "<group>"; };
+		459C93AF27581FD0006207D2 /* OktaUserAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OktaUserAuthentication.swift; sourceTree = "<group>"; };
 		459D80BC26D04D9400EC97E9 /* MultiplatformImageAlignment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplatformImageAlignment.swift; sourceTree = "<group>"; };
 		459D80BE26D04E4A00EC97E9 /* MobileContentImageAlignment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentImageAlignment.swift; sourceTree = "<group>"; };
 		45A3A0C526B0B497005DA490 /* TractFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractFlow.swift; sourceTree = "<group>"; };
@@ -1400,30 +1433,10 @@
 		45A73E4B25CF19E600B7533F /* IncomingDeepLinkType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingDeepLinkType.swift; sourceTree = "<group>"; };
 		45A7BAF4252CBC5B00D70465 /* LocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleTests.swift; sourceTree = "<group>"; };
 		45AC60182624BAB100253217 /* ToolItemInitialDownloadProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolItemInitialDownloadProgress.swift; sourceTree = "<group>"; };
-		45AD174F25938A4D00A096A0 /* TutorialView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialView.xib; sourceTree = "<group>"; };
-		45AD175025938A4D00A096A0 /* TutorialViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewModel.swift; sourceTree = "<group>"; };
-		45AD175225938A4D00A096A0 /* TutorialItemProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialItemProvider.swift; sourceTree = "<group>"; };
-		45AD175325938A4D00A096A0 /* TutorialItemProviderType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialItemProviderType.swift; sourceTree = "<group>"; };
 		45AD175425938A4D00A096A0 /* TutorialItemType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialItemType.swift; sourceTree = "<group>"; };
-		45AD175525938A4D00A096A0 /* SupportedLanguagesType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupportedLanguagesType.swift; sourceTree = "<group>"; };
-		45AD175625938A4D00A096A0 /* TutorialSupportedLanguages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialSupportedLanguages.swift; sourceTree = "<group>"; };
-		45AD175725938A4D00A096A0 /* CustomTutorialViewId.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTutorialViewId.swift; sourceTree = "<group>"; };
-		45AD175825938A4D00A096A0 /* TutorialItemViewBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialItemViewBuilder.swift; sourceTree = "<group>"; };
-		45AD175925938A4D00A096A0 /* TutorialViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewModelType.swift; sourceTree = "<group>"; };
-		45AD175B25938A4D00A096A0 /* TutorialInMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialInMenuView.swift; sourceTree = "<group>"; };
-		45AD175C25938A4D00A096A0 /* TutorialToolsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialToolsView.xib; sourceTree = "<group>"; };
 		45AD175D25938A4D00A096A0 /* TutorialCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialCell.xib; sourceTree = "<group>"; };
-		45AD175E25938A4D00A096A0 /* TutorialToolsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialToolsView.swift; sourceTree = "<group>"; };
-		45AD175F25938A4D00A096A0 /* TutorialToolsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialToolsViewModel.swift; sourceTree = "<group>"; };
 		45AD176025938A4D00A096A0 /* TutorialCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialCellViewModel.swift; sourceTree = "<group>"; };
 		45AD176125938A4D00A096A0 /* TutorialCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialCell.swift; sourceTree = "<group>"; };
-		45AD176225938A4D00A096A0 /* TutorialInMenuViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialInMenuViewModel.swift; sourceTree = "<group>"; };
-		45AD176325938A4D00A096A0 /* TutorialInMenuView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialInMenuView.xib; sourceTree = "<group>"; };
-		45AD176425938A4D00A096A0 /* TutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
-		45AD176625938A4D00A096A0 /* TutorialAvailability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialAvailability.swift; sourceTree = "<group>"; };
-		45AD176725938A4D00A096A0 /* TutorialLanguageAvailability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialLanguageAvailability.swift; sourceTree = "<group>"; };
-		45AD176825938A4D00A096A0 /* LanguageAvailabilityType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageAvailabilityType.swift; sourceTree = "<group>"; };
-		45AD176925938A4D00A096A0 /* TutorialAvailabilityType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialAvailabilityType.swift; sourceTree = "<group>"; };
 		45AD176B25938A4D00A096A0 /* AllToolsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllToolsView.swift; sourceTree = "<group>"; };
 		45AD176C25938A4D00A096A0 /* AllToolsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AllToolsView.xib; sourceTree = "<group>"; };
 		45AD176D25938A4D00A096A0 /* ToolsTableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToolsTableView.xib; sourceTree = "<group>"; };
@@ -1536,23 +1549,6 @@
 		45AD180125938A4D00A096A0 /* ChooseLanguageCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseLanguageCellViewModel.swift; sourceTree = "<group>"; };
 		45AD180225938A4D00A096A0 /* ChooseLanguageCellViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseLanguageCellViewModelType.swift; sourceTree = "<group>"; };
 		45AD180325938A4D00A096A0 /* LanguageSettingsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LanguageSettingsView.xib; sourceTree = "<group>"; };
-		45AD180525938A4D00A096A0 /* MenuViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
-		45AD180725938A4D00A096A0 /* MenuDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuDataSource.swift; sourceTree = "<group>"; };
-		45AD180825938A4D00A096A0 /* MenuSectionId.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuSectionId.swift; sourceTree = "<group>"; };
-		45AD180925938A4D00A096A0 /* MenuItemId.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItemId.swift; sourceTree = "<group>"; };
-		45AD180A25938A4D00A096A0 /* MenuSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuSection.swift; sourceTree = "<group>"; };
-		45AD180B25938A4D00A096A0 /* MenuDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuDataProvider.swift; sourceTree = "<group>"; };
-		45AD180C25938A4D00A096A0 /* MenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
-		45AD180D25938A4D00A096A0 /* MenuDataProviderType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuDataProviderType.swift; sourceTree = "<group>"; };
-		45AD180E25938A4D00A096A0 /* MenuViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewModelType.swift; sourceTree = "<group>"; };
-		45AD180F25938A4D00A096A0 /* MenuView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuView.xib; sourceTree = "<group>"; };
-		45AD181125938A4D00A096A0 /* MenuSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuSectionHeaderView.swift; sourceTree = "<group>"; };
-		45AD181225938A4D00A096A0 /* MenuSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuSectionHeaderView.xib; sourceTree = "<group>"; };
-		45AD181325938A4D00A096A0 /* MenuCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuCellViewModel.swift; sourceTree = "<group>"; };
-		45AD181425938A4D00A096A0 /* MenuSectionHeaderViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuSectionHeaderViewModel.swift; sourceTree = "<group>"; };
-		45AD181525938A4D00A096A0 /* MenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
-		45AD181625938A4D00A096A0 /* MenuCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuCell.xib; sourceTree = "<group>"; };
-		45AD181725938A4D00A096A0 /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		45AD181925938A4D00A096A0 /* ToolTrainingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToolTrainingView.xib; sourceTree = "<group>"; };
 		45AD181A25938A4D00A096A0 /* ToolTrainingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolTrainingViewModel.swift; sourceTree = "<group>"; };
 		45AD181E25938A4D00A096A0 /* ToolTrainingAnimatedTransitioning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolTrainingAnimatedTransitioning.swift; sourceTree = "<group>"; };
@@ -1613,7 +1609,6 @@
 		45AD189025938A4E00A096A0 /* Flow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Flow.swift; sourceTree = "<group>"; };
 		45AD189225938A4E00A096A0 /* AppFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppFlow.swift; sourceTree = "<group>"; };
 		45AD189325938A4E00A096A0 /* MenuFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuFlow.swift; sourceTree = "<group>"; };
-		45AD189425938A4E00A096A0 /* TutorialFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialFlow.swift; sourceTree = "<group>"; };
 		45AD189525938A4E00A096A0 /* OnboardingFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingFlow.swift; sourceTree = "<group>"; };
 		45AD189625938A4E00A096A0 /* LearnToShareToolFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LearnToShareToolFlow.swift; sourceTree = "<group>"; };
 		45AD189725938A4E00A096A0 /* FlowDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowDelegate.swift; sourceTree = "<group>"; };
@@ -1780,8 +1775,6 @@
 		45AD1EAF25938A9800A096A0 /* ResourceViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceViewModel.swift; sourceTree = "<group>"; };
 		45AD1EB025938A9800A096A0 /* RealmResourceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmResourceView.swift; sourceTree = "<group>"; };
 		45AD1EB225938A9800A096A0 /* UserAuthenticationType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAuthenticationType.swift; sourceTree = "<group>"; };
-		45AD1EB425938A9800A096A0 /* UserAuthModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAuthModel.swift; sourceTree = "<group>"; };
-		45AD1EB625938A9800A096A0 /* TheKeyUserAuthentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TheKeyUserAuthentication.swift; sourceTree = "<group>"; };
 		45AD1EBA25938A9800A096A0 /* DeepLinkingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkingService.swift; sourceTree = "<group>"; };
 		45AD1EBD25938A9800A096A0 /* DownloadedTranslationResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadedTranslationResult.swift; sourceTree = "<group>"; };
 		45AD1EBE25938A9800A096A0 /* TranslationDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationDownloader.swift; sourceTree = "<group>"; };
@@ -2084,6 +2077,9 @@
 		45E39ED227457CB5006A59E4 /* MobileContentAnimationViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentAnimationViewModelType.swift; sourceTree = "<group>"; };
 		45E39ED627457CE9006A59E4 /* ContentAnimationModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentAnimationModelType.swift; sourceTree = "<group>"; };
 		45E39ED827457D32006A59E4 /* LearnToShareToolAssetContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LearnToShareToolAssetContent.swift; sourceTree = "<group>"; };
+		45E3FAAC2759424900D0CAFA /* OktaAuthenticationConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OktaAuthenticationConfiguration.swift; sourceTree = "<group>"; };
+		45E3FABD2759898200D0CAFA /* AuthUserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthUserModel.swift; sourceTree = "<group>"; };
+		45E3FABE2759898200D0CAFA /* AuthUserModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthUserModelType.swift; sourceTree = "<group>"; };
 		45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Semibold.otf"; sourceTree = "<group>"; };
 		45EC429A272C87430052F2AA /* PassthroughValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassthroughValue.swift; sourceTree = "<group>"; };
 		45F506D926A3822E00EC04A9 /* ManifestResourcesCacheType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManifestResourcesCacheType.swift; sourceTree = "<group>"; };
@@ -2094,7 +2090,6 @@
 		45F5A047268A72200081C507 /* IncomingDeepLinkUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingDeepLinkUrl.swift; sourceTree = "<group>"; };
 		45F5A04A268A7BD90081C507 /* ToolsDeepLinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsDeepLinkParser.swift; sourceTree = "<group>"; };
 		45F7E75F2701F1AA00CC9FB9 /* MobileContentViewVisibilityState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentViewVisibilityState.swift; sourceTree = "<group>"; };
-		45FA6960242517590006878C /* MockSupportedLanguages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSupportedLanguages.swift; sourceTree = "<group>"; };
 		45FA696B24251CA00006878C /* TutorialLanguageAvailabilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialLanguageAvailabilityTests.swift; sourceTree = "<group>"; };
 		45FF25E6260BED6F00D771B6 /* ToolViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolViewModelType.swift; sourceTree = "<group>"; };
 		4F0CCC1E1EE73E9D00AE4E45 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -2205,7 +2200,6 @@
 		D1B944E4259E58F5004641DB /* remote_share_active.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = remote_share_active.json; sourceTree = "<group>"; };
 		D1C8FEB82714E7000071BD07 /* TutorialCellViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialCellViewModelType.swift; sourceTree = "<group>"; };
 		D1C8FEBC2714E9650071BD07 /* OnboardingTutorialItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialItem.swift; sourceTree = "<group>"; };
-		D1C8FEBE2714EB8D0071BD07 /* TutorialItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialItem.swift; sourceTree = "<group>"; };
 		D1CE0958273EACCC00C8832C /* TutorialVideoAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialVideoAnalytics.swift; sourceTree = "<group>"; };
 		D1D569112704A92B00BBE2A6 /* TutorialPagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPagerView.swift; sourceTree = "<group>"; };
 		D1D56915270502B200BBE2A6 /* TutorialPagerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TutorialPagerView.xib; sourceTree = "<group>"; };
@@ -2257,6 +2251,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F2500621F0C1E8D00364FBC /* AdSupport.framework in Frameworks */,
+				459C93A427581B23006207D2 /* OktaAuthentication in Frameworks */,
 				1E06EB6DA916BEF9C627866F /* Pods_godtools.framework in Frameworks */,
 				45EDBCF027359CD70099495B /* Realm in Frameworks */,
 				45EDBCF227359CD70099495B /* RealmSwift in Frameworks */,
@@ -2314,6 +2309,123 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		45051203275AA6E50081BF56 /* ContentParagraph */ = {
+			isa = PBXGroup;
+			children = (
+				45051204275AA7050081BF56 /* MobileContentParagraphView.swift */,
+				45051206275AA71F0081BF56 /* MobileContentParagraphViewModel.swift */,
+				45051208275AA7260081BF56 /* MobileContentParagraphViewModelType.swift */,
+			);
+			path = ContentParagraph;
+			sourceTree = "<group>";
+		};
+		450E440A27565D1C00D4311E /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				450E440B27565D1C00D4311E /* GetTutorialUseCase */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		450E440B27565D1C00D4311E /* GetTutorialUseCase */ = {
+			isa = PBXGroup;
+			children = (
+				450E440C27565D1C00D4311E /* GetTutorialUseCase.swift */,
+				450E440D27565D1C00D4311E /* TutorialModel.swift */,
+			);
+			path = GetTutorialUseCase;
+			sourceTree = "<group>";
+		};
+		450E440E27565D1C00D4311E /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				450E440F27565D1C00D4311E /* Tutorial */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		450E440F27565D1C00D4311E /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				450E441327565D1C00D4311E /* TutorialView.swift */,
+				450E441027565D1C00D4311E /* TutorialView.xib */,
+				450E441127565D1C00D4311E /* TutorialViewModel.swift */,
+				450E441227565D1C00D4311E /* TutorialViewModelType.swift */,
+			);
+			path = Tutorial;
+			sourceTree = "<group>";
+		};
+		450E441C27565D6F00D4311E /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				450E441D27565D6F00D4311E /* GetTutorialIsAvailableUseCase */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		450E441D27565D6F00D4311E /* GetTutorialIsAvailableUseCase */ = {
+			isa = PBXGroup;
+			children = (
+				450E441E27565D6F00D4311E /* GetTutorialIsAvailableUseCase.swift */,
+				450E441F27565D6F00D4311E /* TutorialLanguageAvailability.swift */,
+				450E442027565D6F00D4311E /* TutorialSupportedLanguages.swift */,
+				450E442127565D6F00D4311E /* TutorialSupportedLanguagesType.swift */,
+			);
+			path = GetTutorialIsAvailableUseCase;
+			sourceTree = "<group>";
+		};
+		450E44372756B61900D4311E /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				450E44382756B66300D4311E /* Menu */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		450E44382756B66300D4311E /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				450E44452756B66300D4311E /* MenuView.swift */,
+				450E443B2756B66300D4311E /* MenuView.xib */,
+				450E44392756B66300D4311E /* MenuViewModel.swift */,
+				450E443A2756B66300D4311E /* MenuViewModelType.swift */,
+				451A17572757B1FF00D35D78 /* MenuDataSource */,
+				450E443C2756B66300D4311E /* Views */,
+			);
+			path = Menu;
+			sourceTree = "<group>";
+		};
+		450E443C2756B66300D4311E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				450E443D2756B66300D4311E /* MenuItem */,
+				450E44412756B66300D4311E /* MenuSectionHeader */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		450E443D2756B66300D4311E /* MenuItem */ = {
+			isa = PBXGroup;
+			children = (
+				450E44502756B6E000D4311E /* MenuItemView.swift */,
+				450E44512756B6E000D4311E /* MenuItemView.xib */,
+				450E44522756B6E000D4311E /* MenuItemViewModel.swift */,
+				450E44562756B6FC00D4311E /* MenuItemViewModelType.swift */,
+			);
+			path = MenuItem;
+			sourceTree = "<group>";
+		};
+		450E44412756B66300D4311E /* MenuSectionHeader */ = {
+			isa = PBXGroup;
+			children = (
+				450E44422756B66300D4311E /* MenuSectionHeaderView.swift */,
+				450E44432756B66300D4311E /* MenuSectionHeaderView.xib */,
+				450E44442756B66300D4311E /* MenuSectionHeaderViewModel.swift */,
+				451A17552756C5B400D35D78 /* MenuSectionHeaderViewModelType.swift */,
+			);
+			path = MenuSectionHeader;
+			sourceTree = "<group>";
+		};
 		451172AB26A35425001AD628 /* Mock */ = {
 			isa = PBXGroup;
 			children = (
@@ -2333,6 +2445,16 @@
 				459925182704F35D008F7844 /* Views */,
 			);
 			path = LessonEvaluation;
+			sourceTree = "<group>";
+		};
+		451A17572757B1FF00D35D78 /* MenuDataSource */ = {
+			isa = PBXGroup;
+			children = (
+				451A17582757B1FF00D35D78 /* MenuDataSource.swift */,
+				451A175C2757B1FF00D35D78 /* MenuItem.swift */,
+				451A175B2757B1FF00D35D78 /* MenuSection.swift */,
+			);
+			path = MenuDataSource;
 			sourceTree = "<group>";
 		};
 		451EBE0C24AD968A00C4D6DD /* InitialResources */ = {
@@ -2772,6 +2894,7 @@
 				4555839F269F2DA500C3FF14 /* ContentLink */,
 				457579D826E969BC00C898D2 /* ContentMultiSelect */,
 				453F0B5C26EA369000436EE4 /* ContentMultiSelectOption */,
+				45051203275AA6E50081BF56 /* ContentParagraph */,
 				4581657426F4DD42000D660F /* ContentRow */,
 				4555835D269F2DA400C3FF14 /* ContentSection */,
 				4555837D269F2DA400C3FF14 /* ContentStack */,
@@ -3333,6 +3456,15 @@
 			path = ChooseScaleSlider;
 			sourceTree = "<group>";
 		};
+		459C93AE27581FC4006207D2 /* Okta */ = {
+			isa = PBXGroup;
+			children = (
+				45E3FAAC2759424900D0CAFA /* OktaAuthenticationConfiguration.swift */,
+				459C93AF27581FD0006207D2 /* OktaUserAuthentication.swift */,
+			);
+			path = Okta;
+			sourceTree = "<group>";
+		};
 		45A7BAF3252CBC5500D70465 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -3383,53 +3515,12 @@
 		45AD174E25938A4D00A096A0 /* Tutorial */ = {
 			isa = PBXGroup;
 			children = (
-				45AD176425938A4D00A096A0 /* TutorialView.swift */,
-				45AD174F25938A4D00A096A0 /* TutorialView.xib */,
-				45AD175025938A4D00A096A0 /* TutorialViewModel.swift */,
-				45AD175925938A4D00A096A0 /* TutorialViewModelType.swift */,
-				45AD175125938A4D00A096A0 /* Models */,
-				45AD176525938A4D00A096A0 /* Services */,
-				45AD175A25938A4D00A096A0 /* Views */,
+				450E440927565D1C00D4311E /* TutorialFlow.swift */,
+				450E440827565D1C00D4311E /* TutorialFlowDiContainer.swift */,
+				450E440A27565D1C00D4311E /* Domain */,
+				450E440E27565D1C00D4311E /* Presentation */,
 			);
 			path = Tutorial;
-			sourceTree = "<group>";
-		};
-		45AD175125938A4D00A096A0 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				D1C8FEBE2714EB8D0071BD07 /* TutorialItem.swift */,
-				45AD175725938A4D00A096A0 /* CustomTutorialViewId.swift */,
-				45AD175525938A4D00A096A0 /* SupportedLanguagesType.swift */,
-				45AD175225938A4D00A096A0 /* TutorialItemProvider.swift */,
-				45AD175325938A4D00A096A0 /* TutorialItemProviderType.swift */,
-				45AD175825938A4D00A096A0 /* TutorialItemViewBuilder.swift */,
-				45AD175625938A4D00A096A0 /* TutorialSupportedLanguages.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		45AD175A25938A4D00A096A0 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				45AD175B25938A4D00A096A0 /* TutorialInMenuView.swift */,
-				45AD176325938A4D00A096A0 /* TutorialInMenuView.xib */,
-				45AD176225938A4D00A096A0 /* TutorialInMenuViewModel.swift */,
-				45AD175E25938A4D00A096A0 /* TutorialToolsView.swift */,
-				45AD175C25938A4D00A096A0 /* TutorialToolsView.xib */,
-				45AD175F25938A4D00A096A0 /* TutorialToolsViewModel.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		45AD176525938A4D00A096A0 /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				45AD176825938A4D00A096A0 /* LanguageAvailabilityType.swift */,
-				45AD176625938A4D00A096A0 /* TutorialAvailability.swift */,
-				45AD176925938A4D00A096A0 /* TutorialAvailabilityType.swift */,
-				45AD176725938A4D00A096A0 /* TutorialLanguageAvailability.swift */,
-			);
-			path = Services;
 			sourceTree = "<group>";
 		};
 		45AD176A25938A4D00A096A0 /* Tools */ = {
@@ -3732,41 +3823,9 @@
 		45AD180425938A4D00A096A0 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
-				45AD181725938A4D00A096A0 /* MenuView.swift */,
-				45AD180F25938A4D00A096A0 /* MenuView.xib */,
-				45AD180525938A4D00A096A0 /* MenuViewModel.swift */,
-				45AD180E25938A4D00A096A0 /* MenuViewModelType.swift */,
-				45AD180625938A4D00A096A0 /* Models */,
-				45AD181025938A4D00A096A0 /* Views */,
+				450E44372756B61900D4311E /* Presentation */,
 			);
 			path = Menu;
-			sourceTree = "<group>";
-		};
-		45AD180625938A4D00A096A0 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				45AD180B25938A4D00A096A0 /* MenuDataProvider.swift */,
-				45AD180D25938A4D00A096A0 /* MenuDataProviderType.swift */,
-				45AD180725938A4D00A096A0 /* MenuDataSource.swift */,
-				45AD180C25938A4D00A096A0 /* MenuItem.swift */,
-				45AD180925938A4D00A096A0 /* MenuItemId.swift */,
-				45AD180A25938A4D00A096A0 /* MenuSection.swift */,
-				45AD180825938A4D00A096A0 /* MenuSectionId.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		45AD181025938A4D00A096A0 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				45AD181525938A4D00A096A0 /* MenuCell.swift */,
-				45AD181625938A4D00A096A0 /* MenuCell.xib */,
-				45AD181325938A4D00A096A0 /* MenuCellViewModel.swift */,
-				45AD181125938A4D00A096A0 /* MenuSectionHeaderView.swift */,
-				45AD181225938A4D00A096A0 /* MenuSectionHeaderView.xib */,
-				45AD181425938A4D00A096A0 /* MenuSectionHeaderViewModel.swift */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		45AD181825938A4D00A096A0 /* ToolTraining */ = {
@@ -4006,7 +4065,6 @@
 				45AD188F25938A4E00A096A0 /* ToolsFlow.swift */,
 				45A3A0C526B0B497005DA490 /* TractFlow.swift */,
 				45A3A0C926B0BE50005DA490 /* TractFlowCompletedState.swift */,
-				45AD189425938A4E00A096A0 /* TutorialFlow.swift */,
 			);
 			path = Flows;
 			sourceTree = "<group>";
@@ -4019,6 +4077,7 @@
 				45AD18BC25938A4E00A096A0 /* ImageCatalog.swift */,
 				45BF6EBD27050D26003596A4 /* AnimationTransitions */,
 				45AD207125938B6A00A096A0 /* Common */,
+				450E441C27565D6F00D4311E /* Domain */,
 				45AD18B025938A4E00A096A0 /* Extensions */,
 				45AD18A125938A4E00A096A0 /* NavControllers */,
 				45AD18D725938A4E00A096A0 /* Protocols */,
@@ -4675,7 +4734,7 @@
 			children = (
 				45AD1EB225938A9800A096A0 /* UserAuthenticationType.swift */,
 				45AD1EB325938A9800A096A0 /* Models */,
-				45AD1EB525938A9800A096A0 /* TheKey */,
+				459C93AE27581FC4006207D2 /* Okta */,
 			);
 			path = UserAuthentication;
 			sourceTree = "<group>";
@@ -4683,17 +4742,10 @@
 		45AD1EB325938A9800A096A0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				45AD1EB425938A9800A096A0 /* UserAuthModel.swift */,
+				45E3FABD2759898200D0CAFA /* AuthUserModel.swift */,
+				45E3FABE2759898200D0CAFA /* AuthUserModelType.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		45AD1EB525938A9800A096A0 /* TheKey */ = {
-			isa = PBXGroup;
-			children = (
-				45AD1EB625938A9800A096A0 /* TheKeyUserAuthentication.swift */,
-			);
-			path = TheKey;
 			sourceTree = "<group>";
 		};
 		45AD1EB825938A9800A096A0 /* DeepLinkingService */ = {
@@ -5097,7 +5149,7 @@
 		45B59D7C242434F700F9D594 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				45FA6960242517590006878C /* MockSupportedLanguages.swift */,
+				450E442A275664B500D4311E /* MockTutorialSupportedLanguages.swift */,
 				45FA696B24251CA00006878C /* TutorialLanguageAvailabilityTests.swift */,
 			);
 			path = Services;
@@ -5625,15 +5677,18 @@
 		D115A65C2526580A007F11AD /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
-				D19EB5DD259BB39300685156 /* training_tip_callout.json */,
-				D19EB5DF259BB75900685156 /* training_tip_tips.json */,
 				45DEF22D2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json */,
-				D1B944E4259E58F5004641DB /* remote_share_active.json */,
-				D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */,
-				D115A65D25265813007F11AD /* share_tool_tutorial_mirrored.json */,
 				D188EA8027146AAF00B10ABA /* onboarding_distance.json */,
 				D188EA7F27146AAF00B10ABA /* onboarding_dog.json */,
 				D188EA7E27146AAF00B10ABA /* onboarding_two_dudes.json */,
+				D1B944E4259E58F5004641DB /* remote_share_active.json */,
+				D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */,
+				D115A65D25265813007F11AD /* share_tool_tutorial_mirrored.json */,
+				D19EB5DD259BB39300685156 /* training_tip_callout.json */,
+				D19EB5DF259BB75900685156 /* training_tip_tips.json */,
+				451A17502756C10400D35D78 /* tutorial_lessons.json */,
+				451A174F2756C10400D35D78 /* tutorial_screenshare.json */,
+				451A17512756C10400D35D78 /* tutorial_tooltip.json */,
 			);
 			path = Lottie;
 			sourceTree = "<group>";
@@ -5705,6 +5760,7 @@
 			isa = PBXGroup;
 			children = (
 				45E39EC227457856006A59E4 /* TutorialAssetContent.swift */,
+				450E442627565DCD00D4311E /* TutorialItem.swift */,
 				45AD175425938A4D00A096A0 /* TutorialItemType.swift */,
 			);
 			path = Models;
@@ -5836,6 +5892,7 @@
 				45EDBCEF27359CD70099495B /* Realm */,
 				45EDBCF127359CD70099495B /* RealmSwift */,
 				45E39EDB27457E0C006A59E4 /* Lottie */,
+				459C93A327581B23006207D2 /* OktaAuthentication */,
 			);
 			productName = godtools;
 			productReference = 4F5732891EA69CF00082035C /* godtools.app */;
@@ -5978,6 +6035,7 @@
 				45B248562734676F00B7AD5E /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */,
 				45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa" */,
 				45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				459C93A227581B23006207D2 /* XCRemoteSwiftPackageReference "okta-authentication-ios" */,
 			);
 			productRefGroup = 4F57328A1EA69CF00082035C /* Products */;
 			projectDirPath = "";
@@ -6013,7 +6071,6 @@
 			files = (
 				45AD1AD225938A4E00A096A0 /* OpenTutorialView.xib in Resources */,
 				45AD1AFC25938A4E00A096A0 /* MailView.xib in Resources */,
-				45AD1A9F25938A4E00A096A0 /* TutorialView.xib in Resources */,
 				451EBE3724AD968B00C4D6DD /* d84e2ee6bc7b949ac74213678a72487e511313579eeb6ace9f03364f31e41f19.jpg in Resources */,
 				45AD1AF725938A4E00A096A0 /* PlaygroundView.xib in Resources */,
 				4FAF20781F02933900C43AFC /* Localizable.strings in Resources */,
@@ -6021,12 +6078,12 @@
 				D188EA8227146AB000B10ABA /* onboarding_dog.json in Resources */,
 				45CB9F9F261F8BA80036BEB3 /* ToolsMenuToolbarView.xib in Resources */,
 				45AD1AC025938A4E00A096A0 /* LoadingToolView.xib in Resources */,
-				45AD1AAA25938A4E00A096A0 /* TutorialToolsView.xib in Resources */,
+				450E44542756B6E000D4311E /* MenuItemView.xib in Resources */,
 				45AD1AF525938A4E00A096A0 /* WebContentView.xib in Resources */,
 				4F57329A1EA69CF00082035C /* LaunchScreen.storyboard in Resources */,
 				45AD1AC825938A4E00A096A0 /* ToolsMenuView.xib in Resources */,
-				45AD1B4925938A4F00A096A0 /* MenuCell.xib in Resources */,
 				451EBE3324AD968B00C4D6DD /* 2351.zip in Resources */,
+				450E44482756B66300D4311E /* MenuView.xib in Resources */,
 				4556AECF23E22185002C15E8 /* SF-Pro-Text-Regular.otf in Resources */,
 				45AD1B0325938A4E00A096A0 /* ArticleCategoriesView.xib in Resources */,
 				45AD1BE225938A4F00A096A0 /* ProgressView.xib in Resources */,
@@ -6042,6 +6099,7 @@
 				455582E2269F2C1000C3FF14 /* TrainingTipView.xib in Resources */,
 				D1838479257E86B3004F5674 /* container in Resources */,
 				D13307262739C5950058450B /* OnboardingQuickStartView.xib in Resources */,
+				451A17522756C10400D35D78 /* tutorial_screenshare.json in Resources */,
 				1737DFDF22FDB48000223CB0 /* GoogleService-Info.plist in Resources */,
 				D188EA8327146AB000B10ABA /* onboarding_distance.json in Resources */,
 				D1330728273ABFF20058450B /* OnboardingQuickStartCell.xib in Resources */,
@@ -6052,6 +6110,7 @@
 				45CB9FA3261F8BA80036BEB3 /* ToolsMenuToolbarItemView.xib in Resources */,
 				451EBE2724AD968B00C4D6DD /* languages.json in Resources */,
 				455583FC269F2DA500C3FF14 /* MobileContentInputView.xib in Resources */,
+				451A17542756C10400D35D78 /* tutorial_tooltip.json in Resources */,
 				451EBE2D24AD968B00C4D6DD /* e999c849242ba4abf20560274f92dd6c77631992d10db0eca5515e80ffb431c6.jpg in Resources */,
 				D1330E0B27567874001623C2 /* SetupParallelLanguageView.xib in Resources */,
 				451EBE3924AD968B00C4D6DD /* 9a8cfa08121f0f0e78dbed54652c2c3f1d51c001a0b81dfdd092d378fd43633c.jpg in Resources */,
@@ -6086,6 +6145,7 @@
 				45558354269F2D1000C3FF14 /* LessonPageView.xib in Resources */,
 				451EBE3224AD968B00C4D6DD /* 86c8e65bddaa4b889e572aa89714ee846f27294abc62b69d291b52ea1cc05144.jpg in Resources */,
 				45AD1B5925938A4F00A096A0 /* AccountView.xib in Resources */,
+				451A17532756C10400D35D78 /* tutorial_lessons.json in Resources */,
 				451EBE2824AD968B00C4D6DD /* resources.json in Resources */,
 				4556AECE23E22185002C15E8 /* SF-Pro-Text-Light.otf in Resources */,
 				45BF6EBC27050A3F003596A4 /* TransparentModalView.xib in Resources */,
@@ -6093,13 +6153,11 @@
 				451EBE3124AD968B00C4D6DD /* 36ec96dc7e53cf2387e448a34740c599fe6fb3c51a597fc49667664ca2828e52.jpg in Resources */,
 				D163EA96254A00BE00BA4EA9 /* share_tool_tutorial_link.json in Resources */,
 				D1D56916270502B200BBE2A6 /* TutorialPagerView.xib in Resources */,
-				45AD1B4525938A4F00A096A0 /* MenuSectionHeaderView.xib in Resources */,
 				D105922E252FA2E700F120CA /* share_tool_tutorial_mirrored.json in Resources */,
 				451EBE3524AD968B00C4D6DD /* 2776.zip in Resources */,
 				45AD1BD625938A4F00A096A0 /* PageNavigationCollectionView.xib in Resources */,
 				45AD1B3625938A4F00A096A0 /* ChooseLanguageCell.xib in Resources */,
 				45AD1B2125938A4F00A096A0 /* LearnToShareToolCell.xib in Resources */,
-				45AD1B4325938A4F00A096A0 /* MenuView.xib in Resources */,
 				4556AECD23E22185002C15E8 /* SF-Pro-Display-Light.otf in Resources */,
 				45AD1B6525938A4F00A096A0 /* GlobalActivityCell.xib in Resources */,
 				45AD1AB825938A4E00A096A0 /* AllToolsView.xib in Resources */,
@@ -6111,10 +6169,12 @@
 				45558324269F2C7B00C3FF14 /* ToolPageView.xib in Resources */,
 				45AD1BD125938A4F00A096A0 /* LoadingView.xib in Resources */,
 				4513C2EE2704683400614F79 /* LessonEvaluationView.xib in Resources */,
+				450E444D2756B66300D4311E /* MenuSectionHeaderView.xib in Resources */,
 				451EBE2B24AD968B00C4D6DD /* e5dd66976d53a69bbd12867079750e14732c5112a254022c038738f7f12953a8.png in Resources */,
 				45AD1ABC25938A4E00A096A0 /* FavoritedToolsView.xib in Resources */,
 				451EBE2A24AD968B00C4D6DD /* a6765002e46cea44dc6245bcb842ce01a0134c147c47cf108134a4c4d1a5c129.jpg in Resources */,
 				D19EB5DE259BB39300685156 /* training_tip_callout.json in Resources */,
+				450E441827565D1C00D4311E /* TutorialView.xib in Resources */,
 				D19EB5E0259BB75900685156 /* training_tip_tips.json in Resources */,
 				4556AED823E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf in Resources */,
 				45CB9FA6261F8BA80036BEB3 /* ToolCell.xib in Resources */,
@@ -6128,7 +6188,6 @@
 				4556AED523E221FE002C15E8 /* AbyssinicaSIL-R.ttf in Resources */,
 				45B6480A25E581660098BAF1 /* (null) in Resources */,
 				45DEF22E2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json in Resources */,
-				45AD1AB125938A4E00A096A0 /* TutorialInMenuView.xib in Resources */,
 				457C8586242E50D70025E079 /* GoogleService-Info-Debug.plist in Resources */,
 				45CB9FFF261FB0BE0036BEB3 /* LessonListItemView.xib in Resources */,
 				45AD1B0825938A4E00A096A0 /* ArticlesView.xib in Resources */,
@@ -6234,7 +6293,6 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-godtools/Pods-godtools-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/AppAuth/AppAuth.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseABTesting/FirebaseABTesting.framework",
@@ -6244,24 +6302,19 @@
 				"${BUILT_PRODUCTS_DIR}/FirebaseInAppMessaging/FirebaseInAppMessaging.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseInstallations/FirebaseInstallations.framework",
 				"${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework",
-				"${BUILT_PRODUCTS_DIR}/GTMAppAuth/GTMAppAuth.framework",
-				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleDataTransport/GoogleDataTransport.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
-				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${BUILT_PRODUCTS_DIR}/SSZipArchive/SSZipArchive.framework",
 				"${BUILT_PRODUCTS_DIR}/SWXMLHash/SWXMLHash.framework",
 				"${BUILT_PRODUCTS_DIR}/SnowplowTracker/SnowplowTracker.framework",
 				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
 				"${BUILT_PRODUCTS_DIR}/TTTAttributedLabel/TTTAttributedLabel.framework",
-				"${BUILT_PRODUCTS_DIR}/TheKeyOAuthSwift/TheKeyOAuthSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 				"${BUILT_PRODUCTS_DIR}/youtube-ios-player-helper/youtube_ios_player_helper.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AppAuth.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseABTesting.framework",
@@ -6271,18 +6324,14 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseInAppMessaging.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseInstallations.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Fuzi.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMAppAuth.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleDataTransport.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SSZipArchive.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SWXMLHash.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnowplowTracker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TTTAttributedLabel.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TheKeyOAuthSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/youtube_ios_player_helper.framework",
 			);
@@ -6324,7 +6373,6 @@
 				45C93B31261D31D600592FFF /* WebArchiveUrl.swift in Sources */,
 				45AD1F7B25938A9800A096A0 /* SharedSessionType.swift in Sources */,
 				45C93AF6261D310900592FFF /* ArticleManifestDownloadArticlesReceipt.swift in Sources */,
-				45AD1B4825938A4F00A096A0 /* MenuCell.swift in Sources */,
 				D182CA232726E6E900ABAAC8 /* MobileContentButtonIcon.swift in Sources */,
 				45BD79CF26A20EEA0007426B /* TrainingTipModelType.swift in Sources */,
 				45AD1B4F25938A4F00A096A0 /* ToolTrainingViewModelType.swift in Sources */,
@@ -6342,9 +6390,10 @@
 				459C56D225FF954F00F15967 /* (null) in Sources */,
 				4543ACD226CB24500002F6F7 /* MultiplatformTipPage.swift in Sources */,
 				45AD1B6225938A4F00A096A0 /* GlobalActivityCell.swift in Sources */,
+				450E441627565D1C00D4311E /* GetTutorialUseCase.swift in Sources */,
 				455583D0269F2DA500C3FF14 /* MobileContentFormViewModelType.swift in Sources */,
 				45E39EC927457A14006A59E4 /* AnimatedView.swift in Sources */,
-				45AD1AB425938A4E00A096A0 /* TutorialLanguageAvailability.swift in Sources */,
+				450E444C2756B66300D4311E /* MenuSectionHeaderView.swift in Sources */,
 				4555840B269F2DA500C3FF14 /* MobileContentErrorView.swift in Sources */,
 				45AD1F9325938A9800A096A0 /* ResourcesApi.swift in Sources */,
 				45AD1EEA25938A9800A096A0 /* FontService.swift in Sources */,
@@ -6360,7 +6409,9 @@
 				455582E8269F2C1000C3FF14 /* TrainingPageViewModelType.swift in Sources */,
 				4559D67C270B5600006C015C /* LessonFeedbackHelpful.swift in Sources */,
 				455583D7269F2DA500C3FF14 /* MobileContentTabsView.swift in Sources */,
+				450E441727565D1C00D4311E /* TutorialModel.swift in Sources */,
 				455583CC269F2DA500C3FF14 /* MobileContentPagePositionsType.swift in Sources */,
+				450E44572756B6FC00D4311E /* MenuItemViewModelType.swift in Sources */,
 				45AD1F6D25938A9800A096A0 /* LanguageSettingsService.swift in Sources */,
 				45DC914D26A6112A006BDBD0 /* MobileContentStyles.swift in Sources */,
 				453F0B5526EA274200436EE4 /* MultiplatformContentMultiSelect.swift in Sources */,
@@ -6381,6 +6432,7 @@
 				45A5200A26C4746F009B68D4 /* MultiplatformLessonPage.swift in Sources */,
 				45AD1FFB25938A9800A096A0 /* DetermineNewUserIfPrimaryLanguageSet.swift in Sources */,
 				455583ED269F2DA500C3FF14 /* MobileContentSpacerViewModel.swift in Sources */,
+				450E442527565D7000D4311E /* TutorialSupportedLanguagesType.swift in Sources */,
 				45B6480B25E581660098BAF1 /* (null) in Sources */,
 				45EC429B272C87430052F2AA /* PassthroughValue.swift in Sources */,
 				45AD1F9925938A9800A096A0 /* RealmResource.swift in Sources */,
@@ -6391,8 +6443,8 @@
 				45AD1B7325938A4F00A096A0 /* OnboardingTutorialItemsRepository.swift in Sources */,
 				45BD7A5326A21FDA0007426B /* HeadingNode.swift in Sources */,
 				45C93AE6261D310900592FFF /* ArticleAemRepository.swift in Sources */,
+				451A17562756C5B400D35D78 /* MenuSectionHeaderViewModelType.swift in Sources */,
 				45AD1B2E25938A4F00A096A0 /* LanguageSettingsViewModel.swift in Sources */,
-				45AD1B3D25938A4F00A096A0 /* MenuItemId.swift in Sources */,
 				45AD1F6725938A9800A096A0 /* ToolTrainingTipsOnboardingViewsUserDefaultsCache.swift in Sources */,
 				45AD202025938A9800A096A0 /* RequestReceiptContainer.swift in Sources */,
 				45AD209825938C4900A096A0 /* GlobalActivityServices.swift in Sources */,
@@ -6406,7 +6458,7 @@
 				45BD7A4126A21FDA0007426B /* ContentSpacerNode.swift in Sources */,
 				45AD1FF325938A9800A096A0 /* DeviceAttachmentBanners.swift in Sources */,
 				45714ACB262100C800EF41FB /* LessonProgressView.swift in Sources */,
-				45AD1B4225938A4F00A096A0 /* MenuViewModelType.swift in Sources */,
+				450E44472756B66300D4311E /* MenuViewModelType.swift in Sources */,
 				45558404269F2DA500C3FF14 /* MobileContentPagesViewModelType.swift in Sources */,
 				45AD1B3325938A4F00A096A0 /* LanguageSettingsView.swift in Sources */,
 				45BD7A7226A235F60007426B /* MobileContentRendererPageViewFactoriesType.swift in Sources */,
@@ -6420,14 +6472,12 @@
 				45BEC53026A604E4005D8CA1 /* MobileContentSpacerMode.swift in Sources */,
 				45AD1BA925938A4F00A096A0 /* ToolsFlow.swift in Sources */,
 				455583E7269F2DA500C3FF14 /* MobileContentButtonView.swift in Sources */,
-				45AD1AA025938A4E00A096A0 /* TutorialViewModel.swift in Sources */,
 				D1DD79FF26690CBA000F1351 /* TrackActionModel.swift in Sources */,
 				45BD79DB26A20EEA0007426B /* ContentLabelModelType.swift in Sources */,
 				45AD21432593A49900A096A0 /* ShareToolRemoteSessionURLView.swift in Sources */,
 				D1D5691E270637AB00BBE2A6 /* OnboardingTutorialIntroViewModel.swift in Sources */,
 				D1AC148F274C1AA8003510AC /* OnboardingQuickStartCellViewModel.swift in Sources */,
 				45AD1B5125938A4F00A096A0 /* ToolTrainingTipView.swift in Sources */,
-				45AD1AA625938A4E00A096A0 /* CustomTutorialViewId.swift in Sources */,
 				458EFEDC26B1D08C009EEB03 /* ToolBackButtonImageType.swift in Sources */,
 				45BD7A3326A21FDA0007426B /* TrainingTipNode.swift in Sources */,
 				45F5A046268A30250081C507 /* URL+DeepLinkScheme.swift in Sources */,
@@ -6435,6 +6485,7 @@
 				45AD21582593A4D900A096A0 /* ShareToolScreenTutorialView.swift in Sources */,
 				453AF09C26A87924002D4AB1 /* MultiplatformContentTabs.swift in Sources */,
 				45AD1F6925938A9800A096A0 /* LanguageDirection.swift in Sources */,
+				450E442227565D6F00D4311E /* GetTutorialIsAvailableUseCase.swift in Sources */,
 				45AD1F8125938A9800A096A0 /* FavoritedResourceTranslationDownloader.swift in Sources */,
 				45585BCF2687BB8F00A21D12 /* ToolDeepLinkParser.swift in Sources */,
 				45BD7A6E26A226160007426B /* MobileContentXmlParser.swift in Sources */,
@@ -6442,7 +6493,6 @@
 				45AD1B0425938A4E00A096A0 /* ShareArticleViewModel.swift in Sources */,
 				459D80BD26D04D9400EC97E9 /* MultiplatformImageAlignment.swift in Sources */,
 				455E799A26A6205800972EC0 /* MobileContentMultiplatformRenderer.swift in Sources */,
-				45AD1B3F25938A4F00A096A0 /* MenuDataProvider.swift in Sources */,
 				45AD1F8C25938A9800A096A0 /* AttachmentModel.swift in Sources */,
 				45AD21592593A4D900A096A0 /* ShareToolScreenTutorialViewModel.swift in Sources */,
 				45AD1AE825938A4E00A096A0 /* ShareToolScreenCustomTutorialViewBuilder.swift in Sources */,
@@ -6455,14 +6505,13 @@
 				45AD1B9825938A4F00A096A0 /* ToolNavBarViewModelType.swift in Sources */,
 				45AD1B1825938A4E00A096A0 /* ArticlesViewModelType.swift in Sources */,
 				45AD1AF125938A4E00A096A0 /* PrivacyPolicyWebContent.swift in Sources */,
-				D1C8FEBF2714EB8D0071BD07 /* TutorialItem.swift in Sources */,
 				45558333269F2C7B00C3FF14 /* ToolPageModalsView.swift in Sources */,
 				45BD79DA26A20EEA0007426B /* LabelModelType.swift in Sources */,
 				45AD1FF925938A9800A096A0 /* IsNewUserDefaultsCache.swift in Sources */,
-				45AD1AB525938A4E00A096A0 /* LanguageAvailabilityType.swift in Sources */,
 				45BD7A4C26A21FDA0007426B /* ContentParagraphNode.swift in Sources */,
 				45FF25E7260BED6F00D771B6 /* ToolViewModelType.swift in Sources */,
 				45AD1B3525938A4F00A096A0 /* ChooseLanguageCell.swift in Sources */,
+				450E44552756B6E000D4311E /* MenuItemViewModel.swift in Sources */,
 				455583FE269F2DA500C3FF14 /* MobileContentEmbeddedVideoView.swift in Sources */,
 				45AD1FBE25938A9800A096A0 /* TractRemoteSharePublisherNavigationEvent.swift in Sources */,
 				45AD206525938B1300A096A0 /* AlertMessage.swift in Sources */,
@@ -6471,7 +6520,6 @@
 				45AD1FD325938A9800A096A0 /* HTMLDocument+ResourceUrls.swift in Sources */,
 				45CB9FA0261F8BA80036BEB3 /* ToolsMenuToolbarViewModel.swift in Sources */,
 				45B6482025E58EE70098BAF1 /* (null) in Sources */,
-				45AD1AB025938A4E00A096A0 /* TutorialInMenuViewModel.swift in Sources */,
 				45AD21152593958E00A096A0 /* LanguageModelType.swift in Sources */,
 				45C93AF7261D310900592FFF /* CategoryArticleUUID.swift in Sources */,
 				45AD1BD925938A4F00A096A0 /* AlertMessageView.swift in Sources */,
@@ -6484,13 +6532,11 @@
 				453AF09626A87901002D4AB1 /* MultiplatformContentSection.swift in Sources */,
 				4526539226CC28EE00AC0FBD /* MultiplatformContent.swift in Sources */,
 				457579E326E96ABE00C898D2 /* MobileContentMultiSelectViewModelType.swift in Sources */,
-				45AD1B3A25938A4F00A096A0 /* MenuViewModel.swift in Sources */,
 				45558355269F2D1000C3FF14 /* LessonContentViewModelType.swift in Sources */,
 				45558330269F2C7B00C3FF14 /* ToolPageCardsViewModel.swift in Sources */,
 				45AD1FCE25938A9800A096A0 /* SHA256FileLocation.swift in Sources */,
 				45AD20C925938F3900A096A0 /* CallbackValueHandler.swift in Sources */,
 				45AD201725938A9800A096A0 /* ToolShortcutItem.swift in Sources */,
-				45AD1B3B25938A4F00A096A0 /* MenuDataSource.swift in Sources */,
 				45AD201F25938A9800A096A0 /* NoResponseSuccessType.swift in Sources */,
 				D1AF02F1273076E700BEC921 /* VideoPlayerViewModel.swift in Sources */,
 				45AD1B1A25938A4E00A096A0 /* InMemoryLearnToShareToolItems.swift in Sources */,
@@ -6512,6 +6558,7 @@
 				453AF09A26A87919002D4AB1 /* MultiplatformContentTab.swift in Sources */,
 				45AD1F8B25938A9800A096A0 /* AttachmentModelType.swift in Sources */,
 				455583F6269F2DA500C3FF14 /* MobileContentImageViewModelType.swift in Sources */,
+				450E441A27565D1C00D4311E /* TutorialViewModelType.swift in Sources */,
 				453AF0A826A87A9B002D4AB1 /* MultiplatformTrainingTip.swift in Sources */,
 				455583DA269F2DA500C3FF14 /* MobileContentAccordionView.swift in Sources */,
 				45BD7A4726A21FDA0007426B /* CardNode.swift in Sources */,
@@ -6539,6 +6586,7 @@
 				D1D5691C270636A600BBE2A6 /* OnboardingTutorialIntroViewModelType.swift in Sources */,
 				45AD205D25938AC300A096A0 /* AnalyticsContainer.swift in Sources */,
 				D1878BC42719BCE500557E0A /* OnboardingTutorialItemsRepositoryType.swift in Sources */,
+				450E44532756B6E000D4311E /* MenuItemView.swift in Sources */,
 				45AD1B5725938A4F00A096A0 /* AccountItem.swift in Sources */,
 				45BD7A5126A21FDA0007426B /* ContentButtonNode.swift in Sources */,
 				456E504325D0CEEE0075FF6A /* URL+DeepLinkHost.swift in Sources */,
@@ -6549,7 +6597,6 @@
 				45CB9FFD261FB0BE0036BEB3 /* LessonListItemViewModel.swift in Sources */,
 				45AD200D25938A9800A096A0 /* TranslationsApiType.swift in Sources */,
 				45AD1ACB25938A4E00A096A0 /* FavoritingToolMessageView.swift in Sources */,
-				45AD1AA125938A4E00A096A0 /* TutorialItemProvider.swift in Sources */,
 				458EFECF26B0FAC7009EEB03 /* ToolDeepLink.swift in Sources */,
 				D119788F271A090400E08580 /* TutorialPagerViewModel.swift in Sources */,
 				45AD1B0525938A4E00A096A0 /* ArticlesErrorMessage.swift in Sources */,
@@ -6559,6 +6606,7 @@
 				45AD1F9025938A9800A096A0 /* TranslationModel.swift in Sources */,
 				45B6480925E581660098BAF1 /* (null) in Sources */,
 				45558407269F2DA500C3FF14 /* MobileContentPagesViewModel.swift in Sources */,
+				45E3FAC02759898200D0CAFA /* AuthUserModelType.swift in Sources */,
 				455582E1269F2C1000C3FF14 /* TrainingViewFactory.swift in Sources */,
 				45AD1F7A25938A9800A096A0 /* DeviceLanguage.swift in Sources */,
 				45AD1F7625938A9800A096A0 /* ViewedTrainingTipType.swift in Sources */,
@@ -6566,7 +6614,6 @@
 				453A93F72705FDB80046B4FC /* PrimaryEvaluationOptionState.swift in Sources */,
 				45AD1B2025938A4E00A096A0 /* LearnToShareToolCellViewModel.swift in Sources */,
 				45AD1BDB25938A4F00A096A0 /* ResponseErrorAlertMessage.swift in Sources */,
-				45AD1AA525938A4E00A096A0 /* TutorialSupportedLanguages.swift in Sources */,
 				45AD1F6825938A9800A096A0 /* LanguageDirectionService.swift in Sources */,
 				4526529E26A7339E00E703F7 /* MultiplatformHeading.swift in Sources */,
 				45BD79D426A20EEA0007426B /* ContentPlaceholderModelType.swift in Sources */,
@@ -6576,7 +6623,6 @@
 				45AD204F25938AC300A096A0 /* ExitLinkAnalytics.swift in Sources */,
 				45AD204E25938AC300A096A0 /* TrackActionAnalytics.swift in Sources */,
 				45A3E72626C59D9900A908D4 /* MultiplatformManifestResource.swift in Sources */,
-				45AD1BAE25938A4F00A096A0 /* TutorialFlow.swift in Sources */,
 				45558400269F2DA500C3FF14 /* MobileContentEmbeddedVideoViewModelType.swift in Sources */,
 				45558339269F2C7B00C3FF14 /* ToolPageHeroViewModelType.swift in Sources */,
 				455583E9269F2DA500C3FF14 /* MobileContentButtonViewModel.swift in Sources */,
@@ -6590,6 +6636,7 @@
 				456E504C25D0CF7E0075FF6A /* DeepLinkParserType.swift in Sources */,
 				45585BD02687BB8F00A21D12 /* ArticleDeepLinkParser.swift in Sources */,
 				45AD1F9525938A9800A096A0 /* DownloadResourceTranslationsReceipts.swift in Sources */,
+				45051209275AA7260081BF56 /* MobileContentParagraphViewModelType.swift in Sources */,
 				D182CA1E2721943900ABAAC8 /* TutorialPagerAnalytics.swift in Sources */,
 				45BD7A4826A21FDA0007426B /* ContentPlaceholderNode.swift in Sources */,
 				45BD79C326A20EEA0007426B /* HeadingModelType.swift in Sources */,
@@ -6614,7 +6661,6 @@
 				4555849A269F2F9E00C3FF14 /* TrainingTipEvent.swift in Sources */,
 				453AF0AA26A87DC3002D4AB1 /* MultiplatformContentHeader.swift in Sources */,
 				455583F1269F2DA500C3FF14 /* MobileContentTabView.swift in Sources */,
-				45AD1B4625938A4F00A096A0 /* MenuCellViewModel.swift in Sources */,
 				45BD79DD26A20EEA0007426B /* HeaderModelType.swift in Sources */,
 				45AD205025938AC300A096A0 /* PageViewedAnalytics.swift in Sources */,
 				45AD1B2325938A4F00A096A0 /* LearnToShareToolViewModelType.swift in Sources */,
@@ -6630,21 +6676,21 @@
 				45AD1B3425938A4F00A096A0 /* LanguageSettingsViewModelType.swift in Sources */,
 				45AD1AC725938A4E00A096A0 /* FavoritedToolsView.swift in Sources */,
 				45AD1B4C25938A4F00A096A0 /* ToolTrainingViewModel.swift in Sources */,
-				45AD1B3E25938A4F00A096A0 /* MenuSection.swift in Sources */,
 				45BD79C626A20EEA0007426B /* TitleModelType.swift in Sources */,
 				45AD1F8D25938A9800A096A0 /* ResourcesPlusLatestTranslationsAndAttachmentsModel.swift in Sources */,
 				45AD201A25938A9800A096A0 /* NoClientApiErrorType.swift in Sources */,
 				453F0B6626EA6F3D00436EE4 /* MobileContentMultiplatformState.swift in Sources */,
 				45AD1FBA25938A9800A096A0 /* TractRemoteSharePublisher.swift in Sources */,
 				45AD1BC725938A4F00A096A0 /* UIView+Animations.swift in Sources */,
+				451A17602757B1FF00D35D78 /* MenuSection.swift in Sources */,
 				45C93AF8261D310900592FFF /* CategoryArticleModel.swift in Sources */,
 				45558406269F2DA500C3FF14 /* MobileContentPagesNavigationModel.swift in Sources */,
 				45C93AE4261D310900592FFF /* RealmArticleAemData.swift in Sources */,
+				450E444F2756B66300D4311E /* MenuView.swift in Sources */,
 				45BD79D026A20EEA0007426B /* ContentModelType.swift in Sources */,
 				45AD1F6225938A9800A096A0 /* ActionCableEventType.swift in Sources */,
 				45AD20EB259391B000A096A0 /* JsonServices.swift in Sources */,
 				45AD1F8F25938A9800A096A0 /* ResourceType.swift in Sources */,
-				45AD1B4725938A4F00A096A0 /* MenuSectionHeaderViewModel.swift in Sources */,
 				45AD201025938A9800A096A0 /* TranslationsFileCache.swift in Sources */,
 				45AD1B6425938A4F00A096A0 /* GlobalActivityHeaderViewModel.swift in Sources */,
 				45CBA01B261FB0EA0036BEB3 /* LessonViewModelType.swift in Sources */,
@@ -6667,7 +6713,6 @@
 				45AD1B1525938A4E00A096A0 /* ArticleCategoryCellViewModel.swift in Sources */,
 				4555832C269F2C7B00C3FF14 /* ToolPageCardBounceAnimation.swift in Sources */,
 				45AD1F7825938A9800A096A0 /* ViewedTrainingTipsService.swift in Sources */,
-				45AD1B4125938A4F00A096A0 /* MenuDataProviderType.swift in Sources */,
 				45C93AD9261D310900592FFF /* ArticleResource.swift in Sources */,
 				45AD20F82593950300A096A0 /* DownloadedLanguagesCache.swift in Sources */,
 				45AD1B0025938A4E00A096A0 /* ShareArticleViewModelType.swift in Sources */,
@@ -6724,12 +6769,14 @@
 				459C56D325FF954F00F15967 /* (null) in Sources */,
 				45D6D02F2708B8FF0063C38A /* LessonEvaluationRepository.swift in Sources */,
 				45BD7A6326A21FDA0007426B /* MobileContentXmlNode.swift in Sources */,
+				450E44462756B66300D4311E /* MenuViewModel.swift in Sources */,
 				45585BD12687BB8F00A21D12 /* LessonDeepLinkParser.swift in Sources */,
 				45AD1B6D25938A4F00A096A0 /* ToolDetailView.swift in Sources */,
 				45558498269F2F9E00C3FF14 /* MobileContentRendererPageModel.swift in Sources */,
 				45AD1AC925938A4E00A096A0 /* ToolsTableView.swift in Sources */,
 				45C93AE5261D310900592FFF /* RealmArticleJcrContent.swift in Sources */,
 				4599251B2704F36A008F7844 /* ChooseScaleSliderView.swift in Sources */,
+				45E3FABF2759898200D0CAFA /* AuthUserModel.swift in Sources */,
 				45AD1AFA25938A4E00A096A0 /* MailViewModelType.swift in Sources */,
 				45558341269F2C7B00C3FF14 /* ToolPageHeaderView.swift in Sources */,
 				45BD79CA26A20EEA0007426B /* ContentTabModelType.swift in Sources */,
@@ -6742,6 +6789,7 @@
 				45AD1AEF25938A4E00A096A0 /* ContactUsWebContent.swift in Sources */,
 				45AD1F7425938A9800A096A0 /* ViewedTrainingTipsCacheType.swift in Sources */,
 				45C93AE9261D310900592FFF /* ArticleAemDataParserError.swift in Sources */,
+				450E442727565DCD00D4311E /* TutorialItem.swift in Sources */,
 				45CB9FA7261F8BA80036BEB3 /* ToolCellViewModelType.swift in Sources */,
 				45BD79E126A20EEA0007426B /* AnalyticsAttributeModel.swift in Sources */,
 				45AD1B6625938A4F00A096A0 /* GlobalActivityHeaderView.swift in Sources */,
@@ -6756,12 +6804,14 @@
 				45AD20D425938F6800A096A0 /* RealmFollowUp.swift in Sources */,
 				45DC914B26A610B5006BDBD0 /* MobileContentXmlNodeRenderer.swift in Sources */,
 				45C93AE1261D310900592FFF /* ArticleAemCacheResult.swift in Sources */,
+				450E441527565D1C00D4311E /* TutorialFlow.swift in Sources */,
 				45BD79D726A20EEA0007426B /* ContentTabsModelType.swift in Sources */,
 				45AD1BD325938A4F00A096A0 /* LoadingView.swift in Sources */,
 				45CB9FA8261F8BA80036BEB3 /* ToolCell.swift in Sources */,
 				45AD1B1925938A4E00A096A0 /* LearnToShareToolViewModel.swift in Sources */,
 				45BD7A4F26A21FDA0007426B /* ContentTextNode.swift in Sources */,
 				455E798F26A6203F00972EC0 /* MultiplatformManifestAttributes.swift in Sources */,
+				45051207275AA71F0081BF56 /* MobileContentParagraphViewModel.swift in Sources */,
 				45558409269F2DA500C3FF14 /* MobileContentPageCell.swift in Sources */,
 				45AD1F8425938A9800A096A0 /* ResourcesDownloader.swift in Sources */,
 				45AD1F8625938A9800A096A0 /* SHA256FileModelType.swift in Sources */,
@@ -6779,6 +6829,7 @@
 				45AD1ABA25938A4E00A096A0 /* ToolsMenuViewModel.swift in Sources */,
 				45AD214C2593A4B700A096A0 /* ShareToolView.swift in Sources */,
 				45BD79C826A20EEA0007426B /* ContentAccordionModelType.swift in Sources */,
+				450E441427565D1C00D4311E /* TutorialFlowDiContainer.swift in Sources */,
 				45AD1F7D25938A9800A096A0 /* ResourcesCleanUpError.swift in Sources */,
 				45AD21042593953100A096A0 /* DownloadedLanguageModel.swift in Sources */,
 				45AD20CA25938F3900A096A0 /* CallbackHandler.swift in Sources */,
@@ -6826,10 +6877,8 @@
 				45AD1FB825938A9800A096A0 /* TractRemoteShareChannel.swift in Sources */,
 				45BD7A5526A21FDA0007426B /* MobileContentXmlNodeType.swift in Sources */,
 				453F0B5B26EA34CB00436EE4 /* ContentMultiSelectOptionModelType.swift in Sources */,
-				45AD1B4A25938A4F00A096A0 /* MenuView.swift in Sources */,
 				453AF09226A878DF002D4AB1 /* MultiplatformContentLink.swift in Sources */,
 				45AD1F2825938A9800A096A0 /* MobileContentManifestTipType.swift in Sources */,
-				45AD1AB625938A4E00A096A0 /* TutorialAvailabilityType.swift in Sources */,
 				45558334269F2C7B00C3FF14 /* ToolPageModalsViewModel.swift in Sources */,
 				45AD1B1325938A4E00A096A0 /* ArticleCellViewModel.swift in Sources */,
 				455583EE269F2DA500C3FF14 /* MobileContentNumberViewModel.swift in Sources */,
@@ -6854,6 +6903,7 @@
 				45AD20D325938F6800A096A0 /* FollowUpModel.swift in Sources */,
 				45AD1F7E25938A9800A096A0 /* ResourcesCleanUp.swift in Sources */,
 				45E39ED427457CB5006A59E4 /* MobileContentAnimationViewModel.swift in Sources */,
+				451A17612757B1FF00D35D78 /* MenuItem.swift in Sources */,
 				455583DB269F2DA500C3FF14 /* MobileContentAccordionViewModel.swift in Sources */,
 				45AD1F2E25938A9800A096A0 /* MobileContentXmlManifestResource.swift in Sources */,
 				45E39ED527457CB5006A59E4 /* MobileContentAnimationViewModelType.swift in Sources */,
@@ -6892,6 +6942,7 @@
 				455583CD269F2DA500C3FF14 /* MobileContentPageView.swift in Sources */,
 				D133071A273989750058450B /* OnboardingQuickStartViewModelType.swift in Sources */,
 				45AD20B225938EE500A096A0 /* FileCache.swift in Sources */,
+				459C93B027581FD0006207D2 /* OktaUserAuthentication.swift in Sources */,
 				45BD79D526A20EEA0007426B /* ContentSectionModelType.swift in Sources */,
 				45AD1B1D25938A4E00A096A0 /* LearnToShareToolView.swift in Sources */,
 				D1A9CD9F27482CA800E25D3E /* SetupParallelLanguageView.swift in Sources */,
@@ -6926,19 +6977,20 @@
 				45558327269F2C7B00C3FF14 /* ToolPageCardViewModelType.swift in Sources */,
 				45558415269F2F6100C3FF14 /* MobileContentAnalyticsEvent.swift in Sources */,
 				D13307222739A5350058450B /* OnboardingQuickStartViewModel.swift in Sources */,
+				450E441B27565D1C00D4311E /* TutorialView.swift in Sources */,
 				45AD202B25938A9800A096A0 /* CardJumpUserDefaultsCache.swift in Sources */,
 				45AD1AD825938A4E00A096A0 /* ToolsMenuViewModelType.swift in Sources */,
+				451A175D2757B1FF00D35D78 /* MenuDataSource.swift in Sources */,
 				45AD1BB625938A4F00A096A0 /* LanguageViewModel.swift in Sources */,
 				45558402269F2DA500C3FF14 /* MobileContentBackgroundImageView.swift in Sources */,
+				45051205275AA7050081BF56 /* MobileContentParagraphView.swift in Sources */,
 				D1AC1493274C2542003510AC /* OnboardingFlowCompletedState.swift in Sources */,
-				45AD1B4025938A4F00A096A0 /* MenuItem.swift in Sources */,
 				45163635268B7F950010876B /* DeepLinkPathType.swift in Sources */,
 				45AD1F9D25938A9800A096A0 /* ResourcesCache.swift in Sources */,
 				D1FF263825BA0C0E00C825DB /* FirebaseInAppMessagingType.swift in Sources */,
 				45AD1AEB25938A4E00A096A0 /* WebContentViewModelType.swift in Sources */,
 				45AD1F5F25938A9800A096A0 /* WebSocketChannelSubscriberType.swift in Sources */,
 				45AD223C2593C90000A096A0 /* CrashReportingType.swift in Sources */,
-				45AD1AA225938A4E00A096A0 /* TutorialItemProviderType.swift in Sources */,
 				45AD1B1225938A4E00A096A0 /* ArticleCategoryCellViewModelType.swift in Sources */,
 				D1FF263E25BA0C1C00C825DB /* FirebaseInAppMessaging.swift in Sources */,
 				45BD79D126A20EEA0007426B /* CallToActionModelType.swift in Sources */,
@@ -6962,10 +7014,9 @@
 				45AD20B125938EE500A096A0 /* FileCacheLocationType.swift in Sources */,
 				45AD1BAF25938A4F00A096A0 /* OnboardingFlow.swift in Sources */,
 				45F5A044268A2F010081C507 /* DeepLinkSchemeType.swift in Sources */,
-				45AD1AA425938A4E00A096A0 /* SupportedLanguagesType.swift in Sources */,
 				4513C2EC2704681F00614F79 /* LessonEvaluationViewModelType.swift in Sources */,
 				455583D6269F2DA500C3FF14 /* MobileContentTabsViewModel.swift in Sources */,
-				45AD1AAD25938A4E00A096A0 /* TutorialToolsViewModel.swift in Sources */,
+				450E442327565D6F00D4311E /* TutorialLanguageAvailability.swift in Sources */,
 				45AD1B3225938A4F00A096A0 /* ChooseLanguageViewModelType.swift in Sources */,
 				45D6D02E2708B8FF0063C38A /* RealmLessonEvaluation.swift in Sources */,
 				45AD1B2F25938A4F00A096A0 /* ChooseLanguageViewModel.swift in Sources */,
@@ -7008,7 +7059,6 @@
 				455583F7269F2DA500C3FF14 /* MobileContentLinkView.swift in Sources */,
 				45BD7A3626A21FDA0007426B /* CallToActionNode.swift in Sources */,
 				45E39ED927457D32006A59E4 /* LearnToShareToolAssetContent.swift in Sources */,
-				45AD1AA925938A4E00A096A0 /* TutorialInMenuView.swift in Sources */,
 				45AD1B1C25938A4E00A096A0 /* LearnToShareToolItemsProviderType.swift in Sources */,
 				45BD7A3126A21FDA0007426B /* LabelNode.swift in Sources */,
 				456E504D25D0CF7E0075FF6A /* ParsedDeepLinkType.swift in Sources */,
@@ -7026,14 +7076,12 @@
 				453C385726CD730C0093F3B5 /* TipModelType.swift in Sources */,
 				45AD1F8A25938A9800A096A0 /* TranslationModelType.swift in Sources */,
 				45BEC53526A604E4005D8CA1 /* MobileContentBackgroundImageScale.swift in Sources */,
-				45AD1AB325938A4E00A096A0 /* TutorialAvailability.swift in Sources */,
 				45BD79CD26A20EEA0007426B /* BackgroundImageModelType.swift in Sources */,
 				45AD200125938A9800A096A0 /* ResourceViewModel.swift in Sources */,
 				455583DD269F2DA500C3FF14 /* MobileContentStackView.swift in Sources */,
 				4513C2E8270467F400614F79 /* LessonEvaluationView.swift in Sources */,
 				45CBA015261FB0E30036BEB3 /* LessonViewModel.swift in Sources */,
 				45AD1B6E25938A4F00A096A0 /* ToolDetailViewModelType.swift in Sources */,
-				45AD1AB225938A4E00A096A0 /* TutorialView.swift in Sources */,
 				45F506DA26A3822E00EC04A9 /* ManifestResourcesCacheType.swift in Sources */,
 				45558499269F2F9E00C3FF14 /* MobileContentRendererVersion.swift in Sources */,
 				45AD20A525938CF100A096A0 /* ConfigType.swift in Sources */,
@@ -7057,6 +7105,7 @@
 				45AD200C25938A9800A096A0 /* NoTranslationZipData.swift in Sources */,
 				45558352269F2D1000C3FF14 /* LessonPageView.swift in Sources */,
 				45AD1AF625938A4E00A096A0 /* PlaygroundViewModel.swift in Sources */,
+				450E444E2756B66300D4311E /* MenuSectionHeaderViewModel.swift in Sources */,
 				45AD1BA225938A4F00A096A0 /* FollowUp.swift in Sources */,
 				4555832A269F2C7B00C3FF14 /* ToolPageCardAnalyticsScreenName.swift in Sources */,
 				45AD1AD325938A4E00A096A0 /* OpenTutorialView.swift in Sources */,
@@ -7108,9 +7157,9 @@
 				45C93AED261D310900592FFF /* ArticleAemDataType.swift in Sources */,
 				45AD1F2D25938A9800A096A0 /* MobileContentXmlManifestAttributes.swift in Sources */,
 				45AD1B5F25938A4F00A096A0 /* AccountItemCellViewModel.swift in Sources */,
+				450E441927565D1C00D4311E /* TutorialViewModel.swift in Sources */,
 				45AD1AEA25938A4E00A096A0 /* WebContentViewModel.swift in Sources */,
 				45AD200025938A9800A096A0 /* ViewsService.swift in Sources */,
-				45AD200425938A9800A096A0 /* UserAuthModel.swift in Sources */,
 				45AD204D25938AC300A096A0 /* GoogleAdwordsAnalytics.swift in Sources */,
 				45AD20B025938EE500A096A0 /* FileCacheType.swift in Sources */,
 				4555840E269F2DA500C3FF14 /* MobileContentTextView.swift in Sources */,
@@ -7123,7 +7172,6 @@
 				45A73E4C25CF19E600B7533F /* IncomingDeepLinkType.swift in Sources */,
 				45AD1BB325938A4F00A096A0 /* FontLibrary.swift in Sources */,
 				458EFED726B1A1C5009EEB03 /* ToolDeepLinkResources.swift in Sources */,
-				45AD1B3C25938A4F00A096A0 /* MenuSectionId.swift in Sources */,
 				45AD1F2525938A9800A096A0 /* MobileContentManifestPageType.swift in Sources */,
 				455583EB269F2DA500C3FF14 /* MobileContentSpacerViewModelType.swift in Sources */,
 				4581657626F4DD4D000D660F /* MobileContentRowView.swift in Sources */,
@@ -7174,7 +7222,6 @@
 				45BD7A7026A235780007426B /* MobileContentRendererPageViewFactories.swift in Sources */,
 				45BD79CE26A20EEA0007426B /* AnalyticsEventModelType.swift in Sources */,
 				45AD1BAD25938A4F00A096A0 /* MenuFlow.swift in Sources */,
-				45AD1B4425938A4F00A096A0 /* MenuSectionHeaderView.swift in Sources */,
 				45AD1FFC25938A9800A096A0 /* IsNewUserCacheType.swift in Sources */,
 				45558337269F2C7B00C3FF14 /* ToolPageCallToActionView.swift in Sources */,
 				45AD206C25938B4400A096A0 /* OnboardPrimaryButton.swift in Sources */,
@@ -7195,16 +7242,15 @@
 				45AD21032593953100A096A0 /* DownloadedLanguageModelType.swift in Sources */,
 				45BD7A4926A21FDA0007426B /* ContentInputNode.swift in Sources */,
 				4543ACCE26CAEE040002F6F7 /* MobileContentTextStyle.swift in Sources */,
-				45AD200525938A9800A096A0 /* TheKeyUserAuthentication.swift in Sources */,
 				45BEC53126A604E4005D8CA1 /* MobileContentTextAlignment.swift in Sources */,
 				45BD7A4B26A21FDA0007426B /* TipNode.swift in Sources */,
 				45AD1B1725938A4E00A096A0 /* ArticleCategoriesViewModelType.swift in Sources */,
 				45AD200A25938A9800A096A0 /* TranslationDownloaderError.swift in Sources */,
-				45AD1AAC25938A4E00A096A0 /* TutorialToolsView.swift in Sources */,
 				D1DD79FD26690CAB000F1351 /* TrackScreenModel.swift in Sources */,
 				D182CA2927286D3100ABAAC8 /* IconGravity.swift in Sources */,
 				45CB9F9E261F8BA80036BEB3 /* ToolsMenuToolbarViewModelType.swift in Sources */,
 				45AD1B2D25938A4F00A096A0 /* AboutTextCellViewModel.swift in Sources */,
+				45E3FAAD2759424900D0CAFA /* OktaAuthenticationConfiguration.swift in Sources */,
 				45AD1AD725938A4E00A096A0 /* ToolsViewModelType.swift in Sources */,
 				45BEC53626A604E4005D8CA1 /* MobileContentVideoProvider.swift in Sources */,
 				45C93AE8261D310900592FFF /* ArticleAemDataParser.swift in Sources */,
@@ -7220,12 +7266,12 @@
 				45A3A0C626B0B497005DA490 /* TractFlow.swift in Sources */,
 				45C93ADD261D310900592FFF /* ArticleAemWebArchiveFileCache.swift in Sources */,
 				45AD1BA825938A4F00A096A0 /* AppRootController.swift in Sources */,
-				45AD1AA725938A4E00A096A0 /* TutorialItemViewBuilder.swift in Sources */,
 				45AD1B0A25938A4E00A096A0 /* ShareArticleView.swift in Sources */,
 				45AD21422593A49900A096A0 /* ShareToolRemoteSessionURLViewModelType.swift in Sources */,
 				45AD1B6825938A4F00A096A0 /* AccountItemViewType.swift in Sources */,
 				45558416269F2F6100C3FF14 /* MobileContentAnalyticsSystem.swift in Sources */,
 				45BD79C926A20EEA0007426B /* ModalsModelType.swift in Sources */,
+				450E442427565D6F00D4311E /* TutorialSupportedLanguages.swift in Sources */,
 				45AD1FE925938A9800A096A0 /* LegacyRealmMigration.swift in Sources */,
 				45558326269F2C7B00C3FF14 /* ToolPageFormView.swift in Sources */,
 				45AD205825938AC300A096A0 /* FirebaseAnalytics.swift in Sources */,
@@ -7241,18 +7287,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				45A45CEF2731B914005D4E74 /* MobileContentBackgroundImageScale.swift in Sources */,
-				45AD22D52593E5F900A096A0 /* TutorialLanguageAvailability.swift in Sources */,
-				45FA696F24251D360006878C /* MockSupportedLanguages.swift in Sources */,
-				45AD22D02593E57100A096A0 /* SupportedLanguagesType.swift in Sources */,
-				45AD22DA2593E60900A096A0 /* LanguageAvailabilityType.swift in Sources */,
 				45557AEA252D094100ACFA95 /* LocaleLocalizationBundleTests.swift in Sources */,
 				45A45CEC2731B77E005D4E74 /* MobileContentImageAlignment.swift in Sources */,
+				450E442D2756665C00D4311E /* TutorialLanguageAvailability.swift in Sources */,
 				45AD22DF2593E63D00A096A0 /* Locale+Extensions.swift in Sources */,
 				45BB7FB925F6BE76000FE44B /* LanguageDirection.swift in Sources */,
 				45A45CEE2731B8C9005D4E74 /* MobileContentBackgroundImageRendererType.swift in Sources */,
+				450E442B275664B500D4311E /* MockTutorialSupportedLanguages.swift in Sources */,
+				450E442E2756669B00D4311E /* TutorialSupportedLanguages.swift in Sources */,
 				45FA696C24251CA00006878C /* TutorialLanguageAvailabilityTests.swift in Sources */,
+				450E442C2756657E00D4311E /* TutorialSupportedLanguagesType.swift in Sources */,
 				45A45CF02731B946005D4E74 /* MobileContentBackgroundImageAlignment.swift in Sources */,
-				45AD22E42593E68D00A096A0 /* TutorialSupportedLanguages.swift in Sources */,
 				45267B7725F19709004DB4C4 /* MobileContentBackgroundImageRendererTests.swift in Sources */,
 				45A45CEB2731B77A005D4E74 /* MobileContentImageAlignmentType.swift in Sources */,
 				45A45CED2731B8C5005D4E74 /* MobileContentBackgroundImageRenderer.swift in Sources */,
@@ -7478,7 +7523,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 5.7.6;
+				MARKETING_VERSION = 5.7.7;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -7658,7 +7703,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 5.7.6;
+				MARKETING_VERSION = 5.7.7;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -7838,7 +7883,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 5.7.6;
+				MARKETING_VERSION = 5.7.7;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -8018,7 +8063,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 5.7.6;
+				MARKETING_VERSION = 5.7.7;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -8226,7 +8271,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 5.7.6;
+				MARKETING_VERSION = 5.7.7;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DRELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -8326,6 +8371,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		459C93A227581B23006207D2 /* XCRemoteSwiftPackageReference "okta-authentication-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CruGlobal/okta-authentication-ios.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		45B248562734676F00B7AD5E /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AppsFlyerSDK/AppsFlyerFramework.git";
@@ -8353,6 +8406,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		459C93A327581B23006207D2 /* OktaAuthentication */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 459C93A227581B23006207D2 /* XCRemoteSwiftPackageReference "okta-authentication-ios" */;
+			productName = OktaAuthentication;
+		};
 		45B248572734676F00B7AD5E /* AppsFlyerLib */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 45B248562734676F00B7AD5E /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */;

@@ -10,7 +10,7 @@ import Foundation
 
 class OpenTutorialViewModel: NSObject, OpenTutorialViewModelType {
     
-    private let tutorialAvailability: TutorialAvailabilityType
+    private let getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase
     private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
@@ -21,10 +21,10 @@ class OpenTutorialViewModel: NSObject, OpenTutorialViewModelType {
     let openTutorialTitle: String
     let hidesOpenTutorial: ObservableValue<AnimatableValue<Bool>>
     
-    required init(flowDelegate: FlowDelegate, tutorialAvailability: TutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase, openTutorialCalloutCache: OpenTutorialCalloutCacheType, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
-        self.tutorialAvailability = tutorialAvailability
+        self.getTutorialIsAvailableUseCase = getTutorialIsAvailableUseCase
         self.openTutorialCalloutCache = openTutorialCalloutCache
         self.localizationServices = localizationServices
         self.analytics = analytics
@@ -32,7 +32,7 @@ class OpenTutorialViewModel: NSObject, OpenTutorialViewModelType {
         showTutorialTitle = localizationServices.stringForMainBundle(key: "openTutorial.showTutorialLabel.text")
         openTutorialTitle = localizationServices.stringForMainBundle(key: "openTutorial.openTutorialButton.title")
         
-        let hidesOpenTutorialCallout: Bool = !tutorialAvailability.tutorialIsAvailable || openTutorialCalloutCache.openTutorialCalloutDisabled
+        let hidesOpenTutorialCallout: Bool = !getTutorialIsAvailableUseCase.getTutorialIsAvailable() || openTutorialCalloutCache.openTutorialCalloutDisabled
         hidesOpenTutorial = ObservableValue(value: AnimatableValue(value: hidesOpenTutorialCallout, animated: false))
         
         super.init()

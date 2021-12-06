@@ -37,22 +37,6 @@ extension UINavigationBar {
     
     private func internalSetupNavigationBarAppearance(backgroundColor: UIColor, controlColor: UIColor?, titleTextAttributes: [NSAttributedString.Key: Any]?, isTranslucent: Bool) {
     
-        shadowImage = UIImage()
-        
-        if isTranslucent {
-            
-            barTintColor = .clear
-            
-            let backgroundImage: UIImage? = backgroundColor == .clear ? UIImage() : UIImage.createImageWithColor(color: backgroundColor)
-            
-            setBackgroundImage(backgroundImage, for: .default)
-        }
-        else {
-           
-            barTintColor = backgroundColor
-            setBackgroundImage(nil, for: .default)
-        }
-        
         self.isTranslucent = isTranslucent
         
         if let controlColor = controlColor {
@@ -80,7 +64,7 @@ extension UINavigationBar {
                 appearance.backgroundColor = backgroundColor
             }
             
-            appearance.shadowImage = UIImage()
+            appearance.shadowColor = .clear
             
             if let titleTextAttributes = titleTextAttributes, !titleTextAttributes.isEmpty {
                 appearance.titleTextAttributes = titleTextAttributes
@@ -88,6 +72,24 @@ extension UINavigationBar {
             
             standardAppearance = appearance
             scrollEdgeAppearance = appearance
+        }
+        else {
+            
+            if isTranslucent {
+                
+                barTintColor = .clear
+                
+                let backgroundImage: UIImage? = backgroundColor == .clear ? UIImage() : UIImage.createImageWithColor(color: backgroundColor)
+                
+                setBackgroundImage(backgroundImage, for: .default)
+            }
+            else {
+               
+                barTintColor = backgroundColor
+                setBackgroundImage(nil, for: .default)
+            }
+            
+            shadowImage = UIImage()
         }
     }
 }

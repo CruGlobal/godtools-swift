@@ -48,7 +48,7 @@ class AppFlow: NSObject, Flow {
         super.init()
         
         rootController.view.frame = UIScreen.main.bounds
-        rootController.view.backgroundColor = UIColor.white
+        rootController.view.backgroundColor = .clear
         
         navigationController.view.backgroundColor = .white
         navigationController.setNavigationBarHidden(true, animated: false)
@@ -170,7 +170,7 @@ class AppFlow: NSObject, Flow {
                 appLaunchedFromDeepLink = nil
                 navigate(step: .deepLink(deepLinkType: deepLink))
             }
-            else if appDiContainer.onboardingTutorialAvailability.onboardingTutorialIsAvailable {
+            else if appDiContainer.getOnboardingTutorialAvailability().onboardingTutorialIsAvailable {
                 
                 navigate(step: .showOnboardingTutorial(animated: false))
             }
@@ -180,6 +180,8 @@ class AppFlow: NSObject, Flow {
             }
             
             loadInitialData()
+            
+            appDiContainer.userAuthentication.refreshAuthenticationIfAvailable()
             
         case .appLaunchedFromBackgroundState:
             
@@ -201,6 +203,8 @@ class AppFlow: NSObject, Flow {
                     
                     resetFlowToToolsFlow(animatedDismissal: false, startingToolbarItem: nil, didFinishSetNavigationStack: nil)
                     loadInitialData()
+                    
+                    appDiContainer.userAuthentication.refreshAuthenticationIfAvailable()
                     
                     UIView.animate(withDuration: 0.4, delay: 1.5, options: .curveEaseOut, animations: {
                         loadingView.alpha = 0

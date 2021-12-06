@@ -19,6 +19,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
+    static func setWindowBackgroundColorForStatusBarColor(color: UIColor) {
+        (UIApplication.shared.delegate as? AppDelegate)?.window?.backgroundColor = color
+    }
+    
     override init() {
         
         appDiContainer = AppDiContainer(appDeepLinkingService: appDeepLinkingService)
@@ -80,7 +84,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppEvents.activateApp()
         
         appDiContainer.analytics.appsFlyerAnalytics.trackAppLaunch()
-        appDiContainer.analytics.firebaseAnalytics.fetchAttributesThenSetUserId()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -182,13 +185,7 @@ extension AppDelegate {
         guard let url = userActivity.webpageURL else {
             return false
         }
-        
-        if url.containsDeepLinkHost(deepLinkHost: .godToolsApp), url.path.contains("auth") {
-            if let theKeyUserAuthentication = appDiContainer.userAuthentication as? TheKeyUserAuthentication {
-                return theKeyUserAuthentication.canResumeAuthorizationFlow(url: url)
-            }
-        }
-           
+          
         let deepLinkHandled: Bool = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
         
         if deepLinkHandled {

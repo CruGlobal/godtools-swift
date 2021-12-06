@@ -10,7 +10,7 @@ import Foundation
 
 class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
         
-    private let tutorialAvailability: TutorialAvailabilityType
+    private let getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase
     private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     
     private weak var flowDelegate: FlowDelegate?
@@ -31,7 +31,7 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     let didEndRefreshing: Signal = Signal()
     
-    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, deviceAttachmentBanners: DeviceAttachmentBanners, analytics: AnalyticsContainer, tutorialAvailability: TutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType) {
+    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, deviceAttachmentBanners: DeviceAttachmentBanners, analytics: AnalyticsContainer, getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase, openTutorialCalloutCache: OpenTutorialCalloutCacheType) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
@@ -40,7 +40,7 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
         self.favoritedResourcesCache = favoritedResourcesCache
         self.deviceAttachmentBanners = deviceAttachmentBanners
         self.analytics = analytics
-        self.tutorialAvailability = tutorialAvailability
+        self.getTutorialIsAvailableUseCase = getTutorialIsAvailableUseCase
         self.openTutorialCalloutCache = openTutorialCalloutCache
         
         super.init()
@@ -146,7 +146,7 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
         
         return OpenTutorialViewModel(
             flowDelegate: getFlowDelegate(),
-            tutorialAvailability: tutorialAvailability,
+            getTutorialIsAvailableUseCase: getTutorialIsAvailableUseCase,
             openTutorialCalloutCache: openTutorialCalloutCache,
             localizationServices: localizationServices,
             analytics: analytics

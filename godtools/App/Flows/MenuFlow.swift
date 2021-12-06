@@ -30,7 +30,7 @@ class MenuFlow: Flow {
         navigationController.setNavigationBarHidden(false, animated: false)
         
         navigationController.navigationBar.setupNavigationBarAppearance(
-            backgroundColor: ColorPalette.gtBlue.color,
+            backgroundColor: ColorPalette.primaryNavBar.color,
             controlColor: .white,
             titleFont: fontService.getFont(size: 17, weight: .semibold),
             titleColor: .white,
@@ -40,13 +40,12 @@ class MenuFlow: Flow {
         let viewModel = MenuViewModel(
             flowDelegate: self,
             config: appDiContainer.config,
-            menuDataProvider: MenuDataProvider(localizationServices: appDiContainer.localizationServices),
             deviceLanguage: appDiContainer.deviceLanguage,
-            tutorialAvailability: appDiContainer.tutorialAvailability,
             openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache,
             userAuthentication: appDiContainer.userAuthentication,
             localizationServices: appDiContainer.localizationServices,
-            analytics: appDiContainer.analytics
+            analytics: appDiContainer.analytics,
+            getTutorialIsAvailableUseCase: appDiContainer.getTutorialIsAvailableUseCase()
         )
         let view = MenuView(viewModel: viewModel)
         
@@ -99,7 +98,7 @@ class MenuFlow: Flow {
         case .myAccountTappedFromMenu:
             
             let viewModel = AccountViewModel(
-                loginClient: appDiContainer.loginClient,
+                userAuthentication: appDiContainer.userAuthentication,
                 globalActivityServices: appDiContainer.globalActivityServices,
                 localizationServices: appDiContainer.localizationServices,
                 analytics: appDiContainer.analytics
@@ -205,25 +204,7 @@ class MenuFlow: Flow {
             let copyrightInfoWebContent = CopyrightInfoWebContent(localizationServices: appDiContainer.localizationServices)
             
             navigateToWebContentView(webContent: copyrightInfoWebContent)
-            
-        case .logoutTappedFromMenu(let logoutHandler):
-            
-            let localizationServices: LocalizationServices = appDiContainer.localizationServices
-            
-            let viewModel = AlertMessageViewModel(
-                title: "Proceed with GodTools logout?",
-                message: "You are about to logout of your GodTools account",
-                cancelTitle: localizationServices.stringForMainBundle(key: "cancel"),
-                acceptTitle: localizationServices.stringForMainBundle(key: "OK"),
-                acceptHandler: logoutHandler
-            )
-            let view = AlertMessageView(viewModel: viewModel)
-            
-            navigationController.present(view.controller, animated: true, completion: nil)
-        
-        case .playgroundTappedFromMenu:
-            break
-            
+                        
         default:
             break
         }

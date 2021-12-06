@@ -28,7 +28,7 @@ class TutorialLanguageAvailabilityTests: XCTestCase {
         
         let deviceEnglishLanguage: Locale = Locale(identifier: "en")
         
-        let supportedLangauges = MockSupportedLanguages(
+        let supportedLangauges = MockTutorialSupportedLanguages(
             languages: [
                 Locale(identifier: "en"),
                 Locale(identifier: "es"),
@@ -56,7 +56,7 @@ class TutorialLanguageAvailabilityTests: XCTestCase {
             Locale(identifier: "zh-Hans-HK")
         ]
         
-        let supportedLangauges = MockSupportedLanguages(
+        let supportedLangauges = MockTutorialSupportedLanguages(
             languages: [
                 Locale(identifier: "zh-Hans")
             ]
@@ -84,7 +84,7 @@ class TutorialLanguageAvailabilityTests: XCTestCase {
             Locale(identifier: "zh-Hant-HK")
         ]
         
-        let supportedLangauges = MockSupportedLanguages(
+        let supportedLangauges = MockTutorialSupportedLanguages(
             languages: [
                 Locale(identifier: "zh-Hans")
             ]
@@ -104,7 +104,7 @@ class TutorialLanguageAvailabilityTests: XCTestCase {
         
         let deviceLanguage: Locale = Locale(identifier: "en-FR")
         
-        let supportedLangauges = MockSupportedLanguages(
+        let supportedLangauges = MockTutorialSupportedLanguages(
             languages: [
                 Locale(identifier: "en")
             ]
@@ -121,7 +121,7 @@ class TutorialLanguageAvailabilityTests: XCTestCase {
         
         let deviceLanguage: Locale = Locale(identifier: "en-CA")
         
-        let supportedLangauges = MockSupportedLanguages(
+        let supportedLangauges = MockTutorialSupportedLanguages(
             languages: [
                 Locale(identifier: "en-CA")
             ]
@@ -149,7 +149,7 @@ class TutorialLanguageAvailabilityTests: XCTestCase {
             Locale(identifier: "zh-Hant-HK")
         ]
         
-        let supportedLangauges = MockSupportedLanguages(
+        let supportedLangauges = MockTutorialSupportedLanguages(
             languages: [
                 Locale(identifier: "zh-Hans-HK")
             ]
@@ -172,7 +172,7 @@ class TutorialLanguageAvailabilityTests: XCTestCase {
             Locale(identifier: "zh-Hant-HK")
         ]
         
-        let supportedLangauges = MockSupportedLanguages(
+        let supportedLangauges = MockTutorialSupportedLanguages(
             languages: [
                 Locale(identifier: "zh-HK")
             ]
@@ -202,7 +202,7 @@ class TutorialLanguageAvailabilityTests: XCTestCase {
             Locale(identifier: "zh-Hant-MO")
         ]
         
-        let supportedLanguages = MockSupportedLanguages(
+        let supportedLanguages = MockTutorialSupportedLanguages(
             languages: [
                 Locale(identifier: "zh-HK")
             ]

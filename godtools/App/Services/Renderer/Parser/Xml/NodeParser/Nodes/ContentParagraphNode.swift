@@ -15,4 +15,8 @@ class ContentParagraphNode: MobileContentXmlNode, ContentParagraphModelType {
         
         super.init(xmlElement: xmlElement)
     }
+    
+    func watchVisibility(rendererState: MobileContentMultiplatformState, visibilityChanged: @escaping ((MobileContentVisibility) -> Void)) -> MobileContentFlowWatcherType {
+        fatalError("Xml rendering no longer supported. Using multiplatform parser.")
+    }
 }

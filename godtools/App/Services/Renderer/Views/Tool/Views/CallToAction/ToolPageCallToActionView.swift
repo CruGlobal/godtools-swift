@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ToolPageCallToActionViewDelegate: class {
+protocol ToolPageCallToActionViewDelegate: AnyObject {
     
     func toolPageCallToActionNextButtonTapped(callToActionView: ToolPageCallToActionView)
 }

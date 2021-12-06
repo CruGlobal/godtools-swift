@@ -71,10 +71,12 @@ class AccountView: UIViewController {
         
         title = viewModel.navTitle
         
-        viewModel.profileName.addObserver(self) { [weak self] (nameTuple: (name: String, animated: Bool)) in
-            self?.nameLabel.text = nameTuple.name
+        viewModel.profileName.addObserver(self) { [weak self] (animatableValue: AnimatableValue<String>) in
+            
+            self?.nameLabel.text = animatableValue.value
             self?.nameLabel.alpha = 1
-            if nameTuple.animated {
+            
+            if animatableValue.animated {
                 self?.nameLabel.alpha = 0
                 UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
                     self?.nameLabel.alpha = 1

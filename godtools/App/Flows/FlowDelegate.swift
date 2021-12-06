@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol FlowDelegate: class {
+protocol FlowDelegate: AnyObject {
     
     func navigate(step: FlowStep)
 }

@@ -7,10 +7,7 @@
 //
 
 import Foundation
-
-// TODO: Remove these imports once TheKeyOauthClient is replaced. ~Levi
-import TheKeyOAuthSwift
-import GTMAppAuth
+import OktaAuthentication
 
 class AppDiContainer {
         
@@ -36,7 +33,6 @@ class AppDiContainer {
     let config: ConfigType
     let crashReporting: CrashReportingType
     let userAuthentication: UserAuthenticationType
-    let loginClient: TheKeyOAuthClient
     let translationsFileCache: TranslationsFileCache
     let translationDownloader: TranslationDownloader
     let favoritedResourcesCache: FavoritedResourcesCache
@@ -68,10 +64,9 @@ class AppDiContainer {
         
         crashReporting = FirebaseCrashlyticsService()
         
-        userAuthentication = TheKeyUserAuthentication()
-        
-        loginClient = TheKeyOAuthClient.shared
-        
+        let oktaAuthentication: OktaAuthentication = OktaAuthenticationConfiguration().configureAndCreateNewOktaAuthentication(config: config)
+        userAuthentication = OktaUserAuthentication(oktaAuthentication: oktaAuthentication)
+                
         realmDatabase = RealmDatabase()
 
         languagesApi = LanguagesApi(config: config, sharedSession: sharedIgnoringCacheSession)
@@ -177,8 +172,8 @@ class AppDiContainer {
         let analyticsLoggingEnabled: Bool = config.build == .analyticsLogging
         analytics = AnalyticsContainer(
             appsFlyerAnalytics: AppsFlyerAnalytics(appsFlyer: appsFlyer, loggingEnabled: analyticsLoggingEnabled),
-            firebaseAnalytics: FirebaseAnalytics(config: config, keyAuthClient: loginClient, languageSettingsService: languageSettingsService, loggingEnabled: analyticsLoggingEnabled),
-            snowplowAnalytics: SnowplowAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: analyticsLoggingEnabled)
+            firebaseAnalytics: FirebaseAnalytics(config: config, userAuthentication: userAuthentication, languageSettingsService: languageSettingsService, loggingEnabled: analyticsLoggingEnabled),
+            snowplowAnalytics: SnowplowAnalytics(config: config, userAuthentication: userAuthentication, loggingEnabled: analyticsLoggingEnabled)
         )
                                                           
         openTutorialCalloutCache = OpenTutorialCalloutUserDefaultsCache()
@@ -252,6 +247,10 @@ class AppDiContainer {
         )
     }
     
+    func getTutorialIsAvailableUseCase() -> GetTutorialIsAvailableUseCase {
+        return GetTutorialIsAvailableUseCase(deviceLanguage: deviceLanguage)
+    }
+    
     func getTutorialVideoAnalytics() -> TutorialVideoAnalytics {
         return TutorialVideoAnalytics(
             trackActionAnalytics: analytics.trackActionAnalytics
@@ -274,6 +273,14 @@ class AppDiContainer {
     
     func getMobileContentNodeParser() -> MobileContentXmlNodeParser {
         return MobileContentXmlNodeParser()
+    }
+    
+    func getOnboardingTutorialAvailability() -> OnboardingTutorialAvailabilityType {
+        return OnboardingTutorialAvailability(
+            getTutorialIsAvailableUseCase: getTutorialIsAvailableUseCase(),
+            onboardingTutorialViewedCache: onboardingTutorialViewedCache,
+            isNewUserCache: isNewUserService.isNewUserCache
+        )
     }
     
     func getToolTrainingTipsOnboardingViews() -> ToolTrainingTipsOnboardingViewsService {
@@ -308,26 +315,10 @@ class AppDiContainer {
         return ExitLinkAnalytics(firebaseAnalytics: analytics.firebaseAnalytics)
     }
     
-    var onboardingTutorialAvailability: OnboardingTutorialAvailabilityType {
-        return OnboardingTutorialAvailability(
-            tutorialAvailability: tutorialAvailability,
-            onboardingTutorialViewedCache: onboardingTutorialViewedCache,
-            isNewUserCache: isNewUserService.isNewUserCache
-        )
-    }
-    
     var onboardingTutorialViewedCache: OnboardingTutorialViewedCacheType {
         return OnboardingTutorialViewedUserDefaultsCache()
     }
-    
-    var tutorialSupportedLanguages: SupportedLanguagesType {
-        return TutorialSupportedLanguages()
-    }
-    
-    var tutorialAvailability: TutorialAvailabilityType {
-        return TutorialAvailability(deviceLanguage: deviceLanguage, tutorialSupportedLanguages: tutorialSupportedLanguages)
-    }
-    
+        
     var tractRemoteShareSubscriber: TractRemoteShareSubscriber {
         let webSocket: WebSocketType = StarscreamWebSocket()
         return TractRemoteShareSubscriber(
@@ -358,9 +349,5 @@ class AppDiContainer {
     
     var learnToShareToolItemsProvider: LearnToShareToolItemsProviderType {
         return InMemoryLearnToShareToolItems(localization: localizationServices)
-    }
-    
-    var tutorialItemsProvider: TutorialItemProviderType {
-        return TutorialItemProvider(localizationServices: localizationServices, deviceLanguage: deviceLanguage)
     }
 }
