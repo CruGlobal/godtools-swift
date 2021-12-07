@@ -180,7 +180,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             if isScreenSharing && isShowingRootView {
                 
                 let acceptHandler = CallbackHandler { [weak self] in
-                    self?.homeTappedFromTool()
+                    self?.closeTool()
                 }
                 
                 let localizationServices: LocalizationServices = appDiContainer.localizationServices
@@ -198,7 +198,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
                 navigationController.present(view.controller, animated: true, completion: nil)
             }
             else {
-                homeTappedFromTool()
+                closeTool()
             }
             
         case .shareMenuTappedFromTool(let tractRemoteShareSubscriber, let tractRemoteSharePublisher, let resource, let selectedLanguage, let primaryLanguage, let parallelLanguage, let pageNumber):
@@ -244,7 +244,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
         }
     }
     
-    private func homeTappedFromTool() {
+    private func closeTool() {
         
         if isShowingRootView {
             flowDelegate?.navigate(step: .tractFlowCompleted(state: .userClosedTract))
