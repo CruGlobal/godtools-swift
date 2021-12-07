@@ -34,17 +34,22 @@ class MobileContentAnimationView: MobileContentView {
         
         // animatedView
         addSubview(animatedView)
-        animatedView.constrainEdgesToSuperview()
+        animatedView.translatesAutoresizingMaskIntoConstraints = false
+        animatedView.constrainEdgesToView(view: self)
+        
+        drawBorder(color: .blue)
         
         // touchAreaButton
         addSubview(touchAreaButton)
-        touchAreaButton.constrainEdgesToSuperview()
+        touchAreaButton.translatesAutoresizingMaskIntoConstraints = false
+        touchAreaButton.constrainEdgesToView(view: self)
         touchAreaButton.backgroundColor = .clear
     }
     
     private func setupBinding() {
         
         animatedView.configure(viewModel: viewModel.animatedViewModel)
+        animatedView.setAnimationContentMode(contentMode: .scaleAspectFill)
     }
     
     @objc private func touchAreaTapped() {
@@ -53,6 +58,9 @@ class MobileContentAnimationView: MobileContentView {
     }
     
     override var heightConstraintType: MobileContentViewHeightConstraintType {
-        return .setToAspectRatioOfProvidedSize(size: CGSize(width: 16, height: 9))
+        
+        let animationAssetSize: CGSize = viewModel.animatedViewModel.getAssetSize()
+        
+        return .setToAspectRatioOfProvidedSize(size: CGSize(width: animationAssetSize.width, height: animationAssetSize.height))
     }
 }

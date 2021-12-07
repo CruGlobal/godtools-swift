@@ -23,8 +23,12 @@ class AnimatedViewModel: AnimatedViewModelType {
         case .mainBundleJsonFile(let filename):
             animationData = Animation.named(filename, bundle: Bundle.main, subdirectory: nil, animationCache: nil)
         }
-        
+                
         self.autoPlay = autoPlay
         self.loop = loop
+    }
+    
+    func getAssetSize() -> CGSize {
+        return animationData?.size ?? .zero
     }
 }
