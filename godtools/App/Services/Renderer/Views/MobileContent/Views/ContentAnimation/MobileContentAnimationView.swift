@@ -36,9 +36,7 @@ class MobileContentAnimationView: MobileContentView {
         addSubview(animatedView)
         animatedView.translatesAutoresizingMaskIntoConstraints = false
         animatedView.constrainEdgesToView(view: self)
-        
-        drawBorder(color: .blue)
-        
+        s
         // touchAreaButton
         addSubview(touchAreaButton)
         touchAreaButton.translatesAutoresizingMaskIntoConstraints = false

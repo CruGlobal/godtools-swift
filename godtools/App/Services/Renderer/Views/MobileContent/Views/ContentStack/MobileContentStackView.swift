@@ -63,9 +63,7 @@ class MobileContentStackView: MobileContentView {
     override func renderChild(childView: MobileContentView) {
         
         super.renderChild(childView: childView)
-        
-        childView.drawBorder(color: .green)
-        
+                
         addChildView(childView: childView)
         
         if let accordionView = childView as? MobileContentAccordionView {
