@@ -134,7 +134,15 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
             }
         
         case .closeTappedFromLesson(let lesson, let highestPageNumberViewed):
-            flowDelegate?.navigate(step: .lessonFlowCompleted(state: .userClosedLesson(lesson: lesson, highestPageNumberViewed: highestPageNumberViewed)))
+            
+            let stackCount: Int = navigationController.viewControllers.count
+            
+            if stackCount == 1 {
+                flowDelegate?.navigate(step: .lessonFlowCompleted(state: .userClosedLesson(lesson: lesson, highestPageNumberViewed: highestPageNumberViewed)))
+            }
+            else {
+                navigationController.popViewController(animated: true)
+            }
             
         case .buttonWithUrlTappedFromMobileContentRenderer(let url, let exitLink):
             guard let webUrl = URL(string: url) else {
