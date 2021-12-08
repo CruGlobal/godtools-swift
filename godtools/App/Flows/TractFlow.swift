@@ -123,6 +123,10 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
         deepLinkingService.deepLinkObserver.removeObserver(self)
     }
     
+    private var isShowingRootView: Bool {
+        return navigationController.viewControllers.count == 1
+    }
+    
     private func configureNavigationBar(shouldAnimateNavigationBarHiddenState: Bool) {
         navigationController.setNavigationBarHidden(false, animated: shouldAnimateNavigationBarHiddenState)
     }
@@ -173,10 +177,10 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
         
         case .homeTappedFromTool(let isScreenSharing):
             
-            if isScreenSharing {
+            if isScreenSharing && isShowingRootView {
                 
                 let acceptHandler = CallbackHandler { [weak self] in
-                    self?.flowDelegate?.navigate(step: .tractFlowCompleted(state: .userClosedTract))
+                    self?.closeTool()
                 }
                 
                 let localizationServices: LocalizationServices = appDiContainer.localizationServices
@@ -194,7 +198,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
                 navigationController.present(view.controller, animated: true, completion: nil)
             }
             else {
-                flowDelegate?.navigate(step: .tractFlowCompleted(state: .userClosedTract))
+                closeTool()
             }
             
         case .shareMenuTappedFromTool(let tractRemoteShareSubscriber, let tractRemoteSharePublisher, let resource, let selectedLanguage, let primaryLanguage, let parallelLanguage, let pageNumber):
@@ -237,6 +241,16 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
         
         default:
             break
+        }
+    }
+    
+    private func closeTool() {
+        
+        if isShowingRootView {
+            flowDelegate?.navigate(step: .tractFlowCompleted(state: .userClosedTract))
+        }
+        else {
+            navigationController.popViewController(animated: true)
         }
     }
     
