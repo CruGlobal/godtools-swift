@@ -95,8 +95,6 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
     }
     
     func openSetupParallelLanguageifAvailable() {
-        if tutorialAvailability.tutorialIsAvailable {
-            flowDelegate?.navigate(step: .openSetupParallelLanguage)
-        }
+        flowDelegate?.navigate(step: .openSetupParallelLanguage)
     }
 }

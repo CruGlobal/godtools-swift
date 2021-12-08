@@ -56,7 +56,7 @@
                             <command title="Item 2" id="GST-ox-uMI"/>
                         </children>
                     </menu>
-                    <state key="normal" title="Button" image="button:siV-NL-Hvb:image" catalog="system">
+                    <state key="normal" title="Button" image="button:siV-NL-Hvb:image">
                         <color key="titleColor" red="0.3529411764705882" green="0.3529411764705882" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                 </button>
@@ -107,7 +107,7 @@
         </view>
     </objects>
     <resources>
-        <image name="button:siV-NL-Hvb:image" catalog="system" width="128" height="124">
+        <image name="button:siV-NL-Hvb:image" width="128" height="124">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0b3BYJG9iamVjdHMSAAGGoF8QD05T
 S2V5ZWRBcmNoaXZlctEICVRyb290gAGvEBELDBscIRkmKywzNjlDS0xQU1UkbnVsbNcNDg8QERITFBUW

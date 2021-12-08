@@ -44,6 +44,8 @@ class SetupParallelLanguageView: UIViewController {
         
         super.viewDidLoad()
         
+        selectLanguageButton.addTarget(self, action: #selector(handleSelectLanguageTapped), for: .touchUpInside)
+        
         yesButton.addTarget(self, action: #selector(handleYesTapped), for: .touchUpInside)
         
         noButton.addTarget(self, action: #selector(handleNoTapped), for: .touchUpInside)
@@ -105,6 +107,10 @@ class SetupParallelLanguageView: UIViewController {
         noButton.layer.cornerRadius = 6
         noButton.drawBorder(color: ColorPalette.gtBlue.color)
         noButton.layer.borderWidth = 1
+    }
+    
+    @objc func handleSelectLanguageTapped() {
+        viewModel.selectLanguageTapped()
     }
     
     @objc func handleCloseTapped(barButtonItem: UIBarButtonItem) {

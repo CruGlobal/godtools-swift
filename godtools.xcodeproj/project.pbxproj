@@ -5757,9 +5757,9 @@
 			isa = PBXGroup;
 			children = (
 				D1C8FEAB275E940A00C71E80 /* ParallelLanguageModal.swift */,
+				D1C8FEB1275EA1C500C71E80 /* ParallelLanguageModal.xib */,
 				D1C8FEAD275E95FA00C71E80 /* ParallelLanguageModalViewModelType.swift */,
 				D1C8FEAF275E9BBB00C71E80 /* ParallelLanguageModalViewModel.swift */,
-				D1C8FEB1275EA1C500C71E80 /* ParallelLanguageModal.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";

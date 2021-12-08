@@ -38,6 +38,10 @@ class SetupParallelLanguageViewModel: SetupParallelLanguageViewModelType {
         self.flowDelegate = flowDelegate
     }
     
+    func selectLanguageTapped() {
+        flowDelegate?.navigate(step: .selectLanguageTappedFromSetupParallelLanguage)
+    }
+    
     func closeButtonTapped() {
         flowDelegate?.navigate(step: .closeTappedFromSetupParallelLanguage)
     }

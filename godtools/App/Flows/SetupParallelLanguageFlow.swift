@@ -48,6 +48,12 @@ class SetupParallelLanguageFlow: Flow {
         
         switch step {
         
+        case .selectLanguageTappedFromSetupParallelLanguage:
+            presentParallelLanguageModal()
+        
+        case .languageSelectedFromSetupParallelLanguage:
+            navigationController.dismiss(animated: true, completion: nil)
+        
         case .closeTappedFromSetupParallelLanguage:
             flowDelegate?.navigate(step: .dismissSetupParallelLanguage)
         
@@ -60,6 +66,21 @@ class SetupParallelLanguageFlow: Flow {
         default:
             break
         }
+    }
+    
+    private func presentParallelLanguageModal() {
+        
+        let viewModel = ParallelLanguageModalViewModel(
+            flowDelegate: self,
+            dataDownloader: appDiContainer.initialDataDownloader,
+            languageSettingsService: appDiContainer.languageSettingsService,
+            localizationServices: appDiContainer.localizationServices
+        )
+        let view = ParallelLanguageModal(viewModel: viewModel)
+        
+        let modal = TransparentModalView(modalView: view)
+        
+        navigationController.present(modal, animated: true, completion: nil)
     }
 }
 

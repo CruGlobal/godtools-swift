@@ -8,17 +8,24 @@
 
 import UIKit
 
-class ParallelLanguageModal: UIViewController {
+class ParallelLanguageModal: UIView, NibBased {
     
     private let viewModel: ParallelLanguageModalViewModelType
-    
+        
     @IBOutlet weak private var languagesTableView: UITableView!
     
     required init(viewModel: ParallelLanguageModalViewModelType) {
         
         self.viewModel = viewModel
         
-        super.init(nibName: String(describing: ParallelLanguageModal.self), bundle: nil)
+        super.init(frame: UIScreen.main.bounds)
+        
+        loadNib()
+        setupLayout()
+        setupBinding()
+        
+        languagesTableView.delegate = self
+        languagesTableView.dataSource = self
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -29,19 +36,6 @@ class ParallelLanguageModal: UIViewController {
     deinit {
         
         print("x deinit: \(type(of: self))")
-    }
-    
-    override func viewDidLoad() {
-        
-        print("view didload: \(type(of: self))")
-        
-        super.viewDidLoad()
-        
-        setupLayout()
-        setupBinding()
-        
-        languagesTableView.delegate = self
-        languagesTableView.dataSource = self
     }
     
     private func setupLayout() {
@@ -96,5 +90,18 @@ extension ParallelLanguageModal: UITableViewDelegate, UITableViewDataSource {
         cell.selectionStyle = .none
         
         return cell
+    }
+}
+
+// MARK: - TransparentModalCustomView
+
+extension ParallelLanguageModal: TransparentModalCustomView {
+    
+    var view: UIView {
+        return self
+    }
+    
+    func transparentModalDidLayout() {
+        
     }
 }

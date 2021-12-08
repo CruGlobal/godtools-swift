@@ -12,23 +12,19 @@ class ParallelLanguageModalViewModel: NSObject, ParallelLanguageModalViewModelTy
     
     private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
-    private let downloadedLanguagesCache: DownloadedLanguagesCache
     private let localizationServices: LocalizationServices
-    private let analytics: AnalyticsContainer
     
     private weak var flowDelegate: FlowDelegate?
     
     let numberOfLanguages: ObservableValue<Int> = ObservableValue(value: 0)
     let selectedLanguageIndex: ObservableValue<Int?> = ObservableValue(value: nil)
     
-    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, downloadedLanguagesCache: DownloadedLanguagesCache, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
-        self.downloadedLanguagesCache = downloadedLanguagesCache
         self.localizationServices = localizationServices
-        self.analytics = analytics
         
         super.init()
         
@@ -136,7 +132,7 @@ class ParallelLanguageModalViewModel: NSObject, ParallelLanguageModalViewModelTy
         
         languageSettingsService.languageSettingsCache.cacheParallelLanguageId(languageId: selectedLanguage.id)
                 
-        flowDelegate?.navigate(step: .languageTappedFromChooseLanguage)
+        flowDelegate?.navigate(step: .languageSelectedFromSetupParallelLanguage)
     }
     
     func languageWillAppear(index: Int) -> ChooseLanguageCellViewModel {
