@@ -36,7 +36,7 @@ class SetupParallelLanguageFlow: Flow {
             isTranslucent: false
         )
         
-        let viewModel = SetupParallelLanguageViewModel(flowDelegate: self, localizationServices: appDiContainer.localizationServices)
+        let viewModel = SetupParallelLanguageViewModel(flowDelegate: self, localizationServices: appDiContainer.localizationServices, languageSettingsService: appDiContainer.languageSettingsService)
         
         let view = SetupParallelLanguageView(viewModel: viewModel)
                 

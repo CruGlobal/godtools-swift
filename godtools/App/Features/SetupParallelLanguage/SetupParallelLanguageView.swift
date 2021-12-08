@@ -59,12 +59,15 @@ class SetupParallelLanguageView: UIViewController {
         animatedView.configure(viewModel: viewModel.animatedViewModel)
         
         promptLabel.text = viewModel.promptText
-        
-        selectLanguageButton.setTitle(viewModel.languagePickerLabelText, for: .normal)
-        
+                
         yesButton.setTitle(viewModel.yesButtonText, for: .normal)
         
         noButton.setTitle(viewModel.noButtonText, for: .normal)
+        
+        viewModel.selectLanguageButtonText.addObserver(self) { [weak self] (buttonText: String) in
+            
+            self?.selectLanguageButton.setTitle(buttonText, for: .normal)
+        }
     }
     
     private func setupLayout() {

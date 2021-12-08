@@ -8,19 +8,26 @@
 
 import Foundation
 
-class SetupParallelLanguageViewModel: SetupParallelLanguageViewModelType {
+class SetupParallelLanguageViewModel: NSObject, SetupParallelLanguageViewModelType {
     
+    private let localizationServices: LocalizationServices
+    private let languageSettingsService: LanguageSettingsService
+
+    private weak var flowDelegate: FlowDelegate?
+
     let animatedViewModel: AnimatedViewModel
     let promptText: String
-    let languagePickerLabelText: String
+    let selectLanguageButtonText: ObservableValue<String> = ObservableValue(value: "")
     let yesButtonText: String
     let noButtonText: String
     let selectButtonText: String
     let getStartedButtonText: String
     
-    private weak var flowDelegate: FlowDelegate?
-    
-    required init (flowDelegate: FlowDelegate, localizationServices: LocalizationServices) {
+    required init (flowDelegate: FlowDelegate, localizationServices: LocalizationServices, languageSettingsService: LanguageSettingsService) {
+        
+        self.flowDelegate = flowDelegate
+        self.localizationServices = localizationServices
+        self.languageSettingsService = languageSettingsService
         
         animatedViewModel = AnimatedViewModel(
             animationDataResource: .mainBundleJsonFile(filename: "onboarding_two_dudes"),
@@ -29,13 +36,43 @@ class SetupParallelLanguageViewModel: SetupParallelLanguageViewModelType {
         )
         
         promptText = localizationServices.stringForMainBundle(key: "parellelLanguage.prompt")
-        languagePickerLabelText = localizationServices.stringForMainBundle(key: "parallelLanguage.languagePicker.title")
         yesButtonText = localizationServices.stringForMainBundle(key: "parallelLanguage.yesButton.title")
         noButtonText = localizationServices.stringForMainBundle(key: "parallelLanguage.noButton.title")
         selectButtonText = localizationServices.stringForMainBundle(key: "parallelLanguage.selectButton.title")
         getStartedButtonText = localizationServices.stringForMainBundle(key: "parallelLanguage.getStartedButton.title")
         
-        self.flowDelegate = flowDelegate
+        super.init()
+        
+        
+        reloadData()
+        
+        setupBinding()
+    }
+    
+    
+    private func reloadData() {
+        
+        let buttonText: String
+        
+        if let parallelLanguage = languageSettingsService.parallelLanguage.value {
+            buttonText = LanguageViewModel(language: parallelLanguage, localizationServices: localizationServices).translatedLanguageName
+        }
+        else {
+            buttonText = localizationServices.stringForMainBundle(key: "parallelLanguage.selectLanguageButton.title")
+        }
+
+        selectLanguageButtonText.accept(value: buttonText)
+    }
+    
+    private func setupBinding() {
+        
+        languageSettingsService.parallelLanguage.addObserver(self) { [weak self] (parallelLanguage: LanguageModel?) in
+            
+            DispatchQueue.main.async { [weak self] in
+                
+                self?.reloadData()
+            }
+        }
     }
     
     func selectLanguageTapped() {

@@ -12,7 +12,7 @@ protocol SetupParallelLanguageViewModelType {
     
     var animatedViewModel: AnimatedViewModel { get }
     var promptText: String { get }
-    var languagePickerLabelText: String { get }
+    var selectLanguageButtonText: ObservableValue<String> { get }
     var yesButtonText: String { get }
     var noButtonText: String { get }
     var selectButtonText: String { get }
