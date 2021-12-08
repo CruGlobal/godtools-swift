@@ -14,4 +14,6 @@ protocol AnimatedViewModelType {
     var animationData: Animation? { get }
     var autoPlay: Bool { get }
     var loop: Bool { get }
+    
+    func getAssetSize() -> CGSize
 }

@@ -68,6 +68,14 @@ extension UIView {
         superview.addConstraint(bottom)
     }
     
+    func constrainEdgesToView(view: UIView) {
+        
+        constrainTopToView(view: view)
+        constrainBottomToView(view: view)
+        constrainLeadingToView(view: view)
+        constrainTrailingToView(view: view)
+    }
+    
     func constrainTopToView(view: UIView) {
         
         let top: NSLayoutConstraint = NSLayoutConstraint(
