@@ -1,5 +1,5 @@
 //
-//  UserAuthModel.swift
+//  AuthUserModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 12/22/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct UserAuthModel {
+struct AuthUserModel: AuthUserModelType {
     
     let email: String
     let firstName: String?

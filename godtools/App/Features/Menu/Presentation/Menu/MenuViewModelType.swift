@@ -24,7 +24,7 @@ protocol MenuViewModelType {
     func aboutTapped()
     func helpTapped()
     func contactUsTapped()
-    func logoutTapped()
+    func logoutTapped(fromViewController: UIViewController)
     func loginTapped(fromViewController: UIViewController)
     func createAccountTapped(fromViewController: UIViewController)
     func shareGodToolsTapped()
@@ -32,5 +32,4 @@ protocol MenuViewModelType {
     func termsOfUseTapped()
     func privacyPolicyTapped()
     func copyrightInfoTapped()
-    func playgroundTapped()
 }

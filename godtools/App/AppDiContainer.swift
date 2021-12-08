@@ -7,10 +7,7 @@
 //
 
 import Foundation
-
-// TODO: Remove these imports once TheKeyOauthClient is replaced. ~Levi
-import TheKeyOAuthSwift
-import GTMAppAuth
+import OktaAuthentication
 
 class AppDiContainer {
         
@@ -36,7 +33,6 @@ class AppDiContainer {
     let config: ConfigType
     let crashReporting: CrashReportingType
     let userAuthentication: UserAuthenticationType
-    let loginClient: TheKeyOAuthClient
     let translationsFileCache: TranslationsFileCache
     let translationDownloader: TranslationDownloader
     let favoritedResourcesCache: FavoritedResourcesCache
@@ -68,10 +64,9 @@ class AppDiContainer {
         
         crashReporting = FirebaseCrashlyticsService()
         
-        userAuthentication = TheKeyUserAuthentication()
-        
-        loginClient = TheKeyOAuthClient.shared
-        
+        let oktaAuthentication: OktaAuthentication = OktaAuthenticationConfiguration().configureAndCreateNewOktaAuthentication(config: config)
+        userAuthentication = OktaUserAuthentication(oktaAuthentication: oktaAuthentication)
+                
         realmDatabase = RealmDatabase()
 
         languagesApi = LanguagesApi(config: config, sharedSession: sharedIgnoringCacheSession)
@@ -177,8 +172,8 @@ class AppDiContainer {
         let analyticsLoggingEnabled: Bool = config.build == .analyticsLogging
         analytics = AnalyticsContainer(
             appsFlyerAnalytics: AppsFlyerAnalytics(appsFlyer: appsFlyer, loggingEnabled: analyticsLoggingEnabled),
-            firebaseAnalytics: FirebaseAnalytics(config: config, keyAuthClient: loginClient, languageSettingsService: languageSettingsService, loggingEnabled: analyticsLoggingEnabled),
-            snowplowAnalytics: SnowplowAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: analyticsLoggingEnabled)
+            firebaseAnalytics: FirebaseAnalytics(config: config, userAuthentication: userAuthentication, languageSettingsService: languageSettingsService, loggingEnabled: analyticsLoggingEnabled),
+            snowplowAnalytics: SnowplowAnalytics(config: config, userAuthentication: userAuthentication, loggingEnabled: analyticsLoggingEnabled)
         )
                                                           
         openTutorialCalloutCache = OpenTutorialCalloutUserDefaultsCache()

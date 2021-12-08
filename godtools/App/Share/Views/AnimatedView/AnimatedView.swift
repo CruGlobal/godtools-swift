@@ -46,7 +46,8 @@ class AnimatedView: UIView {
     private func setupLayout() {
         
         addSubview(animationView)
-        animationView.constrainEdgesToSuperview()
+        animationView.translatesAutoresizingMaskIntoConstraints = false
+        animationView.constrainEdgesToView(view: self)
     }
     
     func configure(viewModel: AnimatedViewModelType) {
@@ -64,6 +65,10 @@ class AnimatedView: UIView {
         else {
             animationView.stop()
         }
+    }
+    
+    func setAnimationContentMode(contentMode: UIView.ContentMode) {
+        animationView.contentMode = contentMode
     }
     
     func destroyAnimation() {

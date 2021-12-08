@@ -20,6 +20,24 @@
         }
       },
       {
+        "package": "OktaAuthentication",
+        "repositoryURL": "https://github.com/CruGlobal/okta-authentication-ios.git",
+        "state": {
+          "branch": null,
+          "revision": "5c55aff943035bd747a2c938ce54fb6d183f976f",
+          "version": "1.0.2"
+        }
+      },
+      {
+        "package": "OktaOidc",
+        "repositoryURL": "https://github.com/okta/okta-oidc-ios.git",
+        "state": {
+          "branch": null,
+          "revision": "555cac26344a9562837f1e24dfa2fcceb98d274f",
+          "version": "3.10.8"
+        }
+      },
+      {
         "package": "Realm",
         "repositoryURL": "https://github.com/realm/realm-cocoa.git",
         "state": {

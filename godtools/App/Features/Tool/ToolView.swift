@@ -63,6 +63,12 @@ class ToolView: MobileContentPagesView {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navBarView.reloadAppearance()
+    }
+    
     override func didConfigurePageView(pageView: MobileContentPageView) {
         if let toolPageView = pageView as? ToolPageView {
             toolPageView.setToolPageDelegate(delegate: self)

@@ -27,7 +27,7 @@ class EmailSignUpService: NSObject {
     
     private func setupBinding() {
         
-        userAuthentication.authenticatedUser.addObserver(self) { [weak self] (userAuth: UserAuthModel?) in
+        userAuthentication.authenticatedUser.addObserver(self) { [weak self] (userAuth: AuthUserModelType?) in
             DispatchQueue.main.async { [weak self] in
                 if let userAuth = userAuth {
                     let emailSignUp = EmailSignUpModel(email: userAuth.email, firstName: userAuth.firstName, lastName: userAuth.lastName)

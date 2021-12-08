@@ -11,10 +11,14 @@ import UIKit
 
 class MobileContentButtonView: MobileContentView {
     
-    static let buttonHeight = 50
+    private static let buttonHeight = 50
     
     private let viewModel: MobileContentButtonViewModelType
-    private let button: UIButton = UIButton(type: .custom)
+    private let buttonTitle: UILabel = UILabel()
+    private let buttonImagePaddingToButtonTitle: CGFloat = 12
+    
+    private var tapGesture: UITapGestureRecognizer?
+    private var buttonImageView: UIImageView?
     
     required init(viewModel: MobileContentButtonViewModelType) {
         
@@ -25,7 +29,10 @@ class MobileContentButtonView: MobileContentView {
         setupLayout()
         setupBinding()
         
-        button.addTarget(self, action: #selector(handleButtonTapped), for: .touchUpInside)
+        // tapGesture
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(buttonTapped))
+        addGestureRecognizer(tapGesture)
+        self.tapGesture = tapGesture
     }
     
     required init?(coder: NSCoder) {
@@ -34,58 +41,49 @@ class MobileContentButtonView: MobileContentView {
     
     private func setupLayout() {
         
-        // button
-        addSubview(button)
-        button.constrainEdgesToSuperview()
+        layer.cornerRadius = 5
         
-        let heightConstraint: NSLayoutConstraint = NSLayoutConstraint(
-            item: button,
-            attribute: .height,
-            relatedBy: .equal,
-            toItem: nil,
-            attribute: .notAnAttribute,
-            multiplier: 1,
-            constant: CGFloat(MobileContentButtonView.buttonHeight)
-        )
-        heightConstraint.priority = UILayoutPriority(1000)
-        button.addConstraint(heightConstraint)
+        // buttonTitle
+        addButtonTitleAndConstraints(buttonTitle: buttonTitle, buttonIcon: viewModel.icon)
         
-        button.layer.cornerRadius = 5
+        buttonTitle.isUserInteractionEnabled = false
+        buttonTitle.backgroundColor = .clear
+        buttonTitle.numberOfLines = 0
+        buttonTitle.lineBreakMode = .byWordWrapping
+        buttonTitle.textAlignment = .center
+        
+        // buttonImageView
+        if let buttonIcon = viewModel.icon {
+            
+            let buttonImageView: UIImageView = UIImageView(image: buttonIcon.image)
+            buttonImageView.isUserInteractionEnabled = false
+            buttonImageView.backgroundColor = .clear
+            
+            addButtonImageViewAndConstraints(buttonImageView: buttonImageView, buttonIcon: buttonIcon)
+            
+            self.buttonImageView = buttonImageView
+        }
     }
     
     private func setupBinding() {
         
-        button.backgroundColor = viewModel.backgroundColor
-        button.titleLabel?.font = viewModel.font
-        button.setTitle(viewModel.title, for: .normal)
-        button.setTitleColor(viewModel.titleColor, for: .normal)
+        backgroundColor = viewModel.backgroundColor
         
         if let borderColor = viewModel.borderColor, let borderWidth = viewModel.borderWidth {
-            button.layer.borderColor = borderColor.cgColor
-            button.layer.borderWidth = borderWidth
+            layer.borderColor = borderColor.cgColor
+            layer.borderWidth = borderWidth
         }
         
-        if let icon = viewModel.icon {
-            
-            if icon.gravity == .end {
-                button.semanticContentAttribute = UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft ? .forceLeftToRight : .forceRightToLeft
-            }
-            
-            button.setImage(icon.image, for: .normal)
-            
-            button.setInsets(forContentPadding:
-                UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6),
-                imageTitlePadding: 10,
-                iconGravity: icon.gravity
-            )
-        }
-        
+        buttonTitle.font = viewModel.font
+        buttonTitle.text = viewModel.title
+        buttonTitle.textColor = viewModel.titleColor
+    
         viewModel.visibilityState.addObserver(self) { [weak self] (visibilityState: MobileContentViewVisibilityState) in
             self?.setVisibilityState(visibilityState: visibilityState)
         }
     }
     
-    @objc func handleButtonTapped() {
+    @objc private func buttonTapped() {
         
         switch viewModel.buttonType {
         
@@ -106,5 +104,82 @@ class MobileContentButtonView: MobileContentView {
     
     override var heightConstraintType: MobileContentViewHeightConstraintType {
         return .constrainedToChildren
+    }
+}
+
+// MARK: - Constraints
+
+extension MobileContentButtonView {
+
+    private func addButtonTitleAndConstraints(buttonTitle: UILabel, buttonIcon: MobileContentButtonIcon?) {
+        
+        addSubview(buttonTitle)
+        
+        buttonTitle.translatesAutoresizingMaskIntoConstraints = false
+        
+        buttonTitle.constrainTopToView(view: self)
+        
+        buttonTitle.constrainBottomToView(view: self)
+        
+        if buttonIcon != nil {
+            
+            buttonTitle.constrainCenterHorizontallyInView(view: self)
+        }
+        else {
+            
+            buttonTitle.constrainLeadingToView(view: self)
+            
+            buttonTitle.constrainTrailingToView(view: self)
+        }
+        
+        buttonTitle.addHeightConstraint(
+            constant: CGFloat(MobileContentButtonView.buttonHeight),
+            relatedBy: .greaterThanOrEqual,
+            priority: 1000
+        )
+    }
+    
+    private func addButtonImageViewAndConstraints(buttonImageView: UIImageView, buttonIcon: MobileContentButtonIcon) {
+        
+        addSubview(buttonImageView)
+        
+        buttonImageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        buttonImageView.constrainCenterVerticallyInView(view: self)
+                        
+        switch buttonIcon.gravity {
+        
+        case .start:
+            
+            let trailing: NSLayoutConstraint = NSLayoutConstraint(
+                item: buttonImageView,
+                attribute: .trailing,
+                relatedBy: .equal,
+                toItem: buttonTitle,
+                attribute: .leading,
+                multiplier: 1,
+                constant: buttonImagePaddingToButtonTitle * -1
+            )
+            
+            addConstraint(trailing)
+            
+        case .end:
+            
+            let leading: NSLayoutConstraint = NSLayoutConstraint(
+                item: buttonImageView,
+                attribute: .leading,
+                relatedBy: .equal,
+                toItem: buttonTitle,
+                attribute: .trailing,
+                multiplier: 1,
+                constant: buttonImagePaddingToButtonTitle
+            )
+            
+            addConstraint(leading)
+        }
+        
+        buttonImageView.addWidthConstraint(constant: CGFloat(buttonIcon.size))
+        
+        buttonImageView.addHeightConstraint(constant: CGFloat(buttonIcon.size))
     }
 }

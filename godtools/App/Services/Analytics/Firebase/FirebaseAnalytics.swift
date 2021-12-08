@@ -8,27 +8,29 @@
 
 import Foundation
 import FirebaseAnalytics
-import TheKeyOAuthSwift
-import GTMAppAuth
 
 class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
     
     private let config: ConfigType
-    private let keyAuthClient: TheKeyOAuthClient
+    private let userAuthentication: UserAuthenticationType
     private let languageSettingsService: LanguageSettingsService
     private let loggingEnabled: Bool
     
     private var previousTrackedScreenName: String = ""
     private var isConfigured: Bool = false
     
-    required init(config: ConfigType, keyAuthClient: TheKeyOAuthClient, languageSettingsService: LanguageSettingsService, loggingEnabled: Bool) {
+    required init(config: ConfigType, userAuthentication: UserAuthenticationType, languageSettingsService: LanguageSettingsService, loggingEnabled: Bool) {
         
         self.config = config
-        self.keyAuthClient = keyAuthClient
+        self.userAuthentication = userAuthentication
         self.languageSettingsService = languageSettingsService
         self.loggingEnabled = loggingEnabled
         
         super.init()
+    }
+    
+    deinit {
+        userAuthentication.authenticatedUser.removeObserver(self)
     }
     
     func configure() {
@@ -47,23 +49,20 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
             
             gai.logger.logLevel = loggingEnabled ? .verbose : .none
         }
-        
-        keyAuthClient.addStateChangeDelegate(delegate: self)
-                
+                        
         setUserProperty(
             key: AnalyticsConstants.Keys.debug,
             value: config.isDebug ? AnalyticsConstants.Values.debugIsTrue : AnalyticsConstants.Values.debugIsFalse
         )
         
-        log(method: "configure()", label: nil, labelValue: nil, data: nil)
-    }
-    
-    func setUserProperty(key: String, value: String?) {
+        userAuthentication.authenticatedUser.addObserver(self) { [weak self] (authUser: AuthUserModelType?) in
+            guard let weakSelf = self else {
+                return
+            }
+            weakSelf.setUserProperties(authUser: authUser, isLoggedIn: weakSelf.userAuthentication.isAuthenticated)
+        }
         
-        Analytics.setUserProperty(
-            value,
-            forName: transformStringForFirebase(string: key)
-        )
+        log(method: "configure()", label: nil, labelValue: nil, data: nil)
     }
     
     func trackScreenView(screenName: String, siteSection: String, siteSubSection: String) {
@@ -104,25 +103,7 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
             ]
         )
     }
-
-    func fetchAttributesThenSetUserId() {
-        assertFailureIfNotConfigured()
         
-        let isLoggedIn: Bool = keyAuthClient.isAuthenticated()
-
-        if isLoggedIn {
-            keyAuthClient.fetchAttributes() { [weak self] (_, _) in
-                guard let firebaseAnalytics = self else { return }
-                
-                firebaseAnalytics.setUserProperties()
-            }
-        } else {
-            setUserProperties()
-        }
-    }
-    
-    // MARK: - Private
-    
     private func assertFailureIfNotConfigured() {
         if !isConfigured {
             assertionFailure("FirebaseAnalytics has not been configured.  Call configure() on application didFinishLaunching.")
@@ -185,22 +166,25 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         return string.replacingOccurrences(of: "(-|\\.|\\ )", with: "_", options: .regularExpression).lowercased()
     }
     
-    private func setUserProperties() {
+    private func setUserProperties(authUser: AuthUserModelType?, isLoggedIn: Bool) {
         assertFailureIfNotConfigured()
-               
-        let isLoggedIn: Bool = keyAuthClient.isAuthenticated()
-        
-        let loggedInStatus = isLoggedIn ? AnalyticsConstants.Values.isLoggedIn : AnalyticsConstants.Values.notLoggedIn
-           
-        let grMasterPersonID = isLoggedIn ? keyAuthClient.grMasterPersonId : nil
-        let ssoguid = isLoggedIn ? keyAuthClient.guid : nil
-
-        let userId = grMasterPersonID ?? ssoguid
+                                  
+        let grMasterPersonID: String? = authUser?.grMasterPersonId
+        let ssoguid: String? = authUser?.ssoGuid
+        let userId: String? = grMasterPersonID ?? ssoguid
         
         Analytics.setUserID(userId)
-        setUserProperty(key: AnalyticsConstants.Keys.loggedInStatus, value: loggedInStatus)
+        setUserProperty(key: AnalyticsConstants.Keys.loggedInStatus, value: isLoggedIn ? AnalyticsConstants.Values.isLoggedIn : AnalyticsConstants.Values.notLoggedIn)
         setUserProperty(key: AnalyticsConstants.Keys.grMasterPersonID, value: grMasterPersonID)
         setUserProperty(key: AnalyticsConstants.Keys.ssoguid, value: ssoguid)
+    }
+    
+    private func setUserProperty(key: String, value: String?) {
+        
+        Analytics.setUserProperty(
+            value,
+            forName: transformStringForFirebase(string: key)
+        )
     }
     
     private func createBaseProperties(screenName: String?, siteSection: String?, siteSubSection: String?, previousScreenName: String?) -> [String: String] {
@@ -230,13 +214,5 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
                 print("  data: \(data)")
             }
         }
-    }
-}
-
-// MARK: - OIDAuthStateChangeDelegate
-
-extension FirebaseAnalytics: OIDAuthStateChangeDelegate {
-    func didChange(_ state: OIDAuthState) {
-        fetchAttributesThenSetUserId()
     }
 }

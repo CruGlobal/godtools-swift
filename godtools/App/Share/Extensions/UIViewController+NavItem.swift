@@ -108,6 +108,15 @@ extension UIViewController {
         }
     }
     
+    func removeAllBarButtonItems() {
+        
+        navigationItem.leftBarButtonItem = nil
+        navigationItem.leftBarButtonItems = Array()
+        
+        navigationItem.rightBarButtonItem = nil
+        navigationItem.rightBarButtonItems = Array()
+    }
+    
     private func addLeftBarButtonItem(item: UIBarButtonItem, index: Int?) {
         if var leftItems = navigationItem.leftBarButtonItems {
             if !leftItems.contains(item) {

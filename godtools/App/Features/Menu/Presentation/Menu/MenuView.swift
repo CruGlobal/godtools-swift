@@ -148,9 +148,7 @@ extension MenuView: UITableViewDelegate {
             viewModel.contactUsTapped()
         
         case .logout:
-            DispatchQueue.main.async { [weak self] in
-                self?.viewModel.logoutTapped()
-            }
+            viewModel.logoutTapped(fromViewController: self)
             
         case .login:
             viewModel.loginTapped(fromViewController: self)

@@ -8,27 +8,24 @@
 
 import Foundation
 import SnowplowTracker
-import TheKeyOAuthSwift
 
 class SnowplowAnalytics: SnowplowAnalyticsType  {
    
+    private let userAuthentication: UserAuthenticationType
     private let serialQueue: DispatchQueue = DispatchQueue(label: "snowplow.serial.queue")
     private let tracker: SPTracker
-    private let keyAuthClient: TheKeyOAuthClient
     private let loggingEnabled: Bool
-        
     private let idSchema = "iglu:org.cru/ids/jsonschema/1-0-3"
     private let uriSchema = "iglu:org.cru/content-scoring/jsonschema/1-0-0"
-    
     private let actionURI = "godtools://action/"
     private let screenURI = "godtools://screenview/"
     
     private var isConfigured: Bool = false
     private var isConfiguring: Bool = false
 
-    required init(config: ConfigType, keyAuthClient: TheKeyOAuthClient, loggingEnabled: Bool) {
+    required init(config: ConfigType, userAuthentication: UserAuthenticationType, loggingEnabled: Bool) {
         
-        self.keyAuthClient = keyAuthClient
+        self.userAuthentication = userAuthentication
         self.loggingEnabled = loggingEnabled
         
         let urlEndpoint: String = "s.cru.org"
@@ -127,17 +124,20 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
 
     private func idContext() -> SPSelfDescribingJson {
                 
-        let grMasterPersonID: String? = keyAuthClient.isAuthenticated() ? keyAuthClient.grMasterPersonId : nil
-        let ssoguid: String? = keyAuthClient.isAuthenticated() ? keyAuthClient.guid : nil
+        let authUser: AuthUserModelType? = userAuthentication.authenticatedUser.value
+        
+        let grMasterPersonID: String = authUser?.grMasterPersonId ?? ""
+        let ssoguid: String = authUser?.ssoGuid ?? ""
+        let isAuthenticated: Bool = userAuthentication.isAuthenticated
         
         log(
             method: "idContext()",
             label: nil,
             labelValue: nil,
             data: [
-                "grMasterPersonID": grMasterPersonID ?? "",
-                "ssoguid": ssoguid ?? "",
-                "isAuthenticated": keyAuthClient.isAuthenticated()
+                "grMasterPersonID": grMasterPersonID,
+                "ssoguid": ssoguid,
+                "isAuthenticated": isAuthenticated
             ]
         )
         
