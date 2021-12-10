@@ -6,7 +6,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
-        <capability name="UIMenu" message="Requires Xcode 11 or later." minToolsVersion="11.0" requiredIntegratedClassName="UICommandDiff"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -18,6 +17,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SetupParallelLanguageView" customModule="godtools" customModuleProvider="target">
             <connections>
                 <outlet property="animatedView" destination="okP-RF-fbs" id="Yxq-WC-h7b"/>
+                <outlet property="getStartedButton" destination="NQh-YT-1Of" id="86p-80-xsD"/>
                 <outlet property="noButton" destination="kFd-qN-9uO" id="2Qg-MU-IYf"/>
                 <outlet property="promptLabel" destination="Tqi-4y-CiJ" id="flu-tr-yxt"/>
                 <outlet property="selectLanguageButton" destination="siV-NL-Hvb" id="aBA-NS-Bod"/>
@@ -26,7 +26,7 @@
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="3AB-3x-2v2">
+        <view contentMode="scaleToFill" id="3AB-3x-2v2" userLabel="Setup Parallel Language View">
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
@@ -50,12 +50,6 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="Sns-PT-HJ1"/>
                     </constraints>
-                    <menu key="menu" id="lW7-a6-X7i">
-                        <children>
-                            <command title="Item 1" id="dFP-LN-10j"/>
-                            <command title="Item 2" id="GST-ox-uMI"/>
-                        </children>
-                    </menu>
                     <state key="normal" title="Button" image="button:siV-NL-Hvb:image">
                         <color key="titleColor" red="0.3529411764705882" green="0.3529411764705882" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
@@ -82,6 +76,18 @@
                         <color key="baseForegroundColor" red="0.23137254900000001" green="0.64313725489999995" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
                     </buttonConfiguration>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NQh-YT-1Of" userLabel="Get Started Button">
+                    <rect key="frame" x="50" y="784" width="314" height="48"/>
+                    <color key="backgroundColor" red="0.23137254900000001" green="0.64313725489999995" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="48" id="Ni5-jB-PMk"/>
+                    </constraints>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" title="Button">
+                        <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </buttonConfiguration>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="5Xp-J2-BDq"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -92,9 +98,12 @@
                 <constraint firstItem="5Xp-J2-BDq" firstAttribute="trailing" secondItem="kFd-qN-9uO" secondAttribute="trailing" constant="30" id="BRc-Q4-NYy"/>
                 <constraint firstItem="okP-RF-fbs" firstAttribute="top" secondItem="5Xp-J2-BDq" secondAttribute="top" constant="26" id="E5z-WN-Gk3"/>
                 <constraint firstItem="siV-NL-Hvb" firstAttribute="leading" secondItem="5Xp-J2-BDq" secondAttribute="leading" constant="30" id="EwX-f0-gRa"/>
+                <constraint firstItem="5Xp-J2-BDq" firstAttribute="bottom" secondItem="NQh-YT-1Of" secondAttribute="bottom" constant="30" id="Gb1-Wv-YsT"/>
                 <constraint firstItem="Tqi-4y-CiJ" firstAttribute="centerX" secondItem="3AB-3x-2v2" secondAttribute="centerX" id="Ntn-oV-RNX"/>
                 <constraint firstItem="siV-NL-Hvb" firstAttribute="top" secondItem="Tqi-4y-CiJ" secondAttribute="bottom" constant="32" id="R5I-5j-zJV"/>
                 <constraint firstItem="5Xp-J2-BDq" firstAttribute="trailing" secondItem="siV-NL-Hvb" secondAttribute="trailing" constant="30" id="Rc7-jb-gNN"/>
+                <constraint firstItem="5Xp-J2-BDq" firstAttribute="trailing" secondItem="NQh-YT-1Of" secondAttribute="trailing" constant="50" id="UKD-uI-8Pu"/>
+                <constraint firstItem="NQh-YT-1Of" firstAttribute="leading" secondItem="5Xp-J2-BDq" secondAttribute="leading" constant="50" id="UvT-S7-UKe"/>
                 <constraint firstItem="okP-RF-fbs" firstAttribute="centerX" secondItem="3AB-3x-2v2" secondAttribute="centerX" id="YeN-CV-c61"/>
                 <constraint firstItem="5Xp-J2-BDq" firstAttribute="bottom" secondItem="kFd-qN-9uO" secondAttribute="bottom" constant="30" id="bRx-tK-mwB"/>
                 <constraint firstItem="WW4-C7-5Sn" firstAttribute="leading" secondItem="5Xp-J2-BDq" secondAttribute="leading" constant="30" id="eBg-j2-Cfw"/>

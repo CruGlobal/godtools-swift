@@ -83,12 +83,12 @@ enum FlowStep {
     
     // setup parallel language
     case selectLanguageTappedFromSetupParallelLanguage
-    case languageSelectedFromSetupParallelLanguage
     case closeTappedFromSetupParallelLanguage
     case yesTappedFromSetupParallelLanguage
     case noThanksTappedFromSetupParallelLanguage
-    case selectTappedFromSetupParallelLanguage
     case getStartedTappedFromSetupParallelLanguage
+    case backgroundTappedFromParallelLanguageModal
+    case selectTappedFromParallelLanguageModal
     
     // share tool menu
     case shareToolTappedFromShareToolMenu

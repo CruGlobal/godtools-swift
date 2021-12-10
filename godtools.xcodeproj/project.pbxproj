@@ -1061,7 +1061,7 @@
 		D1AF02F1273076E700BEC921 /* VideoPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AF02F0273076E700BEC921 /* VideoPlayerViewModel.swift */; };
 		D1AF02F3273080CE00BEC921 /* VideoPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1AF02F2273080CE00BEC921 /* VideoPlayerView.xib */; };
 		D1B944E5259E58F5004641DB /* remote_share_active.json in Resources */ = {isa = PBXBuildFile; fileRef = D1B944E4259E58F5004641DB /* remote_share_active.json */; };
-		D1C8FEAC275E940A00C71E80 /* ParallelLanguageModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C8FEAB275E940A00C71E80 /* ParallelLanguageModal.swift */; };
+		D1BF24522763B98600C6FEB0 /* ParallelLanguageModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BF24512763B98600C6FEB0 /* ParallelLanguageModal.swift */; };
 		D1C8FEAE275E95FA00C71E80 /* ParallelLanguageModalViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C8FEAD275E95FA00C71E80 /* ParallelLanguageModalViewModelType.swift */; };
 		D1C8FEB0275E9BBB00C71E80 /* ParallelLanguageModalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C8FEAF275E9BBB00C71E80 /* ParallelLanguageModalViewModel.swift */; };
 		D1C8FEB2275EA1C500C71E80 /* ParallelLanguageModal.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1C8FEB1275EA1C500C71E80 /* ParallelLanguageModal.xib */; };
@@ -2202,7 +2202,7 @@
 		D1AF02F0273076E700BEC921 /* VideoPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerViewModel.swift; sourceTree = "<group>"; };
 		D1AF02F2273080CE00BEC921 /* VideoPlayerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoPlayerView.xib; sourceTree = "<group>"; };
 		D1B944E4259E58F5004641DB /* remote_share_active.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = remote_share_active.json; sourceTree = "<group>"; };
-		D1C8FEAB275E940A00C71E80 /* ParallelLanguageModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParallelLanguageModal.swift; sourceTree = "<group>"; };
+		D1BF24512763B98600C6FEB0 /* ParallelLanguageModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParallelLanguageModal.swift; sourceTree = "<group>"; };
 		D1C8FEAD275E95FA00C71E80 /* ParallelLanguageModalViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParallelLanguageModalViewModelType.swift; sourceTree = "<group>"; };
 		D1C8FEAF275E9BBB00C71E80 /* ParallelLanguageModalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParallelLanguageModalViewModel.swift; sourceTree = "<group>"; };
 		D1C8FEB1275EA1C500C71E80 /* ParallelLanguageModal.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ParallelLanguageModal.xib; sourceTree = "<group>"; };
@@ -5756,7 +5756,7 @@
 		D1C8FEAA275E93CF00C71E80 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				D1C8FEAB275E940A00C71E80 /* ParallelLanguageModal.swift */,
+				D1BF24512763B98600C6FEB0 /* ParallelLanguageModal.swift */,
 				D1C8FEB1275EA1C500C71E80 /* ParallelLanguageModal.xib */,
 				D1C8FEAF275E9BBB00C71E80 /* ParallelLanguageModalViewModel.swift */,
 				D1C8FEAD275E95FA00C71E80 /* ParallelLanguageModalViewModelType.swift */,
@@ -6493,6 +6493,7 @@
 				45BEC53026A604E4005D8CA1 /* MobileContentSpacerMode.swift in Sources */,
 				45AD1BA925938A4F00A096A0 /* ToolsFlow.swift in Sources */,
 				455583E7269F2DA500C3FF14 /* MobileContentButtonView.swift in Sources */,
+				D1BF24522763B98600C6FEB0 /* ParallelLanguageModal.swift in Sources */,
 				D1DD79FF26690CBA000F1351 /* TrackActionModel.swift in Sources */,
 				45BD79DB26A20EEA0007426B /* ContentLabelModelType.swift in Sources */,
 				45AD21432593A49900A096A0 /* ShareToolRemoteSessionURLView.swift in Sources */,
@@ -7012,7 +7013,6 @@
 				45AD1AEB25938A4E00A096A0 /* WebContentViewModelType.swift in Sources */,
 				45AD1F5F25938A9800A096A0 /* WebSocketChannelSubscriberType.swift in Sources */,
 				45AD223C2593C90000A096A0 /* CrashReportingType.swift in Sources */,
-				D1C8FEAC275E940A00C71E80 /* ParallelLanguageModal.swift in Sources */,
 				45AD1B1225938A4E00A096A0 /* ArticleCategoryCellViewModelType.swift in Sources */,
 				D1FF263E25BA0C1C00C825DB /* FirebaseInAppMessaging.swift in Sources */,
 				45BD79D126A20EEA0007426B /* CallToActionModelType.swift in Sources */,

@@ -10,9 +10,12 @@ import Foundation
 
 protocol ParallelLanguageModalViewModelType {
     
+    var selectButtonText: String { get }
     var numberOfLanguages: ObservableValue<Int> { get }
     var selectedLanguageIndex: ObservableValue<Int?> { get }
     
     func languageWillAppear(index: Int) -> ChooseLanguageCellViewModel
     func languageTapped(index: Int)
+    func backgroundTapped()
+    func selectTapped()
 }

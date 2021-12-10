@@ -2,30 +2,28 @@
 //  ParallelLanguageModal.swift
 //  godtools
 //
-//  Created by Robert Eldredge on 12/6/21.
+//  Created by Robert Eldredge on 12/10/21.
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
 import UIKit
 
-class ParallelLanguageModal: UIView, NibBased {
+class ParallelLanguageModal: UIViewController {
     
     private let viewModel: ParallelLanguageModalViewModelType
         
+    @IBOutlet weak private var overlayButton: UIButton!
+    @IBOutlet weak private var selectButton: UIButton!
     @IBOutlet weak private var languagesTableView: UITableView!
     
     required init(viewModel: ParallelLanguageModalViewModelType) {
         
         self.viewModel = viewModel
         
-        super.init(frame: UIScreen.main.bounds)
+        super.init(nibName: String(describing: ParallelLanguageModal.self), bundle: nil)
         
-        loadNib()
-        setupLayout()
-        setupBinding()
-        
-        languagesTableView.delegate = self
-        languagesTableView.dataSource = self
+        modalPresentationStyle = .overCurrentContext
+        transitioningDelegate = self
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -33,12 +31,26 @@ class ParallelLanguageModal: UIView, NibBased {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        print("x deinit: \(type(of: self))")
+        languagesTableView.delegate = self
+        languagesTableView.dataSource = self
+        
+        setupLayout()
+        setupBinding()
     }
     
     private func setupLayout() {
+        
+        // view
+        view.backgroundColor = .clear
+        
+        // overlayButton
+        overlayButton.backgroundColor = .black
+        overlayButton.alpha = 0.4
+        
+        selectButton.setTitle(viewModel.selectButtonText, for: .normal)
         
         languagesTableView.register(
             UINib(nibName: ChooseLanguageCell.nibName, bundle: nil),
@@ -50,6 +62,8 @@ class ParallelLanguageModal: UIView, NibBased {
     
     private func setupBinding() {
         
+        selectButton.addTarget(self, action: #selector(handleSelectTapped), for: .touchUpInside)
+        
         viewModel.numberOfLanguages.addObserver(self) { [weak self] (numberOfLanguages: Int) in
             self?.languagesTableView.reloadData()
         }
@@ -57,6 +71,14 @@ class ParallelLanguageModal: UIView, NibBased {
         viewModel.selectedLanguageIndex.addObserver(self) { [weak self] (index: Int?) in
             self?.languagesTableView.reloadData()
         }
+    }
+    
+    @objc func handleBackgroundTapped() {
+        viewModel.backgroundTapped()
+    }
+    
+    @objc func handleSelectTapped() {
+        viewModel.selectTapped()
     }
 }
 
@@ -93,15 +115,18 @@ extension ParallelLanguageModal: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-// MARK: - TransparentModalCustomView
+// MARK: - UIViewControllerTransitioningDelegate
 
-extension ParallelLanguageModal: TransparentModalCustomView {
+extension ParallelLanguageModal: UIViewControllerTransitioningDelegate {
     
-    var view: UIView {
-        return self
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        
+        return FadeAnimationTransition(fade: .fadeIn)
     }
     
-    func transparentModalDidLayout() {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
+        return FadeAnimationTransition(fade: .fadeOut)
     }
 }
+

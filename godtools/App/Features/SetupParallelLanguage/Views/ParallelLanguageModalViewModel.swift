@@ -16,6 +16,7 @@ class ParallelLanguageModalViewModel: NSObject, ParallelLanguageModalViewModelTy
     
     private weak var flowDelegate: FlowDelegate?
     
+    let selectButtonText: String
     let numberOfLanguages: ObservableValue<Int> = ObservableValue(value: 0)
     let selectedLanguageIndex: ObservableValue<Int?> = ObservableValue(value: nil)
     
@@ -25,6 +26,8 @@ class ParallelLanguageModalViewModel: NSObject, ParallelLanguageModalViewModelTy
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
+        
+        selectButtonText = localizationServices.stringForMainBundle(key: "parallelLanguage.selectButton.title")
         
         super.init()
         
@@ -124,17 +127,6 @@ class ParallelLanguageModalViewModel: NSObject, ParallelLanguageModalViewModelTy
         selectedLanguageIndex.accept(value: selectedIndex)
     }
     
-    func languageTapped(index: Int) {
-        
-        selectedLanguageIndex.accept(value: index)
-        
-        let selectedLanguage: LanguageModel = languagesList[index].language
-        
-        languageSettingsService.languageSettingsCache.cacheParallelLanguageId(languageId: selectedLanguage.id)
-                
-        flowDelegate?.navigate(step: .languageSelectedFromSetupParallelLanguage)
-    }
-    
     func languageWillAppear(index: Int) -> ChooseLanguageCellViewModel {
         
         let languageViewModel: LanguageViewModel = languagesList[index]
@@ -144,5 +136,26 @@ class ParallelLanguageModalViewModel: NSObject, ParallelLanguageModalViewModelTy
             languageIsDownloaded: true, //hides downloadImageView for all cells in this list
             hidesSelected: languageViewModel.language.id != selectedLanguageModel?.id
         )
+    }
+    
+    func languageTapped(index: Int) {
+        
+        selectedLanguageIndex.accept(value: index)
+    }
+    
+    func backgroundTapped() {
+        
+        flowDelegate?.navigate(step: .backgroundTappedFromParallelLanguageModal)
+    }
+    
+    func selectTapped() {
+        
+        guard let index = selectedLanguageIndex.value else { return }
+        
+        let selectedLanguage: LanguageModel = languagesList[index].language
+        
+        languageSettingsService.languageSettingsCache.cacheParallelLanguageId(languageId: selectedLanguage.id)
+        
+        flowDelegate?.navigate(step: .selectTappedFromParallelLanguageModal)
     }
 }

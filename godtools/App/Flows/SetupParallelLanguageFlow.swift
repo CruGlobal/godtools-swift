@@ -51,9 +51,6 @@ class SetupParallelLanguageFlow: Flow {
         case .selectLanguageTappedFromSetupParallelLanguage:
             presentParallelLanguageModal()
         
-        case .languageSelectedFromSetupParallelLanguage:
-            navigationController.dismiss(animated: true, completion: nil)
-        
         case .closeTappedFromSetupParallelLanguage:
             flowDelegate?.navigate(step: .dismissSetupParallelLanguage)
         
@@ -63,7 +60,10 @@ class SetupParallelLanguageFlow: Flow {
         case .noThanksTappedFromSetupParallelLanguage:
             flowDelegate?.navigate(step: .dismissSetupParallelLanguage)
         
-        case .selectTappedFromSetupParallelLanguage:
+        case .backgroundTappedFromParallelLanguageModal:
+            navigationController.dismiss(animated: true, completion: nil)
+        
+        case .selectTappedFromParallelLanguageModal:
             navigationController.dismiss(animated: true, completion: nil)
         
         case .getStartedTappedFromSetupParallelLanguage:
@@ -83,10 +83,8 @@ class SetupParallelLanguageFlow: Flow {
             localizationServices: appDiContainer.localizationServices
         )
         let view = ParallelLanguageModal(viewModel: viewModel)
-        
-        let modal = TransparentModalView(modalView: view)
-        
-        navigationController.present(modal, animated: true, completion: nil)
+                
+        navigationController.present(view, animated: true, completion: nil)
     }
 }
 

@@ -22,6 +22,8 @@ class SetupParallelLanguageViewModel: NSObject, SetupParallelLanguageViewModelTy
     let noButtonText: String
     let selectButtonText: String
     let getStartedButtonText: String
+    let yesNoButtonsHidden: ObservableValue<Bool> = ObservableValue(value: false)
+    let getStartedButtonHidden: ObservableValue<Bool> = ObservableValue(value: true)
     
     required init (flowDelegate: FlowDelegate, localizationServices: LocalizationServices, languageSettingsService: LanguageSettingsService) {
         
@@ -51,17 +53,22 @@ class SetupParallelLanguageViewModel: NSObject, SetupParallelLanguageViewModelTy
     
     
     private func reloadData() {
-        
-        let buttonText: String
-        
+                
         if let parallelLanguage = languageSettingsService.parallelLanguage.value {
-            buttonText = LanguageViewModel(language: parallelLanguage, localizationServices: localizationServices).translatedLanguageName
+            
+            let buttonText = LanguageViewModel(language: parallelLanguage, localizationServices: localizationServices).translatedLanguageName
+            
+            selectLanguageButtonText.accept(value: buttonText)
+            yesNoButtonsHidden.accept(value: true)
+            getStartedButtonHidden.accept(value: false)
         }
         else {
-            buttonText = localizationServices.stringForMainBundle(key: "parallelLanguage.selectLanguageButton.title")
+            let buttonText = localizationServices.stringForMainBundle(key: "parallelLanguage.selectLanguageButton.title")
+            
+            selectLanguageButtonText.accept(value: buttonText)
+            yesNoButtonsHidden.accept(value: false)
+            getStartedButtonHidden.accept(value: true)
         }
-
-        selectLanguageButtonText.accept(value: buttonText)
     }
     
     private func setupBinding() {
@@ -94,11 +101,6 @@ class SetupParallelLanguageViewModel: NSObject, SetupParallelLanguageViewModelTy
     func noButtonTapped() {
         
         flowDelegate?.navigate(step: .noThanksTappedFromSetupParallelLanguage)
-    }
-    
-    func selectTapped() {
-        
-        flowDelegate?.navigate(step: .selectTappedFromSetupParallelLanguage)
     }
     
     func getStartedButtonTapped() {
