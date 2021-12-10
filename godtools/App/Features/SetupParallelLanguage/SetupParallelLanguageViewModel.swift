@@ -76,26 +76,33 @@ class SetupParallelLanguageViewModel: NSObject, SetupParallelLanguageViewModelTy
     }
     
     func selectLanguageTapped() {
+        
         flowDelegate?.navigate(step: .selectLanguageTappedFromSetupParallelLanguage)
     }
     
     func closeButtonTapped() {
+        
         flowDelegate?.navigate(step: .closeTappedFromSetupParallelLanguage)
     }
     
     func yesButtonTapped() {
         
+        flowDelegate?.navigate(step: .yesTappedFromSetupParallelLanguage)
+
     }
     
     func noButtonTapped() {
         
+        flowDelegate?.navigate(step: .noThanksTappedFromSetupParallelLanguage)
     }
     
-    func languageSelected(index: Int) {
+    func selectTapped() {
         
+        flowDelegate?.navigate(step: .selectTappedFromSetupParallelLanguage)
     }
     
     func getStartedButtonTapped() {
         
+        flowDelegate?.navigate(step: .getStartedTappedFromSetupParallelLanguage)
     }
 }

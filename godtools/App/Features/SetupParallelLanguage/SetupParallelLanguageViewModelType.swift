@@ -22,6 +22,5 @@ protocol SetupParallelLanguageViewModelType {
     func closeButtonTapped()
     func yesButtonTapped()
     func noButtonTapped()
-    func languageSelected(index: Int)
     func getStartedButtonTapped()
 }

@@ -57,8 +57,14 @@ class SetupParallelLanguageFlow: Flow {
         case .closeTappedFromSetupParallelLanguage:
             flowDelegate?.navigate(step: .dismissSetupParallelLanguage)
         
+        case .yesTappedFromSetupParallelLanguage:
+            presentParallelLanguageModal()
+        
         case .noThanksTappedFromSetupParallelLanguage:
             flowDelegate?.navigate(step: .dismissSetupParallelLanguage)
+        
+        case .selectTappedFromSetupParallelLanguage:
+            navigationController.dismiss(animated: true, completion: nil)
         
         case .getStartedTappedFromSetupParallelLanguage:
             flowDelegate?.navigate(step: .dismissSetupParallelLanguage)
