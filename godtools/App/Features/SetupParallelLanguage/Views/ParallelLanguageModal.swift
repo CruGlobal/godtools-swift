@@ -58,6 +58,9 @@ class ParallelLanguageModal: UIViewController {
         )
         languagesTableView.rowHeight = 54
         languagesTableView.separatorStyle = .none
+        languagesTableView.layer.cornerRadius = 6
+        
+        selectButton.layer.cornerRadius = 6
     }
     
     private func setupBinding() {
