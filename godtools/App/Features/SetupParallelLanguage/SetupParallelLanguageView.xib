@@ -16,11 +16,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SetupParallelLanguageView" customModule="godtools" customModuleProvider="target">
             <connections>
-                <outlet property="animatedView" destination="okP-RF-fbs" id="Yxq-WC-h7b"/>
+                <outlet property="animatedView" destination="VSQ-9n-ekB" id="VWX-0z-Bvd"/>
                 <outlet property="getStartedButton" destination="NQh-YT-1Of" id="86p-80-xsD"/>
                 <outlet property="noButton" destination="kFd-qN-9uO" id="2Qg-MU-IYf"/>
-                <outlet property="promptLabel" destination="Tqi-4y-CiJ" id="flu-tr-yxt"/>
-                <outlet property="selectLanguageButton" destination="siV-NL-Hvb" id="aBA-NS-Bod"/>
+                <outlet property="promptLabel" destination="pVM-T5-7vt" id="cFW-0L-jZp"/>
+                <outlet property="selectLanguageButton" destination="IpU-oB-FsV" id="PuF-Ex-tBy"/>
                 <outlet property="view" destination="3AB-3x-2v2" id="Ont-NA-60H"/>
                 <outlet property="yesButton" destination="WW4-C7-5Sn" id="2d6-ZV-k2B"/>
             </connections>
@@ -30,58 +30,41 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nk8-bq-PKN">
-                    <rect key="frame" x="0.0" y="44" width="414" height="740"/>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2Iz-0h-kZx">
+                    <rect key="frame" x="30" y="74" width="354" height="680"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xYV-P3-n0y">
-                            <rect key="frame" x="0.0" y="230.5" width="414" height="279.5"/>
-                            <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="okP-RF-fbs" userLabel="Animated View" customClass="AnimatedView" customModule="godtools" customModuleProvider="target">
-                                    <rect key="frame" x="145" y="0.0" width="124" height="124"/>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="124" id="9pe-nO-Ulj"/>
-                                        <constraint firstAttribute="height" constant="124" id="zUJ-UM-p3G"/>
-                                    </constraints>
-                                </view>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tqi-4y-CiJ" userLabel="Prompt Label">
-                                    <rect key="frame" x="30" y="160" width="354" height="33.5"/>
-                                    <fontDescription key="fontDescription" name="SFProDisplay-Light" family="SF Pro Display" pointSize="28"/>
-                                    <color key="textColor" red="0.23137254900000001" green="0.64313725489999995" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="siV-NL-Hvb" userLabel="Select Language Button">
-                                    <rect key="frame" x="30" y="229.5" width="354" height="50"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="50" id="Sns-PT-HJ1"/>
-                                    </constraints>
-                                    <state key="normal" title="Button" image="arrowtriangle.down.fill" catalog="system">
-                                        <color key="titleColor" red="0.3529411764705882" green="0.3529411764705882" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
-                                    </state>
-                                </button>
-                            </subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VSQ-9n-ekB" userLabel="Animated View" customClass="AnimatedView" customModule="godtools" customModuleProvider="target">
+                            <rect key="frame" x="115.5" y="0.0" width="123" height="124"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
-                                <constraint firstAttribute="trailing" secondItem="Tqi-4y-CiJ" secondAttribute="trailing" constant="30" id="1VZ-Ix-Mb6"/>
-                                <constraint firstItem="okP-RF-fbs" firstAttribute="top" secondItem="xYV-P3-n0y" secondAttribute="top" id="2Ba-cs-2LZ"/>
-                                <constraint firstItem="Tqi-4y-CiJ" firstAttribute="leading" secondItem="xYV-P3-n0y" secondAttribute="leading" constant="30" id="7JI-k8-ZAE"/>
-                                <constraint firstAttribute="trailing" secondItem="siV-NL-Hvb" secondAttribute="trailing" constant="30" id="9MC-3g-mEM"/>
-                                <constraint firstItem="Tqi-4y-CiJ" firstAttribute="top" secondItem="okP-RF-fbs" secondAttribute="bottom" constant="36" id="EQP-om-Xkr"/>
-                                <constraint firstItem="okP-RF-fbs" firstAttribute="centerX" secondItem="xYV-P3-n0y" secondAttribute="centerX" id="V6r-0K-tBa"/>
-                                <constraint firstAttribute="bottom" secondItem="siV-NL-Hvb" secondAttribute="bottom" id="m6l-P7-KFq"/>
-                                <constraint firstItem="siV-NL-Hvb" firstAttribute="leading" secondItem="xYV-P3-n0y" secondAttribute="leading" constant="30" id="msL-zA-ywK"/>
-                                <constraint firstItem="siV-NL-Hvb" firstAttribute="top" secondItem="Tqi-4y-CiJ" secondAttribute="bottom" constant="36" id="oY9-gJ-aOG"/>
+                                <constraint firstAttribute="width" constant="123" id="1cA-74-EOg"/>
+                                <constraint firstAttribute="height" constant="124" id="ql4-lG-VhC"/>
                             </constraints>
                         </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pVM-T5-7vt" userLabel="Prompt Label">
+                            <rect key="frame" x="0.0" y="360.5" width="354" height="33.5"/>
+                            <fontDescription key="fontDescription" name="SFProDisplay-Light" family="SF Pro Display" pointSize="28"/>
+                            <color key="textColor" red="0.23137254900000001" green="0.64313725489999995" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IpU-oB-FsV" userLabel="Select Language Button">
+                            <rect key="frame" x="0.0" y="630" width="354" height="50"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="z1E-od-MRC"/>
+                            </constraints>
+                            <state key="normal" title="Button" image="arrowtriangle.down.fill" catalog="system">
+                                <color key="titleColor" red="0.35294117650000001" green="0.35294117650000001" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                        </button>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstItem="xYV-P3-n0y" firstAttribute="centerY" secondItem="nk8-bq-PKN" secondAttribute="centerY" id="cBT-jN-qgY"/>
-                        <constraint firstItem="xYV-P3-n0y" firstAttribute="leading" secondItem="nk8-bq-PKN" secondAttribute="leading" id="gAV-UU-MXH"/>
-                        <constraint firstAttribute="trailing" secondItem="xYV-P3-n0y" secondAttribute="trailing" id="hIA-cn-Qoj"/>
+                        <constraint firstAttribute="trailing" secondItem="IpU-oB-FsV" secondAttribute="trailing" id="3lQ-pz-bCG"/>
+                        <constraint firstAttribute="trailing" secondItem="pVM-T5-7vt" secondAttribute="trailing" id="SvG-Ob-1fl"/>
+                        <constraint firstItem="IpU-oB-FsV" firstAttribute="leading" secondItem="2Iz-0h-kZx" secondAttribute="leading" id="Wdm-jr-sg9"/>
+                        <constraint firstItem="pVM-T5-7vt" firstAttribute="leading" secondItem="2Iz-0h-kZx" secondAttribute="leading" id="nR6-2m-ywt"/>
                     </constraints>
-                </view>
+                </stackView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WW4-C7-5Sn" userLabel="Yes Button">
                     <rect key="frame" x="30" y="784" width="169" height="48"/>
                     <color key="backgroundColor" red="0.23137254900000001" green="0.64313725489999995" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -121,18 +104,18 @@
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstAttribute="centerX" secondItem="WW4-C7-5Sn" secondAttribute="trailing" constant="8" id="2LB-RE-izk"/>
-                <constraint firstItem="5Xp-J2-BDq" firstAttribute="trailing" secondItem="nk8-bq-PKN" secondAttribute="trailing" id="89u-Ce-Hb0"/>
                 <constraint firstItem="5Xp-J2-BDq" firstAttribute="trailing" secondItem="kFd-qN-9uO" secondAttribute="trailing" constant="30" id="BRc-Q4-NYy"/>
                 <constraint firstItem="5Xp-J2-BDq" firstAttribute="bottom" secondItem="NQh-YT-1Of" secondAttribute="bottom" constant="30" id="Gb1-Wv-YsT"/>
                 <constraint firstItem="5Xp-J2-BDq" firstAttribute="trailing" secondItem="NQh-YT-1Of" secondAttribute="trailing" constant="50" id="UKD-uI-8Pu"/>
                 <constraint firstItem="NQh-YT-1Of" firstAttribute="leading" secondItem="5Xp-J2-BDq" secondAttribute="leading" constant="50" id="UvT-S7-UKe"/>
-                <constraint firstItem="WW4-C7-5Sn" firstAttribute="top" secondItem="nk8-bq-PKN" secondAttribute="bottom" id="Wss-RI-TDy"/>
-                <constraint firstItem="nk8-bq-PKN" firstAttribute="top" secondItem="5Xp-J2-BDq" secondAttribute="top" id="Z4B-Fa-tds"/>
+                <constraint firstItem="5Xp-J2-BDq" firstAttribute="trailing" secondItem="2Iz-0h-kZx" secondAttribute="trailing" constant="30" id="Xdf-Tv-fWf"/>
                 <constraint firstItem="5Xp-J2-BDq" firstAttribute="bottom" secondItem="kFd-qN-9uO" secondAttribute="bottom" constant="30" id="bRx-tK-mwB"/>
-                <constraint firstItem="nk8-bq-PKN" firstAttribute="leading" secondItem="5Xp-J2-BDq" secondAttribute="leading" id="buj-Ro-Uoo"/>
                 <constraint firstItem="WW4-C7-5Sn" firstAttribute="leading" secondItem="5Xp-J2-BDq" secondAttribute="leading" constant="30" id="eBg-j2-Cfw"/>
+                <constraint firstItem="2Iz-0h-kZx" firstAttribute="leading" secondItem="5Xp-J2-BDq" secondAttribute="leading" constant="30" id="lBQ-m5-CRi"/>
                 <constraint firstItem="kFd-qN-9uO" firstAttribute="leading" secondItem="3AB-3x-2v2" secondAttribute="centerX" constant="8" id="rXa-jq-f1A"/>
+                <constraint firstItem="2Iz-0h-kZx" firstAttribute="top" secondItem="5Xp-J2-BDq" secondAttribute="top" constant="30" id="u2G-wG-SRe"/>
                 <constraint firstItem="5Xp-J2-BDq" firstAttribute="bottom" secondItem="WW4-C7-5Sn" secondAttribute="bottom" constant="30" id="yvl-KK-qtJ"/>
+                <constraint firstItem="WW4-C7-5Sn" firstAttribute="top" secondItem="2Iz-0h-kZx" secondAttribute="bottom" constant="30" id="yz7-OJ-iEY"/>
             </constraints>
             <point key="canvasLocation" x="-684.05797101449275" y="57.589285714285708"/>
         </view>
