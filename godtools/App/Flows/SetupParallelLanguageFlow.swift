@@ -16,10 +16,12 @@ class SetupParallelLanguageFlow: Flow {
     let navigationController: UINavigationController
     
     deinit {
+        
         print("x deinit: \(type(of: self))")
     }
     
     required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController?) {
+        
         print("init: \(type(of: self))")
         
         self.flowDelegate = flowDelegate

@@ -32,6 +32,7 @@ class ParallelLanguageModal: UIViewController {
     }
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
         languagesTableView.delegate = self
@@ -43,10 +44,8 @@ class ParallelLanguageModal: UIViewController {
     
     private func setupLayout() {
         
-        // view
         view.backgroundColor = .clear
         
-        // overlayButton
         overlayButton.backgroundColor = .black
         overlayButton.alpha = 0.4
         
@@ -77,10 +76,12 @@ class ParallelLanguageModal: UIViewController {
     }
     
     @objc func handleBackgroundTapped() {
+        
         viewModel.backgroundTapped()
     }
     
     @objc func handleSelectTapped() {
+        
         viewModel.selectTapped()
     }
 }
@@ -90,10 +91,12 @@ class ParallelLanguageModal: UIViewController {
 extension ParallelLanguageModal: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
+        
         return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         return viewModel.numberOfLanguages.value
     }
     

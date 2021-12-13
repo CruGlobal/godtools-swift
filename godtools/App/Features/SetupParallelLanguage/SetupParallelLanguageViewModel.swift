@@ -10,20 +10,20 @@ import Foundation
 
 class SetupParallelLanguageViewModel: NSObject, SetupParallelLanguageViewModelType {
     
+    private weak var flowDelegate: FlowDelegate?
+    
     private let localizationServices: LocalizationServices
     private let languageSettingsService: LanguageSettingsService
-
-    private weak var flowDelegate: FlowDelegate?
-
+    
     let animatedViewModel: AnimatedViewModel
     let promptText: String
-    let selectLanguageButtonText: ObservableValue<String> = ObservableValue(value: "")
     let yesButtonText: String
     let noButtonText: String
     let selectButtonText: String
     let getStartedButtonText: String
-    let yesNoButtonsHidden: ObservableValue<Bool> = ObservableValue(value: false)
-    let getStartedButtonHidden: ObservableValue<Bool> = ObservableValue(value: true)
+    let selectLanguageButtonText: ObservableValue<String>
+    let yesNoButtonsHidden: ObservableValue<Bool>
+    let getStartedButtonHidden: ObservableValue<Bool>
     
     required init (flowDelegate: FlowDelegate, localizationServices: LocalizationServices, languageSettingsService: LanguageSettingsService) {
         
@@ -42,15 +42,16 @@ class SetupParallelLanguageViewModel: NSObject, SetupParallelLanguageViewModelTy
         noButtonText = localizationServices.stringForMainBundle(key: "parallelLanguage.noButton.title")
         selectButtonText = localizationServices.stringForMainBundle(key: "parallelLanguage.selectButton.title")
         getStartedButtonText = localizationServices.stringForMainBundle(key: "parallelLanguage.getStartedButton.title")
+        selectLanguageButtonText = ObservableValue(value: "")
+        yesNoButtonsHidden = ObservableValue(value: false)
+        getStartedButtonHidden = ObservableValue(value: true)
         
         super.init()
-        
         
         reloadData()
         
         setupBinding()
     }
-    
     
     private func reloadData() {
                 
@@ -63,6 +64,7 @@ class SetupParallelLanguageViewModel: NSObject, SetupParallelLanguageViewModelTy
             getStartedButtonHidden.accept(value: false)
         }
         else {
+            
             let buttonText = localizationServices.stringForMainBundle(key: "parallelLanguage.selectLanguageButton.title")
             
             selectLanguageButtonText.accept(value: buttonText)

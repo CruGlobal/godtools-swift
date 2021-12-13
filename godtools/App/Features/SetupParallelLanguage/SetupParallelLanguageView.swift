@@ -31,10 +31,12 @@ class SetupParallelLanguageView: UIViewController {
     }
     
     required init?(coder aDecoder: NSCoder) {
+        
         fatalError("init(coder:) has not been implemented")
     }
     
     deinit {
+        
         print("x deinit: \(type(of: self))")
     }
     
@@ -128,22 +130,27 @@ class SetupParallelLanguageView: UIViewController {
     }
     
     @objc func handleSelectLanguageTapped() {
+        
         viewModel.selectLanguageTapped()
     }
     
     @objc func handleCloseTapped(barButtonItem: UIBarButtonItem) {
+        
         viewModel.closeButtonTapped()
     }
     
     @objc func handleYesTapped() {
+        
         viewModel.yesButtonTapped()
     }
     
     @objc func handleNoTapped() {
+        
         viewModel.noButtonTapped()
     }
     
     @objc func handleGetStartedTapped() {
+        
         viewModel.getStartedButtonTapped()
     }
 }

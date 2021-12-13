@@ -10,15 +10,15 @@ import Foundation
 
 class ParallelLanguageModalViewModel: NSObject, ParallelLanguageModalViewModelType {
     
+    private weak var flowDelegate: FlowDelegate?
+    
     private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
     
-    private weak var flowDelegate: FlowDelegate?
-    
     let selectButtonText: String
-    let numberOfLanguages: ObservableValue<Int> = ObservableValue(value: 0)
-    let selectedLanguageIndex: ObservableValue<Int?> = ObservableValue(value: nil)
+    let numberOfLanguages: ObservableValue<Int>
+    let selectedLanguageIndex: ObservableValue<Int?>
     
     required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices) {
         
@@ -28,6 +28,8 @@ class ParallelLanguageModalViewModel: NSObject, ParallelLanguageModalViewModelTy
         self.localizationServices = localizationServices
         
         selectButtonText = localizationServices.stringForMainBundle(key: "parallelLanguage.selectButton.title")
+        numberOfLanguages = ObservableValue(value: 0)
+        selectedLanguageIndex = ObservableValue(value: nil)
         
         super.init()
         
@@ -84,6 +86,7 @@ class ParallelLanguageModalViewModel: NSObject, ParallelLanguageModalViewModelTy
     private var languagesList: [LanguageViewModel] = Array() {
         
         didSet {
+            
             numberOfLanguages.accept(value: languagesList.count)
         }
     }
@@ -91,6 +94,7 @@ class ParallelLanguageModalViewModel: NSObject, ParallelLanguageModalViewModelTy
     private var selectedLanguageModel: LanguageModel? {
         
         if let index = selectedLanguageIndex.value, index >= 0 && index < languagesList.count {
+            
             return languagesList[index].language
         }
         
@@ -117,7 +121,9 @@ class ParallelLanguageModalViewModel: NSObject, ParallelLanguageModalViewModelTy
         var selectedIndex: Int? = nil
         
         for index in 0 ..< languagesList.count {
+            
             let languageViewModel: LanguageViewModel = languagesList[index]
+            
             if languageViewModel.language.id == language?.id {
                 selectedIndex = index
                 break
