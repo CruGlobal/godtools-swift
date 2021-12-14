@@ -11,6 +11,8 @@ import Foundation
 class LessonFlow: NSObject, ToolNavigationFlow, Flow {
     
     private let deepLinkingService: DeepLinkingServiceType
+    
+    private var initialLesson: LessonView?
         
     private weak var flowDelegate: FlowDelegate?
     
@@ -73,6 +75,8 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
         
         let view = LessonView(viewModel: viewModel)
         
+        initialLesson = view
+        
         navigationController.pushViewController(view, animated: true)
         
         configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
@@ -83,6 +87,10 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
     deinit {
         print("x deinit: \(type(of: self))")
         deepLinkingService.deepLinkObserver.removeObserver(self)
+    }
+    
+    private var isShowingInitialLesson: Bool {
+        return navigationController.viewControllers.last == initialLesson
     }
     
     private func configureNavigationBar(shouldAnimateNavigationBarHiddenState: Bool) {
@@ -134,10 +142,8 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
             }
         
         case .closeTappedFromLesson(let lesson, let highestPageNumberViewed):
-            
-            let stackCount: Int = navigationController.viewControllers.count
-            
-            if stackCount == 1 {
+                        
+            if isShowingInitialLesson {
                 flowDelegate?.navigate(step: .lessonFlowCompleted(state: .userClosedLesson(lesson: lesson, highestPageNumberViewed: highestPageNumberViewed)))
             }
             else {

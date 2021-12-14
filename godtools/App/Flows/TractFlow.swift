@@ -13,6 +13,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
     private let deepLinkingService: DeepLinkingServiceType
     
     private var shareToolMenuFlow: ShareToolMenuFlow?
+    private var initialTract: ToolView?
  
     private weak var flowDelegate: FlowDelegate?
     
@@ -106,6 +107,8 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
         
         let view = ToolView(viewModel: viewModel)
         
+        initialTract = view
+        
         if let sharedNavController = sharedNavigationController {
             sharedNavController.pushViewController(view, animated: true)
         }
@@ -123,8 +126,8 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
         deepLinkingService.deepLinkObserver.removeObserver(self)
     }
     
-    private var isShowingRootView: Bool {
-        return navigationController.viewControllers.count == 1
+    private var isShowingInitialTract: Bool {
+        return navigationController.viewControllers.last == initialTract
     }
     
     private func configureNavigationBar(shouldAnimateNavigationBarHiddenState: Bool) {
@@ -177,7 +180,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
         
         case .homeTappedFromTool(let isScreenSharing):
             
-            if isScreenSharing && isShowingRootView {
+            if isScreenSharing && isShowingInitialTract {
                 
                 let acceptHandler = CallbackHandler { [weak self] in
                     self?.closeTool()
@@ -246,7 +249,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
     
     private func closeTool() {
         
-        if isShowingRootView {
+        if isShowingInitialTract {
             flowDelegate?.navigate(step: .tractFlowCompleted(state: .userClosedTract))
         }
         else {
