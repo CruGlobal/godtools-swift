@@ -127,7 +127,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
     }
     
     private var isShowingInitialTract: Bool {
-        return navigationController.viewControllers.last == initialTract
+        return navigationController.viewControllers.first == initialTract
     }
     
     private func configureNavigationBar(shouldAnimateNavigationBarHiddenState: Bool) {
