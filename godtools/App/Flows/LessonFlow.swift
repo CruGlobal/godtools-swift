@@ -90,7 +90,7 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
     }
     
     private var isShowingInitialLesson: Bool {
-        return navigationController.viewControllers.last == initialLesson
+        return navigationController.viewControllers.first == initialLesson
     }
     
     private func configureNavigationBar(shouldAnimateNavigationBarHiddenState: Bool) {
