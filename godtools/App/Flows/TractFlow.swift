@@ -11,7 +11,6 @@ import UIKit
 class TractFlow: NSObject, ToolNavigationFlow, Flow {
     
     private let deepLinkingService: DeepLinkingServiceType
-    private let parentFlowIsHomeFlow: Bool
     
     private var shareToolMenuFlow: ShareToolMenuFlow?
     
