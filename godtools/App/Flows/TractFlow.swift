@@ -30,7 +30,6 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController ?? UINavigationController()
         self.deepLinkingService = appDiContainer.getDeepLinkingService()
-        self.parentFlowIsHomeFlow = flowDelegate is ToolsFlow
         
         super.init()
             
@@ -84,7 +83,9 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             
             renderers.append(parallelRenderer)
         }
-                
+        
+        let parentFlowIsHomeFlow: Bool = flowDelegate is ToolsFlow
+        
         let viewModel = ToolViewModel(
             flowDelegate: self,
             backButtonImageType: (parentFlowIsHomeFlow) ? .home : .backArrow,
@@ -173,7 +174,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
         
         case .homeTappedFromTool(let isScreenSharing):
             
-            if isScreenSharing && parentFlowIsHomeFlow {
+            if isScreenSharing {
                 
                 let acceptHandler = CallbackHandler { [weak self] in
                     self?.closeTool()
