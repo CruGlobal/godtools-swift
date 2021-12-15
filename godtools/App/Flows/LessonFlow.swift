@@ -90,7 +90,7 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
     }
     
     private var isShowingInitialLesson: Bool {
-        return navigationController.viewControllers.first == initialLesson
+        return navigationController.viewControllers.last == initialLesson
     }
     
     private func configureNavigationBar(shouldAnimateNavigationBarHiddenState: Bool) {
@@ -183,9 +183,79 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
             configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
             
             tractFlow = nil
+            
+        case .lessonFlowCompleted(let state):
+            
+            guard lessonFlow != nil else {
+                return
+            }
+            
+            _ = navigationController.popViewController(animated: true)
+            configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
+            
+            lessonFlow = nil
+            
+            switch state {
+            
+            case .userClosedLesson(let lesson, let highestPageNumberViewed):
+                
+                let lessonEvaluationRepository: LessonEvaluationRepository = appDiContainer.getLessonsEvaluationRepository()
+                let lessonEvaluated: Bool
+                let numberOfEvaluationAttempts: Int
+                
+                if let cachedLessonEvaluation = lessonEvaluationRepository.getLessonEvaluation(lessonId: lesson.id) {
+                    lessonEvaluated = cachedLessonEvaluation.lessonEvaluated
+                    numberOfEvaluationAttempts = cachedLessonEvaluation.numberOfEvaluationAttempts
+                }
+                else {
+                    lessonEvaluated = false
+                    numberOfEvaluationAttempts = 0
+                }
+                
+                let lessonMarkedAsEvaluated: Bool = lessonEvaluated || numberOfEvaluationAttempts > 0
+                
+                if highestPageNumberViewed > 2 && !lessonMarkedAsEvaluated {
+                    presentLessonEvaluation(lesson: lesson, pageIndexReached: highestPageNumberViewed)
+                }
+            }
+            
+        case .closeTappedFromLessonEvaluation:
+            dismissLessonEvaluation()
+            
+        case .sendFeedbackTappedFromLessonEvaluation:
+            dismissLessonEvaluation()
                     
         default:
             break
         }
     }
 }
+
+// MARK: - Lesson Evaluation
+
+extension LessonFlow {
+    
+    private func presentLessonEvaluation(lesson: ResourceModel, pageIndexReached: Int) {
+        
+        let viewModel = LessonEvaluationViewModel(
+            flowDelegate: self,
+            lesson: lesson,
+            pageIndexReached: pageIndexReached,
+            lessonEvaluationRepository: appDiContainer.getLessonsEvaluationRepository(),
+            lessonFeedbackAnalytics: appDiContainer.getLessonFeedbackAnalytics(),
+            languageSettings: appDiContainer.languageSettingsService,
+            localization: appDiContainer.localizationServices
+        )
+        
+        let view = LessonEvaluationView(viewModel: viewModel)
+        
+        let modalView = TransparentModalView(modalView: view)
+        
+        navigationController.present(modalView, animated: true, completion: nil)
+    }
+    
+    private func dismissLessonEvaluation() {
+        navigationController.dismiss(animated: true, completion: nil)
+    }
+}
+
