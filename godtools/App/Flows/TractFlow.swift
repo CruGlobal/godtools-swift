@@ -13,8 +13,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
     private let deepLinkingService: DeepLinkingServiceType
     
     private var shareToolMenuFlow: ShareToolMenuFlow?
-    private var initialTract: ToolView?
- 
+    
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
@@ -106,9 +105,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
         )
         
         let view = ToolView(viewModel: viewModel)
-        
-        initialTract = view
-        
+                
         if let sharedNavController = sharedNavigationController {
             sharedNavController.pushViewController(view, animated: true)
         }
@@ -124,10 +121,6 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
     deinit {
         print("x deinit: \(type(of: self))")
         deepLinkingService.deepLinkObserver.removeObserver(self)
-    }
-    
-    private var isShowingInitialTract: Bool {
-        return navigationController.viewControllers.first == initialTract
     }
     
     private func configureNavigationBar(shouldAnimateNavigationBarHiddenState: Bool) {
@@ -180,7 +173,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
         
         case .homeTappedFromTool(let isScreenSharing):
             
-            if isScreenSharing && isShowingInitialTract {
+            if isScreenSharing {
                 
                 let acceptHandler = CallbackHandler { [weak self] in
                     self?.closeTool()
@@ -241,7 +234,29 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             
         case .closeTappedFromShareToolScreenTutorial:
             self.shareToolMenuFlow = nil
-        
+            
+        case .tractFlowCompleted(let state):
+            
+            guard tractFlow != nil else {
+                return
+            }
+            
+            _ = navigationController.popViewController(animated: true)
+            configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
+            
+            tractFlow = nil
+            
+        case .lessonFlowCompleted(let state):
+            
+            guard lessonFlow != nil else {
+                return
+            }
+            
+            _ = navigationController.popViewController(animated: true)
+            configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
+            
+            lessonFlow = nil
+            
         default:
             break
         }
@@ -249,12 +264,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
     
     private func closeTool() {
         
-        if isShowingInitialTract {
-            flowDelegate?.navigate(step: .tractFlowCompleted(state: .userClosedTract))
-        }
-        else {
-            navigationController.popViewController(animated: true)
-        }
+        flowDelegate?.navigate(step: .tractFlowCompleted(state: .userClosedTract))
     }
     
     private func navigateToToolTraining(event: TrainingTipEvent) {

@@ -11,9 +11,7 @@ import Foundation
 class LessonFlow: NSObject, ToolNavigationFlow, Flow {
     
     private let deepLinkingService: DeepLinkingServiceType
-    
-    private var initialLesson: LessonView?
-        
+            
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
@@ -74,9 +72,7 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
         )
         
         let view = LessonView(viewModel: viewModel)
-        
-        initialLesson = view
-        
+                
         navigationController.pushViewController(view, animated: true)
         
         configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
@@ -87,10 +83,6 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
     deinit {
         print("x deinit: \(type(of: self))")
         deepLinkingService.deepLinkObserver.removeObserver(self)
-    }
-    
-    private var isShowingInitialLesson: Bool {
-        return navigationController.viewControllers.first == initialLesson
     }
     
     private func configureNavigationBar(shouldAnimateNavigationBarHiddenState: Bool) {
@@ -142,13 +134,8 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
             }
         
         case .closeTappedFromLesson(let lesson, let highestPageNumberViewed):
-                        
-            if isShowingInitialLesson {
-                flowDelegate?.navigate(step: .lessonFlowCompleted(state: .userClosedLesson(lesson: lesson, highestPageNumberViewed: highestPageNumberViewed)))
-            }
-            else {
-                navigationController.popViewController(animated: true)
-            }
+            
+            flowDelegate?.navigate(step: .lessonFlowCompleted(state: .userClosedLesson(lesson: lesson, highestPageNumberViewed: highestPageNumberViewed)))
             
         case .buttonWithUrlTappedFromMobileContentRenderer(let url, let exitLink):
             guard let webUrl = URL(string: url) else {
@@ -173,7 +160,7 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
             
             articleFlow = nil
             
-        case .tractFlowCompleted(let state):
+        case .tractFlowCompleted(_):
             
             guard tractFlow != nil else {
                 return
@@ -183,6 +170,17 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
             configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
             
             tractFlow = nil
+            
+        case .lessonFlowCompleted(_):
+            
+            guard lessonFlow != nil else {
+                return
+            }
+            
+            _ = navigationController.popViewController(animated: true)
+            configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
+            
+            lessonFlow = nil
                     
         default:
             break
