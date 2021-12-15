@@ -11,9 +11,7 @@ import Foundation
 class LessonFlow: NSObject, ToolNavigationFlow, Flow {
     
     private let deepLinkingService: DeepLinkingServiceType
-    
-    private var initialLesson: LessonView?
-        
+            
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
@@ -74,9 +72,7 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
         )
         
         let view = LessonView(viewModel: viewModel)
-        
-        initialLesson = view
-        
+                
         navigationController.pushViewController(view, animated: true)
         
         configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
@@ -87,10 +83,6 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
     deinit {
         print("x deinit: \(type(of: self))")
         deepLinkingService.deepLinkObserver.removeObserver(self)
-    }
-    
-    private var isShowingInitialLesson: Bool {
-        return navigationController.viewControllers.last == initialLesson
     }
     
     private func configureNavigationBar(shouldAnimateNavigationBarHiddenState: Bool) {
@@ -142,13 +134,8 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
             }
         
         case .closeTappedFromLesson(let lesson, let highestPageNumberViewed):
-                        
-            if isShowingInitialLesson {
-                flowDelegate?.navigate(step: .lessonFlowCompleted(state: .userClosedLesson(lesson: lesson, highestPageNumberViewed: highestPageNumberViewed)))
-            }
-            else {
-                navigationController.popViewController(animated: true)
-            }
+            
+            flowDelegate?.navigate(step: .lessonFlowCompleted(state: .userClosedLesson(lesson: lesson, highestPageNumberViewed: highestPageNumberViewed)))
             
         case .buttonWithUrlTappedFromMobileContentRenderer(let url, let exitLink):
             guard let webUrl = URL(string: url) else {
@@ -173,7 +160,7 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
             
             articleFlow = nil
             
-        case .tractFlowCompleted(let state):
+        case .tractFlowCompleted(_):
             
             guard tractFlow != nil else {
                 return
@@ -184,7 +171,7 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
             
             tractFlow = nil
             
-        case .lessonFlowCompleted(let state):
+        case .lessonFlowCompleted(_):
             
             guard lessonFlow != nil else {
                 return
@@ -194,68 +181,9 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
             configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
             
             lessonFlow = nil
-            
-            switch state {
-            
-            case .userClosedLesson(let lesson, let highestPageNumberViewed):
-                
-                let lessonEvaluationRepository: LessonEvaluationRepository = appDiContainer.getLessonsEvaluationRepository()
-                let lessonEvaluated: Bool
-                let numberOfEvaluationAttempts: Int
-                
-                if let cachedLessonEvaluation = lessonEvaluationRepository.getLessonEvaluation(lessonId: lesson.id) {
-                    lessonEvaluated = cachedLessonEvaluation.lessonEvaluated
-                    numberOfEvaluationAttempts = cachedLessonEvaluation.numberOfEvaluationAttempts
-                }
-                else {
-                    lessonEvaluated = false
-                    numberOfEvaluationAttempts = 0
-                }
-                
-                let lessonMarkedAsEvaluated: Bool = lessonEvaluated || numberOfEvaluationAttempts > 0
-                
-                if highestPageNumberViewed > 2 && !lessonMarkedAsEvaluated {
-                    presentLessonEvaluation(lesson: lesson, pageIndexReached: highestPageNumberViewed)
-                }
-            }
-            
-        case .closeTappedFromLessonEvaluation:
-            dismissLessonEvaluation()
-            
-        case .sendFeedbackTappedFromLessonEvaluation:
-            dismissLessonEvaluation()
                     
         default:
             break
         }
     }
 }
-
-// MARK: - Lesson Evaluation
-
-extension LessonFlow {
-    
-    private func presentLessonEvaluation(lesson: ResourceModel, pageIndexReached: Int) {
-        
-        let viewModel = LessonEvaluationViewModel(
-            flowDelegate: self,
-            lesson: lesson,
-            pageIndexReached: pageIndexReached,
-            lessonEvaluationRepository: appDiContainer.getLessonsEvaluationRepository(),
-            lessonFeedbackAnalytics: appDiContainer.getLessonFeedbackAnalytics(),
-            languageSettings: appDiContainer.languageSettingsService,
-            localization: appDiContainer.localizationServices
-        )
-        
-        let view = LessonEvaluationView(viewModel: viewModel)
-        
-        let modalView = TransparentModalView(modalView: view)
-        
-        navigationController.present(modalView, animated: true, completion: nil)
-    }
-    
-    private func dismissLessonEvaluation() {
-        navigationController.dismiss(animated: true, completion: nil)
-    }
-}
-

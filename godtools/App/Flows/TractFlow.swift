@@ -11,10 +11,10 @@ import UIKit
 class TractFlow: NSObject, ToolNavigationFlow, Flow {
     
     private let deepLinkingService: DeepLinkingServiceType
+    private let parentFlowIsHomeFlow: Bool
     
     private var shareToolMenuFlow: ShareToolMenuFlow?
-    private var initialTract: ToolView?
- 
+    
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
@@ -30,6 +30,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController ?? UINavigationController()
         self.deepLinkingService = appDiContainer.getDeepLinkingService()
+        self.parentFlowIsHomeFlow = flowDelegate is ToolsFlow
         
         super.init()
             
@@ -83,9 +84,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             
             renderers.append(parallelRenderer)
         }
-        
-        let parentFlowIsHomeFlow: Bool = flowDelegate is ToolsFlow
-        
+                
         let viewModel = ToolViewModel(
             flowDelegate: self,
             backButtonImageType: (parentFlowIsHomeFlow) ? .home : .backArrow,
@@ -106,9 +105,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
         )
         
         let view = ToolView(viewModel: viewModel)
-        
-        initialTract = view
-        
+                
         if let sharedNavController = sharedNavigationController {
             sharedNavController.pushViewController(view, animated: true)
         }
@@ -124,10 +121,6 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
     deinit {
         print("x deinit: \(type(of: self))")
         deepLinkingService.deepLinkObserver.removeObserver(self)
-    }
-    
-    private var isShowingInitialTract: Bool {
-        return navigationController.viewControllers.last == initialTract
     }
     
     private func configureNavigationBar(shouldAnimateNavigationBarHiddenState: Bool) {
@@ -180,7 +173,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
         
         case .homeTappedFromTool(let isScreenSharing):
             
-            if isScreenSharing && isShowingInitialTract {
+            if isScreenSharing && parentFlowIsHomeFlow {
                 
                 let acceptHandler = CallbackHandler { [weak self] in
                     self?.closeTool()
@@ -264,36 +257,6 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             
             lessonFlow = nil
             
-            switch state {
-            
-            case .userClosedLesson(let lesson, let highestPageNumberViewed):
-                
-                let lessonEvaluationRepository: LessonEvaluationRepository = appDiContainer.getLessonsEvaluationRepository()
-                let lessonEvaluated: Bool
-                let numberOfEvaluationAttempts: Int
-                
-                if let cachedLessonEvaluation = lessonEvaluationRepository.getLessonEvaluation(lessonId: lesson.id) {
-                    lessonEvaluated = cachedLessonEvaluation.lessonEvaluated
-                    numberOfEvaluationAttempts = cachedLessonEvaluation.numberOfEvaluationAttempts
-                }
-                else {
-                    lessonEvaluated = false
-                    numberOfEvaluationAttempts = 0
-                }
-                
-                let lessonMarkedAsEvaluated: Bool = lessonEvaluated || numberOfEvaluationAttempts > 0
-                
-                if highestPageNumberViewed > 2 && !lessonMarkedAsEvaluated {
-                    presentLessonEvaluation(lesson: lesson, pageIndexReached: highestPageNumberViewed)
-                }
-            }
-            
-        case .closeTappedFromLessonEvaluation:
-            dismissLessonEvaluation()
-            
-        case .sendFeedbackTappedFromLessonEvaluation:
-            dismissLessonEvaluation()
-            
         default:
             break
         }
@@ -301,12 +264,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
     
     private func closeTool() {
         
-        if isShowingInitialTract {
-            flowDelegate?.navigate(step: .tractFlowCompleted(state: .userClosedTract))
-        }
-        else {
-            navigationController.popViewController(animated: true)
-        }
+        flowDelegate?.navigate(step: .tractFlowCompleted(state: .userClosedTract))
     }
     
     private func navigateToToolTraining(event: TrainingTipEvent) {
@@ -354,33 +312,5 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
         let view = ToolTrainingView(viewModel: viewModel)
         
         navigationController.present(view, animated: true, completion: nil)
-    }
-}
-
-// MARK: - Lesson Evaluation
-
-extension TractFlow {
-    
-    private func presentLessonEvaluation(lesson: ResourceModel, pageIndexReached: Int) {
-        
-        let viewModel = LessonEvaluationViewModel(
-            flowDelegate: self,
-            lesson: lesson,
-            pageIndexReached: pageIndexReached,
-            lessonEvaluationRepository: appDiContainer.getLessonsEvaluationRepository(),
-            lessonFeedbackAnalytics: appDiContainer.getLessonFeedbackAnalytics(),
-            languageSettings: appDiContainer.languageSettingsService,
-            localization: appDiContainer.localizationServices
-        )
-        
-        let view = LessonEvaluationView(viewModel: viewModel)
-        
-        let modalView = TransparentModalView(modalView: view)
-        
-        navigationController.present(modalView, animated: true, completion: nil)
-    }
-    
-    private func dismissLessonEvaluation() {
-        navigationController.dismiss(animated: true, completion: nil)
     }
 }
