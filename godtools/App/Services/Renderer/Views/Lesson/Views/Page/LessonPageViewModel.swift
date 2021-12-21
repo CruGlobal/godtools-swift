@@ -39,6 +39,7 @@ class LessonPageViewModel: MobileContentPageViewModel, LessonPageViewModelType {
     }
     
     func pageDidAppear() {
+        mobileContentDidAppear()
         
         let resource: ResourceModel = rendererPageModel.resource
         let page: Int = rendererPageModel.page
