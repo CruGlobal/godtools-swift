@@ -21,7 +21,7 @@ class LessonPageViewModel: MobileContentPageViewModel, LessonPageViewModelType {
         self.rendererPageModel = rendererPageModel
         self.analytics = analytics
         
-        analyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
+        self.analyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
             analyticsEvents: pageModel.getAnalyticsEvents(),
             mobileContentAnalytics: mobileContentAnalytics,
             rendererPageModel: rendererPageModel
