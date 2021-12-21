@@ -151,7 +151,8 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
                 pageModel: pageModel,
                 rendererPageModel: rendererPageModel,
                 deepLinkService: deepLinkService,
-                analytics: analytics
+                analytics: analytics,
+                mobileContentAnalytics: mobileContentAnalytics
             )
             
             let view = ToolPageView(

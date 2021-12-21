@@ -12,14 +12,16 @@ class LessonPageViewFactory: MobileContentPageViewFactoryType {
     
     private let deepLinkService: DeepLinkingServiceType
     private let analytics: AnalyticsContainer
+    private let mobileContentAnalytics: MobileContentAnalytics
     
     private(set) weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, deepLinkService: DeepLinkingServiceType, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, deepLinkService: DeepLinkingServiceType, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics) {
     
         self.flowDelegate = flowDelegate
         self.deepLinkService = deepLinkService
         self.analytics = analytics
+        self.mobileContentAnalytics = mobileContentAnalytics
     }
     
     func viewForRenderableModel(renderableModel: MobileContentRenderableModel, renderableModelParent: MobileContentRenderableModel?, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) -> MobileContentView? {
@@ -31,7 +33,8 @@ class LessonPageViewFactory: MobileContentPageViewFactoryType {
                 pageModel: pageModel,
                 rendererPageModel: rendererPageModel,
                 deepLinkService: deepLinkService,
-                analytics: analytics
+                analytics: analytics,
+                mobileContentAnalytics: mobileContentAnalytics
             )
             
             let view = LessonPageView(

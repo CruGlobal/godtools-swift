@@ -71,6 +71,10 @@ class MultiplatformTipPage: PageModelType {
     func getTextColor() -> MobileContentColor? {
         return nil
     }
+    
+    func getAnalyticsEvents() -> [AnalyticsEventModelType] {
+        return []
+    }
 }
 
 // MARK: - MobileContentRenderableModel

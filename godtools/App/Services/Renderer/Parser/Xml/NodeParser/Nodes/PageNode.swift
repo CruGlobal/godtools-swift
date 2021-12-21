@@ -26,6 +26,7 @@ class PageNode: MobileContentXmlNode, PageModelType {
     private var cardsNode: CardsNode?
     private var callToActionNode: CallToActionNode?
     private var modalsNode: ModalsNode?
+    private var analyticsEventsNode: AnalyticsEventsNode?
     
     let uuid: String = UUID().uuidString
     let backgroundImage: String?
@@ -68,6 +69,9 @@ class PageNode: MobileContentXmlNode, PageModelType {
         }
         else if let modalsNode = childNode as? ModalsNode {
             self.modalsNode = modalsNode
+        }
+        else if let analyticsEventsNode = childNode as? AnalyticsEventsNode {
+            self.analyticsEventsNode = analyticsEventsNode
         }
     }
     
@@ -142,5 +146,9 @@ class PageNode: MobileContentXmlNode, PageModelType {
             return MobileContentColor(stringColor: stringColor)
         }
         return nil
+    }
+    
+    func getAnalyticsEvents() -> [AnalyticsEventModelType] {
+        return analyticsEventsNode?.analyticsEventNodes ?? []
     }
 }
