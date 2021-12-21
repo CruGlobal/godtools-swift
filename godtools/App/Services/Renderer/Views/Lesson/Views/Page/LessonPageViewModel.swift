@@ -13,12 +13,19 @@ class LessonPageViewModel: MobileContentPageViewModel, LessonPageViewModelType {
     private let pageModel: PageModelType
     private let rendererPageModel: MobileContentRendererPageModel
     private let analytics: AnalyticsContainer
+    private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
     
-    required init(flowDelegate: FlowDelegate, pageModel: PageModelType, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, pageModel: PageModelType, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics) {
             
         self.pageModel = pageModel
         self.rendererPageModel = rendererPageModel
         self.analytics = analytics
+        
+        analyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
+            analyticsEvents: pageModel.getAnalyticsEvents(),
+            mobileContentAnalytics: mobileContentAnalytics,
+            rendererPageModel: rendererPageModel
+        )
         
         super.init(flowDelegate: flowDelegate, pageModel: pageModel, rendererPageModel: rendererPageModel, deepLinkService: deepLinkService, hidesBackgroundImage: false)
     }
@@ -37,5 +44,22 @@ class LessonPageViewModel: MobileContentPageViewModel, LessonPageViewModelType {
         let page: Int = rendererPageModel.page
         
         analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: resource.abbreviation + "-" + String(page), siteSection: resource.abbreviation, siteSubSection: ""))
+    }
+}
+
+// MARK: - MobileContentViewModelType
+
+extension LessonPageViewModel: MobileContentViewModelType {
+    
+    var language: LanguageModel {
+        return rendererPageModel.language
+    }
+    
+    var analyticsEvents: [MobileContentAnalyticsEvent] {
+        return analyticsEventsObjects
+    }
+    
+    var defaultAnalyticsEventsTrigger: MobileContentAnalyticsEventTrigger {
+        return .visible
     }
 }

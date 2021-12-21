@@ -87,6 +87,10 @@ class MultiplatformTractPage: PageModelType {
     func getTextColor() -> MobileContentColor? {
         return MobileContentColor(color: tractPage.textColor)
     }
+    
+    func getAnalyticsEvents() -> [AnalyticsEventModelType] {
+        return tractPage.getAnalyticsEvents(type: .visible).map({MultiplatformAnalyticsEvent(analyticsEvent: $0)})
+    }
 }
 
 // MARK: - MobileContentRenderableModel

@@ -33,7 +33,8 @@ class MobileContentRendererPageViewFactories {
             let lessonPageViewFactory = LessonPageViewFactory(
                 flowDelegate: flowDelegate,
                 deepLinkService: deepLinkingService,
-                analytics: analytics
+                analytics: analytics,
+                mobileContentAnalytics: mobileContentAnalytics
             )
             
             let toolPageViewFactory = ToolPageViewFactory(
