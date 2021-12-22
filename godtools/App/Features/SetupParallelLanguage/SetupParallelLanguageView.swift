@@ -115,7 +115,7 @@ class SetupParallelLanguageView: UIViewController {
         let buttonWidth = selectLanguageButton.frame.size.width
         let imageWidth = selectLanguageButton.image(for: .normal)?.size.width ?? 0
         
-        selectLanguageButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: buttonWidth - imageWidth - 10, bottom: 0, right: 0)
+        selectLanguageButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: buttonWidth - imageWidth - 20, bottom: 0, right: 0)
     }
     
     func setupBottomButtons() {
