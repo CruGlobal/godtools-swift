@@ -18,6 +18,7 @@ class RealmResource: Object, ResourceModelType {
     @objc dynamic var attrCategory: String = ""
     @objc dynamic var attrDefaultOrder: Int = -1
     @objc dynamic var id: String = ""
+    @objc dynamic var isHidden: Bool = false
     @objc dynamic var manifest: String = ""
     @objc dynamic var name: String = ""
     @objc dynamic var oneskyProjectId: Int = -1
@@ -45,6 +46,7 @@ class RealmResource: Object, ResourceModelType {
         attrCategory = model.attrCategory
         attrDefaultOrder = model.attrDefaultOrder
         id = model.id
+        isHidden = model.isHidden
         manifest = model.manifest
         name = model.name
         oneskyProjectId = model.oneskyProjectId

@@ -132,8 +132,13 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
         let sortedFavoritedResourcesIds: [String] = sortedFavoritedResources.map({$0.resourceId})
         
         let resources: [ResourceModel] = dataDownloader.resourcesCache.getResources(resourceIds: sortedFavoritedResourcesIds)
-        tools.accept(value: resources)
-        hidesFindToolsView.accept(value: !resources.isEmpty)
+        
+        let filteredResources: [ResourceModel] = resources.filter({
+            return !$0.isHidden
+        })
+        
+        tools.accept(value: filteredResources)
+        hidesFindToolsView.accept(value: !filteredResources.isEmpty)
         isLoading.accept(value: false)
     }
     
