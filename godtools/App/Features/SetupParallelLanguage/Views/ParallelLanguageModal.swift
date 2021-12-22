@@ -16,6 +16,9 @@ class ParallelLanguageModal: UIViewController {
     @IBOutlet weak private var selectButton: UIButton!
     @IBOutlet weak private var languagesTableView: UITableView!
     
+    @IBOutlet weak private var tableTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak private var tableBottomConstraint: NSLayoutConstraint!
+    
     required init(viewModel: ParallelLanguageModalViewModelType) {
         
         self.viewModel = viewModel
@@ -49,8 +52,6 @@ class ParallelLanguageModal: UIViewController {
         overlayButton.backgroundColor = .black
         overlayButton.alpha = 0.4
         
-        selectButton.setTitle(viewModel.selectButtonText, for: .normal)
-        
         languagesTableView.register(
             UINib(nibName: ChooseLanguageCell.nibName, bundle: nil),
             forCellReuseIdentifier: ChooseLanguageCell.reuseIdentifier
@@ -60,11 +61,13 @@ class ParallelLanguageModal: UIViewController {
         languagesTableView.layer.cornerRadius = 6
         
         selectButton.layer.cornerRadius = 6
+        selectButton.setTitle(viewModel.selectButtonText, for: .normal)
     }
     
     private func setupBinding() {
         
         selectButton.addTarget(self, action: #selector(handleSelectTapped), for: .touchUpInside)
+        overlayButton.addTarget(self, action: #selector(handleBackgroundTapped), for: .touchUpInside)
         
         viewModel.numberOfLanguages.addObserver(self) { [weak self] (numberOfLanguages: Int) in
             self?.languagesTableView.reloadData()
