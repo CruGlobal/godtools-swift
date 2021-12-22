@@ -37,10 +37,10 @@ class MobileContentAnalytics {
         }
                 
         let data: [String: String] = event.getAttributes()
-         
+        
         for system in event.systems {
              
-            if let analyticsSystem = analyticsSystems[system] {
+            if let analyticsSystem = analyticsSystems[system.lowercased()] {
                 
                 let resourceAbbreviation = rendererPageModel.resource.abbreviation
                 let pageNumber = rendererPageModel.page

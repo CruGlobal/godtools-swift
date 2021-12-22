@@ -11,7 +11,7 @@ import Foundation
 class LessonFlow: NSObject, ToolNavigationFlow, Flow {
     
     private let deepLinkingService: DeepLinkingServiceType
-        
+            
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
@@ -72,7 +72,7 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
         )
         
         let view = LessonView(viewModel: viewModel)
-        
+                
         navigationController.pushViewController(view, animated: true)
         
         configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
@@ -134,6 +134,7 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
             }
         
         case .closeTappedFromLesson(let lesson, let highestPageNumberViewed):
+            
             flowDelegate?.navigate(step: .lessonFlowCompleted(state: .userClosedLesson(lesson: lesson, highestPageNumberViewed: highestPageNumberViewed)))
             
         case .buttonWithUrlTappedFromMobileContentRenderer(let url, let exitLink):
@@ -159,7 +160,7 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
             
             articleFlow = nil
             
-        case .tractFlowCompleted(let state):
+        case .tractFlowCompleted(_):
             
             guard tractFlow != nil else {
                 return
@@ -169,6 +170,17 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
             configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
             
             tractFlow = nil
+            
+        case .lessonFlowCompleted(_):
+            
+            guard lessonFlow != nil else {
+                return
+            }
+            
+            _ = navigationController.popViewController(animated: true)
+            configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
+            
+            lessonFlow = nil
                     
         default:
             break

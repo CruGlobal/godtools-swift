@@ -50,12 +50,24 @@ class ToolNavBarView: NSObject {
         setupBinding(viewModel: viewModel)
     }
     
+    func reloadAppearance() {
+        
+        guard let parentViewController = self.parentViewController, let viewModel = self.viewModel else {
+            return
+        }
+
+        setupNavigationBar(parentViewController: parentViewController, viewModel: viewModel)
+    }
+    
     private func setupNavigationBar(parentViewController: UIViewController, viewModel: ToolNavBarViewModelType) {
         
         let navigationController: UINavigationController? = parentViewController.navigationController
         let navBarColor: UIColor = viewModel.navBarColor
         let navBarControlColor: UIColor = viewModel.navBarControlColor
              
+        parentViewController.removeAllBarButtonItems()
+        chooseLanguageControl.removeAllSegments()
+        
         parentViewController.title = viewModel.navTitle
         
         navigationController?.navigationBar.setupNavigationBarAppearance(
@@ -65,7 +77,7 @@ class ToolNavBarView: NSObject {
             titleColor: navBarControlColor,
             isTranslucent: true
         )
-                
+
         _ = parentViewController.addBarButtonItem(
             to: .left,
             image: viewModel.backButtonImage,
@@ -87,10 +99,7 @@ class ToolNavBarView: NSObject {
         }
         
         if !viewModel.hidesChooseLanguageControl {
-                
-            let navBarColor: UIColor = navBarColor
-            let navBarControlColor: UIColor = navBarControlColor
-            
+                            
             for index in 0 ..< viewModel.numberOfLanguages {
                 chooseLanguageControl.insertSegment(
                     withTitle: viewModel.languageSegmentWillAppear(index: index).title,
@@ -135,7 +144,7 @@ class ToolNavBarView: NSObject {
         }
     }
     
-    @objc func backButtonTapped() {
+    @objc private func backButtonTapped() {
         
         guard let viewModel = self.viewModel else {
             return
@@ -147,7 +156,7 @@ class ToolNavBarView: NSObject {
         )
     }
 
-    @objc func shareButtonTapped() {
+    @objc private func shareButtonTapped() {
         
         guard let viewModel = self.viewModel else {
             return
@@ -159,7 +168,7 @@ class ToolNavBarView: NSObject {
         )
     }
 
-    @objc func didChooseLanguage(segmentedControl: UISegmentedControl) {
+    @objc private func didChooseLanguage(segmentedControl: UISegmentedControl) {
         
         guard let viewModel = self.viewModel else {
             return

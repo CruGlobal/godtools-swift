@@ -25,6 +25,7 @@ protocol PageModelType: BackgroundImageModelType, MobileContentRenderableModel {
     func getPrimaryColor() -> MobileContentColor?
     func getPrimaryTextColor() -> MobileContentColor?
     func getTextColor() -> MobileContentColor?
+    func getAnalyticsEvents() -> [AnalyticsEventModelType]
 }
 
 extension PageModelType {
