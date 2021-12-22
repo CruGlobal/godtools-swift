@@ -88,7 +88,7 @@ class LessonsListViewModel: NSObject, LessonsListViewModelType {
         
         let resources: [ResourceModel] = sortedResources.filter({
             let resourceType: ResourceType = $0.resourceTypeEnum
-            return resourceType == .lesson
+            return resourceType == .lesson && !$0.isHidden
         })
         
         return resources
