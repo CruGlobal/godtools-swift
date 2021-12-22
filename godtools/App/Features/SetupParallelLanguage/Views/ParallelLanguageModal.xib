@@ -35,7 +35,7 @@
                     </constraints>
                 </tableView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Gc-rT-i27" userLabel="Select Button">
-                    <rect key="frame" x="50" y="784" width="314" height="48"/>
+                    <rect key="frame" x="30" y="784" width="354" height="48"/>
                     <color key="backgroundColor" red="0.23137254900000001" green="0.64313725489999995" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="48" id="uNt-Cj-5BN"/>
@@ -52,9 +52,9 @@
             <constraints>
                 <constraint firstItem="GaJ-io-bW5" firstAttribute="centerY" secondItem="c4S-2b-ORB" secondAttribute="centerY" constant="-39" id="BaJ-vR-I2f"/>
                 <constraint firstItem="GaJ-io-bW5" firstAttribute="leading" secondItem="c4S-2b-ORB" secondAttribute="leading" constant="30" id="FZp-YR-sNu"/>
-                <constraint firstItem="0Gc-rT-i27" firstAttribute="leading" secondItem="c4S-2b-ORB" secondAttribute="leading" constant="50" id="Njt-va-XD8"/>
+                <constraint firstItem="0Gc-rT-i27" firstAttribute="leading" secondItem="c4S-2b-ORB" secondAttribute="leading" constant="30" id="Njt-va-XD8"/>
                 <constraint firstItem="c4S-2b-ORB" firstAttribute="trailing" secondItem="GaJ-io-bW5" secondAttribute="trailing" constant="30" id="l2p-Xg-Jo0"/>
-                <constraint firstItem="c4S-2b-ORB" firstAttribute="trailing" secondItem="0Gc-rT-i27" secondAttribute="trailing" constant="50" id="rkz-Cp-4HY"/>
+                <constraint firstItem="c4S-2b-ORB" firstAttribute="trailing" secondItem="0Gc-rT-i27" secondAttribute="trailing" constant="30" id="rkz-Cp-4HY"/>
                 <constraint firstItem="c4S-2b-ORB" firstAttribute="bottom" secondItem="0Gc-rT-i27" secondAttribute="bottom" constant="30" id="sFk-By-jg2"/>
             </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="115.51339285714285"/>

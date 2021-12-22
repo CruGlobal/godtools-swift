@@ -114,7 +114,7 @@
                     </buttonConfiguration>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NQh-YT-1Of" userLabel="Get Started Button">
-                    <rect key="frame" x="50" y="784" width="314" height="48"/>
+                    <rect key="frame" x="30" y="784" width="354" height="48"/>
                     <color key="backgroundColor" red="0.23137254900000001" green="0.64313725489999995" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="48" id="Ni5-jB-PMk"/>
@@ -132,8 +132,8 @@
                 <constraint firstAttribute="centerX" secondItem="WW4-C7-5Sn" secondAttribute="trailing" constant="8" id="2LB-RE-izk"/>
                 <constraint firstItem="5Xp-J2-BDq" firstAttribute="trailing" secondItem="kFd-qN-9uO" secondAttribute="trailing" constant="30" id="BRc-Q4-NYy"/>
                 <constraint firstItem="5Xp-J2-BDq" firstAttribute="bottom" secondItem="NQh-YT-1Of" secondAttribute="bottom" constant="30" id="Gb1-Wv-YsT"/>
-                <constraint firstItem="5Xp-J2-BDq" firstAttribute="trailing" secondItem="NQh-YT-1Of" secondAttribute="trailing" constant="50" id="UKD-uI-8Pu"/>
-                <constraint firstItem="NQh-YT-1Of" firstAttribute="leading" secondItem="5Xp-J2-BDq" secondAttribute="leading" constant="50" id="UvT-S7-UKe"/>
+                <constraint firstItem="5Xp-J2-BDq" firstAttribute="trailing" secondItem="NQh-YT-1Of" secondAttribute="trailing" constant="30" id="UKD-uI-8Pu"/>
+                <constraint firstItem="NQh-YT-1Of" firstAttribute="leading" secondItem="5Xp-J2-BDq" secondAttribute="leading" constant="30" id="UvT-S7-UKe"/>
                 <constraint firstItem="5Xp-J2-BDq" firstAttribute="trailing" secondItem="2Iz-0h-kZx" secondAttribute="trailing" constant="30" id="Xdf-Tv-fWf"/>
                 <constraint firstItem="5Xp-J2-BDq" firstAttribute="bottom" secondItem="kFd-qN-9uO" secondAttribute="bottom" constant="30" id="bRx-tK-mwB"/>
                 <constraint firstItem="WW4-C7-5Sn" firstAttribute="leading" secondItem="5Xp-J2-BDq" secondAttribute="leading" constant="30" id="eBg-j2-Cfw"/>
