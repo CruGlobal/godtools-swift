@@ -101,10 +101,10 @@ class SetupParallelLanguageView: UIViewController {
     
     func setupSelectLanguageButton() {
         
-        selectLanguageButton.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
-        selectLanguageButton.layer.shadowOffset = CGSize(width: 2, height: 4)
-        selectLanguageButton.layer.shadowOpacity = 1.0
-        selectLanguageButton.layer.shadowRadius = 0.0
+        selectLanguageButton.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1).cgColor
+        selectLanguageButton.layer.shadowOffset = CGSize(width: 2, height: 2)
+        selectLanguageButton.layer.shadowOpacity =  0.25
+        selectLanguageButton.layer.shadowRadius = 4
         selectLanguageButton.layer.masksToBounds = false
         selectLanguageButton.layer.cornerRadius = 6
         
