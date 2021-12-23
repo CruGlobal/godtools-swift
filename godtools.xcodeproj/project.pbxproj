@@ -974,6 +974,7 @@
 		45CBA009261FB0D30036BEB3 /* LessonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CBA008261FB0D30036BEB3 /* LessonView.swift */; };
 		45CBA015261FB0E30036BEB3 /* LessonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CBA014261FB0E30036BEB3 /* LessonViewModel.swift */; };
 		45CBA01B261FB0EA0036BEB3 /* LessonViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CBA01A261FB0EA0036BEB3 /* LessonViewModelType.swift */; };
+		45D266E9277499AD00960990 /* UIViewController+DismissPresented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D266E8277499AD00960990 /* UIViewController+DismissPresented.swift */; };
 		45D6D02D2708B8FF0063C38A /* LessonEvaluationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D6D0292708B8FF0063C38A /* LessonEvaluationModel.swift */; };
 		45D6D02E2708B8FF0063C38A /* RealmLessonEvaluation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D6D02A2708B8FF0063C38A /* RealmLessonEvaluation.swift */; };
 		45D6D02F2708B8FF0063C38A /* LessonEvaluationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D6D02B2708B8FF0063C38A /* LessonEvaluationRepository.swift */; };
@@ -2048,6 +2049,7 @@
 		45CBA008261FB0D30036BEB3 /* LessonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonView.swift; sourceTree = "<group>"; };
 		45CBA014261FB0E30036BEB3 /* LessonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonViewModel.swift; sourceTree = "<group>"; };
 		45CBA01A261FB0EA0036BEB3 /* LessonViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonViewModelType.swift; sourceTree = "<group>"; };
+		45D266E8277499AD00960990 /* UIViewController+DismissPresented.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+DismissPresented.swift"; sourceTree = "<group>"; };
 		45D6D0292708B8FF0063C38A /* LessonEvaluationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LessonEvaluationModel.swift; sourceTree = "<group>"; };
 		45D6D02A2708B8FF0063C38A /* RealmLessonEvaluation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmLessonEvaluation.swift; sourceTree = "<group>"; };
 		45D6D02B2708B8FF0063C38A /* LessonEvaluationRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LessonEvaluationRepository.swift; sourceTree = "<group>"; };
@@ -4105,10 +4107,13 @@
 		45AD18B025938A4E00A096A0 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				45B116C12625FC6D007A7127 /* LanguageDirection+SemanticContentAttribute.swift */,
 				45AD18BB25938A4E00A096A0 /* Locale+Extensions.swift */,
+				D182CA2627274B1F00ABAAC8 /* UIButton+SetInsets.swift */,
 				45AD18B925938A4E00A096A0 /* UIColor+HexColor.swift */,
-				45AD18B325938A4E00A096A0 /* UIKit+Extensions.swift */,
 				45AD22B22593D1FB00A096A0 /* UIImage+CreateImageWithColor.swift */,
+				D182CA24272745BE00ABAAC8 /* UIImage+ScalePresevingAspectRatio.swift */,
+				45AD18B325938A4E00A096A0 /* UIKit+Extensions.swift */,
 				4533A927270E2567009B1AF5 /* UINavigationBar+Appearance.swift */,
 				45AD18B425938A4E00A096A0 /* UIView+Animations.swift */,
 				45AD18B725938A4E00A096A0 /* UIView+Constraints.swift */,
@@ -4116,11 +4121,9 @@
 				45AD18BA25938A4E00A096A0 /* UIView+RemoveAllSubviews.swift */,
 				45AD18B125938A4E00A096A0 /* UIViewController+AlertMessage.swift */,
 				45AD18B825938A4E00A096A0 /* UIViewController+Containment.swift */,
+				45D266E8277499AD00960990 /* UIViewController+DismissPresented.swift */,
 				45AD18B525938A4E00A096A0 /* UIViewController+NavBackItem.swift */,
 				45AD18B225938A4E00A096A0 /* UIViewController+NavItem.swift */,
-				45B116C12625FC6D007A7127 /* LanguageDirection+SemanticContentAttribute.swift */,
-				D182CA24272745BE00ABAAC8 /* UIImage+ScalePresevingAspectRatio.swift */,
-				D182CA2627274B1F00ABAAC8 /* UIButton+SetInsets.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -6963,6 +6966,7 @@
 				D1FF263825BA0C0E00C825DB /* FirebaseInAppMessagingType.swift in Sources */,
 				45AD1AEB25938A4E00A096A0 /* WebContentViewModelType.swift in Sources */,
 				45AD1F5F25938A9800A096A0 /* WebSocketChannelSubscriberType.swift in Sources */,
+				45D266E9277499AD00960990 /* UIViewController+DismissPresented.swift in Sources */,
 				45AD223C2593C90000A096A0 /* CrashReportingType.swift in Sources */,
 				45AD1B1225938A4E00A096A0 /* ArticleCategoryCellViewModelType.swift in Sources */,
 				D1FF263E25BA0C1C00C825DB /* FirebaseInAppMessaging.swift in Sources */,
