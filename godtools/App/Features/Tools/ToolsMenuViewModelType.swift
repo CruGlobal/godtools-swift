@@ -16,5 +16,4 @@ protocol ToolsMenuViewModelType {
     func toolbarWillAppear() -> ToolsMenuToolbarViewModelType
     func menuTapped()
     func languageTapped()
-    func openSetupParallelLanguageifAvailable()
 }

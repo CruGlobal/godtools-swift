@@ -77,9 +77,6 @@ class ToolsFlow: ToolNavigationFlow, Flow {
         
         switch step {
         
-        case .openSetupParallelLanguage:
-            flowDelegate?.navigate(step: .openSetupParallelLanguage)
-        
         case .openTutorialTapped:
             flowDelegate?.navigate(step: .openTutorialTapped)
            

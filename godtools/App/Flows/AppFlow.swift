@@ -23,7 +23,6 @@ class AppFlow: NSObject, Flow {
     private var toolsFlow: ToolsFlow?
     private var tutorialFlow: TutorialFlow?
     private var articleDeepLinkFlow: ArticleDeepLinkFlow?
-    private var setupParallelLanguageFlow: SetupParallelLanguageFlow?
     private var appLaunchedFromDeepLink: ParsedDeepLinkType?
     private var resignedActiveDate: Date?
     private var navigationStarted: Bool = false
@@ -344,21 +343,6 @@ class AppFlow: NSObject, Flow {
             
         case .startUsingGodToolsTappedFromTutorial:
             dismissTutorial()
-        
-        case .openSetupParallelLanguage:
-            let setupParallelLanguageFlow = SetupParallelLanguageFlow(
-                flowDelegate: self,
-                appDiContainer: appDiContainer,
-                sharedNavigationController: nil
-            )
-            navigationController.present(setupParallelLanguageFlow.navigationController, animated: true, completion: nil)
-            self.setupParallelLanguageFlow = setupParallelLanguageFlow
-        
-        case .dismissSetupParallelLanguage:
-            closeMenu(animated: true)
-            navigate(step: .showTools(animated: false, shouldCreateNewInstance: false, startingToolbarItem: nil))
-            navigationController.dismiss(animated: true, completion: nil)
-            setupParallelLanguageFlow = nil
             
         case .showMenu:
             navigateToMenu(animated: true)
