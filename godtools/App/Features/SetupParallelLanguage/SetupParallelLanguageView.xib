@@ -23,7 +23,9 @@
                 <outlet property="getStartedButton" destination="NQh-YT-1Of" id="86p-80-xsD"/>
                 <outlet property="noButton" destination="kFd-qN-9uO" id="2Qg-MU-IYf"/>
                 <outlet property="promptLabel" destination="pVM-T5-7vt" id="cFW-0L-jZp"/>
-                <outlet property="selectLanguageButton" destination="IpU-oB-FsV" id="PuF-Ex-tBy"/>
+                <outlet property="selectLanguageButtonGestureRecognizer" destination="5rI-zn-L02" id="QDg-fo-jtn"/>
+                <outlet property="selectLanguageButtonTitle" destination="iXU-rl-Xo0" id="4MV-68-u9I"/>
+                <outlet property="selectLanguageButtonView" destination="ROn-5e-r1Q" id="Qbz-WO-nPh"/>
                 <outlet property="view" destination="3AB-3x-2v2" id="Ont-NA-60H"/>
                 <outlet property="yesButton" destination="WW4-C7-5Sn" id="2d6-ZV-k2B"/>
             </connections>
@@ -74,23 +76,42 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iIE-Se-Jcc">
                             <rect key="frame" x="0.0" y="452" width="354" height="226"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IpU-oB-FsV" userLabel="Select Language Button">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ROn-5e-r1Q" userLabel="Select Language Button View">
                                     <rect key="frame" x="0.0" y="88" width="354" height="50"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Language Button" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iXU-rl-Xo0" userLabel="Select Language Button Title">
+                                            <rect key="frame" x="76.5" y="14.5" width="201.5" height="21.5"/>
+                                            <fontDescription key="fontDescription" name="SFProText-Light" family="SF Pro Text" pointSize="18"/>
+                                            <color key="textColor" red="0.35294117650000001" green="0.35294117650000001" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dropdown_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="O3c-lc-K81">
+                                            <rect key="frame" x="316" y="16" width="18" height="18"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="18" id="JCR-k8-Uhy"/>
+                                                <constraint firstAttribute="height" constant="18" id="sga-sK-NAa"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <gestureRecognizers/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="50" id="z1E-od-MRC"/>
+                                        <constraint firstItem="O3c-lc-K81" firstAttribute="centerY" secondItem="ROn-5e-r1Q" secondAttribute="centerY" id="6dx-kb-vX6"/>
+                                        <constraint firstAttribute="height" constant="50" id="K2D-gc-Sy0"/>
+                                        <constraint firstAttribute="trailing" secondItem="O3c-lc-K81" secondAttribute="trailing" constant="20" id="P6e-mz-Rk8"/>
+                                        <constraint firstItem="iXU-rl-Xo0" firstAttribute="centerX" secondItem="ROn-5e-r1Q" secondAttribute="centerX" id="Vii-cC-uX3"/>
+                                        <constraint firstItem="iXU-rl-Xo0" firstAttribute="centerY" secondItem="ROn-5e-r1Q" secondAttribute="centerY" id="skP-PF-pR8"/>
                                     </constraints>
-                                    <fontDescription key="fontDescription" name="SFProText-Light" family="SF Pro Text" pointSize="18"/>
-                                    <state key="normal" title="Button" image="dropdown_arrow">
-                                        <color key="titleColor" red="0.35294117650000001" green="0.35294117650000001" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
-                                    </state>
-                                </button>
+                                    <connections>
+                                        <outletCollection property="gestureRecognizers" destination="5rI-zn-L02" appends="YES" id="fWe-7Y-c9f"/>
+                                    </connections>
+                                </view>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
-                                <constraint firstAttribute="trailing" secondItem="IpU-oB-FsV" secondAttribute="trailing" id="EjJ-SQ-GMg"/>
-                                <constraint firstItem="IpU-oB-FsV" firstAttribute="leading" secondItem="iIE-Se-Jcc" secondAttribute="leading" id="MUE-nh-zAp"/>
-                                <constraint firstItem="IpU-oB-FsV" firstAttribute="centerY" secondItem="iIE-Se-Jcc" secondAttribute="centerY" id="QVz-ld-Y0j"/>
+                                <constraint firstItem="ROn-5e-r1Q" firstAttribute="centerY" secondItem="iIE-Se-Jcc" secondAttribute="centerY" id="4kY-rI-Ckc"/>
+                                <constraint firstAttribute="trailing" secondItem="ROn-5e-r1Q" secondAttribute="trailing" id="DWf-jT-dlL"/>
+                                <constraint firstItem="ROn-5e-r1Q" firstAttribute="leading" secondItem="iIE-Se-Jcc" secondAttribute="leading" id="hRJ-bL-lvq"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -149,6 +170,7 @@
             </constraints>
             <point key="canvasLocation" x="-684.05797101449275" y="57.589285714285708"/>
         </view>
+        <tapGestureRecognizer id="5rI-zn-L02"/>
     </objects>
     <resources>
         <image name="dropdown_arrow" width="18" height="8"/>

@@ -17,7 +17,9 @@ class SetupParallelLanguageView: UIViewController {
 
     @IBOutlet weak private var animatedView: AnimatedView!
     @IBOutlet weak private var promptLabel: UILabel!
-    @IBOutlet weak private var selectLanguageButton: UIButton!
+    @IBOutlet weak private var selectLanguageButtonView: UIView!
+    @IBOutlet weak private var selectLanguageButtonGestureRecognizer: UITapGestureRecognizer!
+    @IBOutlet weak private var selectLanguageButtonTitle: UILabel!
     @IBOutlet weak private var yesButton: UIButton!
     @IBOutlet weak private var noButton: UIButton!
     @IBOutlet weak private var getStartedButton: UIButton!
@@ -51,7 +53,7 @@ class SetupParallelLanguageView: UIViewController {
         
         animatedView.configure(viewModel: viewModel.animatedViewModel)
         
-        selectLanguageButton.addTarget(self, action: #selector(handleSelectLanguageTapped), for: .touchUpInside)
+        selectLanguageButtonGestureRecognizer.addTarget(self, action: #selector(handleSelectLanguageTapped))
         
         yesButton.addTarget(self, action: #selector(handleYesTapped), for: .touchUpInside)
         
@@ -61,7 +63,7 @@ class SetupParallelLanguageView: UIViewController {
 
         viewModel.selectLanguageButtonText.addObserver(self) { [weak self] (buttonText: String) in
             
-            self?.selectLanguageButton.setTitle(buttonText, for: .normal)
+            self?.selectLanguageButtonTitle.text = buttonText
         }
         
         viewModel.yesNoButtonsHidden.addObserver(self) { [weak self] (isHidden: Bool) in
@@ -100,21 +102,12 @@ class SetupParallelLanguageView: UIViewController {
     
     func setupSelectLanguageButton() {
         
-        selectLanguageButton.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1).cgColor
-        selectLanguageButton.layer.shadowOffset = CGSize(width: 2, height: 2)
-        selectLanguageButton.layer.shadowOpacity =  0.25
-        selectLanguageButton.layer.shadowRadius = 4
-        selectLanguageButton.layer.masksToBounds = false
-        selectLanguageButton.layer.cornerRadius = 6
-        
-        selectLanguageButton.setImageColor(color: UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1))
-        
-        selectLanguageButton.layoutIfNeeded()
-        
-        let buttonWidth = selectLanguageButton.frame.size.width
-        let imageWidth = selectLanguageButton.image(for: .normal)?.size.width ?? 0
-        
-        selectLanguageButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: buttonWidth - imageWidth - 20, bottom: 0, right: 0)
+        selectLanguageButtonView.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1).cgColor
+        selectLanguageButtonView.layer.shadowOffset = CGSize(width: 2, height: 2)
+        selectLanguageButtonView.layer.shadowOpacity =  0.25
+        selectLanguageButtonView.layer.shadowRadius = 4
+        selectLanguageButtonView.layer.masksToBounds = false
+        selectLanguageButtonView.layer.cornerRadius = 6
     }
     
     func setupBottomButtons() {
