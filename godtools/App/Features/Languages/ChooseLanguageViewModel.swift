@@ -242,7 +242,9 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
         return ChooseLanguageCellViewModel(
             languageViewModel: languageViewModel,
             languageIsDownloaded: downloadedLanguagesCache.isDownloaded(languageId: languageViewModel.language.id),
-            hidesSelected: languageViewModel.language.id != selectedLanguageModel?.id
+            hidesSelected: languageViewModel.language.id != selectedLanguageModel?.id,
+            selectorColor: nil,
+            separatorColor: nil
         )
     }
 }

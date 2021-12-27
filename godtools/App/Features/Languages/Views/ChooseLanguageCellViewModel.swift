@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class ChooseLanguageCellViewModel: ChooseLanguageCellViewModelType {
     
@@ -14,12 +15,16 @@ class ChooseLanguageCellViewModel: ChooseLanguageCellViewModelType {
     let languageIsDownloaded: Bool
     let hidesSelected: Bool
     let hidesSeparator: Bool
+    let selectorColor: UIColor?
+    let separatorColor: UIColor?
     
-    required init(languageViewModel: LanguageViewModel, languageIsDownloaded: Bool, hidesSelected: Bool) {
+    required init(languageViewModel: LanguageViewModel, languageIsDownloaded: Bool, hidesSelected: Bool, selectorColor: UIColor?, separatorColor: UIColor?) {
                 
         self.languageName = languageViewModel.translatedLanguageName
         self.languageIsDownloaded = languageIsDownloaded
         self.hidesSelected = hidesSelected
         self.hidesSeparator = !hidesSelected
+        self.selectorColor = selectorColor
+        self.separatorColor = separatorColor
     }
 }

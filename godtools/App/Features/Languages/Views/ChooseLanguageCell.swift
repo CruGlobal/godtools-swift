@@ -18,6 +18,7 @@ class ChooseLanguageCell: UITableViewCell {
     @IBOutlet weak private var selectedView: UIView!
     @IBOutlet private weak var languageLabel: UILabel!
     @IBOutlet weak private var downloadImageView: UIImageView!
+    @IBOutlet weak private var selectorView: UIView!
     @IBOutlet weak private var separatorLine: UIView!
         
     override func awakeFromNib() {
@@ -37,5 +38,15 @@ class ChooseLanguageCell: UITableViewCell {
         downloadImageView.isHidden = viewModel.languageIsDownloaded
         selectedView.isHidden = viewModel.hidesSelected
         separatorLine.isHidden = viewModel.hidesSeparator
+        
+        if let selectorColor = viewModel.selectorColor {
+            
+            selectorView.backgroundColor = selectorColor
+        }
+        
+        if let separatorColor = viewModel.separatorColor {
+            
+            separatorLine.backgroundColor = separatorColor
+        }
     }
 }

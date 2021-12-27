@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class ParallelLanguageModalViewModel: NSObject, ParallelLanguageModalViewModelType {
     
@@ -140,7 +141,9 @@ class ParallelLanguageModalViewModel: NSObject, ParallelLanguageModalViewModelTy
         return ChooseLanguageCellViewModel(
             languageViewModel: languageViewModel,
             languageIsDownloaded: true, //hides downloadImageView for all cells in this list
-            hidesSelected: languageViewModel.language.id != selectedLanguageModel?.id
+            hidesSelected: languageViewModel.language.id != selectedLanguageModel?.id,
+            selectorColor: UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0),
+            separatorColor: UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0)
         )
     }
     
