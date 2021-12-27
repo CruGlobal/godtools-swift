@@ -34,13 +34,13 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="2Iz-0h-kZx">
-                    <rect key="frame" x="30" y="74" width="354" height="680"/>
+                    <rect key="frame" x="30" y="74" width="354" height="678"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bAw-UX-ed8">
-                            <rect key="frame" x="0.0" y="0.0" width="354" height="226.5"/>
+                            <rect key="frame" x="0.0" y="0.0" width="354" height="226"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VSQ-9n-ekB" userLabel="Animated View" customClass="AnimatedView" customModule="godtools" customModuleProvider="target">
-                                    <rect key="frame" x="63.5" y="0.0" width="227" height="226.5"/>
+                                    <rect key="frame" x="64" y="0.0" width="226" height="226"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="VSQ-9n-ekB" secondAttribute="height" multiplier="1:1" id="XLC-cz-8XR"/>
@@ -55,10 +55,10 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3bz-cu-spa">
-                            <rect key="frame" x="0.0" y="226.5" width="354" height="227"/>
+                            <rect key="frame" x="0.0" y="226" width="354" height="226"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pVM-T5-7vt" userLabel="Prompt Label">
-                                    <rect key="frame" x="0.0" y="97" width="354" height="33.5"/>
+                                    <rect key="frame" x="0.0" y="96.5" width="354" height="33.5"/>
                                     <fontDescription key="fontDescription" name="SFProDisplay-Light" family="SF Pro Display" pointSize="28"/>
                                     <color key="textColor" red="0.23137254900000001" green="0.64313725489999995" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
@@ -72,7 +72,7 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iIE-Se-Jcc">
-                            <rect key="frame" x="0.0" y="453.5" width="354" height="226.5"/>
+                            <rect key="frame" x="0.0" y="452" width="354" height="226"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IpU-oB-FsV" userLabel="Select Language Button">
                                     <rect key="frame" x="0.0" y="88" width="354" height="50"/>
@@ -96,10 +96,10 @@
                     </subviews>
                 </stackView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WW4-C7-5Sn" userLabel="Yes Button">
-                    <rect key="frame" x="30" y="784" width="169" height="48"/>
+                    <rect key="frame" x="30" y="782" width="169" height="50"/>
                     <color key="backgroundColor" red="0.23137254900000001" green="0.64313725489999995" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="48" id="45s-R5-7CJ"/>
+                        <constraint firstAttribute="height" constant="50" id="45s-R5-7CJ"/>
                     </constraints>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                     <state key="normal" title="Button"/>
@@ -108,9 +108,9 @@
                     </buttonConfiguration>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kFd-qN-9uO" userLabel="No Button">
-                    <rect key="frame" x="215" y="784" width="169" height="48"/>
+                    <rect key="frame" x="215" y="782" width="169" height="50"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="48" id="sqM-n7-qU8"/>
+                        <constraint firstAttribute="height" constant="50" id="sqM-n7-qU8"/>
                     </constraints>
                     <state key="normal" title="Button"/>
                     <buttonConfiguration key="configuration" style="plain" title="Button">
@@ -118,10 +118,10 @@
                     </buttonConfiguration>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NQh-YT-1Of" userLabel="Get Started Button">
-                    <rect key="frame" x="30" y="784" width="354" height="48"/>
+                    <rect key="frame" x="30" y="782" width="354" height="50"/>
                     <color key="backgroundColor" red="0.23137254900000001" green="0.64313725489999995" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="48" id="Ni5-jB-PMk"/>
+                        <constraint firstAttribute="height" constant="50" id="Ni5-jB-PMk"/>
                     </constraints>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                     <state key="normal" title="Button"/>

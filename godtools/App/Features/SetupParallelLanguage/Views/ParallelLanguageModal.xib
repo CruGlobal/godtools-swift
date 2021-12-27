@@ -35,10 +35,10 @@
                     </constraints>
                 </tableView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Gc-rT-i27" userLabel="Select Button">
-                    <rect key="frame" x="30" y="784" width="354" height="48"/>
+                    <rect key="frame" x="30" y="782" width="354" height="50"/>
                     <color key="backgroundColor" red="0.23137254900000001" green="0.64313725489999995" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="48" id="uNt-Cj-5BN"/>
+                        <constraint firstAttribute="height" constant="50" id="uNt-Cj-5BN"/>
                     </constraints>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                     <state key="normal" title="Button"/>
