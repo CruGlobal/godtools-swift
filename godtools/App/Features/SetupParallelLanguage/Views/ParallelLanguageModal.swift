@@ -78,12 +78,12 @@ class ParallelLanguageModal: UIViewController {
         }
     }
     
-    @objc func handleBackgroundTapped() {
+    @objc private func handleBackgroundTapped() {
         
         viewModel.backgroundTapped()
     }
     
-    @objc func handleSelectTapped() {
+    @objc private func handleSelectTapped() {
         
         viewModel.selectTapped()
     }

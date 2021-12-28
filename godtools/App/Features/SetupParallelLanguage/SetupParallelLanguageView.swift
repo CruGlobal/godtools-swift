@@ -100,7 +100,7 @@ class SetupParallelLanguageView: UIViewController {
         setupBottomButtons()
     }
     
-    func setupSelectLanguageButton() {
+    private func setupSelectLanguageButton() {
         
         selectLanguageButtonView.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1).cgColor
         selectLanguageButtonView.layer.shadowOffset = CGSize(width: 2, height: 2)
@@ -110,7 +110,7 @@ class SetupParallelLanguageView: UIViewController {
         selectLanguageButtonView.layer.cornerRadius = 6
     }
     
-    func setupBottomButtons() {
+    private func setupBottomButtons() {
         
         yesButton.layer.cornerRadius = 6
         
@@ -121,27 +121,27 @@ class SetupParallelLanguageView: UIViewController {
         getStartedButton.layer.cornerRadius = 6
     }
     
-    @objc func handleSelectLanguageTapped() {
+    @objc private func handleSelectLanguageTapped() {
         
         viewModel.selectLanguageTapped()
     }
     
-    @objc func handleCloseTapped(barButtonItem: UIBarButtonItem) {
+    @objc private func handleCloseTapped(barButtonItem: UIBarButtonItem) {
         
         viewModel.closeButtonTapped()
     }
     
-    @objc func handleYesTapped() {
+    @objc private func handleYesTapped() {
         
         viewModel.yesButtonTapped()
     }
     
-    @objc func handleNoTapped() {
+    @objc private func handleNoTapped() {
         
         viewModel.noButtonTapped()
     }
     
-    @objc func handleGetStartedTapped() {
+    @objc private func handleGetStartedTapped() {
         
         viewModel.getStartedButtonTapped()
     }
