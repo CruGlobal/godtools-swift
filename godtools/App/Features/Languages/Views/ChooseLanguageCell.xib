@@ -49,11 +49,11 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="cNY-kv-DOQ" firstAttribute="top" secondItem="I6C-AX-CyH" secondAttribute="top" id="IbF-9S-pDk"/>
-                    <constraint firstItem="q6I-9x-rty" firstAttribute="trailing" secondItem="cub-Bb-Jpj" secondAttribute="trailing" id="UTu-gA-SCa"/>
+                    <constraint firstAttribute="trailing" secondItem="cub-Bb-Jpj" secondAttribute="trailing" constant="24" id="UTu-gA-SCa"/>
                     <constraint firstItem="q6I-9x-rty" firstAttribute="centerY" secondItem="I6C-AX-CyH" secondAttribute="centerY" id="YFG-OB-Vcg"/>
                     <constraint firstItem="ojZ-Jh-Pf7" firstAttribute="leading" secondItem="I6C-AX-CyH" secondAttribute="leading" constant="24" id="aNg-Gb-KtC"/>
                     <constraint firstAttribute="bottom" secondItem="cNY-kv-DOQ" secondAttribute="bottom" id="b7U-oE-nah"/>
-                    <constraint firstItem="cub-Bb-Jpj" firstAttribute="leading" secondItem="ojZ-Jh-Pf7" secondAttribute="leading" id="egE-9L-MMw"/>
+                    <constraint firstItem="cub-Bb-Jpj" firstAttribute="leading" secondItem="I6C-AX-CyH" secondAttribute="leading" constant="24" id="egE-9L-MMw"/>
                     <constraint firstAttribute="trailing" secondItem="q6I-9x-rty" secondAttribute="trailing" constant="24" id="el7-tq-aXY"/>
                     <constraint firstAttribute="bottom" secondItem="cub-Bb-Jpj" secondAttribute="bottom" id="gnT-01-fFt"/>
                     <constraint firstItem="ojZ-Jh-Pf7" firstAttribute="centerY" secondItem="I6C-AX-CyH" secondAttribute="centerY" id="ieJ-72-PHu"/>
@@ -66,7 +66,9 @@
                 <outlet property="downloadImageView" destination="q6I-9x-rty" id="7zD-ft-bry"/>
                 <outlet property="languageLabel" destination="ojZ-Jh-Pf7" id="bAp-UL-eOs"/>
                 <outlet property="selectedView" destination="cNY-kv-DOQ" id="ItI-VF-3hf"/>
+                <outlet property="separatorLeftConstraint" destination="egE-9L-MMw" id="T1e-1G-esa"/>
                 <outlet property="separatorLine" destination="cub-Bb-Jpj" id="raQ-70-8YK"/>
+                <outlet property="separatorRightConstraint" destination="UTu-gA-SCa" id="m3E-3Q-1gQ"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="157.70089285714286"/>
         </tableViewCell>

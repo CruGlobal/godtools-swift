@@ -17,8 +17,10 @@ class ChooseLanguageCellViewModel: ChooseLanguageCellViewModelType {
     let hidesSeparator: Bool
     let selectorColor: UIColor?
     let separatorColor: UIColor?
+    let separatorLeftInset: Float
+    let separatorRightInset: Float
     
-    required init(languageViewModel: LanguageViewModel, languageIsDownloaded: Bool, hidesSelected: Bool, selectorColor: UIColor?, separatorColor: UIColor?) {
+    required init(languageViewModel: LanguageViewModel, languageIsDownloaded: Bool, hidesSelected: Bool, selectorColor: UIColor?, separatorColor: UIColor?, separatorLeftInset: Float?, separatorRightInset: Float?) {
                 
         self.languageName = languageViewModel.translatedLanguageName
         self.languageIsDownloaded = languageIsDownloaded
@@ -26,5 +28,7 @@ class ChooseLanguageCellViewModel: ChooseLanguageCellViewModelType {
         self.hidesSeparator = !hidesSelected
         self.selectorColor = selectorColor
         self.separatorColor = separatorColor
+        self.separatorLeftInset = separatorLeftInset ?? 24
+        self.separatorRightInset = separatorRightInset ?? 0
     }
 }

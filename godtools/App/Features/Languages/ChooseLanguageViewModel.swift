@@ -244,7 +244,9 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
             languageIsDownloaded: downloadedLanguagesCache.isDownloaded(languageId: languageViewModel.language.id),
             hidesSelected: languageViewModel.language.id != selectedLanguageModel?.id,
             selectorColor: nil,
-            separatorColor: nil
+            separatorColor: nil,
+            separatorLeftInset: nil,
+            separatorRightInset: nil
         )
     }
 }

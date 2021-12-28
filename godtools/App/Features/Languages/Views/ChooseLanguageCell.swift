@@ -19,7 +19,9 @@ class ChooseLanguageCell: UITableViewCell {
     @IBOutlet private weak var languageLabel: UILabel!
     @IBOutlet weak private var downloadImageView: UIImageView!
     @IBOutlet weak private var separatorLine: UIView!
-        
+    @IBOutlet weak private var separatorLeftConstraint: NSLayoutConstraint!
+    @IBOutlet weak private var separatorRightConstraint: NSLayoutConstraint!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -34,9 +36,13 @@ class ChooseLanguageCell: UITableViewCell {
         self.viewModel = viewModel
         
         languageLabel.text = viewModel.languageName
+        
         downloadImageView.isHidden = viewModel.languageIsDownloaded
         selectedView.isHidden = viewModel.hidesSelected
         separatorLine.isHidden = viewModel.hidesSeparator
+        
+        separatorLeftConstraint.constant = CGFloat(viewModel.separatorLeftInset)
+        separatorRightConstraint.constant = CGFloat(viewModel.separatorRightInset)
         
         if let selectorColor = viewModel.selectorColor {
             
