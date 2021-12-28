@@ -17,6 +17,7 @@ struct ResourceModel: ResourceModelType, Decodable {
     let attrCategory: String
     let attrDefaultOrder: Int
     let id: String
+    let isHidden: Bool
     let manifest: String
     let name: String
     let oneskyProjectId: Int
@@ -44,6 +45,7 @@ struct ResourceModel: ResourceModelType, Decodable {
         case attrCategory = "attr-category"
         case attrDefaultOrder = "attr-default-order"
         case description = "description"
+        case isHidden = "attr-hidden"
         case manifest = "manifest"
         case name = "name"
         case oneskyProjectId = "onesky-project-id"
@@ -69,6 +71,7 @@ struct ResourceModel: ResourceModelType, Decodable {
         attrCategory = realmResource.attrCategory
         attrDefaultOrder = realmResource.attrDefaultOrder
         id = realmResource.id
+        isHidden = realmResource.isHidden
         manifest = realmResource.manifest
         name = realmResource.name
         oneskyProjectId = realmResource.oneskyProjectId
@@ -117,6 +120,7 @@ struct ResourceModel: ResourceModelType, Decodable {
         else {
             attrDefaultOrder = -1
         }
+        isHidden = try attributesContainer?.decodeIfPresent(Bool.self, forKey: .isHidden) ?? false
         manifest = try attributesContainer?.decodeIfPresent(String.self, forKey: .manifest) ?? ""
         name = try attributesContainer?.decodeIfPresent(String.self, forKey: .name) ?? ""
         oneskyProjectId = try attributesContainer?.decodeIfPresent(Int.self, forKey: .oneskyProjectId) ?? -1
