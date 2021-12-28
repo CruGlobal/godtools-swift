@@ -66,7 +66,6 @@
                 <outlet property="downloadImageView" destination="q6I-9x-rty" id="7zD-ft-bry"/>
                 <outlet property="languageLabel" destination="ojZ-Jh-Pf7" id="bAp-UL-eOs"/>
                 <outlet property="selectedView" destination="cNY-kv-DOQ" id="ItI-VF-3hf"/>
-                <outlet property="selectorView" destination="cNY-kv-DOQ" id="qNN-Wu-M0G"/>
                 <outlet property="separatorLine" destination="cub-Bb-Jpj" id="raQ-70-8YK"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="157.70089285714286"/>
