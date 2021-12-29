@@ -78,6 +78,15 @@ enum FlowStep {
     // tool training
     case closeTappedFromToolTraining
     
+    // setup parallel language
+    case selectLanguageTappedFromSetupParallelLanguage
+    case closeTappedFromSetupParallelLanguage
+    case yesTappedFromSetupParallelLanguage
+    case noThanksTappedFromSetupParallelLanguage
+    case getStartedTappedFromSetupParallelLanguage
+    case backgroundTappedFromParallelLanguageModal
+    case selectTappedFromParallelLanguageModal
+    
     // share tool menu
     case shareToolTappedFromShareToolMenu
     case remoteShareToolTappedFromShareToolMenu

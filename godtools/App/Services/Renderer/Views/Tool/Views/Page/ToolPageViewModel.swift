@@ -13,17 +13,24 @@ class ToolPageViewModel: MobileContentPageViewModel, ToolPageViewModelType {
     private let pageModel: PageModelType
     private let rendererPageModel: MobileContentRendererPageModel
     private let analytics: AnalyticsContainer
+    private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
     
     private var cardPosition: Int?
     
     let hidesCallToAction: Bool
     
-    required init(flowDelegate: FlowDelegate, pageModel: PageModelType, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, pageModel: PageModelType, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.pageModel = pageModel
         self.rendererPageModel = rendererPageModel
         self.analytics = analytics
         self.hidesCallToAction = (pageModel.callToAction == nil && rendererPageModel.pageModel.hero == nil) || rendererPageModel.isLastPage
+        
+        self.analyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
+            analyticsEvents: pageModel.getAnalyticsEvents(),
+            mobileContentAnalytics: mobileContentAnalytics,
+            rendererPageModel: rendererPageModel
+        )
         
         super.init(flowDelegate: flowDelegate, pageModel: pageModel, rendererPageModel: rendererPageModel, deepLinkService: deepLinkService, hidesBackgroundImage: false)
     }
@@ -76,6 +83,7 @@ class ToolPageViewModel: MobileContentPageViewModel, ToolPageViewModelType {
     }
     
     func pageDidAppear() {
+        mobileContentDidAppear()
         
         let resource: ResourceModel = rendererPageModel.resource
         let page: Int = rendererPageModel.page
@@ -85,5 +93,22 @@ class ToolPageViewModel: MobileContentPageViewModel, ToolPageViewModelType {
     
     func didChangeCardPosition(cardPosition: Int?) {
         self.cardPosition = cardPosition
+    }
+}
+
+// MARK: - MobileContentViewModelType
+
+extension ToolPageViewModel: MobileContentViewModelType {
+    
+    var language: LanguageModel {
+        return rendererPageModel.language
+    }
+    
+    var analyticsEvents: [MobileContentAnalyticsEvent] {
+        return analyticsEventsObjects
+    }
+    
+    var defaultAnalyticsEventsTrigger: MobileContentAnalyticsEventTrigger {
+        return .visible
     }
 }

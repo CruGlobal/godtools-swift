@@ -83,6 +83,10 @@ class MultiplatformLessonPage: PageModelType {
     func getTextColor() -> MobileContentColor? {
         return MobileContentColor(color: lessonPage.textColor)
     }
+    
+    func getAnalyticsEvents() -> [AnalyticsEventModelType] {
+        return lessonPage.getAnalyticsEvents(type: .visible).map({MultiplatformAnalyticsEvent(analyticsEvent: $0)})
+    }
 }
 
 // MARK: - MobileContentRenderableModel
