@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol ChooseLanguageCellViewModelType {
     
@@ -14,4 +15,8 @@ protocol ChooseLanguageCellViewModelType {
     var languageIsDownloaded: Bool { get }
     var hidesSelected: Bool { get }
     var hidesSeparator: Bool { get }
+    var separatorLeftInset: Float { get }
+    var separatorRightInset: Float { get }
+    var selectorColor: UIColor? { get }
+    var separatorColor: UIColor? { get }
 }

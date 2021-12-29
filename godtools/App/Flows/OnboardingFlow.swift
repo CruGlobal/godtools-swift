@@ -55,35 +55,59 @@ class OnboardingFlow: Flow {
         navigationController.setViewControllers([view], animated: false)
     }
     
-    private func launchVideoPlayerView(youtubeVideoId: String) {
+    private func dismissModal() {
+        
+        navigationController.dismiss(animated: true, completion: nil)
+    }
+    
+    private func presentVideoPlayerView(youtubeVideoId: String) {
         
         let viewModel = VideoPlayerViewModel(flowDelegate: self, youtubeVideoId: youtubeVideoId, closeVideoPlayerFlowStep: .closeVideoPlayerTappedFromOnboardingTutorial, videoEndedFlowStep: .videoEndedOnOnboardingTutorial)
-        
         let view = VideoPlayerView(viewModel: viewModel)
-        
         let modal = ModalNavigationController(rootView: view, navBarColor: .black, navBarIsTranslucent: true)
         
         navigationController.present(modal, animated: true, completion: nil)
     }
     
-    private func dismissVideoPlayerView() {
+    private func navigateToQuickStartOrTools() {
         
-        navigationController.dismiss(animated: true, completion: nil)
+        if appDiContainer.deviceLanguage.isEnglish {
+            
+            let viewModel = OnboardingQuickStartViewModel(flowDelegate: self, localizationServices: appDiContainer.localizationServices)
+            let view = OnboardingQuickStartView(viewModel: viewModel)
+            
+            navigationController.setViewControllers([view], animated: true)
+        }
+        else {
+            
+            flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: nil))
+        }
     }
 
-     private func navigateToQuickStartOrTools() {
-         
-         if appDiContainer.deviceLanguage.isEnglish {
-             
-             let viewModel = OnboardingQuickStartViewModel(flowDelegate: self, localizationServices: appDiContainer.localizationServices)
-             let view = OnboardingQuickStartView(viewModel: viewModel)
-             
-             navigationController.setViewControllers([view], animated: true)
-         }
-         else {
-             
-             flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: nil))
-         }
+    private func navigateToSetupParallelLanguage() {
+        
+        let viewModel = SetupParallelLanguageViewModel(flowDelegate: self, localizationServices: appDiContainer.localizationServices, languageSettingsService: appDiContainer.languageSettingsService)
+        let view = SetupParallelLanguageView(viewModel: viewModel)
+            
+        navigationController.setViewControllers([view], animated: true)
+    }
+    
+    private func presentParallelLanguageModal() {
+        
+        let viewModel = ParallelLanguageModalViewModel(
+            flowDelegate: self,
+            dataDownloader: appDiContainer.initialDataDownloader,
+            languageSettingsService: appDiContainer.languageSettingsService,
+            localizationServices: appDiContainer.localizationServices
+        )
+        let view = ParallelLanguageModal(viewModel: viewModel)
+                
+        navigationController.present(view, animated: true, completion: nil)
+    }
+    
+    private func completeOnboardingFlow(onboardingFlowCompletedState: OnboardingFlowCompletedState?) {
+        
+        flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: onboardingFlowCompletedState))
     }
 }
 
@@ -94,13 +118,13 @@ extension OnboardingFlow: FlowDelegate {
         switch step {
             
         case .videoButtonTappedFromOnboardingTutorial(let youtubeVideoId):
-            launchVideoPlayerView(youtubeVideoId: youtubeVideoId)
+            presentVideoPlayerView(youtubeVideoId: youtubeVideoId)
         
         case .closeVideoPlayerTappedFromOnboardingTutorial:
-            dismissVideoPlayerView()
+            dismissModal()
             
         case .videoEndedOnOnboardingTutorial:
-            dismissVideoPlayerView()
+            dismissModal()
             
         case .skipTappedFromOnboardingTutorial:
             navigateToQuickStartOrTools()
@@ -109,20 +133,41 @@ extension OnboardingFlow: FlowDelegate {
             navigateToQuickStartOrTools()
 
         case .skipTappedFromOnboardingQuickStart:
-            flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: nil))
+            navigateToSetupParallelLanguage()
             
         case .endTutorialFromOnboardingQuickStart:
-            flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: nil))
-        
+            navigateToSetupParallelLanguage()
+            
         case .readArticlesTappedFromOnboardingQuickStart:
-            flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: .readArticles))
+            completeOnboardingFlow(onboardingFlowCompletedState: .readArticles)
         
         case .tryLessonsTappedFromOnboardingQuickStart:
-            flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: .tryLessons))
-        
+            completeOnboardingFlow(onboardingFlowCompletedState: .tryLessons)
+
         case .chooseToolTappedFromOnboardingQuickStart:
-            flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: .chooseTool))
+            completeOnboardingFlow(onboardingFlowCompletedState: .chooseTool)
+
+        case .selectLanguageTappedFromSetupParallelLanguage:
+            presentParallelLanguageModal()
         
+        case .closeTappedFromSetupParallelLanguage:
+            completeOnboardingFlow(onboardingFlowCompletedState: nil)
+
+        case .yesTappedFromSetupParallelLanguage:
+            presentParallelLanguageModal()
+
+        case .noThanksTappedFromSetupParallelLanguage:
+            completeOnboardingFlow(onboardingFlowCompletedState: nil)
+
+        case .backgroundTappedFromParallelLanguageModal:
+            dismissModal()
+        
+        case .selectTappedFromParallelLanguageModal:
+            dismissModal()
+        
+        case .getStartedTappedFromSetupParallelLanguage:
+            completeOnboardingFlow(onboardingFlowCompletedState: nil)
+
         default:
             break
         }
