@@ -64,7 +64,7 @@ class AppDiContainer {
         
         crashReporting = FirebaseCrashlyticsService()
         
-        let oktaAuthentication: OktaAuthentication = OktaAuthenticationConfiguration().configureAndCreateNewOktaAuthentication(config: config)
+        let oktaAuthentication: CruOktaAuthentication = OktaAuthenticationConfiguration().configureAndCreateNewOktaAuthentication(config: config)
         userAuthentication = OktaUserAuthentication(oktaAuthentication: oktaAuthentication)
                 
         realmDatabase = RealmDatabase()

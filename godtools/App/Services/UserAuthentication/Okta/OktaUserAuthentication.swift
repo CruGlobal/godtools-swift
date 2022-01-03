@@ -11,53 +11,15 @@ import OktaAuthentication
 
 class OktaUserAuthentication: UserAuthenticationType {
     
-    private let oktaAuthentication: OktaAuthentication
+    private let oktaAuthentication: CruOktaAuthentication
         
     let authenticatedUser: ObservableValue<AuthUserModelType?> = ObservableValue(value: nil)
     let didAuthenticateSignal: SignalValue<Result<AuthUserModelType, Error>> = SignalValue()
     let didSignOutSignal: Signal = Signal()
     
-    required init(oktaAuthentication: OktaAuthentication) {
+    required init(oktaAuthentication: CruOktaAuthentication) {
         
         self.oktaAuthentication = oktaAuthentication
-    }
-    
-    private func attemptAuthRefreshElseAuthenticate(authenticatefromViewController: UIViewController?) {
-        
-        if oktaAuthentication.refreshTokenExists {
-            
-            oktaAuthentication.renewAccessToken { [weak self] (result: Result<OktaAccessToken, OktaAuthenticationError>) in
-                
-                switch result {
-                case .success(let accessToken):
-                    self?.handleAuthenticationCompleteWithAccessToken(accessToken: accessToken)
-                case .failure(let error):
-                    if let fromViewController = authenticatefromViewController {
-                        self?.authenticate(fromViewController: fromViewController)
-                    }
-                    else {
-                        self?.handleAuthenticationFailedWithError(error: error)
-                    }
-                }
-            }
-        }
-        else if let fromViewController = authenticatefromViewController {
-            
-            authenticate(fromViewController: fromViewController)
-        }
-    }
-    
-    private func authenticate(fromViewController: UIViewController) {
-        
-        oktaAuthentication.authenticate(fromViewController: fromViewController) { [weak self] (result: Result<OktaAccessToken, OktaAuthenticationError>) in
-            
-            switch result {
-            case .success(let accessToken):
-                self?.handleAuthenticationCompleteWithAccessToken(accessToken: accessToken)
-            case .failure(let error):
-                self?.handleAuthenticationFailedWithError(error: error)
-            }
-        }
     }
     
     private func handleAuthenticationCompleteWithAccessToken(accessToken: OktaAccessToken) {
@@ -105,28 +67,41 @@ class OktaUserAuthentication: UserAuthenticationType {
     }
     
     func refreshAuthenticationIfAvailable() {
-
-        attemptAuthRefreshElseAuthenticate(authenticatefromViewController: nil)
-    }
         
-    func createAccount(fromViewController: UIViewController) {
+        guard oktaAuthentication.refreshTokenExists else {
+            return
+        }
         
-        attemptAuthRefreshElseAuthenticate(authenticatefromViewController: fromViewController)
+        oktaAuthentication.renewAccessToken { [weak self] (result: Result<OktaAccessToken, OktaAuthenticationError>) in
+            
+            switch result {
+            case .success(let accessToken):
+                self?.handleAuthenticationCompleteWithAccessToken(accessToken: accessToken)
+            case .failure(let error):
+                self?.handleAuthenticationFailedWithError(error: error)
+            }
+        }
     }
     
-    func signIn(fromViewController: UIViewController) {
+    func authenticate(fromViewController: UIViewController) {
         
-        attemptAuthRefreshElseAuthenticate(authenticatefromViewController: fromViewController)
+        oktaAuthentication.signIn(fromViewController: fromViewController) { [weak self] (result: Result<OktaAccessToken, OktaAuthenticationError>, authMethodType: OktaAuthMethodType) in
+            
+            switch result {
+            case .success(let accessToken):
+                self?.handleAuthenticationCompleteWithAccessToken(accessToken: accessToken)
+            case .failure(let error):
+                self?.handleAuthenticationFailedWithError(error: error)
+            }
+        }
     }
     
     func signOut(fromViewController: UIViewController) {
         
-        oktaAuthentication.signOut(fromViewController: fromViewController) { [weak self] (removeFromSecureStorageError: Error?, signOutError: OktaAuthenticationError?, revokeError: Error?) in
+        oktaAuthentication.signOut(fromViewController: fromViewController) { [weak self] (signOutError: OktaAuthenticationError?, removeFromSecureStorageError: Error?, revokeError: Error?) in
             
-            if signOutError == nil {
-                self?.didSignOutSignal.accept()
-                self?.authenticatedUser.accept(value: nil)
-            }
+            self?.didSignOutSignal.accept()
+            self?.authenticatedUser.accept(value: nil)
         }
     }
     
