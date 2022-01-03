@@ -72,6 +72,10 @@ class MultiplatformContentButton: ContentButtonModelType {
         return button.iconGravity.isEnd ? .end : .start
     }
     
+    var textScale: MobileContentTextScale {
+        return MobileContentTextScale(doubleValue: button.textScale)
+    }
+    
     func getBackgroundColor() -> MobileContentColor? {
         return MobileContentColor(color: button.backgroundColor)
     }
