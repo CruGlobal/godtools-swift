@@ -15,7 +15,7 @@ class OktaAuthenticationConfiguration {
         
     }
     
-    func configureAndCreateNewOktaAuthentication(config: ConfigType) -> OktaAuthentication {
+    func configureAndCreateNewOktaAuthentication(config: ConfigType) -> CruOktaAuthentication {
                 
         let signInPath: String = "auth"
         let signOutPath: String = "auth/logout"
@@ -31,14 +31,11 @@ class OktaAuthenticationConfiguration {
         let logoutRedirectUri: String = "\(redirectBaseUrl):/\(signOutPath)"
         let redirectUri: String = "\(redirectBaseUrl):/\(signInPath)"
         
-        let config: OktaConfigModelType = ProvidedOktaConfigModel(
+        return CruOktaAuthentication(
             clientId: "0oa1ju0zx08vYGgbB0h8",
             logoutRedirectUri: logoutRedirectUri,
             issuer: "https://signon.okta.com",
-            redirectUri: redirectUri,
-            scopes: "openid profile offline_access email"
+            redirectUri: redirectUri
         )
-        
-        return OktaAuthentication(configModel: config)
     }
 }
