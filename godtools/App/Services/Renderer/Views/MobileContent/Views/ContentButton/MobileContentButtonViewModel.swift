@@ -123,4 +123,24 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     func buttonTapped() {
         mobileContentAnalytics.trackEvents(events: buttonModel.getAnalyticsEvents(), rendererPageModel: rendererPageModel)
     }
+    
+    private func getFontWeight() -> UIFont.Weight {
+        
+        return fontWeight
+    }
+    
+    private func getFontScale() -> CGFloat {
+        
+        let fontScale = CGFloat(buttonModel.textScale.doubleValue)
+        
+        return fontScale
+    }
+    
+    func getScaledFont() -> UIFont {
+        
+        return fontService.getFont(
+            size: fontSize * getFontScale(),
+            weight: getFontWeight()
+        )
+    }
 }

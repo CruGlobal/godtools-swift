@@ -24,4 +24,5 @@ protocol MobileContentButtonViewModelType {
     var icon: MobileContentButtonIcon? { get }
     
     func buttonTapped()
+    func getScaledFont() -> UIFont
 }
