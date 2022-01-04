@@ -27,24 +27,26 @@ class AccountActivityViewModel: AccountActivityViewModelType {
         globalActivityResults.accept(value: GlobalActivityResults(isLoading: true, didFail: false, globalActivityAttributes: globalActivityAttributes))
         
         getGlobalAnalyticsOperation = globalActivityServices.getGlobalAnalytics(complete: { [weak self] (result: Result<GlobalActivityAnalytics?, ResponseError<NoClientApiErrorType>>) in
-                        
-            switch result {
-            
-            case .success(let globalActivity):
+            DispatchQueue.main.async { [weak self] in
                 
-                let attributes = globalActivity?.data.attributes
-                let globalActivityAttributes: [GlobalActivityAttribute] = self?.createGlobalActivityAttributes(attributes: attributes) ?? []
+                switch result {
                 
-                self?.globalActivityResults.accept(value: GlobalActivityResults(isLoading: false, didFail: false, globalActivityAttributes: globalActivityAttributes))
-            
-            case .failure(let error):
-                                
-                let globalActivityAttributes: [GlobalActivityAttribute] = self?.createGlobalActivityAttributes(attributes: nil) ?? []
+                case .success(let globalActivity):
+                    
+                    let attributes = globalActivity?.data.attributes
+                    let globalActivityAttributes: [GlobalActivityAttribute] = self?.createGlobalActivityAttributes(attributes: attributes) ?? []
+                    
+                    self?.globalActivityResults.accept(value: GlobalActivityResults(isLoading: false, didFail: false, globalActivityAttributes: globalActivityAttributes))
                 
-                self?.globalActivityResults.accept(value: GlobalActivityResults(isLoading: false, didFail: true, globalActivityAttributes: globalActivityAttributes))
-                
-                if !error.cancelled {
-                    self?.alertMessage.accept(value: ResponseErrorAlertMessage(localizationServices: localizationServices, error: error))
+                case .failure(let error):
+                                    
+                    let globalActivityAttributes: [GlobalActivityAttribute] = self?.createGlobalActivityAttributes(attributes: nil) ?? []
+                    
+                    self?.globalActivityResults.accept(value: GlobalActivityResults(isLoading: false, didFail: true, globalActivityAttributes: globalActivityAttributes))
+                    
+                    if !error.cancelled {
+                        self?.alertMessage.accept(value: ResponseErrorAlertMessage(localizationServices: localizationServices, error: error))
+                    }
                 }
             }
         })

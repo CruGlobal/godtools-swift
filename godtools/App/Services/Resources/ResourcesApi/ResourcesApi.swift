@@ -37,7 +37,11 @@ class ResourcesApi: ResourcesApiType {
         
         let resourcesOperation: RequestOperation = newResourcesPlusLatestTranslationsAndAttachmentsOperation()
         
-        return SingleRequestOperation().execute(operation: resourcesOperation, completeOnMainThread: false) { (response: RequestResponse, result: ResponseResult<NoResponseSuccessType, NoClientApiErrorType>) in
+        let queue = OperationQueue()
+        
+        resourcesOperation.completionHandler { (response: RequestResponse) in
+                        
+            let result: ResponseResult<NoResponseSuccessType, NoClientApiErrorType> = response.getResult()
             
             switch result {
             case .success( _, _):
@@ -46,13 +50,21 @@ class ResourcesApi: ResourcesApiType {
                 complete(.failure(error))
             }
         }
+        
+        queue.addOperations([resourcesOperation], waitUntilFinished: false)
+        
+        return queue
     }
     
     func getResourcesPlusLatestTranslationsAndAttachments(complete: @escaping ((Result<ResourcesPlusLatestTranslationsAndAttachmentsModel?, ResponseError<NoClientApiErrorType>>) -> Void)) -> OperationQueue {
         
         let resourcesOperation: RequestOperation = newResourcesPlusLatestTranslationsAndAttachmentsOperation()
         
-        return SingleRequestOperation().execute(operation: resourcesOperation, completeOnMainThread: false) { (response: RequestResponse, result: ResponseResult<ResourcesPlusLatestTranslationsAndAttachmentsModel, NoClientApiErrorType>) in
+        let queue = OperationQueue()
+        
+        resourcesOperation.completionHandler { (response: RequestResponse) in
+                        
+            let result: ResponseResult<ResourcesPlusLatestTranslationsAndAttachmentsModel, NoClientApiErrorType> = response.getResult()
             
             switch result {
             case .success(let resourcesPlusLatestTranslationsAndAttachments, let decodeError):
@@ -64,5 +76,9 @@ class ResourcesApi: ResourcesApiType {
                 complete(.failure(error))
             }
         }
+        
+        queue.addOperations([resourcesOperation], waitUntilFinished: false)
+        
+        return queue
     }
 }
