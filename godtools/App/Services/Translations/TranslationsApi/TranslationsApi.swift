@@ -47,7 +47,11 @@ class TranslationsApi: TranslationsApiType {
         
         let translationZipDataOperation = newTranslationZipDataOperation(translationId: translationId)
         
-        return SingleRequestOperation().execute(operation: translationZipDataOperation, completeOnMainThread: true) { (response: RequestResponse, result: ResponseResult<NoResponseSuccessType, NoClientApiErrorType>) in
+        let queue = OperationQueue()
+                
+        translationZipDataOperation.completionHandler { (response: RequestResponse) in
+                        
+            let result: ResponseResult<NoResponseSuccessType, NoClientApiErrorType> = response.getResult()
             
             switch result {
             case .success( _, _):
@@ -56,5 +60,9 @@ class TranslationsApi: TranslationsApiType {
                 complete(.failure(error))
             }
         }
+        
+        queue.addOperations([translationZipDataOperation], waitUntilFinished: false)
+        
+        return queue
     }
 }

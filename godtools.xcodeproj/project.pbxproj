@@ -712,7 +712,6 @@
 		45AD202025938A9800A096A0 /* RequestReceiptContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1ED925938A9800A096A0 /* RequestReceiptContainer.swift */; };
 		45AD202125938A9800A096A0 /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EDA25938A9800A096A0 /* RequestBuilder.swift */; };
 		45AD202225938A9800A096A0 /* RequestReceipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EDB25938A9800A096A0 /* RequestReceipt.swift */; };
-		45AD202325938A9800A096A0 /* SingleRequestOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EDC25938A9800A096A0 /* SingleRequestOperation.swift */; };
 		45AD202425938A9800A096A0 /* RequestMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EDD25938A9800A096A0 /* RequestMethod.swift */; };
 		45AD202525938A9800A096A0 /* RequestResponse+Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EDE25938A9800A096A0 /* RequestResponse+Log.swift */; };
 		45AD202625938A9800A096A0 /* FirebaseConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EE025938A9800A096A0 /* FirebaseConfiguration.swift */; };
@@ -1807,7 +1806,6 @@
 		45AD1ED925938A9800A096A0 /* RequestReceiptContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestReceiptContainer.swift; sourceTree = "<group>"; };
 		45AD1EDA25938A9800A096A0 /* RequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestBuilder.swift; sourceTree = "<group>"; };
 		45AD1EDB25938A9800A096A0 /* RequestReceipt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestReceipt.swift; sourceTree = "<group>"; };
-		45AD1EDC25938A9800A096A0 /* SingleRequestOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleRequestOperation.swift; sourceTree = "<group>"; };
 		45AD1EDD25938A9800A096A0 /* RequestMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestMethod.swift; sourceTree = "<group>"; };
 		45AD1EDE25938A9800A096A0 /* RequestResponse+Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RequestResponse+Log.swift"; sourceTree = "<group>"; };
 		45AD1EE025938A9800A096A0 /* FirebaseConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseConfiguration.swift; sourceTree = "<group>"; };
@@ -4839,7 +4837,6 @@
 				45AD1ED725938A9800A096A0 /* RequestResponse+ResponseResult.swift */,
 				45AD1ED525938A9800A096A0 /* ResponseError.swift */,
 				45AD1ED625938A9800A096A0 /* ResponseResult.swift */,
-				45AD1EDC25938A9800A096A0 /* SingleRequestOperation.swift */,
 			);
 			path = URLRequestServices;
 			sourceTree = "<group>";
@@ -7017,7 +7014,6 @@
 				45AD1B1225938A4E00A096A0 /* ArticleCategoryCellViewModelType.swift in Sources */,
 				D1FF263E25BA0C1C00C825DB /* FirebaseInAppMessaging.swift in Sources */,
 				45BD79D126A20EEA0007426B /* CallToActionModelType.swift in Sources */,
-				45AD202325938A9800A096A0 /* SingleRequestOperation.swift in Sources */,
 				455583FF269F2DA500C3FF14 /* MobileContentEmbeddedVideoViewModel.swift in Sources */,
 				45BEC53326A604E4005D8CA1 /* MobileContentAnalyticsEventTrigger.swift in Sources */,
 				45AD1FEF25938A9800A096A0 /* AttachmentsDownloader.swift in Sources */,

@@ -37,8 +37,12 @@ class GlobalActivityAnalyticsApi {
         
         let globalAnalyticsOperation = newGlobalAnalyticsOperation()
         
-        return SingleRequestOperation().execute(operation: globalAnalyticsOperation, completeOnMainThread: true) { (response: RequestResponse, result: ResponseResult<GlobalActivityAnalytics, NoClientApiErrorType>) in
-            
+        let queue = OperationQueue()
+        
+        globalAnalyticsOperation.completionHandler { (response: RequestResponse) in
+                        
+            let result: ResponseResult<GlobalActivityAnalytics, NoClientApiErrorType> = response.getResult()
+                        
             switch result {
             case .success(let globalActivityAnalytics, let decodeError):
                 complete(.success(globalActivityAnalytics))
@@ -49,5 +53,9 @@ class GlobalActivityAnalyticsApi {
                 complete(.failure(error))
             }
         }
+        
+        queue.addOperations([globalAnalyticsOperation], waitUntilFinished: false)
+        
+        return queue
     }
 }
