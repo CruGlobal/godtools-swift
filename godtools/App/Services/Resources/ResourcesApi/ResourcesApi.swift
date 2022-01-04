@@ -35,7 +35,7 @@ class ResourcesApi: ResourcesApiType {
         return RequestOperation(session: session, urlRequest: urlRequest)
     }
     
-    func getResourcesPlusLatestTranslationsAndAttachments(complete: @escaping ((_ result: Result<Data?, ResponseError<NoClientApiErrorType>>) -> Void)) -> OperationQueue {
+    func getResourcesPlusLatestTranslationsAndAttachments(complete: @escaping ((_ result: Result<Data?, RequestResponseError<NoHttpClientErrorResponse>>) -> Void)) -> OperationQueue {
         
         let resourcesOperation: RequestOperation = newResourcesPlusLatestTranslationsAndAttachmentsOperation()
         
@@ -43,7 +43,7 @@ class ResourcesApi: ResourcesApiType {
         
         resourcesOperation.setCompletionHandler { (response: RequestResponse) in
                         
-            let result: ResponseResult<NoResponseSuccessType, NoClientApiErrorType> = response.getResult()
+            let result: RequestResponseResult<NoHttpClientSuccessResponse, NoHttpClientErrorResponse> = response.getResult()
             
             switch result {
             case .success( _, _):
@@ -58,7 +58,7 @@ class ResourcesApi: ResourcesApiType {
         return queue
     }
     
-    func getResourcesPlusLatestTranslationsAndAttachments(complete: @escaping ((Result<ResourcesPlusLatestTranslationsAndAttachmentsModel?, ResponseError<NoClientApiErrorType>>) -> Void)) -> OperationQueue {
+    func getResourcesPlusLatestTranslationsAndAttachments(complete: @escaping ((Result<ResourcesPlusLatestTranslationsAndAttachmentsModel?, RequestResponseError<NoHttpClientErrorResponse>>) -> Void)) -> OperationQueue {
         
         let resourcesOperation: RequestOperation = newResourcesPlusLatestTranslationsAndAttachmentsOperation()
         
@@ -66,7 +66,7 @@ class ResourcesApi: ResourcesApiType {
         
         resourcesOperation.setCompletionHandler { (response: RequestResponse) in
                         
-            let result: ResponseResult<ResourcesPlusLatestTranslationsAndAttachmentsModel, NoClientApiErrorType> = response.getResult()
+            let result: RequestResponseResult<ResourcesPlusLatestTranslationsAndAttachmentsModel, NoHttpClientErrorResponse> = response.getResult()
             
             switch result {
             case .success(let resourcesPlusLatestTranslationsAndAttachments, let decodeError):

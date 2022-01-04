@@ -7,13 +7,14 @@
 //
 
 import Foundation
+import RequestOperation
 
 enum ResourcesDownloaderError: Error {
     
     case failedToDecodeLanguages(error: Error)
     case failedToDecodeResourcesPlusLatestTranslationsAndAttachments(error: Error)
-    case failedToGetLanguages(error: ResponseError<NoClientApiErrorType>)
-    case failedToGetResourcesPlusLatestTranslationsAndAttachments(error: ResponseError<NoClientApiErrorType>)
+    case failedToGetLanguages(error: RequestResponseError<NoHttpClientErrorResponse>)
+    case failedToGetResourcesPlusLatestTranslationsAndAttachments(error: RequestResponseError<NoHttpClientErrorResponse>)
     case internalErrorFailedToGetLanguagesResult
     case internalErrorFailedToGetResourcesResult
     case internalErrorNoLanguages

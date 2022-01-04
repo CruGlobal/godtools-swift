@@ -79,7 +79,7 @@ class AttachmentsDownloader {
     
     private func processDownloadedAttachment(attachmentFile: AttachmentFile, response: RequestResponse, complete: @escaping ((_ result: DownloadedAttachmentResult) -> Void)) {
         
-        let result: ResponseResult<NoResponseSuccessType, NoClientApiErrorType> = response.getResult()
+        let result: RequestResponseResult<NoHttpClientSuccessResponse, NoHttpClientErrorResponse> = response.getResult()
         
         switch result {
         

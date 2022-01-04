@@ -15,5 +15,5 @@ protocol TranslationsApiType {
     
     func newTranslationZipDataRequest(translationId: String) -> URLRequest
     func newTranslationZipDataOperation(translationId: String) -> RequestOperation
-    func getTranslationZipData(translationId: String, complete: @escaping ((_ result: Result<Data?, ResponseError<NoClientApiErrorType>>) -> Void)) -> OperationQueue
+    func getTranslationZipData(translationId: String, complete: @escaping ((_ result: Result<Data?, RequestResponseError<NoHttpClientErrorResponse>>) -> Void)) -> OperationQueue
 }

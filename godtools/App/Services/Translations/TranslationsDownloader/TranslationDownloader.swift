@@ -172,7 +172,7 @@ class TranslationDownloader: NSObject {
             return
         }
         
-        let result: ResponseResult<NoResponseSuccessType, NoClientApiErrorType> = response.getResult()
+        let result: RequestResponseResult<NoHttpClientSuccessResponse, NoHttpClientErrorResponse> = response.getResult()
         
         switch result {
         

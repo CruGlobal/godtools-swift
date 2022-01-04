@@ -12,6 +12,6 @@ import RequestOperation
 protocol ResourcesApiType {
     
     func newResourcesPlusLatestTranslationsAndAttachmentsOperation() -> RequestOperation
-    func getResourcesPlusLatestTranslationsAndAttachments(complete: @escaping ((_ result: Result<Data?, ResponseError<NoClientApiErrorType>>) -> Void)) -> OperationQueue
-    func getResourcesPlusLatestTranslationsAndAttachments(complete: @escaping ((_ result: Result<ResourcesPlusLatestTranslationsAndAttachmentsModel?, ResponseError<NoClientApiErrorType>>) -> Void)) -> OperationQueue
+    func getResourcesPlusLatestTranslationsAndAttachments(complete: @escaping ((_ result: Result<Data?, RequestResponseError<NoHttpClientErrorResponse>>) -> Void)) -> OperationQueue
+    func getResourcesPlusLatestTranslationsAndAttachments(complete: @escaping ((_ result: Result<ResourcesPlusLatestTranslationsAndAttachmentsModel?, RequestResponseError<NoHttpClientErrorResponse>>) -> Void)) -> OperationQueue
 }

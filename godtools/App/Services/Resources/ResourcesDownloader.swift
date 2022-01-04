@@ -29,8 +29,8 @@ class ResourcesDownloader {
         
         let operations: [RequestOperation] = [languagesOperation, resourcesPlusLatestTranslationsAndAttachmentsOperation]
                 
-        var languagesResult: ResponseResult<LanguagesDataModel, NoClientApiErrorType>?
-        var resourcesResult: ResponseResult<ResourcesPlusLatestTranslationsAndAttachmentsModel, NoClientApiErrorType>?
+        var languagesResult: RequestResponseResult<LanguagesDataModel, NoHttpClientErrorResponse>?
+        var resourcesResult: RequestResponseResult<ResourcesPlusLatestTranslationsAndAttachmentsModel, NoHttpClientErrorResponse>?
                 
         languagesOperation.setCompletionHandler { [weak self] (response: RequestResponse) in
             
@@ -68,7 +68,7 @@ class ResourcesDownloader {
         return queue
     }
     
-    private func handleDownloadLanguagesPlusResourcesPlusLatestTranslationsAndAttachmentsCompleted(languagesResult: ResponseResult<LanguagesDataModel, NoClientApiErrorType>?, resourcesResult: ResponseResult<ResourcesPlusLatestTranslationsAndAttachmentsModel, NoClientApiErrorType>?, complete: @escaping ((_ result: Result<ResourcesDownloaderResult, ResourcesDownloaderError>) -> Void)) {
+    private func handleDownloadLanguagesPlusResourcesPlusLatestTranslationsAndAttachmentsCompleted(languagesResult: RequestResponseResult<LanguagesDataModel, NoHttpClientErrorResponse>?, resourcesResult: RequestResponseResult<ResourcesPlusLatestTranslationsAndAttachmentsModel, NoHttpClientErrorResponse>?, complete: @escaping ((_ result: Result<ResourcesDownloaderResult, ResourcesDownloaderError>) -> Void)) {
         
         var languages: [LanguageModel] = Array()
         var resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel = ResourcesPlusLatestTranslationsAndAttachmentsModel.emptyModel

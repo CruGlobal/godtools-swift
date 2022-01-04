@@ -45,7 +45,7 @@ class TranslationsApi: TranslationsApiType {
         return operation
     }
     
-    func getTranslationZipData(translationId: String, complete: @escaping ((_ result: Result<Data?, ResponseError<NoClientApiErrorType>>) -> Void)) -> OperationQueue {
+    func getTranslationZipData(translationId: String, complete: @escaping ((_ result: Result<Data?, RequestResponseError<NoHttpClientErrorResponse>>) -> Void)) -> OperationQueue {
         
         let translationZipDataOperation = newTranslationZipDataOperation(translationId: translationId)
         
@@ -53,7 +53,7 @@ class TranslationsApi: TranslationsApiType {
                 
         translationZipDataOperation.setCompletionHandler { (response: RequestResponse) in
                         
-            let result: ResponseResult<NoResponseSuccessType, NoClientApiErrorType> = response.getResult()
+            let result: RequestResponseResult<NoHttpClientSuccessResponse, NoHttpClientErrorResponse> = response.getResult()
             
             switch result {
             case .success( _, _):

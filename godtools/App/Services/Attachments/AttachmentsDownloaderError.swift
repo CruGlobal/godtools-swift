@@ -7,10 +7,11 @@
 //
 
 import Foundation
+import RequestOperation
 
 enum AttachmentsDownloaderError: Error {
     
     case failedToCacheAttachment(error: Error)
-    case failedToDownloadAttachment(error: ResponseError<NoClientApiErrorType>)
+    case failedToDownloadAttachment(error: RequestResponseError<NoHttpClientErrorResponse>)
     case noAttachmentData(missingAttachmentData: NoAttachmentData)
 }

@@ -35,7 +35,7 @@ class LanguagesApi: LanguagesApiType {
         return RequestOperation(session: session, urlRequest: urlRequest)
     }
     
-    func getLanguages(complete: @escaping ((_ result: Result<Data?, ResponseError<NoClientApiErrorType>>) -> Void)) -> OperationQueue {
+    func getLanguages(complete: @escaping ((_ result: Result<Data?, RequestResponseError<NoHttpClientErrorResponse>>) -> Void)) -> OperationQueue {
         
         let languagesOperation: RequestOperation = newGetLanguagesOperation()
         
@@ -43,7 +43,7 @@ class LanguagesApi: LanguagesApiType {
         
         languagesOperation.setCompletionHandler { (response: RequestResponse) in
                         
-            let result: ResponseResult<NoResponseSuccessType, NoClientApiErrorType> = response.getResult()
+            let result: RequestResponseResult<NoHttpClientSuccessResponse, NoHttpClientErrorResponse> = response.getResult()
             
             switch result {
             case .success( _, _):
@@ -58,7 +58,7 @@ class LanguagesApi: LanguagesApiType {
         return queue
     }
     
-    func getLanguages(complete: @escaping ((_ result: Result<[LanguageModel], ResponseError<NoClientApiErrorType>>) -> Void)) -> OperationQueue {
+    func getLanguages(complete: @escaping ((_ result: Result<[LanguageModel], RequestResponseError<NoHttpClientErrorResponse>>) -> Void)) -> OperationQueue {
         
         let languagesOperation: RequestOperation = newGetLanguagesOperation()
         
@@ -66,7 +66,7 @@ class LanguagesApi: LanguagesApiType {
         
         languagesOperation.setCompletionHandler { (response: RequestResponse) in
                         
-            let result: ResponseResult<LanguagesDataModel, NoClientApiErrorType> = response.getResult()
+            let result: RequestResponseResult<LanguagesDataModel, NoHttpClientErrorResponse> = response.getResult()
             
             switch result {
             case .success( let languagesData, let decodeError):
