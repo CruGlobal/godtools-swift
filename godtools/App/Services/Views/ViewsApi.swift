@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RequestOperation
 
 class ViewsApi {
     
@@ -41,7 +42,8 @@ class ViewsApi {
             urlString: baseUrl + "/views",
             method: .post,
             headers: headers,
-            httpBody: body
+            httpBody: body,
+            queryItems: nil
         )
     }
     
@@ -60,7 +62,7 @@ class ViewsApi {
         
         let operation: RequestOperation = newResourceViewOperation(resourceView: resourceView)
         
-        operation.completionHandler { (response: RequestResponse) in
+        operation.setCompletionHandler { (response: RequestResponse) in
             
             complete(response)
         }

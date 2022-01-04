@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RequestOperation
 
 class TranslationsApi: TranslationsApiType {
     
@@ -28,7 +29,8 @@ class TranslationsApi: TranslationsApiType {
             urlString: baseUrl + "/translations/" + translationId,
             method: .get,
             headers: nil,
-            httpBody: nil
+            httpBody: nil,
+            queryItems: nil
         )
     }
     
@@ -49,7 +51,7 @@ class TranslationsApi: TranslationsApiType {
         
         let queue = OperationQueue()
                 
-        translationZipDataOperation.completionHandler { (response: RequestResponse) in
+        translationZipDataOperation.setCompletionHandler { (response: RequestResponse) in
                         
             let result: ResponseResult<NoResponseSuccessType, NoClientApiErrorType> = response.getResult()
             

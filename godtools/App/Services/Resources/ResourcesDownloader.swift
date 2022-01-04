@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RequestOperation
 
 class ResourcesDownloader {
     
@@ -31,7 +32,7 @@ class ResourcesDownloader {
         var languagesResult: ResponseResult<LanguagesDataModel, NoClientApiErrorType>?
         var resourcesResult: ResponseResult<ResourcesPlusLatestTranslationsAndAttachmentsModel, NoClientApiErrorType>?
                 
-        languagesOperation.completionHandler { [weak self] (response: RequestResponse) in
+        languagesOperation.setCompletionHandler { [weak self] (response: RequestResponse) in
             
             languagesResult = response.getResult()
                         
@@ -45,7 +46,7 @@ class ResourcesDownloader {
             }
         }
         
-        resourcesPlusLatestTranslationsAndAttachmentsOperation.completionHandler { [weak self] (response: RequestResponse) in
+        resourcesPlusLatestTranslationsAndAttachmentsOperation.setCompletionHandler { [weak self] (response: RequestResponse) in
                 
             resourcesResult = response.getResult()
             

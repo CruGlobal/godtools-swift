@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RequestOperation
 
 class FollowUpsService {
     
@@ -51,7 +52,7 @@ class FollowUpsService {
             
             operations.append(operation)
             
-            operation.completionHandler { [weak self] (response: RequestResponse) in
+            operation.setCompletionHandler { [weak self] (response: RequestResponse) in
                 
                 let httpStatusCode: Int = response.httpStatusCode ?? -1
                 let httpStatusCodeSuccess: Bool = httpStatusCode >= 200 && httpStatusCode < 400

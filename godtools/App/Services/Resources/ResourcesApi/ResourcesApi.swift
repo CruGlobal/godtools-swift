@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RequestOperation
 
 class ResourcesApi: ResourcesApiType {
     
@@ -27,7 +28,8 @@ class ResourcesApi: ResourcesApiType {
             urlString: baseUrl + "/resources?include=latest-translations,attachments",
             method: .get,
             headers: nil,
-            httpBody: nil
+            httpBody: nil,
+            queryItems: nil
         )
         
         return RequestOperation(session: session, urlRequest: urlRequest)
@@ -39,7 +41,7 @@ class ResourcesApi: ResourcesApiType {
         
         let queue = OperationQueue()
         
-        resourcesOperation.completionHandler { (response: RequestResponse) in
+        resourcesOperation.setCompletionHandler { (response: RequestResponse) in
                         
             let result: ResponseResult<NoResponseSuccessType, NoClientApiErrorType> = response.getResult()
             
@@ -62,7 +64,7 @@ class ResourcesApi: ResourcesApiType {
         
         let queue = OperationQueue()
         
-        resourcesOperation.completionHandler { (response: RequestResponse) in
+        resourcesOperation.setCompletionHandler { (response: RequestResponse) in
                         
             let result: ResponseResult<ResourcesPlusLatestTranslationsAndAttachmentsModel, NoClientApiErrorType> = response.getResult()
             

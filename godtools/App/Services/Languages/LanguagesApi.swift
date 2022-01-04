@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RequestOperation
 
 class LanguagesApi: LanguagesApiType {
     
@@ -27,7 +28,8 @@ class LanguagesApi: LanguagesApiType {
             urlString: baseUrl + "/languages",
             method: .get,
             headers: nil,
-            httpBody: nil
+            httpBody: nil,
+            queryItems: nil
         )
         
         return RequestOperation(session: session, urlRequest: urlRequest)
@@ -39,7 +41,7 @@ class LanguagesApi: LanguagesApiType {
         
         let queue = OperationQueue()
         
-        languagesOperation.completionHandler { (response: RequestResponse) in
+        languagesOperation.setCompletionHandler { (response: RequestResponse) in
                         
             let result: ResponseResult<NoResponseSuccessType, NoClientApiErrorType> = response.getResult()
             
@@ -62,7 +64,7 @@ class LanguagesApi: LanguagesApiType {
         
         let queue = OperationQueue()
         
-        languagesOperation.completionHandler { (response: RequestResponse) in
+        languagesOperation.setCompletionHandler { (response: RequestResponse) in
                         
             let result: ResponseResult<LanguagesDataModel, NoClientApiErrorType> = response.getResult()
             

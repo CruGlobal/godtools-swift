@@ -54,6 +54,15 @@
           "revision": "b170db6a47789ff5f2fbc3eeed0220b4b0a3f6b7",
           "version": "11.6.0"
         }
+      },
+      {
+        "package": "RequestOperation",
+        "repositoryURL": "https://github.com/CruGlobal/request-operation-ios.git",
+        "state": {
+          "branch": null,
+          "revision": "c443034a9c65ea92c78216e3c1ad4a3db70bc70d",
+          "version": "1.1.0"
+        }
       }
     ]
   },
