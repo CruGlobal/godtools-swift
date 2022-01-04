@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RequestOperation
 
 class GlobalActivityServices {
     
@@ -23,9 +24,9 @@ class GlobalActivityServices {
         return globalActivityCache.getGlobalActivityAnalytics()
     }
     
-    func getGlobalAnalytics(complete: @escaping ((_ result: Result<GlobalActivityAnalytics?, ResponseError<NoClientApiErrorType>>) -> Void)) -> OperationQueue {
+    func getGlobalAnalytics(complete: @escaping ((_ result: Result<GlobalActivityAnalytics?, RequestResponseError<NoHttpClientErrorResponse>>) -> Void)) -> OperationQueue {
         
-        return globalActivityApi.getGlobalAnalytics { [weak self] (result: Result<GlobalActivityAnalytics?, ResponseError<NoClientApiErrorType>>) in
+        return globalActivityApi.getGlobalAnalytics { [weak self] (result: Result<GlobalActivityAnalytics?, RequestResponseError<NoHttpClientErrorResponse>>) in
                         
             switch result {
                 

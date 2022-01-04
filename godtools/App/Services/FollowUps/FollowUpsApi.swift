@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RequestOperation
 
 class FollowUpsApi {
     
@@ -43,7 +44,8 @@ class FollowUpsApi {
             urlString: baseUrl + "/follow_ups",
             method: .post,
             headers: headers,
-            httpBody: body
+            httpBody: body,
+            queryItems: nil
         )
     }
     
@@ -62,7 +64,7 @@ class FollowUpsApi {
         
         let operation: RequestOperation = newFollowUpsOperation(followUp: followUp)
         
-        operation.completionHandler { (response: RequestResponse) in
+        operation.setCompletionHandler { (response: RequestResponse) in
             
             complete(response)
         }

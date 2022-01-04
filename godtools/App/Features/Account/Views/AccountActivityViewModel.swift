@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RequestOperation
 
 class AccountActivityViewModel: AccountActivityViewModelType {
     
@@ -26,7 +27,7 @@ class AccountActivityViewModel: AccountActivityViewModelType {
         
         globalActivityResults.accept(value: GlobalActivityResults(isLoading: true, didFail: false, globalActivityAttributes: globalActivityAttributes))
         
-        getGlobalAnalyticsOperation = globalActivityServices.getGlobalAnalytics(complete: { [weak self] (result: Result<GlobalActivityAnalytics?, ResponseError<NoClientApiErrorType>>) in
+        getGlobalAnalyticsOperation = globalActivityServices.getGlobalAnalytics(complete: { [weak self] (result: Result<GlobalActivityAnalytics?, RequestResponseError<NoHttpClientErrorResponse>>) in
             DispatchQueue.main.async { [weak self] in
                 
                 switch result {
@@ -44,7 +45,7 @@ class AccountActivityViewModel: AccountActivityViewModelType {
                     
                     self?.globalActivityResults.accept(value: GlobalActivityResults(isLoading: false, didFail: true, globalActivityAttributes: globalActivityAttributes))
                     
-                    if !error.cancelled {
+                    if !error.requestCancelled {
                         self?.alertMessage.accept(value: ResponseErrorAlertMessage(localizationServices: localizationServices, error: error))
                     }
                 }

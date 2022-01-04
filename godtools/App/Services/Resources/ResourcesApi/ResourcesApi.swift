@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RequestOperation
 
 class ResourcesApi: ResourcesApiType {
     
@@ -27,21 +28,22 @@ class ResourcesApi: ResourcesApiType {
             urlString: baseUrl + "/resources?include=latest-translations,attachments",
             method: .get,
             headers: nil,
-            httpBody: nil
+            httpBody: nil,
+            queryItems: nil
         )
         
         return RequestOperation(session: session, urlRequest: urlRequest)
     }
     
-    func getResourcesPlusLatestTranslationsAndAttachments(complete: @escaping ((_ result: Result<Data?, ResponseError<NoClientApiErrorType>>) -> Void)) -> OperationQueue {
+    func getResourcesPlusLatestTranslationsAndAttachments(complete: @escaping ((_ result: Result<Data?, RequestResponseError<NoHttpClientErrorResponse>>) -> Void)) -> OperationQueue {
         
         let resourcesOperation: RequestOperation = newResourcesPlusLatestTranslationsAndAttachmentsOperation()
         
         let queue = OperationQueue()
         
-        resourcesOperation.completionHandler { (response: RequestResponse) in
+        resourcesOperation.setCompletionHandler { (response: RequestResponse) in
                         
-            let result: ResponseResult<NoResponseSuccessType, NoClientApiErrorType> = response.getResult()
+            let result: RequestResponseResult<NoHttpClientSuccessResponse, NoHttpClientErrorResponse> = response.getResult()
             
             switch result {
             case .success( _, _):
@@ -56,15 +58,15 @@ class ResourcesApi: ResourcesApiType {
         return queue
     }
     
-    func getResourcesPlusLatestTranslationsAndAttachments(complete: @escaping ((Result<ResourcesPlusLatestTranslationsAndAttachmentsModel?, ResponseError<NoClientApiErrorType>>) -> Void)) -> OperationQueue {
+    func getResourcesPlusLatestTranslationsAndAttachments(complete: @escaping ((Result<ResourcesPlusLatestTranslationsAndAttachmentsModel?, RequestResponseError<NoHttpClientErrorResponse>>) -> Void)) -> OperationQueue {
         
         let resourcesOperation: RequestOperation = newResourcesPlusLatestTranslationsAndAttachmentsOperation()
         
         let queue = OperationQueue()
         
-        resourcesOperation.completionHandler { (response: RequestResponse) in
+        resourcesOperation.setCompletionHandler { (response: RequestResponse) in
                         
-            let result: ResponseResult<ResourcesPlusLatestTranslationsAndAttachmentsModel, NoClientApiErrorType> = response.getResult()
+            let result: RequestResponseResult<ResourcesPlusLatestTranslationsAndAttachmentsModel, NoHttpClientErrorResponse> = response.getResult()
             
             switch result {
             case .success(let resourcesPlusLatestTranslationsAndAttachments, let decodeError):

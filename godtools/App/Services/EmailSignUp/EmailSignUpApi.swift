@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RequestOperation
 
 class EmailSignUpApi {
     
@@ -39,7 +40,8 @@ class EmailSignUpApi {
             urlString: baseUrl + "/forms",
             method: .post,
             headers: ["Content-Type": "application/json"],
-            httpBody: body
+            httpBody: body,
+            queryItems: nil
         )
         
         return request
@@ -61,7 +63,7 @@ class EmailSignUpApi {
         
         let operation = newEmailSignUpOperation(emailSignUp: emailSignUp)
         
-        operation.completionHandler { (response: RequestResponse) in
+        operation.setCompletionHandler { (response: RequestResponse) in
             
             complete(response)
         }
