@@ -136,10 +136,6 @@ extension MobileContentButtonView {
             relatedBy: .greaterThanOrEqual,
             priority: 1000
         )
-        
-        let scaledFont: UIFont = viewModel.getScaledFont()
-        
-        buttonTitle.font = scaledFont
     }
     
     private func addButtonImageViewAndConstraints(buttonImageView: UIImageView, buttonIcon: MobileContentButtonIcon) {
