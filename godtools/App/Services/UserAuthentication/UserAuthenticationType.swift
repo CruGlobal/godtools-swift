@@ -16,8 +16,7 @@ protocol UserAuthenticationType {
     var isAuthenticated: Bool { get }
     
     func refreshAuthenticationIfAvailable()
-    func createAccount(fromViewController: UIViewController)
-    func signIn(fromViewController: UIViewController)
+    func authenticate(fromViewController: UIViewController)
     func signOut(fromViewController: UIViewController)
     func getAuthenticatedUser(completion: @escaping ((_ result: Result<AuthUserModelType, Error>) -> Void))
 }

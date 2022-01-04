@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RequestOperation
 
 class GlobalActivityAnalyticsApi {
     
@@ -27,18 +28,23 @@ class GlobalActivityAnalyticsApi {
             urlString: baseUrl + "/analytics/global",
             method: .get,
             headers: nil,
-            httpBody: nil
+            httpBody: nil,
+            queryItems: nil
         )
         
         return RequestOperation(session: session, urlRequest: urlRequest)
     }
 
-    func getGlobalAnalytics(complete: @escaping ((_ result: Result<GlobalActivityAnalytics?, ResponseError<NoClientApiErrorType>>) -> Void)) -> OperationQueue {
+    func getGlobalAnalytics(complete: @escaping ((_ result: Result<GlobalActivityAnalytics?, RequestResponseError<NoHttpClientErrorResponse>>) -> Void)) -> OperationQueue {
         
         let globalAnalyticsOperation = newGlobalAnalyticsOperation()
         
-        return SingleRequestOperation().execute(operation: globalAnalyticsOperation, completeOnMainThread: true) { (response: RequestResponse, result: ResponseResult<GlobalActivityAnalytics, NoClientApiErrorType>) in
-            
+        let queue = OperationQueue()
+        
+        globalAnalyticsOperation.setCompletionHandler { (response: RequestResponse) in
+                        
+            let result: RequestResponseResult<GlobalActivityAnalytics, NoHttpClientErrorResponse> = response.getResult()
+                        
             switch result {
             case .success(let globalActivityAnalytics, let decodeError):
                 complete(.success(globalActivityAnalytics))
@@ -49,5 +55,9 @@ class GlobalActivityAnalyticsApi {
                 complete(.failure(error))
             }
         }
+        
+        queue.addOperations([globalAnalyticsOperation], waitUntilFinished: false)
+        
+        return queue
     }
 }

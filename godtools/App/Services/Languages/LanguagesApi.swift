@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RequestOperation
 
 class LanguagesApi: LanguagesApiType {
     
@@ -27,17 +28,22 @@ class LanguagesApi: LanguagesApiType {
             urlString: baseUrl + "/languages",
             method: .get,
             headers: nil,
-            httpBody: nil
+            httpBody: nil,
+            queryItems: nil
         )
         
         return RequestOperation(session: session, urlRequest: urlRequest)
     }
     
-    func getLanguages(complete: @escaping ((_ result: Result<Data?, ResponseError<NoClientApiErrorType>>) -> Void)) -> OperationQueue {
+    func getLanguages(complete: @escaping ((_ result: Result<Data?, RequestResponseError<NoHttpClientErrorResponse>>) -> Void)) -> OperationQueue {
         
         let languagesOperation: RequestOperation = newGetLanguagesOperation()
         
-        return SingleRequestOperation().execute(operation: languagesOperation, completeOnMainThread: false) { (response: RequestResponse, result: ResponseResult<NoResponseSuccessType, NoClientApiErrorType>) in
+        let queue = OperationQueue()
+        
+        languagesOperation.setCompletionHandler { (response: RequestResponse) in
+                        
+            let result: RequestResponseResult<NoHttpClientSuccessResponse, NoHttpClientErrorResponse> = response.getResult()
             
             switch result {
             case .success( _, _):
@@ -46,13 +52,21 @@ class LanguagesApi: LanguagesApiType {
                 complete(.failure(error))
             }
         }
+        
+        queue.addOperations([languagesOperation], waitUntilFinished: false)
+        
+        return queue
     }
     
-    func getLanguages(complete: @escaping ((_ result: Result<[LanguageModel], ResponseError<NoClientApiErrorType>>) -> Void)) -> OperationQueue {
+    func getLanguages(complete: @escaping ((_ result: Result<[LanguageModel], RequestResponseError<NoHttpClientErrorResponse>>) -> Void)) -> OperationQueue {
         
         let languagesOperation: RequestOperation = newGetLanguagesOperation()
         
-        return SingleRequestOperation().execute(operation: languagesOperation, completeOnMainThread: false) { (response: RequestResponse, result: ResponseResult<LanguagesDataModel, NoClientApiErrorType>) in
+        let queue = OperationQueue()
+        
+        languagesOperation.setCompletionHandler { (response: RequestResponse) in
+                        
+            let result: RequestResponseResult<LanguagesDataModel, NoHttpClientErrorResponse> = response.getResult()
             
             switch result {
             case .success( let languagesData, let decodeError):
@@ -64,5 +78,9 @@ class LanguagesApi: LanguagesApiType {
                 complete(.failure(error))
             }
         }
+        
+        queue.addOperations([languagesOperation], waitUntilFinished: false)
+        
+        return queue
     }
 }

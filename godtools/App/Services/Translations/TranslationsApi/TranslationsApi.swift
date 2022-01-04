@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RequestOperation
 
 class TranslationsApi: TranslationsApiType {
     
@@ -28,7 +29,8 @@ class TranslationsApi: TranslationsApiType {
             urlString: baseUrl + "/translations/" + translationId,
             method: .get,
             headers: nil,
-            httpBody: nil
+            httpBody: nil,
+            queryItems: nil
         )
     }
     
@@ -43,11 +45,15 @@ class TranslationsApi: TranslationsApiType {
         return operation
     }
     
-    func getTranslationZipData(translationId: String, complete: @escaping ((_ result: Result<Data?, ResponseError<NoClientApiErrorType>>) -> Void)) -> OperationQueue {
+    func getTranslationZipData(translationId: String, complete: @escaping ((_ result: Result<Data?, RequestResponseError<NoHttpClientErrorResponse>>) -> Void)) -> OperationQueue {
         
         let translationZipDataOperation = newTranslationZipDataOperation(translationId: translationId)
         
-        return SingleRequestOperation().execute(operation: translationZipDataOperation, completeOnMainThread: true) { (response: RequestResponse, result: ResponseResult<NoResponseSuccessType, NoClientApiErrorType>) in
+        let queue = OperationQueue()
+                
+        translationZipDataOperation.setCompletionHandler { (response: RequestResponse) in
+                        
+            let result: RequestResponseResult<NoHttpClientSuccessResponse, NoHttpClientErrorResponse> = response.getResult()
             
             switch result {
             case .success( _, _):
@@ -56,5 +62,9 @@ class TranslationsApi: TranslationsApiType {
                 complete(.failure(error))
             }
         }
+        
+        queue.addOperations([translationZipDataOperation], waitUntilFinished: false)
+        
+        return queue
     }
 }

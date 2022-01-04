@@ -17,7 +17,6 @@ import UIKit
     @objc optional func pageNavigationDidChangeMostVisiblePage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
     @objc optional func pageNavigationPageWillAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
     @objc optional func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
-    @objc optional func pageNavigationPageWillDisappear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
     @objc optional func pageNavigationPageDidDisappear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
     @objc optional func pageNavigationDidEndScrollingAnimation(pageNavigation: PageNavigationCollectionView)
 }
@@ -112,6 +111,10 @@ class PageNavigationCollectionView: UIView, NibBased {
         
         if animated {
             isAnimatingScroll = true
+        }
+        else {
+            // Set this to true because when animated is false we don't get any of the scrollView delegate methods called.
+            shouldNotifyPageDidAppearForDataReload = true
         }
         
         collectionView.scrollToItem(
@@ -283,10 +286,6 @@ class PageNavigationCollectionView: UIView, NibBased {
         delegate?.pageNavigationPageDidAppear?(pageNavigation: self, pageCell: pageCell, page: page)
     }
     
-    private func pageWillDisappear(pageCell: UICollectionViewCell, page: Int) {
-        delegate?.pageNavigationPageWillDisappear?(pageNavigation: self, pageCell: pageCell, page: page)
-    }
-    
     private func pageDidDisappear(pageCell: UICollectionViewCell, page: Int) {
         delegate?.pageNavigationPageDidDisappear?(pageNavigation: self, pageCell: pageCell, page: page)
     }
@@ -317,7 +316,7 @@ extension PageNavigationCollectionView: UICollectionViewDelegateFlowLayout, UICo
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
         let page: Int = indexPath.row
-        
+                
         pageWillAppear(pageCell: cell, page: page)
         
         if shouldNotifyPageDidAppearForDataReload {

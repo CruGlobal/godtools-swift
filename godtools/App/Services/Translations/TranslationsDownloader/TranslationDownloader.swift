@@ -8,6 +8,7 @@
 
 import Foundation
 import RealmSwift
+import RequestOperation
 
 class TranslationDownloader: NSObject {
     
@@ -131,7 +132,7 @@ class TranslationDownloader: NSObject {
                     
             operations.append(operation)
             
-            operation.completionHandler { [weak self] (response: RequestResponse) in
+            operation.setCompletionHandler { [weak self] (response: RequestResponse) in
                 
                 self?.processDownloadedTranslation(translationId: translationId, response: response, complete: { (downloadError: TranslationDownloaderError?) in
                     
@@ -171,7 +172,7 @@ class TranslationDownloader: NSObject {
             return
         }
         
-        let result: ResponseResult<NoResponseSuccessType, NoClientApiErrorType> = response.getResult()
+        let result: RequestResponseResult<NoHttpClientSuccessResponse, NoHttpClientErrorResponse> = response.getResult()
         
         switch result {
         

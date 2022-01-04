@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/AppsFlyerSDK/AppsFlyerFramework.git",
         "state": {
           "branch": null,
-          "revision": "0021c8848a3e1f022989a01763d3678a6b6b15e7",
-          "version": "6.4.2"
+          "revision": "dde1f5b04105fa9a27b3ac78b2af88d4164755dc",
+          "version": "6.4.4"
         }
       },
       {
@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/CruGlobal/okta-authentication-ios.git",
         "state": {
           "branch": null,
-          "revision": "5c55aff943035bd747a2c938ce54fb6d183f976f",
-          "version": "1.0.2"
+          "revision": "1af791ad7baf2e9cfd3a9332c0d2a01dc90eaf7c",
+          "version": "1.2.1"
         }
       },
       {
@@ -53,6 +53,15 @@
           "branch": null,
           "revision": "b170db6a47789ff5f2fbc3eeed0220b4b0a3f6b7",
           "version": "11.6.0"
+        }
+      },
+      {
+        "package": "RequestOperation",
+        "repositoryURL": "https://github.com/CruGlobal/request-operation-ios.git",
+        "state": {
+          "branch": null,
+          "revision": "9b222164f89e8437cb985640da979687bbb7b919",
+          "version": "1.2.1"
         }
       }
     ]

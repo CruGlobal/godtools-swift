@@ -120,7 +120,8 @@ struct ResourceModel: ResourceModelType, Decodable {
         else {
             attrDefaultOrder = -1
         }
-        isHidden = try attributesContainer?.decodeIfPresent(Bool.self, forKey: .isHidden) ?? false
+        let isHiddenString: String = try attributesContainer?.decodeIfPresent(String.self, forKey: .isHidden) ?? "false"
+        isHidden = isHiddenString == "true" ? true : false
         manifest = try attributesContainer?.decodeIfPresent(String.self, forKey: .manifest) ?? ""
         name = try attributesContainer?.decodeIfPresent(String.self, forKey: .name) ?? ""
         oneskyProjectId = try attributesContainer?.decodeIfPresent(Int.self, forKey: .oneskyProjectId) ?? -1

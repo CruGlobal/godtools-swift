@@ -192,11 +192,11 @@ extension MenuViewModel {
     }
     
     func loginTapped(fromViewController: UIViewController) {
-        userAuthentication.signIn(fromViewController: fromViewController)
+        userAuthentication.authenticate(fromViewController: fromViewController)
     }
     
     func createAccountTapped(fromViewController: UIViewController) {
-        userAuthentication.createAccount(fromViewController: fromViewController)
+        userAuthentication.authenticate(fromViewController: fromViewController)
     }
     
     func shareGodToolsTapped() {
