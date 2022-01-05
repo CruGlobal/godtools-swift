@@ -14,6 +14,7 @@ class ContentButtonNode: MobileContentXmlNode, ContentButtonModelType {
     private let colorString: String?
     private let styleString: String?
     private let typeString: String?
+    private let textScaleString: String?
     
     private var textNode: ContentTextNode?
     private var analyticsEventsNode: AnalyticsEventsNode?
@@ -66,6 +67,10 @@ class ContentButtonNode: MobileContentXmlNode, ContentButtonModelType {
     
     var text: String? {
         return textNode?.text
+    }
+    
+    var textScale: MobileContentTextScale {
+        return MobileContentTextScale(textScaleString: textScaleString)
     }
     
     func getBackgroundColor() -> MobileContentColor? {

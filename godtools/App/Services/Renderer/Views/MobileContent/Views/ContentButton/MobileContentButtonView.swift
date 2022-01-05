@@ -44,13 +44,16 @@ class MobileContentButtonView: MobileContentView {
         layer.cornerRadius = 5
         
         // buttonTitle
-        addButtonTitleAndConstraints(buttonTitle: buttonTitle, buttonIcon: viewModel.icon)
-        
         buttonTitle.isUserInteractionEnabled = false
         buttonTitle.backgroundColor = .clear
         buttonTitle.numberOfLines = 0
         buttonTitle.lineBreakMode = .byWordWrapping
         buttonTitle.textAlignment = .center
+        buttonTitle.font = viewModel.font
+        buttonTitle.text = viewModel.title
+        buttonTitle.textColor = viewModel.titleColor
+        
+        addButtonTitleAndConstraints(buttonTitle: buttonTitle, buttonIcon: viewModel.icon)
         
         // buttonImageView
         if let buttonIcon = viewModel.icon {
@@ -74,10 +77,6 @@ class MobileContentButtonView: MobileContentView {
             layer.borderWidth = borderWidth
         }
         
-        buttonTitle.font = viewModel.font
-        buttonTitle.text = viewModel.title
-        buttonTitle.textColor = viewModel.titleColor
-    
         viewModel.visibilityState.addObserver(self) { [weak self] (visibilityState: MobileContentViewVisibilityState) in
             self?.setVisibilityState(visibilityState: visibilityState)
         }
