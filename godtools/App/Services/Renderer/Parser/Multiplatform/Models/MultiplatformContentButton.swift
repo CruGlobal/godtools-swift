@@ -69,7 +69,14 @@ class MultiplatformContentButton: ContentButtonModelType {
     }
     
     var iconGravity: IconGravity {
-        return button.iconGravity.isEnd ? .end : .start
+        switch button.iconGravity {
+        case .start:
+            return .start
+        case .end:
+            return .end
+        default:
+            return .start
+        }
     }
     
     var textScale: MobileContentTextScale {
