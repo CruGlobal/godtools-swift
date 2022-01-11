@@ -75,7 +75,7 @@ class MobileContentXmlNodeRenderer: MobileContentRendererType {
             rendererState: rendererState
         )
         
-        if let renderableView = recurseAndRender(node: pageNode, renderableModelParent: nil, rendererPageModel: rendererPageModel, containerModel: nil) {
+        if let renderableView = recurseAndRender(node: pageNode, renderableModelParent: nil, rendererPageModel: rendererPageModel, containerModel: nil, primaryLanguage: primaryRendererLanguage) {
             return .success(renderableView)
         }
         
@@ -83,7 +83,7 @@ class MobileContentXmlNodeRenderer: MobileContentRendererType {
         return .failure(failedToRenderPageError)
     }
     
-    private func recurseAndRender(node: MobileContentXmlNode, renderableModelParent: MobileContentRenderableModel?, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) -> MobileContentView? {
+    private func recurseAndRender(node: MobileContentXmlNode, renderableModelParent: MobileContentRenderableModel?, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?, primaryLanguage: LanguageModel) -> MobileContentView? {
         
         let containerModel: MobileContentRenderableModelContainer? = (node as? MobileContentRenderableModelContainer) ?? containerModel
         
@@ -98,7 +98,7 @@ class MobileContentXmlNodeRenderer: MobileContentRendererType {
         if let fallbackNode = renderableModel as? ContentFallbackNode {
             var viewToRender: MobileContentView?
             for childNode in fallbackNode.children {
-                if let mobileContentView = recurseAndRender(node: childNode, renderableModelParent: renderableModel, rendererPageModel: rendererPageModel, containerModel: containerModel) {
+                if let mobileContentView = recurseAndRender(node: childNode, renderableModelParent: renderableModel, rendererPageModel: rendererPageModel, containerModel: containerModel, primaryLanguage: primaryLanguage) {
                     viewToRender = mobileContentView
                     break
                 }
@@ -106,11 +106,11 @@ class MobileContentXmlNodeRenderer: MobileContentRendererType {
             return viewToRender
         }
                 
-        let mobileContentView: MobileContentView? = getViewFromViewFactory(renderableModel: renderableModel, renderableModelParent: renderableModelParent, rendererPageModel: rendererPageModel, containerModel: containerModel)
+        let mobileContentView: MobileContentView? = getViewFromViewFactory(renderableModel: renderableModel, renderableModelParent: renderableModelParent, rendererPageModel: rendererPageModel, containerModel: containerModel, primaryLanguage: primaryLanguage)
         
         for childNode in node.children {
             
-            let childMobileContentView: MobileContentView? = recurseAndRender(node: childNode, renderableModelParent: renderableModel, rendererPageModel: rendererPageModel, containerModel: containerModel)
+            let childMobileContentView: MobileContentView? = recurseAndRender(node: childNode, renderableModelParent: renderableModel, rendererPageModel: rendererPageModel, containerModel: containerModel, primaryLanguage: primaryLanguage)
             
             if let childMobileContentView = childMobileContentView, let mobileContentView = mobileContentView {
                 mobileContentView.renderChild(childView: childMobileContentView)
