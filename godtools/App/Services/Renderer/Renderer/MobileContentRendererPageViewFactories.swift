@@ -19,7 +19,6 @@ class MobileContentRendererPageViewFactories {
         let analytics: AnalyticsContainer = appDiContainer.analytics
         let mobileContentAnalytics: MobileContentAnalytics = appDiContainer.getMobileContentAnalytics()
         let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
-        let mobileContentNodeParser: MobileContentXmlNodeParser = appDiContainer.getMobileContentNodeParser()
         let viewedTrainingTipsService: ViewedTrainingTipsService = appDiContainer.getViewedTrainingTipsService()
         let fontService: FontService = appDiContainer.getFontService()
         let localizationServices: LocalizationServices = appDiContainer.localizationServices
@@ -46,7 +45,6 @@ class MobileContentRendererPageViewFactories {
                 cardJumpService: cardJumpService,
                 followUpService: followUpsService,
                 translationsFileCache: translationsFileCache,
-                mobileContentNodeParser: mobileContentNodeParser,
                 viewedTrainingTipsService: viewedTrainingTipsService,
                 deepLinkService: deepLinkingService,
                 trainingTipsEnabled: trainingTipsEnabled
@@ -55,7 +53,6 @@ class MobileContentRendererPageViewFactories {
             let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
                 flowDelegate: flowDelegate,
                 translationsFileCache: translationsFileCache,
-                mobileContentNodeParser: mobileContentNodeParser,
                 viewedTrainingTipsService: viewedTrainingTipsService,
                 deepLinkService: deepLinkingService,
                 trainingTipsEnabled: trainingTipsEnabled
@@ -74,7 +71,6 @@ class MobileContentRendererPageViewFactories {
                 cardJumpService: cardJumpService,
                 followUpService: followUpsService,
                 translationsFileCache: translationsFileCache,
-                mobileContentNodeParser: mobileContentNodeParser,
                 viewedTrainingTipsService: viewedTrainingTipsService,
                 deepLinkService: deepLinkingService,
                 trainingTipsEnabled: trainingTipsEnabled
@@ -83,7 +79,6 @@ class MobileContentRendererPageViewFactories {
             let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
                 flowDelegate: flowDelegate,
                 translationsFileCache: translationsFileCache,
-                mobileContentNodeParser: mobileContentNodeParser,
                 viewedTrainingTipsService: viewedTrainingTipsService,
                 deepLinkService: deepLinkingService,
                 trainingTipsEnabled: trainingTipsEnabled
@@ -96,7 +91,6 @@ class MobileContentRendererPageViewFactories {
             let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
                 flowDelegate: flowDelegate,
                 translationsFileCache: translationsFileCache,
-                mobileContentNodeParser: mobileContentNodeParser,
                 viewedTrainingTipsService: viewedTrainingTipsService,
                 deepLinkService: deepLinkingService,
                 trainingTipsEnabled: false
