@@ -16,17 +16,19 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     private let rendererPageModel: MobileContentRendererPageModel
     private let containerModel: MobileContentRenderableModelContainer?
     private let fontService: FontService
+    private let primaryLanguge: LanguageModel
     private let fontSize: CGFloat = 18
     private let defaultFontWeight: UIFont.Weight = .regular
         
     let textColor: UIColor
     
-    required init(textModel: ContentTextModelType, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?, fontService: FontService) {
+    required init(textModel: ContentTextModelType, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?, fontService: FontService, primaryLanguage: LanguageModel) {
         
         self.textModel = textModel
         self.rendererPageModel = rendererPageModel
         self.containerModel = containerModel
         self.fontService = fontService
+        self.primaryLanguge = primaryLanguage
         
         let containerTextColor: UIColor?
         if containerModel is CardModelType {
@@ -77,16 +79,34 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     }
     
     var textAlignment: NSTextAlignment {
-               
-        let modelTextAlignment: MobileContentTextAlignment? = textModel.textAlignment ?? containerModel?.textAlignment
+        
+        let textModelAlignment = textModel.textAlignment
+        let containerModelAlignment = containerModel?.textAlignment
+        
+        //first determine the desired alignment for left-to-right languages
+        var modelTextAlignment = textModelAlignment ?? containerModelAlignment
+        
+        //if primary language is right-to-left, flip the alignment
+        if languageTextAlignment == .right {
+            
+            if modelTextAlignment == .left {
+                
+                modelTextAlignment = .right
+            } else if modelTextAlignment == .right {
+                
+                modelTextAlignment = .left
+            }
+        }
         
         if let textAlignment = modelTextAlignment {
             
             switch textAlignment {
             case .left:
                 return .left
+            
             case .center:
                 return .center
+            
             case .right:
                 return .right
             }

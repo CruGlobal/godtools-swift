@@ -42,7 +42,8 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 textModel: textModel,
                 rendererPageModel: rendererPageModel,
                 containerModel: containerModel,
-                fontService: fontService
+                fontService: fontService,
+                primaryLanguage: primaryLanguage
             )
             
             let view = MobileContentTextView(viewModel: viewModel)
@@ -201,8 +202,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = MobileContentHeaderViewModel(
                 headerModel: headerModel,
-                rendererPageModel: rendererPageModel,
-                primaryLanguage: primaryLanguage
+                rendererPageModel: rendererPageModel
             )
             
             let view = MobileContentHeaderView(viewModel: viewModel)
