@@ -11,18 +11,16 @@ import Foundation
 class TrainingViewFactory: MobileContentPageViewFactoryType {
     
     private let translationsFileCache: TranslationsFileCache
-    private let mobileContentNodeParser: MobileContentXmlNodeParser
     private let viewedTrainingTipsService: ViewedTrainingTipsService
     private let deepLinkService: DeepLinkingServiceType
     private let trainingTipsEnabled: Bool
     
     private(set) weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, viewedTrainingTipsService: ViewedTrainingTipsService, deepLinkService: DeepLinkingServiceType, trainingTipsEnabled: Bool) {
+    required init(flowDelegate: FlowDelegate, translationsFileCache: TranslationsFileCache, viewedTrainingTipsService: ViewedTrainingTipsService, deepLinkService: DeepLinkingServiceType, trainingTipsEnabled: Bool) {
         
         self.flowDelegate = flowDelegate
         self.translationsFileCache = translationsFileCache
-        self.mobileContentNodeParser = mobileContentNodeParser
         self.viewedTrainingTipsService = viewedTrainingTipsService
         self.deepLinkService = deepLinkService
         self.trainingTipsEnabled = trainingTipsEnabled
@@ -36,7 +34,6 @@ class TrainingViewFactory: MobileContentPageViewFactoryType {
             let trainingViewType: TrainingTipViewType = parentIsHeader ? .upArrow : .rounded
             
             return getTrainingTipView(
-                trainingTipId: trainingTipModel.id ?? "",
                 tipModel: trainingTipModel.tip,
                 rendererPageModel: rendererPageModel,
                 trainingTipViewType: trainingViewType
@@ -59,19 +56,17 @@ class TrainingViewFactory: MobileContentPageViewFactoryType {
         return nil
     }
     
-    private func getTrainingTipView(trainingTipId: String, tipModel: TipModelType?, rendererPageModel: MobileContentRendererPageModel, trainingTipViewType: TrainingTipViewType) -> TrainingTipView? {
+    private func getTrainingTipView(tipModel: TipModelType, rendererPageModel: MobileContentRendererPageModel, trainingTipViewType: TrainingTipViewType) -> TrainingTipView? {
         
-        guard !trainingTipId.isEmpty && trainingTipsEnabled else {
+        guard trainingTipsEnabled else {
             return nil
         }
         
         let viewModel = TrainingTipViewModel(
-            trainingTipId: trainingTipId,
             tipModel: tipModel,
             rendererPageModel: rendererPageModel,
             viewType: trainingTipViewType,
             translationsFileCache: translationsFileCache,
-            mobileContentNodeParser: mobileContentNodeParser,
             viewedTrainingTipsService: viewedTrainingTipsService
         )
         

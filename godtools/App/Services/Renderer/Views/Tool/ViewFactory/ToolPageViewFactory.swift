@@ -17,14 +17,13 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
     private let cardJumpService: CardJumpService
     private let followUpService: FollowUpsService
     private let translationsFileCache: TranslationsFileCache
-    private let mobileContentNodeParser: MobileContentXmlNodeParser
     private let viewedTrainingTipsService: ViewedTrainingTipsService
     private let deepLinkService: DeepLinkingServiceType
     private let trainingTipsEnabled: Bool
     
     private(set) weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, followUpService: FollowUpsService, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, viewedTrainingTipsService: ViewedTrainingTipsService, deepLinkService: DeepLinkingServiceType, trainingTipsEnabled: Bool) {
+    required init(flowDelegate: FlowDelegate, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, followUpService: FollowUpsService, translationsFileCache: TranslationsFileCache, viewedTrainingTipsService: ViewedTrainingTipsService, deepLinkService: DeepLinkingServiceType, trainingTipsEnabled: Bool) {
         
         self.flowDelegate = flowDelegate
         self.analytics = analytics
@@ -34,7 +33,6 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
         self.cardJumpService = cardJumpService
         self.followUpService = followUpService
         self.translationsFileCache = translationsFileCache
-        self.mobileContentNodeParser = mobileContentNodeParser
         self.viewedTrainingTipsService = viewedTrainingTipsService
         self.deepLinkService = deepLinkService
         self.trainingTipsEnabled = trainingTipsEnabled
@@ -71,7 +69,6 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
                 headerModel: headerModel,
                 rendererPageModel: rendererPageModel,
                 translationsFileCache: translationsFileCache,
-                mobileContentNodeParser: mobileContentNodeParser,
                 viewedTrainingTipsService: viewedTrainingTipsService
             )
 

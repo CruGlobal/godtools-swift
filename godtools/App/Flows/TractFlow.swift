@@ -48,16 +48,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             multiplatformParser: MobileContentMultiplatformParser(translationManifestData: primaryTranslationManifest, translationsFileCache: translationsFileCache),
             pageViewFactories: pageViewFactories
         )
-        
-        // TODO: Remove when removing xml node renderer. ~Levi
-        /*
-        let primaryRenderer = MobileContentXmlNodeRenderer(
-            resource: resource,
-            language: primaryLanguage,
-            xmlParser: MobileContentXmlParser(translationManifestData: primaryTranslationManifest, translationsFileCache: translationsFileCache),
-            pageViewFactories: pageViewFactories
-        )*/
-        
+                
         var renderers: [MobileContentRendererType] = Array()
         
         renderers.append(primaryRenderer)
@@ -70,16 +61,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
                 multiplatformParser: MobileContentMultiplatformParser(translationManifestData: parallelTranslationManifest, translationsFileCache: translationsFileCache),
                 pageViewFactories: pageViewFactories
             )
-            
-            // TODO: Remove when removing xml node renderer. ~Levi
-            /*
-            let parallelRenderer = MobileContentXmlNodeRenderer(
-                resource: resource,
-                language: parallelLanguage,
-                xmlParser: MobileContentXmlParser(translationManifestData: parallelTranslationManifest, translationsFileCache: translationsFileCache),
-                pageViewFactories: pageViewFactories
-            )*/
-            
+                        
             renderers.append(parallelRenderer)
         }
         
@@ -289,16 +271,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             multiplatformParser: MobileContentMultiplatformParser(manifest: event.rendererPageModel.manifest, pageModels: pageModels, translationsFileCache: appDiContainer.translationsFileCache),
             pageViewFactories: pageViewFactories
         )
-           
-        // TODO: Remove when removing xml node renderer. ~Levi
-        /*
-        let renderer = MobileContentXmlNodeRenderer(
-            resource: event.rendererPageModel.resource,
-            language: event.rendererPageModel.language,
-            xmlParser: MobileContentXmlParser(manifest: event.rendererPageModel.manifest, pageModels: pageModels, translationsFileCache: appDiContainer.translationsFileCache),
-            pageViewFactories: pageViewFactories
-        )*/
-                
+              
         let viewModel = ToolTrainingViewModel(
             flowDelegate: self,
             renderer: renderer,
