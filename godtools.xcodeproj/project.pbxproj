@@ -1022,6 +1022,10 @@
 		8C8C44BD9B31E90E469C99FF /* Pods_godtoolsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */; };
 		D105922E252FA2E700F120CA /* share_tool_tutorial_mirrored.json in Resources */ = {isa = PBXBuildFile; fileRef = D115A65D25265813007F11AD /* share_tool_tutorial_mirrored.json */; };
 		D10AD0D52790ACD4004859C4 /* SetupParallelLanguageFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10AD0D42790ACD4004859C4 /* SetupParallelLanguageFlow.swift */; };
+		D10AD0D82790C0E5004859C4 /* SetupParallelLanguageAvailabilityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10AD0D72790C0E5004859C4 /* SetupParallelLanguageAvailabilityType.swift */; };
+		D10AD0DA2790C140004859C4 /* SetupParallelLanguageAvailability.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10AD0D92790C140004859C4 /* SetupParallelLanguageAvailability.swift */; };
+		D10AD0DE2790C312004859C4 /* SetupParallelLanguageViewedCacheType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10AD0DD2790C312004859C4 /* SetupParallelLanguageViewedCacheType.swift */; };
+		D10AD0E02790C379004859C4 /* SetupParallelLanguageViewedUserDefaultsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10AD0DF2790C379004859C4 /* SetupParallelLanguageViewedUserDefaultsCache.swift */; };
 		D119788F271A090400E08580 /* TutorialPagerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D119788E271A090400E08580 /* TutorialPagerViewModel.swift */; };
 		D1197891271EFDD300E08580 /* OnboardingTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1197890271EFDD300E08580 /* OnboardingTutorialView.swift */; };
 		D1330718273979380058450B /* OnboardingQuickStartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1330717273979380058450B /* OnboardingQuickStartView.swift */; };
@@ -2160,6 +2164,10 @@
 		A9BDC99CD6AA5FF3CCAC0E93 /* Pods-godtools.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.staging.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.staging.xcconfig"; sourceTree = "<group>"; };
 		B03BA6AC6918BE450406F1E6 /* Pods-godtools.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.debug.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.debug.xcconfig"; sourceTree = "<group>"; };
 		D10AD0D42790ACD4004859C4 /* SetupParallelLanguageFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupParallelLanguageFlow.swift; sourceTree = "<group>"; };
+		D10AD0D72790C0E5004859C4 /* SetupParallelLanguageAvailabilityType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupParallelLanguageAvailabilityType.swift; sourceTree = "<group>"; };
+		D10AD0D92790C140004859C4 /* SetupParallelLanguageAvailability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupParallelLanguageAvailability.swift; sourceTree = "<group>"; };
+		D10AD0DD2790C312004859C4 /* SetupParallelLanguageViewedCacheType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupParallelLanguageViewedCacheType.swift; sourceTree = "<group>"; };
+		D10AD0DF2790C379004859C4 /* SetupParallelLanguageViewedUserDefaultsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupParallelLanguageViewedUserDefaultsCache.swift; sourceTree = "<group>"; };
 		D115A65D25265813007F11AD /* share_tool_tutorial_mirrored.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = share_tool_tutorial_mirrored.json; sourceTree = "<group>"; };
 		D119788E271A090400E08580 /* TutorialPagerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPagerViewModel.swift; sourceTree = "<group>"; };
 		D1197890271EFDD300E08580 /* OnboardingTutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialView.swift; sourceTree = "<group>"; };
@@ -4265,6 +4273,7 @@
 				45AD1E7325938A9800A096A0 /* RealmDatabase */,
 				45AD1D4425938A9700A096A0 /* Renderer */,
 				45AD1E0125938A9700A096A0 /* Resources */,
+				D10AD0D62790C0A0004859C4 /* SetupParallelLanguage */,
 				45AD1E6B25938A9800A096A0 /* SHA256FileCache */,
 				45AD1ECD25938A9800A096A0 /* ShortcutItems */,
 				45AD1DE125938A9700A096A0 /* ToolTrainingTipsOnboardingViews */,
@@ -5682,6 +5691,33 @@
 			path = godtoolsTests;
 			sourceTree = "<group>";
 		};
+		D10AD0D62790C0A0004859C4 /* SetupParallelLanguage */ = {
+			isa = PBXGroup;
+			children = (
+				D10AD0DB2790C2B7004859C4 /* Availability */,
+				D10AD0DC2790C2C9004859C4 /* Viewed */,
+			);
+			path = SetupParallelLanguage;
+			sourceTree = "<group>";
+		};
+		D10AD0DB2790C2B7004859C4 /* Availability */ = {
+			isa = PBXGroup;
+			children = (
+				D10AD0D92790C140004859C4 /* SetupParallelLanguageAvailability.swift */,
+				D10AD0D72790C0E5004859C4 /* SetupParallelLanguageAvailabilityType.swift */,
+			);
+			path = Availability;
+			sourceTree = "<group>";
+		};
+		D10AD0DC2790C2C9004859C4 /* Viewed */ = {
+			isa = PBXGroup;
+			children = (
+				D10AD0DF2790C379004859C4 /* SetupParallelLanguageViewedUserDefaultsCache.swift */,
+				D10AD0DD2790C312004859C4 /* SetupParallelLanguageViewedCacheType.swift */,
+			);
+			path = Viewed;
+			sourceTree = "<group>";
+		};
 		D115A65C2526580A007F11AD /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
@@ -6633,6 +6669,7 @@
 				455582E1269F2C1000C3FF14 /* TrainingViewFactory.swift in Sources */,
 				45AD1F7A25938A9800A096A0 /* DeviceLanguage.swift in Sources */,
 				45AD1F7625938A9800A096A0 /* ViewedTrainingTipType.swift in Sources */,
+				D10AD0E02790C379004859C4 /* SetupParallelLanguageViewedUserDefaultsCache.swift in Sources */,
 				45558405269F2DA500C3FF14 /* MobileContentPagesView.swift in Sources */,
 				453A93F72705FDB80046B4FC /* PrimaryEvaluationOptionState.swift in Sources */,
 				45AD1B2025938A4E00A096A0 /* LearnToShareToolCellViewModel.swift in Sources */,
@@ -6973,6 +7010,7 @@
 				45BEC52F26A604E4005D8CA1 /* MobileContentColor.swift in Sources */,
 				45BD7A4526A21FDA0007426B /* NumberNode.swift in Sources */,
 				45AD202925938A9800A096A0 /* LocalizationBundleLoader.swift in Sources */,
+				D10AD0DE2790C312004859C4 /* SetupParallelLanguageViewedCacheType.swift in Sources */,
 				45428A7D26712ABA0022A66D /* SnowplowAnalytics+MobileContentAnalyticsSystem.swift in Sources */,
 				45AD1B6725938A4F00A096A0 /* GlobalActivityCellViewModel.swift in Sources */,
 				45AD201625938A9800A096A0 /* ShortcutItemsService.swift in Sources */,
@@ -7199,6 +7237,7 @@
 				455583EB269F2DA500C3FF14 /* MobileContentSpacerViewModelType.swift in Sources */,
 				4581657626F4DD4D000D660F /* MobileContentRowView.swift in Sources */,
 				4517EDB126F0FAE100F17A84 /* MultiplatformEventId.swift in Sources */,
+				D10AD0D82790C0E5004859C4 /* SetupParallelLanguageAvailabilityType.swift in Sources */,
 				45AD1ABF25938A4E00A096A0 /* LoadingToolViewModel.swift in Sources */,
 				45AD1F6E25938A9800A096A0 /* FollowUpsApi.swift in Sources */,
 				45AD1FF025938A9800A096A0 /* NoAttachmentData.swift in Sources */,
@@ -7239,6 +7278,7 @@
 				457579E226E96ABE00C898D2 /* MobileContentMultiSelectViewModel.swift in Sources */,
 				45AD1BCE25938A4F00A096A0 /* Locale+Extensions.swift in Sources */,
 				45AD1F6025938A9800A096A0 /* ActionCableChannelPublisher.swift in Sources */,
+				D10AD0DA2790C140004859C4 /* SetupParallelLanguageAvailability.swift in Sources */,
 				455582E9269F2C1000C3FF14 /* TrainingPageView.swift in Sources */,
 				45AD1BB225938A4F00A096A0 /* LanguageSettingsFlow.swift in Sources */,
 				45C93B27261D31B900592FFF /* LoadingArticleViewModel.swift in Sources */,

@@ -289,6 +289,13 @@ class AppDiContainer {
         )
     }
     
+    func getSetupParallelLanguageAvailability() -> SetupParallelLanguageAvailabilityType {
+        return SetupParallelLanguageAvailability(
+            setupParallelLanguageViewedCache: setupParallelLanguageViewedCache,
+            isNewUserCache: isNewUserService.isNewUserCache
+        )
+    }
+    
     func getViewedTrainingTipsService() -> ViewedTrainingTipsService {
         return ViewedTrainingTipsService(
             cache: ViewedTrainingTipsUserDefaultsCache(sharedUserDefaults: sharedUserDefaultsCache)
@@ -317,6 +324,10 @@ class AppDiContainer {
     
     var onboardingTutorialViewedCache: OnboardingTutorialViewedCacheType {
         return OnboardingTutorialViewedUserDefaultsCache()
+    }
+    
+    var setupParallelLanguageViewedCache: SetupParallelLanguageViewedCacheType {
+        return SetupParallelLanguageViewedUserDefaultsCache()
     }
         
     var tractRemoteShareSubscriber: TractRemoteShareSubscriber {

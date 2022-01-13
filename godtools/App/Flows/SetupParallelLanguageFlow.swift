@@ -1,5 +1,5 @@
 //
-//  OnboardingFlow.swift
+//  SetupParallelLanguageFlow.swift
 //  godtools
 //
 //  Created by Levi Eggert on 1/27/20.
@@ -64,7 +64,12 @@ class SetupParallelLanguageFlow: Flow {
     
     private func presentSetupParallelLangaugeModal() {
         
-        let viewModel = SetupParallelLanguageViewModel(flowDelegate: self, localizationServices: appDiContainer.localizationServices, languageSettingsService: appDiContainer.languageSettingsService)
+        let viewModel = SetupParallelLanguageViewModel(
+            flowDelegate: self,
+            localizationServices: appDiContainer.localizationServices,
+            languageSettingsService: appDiContainer.languageSettingsService,
+            setupParallelLanguageAvailability: appDiContainer.getSetupParallelLanguageAvailability()
+        )
         let view = SetupParallelLanguageView(viewModel: viewModel)
         let modal = ModalNavigationController(rootView: view, navBarColor: .black, navBarIsTranslucent: true)
         

@@ -25,7 +25,7 @@ class SetupParallelLanguageViewModel: NSObject, SetupParallelLanguageViewModelTy
     let yesNoButtonsHidden: ObservableValue<Bool>
     let getStartedButtonHidden: ObservableValue<Bool>
     
-    required init (flowDelegate: FlowDelegate, localizationServices: LocalizationServices, languageSettingsService: LanguageSettingsService) {
+    required init (flowDelegate: FlowDelegate, localizationServices: LocalizationServices, languageSettingsService: LanguageSettingsService, setupParallelLanguageAvailability: SetupParallelLanguageAvailabilityType) {
         
         self.flowDelegate = flowDelegate
         self.localizationServices = localizationServices
@@ -47,6 +47,8 @@ class SetupParallelLanguageViewModel: NSObject, SetupParallelLanguageViewModelTy
         getStartedButtonHidden = ObservableValue(value: true)
         
         super.init()
+        
+        setupParallelLanguageAvailability.markSetupParallelLanguageViewed()
         
         reloadData()
         

@@ -54,6 +54,11 @@ class ToolsFlow: ToolNavigationFlow, Flow {
         )
         
         navigationController.setViewControllers([view], animated: false)
+        
+        if appDiContainer.getSetupParallelLanguageAvailability().setupParallelLanguageIsAvailable {
+            
+            navigate(step: .showSetupParallelLangauge)
+        }
     }
     
     private func configureNavigationBar(shouldAnimateNavigationBarHiddenState: Bool) {
@@ -76,6 +81,9 @@ class ToolsFlow: ToolNavigationFlow, Flow {
     func navigate(step: FlowStep) {
         
         switch step {
+        
+        case .showSetupParallelLangauge:
+            flowDelegate?.navigate(step: .showSetupParallelLangauge)
         
         case .openTutorialTapped:
             flowDelegate?.navigate(step: .openTutorialTapped)
