@@ -13,7 +13,7 @@ class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
     private let headerModel: HeaderModelType
     private let rendererPageModel: MobileContentRendererPageModel
         
-    required init(headerModel: HeaderModelType, rendererPageModel: MobileContentRendererPageModel, translationsFileCache: TranslationsFileCache, mobileContentNodeParser: MobileContentXmlNodeParser, viewedTrainingTipsService: ViewedTrainingTipsService) {
+    required init(headerModel: HeaderModelType, rendererPageModel: MobileContentRendererPageModel, translationsFileCache: TranslationsFileCache, viewedTrainingTipsService: ViewedTrainingTipsService) {
         
         self.headerModel = headerModel
         self.rendererPageModel = rendererPageModel

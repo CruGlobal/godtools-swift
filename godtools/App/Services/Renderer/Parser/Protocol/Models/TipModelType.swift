@@ -10,6 +10,7 @@ import Foundation
 
 protocol TipModelType {
     
+    var id: String { get }
     var tipType: MobileContentTrainingTipType { get }
     var pages: [PageModelType] { get }
 }
