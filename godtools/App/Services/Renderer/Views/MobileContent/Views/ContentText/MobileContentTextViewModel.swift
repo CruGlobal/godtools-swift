@@ -16,19 +16,17 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     private let rendererPageModel: MobileContentRendererPageModel
     private let containerModel: MobileContentRenderableModelContainer?
     private let fontService: FontService
-    private let primaryLanguge: LanguageModel
     private let fontSize: CGFloat = 18
     private let defaultFontWeight: UIFont.Weight = .regular
         
     let textColor: UIColor
     
-    required init(textModel: ContentTextModelType, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?, fontService: FontService, primaryLanguage: LanguageModel) {
+    required init(textModel: ContentTextModelType, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?, fontService: FontService) {
         
         self.textModel = textModel
         self.rendererPageModel = rendererPageModel
         self.containerModel = containerModel
         self.fontService = fontService
-        self.primaryLanguge = primaryLanguage
         
         let containerTextColor: UIColor?
         if containerModel is CardModelType {

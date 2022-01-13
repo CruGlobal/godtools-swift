@@ -83,7 +83,7 @@ class MobileContentMultiplatformRenderer: MobileContentRendererType {
             return nil
         }
                  
-        let mobileContentView: MobileContentView? = getViewFromViewFactory(renderableModel: renderableModel, renderableModelParent: renderableModelParent, rendererPageModel: rendererPageModel, containerModel: containerModel, primaryLanguage: primaryLanguage)
+        let mobileContentView: MobileContentView? = getViewFromViewFactory(renderableModel: renderableModel, renderableModelParent: renderableModelParent, rendererPageModel: rendererPageModel, containerModel: containerModel)
         
         let childModels: [MobileContentRenderableModel] = renderableModel.getRenderableChildModels()
                 

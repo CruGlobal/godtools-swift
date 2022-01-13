@@ -22,7 +22,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         self.fontService = fontService
     }
     
-    func viewForRenderableModel(renderableModel: MobileContentRenderableModel, renderableModelParent: MobileContentRenderableModel?, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?, primaryLanguage: LanguageModel) -> MobileContentView? {
+    func viewForRenderableModel(renderableModel: MobileContentRenderableModel, renderableModelParent: MobileContentRenderableModel?, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) -> MobileContentView? {
         
         if let paragraphModel = renderableModel as? ContentParagraphModelType {
         
@@ -42,8 +42,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 textModel: textModel,
                 rendererPageModel: rendererPageModel,
                 containerModel: containerModel,
-                fontService: fontService,
-                primaryLanguage: primaryLanguage
+                fontService: fontService
             )
             
             let view = MobileContentTextView(viewModel: viewModel)
