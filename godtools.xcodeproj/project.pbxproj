@@ -1021,6 +1021,7 @@
 		4FC97EB920D2C37900084A33 /* analytics-test2.xml in Resources */ = {isa = PBXBuildFile; fileRef = 4FC97EB820D2C37900084A33 /* analytics-test2.xml */; };
 		8C8C44BD9B31E90E469C99FF /* Pods_godtoolsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */; };
 		D105922E252FA2E700F120CA /* share_tool_tutorial_mirrored.json in Resources */ = {isa = PBXBuildFile; fileRef = D115A65D25265813007F11AD /* share_tool_tutorial_mirrored.json */; };
+		D10AD0D52790ACD4004859C4 /* SetupParallelLanguageFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10AD0D42790ACD4004859C4 /* SetupParallelLanguageFlow.swift */; };
 		D119788F271A090400E08580 /* TutorialPagerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D119788E271A090400E08580 /* TutorialPagerViewModel.swift */; };
 		D1197891271EFDD300E08580 /* OnboardingTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1197890271EFDD300E08580 /* OnboardingTutorialView.swift */; };
 		D1330718273979380058450B /* OnboardingQuickStartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1330717273979380058450B /* OnboardingQuickStartView.swift */; };
@@ -2158,6 +2159,7 @@
 		6A3486217BA7BF7A1AA9B8F5 /* Pods-godtools.analyticslogging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.analyticslogging.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.analyticslogging.xcconfig"; sourceTree = "<group>"; };
 		A9BDC99CD6AA5FF3CCAC0E93 /* Pods-godtools.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.staging.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.staging.xcconfig"; sourceTree = "<group>"; };
 		B03BA6AC6918BE450406F1E6 /* Pods-godtools.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.debug.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.debug.xcconfig"; sourceTree = "<group>"; };
+		D10AD0D42790ACD4004859C4 /* SetupParallelLanguageFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupParallelLanguageFlow.swift; sourceTree = "<group>"; };
 		D115A65D25265813007F11AD /* share_tool_tutorial_mirrored.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = share_tool_tutorial_mirrored.json; sourceTree = "<group>"; };
 		D119788E271A090400E08580 /* TutorialPagerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPagerViewModel.swift; sourceTree = "<group>"; };
 		D1197890271EFDD300E08580 /* OnboardingTutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialView.swift; sourceTree = "<group>"; };
@@ -4070,6 +4072,7 @@
 				45AD188F25938A4E00A096A0 /* ToolsFlow.swift */,
 				45A3A0C526B0B497005DA490 /* TractFlow.swift */,
 				45A3A0C926B0BE50005DA490 /* TractFlowCompletedState.swift */,
+				D10AD0D42790ACD4004859C4 /* SetupParallelLanguageFlow.swift */,
 			);
 			path = Flows;
 			sourceTree = "<group>";
@@ -6576,6 +6579,7 @@
 				45AD206425938B1300A096A0 /* AlertMessageType.swift in Sources */,
 				453AF09A26A87919002D4AB1 /* MultiplatformContentTab.swift in Sources */,
 				45AD1F8B25938A9800A096A0 /* AttachmentModelType.swift in Sources */,
+				D10AD0D52790ACD4004859C4 /* SetupParallelLanguageFlow.swift in Sources */,
 				455583F6269F2DA500C3FF14 /* MobileContentImageViewModelType.swift in Sources */,
 				450E441A27565D1C00D4311E /* TutorialViewModelType.swift in Sources */,
 				453AF0A826A87A9B002D4AB1 /* MultiplatformTrainingTip.swift in Sources */,

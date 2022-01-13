@@ -19,6 +19,7 @@ enum FlowStep {
     case showLanguageSettings
     case showOnboardingTutorial(animated: Bool)
     case onboardingFlowCompleted(onboardingFlowCompletedState: OnboardingFlowCompletedState?)
+    case showSetupParallelLangauge
     case buttonWithUrlTappedFromFirebaseInAppMessage(url: URL)
     
     // tools
