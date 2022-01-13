@@ -81,10 +81,8 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
         let textModelAlignment = textModel.textAlignment
         let containerModelAlignment = containerModel?.textAlignment
         
-        //first determine the desired alignment for left-to-right languages
         var modelTextAlignment = textModelAlignment ?? containerModelAlignment
         
-        //if primary language is right-to-left, flip the alignment
         if languageTextAlignment == .right {
             
             if modelTextAlignment == .left {
