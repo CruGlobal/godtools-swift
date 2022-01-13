@@ -7,18 +7,19 @@
 //
 
 import Foundation
+import RequestOperation
 
 enum TranslationDownloaderError: Error {
     
     case failedToCacheTranslation(error: TranslationsFileCacheError)
-    case failedToDownloadTranslation(error: ResponseError<NoClientApiErrorType>)
+    case failedToDownloadTranslation(error: RequestResponseError<NoHttpClientErrorResponse>)
     case internalErrorTriedDownloadingAnEmptyTranslationId
     case noTranslationZipData(missingTranslationZipData: NoTranslationZipData)
     
     var cancelled: Bool {
         switch self {
         case .failedToDownloadTranslation(let responseError):
-            return responseError.cancelled
+            return responseError.requestCancelled
         default:
             return false
         }

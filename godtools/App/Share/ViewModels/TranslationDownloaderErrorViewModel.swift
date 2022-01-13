@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RequestOperation
 
 class TranslationDownloaderErrorViewModel: AlertMessageType {
     

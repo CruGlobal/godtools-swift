@@ -7,31 +7,40 @@
 //
 
 import Foundation
+import RequestOperation
 
 struct ResponseErrorAlertMessage: AlertMessageType {
     
     let title: String
     let message: String
     
-    init(localizationServices: LocalizationServices, error: ResponseError<NoClientApiErrorType>) {
+    init(localizationServices: LocalizationServices, error: RequestResponseError<NoHttpClientErrorResponse>) {
         
         switch error {
             
-        case .httpClientError(let clientError):
+        case .httpClientError(_, _, _):
             title = localizationServices.stringForMainBundle(key: "error")
             message = "An unknown error occurred on the client api."
         
         case .noNetworkConnection:
             title = localizationServices.stringForMainBundle(key: "no_internet_title")
             message = localizationServices.stringForMainBundle(key: "no_internet")
+            
+        case .notAuthorized:
+            title = localizationServices.stringForMainBundle(key: "error")
+            message = "Not authorized."
         
         case .requestCancelled:
             title = localizationServices.stringForMainBundle(key: "error")
             message = "The request was cancelled."
         
-        case .requestFailed(let error):
+        case .requestError(let error):
             title = localizationServices.stringForMainBundle(key: "error")
             message = error.localizedDescription
+            
+        case .serverError(let httpStatusCode):
+            title = localizationServices.stringForMainBundle(key: "error")
+            message = "Server Error \(httpStatusCode)."
         }
     }
 }

@@ -90,7 +90,13 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     }
     
     var font: UIFont {
-        return fontService.getFont(size: fontSize, weight: fontWeight)
+        
+        let fontScale = CGFloat(buttonModel.textScale.doubleValue)
+        
+        return fontService.getFont(
+            size: fontSize * fontScale,
+            weight: fontWeight
+        )
     }
     
     var title: String? {

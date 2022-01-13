@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RequestOperation
 
 class AttachmentsDownloader {
     
@@ -42,7 +43,7 @@ class AttachmentsDownloader {
                 
                 operations.append(operation)
                 
-                operation.completionHandler { [weak self] (response: RequestResponse) in
+                operation.setCompletionHandler { [weak self] (response: RequestResponse) in
                     
                     self?.processDownloadedAttachment(attachmentFile: attachmentFile, response: response, complete: { (result: DownloadedAttachmentResult) in
                         
@@ -78,7 +79,7 @@ class AttachmentsDownloader {
     
     private func processDownloadedAttachment(attachmentFile: AttachmentFile, response: RequestResponse, complete: @escaping ((_ result: DownloadedAttachmentResult) -> Void)) {
         
-        let result: ResponseResult<NoResponseSuccessType, NoClientApiErrorType> = response.getResult()
+        let result: RequestResponseResult<NoHttpClientSuccessResponse, NoHttpClientErrorResponse> = response.getResult()
         
         switch result {
         

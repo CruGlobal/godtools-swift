@@ -64,7 +64,7 @@ class AppDiContainer {
         
         crashReporting = FirebaseCrashlyticsService()
         
-        let oktaAuthentication: OktaAuthentication = OktaAuthenticationConfiguration().configureAndCreateNewOktaAuthentication(config: config)
+        let oktaAuthentication: CruOktaAuthentication = OktaAuthenticationConfiguration().configureAndCreateNewOktaAuthentication(config: config)
         userAuthentication = OktaUserAuthentication(oktaAuthentication: oktaAuthentication)
                 
         realmDatabase = RealmDatabase()
@@ -269,10 +269,6 @@ class AppDiContainer {
     
     func getMobileContentEventAnalyticsTracking() -> MobileContentEventAnalyticsTracking {
         return MobileContentEventAnalyticsTracking(firebaseAnalytics: analytics.firebaseAnalytics)
-    }
-    
-    func getMobileContentNodeParser() -> MobileContentXmlNodeParser {
-        return MobileContentXmlNodeParser()
     }
     
     func getOnboardingTutorialAvailability() -> OnboardingTutorialAvailabilityType {

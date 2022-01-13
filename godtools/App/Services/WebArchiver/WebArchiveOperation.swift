@@ -8,6 +8,7 @@
 
 import Foundation
 import Fuzi
+import RequestOperation
 
 class WebArchiveOperation: Operation {
     
@@ -108,7 +109,7 @@ class WebArchiveOperation: Operation {
                 
                 let operation = RequestOperation(session: session, urlRequest: URLRequest(url: resourceUrl))
                 
-                operation.completionHandler { [weak self] (response: RequestResponse) in
+                operation.setCompletionHandler { [weak self] (response: RequestResponse) in
                     
                     let httpStatusCode: Int = response.httpStatusCode ?? -1
                     let httpStatusCodeSuccess: Bool = httpStatusCode >= 200 && httpStatusCode < 400
