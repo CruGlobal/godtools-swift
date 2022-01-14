@@ -26,7 +26,7 @@ class SetupParallelLanguageFlow: Flow {
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController ?? UINavigationController(nibName: nil, bundle: nil)
 
-        //navigationController.modalPresentationStyle = .popover
+        navigationController.modalPresentationStyle = .fullScreen
         
         navigationController.setNavigationBarHidden(false, animated: false)
         
@@ -37,22 +37,6 @@ class SetupParallelLanguageFlow: Flow {
             titleColor: nil,
             isTranslucent: true
         )
-        
-        /*let onboardingTutorialItemsRepository = OnboardingTutorialItemsRepository(localizationServices: appDiContainer.localizationServices)
-        
-        let viewModel = OnboardingTutorialViewModel(
-            flowDelegate: self,
-            analyticsContainer: appDiContainer.analytics,
-            tutorialVideoAnalytics: appDiContainer.getTutorialVideoAnalytics(),
-            onboardingTutorialItemsRepository: onboardingTutorialItemsRepository,
-            onboardingTutorialAvailability: appDiContainer.getOnboardingTutorialAvailability(),
-            openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache,
-            customViewBuilder: appDiContainer.onboardingTutorialCustomViewBuilder(flowDelegate: self),
-            localizationServices: appDiContainer.localizationServices
-        )
-        let view = OnboardingTutorialView(viewModel: viewModel)
-        
-        navigationController.setViewControllers([view], animated: false)*/
         
         presentSetupParallelLangaugeModal()
     }
@@ -71,9 +55,8 @@ class SetupParallelLanguageFlow: Flow {
             setupParallelLanguageAvailability: appDiContainer.getSetupParallelLanguageAvailability()
         )
         let view = SetupParallelLanguageView(viewModel: viewModel)
-        let modal = ModalNavigationController(rootView: view, navBarColor: .black, navBarIsTranslucent: true)
         
-        navigationController.present(modal, animated: true, completion: nil)
+        navigationController.setViewControllers([view], animated: false)
     }
 }
 
