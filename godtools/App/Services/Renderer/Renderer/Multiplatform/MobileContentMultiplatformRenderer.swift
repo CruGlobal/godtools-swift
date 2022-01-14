@@ -67,7 +67,7 @@ class MobileContentMultiplatformRenderer: MobileContentRendererType {
             rendererState: rendererState
         )
         
-        if let renderableView = recurseAndRender(renderableModel: pageModel, renderableModelParent: nil, rendererPageModel: rendererPageModel, containerModel: nil, primaryLanguage: primaryRendererLanguage) {
+        if let renderableView = recurseAndRender(renderableModel: pageModel, renderableModelParent: nil, rendererPageModel: rendererPageModel, containerModel: nil) {
             return .success(renderableView)
         }
                 
@@ -75,7 +75,7 @@ class MobileContentMultiplatformRenderer: MobileContentRendererType {
         return .failure(failedToRenderPageError)
     }
     
-    private func recurseAndRender(renderableModel: MobileContentRenderableModel, renderableModelParent: MobileContentRenderableModel?, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?, primaryLanguage: LanguageModel) -> MobileContentView? {
+    private func recurseAndRender(renderableModel: MobileContentRenderableModel, renderableModelParent: MobileContentRenderableModel?, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) -> MobileContentView? {
         
         let containerModel: MobileContentRenderableModelContainer? = (renderableModel as? MobileContentRenderableModelContainer) ?? containerModel
         
@@ -89,7 +89,7 @@ class MobileContentMultiplatformRenderer: MobileContentRendererType {
                 
         for childModel in childModels {
             
-            let childMobileContentView: MobileContentView? = recurseAndRender(renderableModel: childModel, renderableModelParent: renderableModel, rendererPageModel: rendererPageModel, containerModel: containerModel, primaryLanguage: primaryLanguage)
+            let childMobileContentView: MobileContentView? = recurseAndRender(renderableModel: childModel, renderableModelParent: renderableModel, rendererPageModel: rendererPageModel, containerModel: containerModel)
             
             if let childMobileContentView = childMobileContentView, let mobileContentView = mobileContentView {
                 mobileContentView.renderChild(childView: childMobileContentView)
