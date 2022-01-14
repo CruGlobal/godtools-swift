@@ -25,20 +25,18 @@ class SetupParallelLanguageFlow: Flow {
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController ?? UINavigationController(nibName: nil, bundle: nil)
-
-        navigationController.modalPresentationStyle = .fullScreen
         
         navigationController.setNavigationBarHidden(false, animated: false)
         
-        navigationController.navigationBar.setupNavigationBarAppearance(
+        /*navigationController.navigationBar.setupNavigationBarAppearance(
             backgroundColor: .clear,
             controlColor: nil,
             titleFont: nil,
             titleColor: nil,
             isTranslucent: true
-        )
+        )*/
         
-        presentSetupParallelLangaugeModal()
+        presentSetupParallelLanguageModal()
     }
     
     private func dismissModal() {
@@ -46,7 +44,7 @@ class SetupParallelLanguageFlow: Flow {
         navigationController.dismiss(animated: true, completion: nil)
     }
     
-    private func presentSetupParallelLangaugeModal() {
+    private func presentSetupParallelLanguageModal() {
         
         let viewModel = SetupParallelLanguageViewModel(
             flowDelegate: self,
@@ -56,7 +54,9 @@ class SetupParallelLanguageFlow: Flow {
         )
         let view = SetupParallelLanguageView(viewModel: viewModel)
         
-        navigationController.setViewControllers([view], animated: false)
+        let modalView = TransparentModalView(modalView: view)
+        
+        navigationController.present(modalView, animated: true, completion: nil)
     }
 }
 

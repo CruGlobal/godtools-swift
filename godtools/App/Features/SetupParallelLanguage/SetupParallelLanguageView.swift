@@ -9,12 +9,12 @@
 import Foundation
 import UIKit
 
-class SetupParallelLanguageView: UIViewController {
+class SetupParallelLanguageView: UIView, NibBased {
     
     private let viewModel: SetupParallelLanguageViewModelType
     
-    private var closeButton: UIBarButtonItem?
-
+    private let buttonCornerRadius: CGFloat = 24
+    
     @IBOutlet weak private var animatedView: AnimatedView!
     @IBOutlet weak private var promptLabel: UILabel!
     @IBOutlet weak private var selectLanguageButtonView: UIView!
@@ -28,7 +28,11 @@ class SetupParallelLanguageView: UIViewController {
         
         self.viewModel = viewModel
         
-        super.init(nibName: String(describing: SetupParallelLanguageView.self), bundle: nil)
+        super.init(frame: UIScreen.main.bounds)
+        
+        loadNib()
+        setupLayout()
+        setupBinding()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -41,12 +45,18 @@ class SetupParallelLanguageView: UIViewController {
         print("x deinit: \(type(of: self))")
     }
     
-    override func viewDidLoad() {
+    private func setupLayout() {
         
-        super.viewDidLoad()
+        promptLabel.text = viewModel.promptText
+                
+        yesButton.setTitle(viewModel.yesButtonText, for: .normal)
         
-        setupLayout()
-        setupBinding()
+        noButton.setTitle(viewModel.noButtonText, for: .normal)
+        
+        getStartedButton.setTitle(viewModel.getStartedButtonText, for: .normal)
+        
+        setupSelectLanguageButton()
+        setupBottomButtons()
     }
     
     private func setupBinding() {
@@ -62,42 +72,20 @@ class SetupParallelLanguageView: UIViewController {
         getStartedButton.addTarget(self, action: #selector(handleGetStartedTapped), for: .touchUpInside)
 
         viewModel.selectLanguageButtonText.addObserver(self) { [weak self] (buttonText: String) in
-            
-            self?.selectLanguageButtonTitle.text = buttonText
+                        
+            self?.selectLanguageButtonTitle?.text = buttonText
         }
         
         viewModel.yesNoButtonsHidden.addObserver(self) { [weak self] (isHidden: Bool) in
             
-            self?.yesButton.isHidden = isHidden
-            self?.noButton.isHidden = isHidden
+            self?.yesButton?.isHidden = isHidden
+            self?.noButton?.isHidden = isHidden
         }
         
         viewModel.getStartedButtonHidden.addObserver(self) { [weak self] (isHidden: Bool) in
             
-            self?.getStartedButton.isHidden = isHidden
+            self?.getStartedButton?.isHidden = isHidden
         }
-    }
-    
-    private func setupLayout() {
-        
-        closeButton = addBarButtonItem(
-            to: .right,
-            image: ImageCatalog.navClose.image,
-            color: ColorPalette.gtBlue.color,
-            target: self,
-            action: #selector(handleCloseTapped)
-        )
-        
-        promptLabel.text = viewModel.promptText
-                
-        yesButton.setTitle(viewModel.yesButtonText, for: .normal)
-        
-        noButton.setTitle(viewModel.noButtonText, for: .normal)
-        
-        getStartedButton.setTitle(viewModel.getStartedButtonText, for: .normal)
-        
-        setupSelectLanguageButton()
-        setupBottomButtons()
     }
     
     private func setupSelectLanguageButton() {
@@ -144,5 +132,18 @@ class SetupParallelLanguageView: UIViewController {
     @objc private func handleGetStartedTapped() {
         
         viewModel.getStartedButtonTapped()
+    }
+}
+
+// MARK: - TransparentModalCustomView
+
+extension SetupParallelLanguageView: TransparentModalCustomView {
+    
+    var view: UIView {
+        return self
+    }
+    
+    func transparentModalDidLayout() {
+        
     }
 }

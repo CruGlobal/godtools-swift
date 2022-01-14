@@ -334,9 +334,9 @@ class AppFlow: NSObject, Flow {
             let setupParallelLanguageFlow = SetupParallelLanguageFlow(
                 flowDelegate: self,
                 appDiContainer: appDiContainer,
-                sharedNavigationController: nil
+                sharedNavigationController: navigationController
             )
-            navigationController.present(setupParallelLanguageFlow.navigationController, animated: true, completion: nil)
+            
             self.setupParallelLanguageFlow = setupParallelLanguageFlow
                                 
         case .openTutorialTapped:
