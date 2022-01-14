@@ -1,5 +1,5 @@
 //
-//  LoadingToolViewModelType.swift
+//  DownloadToolViewModelType.swift
 //  godtools
 //
 //  Created by Levi Eggert on 6/22/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol LoadingToolViewModelType {
+protocol DownloadToolViewModelType {
     
     var message: ObservableValue<String> { get }
     var isLoading: ObservableValue<Bool> { get }

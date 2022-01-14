@@ -1,5 +1,5 @@
 //
-//  LoadingToolViewModel.swift
+//  DownloadToolViewModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 6/22/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
+class DownloadToolViewModel: NSObject, DownloadToolViewModelType {
     
     private let resource: ResourceModel
     private let translationDownloader: TranslationDownloader

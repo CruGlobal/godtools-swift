@@ -1,5 +1,5 @@
 //
-//  LoadingToolView.swift
+//  DownloadToolView.swift
 //  godtools
 //
 //  Created by Levi Eggert on 6/22/20.
@@ -8,18 +8,18 @@
 
 import UIKit
 
-class LoadingToolView: UIViewController {
+class DownloadToolView: UIViewController {
     
-    private let viewModel: LoadingToolViewModelType
+    private let viewModel: DownloadToolViewModelType
         
     @IBOutlet weak private var messageLabel: UILabel!
     @IBOutlet weak private var loadingView: UIActivityIndicatorView!
     @IBOutlet weak private var progressView: ProgressView!
     @IBOutlet weak private var progressLabel: UILabel!
     
-    required init(viewModel: LoadingToolViewModelType) {
+    required init(viewModel: DownloadToolViewModelType) {
         self.viewModel = viewModel
-        super.init(nibName: String(describing: LoadingToolView.self), bundle: nil)
+        super.init(nibName: String(describing: DownloadToolView.self), bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {

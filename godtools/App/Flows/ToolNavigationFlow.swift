@@ -144,7 +144,7 @@ extension ToolNavigationFlow {
                 for downloadedTranslation in downloadedTranslationsResults {
                     
                     if let downloadError = downloadedTranslation.downloadError {
-                        self?.handleDownloadTranslationErrorFromLoadingToolView(downloadError: downloadError)
+                        self?.handleDownloadTranslationErrorFromDownloadToolView(downloadError: downloadError)
                         return
                     }
                     else {
@@ -170,7 +170,7 @@ extension ToolNavigationFlow {
                     return
                 }
                 
-                self?.leaveLoadingToolView(
+                self?.leaveDownloadToolView(
                     animated: true,
                     completion: nil
                 )
@@ -188,7 +188,7 @@ extension ToolNavigationFlow {
                 
             }// loading tool completed
             
-            navigateToLoadingToolView(
+            navigateToDownloadToolView(
                 resource: resource,
                 translationsToDownload: translationsToDownload,
                 completeHandler: completeHandler
@@ -291,13 +291,13 @@ extension ToolNavigationFlow {
     
     // MARK: -
     
-    private func navigateToLoadingToolView(resource: ResourceModel, translationsToDownload: [TranslationModel], completeHandler: CallbackValueHandler<[DownloadedTranslationResult]>) {
+    private func navigateToDownloadToolView(resource: ResourceModel, translationsToDownload: [TranslationModel], completeHandler: CallbackValueHandler<[DownloadedTranslationResult]>) {
         
         let closeHandler: CallbackHandler = CallbackHandler { [weak self] in
-            self?.leaveLoadingToolView(animated: true, completion: nil)
+            self?.leaveDownloadToolView(animated: true, completion: nil)
         }
         
-        let viewModel = LoadingToolViewModel(
+        let viewModel = DownloadToolViewModel(
             resource: resource,
             translationsToDownload: translationsToDownload,
             translationDownloader: appDiContainer.translationDownloader,
@@ -307,25 +307,25 @@ extension ToolNavigationFlow {
             closeHandler: closeHandler
         )
         
-        let view = LoadingToolView(viewModel: viewModel)
+        let view = DownloadToolView(viewModel: viewModel)
         
         let modal = ModalNavigationController(rootView: view)
         
         navigationController.present(modal, animated: true, completion: nil)
     }
     
-    private func leaveLoadingToolView(animated: Bool, completion: (() -> Void)?) {
+    private func leaveDownloadToolView(animated: Bool, completion: (() -> Void)?) {
         navigationController.dismiss(
             animated: animated,
             completion: completion
         )
     }
     
-    private func handleDownloadTranslationErrorFromLoadingToolView(downloadError: TranslationDownloaderError) {
+    private func handleDownloadTranslationErrorFromDownloadToolView(downloadError: TranslationDownloaderError) {
         
         let localizationServices: LocalizationServices = appDiContainer.localizationServices
         
-        leaveLoadingToolView(animated: true, completion: { [weak self] in
+        leaveDownloadToolView(animated: true, completion: { [weak self] in
             if !downloadError.cancelled {
                 let downloadTranslationAlert = TranslationDownloaderErrorViewModel(
                     localizationServices: localizationServices,
