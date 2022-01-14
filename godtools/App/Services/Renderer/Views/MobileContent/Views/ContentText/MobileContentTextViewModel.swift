@@ -77,16 +77,32 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     }
     
     var textAlignment: NSTextAlignment {
-               
-        let modelTextAlignment: MobileContentTextAlignment? = textModel.textAlignment ?? containerModel?.textAlignment
+        
+        let textModelAlignment = textModel.textAlignment
+        let containerModelAlignment = containerModel?.textAlignment
+        
+        var modelTextAlignment = textModelAlignment ?? containerModelAlignment
+        
+        if languageTextAlignment == .right {
+            
+            if modelTextAlignment == .left {
+                
+                modelTextAlignment = .right
+            } else if modelTextAlignment == .right {
+                
+                modelTextAlignment = .left
+            }
+        }
         
         if let textAlignment = modelTextAlignment {
             
             switch textAlignment {
             case .left:
                 return .left
+            
             case .center:
                 return .center
+            
             case .right:
                 return .right
             }
