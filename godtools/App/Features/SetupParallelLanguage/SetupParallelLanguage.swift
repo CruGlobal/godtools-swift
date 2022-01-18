@@ -8,9 +8,9 @@
 
 import UIKit
 
-class SetupParallelLanguageView: UIView, NibBased {
+class SetupParallelLanguage: UIView, NibBased {
     
-    private let viewModel: SetupParallelLanguageViewModelType
+    private let viewModel: SetupParallelLanguageModelType
     
     private let buttonCornerRadius: CGFloat = 6
     
@@ -23,7 +23,7 @@ class SetupParallelLanguageView: UIView, NibBased {
     @IBOutlet weak private var noButton: UIButton!
     @IBOutlet weak private var getStartedButton: UIButton!
 
-    required init(viewModel: SetupParallelLanguageViewModelType) {
+    required init(viewModel: SetupParallelLanguageModelType) {
         
         self.viewModel = viewModel
         
@@ -136,7 +136,7 @@ class SetupParallelLanguageView: UIView, NibBased {
 
 // MARK: - TransparentModalCustomView
 
-extension SetupParallelLanguageView: TransparentModalCustomView {
+extension SetupParallelLanguage: TransparentModalCustomView {
     
     var view: UIView {
         return self

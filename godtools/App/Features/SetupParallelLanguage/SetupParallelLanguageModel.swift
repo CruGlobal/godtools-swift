@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SetupParallelLanguageViewModel: NSObject, SetupParallelLanguageViewModelType {
+class SetupParallelLanguageModel: NSObject, SetupParallelLanguageModelType {
     
     private weak var flowDelegate: FlowDelegate?
     

@@ -16,7 +16,7 @@
         </array>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SetupParallelLanguageView" customModule="godtools" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SetupParallelLanguage" customModule="godtools" customModuleProvider="target">
             <connections>
                 <outlet property="animatedView" destination="VSQ-9n-ekB" id="VWX-0z-Bvd"/>
                 <outlet property="getStartedButton" destination="NQh-YT-1Of" id="86p-80-xsD"/>
@@ -121,6 +121,7 @@
                 <constraint firstAttribute="trailing" secondItem="NQh-YT-1Of" secondAttribute="trailing" constant="30" id="UKD-uI-8Pu"/>
                 <constraint firstItem="NQh-YT-1Of" firstAttribute="leading" secondItem="3AB-3x-2v2" secondAttribute="leading" constant="30" id="UvT-S7-UKe"/>
                 <constraint firstItem="pVM-T5-7vt" firstAttribute="top" secondItem="VSQ-9n-ekB" secondAttribute="bottom" constant="24" id="VCm-YM-LLG"/>
+                <constraint firstItem="WW4-C7-5Sn" firstAttribute="top" secondItem="ROn-5e-r1Q" secondAttribute="bottom" constant="32" id="YPO-CK-Cs1"/>
                 <constraint firstAttribute="bottom" secondItem="kFd-qN-9uO" secondAttribute="bottom" constant="30" id="bRx-tK-mwB"/>
                 <constraint firstAttribute="trailing" secondItem="pVM-T5-7vt" secondAttribute="trailing" constant="30" id="cGy-Wu-Ecm"/>
                 <constraint firstItem="VSQ-9n-ekB" firstAttribute="centerX" secondItem="3AB-3x-2v2" secondAttribute="centerX" id="d63-0b-0by"/>

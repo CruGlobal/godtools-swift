@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol SetupParallelLanguageViewModelType {
+protocol SetupParallelLanguageModelType {
     
     var animatedViewModel: AnimatedViewModel { get }
     var promptText: String { get }

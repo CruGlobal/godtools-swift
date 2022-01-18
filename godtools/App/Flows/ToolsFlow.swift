@@ -57,7 +57,7 @@ class ToolsFlow: ToolNavigationFlow, Flow {
         
         if appDiContainer.getSetupParallelLanguageAvailability().setupParallelLanguageIsAvailable {
             
-            navigate(step: .showSetupParallelLangauge)
+            navigate(step: .showSetupParallelLanguage)
         }
     }
     
@@ -82,9 +82,9 @@ class ToolsFlow: ToolNavigationFlow, Flow {
         
         switch step {
         
-        case .showSetupParallelLangauge:
+        case .showSetupParallelLanguage:
             presentSetupParallelLanguageModal()
-        
+            
         case .openTutorialTapped:
             flowDelegate?.navigate(step: .openTutorialTapped)
            
@@ -307,12 +307,20 @@ extension ToolsFlow {
     
     private func presentSetupParallelLanguageModal() {
         
+        guard let lesson = appDiContainer.initialDataDownloader.resourcesCache.getResource(abbreviation: "kgp") else {
+            return
+        }
+        
         let viewModel = SetupParallelLanguageViewModel(
             flowDelegate: self,
-            localizationServices: appDiContainer.localizationServices,
-            languageSettingsService: appDiContainer.languageSettingsService,
-            setupParallelLanguageAvailability: appDiContainer.getSetupParallelLanguageAvailability()
+            lesson: lesson,
+            pageIndexReached: 4,
+            lessonEvaluationRepository: appDiContainer.getLessonsEvaluationRepository(),
+            lessonFeedbackAnalytics: appDiContainer.getLessonFeedbackAnalytics(),
+            languageSettings: appDiContainer.languageSettingsService,
+            localization: appDiContainer.localizationServices
         )
+        
         let view = SetupParallelLanguageView(viewModel: viewModel)
         
         let modalView = TransparentModalView(modalView: view)
