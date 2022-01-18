@@ -6,14 +6,13 @@
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 class SetupParallelLanguageView: UIView, NibBased {
     
     private let viewModel: SetupParallelLanguageViewModelType
     
-    private let buttonCornerRadius: CGFloat = 24
+    private let buttonCornerRadius: CGFloat = 6
     
     @IBOutlet weak private var animatedView: AnimatedView!
     @IBOutlet weak private var promptLabel: UILabel!
@@ -100,13 +99,13 @@ class SetupParallelLanguageView: UIView, NibBased {
     
     private func setupBottomButtons() {
         
-        yesButton.layer.cornerRadius = 6
+        yesButton.layer.cornerRadius = buttonCornerRadius
         
-        noButton.layer.cornerRadius = 6
+        noButton.layer.cornerRadius = buttonCornerRadius
         noButton.drawBorder(color: ColorPalette.gtBlue.color)
         noButton.layer.borderWidth = 1
         
-        getStartedButton.layer.cornerRadius = 6
+        getStartedButton.layer.cornerRadius = buttonCornerRadius
     }
     
     @objc private func handleSelectLanguageTapped() {

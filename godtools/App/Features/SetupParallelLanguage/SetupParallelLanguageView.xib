@@ -33,13 +33,6 @@
             <rect key="frame" x="0.0" y="0.0" width="400" height="540"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vnH-xF-eEp" userLabel="verticalSpine">
-                    <rect key="frame" x="199.66666666666666" y="0.0" width="1" height="540"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="1" id="xBl-85-lNG"/>
-                    </constraints>
-                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VSQ-9n-ekB" userLabel="Animated View" customClass="AnimatedView" customModule="godtools" customModuleProvider="target">
                     <rect key="frame" x="80" y="44" width="240" height="240"/>
                     <constraints>
@@ -47,7 +40,7 @@
                         <constraint firstAttribute="width" secondItem="VSQ-9n-ekB" secondAttribute="height" multiplier="1:1" id="XLC-cz-8XR"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="299" verticalCompressionResistancePriority="700" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pVM-T5-7vt" userLabel="Prompt Label">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="299" verticalCompressionResistancePriority="700" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pVM-T5-7vt" userLabel="Prompt Label">
                     <rect key="frame" x="30" y="308" width="340" height="34"/>
                     <fontDescription key="fontDescription" name="SFProDisplay-Light" family="SF Pro Display" pointSize="28"/>
                     <color key="textColor" red="0.23137254900000001" green="0.64313725489999995" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -121,25 +114,22 @@
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstAttribute="centerX" secondItem="WW4-C7-5Sn" secondAttribute="trailing" constant="8" id="2LB-RE-izk"/>
+                <constraint firstAttribute="bottom" secondItem="ROn-5e-r1Q" secondAttribute="bottom" constant="112" id="6n2-yz-iVp"/>
                 <constraint firstAttribute="trailing" secondItem="kFd-qN-9uO" secondAttribute="trailing" constant="30" id="BRc-Q4-NYy"/>
                 <constraint firstAttribute="bottom" secondItem="NQh-YT-1Of" secondAttribute="bottom" constant="30" id="Gb1-Wv-YsT"/>
-                <constraint firstItem="WW4-C7-5Sn" firstAttribute="top" secondItem="ROn-5e-r1Q" secondAttribute="bottom" constant="32" id="Ly4-Zc-dpK"/>
                 <constraint firstAttribute="trailing" secondItem="ROn-5e-r1Q" secondAttribute="trailing" constant="30" id="NYX-es-DM8"/>
                 <constraint firstAttribute="trailing" secondItem="NQh-YT-1Of" secondAttribute="trailing" constant="30" id="UKD-uI-8Pu"/>
                 <constraint firstItem="NQh-YT-1Of" firstAttribute="leading" secondItem="3AB-3x-2v2" secondAttribute="leading" constant="30" id="UvT-S7-UKe"/>
                 <constraint firstItem="pVM-T5-7vt" firstAttribute="top" secondItem="VSQ-9n-ekB" secondAttribute="bottom" constant="24" id="VCm-YM-LLG"/>
-                <constraint firstAttribute="bottom" secondItem="vnH-xF-eEp" secondAttribute="bottom" id="Xga-Tq-eNC"/>
                 <constraint firstAttribute="bottom" secondItem="kFd-qN-9uO" secondAttribute="bottom" constant="30" id="bRx-tK-mwB"/>
                 <constraint firstAttribute="trailing" secondItem="pVM-T5-7vt" secondAttribute="trailing" constant="30" id="cGy-Wu-Ecm"/>
                 <constraint firstItem="VSQ-9n-ekB" firstAttribute="centerX" secondItem="3AB-3x-2v2" secondAttribute="centerX" id="d63-0b-0by"/>
                 <constraint firstItem="ROn-5e-r1Q" firstAttribute="top" secondItem="pVM-T5-7vt" secondAttribute="bottom" constant="36" id="dVT-05-aeY"/>
                 <constraint firstItem="WW4-C7-5Sn" firstAttribute="leading" secondItem="3AB-3x-2v2" secondAttribute="leading" constant="30" id="eBg-j2-Cfw"/>
                 <constraint firstItem="ROn-5e-r1Q" firstAttribute="leading" secondItem="3AB-3x-2v2" secondAttribute="leading" constant="30" id="hV8-f8-9Em"/>
-                <constraint firstItem="vnH-xF-eEp" firstAttribute="top" secondItem="3AB-3x-2v2" secondAttribute="top" id="leZ-ON-yVZ"/>
                 <constraint firstItem="VSQ-9n-ekB" firstAttribute="top" secondItem="3AB-3x-2v2" secondAttribute="top" constant="44" id="nj7-Om-Dxz"/>
                 <constraint firstItem="kFd-qN-9uO" firstAttribute="leading" secondItem="3AB-3x-2v2" secondAttribute="centerX" constant="8" id="rXa-jq-f1A"/>
                 <constraint firstItem="pVM-T5-7vt" firstAttribute="leading" secondItem="3AB-3x-2v2" secondAttribute="leading" constant="30" id="u5P-B3-DGz"/>
-                <constraint firstItem="vnH-xF-eEp" firstAttribute="centerX" secondItem="3AB-3x-2v2" secondAttribute="centerX" id="urc-Ns-KHn"/>
                 <constraint firstAttribute="bottom" secondItem="WW4-C7-5Sn" secondAttribute="bottom" constant="30" id="yvl-KK-qtJ"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

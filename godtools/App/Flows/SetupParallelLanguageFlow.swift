@@ -28,14 +28,6 @@ class SetupParallelLanguageFlow: Flow {
         
         navigationController.setNavigationBarHidden(false, animated: false)
         
-        /*navigationController.navigationBar.setupNavigationBarAppearance(
-            backgroundColor: .clear,
-            controlColor: nil,
-            titleFont: nil,
-            titleColor: nil,
-            isTranslucent: true
-        )*/
-        
         presentSetupParallelLanguageModal()
     }
     

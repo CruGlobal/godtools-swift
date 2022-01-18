@@ -83,7 +83,7 @@ class ToolsFlow: ToolNavigationFlow, Flow {
         switch step {
         
         case .showSetupParallelLangauge:
-            flowDelegate?.navigate(step: .showSetupParallelLangauge)
+            presentSetupParallelLanguageModal()
         
         case .openTutorialTapped:
             flowDelegate?.navigate(step: .openTutorialTapped)
@@ -299,6 +299,21 @@ extension ToolsFlow {
         )
         
         let view = LessonEvaluationView(viewModel: viewModel)
+        
+        let modalView = TransparentModalView(modalView: view)
+        
+        navigationController.present(modalView, animated: true, completion: nil)
+    }
+    
+    private func presentSetupParallelLanguageModal() {
+        
+        let viewModel = SetupParallelLanguageViewModel(
+            flowDelegate: self,
+            localizationServices: appDiContainer.localizationServices,
+            languageSettingsService: appDiContainer.languageSettingsService,
+            setupParallelLanguageAvailability: appDiContainer.getSetupParallelLanguageAvailability()
+        )
+        let view = SetupParallelLanguageView(viewModel: viewModel)
         
         let modalView = TransparentModalView(modalView: view)
         
