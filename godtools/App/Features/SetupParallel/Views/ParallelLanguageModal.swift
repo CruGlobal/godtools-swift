@@ -139,3 +139,17 @@ extension ParallelLanguageModal: UIViewControllerTransitioningDelegate {
     }
 }
 
+// MARK: - TransparentModalCustomView
+
+extension ParallelLanguageModal: TransparentModalCustomView {
+    
+    var modal: UIView {
+        
+        return self.view
+    }
+    
+    func transparentModalDidLayout() {
+        
+    }
+}
+
