@@ -10,7 +10,7 @@ import UIKit
 
 protocol MobileContentImageViewModelType {
     
-    var image: UIImage? { get }
+    var image: ObservableValue<UIImage?> { get }
     var imageEvents: [MultiplatformEventId] { get }
     var rendererState: MobileContentMultiplatformState { get }
 }

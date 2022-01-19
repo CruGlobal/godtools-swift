@@ -11,16 +11,20 @@ import UIKit
 class MobileContentMultiplatformRenderer: MobileContentRendererType {
     
     private let multiplatformParser: MobileContentMultiplatformParser
+    private let attachmentsRepository: AttachmentsRepository
+    private let imageDownloader: ImageDownloader
     private let rendererState: MobileContentMultiplatformState = MobileContentMultiplatformState()
     
     let resource: ResourceModel
     let language: LanguageModel
     let pageViewFactories: [MobileContentPageViewFactoryType]
     
-    required init(resource: ResourceModel, language: LanguageModel, multiplatformParser: MobileContentMultiplatformParser, pageViewFactories: MobileContentRendererPageViewFactories) {
+    required init(resource: ResourceModel, language: LanguageModel, multiplatformParser: MobileContentMultiplatformParser, pageViewFactories: MobileContentRendererPageViewFactories, attachmentsRepository: AttachmentsRepository, imageDownloader: ImageDownloader) {
         
         self.multiplatformParser = multiplatformParser
         self.pageViewFactories = pageViewFactories.factories
+        self.attachmentsRepository = attachmentsRepository
+        self.imageDownloader = imageDownloader
         self.resource = resource
         self.language = language
     }
@@ -60,6 +64,8 @@ class MobileContentMultiplatformRenderer: MobileContentRendererType {
             safeArea: safeArea,
             manifest: parser.manifest,
             resourcesCache: parser.manifestResourcesCache,
+            attachmentsRepository: attachmentsRepository,
+            imageDownloader: imageDownloader,
             resource: resource,
             language: language,
             pageViewFactories: pageViewFactories,

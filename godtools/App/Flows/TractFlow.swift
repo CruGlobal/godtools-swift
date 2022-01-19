@@ -46,7 +46,9 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             resource: resource,
             language: primaryLanguage,
             multiplatformParser: MobileContentMultiplatformParser(translationManifestData: primaryTranslationManifest, translationsFileCache: translationsFileCache),
-            pageViewFactories: pageViewFactories
+            pageViewFactories: pageViewFactories,
+            attachmentsRepository: appDiContainer.getAttachmentsRepository(),
+            imageDownloader: appDiContainer.getImageDownloader()
         )
                 
         var renderers: [MobileContentRendererType] = Array()
@@ -59,7 +61,9 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
                 resource: resource,
                 language: parallelLanguage,
                 multiplatformParser: MobileContentMultiplatformParser(translationManifestData: parallelTranslationManifest, translationsFileCache: translationsFileCache),
-                pageViewFactories: pageViewFactories
+                pageViewFactories: pageViewFactories,
+                attachmentsRepository: appDiContainer.getAttachmentsRepository(),
+                imageDownloader: appDiContainer.getImageDownloader()
             )
                         
             renderers.append(parallelRenderer)
@@ -258,7 +262,9 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             resource: event.rendererPageModel.resource,
             language: event.rendererPageModel.language,
             multiplatformParser: MobileContentMultiplatformParser(manifest: event.rendererPageModel.manifest, pageModels: pageModels, translationsFileCache: appDiContainer.translationsFileCache),
-            pageViewFactories: pageViewFactories
+            pageViewFactories: pageViewFactories,
+            attachmentsRepository: appDiContainer.getAttachmentsRepository(),
+            imageDownloader: appDiContainer.getImageDownloader()
         )
               
         let viewModel = ToolTrainingViewModel(

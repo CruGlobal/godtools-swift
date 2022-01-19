@@ -36,16 +36,26 @@ class MobileContentImageView: MobileContentView {
     private func setupLayout() {
         
         imageView.backgroundColor = .clear
+        imageView.drawBorder(color: .red)
     }
     
     private func setupBinding() {
         
+        viewModel.image.addObserver(self) { [weak self] (image: UIImage?) in
+            
+            if let image = image {
+                self?.addImage(image: image)
+            }
+        }
+        
+        // TODO: What is empty space for? ~Levi
+        /*
         if let image = viewModel.image {
             addImage(image: image)
         }
         else {
             addEmptySpace()
-        }
+        }*/
     }
     
     private func addImage(image: UIImage) {
@@ -54,7 +64,9 @@ class MobileContentImageView: MobileContentView {
         
         addSubview(imageView)
         
-        imageView.constrainEdgesToSuperview()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        imageView.constrainEdgesToView(view: self)
         
         let aspectRatio: NSLayoutConstraint = NSLayoutConstraint(
             item: imageView,

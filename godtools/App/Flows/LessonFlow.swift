@@ -47,7 +47,9 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
                 translationManifestData: primaryTranslationManifest,
                 translationsFileCache: translationsFileCache
             ),
-            pageViewFactories: pageViewFactories
+            pageViewFactories: pageViewFactories,
+            attachmentsRepository: appDiContainer.getAttachmentsRepository(),
+            imageDownloader: appDiContainer.getImageDownloader()
         )
                 
         let viewModel = LessonViewModel(

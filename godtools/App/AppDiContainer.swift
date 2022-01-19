@@ -217,6 +217,12 @@ class AppDiContainer {
         )
     }
     
+    func getAttachmentsRepository() -> AttachmentsRepository {
+        return AttachmentsRepository(
+            cache: RealmAttachmentsCache(realmDatabase: realmDatabase)
+        )
+    }
+    
     func getCardJumpService() -> CardJumpService {
         return CardJumpService(cardJumpCache: CardJumpUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache))
     }
@@ -231,6 +237,10 @@ class AppDiContainer {
     
     func getFontService() -> FontService {
         return FontService(languageSettings: languageSettingsService)
+    }
+    
+    func getImageDownloader() -> ImageDownloader {
+        return ImageDownloader(imageCache: ImageUrlCache(memoryCapacityInMegabytes: 10, diskCapacityInMegabytes: 10, diskPath: "shared-imageDownloader-images"))
     }
     
     func getLessonFeedbackAnalytics() -> LessonFeedbackAnalytics {

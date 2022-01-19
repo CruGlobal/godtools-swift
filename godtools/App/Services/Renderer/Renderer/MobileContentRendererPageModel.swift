@@ -17,6 +17,8 @@ class MobileContentRendererPageModel {
     let safeArea: UIEdgeInsets
     let manifest: MobileContentManifestType
     let resourcesCache: ManifestResourcesCacheType
+    let attachmentsRepository: AttachmentsRepository
+    let imageDownloader: ImageDownloader
     let resource: ResourceModel
     let language: LanguageModel
     let pageViewFactories: [MobileContentPageViewFactoryType]
@@ -25,7 +27,7 @@ class MobileContentRendererPageModel {
     
     private weak var weakWindow: UIViewController?
     
-    required init(pageModel: PageModelType, page: Int, isLastPage: Bool, window: UIViewController, safeArea: UIEdgeInsets, manifest: MobileContentManifestType, resourcesCache: ManifestResourcesCacheType, resource: ResourceModel, language: LanguageModel, pageViewFactories: [MobileContentPageViewFactoryType], primaryRendererLanguage: LanguageModel, rendererState: MobileContentMultiplatformState) {
+    required init(pageModel: PageModelType, page: Int, isLastPage: Bool, window: UIViewController, safeArea: UIEdgeInsets, manifest: MobileContentManifestType, resourcesCache: ManifestResourcesCacheType, attachmentsRepository: AttachmentsRepository, imageDownloader: ImageDownloader, resource: ResourceModel, language: LanguageModel, pageViewFactories: [MobileContentPageViewFactoryType], primaryRendererLanguage: LanguageModel, rendererState: MobileContentMultiplatformState) {
         
         self.pageModel = pageModel
         self.page = page
@@ -35,6 +37,8 @@ class MobileContentRendererPageModel {
         self.safeArea = safeArea
         self.manifest = manifest
         self.resourcesCache = resourcesCache
+        self.attachmentsRepository = attachmentsRepository
+        self.imageDownloader = imageDownloader
         self.resource = resource
         self.language = language
         self.pageViewFactories = pageViewFactories
