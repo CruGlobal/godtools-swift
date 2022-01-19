@@ -12,12 +12,12 @@ extension UIViewController {
     
     // Helper ensures completion will always be called.  I believe if animated is false when calling UIKit's UIViewController.dismiss(animated:) the completion closure will never be called.
     
-    func dismissPresented(animated: Bool, completion: @escaping (() -> Void)) {
+    func dismissPresented(animated: Bool, completion: (() -> Void)?) {
         
         let isPresenting: Bool = presentedViewController != nil
         
         guard isPresenting else {
-            completion()
+            completion?()
             return
         }
         
@@ -26,7 +26,7 @@ extension UIViewController {
         }
         else {
             dismiss(animated: false)
-            completion()
+            completion?()
         }
     }
 }
