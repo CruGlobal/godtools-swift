@@ -46,6 +46,12 @@ class DownloadToolView: UIViewController {
         )
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        viewModel.pageDidAppear()
+    }
+    
     private func setupLayout() {
         
         progressView.progress = 0
@@ -65,13 +71,6 @@ class DownloadToolView: UIViewController {
         
         viewModel.progressValue.addObserver(self) { [weak self] (progressValue: String) in
             self?.progressLabel.text = progressValue
-        }
-        
-        viewModel.alertMessage.addObserver(self) { [weak self] (alertMessage: AlertMessageType?) in
-            guard let alertMessage = alertMessage else {
-                return
-            }
-            self?.presentAlertMessage(alertMessage: alertMessage)
         }
         
         viewModel.message.addObserver(self) { [weak self] (message: String) in

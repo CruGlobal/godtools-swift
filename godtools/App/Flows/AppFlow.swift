@@ -220,34 +220,12 @@ class AppFlow: NSObject, Flow {
             switch deepLink {
             
             case .tool(let toolDeepLink):
-                      
-                guard let toolDeepLinkResources = ToolDeepLinkResources(dataDownloader: dataDownloader, languageSettingsService: appDiContainer.languageSettingsService, toolDeepLink: toolDeepLink) else {
-                    return
-                }
+                   
+                // TODO: Do we need to set starting toolbar item to lessons if deeplinking from a lesson? ~Levi
                 
-                let startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView?
-                
-                if toolDeepLinkResources.resource.resourceTypeEnum == .lesson {
-                    startingToolbarItem = .lessons
-                }
-                else {
-                    startingToolbarItem = nil
-                }
-                
-                resetFlowToToolsFlow(animatedDismissal: false, startingToolbarItem: startingToolbarItem) { [weak self] in
+                resetFlowToToolsFlow(animatedDismissal: false, startingToolbarItem: .favoritedTools) { [weak self] in
                     
-                    guard let weakSelf = self else {
-                        return
-                    }
-                    
-                    weakSelf.toolsFlow?.navigateToTool(
-                        resource: toolDeepLinkResources.resource,
-                        primaryLanguage: toolDeepLinkResources.primaryLanguage,
-                        parallelLanguage: toolDeepLinkResources.parallelLanguage,
-                        liveShareStream: toolDeepLink.liveShareStream,
-                        trainingTipsEnabled: false,
-                        page: toolDeepLink.page
-                    )
+                    self?.toolsFlow?.navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
                 }
             
             case .article(let articleUri):

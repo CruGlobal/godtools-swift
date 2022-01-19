@@ -87,10 +87,10 @@ class ToolsFlow: ToolNavigationFlow, Flow {
             flowDelegate?.navigate(step: .showLanguageSettings)
             
         case .lessonTappedFromLessonsList(let resource):
-            navigateToTool(resource: resource, trainingTipsEnabled: false)
+            navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)
             
         case .toolTappedFromFavoritedTools(let resource):
-            navigateToTool(resource: resource, trainingTipsEnabled: false)
+            navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)
             
         case .aboutToolTappedFromFavoritedTools(let resource):
             navigateToToolDetail(resource: resource)
@@ -135,13 +135,13 @@ class ToolsFlow: ToolNavigationFlow, Flow {
             navigationController.present(view.controller, animated: true, completion: nil)
             
         case .toolTappedFromAllTools(let resource):
-            navigateToTool(resource: resource, trainingTipsEnabled: false)
+            navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)
             
         case .aboutToolTappedFromAllTools(let resource):
             navigateToToolDetail(resource: resource)
                         
         case .openToolTappedFromToolDetails(let resource):
-            navigateToTool(resource: resource, trainingTipsEnabled: false)
+            navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)
             
         case .learnToShareToolTappedFromToolDetails(let resource):
             
@@ -165,15 +165,15 @@ class ToolsFlow: ToolNavigationFlow, Flow {
             }
             else {
                 
-                navigateToTool(resource: resource, trainingTipsEnabled: true)
+                navigateToTool(resourceId: resource.id, trainingTipsEnabled: true)
             }
             
         case .continueTappedFromLearnToShareTool(let resource):
-            navigateToTool(resource: resource, trainingTipsEnabled: true)
+            navigateToTool(resourceId: resource.id, trainingTipsEnabled: true)
             dismissLearnToShareToolFlow()
             
         case .closeTappedFromLearnToShareTool(let resource):
-            navigateToTool(resource: resource, trainingTipsEnabled: true)
+            navigateToTool(resourceId: resource.id, trainingTipsEnabled: true)
             dismissLearnToShareToolFlow()
             
         case .urlLinkTappedFromToolDetail(let url, let exitLink):
