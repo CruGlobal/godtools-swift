@@ -2,43 +2,33 @@
 //  SetupParallelLanguageView.swift
 //  godtools
 //
-//  Created by Levi Eggert on 9/29/21.
+//  Created by Robert Eldredge on 11/19/21.
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
 import UIKit
 
-class SetupParallelLanguageView: UIView, NibBased {
+class SetupParallelLanguageView: UIViewController, UIGestureRecognizerDelegate {
     
     private let viewModel: SetupParallelLanguageViewModelType
     
-    private let buttonCornerRadius: CGFloat = 24
-            
-    //@IBOutlet weak private var closeButton: UIButton!
-    //@IBOutlet weak private var titleLabel: UILabel!
-    //@IBOutlet weak private var wasThisHelpfulLabel: UILabel!
-    //@IBOutlet weak private var yesButton: PrimaryEvaluationOptionButton!
-    //@IBOutlet weak private var noButton: PrimaryEvaluationOptionButton!
-    //@IBOutlet weak private var shareFaithLabel: UILabel!
-    //@IBOutlet weak private var chooseScaleSliderView: ChooseScaleSliderView!
-    //@IBOutlet weak private var sendButton: UIButton!
+    private let buttonCornerRadius: CGFloat = 6
     
+    private var tapRecognizer: UITapGestureRecognizer!
+    
+    @IBOutlet weak private var animatedView: AnimatedView!
+    @IBOutlet weak private var promptLabel: UILabel!
+    @IBOutlet weak private var selectLanguageButtonView: UIView!
+    @IBOutlet weak private var selectLanguageButtonTitle: UILabel!
+    @IBOutlet weak private var yesButton: UIButton!
+    @IBOutlet weak private var noButton: UIButton!
+    @IBOutlet weak private var getStartedButton: UIButton!
+
     required init(viewModel: SetupParallelLanguageViewModelType) {
         
         self.viewModel = viewModel
         
-        super.init(frame: UIScreen.main.bounds)
-        
-        loadNib()
-        setupLayout()
-        setupBinding()
-        
-        /*closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
-        yesButton.addTarget(self, action: #selector(yesButtonTapped), for: .touchUpInside)
-        noButton.addTarget(self, action: #selector(noButtonTapped), for: .touchUpInside)
-        sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
-        
-        chooseScaleSliderView.setDelegate(delegate: self)*/
+        super.init(nibName: String(describing: SetupParallelLanguageView.self), bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -49,59 +39,112 @@ class SetupParallelLanguageView: UIView, NibBased {
         print("x deinit: \(type(of: self))")
     }
     
+    override func viewDidLoad() {
+        
+        super.viewDidLoad()
+        
+        tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleSelectLanguageTapped))
+        tapRecognizer.cancelsTouchesInView = false
+        tapRecognizer.delegate = self
+        self.view.addGestureRecognizer(tapRecognizer)
+        
+        setupLayout()
+        setupBinding()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        
+        self.view.removeGestureRecognizer(self.tapRecognizer)
+        self.tapRecognizer.delegate = nil
+    }
+    
     private func setupLayout() {
         
-        /*yesButton.layer.cornerRadius = buttonCornerRadius
-        noButton.layer.cornerRadius = buttonCornerRadius
-        sendButton.layer.cornerRadius = buttonCornerRadius*/
+        promptLabel.text = viewModel.promptText
+                
+        yesButton.setTitle(viewModel.yesButtonText, for: .normal)
+        
+        noButton.setTitle(viewModel.noButtonText, for: .normal)
+        
+        getStartedButton.setTitle(viewModel.getStartedButtonText, for: .normal)
+        
+        setupSelectLanguageButton()
+        setupBottomButtons()
     }
     
     private func setupBinding() {
         
-        /*chooseScaleSliderView.setMinScaleValue(
-            minScaleValue: viewModel.readyToShareFaithMinimumScaleValue,
-            maxScaleValue: viewModel.readyToShareFaithMaximumScaleValue
-        )
-        chooseScaleSliderView.setScale(scaleValue: viewModel.readyToShareFaithScale)
+        animatedView.configure(viewModel: viewModel.animatedViewModel)
         
-        titleLabel.text = viewModel.title
-        wasThisHelpfulLabel.text = viewModel.wasThisHelpful
-        yesButton.setTitle(viewModel.yesButtonTitle, for: .normal)
-        noButton.setTitle(viewModel.noButtonTitle, for: .normal)
-        shareFaithLabel.text = viewModel.shareFaith
-        sendButton.setTitle(viewModel.sendButtonTitle, for: .normal)*/
+        yesButton.addTarget(self, action: #selector(handleYesTapped), for: .touchUpInside)
         
-        viewModel.yesIsSelected.addObserver(self) { [weak self] (isSelected: Bool) in
-            
-            let optionState: PrimaryEvaluationOptionState = isSelected ? .selected : .deSelected
-            //self?.yesButton.setOptionState(optionState: optionState)
+        noButton.addTarget(self, action: #selector(handleNoTapped), for: .touchUpInside)
+        
+        getStartedButton.addTarget(self, action: #selector(handleGetStartedTapped), for: .touchUpInside)
+
+        viewModel.selectLanguageButtonText.addObserver(self) { [weak self] (buttonText: String) in
+                        
+            self?.selectLanguageButtonTitle?.text = buttonText
         }
         
-        viewModel.noIsSelected.addObserver(self) { [weak self] (isSelected: Bool) in
+        viewModel.yesNoButtonsHidden.addObserver(self) { [weak self] (isHidden: Bool) in
             
-            let optionState: PrimaryEvaluationOptionState = isSelected ? .selected : .deSelected
-            //self?.noButton.setOptionState(optionState: optionState)
+            self?.yesButton?.isHidden = isHidden
+            self?.noButton?.isHidden = isHidden
+        }
+        
+        viewModel.getStartedButtonHidden.addObserver(self) { [weak self] (isHidden: Bool) in
+            
+            self?.getStartedButton?.isHidden = isHidden
         }
     }
     
-    @objc func closeButtonTapped() {
+    private func setupSelectLanguageButton() {
         
-        viewModel.closeTapped()
+        selectLanguageButtonView.isUserInteractionEnabled = true
+        
+        selectLanguageButtonView.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1).cgColor
+        selectLanguageButtonView.layer.shadowOffset = CGSize(width: 2, height: 2)
+        selectLanguageButtonView.layer.shadowOpacity =  0.25
+        selectLanguageButtonView.layer.shadowRadius = 4
+        selectLanguageButtonView.layer.masksToBounds = false
+        selectLanguageButtonView.layer.cornerRadius = 6
     }
     
-    @objc func yesButtonTapped() {
+    private func setupBottomButtons() {
         
-        viewModel.yesTapped()
+        yesButton.layer.cornerRadius = buttonCornerRadius
+        
+        noButton.layer.cornerRadius = buttonCornerRadius
+        noButton.drawBorder(color: ColorPalette.gtBlue.color)
+        noButton.layer.borderWidth = 1
+        
+        getStartedButton.layer.cornerRadius = buttonCornerRadius
     }
     
-    @objc func noButtonTapped() {
+    @objc private func handleSelectLanguageTapped(recognizer: UITapGestureRecognizer) {
         
-        viewModel.noTapped()
+        viewModel.selectLanguageTapped()
     }
     
-    @objc func sendButtonTapped() {
+    @objc private func handleCloseTapped(barButtonItem: UIBarButtonItem) {
         
-        viewModel.sendTapped()
+        viewModel.closeButtonTapped()
+    }
+    
+    @objc private func handleYesTapped() {
+        
+        viewModel.yesButtonTapped()
+    }
+    
+    @objc private func handleNoTapped() {
+        
+        viewModel.noButtonTapped()
+    }
+    
+    @objc private func handleGetStartedTapped() {
+        
+        viewModel.getStartedButtonTapped()
     }
 }
 
@@ -109,21 +152,12 @@ class SetupParallelLanguageView: UIView, NibBased {
 
 extension SetupParallelLanguageView: TransparentModalCustomView {
     
-    var view: UIView {
-        return self
+    var modal: UIView {
+        
+        return self.view
     }
     
     func transparentModalDidLayout() {
-        //chooseScaleSliderView.setScale(scaleValue: viewModel.readyToShareFaithScale)
-    }
-}
-
-// MARK: - ChooseScaleSliderViewDelegate
-
-extension SetupParallelLanguageView: ChooseScaleSliderViewDelegate {
-    
-    func chooseScaleSliderDidChangeScaleValue(chooseScaleSlider: ChooseScaleSliderView, scaleValue: Int) {
         
-        viewModel.didSetScaleForReadyToShareFaith(scale: scaleValue)
     }
 }

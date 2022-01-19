@@ -307,18 +307,11 @@ extension ToolsFlow {
     
     private func presentSetupParallelLanguageModal() {
         
-        guard let lesson = appDiContainer.initialDataDownloader.resourcesCache.getResource(abbreviation: "kgp") else {
-            return
-        }
-        
         let viewModel = SetupParallelLanguageViewModel(
             flowDelegate: self,
-            lesson: lesson,
-            pageIndexReached: 4,
-            lessonEvaluationRepository: appDiContainer.getLessonsEvaluationRepository(),
-            lessonFeedbackAnalytics: appDiContainer.getLessonFeedbackAnalytics(),
-            languageSettings: appDiContainer.languageSettingsService,
-            localization: appDiContainer.localizationServices
+            localizationServices: appDiContainer.localizationServices,
+            languageSettingsService: appDiContainer.languageSettingsService,
+            setupParallelLanguageAvailability: appDiContainer.getSetupParallelLanguageAvailability()
         )
         
         let view = SetupParallelLanguageView(viewModel: viewModel)

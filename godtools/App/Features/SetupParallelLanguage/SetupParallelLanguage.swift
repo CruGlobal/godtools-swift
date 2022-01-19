@@ -138,7 +138,7 @@ class SetupParallelLanguage: UIView, NibBased {
 
 extension SetupParallelLanguage: TransparentModalCustomView {
     
-    var view: UIView {
+    var modal: UIView {
         return self
     }
     

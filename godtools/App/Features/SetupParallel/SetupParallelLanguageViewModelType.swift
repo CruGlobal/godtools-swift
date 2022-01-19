@@ -2,7 +2,7 @@
 //  SetupParallelLanguageViewModelType.swift
 //  godtools
 //
-//  Created by Levi Eggert on 9/29/21.
+//  Created by Robert Eldredge on 11/19/21.
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
@@ -10,21 +10,19 @@ import Foundation
 
 protocol SetupParallelLanguageViewModelType {
     
-    var title: String { get }
-    var wasThisHelpful: String { get }
-    var yesButtonTitle: String { get }
-    var noButtonTitle: String { get }
-    var shareFaith: String { get }
-    var readyToShareFaithMinimumScaleValue: Int { get }
-    var readyToShareFaithMaximumScaleValue: Int { get }
-    var readyToShareFaithScale: Int { get }
-    var sendButtonTitle: String { get }
-    var yesIsSelected: ObservableValue<Bool> { get }
-    var noIsSelected: ObservableValue<Bool> { get }
+    var animatedViewModel: AnimatedViewModel { get }
+    var promptText: String { get }
+    var yesButtonText: String { get }
+    var noButtonText: String { get }
+    var selectButtonText: String { get }
+    var getStartedButtonText: String { get }
+    var selectLanguageButtonText: ObservableValue<String> { get }
+    var yesNoButtonsHidden:  ObservableValue<Bool> { get }
+    var getStartedButtonHidden:  ObservableValue<Bool> { get }
     
-    func closeTapped()
-    func yesTapped()
-    func noTapped()
-    func didSetScaleForReadyToShareFaith(scale: Int)
-    func sendTapped()
+    func selectLanguageTapped()
+    func closeButtonTapped()
+    func yesButtonTapped()
+    func noButtonTapped()
+    func getStartedButtonTapped()
 }

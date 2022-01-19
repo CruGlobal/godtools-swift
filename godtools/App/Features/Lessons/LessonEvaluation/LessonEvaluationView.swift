@@ -109,7 +109,7 @@ class LessonEvaluationView: UIView, NibBased {
 
 extension LessonEvaluationView: TransparentModalCustomView {
     
-    var view: UIView {
+    var modal: UIView {
         return self
     }
     
