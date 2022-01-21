@@ -18,6 +18,10 @@ class MultiplatformTip: TipModelType {
         self.tip = tip
     }
     
+    var id: String {
+        return tip.id
+    }
+    
     var tipType: MobileContentTrainingTipType {
         
         switch tip.type {

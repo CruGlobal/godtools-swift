@@ -18,11 +18,11 @@ class MultiplatformTrainingTip: TrainingTipModelType {
         self.mpTip = tip
     }
     
-    var id: String? {
+    var id: String {
         return mpTip.id
     }
     
-    var tip: TipModelType? {
+    var tip: TipModelType {
         return MultiplatformTip(tip: mpTip)
     }
 }

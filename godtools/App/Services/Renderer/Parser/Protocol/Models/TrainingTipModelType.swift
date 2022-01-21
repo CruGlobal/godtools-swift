@@ -10,8 +10,8 @@ import Foundation
 
 protocol TrainingTipModelType: MobileContentRenderableModel {
     
-    var id: String? { get }
-    var tip: TipModelType? { get }
+    var id: String { get }
+    var tip: TipModelType { get }
 }
 
 extension TrainingTipModelType {

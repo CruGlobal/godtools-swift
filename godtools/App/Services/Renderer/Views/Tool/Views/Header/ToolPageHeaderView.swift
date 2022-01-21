@@ -45,8 +45,10 @@ class ToolPageHeaderView: MobileContentView {
         
         backgroundColor = .clear
         backgroundView.backgroundColor = viewModel.backgroundColor
+        
+        backgroundView.semanticContentAttribute = viewModel.languageDirectionSemanticContentAttribute
     }
-    
+
     // MARK: - MobileContentView
     
     override func renderChild(childView: MobileContentView) {

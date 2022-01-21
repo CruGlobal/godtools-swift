@@ -49,19 +49,7 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
             ),
             pageViewFactories: pageViewFactories
         )
-        
-        // TODO: Remove when removing xml node renderer. ~Levi
-        /*
-        let primaryRenderer = MobileContentXmlNodeRenderer(
-            resource: resource,
-            language: primaryLanguage,
-            xmlParser: MobileContentXmlParser(
-                translationManifestData: primaryTranslationManifest,
-                translationsFileCache: translationsFileCache
-            ),
-            pageViewFactories: pageViewFactories
-        )*/
-        
+                
         let viewModel = LessonViewModel(
             flowDelegate: self,
             renderers: [primaryRenderer],
@@ -119,18 +107,7 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
             
             case .tool(let toolDeepLink):
                 
-                guard let toolDeepLinkResources = ToolDeepLinkResources(dataDownloader: appDiContainer.initialDataDownloader, languageSettingsService: appDiContainer.languageSettingsService, toolDeepLink: toolDeepLink) else {
-                    return
-                }
-                
-                navigateToTool(
-                    resource: toolDeepLinkResources.resource,
-                    primaryLanguage: toolDeepLinkResources.primaryLanguage,
-                    parallelLanguage: toolDeepLinkResources.parallelLanguage,
-                    liveShareStream: toolDeepLink.liveShareStream,
-                    trainingTipsEnabled: false,
-                    page: toolDeepLink.page
-                )
+                navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
             }
         
         case .closeTappedFromLesson(let lesson, let highestPageNumberViewed):

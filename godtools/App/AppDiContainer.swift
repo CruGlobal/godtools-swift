@@ -47,7 +47,6 @@ class AppDiContainer {
     let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     let localizationServices: LocalizationServices = LocalizationServices()
     let deviceLanguage: DeviceLanguageType = DeviceLanguage()
-    let fetchTranslationManifestsViewModel: FetchTranslationManifestsViewModel
     let globalActivityServices: GlobalActivityServices
     let followUpsService: FollowUpsService
     let viewsService: ViewsService
@@ -178,13 +177,6 @@ class AppDiContainer {
                                                           
         openTutorialCalloutCache = OpenTutorialCalloutUserDefaultsCache()
                            
-        fetchTranslationManifestsViewModel = FetchTranslationManifestsViewModel(
-            realmDatabase: realmDatabase,
-            resourcesCache: initialDataDownloader.resourcesCache,
-            languageSettingsService: languageSettingsService,
-            translationsFileCache: translationsFileCache
-        )
-        
         globalActivityServices = GlobalActivityServices(config: config, sharedSession: sharedIgnoringCacheSession)
         
         followUpsService = FollowUpsService(config: config, sharedSession: sharedIgnoringCacheSession, failedFollowUpsCache: failedFollowUpsCache)
@@ -269,10 +261,6 @@ class AppDiContainer {
     
     func getMobileContentEventAnalyticsTracking() -> MobileContentEventAnalyticsTracking {
         return MobileContentEventAnalyticsTracking(firebaseAnalytics: analytics.firebaseAnalytics)
-    }
-    
-    func getMobileContentNodeParser() -> MobileContentXmlNodeParser {
-        return MobileContentXmlNodeParser()
     }
     
     func getOnboardingTutorialAvailability() -> OnboardingTutorialAvailabilityType {
