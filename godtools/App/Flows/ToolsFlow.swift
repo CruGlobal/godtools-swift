@@ -15,9 +15,7 @@ class ToolsFlow: ToolNavigationFlow, Flow {
     private let dataDownloader: InitialDataDownloader
     
     private var learnToShareToolFlow: LearnToShareToolFlow?
-    
-    private var setupParallelLanguageViewController: UIViewController?
-    
+        
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
@@ -320,7 +318,6 @@ extension ToolsFlow {
             languageSettings: appDiContainer.languageSettingsService,
             localization: appDiContainer.localizationServices
         )
-        
         let view = LessonEvaluationView(viewModel: viewModel)
         
         let modalView = TransparentModalView(modalView: view)
@@ -336,23 +333,14 @@ extension ToolsFlow {
             languageSettingsService: appDiContainer.languageSettingsService,
             setupParallelLanguageAvailability: appDiContainer.getSetupParallelLanguageAvailability()
         )
-        
         let view = SetupParallelLanguageView(viewModel: viewModel)
         
         let modalView = TransparentModalView(modalView: view)
         
         navigationController.present(modalView, animated: true, completion: nil)
-        
-        setupParallelLanguageViewController = modalView
     }
     
     private func presentParallelLanguage() {
-        
-        guard let presentedViewController = navigationController.presentedViewController else {
-            return
-        }
-        
-        //guard let setupParallel = setupParallelLanguageViewController else { return }
         
         let viewModel = ParallelLanguageListViewModel(
             flowDelegate: self,
@@ -360,16 +348,11 @@ extension ToolsFlow {
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices
         )
-                
         let view = ParallelLanguageListView(viewModel: viewModel)
         
         let modalView = TransparentModalView(modalView: view)
         
-        presentedViewController.present(modalView, animated: true, completion: nil)
-        
-        //modalView.modalPresentationStyle = .overFullScreen
-        
-        //setupParallel.present(modalView, animated: true, completion: nil)
+        navigationController.presentedViewController?.present(modalView, animated: true, completion: nil)
     }
     
     private func dismissLessonEvaluation() {

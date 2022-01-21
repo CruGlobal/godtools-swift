@@ -48,9 +48,16 @@ class ParallelLanguageListView: UIViewController {
             UINib(nibName: ChooseLanguageCell.nibName, bundle: nil),
             forCellReuseIdentifier: ChooseLanguageCell.reuseIdentifier
         )
+        
         languagesTableView.rowHeight = 54
         languagesTableView.separatorStyle = .none
         languagesTableView.layer.cornerRadius = 6
+        
+        view.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1).cgColor
+        view.layer.shadowOffset = CGSize(width: 2, height: 2)
+        view.layer.shadowOpacity =  0.25
+        view.layer.shadowRadius = 4
+        view.layer.masksToBounds = false
     }
     
     private func setupBinding() {
@@ -118,6 +125,16 @@ extension ParallelLanguageListView: TransparentModalCustomView {
     var modal: UIView {
         
         return self.view
+    }
+    
+    var darkenBackground: Bool {
+        
+        return false
+    }
+    
+    var modalInsets: UIEdgeInsets {
+        
+        return UIEdgeInsets(top: 0, left: 40, bottom: 0, right: 40)
     }
     
     func transparentModalDidLayout() {

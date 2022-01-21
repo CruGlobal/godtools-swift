@@ -55,8 +55,12 @@ class TransparentModalView: UIViewController {
         view.backgroundColor = .clear
         
         // overlayButton
-        overlayButton.backgroundColor = .black
-        overlayButton.alpha = 0.4
+        if modalView.darkenBackground {
+            overlayButton.backgroundColor = .black
+            overlayButton.alpha = 0.4
+        } else {
+            overlayButton.alpha = 0.0
+        }
         
         //customModalView.backgroundColor = .white
         //customModalView.layer.cornerRadius = modalCornerRadius
@@ -79,10 +83,10 @@ extension TransparentModalView {
         guard !view.subviews.contains(modalView.modal) else {
             return
         }
-                
+        
         view.addSubview(modalView.modal)
                 
-        let modalInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        let modalInsets = modalView.modalInsets
         
         modalView.modal.translatesAutoresizingMaskIntoConstraints = false
         
@@ -131,7 +135,7 @@ extension TransparentModalView {
         )
         height.priority = UILayoutPriority(500)
         modalView.modal.addConstraint(height)
-
+        
         modalView.modal.layer.cornerRadius = modalCornerRadius
         modalView.modal.clipsToBounds = true
         modalView.transparentModalDidLayout()

@@ -159,6 +159,16 @@ extension SetupParallelLanguageView: TransparentModalCustomView {
         return self.view
     }
     
+    var darkenBackground: Bool {
+        
+        return true
+    }
+    
+    var modalInsets: UIEdgeInsets {
+        
+        return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+    }
+    
     func transparentModalDidLayout() {
         
     }
