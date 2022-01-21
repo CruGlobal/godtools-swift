@@ -348,7 +348,11 @@ extension ToolsFlow {
     
     private func presentParallelLanguage() {
         
-        guard let setupParallel = setupParallelLanguageViewController else { return }
+        guard let presentedViewController = navigationController.presentedViewController else {
+            return
+        }
+        
+        //guard let setupParallel = setupParallelLanguageViewController else { return }
         
         let viewModel = ParallelLanguageModalViewModel(
             flowDelegate: self,
@@ -360,10 +364,12 @@ extension ToolsFlow {
         let view = ParallelLanguageModal(viewModel: viewModel)
         
         let modalView = TransparentModalView(modalView: view)
-        modalView.modalPresentationStyle = .overFullScreen
         
+        presentedViewController.present(modalView, animated: true, completion: nil)
         
-        setupParallel.present(modalView, animated: true, completion: nil)
+        //modalView.modalPresentationStyle = .overFullScreen
+        
+        //setupParallel.present(modalView, animated: true, completion: nil)
     }
     
     private func dismissLessonEvaluation() {

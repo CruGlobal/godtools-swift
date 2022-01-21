@@ -32,10 +32,12 @@ class SetupParallelLanguageView: UIViewController, UIGestureRecognizerDelegate {
     }
     
     required init?(coder aDecoder: NSCoder) {
+        
         fatalError("init(coder:) has not been implemented")
     }
     
     deinit {
+        
         print("x deinit: \(type(of: self))")
     }
     
