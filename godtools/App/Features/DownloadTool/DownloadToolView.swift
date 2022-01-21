@@ -1,5 +1,5 @@
 //
-//  LoadingToolView.swift
+//  DownloadToolView.swift
 //  godtools
 //
 //  Created by Levi Eggert on 6/22/20.
@@ -8,18 +8,18 @@
 
 import UIKit
 
-class LoadingToolView: UIViewController {
+class DownloadToolView: UIViewController {
     
-    private let viewModel: LoadingToolViewModelType
+    private let viewModel: DownloadToolViewModelType
         
     @IBOutlet weak private var messageLabel: UILabel!
     @IBOutlet weak private var loadingView: UIActivityIndicatorView!
     @IBOutlet weak private var progressView: ProgressView!
     @IBOutlet weak private var progressLabel: UILabel!
     
-    required init(viewModel: LoadingToolViewModelType) {
+    required init(viewModel: DownloadToolViewModelType) {
         self.viewModel = viewModel
-        super.init(nibName: String(describing: LoadingToolView.self), bundle: nil)
+        super.init(nibName: String(describing: DownloadToolView.self), bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -46,6 +46,12 @@ class LoadingToolView: UIViewController {
         )
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        viewModel.pageDidAppear()
+    }
+    
     private func setupLayout() {
         
         progressView.progress = 0
@@ -65,13 +71,6 @@ class LoadingToolView: UIViewController {
         
         viewModel.progressValue.addObserver(self) { [weak self] (progressValue: String) in
             self?.progressLabel.text = progressValue
-        }
-        
-        viewModel.alertMessage.addObserver(self) { [weak self] (alertMessage: AlertMessageType?) in
-            guard let alertMessage = alertMessage else {
-                return
-            }
-            self?.presentAlertMessage(alertMessage: alertMessage)
         }
         
         viewModel.message.addObserver(self) { [weak self] (message: String) in
