@@ -320,7 +320,7 @@ extension ToolsFlow {
         )
         let view = LessonEvaluationView(viewModel: viewModel)
         
-        let modalView = TransparentModalView(modalView: view)
+        let modalView = TransparentModalView(flowDelegate: self, modalView: view, closeModalFlowStep: .closeTappedFromSetupParallelLanguage)
         
         navigationController.present(modalView, animated: true, completion: nil)
     }
@@ -335,7 +335,7 @@ extension ToolsFlow {
         )
         let view = SetupParallelLanguageView(viewModel: viewModel)
         
-        let modalView = TransparentModalView(modalView: view)
+        let modalView = TransparentModalView(flowDelegate: self, modalView: view, closeModalFlowStep: .closeTappedFromSetupParallelLanguage)
         
         navigationController.present(modalView, animated: true, completion: nil)
     }
@@ -350,7 +350,7 @@ extension ToolsFlow {
         )
         let view = ParallelLanguageListView(viewModel: viewModel)
         
-        let modalView = TransparentModalView(modalView: view)
+        let modalView = TransparentModalView(flowDelegate: self, modalView: view,  closeModalFlowStep: .backgroundTappedFromParallelLanguageModal)
         
         navigationController.presentedViewController?.present(modalView, animated: true, completion: nil)
     }

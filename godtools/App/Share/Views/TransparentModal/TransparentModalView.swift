@@ -10,16 +10,22 @@ import UIKit
 
 class TransparentModalView: UIViewController {
     
+    private weak var flowDelegate: FlowDelegate?
+    
     private let modalView: TransparentModalCustomView
     private let modalCornerRadius: CGFloat = 12
+    private let closeModalFlowStep: FlowStep
     
     private var didLayoutSubviews: Bool = false
     
     @IBOutlet weak private var overlayButton: UIButton!
     
-    required init(modalView: TransparentModalCustomView) {
+    required init(flowDelegate: FlowDelegate, modalView: TransparentModalCustomView, closeModalFlowStep: FlowStep) {
+        
+        self.flowDelegate = flowDelegate
         
         self.modalView = modalView
+        self.closeModalFlowStep = closeModalFlowStep
         
         super.init(nibName: String(describing: TransparentModalView.self), bundle: nil)
         
@@ -35,6 +41,7 @@ class TransparentModalView: UIViewController {
         super.viewDidLoad()
         
         setupLayout()
+        setupBinding()
     }
     
     override func viewDidLayoutSubviews() {
@@ -71,6 +78,16 @@ class TransparentModalView: UIViewController {
         
         // modalView
         addModalView(modalView: modalView)
+    }
+    
+    private func setupBinding() {
+        
+        overlayButton.addTarget(self, action: #selector(handleBackgroundTapped), for: .touchUpInside)
+    }
+    
+    @objc private func handleBackgroundTapped() {
+        
+        flowDelegate?.navigate(step: closeModalFlowStep)
     }
 }
 
