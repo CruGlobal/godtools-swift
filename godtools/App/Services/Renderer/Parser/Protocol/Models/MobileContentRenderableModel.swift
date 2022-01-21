@@ -8,6 +8,7 @@
 
 import Foundation
 
+// TODO: I believe this can be removed now that we're using shared Kotlin parser. ~Levi
 protocol MobileContentRenderableModel {
     
     var restrictTo: String? { get }

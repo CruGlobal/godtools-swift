@@ -58,11 +58,14 @@ class MobileContentMultiplatformParser: MobileContentParserType {
                 assertionFailure("Not implemented for articles.")
                 self.pageModels = Array()
                 
+            case .cyoa:
+                self.pageModels = manifest.pages.map({MultiplatformChooseYourOwnAdventurePage(page: $0)})
+                
             case .unknown:
                 self.pageModels = Array()
                 
             default:
-                assertionFailure("Found unsupported manifest type.  Ensure all types are supported.")
+                assertionFailure("Found unsupported manifest type.  Ensure all types are supported. Type found: \(manifest.type)")
                 self.pageModels = Array()
             }
         }
