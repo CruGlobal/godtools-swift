@@ -1,5 +1,5 @@
 //
-//  ParallelLanguageModal.swift
+//  ParallelLanguageListView.swift
 //  godtools
 //
 //  Created by Robert Eldredge on 12/10/21.
@@ -8,17 +8,17 @@
 
 import UIKit
 
-class ParallelLanguageModal: UIViewController {
+class ParallelLanguageListView: UIViewController {
     
-    private let viewModel: ParallelLanguageModalViewModelType
+    private let viewModel: ParallelLanguageListViewModelType
     
     @IBOutlet weak private var languagesTableView: UITableView!
     
-    required init(viewModel: ParallelLanguageModalViewModelType) {
+    required init(viewModel: ParallelLanguageListViewModelType) {
         
         self.viewModel = viewModel
         
-        super.init(nibName: String(describing: ParallelLanguageModal.self), bundle: nil)
+        super.init(nibName: String(describing: ParallelLanguageListView.self), bundle: nil)
         
         modalPresentationStyle = .overCurrentContext
         transitioningDelegate = self
@@ -58,26 +58,12 @@ class ParallelLanguageModal: UIViewController {
         viewModel.numberOfLanguages.addObserver(self) { [weak self] (numberOfLanguages: Int) in
             self?.languagesTableView.reloadData()
         }
-        
-        viewModel.selectedLanguageIndex.addObserver(self) { [weak self] (index: Int?) in
-            self?.languagesTableView.reloadData()
-        }
-    }
-    
-    @objc private func handleBackgroundTapped() {
-        
-        viewModel.backgroundTapped()
-    }
-    
-    @objc private func handleSelectTapped() {
-        
-        viewModel.selectTapped()
     }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
 
-extension ParallelLanguageModal: UITableViewDelegate, UITableViewDataSource {
+extension ParallelLanguageListView: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         
@@ -112,7 +98,7 @@ extension ParallelLanguageModal: UITableViewDelegate, UITableViewDataSource {
 
 // MARK: - UIViewControllerTransitioningDelegate
 
-extension ParallelLanguageModal: UIViewControllerTransitioningDelegate {
+extension ParallelLanguageListView: UIViewControllerTransitioningDelegate {
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
@@ -127,7 +113,7 @@ extension ParallelLanguageModal: UIViewControllerTransitioningDelegate {
 
 // MARK: - TransparentModalCustomView
 
-extension ParallelLanguageModal: TransparentModalCustomView {
+extension ParallelLanguageListView: TransparentModalCustomView {
     
     var modal: UIView {
         

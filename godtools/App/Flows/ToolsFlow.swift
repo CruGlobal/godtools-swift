@@ -354,14 +354,14 @@ extension ToolsFlow {
         
         //guard let setupParallel = setupParallelLanguageViewController else { return }
         
-        let viewModel = ParallelLanguageModalViewModel(
+        let viewModel = ParallelLanguageListViewModel(
             flowDelegate: self,
             dataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices
         )
                 
-        let view = ParallelLanguageModal(viewModel: viewModel)
+        let view = ParallelLanguageListView(viewModel: viewModel)
         
         let modalView = TransparentModalView(modalView: view)
         
@@ -381,6 +381,6 @@ extension ToolsFlow {
     }
     
     private func dismissParallelLanguage() {
-        navigationController.dismiss(animated: true, completion: nil)
+        navigationController.presentedViewController?.dismiss(animated: true, completion: nil)
     }
 }

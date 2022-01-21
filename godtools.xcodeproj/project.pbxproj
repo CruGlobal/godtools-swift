@@ -1007,10 +1007,10 @@
 		D1AF02F1273076E700BEC921 /* VideoPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AF02F0273076E700BEC921 /* VideoPlayerViewModel.swift */; };
 		D1AF02F3273080CE00BEC921 /* VideoPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1AF02F2273080CE00BEC921 /* VideoPlayerView.xib */; };
 		D1B944E5259E58F5004641DB /* remote_share_active.json in Resources */ = {isa = PBXBuildFile; fileRef = D1B944E4259E58F5004641DB /* remote_share_active.json */; };
-		D1BF24522763B98600C6FEB0 /* ParallelLanguageModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BF24512763B98600C6FEB0 /* ParallelLanguageModal.swift */; };
-		D1C8FEAE275E95FA00C71E80 /* ParallelLanguageModalViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C8FEAD275E95FA00C71E80 /* ParallelLanguageModalViewModelType.swift */; };
-		D1C8FEB0275E9BBB00C71E80 /* ParallelLanguageModalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C8FEAF275E9BBB00C71E80 /* ParallelLanguageModalViewModel.swift */; };
-		D1C8FEB2275EA1C500C71E80 /* ParallelLanguageModal.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1C8FEB1275EA1C500C71E80 /* ParallelLanguageModal.xib */; };
+		D1BF24522763B98600C6FEB0 /* ParallelLanguageListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BF24512763B98600C6FEB0 /* ParallelLanguageListView.swift */; };
+		D1C8FEAE275E95FA00C71E80 /* ParallelLanguageListViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C8FEAD275E95FA00C71E80 /* ParallelLanguageListViewModelType.swift */; };
+		D1C8FEB0275E9BBB00C71E80 /* ParallelLanguageListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C8FEAF275E9BBB00C71E80 /* ParallelLanguageListViewModel.swift */; };
+		D1C8FEB2275EA1C500C71E80 /* ParallelLanguageListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1C8FEB1275EA1C500C71E80 /* ParallelLanguageListView.xib */; };
 		D1C8FEB92714E7010071BD07 /* TutorialCellViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C8FEB82714E7000071BD07 /* TutorialCellViewModelType.swift */; };
 		D1C8FEBD2714E9650071BD07 /* OnboardingTutorialItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C8FEBC2714E9650071BD07 /* OnboardingTutorialItem.swift */; };
 		D1CE0959273EACCC00C8832C /* TutorialVideoAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CE0958273EACCC00C8832C /* TutorialVideoAnalytics.swift */; };
@@ -2097,10 +2097,10 @@
 		D1AF02F0273076E700BEC921 /* VideoPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerViewModel.swift; sourceTree = "<group>"; };
 		D1AF02F2273080CE00BEC921 /* VideoPlayerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoPlayerView.xib; sourceTree = "<group>"; };
 		D1B944E4259E58F5004641DB /* remote_share_active.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = remote_share_active.json; sourceTree = "<group>"; };
-		D1BF24512763B98600C6FEB0 /* ParallelLanguageModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParallelLanguageModal.swift; sourceTree = "<group>"; };
-		D1C8FEAD275E95FA00C71E80 /* ParallelLanguageModalViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParallelLanguageModalViewModelType.swift; sourceTree = "<group>"; };
-		D1C8FEAF275E9BBB00C71E80 /* ParallelLanguageModalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParallelLanguageModalViewModel.swift; sourceTree = "<group>"; };
-		D1C8FEB1275EA1C500C71E80 /* ParallelLanguageModal.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ParallelLanguageModal.xib; sourceTree = "<group>"; };
+		D1BF24512763B98600C6FEB0 /* ParallelLanguageListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParallelLanguageListView.swift; sourceTree = "<group>"; };
+		D1C8FEAD275E95FA00C71E80 /* ParallelLanguageListViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParallelLanguageListViewModelType.swift; sourceTree = "<group>"; };
+		D1C8FEAF275E9BBB00C71E80 /* ParallelLanguageListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParallelLanguageListViewModel.swift; sourceTree = "<group>"; };
+		D1C8FEB1275EA1C500C71E80 /* ParallelLanguageListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ParallelLanguageListView.xib; sourceTree = "<group>"; };
 		D1C8FEB82714E7000071BD07 /* TutorialCellViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialCellViewModelType.swift; sourceTree = "<group>"; };
 		D1C8FEBC2714E9650071BD07 /* OnboardingTutorialItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialItem.swift; sourceTree = "<group>"; };
 		D1CE0958273EACCC00C8832C /* TutorialVideoAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialVideoAnalytics.swift; sourceTree = "<group>"; };
@@ -5577,10 +5577,10 @@
 		D1C8FEAA275E93CF00C71E80 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				D1BF24512763B98600C6FEB0 /* ParallelLanguageModal.swift */,
-				D1C8FEB1275EA1C500C71E80 /* ParallelLanguageModal.xib */,
-				D1C8FEAF275E9BBB00C71E80 /* ParallelLanguageModalViewModel.swift */,
-				D1C8FEAD275E95FA00C71E80 /* ParallelLanguageModalViewModelType.swift */,
+				D1BF24512763B98600C6FEB0 /* ParallelLanguageListView.swift */,
+				D1C8FEB1275EA1C500C71E80 /* ParallelLanguageListView.xib */,
+				D1C8FEAF275E9BBB00C71E80 /* ParallelLanguageListViewModel.swift */,
+				D1C8FEAD275E95FA00C71E80 /* ParallelLanguageListViewModelType.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -5970,7 +5970,7 @@
 				451EBE3924AD968B00C4D6DD /* 9a8cfa08121f0f0e78dbed54652c2c3f1d51c001a0b81dfdd092d378fd43633c.jpg in Resources */,
 				45AD1B1025938A4E00A096A0 /* ArticlesErrorMessageView.xib in Resources */,
 				45AD1ACD25938A4E00A096A0 /* FavoritingToolMessageView.xib in Resources */,
-				D1C8FEB2275EA1C500C71E80 /* ParallelLanguageModal.xib in Resources */,
+				D1C8FEB2275EA1C500C71E80 /* ParallelLanguageListView.xib in Resources */,
 				D1AF02F3273080CE00BEC921 /* VideoPlayerView.xib in Resources */,
 				451EBE3824AD968B00C4D6DD /* 298732618f6a220d016b5493508c038a8c821780ea699627d03d4a6035d3f6bb.jpg in Resources */,
 				455582E7269F2C1000C3FF14 /* TrainingPageView.xib in Resources */,
@@ -6320,7 +6320,7 @@
 				45BEC53026A604E4005D8CA1 /* MobileContentSpacerMode.swift in Sources */,
 				45AD1BA925938A4F00A096A0 /* ToolsFlow.swift in Sources */,
 				455583E7269F2DA500C3FF14 /* MobileContentButtonView.swift in Sources */,
-				D1BF24522763B98600C6FEB0 /* ParallelLanguageModal.swift in Sources */,
+				D1BF24522763B98600C6FEB0 /* ParallelLanguageListView.swift in Sources */,
 				D1DD79FF26690CBA000F1351 /* TrackActionModel.swift in Sources */,
 				45BD79DB26A20EEA0007426B /* ContentLabelModelType.swift in Sources */,
 				45AD21432593A49900A096A0 /* ShareToolRemoteSessionURLView.swift in Sources */,
@@ -6469,7 +6469,7 @@
 				45AD1BCA25938A4F00A096A0 /* UIView+Constraints.swift in Sources */,
 				45AD1BA125938A4F00A096A0 /* ReferencedFile.swift in Sources */,
 				4555840D269F2DA500C3FF14 /* MobileContentTextViewModel.swift in Sources */,
-				D1C8FEAE275E95FA00C71E80 /* ParallelLanguageModalViewModelType.swift in Sources */,
+				D1C8FEAE275E95FA00C71E80 /* ParallelLanguageListViewModelType.swift in Sources */,
 				45558331269F2C7B00C3FF14 /* ToolPageCardsViewModelType.swift in Sources */,
 				455583E0269F2DA500C3FF14 /* MobileContentTitleViewModelType.swift in Sources */,
 				45C93AEF261D310900592FFF /* ArticleAemDownloaderResult.swift in Sources */,
@@ -6930,7 +6930,7 @@
 				45AD215B2593A4D900A096A0 /* ShareToolScreenTutorialViewModelType.swift in Sources */,
 				45AD1AFB25938A4E00A096A0 /* MailViewModel.swift in Sources */,
 				45AD202825938A9800A096A0 /* LocalizationServices.swift in Sources */,
-				D1C8FEB0275E9BBB00C71E80 /* ParallelLanguageModalViewModel.swift in Sources */,
+				D1C8FEB0275E9BBB00C71E80 /* ParallelLanguageListViewModel.swift in Sources */,
 				45C93AFB261D310900592FFF /* RealmCategoryArticle.swift in Sources */,
 				45558336269F2C7B00C3FF14 /* ToolPageCallToActionViewModel.swift in Sources */,
 				45D6D0302708B8FF0063C38A /* LessonEvaluationRealmCache.swift in Sources */,
