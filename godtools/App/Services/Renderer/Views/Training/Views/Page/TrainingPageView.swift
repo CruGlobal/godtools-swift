@@ -44,7 +44,7 @@ class TrainingPageView: MobileContentPageView {
         // contentStackView
         contentStackContainerView.addSubview(contentStackView)
         contentStackView.constrainEdgesToSuperview()
-        contentStackView.setContentInset(contentInset: UIEdgeInsets(
+        contentStackView.setScrollViewContentInset(contentInset: UIEdgeInsets(
             top: 0,
             left: 0,
             bottom: bottomGradientView.frame.size.height,
