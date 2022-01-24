@@ -88,9 +88,6 @@ class ToolsFlow: ToolNavigationFlow, Flow {
         case .languageSelectorTappedFromSetupParallelLanguage:
             presentParallelLanguage()
         
-        case .closeTappedFromSetupParallelLanguage:
-            dismissSetupParallelLanguage()
-        
         case .yesTappedFromSetupParallelLanguage:
             presentParallelLanguage()
         
@@ -102,6 +99,9 @@ class ToolsFlow: ToolNavigationFlow, Flow {
         
         case .languageSelectedFromParallelLanguageList:
             dismissParallelLanguage()
+        
+        case .backgroundTappedFromSetupParallelLanguage:
+            dismissSetupParallelLanguage()
         
         case .backgroundTappedFromParallelLanguageList:
             dismissParallelLanguage()
@@ -259,6 +259,9 @@ class ToolsFlow: ToolNavigationFlow, Flow {
             
         case .sendFeedbackTappedFromLessonEvaluation:
             dismissLessonEvaluation()
+        
+        case .backgroundTappedFromLessonEvaluation:
+            dismissLessonEvaluation()
             
         case .tractFlowCompleted(let state):
             
@@ -320,7 +323,7 @@ extension ToolsFlow {
         )
         let view = LessonEvaluationView(viewModel: viewModel)
         
-        let modalView = TransparentModalView(flowDelegate: self, modalView: view, closeModalFlowStep: .closeTappedFromSetupParallelLanguage)
+        let modalView = TransparentModalView(flowDelegate: self, modalView: view, closeModalFlowStep: .backgroundTappedFromLessonEvaluation)
         
         navigationController.present(modalView, animated: true, completion: nil)
     }
@@ -335,7 +338,7 @@ extension ToolsFlow {
         )
         let view = SetupParallelLanguageView(viewModel: viewModel)
         
-        let modalView = TransparentModalView(flowDelegate: self, modalView: view, closeModalFlowStep: .closeTappedFromSetupParallelLanguage)
+        let modalView = TransparentModalView(flowDelegate: self, modalView: view, closeModalFlowStep: .backgroundTappedFromSetupParallelLanguage)
         
         navigationController.present(modalView, animated: true, completion: nil)
     }
