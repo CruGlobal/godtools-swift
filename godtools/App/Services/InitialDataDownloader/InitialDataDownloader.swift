@@ -31,6 +31,7 @@ class InitialDataDownloader: NSObject {
     // observables
     let cachedResourcesAvailable: ObservableValue<Bool> = ObservableValue(value: false)
     let resourcesUpdatedFromRemoteDatabase: SignalValue<InitialDataDownloaderError?> = SignalValue()
+    let didDownloadAndCacheResources: ObservableValue<Bool> = ObservableValue(value: false)
     let attachmentsDownload: ObservableValue<DownloadAttachmentsReceipt?> = ObservableValue(value: nil)
     let latestTranslationsDownload: ObservableValue<DownloadResourceTranslationsReceipts?> = ObservableValue(value: nil)
     
@@ -136,6 +137,8 @@ class InitialDataDownloader: NSObject {
         downloadResourcesOperation = nil
         
         resourcesUpdatedFromRemoteDatabase.accept(value: error)
+        
+        didDownloadAndCacheResources.accept(value: true)
     }
     
     private func downloadLatestAttachments(resourcesCacheResult: ResourcesCacheResult) {

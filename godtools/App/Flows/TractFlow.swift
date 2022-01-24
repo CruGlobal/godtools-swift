@@ -139,18 +139,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             
             case .tool(let toolDeepLink):
                 
-                guard let toolDeepLinkResources = ToolDeepLinkResources(dataDownloader: appDiContainer.initialDataDownloader, languageSettingsService: appDiContainer.languageSettingsService, toolDeepLink: toolDeepLink) else {
-                    return
-                }
-                
-                navigateToTool(
-                    resource: toolDeepLinkResources.resource,
-                    primaryLanguage: toolDeepLinkResources.primaryLanguage,
-                    parallelLanguage: toolDeepLinkResources.parallelLanguage,
-                    liveShareStream: toolDeepLink.liveShareStream,
-                    trainingTipsEnabled: false,
-                    page: toolDeepLink.page
-                )
+                navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
             }
         
         case .homeTappedFromTool(let isScreenSharing):
