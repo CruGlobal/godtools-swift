@@ -121,6 +121,6 @@ class ParallelLanguageListViewModel: NSObject, ParallelLanguageListViewModelType
         
         languageSettingsService.languageSettingsCache.cacheParallelLanguageId(languageId: selectedLanguage.id)
         
-        flowDelegate?.navigate(step: .selectTappedFromParallelLanguageModal)
+        flowDelegate?.navigate(step: .languageSelectedFromParallelLanguageList)
     }
 }

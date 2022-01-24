@@ -127,11 +127,6 @@ extension ParallelLanguageListView: TransparentModalCustomView {
         return self.view
     }
     
-    var darkenBackground: Bool {
-        
-        return false
-    }
-    
     var modalInsets: UIEdgeInsets {
         
         return UIEdgeInsets(top: 0, left: 40, bottom: 0, right: 40)

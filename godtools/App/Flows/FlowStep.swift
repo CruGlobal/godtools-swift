@@ -49,6 +49,7 @@ enum FlowStep {
     // lesson evaluation
     case closeTappedFromLessonEvaluation
     case sendFeedbackTappedFromLessonEvaluation
+    case backgroundTappedFromLessonEvaluation
     
     // favoritedTools
     case toolTappedFromFavoritedTools(resource: ResourceModel)
@@ -80,13 +81,14 @@ enum FlowStep {
     case closeTappedFromToolTraining
     
     // setup parallel language
-    case selectLanguageTappedFromSetupParallelLanguage
+    case languageSelectorTappedFromSetupParallelLanguage
     case closeTappedFromSetupParallelLanguage
     case yesTappedFromSetupParallelLanguage
     case noThanksTappedFromSetupParallelLanguage
     case getStartedTappedFromSetupParallelLanguage
-    case backgroundTappedFromParallelLanguageModal
-    case selectTappedFromParallelLanguageModal
+    case languageSelectedFromParallelLanguageList
+    case backgroundTappedFromSetupParallelLanguage
+    case backgroundTappedFromParallelLanguageList
     
     // share tool menu
     case shareToolTappedFromShareToolMenu

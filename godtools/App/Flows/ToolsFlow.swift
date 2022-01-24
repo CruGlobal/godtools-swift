@@ -85,7 +85,7 @@ class ToolsFlow: ToolNavigationFlow, Flow {
         case .showSetupParallelLanguage:
             presentSetupParallelLanguage()
         
-        case .selectLanguageTappedFromSetupParallelLanguage:
+        case .languageSelectorTappedFromSetupParallelLanguage:
             presentParallelLanguage()
         
         case .closeTappedFromSetupParallelLanguage:
@@ -97,14 +97,14 @@ class ToolsFlow: ToolNavigationFlow, Flow {
         case .noThanksTappedFromSetupParallelLanguage:
             dismissSetupParallelLanguage()
         
-        case .backgroundTappedFromParallelLanguageModal:
-            dismissParallelLanguage()
-        
-        case .selectTappedFromParallelLanguageModal:
-            dismissParallelLanguage()
-        
         case .getStartedTappedFromSetupParallelLanguage:
             dismissSetupParallelLanguage()
+        
+        case .languageSelectedFromParallelLanguageList:
+            dismissParallelLanguage()
+        
+        case .backgroundTappedFromParallelLanguageList:
+            dismissParallelLanguage()
         
         case .openTutorialTapped:
             flowDelegate?.navigate(step: .openTutorialTapped)
@@ -350,7 +350,7 @@ extension ToolsFlow {
         )
         let view = ParallelLanguageListView(viewModel: viewModel)
         
-        let modalView = TransparentModalView(flowDelegate: self, modalView: view,  closeModalFlowStep: .backgroundTappedFromParallelLanguageModal)
+        let modalView = TransparentModalView(flowDelegate: self, modalView: view,  closeModalFlowStep: .backgroundTappedFromParallelLanguageList)
         
         navigationController.presentedViewController?.present(modalView, animated: true, completion: nil)
     }

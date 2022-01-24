@@ -62,12 +62,8 @@ class TransparentModalView: UIViewController {
         view.backgroundColor = .clear
         
         // overlayButton
-        if modalView.darkenBackground {
-            overlayButton.backgroundColor = .black
-            overlayButton.alpha = 0.4
-        } else {
-            overlayButton.alpha = 0.0
-        }
+        overlayButton.backgroundColor = .black
+        overlayButton.alpha = 0.4
         
         //customModalView.backgroundColor = .white
         //customModalView.layer.cornerRadius = modalCornerRadius

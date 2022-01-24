@@ -126,12 +126,7 @@ class SetupParallelLanguageView: UIViewController, UIGestureRecognizerDelegate {
     
     @objc private func handleSelectLanguageTapped(recognizer: UITapGestureRecognizer) {
         
-        viewModel.selectLanguageTapped()
-    }
-    
-    @objc private func handleCloseTapped(barButtonItem: UIBarButtonItem) {
-        
-        viewModel.closeButtonTapped()
+        viewModel.languageSelectorTapped()
     }
     
     @objc private func handleYesTapped() {
@@ -157,11 +152,6 @@ extension SetupParallelLanguageView: TransparentModalCustomView {
     var modal: UIView {
         
         return self.view
-    }
-    
-    var darkenBackground: Bool {
-        
-        return true
     }
     
     var modalInsets: UIEdgeInsets {
