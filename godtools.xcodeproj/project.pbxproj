@@ -51,10 +51,6 @@
 		4513C2EA2704681300614F79 /* SetupParallelLanguageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4513C2E92704681300614F79 /* SetupParallelLanguageViewModel.swift */; };
 		4513C2EC2704681F00614F79 /* SetupParallelLanguageViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4513C2EB2704681F00614F79 /* SetupParallelLanguageViewModelType.swift */; };
 		4513C2EE2704683400614F79 /* SetupParallelLanguageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4513C2ED2704683400614F79 /* SetupParallelLanguageView.xib */; };
-		4513C2E8270467F400614F79 /* LessonEvaluationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4513C2E7270467F400614F79 /* LessonEvaluationView.swift */; };
-		4513C2EA2704681300614F79 /* LessonEvaluationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4513C2E92704681300614F79 /* LessonEvaluationViewModel.swift */; };
-		4513C2EC2704681F00614F79 /* LessonEvaluationViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4513C2EB2704681F00614F79 /* LessonEvaluationViewModelType.swift */; };
-		4513C2EE2704683400614F79 /* LessonEvaluationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4513C2ED2704683400614F79 /* LessonEvaluationView.xib */; };
 		451550F12791E3DE00526CF2 /* DownloadToolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451550ED2791E3DE00526CF2 /* DownloadToolView.swift */; };
 		451550F32791E3DE00526CF2 /* DownloadToolView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 451550EF2791E3DE00526CF2 /* DownloadToolView.xib */; };
 		451550F42791E3DE00526CF2 /* DownloadToolViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451550F02791E3DE00526CF2 /* DownloadToolViewModelType.swift */; };
@@ -1114,10 +1110,6 @@
 		4513C2E92704681300614F79 /* SetupParallelLanguageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupParallelLanguageViewModel.swift; sourceTree = "<group>"; };
 		4513C2EB2704681F00614F79 /* SetupParallelLanguageViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupParallelLanguageViewModelType.swift; sourceTree = "<group>"; };
 		4513C2ED2704683400614F79 /* SetupParallelLanguageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SetupParallelLanguageView.xib; sourceTree = "<group>"; };
-		4513C2E7270467F400614F79 /* LessonEvaluationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonEvaluationView.swift; sourceTree = "<group>"; };
-		4513C2E92704681300614F79 /* LessonEvaluationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonEvaluationViewModel.swift; sourceTree = "<group>"; };
-		4513C2EB2704681F00614F79 /* LessonEvaluationViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonEvaluationViewModelType.swift; sourceTree = "<group>"; };
-		4513C2ED2704683400614F79 /* LessonEvaluationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LessonEvaluationView.xib; sourceTree = "<group>"; };
 		451550ED2791E3DE00526CF2 /* DownloadToolView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadToolView.swift; sourceTree = "<group>"; };
 		451550EF2791E3DE00526CF2 /* DownloadToolView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DownloadToolView.xib; sourceTree = "<group>"; };
 		451550F02791E3DE00526CF2 /* DownloadToolViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadToolViewModelType.swift; sourceTree = "<group>"; };
