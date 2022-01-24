@@ -46,6 +46,9 @@ class MultiplatformContentFactory {
         else if let multiSelect = content as? Multiselect {
             renderableModel = MultiplatformContentMultiSelect(multiSelect: multiSelect)
         }
+        else if let flow = content as? GodToolsToolParser.Flow {
+            renderableModel = MultiplatformContentFlow(contentFlow: flow)
+        }
         else if let form = content as? Form {
             renderableModel = MultiplatformContentForm(form: form)
         }

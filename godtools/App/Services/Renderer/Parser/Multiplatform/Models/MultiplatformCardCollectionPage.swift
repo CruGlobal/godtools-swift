@@ -1,35 +1,35 @@
 //
-//  MultiplatformLessonPage.swift
+//  MultiplatformCardCollectionPage.swift
 //  godtools
 //
-//  Created by Levi Eggert on 8/11/21.
-//  Copyright © 2021 Cru. All rights reserved.
+//  Created by Levi Eggert on 1/22/22.
+//  Copyright © 2022 Cru. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import GodToolsToolParser
 
-class MultiplatformLessonPage: PageModelType {
+class MultiplatformCardCollectionPage: PageModelType {
     
-    private let lessonPage: LessonPage
+    private let cardCollectionPage: CardCollectionPage
     
     let uuid: String = UUID().uuidString
     
-    required init(lessonPage: LessonPage) {
+    required init(cardCollectionPage: CardCollectionPage) {
         
-        self.lessonPage = lessonPage
+        self.cardCollectionPage = cardCollectionPage
     }
     
     var backgroundImage: String? {
-        return lessonPage.backgroundImage?.name
+        return cardCollectionPage.backgroundImage?.name
     }
     
     var backgroundImageAlignment: MobileContentImageAlignmentType {
-        return MultiplatformImageAlignment(imageGravity: lessonPage.backgroundImageGravity)
+        return MultiplatformImageAlignment(imageGravity: cardCollectionPage.backgroundImageGravity)
     }
     
     var backgroundImageScale: MobileContentBackgroundImageScale {
-        switch lessonPage.backgroundImageScaleType {
+        switch cardCollectionPage.backgroundImageScaleType {
         case .fill:
             return .fill
         case .fit:
@@ -45,15 +45,15 @@ class MultiplatformLessonPage: PageModelType {
     }
     
     var listeners: [MultiplatformEventId] {
-        return lessonPage.listeners.map({MultiplatformEventId(eventId: $0)})
+        return cardCollectionPage.listeners.map({MultiplatformEventId(eventId: $0)})
     }
     
     var textScale: MobileContentTextScale {
-        return MobileContentTextScale(doubleValue: lessonPage.textScale)
+        return MobileContentTextScale(doubleValue: cardCollectionPage.textScale)
     }
     
     var isHidden: Bool {
-        return lessonPage.isHidden
+        return cardCollectionPage.isHidden
     }
     
     var hero: HeroModelType? {
@@ -65,7 +65,7 @@ class MultiplatformLessonPage: PageModelType {
     }
     
     func getBackgroundColor() -> MobileContentColor? {
-        return MobileContentColor(color: lessonPage.backgroundColor)
+        return MobileContentColor(color: cardCollectionPage.backgroundColor)
     }
     
     func getCardTextColor() -> MobileContentColor? {
@@ -73,25 +73,25 @@ class MultiplatformLessonPage: PageModelType {
     }
     
     func getPrimaryColor() -> MobileContentColor? {
-        return MobileContentColor(color: lessonPage.primaryColor)
+        return MobileContentColor(color: cardCollectionPage.primaryColor)
     }
     
     func getPrimaryTextColor() -> MobileContentColor? {
-        return MobileContentColor(color: lessonPage.primaryTextColor)
+        return MobileContentColor(color: cardCollectionPage.primaryTextColor)
     }
     
     func getTextColor() -> MobileContentColor? {
-        return MobileContentColor(color: lessonPage.textColor)
+        return MobileContentColor(color: cardCollectionPage.textColor)
     }
     
     func getAnalyticsEvents() -> [AnalyticsEventModelType] {
-        return lessonPage.getAnalyticsEvents(type: .visible).map({MultiplatformAnalyticsEvent(analyticsEvent: $0)})
+        return cardCollectionPage.getAnalyticsEvents(type: .visible).map({MultiplatformAnalyticsEvent(analyticsEvent: $0)})
     }
 }
 
 // MARK: - MobileContentRenderableModel
 
-extension MultiplatformLessonPage {
+extension MultiplatformCardCollectionPage {
     
     var restrictTo: String? {
         return nil
@@ -109,16 +109,7 @@ extension MultiplatformLessonPage {
         
         var childModels: [MobileContentRenderableModel] = Array()
 
-        let contentHorizontalInsets: CGFloat = 30
-        
-        let multiplatformContent = MultiplatformContent(
-            content: lessonPage.content,
-            contentInsets: UIEdgeInsets(top: 0, left: contentHorizontalInsets, bottom: 0, right: contentHorizontalInsets),
-            itemSpacing: 20,
-            scrollIsEnabled: true
-        )
-        
-        childModels.append(multiplatformContent)
+        //childModels.append(MultiplatformContent(content: page.content))
         
         return childModels
     }

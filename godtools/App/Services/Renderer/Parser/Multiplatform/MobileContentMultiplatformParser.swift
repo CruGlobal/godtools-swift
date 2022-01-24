@@ -10,10 +10,7 @@ import Foundation
 import GodToolsToolParser
 
 class MobileContentMultiplatformParser: MobileContentParserType {
-        
-    private static let animationsEnabled: Bool = true
-    private static let multiSelectEnabled: Bool = true
-    
+            
     let manifest: MobileContentManifestType
     let manifestResourcesCache: ManifestResourcesCacheType
     let pageModels: [PageModelType]
@@ -21,17 +18,14 @@ class MobileContentMultiplatformParser: MobileContentParserType {
     
     required init(translationManifestData: TranslationManifestData, translationsFileCache: TranslationsFileCache) {
                         
-        var supportedFeatures: [String] = Array()
-        
-        if MobileContentMultiplatformParser.animationsEnabled {
-            supportedFeatures.append(ParserConfigKt.FEATURE_ANIMATION)
-        }
-        
-        if MobileContentMultiplatformParser.multiSelectEnabled {
-            supportedFeatures.append(ParserConfigKt.FEATURE_MULTISELECT)
-        }
-        
-        ParserConfig().supportedFeatures = Set(supportedFeatures)
+        let enabledFeatures: [String] = [
+            ParserConfigKt.FEATURE_ANIMATION,
+            ParserConfigKt.FEATURE_CONTENT_CARD,
+            ParserConfigKt.FEATURE_FLOW,
+            ParserConfigKt.FEATURE_MULTISELECT
+        ]
+                        
+        ParserConfig().supportedFeatures = Set(enabledFeatures)
         
         let manifestParser = IosManifestParser(parserFactory: MobileContentMultiplatformParserFactory(translationsFileCache: translationsFileCache))
         
@@ -59,7 +53,7 @@ class MobileContentMultiplatformParser: MobileContentParserType {
                 self.pageModels = Array()
                 
             case .cyoa:
-                self.pageModels = manifest.pages.map({MultiplatformChooseYourOwnAdventurePage(page: $0)})
+                self.pageModels = MobileContentMultiplatformParser.getPageModels(pages: manifest.pages)
                 
             case .unknown:
                 self.pageModels = Array()
@@ -86,5 +80,22 @@ class MobileContentMultiplatformParser: MobileContentParserType {
         self.manifestResourcesCache = ManifestResourcesCache(manifest: manifest, translationsFileCache: translationsFileCache)
         self.pageModels = pageModels
         self.errors = Array()
+    }
+    
+    private static func getPageModels(pages: [Page]) -> [PageModelType] {
+        
+        var pageModels: [PageModelType] = Array()
+        
+        for page in pages {
+            
+            if let contentPage = page as? ContentPage {
+                pageModels.append(MultiplatformContentPage(contentPage: contentPage))
+            }
+            else if let cardCollectionPage = page as? CardCollectionPage {
+                pageModels.append(MultiplatformCardCollectionPage(cardCollectionPage: cardCollectionPage))
+            }
+        }
+        
+        return pageModels
     }
 }

@@ -27,7 +27,7 @@ class ChooseYourOwnAdventureFlow: Flow {
         let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
         
         let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
-            type: .tract,
+            type: .chooseYourOwnAdventure,
             flowDelegate: self,
             appDiContainer: appDiContainer,
             trainingTipsEnabled: false,

@@ -13,9 +13,16 @@ class MultiplatformContent: ContentModelType {
     
     private let content: [Content]
     
-    required init(content: [Content]) {
+    let contentInsets: UIEdgeInsets
+    let itemSpacing: CGFloat
+    let scrollIsEnabled: Bool
+    
+    required init(content: [Content], contentInsets: UIEdgeInsets, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
         
         self.content = content
+        self.contentInsets = contentInsets
+        self.itemSpacing = itemSpacing
+        self.scrollIsEnabled = scrollIsEnabled
     }
 }
 

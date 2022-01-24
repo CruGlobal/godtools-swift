@@ -10,6 +10,7 @@ import Foundation
 
 enum MobileContentRendererPageViewFactoriesType {
     
+    case chooseYourOwnAdventure
     case lesson
     case tract
     case trainingTip

@@ -27,6 +27,9 @@ class MobileContentRendererPageViewFactories {
                 
         switch type {
         
+        case .chooseYourOwnAdventure:
+            break
+            
         case .lesson:
             
             let lessonPageViewFactory = LessonPageViewFactory(
@@ -102,7 +105,8 @@ class MobileContentRendererPageViewFactories {
         let mobileContentPageViewFactory = MobileContentPageViewFactory(
             flowDelegate: flowDelegate,
             mobileContentAnalytics: mobileContentAnalytics,
-            fontService: fontService
+            fontService: fontService,
+            deepLinkingService: deepLinkingService
         )
         
         pageViewFactories.append(mobileContentPageViewFactory)

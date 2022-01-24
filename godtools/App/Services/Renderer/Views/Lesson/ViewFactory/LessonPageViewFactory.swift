@@ -44,17 +44,6 @@ class LessonPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let contentModel = renderableModel as? ContentModelType {
-            
-            let viewModel = LessonContentViewModel(
-                contentModel: contentModel,
-                rendererPageModel: rendererPageModel
-            )
-            
-            let view = LessonContentView(viewModel: viewModel)
-            
-            return view
-        }
         
         return nil
     }

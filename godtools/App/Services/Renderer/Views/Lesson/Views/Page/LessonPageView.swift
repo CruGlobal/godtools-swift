@@ -18,7 +18,7 @@ class LessonPageView: MobileContentPageView {
     private let viewModel: LessonPageViewModelType
     private let safeArea: UIEdgeInsets
     
-    private var contentView: LessonContentView?
+    private var contentView: MobileContentStackView?
     
     private weak var delegate: LessonPageViewDelegate?
     
@@ -82,7 +82,7 @@ class LessonPageView: MobileContentPageView {
         
         super.renderChild(childView: childView)
         
-        if let contentView = childView as? LessonContentView {
+        if let contentView = childView as? MobileContentStackView {
             addContentView(contentView: contentView)
         }
     }
@@ -109,15 +109,20 @@ class LessonPageView: MobileContentPageView {
 
 extension LessonPageView {
     
-    private func addContentView(contentView: LessonContentView) {
+    private func addContentView(contentView: MobileContentStackView) {
         
         guard self.contentView == nil else {
             return
         }
         
         contentContainerView.isHidden = false
+        
         contentContainerView.addSubview(contentView)
-        contentView.constrainEdgesToSuperview()
+        
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+
+        contentView.constrainEdgesToView(view: contentContainerView)
+        
         self.contentView = contentView        
     }
 }

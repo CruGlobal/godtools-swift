@@ -10,6 +10,9 @@ import Foundation
 
 protocol ContentModelType: MobileContentRenderableModel {
     
+    var contentInsets: UIEdgeInsets { get }
+    var itemSpacing: CGFloat { get }
+    var scrollIsEnabled: Bool { get }
 }
 
 extension ContentModelType {
