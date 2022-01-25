@@ -34,6 +34,9 @@ class MultiplatformContentFactory {
         else if let inlineTip = content as? InlineTip, let tip = inlineTip.tip {
             return MultiplatformTrainingTip(tip: tip)
         }
+        else if let card = content as? Card {
+            return MultiplatformContentCard(contentCard: card)
+        }
         else if let input = content as? Input {
             renderableModel = MultiplatformContentInput(input: input)
         }

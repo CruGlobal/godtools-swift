@@ -7,10 +7,24 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class MobileContentCardViewModel: MobileContentCardViewModelType {
     
-    required init() {
+    private let contentCard: MultiplatformContentCard
+    private let rendererPageModel: MobileContentRendererPageModel
+    
+    required init(contentCard: MultiplatformContentCard, rendererPageModel: MobileContentRendererPageModel) {
         
+        self.contentCard = contentCard
+        self.rendererPageModel = rendererPageModel
+    }
+    
+    var events: [MultiplatformEventId] {
+        return contentCard.events
+    }
+    
+    var rendererState: MobileContentMultiplatformState {
+        return rendererPageModel.rendererState
     }
 }

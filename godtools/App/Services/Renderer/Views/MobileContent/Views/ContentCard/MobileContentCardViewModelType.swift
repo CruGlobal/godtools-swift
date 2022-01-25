@@ -10,4 +10,6 @@ import Foundation
 
 protocol MobileContentCardViewModelType {
     
+    var events: [MultiplatformEventId] { get }
+    var rendererState: MobileContentMultiplatformState { get }
 }

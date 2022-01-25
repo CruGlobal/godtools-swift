@@ -17,4 +17,34 @@ class MultiplatformContentCard {
         
         self.contentCard = contentCard
     }
+    
+    var events: [MultiplatformEventId] {
+        return contentCard.events.map({MultiplatformEventId(eventId: $0)})
+    }
+}
+
+extension MultiplatformContentCard: MobileContentRenderableModel {
+    
+    var restrictTo: String? {
+        return nil
+    }
+    
+    var version: String? {
+        return nil
+    }
+    
+    var modelContentIsRenderable: Bool {
+        return true
+    }
+    
+    func getRenderableChildModels() -> [MobileContentRenderableModel] {
+        
+        var childModels: [MobileContentRenderableModel] = Array()
+        
+        let content: [Content] = contentCard.content
+        
+        addContentToChildModels(childModels: &childModels, content: content)
+                    
+        return childModels
+    }
 }
