@@ -34,4 +34,10 @@ class ChooseYourOwnAdventureView: MobileContentPagesView {
         super.viewDidLoad()
         print("view didload: \(type(of: self))")
     }
+    
+    override func setupLayout() {
+        super.setupLayout()
+        
+        pageNavigationView.gestureScrollingEnabled = false
+    }
 }
