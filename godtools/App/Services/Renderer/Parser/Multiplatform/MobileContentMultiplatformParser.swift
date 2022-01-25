@@ -53,7 +53,21 @@ class MobileContentMultiplatformParser: MobileContentParserType {
                 self.pageModels = Array()
                 
             case .cyoa:
-                self.pageModels = MobileContentMultiplatformParser.getPageModels(pages: manifest.pages)
+                
+                let pages: [Page] = manifest.pages
+                var pageModels: [PageModelType] = Array()
+                
+                for page in pages {
+                    
+                    if let contentPage = page as? ContentPage {
+                        pageModels.append(MultiplatformContentPage(contentPage: contentPage))
+                    }
+                    else if let cardCollectionPage = page as? CardCollectionPage {
+                        pageModels.append(MultiplatformCardCollectionPage(cardCollectionPage: cardCollectionPage))
+                    }
+                }
+                
+                self.pageModels = pageModels
                 
             case .unknown:
                 self.pageModels = Array()
@@ -80,22 +94,5 @@ class MobileContentMultiplatformParser: MobileContentParserType {
         self.manifestResourcesCache = ManifestResourcesCache(manifest: manifest, translationsFileCache: translationsFileCache)
         self.pageModels = pageModels
         self.errors = Array()
-    }
-    
-    private static func getPageModels(pages: [Page]) -> [PageModelType] {
-        
-        var pageModels: [PageModelType] = Array()
-        
-        for page in pages {
-            
-            if let contentPage = page as? ContentPage {
-                pageModels.append(MultiplatformContentPage(contentPage: contentPage))
-            }
-            else if let cardCollectionPage = page as? CardCollectionPage {
-                pageModels.append(MultiplatformCardCollectionPage(cardCollectionPage: cardCollectionPage))
-            }
-        }
-        
-        return pageModels
     }
 }

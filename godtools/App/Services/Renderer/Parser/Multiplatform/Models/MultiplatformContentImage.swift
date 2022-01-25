@@ -26,6 +26,11 @@ class MultiplatformContentImage: ContentImageModelType {
         let fileName: String? = image.resource?.name
         return fileName
     }
+    
+    var width: Int {
+        let imageWidth: Int = image.width.hashValue
+        return imageWidth
+    }
 }
 
 // MARK: - MobileContentRenderableModel

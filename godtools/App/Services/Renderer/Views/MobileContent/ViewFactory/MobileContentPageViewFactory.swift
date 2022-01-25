@@ -76,6 +76,17 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
+        else if let contentCard = renderableModel as? MultiplatformContentCard {
+            
+            let viewModel = MobileContentCardViewModel(
+                contentCard: contentCard,
+                rendererPageModel: rendererPageModel
+            )
+            
+            let view = MobileContentCardView(viewModel: viewModel)
+            
+            return view
+        }
         else if let linkModel = renderableModel as? ContentLinkModelType {
                         
             let viewModel = MobileContentLinkViewModel(
@@ -260,7 +271,17 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 contentFlow: contentFlow
             )
             
-            let view = MobileContentFlowView(viewModel: viewModel)
+            let view = MobileContentFlowView(viewModel: viewModel, itemSpacing: 16)
+            
+            return view
+        }
+        else if let contentFlowItem = renderableModel as? MultiplatformContentFlowItem {
+            
+            let viewModel = MobileContentFlowItemViewModel(
+                flowItem: contentFlowItem
+            )
+            
+            let view = MobileContentFlowItemView(viewModel: viewModel)
             
             return view
         }

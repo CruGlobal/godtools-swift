@@ -18,8 +18,15 @@ class ChooseYourOwnAdventurePageViewFactory: MobileContentPageViewFactoryType {
     
     func viewForRenderableModel(renderableModel: MobileContentRenderableModel, renderableModelParent: MobileContentRenderableModel?, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) -> MobileContentView? {
         
-        if let contentModel = renderableModel as? ContentModelType {
+        if let contentFlow = renderableModel as? MultiplatformContentFlow {
             
+            let viewModel = MobileContentFlowViewModel(
+                contentFlow: contentFlow
+            )
+            
+            let view = MobileContentFlowView(viewModel: viewModel, itemSpacing: 16)
+            
+            return view
         }
         
         return nil

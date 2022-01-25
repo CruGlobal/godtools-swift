@@ -12,10 +12,15 @@ import GodToolsToolParser
 class MultiplatformContentFlowItem {
     
     private let flowItem: GodToolsToolParser.Flow.Item
-    
+        
     required init(flowItem: GodToolsToolParser.Flow.Item) {
         
         self.flowItem = flowItem
+    }
+    
+    var width: Int {
+        let width: Int = flowItem.width.hashValue
+        return width
     }
 }
 
@@ -36,6 +41,10 @@ extension MultiplatformContentFlowItem: MobileContentRenderableModel {
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
         
         var childModels: [MobileContentRenderableModel] = Array()
+        
+        let content: [Content] = flowItem.content
+        
+        addContentToChildModels(childModels: &childModels, content: content)
                     
         return childModels
     }

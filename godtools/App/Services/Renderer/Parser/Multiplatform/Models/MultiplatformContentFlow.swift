@@ -17,6 +17,10 @@ class MultiplatformContentFlow {
         
         self.contentFlow = contentFlow
     }
+    
+    var rowGravity: Gravity.Horizontal {
+        return contentFlow.rowGravity
+    }
 }
 
 extension MultiplatformContentFlow: MobileContentRenderableModel {
