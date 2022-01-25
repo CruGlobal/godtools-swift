@@ -12,6 +12,7 @@ protocol ContentImageModelType: MobileContentRenderableModel {
     
     var events: [MultiplatformEventId] { get }
     var resource: String? { get }
+    var width: Int { get }
 }
 
 extension ContentImageModelType {

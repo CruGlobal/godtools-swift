@@ -40,33 +40,48 @@ class MobileContentImageView: MobileContentView {
     
     private func setupBinding() {
         
-        if let image = viewModel.image {
-            addImage(image: image)
+        if let image = viewModel.image, let imageConstraintType = viewModel.imageConstraintsType {
+            addImage(image: image, imageConstraintType: imageConstraintType)
         }
         else {
             addEmptySpace()
         }
     }
     
-    private func addImage(image: UIImage) {
+    private func addImage(image: UIImage, imageConstraintType: MobileContentImageConstraintsType) {
         
         imageView.image = image
         
         addSubview(imageView)
         
-        imageView.constrainEdgesToSuperview()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         
-        let aspectRatio: NSLayoutConstraint = NSLayoutConstraint(
-            item: imageView,
-            attribute: .height,
-            relatedBy: .equal,
-            toItem: imageView,
-            attribute: .width,
-            multiplier: image.size.height / image.size.width,
-            constant: 0
-        )
+        imageView.constrainEdgesToView(view: self)
         
-        imageView.addConstraint(aspectRatio)
+        switch imageConstraintType {
+        
+        case .aspectRatio(let multiplier):
+                                
+            let aspectRatio: NSLayoutConstraint = NSLayoutConstraint(
+                item: imageView,
+                attribute: .height,
+                relatedBy: .equal,
+                toItem: imageView,
+                attribute: .width,
+                multiplier: multiplier,
+                constant: 0
+            )
+            
+            imageView.addConstraint(aspectRatio)
+            
+        case .fixedWidthAndHeight(let size):
+            
+            imageView.addWidthConstraint(constant: size)
+            imageView.addHeightConstraint(constant: size)
+            imageView.contentMode = .scaleAspectFit
+        }
+        
+        
     }
     
     private func addEmptySpace() {
