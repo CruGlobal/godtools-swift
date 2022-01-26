@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class ChooseYourOwnAdventurePageViewFactory: MobileContentPageViewFactoryType {
     
@@ -18,10 +19,11 @@ class ChooseYourOwnAdventurePageViewFactory: MobileContentPageViewFactoryType {
     
     func viewForRenderableModel(renderableModel: MobileContentRenderableModel, renderableModelParent: MobileContentRenderableModel?, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) -> MobileContentView? {
         
-        if let contentFlow = renderableModel as? MultiplatformContentFlow {
+        if let contentFlow = renderableModel as? GodToolsToolParser.Flow {
             
             let viewModel = MobileContentFlowViewModel(
-                contentFlow: contentFlow
+                contentFlow: contentFlow,
+                rendererPageModel: rendererPageModel
             )
             
             let view = MobileContentFlowView(viewModel: viewModel, itemSpacing: 16)

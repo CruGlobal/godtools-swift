@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
     
@@ -265,17 +266,18 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let contentFlow = renderableModel as? MultiplatformContentFlow {
+        else if let contentFlow = renderableModel as? GodToolsToolParser.Flow {
             
             let viewModel = MobileContentFlowViewModel(
-                contentFlow: contentFlow
+                contentFlow: contentFlow,
+                rendererPageModel: rendererPageModel
             )
             
             let view = MobileContentFlowView(viewModel: viewModel, itemSpacing: 16)
             
             return view
         }
-        else if let contentFlowItem = renderableModel as? MultiplatformContentFlowItem {
+        else if let contentFlowItem = renderableModel as? GodToolsToolParser.Flow.Item {
             
             let viewModel = MobileContentFlowItemViewModel(
                 flowItem: contentFlowItem
