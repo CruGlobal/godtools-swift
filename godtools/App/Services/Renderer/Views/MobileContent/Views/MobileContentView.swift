@@ -80,6 +80,15 @@ class MobileContentView: UIView {
         
     }
     
+    func removeAllChildren() {
+        
+        for child in children {
+            child.removeFromSuperview()
+        }
+        
+        children.removeAll()
+    }
+    
     // MARK: - View Did Appear
     
     func notifyViewAndAllChildrenViewDidAppear() {

@@ -71,6 +71,16 @@ class MobileContentStackView: MobileContentView {
         }
     }
     
+    override func removeAllChildren() {
+        
+        childViews.removeAll()
+        autoSpacerViews.removeAll()
+        lastAddedView = nil
+        lastAddedBottomConstraint = nil
+        
+        super.removeAllChildren()
+    }
+    
     override var heightConstraintType: MobileContentViewHeightConstraintType {
         return .constrainedToChildren
     }
