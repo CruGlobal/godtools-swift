@@ -6,14 +6,20 @@
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
+import GodToolsToolParser
 
 class MobileContentFlowItemViewModel: MobileContentFlowItemViewModelType {
     
-    private let flowItem: MultiplatformContentFlowItem
+    private let flowItem: GodToolsToolParser.Flow.Item
     
-    required init(flowItem: MultiplatformContentFlowItem) {
+    required init(flowItem: GodToolsToolParser.Flow.Item) {
         
         self.flowItem = flowItem
+    }
+    
+    var width: MobileContentViewWidth {
+        
+        return MobileContentViewWidth(dimension: flowItem.width)
     }
 }

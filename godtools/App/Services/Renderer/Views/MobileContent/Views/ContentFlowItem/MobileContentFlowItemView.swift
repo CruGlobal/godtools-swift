@@ -27,3 +27,10 @@ class MobileContentFlowItemView: MobileContentStackView {
         fatalError("init(contentInsets:itemSpacing:scrollIsEnabled:) has not been implemented")
     }
 }
+
+extension MobileContentFlowItemView: MobileContentFlowRowItem {
+    
+    var itemWidth: MobileContentViewWidth {
+        return viewModel.width
+    }
+}
