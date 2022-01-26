@@ -19,13 +19,13 @@ class MobileContentRendererPageModel {
     let resourcesCache: ManifestResourcesCacheType
     let resource: ResourceModel
     let language: LanguageModel
-    let pageViewFactories: [MobileContentPageViewFactoryType]
+    let pageViewFactories: MobileContentRendererPageViewFactories
     let primaryRendererLanguage: LanguageModel
     let rendererState: MobileContentMultiplatformState
     
     private weak var weakWindow: UIViewController?
     
-    required init(pageModel: PageModelType, page: Int, isLastPage: Bool, window: UIViewController, safeArea: UIEdgeInsets, manifest: MobileContentManifestType, resourcesCache: ManifestResourcesCacheType, resource: ResourceModel, language: LanguageModel, pageViewFactories: [MobileContentPageViewFactoryType], primaryRendererLanguage: LanguageModel, rendererState: MobileContentMultiplatformState) {
+    required init(pageModel: PageModelType, page: Int, isLastPage: Bool, window: UIViewController, safeArea: UIEdgeInsets, manifest: MobileContentManifestType, resourcesCache: ManifestResourcesCacheType, resource: ResourceModel, language: LanguageModel, pageViewFactories: MobileContentRendererPageViewFactories, primaryRendererLanguage: LanguageModel, rendererState: MobileContentMultiplatformState) {
         
         self.pageModel = pageModel
         self.page = page
