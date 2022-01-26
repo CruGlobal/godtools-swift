@@ -7,13 +7,20 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class MobileContentFlowViewModel: MobileContentFlowViewModelType {
     
-    private let contentFlow: MultiplatformContentFlow
+    private let contentFlow: GodToolsToolParser.Flow
+    private let rendererPageModel: MobileContentRendererPageModel
     
-    required init(contentFlow: MultiplatformContentFlow) {
+    required init(contentFlow: GodToolsToolParser.Flow, rendererPageModel: MobileContentRendererPageModel) {
         
         self.contentFlow = contentFlow
+        self.rendererPageModel = rendererPageModel        
+    }
+    
+    var rowGravity: Gravity.Horizontal {
+        return contentFlow.rowGravity
     }
 }

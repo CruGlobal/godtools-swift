@@ -7,7 +7,9 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 protocol MobileContentFlowViewModelType {
     
+    var rowGravity: Gravity.Horizontal { get }    
 }
