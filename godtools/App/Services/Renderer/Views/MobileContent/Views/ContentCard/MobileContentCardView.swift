@@ -11,7 +11,6 @@ import UIKit
 class MobileContentCardView: MobileContentStackView {
     
     private let viewModel: MobileContentCardViewModelType
-    private let backgroundView: UIView = UIView()
     
     private var button: UIButton?
     
@@ -20,8 +19,6 @@ class MobileContentCardView: MobileContentStackView {
         self.viewModel = viewModel
         
         super.init(contentInsets: .zero, itemSpacing: 0, scrollIsEnabled: false)
-        
-        setupLayout()
     }
     
     required init?(coder: NSCoder) {
@@ -30,15 +27,6 @@ class MobileContentCardView: MobileContentStackView {
     
     required init(contentInsets: UIEdgeInsets, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
         fatalError("init(contentInsets:itemSpacing:scrollIsEnabled:) has not been implemented")
-    }
-    
-    private func setupLayout() {
-        
-        // backgroundView
-        backgroundView.backgroundColor = .red
-        insertSubview(backgroundView, at: 0)
-        backgroundView.translatesAutoresizingMaskIntoConstraints = false
-        backgroundView.constrainEdgesToView(view: self)
     }
     
     override func finishedRenderingChildren() {
