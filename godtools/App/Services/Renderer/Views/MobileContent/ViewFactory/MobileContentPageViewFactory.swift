@@ -101,6 +101,16 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
+        else if let cardCollectionPageCard = renderableModel as? CardCollectionPage.Card {
+            
+            let viewModel = MobileContentCardCollectionPageCardViewModel(
+                card: cardCollectionPageCard
+            )
+            
+            let view = MobileContentCardCollectionPageCardView(viewModel: viewModel)
+            
+            return view
+        }
         else if let contentPage = renderableModel as? MultiplatformContentPage {
             
             guard let flowDelegate = self.flowDelegate else {

@@ -7,12 +7,13 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class MobileContentCardCollectionPageViewModel: MobileContentPageViewModel, MobileContentCardCollectionPageViewModelType {
     
     private let cardCollectionPage: MultiplatformCardCollectionPage
     private let rendererPageModel: MobileContentRendererPageModel
-    
+        
     required init(flowDelegate: FlowDelegate, cardCollectionPage: MultiplatformCardCollectionPage, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType) {
         
         self.cardCollectionPage = cardCollectionPage

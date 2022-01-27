@@ -107,10 +107,6 @@ extension MultiplatformCardCollectionPage {
     
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
         
-        var childModels: [MobileContentRenderableModel] = Array()
-
-        //childModels.append(MultiplatformContent(content: page.content))
-        
-        return childModels
+        return cardCollectionPage.cards
     }
 }
