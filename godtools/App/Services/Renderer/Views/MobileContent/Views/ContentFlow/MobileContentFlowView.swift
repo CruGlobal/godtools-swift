@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class MobileContentFlowView: MobileContentStackView {
     
     private let viewModel: MobileContentFlowViewModelType
     
-    private var flowItemRows: [MobileContentRowView] = Array()
+    private var flowItemRows: [MobileContentFlowRow] = Array()
+    private var flowItemViews: [MobileContentFlowItemView] = Array()
     
     required init(viewModel: MobileContentFlowViewModelType, itemSpacing: CGFloat) {
         
@@ -29,6 +31,12 @@ class MobileContentFlowView: MobileContentStackView {
         fatalError("init(contentInsets:itemSpacing:scrollIsEnabled:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        relayoutFlowForBoundsChange()
+    }
+    
     override func renderChild(childView: MobileContentView) {
                 
         if let flowItemView = childView as? MobileContentFlowItemView {
@@ -38,6 +46,26 @@ class MobileContentFlowView: MobileContentStackView {
             super.renderChild(childView: childView)
         }
     }
+    
+    override func finishedRenderingChildren() {
+        super.finishedRenderingChildren()
+        
+        for row in flowItemRows {
+            row.finishedRenderingChildren()
+        }
+    }
+
+    private func relayoutFlowForBoundsChange() {
+        
+        removeAllChildren()
+        flowItemRows.removeAll()
+
+        for flowItemView in flowItemViews {
+            renderChild(childView: flowItemView)
+        }
+        
+        finishedRenderingChildren()
+    }
 }
 
 // MARK: - Rendering FlowItemViews
@@ -46,25 +74,25 @@ extension MobileContentFlowView {
     
     private func renderFlowItemView(flowItemView: MobileContentFlowItemView) {
         
-        let flowItemRow: MobileContentRowView
+        flowItemViews.append(flowItemView)
         
-        if let currentRow = flowItemRows.last, currentRow.canRenderChildView {
+        let row: MobileContentFlowRow
+        
+        if let currentRow = flowItemRows.last, currentRow.renderFlowItem(flowItemView: flowItemView) {
             
-            flowItemRow = currentRow
+            row = currentRow
         }
         else {
             
-            flowItemRow = MobileContentRowView(
-                contentInsets: .zero,
-                itemSpacing: 0,
-                numberOfColumns: 2
+            row = MobileContentFlowRow(
+                rowGravity: viewModel.rowGravity
             )
             
-            flowItemRows.append(flowItemRow)
+            flowItemRows.append(row)
             
-            super.renderChild(childView: flowItemRow)
+            super.renderChild(childView: row)
+            
+            row.renderFlowItem(flowItemView: flowItemView)
         }
-        
-        flowItemRow.renderChild(childView: flowItemView)
     }
 }

@@ -116,21 +116,22 @@ class MobileContentFlowRow: MobileContentView {
         
         didLayoutHorizontalConstraints = true
         
-        let itemSpacing: CGFloat = 0
+        let itemSpacing: CGFloat
         
         switch rowGravity {
             
         case .start:
-            break
+            itemSpacing = 0
             
         case.center:
-            break
+            // TODO: itemSpacing should be equally set depending on remaining space.
+            itemSpacing = 0
             
         case .end:
-            break
+            itemSpacing = 0
             
         default:
-            break
+            itemSpacing = 0
         }
         
         let nextItem: MobileContentFlowRowItem
@@ -154,13 +155,31 @@ class MobileContentFlowRow: MobileContentView {
                     constant: itemSpacing
                 )
                 
-                nextItem.addConstraint(leading)
+                addConstraint(leading)
             }
         }
         
-        if let firstItem = childItems.first {
+        switch rowGravity {
             
-            //firstItem.constrainLeadingToView(view: self)
+        case .start:
+            if let firstItem = childItems.first {
+                firstItem.constrainLeadingToView(view: self)
+            }
+            
+        case.center:
+            if let firstItem = childItems.first {
+                firstItem.constrainLeadingToView(view: self)
+            }
+            
+        case .end:
+            if let lastItem = childItems.last {
+                lastItem.constrainTrailingToView(view: self)
+            }
+            
+        default:
+            if let firstItem = childItems.first {
+                firstItem.constrainLeadingToView(view: self)
+            }
         }
     }
 }
