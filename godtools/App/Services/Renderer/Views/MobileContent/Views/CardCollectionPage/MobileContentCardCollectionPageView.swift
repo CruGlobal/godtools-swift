@@ -45,8 +45,11 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
         addSubview(cardCollectionView)
         cardCollectionView.translatesAutoresizingMaskIntoConstraints = false
         cardCollectionView.constrainEdgesToView(view: self)
-        cardCollectionView.isPagingEnabled = true
         
+        cardCollectionView.backgroundColor = .clear
+        cardCollectionView.isPagingEnabled = true
+        cardCollectionView.register(MobileContentCardCollectionPageCell.self, forCellWithReuseIdentifier: MobileContentCardCollectionPageCell.reuseIdentifier)
+
         // previousCardButton
         addSubview(previousCardButton)
         previousCardButton.setImage(ImageCatalog.previousCard.image, for: .normal)
@@ -73,15 +76,35 @@ extension MobileContentCardCollectionPageView: UICollectionViewDelegateFlowLayou
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return cards.count
+        let numberOfCards: Int = cards.count
+        return numberOfCards
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        return UICollectionViewCell()
+        let cell: MobileContentCardCollectionPageCell = cardCollectionView.dequeueReusableCell(
+            withReuseIdentifier: MobileContentCardCollectionPageCell.reuseIdentifier,
+            for: indexPath) as! MobileContentCardCollectionPageCell
+        
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 240, height: 320)
+                
+        let aspectRatio: CGSize = CGSize(width: 182, height: 268)
+        let widthMultiplierOfScreen: CGFloat = 0.84
+        
+        let width: CGFloat = floor(cardCollectionView.frame.size.width * widthMultiplierOfScreen)
+        let height: CGFloat = floor((aspectRatio.height / aspectRatio.width) * width)
+        
+        return CGSize(width: width, height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
     }
 }
