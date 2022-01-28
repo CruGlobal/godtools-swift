@@ -91,7 +91,7 @@
                         <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </buttonConfiguration>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Ek-4W-K8O" userLabel="No Button">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Ek-4W-K8O" userLabel="No Button">
                     <rect key="frame" x="215.5" y="378" width="168.5" height="50"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="bAI-v7-EH2"/>
