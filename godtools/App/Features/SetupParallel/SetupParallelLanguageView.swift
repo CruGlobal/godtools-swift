@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SetupParallelLanguageView: UIViewController, UIGestureRecognizerDelegate {
+class SetupParallelLanguageView: UIViewController {
     
     private let viewModel: SetupParallelLanguageViewModelType
     
@@ -47,8 +47,7 @@ class SetupParallelLanguageView: UIViewController, UIGestureRecognizerDelegate {
         
         tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleSelectLanguageTapped))
         tapRecognizer.cancelsTouchesInView = false
-        tapRecognizer.delegate = self
-        self.view.addGestureRecognizer(tapRecognizer)
+        selectLanguageButtonView.addGestureRecognizer(tapRecognizer)
         
         setupLayout()
         setupBinding()
@@ -56,8 +55,7 @@ class SetupParallelLanguageView: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewWillDisappear(_ animated: Bool) {
         
-        self.view.removeGestureRecognizer(self.tapRecognizer)
-        self.tapRecognizer.delegate = nil
+        selectLanguageButtonView.removeGestureRecognizer(self.tapRecognizer)
     }
     
     private func setupLayout() {
