@@ -17,6 +17,7 @@ protocol ChooseLanguageCellViewModelType {
     var hidesSeparator: Bool { get }
     var separatorLeftInset: Float { get }
     var separatorRightInset: Float { get }
+    var languageLabelFontSize: Float? { get }
     var selectorColor: UIColor? { get }
     var separatorColor: UIColor? { get }
 }

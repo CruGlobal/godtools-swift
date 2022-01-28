@@ -129,7 +129,7 @@ extension ParallelLanguageListView: TransparentModalCustomView {
     
     var modalInsets: UIEdgeInsets {
         
-        return UIEdgeInsets(top: 0, left: 40, bottom: 0, right: 40)
+        return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
     }
     
     func transparentModalDidLayout() {

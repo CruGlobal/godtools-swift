@@ -246,7 +246,8 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
             selectorColor: nil,
             separatorColor: nil,
             separatorLeftInset: nil,
-            separatorRightInset: nil
+            separatorRightInset: nil,
+            languageLabelFontSize: nil
         )
     }
 }

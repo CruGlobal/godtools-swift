@@ -111,7 +111,8 @@ class ParallelLanguageListViewModel: NSObject, ParallelLanguageListViewModelType
             selectorColor: UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0),
             separatorColor: UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0),
             separatorLeftInset: 24,
-            separatorRightInset: 24
+            separatorRightInset: 24,
+            languageLabelFontSize: 14
         )
     }
     
