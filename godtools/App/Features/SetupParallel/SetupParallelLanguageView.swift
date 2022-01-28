@@ -39,6 +39,8 @@ class SetupParallelLanguageView: UIViewController {
     deinit {
         
         print("x deinit: \(type(of: self))")
+        
+        selectLanguageButtonView.removeGestureRecognizer(self.tapRecognizer)
     }
     
     override func viewDidLoad() {
@@ -55,11 +57,6 @@ class SetupParallelLanguageView: UIViewController {
         
         setupLayout()
         setupBinding()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        
-        selectLanguageButtonView.removeGestureRecognizer(self.tapRecognizer)
     }
     
     private func setupLayout() {
