@@ -49,6 +49,10 @@ class SetupParallelLanguageView: UIViewController {
         tapRecognizer.cancelsTouchesInView = false
         selectLanguageButtonView.addGestureRecognizer(tapRecognizer)
         
+        yesButton.addTarget(self, action: #selector(handleYesTapped), for: .touchUpInside)
+        noButton.addTarget(self, action: #selector(handleNoTapped), for: .touchUpInside)
+        getStartedButton.addTarget(self, action: #selector(handleGetStartedTapped), for: .touchUpInside)
+        
         setupLayout()
         setupBinding()
     }
@@ -76,12 +80,6 @@ class SetupParallelLanguageView: UIViewController {
         
         animatedView.configure(viewModel: viewModel.animatedViewModel)
         
-        yesButton.addTarget(self, action: #selector(handleYesTapped), for: .touchUpInside)
-        
-        noButton.addTarget(self, action: #selector(handleNoTapped), for: .touchUpInside)
-        
-        getStartedButton.addTarget(self, action: #selector(handleGetStartedTapped), for: .touchUpInside)
-
         viewModel.selectLanguageButtonText.addObserver(self) { [weak self] (buttonText: String) in
                         
             self?.selectLanguageButtonTitle?.text = buttonText

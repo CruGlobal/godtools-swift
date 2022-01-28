@@ -40,8 +40,9 @@ class TransparentModalView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        overlayButton.addTarget(self, action: #selector(handleBackgroundTapped), for: .touchUpInside)
+        
         setupLayout()
-        setupBinding()
     }
     
     override func viewDidLayoutSubviews() {
@@ -74,11 +75,6 @@ class TransparentModalView: UIViewController {
         
         // modalView
         addModalView(modalView: modalView)
-    }
-    
-    private func setupBinding() {
-        
-        overlayButton.addTarget(self, action: #selector(handleBackgroundTapped), for: .touchUpInside)
     }
     
     @objc private func handleBackgroundTapped() {
