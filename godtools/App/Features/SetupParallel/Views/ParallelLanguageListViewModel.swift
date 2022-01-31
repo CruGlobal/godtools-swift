@@ -1,5 +1,5 @@
 //
-//  ParallelLanguageModalViewModel.swift
+//  ParallelLanguageListViewModel.swift
 //  godtools
 //
 //  Created by Robert Eldredge on 12/6/21.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class ParallelLanguageModalViewModel: NSObject, ParallelLanguageModalViewModelType {
+class ParallelLanguageListViewModel: NSObject, ParallelLanguageListViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -19,7 +19,6 @@ class ParallelLanguageModalViewModel: NSObject, ParallelLanguageModalViewModelTy
     
     let selectButtonText: String
     let numberOfLanguages: ObservableValue<Int>
-    let selectedLanguageIndex: ObservableValue<Int?>
     
     required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices) {
         
@@ -30,7 +29,6 @@ class ParallelLanguageModalViewModel: NSObject, ParallelLanguageModalViewModelTy
         
         selectButtonText = localizationServices.stringForMainBundle(key: "parallelLanguage.selectButton.title")
         numberOfLanguages = ObservableValue(value: 0)
-        selectedLanguageIndex = ObservableValue(value: nil)
         
         super.init()
         
@@ -92,46 +90,14 @@ class ParallelLanguageModalViewModel: NSObject, ParallelLanguageModalViewModelTy
         }
     }
     
-    private var selectedLanguageModel: LanguageModel? {
-        
-        if let index = selectedLanguageIndex.value, index >= 0 && index < languagesList.count {
-            
-            return languagesList[index].language
-        }
-        
-        return nil
-    }
-    
     private func reloadData() {
         
         reloadLanguages()
-        reloadSelectedLanguage()
     }
     
     private func reloadLanguages() {
                 
         languagesList = allLanguages
-    }
-    
-    private func reloadSelectedLanguage() {
-                
-        let language: LanguageModel?
-        
-        language = languageSettingsService.parallelLanguage.value
-        
-        var selectedIndex: Int? = nil
-        
-        for index in 0 ..< languagesList.count {
-            
-            let languageViewModel: LanguageViewModel = languagesList[index]
-            
-            if languageViewModel.language.id == language?.id {
-                selectedIndex = index
-                break
-            }
-        }
-        
-        selectedLanguageIndex.accept(value: selectedIndex)
     }
     
     func languageWillAppear(index: Int) -> ChooseLanguageCellViewModel {
@@ -141,32 +107,21 @@ class ParallelLanguageModalViewModel: NSObject, ParallelLanguageModalViewModelTy
         return ChooseLanguageCellViewModel(
             languageViewModel: languageViewModel,
             languageIsDownloaded: true, //hides downloadImageView for all cells in this list
-            hidesSelected: languageViewModel.language.id != selectedLanguageModel?.id,
+            hidesSelected: true,
             selectorColor: UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0),
             separatorColor: UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0),
             separatorLeftInset: 24,
-            separatorRightInset: 24
+            separatorRightInset: 24,
+            languageLabelFontSize: 14
         )
     }
     
     func languageTapped(index: Int) {
-        
-        selectedLanguageIndex.accept(value: index)
-    }
-    
-    func backgroundTapped() {
-        
-        flowDelegate?.navigate(step: .backgroundTappedFromParallelLanguageModal)
-    }
-    
-    func selectTapped() {
-        
-        guard let index = selectedLanguageIndex.value else { return }
-        
+                
         let selectedLanguage: LanguageModel = languagesList[index].language
         
         languageSettingsService.languageSettingsCache.cacheParallelLanguageId(languageId: selectedLanguage.id)
         
-        flowDelegate?.navigate(step: .selectTappedFromParallelLanguageModal)
+        flowDelegate?.navigate(step: .languageSelectedFromParallelLanguageList)
     }
 }

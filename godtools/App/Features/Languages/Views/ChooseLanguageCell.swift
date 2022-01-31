@@ -37,6 +37,11 @@ class ChooseLanguageCell: UITableViewCell {
         
         languageLabel.text = viewModel.languageName
         
+        if let fontSize = viewModel.languageLabelFontSize {
+            
+            languageLabel.font = UIFont(name: languageLabel.font.fontName, size: CGFloat(fontSize))
+        }
+        
         downloadImageView.isHidden = viewModel.languageIsDownloaded
         selectedView.isHidden = viewModel.hidesSelected
         separatorLine.isHidden = viewModel.hidesSeparator

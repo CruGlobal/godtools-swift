@@ -6,19 +6,17 @@
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 class SetupParallelLanguageView: UIViewController {
     
     private let viewModel: SetupParallelLanguageViewModelType
-    
-    private var closeButton: UIBarButtonItem?
-
+    private let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer()
+    private let buttonCornerRadius: CGFloat = 6
+        
     @IBOutlet weak private var animatedView: AnimatedView!
     @IBOutlet weak private var promptLabel: UILabel!
     @IBOutlet weak private var selectLanguageButtonView: UIView!
-    @IBOutlet weak private var selectLanguageButtonGestureRecognizer: UITapGestureRecognizer!
     @IBOutlet weak private var selectLanguageButtonTitle: UILabel!
     @IBOutlet weak private var yesButton: UIButton!
     @IBOutlet weak private var noButton: UIButton!
@@ -34,6 +32,7 @@ class SetupParallelLanguageView: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         
         fatalError("init(coder:) has not been implemented")
+        selectLanguageButtonView.removeGestureRecognizer(tapGesture)
     }
     
     deinit {
@@ -45,48 +44,19 @@ class SetupParallelLanguageView: UIViewController {
         
         super.viewDidLoad()
         
+        tapGesture.addTarget(self, action: #selector(handleSelectLanguageTapped))
+        selectLanguageButtonView.isUserInteractionEnabled = true
+        selectLanguageButtonView.addGestureRecognizer(tapGesture)
+        
+        yesButton.addTarget(self, action: #selector(handleYesTapped), for: .touchUpInside)
+        noButton.addTarget(self, action: #selector(handleNoTapped), for: .touchUpInside)
+        getStartedButton.addTarget(self, action: #selector(handleGetStartedTapped), for: .touchUpInside)
+        
         setupLayout()
         setupBinding()
     }
     
-    private func setupBinding() {
-        
-        animatedView.configure(viewModel: viewModel.animatedViewModel)
-        
-        selectLanguageButtonGestureRecognizer.addTarget(self, action: #selector(handleSelectLanguageTapped))
-        
-        yesButton.addTarget(self, action: #selector(handleYesTapped), for: .touchUpInside)
-        
-        noButton.addTarget(self, action: #selector(handleNoTapped), for: .touchUpInside)
-        
-        getStartedButton.addTarget(self, action: #selector(handleGetStartedTapped), for: .touchUpInside)
-
-        viewModel.selectLanguageButtonText.addObserver(self) { [weak self] (buttonText: String) in
-            
-            self?.selectLanguageButtonTitle.text = buttonText
-        }
-        
-        viewModel.yesNoButtonsHidden.addObserver(self) { [weak self] (isHidden: Bool) in
-            
-            self?.yesButton.isHidden = isHidden
-            self?.noButton.isHidden = isHidden
-        }
-        
-        viewModel.getStartedButtonHidden.addObserver(self) { [weak self] (isHidden: Bool) in
-            
-            self?.getStartedButton.isHidden = isHidden
-        }
-    }
-    
     private func setupLayout() {
-        
-        closeButton = addBarButtonItem(
-            to: .right,
-            image: ImageCatalog.navClose.image,
-            color: ColorPalette.gtBlue.color,
-            target: self,
-            action: #selector(handleCloseTapped)
-        )
         
         promptLabel.text = viewModel.promptText
                 
@@ -98,6 +68,27 @@ class SetupParallelLanguageView: UIViewController {
         
         setupSelectLanguageButton()
         setupBottomButtons()
+    }
+    
+    private func setupBinding() {
+        
+        animatedView.configure(viewModel: viewModel.animatedViewModel)
+        
+        viewModel.selectLanguageButtonText.addObserver(self) { [weak self] (buttonText: String) in
+                        
+            self?.selectLanguageButtonTitle?.text = buttonText
+        }
+        
+        viewModel.yesNoButtonsHidden.addObserver(self) { [weak self] (isHidden: Bool) in
+            
+            self?.yesButton?.isHidden = isHidden
+            self?.noButton?.isHidden = isHidden
+        }
+        
+        viewModel.getStartedButtonHidden.addObserver(self) { [weak self] (isHidden: Bool) in
+            
+            self?.getStartedButton?.isHidden = isHidden
+        }
     }
     
     private func setupSelectLanguageButton() {
@@ -112,23 +103,18 @@ class SetupParallelLanguageView: UIViewController {
     
     private func setupBottomButtons() {
         
-        yesButton.layer.cornerRadius = 6
+        yesButton.layer.cornerRadius = buttonCornerRadius
         
-        noButton.layer.cornerRadius = 6
+        noButton.layer.cornerRadius = buttonCornerRadius
         noButton.drawBorder(color: ColorPalette.gtBlue.color)
         noButton.layer.borderWidth = 1
         
-        getStartedButton.layer.cornerRadius = 6
+        getStartedButton.layer.cornerRadius = buttonCornerRadius
     }
     
-    @objc private func handleSelectLanguageTapped() {
+    @objc private func handleSelectLanguageTapped(recognizer: UITapGestureRecognizer) {
         
-        viewModel.selectLanguageTapped()
-    }
-    
-    @objc private func handleCloseTapped(barButtonItem: UIBarButtonItem) {
-        
-        viewModel.closeButtonTapped()
+        viewModel.languageSelectorTapped()
     }
     
     @objc private func handleYesTapped() {
@@ -144,5 +130,24 @@ class SetupParallelLanguageView: UIViewController {
     @objc private func handleGetStartedTapped() {
         
         viewModel.getStartedButtonTapped()
+    }
+}
+
+// MARK: - TransparentModalCustomView
+
+extension SetupParallelLanguageView: TransparentModalCustomView {
+    
+    var modal: UIView {
+        
+        return self.view
+    }
+    
+    var modalInsets: UIEdgeInsets {
+        
+        return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+    }
+    
+    func transparentModalDidLayout() {
+        
     }
 }

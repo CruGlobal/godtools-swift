@@ -20,8 +20,7 @@ protocol SetupParallelLanguageViewModelType {
     var yesNoButtonsHidden:  ObservableValue<Bool> { get }
     var getStartedButtonHidden:  ObservableValue<Bool> { get }
     
-    func selectLanguageTapped()
-    func closeButtonTapped()
+    func languageSelectorTapped()
     func yesButtonTapped()
     func noButtonTapped()
     func getStartedButtonTapped()
