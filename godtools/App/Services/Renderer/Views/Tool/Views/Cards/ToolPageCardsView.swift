@@ -353,6 +353,8 @@ extension ToolPageCardsView {
             cardTopConstraints.append(top)
             
             cardView.setDelegate(delegate: self)
+            
+            cardView.layoutSubviews()
         }
         
         setCardsState(cardsState: .starting, animated: false)

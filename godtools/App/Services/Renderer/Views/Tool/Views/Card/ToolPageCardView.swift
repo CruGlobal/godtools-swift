@@ -93,6 +93,11 @@ class ToolPageCardView: MobileContentView {
         }
     }
     
+    override func layoutSubviews() {
+        
+        setupBottomGradientView()
+    }
+    
     private func initializeNib() {
         
         let nib: UINib = UINib(nibName: String(describing: ToolPageCardView.self), bundle: nil)
@@ -134,19 +139,6 @@ class ToolPageCardView: MobileContentView {
         // background corner radius
         let rootView: UIView? = subviews.first
         rootView?.layer.cornerRadius = cardCornerRadius
-        
-        // bottom gradient
-        bottomGradientView.isUserInteractionEnabled = false
-        bottomGradientView.backgroundColor = .clear
-        let bottomGradient = CAGradientLayer()
-        bottomGradient.frame = bottomGradientView.bounds
-        bottomGradient.colors = [
-            UIColor.white.withAlphaComponent(0).cgColor,
-            UIColor.white.withAlphaComponent(0.5).cgColor,
-            UIColor.white.withAlphaComponent(0.75).cgColor,
-            UIColor.white.cgColor
-        ]
-        bottomGradientView.layer.insertSublayer(bottomGradient, at: 0)
     }
     
     private func setupBinding() {
@@ -177,8 +169,29 @@ class ToolPageCardView: MobileContentView {
         nextButton.isHidden = viewModel.hidesNextButton
     }
     
+    private func setupBottomGradientView() {
+        
+        bottomGradientView.isUserInteractionEnabled = false
+        bottomGradientView.backgroundColor = .clear
+        let bottomGradient = CAGradientLayer()
+        bottomGradient.frame = bottomGradientView.bounds
+        bottomGradient.colors = [
+            UIColor.white.withAlphaComponent(0).cgColor,
+            UIColor.white.withAlphaComponent(0.5).cgColor,
+            UIColor.white.withAlphaComponent(0.75).cgColor,
+            UIColor.white.cgColor
+        ]
+        
+        if let existingBottomGradient = bottomGradientView.layer.sublayers?[0] {
+            bottomGradientView.layer.replaceSublayer(existingBottomGradient, with: bottomGradient)
+        } else {
+            bottomGradientView.layer.insertSublayer(bottomGradient, at: 0)
+        }
+    }
+    
     func setDelegate(delegate: ToolPageCardViewDelegate?) {
         self.delegate = delegate
+        
     }
     
     func onCardVisible() {
