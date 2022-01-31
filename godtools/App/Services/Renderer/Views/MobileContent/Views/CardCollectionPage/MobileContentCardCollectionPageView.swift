@@ -11,23 +11,26 @@ import UIKit
 class MobileContentCardCollectionPageView: MobileContentPageView {
     
     private let viewModel: MobileContentCardCollectionPageViewModelType
-    private let cardCollectionView: UICollectionView
+    private let cardPageNavigationView: PageNavigationCollectionView
+    private let cardCollectionLayout: HorizontallyCenteredCollectionViewLayout = HorizontallyCenteredCollectionViewLayout()
     private let previousCardButton: UIButton = UIButton(type: .custom)
     private let nextCardButton: UIButton = UIButton(type: .custom)
+    private let previousAndNextButtonSize: CGFloat = 44
+    private let previousAndNextButtonInsets: CGFloat = 30
     
     private var cards: [MobileContentCardCollectionPageCardView] = Array()
     
     required init(viewModel: MobileContentCardCollectionPageViewModelType) {
         
         self.viewModel = viewModel
-        let cardCollectionLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        cardCollectionLayout.scrollDirection = .horizontal
-        self.cardCollectionView = UICollectionView(frame: UIScreen.main.bounds, collectionViewLayout: cardCollectionLayout)
+        self.cardPageNavigationView = PageNavigationCollectionView(layout: cardCollectionLayout)
         
         super.init(viewModel: viewModel, nibName: nil)
                 
-        cardCollectionView.delegate = self
-        cardCollectionView.dataSource = self
+        previousCardButton.addTarget(self, action: #selector(previousCardButtonTapped), for: .touchUpInside)
+        nextCardButton.addTarget(self, action: #selector(nextCardButtonTapped), for: .touchUpInside)
+        
+        cardPageNavigationView.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -41,22 +44,44 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
     override func setupLayout() {
         super.setupLayout()
         
-        // cardCollectionView
-        addSubview(cardCollectionView)
-        cardCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        cardCollectionView.constrainEdgesToView(view: self)
+        backgroundColor = .white
         
-        cardCollectionView.backgroundColor = .clear
-        cardCollectionView.isPagingEnabled = true
-        cardCollectionView.register(MobileContentCardCollectionPageCell.self, forCellWithReuseIdentifier: MobileContentCardCollectionPageCell.reuseIdentifier)
+        // cardCollectionView
+        addSubview(cardPageNavigationView)
+        cardPageNavigationView.translatesAutoresizingMaskIntoConstraints = false
+        cardPageNavigationView.constrainEdgesToView(view: self)
+    
+        cardPageNavigationView.backgroundColor = .clear
+        cardPageNavigationView.registerPageCell(classClass: MobileContentCardCollectionPageItemView.self, cellReuseIdentifier: MobileContentCardCollectionPageItemView.reuseIdentifier)
+        
+        cardCollectionLayout.setCellSize(
+            cellSize: .aspectRatioOfContainerWidth(
+                aspectRatio: CGSize(width: 182, height: 268),
+                containerWidth: frame.size.width,
+                widthMultiplier: 0.78
+            ),
+            cellSpacing: 24
+        )
 
         // previousCardButton
         addSubview(previousCardButton)
         previousCardButton.setImage(ImageCatalog.previousCard.image, for: .normal)
+        previousCardButton.translatesAutoresizingMaskIntoConstraints = false
+        previousCardButton.constrainLeadingToView(view: self, constant: previousAndNextButtonInsets)
+        previousCardButton.constrainBottomToView(view: self, constant: previousAndNextButtonInsets * -1)
+        previousCardButton.addWidthConstraint(constant: previousAndNextButtonSize)
+        previousCardButton.addHeightConstraint(constant: previousAndNextButtonSize)
         
         // nextButton
         addSubview(nextCardButton)
         nextCardButton.setImage(ImageCatalog.nextCard.image, for: .normal)
+        nextCardButton.translatesAutoresizingMaskIntoConstraints = false
+        nextCardButton.constrainTrailingToView(view: self, constant: previousAndNextButtonInsets * -1)
+        nextCardButton.constrainBottomToView(view: self, constant: previousAndNextButtonInsets * -1)
+        nextCardButton.addWidthConstraint(constant: previousAndNextButtonSize)
+        nextCardButton.addHeightConstraint(constant: previousAndNextButtonSize)
+        
+        updatePreviousAndNextButtonVisibility(page: 0)
     }
     
     override func renderChild(childView: MobileContentView) {
@@ -64,47 +89,67 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
         
         if let card = childView as? MobileContentCardCollectionPageCardView {
             cards.append(card)
-            cardCollectionView.reloadData()
+            cardPageNavigationView.reloadData()
         }
+    }
+    
+    @objc private func previousCardButtonTapped() {
+        
+        cardPageNavigationView.scrollToPreviousPage(animated: true)
+    }
+    
+    @objc private func nextCardButtonTapped() {
+        
+        cardPageNavigationView.scrollToNextPage(animated: true)
+    }
+    
+    private func updatePreviousAndNextButtonVisibility(page: Int) {
+        
+        let isFirstPage: Bool = page == 0
+        let isLastPage: Bool = page >= cardPageNavigationView.numberOfPages - 1
+        
+        let hidesPreviousCardButton: Bool
+        let hidesNextCardButton: Bool
+        
+        if isFirstPage {
+            hidesPreviousCardButton = true
+            hidesNextCardButton = false
+        }
+        else if isLastPage {
+            hidesPreviousCardButton = false
+            hidesNextCardButton = true
+        }
+        else {
+            hidesPreviousCardButton = false
+            hidesNextCardButton = false
+        }
+        
+        previousCardButton.isHidden = hidesPreviousCardButton
+        nextCardButton.isHidden = hidesNextCardButton
     }
 }
 
-extension MobileContentCardCollectionPageView: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+extension MobileContentCardCollectionPageView: PageNavigationCollectionViewDelegate {
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+    func pageNavigationNumberOfPages(pageNavigation: PageNavigationCollectionView) -> Int {
+        return cards.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let numberOfCards: Int = cards.count
-        return numberOfCards
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func pageNavigation(pageNavigation: PageNavigationCollectionView, cellForPageAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell: MobileContentCardCollectionPageCell = cardCollectionView.dequeueReusableCell(
-            withReuseIdentifier: MobileContentCardCollectionPageCell.reuseIdentifier,
-            for: indexPath) as! MobileContentCardCollectionPageCell
+        let cell: MobileContentCardCollectionPageItemView = cardPageNavigationView.getReusablePageCell(
+            cellReuseIdentifier: MobileContentCardCollectionPageItemView.reuseIdentifier,
+            indexPath: indexPath) as! MobileContentCardCollectionPageItemView
+                
+        let cardView: MobileContentCardCollectionPageCardView = cards[indexPath.row]
         
+        cell.configure(cardView: cardView)
+                
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-                
-        let aspectRatio: CGSize = CGSize(width: 182, height: 268)
-        let widthMultiplierOfScreen: CGFloat = 0.84
+    func pageNavigationDidChangeMostVisiblePage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
         
-        let width: CGFloat = floor(cardCollectionView.frame.size.width * widthMultiplierOfScreen)
-        let height: CGFloat = floor((aspectRatio.height / aspectRatio.width) * width)
-        
-        return CGSize(width: width, height: height)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        updatePreviousAndNextButtonVisibility(page: page)
     }
 }

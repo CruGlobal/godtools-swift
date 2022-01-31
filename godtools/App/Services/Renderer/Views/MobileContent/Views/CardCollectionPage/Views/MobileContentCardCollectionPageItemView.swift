@@ -1,5 +1,5 @@
 //
-//  MobileContentCardCollectionPageCell.swift
+//  MobileContentCardCollectionPageItemView.swift
 //  godtools
 //
 //  Created by Levi Eggert on 1/26/22.
@@ -8,15 +8,17 @@
 
 import UIKit
 
-class MobileContentCardCollectionPageCell: UICollectionViewCell {
+class MobileContentCardCollectionPageItemView: UICollectionViewCell {
     
-    static let nibName: String = "MobileContentCardCollectionPageCell"
-    static let reuseIdentifier: String = "MobileContentCardCollectionPageCellReuseIdentifier"
+    static let nibName: String = "MobileContentCardCollectionPageItemView"
+    static let reuseIdentifier: String = "MobileContentCardCollectionPageItemViewReuseIdentifier"
     
     private let cardShadowView: UIView = UIView()
     private let cardBackgroundView: UIView = UIView()
     private let cardContentView: UIView = UIView()
-    private let cardCornerRadius: CGFloat = 12
+    private let cardCornerRadius: CGFloat = 4
+    
+    private var cardView: MobileContentCardCollectionPageCardView?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,6 +31,9 @@ class MobileContentCardCollectionPageCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        
+        cardView?.removeFromSuperview()
+        cardView = nil
     }
     
     private func setupLayout() {
@@ -38,23 +43,38 @@ class MobileContentCardCollectionPageCell: UICollectionViewCell {
         
         // contentView
         contentView.backgroundColor = .clear
-        contentView.drawBorder(color: .red)
         
         // cardShadowView
         contentView.addSubview(cardShadowView)
         cardShadowView.translatesAutoresizingMaskIntoConstraints = false
         cardShadowView.constrainEdgesToView(view: contentView)
         cardShadowView.layer.cornerRadius = cardCornerRadius
+        cardShadowView.layer.shadowOffset = CGSize(width: 0, height: 0)
+        cardShadowView.layer.shadowRadius = 3
+        cardShadowView.layer.shadowColor = UIColor.black.cgColor
+        cardShadowView.layer.shadowOpacity = 0.3
+        cardShadowView.backgroundColor = .white
         
         // cardBackgroundView
         contentView.addSubview(cardBackgroundView)
         cardBackgroundView.translatesAutoresizingMaskIntoConstraints = false
         cardBackgroundView.constrainEdgesToView(view: contentView)
         cardBackgroundView.layer.cornerRadius = cardCornerRadius
+        cardBackgroundView.backgroundColor = .white
         
         // cardContentView
         contentView.addSubview(cardContentView)
         cardContentView.translatesAutoresizingMaskIntoConstraints = false
         cardContentView.constrainEdgesToView(view: contentView)
+        cardContentView.backgroundColor = .clear
+    }
+    
+    func configure(cardView: MobileContentCardCollectionPageCardView) {
+        
+        cardContentView.addSubview(cardView)
+        cardView.translatesAutoresizingMaskIntoConstraints = false
+        cardView.constrainEdgesToView(view: cardContentView)
+        
+        self.cardView = cardView
     }
 }

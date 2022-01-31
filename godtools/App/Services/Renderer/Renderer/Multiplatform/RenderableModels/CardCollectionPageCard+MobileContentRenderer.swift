@@ -8,6 +8,7 @@
 
 import Foundation
 import GodToolsToolParser
+import UIKit
 
 extension CardCollectionPage.Card: MobileContentRenderableModel {
     
@@ -24,11 +25,14 @@ extension CardCollectionPage.Card: MobileContentRenderableModel {
     }
     
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
+                
+        let content = MultiplatformContent(
+            content: content,
+            contentInsets: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20),
+            itemSpacing: 10,
+            scrollIsEnabled: true
+        )
         
-        var childModels: [MobileContentRenderableModel] = Array()
-        
-        addContentToChildModels(childModels: &childModels, content: content)
-        
-        return childModels
+        return [content]
     }
 }
