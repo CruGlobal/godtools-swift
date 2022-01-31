@@ -12,6 +12,8 @@ class ChooseYourOwnAdventureView: MobileContentPagesView {
     
     private let viewModel: ChooseYourOwnAdventureViewModelType
     
+    private var navBarView: ChooseYourOwnAdventureNavBarView?
+    
     required init(viewModel: ChooseYourOwnAdventureViewModelType) {
         
         self.viewModel = viewModel
@@ -38,6 +40,29 @@ class ChooseYourOwnAdventureView: MobileContentPagesView {
     override func setupLayout() {
         super.setupLayout()
         
+        navBarView = ChooseYourOwnAdventureNavBarView(
+            languageTitles: viewModel.getNavBarLanguageTitles(),
+            parentViewController: self,
+            delegate: self
+        )
+        
         pageNavigationView.gestureScrollingEnabled = false
+    }
+}
+
+// MARK: - ChooseYourOwnAdventureNavBarViewDelegate
+
+extension ChooseYourOwnAdventureView: ChooseYourOwnAdventureNavBarViewDelegate {
+    
+    func chooseYourOwnAdventureNavBarBackTapped(navBar: ChooseYourOwnAdventureNavBarView) {
+
+        pageNavigationView.scrollToPreviousPage(animated: true)
+        
+        viewModel.navBackTapped()
+    }
+    
+    func chooseYourOwnAdventureLanguageSelectorTapped(navBar: ChooseYourOwnAdventureNavBarView, index: Int) {
+
+        viewModel.languageTapped(index: index)
     }
 }
