@@ -23,7 +23,7 @@ import UIKit
 
 class PageNavigationCollectionView: UIView, NibBased {
     
-    private let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+    private let layout: UICollectionViewLayout
         
     private var internalCurrentChangedPage: Int = 0
     private var internalCurrentStoppedOnPage: Int = 0
@@ -35,7 +35,15 @@ class PageNavigationCollectionView: UIView, NibBased {
     
     weak var delegate: PageNavigationCollectionViewDelegate?
     
+    required init(layout: UICollectionViewLayout = UICollectionViewFlowLayout()) {
+        
+        self.layout = layout
+        super.init(frame: UIScreen.main.bounds)
+        initialize()
+    }
+    
     required init?(coder: NSCoder) {
+        self.layout = UICollectionViewFlowLayout()
         super.init(coder: coder)
         initialize()
     }
@@ -54,7 +62,9 @@ class PageNavigationCollectionView: UIView, NibBased {
     private func setupLayout() {
         
         //collectionView
-        layout.scrollDirection = .horizontal
+        if let flowLayout = layout as? UICollectionViewFlowLayout {
+            flowLayout.scrollDirection = .horizontal
+        }
         collectionView.collectionViewLayout = layout
         collectionView.isPagingEnabled = true
         collectionView.isScrollEnabled = true
@@ -213,6 +223,10 @@ class PageNavigationCollectionView: UIView, NibBased {
     
     func setSemanticContentAttribute(semanticContentAttribute: UISemanticContentAttribute) {
         collectionView.semanticContentAttribute = semanticContentAttribute
+    }
+    
+    func setPagingEnabled(pagingEnabled: Bool) {
+        collectionView.isPagingEnabled = pagingEnabled
     }
     
     func getContentOffset() -> CGPoint {
