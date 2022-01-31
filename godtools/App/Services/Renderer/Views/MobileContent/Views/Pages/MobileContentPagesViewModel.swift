@@ -20,8 +20,8 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     private(set) var currentPage: Int = 0
     private(set) var highestPageNumberViewed: Int = 0
     
-    private weak var window: UIViewController?
-    private weak var flowDelegate: FlowDelegate?
+    private(set) weak var window: UIViewController?
+    private(set) weak var flowDelegate: FlowDelegate?
     
     let renderers: [MobileContentRendererType]
     let numberOfPages: ObservableValue<Int> = ObservableValue(value: 0)

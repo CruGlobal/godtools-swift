@@ -9,15 +9,11 @@
 import UIKit
 
 class LessonViewModel: MobileContentPagesViewModel, LessonViewModelType {
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     let progress: ObservableValue<AnimatableValue<CGFloat>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
     
     required init(flowDelegate: FlowDelegate, renderers: [MobileContentRendererType], resource: ResourceModel, primaryLanguage: LanguageModel, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking) {
-        
-        self.flowDelegate = flowDelegate
-        
+                
         super.init(flowDelegate: flowDelegate, renderers: renderers, primaryLanguage: primaryLanguage, page: page, mobileContentEventAnalytics: mobileContentEventAnalytics)
     }
     
