@@ -243,6 +243,17 @@ class ToolsFlow: ToolNavigationFlow, Flow {
             
             tractFlow = nil
             
+        case .chooseYourOwnAdventureFlowCompleted(let state):
+            
+            guard chooseYourOwnAdventureFlow != nil else {
+                return
+            }
+            
+            _ = navigationController.popViewController(animated: true)
+            configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
+            
+            chooseYourOwnAdventureFlow = nil
+            
         default:
             break
         }

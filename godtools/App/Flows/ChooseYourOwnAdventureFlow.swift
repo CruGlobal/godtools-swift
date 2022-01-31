@@ -50,7 +50,8 @@ class ChooseYourOwnAdventureFlow: Flow {
             renderers: renderers,
             primaryLanguage: primaryLanguage,
             page: nil,
-            mobileContentEventAnalytics: appDiContainer.getMobileContentEventAnalyticsTracking()
+            mobileContentEventAnalytics: appDiContainer.getMobileContentEventAnalyticsTracking(),
+            localizationServiecs: appDiContainer.localizationServices
         )
         
         let view = ChooseYourOwnAdventureView(viewModel: viewModel)
@@ -64,5 +65,13 @@ class ChooseYourOwnAdventureFlow: Flow {
     
     func navigate(step: FlowStep) {
         
+        switch step {
+        case .backTappedFromChooseYourOwnAdventure:
+            
+            flowDelegate?.navigate(step: .chooseYourOwnAdventureFlowCompleted(state: .userClosedTool))
+            
+        default:
+            break
+        }
     }
 }
