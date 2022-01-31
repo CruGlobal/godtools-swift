@@ -76,7 +76,7 @@ extension UIView {
         constrainTrailingToView(view: view)
     }
     
-    func constrainTopToView(view: UIView) {
+    func constrainTopToView(view: UIView, constant: CGFloat = 0) {
         
         let top: NSLayoutConstraint = NSLayoutConstraint(
             item: self,
@@ -85,13 +85,13 @@ extension UIView {
             toItem: view,
             attribute: .top,
             multiplier: 1,
-            constant: 0
+            constant: constant
         )
         
         view.addConstraint(top)
     }
     
-    func constrainBottomToView(view: UIView) {
+    func constrainBottomToView(view: UIView, constant: CGFloat = 0) {
         
         let bottom: NSLayoutConstraint = NSLayoutConstraint(
             item: self,
@@ -100,13 +100,13 @@ extension UIView {
             toItem: view,
             attribute: .bottom,
             multiplier: 1,
-            constant: 0
+            constant: constant
         )
         
         view.addConstraint(bottom)
     }
     
-    func constrainLeadingToView(view: UIView) {
+    func constrainLeadingToView(view: UIView, constant: CGFloat = 0) {
         
         let leading: NSLayoutConstraint = NSLayoutConstraint(
             item: self,
@@ -115,13 +115,13 @@ extension UIView {
             toItem: view,
             attribute: .leading,
             multiplier: 1,
-            constant: 0
+            constant: constant
         )
         
         view.addConstraint(leading)
     }
     
-    func constrainTrailingToView(view: UIView) {
+    func constrainTrailingToView(view: UIView, constant: CGFloat = 0) {
         
         let trailing: NSLayoutConstraint = NSLayoutConstraint(
             item: self,
@@ -130,7 +130,7 @@ extension UIView {
             toItem: view,
             attribute: .trailing,
             multiplier: 1,
-            constant: 0
+            constant: constant
         )
         
         view.addConstraint(trailing)
@@ -183,7 +183,7 @@ extension UIView {
         return widthConstraint
     }
     
-    func addHeightConstraint(constant: CGFloat, relatedBy: NSLayoutConstraint.Relation = .equal, priority: CGFloat = 1000) {
+    func addHeightConstraint(constant: CGFloat, relatedBy: NSLayoutConstraint.Relation = .equal, priority: CGFloat = 1000) -> NSLayoutConstraint {
         
         let heightConstraint: NSLayoutConstraint = NSLayoutConstraint(
             item: self,
@@ -196,5 +196,7 @@ extension UIView {
         )
         heightConstraint.priority = UILayoutPriority(Float(priority))
         addConstraint(heightConstraint)
+        
+        return heightConstraint
     }
 }
