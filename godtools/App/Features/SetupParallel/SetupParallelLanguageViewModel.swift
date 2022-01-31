@@ -55,6 +55,13 @@ class SetupParallelLanguageViewModel: NSObject, SetupParallelLanguageViewModelTy
         setupBinding()
     }
     
+    deinit {
+        
+        print("x deinit: \(type(of: self))")
+        
+        languageSettingsService.parallelLanguage.removeObserver(self)
+    }
+    
     private func reloadData() {
                 
         if let parallelLanguage = languageSettingsService.parallelLanguage.value {

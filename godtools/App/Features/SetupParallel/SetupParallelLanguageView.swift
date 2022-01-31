@@ -11,11 +11,9 @@ import UIKit
 class SetupParallelLanguageView: UIViewController {
     
     private let viewModel: SetupParallelLanguageViewModelType
-    
+    private let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer()
     private let buttonCornerRadius: CGFloat = 6
-    
-    private var tapRecognizer: UITapGestureRecognizer!
-    
+        
     @IBOutlet weak private var animatedView: AnimatedView!
     @IBOutlet weak private var promptLabel: UILabel!
     @IBOutlet weak private var selectLanguageButtonView: UIView!
@@ -34,22 +32,21 @@ class SetupParallelLanguageView: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         
         fatalError("init(coder:) has not been implemented")
+        selectLanguageButtonView.removeGestureRecognizer(tapGesture)
     }
     
     deinit {
         
         print("x deinit: \(type(of: self))")
-        
-        selectLanguageButtonView.removeGestureRecognizer(self.tapRecognizer)
     }
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
-        tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleSelectLanguageTapped))
-        tapRecognizer.cancelsTouchesInView = false
-        selectLanguageButtonView.addGestureRecognizer(tapRecognizer)
+        tapGesture.addTarget(self, action: #selector(handleSelectLanguageTapped))
+        selectLanguageButtonView.isUserInteractionEnabled = true
+        selectLanguageButtonView.addGestureRecognizer(tapGesture)
         
         yesButton.addTarget(self, action: #selector(handleYesTapped), for: .touchUpInside)
         noButton.addTarget(self, action: #selector(handleNoTapped), for: .touchUpInside)
@@ -95,8 +92,6 @@ class SetupParallelLanguageView: UIViewController {
     }
     
     private func setupSelectLanguageButton() {
-        
-        selectLanguageButtonView.isUserInteractionEnabled = true
         
         selectLanguageButtonView.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1).cgColor
         selectLanguageButtonView.layer.shadowOffset = CGSize(width: 2, height: 2)
