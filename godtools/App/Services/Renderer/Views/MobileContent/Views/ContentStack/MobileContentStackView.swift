@@ -118,9 +118,8 @@ class MobileContentStackView: MobileContentView {
         return scrollView?.contentOffset
     }
     
-    func setScrollViewContentOffset(contentOffset: CGPoint) {
-        
-        scrollView?.contentOffset = contentOffset
+    func setScrollViewContentOffset(contentOffset: CGPoint, animated: Bool) {
+        scrollView?.setContentOffset(contentOffset, animated: animated)
     }
     
     func setScollBarsHidden(hidden: Bool) {
