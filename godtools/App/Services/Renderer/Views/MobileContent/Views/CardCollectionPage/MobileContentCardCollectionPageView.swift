@@ -16,7 +16,7 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
     private let previousCardButton: UIButton = UIButton(type: .custom)
     private let nextCardButton: UIButton = UIButton(type: .custom)
     private let previousAndNextButtonSize: CGFloat = 44
-    private let previousAndNextButtonInsets: CGFloat = 30
+    private let previousAndNextButtonInsets: CGFloat = 20
     
     private var cards: [MobileContentCardCollectionPageCardView] = Array()
     
