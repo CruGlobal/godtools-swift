@@ -8,7 +8,12 @@
 
 import Foundation
 
-struct ToolPagePositions: MobileContentPagePositionsType {
+class ToolPagePositions: MobileContentViewPositionState {
     
     let cardPosition: Int?
+    
+    required init(cardPosition: Int?) {
+        
+        self.cardPosition = cardPosition
+    }
 }

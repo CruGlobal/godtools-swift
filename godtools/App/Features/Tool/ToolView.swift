@@ -54,7 +54,7 @@ class ToolView: MobileContentPagesView {
             }
             if didSubscribeForRemoteSharePublishing {
                 let page: Int = toolView.pageNavigationView.currentPage
-                let pagePositions: MobileContentPagePositionsType? = toolView.getPagePositions(page: page)
+                let pagePositions: MobileContentViewPositionState? = toolView.getPagePositions(page: page)
                 guard let toolPagePositions = pagePositions as? ToolPagePositions else {
                     return
                 }
@@ -78,7 +78,7 @@ class ToolView: MobileContentPagesView {
     override func pageNavigationDidChangeMostVisiblePage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
         super.pageNavigationDidChangeMostVisiblePage(pageNavigation: pageNavigation, pageCell: pageCell, page: page)
                 
-        let pagePositions: MobileContentPagePositionsType? = getPagePositions(page: page)
+        let pagePositions: MobileContentViewPositionState? = getPagePositions(page: page)
         
         guard let toolPagePositions = pagePositions as? ToolPagePositions else {
             return
@@ -106,7 +106,7 @@ extension ToolView: ToolNavBarViewDelegate {
     func navBarLanguageChanged(navBar: ToolNavBarView) {
 
         let page: Int = pageNavigationView.currentPage
-        let pagePositions: MobileContentPagePositionsType? = getCurrentPagePositions()
+        let pagePositions: MobileContentViewPositionState? = getCurrentPagePositions()
         
         guard let toolPagePositions = pagePositions as? ToolPagePositions else {
             return

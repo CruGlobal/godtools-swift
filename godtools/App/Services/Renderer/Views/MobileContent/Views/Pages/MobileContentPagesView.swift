@@ -14,7 +14,7 @@ class MobileContentPagesView: UIViewController {
     
     private let viewModel: MobileContentPagesViewModelType
     
-    private var initialPagePositions: [PageNumber: MobileContentPagePositionsType] = Dictionary()
+    private var initialPagePositions: [PageNumber: MobileContentViewPositionState] = Dictionary()
     private var currentNavigation: MobileContentPagesNavigationModel?
     private var pageInsets: UIEdgeInsets = .zero
     private var didLayoutSubviews: Bool = false
@@ -144,9 +144,9 @@ class MobileContentPagesView: UIViewController {
         self.pageInsets = pageInsets
     }
     
-    private func getAllVisiblePagesPositions() -> [PageNumber: MobileContentPagePositionsType] {
+    private func getAllVisiblePagesPositions() -> [PageNumber: MobileContentViewPositionState] {
                         
-        var pagePositions: [PageNumber: MobileContentPagePositionsType] = Dictionary()
+        var pagePositions: [PageNumber: MobileContentViewPositionState] = Dictionary()
         
         let visiblePageCells: [UICollectionViewCell] = pageNavigationView.getVisiblePageCells()
         
@@ -157,7 +157,7 @@ class MobileContentPagesView: UIViewController {
                let indexPath = pageNavigationView.getIndexPathForPageCell(pageCell: pageCell) {
                 
                 let page: Int = indexPath.row
-                let currentPagePositions: MobileContentPagePositionsType = pageView.getPagePositions()
+                let currentPagePositions: MobileContentViewPositionState = pageView.getPositionState()
                 
                 pagePositions[page] = currentPagePositions
             }
@@ -166,7 +166,7 @@ class MobileContentPagesView: UIViewController {
         return pagePositions
     }
     
-    func getPagePositions(page: Int) -> MobileContentPagePositionsType? {
+    func getPagePositions(page: Int) -> MobileContentViewPositionState? {
         
         guard let pageCell = pageNavigationView.getCellForItem(indexPath: IndexPath(item: page, section: 0)) as? MobileContentPageCell else {
             return nil
@@ -176,10 +176,10 @@ class MobileContentPagesView: UIViewController {
             return nil
         }
         
-        return pageView.getPagePositions()
+        return pageView.getPositionState()
     }
     
-    func getCurrentPagePositions() -> MobileContentPagePositionsType? {
+    func getCurrentPagePositions() -> MobileContentViewPositionState? {
                 
         guard let pageCell = pageNavigationView.currentPageCell as? MobileContentPageCell else {
             return nil
@@ -189,10 +189,10 @@ class MobileContentPagesView: UIViewController {
             return nil
         }
         
-        return pageView.getPagePositions()
+        return pageView.getPositionState()
     }
     
-    func setCurrentPagePositions(pagePositions: MobileContentPagePositionsType, animated: Bool) {
+    func setCurrentPagePositions(pagePositions: MobileContentViewPositionState, animated: Bool) {
         
         guard let pageCell = pageNavigationView.currentPageCell as? MobileContentPageCell else {
             return
@@ -202,7 +202,7 @@ class MobileContentPagesView: UIViewController {
             return
         }
         
-        pageView.setPagePositions(pagePositions: pagePositions, animated: animated)
+        pageView.setPositionState(positionState: pagePositions, animated: animated)
     }
     
     private func startNavigation(navigationModel: MobileContentPagesNavigationModel) {
@@ -271,7 +271,7 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
         pageView.setDelegate(delegate: self)
         
         if let pagePositions = initialPagePositions[pageNumber] {
-            pageView.setPagePositions(pagePositions: pagePositions, animated: false)
+            pageView.setPositionState(positionState: pagePositions, animated: false)
         }
         
         didConfigurePageView(pageView: pageView)

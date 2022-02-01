@@ -12,6 +12,6 @@ struct MobileContentPagesNavigationModel {
     
     let willReloadData: Bool
     let page: Int
-    let pagePositions: MobileContentPagePositionsType?
+    let pagePositions: MobileContentViewPositionState?
     let animated: Bool
 }
