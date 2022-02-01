@@ -1,5 +1,5 @@
 //
-//  ParallelLanguageModal.swift
+//  ParallelLanguageListView.swift
 //  godtools
 //
 //  Created by Robert Eldredge on 12/10/21.
@@ -8,22 +8,17 @@
 
 import UIKit
 
-class ParallelLanguageModal: UIViewController {
+class ParallelLanguageListView: UIViewController {
     
-    private let viewModel: ParallelLanguageModalViewModelType
-        
-    @IBOutlet weak private var overlayButton: UIButton!
-    @IBOutlet weak private var selectButton: UIButton!
+    private let viewModel: ParallelLanguageListViewModelType
+    
     @IBOutlet weak private var languagesTableView: UITableView!
     
-    @IBOutlet weak private var tableTopConstraint: NSLayoutConstraint!
-    @IBOutlet weak private var tableBottomConstraint: NSLayoutConstraint!
-    
-    required init(viewModel: ParallelLanguageModalViewModelType) {
+    required init(viewModel: ParallelLanguageListViewModelType) {
         
         self.viewModel = viewModel
         
-        super.init(nibName: String(describing: ParallelLanguageModal.self), bundle: nil)
+        super.init(nibName: String(describing: ParallelLanguageListView.self), bundle: nil)
         
         modalPresentationStyle = .overCurrentContext
         transitioningDelegate = self
@@ -49,49 +44,33 @@ class ParallelLanguageModal: UIViewController {
         
         view.backgroundColor = .clear
         
-        overlayButton.backgroundColor = .black
-        overlayButton.alpha = 0.4
-        
         languagesTableView.register(
             UINib(nibName: ChooseLanguageCell.nibName, bundle: nil),
             forCellReuseIdentifier: ChooseLanguageCell.reuseIdentifier
         )
+        
         languagesTableView.rowHeight = 54
         languagesTableView.separatorStyle = .none
         languagesTableView.layer.cornerRadius = 6
         
-        selectButton.layer.cornerRadius = 6
-        selectButton.setTitle(viewModel.selectButtonText, for: .normal)
+        view.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1).cgColor
+        view.layer.shadowOffset = CGSize(width: 2, height: 2)
+        view.layer.shadowOpacity =  0.25
+        view.layer.shadowRadius = 4
+        view.layer.masksToBounds = false
     }
     
     private func setupBinding() {
         
-        selectButton.addTarget(self, action: #selector(handleSelectTapped), for: .touchUpInside)
-        overlayButton.addTarget(self, action: #selector(handleBackgroundTapped), for: .touchUpInside)
-        
         viewModel.numberOfLanguages.addObserver(self) { [weak self] (numberOfLanguages: Int) in
             self?.languagesTableView.reloadData()
         }
-        
-        viewModel.selectedLanguageIndex.addObserver(self) { [weak self] (index: Int?) in
-            self?.languagesTableView.reloadData()
-        }
-    }
-    
-    @objc private func handleBackgroundTapped() {
-        
-        viewModel.backgroundTapped()
-    }
-    
-    @objc private func handleSelectTapped() {
-        
-        viewModel.selectTapped()
     }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
 
-extension ParallelLanguageModal: UITableViewDelegate, UITableViewDataSource {
+extension ParallelLanguageListView: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         
@@ -126,7 +105,7 @@ extension ParallelLanguageModal: UITableViewDelegate, UITableViewDataSource {
 
 // MARK: - UIViewControllerTransitioningDelegate
 
-extension ParallelLanguageModal: UIViewControllerTransitioningDelegate {
+extension ParallelLanguageListView: UIViewControllerTransitioningDelegate {
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
@@ -136,6 +115,25 @@ extension ParallelLanguageModal: UIViewControllerTransitioningDelegate {
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
         return FadeAnimationTransition(fade: .fadeOut)
+    }
+}
+
+// MARK: - TransparentModalCustomView
+
+extension ParallelLanguageListView: TransparentModalCustomView {
+    
+    var modal: UIView {
+        
+        return self.view
+    }
+    
+    var modalInsets: UIEdgeInsets {
+        
+        return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+    }
+    
+    func transparentModalDidLayout() {
+        
     }
 }
 

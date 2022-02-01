@@ -25,7 +25,7 @@ class SetupParallelLanguageViewModel: NSObject, SetupParallelLanguageViewModelTy
     let yesNoButtonsHidden: ObservableValue<Bool>
     let getStartedButtonHidden: ObservableValue<Bool>
     
-    required init (flowDelegate: FlowDelegate, localizationServices: LocalizationServices, languageSettingsService: LanguageSettingsService) {
+    required init (flowDelegate: FlowDelegate, localizationServices: LocalizationServices, languageSettingsService: LanguageSettingsService, setupParallelLanguageAvailability: SetupParallelLanguageAvailabilityType) {
         
         self.flowDelegate = flowDelegate
         self.localizationServices = localizationServices
@@ -48,9 +48,18 @@ class SetupParallelLanguageViewModel: NSObject, SetupParallelLanguageViewModelTy
         
         super.init()
         
+        setupParallelLanguageAvailability.markSetupParallelLanguageViewed()
+        
         reloadData()
         
         setupBinding()
+    }
+    
+    deinit {
+        
+        print("x deinit: \(type(of: self))")
+        
+        languageSettingsService.parallelLanguage.removeObserver(self)
     }
     
     private func reloadData() {
@@ -84,20 +93,14 @@ class SetupParallelLanguageViewModel: NSObject, SetupParallelLanguageViewModelTy
         }
     }
     
-    func selectLanguageTapped() {
+    func languageSelectorTapped() {
         
-        flowDelegate?.navigate(step: .selectLanguageTappedFromSetupParallelLanguage)
-    }
-    
-    func closeButtonTapped() {
-        
-        flowDelegate?.navigate(step: .closeTappedFromSetupParallelLanguage)
+        flowDelegate?.navigate(step: .languageSelectorTappedFromSetupParallelLanguage)
     }
     
     func yesButtonTapped() {
         
         flowDelegate?.navigate(step: .yesTappedFromSetupParallelLanguage)
-
     }
     
     func noButtonTapped() {

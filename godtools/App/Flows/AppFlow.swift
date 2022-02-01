@@ -306,7 +306,7 @@ class AppFlow: NSObject, Flow {
             default:
                 resetFlowToToolsFlow(animatedDismissal: true, startingToolbarItem: nil, didFinishSetNavigationStack: nil)
             }
-                            
+        
         case .openTutorialTapped:
             let tutorialFlow = TutorialFlow(
                 flowDelegate: self,

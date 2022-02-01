@@ -1,5 +1,5 @@
 //
-//  ParallelLanguageModalViewModelType.swift
+//  ParallelLanguageListViewModelType.swift
 //  godtools
 //
 //  Created by Robert Eldredge on 12/6/21.
@@ -8,14 +8,11 @@
 
 import Foundation
 
-protocol ParallelLanguageModalViewModelType {
+protocol ParallelLanguageListViewModelType {
     
     var selectButtonText: String { get }
     var numberOfLanguages: ObservableValue<Int> { get }
-    var selectedLanguageIndex: ObservableValue<Int?> { get }
     
     func languageWillAppear(index: Int) -> ChooseLanguageCellViewModel
     func languageTapped(index: Int)
-    func backgroundTapped()
-    func selectTapped()
 }

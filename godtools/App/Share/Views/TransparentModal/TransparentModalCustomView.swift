@@ -10,7 +10,8 @@ import UIKit
 
 protocol TransparentModalCustomView {
     
-    var view: UIView { get }
+    var modal: UIView { get }
+    var modalInsets: UIEdgeInsets { get }
     
     func transparentModalDidLayout()
 }
