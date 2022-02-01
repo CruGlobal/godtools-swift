@@ -143,6 +143,7 @@ class ToolPageCardView: MobileContentView {
         let rootView: UIView? = subviews.first
         rootView?.layer.cornerRadius = cardCornerRadius
         
+        // bottom gradient
         bottomGradientView.isUserInteractionEnabled = false
         bottomGradientView.backgroundColor = .clear
         bottomGradientLayer.frame = bottomGradientView.bounds
@@ -185,7 +186,6 @@ class ToolPageCardView: MobileContentView {
     
     func setDelegate(delegate: ToolPageCardViewDelegate?) {
         self.delegate = delegate
-        
     }
     
     func onCardVisible() {
