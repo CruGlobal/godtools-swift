@@ -17,7 +17,7 @@ class ChooseYourOwnAdventureFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData) {
+    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -44,6 +44,18 @@ class ChooseYourOwnAdventureFlow: Flow {
         var renderers: [MobileContentRendererType] = Array()
         
         renderers.append(primaryRenderer)
+        
+        if let parallelLanguage = parallelLanguage, let parallelTranslationManifest = parallelTranslationManifest, parallelLanguage.code != primaryLanguage.code {
+            
+            let parallelRenderer = MobileContentMultiplatformRenderer(
+                resource: resource,
+                language: parallelLanguage,
+                multiplatformParser: MobileContentMultiplatformParser(translationManifestData: parallelTranslationManifest, translationsFileCache: translationsFileCache),
+                pageViewFactories: pageViewFactories
+            )
+                        
+            renderers.append(parallelRenderer)
+        }
         
         let viewModel = ChooseYourOwnAdventureViewModel(
             flowDelegate: self,
