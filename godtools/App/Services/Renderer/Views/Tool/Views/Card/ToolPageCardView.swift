@@ -22,6 +22,7 @@ class ToolPageCardView: MobileContentView {
     private let backgroundImageView: MobileContentBackgroundImageView = MobileContentBackgroundImageView()
     private let swipeUpGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer()
     private let swipeDownGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer()
+    private let bottomGradientLayer: CAGradientLayer = CAGradientLayer()
     private let contentStackView: MobileContentStackView = MobileContentStackView(contentInsets: UIEdgeInsets(top: 15, left: 15, bottom: 0, right: 15), itemSpacing: 20, scrollIsEnabled: true)
     
     private lazy var keyboardObserver: KeyboardObserverType = KeyboardNotificationObserver(loggingEnabled: false)
@@ -95,7 +96,9 @@ class ToolPageCardView: MobileContentView {
     
     override func layoutSubviews() {
         
-        setupBottomGradientView()
+        super.layoutSubviews()
+        
+        bottomGradientLayer.frame = bottomGradientView.bounds
     }
     
     private func initializeNib() {
@@ -139,6 +142,17 @@ class ToolPageCardView: MobileContentView {
         // background corner radius
         let rootView: UIView? = subviews.first
         rootView?.layer.cornerRadius = cardCornerRadius
+        
+        bottomGradientView.isUserInteractionEnabled = false
+        bottomGradientView.backgroundColor = .clear
+        bottomGradientLayer.frame = bottomGradientView.bounds
+        bottomGradientLayer.colors = [
+            UIColor.white.withAlphaComponent(0).cgColor,
+            UIColor.white.withAlphaComponent(0.5).cgColor,
+            UIColor.white.withAlphaComponent(0.75).cgColor,
+            UIColor.white.cgColor
+        ]
+        bottomGradientView.layer.insertSublayer(bottomGradientLayer, at: 0)
     }
     
     private func setupBinding() {
@@ -167,26 +181,6 @@ class ToolPageCardView: MobileContentView {
         nextButton.setTitle(viewModel.nextButtonTitle, for: .normal)
         nextButton.setTitleColor(viewModel.nextButtonTitleColor, for: .normal)
         nextButton.isHidden = viewModel.hidesNextButton
-    }
-    
-    private func setupBottomGradientView() {
-        
-        bottomGradientView.isUserInteractionEnabled = false
-        bottomGradientView.backgroundColor = .clear
-        let bottomGradient = CAGradientLayer()
-        bottomGradient.frame = bottomGradientView.bounds
-        bottomGradient.colors = [
-            UIColor.white.withAlphaComponent(0).cgColor,
-            UIColor.white.withAlphaComponent(0.5).cgColor,
-            UIColor.white.withAlphaComponent(0.75).cgColor,
-            UIColor.white.cgColor
-        ]
-        
-        if let existingBottomGradient = bottomGradientView.layer.sublayers?[0] {
-            bottomGradientView.layer.replaceSublayer(existingBottomGradient, with: bottomGradient)
-        } else {
-            bottomGradientView.layer.insertSublayer(bottomGradient, at: 0)
-        }
     }
     
     func setDelegate(delegate: ToolPageCardViewDelegate?) {
