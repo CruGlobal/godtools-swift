@@ -63,6 +63,6 @@ extension ChooseYourOwnAdventureView: ChooseYourOwnAdventureNavBarViewDelegate {
     
     func chooseYourOwnAdventureLanguageSelectorTapped(navBar: ChooseYourOwnAdventureNavBarView, index: Int) {
 
-        viewModel.languageTapped(index: index)
+        viewModel.navLanguageTapped(index: index)
     }
 }

@@ -12,5 +12,5 @@ protocol ChooseYourOwnAdventureViewModelType: MobileContentPagesViewModel {
     
     func getNavBarLanguageTitles() -> [String]
     func navBackTapped()
-    func languageTapped(index: Int)
+    func navLanguageTapped(index: Int)
 }
