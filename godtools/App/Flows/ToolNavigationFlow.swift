@@ -217,7 +217,9 @@ extension ToolNavigationFlow {
                 sharedNavigationController: navigationController,
                 resource: resource,
                 primaryLanguage: primaryLanguageTranslation.language,
-                primaryTranslationManifest: primaryLanguageTranslation.translationManifestData
+                primaryTranslationManifest: primaryLanguageTranslation.translationManifestData,
+                parallelLanguage: parallelLanguageTranslation?.language,
+                parallelTranslationManifest: parallelLanguageTranslation?.translationManifestData
             )
             
         case .unknown:
