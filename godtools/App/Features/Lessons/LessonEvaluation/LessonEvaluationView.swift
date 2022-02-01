@@ -109,8 +109,13 @@ class LessonEvaluationView: UIView, NibBased {
 
 extension LessonEvaluationView: TransparentModalCustomView {
     
-    var view: UIView {
+    var modal: UIView {
         return self
+    }
+    
+    var modalInsets: UIEdgeInsets {
+        
+        return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     }
     
     func transparentModalDidLayout() {

@@ -15,7 +15,7 @@ class ToolsFlow: ToolNavigationFlow, Flow {
     private let dataDownloader: InitialDataDownloader
     
     private var learnToShareToolFlow: LearnToShareToolFlow?
-    
+        
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
@@ -55,6 +55,11 @@ class ToolsFlow: ToolNavigationFlow, Flow {
         )
         
         navigationController.setViewControllers([view], animated: false)
+        
+        if appDiContainer.getSetupParallelLanguageAvailability().setupParallelLanguageIsAvailable {
+            
+            navigate(step: .showSetupParallelLanguage)
+        }
     }
     
     private func configureNavigationBar(shouldAnimateNavigationBarHiddenState: Bool) {
@@ -78,9 +83,33 @@ class ToolsFlow: ToolNavigationFlow, Flow {
         
         switch step {
         
+        case .showSetupParallelLanguage:
+            presentSetupParallelLanguage()
+        
+        case .languageSelectorTappedFromSetupParallelLanguage:
+            presentParallelLanguage()
+        
+        case .yesTappedFromSetupParallelLanguage:
+            presentParallelLanguage()
+        
+        case .noThanksTappedFromSetupParallelLanguage:
+            dismissSetupParallelLanguage()
+        
+        case .getStartedTappedFromSetupParallelLanguage:
+            dismissSetupParallelLanguage()
+        
+        case .languageSelectedFromParallelLanguageList:
+            dismissParallelLanguage()
+        
+        case .backgroundTappedFromSetupParallelLanguage:
+            dismissSetupParallelLanguage()
+        
+        case .backgroundTappedFromParallelLanguageList:
+            dismissParallelLanguage()
+        
         case .openTutorialTapped:
             flowDelegate?.navigate(step: .openTutorialTapped)
-           
+            
         case .menuTappedFromTools:
             flowDelegate?.navigate(step: .showMenu)
         
@@ -231,6 +260,9 @@ class ToolsFlow: ToolNavigationFlow, Flow {
             
         case .sendFeedbackTappedFromLessonEvaluation:
             dismissLessonEvaluation()
+        
+        case .backgroundTappedFromLessonEvaluation:
+            dismissLessonEvaluation()
             
         case .tractFlowCompleted(let state):
             
@@ -258,6 +290,11 @@ class ToolsFlow: ToolNavigationFlow, Flow {
             break
         }
     }
+}
+
+// MARK: - Lesson Evaluation
+
+extension ToolsFlow {
     
     private func dismissLearnToShareToolFlow() {
         
@@ -284,11 +321,6 @@ class ToolsFlow: ToolNavigationFlow, Flow {
         
         navigationController.pushViewController(view, animated: true)
     }
-}
-
-// MARK: - Lesson Evaluation
-
-extension ToolsFlow {
     
     private func presentLessonEvaluation(lesson: ResourceModel, pageIndexReached: Int) {
         
@@ -301,15 +333,52 @@ extension ToolsFlow {
             languageSettings: appDiContainer.languageSettingsService,
             localization: appDiContainer.localizationServices
         )
-        
         let view = LessonEvaluationView(viewModel: viewModel)
         
-        let modalView = TransparentModalView(modalView: view)
+        let modalView = TransparentModalView(flowDelegate: self, modalView: view, closeModalFlowStep: .backgroundTappedFromLessonEvaluation)
         
         navigationController.present(modalView, animated: true, completion: nil)
     }
     
+    private func presentSetupParallelLanguage() {
+        
+        let viewModel = SetupParallelLanguageViewModel(
+            flowDelegate: self,
+            localizationServices: appDiContainer.localizationServices,
+            languageSettingsService: appDiContainer.languageSettingsService,
+            setupParallelLanguageAvailability: appDiContainer.getSetupParallelLanguageAvailability()
+        )
+        let view = SetupParallelLanguageView(viewModel: viewModel)
+        
+        let modalView = TransparentModalView(flowDelegate: self, modalView: view, closeModalFlowStep: .backgroundTappedFromSetupParallelLanguage)
+        
+        navigationController.present(modalView, animated: true, completion: nil)
+    }
+    
+    private func presentParallelLanguage() {
+        
+        let viewModel = ParallelLanguageListViewModel(
+            flowDelegate: self,
+            dataDownloader: appDiContainer.initialDataDownloader,
+            languageSettingsService: appDiContainer.languageSettingsService,
+            localizationServices: appDiContainer.localizationServices
+        )
+        let view = ParallelLanguageListView(viewModel: viewModel)
+        
+        let modalView = TransparentModalView(flowDelegate: self, modalView: view,  closeModalFlowStep: .backgroundTappedFromParallelLanguageList)
+        
+        navigationController.presentedViewController?.present(modalView, animated: true, completion: nil)
+    }
+    
     private func dismissLessonEvaluation() {
         navigationController.dismiss(animated: true, completion: nil)
+    }
+    
+    private func dismissSetupParallelLanguage() {
+        navigationController.dismiss(animated: true, completion: nil)
+    }
+    
+    private func dismissParallelLanguage() {
+        navigationController.presentedViewController?.dismiss(animated: true, completion: nil)
     }
 }
