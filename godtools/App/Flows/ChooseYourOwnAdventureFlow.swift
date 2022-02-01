@@ -63,7 +63,7 @@ class ChooseYourOwnAdventureFlow: Flow {
             primaryLanguage: primaryLanguage,
             page: nil,
             mobileContentEventAnalytics: appDiContainer.getMobileContentEventAnalyticsTracking(),
-            localizationServiecs: appDiContainer.localizationServices
+            localizationServices: appDiContainer.localizationServices
         )
         
         let view = ChooseYourOwnAdventureView(viewModel: viewModel)
