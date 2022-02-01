@@ -11,6 +11,7 @@ import UIKit
 class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     
     private let mobileContentEventAnalytics: MobileContentEventAnalyticsTracking
+    private let initialPageRenderingType: MobileContentPagesInitialPageRenderingType
     private let startingPage: Int?
     
     private var currentRenderer: MobileContentRendererType?
@@ -30,12 +31,13 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     let pageNavigation: ObservableValue<MobileContentPagesNavigationModel?> = ObservableValue(value: nil)
     let pagesRemoved: ObservableValue<[IndexPath]> = ObservableValue(value: [])
     
-    required init(flowDelegate: FlowDelegate, renderers: [MobileContentRendererType], primaryLanguage: LanguageModel, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking) {
+    required init(flowDelegate: FlowDelegate, renderers: [MobileContentRendererType], primaryLanguage: LanguageModel, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType) {
         
         self.flowDelegate = flowDelegate
         self.renderers = renderers
         self.startingPage = page
         self.mobileContentEventAnalytics = mobileContentEventAnalytics
+        self.initialPageRenderingType = initialPageRenderingType
         
         switch primaryLanguage.languageDirection {
         case .leftToRight:
@@ -69,6 +71,39 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         return nil
     }
     
+    private func removePage(page: Int) {
+        
+        pageModels.remove(at: page)
+        numberOfPages.setValue(value: pageModels.count)
+        pagesRemoved.accept(value: [IndexPath(item: page, section: 0)])
+    }
+    
+    private func removeFollowingPagesFromPage(page: Int) {
+        
+        let nextPage: Int = currentPage + 1
+        
+        for index in nextPage ..< pageModels.count {
+            removePage(page: index)
+        }
+    }
+    
+    private func removePageIfHidden(page: Int) {
+        
+        let indexIsInRange: Bool = page >= 0 && page < pageModels.count
+        
+        guard indexIsInRange else {
+            return
+        }
+        
+        let lastViewedPageModel: PageModelType = pageModels[page]
+        
+        guard lastViewedPageModel.isHidden else {
+            return
+        }
+        
+        removePage(page: page)
+    }
+    
     private func trackContentEvents(eventIds: [MultiplatformEventId]) {
         
         guard let resource = currentRenderer?.resource else {
@@ -86,6 +121,8 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     
     private func didReceivePageListenerForPage(page: Int, pageModel: PageModelType) {
         
+        let isChooseYourOwnAdventure: Bool = initialPageRenderingType == .chooseYourOwnAdventure
+        
         let pageNumber: Int
         let willReloadData: Bool
         
@@ -94,7 +131,7 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
             pageNumber = pageNumberExistsInActivatePages
             willReloadData = false
         }
-        else if pageModel.isHidden {
+        else if pageModel.isHidden || isChooseYourOwnAdventure {
             
             let insertAtPage: Int = currentPage + 1
             
@@ -166,13 +203,56 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     
     func setRenderer(renderer: MobileContentRendererType) {
         
+        let pageModelsToRender: [PageModelType]
+        
+        switch initialPageRenderingType {
+        
+        case .chooseYourOwnAdventure:
+            
+            let pagesShouldMatchRenderedPages: Bool = renderers.count > 1 && pageModels.count > 1
+            
+            var newPageModelsToRenderer: [PageModelType] = Array()
+            
+            if let currentRenderer = self.currentRenderer, pagesShouldMatchRenderedPages {
+                
+                let renderedPageModelsUUIDs: [String] = pageModels.map({$0.uuid})
+                let allPageModelsInCurrentRenderer: [PageModelType] = currentRenderer.parser.pageModels
+                let allPageModelsInSetRenderer: [PageModelType] = renderer.parser.pageModels
+                
+                for page in allPageModelsInCurrentRenderer {
+                    
+                    guard let index = renderedPageModelsUUIDs.firstIndex(of: page.uuid) else {
+                        continue
+                    }
+                    
+                    let indexIsInRange: Bool = index >= 0 && index < allPageModelsInSetRenderer.count
+                    
+                    guard indexIsInRange else {
+                        continue
+                    }
+                    
+                    newPageModelsToRenderer.append(allPageModelsInSetRenderer[index])
+                }
+            }
+            
+            if newPageModelsToRenderer.isEmpty && renderer.parser.pageModels.count > 0 {
+                
+                newPageModelsToRenderer = [renderer.parser.pageModels[0]]
+            }
+
+            pageModelsToRender = newPageModelsToRenderer
+            
+        case .visiblePages:
+            
+            pageModelsToRender = renderer.parser.getVisiblePageModels()
+        }
+        
+        
         rendererWillChangeSignal.accept()
         
         currentRenderer = renderer
         
-        let visiblePageModels: [PageModelType] = renderer.parser.getVisiblePageModels()
-        
-        pageModels = visiblePageModels
+        self.pageModels = pageModelsToRender
         
         numberOfPages.accept(value: pageModels.count)
     }
@@ -223,16 +303,14 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     
     func pageDidDisappear(page: Int) {
               
-        let lastViewedPageModel: PageModelType = pageModels[page]
+        let didNavigateBack: Bool = currentPage < page
+        let shouldRemoveAllFollowingPages: Bool = initialPageRenderingType == .chooseYourOwnAdventure && didNavigateBack
         
-        guard lastViewedPageModel.isHidden else {
-            return
+        if shouldRemoveAllFollowingPages {
+            removeFollowingPagesFromPage(page: currentPage)
         }
         
-        // remove page
-        pageModels.remove(at: page)
-        numberOfPages.setValue(value: pageModels.count)
-        pagesRemoved.accept(value: [IndexPath(item: page, section: 0)])
+        removePageIfHidden(page: page)
     }
     
     func pageDidReceiveEvents(eventIds: [MultiplatformEventId]) {

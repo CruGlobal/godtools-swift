@@ -16,15 +16,20 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOw
         
         self.localizationServiecs = localizationServiecs
         
-        super.init(flowDelegate: flowDelegate, renderers: renderers, primaryLanguage: primaryLanguage, page: page, mobileContentEventAnalytics: mobileContentEventAnalytics)
+        super.init(flowDelegate: flowDelegate, renderers: renderers, primaryLanguage: primaryLanguage, page: page, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .chooseYourOwnAdventure)
     }
-    
-    required init(flowDelegate: FlowDelegate, renderers: [MobileContentRendererType], primaryLanguage: LanguageModel, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking) {
-        fatalError("init(flowDelegate:renderers:primaryLanguage:page:mobileContentEventAnalytics:) has not been implemented")
+
+    required init(flowDelegate: FlowDelegate, renderers: [MobileContentRendererType], primaryLanguage: LanguageModel, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType) {
+        fatalError("init(flowDelegate:renderers:primaryLanguage:page:mobileContentEventAnalytics:initialPageRenderingType:) has not been implemented")
     }
     
     func getNavBarLanguageTitles() -> [String] {
-        return renderers.map({ LanguageViewModel(language: $0.language, localizationServices: localizationServiecs).translatedLanguageName })
+        
+        let languageTitles: [String] = renderers.map({ LanguageViewModel(language: $0.language, localizationServices: localizationServiecs).translatedLanguageName })
+        guard languageTitles.count > 1 else {
+            return Array()
+        }
+        return languageTitles
     }
     
     func navBackTapped() {
@@ -32,11 +37,13 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOw
         let isFirstPage: Bool = currentPage == 0
         
         if isFirstPage {
-            flowDelegate?.navigate(step: FlowStep.homeTappedFromTool(isScreenSharing: false))
+            flowDelegate?.navigate(step: FlowStep.backTappedFromChooseYourOwnAdventure)
         }
     }
     
-    func languageTapped(index: Int) {
+    func navLanguageTapped(index: Int) {
         
+        let renderer: MobileContentRendererType = renderers[index]
+        setRenderer(renderer: renderer)
     }
 }
