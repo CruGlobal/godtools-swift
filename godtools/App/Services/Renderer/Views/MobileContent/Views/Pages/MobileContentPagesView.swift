@@ -157,7 +157,7 @@ class MobileContentPagesView: UIViewController {
                let indexPath = pageNavigationView.getIndexPathForPageCell(pageCell: pageCell) {
                 
                 let page: Int = indexPath.row
-                let currentPagePositions: MobileContentViewPositionState = pageView.getPositionState()
+                let currentPagePositions: MobileContentViewPositionState = pageView.getPositionStateForViewHierarchy()
                 
                 pagePositions[page] = currentPagePositions
             }
@@ -176,7 +176,7 @@ class MobileContentPagesView: UIViewController {
             return nil
         }
         
-        return pageView.getPositionState()
+        return pageView.getPositionStateForViewHierarchy()
     }
     
     func getCurrentPagePositions() -> MobileContentViewPositionState? {
@@ -189,7 +189,7 @@ class MobileContentPagesView: UIViewController {
             return nil
         }
         
-        return pageView.getPositionState()
+        return pageView.getPositionStateForViewHierarchy()
     }
     
     func setCurrentPagePositions(pagePositions: MobileContentViewPositionState, animated: Bool) {
@@ -202,7 +202,7 @@ class MobileContentPagesView: UIViewController {
             return
         }
         
-        pageView.setPositionState(positionState: pagePositions, animated: animated)
+        pageView.setPositionStateForViewHierarchy(positionState: pagePositions, animated: animated)
     }
     
     private func startNavigation(navigationModel: MobileContentPagesNavigationModel) {
@@ -271,7 +271,10 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
         pageView.setDelegate(delegate: self)
         
         if let pagePositions = initialPagePositions[pageNumber] {
-            pageView.setPositionState(positionState: pagePositions, animated: false)
+            // NOTE: This DispatchQueue.main.async is here to give the UI a chance to finish laying out constraints. ~Levi
+            DispatchQueue.main.async {
+                pageView.setPositionStateForViewHierarchy(positionState: pagePositions, animated: false)
+            }
         }
         
         didConfigurePageView(pageView: pageView)

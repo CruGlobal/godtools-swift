@@ -127,6 +127,24 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
         previousCardButton.isHidden = hidesPreviousCardButton
         nextCardButton.isHidden = hidesNextCardButton
     }
+    
+    override func getPositionState() -> MobileContentViewPositionState {
+        
+        let currentPage: Int = cardPageNavigationView.currentPage
+                
+        return MobileContentCardCollectionPagePositionState(currentPage: currentPage)
+    }
+    
+    override func setPositionState(positionState: MobileContentViewPositionState, animated: Bool) {
+        
+        guard let cardCollectionPagePositionState = positionState as? MobileContentCardCollectionPagePositionState else {
+            return
+        }
+
+        let currentPage: Int = cardCollectionPagePositionState.currentPage
+        
+        cardPageNavigationView.scrollToPage(page: currentPage, animated: animated)        
+    }
 }
 
 extension MobileContentCardCollectionPageView: PageNavigationCollectionViewDelegate {
@@ -146,6 +164,11 @@ extension MobileContentCardCollectionPageView: PageNavigationCollectionViewDeleg
         cell.configure(cardView: cardView)
                 
         return cell
+    }
+    
+    func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
+        
+        updatePreviousAndNextButtonVisibility(page: page)
     }
     
     func pageNavigationDidChangeMostVisiblePage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {

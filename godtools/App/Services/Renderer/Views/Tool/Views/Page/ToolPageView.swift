@@ -91,9 +91,9 @@ class ToolPageView: MobileContentPageView {
     
     override func getPositionState() -> MobileContentViewPositionState {
         
-        return ToolPagePositions(
-            cardPosition: cardsView?.getCurrentCardPosition()
-        )
+        let cardPosition: Int? = cardsView?.getCurrentCardPosition()
+        
+        return ToolPagePositions(cardPosition: cardPosition)
     }
     
     override func setPositionState(positionState: MobileContentViewPositionState, animated: Bool) {

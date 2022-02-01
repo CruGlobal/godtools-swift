@@ -36,6 +36,24 @@ class MobileContentContentPageView: MobileContentPageView {
             addContentStackView(contentStackView: contentStackView)
         }
     }
+    
+    override func getPositionState() -> MobileContentViewPositionState {
+        
+        let contentOffset: CGPoint = contentStackView?.getScrollViewContentOffset() ?? .zero
+        
+        return MobileContentPagePositionState(scrollContentOffset: contentOffset)
+    }
+    
+    override func setPositionState(positionState: MobileContentViewPositionState, animated: Bool) {
+        
+        guard let contentPagePositionState = positionState as? MobileContentPagePositionState else {
+            return
+        }
+        
+        let scrollContentOffset: CGPoint = contentPagePositionState.scrollContentOffset
+        
+        contentStackView?.setScrollViewContentOffset(contentOffset: scrollContentOffset, animated: animated)
+    }
 }
 
 extension MobileContentContentPageView {

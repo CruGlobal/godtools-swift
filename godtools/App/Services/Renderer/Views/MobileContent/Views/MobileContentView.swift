@@ -179,11 +179,11 @@ class MobileContentView: UIView {
     
     func getPositionStateForViewHierarchy() -> MobileContentViewPositionState {
         
-        let positionState: MobileContentViewPositionState = getPositionState()
+        let rootPositionState: MobileContentViewPositionState = getPositionState()
         
-        recurseHierarchyAndGetPositionState(view: self, viewPositionState: positionState)
+        recurseHierarchyAndGetPositionState(view: self, viewPositionState: rootPositionState)
         
-        return positionState
+        return rootPositionState
     }
     
     private func recurseHierarchyAndGetPositionState(view: MobileContentView, viewPositionState: MobileContentViewPositionState) {
@@ -203,7 +203,9 @@ class MobileContentView: UIView {
         return MobileContentViewPositionState()
     }
     
-    private func setPositionStateForViewHierarchy(positionState: MobileContentViewPositionState, animated: Bool) {
+    func setPositionStateForViewHierarchy(positionState: MobileContentViewPositionState, animated: Bool) {
+        
+        setPositionState(positionState: positionState, animated: animated)
         
         recurseHierarchyAndSetPositionState(view: self, viewPositionState: positionState, animated: animated)
     }
