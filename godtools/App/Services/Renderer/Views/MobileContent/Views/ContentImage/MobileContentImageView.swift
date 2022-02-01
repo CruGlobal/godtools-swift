@@ -56,12 +56,12 @@ class MobileContentImageView: MobileContentView {
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
-        imageView.constrainEdgesToView(view: self)
-        
         switch imageConstraintType {
         
         case .aspectRatio(let multiplier):
                                 
+            imageView.constrainEdgesToView(view: self)
+            
             let aspectRatio: NSLayoutConstraint = NSLayoutConstraint(
                 item: imageView,
                 attribute: .height,
@@ -76,6 +76,9 @@ class MobileContentImageView: MobileContentView {
             
         case .fixedWidthAndHeight(let size):
             
+            imageView.constrainCenterHorizontallyInView(view: self)
+            imageView.constrainTopToView(view: self)
+            imageView.constrainBottomToView(view: self)
             imageView.addWidthConstraint(constant: size)
             imageView.addHeightConstraint(constant: size)
             imageView.contentMode = .scaleAspectFit
