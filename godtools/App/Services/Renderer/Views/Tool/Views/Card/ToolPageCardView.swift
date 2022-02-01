@@ -22,6 +22,7 @@ class ToolPageCardView: MobileContentView {
     private let backgroundImageView: MobileContentBackgroundImageView = MobileContentBackgroundImageView()
     private let swipeUpGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer()
     private let swipeDownGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer()
+    private let bottomGradientLayer: CAGradientLayer = CAGradientLayer()
     private let contentStackView: MobileContentStackView = MobileContentStackView(contentInsets: UIEdgeInsets(top: 15, left: 15, bottom: 0, right: 15), itemSpacing: 20, scrollIsEnabled: true)
     
     private lazy var keyboardObserver: KeyboardObserverType = KeyboardNotificationObserver(loggingEnabled: false)
@@ -93,6 +94,13 @@ class ToolPageCardView: MobileContentView {
         }
     }
     
+    override func layoutSubviews() {
+        
+        super.layoutSubviews()
+        
+        bottomGradientLayer.frame = bottomGradientView.bounds
+    }
+    
     private func initializeNib() {
         
         let nib: UINib = UINib(nibName: String(describing: ToolPageCardView.self), bundle: nil)
@@ -138,15 +146,14 @@ class ToolPageCardView: MobileContentView {
         // bottom gradient
         bottomGradientView.isUserInteractionEnabled = false
         bottomGradientView.backgroundColor = .clear
-        let bottomGradient = CAGradientLayer()
-        bottomGradient.frame = bottomGradientView.bounds
-        bottomGradient.colors = [
+        bottomGradientLayer.frame = bottomGradientView.bounds
+        bottomGradientLayer.colors = [
             UIColor.white.withAlphaComponent(0).cgColor,
             UIColor.white.withAlphaComponent(0.5).cgColor,
             UIColor.white.withAlphaComponent(0.75).cgColor,
             UIColor.white.cgColor
         ]
-        bottomGradientView.layer.insertSublayer(bottomGradient, at: 0)
+        bottomGradientView.layer.insertSublayer(bottomGradientLayer, at: 0)
     }
     
     private func setupBinding() {
