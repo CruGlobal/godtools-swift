@@ -39,9 +39,9 @@ class MobileContentContentPageView: MobileContentPageView {
     
     override func getPositionState() -> MobileContentViewPositionState {
         
-        let contentOffset: CGPoint = contentStackView?.getScrollViewContentOffset() ?? .zero
+        let scrollVerticalContentOffsetPercentageOfContentSize: CGFloat = contentStackView?.getScrollViewVerticalContentOffsetPercentageOfContentSize() ?? 0
         
-        return MobileContentPagePositionState(scrollContentOffset: contentOffset)
+        return MobileContentPagePositionState(scrollVerticalContentOffsetPercentageOfContentSize: scrollVerticalContentOffsetPercentageOfContentSize)
     }
     
     override func setPositionState(positionState: MobileContentViewPositionState, animated: Bool) {
@@ -50,9 +50,9 @@ class MobileContentContentPageView: MobileContentPageView {
             return
         }
         
-        let scrollContentOffset: CGPoint = contentPagePositionState.scrollContentOffset
+        let contentOffsetY: CGFloat = contentPagePositionState.scrollVerticalContentOffsetPercentageOfContentSize
         
-        contentStackView?.setScrollViewContentOffset(contentOffset: scrollContentOffset, animated: animated)
+        contentStackView?.setScrollViewVerticalContentOffsetPercentageOfContentSize(verticalContentOffsetPercentage: contentOffsetY, animated: animated)
     }
 }
 

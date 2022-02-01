@@ -114,6 +114,36 @@ class MobileContentStackView: MobileContentView {
         }
     }
     
+    func getScrollViewVerticalContentOffsetPercentageOfContentSize() -> CGFloat {
+       
+        guard let scrollView = self.scrollView else {
+            return 0
+        }
+        
+        let contentSize: CGSize = scrollView.contentSize
+        let contentOffset: CGPoint = scrollView.contentOffset
+        
+        guard contentSize.height > 0 else {
+            return 0
+        }
+        
+        let verticalContentOffset: CGFloat = contentOffset.y / contentSize.height
+        
+        return verticalContentOffset
+    }
+    
+    func setScrollViewVerticalContentOffsetPercentageOfContentSize(verticalContentOffsetPercentage: CGFloat, animated: Bool) {
+        
+        guard let scrollView = self.scrollView else {
+            return
+        }
+        
+        let contentSize: CGSize = scrollView.contentSize
+        let contentOffsetY: CGFloat = verticalContentOffsetPercentage * contentSize.height
+        
+        setScrollViewContentOffset(contentOffset: CGPoint(x: scrollView.contentOffset.x, y: contentOffsetY), animated: animated)
+    }
+    
     func getScrollViewContentOffset() -> CGPoint? {
         return scrollView?.contentOffset
     }

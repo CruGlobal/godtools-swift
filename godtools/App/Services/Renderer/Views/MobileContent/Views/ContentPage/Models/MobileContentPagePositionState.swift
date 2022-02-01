@@ -10,10 +10,10 @@ import UIKit
 
 class MobileContentPagePositionState: MobileContentViewPositionState {
     
-    let scrollContentOffset: CGPoint
+    let scrollVerticalContentOffsetPercentageOfContentSize: CGFloat
     
-    required init(scrollContentOffset: CGPoint) {
+    required init(scrollVerticalContentOffsetPercentageOfContentSize: CGFloat) {
         
-        self.scrollContentOffset = scrollContentOffset
+        self.scrollVerticalContentOffsetPercentageOfContentSize = scrollVerticalContentOffsetPercentageOfContentSize
     }
 }
