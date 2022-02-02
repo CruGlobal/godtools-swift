@@ -270,16 +270,7 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
         
         pageView.setDelegate(delegate: self)
         
-        if let pagePositions = initialPagePositions[pageNumber] {
-            // NOTE: This DispatchQueue.main.async is here to give the UI a chance to finish laying out constraints. ~Levi
-            DispatchQueue.main.async {
-                pageView.setPositionStateForViewHierarchy(positionState: pagePositions, animated: false)
-            }
-        }
-        
         didConfigurePageView(pageView: pageView)
-        
-        initialPagePositions[pageNumber] = nil
         
         completeCurrentNavigationIfNeeded()
         
@@ -300,6 +291,13 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
     func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
                 
         if let contentPageCell = pageCell as? MobileContentPageCell {
+            
+            if let pageView = contentPageCell.mobileContentView as? MobileContentPageView, let pagePositions = initialPagePositions[page] {
+                pageView.layoutIfNeeded()
+                pageView.setPositionStateForViewHierarchy(positionState: pagePositions, animated: false)
+                initialPagePositions[page] = nil
+            }
+            
             contentPageCell.mobileContentView?.notifyViewAndAllChildrenViewDidAppear()
         }
         
