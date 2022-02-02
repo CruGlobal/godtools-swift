@@ -105,8 +105,6 @@ class MobileContentImageView: MobileContentView {
         case .points( _):
             break
         }
-        
-        
     }
     
     private func getImageViewSize(image: UIImage, contentViewWidth: MobileContentViewWidth) -> CGSize {

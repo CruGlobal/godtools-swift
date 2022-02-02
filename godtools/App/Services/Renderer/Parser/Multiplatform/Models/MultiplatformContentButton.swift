@@ -83,6 +83,10 @@ class MultiplatformContentButton: ContentButtonModelType {
         return MobileContentTextScale(doubleValue: button.textScale)
     }
     
+    var buttonWidth: GodToolsToolParser.Dimension {
+        return button.width
+    }
+    
     func getBackgroundColor() -> MobileContentColor? {
         return MobileContentColor(color: button.backgroundColor)
     }

@@ -11,6 +11,7 @@ import UIKit
 protocol MobileContentButtonViewModelType {
     
     var backgroundColor: UIColor { get }
+    var buttonWidth: MobileContentViewWidth { get }
     var font: UIFont { get }
     var title: String? { get }
     var titleColor: UIColor { get }
