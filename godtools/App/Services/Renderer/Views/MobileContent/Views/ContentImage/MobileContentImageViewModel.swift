@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class MobileContentImageViewModel: MobileContentImageViewModelType {
     
@@ -14,28 +15,19 @@ class MobileContentImageViewModel: MobileContentImageViewModelType {
     private let rendererPageModel: MobileContentRendererPageModel
     
     let image: UIImage?
-    let imageConstraintsType: MobileContentImageConstraintsType?
+    let imageWidth: MobileContentViewWidth
     
     required init(imageModel: ContentImageModelType, rendererPageModel: MobileContentRendererPageModel) {
         
         self.imageModel = imageModel
         self.rendererPageModel = rendererPageModel
+        self.imageWidth = MobileContentViewWidth(dimension: imageModel.width)
         
         if let imageResource = imageModel.resource, !imageResource.isEmpty, let cachedImage = rendererPageModel.resourcesCache.getImageFromManifestResources(fileName: imageResource) {
-            
             self.image = cachedImage
-                        
-            if imageModel.width > 0 {
-                imageConstraintsType = .fixedWidthAndHeight(size: CGFloat(imageModel.width))
-            }
-            else {
-                imageConstraintsType = .aspectRatio(multiplier: cachedImage.size.height / cachedImage.size.width)
-            }
         }
         else {
-            
             self.image = nil
-            self.imageConstraintsType = nil
         }
     }
     

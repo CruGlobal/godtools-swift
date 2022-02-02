@@ -27,9 +27,8 @@ class MultiplatformContentImage: ContentImageModelType {
         return fileName
     }
     
-    var width: Int {
-        let imageWidth: Int = image.width.hashValue
-        return imageWidth
+    var width: GodToolsToolParser.Dimension {
+        return image.width
     }
 }
 
