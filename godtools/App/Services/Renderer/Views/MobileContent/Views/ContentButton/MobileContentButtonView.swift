@@ -49,11 +49,19 @@ class MobileContentButtonView: MobileContentView {
     
     private func setupLayout() {
         
-        layer.cornerRadius = 5
+        backgroundColor = .clear
         
         let buttonIcon: MobileContentButtonIcon? = viewModel.icon
         
         // buttonView
+        buttonView.backgroundColor = viewModel.backgroundColor
+        buttonView.layer.cornerRadius = 5
+        
+        if let borderColor = viewModel.borderColor, let borderWidth = viewModel.borderWidth {
+            buttonView.layer.borderColor = borderColor.cgColor
+            buttonView.layer.borderWidth = borderWidth
+        }
+        
         addSubview(buttonView)
         buttonView.translatesAutoresizingMaskIntoConstraints = false
         buttonView.constrainTopToView(view: self)
@@ -150,14 +158,6 @@ class MobileContentButtonView: MobileContentView {
     }
     
     private func setupBinding() {
-        
-        backgroundColor = .clear
-        buttonView.backgroundColor = viewModel.backgroundColor
-        
-        if let borderColor = viewModel.borderColor, let borderWidth = viewModel.borderWidth {
-            layer.borderColor = borderColor.cgColor
-            layer.borderWidth = borderWidth
-        }
         
         viewModel.visibilityState.addObserver(self) { [weak self] (visibilityState: MobileContentViewVisibilityState) in
             self?.setVisibilityState(visibilityState: visibilityState)
