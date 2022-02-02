@@ -83,27 +83,6 @@ class OnboardingFlow: Flow {
             flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: nil))
         }
     }
-
-    private func navigateToSetupParallelLanguage() {
-        
-        let viewModel = SetupParallelLanguageViewModel(flowDelegate: self, localizationServices: appDiContainer.localizationServices, languageSettingsService: appDiContainer.languageSettingsService)
-        let view = SetupParallelLanguageView(viewModel: viewModel)
-            
-        navigationController.setViewControllers([view], animated: true)
-    }
-    
-    private func presentParallelLanguageModal() {
-        
-        let viewModel = ParallelLanguageModalViewModel(
-            flowDelegate: self,
-            dataDownloader: appDiContainer.initialDataDownloader,
-            languageSettingsService: appDiContainer.languageSettingsService,
-            localizationServices: appDiContainer.localizationServices
-        )
-        let view = ParallelLanguageModal(viewModel: viewModel)
-                
-        navigationController.present(view, animated: true, completion: nil)
-    }
     
     private func completeOnboardingFlow(onboardingFlowCompletedState: OnboardingFlowCompletedState?) {
         
@@ -133,41 +112,20 @@ extension OnboardingFlow: FlowDelegate {
             navigateToQuickStartOrTools()
 
         case .skipTappedFromOnboardingQuickStart:
-            navigateToSetupParallelLanguage()
-            
+            completeOnboardingFlow(onboardingFlowCompletedState: nil)
+
         case .endTutorialFromOnboardingQuickStart:
-            navigateToSetupParallelLanguage()
-            
+            completeOnboardingFlow(onboardingFlowCompletedState: nil)
+
         case .readArticlesTappedFromOnboardingQuickStart:
             completeOnboardingFlow(onboardingFlowCompletedState: .readArticles)
         
         case .tryLessonsTappedFromOnboardingQuickStart:
             completeOnboardingFlow(onboardingFlowCompletedState: .tryLessons)
-
+            
         case .chooseToolTappedFromOnboardingQuickStart:
             completeOnboardingFlow(onboardingFlowCompletedState: .chooseTool)
-
-        case .selectLanguageTappedFromSetupParallelLanguage:
-            presentParallelLanguageModal()
         
-        case .closeTappedFromSetupParallelLanguage:
-            completeOnboardingFlow(onboardingFlowCompletedState: nil)
-
-        case .yesTappedFromSetupParallelLanguage:
-            presentParallelLanguageModal()
-
-        case .noThanksTappedFromSetupParallelLanguage:
-            completeOnboardingFlow(onboardingFlowCompletedState: nil)
-
-        case .backgroundTappedFromParallelLanguageModal:
-            dismissModal()
-        
-        case .selectTappedFromParallelLanguageModal:
-            dismissModal()
-        
-        case .getStartedTappedFromSetupParallelLanguage:
-            completeOnboardingFlow(onboardingFlowCompletedState: nil)
-
         default:
             break
         }
