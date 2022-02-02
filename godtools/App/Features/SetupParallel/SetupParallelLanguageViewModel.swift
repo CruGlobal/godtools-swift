@@ -32,7 +32,7 @@ class SetupParallelLanguageViewModel: NSObject, SetupParallelLanguageViewModelTy
         self.languageSettingsService = languageSettingsService
         
         animatedViewModel = AnimatedViewModel(
-            animationDataResource: .mainBundleJsonFile(filename: "onboarding_two_dudes"),
+            animationDataResource: .mainBundleJsonFile(filename: "onboarding_parallel_language"),
             autoPlay: true,
             loop: true
         )
