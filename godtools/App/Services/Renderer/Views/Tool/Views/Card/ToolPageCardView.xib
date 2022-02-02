@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -98,11 +98,11 @@
                 <constraint firstItem="1mf-U2-uc8" firstAttribute="leading" secondItem="LKt-g0-yhC" secondAttribute="leading" id="3pQ-Cz-8IV"/>
                 <constraint firstItem="LKt-g0-yhC" firstAttribute="top" secondItem="rZm-W3-Lwr" secondAttribute="bottom" id="5cO-3T-Q9R"/>
                 <constraint firstItem="1mf-U2-uc8" firstAttribute="trailing" secondItem="LKt-g0-yhC" secondAttribute="trailing" id="8FN-mZ-bDX"/>
-                <constraint firstItem="65A-1Q-biF" firstAttribute="leading" secondItem="LKt-g0-yhC" secondAttribute="leading" id="8aN-qv-PjE"/>
+                <constraint firstItem="65A-1Q-biF" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="8aN-qv-PjE"/>
                 <constraint firstItem="rZm-W3-Lwr" firstAttribute="top" secondItem="1dD-4I-w1p" secondAttribute="bottom" id="9XW-us-f6P"/>
                 <constraint firstItem="rZm-W3-Lwr" firstAttribute="trailing" secondItem="lKs-as-Ac5" secondAttribute="trailing" id="AfZ-py-tyi"/>
                 <constraint firstItem="tof-tC-XrA" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="14" id="Fk3-3d-1qK"/>
-                <constraint firstItem="65A-1Q-biF" firstAttribute="trailing" secondItem="LKt-g0-yhC" secondAttribute="trailing" id="I25-F3-YNW"/>
+                <constraint firstItem="65A-1Q-biF" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" id="I25-F3-YNW"/>
                 <constraint firstItem="LKt-g0-yhC" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="JjR-qo-B9G"/>
                 <constraint firstAttribute="trailing" secondItem="Vbs-dr-uHK" secondAttribute="trailing" constant="20" id="ThV-Dd-fSL"/>
                 <constraint firstItem="UHR-SS-PKM" firstAttribute="top" secondItem="65A-1Q-biF" secondAttribute="bottom" id="Ttk-iS-pMA"/>
