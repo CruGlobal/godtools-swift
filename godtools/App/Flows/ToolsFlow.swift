@@ -55,11 +55,6 @@ class ToolsFlow: ToolNavigationFlow, Flow {
         )
         
         navigationController.setViewControllers([view], animated: false)
-        
-        if appDiContainer.getSetupParallelLanguageAvailability().setupParallelLanguageIsAvailable {
-            
-            navigate(step: .showSetupParallelLanguage)
-        }
     }
     
     private func configureNavigationBar(shouldAnimateNavigationBarHiddenState: Bool) {
@@ -218,6 +213,8 @@ class ToolsFlow: ToolNavigationFlow, Flow {
             _ = navigationController.popViewController(animated: true)
             configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
             
+            navigate(step: .showSetupParallelLanguage)
+            
             articleFlow = nil
             
         case .lessonFlowCompleted(let state):
@@ -341,18 +338,21 @@ extension ToolsFlow {
     }
     
     private func presentSetupParallelLanguage() {
-        
-        let viewModel = SetupParallelLanguageViewModel(
-            flowDelegate: self,
-            localizationServices: appDiContainer.localizationServices,
-            languageSettingsService: appDiContainer.languageSettingsService,
-            setupParallelLanguageAvailability: appDiContainer.getSetupParallelLanguageAvailability()
-        )
-        let view = SetupParallelLanguageView(viewModel: viewModel)
-        
-        let modalView = TransparentModalView(flowDelegate: self, modalView: view, closeModalFlowStep: .backgroundTappedFromSetupParallelLanguage)
-        
-        navigationController.present(modalView, animated: true, completion: nil)
+                
+        if appDiContainer.getSetupParallelLanguageAvailability().setupParallelLanguageIsAvailable {
+            
+            let viewModel = SetupParallelLanguageViewModel(
+                flowDelegate: self,
+                localizationServices: appDiContainer.localizationServices,
+                languageSettingsService: appDiContainer.languageSettingsService,
+                setupParallelLanguageAvailability: appDiContainer.getSetupParallelLanguageAvailability()
+            )
+            let view = SetupParallelLanguageView(viewModel: viewModel)
+            
+            let modalView = TransparentModalView(flowDelegate: self, modalView: view, closeModalFlowStep: .backgroundTappedFromSetupParallelLanguage)
+            
+            navigationController.present(modalView, animated: true, completion: nil)
+        }
     }
     
     private func presentParallelLanguage() {
