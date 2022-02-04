@@ -92,4 +92,9 @@ class AllToolsView: UIViewController {
             view.layoutIfNeeded()
         }
     }
+    
+    func scrollToTopOfToolsList(animated: Bool) {
+        
+        toolsView.scrollToTopOfTools(animated: animated)
+    }
 }

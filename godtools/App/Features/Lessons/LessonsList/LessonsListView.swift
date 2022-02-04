@@ -81,6 +81,15 @@ class LessonsListView: UIViewController {
     @objc func handleRefreshLessons() {
         viewModel.refreshLessons()
     }
+    
+    func scrollToTopOfLessonsList(animated: Bool) {
+        
+        guard lessonsTableView != nil else {
+            return
+        }
+        
+        lessonsTableView.setContentOffset(.zero, animated: animated)
+    }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
