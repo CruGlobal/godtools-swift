@@ -16,7 +16,8 @@ class LanguageViewModel {
     required init(language: LanguageModel, localizationServices: LocalizationServices) {
                 
         self.language = language
-        
+        let strippedCode: String = language.code.components(separatedBy: "-x-")[0]
+
         let localizedKey: String = "language_name_" + language.code
         let localizedName: String = localizationServices.stringForBundle(bundle: Bundle.main, key: localizedKey)
         
@@ -25,7 +26,7 @@ class LanguageViewModel {
         if !localizedName.isEmpty && localizedName != localizedKey {
             translatedLanguageName = localizedName
         }
-        else if let localeName = Locale.current.localizedString(forIdentifier: language.code), !localeName.isEmpty {
+        else if let localeName = Locale.current.localizedString(forIdentifier: strippedCode), !localeName.isEmpty {
             translatedLanguageName = localeName
         }
         else {
