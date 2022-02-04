@@ -299,12 +299,18 @@ class AppFlow: NSObject, Flow {
             
             case .tryLessons:
                 resetFlowToToolsFlow(animatedDismissal: true, startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView.lessons, didFinishSetNavigationStack: nil)
+                
+                toolsFlow?.navigate(step: .showSetupParallelLanguage)
             
             case .chooseTool:
                 resetFlowToToolsFlow(animatedDismissal: true, startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView.allTools, didFinishSetNavigationStack: nil)
                 
+                toolsFlow?.navigate(step: .showSetupParallelLanguage)
+                
             default:
                 resetFlowToToolsFlow(animatedDismissal: true, startingToolbarItem: nil, didFinishSetNavigationStack: nil)
+                
+                toolsFlow?.navigate(step: .showSetupParallelLanguage)
             }
         
         case .openTutorialTapped:
