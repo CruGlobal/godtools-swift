@@ -748,7 +748,11 @@ extension AppFlow {
 extension AppFlow {
     
     private func presentSetupParallelLanguage() {
-        
+                    
+        guard appDiContainer.getSetupParallelLanguageAvailability().setupParallelLanguageIsAvailable else {
+            return
+        }
+
         let viewModel = SetupParallelLanguageViewModel(
             flowDelegate: self,
             localizationServices: appDiContainer.localizationServices,
