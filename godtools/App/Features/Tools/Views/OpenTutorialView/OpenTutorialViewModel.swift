@@ -44,7 +44,7 @@ class OpenTutorialViewModel: NSObject, OpenTutorialViewModelType {
     
     func openTutorialTapped() {
         openTutorialCalloutCache.disableOpenTutorialCallout()
-        flowDelegate?.navigate(step: .openTutorialTapped)
+        flowDelegate?.navigate(step: .openTutorialTappedFromTools)
     }
     
     func closeTapped() {
