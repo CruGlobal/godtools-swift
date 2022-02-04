@@ -139,7 +139,9 @@ extension OnboardingQuickStartView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        viewModel.quickStartCellTapped(index: indexPath.row)
+        DispatchQueue.main.async { [weak self] in
+            self?.viewModel.quickStartCellTapped(index: indexPath.row)
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -154,3 +156,4 @@ extension OnboardingQuickStartView: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
 }
+

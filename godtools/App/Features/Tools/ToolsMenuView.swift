@@ -96,6 +96,19 @@ class ToolsMenuView: UIViewController {
         viewModel.languageTapped()
     }
     
+    func reset(toolbarItem: ToolsMenuToolbarView.ToolbarItemView, animated: Bool) {
+        
+        guard self.view != nil else {
+            return
+        }
+        
+        lessonsView?.scrollToTopOfLessonsList(animated: false)
+        favoritedToolsView?.scrollToTopOfToolsList(animated: false)
+        allToolsView?.scrollToTopOfToolsList(animated: false)
+        
+        navigateToToolsListForToolbarItem(toolbarItem: toolbarItem, animated: animated)
+    }
+    
     private func didChangeToolbarItem(toolbarItem: ToolsMenuToolbarView.ToolbarItemView) {
         
         let hidesChooseLanguageButton: Bool
@@ -115,6 +128,10 @@ class ToolsMenuView: UIViewController {
     }
     
     private func navigateToToolsListForToolbarItem(toolbarItem: ToolsMenuToolbarView.ToolbarItemView, animated: Bool) {
+        
+        guard toolsListsScrollView != nil else {
+            return
+        }
         
         guard let page = toolbarView.toolbarItemViews.firstIndex(of: toolbarItem) else {
             return

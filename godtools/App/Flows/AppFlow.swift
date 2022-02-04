@@ -9,7 +9,9 @@
 import UIKit
 import MessageUI
 
-class AppFlow: NSObject, Flow {
+class AppFlow: NSObject, ToolNavigationFlow, Flow {
+    
+    private static let defaultStartingToolsMenu: ToolsMenuToolbarView.ToolbarItemView = .favoritedTools
     
     private let window: UIWindow
     private let dataDownloader: InitialDataDownloader
@@ -17,11 +19,12 @@ class AppFlow: NSObject, Flow {
     private let viewsService: ViewsService
     private let deepLinkingService: DeepLinkingServiceType
     
+    private var toolsMenuView: ToolsMenuView?
     private var onboardingFlow: OnboardingFlow?
     private var menuFlow: MenuFlow?
     private var languageSettingsFlow: LanguageSettingsFlow?
-    private var toolsFlow: ToolsFlow?
     private var tutorialFlow: TutorialFlow?
+    private var learnToShareToolFlow: LearnToShareToolFlow?
     private var articleDeepLinkFlow: ArticleDeepLinkFlow?
     private var appLaunchedFromDeepLink: ParsedDeepLinkType?
     private var resignedActiveDate: Date?
@@ -33,6 +36,10 @@ class AppFlow: NSObject, Flow {
     let appDiContainer: AppDiContainer
     let rootController: AppRootController = AppRootController(nibName: nil, bundle: nil)
     let navigationController: UINavigationController
+    
+    var articleFlow: ArticleFlow?
+    var lessonFlow: LessonFlow?
+    var tractFlow: TractFlow?
         
     init(appDiContainer: AppDiContainer, window: UIWindow, appDeepLinkingService: DeepLinkingServiceType) {
         
@@ -49,9 +56,9 @@ class AppFlow: NSObject, Flow {
         rootController.view.frame = UIScreen.main.bounds
         rootController.view.backgroundColor = .clear
         
+        navigationController.delegate = self
         navigationController.view.backgroundColor = .white
         navigationController.setNavigationBarHidden(true, animated: false)
-        navigationController.setViewControllers([], animated: false)
         
         rootController.addChildController(child: navigationController)
         
@@ -66,6 +73,320 @@ class AppFlow: NSObject, Flow {
         removeObservers()
         removeDeepLinkingObservers()
     }
+
+    private func loadInitialData() {
+        
+        dataDownloader.downloadInitialData()
+        
+        _ = followUpsService.postFailedFollowUpsIfNeeded()
+        
+        _ = viewsService.postFailedResourceViewsIfNeeded()
+    }
+    
+    func navigate(step: FlowStep) {
+
+        switch step {
+        
+        case .appLaunchedFromTerminatedState:
+                       
+            if let deepLink = appLaunchedFromDeepLink {
+                
+                appLaunchedFromDeepLink = nil
+                navigate(step: .deepLink(deepLinkType: deepLink))
+            }
+            else if appDiContainer.getOnboardingTutorialAvailability().onboardingTutorialIsAvailable {
+                
+                navigate(step: .showOnboardingTutorial(animated: false))
+            }
+            else {
+                
+                navigateToToolsMenu(toolbarItem: nil, animateToolMenuToolbarItemTransition: false, animatedDismissal: false, didCompleteDismissal: nil)
+            }
+            
+            loadInitialData()
+            
+            appDiContainer.userAuthentication.refreshAuthenticationIfAvailable()
+            
+        case .appLaunchedFromBackgroundState:
+            
+            guard let resignedActiveDate = self.resignedActiveDate else {
+                return
+            }
+            
+            let currentDate: Date = Date()
+            let elapsedTimeInSeconds: TimeInterval = currentDate.timeIntervalSince(resignedActiveDate)
+            let elapsedTimeInMinutes: TimeInterval = elapsedTimeInSeconds / 60
+            
+            if elapsedTimeInMinutes >= 120 {
+
+                let loadingView: UIView = UIView(frame: UIScreen.main.bounds)
+                let loadingImage: UIImageView = UIImageView(frame: UIScreen.main.bounds)
+                loadingImage.contentMode = .scaleAspectFit
+                loadingView.addSubview(loadingImage)
+                loadingImage.image = UIImage(named: "LaunchImage")
+                loadingView.backgroundColor = .white
+                window.addSubview(loadingView)
+                
+                navigateToToolsMenu(toolbarItem: nil, animateToolMenuToolbarItemTransition: false, animatedDismissal: false, didCompleteDismissal: nil)
+                
+                loadInitialData()
+                
+                appDiContainer.userAuthentication.refreshAuthenticationIfAvailable()
+                
+                UIView.animate(withDuration: 0.4, delay: 1.5, options: .curveEaseOut, animations: {
+                    loadingView.alpha = 0
+                }, completion: {(finished: Bool) in
+                    loadingView.removeFromSuperview()
+                })
+            }
+            
+            self.resignedActiveDate = nil
+            
+        case .deepLink(let deepLink):
+            navigateToDeepLink(deepLink: deepLink)
+            
+        case .toolTappedFromAllTools(let resource):
+            navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)
+            
+        case .aboutToolTappedFromAllTools(let resource):
+            navigateToToolDetail(resource: resource)
+                        
+        case .openToolTappedFromToolDetails(let resource):
+            navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)
+            
+        case .lessonTappedFromLessonsList(let resource):
+            navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)
+            
+        case .toolTappedFromFavoritedTools(let resource):
+            navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)
+            
+        case .aboutToolTappedFromFavoritedTools(let resource):
+            navigateToToolDetail(resource: resource)
+            
+        case .unfavoriteToolTappedFromFavoritedTools(let resource, let removeHandler):
+            
+            let handler = CallbackHandler { [weak self] in
+                removeHandler.handle()
+                self?.navigationController.dismiss(animated: true, completion: nil)
+            }
+            
+            let localizationServices: LocalizationServices = appDiContainer.localizationServices
+            let languageSettingsService: LanguageSettingsService = appDiContainer.languageSettingsService
+            let resourcesCache: ResourcesCache = appDiContainer.initialDataDownloader.resourcesCache
+            
+            let toolName: String
+            
+            if let primaryLanguage = languageSettingsService.primaryLanguage.value, let primaryTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageId: primaryLanguage.id) {
+                toolName = primaryTranslation.translatedName
+            }
+            else if let englishTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageCode: "en") {
+                toolName = englishTranslation.translatedName
+            }
+            else {
+                toolName = resource.name
+            }
+            
+            let title: String = localizationServices.stringForMainBundle(key: "remove_from_favorites_title")
+            let message: String = localizationServices.stringForMainBundle(key: "remove_from_favorites_message").replacingOccurrences(of: "%@", with: toolName)
+            let acceptedTitle: String = localizationServices.stringForMainBundle(key: "yes")
+            
+            let viewModel = AlertMessageViewModel(
+                title: title,
+                message: message,
+                cancelTitle: localizationServices.stringForMainBundle(key: "no"),
+                acceptTitle: acceptedTitle,
+                acceptHandler: handler
+            )
+            
+            let view = AlertMessageView(viewModel: viewModel)
+            
+            navigationController.present(view.controller, animated: true, completion: nil)
+            
+        case .articleFlowCompleted(let state):
+            
+            guard articleFlow != nil else {
+                return
+            }
+            
+            _ = navigationController.popViewController(animated: true)
+                        
+            articleFlow = nil
+            
+        case .lessonFlowCompleted(let state):
+            
+            guard lessonFlow != nil else {
+                return
+            }
+            
+            _ = navigationController.popViewController(animated: true)
+                        
+            lessonFlow = nil
+            
+            switch state {
+            
+            case .userClosedLesson(let lesson, let highestPageNumberViewed):
+                
+                let lessonEvaluationRepository: LessonEvaluationRepository = appDiContainer.getLessonsEvaluationRepository()
+                let lessonEvaluated: Bool
+                let numberOfEvaluationAttempts: Int
+                
+                if let cachedLessonEvaluation = lessonEvaluationRepository.getLessonEvaluation(lessonId: lesson.id) {
+                    lessonEvaluated = cachedLessonEvaluation.lessonEvaluated
+                    numberOfEvaluationAttempts = cachedLessonEvaluation.numberOfEvaluationAttempts
+                }
+                else {
+                    lessonEvaluated = false
+                    numberOfEvaluationAttempts = 0
+                }
+                
+                let lessonMarkedAsEvaluated: Bool = lessonEvaluated || numberOfEvaluationAttempts > 0
+                
+                if highestPageNumberViewed > 2 && !lessonMarkedAsEvaluated {
+                    presentLessonEvaluation(lesson: lesson, pageIndexReached: highestPageNumberViewed)
+                }
+            }
+            
+        case .tractFlowCompleted(let state):
+            
+            guard tractFlow != nil else {
+                return
+            }
+            
+            var toolsMenuInNavigationStack: ToolsMenuView?
+            
+            for viewController in navigationController.viewControllers {
+                if let toolsMenu = viewController as? ToolsMenuView {
+                    toolsMenuInNavigationStack = toolsMenu
+                    break
+                }
+            }
+            
+            if let toolsMenuInNavigationStack = toolsMenuInNavigationStack {
+                navigationController.popToViewController(toolsMenuInNavigationStack, animated: true)
+            }
+            else {
+                _ = navigationController.popViewController(animated: true)
+            }
+            
+            tractFlow = nil
+            
+        case .urlLinkTappedFromToolDetail(let url, let exitLink):
+            navigateToURL(url: url, exitLink: exitLink)
+            
+        case .showOnboardingTutorial(let animated):
+            navigateToOnboarding(animated: animated)
+            
+        case .onboardingFlowCompleted(let onboardingFlowCompletedState):
+            
+            instantiateToolsMenuIfNeeded()
+            configureNavigationBarForToolsMenu(shouldAnimateNavigationBarHiddenState: false)
+            
+            dismissOnboarding(animated: true) { [weak self] in
+                
+                switch onboardingFlowCompletedState {
+                
+                case .readArticles:
+                                        
+                    let toolDeepLink = ToolDeepLink(
+                        resourceAbbreviation: "es",
+                        primaryLanguageCodes: ["en"],
+                        parallelLanguageCodes: [],
+                        liveShareStream: nil,
+                        page: nil
+                    )
+                    
+                    self?.navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
+                    
+                case .tryLessons:
+                    self?.navigateToToolsMenu(toolbarItem: .lessons, animateToolMenuToolbarItemTransition: true, animatedDismissal: false, didCompleteDismissal: nil)
+                    
+                case .chooseTool:
+                    self?.navigateToToolsMenu(toolbarItem: .allTools, animateToolMenuToolbarItemTransition: true, animatedDismissal: false, didCompleteDismissal: nil)
+                    
+                default:
+                    self?.navigateToToolsMenu(toolbarItem: nil, animateToolMenuToolbarItemTransition: false, animatedDismissal: false, didCompleteDismissal: nil)
+                }
+            }
+                    
+        case .openTutorialTappedFromTools:
+            navigateToTutorial()
+    
+        case .closeTappedFromTutorial:
+            dismissTutorial()
+            
+        case .startUsingGodToolsTappedFromTutorial:
+            dismissTutorial()
+            
+        case .menuTappedFromTools:
+            navigateToMenu(animated: true)
+            
+        case .doneTappedFromMenu:
+            closeMenu(animated: true)
+            
+        case .languageSettingsTappedFromTools:
+            navigateToLanguageSettings()
+            
+        case .buttonWithUrlTappedFromFirebaseInAppMessage(let url):
+                        
+            let didParseDeepLinkFromUrl: Bool = deepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
+            
+            if !didParseDeepLinkFromUrl {
+                UIApplication.shared.open(url)
+            }
+            
+        case .learnToShareToolTappedFromToolDetails(let resource):
+            navigateToLearnToShareTool(resource: resource)
+            
+        case .continueTappedFromLearnToShareTool(let resource):
+            navigateToTool(resourceId: resource.id, trainingTipsEnabled: true)
+            dismissLearnToShareToolFlow()
+            
+        case .closeTappedFromLearnToShareTool(let resource):
+            navigateToTool(resourceId: resource.id, trainingTipsEnabled: true)
+            dismissLearnToShareToolFlow()
+            
+        case .closeTappedFromLessonEvaluation:
+            dismissLessonEvaluation()
+            
+        case .sendFeedbackTappedFromLessonEvaluation:
+            dismissLessonEvaluation()
+        
+        case .backgroundTappedFromLessonEvaluation:
+            dismissLessonEvaluation()
+            
+        case .showSetupParallelLanguage:
+            presentSetupParallelLanguage()
+        
+        case .languageSelectorTappedFromSetupParallelLanguage:
+            presentParallelLanguage()
+        
+        case .yesTappedFromSetupParallelLanguage:
+            presentParallelLanguage()
+        
+        case .noThanksTappedFromSetupParallelLanguage:
+            dismissSetupParallelLanguage()
+        
+        case .getStartedTappedFromSetupParallelLanguage:
+            dismissSetupParallelLanguage()
+        
+        case .languageSelectedFromParallelLanguageList:
+            dismissParallelLanguage()
+        
+        case .backgroundTappedFromSetupParallelLanguage:
+            dismissSetupParallelLanguage()
+        
+        case .backgroundTappedFromParallelLanguageList:
+            dismissParallelLanguage()
+                        
+        default:
+            break
+        }
+    }
+}
+
+// MARK: - Add / Remove Observers
+
+extension AppFlow {
     
     private func addObservers() {
               
@@ -89,40 +410,6 @@ class AppFlow: NSObject, Flow {
         NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
-    }
-    
-    private func resetFlowToToolsFlow(animatedDismissal: Bool, startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView?, didFinishSetNavigationStack: (() -> Void)?) {
-
-        closeMenu(animated: false)
-        navigationController.dismiss(animated: animatedDismissal, completion: nil)
-        navigationController.setViewControllers([], animated: false)
-        
-        toolsFlow = nil
-        onboardingFlow = nil
-        menuFlow = nil
-        languageSettingsFlow = nil
-        articleDeepLinkFlow = nil
-        tutorialFlow = nil
-        
-        navigate(step: .showTools(animated: false, shouldCreateNewInstance: true, startingToolbarItem: startingToolbarItem))
-        
-        // NOTE: This is here because when we set a new tools flow on the navigation stack, we aren't able to do any further navigation on the stack, such as push until a new render cycle.
-        // So if we reset the flow to ToolsFlow and then want to push something onto the same navigation stack, we have to do it inside of this closure.  Not sure if there is a better way to do this,
-        // it feels a bit messy. ~Levi
-        if let didFinishSetNavigationStack = didFinishSetNavigationStack {
-            DispatchQueue.main.async {
-                didFinishSetNavigationStack()
-            }
-        }
-    }
-    
-    private func loadInitialData() {
-        
-        dataDownloader.downloadInitialData()
-        
-        _ = followUpsService.postFailedFollowUpsIfNeeded()
-        
-        _ = viewsService.postFailedResourceViewsIfNeeded()
     }
     
     private func addDeepLinkingObservers() {
@@ -157,212 +444,351 @@ class AppFlow: NSObject, Flow {
         isObservingDeepLinking = false
         deepLinkingService.deepLinkObserver.removeObserver(self)
     }
+}
+
+// MARK: - Tools Menu
+
+extension AppFlow {
     
-    func navigate(step: FlowStep) {
-
-        switch step {
+    private func configureNavigationBarForToolsMenu(shouldAnimateNavigationBarHiddenState: Bool) {
+                
+        AppDelegate.setWindowBackgroundColorForStatusBarColor(color: ColorPalette.primaryNavBar.color)
         
-        case .appLaunchedFromTerminatedState:
-                       
-            if let deepLink = appLaunchedFromDeepLink {
-                
-                appLaunchedFromDeepLink = nil
-                navigate(step: .deepLink(deepLinkType: deepLink))
-            }
-            else if appDiContainer.getOnboardingTutorialAvailability().onboardingTutorialIsAvailable {
-                
-                navigate(step: .showOnboardingTutorial(animated: false))
-            }
-            else {
-                
-                navigate(step: .showTools(animated: true, shouldCreateNewInstance: true, startingToolbarItem: nil))
-            }
-            
-            loadInitialData()
-            
-            appDiContainer.userAuthentication.refreshAuthenticationIfAvailable()
-            
-        case .appLaunchedFromBackgroundState:
-            
-            if let resignedActiveDate = resignedActiveDate {
-                
-                let currentDate: Date = Date()
-                let elapsedTimeInSeconds: TimeInterval = currentDate.timeIntervalSince(resignedActiveDate)
-                let elapsedTimeInMinutes: TimeInterval = elapsedTimeInSeconds / 60
-                
-                if elapsedTimeInMinutes >= 120 {
-
-                    let loadingView: UIView = UIView(frame: UIScreen.main.bounds)
-                    let loadingImage: UIImageView = UIImageView(frame: UIScreen.main.bounds)
-                    loadingImage.contentMode = .scaleAspectFit
-                    loadingView.addSubview(loadingImage)
-                    loadingImage.image = UIImage(named: "LaunchImage")
-                    loadingView.backgroundColor = .white
-                    window.addSubview(loadingView)
-                    
-                    resetFlowToToolsFlow(animatedDismissal: false, startingToolbarItem: nil, didFinishSetNavigationStack: nil)
-                    loadInitialData()
-                    
-                    appDiContainer.userAuthentication.refreshAuthenticationIfAvailable()
-                    
-                    UIView.animate(withDuration: 0.4, delay: 1.5, options: .curveEaseOut, animations: {
-                        loadingView.alpha = 0
-                    }, completion: {(finished: Bool) in
-                        loadingView.removeFromSuperview()
-                    })
-                }
-            }
-            
-            resignedActiveDate = nil
-            
-        case .deepLink(let deepLink):
-            
-            switch deepLink {
-            
-            case .tool(let toolDeepLink):
-                   
-                // TODO: Do we need to set starting toolbar item to lessons if deeplinking from a lesson? ~Levi
-                
-                resetFlowToToolsFlow(animatedDismissal: false, startingToolbarItem: .favoritedTools) { [weak self] in
-                    
-                    self?.toolsFlow?.navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
-                }
-            
-            case .article(let articleUri):
-                
-                resetFlowToToolsFlow(animatedDismissal: false, startingToolbarItem: nil) { [weak self] in
-                    
-                    guard let weakSelf = self else {
-                        return
-                    }
-                    
-                    let articleDeepLinkFlow = ArticleDeepLinkFlow(
-                        flowDelegate: weakSelf,
-                        appDiContainer: weakSelf.appDiContainer,
-                        sharedNavigationController: weakSelf.navigationController,
-                        aemUri: articleUri
-                    )
-                    
-                    weakSelf.articleDeepLinkFlow = articleDeepLinkFlow
-                }
-                
-            case .lessonsList:
-                
-                resetFlowToToolsFlow(animatedDismissal: false, startingToolbarItem: .lessons, didFinishSetNavigationStack: nil)
-                
-            case .favoritedToolsList:
-                
-                resetFlowToToolsFlow(animatedDismissal: false, startingToolbarItem: .favoritedTools, didFinishSetNavigationStack: nil)
-                
-            case .allToolsList:
-                
-                resetFlowToToolsFlow(animatedDismissal: false, startingToolbarItem: .allTools, didFinishSetNavigationStack: nil)
-            }
+        navigationController.setNavigationBarHidden(false, animated: shouldAnimateNavigationBarHiddenState)
         
-        case .showTools(let animated, let shouldCreateNewInstance, let startingToolbarItem):
-            
-            if shouldCreateNewInstance || toolsFlow == nil {
+        let fontService: FontService = appDiContainer.getFontService()
+        
+        navigationController.navigationBar.setupNavigationBarAppearance(
+            backgroundColor: ColorPalette.primaryNavBar.color,
+            controlColor: .white,
+            titleFont: fontService.getFont(size: 17, weight: .semibold),
+            titleColor: .white,
+            isTranslucent: false
+        )
+    }
+    
+    private func instantiateToolsMenuIfNeeded() {
+        
+        guard toolsMenuView == nil else {
+            return
+        }
+        
+        let toolsMenuViewModel = ToolsMenuViewModel(
+            flowDelegate: self,
+            initialDataDownloader: appDiContainer.initialDataDownloader,
+            languageSettingsService: appDiContainer.languageSettingsService,
+            localizationServices: appDiContainer.localizationServices,
+            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
+            deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
+            favoritingToolMessageCache: appDiContainer.favoritingToolMessageCache,
+            analytics: appDiContainer.analytics,
+            getTutorialIsAvailableUseCase: appDiContainer.getTutorialIsAvailableUseCase(),
+            openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache
+        )
+        
+        let toolsMenuView = ToolsMenuView(
+            viewModel: toolsMenuViewModel,
+            startingToolbarItem: AppFlow.defaultStartingToolsMenu
+        )
+        
+        navigationController.setViewControllers([toolsMenuView], animated: false)
+        
+        navigationController.view.layoutIfNeeded()
+                    
+        self.toolsMenuView = toolsMenuView
+    }
+    
+    private func navigateToToolsMenu(toolbarItem: ToolsMenuToolbarView.ToolbarItemView?, animateToolMenuToolbarItemTransition: Bool, animatedDismissal: Bool, didCompleteDismissal: (() -> Void)? = nil) {
+        
+        instantiateToolsMenuIfNeeded()
+        
+        guard let toolsMenuView = self.toolsMenuView else {
+            return
+        }
+        
+        closeMenu(animated: false)
+        
+        onboardingFlow = nil
+        languageSettingsFlow = nil
+        learnToShareToolFlow = nil
+        articleDeepLinkFlow = nil
+        tutorialFlow = nil
+        lessonFlow = nil
+        tractFlow = nil
+        articleFlow = nil
+        
+        configureNavigationBarForToolsMenu(shouldAnimateNavigationBarHiddenState: false)
+        
+        toolsMenuView.reset(toolbarItem: toolbarItem ?? AppFlow.defaultStartingToolsMenu, animated: animateToolMenuToolbarItemTransition)
+                
+        navigationController.popToRootViewController(animated: false)
+        
+        navigationController.dismissPresented(animated: animatedDismissal, completion: didCompleteDismissal)
+    }
+}
 
-                toolsFlow = ToolsFlow(
-                    flowDelegate: self,
-                    appDiContainer: appDiContainer,
-                    sharedNavigationController: navigationController,
-                    startingToolbarItem: startingToolbarItem
+// MARK: - Onboarding
+
+extension AppFlow {
+    
+    private func navigateToOnboarding(animated: Bool) {
+        
+        guard onboardingFlow == nil else {
+            return
+        }
+        
+        let onboardingFlow = OnboardingFlow(
+            flowDelegate: self,
+            appDiContainer: appDiContainer
+        )
+        
+        navigationController.present(onboardingFlow.navigationController, animated: animated, completion: nil)
+        
+        self.onboardingFlow = onboardingFlow
+    }
+    
+    private func dismissOnboarding(animated: Bool, completion: (() -> Void)? = nil) {
+        
+        guard onboardingFlow != nil else {
+            return
+        }
+        
+        navigationController.dismissPresented(animated: animated, completion: completion)
+        
+        onboardingFlow = nil
+    }
+}
+
+// MARK: - Deep Link
+
+extension AppFlow {
+    
+    private func navigateToDeepLink(deepLink: ParsedDeepLinkType) {
+        
+        switch deepLink {
+        
+        case .tool(let toolDeepLink):
+               
+            // TODO: Do we need to set starting toolbar item to lessons if deeplinking from a lesson? ~Levi
+
+            navigateToToolsMenu(toolbarItem: .favoritedTools, animateToolMenuToolbarItemTransition: false, animatedDismissal: false, didCompleteDismissal: { [weak self] in
+                
+                self?.navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
+            })
+            
+        case .article(let articleUri):
+            
+            navigateToToolsMenu(toolbarItem: .favoritedTools, animateToolMenuToolbarItemTransition: false, animatedDismissal: false, didCompleteDismissal: { [weak self] in
+                
+                guard let weakSelf = self else {
+                    return
+                }
+                
+                let articleDeepLinkFlow = ArticleDeepLinkFlow(
+                    flowDelegate: weakSelf,
+                    appDiContainer: weakSelf.appDiContainer,
+                    sharedNavigationController: weakSelf.navigationController,
+                    aemUri: articleUri
                 )
-
-                if animated, let toolsView = toolsFlow?.navigationController.viewControllers.first?.view {
-                    toolsView.alpha = 0
-                    UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
-                        toolsView.alpha = 1
-                    }, completion: nil)
-                }
-            }
-            
-        case .showOnboardingTutorial(let animated):
-            
-            let onboardingFlow = OnboardingFlow(
-                flowDelegate: self,
-                appDiContainer: appDiContainer
-            )
-            
-            navigationController.present(onboardingFlow.navigationController, animated: animated, completion: nil)
-            
-            self.onboardingFlow = onboardingFlow
-            
-        case .onboardingFlowCompleted(let onboardingFlowCompletedState):
-            
-            
-            switch onboardingFlowCompletedState {
-            
-            case .readArticles:
-                navigate(step: .deepLink(deepLinkType: .tool(toolDeepLink: ToolDeepLink(resourceAbbreviation: "es", primaryLanguageCodes: ["en"], parallelLanguageCodes: [], liveShareStream: nil, page: nil))))
-            
-            case .tryLessons:
-                resetFlowToToolsFlow(animatedDismissal: true, startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView.lessons, didFinishSetNavigationStack: nil)
                 
-                toolsFlow?.navigate(step: .showSetupParallelLanguage)
+                weakSelf.articleDeepLinkFlow = articleDeepLinkFlow
+            })
             
-            case .chooseTool:
-                resetFlowToToolsFlow(animatedDismissal: true, startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView.allTools, didFinishSetNavigationStack: nil)
-                
-                toolsFlow?.navigate(step: .showSetupParallelLanguage)
-                
-            default:
-                resetFlowToToolsFlow(animatedDismissal: true, startingToolbarItem: nil, didFinishSetNavigationStack: nil)
-                
-                toolsFlow?.navigate(step: .showSetupParallelLanguage)
-            }
-        
-        case .openTutorialTapped:
-            let tutorialFlow = TutorialFlow(
-                flowDelegate: self,
-                appDiContainer: appDiContainer,
-                sharedNavigationController: nil
-            )
-            navigationController.present(tutorialFlow.navigationController, animated: true, completion: nil)
-            self.tutorialFlow = tutorialFlow
-    
-        case .closeTappedFromTutorial:
-            dismissTutorial()
+        case .lessonsList:
+            navigateToToolsMenu(toolbarItem: .lessons, animateToolMenuToolbarItemTransition: false, animatedDismissal: false, didCompleteDismissal: nil)
             
-        case .startUsingGodToolsTappedFromTutorial:
-            dismissTutorial()
+        case .favoritedToolsList:
+            navigateToToolsMenu(toolbarItem: .favoritedTools, animateToolMenuToolbarItemTransition: false, animatedDismissal: false, didCompleteDismissal: nil)
             
-        case .showMenu:
-            navigateToMenu(animated: true)
-            
-        case .doneTappedFromMenu:
-            closeMenu(animated: true)
-            
-        case .showLanguageSettings:
-            
-            let languageSettingsFlow = LanguageSettingsFlow(
-                flowDelegate: self,
-                appDiContainer: appDiContainer,
-                sharedNavigationController: navigationController
-            )
-            
-            self.languageSettingsFlow = languageSettingsFlow
-            
-        case .buttonWithUrlTappedFromFirebaseInAppMessage(let url):
-                        
-            let didParseDeepLinkFromUrl: Bool = deepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
-            
-            if !didParseDeepLinkFromUrl {
-                UIApplication.shared.open(url)
-            }
-                        
-        default:
-            break
+        case .allToolsList:
+            navigateToToolsMenu(toolbarItem: .allTools, animateToolMenuToolbarItemTransition: false, animatedDismissal: false, didCompleteDismissal: nil)
         }
     }
+}
+
+// MARK: - Language Settings
+
+extension AppFlow {
+    
+    private func navigateToLanguageSettings() {
         
-    private func dismissTutorial() {
-        closeMenu(animated: true)
-        navigate(step: .showTools(animated: false, shouldCreateNewInstance: false, startingToolbarItem: nil))
-        navigationController.dismiss(animated: true, completion: nil)
-        tutorialFlow = nil
+        let languageSettingsFlow = LanguageSettingsFlow(
+            flowDelegate: self,
+            appDiContainer: appDiContainer,
+            sharedNavigationController: navigationController
+        )
+        
+        self.languageSettingsFlow = languageSettingsFlow
     }
+}
+
+// MARK: - Tutorial
+
+extension AppFlow {
+    
+    private func navigateToTutorial() {
+        
+        let tutorialFlow = TutorialFlow(
+            flowDelegate: self,
+            appDiContainer: appDiContainer,
+            sharedNavigationController: nil
+        )
+        
+        navigationController.present(tutorialFlow.navigationController, animated: true, completion: nil)
+        
+        self.tutorialFlow = tutorialFlow
+    }
+    
+    private func dismissTutorial() {
+        
+        if menuFlow != nil {
+            toolsMenuView?.reset(toolbarItem: .favoritedTools, animated: false)
+            closeMenu(animated: true)
+        }
+        
+        if tutorialFlow != nil {
+            navigationController.dismiss(animated: true, completion: nil)
+            tutorialFlow = nil
+        }
+    }
+}
+
+// MARK: - Tool Detail
+
+extension AppFlow {
+    
+    private func navigateToToolDetail(resource: ResourceModel) {
+        
+        let viewModel = ToolDetailViewModel(
+            flowDelegate: self,
+            resource: resource,
+            dataDownloader: appDiContainer.initialDataDownloader,
+            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
+            languageSettingsService: appDiContainer.languageSettingsService,
+            localizationServices: appDiContainer.localizationServices,
+            translationDownloader: appDiContainer.translationDownloader,
+            analytics: appDiContainer.analytics
+        )
+        let view = ToolDetailView(viewModel: viewModel)
+        
+        navigationController.pushViewController(view, animated: true)
+    }
+}
+
+// MARK: - Learn To Share Tool
+
+extension AppFlow {
+    
+    private func navigateToLearnToShareTool(resource: ResourceModel) {
+        
+        let toolTrainingTipsOnboardingViews: ToolTrainingTipsOnboardingViewsService = appDiContainer.getToolTrainingTipsOnboardingViews()
+                    
+        let toolTrainingTipReachedMaximumViews: Bool = toolTrainingTipsOnboardingViews.getToolTrainingTipReachedMaximumViews(resource: resource)
+        
+        if !toolTrainingTipReachedMaximumViews {
+            
+            toolTrainingTipsOnboardingViews.storeToolTrainingTipViewed(resource: resource)
+            
+            let learnToShareToolFlow = LearnToShareToolFlow(
+                flowDelegate: self,
+                appDiContainer: appDiContainer,
+                resource: resource
+            )
+            
+            navigationController.present(learnToShareToolFlow.navigationController, animated: true, completion: nil)
+            
+            self.learnToShareToolFlow = learnToShareToolFlow
+        }
+        else {
+            
+            navigateToTool(resourceId: resource.id, trainingTipsEnabled: true)
+        }
+    }
+    
+    private func dismissLearnToShareToolFlow() {
+        
+        guard learnToShareToolFlow != nil else {
+            return
+        }
+        
+        navigationController.dismissPresented(animated: true, completion: nil)
+        learnToShareToolFlow = nil
+    }
+}
+
+// MARK: - Lesson Evaluation
+
+extension AppFlow {
+    
+    private func presentLessonEvaluation(lesson: ResourceModel, pageIndexReached: Int) {
+        
+        let viewModel = LessonEvaluationViewModel(
+            flowDelegate: self,
+            lesson: lesson,
+            pageIndexReached: pageIndexReached,
+            lessonEvaluationRepository: appDiContainer.getLessonsEvaluationRepository(),
+            lessonFeedbackAnalytics: appDiContainer.getLessonFeedbackAnalytics(),
+            languageSettings: appDiContainer.languageSettingsService,
+            localization: appDiContainer.localizationServices
+        )
+        let view = LessonEvaluationView(viewModel: viewModel)
+        
+        let modalView = TransparentModalView(flowDelegate: self, modalView: view, closeModalFlowStep: .backgroundTappedFromLessonEvaluation)
+        
+        navigationController.present(modalView, animated: true, completion: nil)
+    }
+    
+    private func dismissLessonEvaluation() {
+        navigationController.dismiss(animated: true, completion: nil)
+    }
+}
+
+// MARK: - Setup Parallel Language
+
+extension AppFlow {
+    
+    private func presentSetupParallelLanguage() {
+        
+        let viewModel = SetupParallelLanguageViewModel(
+            flowDelegate: self,
+            localizationServices: appDiContainer.localizationServices,
+            languageSettingsService: appDiContainer.languageSettingsService,
+            setupParallelLanguageAvailability: appDiContainer.getSetupParallelLanguageAvailability()
+        )
+        let view = SetupParallelLanguageView(viewModel: viewModel)
+        
+        let modalView = TransparentModalView(flowDelegate: self, modalView: view, closeModalFlowStep: .backgroundTappedFromSetupParallelLanguage)
+        
+        navigationController.present(modalView, animated: true, completion: nil)
+    }
+    
+    private func presentParallelLanguage() {
+        
+        let viewModel = ParallelLanguageListViewModel(
+            flowDelegate: self,
+            dataDownloader: appDiContainer.initialDataDownloader,
+            languageSettingsService: appDiContainer.languageSettingsService,
+            localizationServices: appDiContainer.localizationServices
+        )
+        let view = ParallelLanguageListView(viewModel: viewModel)
+        
+        let modalView = TransparentModalView(flowDelegate: self, modalView: view,  closeModalFlowStep: .backgroundTappedFromParallelLanguageList)
+        
+        navigationController.presentedViewController?.present(modalView, animated: true, completion: nil)
+    }
+    
+    private func dismissSetupParallelLanguage() {
+        navigationController.dismiss(animated: true, completion: nil)
+    }
+    
+    private func dismissParallelLanguage() {
+        navigationController.presentedViewController?.dismiss(animated: true, completion: nil)
+    }
+}
+
+// MARK: - Menu
+
+extension AppFlow {
     
     private func navigateToMenu(animated: Bool) {
         
@@ -393,34 +819,53 @@ class AppFlow: NSObject, Flow {
     }
     
     private func closeMenu(animated: Bool) {
-                
-        if let menuFlow = menuFlow {
-                     
-            menuFlow.navigationController.dismiss(animated: animated, completion: nil)
-            
-            let screenWidth: CGFloat = UIScreen.main.bounds.size.width
-            
-            menuFlow.view.transform = CGAffineTransform(translationX: 0, y: 0)
-            navigationController.view.transform = CGAffineTransform(translationX: screenWidth, y: 0)
-            
-            if animated {
-                
-                UIView.animate(withDuration: 0.35, delay: 0, options: .curveEaseOut, animations: { [weak self] in
-                    menuFlow.view.transform = CGAffineTransform(translationX: screenWidth * -1, y: 0)
-                    self?.navigationController.view.transform = CGAffineTransform(translationX: 0, y: 0)
-                }, completion: { [weak self] ( finished: Bool) in
-                    menuFlow.navigationController.removeAsChildController()
-                    self?.menuFlow = nil
-                })
-            }
-            else {
-                
-                menuFlow.view.transform = CGAffineTransform(translationX: screenWidth * -1, y: 0)
-                navigationController.view.transform = CGAffineTransform(translationX: 0, y: 0)
-                menuFlow.navigationController.removeAsChildController()
-                self.menuFlow = nil
-            }
+           
+        guard let menuFlow = self.menuFlow else {
+            return
         }
+        
+        menuFlow.navigationController.dismiss(animated: animated, completion: nil)
+        
+        let screenWidth: CGFloat = UIScreen.main.bounds.size.width
+        
+        menuFlow.view.transform = CGAffineTransform(translationX: 0, y: 0)
+        navigationController.view.transform = CGAffineTransform(translationX: screenWidth, y: 0)
+        
+        if animated {
+            
+            UIView.animate(withDuration: 0.35, delay: 0, options: .curveEaseOut, animations: { [weak self] in
+                menuFlow.view.transform = CGAffineTransform(translationX: screenWidth * -1, y: 0)
+                self?.navigationController.view.transform = CGAffineTransform(translationX: 0, y: 0)
+            }, completion: { [weak self] ( finished: Bool) in
+                menuFlow.navigationController.removeAsChildController()
+                self?.menuFlow = nil
+            })
+        }
+        else {
+            
+            menuFlow.view.transform = CGAffineTransform(translationX: screenWidth * -1, y: 0)
+            navigationController.view.transform = CGAffineTransform(translationX: 0, y: 0)
+            menuFlow.navigationController.removeAsChildController()
+            self.menuFlow = nil
+        }
+    }
+}
+
+// MARK: - NavigationController Delegate
+
+extension AppFlow: UINavigationControllerDelegate {
+    
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        
+        let isToolsMenu: Bool = viewController is ToolsMenuView
+        
+        if isToolsMenu {
+            configureNavigationBarForToolsMenu(shouldAnimateNavigationBarHiddenState: true)
+        }
+    }
+    
+    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+        
     }
 }
 
