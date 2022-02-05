@@ -88,6 +88,12 @@ class ToolsMenuView: UIViewController {
         navigateToToolsListForToolbarItem(toolbarItem: startingToolbarItem, animated: false)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+                
+        toolsListDidAppear()
+    }
+    
     @objc func handleMenu(barButtonItem: UIBarButtonItem) {
         viewModel.menuTapped()
     }
@@ -107,6 +113,25 @@ class ToolsMenuView: UIViewController {
         allToolsView?.scrollToTopOfToolsList(animated: false)
         
         navigateToToolsListForToolbarItem(toolbarItem: toolbarItem, animated: animated)
+    }
+    
+    private func toolsListDidAppear() {
+        
+        guard let toolsList = getMostVisibleToolsList() else {
+            return
+        }
+        
+        switch toolsList {
+        
+        case .lessons:
+            break
+        
+        case .favoritedTools:
+            viewModel.didViewFavoritedToolsList()
+        
+        case .allTools:
+            viewModel.didViewAllToolsList()
+        }
     }
     
     private func didChangeToolbarItem(toolbarItem: ToolsMenuToolbarView.ToolbarItemView) {
@@ -147,6 +172,8 @@ class ToolsMenuView: UIViewController {
         )
         
         didChangeToolbarItem(toolbarItem: toolbarItem)
+        
+        toolsListDidAppear()
     }
     
     private func setChooseLanguageButtonHidden(hidden: Bool) {
@@ -229,6 +256,8 @@ extension ToolsMenuView: UIScrollViewDelegate {
            let mostVisibleItem = getMostVisibleToolsList() {
             
             didChangeToolbarItem(toolbarItem: mostVisibleItem)
+            
+            toolsListDidAppear()
         }
     }
     

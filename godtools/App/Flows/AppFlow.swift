@@ -326,6 +326,12 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         case .languageSettingsTappedFromTools:
             navigateToLanguageSettings()
             
+        case .userViewedFavoritedToolsListFromTools:
+            presentSetupParallelLanguage()
+            
+        case .userViewedAllToolsListFromTools:
+            presentSetupParallelLanguage()
+            
         case .buttonWithUrlTappedFromFirebaseInAppMessage(let url):
                         
             let didParseDeepLinkFromUrl: Bool = deepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
@@ -353,10 +359,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         
         case .backgroundTappedFromLessonEvaluation:
             dismissLessonEvaluation()
-            
-        case .showSetupParallelLanguage:
-            presentSetupParallelLanguage()
-        
+                    
         case .languageSelectorTappedFromSetupParallelLanguage:
             presentParallelLanguage()
         
@@ -748,22 +751,31 @@ extension AppFlow {
 extension AppFlow {
     
     private func presentSetupParallelLanguage() {
-                    
+                            
         guard appDiContainer.getSetupParallelLanguageAvailability().setupParallelLanguageIsAvailable else {
             return
         }
-
-        let viewModel = SetupParallelLanguageViewModel(
-            flowDelegate: self,
-            localizationServices: appDiContainer.localizationServices,
-            languageSettingsService: appDiContainer.languageSettingsService,
-            setupParallelLanguageAvailability: appDiContainer.getSetupParallelLanguageAvailability()
-        )
-        let view = SetupParallelLanguageView(viewModel: viewModel)
-        
-        let modalView = TransparentModalView(flowDelegate: self, modalView: view, closeModalFlowStep: .backgroundTappedFromSetupParallelLanguage)
-        
-        navigationController.present(modalView, animated: true, completion: nil)
+                
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            
+            guard let weakSelf = self, weakSelf.navigationController.presentedViewController == nil else {
+                return
+            }
+            
+            let appDiContainer: AppDiContainer = weakSelf.appDiContainer
+            
+            let viewModel = SetupParallelLanguageViewModel(
+                flowDelegate: weakSelf,
+                localizationServices: appDiContainer.localizationServices,
+                languageSettingsService: appDiContainer.languageSettingsService,
+                setupParallelLanguageAvailability: appDiContainer.getSetupParallelLanguageAvailability()
+            )
+            let view = SetupParallelLanguageView(viewModel: viewModel)
+            
+            let modalView = TransparentModalView(flowDelegate: weakSelf, modalView: view, closeModalFlowStep: .backgroundTappedFromSetupParallelLanguage)
+            
+            weakSelf.navigationController.present(modalView, animated: true, completion: nil)
+        }
     }
     
     private func presentParallelLanguage() {
