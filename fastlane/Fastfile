@@ -58,6 +58,7 @@
         )
 
         create_pull_request(
+            api_token: ENV["GIT_BASIC_AUTHORIZATION_PAT"],
             base: "develop",
             repo: "CruGlobal/godtools-swift",
             title: "Latest OneSky Translations"
