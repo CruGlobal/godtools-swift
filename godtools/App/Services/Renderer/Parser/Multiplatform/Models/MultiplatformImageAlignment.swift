@@ -19,7 +19,7 @@ struct MultiplatformImageAlignment: MobileContentImageAlignmentType {
     let isTop: Bool
     let isBottom: Bool
     
-    init(imageGravity: ImageGravity) {
+    init(imageGravity: Gravity) {
         
         isCenter = imageGravity.isCenter
         isCenterX = imageGravity.isCenterX

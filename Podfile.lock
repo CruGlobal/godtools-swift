@@ -64,7 +64,7 @@ PODS:
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
   - Fuzi (3.1.3)
-  - GodtoolsToolParser (0.4.0)
+  - GodtoolsToolParser (0.5.0)
   - GoogleAnalytics (3.20.0)
   - GoogleAppMeasurement/AdIdSupport (7.11.0):
     - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
@@ -124,7 +124,7 @@ DEPENDENCIES:
   - FirebaseCrashlytics (= 7.11.0)
   - FirebaseInAppMessaging (= 7.11.0-beta)
   - Fuzi (~> 3.1.1)
-  - GodtoolsToolParser (= 0.4.0)
+  - GodtoolsToolParser (= 0.5.0)
   - GoogleConversionTracking (~> 3.4.0)
   - GoogleTagManager (~> 7.2.0)
   - SnowplowTracker (~> 1.3)
@@ -176,7 +176,7 @@ SPEC CHECKSUMS:
   FirebaseInstallations: a58d4f72ec5861840b84df489f2668d970df558a
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   Fuzi: 4c10d6449c0b49a85cd75b13844c559c0fc71220
-  GodtoolsToolParser: a2c45ea430fbdbcfc03555e0348fb4a89da921db
+  GodtoolsToolParser: 6127dd51cb6e80adcde331e179cab8269d1719d3
   GoogleAnalytics: 01e4c5a04544a3608f93e970ce0817836897c5a5
   GoogleAppMeasurement: fd19169c3034975cb934e865e5667bfdce59df7f
   GoogleConversionTracking: ca8c89abda2bd28bb6472b316eeb4ece9264e279
@@ -194,6 +194,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   youtube-ios-player-helper: 0185c57db23c80d63d6ca11251d110abb8a4ca61
 
-PODFILE CHECKSUM: 851203737df0edb8b6f54f3928c43f1279dd6d05
+PODFILE CHECKSUM: 7cac174ded65fce235ef0df86a0373e054b41c9b
 
 COCOAPODS: 1.11.2
