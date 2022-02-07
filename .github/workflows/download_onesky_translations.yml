@@ -11,7 +11,7 @@ on:
 
 jobs:
 
-cancel-previous:
+  cancel-previous:
       name: Cancel Stale In-progress Builds
       runs-on: ubuntu-latest
       steps:
@@ -19,7 +19,7 @@ cancel-previous:
           uses: styfle/cancel-workflow-action@0.9.1
           with:
             access_token: ${{ github.token }}
-
+            
   build:
     runs-on: ubuntu-latest
 
