@@ -16,6 +16,7 @@
   # - one_sky_project_id:
   # - one_sky_public_key:
   # - one_sky_secret_key:
+  # - workflow_branch
   #
   lane :cru_shared_lane_download_and_commit_latest_one_sky_localizations do |options|
 
@@ -50,7 +51,9 @@
 
     begin
 
-        git_branch()
+        workflow_branch = "GT-1371-download-onesky-localizations-workflow";
+
+        sh('git', 'checkout', workflow_branch)
         
         git_add(path: "*/#{one_sky_filename}")
         
