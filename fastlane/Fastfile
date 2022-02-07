@@ -15,7 +15,6 @@
   # - one_sky_project_id:
   # - one_sky_public_key:
   # - one_sky_secret_key:
-  # - git_checkout_branch:
   # - create_pull_request_api_token: 
   # - create_pull_request_base:
   # - create_pull_request_repo:
@@ -28,7 +27,6 @@
     one_sky_project_id = options[:one_sky_project_id] || ENV["ONESKY_PROJECT_ID"]
     one_sky_public_key = options[:one_sky_public_key] || ENV["ONESKY_PUBLIC_KEY"]
     one_sky_secret_key = options[:one_sky_secret_key] || ENV["ONESKY_SECRET_KEY"] || ""
-    git_checkout_branch = options[:git_checkout_branch]
     create_pull_request_api_token = options[:create_pull_request_api_token] || ENV["GIT_BASIC_AUTHORIZATION_PAT"]
     create_pull_request_base = options[:create_pull_request_base]
     create_pull_request_repo = options[:create_pull_request_repo]
@@ -57,8 +55,6 @@
 
     begin
 
-        sh('git', 'checkout', git_checkout_branch)
-        
         git_add(path: "*/#{one_sky_filename}")
         
         git_commit(
