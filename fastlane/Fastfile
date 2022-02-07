@@ -59,7 +59,7 @@
 
         create_pull_request(
             base: "develop",
-            repo: "godtools-swift",
+            repo: "CruGlobal/godtools-swift",
             title: "Latest OneSky Translations"
         )
     rescue
