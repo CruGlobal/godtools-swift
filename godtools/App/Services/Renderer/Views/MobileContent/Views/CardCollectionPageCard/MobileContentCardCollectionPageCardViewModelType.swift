@@ -10,4 +10,5 @@ import Foundation
 
 protocol MobileContentCardCollectionPageCardViewModelType {
     
+    var pageNumber: String { get }
 }

@@ -13,8 +13,11 @@ class MobileContentCardCollectionPageCardViewModel: MobileContentCardCollectionP
     
     private let card: CardCollectionPage.Card
     
+    let pageNumber: String
+    
     required init(card: CardCollectionPage.Card) {
-        
+                
         self.card = card
+        pageNumber = "\(card.position + 1)/\(card.page.cards.count)"
     }
 }
