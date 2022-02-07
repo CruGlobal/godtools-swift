@@ -28,7 +28,7 @@ target 'godtools' do
     pod 'youtube-ios-player-helper', '~> 1.0.3'
     
     # CruGlobal pods
-    pod 'GodtoolsToolParser', '0.4.0'
+    pod 'GodtoolsToolParser', '0.5.0'
     
     target 'godtoolsTests' do
         inherit! :search_paths
