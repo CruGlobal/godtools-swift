@@ -32,7 +32,6 @@ cancel-previous:
         run: bundle install
 
       - name: Download And Commit Latest OneSky Localizations
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         env:
           ONESKY_PUBLIC_KEY: ${{ secrets.ONESKY_PUBLIC_KEY }}
           ONESKY_SECRET_KEY: ${{ secrets.ONESKY_SECRET_KEY }}
