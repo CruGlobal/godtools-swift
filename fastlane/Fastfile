@@ -4,8 +4,7 @@
 #     path: "Fastfile"
 # )
 
-
-# Downloads OneSky localizations by locale to the Xcode project directory and then git adds and commits the localization file.
+  # Downloads OneSky localizations by locale to the Xcode project directory and then git adds and commits the localization file.
   #
   # plugin: https://github.com/thekie/fastlane-plugin-onesky
   #
@@ -16,7 +15,10 @@
   # - one_sky_project_id:
   # - one_sky_public_key:
   # - one_sky_secret_key:
-  # - workflow_branch
+  # - git_checkout_branch:
+  # - create_pull_request_api_token: 
+  # - create_pull_request_base:
+  # - create_pull_request_repo:
   #
   lane :cru_shared_lane_download_and_commit_latest_one_sky_localizations do |options|
 
@@ -26,6 +28,10 @@
     one_sky_project_id = options[:one_sky_project_id] || ENV["ONESKY_PROJECT_ID"]
     one_sky_public_key = options[:one_sky_public_key] || ENV["ONESKY_PUBLIC_KEY"]
     one_sky_secret_key = options[:one_sky_secret_key] || ENV["ONESKY_SECRET_KEY"] || ""
+    git_checkout_branch = options[:git_checkout_branch]
+    create_pull_request_api_token = options[:create_pull_request_api_token] || ENV["GIT_BASIC_AUTHORIZATION_PAT"]
+    create_pull_request_base = options[:create_pull_request_base]
+    create_pull_request_repo = options[:create_pull_request_repo]
     
     one_sky_localizations_array = one_sky_localizations_string.split(",")
 
@@ -51,9 +57,7 @@
 
     begin
 
-        workflow_branch = "GT-1371-download-onesky-localizations-workflow";
-
-        sh('git', 'checkout', workflow_branch)
+        sh('git', 'checkout', git_checkout_branch)
         
         git_add(path: "*/#{one_sky_filename}")
         
@@ -63,9 +67,9 @@
         )
 
         create_pull_request(
-            api_token: ENV["GIT_BASIC_AUTHORIZATION_PAT"],
-            base: "develop",
-            repo: "CruGlobal/godtools-swift",
+            api_token: create_pull_request_api_token,
+            base: create_pull_request_base,
+            repo: create_pull_request_repo,
             title: "Latest OneSky Translations"
         )
     rescue
