@@ -49,6 +49,8 @@
     end
 
     begin
+
+        git_branch()
         
         git_add(path: "*/#{one_sky_filename}")
         
