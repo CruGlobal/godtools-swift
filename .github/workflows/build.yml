@@ -45,13 +45,6 @@ jobs:
       - name: Run Tests
         run: bundle exec fastlane cru_shared_lane_run_tests
 
-      - name: Download And Commit Latest OneSky Localizations
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-        env:
-          ONESKY_PUBLIC_KEY: ${{ secrets.ONESKY_PUBLIC_KEY }}
-          ONESKY_SECRET_KEY: ${{ secrets.ONESKY_SECRET_KEY }}
-        run: bundle exec fastlane cru_shared_lane_download_and_commit_latest_one_sky_localizations
-
       - name: Import App Store Connect API Key
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         env:
