@@ -1,4 +1,4 @@
-"language_onboard" = "80+ јазиците";
+"language_onboard" = "90+ јазиците";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "Мои алатки";
@@ -79,7 +79,7 @@
 // Downloads
 "Download in progress" = "Преземање во тек";
 
-// Navigation
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "претходниот";
 "card_status2" = "Следно";
 

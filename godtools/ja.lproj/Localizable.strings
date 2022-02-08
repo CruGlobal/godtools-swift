@@ -1,3 +1,17 @@
+"parallelLanguage.yesButton.title" = "はい";
+"parallelLanguage.noButton.title" = "いいえ、結構です";
+"parallelLanguage.getStartedButton.title" = "開始する";
+"parallelLanguage.selectLanguageButton.title" = "言語を選択";
+"parellelLanguage.prompt" = "第二言語を設定しますか？";
+"onboardingTutorial.beginButton.title" = "始める";
+"onboardingTutorial.quickStart.2.message" = "キリストの教えを誰かと共有したい";
+"onboardingTutorial.quickStart.2.link" = "ツールを一つお選びください";
+"onboardingTutorial.nextButton.title" = "次";
+"onboardingTutorial.quickstart.title" = "クイックスタートリンク";
+"onboardingTutorial.quickStart.0.message" = "キリスト教について知りたい";
+"onboardingTutorial.quickStart.0.link" = "記事をお読みください";
+"onboardingTutorial.quickStart.1.message" = "キリストの教えについて会話をする方法を知りたい";
+"onboardingTutorial.quickStart.1.link" = "レッスンをお試しください";
 "tool_offline_favorite_message" = "ハートアイコンをタップすると、お気に入りに追加され、オフラインで利用できるようになります。";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -18,6 +32,14 @@
 "share_tool_remote_link_message" = "こんにちは。画面共有を通してGodToolsを一緒に見てみましょう。リンクはこちらです: %@ このメッセージが後から届いた場合、リンクが使用できなくなっている場合があります。その場合は、またの機会に試しましょう。";
 "exit_tract_remote_share_session.message" = "遠隔共有セッションを今すぐ終了しますか？";
 "load_tool_remote_session.message" = "「画面共有」を開始しています…";
+"onboardingTutorial.0.title" = "どのような会話にも対応できます";
+"onboardingTutorial.0.videoLink.title" = "動画を視聴";
+"onboardingTutorial.1.title" = "誰とでも神について話しましょう";
+"onboardingTutorial.1.message" = "GodToolsは神について意義ある会話をするのに役立ちます。";
+"onboardingTutorial.2.title" = "大切な瞬間のために準備しておきましょう";
+"onboardingTutorial.2.message" = "信仰についての会話をあなたの自然な生活の一部にする方法を学びましょう。";
+"onboardingTutorial.3.title" = "イエスとの出会い助けましょう";
+"onboardingTutorial.3.message" = "GodToolsはキリストの教えを分かりやすく身近な方法で伝えるためのガイドです。";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "トレーニング";
@@ -49,7 +71,7 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "記事";
-"language_onboard" = "80 種類以上の言語";
+"language_onboard" = "90 種類以上の言語";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "利用可能なツールをすべてダウンロードしました。";
@@ -62,15 +84,20 @@
 
 "unavailable" = "利用不可";
 
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "スキップ";
+
 // Onboarding
 "add_new_tools" = "新しいツールを追加";
 "set_your_languages" = "言語を設定";
 "okay" = "OK";
 // Menu
 "menu_general" = "一般";
+"menu_account" = "アカウント";
 "menu_share" = "シェア";
 "menu_legal" = "法定事項";
 "language_settings" = "言語設定";
+"menu.tutorial" = "チュートリアル";
 // Login
 "login" = "ログイン";
 "logout" = "ログアウト";
@@ -149,6 +176,8 @@
 "error_can_not_send_email" = "お使いの端末にメールが設定されていません。";
 "required_field_missing" = "「%@」は必須記入欄です。";
 
+"onboardingTutorial.getStartedButton.title" = "開始";
+
 // About
 "general_about_1" = "GodToolsは、簡単で明確な方法で信仰をシェアすることができます。";
 "general_about_2" = "これらのツールがあれば、これまで信仰をシェアシたことがない人でも、言語が異なる人でも、イエス・キリストを通じて神との関係をどのように始めることができるかを自信をもって他者に伝えることができるようになります。";
@@ -158,16 +187,20 @@
 "general_about_6" = "質問、提案、リクエストは、support@godtoolsapp.comまでご連絡ください。";
 "general_about_7" = "これらのツールのオンライン版は、knowgod.comでも紹介しています。ご自分のサイトに埋め込んでお使いください。";
 "general_about_8" = "詳しくは、godtoolsapp.comをご覧ください。";
+"tutorial.continueButton.title.continue" = "続行";
 "general_about_9" = "率先して信仰をシェアするために、神が心を変える存在であることを思い出してください。理解するために耳を傾け、一人一人を愛してください。";
 "general_about_10" = "「あなたがたの会話が、良識に富み、善意にあふれるよう心がけなさい。そうすれば、相手の一人一人に適切な答えができます。 」コロサイ人への手紙4:6";
 
 // Downloads
 "Download in progress" = "ダウンロードが進行中です";
 
-// Navigation
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "前";
 "card_status2" = "次";
 
 // Language Name Strings
 "language_name_fa" = "ペルシア語（ファールシー語）";
 
+"onboardingWelcome.beginButton" = "始める";
+
+"onboardingTutorial.continueButton.title" = "続行";

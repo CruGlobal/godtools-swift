@@ -40,7 +40,7 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "લે્ખો";
-"language_onboard" = "૮૦ થી વધારે ભાષાઓ";
+"language_onboard" = "90 થી વધુ ભાષાઓ";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "પ્રાપ્ય બધાં જ સાધનો/ટુલ્સ તમે ડાઉનલોડ કરી લીધાં છે.";
@@ -134,36 +134,64 @@ http://godtoolsapp.com";
 "error_can_not_send_email" = "તમારા સાધન સાથે કોઈ ઈ-મેલ અંકિત નથી.";
 "required_field_missing" = "%@ આ ખાનું  ફરજીયાત છે.";
 
+"onboardingTutorial.getStartedButton.title" = "શરૂ કરો";
+
 // About
 "general_about_1" = "તમારો વિશ્વાસ સરળ અને સ્પષ્ટ રીતે વહેંચવા માટે 'ગોડ ટુલ્સ' તમને મદદરૂપ બને છે.";
+// Tutorial
+"tutorial.tutorialItem.0.title" = "જુઓ";
 "general_about_2" = "આ સાધનો/ટુલ્સની મદદથી અન્યોને તમે ખાતરીપૂર્વક સમજાવી શકશો કે કોઈપણ વ્યક્તિ ઈશ્વરની સાથે ઈસુ ખ્રિસ્ત દ્વારા એક નવા સબંધની શરૂઆત કેવી રીતે કરી શકે, જો તમે પહેલા કદીપણ તમારો વિશ્વાસ અન્ય સાથે વહેંચ્યો ના હોવા છતાં અથવા તેઓ બીજી કોઈ ભાષા બોલતા હોય તો પણ તમે આ કરી શકો છો.";
 "general_about_3" = "વિવિધ સાધનો/ટુલ્સની પસંદગી તમારી અગ્રતા અને શ્રોતાને ધ્યાનમાં રાખી કરો. બધાં સાધનો/ટુલ્સ બધી ભાષામાં પ્રાપ્ય નથી.";
 "general_about_4" = "અન્ય સામગ્રી માટેની લીંક દરેક સાધન/ટુલના અંતમાં આપેલ છે.";
+"tutorial.tutorialItem.1.message" = "તમારા કેટલાક Tools થી પરિચિત થાઓ. \"મને શેર કરવાનું શીખવો\" આ ટૂલ પ્રારંભ કરવા માટે સારું સાધન છે. ટૂલ વિશે વધુ જાણવા માટે અબાઉટ  બટન દબાવો.";
 "general_about_5" = "દરેક નવી ભાષા અને/અથવા સાધન/ટુલ ડાઉનલોડ કરવા માટે ઈન્ટરનેટનું જોડાણ જરૂરી છે. એકવાર ડાઉનલોડ કર્યા બાદ તેઓ ઈન્ટરનેટ વગર પણ વાપરી શકાશે.";
+"tutorial.tutorialItem.2.title" = "પ્રયત્ન કરો";
 "general_about_6" = "સવાલો? સૂચનો? વિનંતીઓ? અહીં અમારો સંપર્ક કરો support@godtoolsapp.com";
+"tutorial.tutorialItem.2.message" = "દરેક પ્રથમ શિખાઉ વ્યક્તિ તરીકે શરૂ કરે છે. વાતચીતમાં ટૂલનો ઉપયોગ કરો અને જુઓ કે તમે શું શીખી શકો છો.";
 "general_about_7" = "આ સાધનો/ટુલ્સનું ઓનલાઈન વર્ઝન અહિયાં મળી શકે. knowgod.com. તમારી સાઈટ પર તેને જોડી દો.";
+"tutorial.tutorialItem.3.title" = "આ ટ્યુટોરીયલ ફરીથી મેનૂમાં જોવા માટે ઉપલબ્ધ છે";
 "general_about_8" = "વધુ માહિતી માટે જાઓ godtoolsapp.com પર";
+"tutorial.continueButton.title.continue" = "ચાલુ રાખો";
 "general_about_9" = "તમે અન્ય સાથે તમારો વિશ્વાસ વહેંચવાની પહેલ કરો ત્યારે યાદ રાખો કે હૃદય પરિવર્તન તો ઈશ્વર જ કરી શકે. દરેક વ્યક્તિને સમજવા પહેલા પ્રેમથી તેનું સાંભળો.";
+"tutorial.continueButton.title.startUsingGodTools" = "GodTools નો ઉપયોગ શરૂ કરો";
+
 "general_about_10" = "તમારું બોલવું હંમેશાં કૃપાયુક્ત સલૂણું હોય કે, જેથી દરેકને યોગ્ય ઉત્તર આપવો એ તમે જાણો. કલોસીઓને પત્ર ૪:૬";
 
+// OpenTutorial
+"openTutorial.showTutorialLabel.text" = "મને એક ટ્યુટોરિયલ બતાવો";
 // Downloads
 "Download in progress" = "ડાઉનલોડ ચાલુ છે";
 
-// Navigation
+"openTutorial.openTutorialButton.title" = "ટ્યુટોરિયલ ખોલો";
+
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "અગાઉના";
+// Account
+"account.navTitle" = "મારી પ્રોફાઈલ";
 "card_status2" = "આગળ";
+
+"account.activity.title" = "પ્રવૃત્તિ";
 
 // Language Name Strings
 "language_name_fa" = "પર્સિયન (ફારસી)";
 
+// Account Activity
+"accountActivity.globalAnalytics.header.title" = "વૈશ્વિક પ્રવૃત્તિ";
 // OnboardingWelcome
 "onboardingWelcome.titleLabel.welcome" = "સ્વાગત છે";
+"accountActivity.globalAnalytics.users.title" = "અનન્ય વપરાશકર્તાઓ";
 "onboardingWelcome.titleLabel.tagline" = "તમને તમારો વિશ્વાસ વહેંચવામાં મદદ કરશે";
+"accountActivity.globalAnalytics.gospelPresentation.title" = "સુવાર્તા પ્રસ્તુતિઓ";
 "onboardingWelcome.beginButton" = "શરૂઆત";
 
+"accountActivity.globalAnalytics.launches.title" = "સત્રો";
 // OnboardingTutorial
 "onboardingTutorial.aboutAppItem.0.title" = "અન્ય લોકો સાથે શેર કરો";
+"accountActivity.globalAnalytics.countries.title" = "દેશો";
+
 "onboardingTutorial.aboutAppItem.0.message" = "GodTools તમારા વિશ્વાસ વાર્તાલાપને માર્ગદર્શન આપવા માટે બનાવવામાં આવ્યું છે";
+// Alerts
+"alert.action.ok" = "બરાબર";
 "onboardingTutorial.aboutAppItem.1.title" = "તમારા ટુલ્સ પસંદ કરો";
 "onboardingTutorial.aboutAppItem.1.message" = "GodTools આધ્યાત્મિક વાતચીત પહેલાં, દરમ્યાન અને પછી તમને મદદ કરે છે";
 "onboardingTutorial.aboutAppItem.2.title" = "હંમેશા તૈયાર";
@@ -171,35 +199,7 @@ http://godtoolsapp.com";
 "onboardingTutorial.appUsageItem.0.message" = "કોઈપણ વાતચીત માટે તૈયાર થાવ";
 "onboardingTutorial.appUsageItem.1.message" = "સુવાર્તા સમજાવતાં કોઈની સાથે વ્યવહાર કરો";
 "onboardingTutorial.appUsageItem.2.message" = "એક સાથે બે ભાષાઓ જુઓ";
-"onboardingTutorial.appUsageItem.3.message" = "80 થી વધુ ભાષાઓમાંથી પસંદ કરો";
+"onboardingTutorial.appUsageItem.3.message" = "90 થી વધુ ભાષાઓમાંથી પસંદ કરો";
 "onboardingTutorial.appUsageItem.4.message" = "કોઈને ખ્રિસ્તી તરીકે પ્રારંભ કરવામાં સહાય કરો";
 "onboardingTutorial.continueButton.title" = "ચાલુ રાખો";
 "onboardingTutorial.showMoreButton.title" = "મને વધુ બતાવો";
-"onboardingTutorial.getStartedButton.title" = "શરૂ કરો";
-
-// Tutorial
-"tutorial.tutorialItem.0.title" = "જુઓ";
-"tutorial.tutorialItem.1.message" = "તમારા કેટલાક Tools થી પરિચિત થાઓ. \"મને શેર કરવાનું શીખવો\" આ ટૂલ પ્રારંભ કરવા માટે સારું સાધન છે. ટૂલ વિશે વધુ જાણવા માટે અબાઉટ  બટન દબાવો.";
-"tutorial.tutorialItem.2.title" = "પ્રયત્ન કરો";
-"tutorial.tutorialItem.2.message" = "દરેક પ્રથમ શિખાઉ વ્યક્તિ તરીકે શરૂ કરે છે. વાતચીતમાં ટૂલનો ઉપયોગ કરો અને જુઓ કે તમે શું શીખી શકો છો.";
-"tutorial.tutorialItem.3.title" = "આ ટ્યુટોરીયલ ફરીથી મેનૂમાં જોવા માટે ઉપલબ્ધ છે";
-"tutorial.continueButton.title.continue" = "ચાલુ રાખો";
-"tutorial.continueButton.title.startUsingGodTools" = "GodTools નો ઉપયોગ શરૂ કરો";
-
-// OpenTutorial
-"openTutorial.showTutorialLabel.text" = "મને એક ટ્યુટોરિયલ બતાવો";
-"openTutorial.openTutorialButton.title" = "ટ્યુટોરિયલ ખોલો";
-
-// Account
-"account.navTitle" = "મારી પ્રોફાઈલ";
-"account.activity.title" = "પ્રવૃત્તિ";
-
-// Account Activity
-"accountActivity.globalAnalytics.header.title" = "વૈશ્વિક પ્રવૃત્તિ";
-"accountActivity.globalAnalytics.users.title" = "અનન્ય વપરાશકર્તાઓ";
-"accountActivity.globalAnalytics.gospelPresentation.title" = "સુવાર્તા પ્રસ્તુતિઓ";
-"accountActivity.globalAnalytics.launches.title" = "સત્રો";
-"accountActivity.globalAnalytics.countries.title" = "દેશો";
-
-// Alerts
-"alert.action.ok" = "બરાબર";

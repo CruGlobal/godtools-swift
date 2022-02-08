@@ -1,3 +1,17 @@
+"parallelLanguage.yesButton.title" = "Tak";
+"parallelLanguage.noButton.title" = "Nie, dziękuję";
+"parallelLanguage.getStartedButton.title" = "Rozpocznij";
+"parallelLanguage.selectLanguageButton.title" = "Wybierz język";
+"parellelLanguage.prompt" = "Czy chcesz ustawić drugi język?";
+"onboardingTutorial.beginButton.title" = "Zacznij";
+"onboardingTutorial.quickStart.2.message" = "Chcę podzielić się z kimś ewangelią";
+"onboardingTutorial.quickStart.2.link" = "Wybierz jedno z naszych narzędzi";
+"onboardingTutorial.nextButton.title" = "Następny";
+"onboardingTutorial.quickstart.title" = "Linki do szybkiego rozpoczęcia";
+"onboardingTutorial.quickStart.0.message" = "Chcę dowiedzieć się więcej o Chrześcijaństwie";
+"onboardingTutorial.quickStart.0.link" = "Przeczytaj nasze artykuły";
+"onboardingTutorial.quickStart.1.message" = "Chcę dowiedzieć się więcej o przeprowadzaniu rozmów o ewangelii";
+"onboardingTutorial.quickStart.1.link" = "Spróbuj naszych lekcji";
 "tool_offline_favorite_message" = "Stukając w ikonę serca, dodasz narzędzie do ulubionych i sprawisz, że będzie dostępne offline.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -18,6 +32,14 @@
 "share_tool_remote_link_message" = "Witaj, obserwuj mnie w GodTools za pośrednictwem udostępniania ekranu. Oto link: %@ Jeżeli otrzymasz tę wiadomość po czasie, link może nie działać. W takim przypadku spróbujemy innym razem.";
 "exit_tract_remote_share_session.message" = "Opuścić zdalną sesję udostępniania?";
 "load_tool_remote_session.message" = "Rozpoczynanie udostępniania ekranu...";
+"onboardingTutorial.0.title" = "Gotowa na każdą rozmowę";
+"onboardingTutorial.0.videoLink.title" = "Obejrzyj film";
+"onboardingTutorial.1.title" = "Porozmawiaj o Bogu z dowolną osobą";
+"onboardingTutorial.1.message" = "GodTools pomoże Ci w przeprowadzeniu pełnej treści rozmowy o Bogu.";
+"onboardingTutorial.2.title" = "Przygotuj się na chwile, które mają znaczenie";
+"onboardingTutorial.2.message" = "Dowiedz się, w jaki sposób rozmowy o wierze uczynić częścią życia.";
+"onboardingTutorial.3.title" = "Pomóż innym odnaleźć Jezusa";
+"onboardingTutorial.3.message" = "GodTools jest twoim przewodnikiem przy przekazywaniu ewangelii w zrozumiały i adekwatny do sytuacji sposób.";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Szkolenie";
@@ -49,7 +71,7 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Artykuły";
-"language_onboard" = "80+ języków";
+"language_onboard" = "90+ języków";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Pobrałeś(aś) już wszystkie dostępne materiały.";
@@ -61,6 +83,9 @@
 "find_tools" = "Wszystkie narzędzia";
 
 "unavailable" = "Niedostępne";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "Pomiń";
 
 // Onboarding
 "add_new_tools" = "Dodaj Nowe Narzędzia";
@@ -150,6 +175,8 @@ Możesz pobrać tę aplikację z https://godtoolsapp.com";
 "error_can_not_send_email" = "Na Twoim urządzeniu nie ma skonfigurowanego adresu e-mail.";
 "required_field_missing" = "\"%@\" jest polem wymaganym.";
 
+"onboardingTutorial.getStartedButton.title" = "Rozpocznij";
+
 // About
 "general_about_1" = "GodToold pomaga dzielić się wiarą w prosty i przejrzysty sposób.";
 "general_about_2" = "Narzędzia te pomogą Ci  wytłumaczyć komuś, jak można zbudować własną relację z Bogiem poprzez Jezusa Chrystusa, nawet jeśli ta osoba nigdy wcześniej z nikim nie dzieliła się  własną wiarą lub mówi innym językiem.";
@@ -159,6 +186,7 @@ Możesz pobrać tę aplikację z https://godtoolsapp.com";
 "general_about_6" = "Pytania? Propozycje? Wnioski? Skontaktuj się z nami pod support@godtoolsapp.com";
 "general_about_7" = "Wersja online tych narzędzi dostępna jest pod adresem knowgod.com. Umieść je na własnej stronie!";
 "general_about_8" = "Więcej informacji znajdziesz na stronie godtoolsapp.com.";
+"tutorial.continueButton.title.continue" = "kontynuować";
 "general_about_9" = "Wraz z tym jak podejmujesz inicjatywę dzielenia się własną wiarą, pamiętaj, że Bóg jest siłą zdolna odmieniać serca. Wyrażaj miłość do każdego człowieka wysłuchując go ze zrozumieniem.";
 "general_about_10" = "\"Mowa wasza, zawsze miła, niech będzie zaprawiona solą, tak byście wiedzieli, jak należy każdemu odpowiadać.\"
 List do Kolosan 4, 6";
@@ -166,10 +194,11 @@ List do Kolosan 4, 6";
 // Downloads
 "Download in progress" = "Pobieranie w toku";
 
-// Navigation
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "Poprz.";
 "card_status2" = "Następny";
 
 // Language Name Strings
 "language_name_fa" = "Perski (Farsi)";
 
+"onboardingTutorial.continueButton.title" = "kontynuować";

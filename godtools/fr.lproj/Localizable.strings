@@ -1,3 +1,17 @@
+"parallelLanguage.yesButton.title" = "Oui";
+"parallelLanguage.noButton.title" = "Non, merci";
+"parallelLanguage.getStartedButton.title" = "Commencer";
+"parallelLanguage.selectLanguageButton.title" = "Sélectionner une langue";
+"parellelLanguage.prompt" = "Souhaitez-vous définir une deuxième langue ?";
+"onboardingTutorial.beginButton.title" = "Commencez";
+"onboardingTutorial.quickStart.2.message" = "Je souhaite partager l'Évangile avec quelqu'un";
+"onboardingTutorial.quickStart.2.link" = "Choisissez l'un de nos outils";
+"onboardingTutorial.nextButton.title" = "Suivant";
+"onboardingTutorial.quickstart.title" = "Liens de démarrage rapide";
+"onboardingTutorial.quickStart.0.message" = "Je souhaite explorer le Christianisme";
+"onboardingTutorial.quickStart.0.link" = "Lisez nos articles";
+"onboardingTutorial.quickStart.1.message" = "Je souhaite découvrir comment parler de l'Évangile";
+"onboardingTutorial.quickStart.1.link" = "Essayez nos leçons";
 "tool_offline_favorite_message" = "Rendez un outil disponible hors connexion en touchant l'icône cœur. Cette action permet de l'ajouter à vos favoris.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -18,6 +32,14 @@
 "share_tool_remote_link_message" = "Bonjour, suivez-moi sur GodTools via le partage d'écran. Voici le lien : %@ Si vous recevez ce message avec du retard, le lien pourrait ne plus fonctionner. Nous réessaierons à une autre occasion.";
 "exit_tract_remote_share_session.message" = "Quitter la session de partage à distance maintenant ?";
 "load_tool_remote_session.message" = "Lancement du partage d'écran...";
+"onboardingTutorial.0.title" = "Prête pour toutes les conversations";
+"onboardingTutorial.0.videoLink.title" = "Regarder la vidéo";
+"onboardingTutorial.1.title" = "Parlez de Dieu avec n'importe qui";
+"onboardingTutorial.1.message" = "GodTools vous aide à avoir des conversations profondes sur Dieu.";
+"onboardingTutorial.2.title" = "Préparez-vous pour les instants qui comptent";
+"onboardingTutorial.2.message" = "Apprenez comment intégrer naturellement dans votre vie les conversations sur la foi.";
+"onboardingTutorial.3.title" = "Aidez quelqu'un à découvrir Jésus";
+"onboardingTutorial.3.message" = "GodTools est votre guide pour communiquer l'Évangile de manière claire et pertinente.";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Formation";
@@ -57,7 +79,7 @@
 
 /* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "articles.loadingView.downloadingArticles" = "Téléchargement des articles...";
-"language_onboard" = "Plus de 80 langues";
+"language_onboard" = "Plus de 90 langues";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Vous avez téléchargé tous les outils disponibles.";
@@ -166,37 +188,67 @@ L'application est téléchargeable depuis https://godtoolsapp.com";
 "error_can_not_send_email" = "Il n'y a aucun e-mail configuré sur cet appareil.";
 "required_field_missing" = "\"%@\" est un champ obligatoire.";
 
+"onboardingTutorial.getStartedButton.title" = "Commencer";
+
 // About
 "general_about_1" = "GodTools vous aide à partager votre foi dans une façon facile et clair.";
+// Tutorial
+"tutorial.tutorialItem.0.title" = "Regarder";
 "general_about_2" = "Cs outils vous aident à expliquer en toute confiance à quelqu'un comment il est possible de démarrer une relation avec Dieu par l'intermédiaire de Jésus-Christ, même si vous n'avez jamais partagé votre foi auparavant ou si la personne parle une autre langue.";
+"tutorial.tutorialItem.0.message" = "Découvrez ce que GodTools peut vous offrir grâce à notre vidéo de démo";
 "general_about_3" = "Choisissez parmi de nombreux outils basés sur vos préférences et votre public. Tous les outils ne sont pas disponibles dans toutes les langues.";
+"tutorial.tutorialItem.1.title" = "Préparez-vous";
 "general_about_4" = "Des liens vers d'autres ressources sont inclus en bas de chaque outil.";
+"tutorial.tutorialItem.1.message" = "Familiarisez-vous avez certains de vos outils. L'outil « M'apprendre à partager » est parfait pour débuter.";
 "general_about_5" = "Une connexion en ligne est nécessaire pour télécharger chaque nouvel outil et/ou langue. Une fois téléchargés, ils peuvent s'utiliser hors-ligne.";
+"tutorial.tutorialItem.2.title" = "Essayer";
 "general_about_6" = "Des questions ? Des suggestions ? Des demandes ? Contactez-nous sur support@godtoolsapp.com";
+"tutorial.tutorialItem.2.message" = "Tout le monde commence en tant que débutant. Essayez d'utiliser un outil dans une conversation et découvrez ce qu'il peut vous apprendre.";
 "general_about_7" = "Une version en ligne de ces outils se trouve sur knowgod.com. Intégrez-le à votre propre site !";
+"tutorial.tutorialItem.3.title" = "Ce tutoriel peut être consulté à nouveau depuis le menu";
 "general_about_8" = "Visitez godtoolsapp.com pour plus d'information";
+"tutorial.continueButton.title.continue" = "Continuer";
 "general_about_9" = "Lorsque vous prenez l'initiative de partager votre foi, rappelez-vous que Dieu est celui qui change le cœur. Aimez chacun bien en écoutant pour comprendre.";
+"tutorial.continueButton.title.startUsingGodTools" = "Commencer à utiliser GodTools";
+
 "general_about_10" = "« Que votre parole soit toujours accompagnée de grâce, assaisonnée de sel, afin que vous sachiez comment il faut répondre à chacun. »
 Colossiens 4:6";
 
+// OpenTutorial
+"openTutorial.showTutorialLabel.text" = "Me montrer un tutoriel";
 // Downloads
 "Download in progress" = "Téléchargement en cours";
 
-// Navigation
+"openTutorial.openTutorialButton.title" = "Ouvrir le tutoriel";
+
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "Préc";
+// Account
+"account.navTitle" = "Mon profil";
 "card_status2" = "Suivant";
+
+"account.activity.title" = "Activité";
 
 // Language Name Strings
 "language_name_fa" = "Perse (Farsi)";
 
+// Account Activity
+"accountActivity.globalAnalytics.header.title" = "Activité globale";
 // OnboardingWelcome
 "onboardingWelcome.titleLabel.welcome" = "Bienvenue";
+"accountActivity.globalAnalytics.users.title" = "Utilisateurs\nuniques";
 "onboardingWelcome.titleLabel.tagline" = "Vous aider à partager votre foi";
-"onboardingWelcome.beginButton" = "Commencer";
+"accountActivity.globalAnalytics.gospelPresentation.title" = "Présentations\nde l'Évangile";
+"onboardingWelcome.beginButton" = "Commencez";
 
+"accountActivity.globalAnalytics.launches.title" = "Sessions";
 // OnboardingTutorial
 "onboardingTutorial.aboutAppItem.0.title" = "Partager avec d'autres";
+"accountActivity.globalAnalytics.countries.title" = "Pays";
+
 "onboardingTutorial.aboutAppItem.0.message" = "GodTools est conçu pour orienter vos conversations sur la foi";
+// Alerts
+"alert.action.ok" = "OK";
 "onboardingTutorial.aboutAppItem.1.title" = "Choisissez vos outils";
 "onboardingTutorial.aboutAppItem.1.message" = "GodTools vous aide avant, pendant et après une conversation spirituelle";
 "onboardingTutorial.aboutAppItem.2.title" = "Toujours prêt";
@@ -204,37 +256,7 @@ Colossiens 4:6";
 "onboardingTutorial.appUsageItem.0.message" = "Préparez-vous à n'importe quelle conversation";
 "onboardingTutorial.appUsageItem.1.message" = "Accompagnez quelqu'un pendant sa découverte de l'Évangile";
 "onboardingTutorial.appUsageItem.2.message" = "Afficher deux langues côte à côte";
-"onboardingTutorial.appUsageItem.3.message" = "Choisissez parmi plus de 80 langues";
+"onboardingTutorial.appUsageItem.3.message" = "Choisissez parmi plus de 90 langues";
 "onboardingTutorial.appUsageItem.4.message" = "Aidez quelqu'un à faire ses premiers pas en tant que Chrétien";
 "onboardingTutorial.continueButton.title" = "Continuer";
 "onboardingTutorial.showMoreButton.title" = "Me montrer plus";
-"onboardingTutorial.getStartedButton.title" = "Commencer";
-
-// Tutorial
-"tutorial.tutorialItem.0.title" = "Regarder";
-"tutorial.tutorialItem.0.message" = "Découvrez ce que GodTools peut vous offrir grâce à notre vidéo de démo";
-"tutorial.tutorialItem.1.title" = "Préparez-vous";
-"tutorial.tutorialItem.1.message" = "Familiarisez-vous avez certains de vos outils. L'outil « M'apprendre à partager » est parfait pour débuter.";
-"tutorial.tutorialItem.2.title" = "Essayer";
-"tutorial.tutorialItem.2.message" = "Tout le monde commence en tant que débutant. Essayez d'utiliser un outil dans une conversation et découvrez ce qu'il peut vous apprendre.";
-"tutorial.tutorialItem.3.title" = "Ce tutoriel peut être consulté à nouveau depuis le menu";
-"tutorial.continueButton.title.continue" = "Continuer";
-"tutorial.continueButton.title.startUsingGodTools" = "Commencer à utiliser GodTools";
-
-// OpenTutorial
-"openTutorial.showTutorialLabel.text" = "Me montrer un tutoriel";
-"openTutorial.openTutorialButton.title" = "Ouvrir le tutoriel";
-
-// Account
-"account.navTitle" = "Mon profil";
-"account.activity.title" = "Activité";
-
-// Account Activity
-"accountActivity.globalAnalytics.header.title" = "Activité globale";
-"accountActivity.globalAnalytics.users.title" = "Utilisateurs\nuniques";
-"accountActivity.globalAnalytics.gospelPresentation.title" = "Présentations\nde l'Évangile";
-"accountActivity.globalAnalytics.launches.title" = "Sessions";
-"accountActivity.globalAnalytics.countries.title" = "Pays";
-
-// Alerts
-"alert.action.ok" = "OK";

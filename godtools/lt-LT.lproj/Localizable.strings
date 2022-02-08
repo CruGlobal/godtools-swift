@@ -1,3 +1,17 @@
+"parallelLanguage.yesButton.title" = "Taip";
+"parallelLanguage.noButton.title" = "Ne, ačiū";
+"parallelLanguage.getStartedButton.title" = "Pradėkite";
+"parallelLanguage.selectLanguageButton.title" = "Pasirinkite kalbą";
+"parellelLanguage.prompt" = "Ar norėtumėte nustatyti papildomą kalbą?";
+"onboardingTutorial.beginButton.title" = "Pradėti";
+"onboardingTutorial.quickStart.2.message" = "Noriu su kuo nors pasidalyti evangelija";
+"onboardingTutorial.quickStart.2.link" = "Pasirinkite vieną iš mūsų įrankių";
+"onboardingTutorial.nextButton.title" = "Kitas";
+"onboardingTutorial.quickstart.title" = "Greitos pradžios nuorodos";
+"onboardingTutorial.quickStart.0.message" = "Noriu susipažinti su Krikščionybe";
+"onboardingTutorial.quickStart.0.link" = "Skaitykite mūsų straipsnius";
+"onboardingTutorial.quickStart.1.message" = "Noriu sužinoti, kaip rengti pokalbius apie evangeliją";
+"onboardingTutorial.quickStart.1.link" = "Išbandykite mūsų pamokas";
 "tool_offline_favorite_message" = "Įrankį galima naudoti atsijungus, paspaudus širdelės piktogramą, kuri prideda ją prie mėgstamiausių.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -18,6 +32,14 @@
 "share_tool_remote_link_message" = "Sveiki, sekite kartu su manimi „GodTools“ su ekranų bendrinimu. Štai nuoroda: %@ Jei negausite šio pranešimo kurį laiką, nuoroda gali nebeveikti. Galime pabandyti dar kartą vėliau.";
 "exit_tract_remote_share_session.message" = "Ar išjungti nuotolinio bendrinimo sesiją dabar?";
 "load_tool_remote_session.message" = "Įjungiamas Ekranų bendrinimas...";
+"onboardingTutorial.0.title" = "Pasirengę kiekvienam pokalbiui";
+"onboardingTutorial.0.videoLink.title" = "Žiūrėti vaizdo įrašą";
+"onboardingTutorial.1.title" = "Pakalbėkite apie Dievą su bet kuo";
+"onboardingTutorial.1.message" = "„GodTools“ padeda jums prasmingai pasikalbėti apie Dievą.";
+"onboardingTutorial.2.title" = "Pasiruoškite reikšmingoms akimirkoms";
+"onboardingTutorial.2.message" = "Sužinokite, kaip pokalbius apie tikėjimą paversti natūralia jūsų gyvenimo dalimi.";
+"onboardingTutorial.3.title" = "Padėkite kam nors atrasti Jėzų";
+"onboardingTutorial.3.message" = "„GodTools“ – tai jūsų vadovas, kaip skelbti evangeliją aiškiais ir aktualiais būdais.";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Mokymas";
@@ -48,7 +70,7 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Straipsniai";
-"language_onboard" = "80+ kalbų";
+"language_onboard" = "90+ kalbų";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Parsisiuntėte visus siūlomus įrankius.";
@@ -60,6 +82,9 @@
 "find_tools" = "Visi įrankiai";
 
 "unavailable" = "Nėra";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "Praleisti";
 
 // Onboarding
 "add_new_tools" = "Pridėti naujus įrankius";
@@ -147,6 +172,8 @@ Programėlę galima atsisiųsti adresu https://godtoolsapp.com";
 "error_can_not_send_email" = "Jūsų įrenginyje nėra konfigūruoto el. pašto.";
 "required_field_missing" = "„%@“ yra reikalingas laukelis.";
 
+"onboardingTutorial.getStartedButton.title" = "Pradėti";
+
 // About
 "general_about_1" = "„GodTools“ padeda jums dalytis tikėjimu lengvu ir aiškiu būdu.";
 "general_about_2" = "Įrankiai padės jums konfidencialiai paaiškinti kitam asmeniui, kaip jis gali užmegzti ryšį su Dievu per Jėzų Kristų net jei niekada anksčiau nesidalijote tikėjimu arba kalbate kita kalba.";
@@ -156,16 +183,18 @@ Programėlę galima atsisiųsti adresu https://godtoolsapp.com";
 "general_about_6" = "Klausimai? Pasiūlymai? Prašymai? Susisiekite su mumis adresu support@godtoolsapp.com";
 "general_about_7" = "Internetinė šių įrankių versija pateikiama knowgod.com. Įterpkite ją savo svetainėje!";
 "general_about_8" = "Jei norite daugiau informacijos, apsilankykite godtoolsapp.com.";
+"tutorial.continueButton.title.continue" = "Tęsti";
 "general_about_9" = "Imdamiesi iniciatyvos pasidalyti savo tikėjimu, nepamirškite, kad tai Dievas keičia širdį. Suteikite kiekvienam asmeniui meilės išklausydami ir suprasdami.";
 "general_about_10" = "„Jūsų kalba visada tebūna maloni, druska pasūdyta, kad žinotumėte, kaip turite kiekvienam atsakyti.“ Kolosiečiams 4:6";
 
 // Downloads
 "Download in progress" = "Atsisiunčiama";
 
-// Navigation
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "Ankst";
 "card_status2" = "Kitas";
 
 // Language Name Strings
 "language_name_fa" = "Persų (Farsi)";
 
+"onboardingTutorial.continueButton.title" = "Tęsti";

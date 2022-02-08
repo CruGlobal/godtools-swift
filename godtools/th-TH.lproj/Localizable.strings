@@ -1,3 +1,17 @@
+"parallelLanguage.yesButton.title" = "ใช่";
+"parallelLanguage.noButton.title" = "ไม่ ขอบคุณ";
+"parallelLanguage.getStartedButton.title" = "เริ่มต้นใช้งาน";
+"parallelLanguage.selectLanguageButton.title" = "เลือกภาษา";
+"parellelLanguage.prompt" = "คุณต้องการตั้งค่าภาษารองหรือไม่";
+"onboardingTutorial.beginButton.title" = "เริ่มต้น";
+"onboardingTutorial.quickStart.2.message" = "ฉันต้องการแชร์เรื่องพระกิตติคุณกับใครสักคน";
+"onboardingTutorial.quickStart.2.link" = "เลือกหนึ่งในเครื่องมือของเรา";
+"onboardingTutorial.nextButton.title" = "ต่อไป";
+"onboardingTutorial.quickstart.title" = "ลิงก์เริ่มต้นด่วน";
+"onboardingTutorial.quickStart.0.message" = "ฉันต้องการศึกษาศาสนาคริสต์";
+"onboardingTutorial.quickStart.0.link" = "อ่านบทความของเรา";
+"onboardingTutorial.quickStart.1.message" = "ฉันต้องการเรียนรู้เกี่ยวกับการสนทนาเรื่องพระกิตติคุณ";
+"onboardingTutorial.quickStart.1.link" = "ลองศึกษาบทเรียนของเรา";
 "tool_offline_favorite_message" = "ทำให้เครื่องมือพร้อมใช้งานแบบออฟไลน์โดยแตะที่ไอคอนรูปหัวใจเพื่อเพิ่มไว้ในรายการโปรดของคุณ";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -18,6 +32,14 @@
 "share_tool_remote_link_message" = "สวัสดี ติดตามไปกับฉันใน GodTools ผ่านการแชร์หน้าจอ นี่คือลิงค์: %@ หากคุณไม่ได้รับข้อความนี้หลังจากผ่านไปสักพัก ลิงก์อาจยังใช้งานไม่ได้ เราสามารถลองอีกครั้งในภายหลัง";
 "exit_tract_remote_share_session.message" = "ออกจากเซสชันการแชร์ทางไกลตอนนี้หรือไม่";
 "load_tool_remote_session.message" = "กำลังเริ่มการแชร์หน้าจอ...";
+"onboardingTutorial.0.title" = "พร้อมสำหรับทุกการสนทนา";
+"onboardingTutorial.0.videoLink.title" = "ดูวิดีโอ";
+"onboardingTutorial.1.title" = "พูดคุยเรื่องพระเจ้ากับใครก็ได้";
+"onboardingTutorial.1.message" = "GodTools ช่วยให้คุณมีบทสนทนาที่มีความหมายเกี่ยวกับพระเจ้า";
+"onboardingTutorial.2.title" = "เตรียมพร้อมสำหรับช่วงเวลาที่สำคัญ";
+"onboardingTutorial.2.message" = "เรียนรู้วิธีสนทนาเกี่ยวกับความศรัทธา ซึ่งเป็นส่วนหนึ่งของชีวิตคุณ";
+"onboardingTutorial.3.title" = "ช่วยใครซักคนให้รู้จักกับพระเยซู";
+"onboardingTutorial.3.message" = "GodTools ชี้แนะแนวทางในการสื่อสารพระกิตติคุณอย่างชัดเจนและตรงประเด็น";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "การฝึกซ้อม";
@@ -48,7 +70,7 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "บทความ";
-"language_onboard" = "กว่า 80 ภาษา";
+"language_onboard" = "กว่า 90 ภาษา";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "คุณดาวน์โหลดเครื่องมือทั้งหมดแล้ว";
@@ -151,6 +173,8 @@
 "error_can_not_send_email" = "ไม่มีอีเมลที่กำหนดค่าในอุปกรณ์ของคุณ";
 "required_field_missing" = "\"%@\" เป็นช่องบังคับ";
 
+"onboardingTutorial.getStartedButton.title" = "เริ่มต้นใช้งาน";
+
 // About
 "general_about_1" = "GodTools เป็นแอปที่ให้คุณแชร์ศรัทธาที่มีได้อย่างง่ายดายและชัดเจน";
 "general_about_2" = "เครื่องมือเหล่านี้จะช่วยให้คุณอธิบายได้อย่างมั่นใจถึงวิธีเริ่มต้นความสัมพันธ์กับพระผู้เป็นเจ้าผ่านพระเยซูคริสต์ ถึงแม้คุณจะไม่เคยเผยแผ่ศรัทธามาก่อนหรือผู้ฟังไม่ได้พูดภาษาเดียวกันกับคุณ";
@@ -160,16 +184,18 @@
 "general_about_6" = "หากมีคำถาม ข้อเสนอแนะ หรือต้องการความช่วยเหลือ โปรดติดต่อเราที่ support@godtoolsapp.com";
 "general_about_7" = "ค้นเครื่องมือออนไลน์ได้จาก knowgod.com แล้วดาวน์โหลดไว้ในเว็บไซต์ของคุณ!";
 "general_about_8" = "ดูข้อมูลเพิ่มเติมได้ที่ godtoolsapp.com";
+"tutorial.continueButton.title.continue" = "ต่อไป";
 "general_about_9" = "ในการเผยแผ่ศรัทธาที่คุณมีต่อพระผู้เป็นเจ้า โปรดระลึกว่าพระองค์เป็นผู้เปลี่ยนแปลงจิตใจ ขอให้เปิดใจฟังอย่างเข้าอกเข้าใจ";
 "general_about_10" = "\"จงให้ถ้อยคำของท่านทั้งหลายประกอบด้วยเมตตาคุณเสมอ ปรุงด้วยเกลือให้มีรส เพื่อท่านจะได้รู้ว่าควรจะตอบแต่ละคนอย่างไร\" โคโลสี 4:6";
 
 // Downloads
 "Download in progress" = "อยู่ระหว่างการดาวน์โหลด";
 
-// Navigation
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "ก่อนหน้า";
 "card_status2" = "ถัดไป";
 
 // Language Name Strings
 "language_name_fa" = "เปอร์เซีย (ฟาร์ซี)";
 
+"onboardingTutorial.continueButton.title" = "ต่อไป";

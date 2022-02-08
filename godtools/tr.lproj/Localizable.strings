@@ -1,3 +1,18 @@
+"parallelLanguage.yesButton.title" = "Evet";
+"parallelLanguage.noButton.title" = "Hayır Teşekkürler";
+"parallelLanguage.selectButton.title" = "Seç";
+"parallelLanguage.getStartedButton.title" = "Başlayın";
+"parallelLanguage.selectLanguageButton.title" = "Bir dil seçin";
+"parellelLanguage.prompt" = "İkinci bir dil ayarlamak ister misiniz?";
+"onboardingTutorial.beginButton.title" = "Başla";
+"onboardingTutorial.quickStart.2.message" = "Hakikati birisiyle paylaşmak istiyorum";
+"onboardingTutorial.quickStart.2.link" = "Araçlarımızdan birini seç";
+"onboardingTutorial.nextButton.title" = "Sonraki";
+"onboardingTutorial.quickstart.title" = "Hızlı başlangıç bağlantıları";
+"onboardingTutorial.quickStart.0.message" = "Hristiyanlığı keşfetmek istiyorum";
+"onboardingTutorial.quickStart.0.link" = "Makalelerimizi oku";
+"onboardingTutorial.quickStart.1.message" = "İncil sohbetleri gerçekleştirme konusunda bilgi edinmek istiyorum";
+"onboardingTutorial.quickStart.1.link" = "Derslerimizi dene";
 "tool_offline_favorite_message" = "Kalp simgesine dokunup favorilerine ekleyerek bir aracı çevrim dışı kullanılabilir hâle getir.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -18,6 +33,14 @@
 "share_tool_remote_link_message" = "Merhaba, ekran paylaşımıyla GodTools'da benim yaptıklarımı takip et. İşte bağlantı burada: %@ Bu mesajı kısa süre içinde almazsan, bağlantı hâlâ çalışmıyor olabilir. Başka bir zaman bunu yeniden deneyebiliriz.";
 "exit_tract_remote_share_session.message" = "Uzaktan paylaşım oturumundan şimdi çıkılsın mı?";
 "load_tool_remote_session.message" = "Ekran Paylaşma Başlatılıyor...";
+"onboardingTutorial.0.title" = "Her sohbete hazır";
+"onboardingTutorial.0.videoLink.title" = "Videoyu İzle";
+"onboardingTutorial.1.title" = "Herkesle Tanrı hakkında konuş";
+"onboardingTutorial.1.message" = "GodTools Tanrı hakkında anlamlı sohbetlere katılmana yardımcı olur.";
+"onboardingTutorial.2.title" = "Önemli anlara hazırlan";
+"onboardingTutorial.2.message" = "İnanç hakkında sohbetleri nasıl hayatının doğal bir parçası hâline getireceğini öğren.";
+"onboardingTutorial.3.title" = "Birilerinin İsa'yı bulmasına yardımcı ol";
+"onboardingTutorial.3.message" = "GodTools hakikati açık ve amacına uygun biçimde anlatma konusunda rehberindir.";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Eğitim";
@@ -49,7 +72,7 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Makaleler";
-"language_onboard" = "80'i Aşkın Dil";
+"language_onboard" = "90'i Aşkın Dil";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Kullanılabilir tüm araçları indirdiniz.";
@@ -61,6 +84,9 @@
 "find_tools" = "Tüm Araçlar";
 
 "unavailable" = "Mevcut Değil";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "atla";
 
 // Onboarding
 "add_new_tools" = "Yeni Araçlar Ekle";
@@ -149,6 +175,8 @@ Uygulama http://godtoolsapp.com adresinden indirilebilir";
 "error_can_not_send_email" = "Cihazınızda yapılandırılmış bir e-posta yok.";
 "required_field_missing" = "\"%@\" gerekli bir alandır.";
 
+"onboardingTutorial.getStartedButton.title" = "Başlayın";
+
 // About
 "general_about_1" = "GodTools, inancınızı kolay ve açık bir biçimde paylaşmanıza yardımcı olur.";
 "general_about_2" = "Bu araçlar, daha önce inancınızı hiç paylaşmamış olsanız veya onlar farklı bir dil konuşuyor olsalar bile birilerine İsa Mesih aracılığıyla Tanrı'yla nasıl bir ilişki başlatabileceklerini güvenli biçimde açıklamanıza yardımcı olur.";
@@ -158,16 +186,18 @@ Uygulama http://godtoolsapp.com adresinden indirilebilir";
 "general_about_6" = "Sorularınız, önerileriniz, talepleriniz mi var? support@godtoolsapp.com adresinden bize ulaşın";
 "general_about_7" = "Bu araçların çevrim içi versiyonu, knowgod.com adresinde bulunabilir. Bunu kendi sitenize ekleyin!";
 "general_about_8" = "Daha fazla bilgi için godtoolsapp.com adresini ziyaret edin.";
+"tutorial.continueButton.title.continue" = "devam";
 "general_about_9" = "İnancınızı paylaşma inisiyatifi alırken, Tanrı'nın kalbi değiştiren olduğunu aklınızda bulundurun. Anlamak için dinleyerek, her kişiyi güzelce sevin.";
 "general_about_10" = "\"Sözünüz tuzla terbiye edilmiş gibi, her zaman lütufkâr olsun. Böylece herkese nasıl karşılık vermek gerektiğini bileceksiniz.\" Koloseliler 4:6";
 
 // Downloads
 "Download in progress" = "İndirme sürüyor";
 
-// Navigation
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "Önce.";
 "card_status2" = "Sonraki";
 
 // Language Name Strings
 "language_name_fa" = "Persçe (Farsça)";
 
+"onboardingTutorial.continueButton.title" = "devam";

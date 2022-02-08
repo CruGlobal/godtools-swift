@@ -7,7 +7,7 @@
 // Downloads
 "Download in progress" = "Жүктөө аткарылууда";
 
-// Navigation
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "Мурунку";
 "card_status2" = "кийинки";
 

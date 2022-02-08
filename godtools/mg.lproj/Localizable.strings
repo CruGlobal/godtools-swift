@@ -88,7 +88,7 @@ Kolosiana 4:6";
 // Downloads
 "Download in progress" = "Misintona fivoarana";
 
-// Navigation
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "Teo aloha";
 "card_status2" = "Mana.";
 

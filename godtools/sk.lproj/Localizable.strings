@@ -1,3 +1,17 @@
+"parallelLanguage.yesButton.title" = "Áno";
+"parallelLanguage.noButton.title" = "Nie, ďakujem";
+"parallelLanguage.getStartedButton.title" = "Začať";
+"parallelLanguage.selectLanguageButton.title" = "Vyberte jazyk";
+"parellelLanguage.prompt" = "Chcete si nastaviť vedľajší jazyk?";
+"onboardingTutorial.beginButton.title" = "Začať";
+"onboardingTutorial.quickStart.2.message" = "Chcem sa s niekým podeliť o slovo božie";
+"onboardingTutorial.quickStart.2.link" = "Vyberte si jeden z našich nástrojov";
+"onboardingTutorial.nextButton.title" = "Ďalej";
+"onboardingTutorial.quickstart.title" = "Odkazy na rýchly začiatok";
+"onboardingTutorial.quickStart.0.message" = "Chcem preskúmať kresťanstvo";
+"onboardingTutorial.quickStart.0.link" = "Prečítajte si naše články";
+"onboardingTutorial.quickStart.1.message" = "Chcem sa dozvedieť o konverzáciách o slove božom";
+"onboardingTutorial.quickStart.1.link" = "Vyskúšajte naše lekcie";
 "tool_offline_favorite_message" = "Ak chceš, aby bol nástroj dostupný offline, ťukni na ikonku srdca, ktorým ho pridáš medzi obľúbené.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -13,7 +27,7 @@
 "share_tool_screen_tutorial.share_your_screen.message" = "Táto možnosť odošle odkaz na nástroj kamarátovi. Po otvorení odkazu sa začne relácia zdieľania obrazovky.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "Zrkadlové zobrazenie";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Počas prechádzania nástroja v telefóne bude kamarátov telefón reagovať rovnako. To vám umožní spoločne prechádzať nástrojom na 2 zariadeniach naraz.";
-"share_tool_screen_tutorial.get_started.title" = "Začíname";
+"share_tool_screen_tutorial.get_started.title" = "Začať";
 "share_tool_screen_tutorial.get_started.message" = "Pošli odkaz jednému alebo viacerým ľuďom a spusti reláciu zdieľania obrazovky. Všetci účastníci si na to musia do zariadenia stiahnuť aplikáciu GodTools.";
 "share_tool_remote_link_message" = "Ahoj, sleduj ma v GodTools cez zdieľanú obrazovku. Tu je odkaz: %@ Ak ti táto správa do určitého času nepríde, odkaz možno ešte nefunguje. Môžeme to znovu skúsiť inokedy.";
 "exit_tract_remote_share_session.message" = "Ukončiť reláciu zdieľania na diaľku?";
@@ -49,7 +63,7 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Články";
-"language_onboard" = "Vyše 80 jazykov";
+"language_onboard" = "Vyše 90 jazykov";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Stiahli ste si všetky dostupné nástroje.";
@@ -61,6 +75,9 @@
 "find_tools" = "Všetky nástroje";
 
 "unavailable" = "Nedostupné";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "Preskočiť";
 
 // Onboarding
 "add_new_tools" = "Pridať nové nástroje";
@@ -149,6 +166,8 @@ Aplikácia sa dá stiahnuť na https://godtoolsapp.com";
 "error_can_not_send_email" = "Vo vašom zariadení nie je nastavený e-mail.";
 "required_field_missing" = "%@ je povinné pole.";
 
+"onboardingTutorial.getStartedButton.title" = "Začať";
+
 // About
 "general_about_1" = "Aplikácia GodTools vám pomáha zdieľať vieru jednoducho a jasne.";
 "general_about_2" = "Tieto nástroje vám pomôžu sebavedomo vysvetliť človeku, ako môže začať vzťah s bohom prostredníctvom Ježiša Krista, a to aj v prípade, že ste sa predtým o svoju vieru nikdy nedelili alebo táto osoba hovorí iným jazykom.";
@@ -158,16 +177,18 @@ Aplikácia sa dá stiahnuť na https://godtoolsapp.com";
 "general_about_6" = "Máte otázky? Návrhy? Požiadavky? Kontaktujte nás na support@godtoolsapp.com";
 "general_about_7" = "Online verziu týchto nástrojov nájdete na stránke knowgod.com. Vložte ju na svoje vlastné webové stránky!";
 "general_about_8" = "Ďalšie informácie nájdete na godtoolsapp.com.";
+"tutorial.continueButton.title.continue" = "Pokračovať";
 "general_about_9" = "Keď prevezmete iniciatívu a začnete sa deliť o svoju vieru, nezabúdajte, že boh je ten, kto mení srdcia. Milujte všetkých ľudí a vnímajte porozumenie.";
 "general_about_10" = "„Nech je vaša reč vždy ľúbezná, okorenená soľou, aby ste vedeli, ako by ste mali každému odpovedať.“ List Kolosanom 4:6";
 
 // Downloads
 "Download in progress" = "Prebieha sťahovanie";
 
-// Navigation
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "Späť";
 "card_status2" = "Ďalej";
 
 // Language Name Strings
 "language_name_fa" = "Perzština (fársí)";
 
+"onboardingTutorial.continueButton.title" = "Pokračovať";

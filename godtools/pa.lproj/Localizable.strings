@@ -1,3 +1,17 @@
+"parallelLanguage.yesButton.title" = "ਹਾਂ";
+"parallelLanguage.noButton.title" = "ਨਹੀਂ ਧੰਨਵਾਦ";
+"parallelLanguage.getStartedButton.title" = "ਸ਼ੁਰੂ ਕਰੋ";
+"parallelLanguage.selectLanguageButton.title" = "ਇੱਕ ਭਾਸ਼ਾ ਚੁਣੋ";
+"parellelLanguage.prompt" = "ਕੀ ਤੁਸੀਂ ਇੱਕ ਸੈਕੰਡਰੀ ਭਾਸ਼ਾ ਸੈਟ ਕਰਨਾ ਚਾਹੋਗੇ?";
+"onboardingTutorial.beginButton.title" = "ਅਰੰਭ ਕਰੋ";
+"onboardingTutorial.quickStart.2.message" = "ਮੈਂ ਕਿਸੇ ਨਾਲ ਗੌਸਪਲ ਸਾਂਝੇ ਕਰਨਾ ਚਾਹੁੰਦਾ ਹਾਂ";
+"onboardingTutorial.quickStart.2.link" = "ਸਾਡੇ ਟੂਲਸ ਵਿੱਚੋਂ ਇੱਕ ਦੀ ਚੋਣ ਕਰੋ";
+"onboardingTutorial.nextButton.title" = "ਅਗਲਾ";
+"onboardingTutorial.quickstart.title" = "ਤੁਰੰਤ ਸ਼ੁਰੂਆਤ ਲਈ ਲਿੰਕ";
+"onboardingTutorial.quickStart.0.message" = "ਮੈਂ ਈਸਾਈ ਧਰਮ ਦੀ ਪੜਚੋਲ ਕਰਨਾ ਚਾਹੁੰਦਾ ਹਾਂ";
+"onboardingTutorial.quickStart.0.link" = "ਸਾਡੇ ਲੇਖ ਪੜ੍ਹੋ";
+"onboardingTutorial.quickStart.1.message" = "ਮੈਂ ਗੌਸਪਲ ਸੰਚਾਰ ਕਰਨ ਬਾਰੇ ਸਿੱਖਣਾ ਚਾਹੁੰਦਾ ਹਾਂ";
+"onboardingTutorial.quickStart.1.link" = "ਸਾਡੇ ਪਾਠਾਂ ਨੂੰ ਅਜ਼ਮਾਓ";
 "tool_offline_favorite_message" = "ਦਿਲ ਦੇ ਆਈਕਨ ਨੂੰ ਟੈਪ ਕਰਕੇ ਇੱਕ ਟੂਲ ਨੂੰ ਆਫਲਾਈਨ ਉਪਲੱਬਧ ਕਰੋ ਜੋ ਇਸਨੂੰ ਤੁਹਾਡੇ ਮਨਪਸੰਦ ਵਿੱਚ ਜੋੜਦਾ ਹੈ।";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -18,6 +32,14 @@
 "share_tool_remote_link_message" = "ਨਮਸਕਾਰ, ਸਕ੍ਰੀਨ ਸ਼ੇਅਰਿੰਗ ਦੇ ਜ਼ਰੀਏ GodTools ਵਿੱਚ ਮੇਰੇ ਨਾਲ ਚੱਲੋ। ਲਿੰਕ ਇਹ ਹੈ: %@ ਜੇ ਤੁਸੀਂ ਬਾਅਦ ਤੱਕ ਇਹ ਸੰਦੇਸ਼ ਪ੍ਰਾਪਤ ਨਹੀਂ ਕਰਦੇ, ਤਾਂ ਸ਼ਾਇਦ ਲਿੰਕ ਕੰਮ ਨਹੀਂ ਕਰੇਗਾ। ਅਸੀਂ ਕਿਸੇ ਹੋਰ ਸਮੇਂ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰ ਸਕਦੇ ਹਾਂ।";
 "exit_tract_remote_share_session.message" = "ਕੀ ਹੁਣ ਰਿਮੋਟ ਸ਼ੇਅਰਿੰਗ ਸੈਸ਼ਨ ਤੋਂ ਨਿਕਾਸ ਕਰਨਾ ਹੈ?";
 "load_tool_remote_session.message" = "ਸਕ੍ਰੀਨ ਸ਼ੇਅਰਿੰਗ ਸ਼ੁਰੂ ਕਰ ਰਹੇ ਹਾਂ…";
+"onboardingTutorial.0.title" = "ਹਰ ਗੱਲਬਾਤ ਲਈ ਤਿਆਰ";
+"onboardingTutorial.0.videoLink.title" = "ਵੀਡੀਓ ਵੇਖੋ";
+"onboardingTutorial.1.title" = "ਕਿਸੇ ਨਾਲ ਵੀ ਰੱਬ ਬਾਰੇ ਗੱਲ ਕਰੋ";
+"onboardingTutorial.1.message" = "GodTools ਰੱਬ ਬਾਰੇ ਸਾਰਥਕ ਗੱਲਬਾਤ ਕਰਨ ਵਿੱਚ ਤੁਹਾਡੀ ਸਹਾਇਤਾ ਕਰਦੀ ਹੈ।";
+"onboardingTutorial.2.title" = "ਮਹੱਤਵਪੂਰਣ ਪਲਾਂ ਲਈ ਤਿਆਰੀ ਕਰੋ";
+"onboardingTutorial.2.message" = "ਵਿਸ਼ਵਾਸ ਬਾਰੇ ਗੱਲਬਾਤ ਨੂੰ ਆਪਣੀ ਜ਼ਿੰਦਗੀ ਦਾ ਇੱਕ ਕੁਦਰਤੀ ਹਿੱਸਾ ਬਣਾਉਣਾ ਸਿੱਖੋ।";
+"onboardingTutorial.3.title" = "ਕਿਸੇ ਨੂੰ ਯਿਸੂ ਦੀ ਖੋਜ ਕਰਨ ਵਿੱਚ ਸਹਾਇਤਾ ਕਰੋ";
+"onboardingTutorial.3.message" = "ਸਪਸ਼ਟ ਅਤੇ ਢੁਕਵੇਂ ਤਰੀਕਿਆਂ ਨਾਲ ਗੌਸਪਲ ਦਾ ਸੰਚਾਰ ਕਰਨ ਲਈ GodTools ਤੁਹਾਡੀ ਮਾਰਗਦਰਸ਼ਕ ਹੈ।";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "ਸਿਖਲਾਈ";
@@ -49,7 +71,7 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "ਲੇਖ";
-"language_onboard" = "80+ ਭਾਸ਼ਾਵਾਂ";
+"language_onboard" = "90+ ਭਾਸ਼ਾਵਾਂ";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "ਤੁਸੀਂ ਸਾਰੇ ਉਪਲਬਧ ਟੂਲਸ ਡਾਉਨਲੋਡ ਕੀਤੇ ਹਨ।";
@@ -61,6 +83,9 @@
 "find_tools" = "ਸਾਰੇ ਟੂਲ";
 
 "unavailable" = "ਅਣਉਪਲਬਧ";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "ਛੱਡੋ";
 
 // Onboarding
 "add_new_tools" = "ਨਵੇਂ ਟੂਲ ਨੂੰ ਜੋੜੋ";
@@ -147,6 +172,8 @@
 "error_can_not_send_email" = "ਤੁਹਾਡੀ ਡਿਵਾਈਸ ਤੇ ਕੋਈ ਕੌਂਫਿਗਰ ਈਮੇਲ ਨਹੀਂ ਕੀਤੀ ਗਈ ਹੈ।";
 "required_field_missing" = "\"%@\" ਇੱਕ ਲੋੜੀਂਦਾ ਖੇਤਰ ਹੈ।";
 
+"onboardingTutorial.getStartedButton.title" = "ਅਰੰਭ ਕਰੋ";
+
 // About
 "general_about_1" = "ਗੋਡਟੂਲ ਤੁਹਾਨੂੰ ਆਪਣੇ ਵਿਸ਼ਵਾਸ ਨੂੰ ਆਸਾਨੀ ਅਤੇ ਸਾਫ਼ ਸ਼ਬਦਾਂ ਦੇ ਵਿੱਚ ਦੂਜਿਆਂ ਨਾਲ ਸਾਂਝਿਆਂ ਕਰਨ ਵਿੱਚ ਮਦਦ ਕਰਦਾ ਹੈ।";
 "general_about_2" = "ਇਹ ਟੂਲ ਤੁਹਾਨੂੰ ਬੜੇ ਭਰੋਸੇ ਨਾਲ ਕਿਸੇ ਨੂੰ ਵੀ ਇਹ ਸਪੱਸ਼ਟ ਕਰਨ ਵਿੱਚ ਮਦਦ ਦਿੰਦੇ ਹਨ ਕਿ ਉਹ ਕਿਵੇਂ ਯਿਸੂ ਮਸੀਹ ਦੇ ਰਾਹੀਂ ਪਰਮੇਸ਼ੁਰ ਨਾਲ ਇੱਕ ਰਿਸ਼ਤਾ ਨੂੰ ਅਰੰਭ ਕਰ ਸਕਦੇ ਹਨ, ਭਾਵੇਂ ਤੁਸੀਂ ਆਪਣੇ ਵਿਸ਼ਵਾਸ ਨੂੰ ਪਹਿਲਾਂ ਕਦੇ ਵੀ ਸਾਂਝਾ ਨਹੀਂ ਕੀਤਾ ਜਾਂ ਉਹ ਇੱਕ ਵੱਖਰੀ ਹੀ ਭਾਸ਼ਾ ਕਿਉਂ ਨਾ ਬੋਲਦੇ ਹੋਣ।";
@@ -156,16 +183,18 @@
 "general_about_6" = "ਸਵਾਲ? ਸੁਝਾਅ? ਬੇਨਤੀਆਂ? ਦੇ ਲਈ Support@godtoolsapp.com ਤੇ ਸਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰੋ";
 "general_about_7" = "ਇਹਨਾਂ ਟੂਲਾਂ ਦੇ ਔਨਲਾਈਨ ਅਨੁਵਾਦ knowgod.com 'ਤੇ ਪਾਏ ਜਾ ਸਕਦਾੇ ਹਨ। ਇਸ ਨੂੰ ਆਪਣੀ ਵੈਬਸਾਈਟ 'ਤੇ ਸ਼ਾਮਿਲ ਕਰੋ!";
 "general_about_8" = "ਹੋਰ ਵਧੇਰੇ ਜਾਣਕਾਰੀ ਲਈ godtoolsapp.com ਨੂੰ ਵੇਖੋ।";
+"tutorial.continueButton.title.continue" = "ਜਾਰੀ ਰੱਖੋ";
 "general_about_9" = "ਜਦੋਂ ਤੁਸੀਂ ਆਪਣੇ ਵਿਸ਼ਵਾਸ ਸਾਂਝਿਆਂ ਕਰਨ ਲਈ ਪਹਿਲ ਕਰਦੇ ਹੋ, ਤਾਂ ਯਾਦ ਰੱਖੋ ਕਿ ਪਰਮੇਸ਼ੁਰ ਹੀ ਹੈ ਜਿਹੜਾ ਦਿਲ ਨੂੰ ਬਦਲਦਾ ਹੈ। ਹਰੇਕ ਵਿਅਕਤੀ ਨੂੰ ਚੰਗੀ ਤਰ੍ਹਾਂ ਸੁਣ ਕੇ ਸਮਝਦੇ ਹੋ ਏ ਪਿਆਰ ਕਰੋ।";
 "general_about_10" = "“ਤੁਹਾਡੀ ਗੱਲ ਬਾਤ ਸਦਾ ਕਿਰਪਾਮਈ ਅਤੇ ਸਲੂਣੀ ਹੋਵੇ ਤਾਂ ਜੋ ਤੁਸੀ ਜਾਣੋ ਭਈ ਹਰੋਕ ਨੂੰ ਕਿਵੇਂ ਉੱਤਰ ਦੇਣਾ ਚਾਹੀਦਾ ਹੈ।” (ਕੁਲੁੱਸੀਆਂ 4:6)";
 
 // Downloads
 "Download in progress" = "ਡਾਊਨਲੋਡ ਜਾਰੀ ਹੈ";
 
-// Navigation
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "ਪਿਛਲੇ";
 "card_status2" = "ਅਗਲਾ";
 
 // Language Name Strings
 "language_name_fa" = "ਫ਼ਾਰਸੀ (ਫਾਰਸੀ)";
 
+"onboardingTutorial.continueButton.title" = "ਜਾਰੀ ਰੱਖੋ";

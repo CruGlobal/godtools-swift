@@ -1,3 +1,16 @@
+"parallelLanguage.noButton.title" = "不用了，謝謝";
+"parallelLanguage.getStartedButton.title" = "開始使用";
+"parallelLanguage.selectLanguageButton.title" = "選擇語言";
+"parellelLanguage.prompt" = "您想要設定次要語言嗎？";
+"onboardingTutorial.beginButton.title" = "開始";
+"onboardingTutorial.quickStart.2.message" = "我想要與某人分享福音";
+"onboardingTutorial.quickStart.2.link" = "選擇一個我們的工具";
+"onboardingTutorial.nextButton.title" = "下一頁";
+"onboardingTutorial.quickstart.title" = "快速入門連結";
+"onboardingTutorial.quickStart.0.message" = "我想要了解基督教";
+"onboardingTutorial.quickStart.0.link" = "閱讀我們的文章";
+"onboardingTutorial.quickStart.1.message" = "我想要瞭解福音對話";
+"onboardingTutorial.quickStart.1.link" = "試試我們的課程";
 "tool_offline_favorite_message" = "點擊愛心圖示，將工具新增至你的最愛，就能離線使用工具。";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -18,6 +31,14 @@
 "share_tool_remote_link_message" = "你好，歡迎與我一同在 GodTools 中參加螢幕分享會。連結為：%@ 如果你稍後才收到此訊息，該連結可能已經失效。我們可以改天再試一次。";
 "exit_tract_remote_share_session.message" = "確定要現在離開遠端分享會？";
 "load_tool_remote_session.message" = "正在開始進行螢幕分享……";
+"onboardingTutorial.0.title" = "準備好進行每次對話";
+"onboardingTutorial.0.videoLink.title" = "觀看影片";
+"onboardingTutorial.1.title" = "與任何人談論上帝";
+"onboardingTutorial.1.message" = "GodTools 能幫助你們以上帝為主題，進行有意義的對話。";
+"onboardingTutorial.2.title" = "為重要時刻做好準備";
+"onboardingTutorial.2.message" = "學習如何將關於信仰的對話自然而然地融入生活中。";
+"onboardingTutorial.3.title" = "幫助某人認識耶穌";
+"onboardingTutorial.3.message" = "GodTools 是能讓你以清楚且相關的方式交流福音的指南。";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "培訓";
@@ -57,7 +78,7 @@
 
 /* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "articles.loadingView.downloadingArticles" = "正在下載文章...";
-"language_onboard" = "超過 80 種語言";
+"language_onboard" = "超過 90 種語言";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "您已經下載所有可用工具了。";
@@ -166,36 +187,69 @@
 "error_can_not_send_email" = "您的裝置上沒有建立電子郵件帳戶。";
 "required_field_missing" = "必須輸入「%@」。";
 
+"onboardingTutorial.getStartedButton.title" = "開始使用";
+
 // About
 "general_about_1" = "GodTools幫助您以簡單清楚的方式分享您的信仰。";
+// Tutorial
+"tutorial.tutorialItem.0.title" = "觀看";
 "general_about_2" = "我們提供的工具，能夠幫助您自信地與他人分享信仰，介紹如何透過耶穌基督開始建立與上帝的關係。即使您是第一次與他人分享您的信仰，或對方講的是別的語言，您依然能夠利用我們的工具順利介紹。";
+"tutorial.tutorialItem.0.message" = "在演示影片中查看 GodTools 的功能
+（點按影片可顯示字幕設定）";
 "general_about_3" = "依據您的喜好與分享對象，您可選擇各式各樣的工具。請注意，並非所有工具都包含所有語言的版本。";
+"tutorial.tutorialItem.1.title" = "準備";
 "general_about_4" = "各個工具的結尾處可以找到其他資源的連結。";
+"tutorial.tutorialItem.1.message" = "了解工具的特點。建議由「教我如何分享」工具開始。
+
+點按任何工具上的資訊按鈕以獲取詳情。";
 "general_about_5" = "下載各個新工具或語言需要連線至網路。下載完成後，不需網路連線即可使用。";
+"tutorial.tutorialItem.2.title" = "嘗試";
 "general_about_6" = "有疑問、建議、請求嗎？請寫電子郵件至support@godtoolsapp.com與我們聯絡。";
+"tutorial.tutorialItem.2.message" = "所有人都是從初學者開始。嘗試在對話中使用工具，看看自己學會了什麼。";
 "general_about_7" = "這些工具的線上版可在knowgod.com找到。把它嵌入在您的個人網站上吧！";
+"tutorial.tutorialItem.3.title" = "您可在選單再次觀看教學";
 "general_about_8" = "如需更多資訊，請前往godtoolsapp.com。";
+"tutorial.continueButton.title.continue" = "繼續";
 "general_about_9" = "在您踏出第一步分享您的信仰同時，也別忘了只有上帝能夠改變人心。請愛每個人，仔細聆聽對方的話，確認對方是否理解。";
+"tutorial.continueButton.title.startUsingGodTools" = "開始使用 GodTools";
+
 "general_about_10" = "「你們的話語總要帶著恩惠，像用鹽調和過的，好使你們知道該怎樣回答每一個人。」—歌羅西書 4:6";
 
+// OpenTutorial
+"openTutorial.showTutorialLabel.text" = "展示教學";
 // Downloads
 "Download in progress" = "正在下載中";
 
-// Navigation
+"openTutorial.openTutorialButton.title" = "打開教學";
+
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "前一頁";
+// Account
+"account.navTitle" = "我的個人檔案";
 "card_status2" = "下一頁";
+
+"account.activity.title" = "活動";
 
 // Language Name Strings
 "language_name_fa" = "波斯文";
 
+// Account Activity
+"accountActivity.globalAnalytics.header.title" = "全球活動";
 // OnboardingWelcome
 "onboardingWelcome.titleLabel.welcome" = "歡迎";
+"accountActivity.globalAnalytics.users.title" = "獨特\n用戶";
 "onboardingWelcome.titleLabel.tagline" = "幫助你分享信念";
+"accountActivity.globalAnalytics.gospelPresentation.title" = "福音演示";
 "onboardingWelcome.beginButton" = "開始";
 
+"accountActivity.globalAnalytics.launches.title" = "節";
 // OnboardingTutorial
 "onboardingTutorial.aboutAppItem.0.title" = "與他人分享";
+"accountActivity.globalAnalytics.countries.title" = "國家或地區";
+
 "onboardingTutorial.aboutAppItem.0.message" = "GodTools 為引導您的信仰對話而設";
+// Alerts
+"alert.action.ok" = "好";
 "onboardingTutorial.aboutAppItem.1.title" = "選擇工具";
 "onboardingTutorial.aboutAppItem.1.message" = "GodTools 協助您準備、進行及回顧靈性對話";
 "onboardingTutorial.aboutAppItem.2.title" = "隨時就緒";
@@ -203,40 +257,7 @@
 "onboardingTutorial.appUsageItem.0.message" = "為任何對話而設";
 "onboardingTutorial.appUsageItem.1.message" = "帶領他人參與福音";
 "onboardingTutorial.appUsageItem.2.message" = "兩種語言並列顯示";
-"onboardingTutorial.appUsageItem.3.message" = "共有超過 80 種語言可選";
+"onboardingTutorial.appUsageItem.3.message" = "共有超過 90 種語言可選";
 "onboardingTutorial.appUsageItem.4.message" = "引導他人成為教徒";
 "onboardingTutorial.continueButton.title" = "繼續";
 "onboardingTutorial.showMoreButton.title" = "展示更多";
-"onboardingTutorial.getStartedButton.title" = "開始使用";
-
-// Tutorial
-"tutorial.tutorialItem.0.title" = "觀看";
-"tutorial.tutorialItem.0.message" = "在演示影片中查看 GodTools 的功能
-（點按影片可顯示字幕設定）";
-"tutorial.tutorialItem.1.title" = "準備";
-"tutorial.tutorialItem.1.message" = "了解工具的特點。建議由「教我如何分享」工具開始。
-
-點按任何工具上的資訊按鈕以獲取詳情。";
-"tutorial.tutorialItem.2.title" = "嘗試";
-"tutorial.tutorialItem.2.message" = "所有人都是從初學者開始。嘗試在對話中使用工具，看看自己學會了什麼。";
-"tutorial.tutorialItem.3.title" = "您可在選單再次觀看教學";
-"tutorial.continueButton.title.continue" = "繼續";
-"tutorial.continueButton.title.startUsingGodTools" = "開始使用 GodTools";
-
-// OpenTutorial
-"openTutorial.showTutorialLabel.text" = "展示教學";
-"openTutorial.openTutorialButton.title" = "打開教學";
-
-// Account
-"account.navTitle" = "我的個人檔案";
-"account.activity.title" = "活動";
-
-// Account Activity
-"accountActivity.globalAnalytics.header.title" = "全球活動";
-"accountActivity.globalAnalytics.users.title" = "獨特\n用戶";
-"accountActivity.globalAnalytics.gospelPresentation.title" = "福音演示";
-"accountActivity.globalAnalytics.launches.title" = "節";
-"accountActivity.globalAnalytics.countries.title" = "國家或地區";
-
-// Alerts
-"alert.action.ok" = "好";

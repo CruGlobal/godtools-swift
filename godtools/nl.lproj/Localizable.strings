@@ -1,3 +1,17 @@
+"parallelLanguage.yesButton.title" = "Ja";
+"parallelLanguage.noButton.title" = "Nee, bedankt";
+"parallelLanguage.getStartedButton.title" = "Aan de slag";
+"parallelLanguage.selectLanguageButton.title" = "Selecteer een taal";
+"parellelLanguage.prompt" = "Wil je een tweede taal instellen?";
+"onboardingTutorial.beginButton.title" = "Beginnen";
+"onboardingTutorial.quickStart.2.message" = "Ik wil het evangelie met iemand delen";
+"onboardingTutorial.quickStart.2.link" = "Kies een van onze programma's";
+"onboardingTutorial.nextButton.title" = "Volgende";
+"onboardingTutorial.quickstart.title" = "Links voor snelle start";
+"onboardingTutorial.quickStart.0.message" = "Ik wil het Christendom leren kennen";
+"onboardingTutorial.quickStart.0.link" = "Lees onze artikelen";
+"onboardingTutorial.quickStart.1.message" = "Ik wil evangeliegesprekken leren voeren";
+"onboardingTutorial.quickStart.1.link" = "Probeer onze lessen";
 "tool_offline_favorite_message" = "Maak een hulpprogramma ook offline beschikbaar door op het hartje te tikken en het toe te voegen aan je favorieten.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -18,6 +32,14 @@
 "share_tool_remote_link_message" = "Hallo, lees met me mee in GodTools via een gedeeld scherm. Hier is de koppeling: %@ Als je dit bericht pas later ontvangt, kan het zijn dat de koppeling niet meer werkt. Dan proberen we het een andere keer gewoon opnieuw.";
 "exit_tract_remote_share_session.message" = "De deelsessie afsluiten?";
 "load_tool_remote_session.message" = "Scherm delen starten…";
+"onboardingTutorial.0.title" = "Klaar voor elk gesprek";
+"onboardingTutorial.0.videoLink.title" = "Video bekijken";
+"onboardingTutorial.1.title" = "Met iedereen over God praten";
+"onboardingTutorial.1.message" = "GodTools helpt je zinvolle gesprekken over God te hebben.";
+"onboardingTutorial.2.title" = "Bereid je voor op de momenten die ertoe doen.";
+"onboardingTutorial.2.message" = "Leer hoe je gesprekken over het geloof op natuurlijke wijze in je leven kunt integreren.";
+"onboardingTutorial.3.title" = "Help iemand anders Jezus te leren kennen";
+"onboardingTutorial.3.message" = "GodTools helpen je het evangelie op een duidelijke en relevante manier te verspreiden.";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Training";
@@ -49,7 +71,7 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Artikelen";
-"language_onboard" = "80+ talen";
+"language_onboard" = "90+ talen";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Je hebt alle beschikbare tools gedownload.";
@@ -61,6 +83,9 @@
 "find_tools" = "Alle hulpmiddelen";
 
 "unavailable" = "Niet beschikbaar";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "Overslaan";
 
 // Onboarding
 "add_new_tools" = "Voeg nieuwe hulpmiddelen toe";
@@ -149,6 +174,8 @@ De app is te downloaden vanaf https://godtoolsapp.com";
 "error_can_not_send_email" = "Er is geen geconfigureerd e-mailadres op je apparaat.";
 "required_field_missing" = "\"%@\" Is een verplicht veld.";
 
+"onboardingTutorial.getStartedButton.title" = "Aan de slag";
+
 // About
 "general_about_1" = "GodTools helpt je je geloof op een gemakkelijke en duidelijke manier te delen.";
 "general_about_2" = "Deze hulpmiddelen helpen je met vertrouwen aan iemand te kunnen vertellen hoe ze een relatie met God kunnen beginnen door Jezus Christus, zelfs als je je geloof nooit eerder hebt gedeeld of een andere taal spreekt.";
@@ -158,16 +185,18 @@ De app is te downloaden vanaf https://godtoolsapp.com";
 "general_about_6" = "Vragen? Iets te melden? Verzoeken? Contacteer ons op support@godtoolsapp.com";
 "general_about_7" = "Een online versie van deze tools is te vinden op knowgod.com. Plaats het op je eigen site!";
 "general_about_8" = "Bezoek godtoolsapp.com voor meer informatie.";
+"tutorial.continueButton.title.continue" = "doorgaan";
 "general_about_9" = "Terwijl je het initiatief neemt om je geloof te delen, is het belangrijk om te onthouden dat God degene is die het hart verandert. Hou van elke persoon door met begrip naar ze te luisteren.";
 "general_about_10" = "\"Laat uw woord altijd in genade zijn, met een snuifje zout, en weet hoe gij aan een ieder moet antwoorden.\" Kolossenzen 4:6";
 
 // Downloads
 "Download in progress" = "Bezig met downloaden";
 
-// Navigation
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "Vorige";
 "card_status2" = "Volgende";
 
 // Language Name Strings
 "language_name_fa" = "Perzisch (Farsi)";
 
+"onboardingTutorial.continueButton.title" = "doorgaan";
