@@ -1,3 +1,17 @@
+"parallelLanguage.yesButton.title" = "Oo";
+"parallelLanguage.noButton.title" = "Hindi, Salamat";
+"parallelLanguage.getStartedButton.title" = "Magsimula";
+"parallelLanguage.selectLanguageButton.title" = "Pumili ng wika";
+"parellelLanguage.prompt" = "Gusto mo bang mag-set ng pangalawang wika?";
+"onboardingTutorial.beginButton.title" = "Magsimula";
+"onboardingTutorial.quickStart.2.message" = "Gusto kong magbahagi ng ebanghelyo sa isang tao";
+"onboardingTutorial.quickStart.2.link" = "Piliin ang isa sa aming mga tool";
+"onboardingTutorial.nextButton.title" = "Susunod";
+"onboardingTutorial.quickstart.title" = "Mga link para sa mabilis na simula";
+"onboardingTutorial.quickStart.0.message" = "Gusto kong ma-explore ang Kristiyanismo";
+"onboardingTutorial.quickStart.0.link" = "Basahin ang aming mga artikulo";
+"onboardingTutorial.quickStart.1.message" = "Gusto kong matutong magkaroon ng mga pag-uusap tungkol sa ebanghelyo";
+"onboardingTutorial.quickStart.1.link" = "Subukan ang aming mga Lesson";
 "tool_offline_favorite_message" = "Gawing available offline ang isang tool sa pamamagitan ng pag-tap sa pusong icon na magdaragdag dito sa mga paborito mo.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -18,6 +32,14 @@
 "share_tool_remote_link_message" = "Hi, sumabay sa akin sa GodTools sa pamamagitan ng pagbabahagi ng screen. Narito ang link: %@ Kung hindi mo matatanggap ang mensaheng ito hanggang sa mamaya, maaaring hindi pa rin gumana ang link. Puwede nating subukan ulit sa ibang oras.";
 "exit_tract_remote_share_session.message" = "Umalis na sa session ng remote na pagbabahagi?";
 "load_tool_remote_session.message" = "Sinisimulan ang Pagbabahagi ng Screen…";
+"onboardingTutorial.0.title" = "Handa para sa araw-araw na pag-uusap";
+"onboardingTutorial.0.videoLink.title" = "Panoorin ang Video";
+"onboardingTutorial.1.title" = "Pag-usapan ang tungkol sa Diyos kasama ng iba";
+"onboardingTutorial.1.message" = "Tutulungan ka ng GodTools na magkaroon ng mga makabuluhang pag-uusap tungkol sa Diyos.";
+"onboardingTutorial.2.title" = "Paghandaan ang mahahalagang sandali";
+"onboardingTutorial.2.message" = "Alamin kung paano gagawing natural na bahagi ng iyong buhay ang mga pag-uusap tungkol sa pananalampalataya.";
+"onboardingTutorial.3.title" = "Tulungan ang isang tao na makilala si Hesus";
+"onboardingTutorial.3.message" = "Ang GodTools ay ang iyong gabay sa pagsasabi ng ebanghelyo sa malinaw at makabuluhang mga paraan.";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Pagsasanay";
@@ -48,7 +70,7 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Mga Artikulo";
-"language_onboard" = "80+ na Wika";
+"language_onboard" = "90+ na Wika";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Na-download mo na ang lahat ng available na tool.";
@@ -60,6 +82,9 @@
 "find_tools" = "Lahat ng Tool";
 
 "unavailable" = "Hindi available";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "Laktawan";
 
 // Onboarding
 "add_new_tools" = "Magdagdag ng Mga Bagong Tool";
@@ -148,6 +173,8 @@ Maaaring ma-download ang app mula sa https://godtoolsapp.com";
 "error_can_not_send_email" = "Walang naka-configure na email sa iyong device.";
 "required_field_missing" = "Ang \"%@\" ay kinakailangang field.";
 
+"onboardingTutorial.getStartedButton.title" = "Magsimula";
+
 // About
 "general_about_1" = "Tinutulungan ka ng GodTools na ibahagi ang iyong pananampalataya sa isang madali at malinaw na paraan.";
 "general_about_2" = "Tinutulungan ka ng mga tool na ito na kumpiyansang maipaliwanag sa isang tao kung paano nila masisimulan ang isang relasyon sa Diyos sa pamamagitan ni Hesukristo, kahit na kailanman ay hindi mo pa naibahagi ang iyong pananalampalataya dati o iba ang wikang sinasalita nila.";
@@ -157,16 +184,18 @@ Maaaring ma-download ang app mula sa https://godtoolsapp.com";
 "general_about_6" = "May mga tanong? Mga mungkahi? Mga kahilingan? Kontakin kami sa support@godtoolsapp.com";
 "general_about_7" = "Makikita sa knowgod.com ang online na bersyon ng mga tool na ito. I-embed ito sa iyong sariling site!";
 "general_about_8" = "Pumunta sa godtoolsapp.com para sa karagdagang impormasyon.";
+"tutorial.continueButton.title.continue" = "Magpatuloy";
 "general_about_9" = "Habang ginagawa mo ang inisiyatiba para ibahagi ang iyong pananalampalataya, tandaan na ang Diyos ang siyang nagbabago sa puso. Mahaling mabuti ang bawat tao sa pamamagitan ng pakikinig para magkaunawaan.";
 "general_about_10" = "\"Hayaang maging puno ng grasya ang iyong pag-uusap, na binudburan ng asin, para malaman mo kung paano sasagutin ang lahat.\" Taga-Colosas 4:6";
 
 // Downloads
 "Download in progress" = "Kasalukuyang dina-download";
 
-// Navigation
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "Nauna";
 "card_status2" = "Susunod";
 
 // Language Name Strings
 "language_name_fa" = "Persian (Farsi)";
 
+"onboardingTutorial.continueButton.title" = "Magpatuloy";

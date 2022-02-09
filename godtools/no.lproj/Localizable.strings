@@ -1,3 +1,17 @@
+"parallelLanguage.yesButton.title" = "Ja";
+"parallelLanguage.noButton.title" = "Nei takk";
+"parallelLanguage.getStartedButton.title" = "Kom i gang";
+"parallelLanguage.selectLanguageButton.title" = "Velg språk";
+"parellelLanguage.prompt" = "Vil du velg et språk til?";
+"onboardingTutorial.beginButton.title" = "Begynn";
+"onboardingTutorial.quickStart.2.message" = "Jeg vil dele Guds ord med noen";
+"onboardingTutorial.quickStart.2.link" = "Velg et av de fire verktøyene våre";
+"onboardingTutorial.nextButton.title" = "Neste";
+"onboardingTutorial.quickstart.title" = "Koblinger for å komme i gang";
+"onboardingTutorial.quickStart.0.message" = "Jeg vil utforske kristendommen";
+"onboardingTutorial.quickStart.0.link" = "Les artiklene våre";
+"onboardingTutorial.quickStart.1.message" = "Jeg vil lære meg hvordan jeg kan ha samtaler om Guds ord";
+"onboardingTutorial.quickStart.1.link" = "Prøv leksjonene våre";
 "tool_offline_favorite_message" = "Gjør et verktøy tilgjengelig offline ved å trykke på hjerteikonet – det legges da i Favoritter.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -18,6 +32,14 @@
 "share_tool_remote_link_message" = "Hei, følg med meg i GodTools via skjermdeling. Her er lenken: %@ Hvis du ikke mottar denne meldingen før senere, kan det hende at lenken ikke virker. Vi kan prøve igjen på et annet tidspunkt.";
 "exit_tract_remote_share_session.message" = "Vil du avslutte den eksterne delingsøkten nå?";
 "load_tool_remote_session.message" = "Start skjermdeling …";
+"onboardingTutorial.0.title" = "Klar for enhver samtale";
+"onboardingTutorial.0.videoLink.title" = "Se video";
+"onboardingTutorial.1.title" = "Snakk om Gud med hvem du vil";
+"onboardingTutorial.1.message" = "GodTools hjelper deg med å ha dype samtaler om Gud.";
+"onboardingTutorial.2.title" = "Forbered deg for livets viktige øyeblikk";
+"onboardingTutorial.2.message" = "Finn ut hvordan du kan gjøre samtaler om tro til en naturlig del av livet.";
+"onboardingTutorial.3.title" = "Hjelp noen med å finne Jesus";
+"onboardingTutorial.3.message" = "GodTools er din guide til å spre Guds ord på en klar og relevant måte.";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Opplæring";
@@ -49,7 +71,7 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Artikler";
-"language_onboard" = "Over 80 språk";
+"language_onboard" = "Over 90 språk";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Du har lastet ned alle tilgjengelige verktøy.";
@@ -61,6 +83,9 @@
 "find_tools" = "Alle verktøy";
 
 "unavailable" = "Utilgjengelig";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "Hopp over";
 
 // Onboarding
 "add_new_tools" = "Legg til nye verktøy";
@@ -149,6 +174,8 @@ Appen kan lastes ned på https://godtoolsapp.com";
 "error_can_not_send_email" = "Det finnes ingen konfigurert e-post på enheten.";
 "required_field_missing" = "«%@» er et obligatorisk felt.";
 
+"onboardingTutorial.getStartedButton.title" = "Kom i gang";
+
 // About
 "general_about_1" = "GodTools hjelper deg å dele troen din på en enkel og klar måte.";
 "general_about_2" = "Med disse verktøyene kan du forklare til andre hvordan de kan starte en relasjon med Gud gjennom Jesus Kristus, også om du aldri før har delt troen din og med mennesker som snakker andre språk.";
@@ -158,16 +185,18 @@ Appen kan lastes ned på https://godtoolsapp.com";
 "general_about_6" = "Spørsmål? Forslag? Forespørsler? Ta kontakt på support@godtoolsapp.com";
 "general_about_7" = "Du kan finne en nettversjon av disse verktøyene på knowgod.com. Bygg inn på nettsiden din!";
 "general_about_8" = "Gå til godtoolsapp.com for mer informasjon.";
+"tutorial.continueButton.title.continue" = "Fortsett";
 "general_about_9" = "Når du tar initiativ til å dele troen din, må du huske at Gud er den eneste som endrer hjertet. Elsk alle ved å lytte og forstå.";
 "general_about_10" = "«La deres tale alltid være vennlig, men krydret med salt, så dere vet hvordan dere skal svare enhver.» Kolosserne 4:6";
 
 // Downloads
 "Download in progress" = "Laster ned …";
 
-// Navigation
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "Forrige";
 "card_status2" = "Neste";
 
 // Language Name Strings
 "language_name_fa" = "Persisk (farsi)";
 
+"onboardingTutorial.continueButton.title" = "Fortsett";

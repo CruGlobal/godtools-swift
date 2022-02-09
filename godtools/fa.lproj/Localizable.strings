@@ -1,3 +1,17 @@
+"parallelLanguage.yesButton.title" = "بله";
+"parallelLanguage.noButton.title" = "خیر، متشکرم";
+"parallelLanguage.getStartedButton.title" = "شروع کنید";
+"parallelLanguage.selectLanguageButton.title" = "انتخاب زبان";
+"parellelLanguage.prompt" = "مایلید زبان دومی تنظیم کنید؟";
+"onboardingTutorial.beginButton.title" = "شروع";
+"onboardingTutorial.quickStart.2.message" = "می‌خواهم انجیل را با دیگری به اشتراک بگذارم";
+"onboardingTutorial.quickStart.2.link" = "یکی از ابزارهای ما را انتخاب کنید";
+"onboardingTutorial.nextButton.title" = "بعدی";
+"onboardingTutorial.quickstart.title" = "لینک‌های شروع سریع";
+"onboardingTutorial.quickStart.0.message" = "می‌خواهم با مسیحیت آشنا شوم";
+"onboardingTutorial.quickStart.0.link" = "خواندن مقاله‌های ما";
+"onboardingTutorial.quickStart.1.message" = "می‌خواهم در مورد گفت‌وگوهای مربوط به انجیل بیشتر بدانم";
+"onboardingTutorial.quickStart.1.link" = "درس‌های ما را امتحان کنید";
 "tool_offline_favorite_message" = "با ضربه زدن روی آیکون قلب، که ابزار را به موارد دلخواه اضافه می‌کند، آن را به صورت آفلاین در دسترس قرار دهید.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -18,6 +32,14 @@
 "share_tool_remote_link_message" = "سلام، از طریق اشتراک‌گذاری صفحه در GodTools با من همراه باشید. لینک اینجاست: %@ اگر این پیام را دریافت نمی‌کنید، ممکن است لینک هنوز کار نمی‌کند. می‌توانید بعداً دوباره امتحان کنیم.";
 "exit_tract_remote_share_session.message" = "اکنون از جلسه اشتراک‌گذاری راه‌دور خارج می‌شوید؟";
 "load_tool_remote_session.message" = "شروع اشتراک گذاری صفحه";
+"onboardingTutorial.0.title" = "آمادۀ هر گفت‌وگویی";
+"onboardingTutorial.0.videoLink.title" = "تماشای ویدیو";
+"onboardingTutorial.1.title" = "با دیگران دربارۀ خدا صحبت کنید";
+"onboardingTutorial.1.message" = "GodTools به شما کمک می‌کند گفت‌وگویی معنادار درباره خدا داشته باشید.";
+"onboardingTutorial.2.title" = "برای لحظات مهم آماده شوید";
+"onboardingTutorial.2.message" = "بیاموزید چگونه صحبت کردن در مورد باورها را به بخشی از زندگی‌تان تبدیل کنید.";
+"onboardingTutorial.3.title" = "به دیگری کمک کنید عیسی مسیح را بشناسد";
+"onboardingTutorial.3.message" = "GodTools راهنمای شما در انتقال واضح و متناسب آموزه‌های انجیل است.";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "تمرین";
@@ -49,7 +71,7 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "مقاله‌ها";
-"language_onboard" = "80+ زبان";
+"language_onboard" = "90+ زبان";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "همه ابزارهای موجود را دانلود کرده‌اید.";
@@ -155,37 +177,66 @@ https://godtoolsapp.com
 "error_can_not_send_email" = "هیچ ایمیلی روی دستگاه شما پیکربندی نشده است.";
 "required_field_missing" = "کادر «%@» باید تکمیل شود.";
 
+"onboardingTutorial.getStartedButton.title" = "شروع کنید";
+
 // About
 "general_about_1" = "برنامه GodTools به شما کمک می‌کند ایمان خود را به شکلی راحت و صریح به اشتراک بگذارید.";
+// Tutorial
+"tutorial.tutorialItem.0.title" = "تماشا کردن";
 "general_about_2" = "این ابزار به شما کمک می‌کند با اطمینان به دیگران توضیح بدهید چطور می‌توانند از طریق عیسی مسیح رابطه خود با خداوند را آغاز کنند، حتی اگر هرگز پیش از این درباره ایمان خود با دیگران صحبت نکرده‌اید و یا شنوندکان شما به زبان دیگری صحبت می‌کنند.";
 "general_about_3" = "از میان مجموعه‌ای از ابزار مختلف با توجه به علایق و مخاطب خود انتخاب کنید. تمام ابزارها در تمام زبان‌ها در دسترس قرار ندارند.";
+"tutorial.tutorialItem.1.title" = "آماده کردن";
 "general_about_4" = "پیوندهای مربوط به منابع دیگر در پایان هر ابزار قرار دارند.";
+"tutorial.tutorialItem.1.message" = "آشنایی با امکانات دیگر ابزار";
 "general_about_5" = "برای دانلود هر زبان و/یا ابزار جدید به اتصال به اینترنت نیاز دارید. پس از دانلود، می‌توان از آن‌ها به صورت آفلاین هم استفاده کرد.";
+"tutorial.tutorialItem.2.title" = "سعی کردن";
 "general_about_6" = "پرسش‌ها؟ پیشنهادات؟ درخواست‌ها؟ با ما از طریق آدرس support@godtoolsapp.com تماس بگیرید.";
+"tutorial.tutorialItem.2.message" = "همه به عنوان مبتدی شروع می کنند. با دیگران به اشتراک بگذارید و از تجربیات خود بیاموزید.";
 "general_about_7" = "می‌توان در knowgod.com یک نسخه آنلاین از این ابزار را پیدا کرد. آن را در داخل سایت خودتان قرار دهید!";
+"tutorial.tutorialItem.3.title" = "این بخش آموزشی  برای مشاهده دوباره در منو موجود است.";
 "general_about_8" = "برای کسب اطلاعات بیشتر به godtoolsapp.com مراجعه کنید.";
+"tutorial.continueButton.title.continue" = "ادامه";
 "general_about_9" = "وقتی انگیزه لازم برای صحبت درباره ایمان خود را پیدا می‌کنید، به یاد داشته باشید که خداوند یگانه فردی است که قلب‌ها را تغییر می‌دهد. هر کسی را با شنیدن و درک سخنانش دوست بدارید";
+"tutorial.continueButton.title.startUsingGodTools" = "استفاده از GodTools را شروع کنید";
+
 "general_about_10" = "«بگذار صحبت‌های تو همیشه مملؤ از متانت باشد، کی به آن نمک اضافه کن، تا از این طریق برای همه پاسخی داشته باشی.»
 کولسیان‌ها ۴:۶";
 
+// OpenTutorial
+"openTutorial.showTutorialLabel.text" = "نشان دادن آمورش";
 // Downloads
 "Download in progress" = "دانلود در حال انجام است";
 
-// Navigation
+"openTutorial.openTutorialButton.title" = "باز کردن آموزش";
+
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "قبلی";
+// Account
+"account.navTitle" = "پروفایل من";
 "card_status2" = "بعدی";
+
+"account.activity.title" = "فعالیت";
 
 // Language Name Strings
 "language_name_fa" = "فارسی";
 
+// Account Activity
+"accountActivity.globalAnalytics.header.title" = "فعالیت جهانی";
 // OnboardingWelcome
 "onboardingWelcome.titleLabel.welcome" = "خوش آمدید";
+"accountActivity.globalAnalytics.users.title" = "کاربران بی نظیر";
 "onboardingWelcome.titleLabel.tagline" = "کمک برای به اشتراک گذاشتن ایمان مسیحی";
+"accountActivity.globalAnalytics.gospelPresentation.title" = "ارائه انجیل";
 "onboardingWelcome.beginButton" = "شروع";
 
+"accountActivity.globalAnalytics.launches.title" = "جلسات";
 // OnboardingTutorial
 "onboardingTutorial.aboutAppItem.0.title" = "با دیگران به اشتراک بگذارید";
+"accountActivity.globalAnalytics.countries.title" = "کشورها";
+
 "onboardingTutorial.aboutAppItem.0.message" = "این برنامه برای کمک به اشتراک گذاری ایمان شما طراحی شده است";
+// Alerts
+"alert.action.ok" = "تایید";
 "onboardingTutorial.aboutAppItem.1.title" = "انتخاب ابزار";
 "onboardingTutorial.aboutAppItem.1.message" = "God tools یاری دهنده شما برای آغاز و پایان یک گفتگوی روحانی می باشد";
 "onboardingTutorial.aboutAppItem.2.title" = "همیشه آماده است";
@@ -193,36 +244,7 @@ https://godtoolsapp.com
 "onboardingTutorial.appUsageItem.0.message" = "برای هر گفتگویی آماده شوید";
 "onboardingTutorial.appUsageItem.1.message" = "هم قذم شدم با شخصی برای اعلام مژده نجات";
 "onboardingTutorial.appUsageItem.2.message" = "دو زبان را کنار هم اجرا کنید";
-"onboardingTutorial.appUsageItem.3.message" = "از بین بیش از 80 زبان انتخاب کنید";
+"onboardingTutorial.appUsageItem.3.message" = "از بین بیش از 90 زبان انتخاب کنید";
 "onboardingTutorial.appUsageItem.4.message" = "کمک کردن به دیگران برای شروع به عنوان یک مسیحی";
 "onboardingTutorial.continueButton.title" = "ادامه";
 "onboardingTutorial.showMoreButton.title" = "موارد بیشتری را نشان بده";
-"onboardingTutorial.getStartedButton.title" = "شروع کنید";
-
-// Tutorial
-"tutorial.tutorialItem.0.title" = "تماشا کردن";
-"tutorial.tutorialItem.1.title" = "آماده کردن";
-"tutorial.tutorialItem.1.message" = "آشنایی با امکانات دیگر ابزار";
-"tutorial.tutorialItem.2.title" = "سعی کردن";
-"tutorial.tutorialItem.2.message" = "همه به عنوان مبتدی شروع می کنند. با دیگران به اشتراک بگذارید و از تجربیات خود بیاموزید.";
-"tutorial.tutorialItem.3.title" = "این بخش آموزشی  برای مشاهده دوباره در منو موجود است.";
-"tutorial.continueButton.title.continue" = "ادامه";
-"tutorial.continueButton.title.startUsingGodTools" = "استفاده از GodTools را شروع کنید";
-
-// OpenTutorial
-"openTutorial.showTutorialLabel.text" = "نشان دادن آمورش";
-"openTutorial.openTutorialButton.title" = "باز کردن آموزش";
-
-// Account
-"account.navTitle" = "پروفایل من";
-"account.activity.title" = "فعالیت";
-
-// Account Activity
-"accountActivity.globalAnalytics.header.title" = "فعالیت جهانی";
-"accountActivity.globalAnalytics.users.title" = "کاربران بی نظیر";
-"accountActivity.globalAnalytics.gospelPresentation.title" = "ارائه انجیل";
-"accountActivity.globalAnalytics.launches.title" = "جلسات";
-"accountActivity.globalAnalytics.countries.title" = "کشورها";
-
-// Alerts
-"alert.action.ok" = "تایید";

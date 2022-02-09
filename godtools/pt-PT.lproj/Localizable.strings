@@ -1,3 +1,17 @@
+"parallelLanguage.yesButton.title" = "Sim";
+"parallelLanguage.noButton.title" = "Não, obrigado";
+"parallelLanguage.getStartedButton.title" = "Começar";
+"parallelLanguage.selectLanguageButton.title" = "Seleciona um idioma";
+"parellelLanguage.prompt" = "Gostarias de definir um idioma secundário?";
+"onboardingTutorial.beginButton.title" = "Começar";
+"onboardingTutorial.quickStart.2.message" = "Quero partilhar o evangelho com uma pessoa";
+"onboardingTutorial.quickStart.2.link" = "Escolhe uma das nossas ferramentas";
+"onboardingTutorial.nextButton.title" = "Seguinte";
+"onboardingTutorial.quickstart.title" = "Ligações para o início rápido";
+"onboardingTutorial.quickStart.0.message" = "Quero explorar o Cristianismo";
+"onboardingTutorial.quickStart.0.link" = "Lê os nossos artigos";
+"onboardingTutorial.quickStart.1.message" = "Quero aprender a ter conversas sobre o evangelho";
+"onboardingTutorial.quickStart.1.link" = "Experimenta as nossas sessões";
 "tool_offline_favorite_message" = "Para ficares com uma ferramenta disponível offline, toca no ícone de coração para a adicionares aos teus favoritos.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -18,6 +32,14 @@
 "share_tool_remote_link_message" = "Olá. Acompanha-me na GodTools através da partilha de ecrã. Aqui está a ligação: %@ Se receberes esta mensagem demasiado tarde, a ligação poderá não estar a funcionar. Podemos tentar novamente noutra altura.";
 "exit_tract_remote_share_session.message" = "Pretendes sair da sessão de partilha remota agora?";
 "load_tool_remote_session.message" = "A iniciar a partilha de ecrã…";
+"onboardingTutorial.0.title" = "Pronto para qualquer conversa";
+"onboardingTutorial.0.videoLink.title" = "Ver vídeo";
+"onboardingTutorial.1.title" = "Fala sobre Deus com qualquer pessoa";
+"onboardingTutorial.1.message" = "A aplicação GodTools ajuda-te a ter conversas profundas sobre Deus.";
+"onboardingTutorial.2.title" = "Prepara-te para os momentos importantes";
+"onboardingTutorial.2.message" = "Aprende a tornar as conversas sobre a fé numa parte natural da tua vida.";
+"onboardingTutorial.3.title" = "Ajuda outra pessoa a descobrir Jesus";
+"onboardingTutorial.3.message" = "A aplicação GodTools é o teu guia para transmitir o evangelho de uma forma clara e relevante.";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Formação";
@@ -49,7 +71,7 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Artigos";
-"language_onboard" = "Mais de 80 idiomas";
+"language_onboard" = "Mais de 90 idiomas";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Transferiu todas as ferramentas disponíveis.";
@@ -61,6 +83,9 @@
 "find_tools" = "Todas as ferramentas";
 
 "unavailable" = "Indisponível";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "Ignorar";
 
 // Onboarding
 "add_new_tools" = "Adicionar novas ferramentas";
@@ -149,6 +174,8 @@ Podes transferir a aplicação em https://godtoolsapp.com";
 "error_can_not_send_email" = "Não existe nenhum e-mail configurado no teu dispositivo.";
 "required_field_missing" = "\"%@\" é um campo obrigatório.";
 
+"onboardingTutorial.getStartedButton.title" = "Começar";
+
 // About
 "general_about_1" = "A aplicação GodTools ajuda-te a partilhar a tua fé de uma forma fácil e clara.";
 "general_about_2" = "Estas ferramentas ajudam-te a explicar com segurança a outra pessoa como pode iniciar uma relação com Deus através de Jesus Cristo, mesmo que nunca tenhas partilhado a tua fé ou que a outra pessoa fale num idioma diferente.";
@@ -158,16 +185,18 @@ Podes transferir a aplicação em https://godtoolsapp.com";
 "general_about_6" = "Perguntas? Sugestões? Pedidos? Contacta-nos através do e-mail support@godtoolsapp.com";
 "general_about_7" = "Encontras uma versão online destas ferramentas em knowgod.com. Incorpora esta versão no teu próprio site!";
 "general_about_8" = "Visita godtoolsapp.com para obteres mais informações.";
+"tutorial.continueButton.title.continue" = "Continuar";
 "general_about_9" = "Quando tomas a iniciativa de partilhar a tua fé, lembra-te de que Deus é quem muda o coração. Ama cada pessoa ouvindo-a atentamente para a compreenderes.";
 "general_about_10" = "\"Que a vossa palavra seja sempre amável, temperada de sal, para que saibais responder a cada um como deveis.\" Colossenses 4:6";
 
 // Downloads
 "Download in progress" = "Transferência em curso";
 
-// Navigation
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "Anterior";
 "card_status2" = "Seguinte";
 
 // Language Name Strings
 "language_name_fa" = "Persa (parse)";
 
+"onboardingTutorial.continueButton.title" = "Continuar";

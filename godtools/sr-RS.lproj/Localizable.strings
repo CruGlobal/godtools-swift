@@ -1,3 +1,17 @@
+"parallelLanguage.yesButton.title" = "Да";
+"parallelLanguage.noButton.title" = "Не хвала";
+"parallelLanguage.getStartedButton.title" = "Започни";
+"parallelLanguage.selectLanguageButton.title" = "Изаберите језик";
+"parellelLanguage.prompt" = "Желите ли да поставите секундарни језик?";
+"onboardingTutorial.beginButton.title" = "Почни";
+"onboardingTutorial.quickStart.2.message" = "Желим да поделим јеванђеље са неким";
+"onboardingTutorial.quickStart.2.link" = "Одаберите један од наших алатки";
+"onboardingTutorial.nextButton.title" = "Следеће";
+"onboardingTutorial.quickstart.title" = "Линкови за брзи почетак";
+"onboardingTutorial.quickStart.0.message" = "Желим да истражим хришћанство";
+"onboardingTutorial.quickStart.0.link" = "Прочитајте наше чланке";
+"onboardingTutorial.quickStart.1.message" = "Желим да учим о разговорима о јеванђељу";
+"onboardingTutorial.quickStart.1.link" = "Испробајте наше лекције";
 "tool_offline_favorite_message" = "Омогући да алатка буде доступна ван мреже тако што ћете додирнути иконицу срце која ће је додати у омиљене.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -18,6 +32,14 @@
 "share_tool_remote_link_message" = "Здраво, пратите заједно са мном у апликацији GodTools преко дељења екрана. Ево везе: %@ Ако ову поруку не примите до касније, веза можда неће радити. Можемо да пробамо поново други пут.";
 "exit_tract_remote_share_session.message" = "Изађите из сесије даљинског дељења одмах?";
 "load_tool_remote_session.message" = "Почетак дељења екрана...";
+"onboardingTutorial.0.title" = "Спремни за сваки разговор";
+"onboardingTutorial.0.videoLink.title" = "Погледајте видео запис";
+"onboardingTutorial.1.title" = "Разговарајте о Богу са било ким";
+"onboardingTutorial.1.message" = "GodTools вам помаже да водите смислене разговоре о Богу.";
+"onboardingTutorial.2.title" = "Припремите се за важне тренутке";
+"onboardingTutorial.2.message" = "Научите како да разговоре о вери учините природним делом свог живота.";
+"onboardingTutorial.3.title" = "Помозите некоме да открије Исуса";
+"onboardingTutorial.3.message" = "GodTools је ваш водич за представљање јеванђеља на јасан и релевантан начин.";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Обука";
@@ -49,7 +71,7 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Чланци";
-"language_onboard" = "Перко 80 језика";
+"language_onboard" = "Перко 90 језика";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Преузели сте све доступне алатке.";
@@ -61,6 +83,9 @@
 "find_tools" = "Све алатке";
 
 "unavailable" = "Недоступно";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "Прескочи";
 
 // Onboarding
 "add_new_tools" = "Додај нове алатке";
@@ -147,6 +172,8 @@
 "error_can_not_send_email" = "На вашем уређају е-пошта није конфигурисана.";
 "required_field_missing" = "\"%@\" је обавезно поље.";
 
+"onboardingTutorial.getStartedButton.title" = "Започни";
+
 // About
 "general_about_1" = "Апликација GodTools вам помаже да поделите своју веру на лак и јасан начин.";
 "general_about_2" = "Ови алати вам помажу да некоме објасните сигурно како могу да започну везу са Богом кроз Исуса Христа, чак и ако никада раније нису делили своју веру или говорили на другом језику.";
@@ -156,16 +183,18 @@
 "general_about_6" = "Питања? Предлози? Захтеви? Контактирајте нас на support@godtoolsapp.com";
 "general_about_7" = "Верзија ових алата на мрежи се може наћи на knowgod.com. Уградите га на свом сајту!";
 "general_about_8" = "Посетите godtoolsapp.com за више информација.";
+"tutorial.continueButton.title.continue" = "Настави";
 "general_about_9" = "Чим предузмете иницијативу да поделите своју веру, сетите се да је Бог онај који мења срце. Волите сваку особу тако што ћете је слушати да бисте је разумели.";
 "general_about_10" = "„Реч ваша да бива свагда у благодати, сољу зачињена, да знате како вам свакоме треба одговарати.“ Колошани 4, 6";
 
 // Downloads
 "Download in progress" = "Преузимање је у току";
 
-// Navigation
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "Претходно";
 "card_status2" = "Следеће";
 
 // Language Name Strings
 "language_name_fa" = "Персијски (фарси)";
 
+"onboardingTutorial.continueButton.title" = "Настави";

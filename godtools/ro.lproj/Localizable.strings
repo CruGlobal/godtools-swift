@@ -1,3 +1,17 @@
+"parallelLanguage.yesButton.title" = "Da";
+"parallelLanguage.noButton.title" = "Nu, mulțumesc";
+"parallelLanguage.getStartedButton.title" = "Să începem";
+"parallelLanguage.selectLanguageButton.title" = "Selectează o limbă";
+"parellelLanguage.prompt" = "Vrei să setezi o limbă secundară?";
+"onboardingTutorial.beginButton.title" = "Începe";
+"onboardingTutorial.quickStart.2.message" = "Vreau să împărtășesc Biblia cu cineva";
+"onboardingTutorial.quickStart.2.link" = "Alege unul dintre instrumentele noastre";
+"onboardingTutorial.nextButton.title" = "Următorul";
+"onboardingTutorial.quickstart.title" = "Linkuri de pornire rapidă";
+"onboardingTutorial.quickStart.0.message" = "Vreau să explorez creștinismul";
+"onboardingTutorial.quickStart.0.link" = "Citește articolele noastre";
+"onboardingTutorial.quickStart.1.message" = "Vreau să aflu despre conversațiile pe marginea Bibliei";
+"onboardingTutorial.quickStart.1.link" = "Încearcă lecțiile noastre";
 "tool_offline_favorite_message" = "Un instrument va fi disponibil offline dacă apeși pictograma inimă, care îl adaugă la Favorite.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -18,6 +32,14 @@
 "share_tool_remote_link_message" = "Bună, urmează-mă în GodTools prin partajarea ecranului. Iată linkul: %@ Dacă nu primești acest mesaj până mai târziu, este posibil ca linkul să nu funcționeze. Poți încerca ulterior.";
 "exit_tract_remote_share_session.message" = "Părăsești sesiunea de partajare la distanță acum?";
 "load_tool_remote_session.message" = "Începe partajarea ecranului...";
+"onboardingTutorial.0.title" = "Pregătită pentru fiecare conversație";
+"onboardingTutorial.0.videoLink.title" = "Urmărește videoclipul";
+"onboardingTutorial.1.title" = "Discută despre Dumnezeu cu oricine";
+"onboardingTutorial.1.message" = "GodTools te ajută să ai conversații constructive despre Dumnezeu.";
+"onboardingTutorial.2.title" = "Pregătește-te pentru momentele care contează";
+"onboardingTutorial.2.message" = "Află cum să faci conversațiile despre credință o parte normală din viața ta.";
+"onboardingTutorial.3.title" = "Ajută pe cineva să-l descopere pe Iisus";
+"onboardingTutorial.3.message" = "GodTools este ghidul tău pentru propovăduirea Bibliei într-un mod clar și relevant.";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Instruire";
@@ -49,7 +71,7 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Articole";
-"language_onboard" = "Peste 75 de limbi";
+"language_onboard" = "Peste 90 de limbi";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Ai descărcat toate instrumentele disponibile.";
@@ -61,6 +83,9 @@
 "find_tools" = "Toate instrumentele";
 
 "unavailable" = "Indisponibil";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "Omite";
 
 // Onboarding
 "add_new_tools" = "Adaugă instrumente noi";
@@ -158,16 +183,18 @@ Aplicația poate fi descărcată de pe https://godtoolsapp.com";
 "general_about_6" = "Întrebări? Sugestii? Solicitări? Contactați-ne la support@godtoolsapp.com";
 "general_about_7" = "Puteți găsi versiunea online a instrumentelor pe knowgod.com. Implementați-o pe site-ul vostru!";
 "general_about_8" = "Vizitați godtoolsapp.com pentru mai multe informații.";
+"tutorial.continueButton.title.continue" = "Continuaţi";
 "general_about_9" = "Atunci când adopți inițiativa de a-ți împărtăși credința, nu uita că Dumnezeu este cel care schimbă inimile. Iubește fiecare persoană și ascult-o pentru a o înțelege.";
 "general_about_10" = "„Vorbirea voastră să fie totdeauna cu har, dreasă cu sare, ca să ştiţi cum trebuie să răspundeţi fiecăruia.” Coloseni 4:6";
 
 // Downloads
 "Download in progress" = "Descărcare în curs";
 
-// Navigation
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "Ant.";
-"card_status2" = "Următor";
+"card_status2" = "Următorul";
 
 // Language Name Strings
 "language_name_fa" = "Persană (Farsi)";
 
+"onboardingTutorial.continueButton.title" = "Continuaţi";

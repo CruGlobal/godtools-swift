@@ -1,3 +1,17 @@
+"parallelLanguage.yesButton.title" = "Так";
+"parallelLanguage.noButton.title" = "Ні, дякую";
+"parallelLanguage.getStartedButton.title" = "Розпочати";
+"parallelLanguage.selectLanguageButton.title" = "Оберіть мову";
+"parellelLanguage.prompt" = "Хочете встановити додаткову мову?";
+"onboardingTutorial.beginButton.title" = "Почати";
+"onboardingTutorial.quickStart.2.message" = "Я хочу поділитися Благою Вісткою з іншими";
+"onboardingTutorial.quickStart.2.link" = "Виберіть один із наших інструментів";
+"onboardingTutorial.nextButton.title" = "Далі";
+"onboardingTutorial.quickstart.title" = "Стартові посилання";
+"onboardingTutorial.quickStart.0.message" = "Я хочу дізнатися про християнство";
+"onboardingTutorial.quickStart.0.link" = "Прочитайте наші статті";
+"onboardingTutorial.quickStart.1.message" = "Я хочу навчитися вести євангельські розмови";
+"onboardingTutorial.quickStart.1.link" = "Спробуйте наші уроки";
 "tool_offline_favorite_message" = "Інструмент буде доступним у режимі офлайн, якщо торкнутись значка серця. Його буде додано до улюбленого.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -13,11 +27,19 @@
 "share_tool_screen_tutorial.share_your_screen.message" = "Ви можете надіслати другу чи подрузі посилання на цей інструмент. Коли він чи вона відкриє посилання, розпочнеться демонстрація екрану.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "Функція віддзеркалення";
 "share_tool_screen_tutorial.mirrored_experience.message" = "На екрані вашого друга буде показуватися те, що ви переглядаєте в інструменті на вашому телефоні. Це дозволить зробити огляд інструменту одночасно на двох пристроях.";
-"share_tool_screen_tutorial.get_started.title" = "Початок";
+"share_tool_screen_tutorial.get_started.title" = "Розпочати";
 "share_tool_screen_tutorial.get_started.message" = "Відправте посилання людям, з якими ви хочете розпочати сеанс демонстрації екрану. Для участі в сеансі, необхідно, щоб в учасників була встановлена програма GodTools на їхніх пристроях.";
 "share_tool_remote_link_message" = "Вітаю! Зайдіть у програму GodTools, щоб бачити мій екран за посиланням: %@ Якщо ви пізно отримали це повідомлення, посилання може бути застарілим. Спробуймо іншим разом.";
 "exit_tract_remote_share_session.message" = "Закінчити віддалений сеанс демонстрації?";
 "load_tool_remote_session.message" = "Розпочинається демонстрація екрану...";
+"onboardingTutorial.0.title" = "Допомога в будь-якій розмові";
+"onboardingTutorial.0.videoLink.title" = "Переглянути відео";
+"onboardingTutorial.1.title" = "Розмовляйте про Бога з будь-ким";
+"onboardingTutorial.1.message" = "GodTools допомагають вам проводити змістовні розмови про Бога.";
+"onboardingTutorial.2.title" = "Будьте готові до важливих моментів";
+"onboardingTutorial.2.message" = "Дізнайтесь, як зробити розмови про віру невід’ємною частиною вашого життя.";
+"onboardingTutorial.3.title" = "Допоможіть іншим прийти до Ісуса";
+"onboardingTutorial.3.message" = "GodTools навчить вас передавати Благу Вістку зрозумілими й простими словами.";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Тренування";
@@ -48,7 +70,7 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Статті";
-"language_onboard" = "Понад 80 мов";
+"language_onboard" = "Понад 90 мов";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Ви завантажили всі доступні інструменти.";
@@ -60,6 +82,9 @@
 "find_tools" = "Усі інструменти";
 
 "unavailable" = "Недоступно";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "Пропустити";
 
 // Onboarding
 "add_new_tools" = "Додати інструмент";
@@ -148,6 +173,8 @@
 "error_can_not_send_email" = "Ел. пошту не налаштовано на вашому пристрої.";
 "required_field_missing" = "\"%@\" є обов'язковим пунктом";
 
+"onboardingTutorial.getStartedButton.title" = "Розпочати";
+
 // About
 "general_about_1" = "З допомогою програми GodTools поширювати Божу вістку легко та зручно.";
 "general_about_2" = "Ви зможете впевнено розповісти комусь, як познайомитись із Богом через Ісуса — навіть, якщо ви цього ніколи ще не робили або та людина розмовляє іншої мовою.";
@@ -157,16 +184,18 @@
 "general_about_6" = "Ви никли питання, пропозиції чи прохання? Звертайтеся за адресою support@godtoolsapp.com";
 "general_about_7" = "Онлайн версію програми можна знайти на веб-сайті knowgod.com. Ви також можете розмістити інструменти на вашому веб-сайті!";
 "general_about_8" = "Відвідайте godtoolsapp.com за докладнішою інформацією.";
+"tutorial.continueButton.title.continue" = "Продовжити";
 "general_about_9" = "Вирішивши донести Божу вістку до інших, пам'ятайте, що любов — то є божий дар. Тому поширюйте її серед інших і уважно прислухайтеся і ви завжди знайдете порозуміння.";
 "general_about_10" = "«Нехай ваше слово завжди буде люб’язне, приправлене сіллю, щоб у розмові з будь-ким ви знали, як відповідати.» Колоссян 4:6";
 
 // Downloads
 "Download in progress" = "Завантажується...";
 
-// Navigation
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "Назад";
 "card_status2" = "Далі";
 
 // Language Name Strings
 "language_name_fa" = "Перська (фарсі)";
 
+"onboardingTutorial.continueButton.title" = "Продовжити";
