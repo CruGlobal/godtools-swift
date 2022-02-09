@@ -1202,6 +1202,8 @@
 		454B53F427305C7100DDA8F9 /* LessonDeepLinkPathComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDeepLinkPathComponents.swift; sourceTree = "<group>"; };
 		455416822794C9540060D4F1 /* DownloadedToolData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadedToolData.swift; sourceTree = "<group>"; };
 		455416842794C9670060D4F1 /* ToolTranslationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolTranslationData.swift; sourceTree = "<group>"; };
+		4555599A27B3193D00A32A61 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
+		4555599B27B3194800A32A61 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		45557AE9252D094000ACFA95 /* LocaleLocalizationBundleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocaleLocalizationBundleTests.swift; sourceTree = "<group>"; };
 		455582D3269F2C1000C3FF14 /* TrainingViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrainingViewFactory.swift; sourceTree = "<group>"; };
 		455582D6269F2C1000C3FF14 /* TrainingTipView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TrainingTipView.xib; sourceTree = "<group>"; };
@@ -5938,6 +5940,8 @@
 				mn,
 				tpi,
 				nb,
+				sv,
+				fi,
 			);
 			mainGroup = 4F5732801EA69CF00082035C;
 			packageReferences = (
@@ -7275,6 +7279,8 @@
 				45DEF4BC24DEF6FA00996695 /* tr */,
 				453D866324E08310004EA89F /* mn */,
 				453D866424E08347004EA89F /* tpi */,
+				4555599A27B3193D00A32A61 /* sv */,
+				4555599B27B3194800A32A61 /* fi */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
