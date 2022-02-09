@@ -56,11 +56,14 @@ class MobileContentFlowView: MobileContentStackView {
     }
 
     private func relayoutFlowForBoundsChange() {
+                     
+        let currentFlowItemsViews: [MobileContentFlowItemView] = flowItemViews
         
         removeAllChildren()
         flowItemRows.removeAll()
-
-        for flowItemView in flowItemViews {
+        flowItemViews.removeAll()
+                
+        for flowItemView in currentFlowItemsViews {
             renderChild(childView: flowItemView)
         }
         
