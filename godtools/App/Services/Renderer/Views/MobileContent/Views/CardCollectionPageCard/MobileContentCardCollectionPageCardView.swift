@@ -62,10 +62,6 @@ class MobileContentCardCollectionPageCardView: MobileContentView {
             addContentStackView(contentStackView: contentStackView)
         }
     }
-    
-    override func finishedRenderingChildren() {
-        super.finishedRenderingChildren()
-    }
 }
 
 // MARK: - Content Stack
