@@ -11,7 +11,7 @@ import UIKit
 class ToolPageCardViewModel: ToolPageCardViewModelType {
     
     private let rendererPageModel: MobileContentRendererPageModel
-    private let cardModel: CardModelType
+    private let cardModel: MultiplatformCard
     private let analytics: AnalyticsContainer
     private let fontService: FontService
     private let localizationServices: LocalizationServices
@@ -26,7 +26,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     let hidesNextButton: Bool
     let isHiddenCard: Bool
     
-    required init(cardModel: CardModelType, rendererPageModel: MobileContentRendererPageModel, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, trainingTipsEnabled: Bool) {
+    required init(cardModel: MultiplatformCard, rendererPageModel: MobileContentRendererPageModel, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, trainingTipsEnabled: Bool) {
                         
         self.cardModel = cardModel
         self.rendererPageModel = rendererPageModel
@@ -129,8 +129,15 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     }
     
     func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel {
+        
+        let backgroundImageModel = BackgroundImageModel(
+            backgroundImage: cardModel.backgroundImage,
+            backgroundImageAlignment: cardModel.backgroundImageAlignment,
+            backgroundImageScale: cardModel.backgroundImageScale
+        )
+        
         return MobileContentBackgroundImageViewModel(
-            backgroundImageModel: cardModel,
+            backgroundImageModel: backgroundImageModel,
             manifestResourcesCache: rendererPageModel.resourcesCache,
             languageDirection: rendererPageModel.language.languageDirection
         )

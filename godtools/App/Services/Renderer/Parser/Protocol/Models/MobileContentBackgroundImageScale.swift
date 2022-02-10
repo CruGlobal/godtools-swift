@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 enum MobileContentBackgroundImageScale: String {
     
@@ -14,4 +15,21 @@ enum MobileContentBackgroundImageScale: String {
     case fill = "fill"
     case fillHorizontally = "fill-x"
     case fillVertically = "fill-y"
+    
+    init(imageScale: ImageScaleType) {
+        
+        switch imageScale {
+        case .fit:
+            self = .fit
+        case .fill:
+            self =  .fill
+        case .fillX:
+            self =  .fillHorizontally
+        case .fillY:
+            self =  .fillVertically
+        default:
+            assertionFailure("Found unsupported type, returning fill.  Ensure case is supported.")
+            self =  .fill
+        }
+    }
 }

@@ -9,7 +9,7 @@
 import Foundation
 import GodToolsToolParser
 
-class MultiplatformCard: CardModelType {
+class MultiplatformCard {
     
     private let card: TractPage.Card
     
@@ -31,20 +31,7 @@ class MultiplatformCard: CardModelType {
     }
     
     var backgroundImageScale: MobileContentBackgroundImageScale {
-        
-        switch card.backgroundImageScaleType {
-        case .fit:
-            return .fit
-        case .fill:
-            return .fill
-        case .fillX:
-            return .fillHorizontally
-        case .fillY:
-            return .fillVertically
-        default:
-            assertionFailure("Found unsupported type, returning fill.  Ensure case is supported.")
-            return .fill
-        }
+        return MobileContentBackgroundImageScale(imageScale: card.backgroundImageScaleType)
     }
     
     var dismissListeners: [MultiplatformEventId] {
@@ -86,20 +73,8 @@ class MultiplatformCard: CardModelType {
 
 // MARK: - MobileContentRenderableModel
 
-extension MultiplatformCard {
-    
-    var restrictTo: String? {
-        return nil
-    }
-    
-    var version: String? {
-        return nil
-    }
-    
-    var modelContentIsRenderable: Bool {
-        return true
-    }
-    
+extension MultiplatformCard: MobileContentRenderableModel {
+        
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
         
         var childModels: [MobileContentRenderableModel] = Array()

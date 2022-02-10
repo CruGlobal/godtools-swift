@@ -9,9 +9,9 @@
 import Foundation
 import GodToolsToolParser
 
-class MultiplatformCards: CardsModelType {
+class MultiplatformCards {
     
-    let cards: [CardModelType]
+    let cards: [MultiplatformCard]
     
     required init(cards: [TractPage.Card]) {
         
@@ -19,23 +19,23 @@ class MultiplatformCards: CardsModelType {
         
         self.cards = cards.map({MultiplatformCard(card: $0, numberOfVisibleCards: numberOfVisibleCards)})
     }
+    
+    var visibleCards: [MultiplatformCard] {
+        return cards.filter({!$0.isHidden})
+    }
+    
+    var numberOfCards: Int {
+        return cards.count
+    }
+    
+    var numberOfVisibleCards: Int {
+        return visibleCards.count
+    }
 }
 
 // MARK: - MobileContentRenderableModel
 
-extension MultiplatformCards {
-    
-    var restrictTo: String? {
-        return nil
-    }
-    
-    var version: String? {
-        return nil
-    }
-    
-    var modelContentIsRenderable: Bool {
-        return true
-    }
+extension MultiplatformCards: MobileContentRenderableModel {
     
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
         return cards

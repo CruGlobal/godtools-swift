@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class MobileContentTextViewModel: MobileContentTextViewModelType {
     
@@ -29,7 +30,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
         self.fontService = fontService
         
         let containerTextColor: UIColor?
-        if containerModel is CardModelType {
+        if containerModel is TractPage.Card {
             containerTextColor = rendererPageModel.pageColors.cardTextColor?.uiColor
         }
         else {

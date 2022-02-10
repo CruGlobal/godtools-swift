@@ -10,7 +10,7 @@ import Foundation
 
 class ToolPageCardsViewModel: NSObject, ToolPageCardsViewModelType {
     
-    private let cardsModel: CardsModelType
+    private let cardsModel: MultiplatformCards
     private let rendererPageModel: MobileContentRendererPageModel
     private let cardJumpService: CardJumpService
     
@@ -18,7 +18,7 @@ class ToolPageCardsViewModel: NSObject, ToolPageCardsViewModelType {
     let numberOfCards: Int
     let numberOfVisibleCards: Int
     
-    required init(cardsModel: CardsModelType, rendererPageModel: MobileContentRendererPageModel, cardJumpService: CardJumpService) {
+    required init(cardsModel: MultiplatformCards, rendererPageModel: MobileContentRendererPageModel, cardJumpService: CardJumpService) {
         
         self.cardsModel = cardsModel
         self.rendererPageModel = rendererPageModel

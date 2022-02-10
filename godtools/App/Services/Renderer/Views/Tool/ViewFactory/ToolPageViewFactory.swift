@@ -41,7 +41,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
     
     func viewForRenderableModel(renderableModel: MobileContentRenderableModel, renderableModelParent: MobileContentRenderableModel?, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) -> MobileContentView? {
         
-        if let cardModel = renderableModel as? CardModelType {
+        if let cardModel = renderableModel as? MultiplatformCard {
             
             let viewModel = ToolPageCardViewModel(
                 cardModel: cardModel,
@@ -89,7 +89,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let cardsModel = renderableModel as? CardsModelType {
+        else if let cardsModel = renderableModel as? MultiplatformCards {
             
             let viewModel = ToolPageCardsViewModel(
                 cardsModel: cardsModel,
