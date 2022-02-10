@@ -75,21 +75,14 @@ class MenuFlow: Flow {
             self.languageSettingsFlow = languageSettingsFlow
             
         case .tutorialTappedFromMenu:
-            
-            let tutorialFlow = TutorialFlow(
-                flowDelegate: self,
-                appDiContainer: appDiContainer,
-                sharedNavigationController: nil
-            )
-            navigationController.present(tutorialFlow.navigationController, animated: true, completion: nil)
-            self.tutorialFlow = tutorialFlow
+            navigateToTutorial()
             
         case .closeTappedFromTutorial:
-            navigationController.dismiss(animated: true, completion: nil)
-            self.tutorialFlow = nil
+            dismissTutorial()
             
         case .startUsingGodToolsTappedFromTutorial:
             flowDelegate?.navigate(step: .startUsingGodToolsTappedFromTutorial)
+            dismissTutorial()
             
         case .doneTappedFromMenu:
             print(" menu flow done tapped")
@@ -219,5 +212,34 @@ class MenuFlow: Flow {
         let view = WebContentView(viewModel: viewModel)
         
         navigationController.pushViewController(view, animated: true)
+    }
+}
+
+// MARK: - Tutorial
+
+extension MenuFlow {
+    
+    private func navigateToTutorial() {
+        
+        let tutorialFlow = TutorialFlow(
+            flowDelegate: self,
+            appDiContainer: appDiContainer,
+            sharedNavigationController: nil
+        )
+        
+        navigationController.present(tutorialFlow.navigationController, animated: true, completion: nil)
+        
+        self.tutorialFlow = tutorialFlow
+    }
+    
+    private func dismissTutorial() {
+        
+        guard tutorialFlow != nil else {
+            return
+        }
+        
+        navigationController.dismiss(animated: true, completion: nil)
+        
+        self.tutorialFlow = nil
     }
 }

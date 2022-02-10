@@ -14,18 +14,14 @@ enum FlowStep {
     case appLaunchedFromTerminatedState
     case appLaunchedFromBackgroundState
     case deepLink(deepLinkType: ParsedDeepLinkType)
-    case showTools(animated: Bool, shouldCreateNewInstance: Bool, startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView?)
-    case showMenu
-    case showLanguageSettings
     case showOnboardingTutorial(animated: Bool)
     case onboardingFlowCompleted(onboardingFlowCompletedState: OnboardingFlowCompletedState?)
-    case showSetupParallelLanguage
     case buttonWithUrlTappedFromFirebaseInAppMessage(url: URL)
-    
-    // tools
     case menuTappedFromTools
     case languageSettingsTappedFromTools
-    case openTutorialTapped
+    case openTutorialTappedFromTools
+    case userViewedFavoritedToolsListFromTools
+    case userViewedAllToolsListFromTools
     
     // onboarding
     case videoButtonTappedFromOnboardingTutorial(youtubeVideoId: String)
