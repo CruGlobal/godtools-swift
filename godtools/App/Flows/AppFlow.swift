@@ -57,7 +57,6 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         rootController.view.frame = UIScreen.main.bounds
         rootController.view.backgroundColor = .clear
         
-        navigationController.delegate = self
         navigationController.view.backgroundColor = .white
         navigationController.setNavigationBarHidden(true, animated: false)
         
@@ -280,7 +279,6 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         case .onboardingFlowCompleted(let onboardingFlowCompletedState):
             
             instantiateToolsMenuIfNeeded()
-            configureNavigationBarForToolsMenu(shouldAnimateNavigationBarHiddenState: false)
             
             dismissOnboarding(animated: true) { [weak self] in
                 
@@ -454,23 +452,6 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func configureNavigationBarForToolsMenu(shouldAnimateNavigationBarHiddenState: Bool) {
-                
-        AppDelegate.setWindowBackgroundColorForStatusBarColor(color: ColorPalette.primaryNavBar.color)
-        
-        navigationController.setNavigationBarHidden(false, animated: shouldAnimateNavigationBarHiddenState)
-        
-        let fontService: FontService = appDiContainer.getFontService()
-        
-        navigationController.navigationBar.setupNavigationBarAppearance(
-            backgroundColor: ColorPalette.primaryNavBar.color,
-            controlColor: .white,
-            titleFont: fontService.getFont(size: 17, weight: .semibold),
-            titleColor: .white,
-            isTranslucent: false
-        )
-    }
-    
     private func instantiateToolsMenuIfNeeded() {
         
         guard toolsMenuView == nil else {
@@ -487,7 +468,8 @@ extension AppFlow {
             favoritingToolMessageCache: appDiContainer.favoritingToolMessageCache,
             analytics: appDiContainer.analytics,
             getTutorialIsAvailableUseCase: appDiContainer.getTutorialIsAvailableUseCase(),
-            openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache
+            openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache,
+            fontService: appDiContainer.getFontService()
         )
         
         let toolsMenuView = ToolsMenuView(
@@ -520,9 +502,7 @@ extension AppFlow {
         lessonFlow = nil
         tractFlow = nil
         articleFlow = nil
-        
-        configureNavigationBarForToolsMenu(shouldAnimateNavigationBarHiddenState: false)
-        
+                
         toolsMenuView.reset(toolbarItem: toolbarItem ?? AppFlow.defaultStartingToolsMenu, animated: animateToolMenuToolbarItemTransition)
                 
         navigationController.popToRootViewController(animated: false)
@@ -865,24 +845,6 @@ extension AppFlow {
             menuFlow.navigationController.removeAsChildController()
             self.menuFlow = nil
         }
-    }
-}
-
-// MARK: - NavigationController Delegate
-
-extension AppFlow: UINavigationControllerDelegate {
-    
-    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-        
-        let isToolsMenu: Bool = viewController is ToolsMenuView
-        
-        if isToolsMenu {
-            configureNavigationBarForToolsMenu(shouldAnimateNavigationBarHiddenState: true)
-        }
-    }
-    
-    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
-        
     }
 }
 

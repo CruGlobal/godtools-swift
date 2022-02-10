@@ -88,6 +88,12 @@ class ToolsMenuView: UIViewController {
         navigateToToolsListForToolbarItem(toolbarItem: startingToolbarItem, animated: false)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        configureNavigationBarAppearance(shouldAnimateNavigationBarHiddenState: animated)
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
                 
@@ -113,6 +119,21 @@ class ToolsMenuView: UIViewController {
         allToolsView?.scrollToTopOfToolsList(animated: false)
         
         navigateToToolsListForToolbarItem(toolbarItem: toolbarItem, animated: animated)
+    }
+    
+    private func configureNavigationBarAppearance(shouldAnimateNavigationBarHiddenState: Bool) {
+                
+        AppDelegate.setWindowBackgroundColorForStatusBarColor(color: ColorPalette.primaryNavBar.color)
+        
+        navigationController?.setNavigationBarHidden(false, animated: shouldAnimateNavigationBarHiddenState)
+                
+        navigationController?.navigationBar.setupNavigationBarAppearance(
+            backgroundColor: ColorPalette.primaryNavBar.color,
+            controlColor: .white,
+            titleFont: viewModel.navTitleFont,
+            titleColor: .white,
+            isTranslucent: false
+        )
     }
     
     private func toolsListDidAppear() {

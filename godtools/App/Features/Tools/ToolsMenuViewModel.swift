@@ -6,7 +6,7 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class ToolsMenuViewModel: ToolsMenuViewModelType {
     
@@ -21,8 +21,10 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
     private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     
     private weak var flowDelegate: FlowDelegate?
+    
+    let navTitleFont: UIFont
         
-    required init(flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, deviceAttachmentBanners: DeviceAttachmentBanners, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase, openTutorialCalloutCache: OpenTutorialCalloutCacheType) {
+    required init(flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, deviceAttachmentBanners: DeviceAttachmentBanners, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase, openTutorialCalloutCache: OpenTutorialCalloutCacheType, fontService: FontService) {
         
         self.flowDelegate = flowDelegate
         self.initialDataDownloader = initialDataDownloader
@@ -34,6 +36,7 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
         self.analytics = analytics
         self.getTutorialIsAvailableUseCase = getTutorialIsAvailableUseCase
         self.openTutorialCalloutCache = openTutorialCalloutCache
+        self.navTitleFont = fontService.getFont(size: 17, weight: .semibold)
     }
     
     private func getFlowDelegate() -> FlowDelegate {
