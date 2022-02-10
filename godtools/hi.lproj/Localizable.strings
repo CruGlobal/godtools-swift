@@ -1,3 +1,17 @@
+"parallelLanguage.yesButton.title" = "हां";
+"parallelLanguage.noButton.title" = "नहीं, धन्यवाद";
+"parallelLanguage.getStartedButton.title" = "शुरू करें";
+"parallelLanguage.selectLanguageButton.title" = "एक भाषा चुनें";
+"parellelLanguage.prompt" = "क्या आप कोई द्वितीय भाषा सेट करना चाहेंगे?";
+"onboardingTutorial.beginButton.title" = "शुरू करें";
+"onboardingTutorial.quickStart.2.message" = "मुझे इंजील किसी के साथ साझा करना है";
+"onboardingTutorial.quickStart.2.link" = "हमारा कोई टूल चुनें";
+"onboardingTutorial.nextButton.title" = "अगला";
+"onboardingTutorial.quickstart.title" = "तुरंत शुरुआत के लिंक";
+"onboardingTutorial.quickStart.0.message" = "मुझे ईसाईयत के बारे में अधिक जानना है";
+"onboardingTutorial.quickStart.0.link" = "हमारे लेख पढ़ें";
+"onboardingTutorial.quickStart.1.message" = "मुझे इंजील वार्तालापों के बारे में जानना है";
+"onboardingTutorial.quickStart.1.link" = "हमारे अध्याय आज़माएँ";
 "tool_offline_favorite_message" = "टूल को पसंदीदा में जोड़ने वाले 'दिल' चिन्ह को टैप करके आप उस टूल को ऑफलाइन उपलब्ध कर सकते हैं।";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -18,6 +32,14 @@
 "share_tool_remote_link_message" = "हैलो, अपनी स्क्रीन को साझा करते हुए मेरे साथ GodTools में अनुसरण करें।  लिंक यहाँ है:%@ यदि आपको यह संदेश बाद में भी नहीं मिलता है, तो लिंक अभी भी काम नहीं कर सकता है। हम एक बार फिर से कोशिश कर सकते हैं।";
 "exit_tract_remote_share_session.message" = "अब दूरस्थ साझाकरण सत्र से बाहर निकलें?";
 "load_tool_remote_session.message" = "स्क्रीन साझा करना शुरू...";
+"onboardingTutorial.0.title" = "हर वार्तालाप के लिए तैयार";
+"onboardingTutorial.0.videoLink.title" = "वीडियो देखें";
+"onboardingTutorial.1.title" = "परमेश्वर के बारे में किसी से भी वार्तालाप करें";
+"onboardingTutorial.1.message" = "GodTools आपको परमेश्वर के बारे में अर्थपूर्ण वार्तालाप करने में मदद करते हैं।";
+"onboardingTutorial.2.title" = "महत्त्वपूर्ण पलों की तैयारी करें";
+"onboardingTutorial.2.message" = "सीखें कि विश्वास-संबंधी बातचीत को अपने जीवन का एक अभिन्न अंग कैसे बनाएँ।";
+"onboardingTutorial.3.title" = "किसी को जीसस के पास आने में मदद करें";
+"onboardingTutorial.3.message" = "इंजील के बारे में स्पष्ट और प्रासंगिक तरीके से संवाद स्थापित करने में GodTools आपका दिशादर्शक है।";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "प्रशिक्षण";
@@ -57,7 +79,7 @@
 
 /* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "articles.loadingView.downloadingArticles" = "लेख डाउनलोड कर रहे…";
-"language_onboard" = "80+ भाषाएँ";
+"language_onboard" = "90+ भाषाएँ";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "आपने सभी उपलब्ध टूल्स डाउनलोड कर लिए हैं।";
@@ -166,36 +188,68 @@
 "error_can_not_send_email" = "आपके डिवाइस पर कोई भी ईमेल कनफिगर नहीं है।";
 "required_field_missing" = "\"%@\" एक आवश्यक फील्ड है।";
 
+"onboardingTutorial.getStartedButton.title" = "शुरू हो जाएं";
+
 // About
 "general_about_1" = "GodTools आपको अपने विश्वास/धर्म को आसान और साफ तरीके शेयर करने में मदद करता है।";
+// Tutorial
+"tutorial.tutorialItem.0.title" = "देखें";
 "general_about_2" = "ये टूल आपको विश्वास के किसी अन्य को ये समझाने में मदद करता है कि वे कैसे भगवान के साथ जीसस क्राइस्ट के सहारे एक रिश्ते की शुरूआत कर सकते हैं, भले ही आपने अपना विश्वास इससे पहले कभी नहीं किया या वे कोई दूसरी भाषा बोलते हों।";
+"tutorial.tutorialItem.0.message" = "हमारे डेमो वीडियो में देखें कि GodTools में क्या है (उप-शीर्षक सेटिंग के लिए वीडियो पर टैप करें)";
 "general_about_3" = "अपनी प्राथमिकताओं और अपने श्रोता के आधार पर विभिन्न टूल्स में से चुनें। सभी टूल हरेक भाषा में उपलब्ध नहीं हैं।";
+"tutorial.tutorialItem.1.title" = "तैयारी करें";
 "general_about_4" = "अन्य संसाधनों के लिंक हरेक टूल के नीचे शामिल हैं।";
+"tutorial.tutorialItem.1.message" = "अपने कुछ टूल्स को जानें। \"मुझे शेयर करना सिखाएं\" टूल एक अच्छी शुरुआत होगी।
+
+किसी भी टूल की अधिक जानकारी हेतु उस पर दिया हुआ जानकारी बटन दबाएं।";
 "general_about_5" = "हरेक नए टूल और/या भाषा के लिए ऑनलाइन कनेक्शन का होना आवश्यक है। डाउनलोड होने के बाद उनका प्रयोग ऑफलाइन किया जा सकता है।";
+"tutorial.tutorialItem.2.title" = "कोशिश करें";
 "general_about_6" = "प्रश्न? सुझाव? आग्रह? support@godtoolsapp.com पर हमसे संपर्क करें।";
+"tutorial.tutorialItem.2.message" = "सबकी शुरुआत नौसिखिए की तरह होती है। किसी वार्तालाप में एक टूल का उपयोग करके देखें कि आप क्या सीखते हैं।";
 "general_about_7" = "इन टूल्स के ऑनलाइन संस्करण knowgod.com पर भी हैं। इसे अपने वेबसाइट से जोड़ें।";
+"tutorial.tutorialItem.3.title" = "दुबारा देखने के लिए यह ट्यूटोरियल मेन्यु में उपलब्ध है";
 "general_about_8" = "अधिक जानकारी के लिए godtoolsapp.com पर जाएं।";
+"tutorial.continueButton.title.continue" = "जारी रखें";
 "general_about_9" = "अपना विश्वास प्रकट करने के दौरान याद रखें कि केवल भगवान ही हृदय परिवर्तन कराता है। समझने के लिए सुनकर हरेक व्यक्ति से प्रेम करें।";
+"tutorial.continueButton.title.startUsingGodTools" = "GodTools का उपयोग शुरू करें";
+
 "general_about_10" = "\"अपनी बातचीत को हमेशा भावपूर्ण बनाएं रखें, परिपक्व रखें, ताकि आप समझ सकें हरेक व्यक्ति को कैसे उत्तर देना है।\" कोलोसियन्स 4:6";
 
+// OpenTutorial
+"openTutorial.showTutorialLabel.text" = "मुझे एक ट्यूटोरियल दिखाएं";
 // Downloads
 "Download in progress" = "डाउनलोड प्रगति पर";
 
-// Navigation
+"openTutorial.openTutorialButton.title" = "ट्यूटोरियल खोलें";
+
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "पिछला";
+// Account
+"account.navTitle" = "मेरी प्रोफाइल";
 "card_status2" = "अगला";
+
+"account.activity.title" = "गतिविधि";
 
 // Language Name Strings
 "language_name_fa" = "फ़ारसी";
 
+// Account Activity
+"accountActivity.globalAnalytics.header.title" = "वैश्विक गतिविधि";
 // OnboardingWelcome
 "onboardingWelcome.titleLabel.welcome" = "स्वागतम";
+"accountActivity.globalAnalytics.users.title" = "खास\nउपयोगकर्ता";
 "onboardingWelcome.titleLabel.tagline" = "आपके विश्वास को शेयर करने में सहायक";
+"accountActivity.globalAnalytics.gospelPresentation.title" = "इंजील\nप्रस्तुतिकरण";
 "onboardingWelcome.beginButton" = "शुरू करें";
 
+"accountActivity.globalAnalytics.launches.title" = "सत्र";
 // OnboardingTutorial
 "onboardingTutorial.aboutAppItem.0.title" = "अन्यों से शेयर करें";
+"accountActivity.globalAnalytics.countries.title" = "देश";
+
 "onboardingTutorial.aboutAppItem.0.message" = "GodTools को आपके विश्वास वार्तालापों में मदद के लिए बनाया गया है";
+// Alerts
+"alert.action.ok" = "ठीक";
 "onboardingTutorial.aboutAppItem.1.title" = "अपने टूल चुनें";
 "onboardingTutorial.aboutAppItem.1.message" = "GodTools आपको आध्यात्मिक वार्तालाप से पहले, उसेक दौरान और उसके बाद मदद करता है";
 "onboardingTutorial.aboutAppItem.2.title" = "हमेशा तैयार";
@@ -203,39 +257,7 @@
 "onboardingTutorial.appUsageItem.0.message" = "किसी भी वार्तालाप की तैयारी करें";
 "onboardingTutorial.appUsageItem.1.message" = "किसी को इंजील के बारे में विस्तार से बताएं";
 "onboardingTutorial.appUsageItem.2.message" = "दो भाषाएं एक साथ देखें";
-"onboardingTutorial.appUsageItem.3.message" = "80 से अधिक भाषाओं में से चुनें";
-"onboardingTutorial.appUsageItem.4.message" = "किसी को ईसाई के रूप में शुरुआत करने में मदद करें";
+"onboardingTutorial.appUsageItem.3.message" = "90 से अधिक भाषाओं में से चुनें";
+"onboardingTutorial.appUsageItem.4.message" = "किसी को मसीही के रूप में आरम्भ करने में मदद करें।";
 "onboardingTutorial.continueButton.title" = "जारी रखें";
 "onboardingTutorial.showMoreButton.title" = "अधिक दिखाएं";
-"onboardingTutorial.getStartedButton.title" = "शुरू हो जाएं";
-
-// Tutorial
-"tutorial.tutorialItem.0.title" = "देखें";
-"tutorial.tutorialItem.0.message" = "हमारे डेमो वीडियो में देखें कि GodTools में क्या है (उप-शीर्षक सेटिंग के लिए वीडियो पर टैप करें)";
-"tutorial.tutorialItem.1.title" = "तैयारी करें";
-"tutorial.tutorialItem.1.message" = "अपने कुछ टूल्स को जानें। \"मुझे शेयर करना सिखाएं\" टूल एक अच्छी शुरुआत होगी।
-
-किसी भी टूल की अधिक जानकारी हेतु उस पर जानकारी बटन दबाएं।";
-"tutorial.tutorialItem.2.title" = "कोशिश करें";
-"tutorial.tutorialItem.2.message" = "सबकी शुरुआत नौसिखिए की तरह होती है। किसी वार्तालाप में एक टूल का उपयोग करके देखें कि आप क्या सीखते हैं।";
-"tutorial.tutorialItem.3.title" = "दुबारा देखने के लिए यह ट्यूटोरियल मेन्यु में उपलब्ध है";
-"tutorial.continueButton.title.continue" = "जारी रखें";
-"tutorial.continueButton.title.startUsingGodTools" = "GodTools का उपयोग शुरू करें";
-
-// OpenTutorial
-"openTutorial.showTutorialLabel.text" = "मुझे एक ट्यूटोरियल दिखाएं";
-"openTutorial.openTutorialButton.title" = "ट्यूटोरियल खोलें";
-
-// Account
-"account.navTitle" = "मेरी प्रोफाइल";
-"account.activity.title" = "गतिविधि";
-
-// Account Activity
-"accountActivity.globalAnalytics.header.title" = "वैश्विक गतिविधि";
-"accountActivity.globalAnalytics.users.title" = "खास\nउपयोगकर्ता";
-"accountActivity.globalAnalytics.gospelPresentation.title" = "इंजील\nप्रस्तुतिकरण";
-"accountActivity.globalAnalytics.launches.title" = "सत्र";
-"accountActivity.globalAnalytics.countries.title" = "देश";
-
-// Alerts
-"alert.action.ok" = "ठीक";

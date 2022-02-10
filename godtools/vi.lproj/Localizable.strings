@@ -1,3 +1,15 @@
+"parallelLanguage.noButton.title" = "Không, cám ơn";
+"parallelLanguage.getStartedButton.title" = "Bắt đầu";
+"parallelLanguage.selectLanguageButton.title" = "Chọn một ngôn ngữ";
+"parellelLanguage.prompt" = "Bạn có muốn thiết lập ngôn ngữ thứ hai không?";
+"onboardingTutorial.beginButton.title" = "Bắt đầu";
+"onboardingTutorial.quickStart.2.message" = "Tôi muốn chia sẻ Phúc Âm với người khác";
+"onboardingTutorial.quickStart.2.link" = "Chọn một trong số bốn công cụ";
+"onboardingTutorial.nextButton.title" = "Tiếp theo";
+"onboardingTutorial.quickStart.0.message" = "Tôi muốn biết nhiều hơn về Chúa";
+"onboardingTutorial.quickStart.0.link" = "Đọc bài viết";
+"onboardingTutorial.quickStart.1.message" = "Tôi muốn học biết về việc chia sẻ Phúc Âm";
+"onboardingTutorial.quickStart.1.link" = "Xem bài học";
 "tool_offline_favorite_message" = "Để công cụ ngoại tuyến bằng cách gõ vào biểu tượng trái tìm để thêm vào phần ưa thích của bạn.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -18,6 +30,19 @@
 "share_tool_remote_link_message" = "Xin chào, hãy theo dõi cùng tôi trong GodTools thông qua chia sẻ màn hình. Đây là liên kết: %@ Nếu bạn không nhận được thông báo này sau đó, liên kết có thể vẫn không hoạt động. Chúng ta có thể thử lại vào lúc khác.";
 "exit_tract_remote_share_session.message" = "Thoát khỏi phiên chia sẻ từ xa bây giờ?";
 "load_tool_remote_session.message" = "Bắt đầu chia sẻ màn hình…";
+"learn_to_share_tool.learn_to_share.title" = "Học cách chia sẻ về công cụ này với người khác";
+"learn_to_share_tool.tips_light_the_way.title" = "Những gợi ý để chỉ dẫn";
+"learn_to_share_tool.tips_light_the_way.message" = "Trên màn hình, bạn sẽ thấy một số biểu tượng. Bấm vào biểu tượng để xem lời gợi ý giúp bạn trình bày về nội dung bạn đang xem trên màn hình.";
+"learn_to_share_tool.light_up_the_tips.title" = "Bật sáng lời gợi ý";
+"learn_to_share_tool.light_up_the_tips.message" = "Khi lời gợi ý bật sáng lên, nó báo hiệu rằng bạn đã hoàn thành phần hướng dẫn đó. Bạn không nhất thiết phải sử dụng tất cả các lời gợi ý trong tất cả các phần khi chia sẻ.";
+"onboardingTutorial.0.title" = "Sẵn sàng cho mọi cuộc trò chuyện";
+"onboardingTutorial.0.videoLink.title" = "Xem video";
+"onboardingTutorial.1.title" = "Nói về Chúa với người khác";
+"onboardingTutorial.1.message" = "GodTools giúp bạn có những cuộc trò chuyện đầy ý nghĩa về Chúa.";
+"onboardingTutorial.2.title" = "Sẵn sàng cho những thời điểm quan trọng";
+"onboardingTutorial.2.message" = "Học cách trò chuyện chia sẻ đức tin như là điều tự nhiên trong đời sống bạn.";
+"onboardingTutorial.3.title" = "Giúp người khác khám phá về Chúa Giê-xu";
+"onboardingTutorial.3.message" = "GodTools là sự chỉ dẫn để bạn chia sẻ Phúc Âm cách rõ ràng và thích hợp.";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Đào tạo";
@@ -57,7 +82,7 @@
 
 /* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "articles.loadingView.downloadingArticles" = "Đang tải bài viết...";
-"language_onboard" = "Hơn 80 Ngôn ngữ";
+"language_onboard" = "Hơn 90 Ngôn ngữ";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Bạn đã tải về tất cả các công cụ sẵn có.";
@@ -166,36 +191,69 @@ Có thể tải xuống ứng dụng từ https://godtoolsapp.com";
 "error_can_not_send_email" = "Không có email được cấu hình nào trên thiết bị của bạn.";
 "required_field_missing" = "\"%@\" là một trường bắt buộc.";
 
+"onboardingTutorial.getStartedButton.title" = "Bắt đầu";
+
 // About
 "general_about_1" = "GodTools giúp bạn chia sẻ niềm tin của mình theo một cách dễ hiểu và dễ dàng.";
+// Tutorial
+"tutorial.tutorialItem.0.title" = "Xem";
 "general_about_2" = "Những công cụ này giúp bạn giải thích một cách tự tin với một ai đó cách thức họ bắt đầu một mối quan hệ với Chúa qua Jesus Christ, ngay cả khi bạn chưa từng chia sẻ niềm tin của mình trước đó hoặc họ nói một thứ ngôn ngữ khác";
+"tutorial.tutorialItem.0.message" = "Xem GodTools có gì trong video demo của chúng tôi
+(Chạm vào video để hiển thị cài đặt cho phụ đề)";
 "general_about_3" = "Chọn từ vô số các công cụ dựa trên ưu tiên và khán giả của bạn. Không phải tất cả các công cụ đều sẵn có trong mọi ngôn ngữ.";
+"tutorial.tutorialItem.1.title" = "Chuẩn bị";
 "general_about_4" = "Các đường dẫn đến các nguồn khác được gộp lại ở cuối mỗi công cụ.";
+"tutorial.tutorialItem.1.message" = "Làm quen với một số công cụ của bạn. Công cụ \"Dạy tôi chia sẻ\" là một nơi phù hợp để bắt đầu.
+
+Nhấn nút thông tin trên bất kỳ công cụ nào để xem thêm thông tin.";
 "general_about_5" = "Kết nối trực tuyến là cần thiết để tải về mỗi công cụ và/hoặc ngôn ngữ mới. Khi đã tải về rồi, chúng có thể được sử dụng trực tuyến.";
+"tutorial.tutorialItem.2.title" = "Thử";
 "general_about_6" = "Thắc mắc? Gợi ý? Yêu cầu? Hãy liên hệ chúng tôi tại support@godtoolsapp.com";
+"tutorial.tutorialItem.2.message" = "Mỗi người đều bắt đầu là người mới mới học. Hãy thử sử dụng công cụ trong một cuộc trò chuyện và xem bạn học được những gì.";
 "general_about_7" = "Bạn có thể tìm thấy một phiên bản trực tuyến của những công cụ này tại knowgod.com. Được gắn vào nó trên trang của riêng bạn!";
+"tutorial.tutorialItem.3.title" = "Bạn có thể xem lại hướng dẫn này trong menu";
 "general_about_8" = "Ghé thăm godtoolsapp.com để biết thêm thông tin.";
+"tutorial.continueButton.title.continue" = "Tiếp tục";
 "general_about_9" = "Vì bạn đã bắt đầu chia sẻ niềm tin của mình, hãy ghi nhớ rằng Chúa là người thay đổi trái tim. Hãy yêu thương từng người thật tốt bằng cách lắng nghe để thấu hiểu.";
+"tutorial.continueButton.title.startUsingGodTools" = "Bắt đầu sử dụng GodTools";
+
 "general_about_10" = "\"Hãy để cuộc hội thoại của bạn luôn chứa đầy sự duyên dáng, nồng nhiệt để bạn có thể biết cách trả lời mọi người.\" Colossians 4:6";
 
+// OpenTutorial
+"openTutorial.showTutorialLabel.text" = "Cho tôi xem hướng dẫn";
 // Downloads
 "Download in progress" = "Đang tải về";
 
-// Navigation
+"openTutorial.openTutorialButton.title" = "Mở hướng dẫn";
+
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "Trước";
+// Account
+"account.navTitle" = "Hồ sơ của tôi";
 "card_status2" = "Tiếp theo";
+
+"account.activity.title" = "Hoạt động";
 
 // Language Name Strings
 "language_name_fa" = "Ba Tư (Farsi)";
 
+// Account Activity
+"accountActivity.globalAnalytics.header.title" = "Hoạt động toàn cầu";
 // OnboardingWelcome
 "onboardingWelcome.titleLabel.welcome" = "Chào mừng ";
+"accountActivity.globalAnalytics.users.title" = "Người dùng\nduy nhất";
 "onboardingWelcome.titleLabel.tagline" = "Giúp bạn chia sẻ đức tin của mình";
+"accountActivity.globalAnalytics.gospelPresentation.title" = "Bài thuyết trình\nKinh Phúc âm";
 "onboardingWelcome.beginButton" = "Bắt đầu";
 
+"accountActivity.globalAnalytics.launches.title" = "Các phiên";
 // OnboardingTutorial
 "onboardingTutorial.aboutAppItem.0.title" = "Chia sẻ với người khác";
+"accountActivity.globalAnalytics.countries.title" = "Các quốc gia";
+
 "onboardingTutorial.aboutAppItem.0.message" = "GodTools được xây dựng để dẫn dắt các cuộc trò chuyện về đức tin của bạn";
+// Alerts
+"alert.action.ok" = "OK";
 "onboardingTutorial.aboutAppItem.1.title" = "Chọn công cụ của bạn";
 "onboardingTutorial.aboutAppItem.1.message" = "GodTools trợ giúp bạn trước, trong và sau một cuộc trò chuyện về tâm linh";
 "onboardingTutorial.aboutAppItem.2.title" = "Luôn sẵn sàng ";
@@ -203,40 +261,7 @@ Có thể tải xuống ứng dụng từ https://godtoolsapp.com";
 "onboardingTutorial.appUsageItem.0.message" = "Chuẩn bị cho bất kỳ cuộc trò chuyện nào";
 "onboardingTutorial.appUsageItem.1.message" = "Hướng dẫn về Kinh Phúc âm";
 "onboardingTutorial.appUsageItem.2.message" = "Xem hai ngôn ngữ cạnh nhau";
-"onboardingTutorial.appUsageItem.3.message" = "Chọn từ hơn 80 ngôn ngữ";
+"onboardingTutorial.appUsageItem.3.message" = "Chọn từ hơn 90 ngôn ngữ";
 "onboardingTutorial.appUsageItem.4.message" = "Trợ giúp ai đó bắt đầu với tư cách là Cơ đốc Nhân";
 "onboardingTutorial.continueButton.title" = "Tiếp tục";
 "onboardingTutorial.showMoreButton.title" = "Cho tôi xem nhiều hơn";
-"onboardingTutorial.getStartedButton.title" = "Bắt đầu";
-
-// Tutorial
-"tutorial.tutorialItem.0.title" = "Xem";
-"tutorial.tutorialItem.0.message" = "Xem GodTools có gì trong video demo của chúng tôi
-(Chạm vào video để hiển thị cài đặt cho phụ đề)";
-"tutorial.tutorialItem.1.title" = "Chuẩn bị";
-"tutorial.tutorialItem.1.message" = "Làm quen với một số công cụ của bạn. Công cụ \"Dạy tôi chia sẻ\" là một nơi phù hợp để bắt đầu.
-
-Nhấn nút thông tin trên bất kỳ công cụ nào để xem thêm thông tin.";
-"tutorial.tutorialItem.2.title" = "Thử";
-"tutorial.tutorialItem.2.message" = "Mỗi người đều bắt đầu là người mới mới học. Hãy thử sử dụng công cụ trong một cuộc trò chuyện và xem bạn học được những gì.";
-"tutorial.tutorialItem.3.title" = "Bạn có thể xem lại hướng dẫn này trong menu";
-"tutorial.continueButton.title.continue" = "Tiếp tục";
-"tutorial.continueButton.title.startUsingGodTools" = "Bắt đầu sử dụng GodTools";
-
-// OpenTutorial
-"openTutorial.showTutorialLabel.text" = "Cho tôi xem hướng dẫn";
-"openTutorial.openTutorialButton.title" = "Mở hướng dẫn";
-
-// Account
-"account.navTitle" = "Hồ sơ của tôi";
-"account.activity.title" = "Hoạt động";
-
-// Account Activity
-"accountActivity.globalAnalytics.header.title" = "Hoạt động toàn cầu";
-"accountActivity.globalAnalytics.users.title" = "Người dùng\nduy nhất";
-"accountActivity.globalAnalytics.gospelPresentation.title" = "Bài thuyết trình\nKinh Phúc âm";
-"accountActivity.globalAnalytics.launches.title" = "Các phiên";
-"accountActivity.globalAnalytics.countries.title" = "Các quốc gia";
-
-// Alerts
-"alert.action.ok" = "OK";

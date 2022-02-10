@@ -1,277 +1,129 @@
-"language_onboard" = "80+ Languages";
+"parallelLanguage.yesButton.title" = "Kyllä";
+"parallelLanguage.noButton.title" = "Ei, kiitos";
+"parallelLanguage.getStartedButton.title" = "Aloittaminen";
+"parallelLanguage.selectLanguageButton.title" = "Valitse kieli";
+"parellelLanguage.prompt" = "Haluatko määrittää toissijaisen kielen?";
+"tool_offline_favorite_message" = "Ota työkalu käyttöön offline-tilassa sydänkuvaketta napauttamalla, jolloin se lisätään suosikkeihisi.";
+
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "Keskustelunaloittaja";
+
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "Kasvaminen kristittynä";
+
+"share_link" = "Jaa linkki";
+"share_tool_menu.remote_share_tool" = "Jaa näyttösi";
+"share_tool_menu.send_tool" = "Lähetä tämä työkalu";
+"share_tool_screen_tutorial.share_your_screen.title" = "Jaa näyttösi";
+"share_tool_screen_tutorial.share_your_screen.message" = "Tämä toiminto lähettää tämän työkalun linkin ystävällesi. Näytönjako alkaa linkin avaamisen jälkeen.";
+"share_tool_screen_tutorial.mirrored_experience.title" = "Heijastettu käyttökokemus";
+"share_tool_screen_tutorial.mirrored_experience.message" = "Liikkueassasi työkalussa puhelimellasi myös ystäväsi näyttö toimii samalla tavoin. Täten työkalun käyttöön voi perehdyttää kahdella laitteella yhtäaikaisesti.";
+"share_tool_screen_tutorial.get_started.title" = "Aloittaminen";
+"share_tool_screen_tutorial.get_started.message" = "Lähetä linkki vähintään yhdelle henkilölle aloittaaksesi näytönjaon. Tämän ominaisuuden käytön mahdollistamiseksi jokaisella osallistujalla on oltava GodTools-sovellus ladattuna laitteelleen.";
+"share_tool_remote_link_message" = "Hei, voit käyttää GodToolsia kanssani näytönjaon avulla. Tässä linkki: %@ Linkki voi yhä olla toiminnassa, vaikka saisitkin tämän viestin myöhemmin. Voimme yrittää uudelleen toisen kerran.";
+"exit_tract_remote_share_session.message" = "Haluatko poistua etäjaosta?";
+"load_tool_remote_session.message" = "Näytönjakoa käynnistetään…";
+
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Koulutus";
+
+/* This is an invitation for a user to open a tool */
+"open" = "Avaa";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Lisää suosikkeihin";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Poista suosikeista";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Työkalua ladataan. Voit välttää odottamisen jatkossa merkitsemällä tämän työkalun suosikiksesi, jolloin se on käytettävissä offline-tilassa.
+";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Tämän työkalun uusinta käännöstä ladataan.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Poistetaanko tämä suosikeista? ";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Tahdotko varmasti, että %@ poistetaan suosikeistasi? ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Ilosanomakutsu";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Artikkelit";
+"language_onboard" = "90+ kieltä";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
-"no_more_tools" = "You have downloaded all available tools.";
+"no_more_tools" = "Olet jo ladannut kaikki käytettävissä olevat työkalut.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "Favorites";
+"my_tools" = "Suosikit";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "All Tools";
-
-"unavailable" = "Unavailable";
+"find_tools" = "Kaikki työkalut";
 
 // Navigation Bar
-"navigationBar.navigationItem.skip" = "Skip";
+"navigationBar.navigationItem.skip" = "Ohita";
 
 // Onboarding
-"add_new_tools" = "Add New Tools";
-"set_your_languages" = "Set Your Languages";
-"okay" = "Okay";
-"want_more_godtools?" = "Want more GodTools?";
-"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
-"click_here" = "Click Here";
-
+"add_new_tools" = "Lisää uusia työkaluja";
 // Menu
-"menu_general" = "General";
-"menu_account" = "Account";
-"menu_share" = "Share";
-"menu_legal" = "Legal";
-"menu_version" = "Version";
-"language_settings" = "Language Settings";
-"menu.tutorial" = "Tutorial";
-"menu.my_account" = "Global Activity";
-
+"menu_general" = "Yleistä";
+"menu_share" = "Jaa";
+"menu_legal" = "Juridiset";
+"language_settings" = "Kieliasetukset";
 // Login
-"login" = "Login";
-"logout" = "Logout";
-"create_account" = "Create Account";
-"account_login" = "Account Login";
-
+"login" = "Kirjaudu sisään";
+"logout" = "Kirjaudu ulos";
+"create_account" = "Luo tili";
 // Tool Detail
-"about" = "About";
-"help" = "Frequently Asked Questions";
-"contact_us" = "Contact Us";
-"preview_mode_translators_only" = "Preview Mode (Translators Only)";
-"share_god_tools" = "Share the GodTools App";
-"share_a_story_with_us" = "Share a Story With Us";
-"terms_of_use" = "Terms of Use";
-"privacy_policy" = "Privacy Policy";
-"copyright_info" = "Copyright Info";
-"share_god_tools_share_sheet_text" = "Download the GodTools app: https://godtoolsapp.com
-
-An online version can be found at https://knowgod.com/";
-
-// Add Tools
-"add_tools" = "Add Tools";
-
-"total_views" = "%d views";
-"total_languages" = "%d languages";
-
-//Setup Parallel Language
-"parellelLanguage.prompt" = "Would you like to choose a parallel language?";
-"parallelLanguage.selectLanguageButton.title" = "Select a language";
-"parallelLanguage.yesButton.title" = "Yes";
-"parallelLanguage.noButton.title" = "No";
-"parallelLanguage.selectButton.title" = "Select";
-"parallelLanguage.getStartedButton.title" = "Get Started";
+"about" = "Info";
+"help" = "Usein kysytyt kysymykset";
+"contact_us" = "Ota yhteyttä";
+"share_god_tools" = "Jaa GodTools -sovellus";
+"share_a_story_with_us" = "Jaa meille tarina";
+"terms_of_use" = "Käyttöehdot";
+"privacy_policy" = "Tietosuojakäytäntö";
+"total_views" = "%d tarkastelua";
+"total_languages" = "%d kieltä";
 
 // Language Settings
-"primary_language" = "Primary Language";
-"select_primary_language" = "Select a Primary Language";
-"parallel_language" = "Parallel Language";
-"select_parallel_language" = "Select a Parallel Language";
-"share_god_tools_native_language" = "Share GodTools with someone in their native language";
-"not_every_tool_is_available" = "Not every tool is available in every language";
+"primary_language" = "Ensisijainen kieli";
+"parallel_language" = "Rinnakkaiskieli";
+"select_parallel_language" = "Valitse rinnakkaiskieli";
+"share_god_tools_native_language" = "Jaa GodTools jollekulle hänen omalla kielellään.";
+"not_every_tool_is_available" = "Kaikki työkalut eivät ole saatavissa joka kielellä.";
 
-// Settings
-"settings" = "Menu";
-
-// Alert & Info Controllers
-"download_error" = "Download Error";
-"language_download_error" = "The available languages could not be downloaded at this time. Please check your connectivity or retry later.";
-"tract_loading_error_message" = "There was a problem opening this resource. Downloading it again often solves this problem. \n\n Would you like to download it again?";
-"no_internet_title" = "No internet connection";
-"no_internet" = "Please check your internet connection and try again.";
-
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
-"the_tool_you_requested_is_loading" = "The tool you requested is loading...";
-"loading" = "Loading...";
-
+"the_tool_you_requested_is_loading" = "Haluamaasi työkalua ladataan…";
 // Actions
-"yes" = "Yes";
-"no" = "No";
-
+"yes" = "Kyllä";
 // Tract - Sharing
-"tract_share_message" ="This link will take you to the web version of the page we were last looking at together today: %@. Let's talk more!
-
-The app can be downloaded from https://godtoolsapp.com";
+"tract_share_message" ="Tämä linkki siirtää sinut tämänpäiväisen puheenaiheemme verkkoversioon: %@ \n\n Sovelluksen voi ladata osoitteesta https://godtoolsapp.com \n\n Jutellaan asiasta lisää!";
 
 // Buttons
-"download" = "Download";
-"dismiss" = "Dismiss";
-"done" = "Done";
-"remove" = "Remove";
-"clear" = "Clear";
-"open" = "Open";
-"toolinfo_opentool" = "Open Tool";
-"add_to_favorites" = "Add to Favorites";
-"remove_from_favorites" = "Remove from Favorites";
-"share_link" = "Share link";
-"start_training" = "Start Training";
-"close" = "Close";
+"download" = "Lataa";
+"dismiss" = "Hylkää";
+"done" = "Valmis";
+"remove" = "Poista";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Avaa työkalu";
 
-// Alerts
-"error" = "Error";
-"ok" = "Ok";
-"OK" = "OK";
-"cancel" = "Cancel";
-"error_can_not_send_email" = "There is no configured email on your device.";
-"required_field_missing" = "\"%@\" is a required field.";
+"cancel" = "Peruuta";
+"onboardingTutorial.getStartedButton.title" = "Aloittaminen";
 
 // About
-"general_about_1" = "GodTools helps you share your faith in an easy and clear way.";
-"general_about_2" = "These tools help you confidently explain to someone how they can begin a relationship with God through Jesus Christ, even if you've never shared your faith before or they speak a different language.";
-"general_about_3" = "Choose from a variety of tools based on your preference and your audience. Not all tools are available in every language.";
-"general_about_4" = "Links to other resources are included at the end of each tool.";
-"general_about_5" = "Online connection is needed to download each new tool and/or language. Once downloaded, they can be used offline.";
-"general_about_6" = "Questions? Suggestions? Requests? Contact us at support@godtoolsapp.com";
-"general_about_7" = "An online version of these tools can be found at knowgod.com. Embed it on your own site!";
-"general_about_8" = "Visit godtoolsapp.com for more information.";
-"general_about_9" = "As you take the initiative to share your faith, remember that God is the one who changes the heart. Love each person well by listening for understanding.";
-"general_about_10" = "\"Let your conversation always be full of grace, seasoned with salt, so that you may know how to answer everyone.\" Colossians 4:6";
+"general_about_1" = "GodTools auttaa sinua jakamaan uskoasi helpolla ja selkeällä tavalla.";
+"general_about_2" = "Nämä työkalut auttavat sinua selittämään itsevarmasti toisille, miten he voivat aloittaa suhteen Jumalaan Jeesuksen Kristuksen kautta, vaikket olisi koskaan aiemmin kertonut Jeesuksesta tai vaikka he puhuisivat eri kieltä kuin sinä.";
+"general_about_3" = "Valitse haluamasi työkalut. Kaikki työkalut eivät ole saatavilla joka kielellä.";
+"general_about_4" = "Jokaisen työkalun lopusta löytyy linkkejä lisäresursseihin.";
+"general_about_5" = "Internetyhteys vaaditaan jokaisen uuden työkalun ja/tai kielen lataamiseen. Ladattuasi ne voit käyttää niitä myös offline-tilassa.";
+"general_about_6" = "Kysymyksiä? Ehdotuksia? Pyyntöjä? Ota yhteyttä meihin englanniksi support@godtoolsapp.com";
+"tutorial.continueButton.title.continue" = "Jatka";
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
+"card_status1" = "Edellinen";
+"card_status2" = "Seuraava";
 
-// Downloads
-"Download in progress" = "Download in progress";
-
-// Navigation
-"card_status1" = "Prev";
-"card_status2" = "Next";
-
-// Language Name Strings
-"language_name_fa" = "Persian (Farsi)";
-
-// OnboardingWelcome
-"onboardingWelcome.titleLabel.welcome" = "Welcome";
-"onboardingWelcome.titleLabel.tagline" = "Helping You Share\nYour Faith";
-"onboardingWelcome.beginButton" = "Begin";
-
-// OnboardingTutorial
-"onboardingTutorial.0.title" = "Ready for every conversation";
-"onboardingTutorial.0.videoLink.title" = "Watch Video";
-"onboardingTutorial.1.title" = "Talk about God with anyone";
-"onboardingTutorial.1.message" = "GodTools help you have meaningful conversations about God.";
-"onboardingTutorial.2.title" = "Prepare for the moments that matter";
-"onboardingTutorial.2.message" = "Learn how to make conversations about faith a natural part of your life.";
-"onboardingTutorial.3.title" = "Help someone discover Jesus";
-"onboardingTutorial.3.message" = "GodTools is your guide to communicating the gospel in clear and relevant ways.";
-"onboardingTutorial.beginButton.title" = "Begin";
-"onboardingTutorial.nextButton.title" = "Next";
-"onboardingTutorial.getStartedButton.title" = "Get Started";
-
-//OnboardingQuickStart
-"onboardingQuickStart.title" = "Quick start links";
-"onboardingQuickStart.0.title" = "I want to explore Christianity";
-"onboardingQuickStart.0.button.title" = "Read our articles";
-"onboardingQuickStart.1.title" = "I want to learn about having gospel conversations";
-"onboardingQuickStart.1.button.title" = "Try our Lessons";
-"onboardingQuickStart.2.title" = "I want to share the gospel with someone";
-"onboardingQuickStart.2.button.title" = "Choose one of our tools";
-
-// Tutorial
-"tutorial.tutorialItem.0.title" = "Watch";
-"tutorial.tutorialItem.0.message" = "See what GodTools offers in our demo video";
-"tutorial.tutorialItem.1.title" = "Prepare";
-"tutorial.tutorialItem.1.message" = "Get familiar with some of your tools. This tool is a good place to start.";
-"tutorial.tutorialItem.2.title" = "Try";
-"tutorial.tutorialItem.2.message" = "Everyone starts as a beginner. Try using a tool in a conversation and see what you learn.";
-"tutorial.tutorialItem.3.title" = "This tutorial is available to see again in the menu";
-"tutorial.continueButton.title.continue" = "Continue";
-"tutorial.continueButton.title.startUsingGodTools" = "Start Using GodTools";
-"tutorial.tool.title" = "Tools";
-"tutorial.tool.message" = "Each tool is made for a different stage of conversation– before, during or after.";
-"tutorial.toolTip.title" = "Tool tips";
-"tutorial.toolTip.message" = "GodTools tips guide you as you help someone understand the gospel and encounter Jesus.";
-"tutorial.screenShare.title" = "Screen sharing";
-"tutorial.screenShare.message" = "You can now share your screen remotely so the other person can follow as you use a tool to discuss the gospel.";
-"tutorial.lesson.title" = "Lessons";
-"tutorial.lesson.message" = "In each GodTools lesson you learn something to help you have real conversations about God.";
-"tutorial.findTutorial.title" = "Find this tutorial in the menu whenever you need it.";
-"tutorial.continueButton.title.closeTutorial" = "Close tutorial";
-
-// OpenTutorial
-"openTutorial.showTutorialLabel.text" = "Show Me A Tutorial";
-"openTutorial.openTutorialButton.title" = "Open Tutorial";
-
-// Account
-"account.navTitle" = "My Profile";
-"account.activity.title" = "Activity";
-
-// Account Activity
-"accountActivity.globalAnalytics.header.title" = "Global Activity";
-"accountActivity.globalAnalytics.users.title" = "Unique\nUsers";
-"accountActivity.globalAnalytics.gospelPresentation.title" = "Gospel\nPresentations";
-"accountActivity.globalAnalytics.launches.title" = "Sessions";
-"accountActivity.globalAnalytics.countries.title" = "Countries";
-
-// Alerts
-"alert.action.ok" = "OK";
-
-// Articles
-"articles.loadingView.downloadingArticles" = "Downloading articles...";
-"articles.downloadingArticles.errorMessage.title" = "Error Downloading Articles";
-"articles.downloadArticlesButton.title.retryDownload" = "Retry Download";
-
-// Loading Tool
-"loading_unfavorited_tool" = "The tool is currently downloading. To avoid waiting next time add this tool to your favorites so it will be available offline.";
-"loading_favorited_tool" = "Downloading the latest translation for this tool.";
-
-// Favorites
-"remove_from_favorites_title" = "Remove From Favorites?";
-"remove_from_favorites_message" = "Are you sure you want to remove %@ from your favorites?";
-"tool_offline_favorite_message" = "Make a tool available offline by tapping the heart icon which adds it to your favorites.";
-
-// Tool Categories
-"tool_category_gospel" = "Gospel Invitation";
-"tool_category_articles" = "Articles";
-"tool_category_conversation_starter" = "Conversation Starter";
-"tool_category_growth" = "Christian Growth";
-"tool_category_training" = "Training";
-
-// Share Tool Menu
-"share_tool_menu.send_tool" = "Send this tool";
-"share_tool_menu.remote_share_tool" = "Share your screen";
-
-// Share Tool Screen Tutorial
-"share_tool_screen_tutorial.share_your_screen.title" = "Share your screen";
-"share_tool_screen_tutorial.share_your_screen.message" = "This option will send a link to this tool to a friend. When the link is opened it will start a screen sharing session.";
-"share_tool_screen_tutorial.mirrored_experience.title" = "Mirrored experience";
-"share_tool_screen_tutorial.mirrored_experience.message" = "As you scroll the tool on your phone, your friend's screen will respond in the same way. This allows you to walk through a tool together on 2 devices at the same time.";
-"share_tool_screen_tutorial.get_started.title" = "Get started";
-"share_tool_screen_tutorial.get_started.message" = "Send the link to one or more people to start a screen sharing session now.\nHave them download the GodTools app first before opening the link";
-"share_tool_remote_link_message" = "Hi, Follow along with me in GodTools via screen sharing. Here's the link: %@";
-
-// Exit Tract Remote Share Session
-"exit_tract_remote_share_session.message" = "Exit the remote share session now?";
-
-// Loading Tool Remote Share Session
-"load_tool_remote_session.message" = "Starting Screen Sharing...";
-
-// Learn To Share Tool
-"learn_to_share_tool.learn_to_share.title" = "Learn to share this tool with anyone.";
-"learn_to_share_tool.learn_to_share.message" = "This tool helps guide a conversation about how someone begins a relationship with God.  Practice sharing the content using the tips provided, so you feel ready to talk to someone else.";
-"learn_to_share_tool.tips_light_the_way.title" = "Tips to light the way";
-"learn_to_share_tool.tips_light_the_way.message" = "On select screens of this training, you’ll see a variety of icons. Press each icon to reveal a tip that will help you talk about the content of the screen. If a screen has no icon, then just read through the content and discuss as needed.";
-"learn_to_share_tool.light_up_the_tips.title" = "Light up the tips";
-"learn_to_share_tool.light_up_the_tips.message" = "When a tip lights up, you’ve completed that piece of training. Practice using as many tips as you need to feel confident explaining the tool.";
-
-// Training Tips
-"training_tip_ask" = "Ask";
-"training_tip_consider" = "Consider";
-"training_tip_prepare" = "Prepare";
-"training_tip_quote" = "Quote";
-"training_tip_tip" = "Tip";
-
-// Lessons
-"tool_menu_item.lessons" = "Lessons";
-
-// Lesson Evaluation
-
-"lesson_evaluation.title" = "Review";
-"lesson_evaluation.wasThisHelpful" = "Was this lesson helpful for you?";
-"lesson_evaluation.shareFaith" = "How ready do you feel to start a spiritual conversation?";
-"lesson_evaluation.sendButtonTitle" = "Send feedback";
+"onboardingTutorial.continueButton.title" = "Jatka";

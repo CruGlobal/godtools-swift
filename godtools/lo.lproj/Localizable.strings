@@ -1,3 +1,12 @@
+"onboardingTutorial.beginButton.title" = "ເລີ່ມ";
+"onboardingTutorial.quickStart.2.message" = "ຂ້ອຍຕ້ອງການແບ່ງປັນຂ່າວປະເສີດກັບຄົນອື່ນ";
+"onboardingTutorial.quickStart.2.link" = "ເລືອກເຄື່ອງມືໃດໜຶ່ງຂອງພວກເຮົາ";
+"onboardingTutorial.nextButton.title" = "ຖັດໄປ";
+"onboardingTutorial.quickstart.title" = "ລິ້ງສໍາລັບການເລີ່ມດ່ວນ";
+"onboardingTutorial.quickStart.0.message" = "ຂ້ອຍຕ້ອງການສໍາຫຼວດສາສະໜາຄຣິສ";
+"onboardingTutorial.quickStart.0.link" = "ອ່ານບົດຄວາມຂອງພວກເຮົາ";
+"onboardingTutorial.quickStart.1.message" = "ຂ້ອຍຕ້ອງການຮຽນຮູ້ກ່ຽວກັບການສົນທະນາຂ່າວປະເສີດ";
+"onboardingTutorial.quickStart.1.link" = "ລອງເບິ່ງບົດຮຽນຂອງພວກເຮົາ";
 "tool_offline_favorite_message" = "ເຮັດໃຫ້ສາມາດໃຊ້ເຄື່ອງມືແບບອອບລາຍໂດຍການແຕະໄອຄອນຫົວໃຈ ເຊິ່ງຈະເປັນການເພີ່ມເຄື່ອງມືໃສ່ລາຍການທີ່ມັກຂອງທ່ານ.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -18,6 +27,14 @@
 "share_tool_remote_link_message" = "ສະບາຍດີ, ຕິດຕາມຂ້ອຍໃນ GodTools ຜ່ານການແບ່ງປັນໜ້າຈໍ. ນີ້ແມ່ນລິ້ງ: %@ ຖ້າທ່ານບໍ່ໄດ້ຮັບຂໍ້ຄວາມນີ້ຈົນຮອດພາຍຫຼັງ, ລິ້ງອາດຈະຍັງໃຊ້ບໍ່ໄດ້. ພວກເຮົາສາມາດລອງໃໝ່ອີກຄັ້ງໃນເວລາອື່ນ.";
 "exit_tract_remote_share_session.message" = "ອອກຈາກເຊດຊັນແບ່ງປັນທາງໄກດຽວນີ້ບໍ?";
 "load_tool_remote_session.message" = "ເລີ່ມແບ່ງປັນໜ້າຈໍ...";
+"onboardingTutorial.0.title" = "ພ້ອມສໍາລັບການສົນທະນາທັງໝົດ";
+"onboardingTutorial.0.videoLink.title" = "ເບິ່ງວິດີໂອ";
+"onboardingTutorial.1.title" = "ເວົ້າກ່ຽວກັບພຣະເຈົ້າກັບຜູ້ໃດກໍໄດ້";
+"onboardingTutorial.1.message" = "GodTools ຊ່ວຍໃຫ້ທ່ານມີການສົນທະນາຢ່າງເປັນປະໂຫຍດກ່ຽວກັບພຣະເຈົ້າ";
+"onboardingTutorial.2.title" = "ກະກຽມເພື່ອຊ່ວງເວລາທີ່ສໍາຄັນ";
+"onboardingTutorial.2.message" = "ຮຽນຮູ້ວິທີສົນທະນາກ່ຽວກັບຄວາມເຊື່ອເຊິ່ງເປັນສ່ວນໜຶ່ງຂອງຊີວິດທ່ານໂດຍທໍາມະຊາດ.";
+"onboardingTutorial.3.title" = "ຊ່ວຍຄົນອື່ນຄົ້ນພົບພຣະເຢຊູ";
+"onboardingTutorial.3.message" = "GodTools ແມ່ນຄູ່ມືຂອງທ່ານໃນການເຜີຍແຜ່ຂ່າວປະເສີດໃນລັກສະນະທີ່ຊັດເຈນ ແລະ ກ່ຽວຂ້ອງ.";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "ການຝຶກອົບຮົມ";
@@ -48,7 +65,7 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "ບົດຄວາມ";
-"language_onboard" = "80+ ພາສາ";
+"language_onboard" = "90+ ພາສາ";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "ທ່ານໄດ້ດາວໂຫຼດເຄື່ອງມືທີ່ມີທັງໝົດ";
@@ -60,6 +77,9 @@
 "find_tools" = "ເຄື່ອງມືທັງໝົດ";
 
 "unavailable" = "ບໍ່ພ້ອມໃຊ້ງານ";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "ຂ້າມ";
 
 // Onboarding
 "add_new_tools" = "ເພີ່ມເຄື່ອງມືໃໝ່ໃສ່";
@@ -147,6 +167,8 @@
 "error_can_not_send_email" = "ບໍ່ມີການກຳນົດຄ່າອີເມວເທິງອຸປະກອນຂອງທ່ານ.";
 "required_field_missing" = "\"%@\" ເປັນພາກສະຫນາມຂໍ້ມູນທີ່ຈຳເປັນ.";
 
+"onboardingTutorial.getStartedButton.title" = "ເລີ່ມເລີຍ";
+
 // About
 "general_about_1" = "GodTools ຊ່ວຍໃຫ້ທ່ານແບ່ງປັນຄວາມສັດທາຂອງທ່ານໄດ້ ແບບງ່າຍໆ ແລະ ຊັດເຈນ.";
 "general_about_2" = "ອຸປະກອນເຫຼົ່ານີ້ຊ່ວຍໃຫ້ທ່ານອະທິບາຍໄດ້ຢ່າງໝັ້ນໃຈເຖິງວິທີ ທີ່ຈະເລີ່ມຕົ້ນຄວາມສຳພັນກັບພຣະຜູ້ເປັນເຈົ້າຜ່ານພຣະເຢຊູຄິດ, ເຖິງແມ່ນວ່າທ່ານຈະບໍ່ເຄີຍແບ່ງປັນຄວາມເຊື່ອ ຂອງທ່ານມາກ່ອນ, ຫຼືແມ່ນແຕ່ ຜູ້ຟັງບໍ່ໄດ້ໃຊ້ພາສາດຽວກັບທ່ານ.";
@@ -156,16 +178,18 @@
 "general_about_6" = "ຫາກມີຄຳຖາມ ຂໍ້ສະເໜີແນະນຳ ຫຼືຕ້ອງການຄວາມຊ່ວຍເຫຼືອ ໂປດຕິດເຮົາຕໍ່ທີ່ support@godtoolsapp.com";
 "general_about_7" = "ຄົ້ນຫາເຄື່ອງມືແບບອອນລາຍໄດຈາກ knowgod.com. ແລ້ວດາວໂຫຼດໄວ້ໃນເວັບໄຊ້ ຂອງທ່ານ!";
 "general_about_8" = "ເຂົ້າໄປທີ່ godtoolsapp.com ເພື່ອຊອກຫາຂໍ້ມູນເພີ່ມເຕີມ.";
+"tutorial.continueButton.title.continue" = "ສືບຕໍ່";
 "general_about_9" = "ໃນການທີ່ທ່ານຈະເຜີຍແພ່ ຄວາມເຊື່ອ ຫຼື ສັດທາ ທີ່ທ່ານມີຕໍ່ພຣະຜູ້ເປັນເຈົ້າ, ໃຫ້ທ່ານຈື່ໄວ້ສະເໝີວ່າ ພຣະອົງເປັນຜູ້ປ່ຽນແປງຈິດໃຈ. ສະນັ້ນ ຂໍໃຫ້ເປີດໃຈຟັງຢ່າງເຂົ້າໃຈ.";
 "general_about_10" = "“ຈົ່ງໃຫ້ວາຈາຂອງເຈົ້າທັງຫຼາຍປະກອບດ້ວຍເມດຕາຄຸນຢູ່ສະເໝີ ປະສົມດ້ວຍເກືອ ເພື່ອເຈົ້າທັງຫຼາຍຈະໄດ້ຮູ້ວິທີຕອບທີ່ຖືກໃຈແກ່ທຸກຄົນ.” ໂກໂລຊາຍ 4:6";
 
 // Downloads
 "Download in progress" = "ກຳລັງດາວໂຫລດຢູ່";
 
-// Navigation
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "ກ່ອນ";
 "card_status2" = "ຖັດໄປ";
 
 // Language Name Strings
 "language_name_fa" = "ພາສາເປີເຊຍ";
 
+"onboardingTutorial.continueButton.title" = "ສືບຕໍ່";

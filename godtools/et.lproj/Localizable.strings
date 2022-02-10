@@ -1,3 +1,8 @@
+"parallelLanguage.yesButton.title" = "Jah";
+"parallelLanguage.noButton.title" = "Ei, aitäh";
+"parallelLanguage.getStartedButton.title" = "Alustamine";
+"parallelLanguage.selectLanguageButton.title" = "Vali keel";
+"parellelLanguage.prompt" = "Kas soovid seadistada teise keele?";
 "tool_offline_favorite_message" = "Tee tööriist kättesaadavaks võrguühenduseta, puudutades südameikoonil, et lisada see lemmikute hulka.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -49,7 +54,7 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Artiklid";
-"language_onboard" = "80+ keelt";
+"language_onboard" = "90+ keelt";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Sa oled alla laadinud kõik olemasolevad tööriistad.";
@@ -61,6 +66,9 @@
 "find_tools" = "Leia tööriistu";
 
 "unavailable" = "Ei ole saadaval";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "Jäta vahele";
 
 // Onboarding
 "add_new_tools" = "Lisa uusi tööriistu";
@@ -149,6 +157,8 @@ Rakenduse saab alla laadida lehelt godtoolsapp.com";
 "error_can_not_send_email" = "Sa ei ole oma seadmes meilikontot seadistanud.";
 "required_field_missing" = "%@ on kohustuslik väli.";
 
+"onboardingTutorial.getStartedButton.title" = "Alustamine";
+
 // About
 "general_about_1" = "Jumala Tööriistad aitavad sul jagada oma usku lihtsalt ja selgelt.";
 "general_about_2" = "Need tööriistad aitavad sul kindlustundega selgitada kellelegi, mida tähendab olla jumalaga Jeesus Kristuse kaudu seotud - seda isegi siis, kui sul on temast erinev emakeel.";
@@ -158,16 +168,18 @@ Rakenduse saab alla laadida lehelt godtoolsapp.com";
 "general_about_6" = "Küsimused? Soovitused? Taotlused? Võta meiega ühendust aadressil support@godtoolsapp.com";
 "general_about_7" = "Tööriistade veebiversioon on saadaval knowgod.com. Manusta see oma lehele!";
 "general_about_8" = "Lisateavet saad godtoolsapp.com-ist.";
+"tutorial.continueButton.title.continue" = "Jätka";
 "general_about_9" = "Kui jagad oma usku kellegagi, pea meeles, et inimese meelt muudab jumal. Näita oma armastust, kuulates inimesi, et mõistaksid neid.";
 "general_about_10" = "\"Teie kõne olgu alati armu sees, soolaga soolatud, et te teaksite, kuidas teil tuleb igaühele kosta.\" Koloslastele 4:6";
 
 // Downloads
 "Download in progress" = "Toimub allalaadimine";
 
-// Navigation
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "Tagasi";
 "card_status2" = "Edasi";
 
 // Language Name Strings
 "language_name_fa" = "Pärsia (farsi)";
 
+"onboardingTutorial.continueButton.title" = "Jätka";

@@ -1,3 +1,17 @@
+"parallelLanguage.yesButton.title" = "Ja";
+"parallelLanguage.noButton.title" = "Ne, hvala";
+"parallelLanguage.getStartedButton.title" = "Začetek";
+"parallelLanguage.selectLanguageButton.title" = "Izberi jezik";
+"parellelLanguage.prompt" = "Ali želite nastaviti sekundarni jezik?";
+"onboardingTutorial.beginButton.title" = "Začni";
+"onboardingTutorial.quickStart.2.message" = "Želim deliti evangelij z nekom";
+"onboardingTutorial.quickStart.2.link" = "Izberite eno od naših orodij";
+"onboardingTutorial.nextButton.title" = "Naprej";
+"onboardingTutorial.quickstart.title" = "Povezave za hitri začetek";
+"onboardingTutorial.quickStart.0.message" = "Želim raziskati krščanstvo";
+"onboardingTutorial.quickStart.0.link" = "Preberite naše članke";
+"onboardingTutorial.quickStart.1.message" = "Želim se naučiti pogovorov o evangeliju";
+"onboardingTutorial.quickStart.1.link" = "Preizkusite naše lekcije";
 "tool_offline_favorite_message" = "Če želite, da bo orodje na voljo brez povezave, se dotaknite ikone srca in jo dodajte med priljubljene.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -18,6 +32,14 @@
 "share_tool_remote_link_message" = "Živjo, sledi mi v GodTools z deljenjem zaslona. Tukaj je povezava: %@ Če kasneje ne prejmete tega sporočila, morda povezava še ne deluje. Poskusite lahko znova kasneje.";
 "exit_tract_remote_share_session.message" = "Izhod iz seje deljenja na daljavo?";
 "load_tool_remote_session.message" = "Začni deljenje zaslona";
+"onboardingTutorial.0.title" = "Pripravljeni za vsak pogovor";
+"onboardingTutorial.0.videoLink.title" = "Oglejte si videoposnetek";
+"onboardingTutorial.1.title" = "Govorite o Bogu s komer koli";
+"onboardingTutorial.1.message" = "GodTools vam pomaga do smiselnih pogovorov o Bogu.";
+"onboardingTutorial.2.title" = "Pripravite se na pomembne trenutke";
+"onboardingTutorial.2.message" = "Naučite se, kako postanejo pogovori o veri naravni del vašega življenja.";
+"onboardingTutorial.3.title" = "Pomagajte nekomu odkriti Jezusa";
+"onboardingTutorial.3.message" = "GodTools je vaš vodič za jasno in ustrezno oznanjanje evangelija.";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Učenje";
@@ -48,7 +70,7 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Članki";
-"language_onboard" = "Več kot 80 jezikov";
+"language_onboard" = "Več kot 90 jezikov";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Prenesli ste vsa razpoložljiva orodja.";
@@ -60,6 +82,9 @@
 "find_tools" = "Dodaj orodje";
 
 "unavailable" = "Ni na voljo";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "Preskoči";
 
 // Onboarding
 "add_new_tools" = "Dodaj nova orodja";
@@ -149,6 +174,8 @@ Aplikacijo lahko preneseš na https://godtoolsapp.com";
 "error_can_not_send_email" = "Na napravi nimaš sinhorniziranega računa za elektronsko pošto.";
 "required_field_missing" = "\"%@\" je obvesno polje.";
 
+"onboardingTutorial.getStartedButton.title" = "Začetek";
+
 // About
 "general_about_1" = "GodTools ti pomaga deliti svojo vero na enostavni in jasni način. ";
 "general_about_2" = "Ta orodja so ti v pomoč pri tem, da nekomu razložiš, kako lahko začne odnos z Bogom preko Jezusa Kristusa, četudi prej nikoli nisi delil/a svoje vere ali pa ta oseba govori drug jezik.";
@@ -158,16 +185,18 @@ Aplikacijo lahko preneseš na https://godtoolsapp.com";
 "general_about_6" = "Vprašanja? Predlogi? Prošnje? Kontaktiraj nas na support@godtoolsapp.com";
 "general_about_7" = "Spletno verzijo teh orodij lahko najdeš na knowgod.com. Vstavi jo na svojo stran!";
 "general_about_8" = "Obišči godtoolsapp.com za več informacij.";
+"tutorial.continueButton.title.continue" = "Nadaljuj";
 "general_about_9" = "Pri prevzemanju pobude za deljenje svoje vere ne pozabi, da je le Bog tisti, ki spreminja srca ljudi. Izrazi skrb za vsako osebo s poslušanjem z namenom razumevanja.";
 "general_about_10" = "»Vaše govorjenje naj bo zmeraj ljubeznivo, začinjeno s soljo, da boste vedeli, kako morate odgovarjati komur koli.« Pismo Kološanom 4,6";
 
 // Downloads
 "Download in progress" = "Poteka prenos";
 
-// Navigation
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "Nazaj";
 "card_status2" = "Naprej";
 
 // Language Name Strings
 "language_name_fa" = "Perzijščina (farsi)";
 
+"onboardingTutorial.continueButton.title" = "Nadaljuj";
