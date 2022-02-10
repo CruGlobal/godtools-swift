@@ -78,7 +78,7 @@ class ToolPageModalView: MobileContentView {
         
         if shouldCenterVertically {
             let difference: CGFloat = frame.size.height - modalContentSize.height
-            contentStackView.setContentInset(contentInset: UIEdgeInsets(top: difference / 2, left: 0, bottom: 0, right: 0))
+            contentStackView.setScrollViewContentInset(contentInset: UIEdgeInsets(top: difference / 2, left: 0, bottom: 0, right: 0))
         }
     }
     

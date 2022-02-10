@@ -7,25 +7,28 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class MobileContentImageViewModel: MobileContentImageViewModelType {
     
     private let imageModel: ContentImageModelType
     private let rendererPageModel: MobileContentRendererPageModel
     
+    let image: UIImage?
+    let imageWidth: MobileContentViewWidth
+    
     required init(imageModel: ContentImageModelType, rendererPageModel: MobileContentRendererPageModel) {
         
         self.imageModel = imageModel
         self.rendererPageModel = rendererPageModel
-    }
-    
-    var image: UIImage? {
+        self.imageWidth = MobileContentViewWidth(dimension: imageModel.width)
         
-        guard let resource = imageModel.resource else {
-            return nil
+        if let imageResource = imageModel.resource, !imageResource.isEmpty, let cachedImage = rendererPageModel.resourcesCache.getImageFromManifestResources(fileName: imageResource) {
+            self.image = cachedImage
         }
-        
-        return rendererPageModel.resourcesCache.getImageFromManifestResources(fileName: resource)
+        else {
+            self.image = nil
+        }
     }
     
     var imageEvents: [MultiplatformEventId] {

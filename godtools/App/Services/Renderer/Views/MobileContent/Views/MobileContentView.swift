@@ -80,6 +80,15 @@ class MobileContentView: UIView {
         
     }
     
+    func removeAllChildren() {
+        
+        for child in children {
+            child.removeFromSuperview()
+        }
+        
+        children.removeAll()
+    }
+    
     // MARK: - View Did Appear
     
     func notifyViewAndAllChildrenViewDidAppear() {
@@ -163,6 +172,62 @@ class MobileContentView: UIView {
     }
     
     func didReceiveError(error: MobileContentErrorViewModel) {
+        
+    }
+    
+    // MARK: - Position State
+    
+    func getPositionStateForViewHierarchy() -> MobileContentViewPositionState {
+        
+        let rootPositionState: MobileContentViewPositionState = getPositionState()
+        
+        recurseHierarchyAndGetPositionState(view: self, viewPositionState: rootPositionState)
+        
+        return rootPositionState
+    }
+    
+    private func recurseHierarchyAndGetPositionState(view: MobileContentView, viewPositionState: MobileContentViewPositionState) {
+        
+        for childView in view.children {
+            
+            let childPositionState: MobileContentViewPositionState = childView.getPositionState()
+            
+            viewPositionState.addChild(positionState: childPositionState)
+            
+            childView.recurseHierarchyAndGetPositionState(view: childView, viewPositionState: childPositionState)
+        }
+    }
+    
+    func getPositionState() -> MobileContentViewPositionState {
+        
+        return MobileContentViewPositionState()
+    }
+    
+    func setPositionStateForViewHierarchy(positionState: MobileContentViewPositionState, animated: Bool) {
+        
+        setPositionState(positionState: positionState, animated: animated)
+        
+        recurseHierarchyAndSetPositionState(view: self, viewPositionState: positionState, animated: animated)
+    }
+    
+    private func recurseHierarchyAndSetPositionState(view: MobileContentView, viewPositionState: MobileContentViewPositionState, animated: Bool) {
+        
+        for index in 0 ..< viewPositionState.children.count {
+            
+            guard index < view.children.count else {
+                continue
+            }
+            
+            let childView: MobileContentView = view.children[index]
+            let childPositionState: MobileContentViewPositionState = viewPositionState.children[index]
+            
+            childView.setPositionState(positionState: childPositionState, animated: animated)
+            
+            childView.recurseHierarchyAndSetPositionState(view: childView, viewPositionState: childPositionState, animated: animated)
+        }
+    }
+    
+    func setPositionState(positionState: MobileContentViewPositionState, animated: Bool) {
         
     }
 }

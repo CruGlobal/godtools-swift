@@ -109,7 +109,16 @@ extension MultiplatformLessonPage {
         
         var childModels: [MobileContentRenderableModel] = Array()
 
-        childModels.append(MultiplatformContent(content: lessonPage.content))
+        let contentHorizontalInsets: CGFloat = 30
+        
+        let multiplatformContent = MultiplatformContent(
+            content: lessonPage.content,
+            contentInsets: UIEdgeInsets(top: 0, left: contentHorizontalInsets, bottom: 0, right: contentHorizontalInsets),
+            itemSpacing: 20,
+            scrollIsEnabled: true
+        )
+        
+        childModels.append(multiplatformContent)
         
         return childModels
     }

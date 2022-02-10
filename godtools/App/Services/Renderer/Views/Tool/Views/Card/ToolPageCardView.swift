@@ -123,7 +123,7 @@ class ToolPageCardView: MobileContentView {
         contentStackContainer.addSubview(contentStackView)
         contentStackView.constrainEdgesToSuperview()
         layoutIfNeeded()
-        contentStackView.setContentInset(contentInset: UIEdgeInsets(
+        contentStackView.setScrollViewContentInset(contentInset: UIEdgeInsets(
             top: 0,
             left: 0,
             bottom: bottomGradientView.frame.size.height,
@@ -238,7 +238,7 @@ class ToolPageCardView: MobileContentView {
     
     @objc func handleSwipeGesture(swipeGesture: UISwipeGestureRecognizer) {
         
-        guard let offset = contentStackView.getContentOffset(), let inset = contentStackView.getContentInset(), let scrollFrame = contentStackView.scrollViewFrame else {
+        guard let offset = contentStackView.getScrollViewContentOffset(), let inset = contentStackView.getScrollViewContentInset(), let scrollFrame = contentStackView.scrollViewFrame else {
             return
         }
         
@@ -347,7 +347,7 @@ extension ToolPageCardView {
             height: contentHeight
         )
         
-        contentStackView.setContentSize(size: contentSize)
+        contentStackView.setScrollViewContentSize(size: contentSize)
     }
     
     private func removeKeyboardHeightFromContentSize() {
@@ -370,7 +370,7 @@ extension ToolPageCardView {
             height: contentHeight
         )
         
-        contentStackView.setContentSize(size: contentSize)
+        contentStackView.setScrollViewContentSize(size: contentSize)
     }
 }
 

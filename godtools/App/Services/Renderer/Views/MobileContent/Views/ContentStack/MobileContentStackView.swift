@@ -9,35 +9,21 @@
 import UIKit
 
 class MobileContentStackView: MobileContentView {
-    
-    private let contentView: UIView = UIView()
-    private let contentInsets: UIEdgeInsets
-    private let itemSpacing: CGFloat
-    
+        
     private var scrollView: UIScrollView?
+    private var contentView: UIView = UIView()
     private var childViews: [MobileContentView] = Array()
-    private var lastAddedView: MobileContentView?
-    private var lastAddedBottomConstraint: NSLayoutConstraint?
+    private var lastAddedChildView: MobileContentView?
+    private var lastAddedChildBottomConstraint: NSLayoutConstraint?
     private var autoSpacerViews: [MobileContentSpacerView] = Array()
+    private var contentInsets: UIEdgeInsets = .zero
+    private var itemSpacing: CGFloat = 0
             
     required init(contentInsets: UIEdgeInsets, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
                 
-        self.contentInsets = contentInsets
-        self.itemSpacing = itemSpacing
-        
         super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: itemSpacing))
         
-        setupConstraints(scrollIsEnabled: scrollIsEnabled)
-                
-        backgroundColor = .clear
-        contentView.backgroundColor = .clear
-        
-        if scrollIsEnabled && scrollView == nil {
-            assertionFailure("ScrollView should be initialized at this point.")
-        }
-        scrollView?.backgroundColor = .clear
-        scrollView?.showsVerticalScrollIndicator = false
-        scrollView?.showsHorizontalScrollIndicator = false
+        configureLayout(contentInsets: contentInsets, itemSpacing: itemSpacing, scrollIsEnabled: scrollIsEnabled)
     }
     
     required init?(coder: NSCoder) {
@@ -65,10 +51,16 @@ class MobileContentStackView: MobileContentView {
         super.renderChild(childView: childView)
                 
         addChildView(childView: childView)
+    }
+    
+    override func removeAllChildren() {
         
-        if let accordionView = childView as? MobileContentAccordionView {
-            accordionView.setDelegate(delegate: self)
-        }
+        childViews.removeAll()
+        autoSpacerViews.removeAll()
+        lastAddedChildView = nil
+        lastAddedChildBottomConstraint = nil
+        
+        super.removeAllChildren()
     }
     
     override var heightConstraintType: MobileContentViewHeightConstraintType {
@@ -89,28 +81,57 @@ class MobileContentStackView: MobileContentView {
         return scrollView?.contentSize ?? contentView.frame.size
     }
     
-    func setContentSize(size: CGSize) {
+    func setScrollViewContentSize(size: CGSize) {
         scrollView?.contentSize = size
     }
     
-    func getContentInset() -> UIEdgeInsets? {
+    func getScrollViewContentInset() -> UIEdgeInsets? {
         return scrollView?.contentInset
     }
     
-    func setContentInset(contentInset: UIEdgeInsets) {
+    func setScrollViewContentInset(contentInset: UIEdgeInsets) {
         if let scrollView = self.scrollView {
             scrollView.contentInset = contentInset
             relayoutForSpacerViews()
         }
     }
     
-    func getContentOffset() -> CGPoint? {
+    func getScrollViewVerticalContentOffsetPercentageOfContentSize() -> CGFloat {
+       
+        guard let scrollView = self.scrollView else {
+            return 0
+        }
+        
+        let contentSize: CGSize = scrollView.contentSize
+        let contentOffset: CGPoint = scrollView.contentOffset
+        
+        guard contentSize.height > 0 else {
+            return 0
+        }
+        
+        let verticalContentOffset: CGFloat = contentOffset.y / contentSize.height
+        
+        return verticalContentOffset
+    }
+    
+    func setScrollViewVerticalContentOffsetPercentageOfContentSize(verticalContentOffsetPercentage: CGFloat, animated: Bool) {
+        
+        guard let scrollView = self.scrollView else {
+            return
+        }
+        
+        let contentSize: CGSize = scrollView.contentSize
+        let contentOffsetY: CGFloat = verticalContentOffsetPercentage * contentSize.height
+        
+        setScrollViewContentOffset(contentOffset: CGPoint(x: scrollView.contentOffset.x, y: contentOffsetY), animated: animated)
+    }
+    
+    func getScrollViewContentOffset() -> CGPoint? {
         return scrollView?.contentOffset
     }
     
-    func setContentOffset(contentOffset: CGPoint) {
-        
-        scrollView?.contentOffset = contentOffset
+    func setScrollViewContentOffset(contentOffset: CGPoint, animated: Bool) {
+        scrollView?.setContentOffset(contentOffset, animated: animated)
     }
     
     func setScollBarsHidden(hidden: Bool) {
@@ -190,6 +211,87 @@ class MobileContentStackView: MobileContentView {
         
         spacerView.setHeight(height: 0)
         autoSpacerViews.append(spacerView)
+    }
+}
+
+// MARK: - Build Layout
+
+extension MobileContentStackView {
+    
+    func configureLayout(contentInsets: UIEdgeInsets, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
+        
+        // remove current layout
+        scrollView?.removeFromSuperview()
+        contentView.removeFromSuperview()
+        autoSpacerViews.removeAll()
+        lastAddedChildView = nil
+        lastAddedChildBottomConstraint = nil
+        scrollView = nil
+        
+        //
+        self.contentInsets = contentInsets
+        self.itemSpacing = itemSpacing
+        
+        // add scrollview and content view
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        let contentViewParent: UIView
+        contentView = UIView()
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        
+        if scrollIsEnabled {
+            
+            let newScrollView: UIScrollView = UIScrollView()
+            newScrollView.translatesAutoresizingMaskIntoConstraints = false
+            
+            addSubview(newScrollView)
+            newScrollView.constrainEdgesToView(view: self)
+            
+            contentViewParent = newScrollView
+            
+            self.scrollView = newScrollView
+        }
+        else {
+            
+            contentViewParent = self
+        }
+        
+        contentViewParent.addSubview(contentView)
+        contentView.constrainEdgesToView(view: contentViewParent)
+        
+        if let scrollView = self.scrollView {
+            
+            scrollView.backgroundColor = .clear
+            scrollView.showsVerticalScrollIndicator = false
+            scrollView.showsHorizontalScrollIndicator = false
+            
+            let equalWidths: NSLayoutConstraint = NSLayoutConstraint(
+                item: scrollView,
+                attribute: .width,
+                relatedBy: .equal,
+                toItem: contentView,
+                attribute: .width,
+                multiplier: 1,
+                constant: 0
+            )
+            
+            scrollView.addConstraint(equalWidths)
+        }
+        
+        backgroundColor = .clear
+        contentView.backgroundColor = .clear
+        
+        // build layout if needed
+        guard childViews.count > 0 else {
+            return
+        }
+        
+        let currentChildViews: [MobileContentView] = childViews
+        childViews = Array()
+        
+        for childView in currentChildViews {
+            addChildView(childView: childView)
+        }
     }
 }
 
@@ -273,12 +375,16 @@ extension MobileContentStackView {
         addTopAndBottomConstraintsToChildView(childView: childView)
         
         relayoutForSpacerViews()
+        
+        if let accordionView = childView as? MobileContentAccordionView {
+            accordionView.setDelegate(delegate: self)
+        }
     }
     
     private func relayoutTopAndBottomConstraintsForChildViews() {
         
-        lastAddedView = nil
-        lastAddedBottomConstraint = nil
+        lastAddedChildView = nil
+        lastAddedChildBottomConstraint = nil
         
         let contentViewConstraints: [NSLayoutConstraint] = contentView.constraints
         
@@ -462,15 +568,15 @@ extension MobileContentStackView {
             constant: 0
         )
         
-        if let lastAddedBottomConstraint = self.lastAddedBottomConstraint {
-            contentView.removeConstraint(lastAddedBottomConstraint)
+        if let lastAddedChildBottomConstraint = self.lastAddedChildBottomConstraint {
+            contentView.removeConstraint(lastAddedChildBottomConstraint)
         }
         
         contentView.addConstraint(bottom)
         
         let top: NSLayoutConstraint
         
-        if let lastView = lastAddedView {
+        if let lastView = lastAddedChildView {
             
             top = NSLayoutConstraint(
                 item: childView,
@@ -497,8 +603,8 @@ extension MobileContentStackView {
         
         contentView.addConstraint(top)
         
-        lastAddedView = childView
-        lastAddedBottomConstraint = bottom
+        lastAddedChildView = childView
+        lastAddedChildBottomConstraint = bottom
     }
 }
 
@@ -532,100 +638,5 @@ extension MobileContentStackView: MobileContentAccordionViewDelegate {
                 animated: true
             )
         }
-    }
-}
-
-// MARK: - Constraints
-
-extension MobileContentStackView {
-    
-    private func setupConstraints(scrollIsEnabled: Bool) {
-            
-        translatesAutoresizingMaskIntoConstraints = false
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        
-        if scrollIsEnabled {
-            
-            let scrollView: UIScrollView = UIScrollView()
-            scrollView.translatesAutoresizingMaskIntoConstraints = false
-            
-            addSubview(scrollView)
-            scrollView.addSubview(contentView)
-            
-            constrainViewEdgesToSuperview(view: scrollView)
-            constrainViewEdgesToSuperview(view: contentView)
-                        
-            let equalWidths: NSLayoutConstraint = NSLayoutConstraint(
-                item: scrollView,
-                attribute: .width,
-                relatedBy: .equal,
-                toItem: contentView,
-                attribute: .width,
-                multiplier: 1,
-                constant: 0
-            )
-            
-            scrollView.addConstraint(equalWidths)
-            
-            self.scrollView = scrollView
-        }
-        else {
-            
-            addSubview(contentView)
-            
-            constrainViewEdgesToSuperview(view: contentView)
-        }
-    }
-    
-    private func constrainViewEdgesToSuperview(view: UIView) {
-        
-        guard let superview = view.superview else {
-            return
-        }
-        
-        let leading: NSLayoutConstraint = NSLayoutConstraint(
-            item: view,
-            attribute: .leading,
-            relatedBy: .equal,
-            toItem: superview,
-            attribute: .leading,
-            multiplier: 1,
-            constant: 0
-        )
-        
-        let trailing: NSLayoutConstraint = NSLayoutConstraint(
-            item: view,
-            attribute: .trailing,
-            relatedBy: .equal,
-            toItem: superview,
-            attribute: .trailing,
-            multiplier: 1,
-            constant: 0
-        )
-        
-        let top: NSLayoutConstraint = NSLayoutConstraint(
-            item: view,
-            attribute: .top,
-            relatedBy: .equal,
-            toItem: superview,
-            attribute: .top,
-            multiplier: 1,
-            constant: 0
-        )
-        
-        let bottom: NSLayoutConstraint = NSLayoutConstraint(
-            item: view,
-            attribute: .bottom,
-            relatedBy: .equal,
-            toItem: superview,
-            attribute: .bottom,
-            multiplier: 1,
-            constant: 0
-        )
-        
-        superview.addConstraint(leading)
-        superview.addConstraint(trailing)
-        superview.addConstraint(top)
-        superview.addConstraint(bottom)
     }
 }
