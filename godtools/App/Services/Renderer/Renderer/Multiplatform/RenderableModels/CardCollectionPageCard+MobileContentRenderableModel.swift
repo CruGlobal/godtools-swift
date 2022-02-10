@@ -1,5 +1,5 @@
 //
-//  CardCollectionPageCard+MobileContentRenderer.swift
+//  CardCollectionPageCard+MobileContentRenderableModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 1/26/22.
@@ -11,18 +11,6 @@ import GodToolsToolParser
 import UIKit
 
 extension CardCollectionPage.Card: MobileContentRenderableModel {
-    
-    var restrictTo: String? {
-        return nil
-    }
-    
-    var version: String? {
-        return nil
-    }
-    
-    var modelContentIsRenderable: Bool {
-        return true
-    }
     
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
                 

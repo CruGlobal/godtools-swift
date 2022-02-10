@@ -60,7 +60,7 @@ class MultiplatformChooseYourOwnAdventurePage: PageModelType {
         return nil
     }
     
-    var callToAction: CallToActionModelType? {
+    var callToAction: CallToAction? {
         return nil
     }
     

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 protocol PageModelType: BackgroundImageModelType, MobileContentRenderableModel {
         
@@ -18,7 +19,7 @@ protocol PageModelType: BackgroundImageModelType, MobileContentRenderableModel {
     var textScale: MobileContentTextScale { get }
     var isHidden: Bool { get }
     var hero: HeroModelType? { get }
-    var callToAction: CallToActionModelType? { get }
+    var callToAction: CallToAction? { get }
     
     func getBackgroundColor() -> MobileContentColor?
     func getCardTextColor() -> MobileContentColor?

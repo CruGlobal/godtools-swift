@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class ToolPageViewFactory: MobileContentPageViewFactoryType {
         
@@ -56,7 +57,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let callToActionModel = renderableModel as? CallToActionModelType {
+        else if let callToActionModel = renderableModel as? CallToAction {
             
             return getCallToActionView(
                 callToActionModel: callToActionModel,
@@ -163,7 +164,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
         return nil
     }
     
-    func getCallToActionView(callToActionModel: CallToActionModelType?, rendererPageModel: MobileContentRendererPageModel) -> ToolPageCallToActionView {
+    func getCallToActionView(callToActionModel: CallToAction?, rendererPageModel: MobileContentRendererPageModel) -> ToolPageCallToActionView {
         
         let viewModel = ToolPageCallToActionViewModel(
             callToActionModel: callToActionModel,

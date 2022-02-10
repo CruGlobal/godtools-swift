@@ -7,14 +7,15 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class ToolPageCallToActionViewModel: ToolPageCallToActionViewModelType {
     
-    private let callToActionModel: CallToActionModelType?
+    private let callToActionModel: CallToAction?
     private let rendererPageModel: MobileContentRendererPageModel
     private let fontService: FontService
         
-    required init(callToActionModel: CallToActionModelType?, rendererPageModel: MobileContentRendererPageModel, fontService: FontService) {
+    required init(callToActionModel: CallToAction?, rendererPageModel: MobileContentRendererPageModel, fontService: FontService) {
         
         self.callToActionModel = callToActionModel
         self.rendererPageModel = rendererPageModel
@@ -26,7 +27,7 @@ class ToolPageCallToActionViewModel: ToolPageCallToActionViewModelType {
     }
     
     var title: String? {
-        return callToActionModel?.text
+        return callToActionModel?.label?.text
     }
     
     var titleFont: UIFont {
@@ -44,11 +45,11 @@ class ToolPageCallToActionViewModel: ToolPageCallToActionViewModelType {
     }
     
     var titleColor: UIColor {
-        return callToActionModel?.getTextColor()?.uiColor ?? rendererPageModel.pageColors.textColor.uiColor
+        return callToActionModel?.label?.textColor ?? rendererPageModel.pageColors.textColor.uiColor
     }
     
     var nextButtonColor: UIColor {
-        return callToActionModel?.getControlColor()?.uiColor ?? rendererPageModel.pageColors.primaryColor.uiColor
+        return callToActionModel?.controlColor ?? rendererPageModel.pageColors.primaryColor.uiColor
     }
     
     var nextButtonImage: UIImage? {

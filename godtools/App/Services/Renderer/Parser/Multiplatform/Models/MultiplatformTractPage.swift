@@ -64,8 +64,8 @@ class MultiplatformTractPage: PageModelType {
         return MultiplatformHero(hero: hero)
     }
     
-    var callToAction: CallToActionModelType? {
-        return MultiplatformCallToAction(callToAction: tractPage.callToAction)
+    var callToAction: CallToAction? {
+        return tractPage.callToAction
     }
     
     func getBackgroundColor() -> MobileContentColor? {

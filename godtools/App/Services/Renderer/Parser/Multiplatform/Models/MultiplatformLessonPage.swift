@@ -60,7 +60,7 @@ class MultiplatformLessonPage: PageModelType {
         return nil
     }
     
-    var callToAction: CallToActionModelType? {
+    var callToAction: CallToAction? {
         return nil
     }
     
