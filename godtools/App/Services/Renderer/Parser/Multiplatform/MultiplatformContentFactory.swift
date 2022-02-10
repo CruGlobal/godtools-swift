@@ -56,7 +56,7 @@ class MultiplatformContentFactory {
             renderableModel = form
         }
         else if let tabs = content as? Tabs {
-            renderableModel = MultiplatformContentTabs(tabs: tabs)
+            renderableModel = tabs
         }
         else if let spacer = content as? Spacer {
             renderableModel = MultiplatformContentSpacer(spacer: spacer)

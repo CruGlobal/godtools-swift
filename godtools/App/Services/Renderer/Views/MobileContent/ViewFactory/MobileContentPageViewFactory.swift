@@ -208,7 +208,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let tabModel = renderableModel as? ContentTabModelType {
+        else if let tabModel = renderableModel as? Tabs.Tab {
             
             let viewModel = MobileContentTabViewModel(
                 tabModel: tabModel,
@@ -220,7 +220,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let tabsModel = renderableModel as? ContentTabsModelType {
+        else if let tabsModel = renderableModel as? Tabs {
 
             let viewModel = MobileContentTabsViewModel(
                 tabsModel: tabsModel,

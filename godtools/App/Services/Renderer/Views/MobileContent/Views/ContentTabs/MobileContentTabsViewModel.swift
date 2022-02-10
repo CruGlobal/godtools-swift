@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class MobileContentTabsViewModel: MobileContentTabsViewModelType {
     
-    private let tabsModel: ContentTabsModelType
+    private let tabsModel: Tabs
     private let rendererPageModel: MobileContentRendererPageModel
         
-    required init(tabsModel: ContentTabsModelType, rendererPageModel: MobileContentRendererPageModel) {
+    required init(tabsModel: Tabs, rendererPageModel: MobileContentRendererPageModel) {
         
         self.tabsModel = tabsModel
         self.rendererPageModel = rendererPageModel
