@@ -35,7 +35,7 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "கட்டுரைகள்";
-"language_onboard" = "80+ மொழிகளை";
+"language_onboard" = "90+ மொழிகளை";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "பிடித்தவை";
@@ -113,6 +113,8 @@
 "clear" = "தெளிவாக்கு";
 "cancel" = "ரத்துசெய்";
 "error_can_not_send_email" = "உங்களுடைய சாதனத்திலே கட்டமைக்கப்பட்ட மின்னஞ்சல் இல்லை";
+"onboardingTutorial.getStartedButton.title" = "தொடங்கவும்";
+
 // About
 "general_about_1" = "காட்டூல்ஸ் உங்களுடைய நம்பிக்கையை  எளிய் முறையில் தெளிவாக பகிர்ந்துகொள்ள உதவுகிறது";
 "general_about_2" = "இதற்கு முன்பாக உங்கள் நம்பிக்கையை வேறு ஒருவருடன், குறிப்பாய் வேறு மொழி பேசும் ஒருவருடன் பகிர்ந்திடவே இல்லை என்றாலும், இந்த உபகரணத்தை பயன்படுத்தி ஒருவர் இ யேசு கிறிஸ்துவின் மூலமாக  தேவனோடு உறவை எப்படி   
@@ -123,13 +125,14 @@
 "general_about_6" = "கேள்விகள்? ஆலோசனைகள்? வேண்டுகோள்கள்? support@godtoolsapp.com தொடர்புகொள்ளுங்கள்";
 "general_about_7" = "இந்த உபகரணங்களின் இணைய பதிவினை knowgod.com இணையதளத்தில் கண்டுபிடிக்கலாம்.  அதனை உங்களுடைய சொந்த வலைதளத்தில் கிடத்துக";
 "general_about_8" = "கூடுதலான தகவலுக்கு godtoolsapp.com வருகை தாருங்கள்";
+"tutorial.continueButton.title.continue" = "தொடரவும்";
 "general_about_9" = "உங்களுடைய நம்பிக்கையை பகிர்ந்துகொள்ள முயற்சி எடுக்கின்ற இந்த வேளையிலே, இருதயங்களை மாற்றக்கூடியவர் கர்த்தர் ஒருவரே என்பதை நினைவில்கொள்ளுங்கள்.  ஒருவரை புரிந்துகொள்ளும்படிக்கு  அவருடைய காரியத்தை நன்றாக கேட்டு உங்கள் அன்பை வெளிப்படுத்துங்கள்.";
 "general_about_10" = "\"அவனவனுக்கு இன்னின்னபடி உத்தரவு சொல்லவேண்டுமென்று நீங்கள் அறியும்படிக்கு, உங்கள் வசனம் எப்பொழுதும் கிருபை பொருந்தினதாயும் உப்பால் சாரமேறினதாயுமிருப்பதாக\"  கொலோசெயர் 4:6";
 
 // Downloads
 "Download in progress" = "பதிவிறக்கம் செயலில் உள்ளது";
 
-// Navigation
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "முந்தைய";
 "card_status2" = "அடுத்த";
 
@@ -137,5 +140,3 @@
 "language_name_fa" = "பாரசீக (ஃபார்ஸி)";
 
 "onboardingTutorial.continueButton.title" = "தொடரவும்";
-"onboardingTutorial.getStartedButton.title" = "தொடங்கவும்";
-

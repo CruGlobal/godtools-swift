@@ -11,6 +11,7 @@ import Foundation
 protocol ToolNavigationFlow: Flow {
     
     var articleFlow: ArticleFlow? { get set }
+    var chooseYourOwnAdventureFlow: ChooseYourOwnAdventureFlow? { get set }
     var lessonFlow: LessonFlow? { get set }
     var tractFlow: TractFlow? { get set }
 }
@@ -206,6 +207,19 @@ extension ToolNavigationFlow {
                 liveShareStream: liveShareStream,
                 trainingTipsEnabled: trainingTipsEnabled,
                 page: page
+            )
+            
+        case .chooseYourOwnAdventure:
+            
+            chooseYourOwnAdventureFlow = ChooseYourOwnAdventureFlow(
+                flowDelegate: self,
+                appDiContainer: appDiContainer,
+                sharedNavigationController: navigationController,
+                resource: resource,
+                primaryLanguage: primaryLanguageTranslation.language,
+                primaryTranslationManifest: primaryLanguageTranslation.translationManifestData,
+                parallelLanguage: parallelLanguageTranslation?.language,
+                parallelTranslationManifest: parallelLanguageTranslation?.translationManifestData
             )
             
         case .unknown:

@@ -1,5 +1,11 @@
+"parallelLanguage.yesButton.title" = "Po";
+"parallelLanguage.noButton.title" = "Jo faleminderit";
+"parallelLanguage.selectButton.title" = "Përzgjidh";
 "share_link" = "Tregoju të tjerëve";
-"language_onboard" = "80+ Gjuhë";
+
+/* This is an invitation for a user to open a tool */
+"open" = "Hape";
+"language_onboard" = "90+ Gjuhë";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Ju keni shkarkuar të gjitha mjetet në dispozicion.";
@@ -92,16 +98,18 @@
 "general_about_6" = "Pyetje? Sygjerime? Kërkesa? Na kontakto te support@godtoolsapp.com";
 "general_about_7" = "Një version online i këtyre mjeteve mund të gjendet tek knowgod.com.Fute në sitin tënd.";
 "general_about_8" = "Vizito godtoolsapp.com për më shumë informacion.";
+"tutorial.continueButton.title.continue" = "vazhdo";
 "general_about_9" = "Ndërsa merr iniciativën të ndash besimin tënd,kujto që Perëndia është Ai që ndryshon zemrën.Trego dashuri ndaj cdo personi duke i dëgjuar që t`i kuptosh.";
 "general_about_10" = "\"Fjala juaj të jetë me hir,e ndrequr me kripë ,që të dini si duhet t`i përgjigjeni gjithsecilit.\"Kolosianëve 4:6";
 
 // Downloads
 "Download in progress" = "Shkarkoni në vazhdim";
 
-// Navigation
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "Prapa";
 "card_status2" = "Përpara";
 
 // Language Name Strings
 "language_name_fa" = "Persian (Farsi)";
 
+"onboardingTutorial.continueButton.title" = "vazhdo";

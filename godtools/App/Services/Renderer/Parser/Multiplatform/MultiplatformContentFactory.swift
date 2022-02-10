@@ -34,6 +34,9 @@ class MultiplatformContentFactory {
         else if let inlineTip = content as? InlineTip, let tip = inlineTip.tip {
             return MultiplatformTrainingTip(tip: tip)
         }
+        else if let card = content as? Card {
+            return MultiplatformContentCard(contentCard: card)
+        }
         else if let input = content as? Input {
             renderableModel = MultiplatformContentInput(input: input)
         }
@@ -45,6 +48,9 @@ class MultiplatformContentFactory {
         }
         else if let multiSelect = content as? Multiselect {
             renderableModel = MultiplatformContentMultiSelect(multiSelect: multiSelect)
+        }
+        else if let flow = content as? GodToolsToolParser.Flow {
+            return flow
         }
         else if let form = content as? Form {
             renderableModel = MultiplatformContentForm(form: form)

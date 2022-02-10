@@ -94,7 +94,7 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
         let sortedResources: [ResourceModel] = dataDownloader.resourcesCache.getSortedResources()
         let resources: [ResourceModel] = sortedResources.filter({
             let resourceType: ResourceType = $0.resourceTypeEnum
-            return (resourceType == .tract || resourceType == .article) && !$0.isHidden
+            return (resourceType == .tract || resourceType == .article || resourceType == .chooseYourOwnAdventure) && !$0.isHidden
         })
         tools.accept(value: resources)
         isLoading.accept(value: false)

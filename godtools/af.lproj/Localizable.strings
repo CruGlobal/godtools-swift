@@ -1,3 +1,6 @@
+"parallelLanguage.yesButton.title" = "Ja";
+"parallelLanguage.noButton.title" = "Nee dankie";
+"parallelLanguage.getStartedButton.title" = "Kom ons begin";
 "tool_offline_favorite_message" = "Maak die gereedskap beskikbaar deur die hartikoon te tik wat dit tot jou gunstelinge sal byvoeg.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -48,7 +51,7 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Artikels";
-"language_onboard" = "80+ Tale";
+"language_onboard" = "90+ Tale";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Jy het alle beskikbare hulpmiddels afgelaai.";
@@ -60,6 +63,9 @@
 "find_tools" = "Alle hulpmiddels";
 
 "unavailable" = "Nie beskikbaar";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "Slaan oor";
 
 // Onboarding
 "add_new_tools" = "Voeg nuwe hulpmiddels by";
@@ -148,6 +154,8 @@ https://godtoolsapp.com";
 "error_can_not_send_email" = "Daar is geen gekonfigureerde e-pos op jou toestel nie.";
 "required_field_missing" = "%@ is ’n benodigde veld.";
 
+"onboardingTutorial.getStartedButton.title" = "Kom ons begin";
+
 // About
 "general_about_1" = "GodTools help jou om jou geloof op 'n maklike en duidelike manier te deel.";
 "general_about_2" = "Hierdie hulpmiddele help jou om met selfvertroue aan iemand te verduidelik hoe hulle 'n verhouding met God kan hê deur Jesus Christus, selfs as jy nog nooit voorheen jou geloof gedeel het nie of hulle dalk 'n ander taal praat.";
@@ -157,16 +165,18 @@ https://godtoolsapp.com";
 "general_about_6" = "Vrae? Aanbevelings? Versoeke? Kontak ons by support@godtoolsapp.com";
 "general_about_7" = "'n Aanlyn weergawe van hierdie hulpmiddels kan by knowgod.com gevind word. Maak dit deel van jou eie webwerf!";
 "general_about_8" = "Besoek godtoolsapp.com vir meer inligting.";
+"tutorial.continueButton.title.continue" = "Gaan voort";
 "general_about_9" = "Terwyl jy die inisiatief neem om jou geloof te deel, onthou God is die een wat die hart verander. Wees lief vir elke persoon deur goed te luister vir begrip.";
 "general_about_10" = "\"Wat julle sê, moet altyd vriendelik wees en van goeie smaak getuig; en julle moet weet hoe julle elkeen behoort te antwoord.\" Kolossense 4:6";
 
 // Downloads
 "Download in progress" = "Besig om af te laai";
 
-// Navigation
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "Vorige";
 "card_status2" = "Volgende";
 
 // Language Name Strings
 "language_name_fa" = "Persies (Farsi)";
 
+"onboardingTutorial.continueButton.title" = "Gaan voort";

@@ -13,4 +13,5 @@ protocol MobileContentImageViewModelType {
     var image: UIImage? { get }
     var imageEvents: [MultiplatformEventId] { get }
     var rendererState: MobileContentMultiplatformState { get }
+    var imageWidth: MobileContentViewWidth { get }
 }

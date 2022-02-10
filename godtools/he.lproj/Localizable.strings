@@ -1,3 +1,17 @@
+"parallelLanguage.yesButton.title" = "כן";
+"parallelLanguage.noButton.title" = "לא תודה";
+"parallelLanguage.getStartedButton.title" = "בואו נתחיל";
+"parallelLanguage.selectLanguageButton.title" = "בחרו שפה";
+"parellelLanguage.prompt" = "האם ברצונכם להגדיר שפה שניה?";
+"onboardingTutorial.beginButton.title" = "התחלה";
+"onboardingTutorial.quickStart.2.message" = "אני רוצה לחלוק את הבשורה עם מישהו";
+"onboardingTutorial.quickStart.2.link" = "בחרו את אחד מהכלים שלנו";
+"onboardingTutorial.nextButton.title" = "הבא";
+"onboardingTutorial.quickstart.title" = "קישורי התחלה מהירה";
+"onboardingTutorial.quickStart.0.message" = "אני רוצה לחקור את הנצרות";
+"onboardingTutorial.quickStart.0.link" = "קראו את המאמרים שלנו";
+"onboardingTutorial.quickStart.1.message" = "אני רוצה ללמוד על ניהול שיחות בשורה";
+"onboardingTutorial.quickStart.1.link" = "נסה את השיעורים שלנו";
 "tool_offline_favorite_message" = "הפוך כלי לזמין במצב לא מקוון על ידי הקשה על סמל הלב שמוסיף אותו למועדפים שלך.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -18,6 +32,14 @@
 "share_tool_remote_link_message" = "היי, הצטרף אלי ב-GodTools באמצעות שיתוף מסך. הנה הקישור: %@ אם לא תקבל הודעה זו עד מאוחר יותר, ייתכן שהקישור כבר לא יעבוד. אנחנו יכולים לנסות שוב בזמן אחר.";
 "exit_tract_remote_share_session.message" = "לצאת מהשיתוף מרחוק עכשיו?";
 "load_tool_remote_session.message" = "מתחיל שיתוף מסך...";
+"onboardingTutorial.0.title" = "מוכן לכל שיחה";
+"onboardingTutorial.0.videoLink.title" = "צפו בסרטון";
+"onboardingTutorial.1.title" = "דברו על אלוהים עם כל אחד";
+"onboardingTutorial.1.message" = "GodTools עוזרת לכם לנהל שיחות משמעותיות על אלוהים.";
+"onboardingTutorial.2.title" = "תתכוננו לרגעים החשובים";
+"onboardingTutorial.2.message" = "למדו כיצד להפוך שיחות על אמונה לחלק טבעי מחייכם.";
+"onboardingTutorial.3.title" = "תעזרו למישהו לגלות את ישוע";
+"onboardingTutorial.3.message" = "GodTools הוא המדריך שלכם להעביר את הבשורה בדרכים ברורות ורלוונטיות.";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "הדרכה";
@@ -48,7 +70,7 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "מאמרים";
-"language_onboard" = "80+ שפות";
+"language_onboard" = "90+ שפות";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "הורדתם את כל הכלים הזמינים.";
@@ -60,6 +82,9 @@
 "find_tools" = "כל הכלים";
 
 "unavailable" = "לא זמין";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "דלג";
 
 // Onboarding
 "add_new_tools" = "הוסיפו כלים חדשים";
@@ -147,6 +172,8 @@
 "error_can_not_send_email" = "אין דוא\"ל מוגדר במכשירך";
 "required_field_missing" = "\"%@\" הינו שדה חובה.";
 
+"onboardingTutorial.getStartedButton.title" = "בואו נתחיל";
+
 // About
 "general_about_1" = "GodTools עוזר לך לשתף את האמונה שלך בדרך קלה ופשוטה.";
 "general_about_2" = "כלים אלה מסייעים לך להסביר בביטחון למישהו איך הם יכולים להתחיל מערכת יחסים עם אלוהים דרך ישוע המשיח, גם אם מעולם לא שיתפת את האמונה שלך או שהם מדברים בשפה אחרת.";
@@ -157,6 +184,7 @@
 support@godtoolsapp.com";
 "general_about_7" = "ניתן למצוא גרסה מקוונת של כלים אלה בכתובת knowgod.com. הטמע אותו באתר שלך!";
 "general_about_8" = "בקרו באתר godtoolsapp.com בשביל עוד מידע.";
+"tutorial.continueButton.title.continue" = "המשך";
 "general_about_9" = "כאשר אתה לוקח את היוזמה לחלוק את האמונה שלך, זכור כי אלוהים הוא אשר משנה את הלב. אהוב כל אדם טוב על ידי הקשבה להבנה.";
 "general_about_10" = "\"יהיו נא דבריכם מלווים תמיד בחן ומתבלים במלח, באפן שתדעו איך להשיב לכל שואל.\"
 קולוסים 4:6";
@@ -164,10 +192,11 @@ support@godtoolsapp.com";
 // Downloads
 "Download in progress" = "ההורדה בתהליך";
 
-// Navigation
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "קודם";
 "card_status2" = "הבא";
 
 // Language Name Strings
 "language_name_fa" = "פרסית (פרסית)";
 
+"onboardingTutorial.continueButton.title" = "המשך";

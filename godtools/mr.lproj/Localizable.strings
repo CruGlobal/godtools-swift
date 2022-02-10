@@ -1,3 +1,17 @@
+"parallelLanguage.yesButton.title" = "होय";
+"parallelLanguage.noButton.title" = "नाही धन्यवाद";
+"parallelLanguage.getStartedButton.title" = "सुरु करा";
+"parallelLanguage.selectLanguageButton.title" = "एक भाषा निवडा";
+"parellelLanguage.prompt" = "आपण अतिरिक्त भाषा सेट करू इच्छिता?";
+"onboardingTutorial.beginButton.title" = "सुरू करा";
+"onboardingTutorial.quickStart.2.message" = "मला गॉस्पेल कुणाशी तरी शेअर करायचे आहे";
+"onboardingTutorial.quickStart.2.link" = "आमच्या टूल्सपैकी एक निवडा";
+"onboardingTutorial.nextButton.title" = "यापुढील";
+"onboardingTutorial.quickstart.title" = "झटपट सुरुवात लिंक्स";
+"onboardingTutorial.quickStart.0.message" = "मला ख्रिश्चनिटी विषयी जाणून घ्यायचे आहे";
+"onboardingTutorial.quickStart.0.link" = "आमचे लेख वाचा";
+"onboardingTutorial.quickStart.1.message" = "मला गॉस्पेल-विषयक संभाषणे करण्याबद्दल जाणून घ्यायचे आहे";
+"onboardingTutorial.quickStart.1.link" = "आमचे धडे घेऊन पहा";
 "tool_offline_favorite_message" = "साधनाला आपल्या पसंतीत जोडणाऱ्या 'ह्रदय' चिन्हावर टॅप करून ते साधन ऑफलाइन उपलब्ध करा.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -18,6 +32,14 @@
 "share_tool_remote_link_message" = "नमस्कार, स्क्रीन शेअरिंग द्वारे GodTools वर मला फॉलो करा. ही आहे लिंक: %@ तुम्हाला हा संदेश उशीरा मिळाला असल्यास लिंक निकामी झाली असण्याची शक्यता आहे. आपण नंतर कधी तरी परत प्रयास करू शकतो.";
 "exit_tract_remote_share_session.message" = "रिमोट शेअरिंग सत्र आता सोडायचे?";
 "load_tool_remote_session.message" = "स्क्रीन शेअरिंग सुरु होत आहे…";
+"onboardingTutorial.0.title" = "सर्व संभाषणांसाठी तयर";
+"onboardingTutorial.0.videoLink.title" = "व्हीडिओ पहा";
+"onboardingTutorial.1.title" = "देवाविषयी कुणाशीही बोला";
+"onboardingTutorial.1.message" = "GodTools आपल्याला देवाविषयी अर्थपूर्ण संभाषण करू शकण्यात मदत करते.";
+"onboardingTutorial.2.title" = "महत्त्वाच्या क्षणांसाठी तयारी करा";
+"onboardingTutorial.2.message" = "विश्वासाविषयी संभाषणाला आपल्या आयुष्याचा एक नैसर्गिक भाग कसे बनवावे ते शिका.";
+"onboardingTutorial.3.title" = "कुणाला तरी येशूजवळ येण्यास मदत करा";
+"onboardingTutorial.3.message" = "गॉस्पेल विषयी सुस्पष्ट व सुबोध रीत्या संवाद स्थापनेमध्ये GodTools आपले दिशादर्शक आहे.";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "प्रशिक्षण";
@@ -49,7 +71,7 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "लेख";
-"language_onboard" = "८० पेक्षा जास्त भाषा";
+"language_onboard" = "90 पेक्षा जास्त भाषा";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "तुम्ही सर्व उपलब्ध साधने डाउनलोड केली आहेत.";
@@ -63,7 +85,7 @@
 "unavailable" = "अनुपलब्ध";
 
 // Navigation Bar
-"navigationBar.navigationItem.skip" = "वगळा";
+"navigationBar.navigationItem.skip" = "सोडा";
 
 // Onboarding
 "add_new_tools" = "टीपा
@@ -182,39 +204,68 @@
 "error_can_not_send_email" = "आपल्या डिवाईसवर काॅन्फिगर्ड ईमेल नाही. ";
 "required_field_missing" = "\"%@\" जरूरी फिल्ड म्हणजे क्षेत्र आहे.";
 
+"onboardingTutorial.getStartedButton.title" = "सुरूवात करा";
+
 // About
 "general_about_1" = "टीपा
 विषयी
 गाॅड टूल्स म्हणजे देवाची साधने आपणास सोप्या व स्पष्ट पद्धतीने आपल्या विश्वासाविषयी सांगण्यात मदत करतात.";
+// Tutorial
+"tutorial.tutorialItem.0.title" = "पाहा";
 "general_about_2" = "पण आपल्या विश्वासाविषयी पूर्वी कधी सांगितले नसतांनाही अथवा ते वेगळी भाषा बोलत असतांनाही, ही साधने आत्मविश्वासाने एखाद्याला हे समजाविण्यात मदत करतात की ते कशाप्रकारे येशू ख्रिस्ताद्वारे देवासोबत आपल्या नात्याची सुरूवात करू शकतात.
 ";
 "general_about_3" = "आपल्या पसंतीच्या आधारे व आपल्या श्रोत्यांनुसार वेगवेगळ्या साधनांतून निवड करा. प्रत्येक भाषेत सर्वच साधने उपलब्ध नाहीत.";
+"tutorial.tutorialItem.1.title" = "तयार करा";
 "general_about_4" = "प्रत्येक साधनाच्या शेवटी इतर रिसोर्सेस अथवा माहितीसाठी लिंक्सचा समावेश करण्यात आला आहे.";
+"tutorial.tutorialItem.1.message" = "आपल्या काही टूलशी परिचित व्हा. “मला सांगावयास शिकवा” टूल प्रारंभ करण्यासाठी चांगली जागा आहे. टूलबद्दल अधिक जाणून घेण्यासाठी बटण दाबा.";
 "general_about_5" = "प्रत्येक नवीन साधन आणि/अथवा डाऊलोड करण्यासाठी आॅनलाईन कनेक्शनची गरज आहे. डाऊनलोड केल्यानंतर त्यांना आॅफलाईन उपयोग करता येते.";
+"tutorial.tutorialItem.2.title" = "प्रयत्न करा";
 "general_about_6" = "प्रश्न? प्रस्ताव? विनंती? आमच्याशी येथे संपर्क साधा support@godtoolsapp.com";
+"tutorial.tutorialItem.2.message" = "प्रत्येक जण नवशिक्या म्हणून सुरुवात करतो. संभाषणात टूल वापरण्याचा प्रयत्न करा आणि आपण काय शिकता ते पहा.";
 "general_about_7" = "ह्या साधनांची आॅनलाईन आवृत्ती येथे आढळून येईल ादवूहवकण्बवउ ती आपल्या साईटवर एम्बेड करा!";
+"tutorial.tutorialItem.3.title" = "हे ट्यूटोरियल मेनूमध्ये पुन्हा पाहण्यासाठी उपलब्ध आहे";
 "general_about_8" = "अधिक माहितीसाठी godtoolsapp.com ला भेट द्या.";
+"tutorial.continueButton.title.continue" = "सुरू";
 "general_about_9" = "आपल्या विश्वासाविषयी सांगण्यासाठी पहिले पाऊल घेत असतांना, आपण हे लक्षात ठेवा की अंतःकरणे बदलणारा देव आहे.  समजण्यासाठी प्रत्येक व्यक्तीचे ऐकण्याद्वारे प्रत्येक व्यक्तीवर उत्तमप्रकारे प्रीती करा.";
+"tutorial.continueButton.title.startUsingGodTools" = "GodTools वापरण्या प्रारंभ करा";
+
 "general_about_10" = "“तुमचे बोलणे सर्वदा कृपायुक्त, मिठाने रूचकर केल्यासारखे असावे, म्हणजे प्रत्येकाला कसकसे उत्तर द्यावयाचे हे तुम्ही समजावे” कलस्सैकरांस पत्र 4:6";
 
+// OpenTutorial
+"openTutorial.showTutorialLabel.text" = "मला एक ट्यूटोरियल दाखवा";
 // Downloads
 "Download in progress" = "डाउनलोड चालू आहे";
 
-// Navigation
+"openTutorial.openTutorialButton.title" = "ट्यूटोरियल उघडा";
+
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "याआधीचे";
+// Account
+"account.navTitle" = "माझे प्रोफाइल";
 "card_status2" = "यापुढील";
+
+"account.activity.title" = "क्रियाकलाप";
 
 // Language Name Strings
 "language_name_fa" = "पर्शियन (फारसी)";
 
+// Account Activity
+"accountActivity.globalAnalytics.header.title" = "जागतिक क्रियाकलाप";
 // OnboardingWelcome
 "onboardingWelcome.titleLabel.welcome" = "स्वागत आहे";
+"accountActivity.globalAnalytics.users.title" = "अनन्य वापरकर्ते";
 "onboardingWelcome.titleLabel.tagline" = "आपला विश्वास पसरवण्यात आपल्या मदतीसाठी";
+"accountActivity.globalAnalytics.gospelPresentation.title" = "सुवार्ता सादरीकरण";
 "onboardingWelcome.beginButton" = "सुरू करा";
 
+"accountActivity.globalAnalytics.launches.title" = "सत्रे";
 // OnboardingTutorial
 "onboardingTutorial.aboutAppItem.0.title" = "इतरांस सांगा";
+"accountActivity.globalAnalytics.countries.title" = "देश";
+
 "onboardingTutorial.aboutAppItem.0.message" = "GodTools आपल्या विश्वासात संभाषणांचे मार्गदर्शन करण्यासाठी तयार केले गेले आहेत";
+// Alerts
+"alert.action.ok" = "ओके";
 "onboardingTutorial.aboutAppItem.1.title" = "आपले टूल्स निवडा";
 "onboardingTutorial.aboutAppItem.1.message" = "GodTools आपल्याला आत्मिक संभाषणापूर्वी, दरम्यान आणि नंतर मदत करतात";
 "onboardingTutorial.aboutAppItem.2.title" = "सदैव तयार";
@@ -222,36 +273,7 @@
 "onboardingTutorial.appUsageItem.0.message" = "कोणत्याही संभाषणाची तयारी करा";
 "onboardingTutorial.appUsageItem.1.message" = "एखाद्याला सुवार्ता सांगा";
 "onboardingTutorial.appUsageItem.2.message" = "दोन भाषा आजूबाजूला पाहा";
-"onboardingTutorial.appUsageItem.3.message" = "80 पेक्षा जास्त भाषांमधून निवडा";
+"onboardingTutorial.appUsageItem.3.message" = "90 पेक्षा जास्त भाषांमधून निवडा";
 "onboardingTutorial.appUsageItem.4.message" = "एखाद्याला ख्रिस्ती म्हणून प्रारंभ करण्यास मदत करा";
 "onboardingTutorial.continueButton.title" = "सुरू";
 "onboardingTutorial.showMoreButton.title" = "मला आणखी दाखवा";
-"onboardingTutorial.getStartedButton.title" = "सुरूवात करा";
-
-// Tutorial
-"tutorial.tutorialItem.0.title" = "पाहा";
-"tutorial.tutorialItem.1.title" = "तयार करा";
-"tutorial.tutorialItem.1.message" = "आपल्या काही टूलशी परिचित व्हा. “मला सांगावयास शिकवा” टूल प्रारंभ करण्यासाठी चांगली जागा आहे. टूलबद्दल अधिक जाणून घेण्यासाठी बटण दाबा.";
-"tutorial.tutorialItem.2.title" = "प्रयत्न करा";
-"tutorial.tutorialItem.2.message" = "प्रत्येक जण नवशिक्या म्हणून सुरुवात करतो. संभाषणात टूल वापरण्याचा प्रयत्न करा आणि आपण काय शिकता ते पहा.";
-"tutorial.tutorialItem.3.title" = "हे ट्यूटोरियल मेनूमध्ये पुन्हा पाहण्यासाठी उपलब्ध आहे";
-"tutorial.continueButton.title.continue" = "सुरू";
-"tutorial.continueButton.title.startUsingGodTools" = "GodTools वापरण्या प्रारंभ करा";
-
-// OpenTutorial
-"openTutorial.showTutorialLabel.text" = "मला एक ट्यूटोरियल दाखवा";
-"openTutorial.openTutorialButton.title" = "ट्यूटोरियल उघडा";
-
-// Account
-"account.navTitle" = "माझे प्रोफाइल";
-"account.activity.title" = "क्रियाकलाप";
-
-// Account Activity
-"accountActivity.globalAnalytics.header.title" = "जागतिक क्रियाकलाप";
-"accountActivity.globalAnalytics.users.title" = "अनन्य वापरकर्ते";
-"accountActivity.globalAnalytics.gospelPresentation.title" = "सुवार्ता सादरीकरण";
-"accountActivity.globalAnalytics.launches.title" = "सत्रे";
-"accountActivity.globalAnalytics.countries.title" = "देश";
-
-// Alerts
-"alert.action.ok" = "ओके";

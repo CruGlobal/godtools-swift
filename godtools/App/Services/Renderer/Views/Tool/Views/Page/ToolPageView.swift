@@ -89,16 +89,16 @@ class ToolPageView: MobileContentPageView {
         super.setupBinding()
     }
     
-    override func getPagePositions() -> MobileContentPagePositionsType {
+    override func getPositionState() -> MobileContentViewPositionState {
         
-        return ToolPagePositions(
-            cardPosition: cardsView?.getCurrentCardPosition()
-        )
+        let cardPosition: Int? = cardsView?.getCurrentCardPosition()
+        
+        return ToolPagePositions(cardPosition: cardPosition)
     }
     
-    override func setPagePositions(pagePositions: MobileContentPagePositionsType, animated: Bool) {
+    override func setPositionState(positionState: MobileContentViewPositionState, animated: Bool) {
         
-        guard let toolPagePositions = pagePositions as? ToolPagePositions else {
+        guard let toolPagePositions = positionState as? ToolPagePositions else {
             return
         }
         

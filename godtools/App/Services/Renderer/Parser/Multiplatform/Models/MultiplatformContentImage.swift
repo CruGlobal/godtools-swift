@@ -26,6 +26,10 @@ class MultiplatformContentImage: ContentImageModelType {
         let fileName: String? = image.resource?.name
         return fileName
     }
+    
+    var width: GodToolsToolParser.Dimension {
+        return image.width
+    }
 }
 
 // MARK: - MobileContentRenderableModel

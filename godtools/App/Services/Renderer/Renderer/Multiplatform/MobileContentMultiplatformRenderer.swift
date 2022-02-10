@@ -15,12 +15,12 @@ class MobileContentMultiplatformRenderer: MobileContentRendererType {
     
     let resource: ResourceModel
     let language: LanguageModel
-    let pageViewFactories: [MobileContentPageViewFactoryType]
+    let pageViewFactories: MobileContentRendererPageViewFactories
     
     required init(resource: ResourceModel, language: LanguageModel, multiplatformParser: MobileContentMultiplatformParser, pageViewFactories: MobileContentRendererPageViewFactories) {
         
         self.multiplatformParser = multiplatformParser
-        self.pageViewFactories = pageViewFactories.factories
+        self.pageViewFactories = pageViewFactories
         self.resource = resource
         self.language = language
     }
@@ -83,7 +83,7 @@ class MobileContentMultiplatformRenderer: MobileContentRendererType {
             return nil
         }
                  
-        let mobileContentView: MobileContentView? = getViewFromViewFactory(renderableModel: renderableModel, renderableModelParent: renderableModelParent, rendererPageModel: rendererPageModel, containerModel: containerModel)
+        let mobileContentView: MobileContentView? = pageViewFactories.getViewFromViewFactory(renderableModel: renderableModel, renderableModelParent: renderableModelParent, rendererPageModel: rendererPageModel, containerModel: containerModel)
         
         let childModels: [MobileContentRenderableModel] = renderableModel.getRenderableChildModels()
                 

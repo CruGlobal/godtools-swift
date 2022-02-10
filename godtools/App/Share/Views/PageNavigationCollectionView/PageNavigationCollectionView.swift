@@ -23,11 +23,11 @@ import UIKit
 
 class PageNavigationCollectionView: UIView, NibBased {
     
-    private let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+    private let layout: UICollectionViewLayout
         
     private var internalCurrentChangedPage: Int = 0
     private var internalCurrentStoppedOnPage: Int = 0
-    private var shouldNotifyPageDidAppearForDataReload: Bool = false
+    private var shouldNotifyPageDidAppearForDataReload: PageNavigationCollectionViewNavigationModel?
     
     private(set) var isAnimatingScroll: Bool = false
     
@@ -35,7 +35,15 @@ class PageNavigationCollectionView: UIView, NibBased {
     
     weak var delegate: PageNavigationCollectionViewDelegate?
     
+    required init(layout: UICollectionViewLayout = UICollectionViewFlowLayout()) {
+        
+        self.layout = layout
+        super.init(frame: UIScreen.main.bounds)
+        initialize()
+    }
+    
     required init?(coder: NSCoder) {
+        self.layout = UICollectionViewFlowLayout()
         super.init(coder: coder)
         initialize()
     }
@@ -45,7 +53,7 @@ class PageNavigationCollectionView: UIView, NibBased {
         loadNib()
         setupLayout()
         
-        shouldNotifyPageDidAppearForDataReload = true
+        shouldNotifyPageDidAppearForDataReload = PageNavigationCollectionViewNavigationModel(page: 0, animated: false)
         
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -54,7 +62,9 @@ class PageNavigationCollectionView: UIView, NibBased {
     private func setupLayout() {
         
         //collectionView
-        layout.scrollDirection = .horizontal
+        if let flowLayout = layout as? UICollectionViewFlowLayout {
+            flowLayout.scrollDirection = .horizontal
+        }
         collectionView.collectionViewLayout = layout
         collectionView.isPagingEnabled = true
         collectionView.isScrollEnabled = true
@@ -83,7 +93,7 @@ class PageNavigationCollectionView: UIView, NibBased {
     }
     
     func reloadData() {
-        shouldNotifyPageDidAppearForDataReload = true
+        shouldNotifyPageDidAppearForDataReload = PageNavigationCollectionViewNavigationModel(page: currentPage, animated: false)
         collectionView.reloadData()
     }
     
@@ -114,7 +124,7 @@ class PageNavigationCollectionView: UIView, NibBased {
         }
         else {
             // Set this to true because when animated is false we don't get any of the scrollView delegate methods called.
-            shouldNotifyPageDidAppearForDataReload = true
+            shouldNotifyPageDidAppearForDataReload = PageNavigationCollectionViewNavigationModel(page: page, animated: animated)
         }
         
         collectionView.scrollToItem(
@@ -213,6 +223,10 @@ class PageNavigationCollectionView: UIView, NibBased {
     
     func setSemanticContentAttribute(semanticContentAttribute: UISemanticContentAttribute) {
         collectionView.semanticContentAttribute = semanticContentAttribute
+    }
+    
+    func setPagingEnabled(pagingEnabled: Bool) {
+        collectionView.isPagingEnabled = pagingEnabled
     }
     
     func getContentOffset() -> CGPoint {
@@ -319,8 +333,10 @@ extension PageNavigationCollectionView: UICollectionViewDelegateFlowLayout, UICo
                 
         pageWillAppear(pageCell: cell, page: page)
         
-        if shouldNotifyPageDidAppearForDataReload {
-            shouldNotifyPageDidAppearForDataReload = false
+        if let shouldNotifyPageDidAppearForDataReload = self.shouldNotifyPageDidAppearForDataReload, page == shouldNotifyPageDidAppearForDataReload.page {
+            
+            self.shouldNotifyPageDidAppearForDataReload = nil
+            
             mostVisiblePageChanged(pageCell: cell, page: page)
             pageDidAppear(pageCell: cell, page: page)
         }

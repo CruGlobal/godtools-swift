@@ -7,19 +7,22 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
     
     private let mobileContentAnalytics: MobileContentAnalytics
     private let fontService: FontService
+    private let deepLinkingService: DeepLinkingServiceType
     
     private(set) weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
+    required init(flowDelegate: FlowDelegate, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, deepLinkingService: DeepLinkingServiceType) {
         
         self.flowDelegate = flowDelegate
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
+        self.deepLinkingService = deepLinkingService
     }
     
     func viewForRenderableModel(renderableModel: MobileContentRenderableModel, renderableModelParent: MobileContentRenderableModel?, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) -> MobileContentView? {
@@ -74,6 +77,17 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
+        else if let contentCard = renderableModel as? MultiplatformContentCard {
+            
+            let viewModel = MobileContentCardViewModel(
+                contentCard: contentCard,
+                rendererPageModel: rendererPageModel
+            )
+            
+            let view = MobileContentCardView(viewModel: viewModel)
+            
+            return view
+        }
         else if let linkModel = renderableModel as? ContentLinkModelType {
                         
             let viewModel = MobileContentLinkViewModel(
@@ -87,6 +101,52 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
+        else if let cardCollectionPageCard = renderableModel as? CardCollectionPage.Card {
+            
+            let viewModel = MobileContentCardCollectionPageCardViewModel(
+                card: cardCollectionPageCard
+            )
+            
+            let view = MobileContentCardCollectionPageCardView(viewModel: viewModel)
+            
+            return view
+        }
+        else if let contentPage = renderableModel as? MultiplatformContentPage {
+            
+            guard let flowDelegate = self.flowDelegate else {
+                // TODO: Return an error here if flowDelegate is null for some reason. ~Levi
+                return nil
+            }
+            
+            let viewModel = MobileContentContentPageViewModel(
+                flowDelegate: flowDelegate,
+                contentPage: contentPage,
+                rendererPageModel: rendererPageModel,
+                deepLinkService: deepLinkingService
+            )
+            
+            let view = MobileContentContentPageView(viewModel: viewModel)
+            
+            return view
+        }
+        else if let cardCollectionPage = renderableModel as? MultiplatformCardCollectionPage {
+            
+            guard let flowDelegate = self.flowDelegate else {
+                // TODO: Return an error here if flowDelegate is null for some reason. ~Levi
+                return nil
+            }
+            
+            let viewModel = MobileContentCardCollectionPageViewModel(
+                flowDelegate: flowDelegate,
+                cardCollectionPage: cardCollectionPage,
+                rendererPageModel: rendererPageModel,
+                deepLinkService: deepLinkingService
+            )
+            
+            let view = MobileContentCardCollectionPageView(viewModel: viewModel)
+            
+            return view
+        }
         else if let headingModel = renderableModel as? HeadingModelType {
             
             let viewModel = MobileContentHeadingViewModel(
@@ -97,6 +157,14 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             let view = MobileContentHeadingView(viewModel: viewModel)
             
             return view
+        }
+        else if let contentModel = renderableModel as? ContentModelType {
+            
+            return MobileContentStackView(
+                contentInsets: contentModel.contentInsets,
+                itemSpacing: contentModel.itemSpacing,
+                scrollIsEnabled: contentModel.scrollIsEnabled
+            )
         }
         else if let titleModel = renderableModel as? TitleModelType {
                   
@@ -205,6 +273,27 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             )
             
             let view = MobileContentHeaderView(viewModel: viewModel)
+            
+            return view
+        }
+        else if let contentFlow = renderableModel as? GodToolsToolParser.Flow {
+            
+            let viewModel = MobileContentFlowViewModel(
+                contentFlow: contentFlow,
+                rendererPageModel: rendererPageModel
+            )
+            
+            let view = MobileContentFlowView(viewModel: viewModel, itemSpacing: 16)
+            
+            return view
+        }
+        else if let contentFlowItem = renderableModel as? GodToolsToolParser.Flow.Item {
+            
+            let viewModel = MobileContentFlowItemViewModel(
+                flowItem: contentFlowItem
+            )
+            
+            let view = MobileContentFlowItemView(viewModel: viewModel)
             
             return view
         }

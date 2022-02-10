@@ -1,3 +1,17 @@
+"parallelLanguage.yesButton.title" = "Ndio";
+"parallelLanguage.noButton.title" = "Hapana Asante";
+"parallelLanguage.getStartedButton.title" = "Anza";
+"parallelLanguage.selectLanguageButton.title" = "Chagua lugha";
+"parellelLanguage.prompt" = "Je, ungependa kuweka lugha ya sekondari?";
+"onboardingTutorial.beginButton.title" = "Anza";
+"onboardingTutorial.quickStart.2.message" = "Ninataka kushirikisha mwingine na injili";
+"onboardingTutorial.quickStart.2.link" = "Chagua moja ya zana zetu";
+"onboardingTutorial.nextButton.title" = "Ijayo";
+"onboardingTutorial.quickstart.title" = "Viungo muhimo vya kuanza";
+"onboardingTutorial.quickStart.0.message" = "Ninataka kuchunguza Ukristo";
+"onboardingTutorial.quickStart.0.link" = "Soma makala yetu";
+"onboardingTutorial.quickStart.1.message" = "Ninataka kuanza kuwa na mazungumzo ya injili";
+"onboardingTutorial.quickStart.1.link" = "Jaribu Masomo yetu";
 "tool_offline_favorite_message" = "Fanya zana ipatikane nje ya mkondo kwa kudonoa ikoni ya moyo inayoiongeza kwenye Vipendwa vyako.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -18,6 +32,14 @@
 "share_tool_remote_link_message" = "Jambo, Fuatana na mimi kwenye GodTools kupitia kuchangia kupitia skrini. Kiungo ni hiki: %@ Kama hutapokea ujumbe huu hadi baadaye, kiungo kinaweza kukosa kufanya kazi. Tunaweza kujaribu wakati mwingine.";
 "exit_tract_remote_share_session.message" = "Ondoka sasa kutoka kipindi cha kuchangia ukiwa mbali?";
 "load_tool_remote_session.message" = "Anza Kuchangia kupitia kuonyesha Skrini...";
+"onboardingTutorial.0.title" = "Tayari kwa mazungumzo yote";
+"onboardingTutorial.0.videoLink.title" = "Tazama Video";
+"onboardingTutorial.1.title" = "Ongea kuhusu Mungu na yeyote yule";
+"onboardingTutorial.1.message" = "GodTools inakusaidia kuwa na mazungumzo yenye maana kuhusu Mungu.";
+"onboardingTutorial.2.title" = "Jitayarishe kwa nyakati ambazo ni muhimu";
+"onboardingTutorial.2.message" = "Fahamu jinsi ya kufanya mazungumzo kuhusu imani yawe sehemu asili ya maisha yako.";
+"onboardingTutorial.3.title" = "Msaidie mtu kugundua Yesu";
+"onboardingTutorial.3.message" = "GodTools ni mwongozo wako wa kuwasilisha injili kwa njia wazi na muhimu.";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Mafunzo";
@@ -48,7 +70,7 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Makala";
-"language_onboard" = "Zaidi ya lugha themanini";
+"language_onboard" = "Zaidi ya lugha tisini";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Umepakua zana zote zilizopo.";
@@ -60,6 +82,9 @@
 "find_tools" = "Pata Zana";
 
 "unavailable" = "Hazipatikani";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "Ruka";
 
 // Onboarding
 "add_new_tools" = "Ongeza Vifaa Vipya";
@@ -148,6 +173,8 @@ Programu inaweza kupakuliwa kwenye https://godtoolsapp.com";
 "error_can_not_send_email" = "Hakuna barua pepe iliyowekwa kwenye kifaa chako.";
 "required_field_missing" = " \"%@\" ni sharti ambalo lazima litimizwe.";
 
+"onboardingTutorial.getStartedButton.title" = "Anza";
+
 // About
 "general_about_1" = "GodTools inakusaidia kueneza imani yako kwa njia rahisi na ya wazi.";
 "general_about_2" = "Vifaa hivi vinasaidia kumwambia mtu kwa ujasiri jinsi wanaweza kuanzisha uhusiano na Mungu kupitia Yesu Kristo, hata kama hujawahi kushiriki imani yako kabla au wanasema ama wanaongea lugha tofauti.";
@@ -158,16 +185,18 @@ Programu inaweza kupakuliwa kwenye https://godtoolsapp.com";
 "general_about_7" = "Toleo la mtandaoni la zana hizi linaweza kupatikana kwenya knowgod.com. Ingiza kwenye tovuti yako mwenyewe!
 ";
 "general_about_8" = "Tembelea godtoolsapp.com kwa maelezo zaidi.";
+"tutorial.continueButton.title.continue" = "Endelea";
 "general_about_9" = "Unapopata hatua ya kushiriki imani yako, kumbuka kwamba Mungu ndiye anayebadilisha moyo. Mpende kila mtu vizuri kwa kusikiliza kwa ufahamu.";
 "general_about_10" = "\"Hebu mazungumzo yako yote yawe kamili ya neema, iliyohifadhiwa na chumvi, ili uweze kujua jinsi ya kujibu kila mtu.\" Wakolosai, sura ya Nne, aya ya sita (Wakolosai  4:6).";
 
 // Downloads
 "Download in progress" = "Kupakua kunaendelea";
 
-// Navigation
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "Iliyopita";
 "card_status2" = "Ijayo";
 
 // Language Name Strings
 "language_name_fa" = "Kipersia (Kifarsi)";
 
+"onboardingTutorial.continueButton.title" = "Endelea";
