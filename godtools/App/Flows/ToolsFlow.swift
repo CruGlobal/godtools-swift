@@ -22,6 +22,7 @@ class ToolsFlow: ToolNavigationFlow, Flow {
     let navigationController: UINavigationController
     
     var articleFlow: ArticleFlow?
+    var chooseYourOwnAdventureFlow: ChooseYourOwnAdventureFlow?
     var lessonFlow: LessonFlow?
     var tractFlow: TractFlow?
     
@@ -270,6 +271,17 @@ class ToolsFlow: ToolNavigationFlow, Flow {
             configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
             
             tractFlow = nil
+            
+        case .chooseYourOwnAdventureFlowCompleted(let state):
+            
+            guard chooseYourOwnAdventureFlow != nil else {
+                return
+            }
+            
+            _ = navigationController.popViewController(animated: true)
+            configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
+            
+            chooseYourOwnAdventureFlow = nil
             
         default:
             break

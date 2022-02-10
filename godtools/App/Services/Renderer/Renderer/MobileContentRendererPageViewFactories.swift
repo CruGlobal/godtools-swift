@@ -27,6 +27,9 @@ class MobileContentRendererPageViewFactories {
                 
         switch type {
         
+        case .chooseYourOwnAdventure:
+            break
+            
         case .lesson:
             
             let lessonPageViewFactory = LessonPageViewFactory(
@@ -102,11 +105,25 @@ class MobileContentRendererPageViewFactories {
         let mobileContentPageViewFactory = MobileContentPageViewFactory(
             flowDelegate: flowDelegate,
             mobileContentAnalytics: mobileContentAnalytics,
-            fontService: fontService
+            fontService: fontService,
+            deepLinkingService: deepLinkingService
         )
         
         pageViewFactories.append(mobileContentPageViewFactory)
         
         self.factories = pageViewFactories
+    }
+    
+    func getViewFromViewFactory(renderableModel: MobileContentRenderableModel, renderableModelParent: MobileContentRenderableModel?, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) -> MobileContentView? {
+        
+        for pageViewFactory in factories {
+            
+            if let view = pageViewFactory.viewForRenderableModel(renderableModel: renderableModel, renderableModelParent: renderableModelParent, rendererPageModel: rendererPageModel, containerModel: containerModel) {
+            
+                return view
+            }
+        }
+        
+        return nil
     }
 }

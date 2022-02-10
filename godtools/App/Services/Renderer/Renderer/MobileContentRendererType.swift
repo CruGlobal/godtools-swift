@@ -13,24 +13,8 @@ protocol MobileContentRendererType {
     var resource: ResourceModel { get }
     var language: LanguageModel { get }
     var parser: MobileContentParserType { get }
-    var pageViewFactories: [MobileContentPageViewFactoryType] { get }
+    var pageViewFactories: MobileContentRendererPageViewFactories { get }
     
     func renderPage(page: Int, window: UIViewController, safeArea: UIEdgeInsets, primaryRendererLanguage: LanguageModel) -> Result<MobileContentView, Error>
     func renderPageModel(pageModel: PageModelType, page: Int, numberOfPages: Int, window: UIViewController, safeArea: UIEdgeInsets, primaryRendererLanguage: LanguageModel) -> Result<MobileContentView, Error>
-}
-
-extension MobileContentRendererType {
-    
-    func getViewFromViewFactory(renderableModel: MobileContentRenderableModel, renderableModelParent: MobileContentRenderableModel?, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) -> MobileContentView? {
-        
-        for viewFactory in pageViewFactories {
-            
-            if let view = viewFactory.viewForRenderableModel(renderableModel: renderableModel, renderableModelParent: renderableModelParent, rendererPageModel: rendererPageModel, containerModel: containerModel) {
-            
-                return view
-            }
-        }
-        
-        return nil
-    }
 }

@@ -1,4 +1,4 @@
-"language_onboard" = "Более 80 языков";
+"language_onboard" = "Более 90 языков";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Все доступные инструменты загружены.";
@@ -93,7 +93,7 @@
 // Downloads
 "Download in progress" = "Выполняется загрузка";
 
-// Navigation
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "Назад";
 "card_status2" = "Далее";
 

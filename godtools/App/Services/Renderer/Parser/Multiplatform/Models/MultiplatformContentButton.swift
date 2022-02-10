@@ -69,11 +69,22 @@ class MultiplatformContentButton: ContentButtonModelType {
     }
     
     var iconGravity: IconGravity {
-        return button.iconGravity.isEnd ? .end : .start
+        switch button.iconGravity {
+        case .start:
+            return .start
+        case .end:
+            return .end
+        default:
+            return .start
+        }
     }
     
     var textScale: MobileContentTextScale {
         return MobileContentTextScale(doubleValue: button.textScale)
+    }
+    
+    var buttonWidth: GodToolsToolParser.Dimension {
+        return button.width
     }
     
     func getBackgroundColor() -> MobileContentColor? {

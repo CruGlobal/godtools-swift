@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 protocol ContentButtonModelType: MobileContentRenderableModel {
     
@@ -19,6 +20,7 @@ protocol ContentButtonModelType: MobileContentRenderableModel {
     var iconSize: Int32 { get }
     var iconGravity: IconGravity { get }
     var textScale: MobileContentTextScale { get }
+    var buttonWidth: GodToolsToolParser.Dimension { get }
     
     func getBackgroundColor() -> MobileContentColor?
     func getColor() -> MobileContentColor?

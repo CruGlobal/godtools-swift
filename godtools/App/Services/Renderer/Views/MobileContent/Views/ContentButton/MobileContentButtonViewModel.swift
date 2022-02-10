@@ -23,6 +23,7 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     private var visibilityFlowWatcher: MobileContentFlowWatcherType?
     
     let backgroundColor: UIColor
+    let buttonWidth: MobileContentViewWidth
     let titleColor: UIColor
     let borderColor: UIColor?
     let visibilityState: ObservableValue<MobileContentViewVisibilityState> = ObservableValue(value: .visible)
@@ -35,6 +36,8 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
         self.containerModel = containerModel
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
+        
+        buttonWidth = MobileContentViewWidth(dimension: buttonModel.buttonWidth)
         
         let buttonColor: UIColor = buttonModel.getColor()?.uiColor ?? containerModel?.buttonColor?.uiColor ?? rendererPageModel.pageColors.primaryColor.uiColor
         let buttonTitleColor: UIColor? = buttonModel.getTextColor()?.uiColor

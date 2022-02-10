@@ -1,0 +1,129 @@
+"parallelLanguage.yesButton.title" = "Kyllä";
+"parallelLanguage.noButton.title" = "Ei, kiitos";
+"parallelLanguage.getStartedButton.title" = "Aloittaminen";
+"parallelLanguage.selectLanguageButton.title" = "Valitse kieli";
+"parellelLanguage.prompt" = "Haluatko määrittää toissijaisen kielen?";
+"tool_offline_favorite_message" = "Ota työkalu käyttöön offline-tilassa sydänkuvaketta napauttamalla, jolloin se lisätään suosikkeihisi.";
+
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "Keskustelunaloittaja";
+
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "Kasvaminen kristittynä";
+
+"share_link" = "Jaa linkki";
+"share_tool_menu.remote_share_tool" = "Jaa näyttösi";
+"share_tool_menu.send_tool" = "Lähetä tämä työkalu";
+"share_tool_screen_tutorial.share_your_screen.title" = "Jaa näyttösi";
+"share_tool_screen_tutorial.share_your_screen.message" = "Tämä toiminto lähettää tämän työkalun linkin ystävällesi. Näytönjako alkaa linkin avaamisen jälkeen.";
+"share_tool_screen_tutorial.mirrored_experience.title" = "Heijastettu käyttökokemus";
+"share_tool_screen_tutorial.mirrored_experience.message" = "Liikkueassasi työkalussa puhelimellasi myös ystäväsi näyttö toimii samalla tavoin. Täten työkalun käyttöön voi perehdyttää kahdella laitteella yhtäaikaisesti.";
+"share_tool_screen_tutorial.get_started.title" = "Aloittaminen";
+"share_tool_screen_tutorial.get_started.message" = "Lähetä linkki vähintään yhdelle henkilölle aloittaaksesi näytönjaon. Tämän ominaisuuden käytön mahdollistamiseksi jokaisella osallistujalla on oltava GodTools-sovellus ladattuna laitteelleen.";
+"share_tool_remote_link_message" = "Hei, voit käyttää GodToolsia kanssani näytönjaon avulla. Tässä linkki: %@ Linkki voi yhä olla toiminnassa, vaikka saisitkin tämän viestin myöhemmin. Voimme yrittää uudelleen toisen kerran.";
+"exit_tract_remote_share_session.message" = "Haluatko poistua etäjaosta?";
+"load_tool_remote_session.message" = "Näytönjakoa käynnistetään…";
+
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Koulutus";
+
+/* This is an invitation for a user to open a tool */
+"open" = "Avaa";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Lisää suosikkeihin";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Poista suosikeista";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Työkalua ladataan. Voit välttää odottamisen jatkossa merkitsemällä tämän työkalun suosikiksesi, jolloin se on käytettävissä offline-tilassa.
+";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Tämän työkalun uusinta käännöstä ladataan.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Poistetaanko tämä suosikeista? ";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Tahdotko varmasti, että %@ poistetaan suosikeistasi? ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Ilosanomakutsu";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Artikkelit";
+"language_onboard" = "90+ kieltä";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "Olet jo ladannut kaikki käytettävissä olevat työkalut.";
+
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "Suosikit";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "Kaikki työkalut";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "Ohita";
+
+// Onboarding
+"add_new_tools" = "Lisää uusia työkaluja";
+// Menu
+"menu_general" = "Yleistä";
+"menu_share" = "Jaa";
+"menu_legal" = "Juridiset";
+"language_settings" = "Kieliasetukset";
+// Login
+"login" = "Kirjaudu sisään";
+"logout" = "Kirjaudu ulos";
+"create_account" = "Luo tili";
+// Tool Detail
+"about" = "Info";
+"help" = "Usein kysytyt kysymykset";
+"contact_us" = "Ota yhteyttä";
+"share_god_tools" = "Jaa GodTools -sovellus";
+"share_a_story_with_us" = "Jaa meille tarina";
+"terms_of_use" = "Käyttöehdot";
+"privacy_policy" = "Tietosuojakäytäntö";
+"total_views" = "%d tarkastelua";
+"total_languages" = "%d kieltä";
+
+// Language Settings
+"primary_language" = "Ensisijainen kieli";
+"parallel_language" = "Rinnakkaiskieli";
+"select_parallel_language" = "Valitse rinnakkaiskieli";
+"share_god_tools_native_language" = "Jaa GodTools jollekulle hänen omalla kielellään.";
+"not_every_tool_is_available" = "Kaikki työkalut eivät ole saatavissa joka kielellä.";
+
+"the_tool_you_requested_is_loading" = "Haluamaasi työkalua ladataan…";
+// Actions
+"yes" = "Kyllä";
+// Tract - Sharing
+"tract_share_message" ="Tämä linkki siirtää sinut tämänpäiväisen puheenaiheemme verkkoversioon: %@ \n\n Sovelluksen voi ladata osoitteesta https://godtoolsapp.com \n\n Jutellaan asiasta lisää!";
+
+// Buttons
+"download" = "Lataa";
+"dismiss" = "Hylkää";
+"done" = "Valmis";
+"remove" = "Poista";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Avaa työkalu";
+
+"cancel" = "Peruuta";
+"onboardingTutorial.getStartedButton.title" = "Aloittaminen";
+
+// About
+"general_about_1" = "GodTools auttaa sinua jakamaan uskoasi helpolla ja selkeällä tavalla.";
+"general_about_2" = "Nämä työkalut auttavat sinua selittämään itsevarmasti toisille, miten he voivat aloittaa suhteen Jumalaan Jeesuksen Kristuksen kautta, vaikket olisi koskaan aiemmin kertonut Jeesuksesta tai vaikka he puhuisivat eri kieltä kuin sinä.";
+"general_about_3" = "Valitse haluamasi työkalut. Kaikki työkalut eivät ole saatavilla joka kielellä.";
+"general_about_4" = "Jokaisen työkalun lopusta löytyy linkkejä lisäresursseihin.";
+"general_about_5" = "Internetyhteys vaaditaan jokaisen uuden työkalun ja/tai kielen lataamiseen. Ladattuasi ne voit käyttää niitä myös offline-tilassa.";
+"general_about_6" = "Kysymyksiä? Ehdotuksia? Pyyntöjä? Ota yhteyttä meihin englanniksi support@godtoolsapp.com";
+"tutorial.continueButton.title.continue" = "Jatka";
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
+"card_status1" = "Edellinen";
+"card_status2" = "Seuraava";
+
+"onboardingTutorial.continueButton.title" = "Jatka";

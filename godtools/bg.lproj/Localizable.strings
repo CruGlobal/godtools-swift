@@ -1,3 +1,17 @@
+"parallelLanguage.yesButton.title" = "Да";
+"parallelLanguage.noButton.title" = "Не, благодаря";
+"parallelLanguage.getStartedButton.title" = "Започнете";
+"parallelLanguage.selectLanguageButton.title" = "Изберете език";
+"parellelLanguage.prompt" = "Искате ли да зададете втори език?";
+"onboardingTutorial.beginButton.title" = "Начало";
+"onboardingTutorial.quickStart.2.message" = "Искам да споделя Евангелието с някого";
+"onboardingTutorial.quickStart.2.link" = "Избери един от инструментите ни";
+"onboardingTutorial.nextButton.title" = "Напред";
+"onboardingTutorial.quickstart.title" = "Връзки за бързо начало";
+"onboardingTutorial.quickStart.0.message" = "Искам да науча още за християнството";
+"onboardingTutorial.quickStart.0.link" = "Четете статиите ни";
+"onboardingTutorial.quickStart.1.message" = "Искам да науча още за разговорите относно Евангелието";
+"onboardingTutorial.quickStart.1.link" = "Опитай уроците ни";
 "tool_offline_favorite_message" = "Направете инструмента достъпен офлайн чрез докосване на иконката сърце, което ще го добави към Вашите любими.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -18,6 +32,14 @@
 "share_tool_remote_link_message" = "Здравей, последвай ме в GodTools чрез споделяне на екрана. Ето връзката: %@ Ако получиш това съобщение твърде късно, връзката може вече да не работи. Можем да опитаме пак друг път.";
 "exit_tract_remote_share_session.message" = "Искаш ли да прекратиш сесията за отдалечено споделяне сега?";
 "load_tool_remote_session.message" = "Започва споделяне на екрана...";
+"onboardingTutorial.0.title" = "Готово за всеки разговор";
+"onboardingTutorial.0.videoLink.title" = "Виж видео";
+"onboardingTutorial.1.title" = "Говори за Бог с всеки";
+"onboardingTutorial.1.message" = "GodTools ти помага да провеждаш смислени разговори за Бог.";
+"onboardingTutorial.2.title" = "Подготви се за моментите, които имат значение";
+"onboardingTutorial.2.message" = "Научи се как да направиш така, че разговорите за вярата да са естествена час от живота ти.";
+"onboardingTutorial.3.title" = "Помогни на някого да открие Исус.";
+"onboardingTutorial.3.message" = "GodTools ти помага да говориш за Евангелието по ясен и уместен начин.";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Обучение";
@@ -49,7 +71,7 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Статии";
-"language_onboard" = "80+ Езика";
+"language_onboard" = "90+ Езика";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Вие изтеглихте всички налични инструменти.";
@@ -154,36 +176,65 @@
 "error_can_not_send_email" = "Няма конфигуриран имейл на Вашето устройство.";
 "required_field_missing" = "\"%@\" е задължително поле.";
 
+"onboardingTutorial.getStartedButton.title" = "Започнете";
+
 // About
 "general_about_1" = "GodTools помага да споделяте Вашата вяра по лесен и ясен начин.";
+// Tutorial
+"tutorial.tutorialItem.0.title" = "Гледайте";
 "general_about_2" = "Тези средства Ви позволяват уверено да обясните на някого как може да започне връзка с Бог чрез Исус Христос, дори и никога преди това да не сте споделяли Вашата вяра или той/тя да говори на различен език.";
 "general_about_3" = "Изберете от множество инструменти според Вашите предпочитания и Вашата публика. Не всички инструменти са налични на всички езици.";
+"tutorial.tutorialItem.1.title" = "Подгответе се";
 "general_about_4" = "В края на всеки инструмент са включени линкове към други ресурси.";
+"tutorial.tutorialItem.1.message" = "Запознайте се с някои от вашите инструменти. Инструментът „Научи ме да споделям“ е добро място да започнете. Натиснете на „Подробности“, за да научите повече за инструмента.";
 "general_about_5" = "Изисква се онлайн връзка за изтегляне на всеки инструмент и/или език. След изтегляне, могат да се използват офлайн.";
+"tutorial.tutorialItem.2.title" = "Опитайте";
 "general_about_6" = "Въпроси? Предложения? Молби? Свържете се с нас на support@godtoolsapp.com";
+"tutorial.tutorialItem.2.message" = "Всеки започва като начинаещ. Опитайте да използвате някой от инструментите, когато имате разговор и вижте какво ще научите.";
 "general_about_7" = "Онлайн версия на тези инструменти може да се намери на knowgod.com. Добавете го във Вашия уебсайт!";
+"tutorial.tutorialItem.3.title" = "Можете да намерите този урок отново в менюто";
 "general_about_8" = "Посетете godtoolsapp.com за повече информация.";
+"tutorial.continueButton.title.continue" = "Продължете";
 "general_about_9" = "Като поемате инициативата да споделите Вашата вяра, запомнете, че Бог е този, който променя сърцето. Обичайте всеки човек, като слушате, за да разберете.";
+"tutorial.continueButton.title.startUsingGodTools" = "Започнете да използвате GodTools";
+
 "general_about_10" = "\"Това, което говорите, да бъде винаги с благодат, подправено със сол, за да знаете как трябва да отговаряте на всекиго.\" Колосяни 4:6";
 
+// OpenTutorial
+"openTutorial.showTutorialLabel.text" = "Покажете ми ръководството";
 // Downloads
 "Download in progress" = "Процес на изтегляне";
 
-// Navigation
+"openTutorial.openTutorialButton.title" = "Отворете ръководството";
+
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "Назад";
+// Account
+"account.navTitle" = "Моят профил";
 "card_status2" = "Напред";
+
+"account.activity.title" = "Активност";
 
 // Language Name Strings
 "language_name_fa" = "Персийски (фарси)";
 
+// Account Activity
+"accountActivity.globalAnalytics.header.title" = "Глобална активност";
 // OnboardingWelcome
 "onboardingWelcome.titleLabel.welcome" = "Добре дошли";
+"accountActivity.globalAnalytics.users.title" = "Уникални потребители";
 "onboardingWelcome.titleLabel.tagline" = "Помагайки ви да споделяте вярата си";
+"accountActivity.globalAnalytics.gospelPresentation.title" = "Презентации на Евангелието";
 "onboardingWelcome.beginButton" = "Начало";
 
+"accountActivity.globalAnalytics.launches.title" = "Сесии";
 // OnboardingTutorial
 "onboardingTutorial.aboutAppItem.0.title" = "Споделете с други";
+"accountActivity.globalAnalytics.countries.title" = "Държави";
+
 "onboardingTutorial.aboutAppItem.0.message" = "GodTools е създаден, за да ви помогне във вашите духовни разговори";
+// Alerts
+"alert.action.ok" = "OK";
 "onboardingTutorial.aboutAppItem.1.title" = "Изберете вашите инструменти";
 "onboardingTutorial.aboutAppItem.1.message" = "GodTools ви помага преди, по време на, и след духовен разговор";
 "onboardingTutorial.aboutAppItem.2.title" = "Винаги готов";
@@ -191,36 +242,7 @@
 "onboardingTutorial.appUsageItem.0.message" = "Подгответе се за всеки разговор";
 "onboardingTutorial.appUsageItem.1.message" = "Преминете през Евангелието с някого";
 "onboardingTutorial.appUsageItem.2.message" = "Вижте два езика един до друг";
-"onboardingTutorial.appUsageItem.3.message" = "Изберете от над 80 езика";
+"onboardingTutorial.appUsageItem.3.message" = "Изберете от над 90 езика";
 "onboardingTutorial.appUsageItem.4.message" = "Помогнете на някого да израсне като християнин";
 "onboardingTutorial.continueButton.title" = "Продължете";
 "onboardingTutorial.showMoreButton.title" = "Покажете повече";
-"onboardingTutorial.getStartedButton.title" = "Започнете";
-
-// Tutorial
-"tutorial.tutorialItem.0.title" = "Гледайте";
-"tutorial.tutorialItem.1.title" = "Подгответе се";
-"tutorial.tutorialItem.1.message" = "Запознайте се с някои от вашите инструменти. Инструментът „Научи ме да споделям“ е добро място да започнете. Натиснете на „Подробности“, за да научите повече за инструмента.";
-"tutorial.tutorialItem.2.title" = "Опитайте";
-"tutorial.tutorialItem.2.message" = "Всеки започва като начинаещ. Опитайте да използвате някой от инструментите, когато имате разговор и вижте какво ще научите.";
-"tutorial.tutorialItem.3.title" = "Можете да намерите този урок отново в менюто";
-"tutorial.continueButton.title.continue" = "Продължете";
-"tutorial.continueButton.title.startUsingGodTools" = "Започнете да използвате GodTools";
-
-// OpenTutorial
-"openTutorial.showTutorialLabel.text" = "Покажете ми ръководството";
-"openTutorial.openTutorialButton.title" = "Отворете ръководството";
-
-// Account
-"account.navTitle" = "Моят профил";
-"account.activity.title" = "Активност";
-
-// Account Activity
-"accountActivity.globalAnalytics.header.title" = "Глобална активност";
-"accountActivity.globalAnalytics.users.title" = "Уникални потребители";
-"accountActivity.globalAnalytics.gospelPresentation.title" = "Презентации на Евангелието";
-"accountActivity.globalAnalytics.launches.title" = "Сесии";
-"accountActivity.globalAnalytics.countries.title" = "Държави";
-
-// Alerts
-"alert.action.ok" = "OK";

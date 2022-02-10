@@ -11,6 +11,7 @@ import Foundation
 enum ResourceType: String {
 
     case article = "article"
+    case chooseYourOwnAdventure = "cyoa"
     case lesson = "lesson"
     case tract = "tract"
     case unknown = "unknown"

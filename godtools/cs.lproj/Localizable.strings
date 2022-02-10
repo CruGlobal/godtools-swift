@@ -1,3 +1,17 @@
+"parallelLanguage.yesButton.title" = "Ano";
+"parallelLanguage.noButton.title" = "Ne, děkuji";
+"parallelLanguage.getStartedButton.title" = "Začít";
+"parallelLanguage.selectLanguageButton.title" = "Vybrat jazyk";
+"parellelLanguage.prompt" = "Chcete si nastavit druhý jazyk?";
+"onboardingTutorial.beginButton.title" = "Začněte";
+"onboardingTutorial.quickStart.2.message" = "Chci se s někým podělit o evangelium";
+"onboardingTutorial.quickStart.2.link" = "Vyberte si jeden z našich nástrojů";
+"onboardingTutorial.nextButton.title" = "Další";
+"onboardingTutorial.quickstart.title" = "Odkazy pro rychlý start";
+"onboardingTutorial.quickStart.0.message" = "Chci prozkoumat křesťanství";
+"onboardingTutorial.quickStart.0.link" = "Přečtěte si naše články";
+"onboardingTutorial.quickStart.1.message" = "Chci se dozvědět, jak vést rozhovory o evangeliu";
+"onboardingTutorial.quickStart.1.link" = "Vyzkoušejte naše lekce";
 "tool_offline_favorite_message" = "Klepnutím na ikonu srdíčka přidáte nástroj do svých oblíbených a budete jej mít k dispozici offline.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -18,6 +32,14 @@
 "share_tool_remote_link_message" = "Zdravím, pojďte sledovat prostřednictvím sdílení obrazovky v GodTools. Tady je odkaz: %@ Pokud vám tato zpráva přijde později, odkaz už nemusí fungovat. Můžeme to zkusit znovu jindy.";
 "exit_tract_remote_share_session.message" = "Ukončit nyní vzdálené sdílení?";
 "load_tool_remote_session.message" = "Zahájit sdílení obrazovky...";
+"onboardingTutorial.0.title" = "Připravena na každý rozhovor";
+"onboardingTutorial.0.videoLink.title" = "Podívejte se na video";
+"onboardingTutorial.1.title" = "Promluvte si o Bohu s kýmkoli";
+"onboardingTutorial.1.message" = "GodTools vám pomohou vést smysluplné rozhovory o Bohu.";
+"onboardingTutorial.2.title" = "Připravte se na důležité okamžiky";
+"onboardingTutorial.2.message" = "Naučte se, jak z rozhovorů o víře udělat přirozenou součást svého života.";
+"onboardingTutorial.3.title" = "Pomozte někomu objevit Ježíše";
+"onboardingTutorial.3.message" = "GodTools jsou vaším průvodcem, jak srozumitelně a relevantně předávat evangelium.";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Školení";
@@ -49,7 +71,7 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Články";
-"language_onboard" = "80+ jazyků";
+"language_onboard" = "90+ jazyků";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Máte staženy všechny dostupné nástroje.";
@@ -61,6 +83,9 @@
 "find_tools" = "Všechny nástroje";
 
 "unavailable" = "Nedostupný";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "Přeskočit";
 
 // Onboarding
 "add_new_tools" = "Přidat nové nástroje";
@@ -148,6 +173,8 @@ Aplikaci si můžete stáhnout z https://godtoolsapp.com";
 "error_can_not_send_email" = "Na svém přístroji nemáte nakonfigurován e-mail.";
 "required_field_missing" = "\"%@\" je povinné pole.";
 
+"onboardingTutorial.getStartedButton.title" = "Začít";
+
 // About
 "general_about_1" = "GodTools vám pomohou jednoduše a jasně sdílet svoji víru.";
 "general_about_2" = "Tyto nástroje vám napomohou někomu sebejistě vysvětlit, jak si mohou vytvořit vztah k Bohu prostřednictvím Ježíše Krista, i když jste se nikdy předtím o své víře nebavili nebo mluví-li jiným jazykem.";
@@ -157,16 +184,18 @@ Aplikaci si můžete stáhnout z https://godtoolsapp.com";
 "general_about_6" = "Otázky? Náměty? Žádosti? Napište nám na support@godtoolsapp.com";
 "general_about_7" = "Online verze těchto nástrojů je dostupná na knowgod.com. Vložte je na svou stránku!";
 "general_about_8" = "Více informací naleznete na stránce godtoolsapp.com.";
+"tutorial.continueButton.title.continue" = "Pokračovat";
 "general_about_9" = "Při chopení se iniciativy o sdílení vaší víry si pamatujte, že Bůh je ten, kdo mění srdce. Miluj všechny posloucháním, které vede k porozumění.";
 "general_about_10" = "„Vaše slova ať jsou vždy vlídná a ochucená solí, ať víte, jak máte mluvit s každým člověkem.“ Koloským 4:6";
 
 // Downloads
 "Download in progress" = "Probíhá stahování";
 
-// Navigation
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "Předch";
 "card_status2" = "Další";
 
 // Language Name Strings
 "language_name_fa" = "Perština (fársí)";
 
+"onboardingTutorial.continueButton.title" = "Pokračovat";

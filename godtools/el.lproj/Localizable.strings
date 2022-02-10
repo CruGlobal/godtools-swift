@@ -1,3 +1,17 @@
+"parallelLanguage.yesButton.title" = "Ναι";
+"parallelLanguage.noButton.title" = "Όχι ευχαριστώ";
+"parallelLanguage.getStartedButton.title" = "Αρχίστε";
+"parallelLanguage.selectLanguageButton.title" = "Επιλέξτε μία γλώσσα";
+"parellelLanguage.prompt" = "Θα θέλατε να ορίσετε μία δευτερεύουσα γλώσσα;";
+"onboardingTutorial.beginButton.title" = "Αρχίστε";
+"onboardingTutorial.quickStart.2.message" = "Θέλω να μοιραστώ το Ευαγγέλιο με κάποιον";
+"onboardingTutorial.quickStart.2.link" = "Διαλέξτε ένα από τα εργαλεία μας";
+"onboardingTutorial.nextButton.title" = "Επόμενο";
+"onboardingTutorial.quickstart.title" = "Σύνδεσμοι γρήγορης εκκίνησης";
+"onboardingTutorial.quickStart.0.message" = "Θέλω να εξερευνήσω τον Χριστιανισμό";
+"onboardingTutorial.quickStart.0.link" = "Διαβάστε τα άρθρα μας";
+"onboardingTutorial.quickStart.1.message" = "Θέλω να μάθω πώς να κάνω συζητήσεις για το Ευαγγέλιο";
+"onboardingTutorial.quickStart.1.link" = "Δοκιμάστε τα μαθήματά μας";
 "tool_offline_favorite_message" = "Κάντε το εργαλείο διαθέσιμο offline πατώντας το εικονίδιο με την καρδιά που το προσθέτει στα αγαπημένα σας.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -18,6 +32,14 @@
 "share_tool_remote_link_message" = "Γεια, Ακολουθήστε με στο GodTools μέσω κοινής χρήσης οθόνης. Αυτός είναι ο σύνδεσμος: %@ Αν δεν λάβετε αυτό το μήνυμα αργότερα, ο σύνδεσμος ενδέχεται να μην λειτουργεί ακόμη. Μπορούμε να ξαναδοκιμάσουμε άλλη στιγμή.";
 "exit_tract_remote_share_session.message" = "Έξοδος από την απομακρυσμένη συνεδρία κοινής χρήσης τώρα;";
 "load_tool_remote_session.message" = "Έναρξη κοινής χρήσης οθόνης…";
+"onboardingTutorial.0.title" = "Έτοιμη για κάθε συζήτηση";
+"onboardingTutorial.0.videoLink.title" = "Παρακολουθήστε Βίντεο";
+"onboardingTutorial.1.title" = "Μιλήστε για τον Θεό με οποιονδήποτε";
+"onboardingTutorial.1.message" = "Τα Θεϊκά Εργαλεία σάς βοηθούν να κάνετε ουσιαστικές συζητήσεις για τον Θεό.";
+"onboardingTutorial.2.title" = "Προετοιμαστείτε για τις σημαντικές στιγμές";
+"onboardingTutorial.2.message" = "Μάθετε πώς να κάνετε τις συζητήσεις για την πίστη φυσικό μέρος της ζωής σας.";
+"onboardingTutorial.3.title" = "Βοηθήστε κάποιον να ανακαλύψει τον Ιησού";
+"onboardingTutorial.3.message" = "Τα Θεϊκά Εργαλεία είναι ο οδηγός σας για την επικοινωνία του Ευαγγελίου με σαφείς και σχετικούς τρόπους.";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Εξάσκηση";
@@ -49,7 +71,7 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Άρθρα";
-"language_onboard" = "80+ Γλώσσες";
+"language_onboard" = "90+ Γλώσσες";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Κάνατε λήψη όλων των διαθέσιμων εργαλείων.";
@@ -61,6 +83,9 @@
 "find_tools" = "Όλα τα Εργαλεία";
 
 "unavailable" = "Μη διαθέσιμο";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "Παράλειψη";
 
 // Onboarding
 "add_new_tools" = "Προσθήκη Νέων Εργαλείων";
@@ -149,6 +174,8 @@
 "error_can_not_send_email" = "Δεν υπάρχει διαμορφωμένο email στη συσκευή σας.";
 "required_field_missing" = "\"%@\" είναι απαιτούμενο πεδίο.";
 
+"onboardingTutorial.getStartedButton.title" = "Αρχίστε";
+
 // About
 "general_about_1" = "Τα Θεϊκά Εργαλεία σας βοηθούν να μοιράζεστε την πίστη σας με έναν εύκολο και ξεκάθαρο τρόπο.";
 "general_about_2" = "Αυτά τα εργαλεία σας βοηθούν να εξηγήσετε με σιγουριά σε κάποιον πώς μπορεί να ξεκινήσει μια σχέση με τον Θεό μέσω του Ιησού Χριστού, ακόμα κι αν δεν έχετε μοιραστεί ποτέ την πίστη σας πριν ή αυτός μιλάει διαφορετική γλώσσα.";
@@ -158,16 +185,18 @@
 "general_about_6" = "Απορίες; Προτάσεις; Αιτήματα; Επικοινωνήστε μαζί μας στο support@godtoolsapp.com";
 "general_about_7" = "Μπορείτε να βρείτε μια online έκδοση αυτών των εργαλείων στο knowgod.com. Ενσωματώστε το στον δικό σας ιστότοπο!";
 "general_about_8" = "Επισκεφθείτε το godtoolsapp.com για περισσότερες πληροφορίες.";
+"tutorial.continueButton.title.continue" = "Συνέχεια";
 "general_about_9" = "Καθώς αναλαμβάνετε την πρωτοβουλία να μοιραστείτε την πίστη σας, θυμηθείτε ότι ο Θεός είναι αυτός που αλλάζει την καρδιά. Αγαπήστε το κάθε άτομο καλά ακούγοντας και κατανοώντας.";
 "general_about_10" = "\"Τα λόγια σας ας είναι πάντοτε γεμάτα χάρη, αρτυμένα με το αλατι της καλοσύνης και της διακρίσεως, ώστε να ξέρετε πώς πρέπει να αποκρίνεστε στον καθένα.\" Προς Κολοσσαείς 4:6";
 
 // Downloads
 "Download in progress" = "Λήψη σε εξέλιξη";
 
-// Navigation
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "Προηγ";
 "card_status2" = "Επόμενο";
 
 // Language Name Strings
 "language_name_fa" = "Περσικά (Φαρσί)";
 
+"onboardingTutorial.continueButton.title" = "Συνέχεια";

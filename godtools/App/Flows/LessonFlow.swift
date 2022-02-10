@@ -18,6 +18,7 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
     let navigationController: UINavigationController
     
     var articleFlow: ArticleFlow?
+    var chooseYourOwnAdventureFlow: ChooseYourOwnAdventureFlow?
     var lessonFlow: LessonFlow?
     var tractFlow: TractFlow?
     

@@ -48,7 +48,7 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Məqalələr";
-"language_onboard" = "80-dən çox dil";
+"language_onboard" = "90-dən çox dil";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Siz bütün mövcud alətləri yükləmisiniz.";
@@ -60,6 +60,9 @@
 "find_tools" = "Alət tap";
 
 "unavailable" = "Mövcud deyil";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "Burax";
 
 // Onboarding
 "add_new_tools" = "Yeni alətlər əlavə edin";
@@ -147,6 +150,8 @@ https://godtoolsapp.com";
 "error_can_not_send_email" = "Cihazınızda quraşdırılmış e-poçt yoxdur.";
 "required_field_missing" = "\"%@\" tələb olunan sahədir.";
 
+"onboardingTutorial.getStartedButton.title" = "Başla";
+
 // About
 "general_about_1" = "GodTools sizə inancınızı asan və aydın yolla paylaşmağa kömək edir.";
 "general_about_2" = "Bu alətlər sizə İsa Məsih vasitəsilə Allahla münasibət qurmaq qaydalarını başqalarına əmin şəkildə izah etməyə kömək edir. Baxmayaraq ki, siz daha öncə inancınızı heç vaxt paylaşmamısınız və ya onlar fərqli dildə danışır.";
@@ -156,6 +161,7 @@ https://godtoolsapp.com";
 "general_about_6" = "Suallar? Təkliflər? Sorğular? support@godtoolsapp.com ünvanında bizimlə əlaqə saxlayın";
 "general_about_7" = "Bu alətlərin onlayn versiyası knowgod.com səhifəsindən əldə edilə bilər. Öz saytınıza keçirin!";
 "general_about_8" = "Daha ətraflı məlumat üçün godtoolsapp.com səhifəsini ziyarət edin.";
+"tutorial.continueButton.title.continue" = "Davam et";
 "general_about_9" = "İnancınızı paylaşmaq təşəbbüsü götürdükdə yadda saxlayın ki, Allah ürəkləri dəyişəndir. Hər kəsi sevin və anlamaq üçün dinləyin.";
 "general_about_10" = "\"Qoyun söhbətiniz hər zaman zərif, duzlu olsun ki, hamıya nə cavab verəcəyinizi biləsiniz.\"
 Colossians 4.6";
@@ -163,10 +169,11 @@ Colossians 4.6";
 // Downloads
 "Download in progress" = "Yüklənmə davam edir";
 
-// Navigation
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "Əvvəlki";
 "card_status2" = "Sonrakı";
 
 // Language Name Strings
 "language_name_fa" = "Fars dili";
 
+"onboardingTutorial.continueButton.title" = "Davam et";

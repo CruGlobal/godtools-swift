@@ -84,16 +84,7 @@ class MobileContentPageView: MobileContentView {
     func setDelegate(delegate: MobileContentPageViewDelegate?) {
         self.delegate = delegate
     }
-    
-    func getPagePositions() -> MobileContentPagePositionsType {
         
-        return MobileContentPagePositions()
-    }
-    
-    func setPagePositions(pagePositions: MobileContentPagePositionsType, animated: Bool) {
-        
-    }
-    
     // MARK: - MobileContentView
     
     override func didReceiveEvents(eventIds: [MultiplatformEventId]) {

@@ -1,3 +1,17 @@
+"parallelLanguage.yesButton.title" = "جی ہاں";
+"parallelLanguage.noButton.title" = "نہیں، شکریہ";
+"parallelLanguage.getStartedButton.title" = "شروعات";
+"parallelLanguage.selectLanguageButton.title" = "کوئی زبان منتخب کریں";
+"parellelLanguage.prompt" = "کیا آپ کوئی ثانوی زبان سیٹ کرنا چاہیں گے؟";
+"onboardingTutorial.beginButton.title" = "شروع کریں";
+"onboardingTutorial.quickStart.2.message" = "میں کسی کے ساتھ انجیل ساجھا کرنا چاہتا ہوں";
+"onboardingTutorial.quickStart.2.link" = "ہمارے ٹولز میں سے کسی ایک کا انتخاب کریں";
+"onboardingTutorial.nextButton.title" = "اگلا";
+"onboardingTutorial.quickstart.title" = "فوری آغاز کے لنکس";
+"onboardingTutorial.quickStart.0.message" = "میں عیسائیت کو دریافت کرنا چاہتا ہوں";
+"onboardingTutorial.quickStart.0.link" = "ہمارے مضامین پڑھیں";
+"onboardingTutorial.quickStart.1.message" = "میں انجیل کے متعلق گفتگو کرنے کے بارے میں جاننا چاہتا ہوں";
+"onboardingTutorial.quickStart.1.link" = "ہمارے سبق آزمائیں";
 "tool_offline_favorite_message" = "دل کے آئیکن پر ٹیپ کر کے کسی ٹول کو آف لائن دستیاب کرائیں جو اسے آپ کے پسندیدگان میں شامل کر دیتا ہے۔";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -18,6 +32,14 @@
 "share_tool_remote_link_message" = "ہیلو، GodTools میں سکرین شیئرنگ کے ذریعے میری پیروی کریں۔ ربط یہ رہا: %@ اگر آپ کو دیر تک یہ پیغام موصول نہیں ہوتا تو شاید ربط بھی کام نہ کرتا ہو۔ ہم کسی اور وقت دوبارہ کوشش کر سکتے ہیں۔";
 "exit_tract_remote_share_session.message" = "ابھی ریموٹ سکرین شیئرنگ سیشن سے نکلیں؟";
 "load_tool_remote_session.message" = "سکرین شیئرنگ شروع ہو رہی ہے۔۔۔";
+"onboardingTutorial.0.title" = "ہر گفتگو کے لیے تیار";
+"onboardingTutorial.0.videoLink.title" = "ویڈیو دیکھیں";
+"onboardingTutorial.1.title" = "کسی کے بھی ساتھ خدا کے بارے میں بات کریں";
+"onboardingTutorial.1.message" = "GodTools خدا کے بارے میں بامعنی گفتگو کرنے میں آپ کی مدد کرتا ہے۔";
+"onboardingTutorial.2.title" = "اہم لمحات کے لیے تیاری کریں";
+"onboardingTutorial.2.message" = "ایمان کے بارے میں گفتگو کو اپنی زندگی کا فطری حصہ بنانا سیکھیں۔";
+"onboardingTutorial.3.title" = "یسوع کو دریافت کرنے میں کسی کی مدد کریں";
+"onboardingTutorial.3.message" = "واضح اور متعلقہ طریقوں سے انجیل کی تبلیغ کے لیے GodTools آپ کا رہنما ہے۔";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "تربیت";
@@ -49,7 +71,7 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "مضامین";
-"language_onboard" = "80+ زبانیں";
+"language_onboard" = "90+ زبانیں";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "آپ نے تمام دستیاب ٹُولز ڈاونلوڈ کر لیے ہیں۔";
@@ -61,6 +83,9 @@
 "find_tools" = "تمام ٹولز";
 
 "unavailable" = "غیر دستیاب";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "چھوڑیں";
 
 // Onboarding
 "add_new_tools" = "نئے ٹُولز ایڈ کریں";
@@ -152,6 +177,8 @@ https://godtoolsapp.com";
 "error_can_not_send_email" = " آپ کے ڈیوائس پرکوئی ترتیب شدہ ای میل نہیں ہے۔";
 "required_field_missing" = "\"%@\" ضرورت شدہ فیلڈ ہے۔";
 
+"onboardingTutorial.getStartedButton.title" = "شروع کریں";
+
 // About
 "general_about_1" = "گاڈ ٹول آپ کی مدد کرتا ہے کہ آسانی سے اور صاف طور پر آپ اپنا ایمان بانٹیں۔";
 "general_about_2" = "یہ ٹولس آپ کی مدد کرتا ہے بھروسہ کے ساتھ سمجھانے کے لئے  کسی کو بھی کہ وہ کس طرح خداکے ساتھ یسوع مسیح کے وسیلہ سے ایک رشتہ کی شروعات کی جا سکتی ہے۔ اس کے باوجود بھی کہ آپ نے اس سے پہلے کبھی کسی سے اپنا ایمان نہ بانٹا ہو یا وہ لوگ ایک فرق زبان بولتے ہوں۔";
@@ -161,16 +188,18 @@ https://godtoolsapp.com";
 "general_about_6" = " سوالات؟ صلاح مشورے ؟ درخواستیں؟  support@godtoolsapp.com میں ہمارے  ساتھ رابطہ قائم کریں۔ ";
 "general_about_7" = " ان اوزاروں کے آن لائن ورژن knowgod.com میں بھی دیکھی جا سکتی ہیں۔ آپ اپنے خوو کے سائٹ پر اسے مضبوطی سے جما دیں!";
 "general_about_8" = " مزید معلومات کے لئے godtoolsapp.com کا استعمال کریں۔";
+"tutorial.continueButton.title.continue" = "جاری";
 "general_about_9" = " جب آپ اپنا ایمان بانٹنے کے لئے آغازی فعل کو انجام دیتےہیں تو یاد رکھئے کہ وہ خداہی ہے جو دلوں کو بدلتاہے۔ اسے سمجھنے کے لئے دھیان سے سنتے ہوئے ہر ایک شخص سے اچھی طرح سے محبت سےپیش آئیں۔";
 "general_about_10" = "\"تمہارا کلام ہمیشہ ایسا پر فضل اور نمکین ہو کہ تمہیں ہر شخص کو مناسب جواب دینا جائے۔\" کلیسیوں 4:6";
 
 // Downloads
 "Download in progress" = "ڈاؤنلوڈ جاری ہے";
 
-// Navigation
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "پچھلا";
-"card_status2" = "اگلی اسکرین";
+"card_status2" = "اگلا";
 
 // Language Name Strings
 "language_name_fa" = "فارسی";
 
+"onboardingTutorial.continueButton.title" = "جاری";

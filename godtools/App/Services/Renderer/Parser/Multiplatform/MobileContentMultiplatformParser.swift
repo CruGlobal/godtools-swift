@@ -10,10 +10,7 @@ import Foundation
 import GodToolsToolParser
 
 class MobileContentMultiplatformParser: MobileContentParserType {
-        
-    private static let animationsEnabled: Bool = true
-    private static let multiSelectEnabled: Bool = true
-    
+            
     let manifest: MobileContentManifestType
     let manifestResourcesCache: ManifestResourcesCacheType
     let pageModels: [PageModelType]
@@ -21,17 +18,14 @@ class MobileContentMultiplatformParser: MobileContentParserType {
     
     required init(translationManifestData: TranslationManifestData, translationsFileCache: TranslationsFileCache) {
                         
-        var supportedFeatures: [String] = Array()
-        
-        if MobileContentMultiplatformParser.animationsEnabled {
-            supportedFeatures.append(ParserConfigKt.FEATURE_ANIMATION)
-        }
-        
-        if MobileContentMultiplatformParser.multiSelectEnabled {
-            supportedFeatures.append(ParserConfigKt.FEATURE_MULTISELECT)
-        }
-        
-        ParserConfig().supportedFeatures = Set(supportedFeatures)
+        let enabledFeatures: [String] = [
+            ParserConfigKt.FEATURE_ANIMATION,
+            ParserConfigKt.FEATURE_CONTENT_CARD,
+            ParserConfigKt.FEATURE_FLOW,
+            ParserConfigKt.FEATURE_MULTISELECT
+        ]
+                        
+        ParserConfig().supportedFeatures = Set(enabledFeatures)
         
         let manifestParser = IosManifestParser(parserFactory: MobileContentMultiplatformParserFactory(translationsFileCache: translationsFileCache))
         
@@ -58,11 +52,28 @@ class MobileContentMultiplatformParser: MobileContentParserType {
                 assertionFailure("Not implemented for articles.")
                 self.pageModels = Array()
                 
+            case .cyoa:
+                
+                let pages: [Page] = manifest.pages
+                var pageModels: [PageModelType] = Array()
+                
+                for page in pages {
+                    
+                    if let contentPage = page as? ContentPage {
+                        pageModels.append(MultiplatformContentPage(contentPage: contentPage))
+                    }
+                    else if let cardCollectionPage = page as? CardCollectionPage {
+                        pageModels.append(MultiplatformCardCollectionPage(cardCollectionPage: cardCollectionPage))
+                    }
+                }
+                
+                self.pageModels = pageModels
+                
             case .unknown:
                 self.pageModels = Array()
                 
             default:
-                assertionFailure("Found unsupported manifest type.  Ensure all types are supported.")
+                assertionFailure("Found unsupported manifest type.  Ensure all types are supported. Type found: \(manifest.type)")
                 self.pageModels = Array()
             }
         }

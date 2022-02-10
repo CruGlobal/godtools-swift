@@ -1,3 +1,17 @@
+"parallelLanguage.yesButton.title" = "예";
+"parallelLanguage.noButton.title" = "아니오";
+"parallelLanguage.getStartedButton.title" = "시작하기";
+"parallelLanguage.selectLanguageButton.title" = "언어 선택";
+"parellelLanguage.prompt" = "제2의 언어를 설정하시겠습니까?";
+"onboardingTutorial.beginButton.title" = "시작";
+"onboardingTutorial.quickStart.2.message" = "누군가와 복음을 나누고 싶습니다";
+"onboardingTutorial.quickStart.2.link" = "도구를 선택하세요";
+"onboardingTutorial.nextButton.title" = "다음";
+"onboardingTutorial.quickstart.title" = "빠른 시작 링크";
+"onboardingTutorial.quickStart.0.message" = "기독교를 알아보고 싶습니다";
+"onboardingTutorial.quickStart.0.link" = "글 읽어보기";
+"onboardingTutorial.quickStart.1.message" = "복음 대화에 대해 배우고 싶습니다";
+"onboardingTutorial.quickStart.1.link" = "수업 듣기";
 "tool_offline_favorite_message" = "하트 아이콘을 탭하여 즐겨찾기에 추가해서 오프라인에서도 도구를 사용하세요.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -18,6 +32,14 @@
 "share_tool_remote_link_message" = "안녕하세요, 저와 함께 화면 공유를 통한 GodTools를 사용해 보세요. 링크: %@ 많은 시간이 지날 때까지 이 메시지를 받지 못하는 경우, 링크가 작동하지 않을 수도 있습니다. 다음에 다시 시도할 수 있습니다.";
 "exit_tract_remote_share_session.message" = "지금 원격 공유 세션에서 나갈까요?";
 "load_tool_remote_session.message" = "화면 공유 시작 중...";
+"onboardingTutorial.0.title" = "모든 대화 준비";
+"onboardingTutorial.0.videoLink.title" = "동영상 보기";
+"onboardingTutorial.1.title" = "다른 사람과 신에 대해 이야기하기";
+"onboardingTutorial.1.message" = "GodTools는 신에 대한 의미 있는 대화를 할 수 있도록 도와줍니다.";
+"onboardingTutorial.2.title" = "중요한 순간을 준비하세요";
+"onboardingTutorial.2.message" = "신앙에 대한 대화를 자연스럽게 삶의 일부로 만드는 방법을 배우세요.";
+"onboardingTutorial.3.title" = "다른 사람에게 예수님을 발견하도록 도와주세요";
+"onboardingTutorial.3.message" = "GodTools는 명확하고 적절한 방식으로 복음을 전하기 위한 지침입니다.";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "훈련";
@@ -49,7 +71,7 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "규약";
-"language_onboard" = "80개 이상의 언어";
+"language_onboard" = "90개 이상의 언어";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "모든 이용 가능한 도구를 다운로드했습니다.";
@@ -61,6 +83,9 @@
 "find_tools" = "모든 도구";
 
 "unavailable" = "사용 불가";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "건너뛰기";
 
 // Onboarding
 "add_new_tools" = "새 도구 추가";
@@ -149,6 +174,8 @@
 "error_can_not_send_email" = "장치에 구성된 이메일이 없습니다.";
 "required_field_missing" = "\"%@\"은(는) 필수 입력란입니다.";
 
+"onboardingTutorial.getStartedButton.title" = "시작하기";
+
 // About
 "general_about_1" = "GodTools가 쉽고 깨끗한 방식으로 신념을 공유할 수 있게 해줍니다.";
 "general_about_2" = "이러한 도구를 활용하여 한 번도 신념을 공유하지 않았거나 다른 언어로 이야기하더라도 예수 그리스도를 통해 신과의 관계를 시작할 수 있는 방법을 자신있게 설명할 수 있습니다.";
@@ -158,16 +185,18 @@
 "general_about_6" = "질문? 제안? 요청? support@godtoolsapp.com에 문의하세요";
 "general_about_7" = "이러한 도구의 온라인 버전은 knowgod.com에서 찾을 수 있습니다. 자신의 사이트에 임베드하세요!";
 "general_about_8" = "자세한 정보는 godtoolsapp.com을 방문하세요.";
+"tutorial.continueButton.title.continue" = "계속";
 "general_about_9" = "신념을 공유하는 데 결단이 섰다면 오직 신만이 마음을 바꾸는 존재라는 걸 기억하세요. 이해를하며 서로를 사랑하세요.";
 "general_about_10" = "\"여러분은 언제나, 소금으로 맛을 내는 것과 같이, 은혜가 넘치게 말을 하십시오.\" 골로새서 4:6";
 
 // Downloads
 "Download in progress" = "다운로드 진행 중";
 
-// Navigation
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "이전";
 "card_status2" = "다음";
 
 // Language Name Strings
 "language_name_fa" = "페르시아어";
 
+"onboardingTutorial.continueButton.title" = "계속";

@@ -7,11 +7,13 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 protocol ContentImageModelType: MobileContentRenderableModel {
     
     var events: [MultiplatformEventId] { get }
     var resource: String? { get }
+    var width: GodToolsToolParser.Dimension { get }
 }
 
 extension ContentImageModelType {

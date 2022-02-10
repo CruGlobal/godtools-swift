@@ -131,4 +131,8 @@ enum FlowStep {
     // article deep link
     case didDownloadArticleFromLoadingArticle(aemCacheObject: ArticleAemCacheObject)
     case didFailToDownloadArticleFromLoadingArticle(alertMessage: AlertMessageType)
+    
+    // choose your own adventure
+    case backTappedFromChooseYourOwnAdventure
+    case chooseYourOwnAdventureFlowCompleted(state: ChooseYourOwnAdventureFlowCompletedState)
 }

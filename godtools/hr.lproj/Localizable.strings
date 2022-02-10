@@ -1,3 +1,18 @@
+"parallelLanguage.yesButton.title" = "Da";
+"parallelLanguage.noButton.title" = "Ne, hvala";
+"parallelLanguage.selectButton.title" = "Odaberite";
+"parallelLanguage.getStartedButton.title" = "Započnite";
+"parallelLanguage.selectLanguageButton.title" = "Odaberite jezik";
+"parellelLanguage.prompt" = "Želite li postaviti drugi jezik?";
+"onboardingTutorial.beginButton.title" = "Započni";
+"onboardingTutorial.quickStart.2.message" = "Želim podijeliti evanđelje s nekim";
+"onboardingTutorial.quickStart.2.link" = "Odaberite jedan od naših alata";
+"onboardingTutorial.nextButton.title" = "Dalje";
+"onboardingTutorial.quickstart.title" = "Poveznice za brzi početak";
+"onboardingTutorial.quickStart.0.message" = "Želim istraživati o kršćanstvu";
+"onboardingTutorial.quickStart.0.link" = "Pročitajte naše članke";
+"onboardingTutorial.quickStart.1.message" = "Želim naučiti kako voditi razgovore o evanđelju";
+"onboardingTutorial.quickStart.1.link" = "Isprobajte naše lekcije";
 "tool_offline_favorite_message" = "Alat može biti raspoloživ i izvan mreže ako dodirnete ikonu srca, čime ga dodajete u svoje omiljene.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -18,6 +33,14 @@
 "share_tool_remote_link_message" = "Pozdrav, pratite sesiju iz aplikacije GodTools sa mnom putem značajke dijeljenja zaslona. Evo veze: %@ Ako ovu poruku pročitate kasnije, veza možda više neće vrijediti. Možemo pokušati ponovno drugom prilikom.";
 "exit_tract_remote_share_session.message" = "Želite li odmah napustiti sesiju udaljenog dijeljenja?";
 "load_tool_remote_session.message" = "Pokretanje dijeljenja zaslona...";
+"onboardingTutorial.0.title" = "Spremna za razgovor o svemu";
+"onboardingTutorial.0.videoLink.title" = "Pogledaj video";
+"onboardingTutorial.1.title" = "Svakome govorite o Bogu";
+"onboardingTutorial.1.message" = "GodTools pomaže u smislenom razgovoru o Bogu.";
+"onboardingTutorial.2.title" = "Pripremite se za trenutke koji su bitni";
+"onboardingTutorial.2.message" = "Saznajte kako učiniti razgovore o vjeri sastavnim dijelom vašega života.";
+"onboardingTutorial.3.title" = "Pomozite nekome otkriti Isusa";
+"onboardingTutorial.3.message" = "GodTools je vaš vodič u prenošenju evanđelja na jasan, smislen i prikladan način.";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Učenje";
@@ -49,7 +72,7 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Članci";
-"language_onboard" = "Više od 80 jezika";
+"language_onboard" = "Više od 90 jezika";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Preuzeli ste sve raspoložive alate.";
@@ -61,6 +84,9 @@
 "find_tools" = "Svi alati";
 
 "unavailable" = "Nedostupno";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "Preskoči";
 
 // Onboarding
 "add_new_tools" = "Dodajte novi alat";
@@ -149,6 +175,8 @@ Aplikaciju je moguće preuzeti na adresi: http://godtoolsapp.com";
 "error_can_not_send_email" = "Nema konfigurirane e-pošte na vašem uređaju";
 "required_field_missing" = "\"%@\" je obvezno polje.";
 
+"onboardingTutorial.getStartedButton.title" = "Započnite";
+
 // About
 "general_about_1" = "GodTools vam pomaže podijeliti vašu vjeri na jednostavan i jasan način.";
 "general_about_2" = "OVi alati vam pomažu pouzdano nekome objasniti kako može započeti odnos s Bogom po Isusu Kristu, čak i ako nikada prije niste dijelili svoju vjeru ili ako te osobe govore drugi jezik.";
@@ -158,16 +186,18 @@ Aplikaciju je moguće preuzeti na adresi: http://godtoolsapp.com";
 "general_about_6" = "Pitanja? Prijedlozi? Zahtjevi? Kontaktirajte nas na support@godtoolsapp.com";
 "general_about_7" = "Online verzija ovih alata nalazi se na knowgod.com. Uključite ih na svoju web stranicu!";
 "general_about_8" = "Posjetite godtoolsapp.com za više informacija.";
+"tutorial.continueButton.title.continue" = "Nastavi";
 "general_about_9" = "Kada poduzmete inicijativu dijeljenja svoje vjere, zapamtite da je Bog taj koji mijenja srce. Ljubite svaku osobu slušajući kako biste razumijeli.";
 "general_about_10" = "\"Neka vaš razgovor uvijek bude pun milosti, začinjen solju kako biste mogli odgovoriti svima.\" Kološanima 4:6";
 
 // Downloads
 "Download in progress" = "Preuzimanje u tijeku";
 
-// Navigation
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "Pret.";
-"card_status2" = "Sljedeći";
+"card_status2" = "Dalje";
 
 // Language Name Strings
 "language_name_fa" = "Perzijski (farsi)";
 
+"onboardingTutorial.continueButton.title" = "Nastavi";
