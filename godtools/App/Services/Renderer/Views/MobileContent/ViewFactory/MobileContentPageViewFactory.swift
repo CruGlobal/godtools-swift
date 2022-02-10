@@ -52,7 +52,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let imageModel = renderableModel as? ContentImageModelType {
+        else if let imageModel = renderableModel as? Image {
             
             let viewModel = MobileContentImageViewModel(
                 imageModel: imageModel,

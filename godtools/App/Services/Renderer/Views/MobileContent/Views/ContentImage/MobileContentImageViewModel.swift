@@ -11,19 +11,19 @@ import GodToolsToolParser
 
 class MobileContentImageViewModel: MobileContentImageViewModelType {
     
-    private let imageModel: ContentImageModelType
+    private let imageModel: Image
     private let rendererPageModel: MobileContentRendererPageModel
     
     let image: UIImage?
     let imageWidth: MobileContentViewWidth
     
-    required init(imageModel: ContentImageModelType, rendererPageModel: MobileContentRendererPageModel) {
+    required init(imageModel: Image, rendererPageModel: MobileContentRendererPageModel) {
         
         self.imageModel = imageModel
         self.rendererPageModel = rendererPageModel
         self.imageWidth = MobileContentViewWidth(dimension: imageModel.width)
-        
-        if let imageResource = imageModel.resource, !imageResource.isEmpty, let cachedImage = rendererPageModel.resourcesCache.getImageFromManifestResources(fileName: imageResource) {
+                
+        if let imageResource = imageModel.resource?.name, !imageResource.isEmpty, let cachedImage = rendererPageModel.resourcesCache.getImageFromManifestResources(fileName: imageResource) {
             self.image = cachedImage
         }
         else {
@@ -32,7 +32,7 @@ class MobileContentImageViewModel: MobileContentImageViewModelType {
     }
     
     var imageEvents: [MultiplatformEventId] {
-        return imageModel.events
+        return imageModel.events.map({MultiplatformEventId(eventId: $0)})
     }
     
     var rendererState: MobileContentMultiplatformState {

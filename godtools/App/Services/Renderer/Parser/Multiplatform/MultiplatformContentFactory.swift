@@ -29,7 +29,7 @@ class MultiplatformContentFactory {
             renderableModel = MultiplatformContentButton(button: button)
         }
         else if let image = content as? Image {
-            renderableModel = MultiplatformContentImage(image: image)
+            renderableModel = image
         }
         else if let inlineTip = content as? InlineTip, let tip = inlineTip.tip {
             return MultiplatformTrainingTip(tip: tip)
