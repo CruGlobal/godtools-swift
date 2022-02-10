@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class MobileContentInputViewModel: MobileContentInputViewModelType {
     
-    private let inputModel: ContentInputModelType
+    private let inputModel: Input
     private let rendererPageModel: MobileContentRendererPageModel
     private let fontService: FontService
     
@@ -19,14 +20,14 @@ class MobileContentInputViewModel: MobileContentInputViewModelType {
     let inputLabel: String?
     let placeholder: String?
     
-    required init(inputModel: ContentInputModelType, rendererPageModel: MobileContentRendererPageModel, fontService: FontService) {
+    required init(inputModel: Input, rendererPageModel: MobileContentRendererPageModel, fontService: FontService) {
         
         self.inputModel = inputModel
         self.rendererPageModel = rendererPageModel
         self.fontService = fontService
         
-        inputLabel = inputModel.text
-        placeholder = inputModel.placeholderText
+        inputLabel = inputModel.label?.text
+        placeholder = inputModel.placeholder?.text
     }
     
     var isHidden: Bool {

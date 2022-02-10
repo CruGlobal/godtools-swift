@@ -231,7 +231,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let inputModel = renderableModel as? ContentInputModelType {
+        else if let inputModel = renderableModel as? Input {
             
             let viewModel = MobileContentInputViewModel(
                 inputModel: inputModel,

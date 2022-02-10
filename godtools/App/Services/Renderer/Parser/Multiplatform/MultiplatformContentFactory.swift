@@ -38,7 +38,7 @@ class MultiplatformContentFactory {
             return MultiplatformContentCard(contentCard: card)
         }
         else if let input = content as? Input {
-            renderableModel = MultiplatformContentInput(input: input)
+            renderableModel = input
         }
         else if let link = content as? Link {
             renderableModel = link
