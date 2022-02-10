@@ -9,19 +9,7 @@
 import Foundation
 import GodToolsToolParser
 
-extension GodToolsToolParser.Flow : MobileContentRenderableModel {
-    
-    var restrictTo: String? {
-        return nil
-    }
-    
-    var version: String? {
-        return nil
-    }
-    
-    var modelContentIsRenderable: Bool {
-        return true
-    }
+extension GodToolsToolParser.Flow: MobileContentRenderableModel {
     
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
         
