@@ -41,7 +41,7 @@ class MultiplatformContentFactory {
             renderableModel = MultiplatformContentInput(input: input)
         }
         else if let link = content as? Link {
-            renderableModel = MultiplatformContentLink(link: link)
+            renderableModel = link
         }
         else if let accordion = content as? Accordion {
             renderableModel = MultiplatformContentAccordion(accordion: accordion)

@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class MobileContentLinkViewModel: MobileContentLinkViewModelType {
     
-    private let linkModel: ContentLinkModelType
+    private let linkModel: Link
     private let rendererPageModel: MobileContentRendererPageModel
     private let mobileContentAnalytics: MobileContentAnalytics
     private let fontService: FontService
@@ -19,13 +20,13 @@ class MobileContentLinkViewModel: MobileContentLinkViewModelType {
     
     let titleColor: UIColor
     
-    required init(linkModel: ContentLinkModelType, rendererPageModel: MobileContentRendererPageModel, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
+    required init(linkModel: Link, rendererPageModel: MobileContentRendererPageModel, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
         
         self.linkModel = linkModel
         self.rendererPageModel = rendererPageModel
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
-        self.titleColor = linkModel.getTextColor()?.uiColor ?? rendererPageModel.pageColors.primaryColor.uiColor
+        self.titleColor = linkModel.textColor
     }
     
     var backgroundColor: UIColor {
@@ -37,11 +38,12 @@ class MobileContentLinkViewModel: MobileContentLinkViewModelType {
     }
     
     var title: String? {
-        return linkModel.text
+        return linkModel.text?.text
     }
     
     var linkEvents: [MultiplatformEventId] {
-        return linkModel.events
+        // TODO: Remove MultiplatformEventId. ~Levi
+        return linkModel.events.map({MultiplatformEventId(eventId: $0)})
     }
     
     var rendererState: MobileContentMultiplatformState {
@@ -49,6 +51,11 @@ class MobileContentLinkViewModel: MobileContentLinkViewModelType {
     }
     
     func linkTapped() {
-        mobileContentAnalytics.trackEvents(events: linkModel.getAnalyticsEvents(), rendererPageModel: rendererPageModel)
+        
+        // TODO: Remove MultiplatformAnalyticsEvent. ~Levi
+        
+        let events: [AnalyticsEventModelType] = linkModel.analyticsEvents.map({MultiplatformAnalyticsEvent(analyticsEvent: $0)})
+        
+        mobileContentAnalytics.trackEvents(events: events, rendererPageModel: rendererPageModel)
     }
 }

@@ -88,7 +88,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let linkModel = renderableModel as? ContentLinkModelType {
+        else if let linkModel = renderableModel as? Link {
                         
             let viewModel = MobileContentLinkViewModel(
                 linkModel: linkModel,
