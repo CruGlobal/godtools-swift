@@ -78,11 +78,7 @@ class MobileContentMultiplatformRenderer: MobileContentRendererType {
     private func recurseAndRender(renderableModel: MobileContentRenderableModel, renderableModelParent: MobileContentRenderableModel?, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) -> MobileContentView? {
         
         let containerModel: MobileContentRenderableModelContainer? = (renderableModel as? MobileContentRenderableModelContainer) ?? containerModel
-        
-        guard renderableModel.isRenderable else {
-            return nil
-        }
-                 
+           
         let mobileContentView: MobileContentView? = pageViewFactories.getViewFromViewFactory(renderableModel: renderableModel, renderableModelParent: renderableModelParent, rendererPageModel: rendererPageModel, containerModel: containerModel)
         
         let childModels: [MobileContentRenderableModel] = renderableModel.getRenderableChildModels()

@@ -53,7 +53,7 @@ class MultiplatformContentFactory {
             return flow
         }
         else if let form = content as? Form {
-            renderableModel = MultiplatformContentForm(form: form)
+            renderableModel = form
         }
         else if let tabs = content as? Tabs {
             renderableModel = MultiplatformContentTabs(tabs: tabs)

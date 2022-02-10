@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class ToolPageFormViewModel: MobileContentFormViewModel {
     
@@ -17,7 +18,7 @@ class ToolPageFormViewModel: MobileContentFormViewModel {
     let didSendFollowUpSignal: SignalValue<[MultiplatformEventId]> = SignalValue()
     let error: ObservableValue<MobileContentErrorViewModel?> = ObservableValue(value: nil)
     
-    required init(formModel: ContentFormModelType, rendererPageModel: MobileContentRendererPageModel, followUpService: FollowUpsService, localizationServices: LocalizationServices) {
+    required init(formModel: Form, rendererPageModel: MobileContentRendererPageModel, followUpService: FollowUpsService, localizationServices: LocalizationServices) {
         
         self.rendererPageModel = rendererPageModel
         self.followUpService = followUpService
@@ -26,7 +27,7 @@ class ToolPageFormViewModel: MobileContentFormViewModel {
         super.init(formModel: formModel, rendererPageModel: rendererPageModel)
     }
     
-    required init(formModel: ContentFormModelType, rendererPageModel: MobileContentRendererPageModel) {
+    required init(formModel: Form, rendererPageModel: MobileContentRendererPageModel) {
         fatalError("init(formModel:rendererPageModel:) has not been implemented")
     }
     

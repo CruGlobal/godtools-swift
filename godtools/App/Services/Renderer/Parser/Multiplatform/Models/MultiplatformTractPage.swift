@@ -125,7 +125,7 @@ extension MultiplatformTractPage {
             childModels.append(MultiplatformCards(cards: tractPage.cards))
         }
         
-        childModels.append(MultiplatformCallToAction(callToAction: tractPage.callToAction))
+        childModels.append(tractPage.callToAction)
         
         childModels.append(MultiplatformModals(modals: tractPage.modals))
         

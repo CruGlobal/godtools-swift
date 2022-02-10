@@ -104,7 +104,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let formModel = renderableModel as? ContentFormModelType {
+        else if let formModel = renderableModel as? Form {
             
             let viewModel = ToolPageFormViewModel(
                 formModel: formModel,
