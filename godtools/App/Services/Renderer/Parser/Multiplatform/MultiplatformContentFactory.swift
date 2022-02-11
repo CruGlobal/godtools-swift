@@ -59,7 +59,7 @@ class MultiplatformContentFactory {
             renderableModel = tabs
         }
         else if let spacer = content as? Spacer {
-            renderableModel = MultiplatformContentSpacer(spacer: spacer)
+            renderableModel = spacer
         }
         else if let animation = content as? Animation {
             renderableModel = MultiplatformContentAnimation(animation: animation)

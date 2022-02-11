@@ -254,7 +254,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let spacerModel = renderableModel as? ContentSpacerModelType {
+        else if let spacerModel = renderableModel as? Spacer {
                 
             let viewModel = MobileContentSpacerViewModel(
                 spacerModel: spacerModel,
