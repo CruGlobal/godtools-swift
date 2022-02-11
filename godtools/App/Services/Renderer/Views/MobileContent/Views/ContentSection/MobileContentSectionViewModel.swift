@@ -7,13 +7,14 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class MobileContentSectionViewModel: MobileContentSectionViewModelType {
     
-    private let sectionModel: ContentSectionModelType
+    private let sectionModel: Accordion.Section
     private let rendererPageModel: MobileContentRendererPageModel
     
-    required init(sectionModel: ContentSectionModelType, rendererPageModel: MobileContentRendererPageModel) {
+    required init(sectionModel: Accordion.Section, rendererPageModel: MobileContentRendererPageModel) {
         
         self.sectionModel = sectionModel
         self.rendererPageModel = rendererPageModel

@@ -7,13 +7,14 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class MobileContentAccordionViewModel: MobileContentAccordionViewModelType {
     
-    private let accordionModel: ContentAccordionModelType
+    private let accordionModel: Accordion
     private let rendererPageModel: MobileContentRendererPageModel
     
-    required init(accordionModel: ContentAccordionModelType, rendererPageModel: MobileContentRendererPageModel) {
+    required init(accordionModel: Accordion, rendererPageModel: MobileContentRendererPageModel) {
         
         self.accordionModel = accordionModel
         self.rendererPageModel = rendererPageModel

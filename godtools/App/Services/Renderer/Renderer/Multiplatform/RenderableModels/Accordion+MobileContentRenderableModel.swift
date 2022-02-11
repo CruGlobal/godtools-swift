@@ -1,18 +1,18 @@
 //
-//  Tabs+MobileContentRenderableModel.swift
+//  Accordion+MobileContentRenderableModel.swift
 //  godtools
 //
-//  Created by Levi Eggert on 2/10/22.
+//  Created by Levi Eggert on 2/11/22.
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
 import Foundation
 import GodToolsToolParser
 
-extension Tabs: MobileContentRenderableModel {
+extension Accordion: MobileContentRenderableModel {
     
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
         
-        return tabs
+        return sections
     }
 }

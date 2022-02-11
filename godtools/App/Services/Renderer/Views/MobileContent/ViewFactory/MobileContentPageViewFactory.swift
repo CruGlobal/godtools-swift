@@ -320,7 +320,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let sectionModel = renderableModel as? ContentSectionModelType {
+        else if let sectionModel = renderableModel as? Accordion.Section {
             
             let viewModel = MobileContentSectionViewModel(
                 sectionModel: sectionModel,
@@ -331,7 +331,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let accordionModel = renderableModel as? ContentAccordionModelType {
+        else if let accordionModel = renderableModel as? Accordion {
             
             let viewModel = MobileContentAccordionViewModel(
                 accordionModel: accordionModel,

@@ -13,10 +13,6 @@ extension Multiselect: MobileContentRenderableModel {
     
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
         
-        var childModels: [MobileContentRenderableModel] = Array()
-                
-        childModels.append(contentsOf: options)
-        
-        return childModels
+        return options
     }
 }
