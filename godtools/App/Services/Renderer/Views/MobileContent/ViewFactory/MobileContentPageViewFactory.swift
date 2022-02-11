@@ -297,7 +297,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let multiSelectOptionModel = renderableModel as? ContentMultiSelectOptionModelType {
+        else if let multiSelectOptionModel = renderableModel as? Multiselect.Option {
             
             let viewModel = MobileContentMultiSelectOptionViewModel(
                 multiSelectOptionModel: multiSelectOptionModel,

@@ -11,7 +11,7 @@ import GodToolsToolParser
 
 class MobileContentMultiSelectOptionViewModel: MobileContentMultiSelectOptionViewModelType {
     
-    private let multiSelectOptionModel: ContentMultiSelectOptionModelType
+    private let multiSelectOptionModel: Multiselect.Option
     private let rendererPageModel: MobileContentRendererPageModel
     private let mobileContentAnalytics: MobileContentAnalytics
     
@@ -19,7 +19,7 @@ class MobileContentMultiSelectOptionViewModel: MobileContentMultiSelectOptionVie
     
     let backgroundColor: ObservableValue<UIColor>
     
-    required init(multiSelectOptionModel: ContentMultiSelectOptionModelType, rendererPageModel: MobileContentRendererPageModel, mobileContentAnalytics: MobileContentAnalytics) {
+    required init(multiSelectOptionModel: Multiselect.Option, rendererPageModel: MobileContentRendererPageModel, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.multiSelectOptionModel = multiSelectOptionModel
         self.rendererPageModel = rendererPageModel
@@ -27,13 +27,14 @@ class MobileContentMultiSelectOptionViewModel: MobileContentMultiSelectOptionVie
         
         backgroundColor = ObservableValue(value: multiSelectOptionModel.backgroundColor)
         
-        isSelectedFlowWatcher = multiSelectOptionModel.watchIsSelected(rendererState: rendererPageModel.rendererState) { [weak self] (isSelected: Bool) in
-            
+        isSelectedFlowWatcher = multiSelectOptionModel.watchIsSelected(state: rendererPageModel.rendererState) { [weak self] (isSelected: KotlinBoolean) in
+
             guard let weakSelf = self else {
                 return
             }
             
-            let backgroundColor: UIColor = isSelected ? weakSelf.multiSelectOptionModel.selectedColor : weakSelf.multiSelectOptionModel.backgroundColor
+            let backgroundColor: UIColor = isSelected.boolValue ? weakSelf.multiSelectOptionModel.selectedColor : weakSelf.multiSelectOptionModel.backgroundColor
+            
             weakSelf.backgroundColor.accept(value: backgroundColor)
         }
     }
@@ -44,9 +45,9 @@ class MobileContentMultiSelectOptionViewModel: MobileContentMultiSelectOptionVie
     
     func multiSelectOptionTapped() {
         
-        multiSelectOptionModel.toggleSelected(rendererState: rendererPageModel.rendererState)
-        
-        let analyticsEvents: [AnalyticsEventModelType] = multiSelectOptionModel.getTappedAnalyticsEvents()
+        multiSelectOptionModel.toggleSelected(state: rendererPageModel.rendererState)
+                
+        let analyticsEvents: [AnalyticsEventModelType] = multiSelectOptionModel.getAnalyticsEvents(type: .clicked).map({MultiplatformAnalyticsEvent(analyticsEvent: $0)})
                 
         mobileContentAnalytics.trackEvents(events: analyticsEvents, rendererPageModel: rendererPageModel)
     }

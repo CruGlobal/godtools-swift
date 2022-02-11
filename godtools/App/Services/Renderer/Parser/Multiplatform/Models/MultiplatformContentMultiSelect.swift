@@ -43,9 +43,7 @@ extension MultiplatformContentMultiSelect {
         
         var childModels: [MobileContentRenderableModel] = Array()
                 
-        let multiSelectOptions: [MultiplatformContentMultiSelectOption] = multiSelect.options.map({MultiplatformContentMultiSelectOption(multiSelectOption: $0)})
-                
-        childModels.append(contentsOf: multiSelectOptions)
+        childModels.append(contentsOf: multiSelect.options)
         
         return childModels
     }
