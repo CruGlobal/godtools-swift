@@ -9,7 +9,7 @@
 import Foundation
 import GodToolsToolParser
 
-class MultiplatformContentAnimation: ContentAnimationModelType {
+class MultiplatformContentAnimation {
     
     private let animation: Animation
     

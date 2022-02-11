@@ -7,16 +7,17 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class MobileContentAnimationViewModel: MobileContentAnimationViewModelType {
     
-    private let animationModel: ContentAnimationModelType
+    private let animationModel: Animation
     private let rendererPageModel: MobileContentRendererPageModel
     private let containerModel: MobileContentRenderableModelContainer?
     
     let animatedViewModel: AnimatedViewModelType
     
-    required init(animationModel: ContentAnimationModelType, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) {
+    required init(animationModel: Animation, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) {
         
         self.animationModel = animationModel
         self.rendererPageModel = rendererPageModel
@@ -24,7 +25,7 @@ class MobileContentAnimationViewModel: MobileContentAnimationViewModelType {
         
         let animationFilepath: String
         
-        let animationfileResult: Result<URL, Error> = rendererPageModel.resourcesCache.getFile(fileName: animationModel.resource ?? "")
+        let animationfileResult: Result<URL, Error> = rendererPageModel.resourcesCache.getFile(fileName: animationModel.resource?.name ?? "")
         
         switch animationfileResult {
         case .success(let fileUrl):

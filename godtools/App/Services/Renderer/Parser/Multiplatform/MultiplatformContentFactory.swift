@@ -62,7 +62,7 @@ class MultiplatformContentFactory {
             renderableModel = spacer
         }
         else if let animation = content as? Animation {
-            renderableModel = MultiplatformContentAnimation(animation: animation)
+            renderableModel = animation
         }
         else if let video = content as? Video {
             renderableModel = MultiplatformContentVideo(video: video)
