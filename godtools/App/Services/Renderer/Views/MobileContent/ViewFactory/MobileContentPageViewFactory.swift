@@ -309,7 +309,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let multiSelectModel = renderableModel as? ContentMultiSelectModelType {
+        else if let multiSelectModel = renderableModel as? Multiselect {
             
             let viewModel = MobileContentMultiSelectViewModel(
                 multiSelectModel: multiSelectModel,

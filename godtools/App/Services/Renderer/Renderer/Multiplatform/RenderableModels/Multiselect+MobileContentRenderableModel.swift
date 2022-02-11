@@ -1,5 +1,5 @@
 //
-//  MultiselectOption+MobileContentRenderableModel.swift
+//  Multiselect+MobileContentRenderableModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 2/10/22.
@@ -9,14 +9,14 @@
 import Foundation
 import GodToolsToolParser
 
-extension Multiselect.Option: MobileContentRenderableModel {
+extension Multiselect: MobileContentRenderableModel {
     
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
-       
+        
         var childModels: [MobileContentRenderableModel] = Array()
-
-        addContentToChildModels(childModels: &childModels, content: content)
                 
+        childModels.append(contentsOf: options)
+        
         return childModels
     }
 }

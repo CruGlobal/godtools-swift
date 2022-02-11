@@ -46,8 +46,8 @@ class MultiplatformContentFactory {
         else if let accordion = content as? Accordion {
             renderableModel = MultiplatformContentAccordion(accordion: accordion)
         }
-        else if let multiSelect = content as? Multiselect {
-            renderableModel = MultiplatformContentMultiSelect(multiSelect: multiSelect)
+        else if let multiselect = content as? Multiselect {
+            renderableModel = multiselect
         }
         else if let flow = content as? GodToolsToolParser.Flow {
             return flow

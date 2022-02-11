@@ -9,7 +9,7 @@
 import Foundation
 import GodToolsToolParser
 
-class MultiplatformContentMultiSelect: ContentMultiSelectModelType {
+class MultiplatformContentMultiSelect {
     
     private let multiSelect: Multiselect
     
@@ -20,31 +20,5 @@ class MultiplatformContentMultiSelect: ContentMultiSelectModelType {
     
     var numberOfColumns: Int32 {
         return multiSelect.columns
-    }
-}
-
-// MARK: - MobileContentRenderableModel
-
-extension MultiplatformContentMultiSelect {
-    
-    var restrictTo: String? {
-        return nil
-    }
-    
-    var version: String? {
-        return nil
-    }
-    
-    var modelContentIsRenderable: Bool {
-        return true
-    }
-    
-    func getRenderableChildModels() -> [MobileContentRenderableModel] {
-        
-        var childModels: [MobileContentRenderableModel] = Array()
-                
-        childModels.append(contentsOf: multiSelect.options)
-        
-        return childModels
     }
 }
