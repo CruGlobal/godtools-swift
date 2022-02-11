@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 protocol ContentMultiSelectOptionModelType: MobileContentRenderableModel {
     
@@ -14,8 +15,8 @@ protocol ContentMultiSelectOptionModelType: MobileContentRenderableModel {
     var selectedColor: UIColor { get }
     
     func getTappedAnalyticsEvents() -> [AnalyticsEventModelType]
-    func toggleSelected(rendererState: MobileContentMultiplatformState)
-    func watchIsSelected(rendererState: MobileContentMultiplatformState, completion: @escaping ((_ isSelected: Bool) -> Void)) -> MultiplatformFlowWatcher
+    func watchIsSelected(rendererState: State, completion: @escaping ((_ isSelected: Bool) -> Void)) -> FlowWatcher
+    func toggleSelected(rendererState: State)
 }
 
 extension ContentMultiSelectOptionModelType {

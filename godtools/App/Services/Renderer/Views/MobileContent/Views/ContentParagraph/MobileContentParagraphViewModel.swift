@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class MobileContentParagraphViewModel: MobileContentParagraphViewModelType {
     
@@ -14,7 +15,7 @@ class MobileContentParagraphViewModel: MobileContentParagraphViewModelType {
     private let rendererPageModel: MobileContentRendererPageModel
     private let containerModel: MobileContentRenderableModelContainer?
     
-    private var visibilityFlowWatcher: MobileContentFlowWatcherType?
+    private var visibilityFlowWatcher: FlowWatcher?
     
     let visibilityState: ObservableValue<MobileContentViewVisibilityState> = ObservableValue(value: .visible)
     

@@ -7,11 +7,12 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 protocol MobileContentImageViewModelType {
     
     var image: UIImage? { get }
     var imageEvents: [MultiplatformEventId] { get }
-    var rendererState: MobileContentMultiplatformState { get }
+    var rendererState: State { get }
     var imageWidth: MobileContentViewWidth { get }
 }

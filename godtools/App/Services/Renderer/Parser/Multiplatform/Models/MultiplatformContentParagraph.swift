@@ -18,14 +18,14 @@ class MultiplatformContentParagraph: ContentParagraphModelType {
         self.paragraph = paragraph
     }
     
-    func watchVisibility(rendererState: MobileContentMultiplatformState, visibilityChanged: @escaping ((_ visibility: MobileContentVisibility) -> Void)) -> MobileContentFlowWatcherType {
+    func watchVisibility(rendererState: State, visibilityChanged: @escaping ((_ visibility: MobileContentVisibility) -> Void)) -> FlowWatcher {
         
-        let flowWatcher = paragraph.watchVisibility(state: rendererState.state) { (invisible: KotlinBoolean, gone: KotlinBoolean) in
+        let flowWatcher = paragraph.watchVisibility(state: rendererState) { (invisible: KotlinBoolean, gone: KotlinBoolean) in
             
             visibilityChanged(MobileContentVisibility(isInvisible: invisible.boolValue, isGone: gone.boolValue))
         }
         
-        return MultiplatformFlowWatcher(flowWatcher: flowWatcher)
+        return flowWatcher
     }
 }
 

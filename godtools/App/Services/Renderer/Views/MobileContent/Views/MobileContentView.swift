@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class MobileContentView: UIView {
         
@@ -125,7 +126,7 @@ class MobileContentView: UIView {
     
     // MARK: - Events
     
-    func sendEventsToAllViews(eventIds: [MultiplatformEventId], rendererState: MobileContentMultiplatformState) {
+    func sendEventsToAllViews(eventIds: [MultiplatformEventId], rendererState: State) {
         
         let eventIds: [MultiplatformEventId] = eventIds.flatMap({$0.resolve(rendererState: rendererState)})
         

@@ -31,7 +31,7 @@ class ToolPageFormViewModel: MobileContentFormViewModel {
         fatalError("init(formModel:rendererPageModel:) has not been implemented")
     }
     
-    var rendererState: MobileContentMultiplatformState {
+    var rendererState: State {
         return rendererPageModel.rendererState
     }
     

@@ -135,7 +135,7 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
         return buttonModel.url?.absoluteString ?? ""
     }
     
-    var rendererState: MobileContentMultiplatformState {
+    var rendererState: State {
         return rendererPageModel.rendererState
     }
     

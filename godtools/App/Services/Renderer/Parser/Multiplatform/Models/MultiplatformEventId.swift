@@ -22,9 +22,9 @@ class MultiplatformEventId: Equatable {
         return eventId.description()
     }
     
-    func resolve(rendererState: MobileContentMultiplatformState) -> [MultiplatformEventId] {
+    func resolve(rendererState: State) -> [MultiplatformEventId] {
         
-        return eventId.resolve(state: rendererState.state).map({MultiplatformEventId(eventId: $0)})
+        return eventId.resolve(state: rendererState).map({MultiplatformEventId(eventId: $0)})
     }
     
     static func ==(thisEventId: MultiplatformEventId, thatEventId: MultiplatformEventId) -> Bool {

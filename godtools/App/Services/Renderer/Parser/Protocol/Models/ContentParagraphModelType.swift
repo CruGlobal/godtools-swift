@@ -7,10 +7,11 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 protocol ContentParagraphModelType: MobileContentRenderableModel {
     
-    func watchVisibility(rendererState: MobileContentMultiplatformState, visibilityChanged: @escaping ((_ visibility: MobileContentVisibility) -> Void)) -> MobileContentFlowWatcherType
+    func watchVisibility(rendererState: State, visibilityChanged: @escaping ((_ visibility: MobileContentVisibility) -> Void)) -> FlowWatcher
 }
 
 extension ContentParagraphModelType {

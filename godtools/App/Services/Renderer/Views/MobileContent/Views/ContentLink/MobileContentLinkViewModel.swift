@@ -46,7 +46,7 @@ class MobileContentLinkViewModel: MobileContentLinkViewModelType {
         return linkModel.events.map({MultiplatformEventId(eventId: $0)})
     }
     
-    var rendererState: MobileContentMultiplatformState {
+    var rendererState: State {
         return rendererPageModel.rendererState
     }
     

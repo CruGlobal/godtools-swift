@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class MobileContentMultiSelectOptionViewModel: MobileContentMultiSelectOptionViewModelType {
     
@@ -14,7 +15,7 @@ class MobileContentMultiSelectOptionViewModel: MobileContentMultiSelectOptionVie
     private let rendererPageModel: MobileContentRendererPageModel
     private let mobileContentAnalytics: MobileContentAnalytics
     
-    private var isSelectedFlowWatcher: MultiplatformFlowWatcher?
+    private var isSelectedFlowWatcher: FlowWatcher?
     
     let backgroundColor: ObservableValue<UIColor>
     

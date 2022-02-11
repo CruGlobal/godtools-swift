@@ -30,18 +30,18 @@ class MultiplatformContentMultiSelectOption: ContentMultiSelectOptionModelType {
         return multiSelectOption.getAnalyticsEvents(type: .clicked).map({MultiplatformAnalyticsEvent(analyticsEvent: $0)})
     }
     
-    func toggleSelected(rendererState: MobileContentMultiplatformState) {
+    func toggleSelected(rendererState: State) {
         
-        multiSelectOption.toggleSelected(state: rendererState.state)
+        multiSelectOption.toggleSelected(state: rendererState)
     }
     
-    func watchIsSelected(rendererState: MobileContentMultiplatformState, completion: @escaping ((_ isSelected: Bool) -> Void)) -> MultiplatformFlowWatcher {
+    func watchIsSelected(rendererState: State, completion: @escaping ((_ isSelected: Bool) -> Void)) -> FlowWatcher {
         
-        let flowWatcher = multiSelectOption.watchIsSelected(state: rendererState.state) { (boolean: KotlinBoolean) in
+        let flowWatcher = multiSelectOption.watchIsSelected(state: rendererState) { (boolean: KotlinBoolean) in
             completion(boolean.boolValue)
         }
         
-        return MultiplatformFlowWatcher(flowWatcher: flowWatcher)
+        return flowWatcher
     }
 }
 

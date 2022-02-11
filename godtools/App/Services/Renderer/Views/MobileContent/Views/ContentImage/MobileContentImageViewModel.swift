@@ -8,6 +8,7 @@
 
 import UIKit
 import GodToolsToolParser
+import RealmSwift
 
 class MobileContentImageViewModel: MobileContentImageViewModelType {
     
@@ -35,7 +36,7 @@ class MobileContentImageViewModel: MobileContentImageViewModelType {
         return imageModel.events.map({MultiplatformEventId(eventId: $0)})
     }
     
-    var rendererState: MobileContentMultiplatformState {
+    var rendererState: State {
         return rendererPageModel.rendererState
     }
 }

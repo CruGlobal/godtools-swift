@@ -7,11 +7,12 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class MobileContentMultiplatformRenderer: MobileContentRendererType {
     
     private let multiplatformParser: MobileContentMultiplatformParser
-    private let rendererState: MobileContentMultiplatformState = MobileContentMultiplatformState()
+    private let rendererState: State = State()
     
     let resource: ResourceModel
     let language: LanguageModel

@@ -24,7 +24,7 @@ class MobileContentCardViewModel: MobileContentCardViewModelType {
         return contentCard.events
     }
     
-    var rendererState: MobileContentMultiplatformState {
+    var rendererState: State {
         return rendererPageModel.rendererState
     }
 }

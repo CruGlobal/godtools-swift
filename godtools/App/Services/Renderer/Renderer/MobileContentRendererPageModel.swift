@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class MobileContentRendererPageModel {
     
@@ -21,11 +22,11 @@ class MobileContentRendererPageModel {
     let language: LanguageModel
     let pageViewFactories: MobileContentRendererPageViewFactories
     let primaryRendererLanguage: LanguageModel
-    let rendererState: MobileContentMultiplatformState
+    let rendererState: State
     
     private weak var weakWindow: UIViewController?
     
-    required init(pageModel: PageModelType, page: Int, isLastPage: Bool, window: UIViewController, safeArea: UIEdgeInsets, manifest: MobileContentManifestType, resourcesCache: ManifestResourcesCacheType, resource: ResourceModel, language: LanguageModel, pageViewFactories: MobileContentRendererPageViewFactories, primaryRendererLanguage: LanguageModel, rendererState: MobileContentMultiplatformState) {
+    required init(pageModel: PageModelType, page: Int, isLastPage: Bool, window: UIViewController, safeArea: UIEdgeInsets, manifest: MobileContentManifestType, resourcesCache: ManifestResourcesCacheType, resource: ResourceModel, language: LanguageModel, pageViewFactories: MobileContentRendererPageViewFactories, primaryRendererLanguage: LanguageModel, rendererState: State) {
         
         self.pageModel = pageModel
         self.page = page
