@@ -63,7 +63,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view            
         }
-        else if let buttonModel = renderableModel as? ContentButtonModelType {
+        else if let buttonModel = renderableModel as? Button {
                         
             let viewModel = MobileContentButtonViewModel(
                 buttonModel: buttonModel,

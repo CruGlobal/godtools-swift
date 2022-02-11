@@ -61,18 +61,8 @@ extension MultiplatformModal: MobileContentRenderableModelContainer {
         return MobileContentColor(color: modal.buttonColor)
     }
     
-    var buttonStyle: MobileContentButtonStyle? {
-        switch modal.buttonStyle {
-        case .outlined:
-            return .outlined
-        case .contained:
-            return .contained
-        case .unknown:
-            return nil
-        default:
-            assertionFailure("Found unsupported buttonStyle: \(modal.buttonStyle). Ensure all cases are supported.")
-            return nil
-        }
+    var buttonStyle: Button.Style? {
+        return modal.buttonStyle
     }
     
     var primaryColor: MobileContentColor? {

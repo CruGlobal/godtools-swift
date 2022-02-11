@@ -26,7 +26,7 @@ class MultiplatformContentFactory {
             renderableModel = MultiplatformContentText(text: text)
         }
         else if let button = content as? Button {
-            renderableModel = MultiplatformContentButton(button: button)
+            renderableModel = button
         }
         else if let image = content as? Image {
             renderableModel = image

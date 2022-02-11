@@ -8,6 +8,7 @@
 
 import Foundation
 
+// TODO: Remove when removing wrappers. ~Levi
 protocol MobileContentFlowWatcherType {
     
     func close()

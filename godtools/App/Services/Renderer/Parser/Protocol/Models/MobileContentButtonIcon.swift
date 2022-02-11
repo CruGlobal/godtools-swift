@@ -7,11 +7,12 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 struct MobileContentButtonIcon {
     
     let size: Int32
-    let gravity: IconGravity
+    let gravity: Gravity.Horizontal
     let image: UIImage
 }
 

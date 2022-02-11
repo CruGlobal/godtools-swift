@@ -7,12 +7,13 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     
     private let maxAllowedIconSize = 40
     
-    private let buttonModel: ContentButtonModelType
+    private let buttonModel: Button
     private let rendererPageModel: MobileContentRendererPageModel
     private let containerModel: MobileContentRenderableModelContainer?
     private let mobileContentAnalytics: MobileContentAnalytics
@@ -20,7 +21,7 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     private let fontSize: CGFloat = 18
     private let fontWeight: UIFont.Weight = .regular
     
-    private var visibilityFlowWatcher: MobileContentFlowWatcherType?
+    private var visibilityFlowWatcher: FlowWatcher?
     
     let backgroundColor: UIColor
     let buttonWidth: MobileContentViewWidth
@@ -29,7 +30,7 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     let visibilityState: ObservableValue<MobileContentViewVisibilityState> = ObservableValue(value: .visible)
     let icon: MobileContentButtonIcon?
     
-    required init(buttonModel: ContentButtonModelType, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
+    required init(buttonModel: Button, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
         
         self.buttonModel = buttonModel
         self.rendererPageModel = rendererPageModel
@@ -37,26 +38,33 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
         
-        buttonWidth = MobileContentViewWidth(dimension: buttonModel.buttonWidth)
+        buttonWidth = MobileContentViewWidth(dimension: buttonModel.width)
         
-        let buttonColor: UIColor = buttonModel.getColor()?.uiColor ?? containerModel?.buttonColor?.uiColor ?? rendererPageModel.pageColors.primaryColor.uiColor
-        let buttonTitleColor: UIColor? = buttonModel.getTextColor()?.uiColor
-        
-        let buttonStyle: MobileContentButtonStyle = buttonModel.style ?? containerModel?.buttonStyle ?? .contained
-        
-        switch buttonStyle {
+        let buttonColor: UIColor = buttonModel.buttonColor
+        let buttonTitleColor: UIColor? = buttonModel.text?.textColor
+                
+        switch buttonModel.style {
         
         case .contained:
             backgroundColor = buttonColor
             titleColor = buttonTitleColor ?? rendererPageModel.pageColors.primaryTextColor.uiColor
             borderColor = UIColor.clear
         case .outlined:
-            backgroundColor = buttonModel.getBackgroundColor()?.uiColor ?? .clear
+            backgroundColor = buttonModel.backgroundColor
             titleColor = buttonColor
             borderColor = buttonColor
+        case .unknown:
+            backgroundColor = buttonColor
+            titleColor = buttonTitleColor ?? rendererPageModel.pageColors.primaryTextColor.uiColor
+            borderColor = UIColor.clear
+        default:
+            backgroundColor = buttonColor
+            titleColor = buttonTitleColor ?? rendererPageModel.pageColors.primaryTextColor.uiColor
+            borderColor = UIColor.clear
         }
         
-        if let name = buttonModel.iconName, let image = rendererPageModel.resourcesCache.getImageFromManifestResources(fileName: name)  {
+        if let name = buttonModel.icon?.name,
+            let image = rendererPageModel.resourcesCache.getImageFromManifestResources(fileName: name)  {
             
             let iconSize = min(Int(buttonModel.iconSize), maxAllowedIconSize)
                     
@@ -70,6 +78,8 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
         
         super.init()
         
+        // TODO: Implement back in. ~Levi
+        /*
         visibilityFlowWatcher = buttonModel.watchVisibility(rendererState: rendererPageModel.rendererState, visibilityChanged: { [weak self] (visibility: MobileContentVisibility) in
             
             let visibilityStateValue: MobileContentViewVisibilityState
@@ -85,7 +95,7 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
             }
             
             self?.visibilityState.accept(value: visibilityStateValue)
-        })
+        })*/
     }
     
     deinit {
@@ -94,7 +104,7 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     
     var font: UIFont {
         
-        let fontScale = CGFloat(buttonModel.textScale.doubleValue)
+        let fontScale = CGFloat(buttonModel.textScale)
         
         return fontService.getFont(
             size: fontSize * fontScale,
@@ -103,7 +113,7 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     }
     
     var title: String? {
-        return buttonModel.text
+        return buttonModel.text?.text
     }
     
     var borderWidth: CGFloat? {
@@ -113,16 +123,16 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
         return 1
     }
     
-    var buttonType: MobileContentButtonType {
+    var buttonType: Button.Type_ {
         return buttonModel.type
     }
     
     var buttonEvents: [MultiplatformEventId] {
-        return buttonModel.events
+        return buttonModel.events.map({MultiplatformEventId(eventId: $0)})
     }
     
     var buttonUrl: String {
-        return buttonModel.url ?? ""
+        return buttonModel.url?.absoluteString ?? ""
     }
     
     var rendererState: MobileContentMultiplatformState {
@@ -130,6 +140,9 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     }
     
     func buttonTapped() {
-        mobileContentAnalytics.trackEvents(events: buttonModel.getAnalyticsEvents(), rendererPageModel: rendererPageModel)
+        
+        let analyticsEvents: [AnalyticsEventModelType] = buttonModel.analyticsEvents.map({MultiplatformAnalyticsEvent(analyticsEvent: $0)})
+        
+        mobileContentAnalytics.trackEvents(events: analyticsEvents, rendererPageModel: rendererPageModel)
     }
 }

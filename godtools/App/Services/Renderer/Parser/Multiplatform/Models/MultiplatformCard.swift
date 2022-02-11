@@ -93,7 +93,7 @@ extension MultiplatformCard: MobileContentRenderableModelContainer {
         return nil
     }
     
-    var buttonStyle: MobileContentButtonStyle? {
+    var buttonStyle: Button.Style? {
         return nil
     }
     

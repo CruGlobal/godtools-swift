@@ -7,13 +7,15 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 protocol MobileContentStyles {
     
     var buttonColor: MobileContentColor? { get }
-    var buttonStyle: MobileContentButtonStyle? { get }
+    var buttonStyle: Button.Style? { get }
     var primaryColor: MobileContentColor? { get }
     var primaryTextColor: MobileContentColor? { get }
     var textAlignment: MobileContentTextAlignment? { get }
     var textColor: MobileContentColor? { get }
 }
+

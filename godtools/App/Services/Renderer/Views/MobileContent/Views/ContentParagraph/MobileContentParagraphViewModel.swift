@@ -3,7 +3,7 @@
 //  godtools
 //
 //  Created by Levi Eggert on 12/3/21.
-//  Copyright © 2021 Cru. All rights reserved.
+//  Copyright © 2021 Cru. All rights reserved.b
 //
 
 import Foundation

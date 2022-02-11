@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 protocol MobileContentButtonViewModelType {
     
@@ -17,7 +18,7 @@ protocol MobileContentButtonViewModelType {
     var titleColor: UIColor { get }
     var borderColor: UIColor? { get }
     var borderWidth: CGFloat? { get }
-    var buttonType: MobileContentButtonType { get }
+    var buttonType: Button.Type_ { get }
     var buttonEvents: [MultiplatformEventId] { get }
     var buttonUrl: String { get }
     var rendererState: MobileContentMultiplatformState { get }
