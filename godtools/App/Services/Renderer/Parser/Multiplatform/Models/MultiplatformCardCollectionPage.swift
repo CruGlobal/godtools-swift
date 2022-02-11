@@ -56,7 +56,7 @@ class MultiplatformCardCollectionPage: PageModelType {
         return cardCollectionPage.isHidden
     }
     
-    var hero: HeroModelType? {
+    var hero: Hero? {
         return nil
     }
     

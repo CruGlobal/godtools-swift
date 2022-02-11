@@ -77,7 +77,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let heroModel = renderableModel as? HeroModelType {
+        else if let heroModel = renderableModel as? Hero {
             
             let viewModel = ToolPageHeroViewModel(
                 heroModel: heroModel,

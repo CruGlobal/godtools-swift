@@ -56,7 +56,7 @@ class MultiplatformContentPage: PageModelType {
         return contentPage.isHidden
     }
     
-    var hero: HeroModelType? {
+    var hero: Hero? {
         return nil
     }
     

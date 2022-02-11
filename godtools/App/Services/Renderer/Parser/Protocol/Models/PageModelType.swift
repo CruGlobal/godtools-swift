@@ -18,7 +18,7 @@ protocol PageModelType: BackgroundImageModelType, MobileContentRenderableModel {
     var listeners: [MultiplatformEventId] { get }
     var textScale: MobileContentTextScale { get }
     var isHidden: Bool { get }
-    var hero: HeroModelType? { get }
+    var hero: Hero? { get }
     var callToAction: CallToAction? { get }
     
     func getBackgroundColor() -> MobileContentColor?

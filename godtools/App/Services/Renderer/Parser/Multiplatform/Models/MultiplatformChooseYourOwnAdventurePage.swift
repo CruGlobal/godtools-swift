@@ -56,7 +56,7 @@ class MultiplatformChooseYourOwnAdventurePage: PageModelType {
         return page.isHidden
     }
     
-    var hero: HeroModelType? {
+    var hero: Hero? {
         return nil
     }
     

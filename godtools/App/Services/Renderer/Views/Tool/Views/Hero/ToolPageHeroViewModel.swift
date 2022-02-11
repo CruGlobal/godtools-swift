@@ -7,20 +7,23 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class ToolPageHeroViewModel: ToolPageHeroViewModelType {
     
-    private let heroModel: HeroModelType
+    private let heroModel: Hero
     private let rendererPageModel: MobileContentRendererPageModel
     private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
     
-    required init(heroModel: HeroModelType, rendererPageModel: MobileContentRendererPageModel, mobileContentAnalytics: MobileContentAnalytics) {
+    required init(heroModel: Hero, rendererPageModel: MobileContentRendererPageModel, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.heroModel = heroModel
         self.rendererPageModel = rendererPageModel
         
+        let analyticsEvents: [AnalyticsEventModelType] = heroModel.analyticsEvents.map({MultiplatformAnalyticsEvent(analyticsEvent: $0)})
+        
         analyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
-            analyticsEvents: heroModel.getAnalyticsEvents(),
+            analyticsEvents: analyticsEvents,
             mobileContentAnalytics: mobileContentAnalytics,
             rendererPageModel: rendererPageModel
         )

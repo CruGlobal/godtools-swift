@@ -57,11 +57,8 @@ class MultiplatformTractPage: PageModelType {
         return false
     }
     
-    var hero: HeroModelType? {
-        guard let hero = tractPage.hero else {
-            return nil
-        }
-        return MultiplatformHero(hero: hero)
+    var hero: Hero? {
+        return tractPage.hero
     }
     
     var callToAction: CallToAction? {
@@ -118,7 +115,7 @@ extension MultiplatformTractPage {
         }
         
         if let hero = tractPage.hero {
-            childModels.append(MultiplatformHero(hero: hero))
+            childModels.append(hero)
         }
         
         if tractPage.cards.count > 0 {

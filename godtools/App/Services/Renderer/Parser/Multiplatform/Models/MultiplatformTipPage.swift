@@ -44,7 +44,7 @@ class MultiplatformTipPage: PageModelType {
         return false
     }
     
-    var hero: HeroModelType? {
+    var hero: Hero? {
         return nil
     }
     
