@@ -11,7 +11,7 @@ import GodToolsToolParser
 
 class MobileContentParagraphViewModel: MobileContentParagraphViewModelType {
     
-    private let paragraphModel: ContentParagraphModelType
+    private let paragraphModel: Paragraph
     private let rendererPageModel: MobileContentRendererPageModel
     private let containerModel: MobileContentRenderableModelContainer?
     
@@ -19,20 +19,20 @@ class MobileContentParagraphViewModel: MobileContentParagraphViewModelType {
     
     let visibilityState: ObservableValue<MobileContentViewVisibilityState> = ObservableValue(value: .visible)
     
-    required init(paragraphModel: ContentParagraphModelType, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) {
+    required init(paragraphModel: Paragraph, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) {
         
         self.paragraphModel = paragraphModel
         self.rendererPageModel = rendererPageModel
         self.containerModel = containerModel
-        
-        visibilityFlowWatcher = paragraphModel.watchVisibility(rendererState: rendererPageModel.rendererState, visibilityChanged: { [weak self] (visibility: MobileContentVisibility) in
-            
+                
+        visibilityFlowWatcher = paragraphModel.watchVisibility(state: rendererPageModel.rendererState) { [weak self] (invisible: KotlinBoolean, gone: KotlinBoolean) in
+                
             let visibilityStateValue: MobileContentViewVisibilityState
             
-            if visibility.isGone {
+            if gone.boolValue {
                 visibilityStateValue = .gone
             }
-            else if visibility.isInvisible {
+            else if invisible.boolValue {
                 visibilityStateValue = .hidden
             }
             else {
@@ -40,6 +40,10 @@ class MobileContentParagraphViewModel: MobileContentParagraphViewModelType {
             }
             
             self?.visibilityState.accept(value: visibilityStateValue)
-        })
+        }
+    }
+    
+    deinit {
+        visibilityFlowWatcher?.close()
     }
 }

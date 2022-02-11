@@ -20,7 +20,7 @@ class MultiplatformContentFactory {
         let renderableModel: MobileContentRenderableModel?
         
         if let paragraph = content as? Paragraph {
-            renderableModel = MultiplatformContentParagraph(paragraph: paragraph)
+            renderableModel = paragraph
         }
         else if let text = content as? Text {
             renderableModel = MultiplatformContentText(text: text)
