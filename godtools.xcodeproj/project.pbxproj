@@ -129,7 +129,6 @@
 		453C385926CD758D0093F3B5 /* MobileContentTrainingTipType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453C385826CD758D0093F3B5 /* MobileContentTrainingTipType.swift */; };
 		453C385B26CD772C0093F3B5 /* MultiplatformTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453C385A26CD772C0093F3B5 /* MultiplatformTip.swift */; };
 		453D866A24E08461004EA89F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 453D866824E08461004EA89F /* Localizable.strings */; };
-		453F0B5526EA274200436EE4 /* MultiplatformContentMultiSelect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453F0B5426EA274200436EE4 /* MultiplatformContentMultiSelect.swift */; };
 		453F0B6026EA369000436EE4 /* MobileContentMultiSelectOptionViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453F0B5D26EA369000436EE4 /* MobileContentMultiSelectOptionViewModelType.swift */; };
 		453F0B6126EA369000436EE4 /* MobileContentMultiSelectOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453F0B5E26EA369000436EE4 /* MobileContentMultiSelectOptionView.swift */; };
 		453F0B6226EA369000436EE4 /* MobileContentMultiSelectOptionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453F0B5F26EA369000436EE4 /* MobileContentMultiSelectOptionViewModel.swift */; };
@@ -1213,7 +1212,6 @@
 		453D866324E08310004EA89F /* mn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = mn; path = mn.lproj/Localizable.strings; sourceTree = "<group>"; };
 		453D866424E08347004EA89F /* tpi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tpi; path = tpi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		453D866924E08461004EA89F /* no */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = no; path = Localizable.strings; sourceTree = "<group>"; };
-		453F0B5426EA274200436EE4 /* MultiplatformContentMultiSelect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplatformContentMultiSelect.swift; sourceTree = "<group>"; };
 		453F0B5D26EA369000436EE4 /* MobileContentMultiSelectOptionViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentMultiSelectOptionViewModelType.swift; sourceTree = "<group>"; };
 		453F0B5E26EA369000436EE4 /* MobileContentMultiSelectOptionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentMultiSelectOptionView.swift; sourceTree = "<group>"; };
 		453F0B5F26EA369000436EE4 /* MobileContentMultiSelectOptionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentMultiSelectOptionViewModel.swift; sourceTree = "<group>"; };
@@ -3381,7 +3379,6 @@
 				45828BD6279CCD7500F6B5F3 /* MultiplatformContentCard.swift */,
 				453AF0A926A87DC3002D4AB1 /* MultiplatformContentHeader.swift */,
 				453AF08F26A878D3002D4AB1 /* MultiplatformContentLabel.swift */,
-				453F0B5426EA274200436EE4 /* MultiplatformContentMultiSelect.swift */,
 				4576CCF5279C3BD600A7A323 /* MultiplatformContentPage.swift */,
 				453AF09326A878F5002D4AB1 /* MultiplatformContentPlaceholder.swift */,
 				453AF09526A87901002D4AB1 /* MultiplatformContentSection.swift */,
@@ -6570,7 +6567,6 @@
 				450E44572756B6FC00D4311E /* MenuItemViewModelType.swift in Sources */,
 				45AD1F6D25938A9800A096A0 /* LanguageSettingsService.swift in Sources */,
 				45DC914D26A6112A006BDBD0 /* MobileContentStyles.swift in Sources */,
-				453F0B5526EA274200436EE4 /* MultiplatformContentMultiSelect.swift in Sources */,
 				45AD1FEC25938A9800A096A0 /* InitialDataDownloaderError.swift in Sources */,
 				45AD1FDF25938A9800A096A0 /* EmailSignUpModel.swift in Sources */,
 				45AD1F6525938A9800A096A0 /* ToolTrainingTipsOnboardingViewsService.swift in Sources */,
