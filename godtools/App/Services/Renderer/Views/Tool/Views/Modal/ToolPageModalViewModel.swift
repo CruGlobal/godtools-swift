@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class ToolPageModalViewModel: ToolPageModalViewModelType {
     
-    private let modalModel: ModalModelType
+    private let modalModel: Modal
     private let rendererPageModel: MobileContentRendererPageModel
             
-    required init(modalModel: ModalModelType, rendererPageModel: MobileContentRendererPageModel) {
+    required init(modalModel: Modal, rendererPageModel: MobileContentRendererPageModel) {
         
         self.modalModel = modalModel
         self.rendererPageModel = rendererPageModel
@@ -24,10 +25,10 @@ class ToolPageModalViewModel: ToolPageModalViewModelType {
     }
     
     var listeners: [MultiplatformEventId] {
-        return modalModel.listeners
+        return modalModel.listeners.map({MultiplatformEventId(eventId: $0)})
     }
     
     var dismissListeners: [MultiplatformEventId] {
-        return modalModel.dismissListeners
+        return modalModel.dismissListeners.map({MultiplatformEventId(eventId: $0)})
     }
 }

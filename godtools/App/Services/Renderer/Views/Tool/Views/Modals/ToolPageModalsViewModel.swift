@@ -10,10 +10,10 @@ import Foundation
 
 class ToolPageModalsViewModel: ToolPageModalsViewModelType {
     
-    private let modalsModel: ModalsModelType
+    private let modalsModel: MultiplatformModals
     private let rendererPageModel: MobileContentRendererPageModel
     
-    required init(modalsModel: ModalsModelType, rendererPageModel: MobileContentRendererPageModel) {
+    required init(modalsModel: MultiplatformModals, rendererPageModel: MobileContentRendererPageModel) {
         
         self.modalsModel = modalsModel
         self.rendererPageModel = rendererPageModel

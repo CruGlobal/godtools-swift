@@ -117,7 +117,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let modalModel = renderableModel as? ModalModelType {
+        else if let modalModel = renderableModel as? Modal {
             
             let viewModel = ToolPageModalViewModel(
                 modalModel: modalModel,
@@ -128,7 +128,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let modalsModel = renderableModel as? ModalsModelType {
+        else if let modalsModel = renderableModel as? MultiplatformModals {
             
             let viewModel = ToolPageModalsViewModel(
                 modalsModel: modalsModel,

@@ -9,7 +9,7 @@
 import Foundation
 import GodToolsToolParser
 
-class MultiplatformModals: ModalsModelType {
+class MultiplatformModals {
     
     private let modals: [Modal]
     
@@ -21,28 +21,8 @@ class MultiplatformModals: ModalsModelType {
 
 // MARK: - MobileContentRenderableModel
 
-extension MultiplatformModals {
-    
-    var restrictTo: String? {
-        return nil
-    }
-    
-    var version: String? {
-        return nil
-    }
-    
-    var modelContentIsRenderable: Bool {
-        return true
-    }
-    
+extension MultiplatformModals: MobileContentRenderableModel {
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
-        
-        var childModels: [MobileContentRenderableModel] = Array()
-        
-        for modal in modals {
-            childModels.append(MultiplatformModal(modal: modal))
-        }
-        
-        return childModels
+        return modals
     }
 }
