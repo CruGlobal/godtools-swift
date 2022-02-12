@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     
@@ -14,7 +15,7 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     private let resource: ResourceModel
     private let language: LanguageModel
     private let trainingTipId: String
-    private let tipModel: TipModelType
+    private let tipModel: Tip
     private let analytics: AnalyticsContainer
     private let localizationServices: LocalizationServices
     private let viewedTrainingTips: ViewedTrainingTipsService
@@ -30,7 +31,7 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     let continueButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     let numberOfTipPages: ObservableValue<Int> = ObservableValue(value: 0)
     
-    required init(flowDelegate: FlowDelegate, renderer: MobileContentRendererType, trainingTipId: String, tipModel: TipModelType, analytics: AnalyticsContainer, localizationServices: LocalizationServices, viewedTrainingTips: ViewedTrainingTipsService) {
+    required init(flowDelegate: FlowDelegate, renderer: MobileContentRendererType, trainingTipId: String, tipModel: Tip, analytics: AnalyticsContainer, localizationServices: LocalizationServices, viewedTrainingTips: ViewedTrainingTipsService) {
         
         self.flowDelegate = flowDelegate
         self.renderer = renderer
@@ -80,14 +81,13 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
         }
     }
     
-    private func reloadTitleAndTipIcon(tipModel: TipModelType, trainingTipViewed: Bool) {
+    private func reloadTitleAndTipIcon(tipModel: Tip, trainingTipViewed: Bool) {
         
-        let trainingTipType: MobileContentTrainingTipType = tipModel.tipType
         let tipBackgroundImageName: String = trainingTipViewed ? "training_tip_red_square_bg" : "training_tip_square_bg"
         let tipImageName: String
         let localizedTipTitle: String
         
-        switch trainingTipType {
+        switch tipModel.type {
         case .ask:
             tipImageName = trainingTipViewed ? "training_tip_ask_filled_red" : "training_tip_ask"
             localizedTipTitle = "training_tip_ask"
@@ -103,7 +103,7 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
         case .tip:
             tipImageName = trainingTipViewed ? "training_tip_tip_filled_red" : "training_tip_tip"
             localizedTipTitle = "training_tip_tip"
-        case .unknown:
+        default:
             tipImageName = ""
             localizedTipTitle = ""
         }

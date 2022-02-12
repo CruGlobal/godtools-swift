@@ -14,7 +14,7 @@ class MultiplatformHeader: HeaderModelType {
     private let header: Header
     
     let trainingTipId: String?
-    let trainingTip: TrainingTipModelType?
+    let trainingTip: Tip?
     
     required init(header: Header) {
         
@@ -23,7 +23,7 @@ class MultiplatformHeader: HeaderModelType {
         self.trainingTipId = header.tip?.id
         
         if let tip = header.tip {
-            self.trainingTip = MultiplatformTrainingTip(tip: tip)
+            self.trainingTip = tip
         }
         else {
             self.trainingTip = nil

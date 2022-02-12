@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class TrainingViewFactory: MobileContentPageViewFactoryType {
     
@@ -28,13 +29,13 @@ class TrainingViewFactory: MobileContentPageViewFactoryType {
     
     func viewForRenderableModel(renderableModel: MobileContentRenderableModel, renderableModelParent: MobileContentRenderableModel?, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) -> MobileContentView? {
         
-        if let trainingTipModel = renderableModel as? TrainingTipModelType {
+        if let tipModel = renderableModel as? Tip {
             
             let parentIsHeader: Bool = renderableModelParent is HeaderModelType
             let trainingViewType: TrainingTipViewType = parentIsHeader ? .upArrow : .rounded
             
             return getTrainingTipView(
-                tipModel: trainingTipModel.tip,
+                tipModel: tipModel,
                 rendererPageModel: rendererPageModel,
                 trainingTipViewType: trainingViewType
             )
@@ -56,7 +57,7 @@ class TrainingViewFactory: MobileContentPageViewFactoryType {
         return nil
     }
     
-    private func getTrainingTipView(tipModel: TipModelType, rendererPageModel: MobileContentRendererPageModel, trainingTipViewType: TrainingTipViewType) -> TrainingTipView? {
+    private func getTrainingTipView(tipModel: Tip, rendererPageModel: MobileContentRendererPageModel, trainingTipViewType: TrainingTipViewType) -> TrainingTipView? {
         
         guard trainingTipsEnabled else {
             return nil

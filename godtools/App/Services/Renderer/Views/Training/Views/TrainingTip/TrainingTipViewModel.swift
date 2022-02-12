@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class TrainingTipViewModel: TrainingTipViewModelType {
     
-    private let tipModel: TipModelType
+    private let tipModel: Tip
     private let rendererPageModel: MobileContentRendererPageModel
     private let viewedTrainingTipsService: ViewedTrainingTipsService
     
@@ -19,7 +20,7 @@ class TrainingTipViewModel: TrainingTipViewModelType {
     let trainingTipBackgroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     let trainingTipForegroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     
-    required init(tipModel: TipModelType, rendererPageModel: MobileContentRendererPageModel, viewType: TrainingTipViewType, translationsFileCache: TranslationsFileCache, viewedTrainingTipsService: ViewedTrainingTipsService) {
+    required init(tipModel: Tip, rendererPageModel: MobileContentRendererPageModel, viewType: TrainingTipViewType, translationsFileCache: TranslationsFileCache, viewedTrainingTipsService: ViewedTrainingTipsService) {
         
         self.tipModel = tipModel
         self.rendererPageModel = rendererPageModel
@@ -52,7 +53,7 @@ class TrainingTipViewModel: TrainingTipViewModelType {
         return trainingTipViewed
     }
     
-    private func reloadTipIcon(tipModel: TipModelType, viewType: TrainingTipViewType, trainingTipViewed: Bool) {
+    private func reloadTipIcon(tipModel: Tip, viewType: TrainingTipViewType, trainingTipViewed: Bool) {
         
         let backgroundImageName: String
         switch viewType {
@@ -62,9 +63,9 @@ class TrainingTipViewModel: TrainingTipViewModelType {
             backgroundImageName = trainingTipViewed ? "training_tip_red_square_bg" : "training_tip_square_bg"
         }
         
-        let trainingTipType: MobileContentTrainingTipType = tipModel.tipType
         let imageName: String
-        switch trainingTipType {
+        
+        switch tipModel.type {
         case .ask:
             imageName = trainingTipViewed ? "training_tip_ask_filled_red" : "training_tip_ask"
         case .consider:
@@ -75,7 +76,7 @@ class TrainingTipViewModel: TrainingTipViewModelType {
             imageName = trainingTipViewed ? "training_tip_quote_filled_red" : "training_tip_quote"
         case .tip:
             imageName = trainingTipViewed ? "training_tip_tip_filled_red" : "training_tip_tip"
-        case .unknown:
+        default:
             imageName = ""
         }
         

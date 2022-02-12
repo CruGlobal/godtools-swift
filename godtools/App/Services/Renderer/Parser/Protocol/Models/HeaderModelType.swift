@@ -7,11 +7,12 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 protocol HeaderModelType: MobileContentRenderableModel {
     
     var trainingTipId: String? { get }
-    var trainingTip: TrainingTipModelType? { get }
+    var trainingTip: Tip? { get }
 }
 
 extension HeaderModelType {

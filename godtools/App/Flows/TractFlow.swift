@@ -241,7 +241,8 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
     
     private func navigateToToolTraining(event: TrainingTipEvent) {
         
-        let pageModels: [PageModelType] = event.tipModel.pages
+        // TODO: Eventually need to remove MultiplatformTipPage. ~Levi
+        let pageModels: [PageModelType] = event.tipModel.pages.map({MultiplatformTipPage(tipPage: $0)})
         
         if pageModels.isEmpty {
             assertionFailure("Pages should not be empty for training tip.")
