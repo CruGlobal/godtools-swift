@@ -6,7 +6,7 @@
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import GodToolsToolParser
 
 class MultiplatformHeading: HeadingModelType {
@@ -18,8 +18,8 @@ class MultiplatformHeading: HeadingModelType {
         self.contentText = text
     }
     
-    func getTextColor() -> MobileContentColor? {
-        return MobileContentColor(color: contentText.textColor)
+    func getTextColor() -> UIColor {
+        return contentText.textColor
     }
 }
 

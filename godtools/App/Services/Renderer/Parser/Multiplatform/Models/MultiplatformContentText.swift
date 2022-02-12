@@ -60,8 +60,8 @@ class MultiplatformContentText: ContentTextModelType {
         return MobileContentTextScale(doubleValue: contentText.textScale)
     }
     
-    func getTextColor() -> MobileContentColor? {
-        return MobileContentColor(color: contentText.textColor)
+    func getTextColor() -> UIColor {
+        return contentText.textColor
     }
     
     func getTextStyles() -> [MobileContentTextStyle] {

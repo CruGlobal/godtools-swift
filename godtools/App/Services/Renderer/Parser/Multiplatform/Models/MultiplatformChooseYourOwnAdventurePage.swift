@@ -8,6 +8,7 @@
 
 import Foundation
 import GodToolsToolParser
+import UIKit
 
 class MultiplatformChooseYourOwnAdventurePage: PageModelType {
     
@@ -64,24 +65,24 @@ class MultiplatformChooseYourOwnAdventurePage: PageModelType {
         return nil
     }
     
-    func getBackgroundColor() -> MobileContentColor? {
-        return MobileContentColor(color: page.backgroundColor)
+    func getBackgroundColor() -> UIColor? {
+        return page.backgroundColor
     }
     
-    func getCardTextColor() -> MobileContentColor? {
+    func getCardTextColor() -> UIColor? {
         return nil
     }
     
-    func getPrimaryColor() -> MobileContentColor? {
-        return MobileContentColor(color: page.primaryColor)
+    func getPrimaryColor() -> UIColor? {
+        return page.primaryColor
     }
     
-    func getPrimaryTextColor() -> MobileContentColor? {
-        return MobileContentColor(color: page.primaryTextColor)
+    func getPrimaryTextColor() -> UIColor? {
+        return page.primaryTextColor
     }
     
-    func getTextColor() -> MobileContentColor? {
-        return MobileContentColor(color: page.textColor)
+    func getTextColor() -> UIColor? {
+        return page.textColor
     }
     
     func getAnalyticsEvents() -> [AnalyticsEventModelType] {

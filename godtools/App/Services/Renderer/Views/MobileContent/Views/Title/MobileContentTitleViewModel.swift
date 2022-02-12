@@ -28,7 +28,7 @@ class MobileContentTitleViewModel: MobileContentTitleViewModelType {
     }
     
     var textColor: UIColor {
-        return titleModel.getTextColor()?.uiColor ?? rendererPageModel.pageColors.primaryTextColor.uiColor
+        return titleModel.getTextColor()
     }
     
     var lineSpacing: CGFloat {

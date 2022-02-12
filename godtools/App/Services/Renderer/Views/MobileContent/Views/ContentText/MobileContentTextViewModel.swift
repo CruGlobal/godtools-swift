@@ -29,15 +29,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
         self.containerModel = containerModel
         self.fontService = fontService
         
-        let containerTextColor: UIColor?
-        if containerModel is TractPage.Card {
-            containerTextColor = rendererPageModel.pageColors.cardTextColor?.uiColor
-        }
-        else {
-            containerTextColor = containerModel?.textColor?.uiColor
-        }
-        
-        self.textColor = textModel.getTextColor()?.uiColor ?? containerTextColor ?? rendererPageModel.pageColors.textColor.uiColor
+        self.textColor = textModel.getTextColor()
     }
     
     var startImage: UIImage? {

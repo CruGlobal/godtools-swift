@@ -52,23 +52,23 @@ class MultiplatformTipPage: PageModelType {
         return nil
     }
     
-    func getBackgroundColor() -> MobileContentColor? {
+    func getBackgroundColor() -> UIColor? {
         return nil
     }
     
-    func getCardTextColor() -> MobileContentColor? {
+    func getCardTextColor() -> UIColor? {
         return nil
     }
     
-    func getPrimaryColor() -> MobileContentColor? {
+    func getPrimaryColor() -> UIColor? {
         return nil
     }
     
-    func getPrimaryTextColor() -> MobileContentColor? {
+    func getPrimaryTextColor() -> UIColor? {
         return nil
     }
     
-    func getTextColor() -> MobileContentColor? {
+    func getTextColor() -> UIColor? {
         return nil
     }
     

@@ -28,7 +28,7 @@ class MobileContentNumberViewModel: MobileContentNumberViewModelType {
     }
     
     var textColor: UIColor {
-        return rendererPageModel.pageColors.primaryTextColor.uiColor
+        return rendererPageModel.pageColors.primaryTextColor
     }
 }
 

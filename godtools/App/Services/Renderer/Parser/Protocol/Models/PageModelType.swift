@@ -6,7 +6,7 @@
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import GodToolsToolParser
 
 protocol PageModelType: BackgroundImageModelType, MobileContentRenderableModel {
@@ -21,11 +21,11 @@ protocol PageModelType: BackgroundImageModelType, MobileContentRenderableModel {
     var hero: Hero? { get }
     var callToAction: CallToAction? { get }
     
-    func getBackgroundColor() -> MobileContentColor?
-    func getCardTextColor() -> MobileContentColor?
-    func getPrimaryColor() -> MobileContentColor?
-    func getPrimaryTextColor() -> MobileContentColor?
-    func getTextColor() -> MobileContentColor?
+    func getBackgroundColor() -> UIColor?
+    func getCardTextColor() -> UIColor?
+    func getPrimaryColor() -> UIColor?
+    func getPrimaryTextColor() -> UIColor?
+    func getTextColor() -> UIColor?
     func getAnalyticsEvents() -> [AnalyticsEventModelType]
 }
 

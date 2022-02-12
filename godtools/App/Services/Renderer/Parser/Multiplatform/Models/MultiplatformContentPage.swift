@@ -6,7 +6,7 @@
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import GodToolsToolParser
 
 class MultiplatformContentPage: PageModelType {
@@ -64,24 +64,24 @@ class MultiplatformContentPage: PageModelType {
         return nil
     }
     
-    func getBackgroundColor() -> MobileContentColor? {
-        return MobileContentColor(color: contentPage.backgroundColor)
+    func getBackgroundColor() -> UIColor? {
+        return contentPage.backgroundColor
     }
     
-    func getCardTextColor() -> MobileContentColor? {
+    func getCardTextColor() -> UIColor? {
         return nil
     }
     
-    func getPrimaryColor() -> MobileContentColor? {
-        return MobileContentColor(color: contentPage.primaryColor)
+    func getPrimaryColor() -> UIColor? {
+        return contentPage.primaryColor
     }
     
-    func getPrimaryTextColor() -> MobileContentColor? {
-        return MobileContentColor(color: contentPage.primaryTextColor)
+    func getPrimaryTextColor() -> UIColor? {
+        return contentPage.primaryTextColor
     }
     
-    func getTextColor() -> MobileContentColor? {
-        return MobileContentColor(color: contentPage.textColor)
+    func getTextColor() -> UIColor? {
+        return contentPage.textColor
     }
     
     func getAnalyticsEvents() -> [AnalyticsEventModelType] {

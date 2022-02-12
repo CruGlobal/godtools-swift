@@ -6,16 +6,16 @@
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import GodToolsToolParser
 
 protocol MobileContentStyles {
     
-    var buttonColor: MobileContentColor? { get }
+    var buttonColor: UIColor? { get }
     var buttonStyle: Button.Style? { get }
-    var primaryColor: MobileContentColor? { get }
-    var primaryTextColor: MobileContentColor? { get }
+    var primaryColor: UIColor? { get }
+    var primaryTextColor: UIColor? { get }
     var textAlignment: MobileContentTextAlignment? { get }
-    var textColor: MobileContentColor? { get }
+    var textColor: UIColor? { get }
 }
 

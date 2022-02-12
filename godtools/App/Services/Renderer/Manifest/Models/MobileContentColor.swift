@@ -8,6 +8,7 @@
 
 import UIKit
 
+// TODO: This can be removed once fully switching to use multiplatform xml parser for manifest xmls. ~Levi
 class MobileContentColor {
         
     let uiColor: UIColor

@@ -18,8 +18,8 @@ class MultiplatformTitle: TitleModelType {
         self.contentText = text
     }
     
-    func getTextColor() -> MobileContentColor? {
-        return MobileContentColor(color: contentText.textColor)
+    func getTextColor() -> UIColor {
+        return contentText.textColor
     }
 }
 

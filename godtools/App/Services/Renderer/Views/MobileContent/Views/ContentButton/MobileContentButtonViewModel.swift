@@ -47,7 +47,7 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
         
         case .contained:
             backgroundColor = buttonColor
-            titleColor = buttonTitleColor ?? rendererPageModel.pageColors.primaryTextColor.uiColor
+            titleColor = buttonTitleColor ?? rendererPageModel.pageColors.primaryTextColor
             borderColor = UIColor.clear
         case .outlined:
             backgroundColor = buttonModel.backgroundColor
@@ -55,11 +55,11 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
             borderColor = buttonColor
         case .unknown:
             backgroundColor = buttonColor
-            titleColor = buttonTitleColor ?? rendererPageModel.pageColors.primaryTextColor.uiColor
+            titleColor = buttonTitleColor ?? rendererPageModel.pageColors.primaryTextColor
             borderColor = UIColor.clear
         default:
             backgroundColor = buttonColor
-            titleColor = buttonTitleColor ?? rendererPageModel.pageColors.primaryTextColor.uiColor
+            titleColor = buttonTitleColor ?? rendererPageModel.pageColors.primaryTextColor
             borderColor = UIColor.clear
         }
         

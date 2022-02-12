@@ -64,24 +64,24 @@ class MultiplatformLessonPage: PageModelType {
         return nil
     }
     
-    func getBackgroundColor() -> MobileContentColor? {
-        return MobileContentColor(color: lessonPage.backgroundColor)
+    func getBackgroundColor() -> UIColor? {
+        return lessonPage.backgroundColor
     }
     
-    func getCardTextColor() -> MobileContentColor? {
+    func getCardTextColor() -> UIColor? {
         return nil
     }
     
-    func getPrimaryColor() -> MobileContentColor? {
-        return MobileContentColor(color: lessonPage.primaryColor)
+    func getPrimaryColor() -> UIColor? {
+        return lessonPage.primaryColor
     }
     
-    func getPrimaryTextColor() -> MobileContentColor? {
-        return MobileContentColor(color: lessonPage.primaryTextColor)
+    func getPrimaryTextColor() -> UIColor? {
+        return lessonPage.primaryTextColor
     }
     
-    func getTextColor() -> MobileContentColor? {
-        return MobileContentColor(color: lessonPage.textColor)
+    func getTextColor() -> UIColor? {
+        return lessonPage.textColor
     }
     
     func getAnalyticsEvents() -> [AnalyticsEventModelType] {

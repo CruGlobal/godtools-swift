@@ -6,22 +6,22 @@
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class MobileContentPageColors {
     
-    let backgroundColor: MobileContentColor
-    let cardTextColor: MobileContentColor?
-    let primaryColor: MobileContentColor
-    let primaryTextColor: MobileContentColor
-    let textColor: MobileContentColor
+    let backgroundColor: UIColor
+    let cardTextColor: UIColor?
+    let primaryColor: UIColor
+    let primaryTextColor: UIColor
+    let textColor: UIColor
     
     required init(pageModel: PageModelType, manifest: MobileContentManifestType) {
         
-        backgroundColor = pageModel.getBackgroundColor() ?? manifest.attributes.backgroundColor
+        backgroundColor = pageModel.getBackgroundColor() ?? manifest.attributes.backgroundColor.uiColor
         cardTextColor = pageModel.getCardTextColor()
-        primaryColor = pageModel.getPrimaryColor() ?? manifest.attributes.primaryColor
-        primaryTextColor = pageModel.getPrimaryTextColor() ?? manifest.attributes.primaryTextColor
-        textColor = pageModel.getTextColor() ?? manifest.attributes.textColor
+        primaryColor = pageModel.getPrimaryColor() ?? manifest.attributes.primaryColor.uiColor
+        primaryTextColor = pageModel.getPrimaryTextColor() ?? manifest.attributes.primaryTextColor.uiColor
+        textColor = pageModel.getTextColor() ?? manifest.attributes.textColor.uiColor
     }
 }

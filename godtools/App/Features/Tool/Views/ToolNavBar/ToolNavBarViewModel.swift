@@ -40,8 +40,8 @@ class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
         self.hidesShareButton = hidesShareButton
         
         backButtonImage = backButtonImageType.getImage()
-        navBarColor = manifestAttributes.navbarColor?.uiColor ?? manifestAttributes.primaryColor.uiColor
-        navBarControlColor = manifestAttributes.navbarControlColor?.uiColor ?? manifestAttributes.primaryTextColor.uiColor
+        navBarColor = manifestAttributes.navbarColor?.uiColor ?? .darkGray
+        navBarControlColor = manifestAttributes.navbarControlColor?.uiColor ?? .lightGray
         hidesChooseLanguageControl = languages.count <= 1
         
         super.init()

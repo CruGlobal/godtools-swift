@@ -29,6 +29,6 @@ class MobileContentHeadingViewModel: MobileContentHeadingViewModelType {
     
     var textColor: UIColor {
         
-        return headingModel.getTextColor()?.uiColor ?? rendererPageModel.pageColors.primaryColor.uiColor
+        return headingModel.getTextColor()
     }
 }

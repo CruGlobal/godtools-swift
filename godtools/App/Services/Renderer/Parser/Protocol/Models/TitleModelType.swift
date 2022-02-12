@@ -6,11 +6,11 @@
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol TitleModelType: MobileContentRenderableModel {
         
-    func getTextColor() -> MobileContentColor?
+    func getTextColor() -> UIColor
 }
 
 extension TitleModelType {

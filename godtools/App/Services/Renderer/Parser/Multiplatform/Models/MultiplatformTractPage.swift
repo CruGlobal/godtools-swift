@@ -65,24 +65,24 @@ class MultiplatformTractPage: PageModelType {
         return tractPage.callToAction
     }
     
-    func getBackgroundColor() -> MobileContentColor? {
-        return MobileContentColor(color: tractPage.backgroundColor)
+    func getBackgroundColor() -> UIColor? {
+        return tractPage.backgroundColor
     }
     
-    func getCardTextColor() -> MobileContentColor? {
-        return MobileContentColor(color: tractPage.cardTextColor)
+    func getCardTextColor() -> UIColor? {
+        return tractPage.cardTextColor
     }
     
-    func getPrimaryColor() -> MobileContentColor? {
-        return MobileContentColor(color: tractPage.primaryColor)
+    func getPrimaryColor() -> UIColor? {
+        return tractPage.primaryColor
     }
     
-    func getPrimaryTextColor() -> MobileContentColor? {
-        return MobileContentColor(color: tractPage.primaryTextColor)
+    func getPrimaryTextColor() -> UIColor? {
+        return tractPage.primaryTextColor
     }
     
-    func getTextColor() -> MobileContentColor? {
-        return MobileContentColor(color: tractPage.textColor)
+    func getTextColor() -> UIColor? {
+        return tractPage.textColor
     }
     
     func getAnalyticsEvents() -> [AnalyticsEventModelType] {

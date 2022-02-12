@@ -42,7 +42,7 @@ class MobileContentPageViewModel: MobileContentPageViewModelType {
     }
     
     var backgroundColor: UIColor {
-        return rendererPageModel.pageColors.backgroundColor.uiColor
+        return rendererPageModel.pageColors.backgroundColor
     }
     
     func getFlowDelegate() -> FlowDelegate? {

@@ -45,11 +45,11 @@ class ToolPageCallToActionViewModel: ToolPageCallToActionViewModelType {
     }
     
     var titleColor: UIColor {
-        return callToActionModel?.label?.textColor ?? rendererPageModel.pageColors.textColor.uiColor
+        return callToActionModel?.label?.textColor ?? rendererPageModel.pageColors.textColor
     }
     
     var nextButtonColor: UIColor {
-        return callToActionModel?.controlColor ?? rendererPageModel.pageColors.primaryColor.uiColor
+        return callToActionModel?.controlColor ?? rendererPageModel.pageColors.primaryColor
     }
     
     var nextButtonImage: UIImage? {

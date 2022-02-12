@@ -6,7 +6,7 @@
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import GodToolsToolParser
 
 class MultiplatformCard {
@@ -58,10 +58,10 @@ class MultiplatformCard {
         return card.visiblePosition?.intValue ?? 0
     }
     
-    func getTitleColor() -> MobileContentColor? {
+    func getTitleColor() -> UIColor? {
         
         if let labelTextColor = card.label?.textColor {
-            return MobileContentColor(color: labelTextColor)
+            return labelTextColor
         }
         return nil
     }
@@ -89,7 +89,7 @@ extension MultiplatformCard: MobileContentRenderableModel {
 
 extension MultiplatformCard: MobileContentRenderableModelContainer {
     
-    var buttonColor: MobileContentColor? {
+    var buttonColor: UIColor? {
         return nil
     }
     
@@ -97,11 +97,11 @@ extension MultiplatformCard: MobileContentRenderableModelContainer {
         return nil
     }
     
-    var primaryColor: MobileContentColor? {
+    var primaryColor: UIColor? {
         return nil
     }
     
-    var primaryTextColor: MobileContentColor? {
+    var primaryTextColor: UIColor? {
         return nil
     }
     
@@ -109,7 +109,7 @@ extension MultiplatformCard: MobileContentRenderableModelContainer {
         return nil
     }
     
-    var textColor: MobileContentColor? {
+    var textColor: UIColor? {
         return nil
     }
 }

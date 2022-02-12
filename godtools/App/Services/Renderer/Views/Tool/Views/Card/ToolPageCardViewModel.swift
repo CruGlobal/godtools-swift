@@ -69,7 +69,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     }
     
     var titleColor: UIColor {
-        return cardModel.getTitleColor()?.uiColor ?? rendererPageModel.pageColors.primaryColor.uiColor
+        return cardModel.getTitleColor() ?? rendererPageModel.pageColors.primaryColor
     }
     
     var titleFont: UIFont {
