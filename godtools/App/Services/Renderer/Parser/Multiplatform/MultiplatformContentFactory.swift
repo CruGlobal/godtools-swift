@@ -65,7 +65,7 @@ class MultiplatformContentFactory {
             renderableModel = animation
         }
         else if let video = content as? Video {
-            renderableModel = MultiplatformContentVideo(video: video)
+            renderableModel = video
         }
         else {
             renderableModel = nil

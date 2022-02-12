@@ -200,9 +200,12 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let videoModel = renderableModel as? ContentVideoModelType {
+        else if let videoModel = renderableModel as? Video {
             
-            let viewModel = MobileContentEmbeddedVideoViewModel(videoModel: videoModel)
+            let viewModel = MobileContentEmbeddedVideoViewModel(
+                videoModel: videoModel,
+                rendererPageModel: rendererPageModel
+            )
             
             let view = MobileContentEmbeddedVideoView(viewModel: viewModel)
             
