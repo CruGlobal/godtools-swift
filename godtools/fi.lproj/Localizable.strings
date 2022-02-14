@@ -72,9 +72,11 @@
 "add_new_tools" = "Lisää uusia työkaluja";
 // Menu
 "menu_general" = "Yleistä";
+"menu_account" = "Tili";
 "menu_share" = "Jaa";
 "menu_legal" = "Juridiset";
 "language_settings" = "Kieliasetukset";
+"menu.tutorial" = "Opastus";
 // Login
 "login" = "Kirjaudu sisään";
 "logout" = "Kirjaudu ulos";
@@ -122,8 +124,13 @@
 "general_about_5" = "Internetyhteys vaaditaan jokaisen uuden työkalun ja/tai kielen lataamiseen. Ladattuasi ne voit käyttää niitä myös offline-tilassa.";
 "general_about_6" = "Kysymyksiä? Ehdotuksia? Pyyntöjä? Ota yhteyttä meihin englanniksi support@godtoolsapp.com";
 "tutorial.continueButton.title.continue" = "Jatka";
+"general_about_10" = "\"Puhukaa aina ystävällisesti, kuitenkin sananne suolalla höystäen. Teidän on tiedettävä, miten kullekin vastaatte.\" Kolossalaiskirje 4:6";
+
 // Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "Edellinen";
 "card_status2" = "Seuraava";
+
+// Language Name Strings
+"language_name_fa" = "persia (farsi)";
 
 "onboardingTutorial.continueButton.title" = "Jatka";
