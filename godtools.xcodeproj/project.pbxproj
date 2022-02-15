@@ -110,7 +110,6 @@
 		4533A928270E2567009B1AF5 /* UINavigationBar+Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4533A927270E2567009B1AF5 /* UINavigationBar+Appearance.swift */; };
 		453A93F72705FDB80046B4FC /* PrimaryEvaluationOptionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453A93F62705FDB80046B4FC /* PrimaryEvaluationOptionState.swift */; };
 		453AF09026A878D3002D4AB1 /* MultiplatformContentLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453AF08F26A878D3002D4AB1 /* MultiplatformContentLabel.swift */; };
-		453AF0A026A87A58002D4AB1 /* MultiplatformLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453AF09F26A87A58002D4AB1 /* MultiplatformLabel.swift */; };
 		453AF0A426A87A80002D4AB1 /* MultiplatformModals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453AF0A326A87A80002D4AB1 /* MultiplatformModals.swift */; };
 		453AF0AA26A87DC3002D4AB1 /* MultiplatformContentHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453AF0A926A87DC3002D4AB1 /* MultiplatformContentHeader.swift */; };
 		453D866A24E08461004EA89F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 453D866824E08461004EA89F /* Localizable.strings */; };
@@ -843,7 +842,6 @@
 		45BD79D026A20EEA0007426B /* ContentModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BD79AD26A20EEA0007426B /* ContentModelType.swift */; };
 		45BD79D226A20EEA0007426B /* ContentTextModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BD79AF26A20EEA0007426B /* ContentTextModelType.swift */; };
 		45BD79D326A20EEA0007426B /* ContentHeaderModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BD79B026A20EEA0007426B /* ContentHeaderModelType.swift */; };
-		45BD79DA26A20EEA0007426B /* LabelModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BD79B726A20EEA0007426B /* LabelModelType.swift */; };
 		45BD79DB26A20EEA0007426B /* ContentLabelModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BD79B826A20EEA0007426B /* ContentLabelModelType.swift */; };
 		45BD7A7026A235780007426B /* MobileContentRendererPageViewFactories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BD7A6F26A235780007426B /* MobileContentRendererPageViewFactories.swift */; };
 		45BD7A7226A235F60007426B /* MobileContentRendererPageViewFactoriesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BD7A7126A235F60007426B /* MobileContentRendererPageViewFactoriesType.swift */; };
@@ -1172,7 +1170,6 @@
 		4533A927270E2567009B1AF5 /* UINavigationBar+Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Appearance.swift"; sourceTree = "<group>"; };
 		453A93F62705FDB80046B4FC /* PrimaryEvaluationOptionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryEvaluationOptionState.swift; sourceTree = "<group>"; };
 		453AF08F26A878D3002D4AB1 /* MultiplatformContentLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplatformContentLabel.swift; sourceTree = "<group>"; };
-		453AF09F26A87A58002D4AB1 /* MultiplatformLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplatformLabel.swift; sourceTree = "<group>"; };
 		453AF0A326A87A80002D4AB1 /* MultiplatformModals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplatformModals.swift; sourceTree = "<group>"; };
 		453AF0A926A87DC3002D4AB1 /* MultiplatformContentHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplatformContentHeader.swift; sourceTree = "<group>"; };
 		453D866324E08310004EA89F /* mn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = mn; path = mn.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1888,7 +1885,6 @@
 		45BD79AD26A20EEA0007426B /* ContentModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentModelType.swift; sourceTree = "<group>"; };
 		45BD79AF26A20EEA0007426B /* ContentTextModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentTextModelType.swift; sourceTree = "<group>"; };
 		45BD79B026A20EEA0007426B /* ContentHeaderModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentHeaderModelType.swift; sourceTree = "<group>"; };
-		45BD79B726A20EEA0007426B /* LabelModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelModelType.swift; sourceTree = "<group>"; };
 		45BD79B826A20EEA0007426B /* ContentLabelModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentLabelModelType.swift; sourceTree = "<group>"; };
 		45BD7A6F26A235780007426B /* MobileContentRendererPageViewFactories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRendererPageViewFactories.swift; sourceTree = "<group>"; };
 		45BD7A7126A235F60007426B /* MobileContentRendererPageViewFactoriesType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRendererPageViewFactoriesType.swift; sourceTree = "<group>"; };
@@ -3346,7 +3342,6 @@
 				4517EDB026F0FAE100F17A84 /* MultiplatformEventId.swift */,
 				4526529D26A7339E00E703F7 /* MultiplatformHeading.swift */,
 				459D80BC26D04D9400EC97E9 /* MultiplatformImageAlignment.swift */,
-				453AF09F26A87A58002D4AB1 /* MultiplatformLabel.swift */,
 				45A5200926C4746F009B68D4 /* MultiplatformLessonPage.swift */,
 				453AF0A326A87A80002D4AB1 /* MultiplatformModals.swift */,
 				4526529926A7294500E703F7 /* MultiplatformNumber.swift */,
@@ -5355,7 +5350,6 @@
 				45BD79AF26A20EEA0007426B /* ContentTextModelType.swift */,
 				45BD79A026A20EEA0007426B /* HeadingModelType.swift */,
 				D182CA2827286D3100ABAAC8 /* IconGravity.swift */,
-				45BD79B726A20EEA0007426B /* LabelModelType.swift */,
 				45BEC52726A604E3005D8CA1 /* MobileContentAnalyticsEventTrigger.swift */,
 				45BEC52B26A604E3005D8CA1 /* MobileContentBackgroundImageAlignment.swift */,
 				45BEC52926A604E3005D8CA1 /* MobileContentBackgroundImageScale.swift */,
@@ -6622,7 +6616,6 @@
 				45AD1B1825938A4E00A096A0 /* ArticlesViewModelType.swift in Sources */,
 				45AD1AF125938A4E00A096A0 /* PrivacyPolicyWebContent.swift in Sources */,
 				45558333269F2C7B00C3FF14 /* ToolPageModalsView.swift in Sources */,
-				45BD79DA26A20EEA0007426B /* LabelModelType.swift in Sources */,
 				45AD1FF925938A9800A096A0 /* IsNewUserDefaultsCache.swift in Sources */,
 				45FF25E7260BED6F00D771B6 /* ToolViewModelType.swift in Sources */,
 				45AD1B3525938A4F00A096A0 /* ChooseLanguageCell.swift in Sources */,
@@ -6899,7 +6892,6 @@
 				45AD1FD825938A9800A096A0 /* WebArchive.swift in Sources */,
 				45C93AF3261D310900592FFF /* ArticleAemRepositoryResult.swift in Sources */,
 				455D275927B6A0A100FB85B3 /* AccordionSection+MobileContentRenderableModel.swift in Sources */,
-				453AF0A026A87A58002D4AB1 /* MultiplatformLabel.swift in Sources */,
 				45AD1BD525938A4F00A096A0 /* PageNavigationCollectionView.swift in Sources */,
 				45AD20EC259391B000A096A0 /* JsonServicesType.swift in Sources */,
 				45AD1B2725938A4F00A096A0 /* AboutTextModel.swift in Sources */,
