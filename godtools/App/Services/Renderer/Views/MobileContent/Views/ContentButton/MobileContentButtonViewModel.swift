@@ -78,16 +78,14 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
         
         super.init()
         
-        // TODO: Implement back in. ~Levi
-        /*
-        visibilityFlowWatcher = buttonModel.watchVisibility(rendererState: rendererPageModel.rendererState, visibilityChanged: { [weak self] (visibility: MobileContentVisibility) in
+        visibilityFlowWatcher = buttonModel.watchVisibility(state: rendererPageModel.rendererState, block: { [weak self] (invisible: KotlinBoolean, gone: KotlinBoolean) in
             
             let visibilityStateValue: MobileContentViewVisibilityState
             
-            if visibility.isGone {
+            if gone.boolValue {
                 visibilityStateValue = .gone
             }
-            else if visibility.isInvisible {
+            else if invisible.boolValue {
                 visibilityStateValue = .hidden
             }
             else {
@@ -95,7 +93,7 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
             }
             
             self?.visibilityState.accept(value: visibilityStateValue)
-        })*/
+        })
     }
     
     deinit {
