@@ -12,7 +12,8 @@ class ChooseYourOwnAdventureView: MobileContentPagesView {
     
     private let viewModel: ChooseYourOwnAdventureViewModelType
     
-    private var navBarView: ChooseYourOwnAdventureNavBarView?
+    private var backButtonItem: UIBarButtonItem?
+    private var languageSelector: NavBarSelectorView?
     
     required init(viewModel: ChooseYourOwnAdventureViewModelType) {
         
@@ -40,29 +41,62 @@ class ChooseYourOwnAdventureView: MobileContentPagesView {
     override func setupLayout() {
         super.setupLayout()
         
-        navBarView = ChooseYourOwnAdventureNavBarView(
-            languageTitles: viewModel.getNavBarLanguageTitles(),
-            parentViewController: self,
+        // navigation bar
+        backButtonItem = addDefaultNavBackItem(target: self, action: #selector(backTapped))
+        
+        // languageSelector
+        languageSelector = NavBarSelectorView(
+            selectorButtonTitles: viewModel.getNavBarLanguageTitles(),
+            selectedColor: viewModel.navBarColors.value.languageToggleSelectedColor,
+            deselectedColor: viewModel.navBarColors.value.languageToggleDeselectedColor,
             delegate: self
         )
         
+        navigationItem.titleView = languageSelector
+        
+        // pageNavigationView
         pageNavigationView.gestureScrollingEnabled = false
     }
-}
-
-// MARK: - ChooseYourOwnAdventureNavBarViewDelegate
-
-extension ChooseYourOwnAdventureView: ChooseYourOwnAdventureNavBarViewDelegate {
     
-    func chooseYourOwnAdventureNavBarBackTapped(navBar: ChooseYourOwnAdventureNavBarView) {
-
+    override func setupBinding() {
+        super.setupBinding()
+        
+        viewModel.backButtonImage.addObserver(self) { [weak self] (image: UIImage?) in
+            self?.backButtonItem?.image = image
+        }
+        
+        viewModel.navBarColors.addObserver(self) { [weak self] (navBarModel: ChooseYourOwnAdventureNavBarModel) in
+            
+            self?.navigationController?.navigationBar.setupNavigationBarAppearance(
+                backgroundColor: navBarModel.barColor,
+                controlColor: navBarModel.controlColor,
+                titleFont: nil,
+                titleColor: nil,
+                isTranslucent: false
+            )
+            
+            self?.languageSelector?.setSelectedColor(
+                selectedColor: navBarModel.languageToggleSelectedColor,
+                deselectedColor: navBarModel.languageToggleDeselectedColor
+            )
+            self?.languageSelector?.layer.borderColor = navBarModel.languageToggleBorderColor.cgColor
+            
+            self?.navigationController?.navigationBar.setNeedsLayout()
+        }
+    }
+    
+    @objc private func backTapped() {
+        
         pageNavigationView.scrollToPreviousPage(animated: true)
         
         viewModel.navBackTapped()
     }
-    
-    func chooseYourOwnAdventureLanguageSelectorTapped(navBar: ChooseYourOwnAdventureNavBarView, index: Int) {
+}
 
+// MARK: - NavBarSelectorViewDelegate
+
+extension ChooseYourOwnAdventureView: NavBarSelectorViewDelegate {
+    func navBarSelectorTapped(navBarSelector: NavBarSelectorView, index: Int) {
         viewModel.navLanguageTapped(index: index)
     }
 }
