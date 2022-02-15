@@ -270,6 +270,13 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
             tractFlow = nil
             
+        case .chooseYourOwnAdventureFlowCompleted(let state):
+            switch state {
+            case .userClosedTool:
+                _ = navigationController.popViewController(animated: true)
+                chooseYourOwnAdventureFlow = nil
+            }
+            
         case .urlLinkTappedFromToolDetail(let url, let exitLink):
             navigateToURL(url: url, exitLink: exitLink)
             
