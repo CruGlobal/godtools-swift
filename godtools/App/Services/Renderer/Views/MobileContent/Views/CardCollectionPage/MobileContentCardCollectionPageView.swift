@@ -43,15 +43,13 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
     
     override func setupLayout() {
         super.setupLayout()
-        
-        backgroundColor = .white
-        
+                
         // cardCollectionView
         addSubview(cardPageNavigationView)
         cardPageNavigationView.translatesAutoresizingMaskIntoConstraints = false
         cardPageNavigationView.constrainEdgesToView(view: self)
     
-        cardPageNavigationView.backgroundColor = .clear
+        cardPageNavigationView.pageBackgroundColor = .clear
         cardPageNavigationView.registerPageCell(classClass: MobileContentCardCollectionPageItemView.self, cellReuseIdentifier: MobileContentCardCollectionPageItemView.reuseIdentifier)
         
         cardCollectionLayout.setCellSize(
