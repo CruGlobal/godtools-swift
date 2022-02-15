@@ -86,6 +86,8 @@ class MobileContentTextView: MobileContentView {
     
     private func setupBinding(viewType: ViewType) {
         
+        let lineSpacing = CGFloat(2)
+        
         textLabel.backgroundColor = UIColor.clear
         textLabel.numberOfLines = 0
         textLabel.lineBreakMode = .byWordWrapping
@@ -93,7 +95,14 @@ class MobileContentTextView: MobileContentView {
         textLabel.text = viewModel.text
         textLabel.textColor = viewModel.textColor
         textLabel.textAlignment = viewModel.textAlignment
-        textLabel.setLineSpacing(lineSpacing: 2)
+        textLabel.setLineSpacing(lineSpacing: lineSpacing)
+        
+        let lineHeight = viewModel.font.lineHeight
+        let minimumLines = viewModel.minimumLines
+        
+        let minimumHeight = (lineHeight * minimumLines) + (lineSpacing * (minimumLines - 1))
+        
+        textLabel.addHeightConstraint(constant: minimumHeight, relatedBy: NSLayoutConstraint.Relation.greaterThanOrEqual, priority: 1000)
         
         if viewType == .loadFromNib {
             
@@ -174,4 +183,3 @@ class MobileContentTextView: MobileContentView {
     
     // MARK: -
 }
-
