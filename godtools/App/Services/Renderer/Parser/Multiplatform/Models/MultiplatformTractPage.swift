@@ -111,7 +111,7 @@ extension MultiplatformTractPage {
         var childModels: [MobileContentRenderableModel] = Array()
         
         if let header = tractPage.header {
-            childModels.append(MultiplatformHeader(header: header))
+            childModels.append(header)
         }
         
         if let hero = tractPage.hero {

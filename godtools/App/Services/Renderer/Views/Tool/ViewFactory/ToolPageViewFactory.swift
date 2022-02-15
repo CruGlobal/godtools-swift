@@ -64,7 +64,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
                 rendererPageModel: rendererPageModel
             )
         }
-        else if let headerModel = renderableModel as? HeaderModelType {
+        else if let headerModel = renderableModel as? Header {
             
             let viewModel = ToolPageHeaderViewModel(
                 headerModel: headerModel,

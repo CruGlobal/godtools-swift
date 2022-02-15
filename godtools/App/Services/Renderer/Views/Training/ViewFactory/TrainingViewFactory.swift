@@ -31,7 +31,7 @@ class TrainingViewFactory: MobileContentPageViewFactoryType {
         
         if let tipModel = renderableModel as? Tip {
             
-            let parentIsHeader: Bool = renderableModelParent is HeaderModelType
+            let parentIsHeader: Bool = renderableModelParent is Header
             let trainingViewType: TrainingTipViewType = parentIsHeader ? .upArrow : .rounded
             
             return getTrainingTipView(
