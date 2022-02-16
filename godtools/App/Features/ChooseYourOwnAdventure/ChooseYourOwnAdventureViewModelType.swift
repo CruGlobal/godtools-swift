@@ -6,9 +6,12 @@
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol ChooseYourOwnAdventureViewModelType: MobileContentPagesViewModel {
+    
+    var backButtonImage: ObservableValue<UIImage?> { get }
+    var navBarColors: ObservableValue<ChooseYourOwnAdventureNavBarModel> { get }
     
     func getNavBarLanguageTitles() -> [String]
     func navBackTapped()

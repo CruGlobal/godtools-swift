@@ -17,9 +17,9 @@ class NavBarSelectorView: UIView {
     
     private let stackView: UIStackView = UIStackView()
     private let selectorButtonTitles: [String]
-    private let selectedColor: UIColor
-    private let deselectedColor: UIColor
     
+    private var selectedColor: UIColor = .darkGray
+    private var deselectedColor: UIColor = .lightGray
     private var selectorButtons: [UIButton] = Array()
     private var selectedIndex: Int = 0
     
@@ -71,6 +71,14 @@ class NavBarSelectorView: UIView {
         relayoutForBoundsChange()
     }
     
+    func setSelectedColor(selectedColor: UIColor, deselectedColor: UIColor) {
+        
+        self.selectedColor = selectedColor
+        self.deselectedColor = deselectedColor
+        
+        reloadSelectorButtons(selectorButtonTitles: selectorButtonTitles)
+    }
+    
     private func relayoutForBoundsChange() {
         
         stackView.frame = bounds
@@ -105,6 +113,8 @@ class NavBarSelectorView: UIView {
                 for: .touchUpInside
             )
         }
+        
+        setSelectedIndex(selectedIndex: selectedIndex)
     }
     
     private func setSelectedIndex(selectedIndex: Int) {

@@ -88,12 +88,71 @@ class ToolsMenuView: UIViewController {
         navigateToToolsListForToolbarItem(toolbarItem: startingToolbarItem, animated: false)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        configureNavigationBarAppearance(shouldAnimateNavigationBarHiddenState: animated)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+                
+        toolsListDidAppear()
+    }
+    
     @objc func handleMenu(barButtonItem: UIBarButtonItem) {
         viewModel.menuTapped()
     }
     
     @objc func handleLanguage(barButtonItem: UIBarButtonItem) {
         viewModel.languageTapped()
+    }
+    
+    func reset(toolbarItem: ToolsMenuToolbarView.ToolbarItemView, animated: Bool) {
+        
+        guard self.view != nil else {
+            return
+        }
+        
+        lessonsView?.scrollToTopOfLessonsList(animated: false)
+        favoritedToolsView?.scrollToTopOfToolsList(animated: false)
+        allToolsView?.scrollToTopOfToolsList(animated: false)
+        
+        navigateToToolsListForToolbarItem(toolbarItem: toolbarItem, animated: animated)
+    }
+    
+    private func configureNavigationBarAppearance(shouldAnimateNavigationBarHiddenState: Bool) {
+                
+        AppDelegate.setWindowBackgroundColorForStatusBarColor(color: ColorPalette.primaryNavBar.color)
+        
+        navigationController?.setNavigationBarHidden(false, animated: shouldAnimateNavigationBarHiddenState)
+                
+        navigationController?.navigationBar.setupNavigationBarAppearance(
+            backgroundColor: ColorPalette.primaryNavBar.color,
+            controlColor: .white,
+            titleFont: viewModel.navTitleFont,
+            titleColor: .white,
+            isTranslucent: false
+        )
+    }
+    
+    private func toolsListDidAppear() {
+        
+        guard let toolsList = getMostVisibleToolsList() else {
+            return
+        }
+        
+        switch toolsList {
+        
+        case .lessons:
+            break
+        
+        case .favoritedTools:
+            viewModel.didViewFavoritedToolsList()
+        
+        case .allTools:
+            viewModel.didViewAllToolsList()
+        }
     }
     
     private func didChangeToolbarItem(toolbarItem: ToolsMenuToolbarView.ToolbarItemView) {
@@ -116,6 +175,10 @@ class ToolsMenuView: UIViewController {
     
     private func navigateToToolsListForToolbarItem(toolbarItem: ToolsMenuToolbarView.ToolbarItemView, animated: Bool) {
         
+        guard toolsListsScrollView != nil else {
+            return
+        }
+        
         guard let page = toolbarView.toolbarItemViews.firstIndex(of: toolbarItem) else {
             return
         }
@@ -130,6 +193,8 @@ class ToolsMenuView: UIViewController {
         )
         
         didChangeToolbarItem(toolbarItem: toolbarItem)
+        
+        toolsListDidAppear()
     }
     
     private func setChooseLanguageButtonHidden(hidden: Bool) {
@@ -212,6 +277,8 @@ extension ToolsMenuView: UIScrollViewDelegate {
            let mostVisibleItem = getMostVisibleToolsList() {
             
             didChangeToolbarItem(toolbarItem: mostVisibleItem)
+            
+            toolsListDidAppear()
         }
     }
     

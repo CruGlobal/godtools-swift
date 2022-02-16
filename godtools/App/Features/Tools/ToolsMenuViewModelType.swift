@@ -6,14 +6,18 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol ToolsMenuViewModelType {
-                   
+            
+    var navTitleFont: UIFont { get }
+    
     func lessonsWillAppear() -> LessonsListViewModelType
     func favoritedToolsWillAppear() -> FavoritedToolsViewModelType
     func allToolsWillAppear() -> AllToolsViewModelType
     func toolbarWillAppear() -> ToolsMenuToolbarViewModelType
     func menuTapped()
     func languageTapped()
+    func didViewFavoritedToolsList()
+    func didViewAllToolsList()
 }

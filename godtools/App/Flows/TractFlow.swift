@@ -66,7 +66,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             renderers.append(parallelRenderer)
         }
         
-        let parentFlowIsHomeFlow: Bool = flowDelegate is ToolsFlow
+        let parentFlowIsHomeFlow: Bool = flowDelegate is AppFlow
         
         let viewModel = ToolViewModel(
             flowDelegate: self,
