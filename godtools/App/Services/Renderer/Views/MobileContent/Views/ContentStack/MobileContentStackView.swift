@@ -18,6 +18,7 @@ class MobileContentStackView: MobileContentView {
     private var autoSpacerViews: [MobileContentSpacerView] = Array()
     private var contentInsets: UIEdgeInsets = .zero
     private var itemSpacing: CGFloat = 0
+    private var scrollIsEnabled: Bool = true
             
     required init(contentInsets: UIEdgeInsets, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
                 
@@ -218,7 +219,7 @@ class MobileContentStackView: MobileContentView {
 
 extension MobileContentStackView {
     
-    func configureLayout(contentInsets: UIEdgeInsets, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
+    func configureLayout(contentInsets: UIEdgeInsets?, itemSpacing: CGFloat?, scrollIsEnabled: Bool?) {
         
         // remove current layout
         scrollView?.removeFromSuperview()
@@ -229,8 +230,17 @@ extension MobileContentStackView {
         scrollView = nil
         
         //
-        self.contentInsets = contentInsets
-        self.itemSpacing = itemSpacing
+        if let contentInsets = contentInsets {
+            self.contentInsets = contentInsets
+        }
+        
+        if let itemSpacing = itemSpacing {
+            self.itemSpacing = itemSpacing
+        }
+        
+        if let scrollIsEnabled = scrollIsEnabled {
+            self.scrollIsEnabled = scrollIsEnabled
+        }
         
         // add scrollview and content view
         translatesAutoresizingMaskIntoConstraints = false
@@ -239,7 +249,7 @@ extension MobileContentStackView {
         contentView = UIView()
         contentView.translatesAutoresizingMaskIntoConstraints = false
         
-        if scrollIsEnabled {
+        if self.scrollIsEnabled {
             
             let newScrollView: UIScrollView = UIScrollView()
             newScrollView.translatesAutoresizingMaskIntoConstraints = false
