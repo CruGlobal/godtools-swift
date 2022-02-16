@@ -66,7 +66,7 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
         previousCardButton.setImage(ImageCatalog.previousCard.image, for: .normal)
         previousCardButton.translatesAutoresizingMaskIntoConstraints = false
         previousCardButton.constrainLeadingToView(view: self, constant: previousAndNextButtonInsets)
-        previousCardButton.constrainBottomToView(view: self, constant: previousAndNextButtonInsets * -1)
+        previousCardButton.constrainBottomToView(view: self, constant: previousAndNextButtonInsets)
         previousCardButton.addWidthConstraint(constant: previousAndNextButtonSize)
         previousCardButton.addHeightConstraint(constant: previousAndNextButtonSize)
         
@@ -74,8 +74,8 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
         addSubview(nextCardButton)
         nextCardButton.setImage(ImageCatalog.nextCard.image, for: .normal)
         nextCardButton.translatesAutoresizingMaskIntoConstraints = false
-        nextCardButton.constrainTrailingToView(view: self, constant: previousAndNextButtonInsets * -1)
-        nextCardButton.constrainBottomToView(view: self, constant: previousAndNextButtonInsets * -1)
+        nextCardButton.constrainTrailingToView(view: self, constant: previousAndNextButtonInsets)
+        nextCardButton.constrainBottomToView(view: self, constant: previousAndNextButtonInsets)
         nextCardButton.addWidthConstraint(constant: previousAndNextButtonSize)
         nextCardButton.addHeightConstraint(constant: previousAndNextButtonSize)
         
