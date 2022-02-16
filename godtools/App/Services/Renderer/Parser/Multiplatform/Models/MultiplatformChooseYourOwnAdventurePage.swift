@@ -20,6 +20,10 @@ class MultiplatformChooseYourOwnAdventurePage: PageModelType {
         self.page = page
     }
     
+    var id: String {
+        return page.id
+    }
+    
     var backgroundImage: String? {
         return page.backgroundImage?.name
     }
