@@ -125,7 +125,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 deepLinkService: deepLinkingService
             )
             
-            let view = MobileContentContentPageView(viewModel: viewModel)
+            let view = MobileContentContentPageView(viewModel: viewModel, contentInsets: .zero, itemSpacing: 20)
             
             return view
         }
