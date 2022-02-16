@@ -10,4 +10,5 @@ import Foundation
 
 protocol MobileContentCardCollectionPageViewModelType: MobileContentPageViewModelType {
     
+    func pageDidAppear(page: Int)
 }
