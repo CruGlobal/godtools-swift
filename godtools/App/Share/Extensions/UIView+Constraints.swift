@@ -68,12 +68,12 @@ extension UIView {
         superview.addConstraint(bottom)
     }
     
-    func constrainEdgesToView(view: UIView) {
+    func constrainEdgesToView(view: UIView, edgeInsets: UIEdgeInsets = .zero) {
         
-        constrainTopToView(view: view)
-        constrainBottomToView(view: view)
-        constrainLeadingToView(view: view)
-        constrainTrailingToView(view: view)
+        constrainTopToView(view: view, constant: edgeInsets.top)
+        constrainBottomToView(view: view, constant: edgeInsets.bottom)
+        constrainLeadingToView(view: view, constant: edgeInsets.left)
+        constrainTrailingToView(view: view, constant: edgeInsets.right)
     }
     
     func constrainTopToView(view: UIView, constant: CGFloat = 0) {
@@ -100,7 +100,7 @@ extension UIView {
             toItem: view,
             attribute: .bottom,
             multiplier: 1,
-            constant: constant
+            constant: constant * -1
         )
         
         view.addConstraint(bottom)
@@ -130,7 +130,7 @@ extension UIView {
             toItem: view,
             attribute: .trailing,
             multiplier: 1,
-            constant: constant
+            constant: constant * -1
         )
         
         view.addConstraint(trailing)
