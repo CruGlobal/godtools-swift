@@ -28,11 +28,46 @@ class MobileContentCardCollectionPageViewModel: MobileContentPageViewModel, Mobi
         fatalError("init(flowDelegate:pageModel:rendererPageModel:deepLinkService:hidesBackgroundImage:) has not been implemented")
     }
     
-    func pageDidAppear(page: Int) {
+    private func getPageAnalyticsScreenName() -> String {
         
         let resource: ResourceModel = rendererPageModel.resource
+        let pageId: String = rendererPageModel.pageModel.id
+        let separator: String = ":"
         
-        // TODO: Use pageId and cardId to track analytics. ~Levi
-        //analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: resource.abbreviation + "-" + String(page), siteSection: resource.abbreviation, siteSubSection: ""))
+        let screenName: String = resource.abbreviation + separator + pageId
+        
+        return screenName
+    }
+    
+    private func getCardAnalyticsScreenName(card: Int) -> String {
+        
+        let cards: [CardCollectionPage.Card] = cardCollectionPage.cards
+        let cardId: String
+        
+        if card >= 0 && card < cards.count {
+            cardId = cards[card].id
+        }
+        else {
+            assertionFailure("Failed to get card at index: \(card)")
+            cardId = ""
+        }
+        
+        let resource: ResourceModel = rendererPageModel.resource
+        let pageId: String = rendererPageModel.pageModel.id
+        let separator: String = ":"
+        
+        let screenName: String = resource.abbreviation + separator + pageId + separator + cardId
+        
+        return screenName
+    }
+    
+    func pageDidAppear() {
+        
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: getPageAnalyticsScreenName(), siteSection: rendererPageModel.resource.abbreviation, siteSubSection: ""))
+    }
+    
+    func cardDidAppear(card: Int) {
+        
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: getCardAnalyticsScreenName(card: card), siteSection: rendererPageModel.resource.abbreviation, siteSubSection: ""))
     }
 }
