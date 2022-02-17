@@ -31,7 +31,8 @@ class MobileContentRendererPageViewFactories {
             
             let chooseYourOwnAdventureViewFactory = ChooseYourOwnAdventurePageViewFactory(
                 flowDelegate: flowDelegate,
-                deepLinkingService: deepLinkingService
+                deepLinkingService: deepLinkingService,
+                analytics: analytics
             )
             
             pageViewFactories = [chooseYourOwnAdventureViewFactory]
