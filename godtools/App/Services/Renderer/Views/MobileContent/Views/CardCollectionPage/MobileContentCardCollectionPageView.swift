@@ -134,9 +134,10 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
     
     override func getPositionState() -> MobileContentViewPositionState {
         
-        let currentPage: Int = cardPageNavigationView.currentPage
+        let page: Int = cardPageNavigationView.currentPage
+        let currentCardId: String = viewModel.getCardId(card: page)
                 
-        return MobileContentCardCollectionPagePositionState(currentPage: currentPage)
+        return MobileContentCardCollectionPagePositionState(currentCardId: currentCardId)
     }
     
     override func setPositionState(positionState: MobileContentViewPositionState, animated: Bool) {
@@ -145,8 +146,10 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
             return
         }
 
-        let currentPage: Int = cardCollectionPagePositionState.currentPage
-        
+        guard let currentPage = viewModel.getCardPosition(cardId: cardCollectionPagePositionState.currentCardId) else {
+            return
+        }
+                
         cardPageNavigationView.scrollToPage(page: currentPage, animated: animated)        
     }
 }
