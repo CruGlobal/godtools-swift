@@ -33,7 +33,8 @@ class MobileContentCardView: MobileContentStackView {
     override func finishedRenderingChildren() {
         super.finishedRenderingChildren()
         
-        drawShadow()
+        // TODO: Not drawing shadow until I can resolve item spacing. ~Levi
+        //drawShadow()
         addButtonOverlay()
     }
     
