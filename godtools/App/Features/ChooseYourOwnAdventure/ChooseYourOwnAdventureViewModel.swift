@@ -13,13 +13,16 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOw
     private static let navHomeImage: UIImage? = ImageCatalog.navHome.image
     
     private let localizationServices: LocalizationServices
+    private let fontService: FontService
     
     let backButtonImage: ObservableValue<UIImage?>
     let navBarColors: ObservableValue<ChooseYourOwnAdventureNavBarModel>
+    let navBarTitleType: ChooseYourOwnAdventureNavBarTitleType
     
-    required init(flowDelegate: FlowDelegate, renderers: [MobileContentRendererType], primaryLanguage: LanguageModel, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, localizationServices: LocalizationServices) {
+    required init(flowDelegate: FlowDelegate, renderers: [MobileContentRendererType], primaryLanguage: LanguageModel, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, localizationServices: LocalizationServices, fontService: FontService) {
         
         self.localizationServices = localizationServices
+        self.fontService = fontService
         
         backButtonImage = ObservableValue(value: ChooseYourOwnAdventureViewModel.navHomeImage)
         
@@ -42,12 +45,20 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOw
         let navBarModel = ChooseYourOwnAdventureNavBarModel(
             barColor: navBarColor,
             controlColor: navBarControlColor,
+            titleFont: fontService.getFont(size: 17, weight: .semibold),
             languageToggleBorderColor: navBarControlColor,
             languageToggleSelectedColor: navBarControlColor,
             languageToggleDeselectedColor: navBarColor
         )
         
         navBarColors = ObservableValue(value: navBarModel)
+        
+        if renderers.count > 1 {
+            navBarTitleType = .languageToggle
+        }
+        else {
+            navBarTitleType = .title(title: "GodTools")
+        }
         
         super.init(flowDelegate: flowDelegate, renderers: renderers, primaryLanguage: primaryLanguage, page: page, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .chooseYourOwnAdventure)
     }
