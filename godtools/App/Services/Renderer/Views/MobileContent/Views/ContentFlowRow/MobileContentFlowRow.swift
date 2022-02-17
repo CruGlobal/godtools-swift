@@ -104,7 +104,7 @@ class MobileContentFlowRow: MobileContentView {
         
         flowItem.constrainTopToView(view: self)
         flowItem.constrainBottomToView(view: self)
-        flowItem.addWidthConstraint(constant: widthPercentage * containerWidth)
+        flowItem.setWidthConstraint(constant: widthPercentage * containerWidth)
         
         return true
     }

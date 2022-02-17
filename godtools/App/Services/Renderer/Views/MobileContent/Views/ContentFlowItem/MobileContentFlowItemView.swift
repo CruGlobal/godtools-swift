@@ -8,9 +8,14 @@
 
 import UIKit
 
-class MobileContentFlowItemView: MobileContentStackView {
+class MobileContentFlowItemView: MobileContentStackView, MobileContentFlowRowItem {
     
     private let viewModel: MobileContentFlowItemViewModelType
+    
+    var itemWidth: MobileContentViewWidth {
+        return viewModel.width
+    }
+    var widthConstraint: NSLayoutConstraint?
     
     required init(viewModel: MobileContentFlowItemViewModelType) {
         
@@ -25,12 +30,5 @@ class MobileContentFlowItemView: MobileContentStackView {
     
     required init(contentInsets: UIEdgeInsets, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
         fatalError("init(contentInsets:itemSpacing:scrollIsEnabled:) has not been implemented")
-    }
-}
-
-extension MobileContentFlowItemView: MobileContentFlowRowItem {
-    
-    var itemWidth: MobileContentViewWidth {
-        return viewModel.width
     }
 }

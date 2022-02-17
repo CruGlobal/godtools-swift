@@ -11,4 +11,20 @@ import Foundation
 protocol MobileContentFlowRowItem: MobileContentView {
     
     var itemWidth: MobileContentViewWidth { get }
+    var widthConstraint: NSLayoutConstraint? { get set }
+    
+    func setWidthConstraint(constant: CGFloat)
+}
+
+extension MobileContentFlowRowItem {
+    
+    func setWidthConstraint(constant: CGFloat) {
+        
+        if let widthConstraint = self.widthConstraint {
+            removeConstraint(widthConstraint)
+            self.widthConstraint = nil
+        }
+        
+        widthConstraint = addWidthConstraint(constant: constant)
+    }
 }
