@@ -12,7 +12,8 @@ class MobileContentCardView: MobileContentStackView {
     
     private let viewModel: MobileContentCardViewModelType
     
-    private var button: UIButton?
+    private var shadowView: UIView?
+    private var buttonOverlay: UIButton?
     
     required init(viewModel: MobileContentCardViewModelType) {
         
@@ -32,13 +33,39 @@ class MobileContentCardView: MobileContentStackView {
     override func finishedRenderingChildren() {
         super.finishedRenderingChildren()
         
-        addButton()
+        // TODO: Not drawing shadow until I can resolve item spacing. ~Levi
+        //drawShadow()
+        addButtonOverlay()
     }
     
-    private func addButton() {
+    private func drawShadow() {
         
-        guard button == nil else {
-            return
+        if let shadowView = self.shadowView {
+            shadowView.removeFromSuperview()
+            self.shadowView = nil
+        }
+        
+        let shadowView: UIView = UIView()
+        
+        insertSubview(shadowView, at: 0)
+        shadowView.translatesAutoresizingMaskIntoConstraints = false
+        shadowView.constrainEdgesToView(view: self)
+        shadowView.backgroundColor = .white
+        shadowView.layer.cornerRadius = 10
+        shadowView.layer.shadowOffset = CGSize(width: 1, height: 1)
+        shadowView.layer.shadowColor = UIColor.black.cgColor
+        shadowView.layer.shadowRadius = 3
+        shadowView.layer.shadowOpacity = 0.3
+        
+        self.shadowView = shadowView
+    }
+    
+    private func addButtonOverlay() {
+        
+        if let buttonOverlay = self.buttonOverlay {
+            buttonOverlay.removeTarget(self, action: #selector(cardTapped), for: .touchUpInside)
+            buttonOverlay.removeFromSuperview()
+            self.buttonOverlay = nil
         }
         
         let button = UIButton(type: .custom)
@@ -52,7 +79,7 @@ class MobileContentCardView: MobileContentStackView {
         
         button.addTarget(self, action: #selector(cardTapped), for: .touchUpInside)
         
-        self.button = button
+        self.buttonOverlay = button
     }
     
     @objc private func cardTapped() {

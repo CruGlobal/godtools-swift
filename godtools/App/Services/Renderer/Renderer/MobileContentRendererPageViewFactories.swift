@@ -28,7 +28,14 @@ class MobileContentRendererPageViewFactories {
         switch type {
         
         case .chooseYourOwnAdventure:
-            break
+            
+            let chooseYourOwnAdventureViewFactory = ChooseYourOwnAdventurePageViewFactory(
+                flowDelegate: flowDelegate,
+                deepLinkingService: deepLinkingService,
+                analytics: analytics
+            )
+            
+            pageViewFactories = [chooseYourOwnAdventureViewFactory]
             
         case .lesson:
             

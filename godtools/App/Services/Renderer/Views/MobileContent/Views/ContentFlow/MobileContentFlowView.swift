@@ -88,6 +88,7 @@ extension MobileContentFlowView {
         else {
             
             row = MobileContentFlowRow(
+                frame: CGRect(x: 0, y: 0, width: frame.size.width, height: 100),
                 rowGravity: viewModel.rowGravity
             )
             
