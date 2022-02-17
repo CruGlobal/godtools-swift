@@ -13,16 +13,61 @@ class MobileContentCardCollectionPageViewModel: MobileContentPageViewModel, Mobi
     
     private let cardCollectionPage: MultiplatformCardCollectionPage
     private let rendererPageModel: MobileContentRendererPageModel
+    private let analytics: AnalyticsContainer
         
-    required init(flowDelegate: FlowDelegate, cardCollectionPage: MultiplatformCardCollectionPage, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType) {
+    required init(flowDelegate: FlowDelegate, cardCollectionPage: MultiplatformCardCollectionPage, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, analytics: AnalyticsContainer) {
         
         self.cardCollectionPage = cardCollectionPage
         self.rendererPageModel = rendererPageModel
+        self.analytics = analytics
         
         super.init(flowDelegate: flowDelegate, pageModel: cardCollectionPage, rendererPageModel: rendererPageModel, deepLinkService: deepLinkService, hidesBackgroundImage: false)
     }
     
     required init(flowDelegate: FlowDelegate, pageModel: PageModelType, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, hidesBackgroundImage: Bool) {
         fatalError("init(flowDelegate:pageModel:rendererPageModel:deepLinkService:hidesBackgroundImage:) has not been implemented")
+    }
+    
+    private func getPageAnalyticsScreenName() -> String {
+        
+        let resource: ResourceModel = rendererPageModel.resource
+        let pageId: String = rendererPageModel.pageModel.id
+        let separator: String = ":"
+        
+        let screenName: String = resource.abbreviation + separator + pageId
+        
+        return screenName
+    }
+    
+    private func getCardAnalyticsScreenName(card: Int) -> String {
+        
+        let cards: [CardCollectionPage.Card] = cardCollectionPage.cards
+        let cardId: String
+        
+        if card >= 0 && card < cards.count {
+            cardId = cards[card].id
+        }
+        else {
+            assertionFailure("Failed to get card at index: \(card)")
+            cardId = ""
+        }
+        
+        let resource: ResourceModel = rendererPageModel.resource
+        let pageId: String = rendererPageModel.pageModel.id
+        let separator: String = ":"
+        
+        let screenName: String = resource.abbreviation + separator + pageId + separator + cardId
+        
+        return screenName
+    }
+    
+    func pageDidAppear() {
+        
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: getPageAnalyticsScreenName(), siteSection: rendererPageModel.resource.abbreviation, siteSubSection: ""))
+    }
+    
+    func cardDidAppear(card: Int) {
+        
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: getCardAnalyticsScreenName(card: card), siteSection: rendererPageModel.resource.abbreviation, siteSubSection: ""))
     }
 }
