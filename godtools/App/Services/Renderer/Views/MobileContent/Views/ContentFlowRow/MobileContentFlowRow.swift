@@ -18,11 +18,11 @@ class MobileContentFlowRow: MobileContentView {
     
     private var childItems: [MobileContentFlowRowItem] = Array()
     
-    required init(rowGravity: Gravity.Horizontal) {
+    required init(frame: CGRect, rowGravity: Gravity.Horizontal) {
         
         self.rowGravity = rowGravity
         
-        super.init(frame: UIScreen.main.bounds)
+        super.init(frame: frame)
         
         setupLayout()
     }
@@ -62,7 +62,8 @@ class MobileContentFlowRow: MobileContentView {
     }
     
     private var containerWidth: CGFloat {
-        return frame.size.width
+        let containerWidth: CGFloat = frame.size.width
+        return containerWidth
     }
     
     private func getFlowItemWidthPercentageOfContainer(flowItem: MobileContentFlowRowItem) -> CGFloat {
