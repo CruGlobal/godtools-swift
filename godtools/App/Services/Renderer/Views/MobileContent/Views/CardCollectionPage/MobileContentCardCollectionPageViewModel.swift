@@ -41,6 +41,18 @@ class MobileContentCardCollectionPageViewModel: MobileContentPageViewModel, Mobi
     
     private func getCardAnalyticsScreenName(card: Int) -> String {
         
+        let resource: ResourceModel = rendererPageModel.resource
+        let pageId: String = rendererPageModel.pageModel.id
+        let cardId: String = getCardId(card: card)
+        let separator: String = ":"
+        
+        let screenName: String = resource.abbreviation + separator + pageId + separator + cardId
+        
+        return screenName
+    }
+    
+    func getCardId(card: Int) -> String {
+        
         let cards: [CardCollectionPage.Card] = cardCollectionPage.cards
         let cardId: String
         
@@ -52,13 +64,21 @@ class MobileContentCardCollectionPageViewModel: MobileContentPageViewModel, Mobi
             cardId = ""
         }
         
-        let resource: ResourceModel = rendererPageModel.resource
-        let pageId: String = rendererPageModel.pageModel.id
-        let separator: String = ":"
+        return cardId
+    }
+    
+    func getCardPosition(cardId: String) -> Int? {
         
-        let screenName: String = resource.abbreviation + separator + pageId + separator + cardId
+        let cards: [CardCollectionPage.Card] = cardCollectionPage.cards
         
-        return screenName
+        for index in 0 ..< cards.count {
+            let card: CardCollectionPage.Card = cards[index]
+            if card.id == cardId {
+                return index
+            }
+        }
+        
+        return nil
     }
     
     func pageDidAppear() {
