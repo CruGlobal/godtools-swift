@@ -12,6 +12,7 @@ struct ChooseYourOwnAdventureNavBarModel {
     
     let barColor: UIColor
     let controlColor: UIColor
+    let titleFont: UIFont
     let languageToggleBorderColor: UIColor
     let languageToggleSelectedColor: UIColor
     let languageToggleDeselectedColor: UIColor
