@@ -1022,6 +1022,7 @@
 		D10AD0DA2790C140004859C4 /* SetupParallelLanguageAvailability.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10AD0D92790C140004859C4 /* SetupParallelLanguageAvailability.swift */; };
 		D10AD0DE2790C312004859C4 /* SetupParallelLanguageViewedCacheType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10AD0DD2790C312004859C4 /* SetupParallelLanguageViewedCacheType.swift */; };
 		D10AD0E02790C379004859C4 /* SetupParallelLanguageViewedUserDefaultsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10AD0DF2790C379004859C4 /* SetupParallelLanguageViewedUserDefaultsCache.swift */; };
+		D115B25B27BEEC0100C18EF6 /* CYOADeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D115B25A27BEEC0100C18EF6 /* CYOADeepLinkParser.swift */; };
 		D119788F271A090400E08580 /* TutorialPagerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D119788E271A090400E08580 /* TutorialPagerViewModel.swift */; };
 		D1197891271EFDD300E08580 /* OnboardingTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1197890271EFDD300E08580 /* OnboardingTutorialView.swift */; };
 		D1330718273979380058450B /* OnboardingQuickStartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1330717273979380058450B /* OnboardingQuickStartView.swift */; };
@@ -2162,6 +2163,7 @@
 		D10AD0DD2790C312004859C4 /* SetupParallelLanguageViewedCacheType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupParallelLanguageViewedCacheType.swift; sourceTree = "<group>"; };
 		D10AD0DF2790C379004859C4 /* SetupParallelLanguageViewedUserDefaultsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupParallelLanguageViewedUserDefaultsCache.swift; sourceTree = "<group>"; };
 		D115A65D25265813007F11AD /* share_tool_tutorial_mirrored.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = share_tool_tutorial_mirrored.json; sourceTree = "<group>"; };
+		D115B25A27BEEC0100C18EF6 /* CYOADeepLinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CYOADeepLinkParser.swift; sourceTree = "<group>"; };
 		D119788E271A090400E08580 /* TutorialPagerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPagerViewModel.swift; sourceTree = "<group>"; };
 		D1197890271EFDD300E08580 /* OnboardingTutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialView.swift; sourceTree = "<group>"; };
 		D1330717273979380058450B /* OnboardingQuickStartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingQuickStartView.swift; sourceTree = "<group>"; };
@@ -3494,6 +3496,7 @@
 				45163634268B7F950010876B /* DeepLinkPathType.swift */,
 				456E504A25D0CF7E0075FF6A /* ParsedDeepLinkType.swift */,
 				45585BCB2687BB8F00A21D12 /* Article */,
+				D115B25727BEEB7E00C18EF6 /* CYOA */,
 				45585BCD2687BB8F00A21D12 /* Lesson */,
 				45F5A0402689FEC80081C507 /* Lessons */,
 				45585BC92687BB8F00A21D12 /* Tool */,
@@ -5878,6 +5881,14 @@
 			path = Lottie;
 			sourceTree = "<group>";
 		};
+		D115B25727BEEB7E00C18EF6 /* CYOA */ = {
+			isa = PBXGroup;
+			children = (
+				D115B25A27BEEC0100C18EF6 /* CYOADeepLinkParser.swift */,
+			);
+			path = CYOA;
+			sourceTree = "<group>";
+		};
 		D168FDC426F921EB0083D578 /* TutorialPagerView */ = {
 			isa = PBXGroup;
 			children = (
@@ -6677,6 +6688,7 @@
 				455583D8269F2DA500C3FF14 /* MobileContentTabsViewModelType.swift in Sources */,
 				45BEC53026A604E4005D8CA1 /* MobileContentSpacerMode.swift in Sources */,
 				455583E7269F2DA500C3FF14 /* MobileContentButtonView.swift in Sources */,
+				D115B25B27BEEC0100C18EF6 /* CYOADeepLinkParser.swift in Sources */,
 				D1BF24522763B98600C6FEB0 /* ParallelLanguageListView.swift in Sources */,
 				D1DD79FF26690CBA000F1351 /* TrackActionModel.swift in Sources */,
 				45BD79DB26A20EEA0007426B /* ContentLabelModelType.swift in Sources */,
