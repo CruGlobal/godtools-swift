@@ -20,6 +20,10 @@ class MultiplatformTipPage: PageModelType {
         self.tipPage = tipPage
     }
     
+    var id: String {
+        return ""
+    }
+    
     var backgroundImage: String? {
         return nil
     }

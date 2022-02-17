@@ -20,6 +20,10 @@ class MultiplatformTractPage: PageModelType {
         self.tractPage = tractPage
     }
     
+    var id: String {
+        return tractPage.id
+    }
+    
     var backgroundImage: String? {
         return tractPage.backgroundImage?.name
     }

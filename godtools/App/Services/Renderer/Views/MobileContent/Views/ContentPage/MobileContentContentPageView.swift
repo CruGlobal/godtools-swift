@@ -11,12 +11,16 @@ import UIKit
 class MobileContentContentPageView: MobileContentPageView {
     
     private let viewModel: MobileContentContentPageViewModelType
+    private let contentInsets: UIEdgeInsets
+    private let itemSpacing: CGFloat
     
     private var contentStackView: MobileContentStackView?
     
-    required init(viewModel: MobileContentContentPageViewModelType) {
+    required init(viewModel: MobileContentContentPageViewModelType, contentInsets: UIEdgeInsets, itemSpacing: CGFloat) {
         
         self.viewModel = viewModel
+        self.contentInsets = contentInsets
+        self.itemSpacing = itemSpacing
         
         super.init(viewModel: viewModel, nibName: nil)
     }
@@ -54,6 +58,12 @@ class MobileContentContentPageView: MobileContentPageView {
         
         contentStackView?.setScrollViewVerticalContentOffsetPercentageOfContentSize(verticalContentOffsetPercentage: contentOffsetY, animated: animated)
     }
+    
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        
+        viewModel.pageDidAppear()
+    }
 }
 
 extension MobileContentContentPageView {
@@ -68,6 +78,7 @@ extension MobileContentContentPageView {
         
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
         contentStackView.constrainEdgesToView(view: self)
+        contentStackView.configureLayout(contentInsets: contentInsets, itemSpacing: itemSpacing, scrollIsEnabled: true)
         
         self.contentStackView = contentStackView
     }

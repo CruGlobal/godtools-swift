@@ -20,6 +20,10 @@ class MultiplatformLessonPage: PageModelType {
         self.lessonPage = lessonPage
     }
     
+    var id: String {
+        return lessonPage.id
+    }
+    
     var backgroundImage: String? {
         return lessonPage.backgroundImage?.name
     }

@@ -61,6 +61,25 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         return currentRenderer
     }
     
+    private func getRendererPageModelsMatchingCurrentRenderedPageModels(renderer: MobileContentRendererType) -> [PageModelType] {
+        
+        var rendererPageModelsMatchingCurrentRenderedPageModels: [PageModelType] = Array()
+        
+        let currentRenderedPageModels: [PageModelType] = pageModels
+        let allPageModelsInNewRenderer: [PageModelType] = renderer.parser.pageModels
+        
+        for pageModel in currentRenderedPageModels {
+                        
+            guard let setRendererPageModel = allPageModelsInNewRenderer.filter({$0.id == pageModel.id}).first else {
+                continue
+            }
+            
+            rendererPageModelsMatchingCurrentRenderedPageModels.append(setRendererPageModel)
+        }
+        
+        return rendererPageModelsMatchingCurrentRenderedPageModels
+    }
+    
     private func getIndexForFirstPageModel(pageModel: PageModelType) -> Int? {
         for index in 0 ..< pageModels.count {
             let activePageModel: PageModelType = pageModels[index]
@@ -213,26 +232,9 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
             
             var newPageModelsToRenderer: [PageModelType] = Array()
             
-            if let currentRenderer = self.currentRenderer, pagesShouldMatchRenderedPages {
+            if pagesShouldMatchRenderedPages {
                 
-                let renderedPageModelsUUIDs: [String] = pageModels.map({$0.uuid})
-                let allPageModelsInCurrentRenderer: [PageModelType] = currentRenderer.parser.pageModels
-                let allPageModelsInSetRenderer: [PageModelType] = renderer.parser.pageModels
-                
-                for page in allPageModelsInCurrentRenderer {
-                    
-                    guard let index = renderedPageModelsUUIDs.firstIndex(of: page.uuid) else {
-                        continue
-                    }
-                    
-                    let indexIsInRange: Bool = index >= 0 && index < allPageModelsInSetRenderer.count
-                    
-                    guard indexIsInRange else {
-                        continue
-                    }
-                    
-                    newPageModelsToRenderer.append(allPageModelsInSetRenderer[index])
-                }
+                newPageModelsToRenderer = getRendererPageModelsMatchingCurrentRenderedPageModels(renderer: renderer)
             }
             
             if newPageModelsToRenderer.isEmpty && renderer.parser.pageModels.count > 0 {

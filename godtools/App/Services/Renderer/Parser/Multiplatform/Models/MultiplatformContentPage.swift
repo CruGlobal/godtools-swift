@@ -20,6 +20,10 @@ class MultiplatformContentPage: PageModelType {
         self.contentPage = contentPage
     }
     
+    var id: String {
+        return contentPage.id
+    }
+    
     var backgroundImage: String? {
         return contentPage.backgroundImage?.name
     }

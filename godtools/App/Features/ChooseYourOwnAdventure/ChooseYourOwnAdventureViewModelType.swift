@@ -12,6 +12,7 @@ protocol ChooseYourOwnAdventureViewModelType: MobileContentPagesViewModel {
     
     var backButtonImage: ObservableValue<UIImage?> { get }
     var navBarColors: ObservableValue<ChooseYourOwnAdventureNavBarModel> { get }
+    var navBarTitleType: ChooseYourOwnAdventureNavBarTitleType { get }
     
     func getNavBarLanguageTitles() -> [String]
     func navBackTapped()

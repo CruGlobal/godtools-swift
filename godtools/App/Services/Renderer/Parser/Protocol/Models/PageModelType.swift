@@ -11,6 +11,7 @@ import GodToolsToolParser
 
 protocol PageModelType: BackgroundImageModelType, MobileContentRenderableModel {
         
+    var id: String { get }
     var uuid: String { get }
     var backgroundImage: String? { get }
     var backgroundImageAlignment: MobileContentImageAlignmentType { get }
