@@ -100,7 +100,7 @@ class MobileContentTextView: MobileContentView {
         let lineHeight = viewModel.font.lineHeight
         let minimumLines = viewModel.minimumLines
         
-        let minimumHeight = (lineHeight * minimumLines) + (lineSpacing * (minimumLines - 1))
+        let minimumHeight = minimumLines > 0 ? (lineHeight * minimumLines) + (lineSpacing * (minimumLines - 1)) : lineHeight
         
         textLabel.addHeightConstraint(constant: minimumHeight, relatedBy: NSLayoutConstraint.Relation.greaterThanOrEqual, priority: 1000)
         
