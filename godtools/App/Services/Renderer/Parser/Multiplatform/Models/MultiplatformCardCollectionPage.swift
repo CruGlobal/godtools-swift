@@ -20,6 +20,14 @@ class MultiplatformCardCollectionPage: PageModelType {
         self.cardCollectionPage = cardCollectionPage
     }
     
+    var id: String {
+        return cardCollectionPage.id
+    }
+    
+    var cards: [CardCollectionPage.Card] {
+        return cardCollectionPage.cards
+    }
+    
     var backgroundImage: String? {
         return cardCollectionPage.backgroundImage?.name
     }

@@ -52,8 +52,6 @@ class ChooseYourOwnAdventureView: MobileContentPagesView {
             delegate: self
         )
         
-        navigationItem.titleView = languageSelector
-        
         // pageNavigationView
         pageNavigationView.gestureScrollingEnabled = false
     }
@@ -70,8 +68,8 @@ class ChooseYourOwnAdventureView: MobileContentPagesView {
             self?.navigationController?.navigationBar.setupNavigationBarAppearance(
                 backgroundColor: navBarModel.barColor,
                 controlColor: navBarModel.controlColor,
-                titleFont: nil,
-                titleColor: nil,
+                titleFont: navBarModel.titleFont,
+                titleColor: navBarModel.controlColor,
                 isTranslucent: false
             )
             
@@ -82,6 +80,15 @@ class ChooseYourOwnAdventureView: MobileContentPagesView {
             self?.languageSelector?.layer.borderColor = navBarModel.languageToggleBorderColor.cgColor
             
             self?.navigationController?.navigationBar.setNeedsLayout()
+        }
+        
+        switch viewModel.navBarTitleType {
+        case .languageToggle:
+            navigationItem.titleView = languageSelector
+            self.title = nil
+        case .title(let title):
+            navigationItem.titleView = nil
+            self.title = title
         }
     }
     

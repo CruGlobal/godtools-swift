@@ -10,10 +10,10 @@ import Foundation
 
 class MobileContentCardCollectionPagePositionState: MobileContentViewPositionState {
     
-    let currentPage: Int
+    let currentCardId: String
     
-    required init(currentPage: Int) {
+    required init(currentCardId: String) {
         
-        self.currentPage = currentPage
+        self.currentCardId = currentCardId
     }
 }
