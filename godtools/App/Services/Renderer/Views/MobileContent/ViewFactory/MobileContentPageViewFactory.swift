@@ -14,15 +14,17 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
     private let mobileContentAnalytics: MobileContentAnalytics
     private let fontService: FontService
     private let deepLinkingService: DeepLinkingServiceType
+    private let analytics: AnalyticsContainer
     
     private(set) weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, deepLinkingService: DeepLinkingServiceType) {
+    required init(flowDelegate: FlowDelegate, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, deepLinkingService: DeepLinkingServiceType, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
         self.deepLinkingService = deepLinkingService
+        self.analytics = analytics
     }
     
     func viewForRenderableModel(renderableModel: MobileContentRenderableModel, renderableModelParent: MobileContentRenderableModel?, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) -> MobileContentView? {
@@ -122,7 +124,8 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 flowDelegate: flowDelegate,
                 contentPage: contentPage,
                 rendererPageModel: rendererPageModel,
-                deepLinkService: deepLinkingService
+                deepLinkService: deepLinkingService,
+                analytics: analytics
             )
             
             let view = MobileContentContentPageView(viewModel: viewModel, contentInsets: .zero, itemSpacing: 20)
@@ -140,7 +143,8 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 flowDelegate: flowDelegate,
                 cardCollectionPage: cardCollectionPage,
                 rendererPageModel: rendererPageModel,
-                deepLinkService: deepLinkingService
+                deepLinkService: deepLinkingService,
+                analytics: analytics
             )
             
             let view = MobileContentCardCollectionPageView(viewModel: viewModel)

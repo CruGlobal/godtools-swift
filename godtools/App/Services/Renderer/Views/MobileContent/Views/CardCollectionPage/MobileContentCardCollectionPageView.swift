@@ -91,6 +91,12 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
         }
     }
     
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        
+        viewModel.pageDidAppear()
+    }
+    
     @objc private func previousCardButtonTapped() {
         
         cardPageNavigationView.scrollToPreviousPage(animated: true)
@@ -167,6 +173,8 @@ extension MobileContentCardCollectionPageView: PageNavigationCollectionViewDeleg
     func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
         
         updatePreviousAndNextButtonVisibility(page: page)
+        
+        viewModel.cardDidAppear(card: page)
     }
     
     func pageNavigationDidChangeMostVisiblePage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {

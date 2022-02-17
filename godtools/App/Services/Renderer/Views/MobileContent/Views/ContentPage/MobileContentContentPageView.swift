@@ -58,6 +58,12 @@ class MobileContentContentPageView: MobileContentPageView {
         
         contentStackView?.setScrollViewVerticalContentOffsetPercentageOfContentSize(verticalContentOffsetPercentage: contentOffsetY, animated: animated)
     }
+    
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        
+        viewModel.pageDidAppear()
+    }
 }
 
 extension MobileContentContentPageView {

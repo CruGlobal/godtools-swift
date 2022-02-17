@@ -112,7 +112,8 @@ class MobileContentRendererPageViewFactories {
             flowDelegate: flowDelegate,
             mobileContentAnalytics: mobileContentAnalytics,
             fontService: fontService,
-            deepLinkingService: deepLinkingService
+            deepLinkingService: deepLinkingService,
+            analytics: analytics
         )
         
         pageViewFactories.append(mobileContentPageViewFactory)
