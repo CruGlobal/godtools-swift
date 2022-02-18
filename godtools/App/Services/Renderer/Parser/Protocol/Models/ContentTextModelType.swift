@@ -16,7 +16,7 @@ protocol ContentTextModelType: MobileContentRenderableModel {
     var startImage: String? { get }
     var startImageSize: Int32 { get }
     var text: String? { get }
-    var textAlignment: MobileContentTextAlignment? { get }
+    var textAlignment: Text.Align { get }
     var textScale: MobileContentTextScale { get }
     var minimumLines: Int32 { get }
     

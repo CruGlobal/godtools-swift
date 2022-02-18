@@ -15,7 +15,7 @@ protocol MobileContentStyles {
     var buttonStyle: Button.Style? { get }
     var primaryColor: UIColor? { get }
     var primaryTextColor: UIColor? { get }
-    var textAlignment: MobileContentTextAlignment? { get }
+    var textAlignment: Text.Align? { get }
     var textColor: UIColor? { get }
 }
 

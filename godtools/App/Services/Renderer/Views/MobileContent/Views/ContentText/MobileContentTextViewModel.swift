@@ -70,38 +70,8 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     }
     
     var textAlignment: NSTextAlignment {
-        
-        let textModelAlignment = textModel.textAlignment
-        let containerModelAlignment = containerModel?.textAlignment
-        
-        var modelTextAlignment = textModelAlignment ?? containerModelAlignment
-        
-        if languageTextAlignment == .right {
-            
-            if modelTextAlignment == .left {
                 
-                modelTextAlignment = .right
-            } else if modelTextAlignment == .right {
-                
-                modelTextAlignment = .left
-            }
-        }
-        
-        if let textAlignment = modelTextAlignment {
-            
-            switch textAlignment {
-            case .left:
-                return .left
-            
-            case .center:
-                return .center
-            
-            case .right:
-                return .right
-            }
-        }
-        
-        return languageTextAlignment
+        return mapTextAlignToTextAlignment(textAlign: getLanguageTextAlign())
     }
     
     var minimumLines: CGFloat {
@@ -131,6 +101,35 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
             return true
         }
         return resource.isEmpty
+    }
+    
+    private func getLanguageTextAlign() -> Text.Align {
+        
+        if language.languageDirection == .rightToLeft {
+            
+            if textModel.textAlignment == .start {
+                return .end
+            }
+            else if textModel.textAlignment == .end {
+                return .start
+            }
+        }
+        
+        return textModel.textAlignment
+    }
+    
+    private func mapTextAlignToTextAlignment(textAlign: Text.Align) -> NSTextAlignment {
+        
+        switch textAlign {
+        case .start:
+            return .left
+        case .center:
+            return .center
+        case .end:
+            return .right
+        default:
+            return .left
+        }
     }
     
     private func getFontWeight() -> UIFont.Weight {

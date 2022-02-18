@@ -38,22 +38,8 @@ class MultiplatformContentText: ContentTextModelType {
         return contentText.text
     }
     
-    var textAlignment: MobileContentTextAlignment? {
-       
-        switch contentText.textAlign {
-        case .start:
-            return .left
-    
-        case .center:
-            return .center
-            
-        case .end:
-            return .right
-            
-        default:
-            assertionFailure("Found unsupported Text.Align. Ensure all alignments are supported.")
-            return .left
-        }
+    var textAlignment: Text.Align {
+        return contentText.textAlign
     }
     
     var textScale: MobileContentTextScale {

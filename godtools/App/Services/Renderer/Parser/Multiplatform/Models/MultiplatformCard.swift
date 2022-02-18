@@ -105,7 +105,7 @@ extension MultiplatformCard: MobileContentRenderableModelContainer {
         return nil
     }
     
-    var textAlignment: MobileContentTextAlignment? {
+    var textAlignment: Text.Align? {
         return nil
     }
     
