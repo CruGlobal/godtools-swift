@@ -19,7 +19,7 @@ class MobileContentCardView: MobileContentStackView {
         
         self.viewModel = viewModel
         
-        super.init(contentInsets: UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0), itemSpacing: 0, scrollIsEnabled: false)
+        super.init(contentInsets: UIEdgeInsets(top: 20, left: 15, bottom: 20, right: 15), itemSpacing: 0, scrollIsEnabled: false)
     }
     
     required init?(coder: NSCoder) {
