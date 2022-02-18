@@ -485,9 +485,7 @@ extension AppFlow {
         )
         
         navigationController.setViewControllers([toolsMenuView], animated: false)
-        
-        navigationController.view.layoutIfNeeded()
-                    
+                            
         self.toolsMenuView = toolsMenuView
     }
     
