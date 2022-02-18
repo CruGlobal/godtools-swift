@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 protocol ContentTextModelType: MobileContentRenderableModel {
     
@@ -20,7 +21,7 @@ protocol ContentTextModelType: MobileContentRenderableModel {
     var minimumLines: Int32 { get }
     
     func getTextColor() -> UIColor
-    func getTextStyles() -> [MobileContentTextStyle]
+    func getTextStyles() -> [Text.Style]
 }
 
 extension ContentTextModelType {

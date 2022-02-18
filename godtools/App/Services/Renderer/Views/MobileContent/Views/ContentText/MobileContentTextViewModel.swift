@@ -137,7 +137,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
         
         let fontWeight: UIFont.Weight
         
-        let textStyles: [MobileContentTextStyle] = textModel.getTextStyles()
+        let textStyles: [Text.Style] = textModel.getTextStyles()
         
         // TODO: Need to add support for multiple textStyles. ~Levi
         if let textStyle = textStyles.first {
