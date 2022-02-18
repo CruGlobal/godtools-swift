@@ -97,12 +97,16 @@ class MobileContentTextView: MobileContentView {
         textLabel.textAlignment = viewModel.textAlignment
         textLabel.setLineSpacing(lineSpacing: lineSpacing)
         
-        let lineHeight = viewModel.font.lineHeight
         let minimumLines = viewModel.minimumLines
         
-        let minimumHeight = minimumLines > 0 ? (lineHeight * minimumLines) + (lineSpacing * (minimumLines - 1)) : lineHeight
-        
-        textLabel.addHeightConstraint(constant: minimumHeight, relatedBy: NSLayoutConstraint.Relation.greaterThanOrEqual, priority: 1000)
+        if minimumLines > 0 {
+            
+            let lineHeight = viewModel.font.lineHeight
+            
+            let minimumHeight = (lineHeight * minimumLines) + (lineSpacing * (minimumLines - 1))
+            
+            textLabel.addHeightConstraint(constant: minimumHeight, relatedBy: NSLayoutConstraint.Relation.greaterThanOrEqual, priority: 1000)
+        }
         
         if viewType == .loadFromNib {
             
