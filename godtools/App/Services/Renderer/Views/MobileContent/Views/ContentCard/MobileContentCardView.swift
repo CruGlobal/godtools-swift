@@ -19,7 +19,7 @@ class MobileContentCardView: MobileContentStackView {
         
         self.viewModel = viewModel
         
-        super.init(contentInsets: .zero, itemSpacing: 0, scrollIsEnabled: false)
+        super.init(contentInsets: UIEdgeInsets(top: 20, left: 15, bottom: 20, right: 15), itemSpacing: 0, scrollIsEnabled: false)
     }
     
     required init?(coder: NSCoder) {
@@ -30,11 +30,14 @@ class MobileContentCardView: MobileContentStackView {
         fatalError("init(contentInsets:itemSpacing:scrollIsEnabled:) has not been implemented")
     }
     
+    override var paddingInsets: UIEdgeInsets {
+        return UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+    }
+    
     override func finishedRenderingChildren() {
         super.finishedRenderingChildren()
         
-        // TODO: Not drawing shadow until I can resolve item spacing. ~Levi
-        //drawShadow()
+        drawShadow()
         addButtonOverlay()
     }
     
