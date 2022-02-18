@@ -14,6 +14,10 @@ class MobileContentView: UIView {
     
     private(set) var children: [MobileContentView] = Array()
     private(set) var visibilityState: MobileContentViewVisibilityState = .visible
+    
+    var paddingInsets: UIEdgeInsets {
+        return .zero
+    }
             
     private func getRootView() -> MobileContentView {
         
