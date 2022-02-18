@@ -575,7 +575,7 @@ extension MobileContentStackView {
             toItem: contentView,
             attribute: .bottom,
             multiplier: 1,
-            constant: childView.paddingInsets.bottom * -1
+            constant: (contentInsets.bottom * -1) + (childView.paddingInsets.bottom * -1)
         )
         
         if let lastAddedChildBottomConstraint = self.lastAddedChildBottomConstraint {
