@@ -111,6 +111,10 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
         return languageTextAlignment
     }
     
+    var minimumLines: CGFloat {
+        return CGFloat(textModel.minimumLines)
+    }
+    
     var endImage: UIImage? {
         
         guard let resource = textModel.endImage, !resource.isEmpty else {
