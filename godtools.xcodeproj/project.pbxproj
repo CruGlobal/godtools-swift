@@ -1023,6 +1023,7 @@
 		D10AD0DE2790C312004859C4 /* SetupParallelLanguageViewedCacheType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10AD0DD2790C312004859C4 /* SetupParallelLanguageViewedCacheType.swift */; };
 		D10AD0E02790C379004859C4 /* SetupParallelLanguageViewedUserDefaultsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10AD0DF2790C379004859C4 /* SetupParallelLanguageViewedUserDefaultsCache.swift */; };
 		D115B25B27BEEC0100C18EF6 /* CYOADeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D115B25A27BEEC0100C18EF6 /* CYOADeepLinkParser.swift */; };
+		D115B25D27C0318200C18EF6 /* Collection+SafeLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = D115B25C27C0318100C18EF6 /* Collection+SafeLookup.swift */; };
 		D119788F271A090400E08580 /* TutorialPagerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D119788E271A090400E08580 /* TutorialPagerViewModel.swift */; };
 		D1197891271EFDD300E08580 /* OnboardingTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1197890271EFDD300E08580 /* OnboardingTutorialView.swift */; };
 		D1330718273979380058450B /* OnboardingQuickStartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1330717273979380058450B /* OnboardingQuickStartView.swift */; };
@@ -2164,6 +2165,7 @@
 		D10AD0DF2790C379004859C4 /* SetupParallelLanguageViewedUserDefaultsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupParallelLanguageViewedUserDefaultsCache.swift; sourceTree = "<group>"; };
 		D115A65D25265813007F11AD /* share_tool_tutorial_mirrored.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = share_tool_tutorial_mirrored.json; sourceTree = "<group>"; };
 		D115B25A27BEEC0100C18EF6 /* CYOADeepLinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CYOADeepLinkParser.swift; sourceTree = "<group>"; };
+		D115B25C27C0318100C18EF6 /* Collection+SafeLookup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+SafeLookup.swift"; sourceTree = "<group>"; };
 		D119788E271A090400E08580 /* TutorialPagerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPagerViewModel.swift; sourceTree = "<group>"; };
 		D1197890271EFDD300E08580 /* OnboardingTutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialView.swift; sourceTree = "<group>"; };
 		D1330717273979380058450B /* OnboardingQuickStartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingQuickStartView.swift; sourceTree = "<group>"; };
@@ -4383,6 +4385,7 @@
 				45D266E8277499AD00960990 /* UIViewController+DismissPresented.swift */,
 				45AD18B525938A4E00A096A0 /* UIViewController+NavBackItem.swift */,
 				45AD18B225938A4E00A096A0 /* UIViewController+NavItem.swift */,
+				D115B25C27C0318100C18EF6 /* Collection+SafeLookup.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -6951,6 +6954,7 @@
 				458EFECD26B0F4EA009EEB03 /* LessonFlowCompletedState.swift in Sources */,
 				45558332269F2C7B00C3FF14 /* ToolPageModalsViewModelType.swift in Sources */,
 				45AD21132593958E00A096A0 /* LanguageModel.swift in Sources */,
+				D115B25D27C0318200C18EF6 /* Collection+SafeLookup.swift in Sources */,
 				45AD1BCD25938A4F00A096A0 /* UIView+RemoveAllSubviews.swift in Sources */,
 				45AD202725938A9800A096A0 /* LocaleLocalizationBundle.swift in Sources */,
 				453F0B6226EA369000436EE4 /* MobileContentMultiSelectOptionViewModel.swift in Sources */,
