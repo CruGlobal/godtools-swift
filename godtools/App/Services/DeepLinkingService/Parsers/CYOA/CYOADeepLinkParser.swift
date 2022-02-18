@@ -42,17 +42,17 @@ class CYOADeepLinkParser: DeepLinkParserType {
         
         let linkParts = deepLinkValue.components(separatedBy: "|")
         
-        guard linkParts[0] == "tool", linkParts[1] == "cyoa" else {
+        guard linkParts.count >= 3, linkParts[0] == "tool", linkParts[1] == "cyoa" else {
             return nil
         }
         
         let resourceAbbreviation = linkParts[2]
         
-        let primaryLanguageCode = linkParts[3]
+        let primaryLanguageCodes = linkParts.count >= 4 ? [linkParts[3]] : []
         
         let toolDeepLink = ToolDeepLink(
             resourceAbbreviation: resourceAbbreviation,
-            primaryLanguageCodes: [primaryLanguageCode],
+            primaryLanguageCodes: primaryLanguageCodes,
             parallelLanguageCodes: [],
             liveShareStream: nil,
             page: nil
