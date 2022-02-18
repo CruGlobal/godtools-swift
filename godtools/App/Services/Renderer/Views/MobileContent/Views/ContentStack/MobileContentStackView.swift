@@ -545,7 +545,7 @@ extension MobileContentStackView {
                 toItem: contentView,
                 attribute: .leading,
                 multiplier: 1,
-                constant: contentInsets.left
+                constant: contentInsets.left + childView.paddingInsets.left
             )
             
             contentView.addConstraint(leading)
@@ -560,7 +560,7 @@ extension MobileContentStackView {
                 toItem: contentView,
                 attribute: .trailing,
                 multiplier: 1,
-                constant: contentInsets.right * -1
+                constant: (contentInsets.right * -1) + (childView.paddingInsets.right * -1)
             )
             
             contentView.addConstraint(trailing)
@@ -576,7 +576,7 @@ extension MobileContentStackView {
             toItem: contentView,
             attribute: .bottom,
             multiplier: 1,
-            constant: 0
+            constant: (contentInsets.bottom * -1) + (childView.paddingInsets.bottom * -1)
         )
         
         if let lastAddedChildBottomConstraint = self.lastAddedChildBottomConstraint {
@@ -608,7 +608,7 @@ extension MobileContentStackView {
                 toItem: contentView,
                 attribute: .top,
                 multiplier: 1,
-                constant: contentInsets.top
+                constant: contentInsets.top + childView.paddingInsets.top
             )
         }
         

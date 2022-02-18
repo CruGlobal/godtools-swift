@@ -17,6 +17,7 @@ protocol MobileContentTextViewModelType: MobileContentViewModelType {
     var text: String? { get }
     var textColor: UIColor { get }
     var textAlignment: NSTextAlignment { get }
+    var minimumLines: CGFloat { get }
     var endImage: UIImage? { get }
     var endImageSize: CGSize { get }
     var hidesEndImage: Bool { get }

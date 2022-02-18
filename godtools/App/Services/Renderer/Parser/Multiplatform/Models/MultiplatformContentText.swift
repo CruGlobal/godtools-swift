@@ -60,8 +60,16 @@ class MultiplatformContentText: ContentTextModelType {
         return MobileContentTextScale(doubleValue: contentText.textScale)
     }
     
+    var minimumLines: Int32 {
+        return contentText.minimumLines
+    }
+    
     func getTextColor() -> UIColor {
         return contentText.textColor
+    }
+    
+    func getTextColor() -> MobileContentColor? {
+        return MobileContentColor(color: contentText.textColor)
     }
     
     func getTextStyles() -> [MobileContentTextStyle] {
