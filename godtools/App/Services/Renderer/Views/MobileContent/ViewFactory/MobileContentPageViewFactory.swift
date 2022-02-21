@@ -148,7 +148,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let headingModel = renderableModel as? HeadingModelType {
+        else if let headingModel = renderableModel as? MultiplatformHeading {
             
             let viewModel = MobileContentHeadingViewModel(
                 headingModel: headingModel,

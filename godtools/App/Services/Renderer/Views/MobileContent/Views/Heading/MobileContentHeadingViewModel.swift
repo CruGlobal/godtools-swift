@@ -10,10 +10,10 @@ import UIKit
 
 class MobileContentHeadingViewModel: MobileContentHeadingViewModelType {
     
-    private let headingModel: HeadingModelType
+    private let headingModel: MultiplatformHeading
     private let rendererPageModel: MobileContentRendererPageModel
     
-    required init(headingModel: HeadingModelType, rendererPageModel: MobileContentRendererPageModel) {
+    required init(headingModel: MultiplatformHeading, rendererPageModel: MobileContentRendererPageModel) {
         
         self.headingModel = headingModel
         self.rendererPageModel = rendererPageModel
