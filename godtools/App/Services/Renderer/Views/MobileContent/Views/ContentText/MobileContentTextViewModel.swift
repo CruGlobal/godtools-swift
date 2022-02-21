@@ -13,7 +13,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     
     private static let numberFormatter: NumberFormatter = NumberFormatter()
     
-    private let textModel: ContentTextModelType
+    private let textModel: MultiplatformContentText
     private let rendererPageModel: MobileContentRendererPageModel
     private let fontService: FontService
     private let fontSize: CGFloat = 18
@@ -21,7 +21,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
         
     let textColor: UIColor
     
-    required init(textModel: ContentTextModelType, rendererPageModel: MobileContentRendererPageModel, fontService: FontService) {
+    required init(textModel: MultiplatformContentText, rendererPageModel: MobileContentRendererPageModel, fontService: FontService) {
         
         self.textModel = textModel
         self.rendererPageModel = rendererPageModel

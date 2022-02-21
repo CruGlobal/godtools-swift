@@ -40,7 +40,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let textModel = renderableModel as? ContentTextModelType {
+        else if let textModel = renderableModel as? MultiplatformContentText {
                           
             let viewModel = MobileContentTextViewModel(
                 textModel: textModel,
