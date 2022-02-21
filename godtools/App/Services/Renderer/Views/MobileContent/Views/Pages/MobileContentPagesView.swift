@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class MobileContentPagesView: UIViewController {
     
@@ -324,7 +325,7 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
 
 extension MobileContentPagesView: MobileContentPageViewDelegate {
     
-    func pageViewDidReceiveEvents(pageView: MobileContentPageView, eventIds: [MultiplatformEventId]) {
+    func pageViewDidReceiveEvents(pageView: MobileContentPageView, eventIds: [EventId]) {
         viewModel.pageDidReceiveEvents(eventIds: eventIds)
     }
 }

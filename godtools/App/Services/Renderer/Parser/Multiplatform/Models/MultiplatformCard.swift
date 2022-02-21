@@ -34,12 +34,12 @@ class MultiplatformCard {
         return card.backgroundImageScaleType
     }
     
-    var dismissListeners: [MultiplatformEventId] {
-        return card.dismissListeners.map({MultiplatformEventId(eventId: $0)})
+    var dismissListeners: [EventId] {
+        return Array(card.dismissListeners)
     }
     
-    var listeners: [MultiplatformEventId] {
-        return card.listeners.map({MultiplatformEventId(eventId: $0)})
+    var listeners: [EventId] {
+        return Array(card.listeners)
     }
     
     var isHidden: Bool {

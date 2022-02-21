@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 protocol MobileContentParserType {
         
@@ -20,7 +21,7 @@ protocol MobileContentParserType {
     
     func getPageModel(page: Int) -> PageModelType?
     func getVisiblePageModels() -> [PageModelType]
-    func getPageForListenerEvents(eventIds: [MultiplatformEventId]) -> Int?
+    func getPageForListenerEvents(eventIds: [EventId]) -> Int?
 }
 
 extension MobileContentParserType {
@@ -36,7 +37,7 @@ extension MobileContentParserType {
         return pageModels.filter({!$0.isHidden})
     }
     
-    func getPageForListenerEvents(eventIds: [MultiplatformEventId]) -> Int? {
+    func getPageForListenerEvents(eventIds: [EventId]) -> Int? {
                 
         for pageIndex in 0 ..< pageModels.count {
             

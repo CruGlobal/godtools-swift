@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 protocol ToolPageModalViewDelegate: AnyObject {
     
@@ -98,9 +99,9 @@ class ToolPageModalView: MobileContentView {
         centerContentStackVerticallyIfNeeded()
     }
     
-    override func didReceiveEvents(eventIds: [MultiplatformEventId]) {
+    override func didReceiveEvents(eventIds: [EventId]) {
             
-        let eventsContainFollowUp: Bool = eventIds.contains(MultiplatformEventId.followUp)
+        let eventsContainFollowUp: Bool = eventIds.contains(EventId.Companion().FOLLOWUP)
         
         for eventId in eventIds {
             

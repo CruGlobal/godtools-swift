@@ -38,8 +38,8 @@ class MultiplatformManifestAttributes: MobileContentManifestAttributesType {
         return MobileContentColor(color: manifest.categoryLabelColor)
     }
     
-    var dismissListeners: [MultiplatformEventId] {
-        return manifest.dismissListeners.map({MultiplatformEventId(eventId: $0)})
+    var dismissListeners: [EventId] {
+        return Array(manifest.dismissListeners)
     }
     
     var locale: String? {

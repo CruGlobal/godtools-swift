@@ -36,8 +36,8 @@ class MultiplatformTractPage: PageModelType {
         return tractPage.backgroundImageScaleType
     }
     
-    var listeners: [MultiplatformEventId] {
-        return tractPage.listeners.map({MultiplatformEventId(eventId: $0)})
+    var listeners: [EventId] {
+        return Array(tractPage.listeners)
     }
     
     var textScale: MobileContentTextScale {

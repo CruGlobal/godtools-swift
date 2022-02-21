@@ -6,9 +6,8 @@
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
-import Foundation
-import GodToolsToolParser
 import UIKit
+import GodToolsToolParser
 
 class MultiplatformChooseYourOwnAdventurePage: PageModelType {
     
@@ -37,8 +36,8 @@ class MultiplatformChooseYourOwnAdventurePage: PageModelType {
         return page.backgroundImageScaleType
     }
     
-    var listeners: [MultiplatformEventId] {
-        return page.listeners.map({MultiplatformEventId(eventId: $0)})
+    var listeners: [EventId] {
+        return Array(page.listeners)
     }
     
     var textScale: MobileContentTextScale {

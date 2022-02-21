@@ -32,8 +32,8 @@ class MobileContentImageViewModel: MobileContentImageViewModelType {
         }
     }
     
-    var imageEvents: [MultiplatformEventId] {
-        return imageModel.events.map({MultiplatformEventId(eventId: $0)})
+    var imageEvents: [EventId] {
+        return imageModel.events
     }
     
     var rendererState: State {

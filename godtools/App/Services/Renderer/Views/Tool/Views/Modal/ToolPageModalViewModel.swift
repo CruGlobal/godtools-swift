@@ -24,11 +24,11 @@ class ToolPageModalViewModel: ToolPageModalViewModelType {
         return UIColor.black.withAlphaComponent(0.9)
     }
     
-    var listeners: [MultiplatformEventId] {
-        return modalModel.listeners.map({MultiplatformEventId(eventId: $0)})
+    var listeners: [EventId] {
+        return Array(modalModel.listeners)
     }
     
-    var dismissListeners: [MultiplatformEventId] {
-        return modalModel.dismissListeners.map({MultiplatformEventId(eventId: $0)})
+    var dismissListeners: [EventId] {
+        return Array(modalModel.dismissListeners)
     }
 }

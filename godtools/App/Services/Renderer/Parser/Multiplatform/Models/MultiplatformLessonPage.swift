@@ -36,8 +36,8 @@ class MultiplatformLessonPage: PageModelType {
         return lessonPage.backgroundImageScaleType
     }
     
-    var listeners: [MultiplatformEventId] {
-        return lessonPage.listeners.map({MultiplatformEventId(eventId: $0)})
+    var listeners: [EventId] {
+        return Array(lessonPage.listeners)
     }
     
     var textScale: MobileContentTextScale {

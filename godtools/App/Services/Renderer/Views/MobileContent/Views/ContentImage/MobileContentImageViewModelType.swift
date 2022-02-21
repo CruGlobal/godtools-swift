@@ -12,7 +12,7 @@ import GodToolsToolParser
 protocol MobileContentImageViewModelType {
     
     var image: UIImage? { get }
-    var imageEvents: [MultiplatformEventId] { get }
+    var imageEvents: [EventId] { get }
     var rendererState: State { get }
     var imageWidth: MobileContentViewWidth { get }
 }

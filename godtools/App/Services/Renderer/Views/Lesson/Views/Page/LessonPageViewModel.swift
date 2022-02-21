@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class LessonPageViewModel: MobileContentPageViewModel, LessonPageViewModelType {
     
@@ -34,7 +35,7 @@ class LessonPageViewModel: MobileContentPageViewModel, LessonPageViewModelType {
         fatalError("init(flowDelegate:pageModel:rendererPageModel:deepLinkService:hidesBackgroundImage:) has not been implemented")
     }
     
-    var manifestDismissListeners: [MultiplatformEventId] {
+    var manifestDismissListeners: [EventId] {
         return rendererPageModel.manifest.attributes.dismissListeners
     }
     

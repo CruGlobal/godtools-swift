@@ -40,8 +40,8 @@ class MultiplatformCardCollectionPage: PageModelType {
         return cardCollectionPage.backgroundImageScaleType
     }
     
-    var listeners: [MultiplatformEventId] {
-        return cardCollectionPage.listeners.map({MultiplatformEventId(eventId: $0)})
+    var listeners: [EventId] {
+        return Array(cardCollectionPage.listeners)
     }
     
     var textScale: MobileContentTextScale {

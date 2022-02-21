@@ -19,7 +19,7 @@ protocol MobileContentButtonViewModelType {
     var borderColor: UIColor? { get }
     var borderWidth: CGFloat? { get }
     var buttonType: Button.Type_ { get }
-    var buttonEvents: [MultiplatformEventId] { get }
+    var buttonEvents: [EventId] { get }
     var buttonUrl: String { get }
     var rendererState: State { get }
     var visibilityState: ObservableValue<MobileContentViewVisibilityState> { get }

@@ -41,9 +41,8 @@ class MobileContentLinkViewModel: MobileContentLinkViewModelType {
         return linkModel.text?.text
     }
     
-    var linkEvents: [MultiplatformEventId] {
-        // TODO: Remove MultiplatformEventId. ~Levi
-        return linkModel.events.map({MultiplatformEventId(eventId: $0)})
+    var linkEvents: [EventId] {
+        return linkModel.events
     }
     
     var rendererState: State {

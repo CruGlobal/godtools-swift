@@ -125,8 +125,8 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
         return buttonModel.type
     }
     
-    var buttonEvents: [MultiplatformEventId] {
-        return buttonModel.events.map({MultiplatformEventId(eventId: $0)})
+    var buttonEvents: [EventId] {
+        return buttonModel.events
     }
     
     var buttonUrl: String {

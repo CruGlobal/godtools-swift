@@ -26,8 +26,8 @@ class MobileContentTabViewModel: MobileContentTabViewModelType {
         return tabModel.label?.text
     }
     
-    var tabListeners: [MultiplatformEventId] {
-        return tabModel.listeners.map({MultiplatformEventId(eventId: $0)})
+    var tabListeners: [EventId] {
+        return Array(tabModel.listeners)
     }
     
     func tabTapped() {

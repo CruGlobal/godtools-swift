@@ -16,7 +16,7 @@ class MockMobileContentManifestAttributes: MobileContentManifestAttributesType {
     let backgroundImageAlignment: Gravity? = nil
     let backgroundImageScale: ImageScaleType = .fill
     let categoryLabelColor: MobileContentColor? = nil
-    let dismissListeners: [MultiplatformEventId] = []
+    let dismissListeners: [EventId] = []
     let locale: String? = nil
     let navbarColor: MobileContentColor? = nil
     let navbarControlColor: MobileContentColor? = nil

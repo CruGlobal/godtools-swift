@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class ToolPageCardViewModel: ToolPageCardViewModelType {
     
@@ -120,11 +121,11 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
         return rendererPageModel.language.languageDirection.semanticContentAttribute
     }
     
-    var dismissListeners: [MultiplatformEventId] {
+    var dismissListeners: [EventId] {
         return cardModel.dismissListeners
     }
     
-    var listeners: [MultiplatformEventId] {
+    var listeners: [EventId] {
         return cardModel.listeners
     }
     

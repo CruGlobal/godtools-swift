@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     
@@ -123,7 +124,7 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         removePage(page: page)
     }
     
-    private func trackContentEvents(eventIds: [MultiplatformEventId]) {
+    private func trackContentEvents(eventIds: [EventId]) {
         
         guard let resource = currentRenderer?.resource else {
             assertionFailure("Failed to track content event for current renderer.  Resource was not found.")
@@ -315,7 +316,7 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         removePageIfHidden(page: page)
     }
     
-    func pageDidReceiveEvents(eventIds: [MultiplatformEventId]) {
+    func pageDidReceiveEvents(eventIds: [EventId]) {
     
         trackContentEvents(eventIds: eventIds)
         

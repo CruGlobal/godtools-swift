@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 protocol ToolPageCardViewModelType: MobileContentViewModelType {
     
@@ -28,8 +29,8 @@ protocol ToolPageCardViewModelType: MobileContentViewModelType {
     var nextButtonTitleFont: UIFont { get }
     var hidesNextButton: Bool { get }
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute { get }
-    var dismissListeners: [MultiplatformEventId] { get }
-    var listeners: [MultiplatformEventId] { get }
+    var dismissListeners: [EventId] { get }
+    var listeners: [EventId] { get }
     var isHiddenCard: Bool { get }
     
     func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel?

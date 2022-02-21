@@ -20,7 +20,7 @@ class MobileContentCardViewModel: MobileContentCardViewModelType {
         self.rendererPageModel = rendererPageModel
     }
     
-    var events: [MultiplatformEventId] {
+    var events: [EventId] {
         return contentCard.events
     }
     

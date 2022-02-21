@@ -31,16 +31,16 @@ class MultiplatformContentAnimation {
         return animation.loop
     }
     
-    var events: [MultiplatformEventId] {
-        return animation.events.map({MultiplatformEventId(eventId: $0)})
+    var events: [EventId] {
+        return animation.events
     }
     
-    var playListeners: [MultiplatformEventId] {
-        return animation.playListeners.map({MultiplatformEventId(eventId: $0)})
+    var playListeners: [EventId] {
+        return Array(animation.playListeners)
     }
     
-    var stopListeners: [MultiplatformEventId] {
-        return animation.stopListeners.map({MultiplatformEventId(eventId: $0)})
+    var stopListeners: [EventId] {
+        return Array(animation.stopListeners)
     }
 }
 

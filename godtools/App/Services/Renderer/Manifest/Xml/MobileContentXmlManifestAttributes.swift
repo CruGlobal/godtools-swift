@@ -24,7 +24,7 @@ class MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
     private let textScaleString: String?
     
     let backgroundImage: String?
-    let dismissListeners: [MultiplatformEventId]
+    let dismissListeners: [EventId]
     let locale: String?
     
     required init(manifest: XMLIndexer) {

@@ -11,6 +11,6 @@ import GodToolsToolParser
 
 protocol MobileContentCardViewModelType {
     
-    var events: [MultiplatformEventId] { get }
+    var events: [EventId] { get }
     var rendererState: State { get }
 }

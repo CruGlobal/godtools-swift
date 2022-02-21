@@ -18,8 +18,8 @@ class MultiplatformContentCard {
         self.contentCard = contentCard
     }
     
-    var events: [MultiplatformEventId] {
-        return contentCard.events.map({MultiplatformEventId(eventId: $0)})
+    var events: [EventId] {
+        return contentCard.events
     }
 }
 

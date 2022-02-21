@@ -15,7 +15,7 @@ class ToolPageFormViewModel: MobileContentFormViewModel {
     private let followUpService: FollowUpsService
     private let localizationServices: LocalizationServices
     
-    let didSendFollowUpSignal: SignalValue<[MultiplatformEventId]> = SignalValue()
+    let didSendFollowUpSignal: SignalValue<[EventId]> = SignalValue()
     let error: ObservableValue<MobileContentErrorViewModel?> = ObservableValue(value: nil)
     
     required init(formModel: Form, rendererPageModel: MobileContentRendererPageModel, followUpService: FollowUpsService, localizationServices: LocalizationServices) {
@@ -37,7 +37,7 @@ class ToolPageFormViewModel: MobileContentFormViewModel {
     
     // MARK: - Follow Up
     
-    func sendFollowUp(inputModels: [MobileContentFormInputModel], eventIds: [MultiplatformEventId]) {
+    func sendFollowUp(inputModels: [MobileContentFormInputModel], eventIds: [EventId]) {
            
         let destinationIdField: String = "destination_id"
         let nameField: String = "name"
