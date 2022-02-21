@@ -33,20 +33,8 @@ class MultiplatformChooseYourOwnAdventurePage: PageModelType {
         return MultiplatformImageAlignment(imageGravity: page.backgroundImageGravity)
     }
     
-    var backgroundImageScale: MobileContentBackgroundImageScale {
-        switch page.backgroundImageScaleType {
-        case .fill:
-            return .fill
-        case .fit:
-            return .fit
-        case .fillX:
-            return .fillHorizontally
-        case .fillY:
-            return .fillVertically
-        default:
-            assertionFailure("Found unsupported type, returning fill.  Ensure case is supported.")
-            return .fill
-        }
+    var backgroundImageScale: ImageScaleType {
+        return page.backgroundImageScaleType
     }
     
     var listeners: [MultiplatformEventId] {

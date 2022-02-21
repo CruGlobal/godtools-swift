@@ -7,12 +7,13 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 protocol BackgroundImageModelType {
     
     var backgroundImage: String? { get }
     var backgroundImageAlignment: MobileContentImageAlignmentType { get }
-    var backgroundImageScale: MobileContentBackgroundImageScale { get }
+    var backgroundImageScale: ImageScaleType { get }
 }
 
 extension BackgroundImageModelType {

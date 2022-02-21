@@ -7,10 +7,11 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 struct BackgroundImageModel: BackgroundImageModelType {
     
     let backgroundImage: String?
     let backgroundImageAlignment: MobileContentImageAlignmentType
-    let backgroundImageScale: MobileContentBackgroundImageScale
+    let backgroundImageScale: ImageScaleType
 }

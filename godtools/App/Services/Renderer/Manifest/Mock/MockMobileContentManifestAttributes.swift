@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class MockMobileContentManifestAttributes: MobileContentManifestAttributesType {
     
     let backgroundColor: MobileContentColor = MobileContentColor(color: .lightGray)
     let backgroundImage: String? = nil
     let backgroundImageAlignment: MobileContentImageAlignmentType = MobileContentImageAlignment(isCenter: false, isCenterX: false, isCenterY: false, isStart: true, isEnd: false, isTop: true, isBottom: false)
-    let backgroundImageScale: MobileContentBackgroundImageScale = .fill
+    let backgroundImageScale: ImageScaleType = .fill
     let categoryLabelColor: MobileContentColor? = nil
     let dismissListeners: [MultiplatformEventId] = []
     let locale: String? = nil

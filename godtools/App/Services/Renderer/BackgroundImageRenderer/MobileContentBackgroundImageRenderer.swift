@@ -15,7 +15,7 @@ class MobileContentBackgroundImageRenderer: MobileContentBackgroundImageRenderer
         
     }
     
-    func getBackgroundImageRectForRenderingInContainer(container: CGRect, backgroundImageSizePixels: CGSize, scale: MobileContentBackgroundImageScale, alignment: MobileContentImageAlignmentType, languageDirection: LanguageDirection) -> CGRect {
+    func getBackgroundImageRectForRenderingInContainer(container: CGRect, backgroundImageSizePixels: CGSize, scale: ImageScaleType, alignment: MobileContentImageAlignmentType, languageDirection: LanguageDirection) -> CGRect {
         
         let scaledRect: CGRect = scaleRectToContainer(
             container: container,
@@ -33,7 +33,7 @@ class MobileContentBackgroundImageRenderer: MobileContentBackgroundImageRenderer
         return floorRect(rect: scaledAndPositioned)
     }
         
-    private func scaleRectToContainer(container: CGRect, rect: CGRect, scale: MobileContentBackgroundImageScale) -> CGRect {
+    private func scaleRectToContainer(container: CGRect, rect: CGRect, scale: ImageScaleType) -> CGRect {
         
         switch scale {
         
@@ -42,12 +42,15 @@ class MobileContentBackgroundImageRenderer: MobileContentBackgroundImageRenderer
         
         case .fill:
             return scaleRectToFillContainer(container: container, rect: rect)
-        
-        case .fillHorizontally:
+                    
+        case .fillX:
             return scaleRectToHorizontallyFitContainer(container: container, rect: rect)
         
-        case .fillVertically:
+        case .fillY:
             return scaleRectToVerticallyFitContainer(container: container, rect: rect)
+            
+        default:
+            return scaleRectToFitContainer(container: container, rect: rect)
         }
     }
     

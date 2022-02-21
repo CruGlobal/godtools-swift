@@ -32,7 +32,7 @@ class MultiplatformTipPage: PageModelType {
         return MobileContentImageAlignment(isCenter: false, isCenterX: false, isCenterY: false, isStart: true, isEnd: false, isTop: true, isBottom: false)
     }
     
-    var backgroundImageScale: MobileContentBackgroundImageScale {
+    var backgroundImageScale: ImageScaleType {
         return .fill
     }
     

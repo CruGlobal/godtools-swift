@@ -30,8 +30,8 @@ class MultiplatformCard {
         return MultiplatformImageAlignment(imageGravity: card.backgroundImageGravity)
     }
     
-    var backgroundImageScale: MobileContentBackgroundImageScale {
-        return MobileContentBackgroundImageScale(imageScale: card.backgroundImageScaleType)
+    var backgroundImageScale: ImageScaleType {
+        return card.backgroundImageScaleType
     }
     
     var dismissListeners: [MultiplatformEventId] {

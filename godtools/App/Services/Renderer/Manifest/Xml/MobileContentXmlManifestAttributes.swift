@@ -8,6 +8,7 @@
 
 import UIKit
 import SWXMLHash
+import GodToolsToolParser
 
 class MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
         
@@ -64,12 +65,9 @@ class MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
         }
     }
     
-    var backgroundImageScale: MobileContentBackgroundImageScale {
-        let defaultValue: MobileContentBackgroundImageScale = .fill
-        guard let backgroundImageScaleString = self.backgroundImageScaleString else {
-            return defaultValue
-        }
-        return MobileContentBackgroundImageScale(rawValue: backgroundImageScaleString) ?? defaultValue
+    var backgroundImageScale: ImageScaleType {
+        assertionFailure("This class should no longer be used and has been replaced by the multiplatform parser.")
+        return .fill
     }
     
     var categoryLabelColor: MobileContentColor? {

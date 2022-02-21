@@ -36,20 +36,8 @@ class MultiplatformCardCollectionPage: PageModelType {
         return MultiplatformImageAlignment(imageGravity: cardCollectionPage.backgroundImageGravity)
     }
     
-    var backgroundImageScale: MobileContentBackgroundImageScale {
-        switch cardCollectionPage.backgroundImageScaleType {
-        case .fill:
-            return .fill
-        case .fit:
-            return .fit
-        case .fillX:
-            return .fillHorizontally
-        case .fillY:
-            return .fillVertically
-        default:
-            assertionFailure("Found unsupported type, returning fill.  Ensure case is supported.")
-            return .fill
-        }
+    var backgroundImageScale: ImageScaleType {
+        return cardCollectionPage.backgroundImageScaleType
     }
     
     var listeners: [MultiplatformEventId] {

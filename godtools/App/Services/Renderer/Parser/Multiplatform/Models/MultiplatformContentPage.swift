@@ -32,20 +32,8 @@ class MultiplatformContentPage: PageModelType {
         return MultiplatformImageAlignment(imageGravity: contentPage.backgroundImageGravity)
     }
     
-    var backgroundImageScale: MobileContentBackgroundImageScale {
-        switch contentPage.backgroundImageScaleType {
-        case .fill:
-            return .fill
-        case .fit:
-            return .fit
-        case .fillX:
-            return .fillHorizontally
-        case .fillY:
-            return .fillVertically
-        default:
-            assertionFailure("Found unsupported type, returning fill.  Ensure case is supported.")
-            return .fill
-        }
+    var backgroundImageScale: ImageScaleType {
+        return contentPage.backgroundImageScaleType
     }
     
     var listeners: [MultiplatformEventId] {

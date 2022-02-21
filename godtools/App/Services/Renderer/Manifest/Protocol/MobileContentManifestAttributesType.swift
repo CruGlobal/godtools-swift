@@ -7,13 +7,14 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 protocol MobileContentManifestAttributesType: BackgroundImageModelType {
     
     var backgroundColor: MobileContentColor { get }
     var backgroundImage: String? { get }
     var backgroundImageAlignment: MobileContentImageAlignmentType { get }
-    var backgroundImageScale: MobileContentBackgroundImageScale { get }
+    var backgroundImageScale: ImageScaleType { get }
     var categoryLabelColor: MobileContentColor? { get }
     var dismissListeners: [MultiplatformEventId] { get }
     var locale: String? { get }

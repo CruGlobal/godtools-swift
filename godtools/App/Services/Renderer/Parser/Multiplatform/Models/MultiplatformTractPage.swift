@@ -32,20 +32,8 @@ class MultiplatformTractPage: PageModelType {
         return MultiplatformImageAlignment(imageGravity: tractPage.backgroundImageGravity)
     }
     
-    var backgroundImageScale: MobileContentBackgroundImageScale {
-        switch tractPage.backgroundImageScaleType {
-        case .fill:
-            return .fill
-        case .fit:
-            return .fit
-        case .fillX:
-            return .fillHorizontally
-        case .fillY:
-            return .fillVertically
-        default:
-            assertionFailure("Found unsupported type, returning fill.  Ensure case is supported.")
-            return .fill
-        }
+    var backgroundImageScale: ImageScaleType {
+        return tractPage.backgroundImageScaleType
     }
     
     var listeners: [MultiplatformEventId] {
