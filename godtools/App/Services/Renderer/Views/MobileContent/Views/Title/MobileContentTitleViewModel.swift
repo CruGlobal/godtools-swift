@@ -10,10 +10,10 @@ import UIKit
 
 class MobileContentTitleViewModel: MobileContentTitleViewModelType {
     
-    private let titleModel: TitleModelType
+    private let titleModel: MultiplatformTitle
     private let rendererPageModel: MobileContentRendererPageModel
     
-    required init(titleModel: TitleModelType, rendererPageModel: MobileContentRendererPageModel) {
+    required init(titleModel: MultiplatformTitle, rendererPageModel: MobileContentRendererPageModel) {
         
         self.titleModel = titleModel
         self.rendererPageModel = rendererPageModel

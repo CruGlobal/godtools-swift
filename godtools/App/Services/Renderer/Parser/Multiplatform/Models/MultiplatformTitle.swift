@@ -9,7 +9,7 @@
 import Foundation
 import GodToolsToolParser
 
-class MultiplatformTitle: TitleModelType {
+class MultiplatformTitle {
     
     private let contentText: Text
     
@@ -25,19 +25,7 @@ class MultiplatformTitle: TitleModelType {
 
 // MARK: - MobileContentRenderableModel
 
-extension MultiplatformTitle {
-    
-    var restrictTo: String? {
-        return nil
-    }
-    
-    var version: String? {
-        return nil
-    }
-    
-    var modelContentIsRenderable: Bool {
-        return true
-    }
+extension MultiplatformTitle: MobileContentRenderableModel {
     
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
         

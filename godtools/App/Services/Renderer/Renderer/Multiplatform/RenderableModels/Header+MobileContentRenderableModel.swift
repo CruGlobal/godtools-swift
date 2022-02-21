@@ -12,9 +12,9 @@ import GodToolsToolParser
 extension Header: MobileContentRenderableModel {
     
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
-        
+                
         var childModels: [MobileContentRenderableModel] = Array()
-         
+        
         if let number = number {
             childModels.append(MultiplatformNumber(text: number))
         }

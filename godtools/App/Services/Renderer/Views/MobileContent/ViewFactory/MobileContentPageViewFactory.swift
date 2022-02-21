@@ -167,7 +167,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 scrollIsEnabled: contentModel.scrollIsEnabled
             )
         }
-        else if let titleModel = renderableModel as? TitleModelType {
+        else if let titleModel = renderableModel as? MultiplatformTitle {
                   
             let viewModel = MobileContentTitleViewModel(
                 titleModel: titleModel,
