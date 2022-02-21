@@ -9,7 +9,7 @@
 import Foundation
 import GodToolsToolParser
 
-class MultiplatformNumber: NumberModelType {
+class MultiplatformNumber {
     
     private let contentText: Text
     
@@ -21,19 +21,7 @@ class MultiplatformNumber: NumberModelType {
 
 // MARK: - MobileContentRenderableModel
 
-extension MultiplatformNumber {
-    
-    var restrictTo: String? {
-        return nil
-    }
-    
-    var version: String? {
-        return nil
-    }
-    
-    var modelContentIsRenderable: Bool {
-        return true
-    }
+extension MultiplatformNumber: MobileContentRenderableModel {
     
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
         

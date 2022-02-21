@@ -178,7 +178,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let numberModel = renderableModel as? NumberModelType {
+        else if let numberModel = renderableModel as? MultiplatformNumber {
             
             let viewModel = MobileContentNumberViewModel(
                 numberModel: numberModel,
