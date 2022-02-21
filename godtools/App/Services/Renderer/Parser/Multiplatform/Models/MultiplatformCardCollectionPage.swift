@@ -32,8 +32,8 @@ class MultiplatformCardCollectionPage: PageModelType {
         return cardCollectionPage.backgroundImage?.name
     }
     
-    var backgroundImageAlignment: MobileContentImageAlignmentType {
-        return MultiplatformImageAlignment(imageGravity: cardCollectionPage.backgroundImageGravity)
+    var backgroundImageAlignment: Gravity? {
+        return cardCollectionPage.backgroundImageGravity
     }
     
     var backgroundImageScale: ImageScaleType {

@@ -32,7 +32,7 @@ protocol ToolPageCardViewModelType: MobileContentViewModelType {
     var listeners: [MultiplatformEventId] { get }
     var isHiddenCard: Bool { get }
     
-    func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel
+    func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel?
     func cardDidAppear()
     func cardDidDisappear()
 }

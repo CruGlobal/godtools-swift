@@ -29,8 +29,8 @@ class MultiplatformChooseYourOwnAdventurePage: PageModelType {
         return page.backgroundImage?.name
     }
     
-    var backgroundImageAlignment: MobileContentImageAlignmentType {
-        return MultiplatformImageAlignment(imageGravity: page.backgroundImageGravity)
+    var backgroundImageAlignment: Gravity? {
+        return page.backgroundImageGravity
     }
     
     var backgroundImageScale: ImageScaleType {

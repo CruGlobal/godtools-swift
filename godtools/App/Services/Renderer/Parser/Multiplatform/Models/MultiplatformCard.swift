@@ -26,8 +26,8 @@ class MultiplatformCard {
         return fileName
     }
     
-    var backgroundImageAlignment: MobileContentImageAlignmentType {
-        return MultiplatformImageAlignment(imageGravity: card.backgroundImageGravity)
+    var backgroundImageAlignment: Gravity? {
+        return card.backgroundImageGravity
     }
     
     var backgroundImageScale: ImageScaleType {

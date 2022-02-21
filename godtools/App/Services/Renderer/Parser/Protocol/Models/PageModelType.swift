@@ -14,7 +14,7 @@ protocol PageModelType: BackgroundImageModelType, MobileContentRenderableModel {
     var id: String { get }
     var uuid: String { get }
     var backgroundImage: String? { get }
-    var backgroundImageAlignment: MobileContentImageAlignmentType { get }
+    var backgroundImageAlignment: Gravity? { get }
     var backgroundImageScale: ImageScaleType { get }
     var listeners: [MultiplatformEventId] { get }
     var textScale: MobileContentTextScale { get }

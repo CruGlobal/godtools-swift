@@ -12,12 +12,14 @@ import GodToolsToolParser
 protocol BackgroundImageModelType {
     
     var backgroundImage: String? { get }
-    var backgroundImageAlignment: MobileContentImageAlignmentType { get }
+    // TODO: Making this optional for now until multiplatform parser is removed. ~Levi
+    var backgroundImageAlignment: Gravity? { get }
     var backgroundImageScale: ImageScaleType { get }
 }
 
 extension BackgroundImageModelType {
     
+    // TODO: Do we still need this protocol once switching to shared parser? ~Levi
     var backgroundImageExists: Bool {
         if let backgroundImage = self.backgroundImage {
             return !backgroundImage.isEmpty
@@ -25,7 +27,8 @@ extension BackgroundImageModelType {
         return false
     }
     
-    func getImageAlignment(alignments: [MobileContentBackgroundImageAlignment]) -> MobileContentImageAlignmentType {
+    /*
+    func getImageAlignment(alignments: [MobileContentBackgroundImageAlignment]) -> Gravity {
         
         var isCenter: Bool = false
         var isCenterX: Bool = false
@@ -103,7 +106,7 @@ extension BackgroundImageModelType {
             }
         }
         
-        return MobileContentImageAlignment(
+        return Gravity(
             isCenter: isCenter,
             isCenterX: isCenterX,
             isCenterY: isCenterY,
@@ -112,5 +115,5 @@ extension BackgroundImageModelType {
             isTop: isTop,
             isBottom: isBottom
         )
-    }
+    }*/
 }

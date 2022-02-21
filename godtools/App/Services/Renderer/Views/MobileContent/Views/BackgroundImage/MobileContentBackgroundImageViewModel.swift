@@ -31,7 +31,7 @@ class MobileContentBackgroundImageViewModel {
         }
     }
     
-    func getRenderPositionForBackgroundImage(container: CGRect, backgroundImage: UIImage) -> CGRect {
+    func getRenderPositionForBackgroundImage(container: CGRect, backgroundImage: UIImage) -> CGRect? {
         
         let imageSizePixels: CGSize = CGSize(
             width: backgroundImage.size.width * backgroundImage.scale,
@@ -41,13 +41,17 @@ class MobileContentBackgroundImageViewModel {
         return getRenderPositionForBackgroundImage(container: container, imageSizePixels: imageSizePixels)
     }
     
-    private func getRenderPositionForBackgroundImage(container: CGRect, imageSizePixels: CGSize) -> CGRect {
+    private func getRenderPositionForBackgroundImage(container: CGRect, imageSizePixels: CGSize) -> CGRect? {
+        
+        guard let backgroundImageAlignment = backgroundImageModel.backgroundImageAlignment else {
+            return nil
+        }
         
         return backgroundImageRenderer.getBackgroundImageRectForRenderingInContainer(
             container: container,
             backgroundImageSizePixels: imageSizePixels,
             scale: backgroundImageModel.backgroundImageScale,
-            alignment: backgroundImageModel.backgroundImageAlignment,
+            alignment: backgroundImageAlignment,
             languageDirection: languageDirection
         )
     }
@@ -58,7 +62,7 @@ class MobileContentBackgroundImageViewModel {
             return nil
         }
         
-        let backgroundImageFrame: CGRect = getRenderPositionForBackgroundImage(container: container, backgroundImage: backgroundImage)
+        let backgroundImageFrame: CGRect? = getRenderPositionForBackgroundImage(container: container, backgroundImage: backgroundImage)
         
         return backgroundImageFrame
     }

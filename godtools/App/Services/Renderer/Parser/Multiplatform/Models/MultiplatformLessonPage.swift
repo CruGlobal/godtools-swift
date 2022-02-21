@@ -28,8 +28,8 @@ class MultiplatformLessonPage: PageModelType {
         return lessonPage.backgroundImage?.name
     }
     
-    var backgroundImageAlignment: MobileContentImageAlignmentType {
-        return MultiplatformImageAlignment(imageGravity: lessonPage.backgroundImageGravity)
+    var backgroundImageAlignment: Gravity? {
+        return lessonPage.backgroundImageGravity
     }
     
     var backgroundImageScale: ImageScaleType {

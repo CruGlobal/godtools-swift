@@ -28,8 +28,8 @@ class MultiplatformContentPage: PageModelType {
         return contentPage.backgroundImage?.name
     }
     
-    var backgroundImageAlignment: MobileContentImageAlignmentType {
-        return MultiplatformImageAlignment(imageGravity: contentPage.backgroundImageGravity)
+    var backgroundImageAlignment: Gravity? {
+        return contentPage.backgroundImageGravity
     }
     
     var backgroundImageScale: ImageScaleType {

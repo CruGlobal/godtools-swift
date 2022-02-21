@@ -51,8 +51,9 @@ class MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
         return MobileContentColor(stringColor: backgroundColorString)
     }
     
-    var backgroundImageAlignment: MobileContentImageAlignmentType {
-        return getImageAlignment(alignments: backgroundImageAlignments)
+    var backgroundImageAlignment: Gravity? {
+        assertionFailure("This class should no longer be used and has been replaced by the multiplatform parser.")
+        return nil
     }
     
     var backgroundImageAlignments: [MobileContentBackgroundImageAlignment] {

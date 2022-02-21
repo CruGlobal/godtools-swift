@@ -28,8 +28,8 @@ class MultiplatformTractPage: PageModelType {
         return tractPage.backgroundImage?.name
     }
     
-    var backgroundImageAlignment: MobileContentImageAlignmentType {
-        return MultiplatformImageAlignment(imageGravity: tractPage.backgroundImageGravity)
+    var backgroundImageAlignment: Gravity? {
+        return tractPage.backgroundImageGravity
     }
     
     var backgroundImageScale: ImageScaleType {

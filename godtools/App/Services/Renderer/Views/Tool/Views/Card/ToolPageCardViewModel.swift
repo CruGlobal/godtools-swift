@@ -128,11 +128,16 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
         return cardModel.listeners
     }
     
-    func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel {
+    func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel? {
+        
+        // TODO: This may not need to be optional once fully switching to shared parser.  ~Levi
+        guard let backgroundImageAlignment = cardModel.backgroundImageAlignment else {
+            return nil
+        }
         
         let backgroundImageModel = BackgroundImageModel(
             backgroundImage: cardModel.backgroundImage,
-            backgroundImageAlignment: cardModel.backgroundImageAlignment,
+            backgroundImageAlignment: backgroundImageAlignment,
             backgroundImageScale: cardModel.backgroundImageScale
         )
         
