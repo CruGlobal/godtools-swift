@@ -15,18 +15,16 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     
     private let textModel: ContentTextModelType
     private let rendererPageModel: MobileContentRendererPageModel
-    private let containerModel: MobileContentRenderableModelContainer?
     private let fontService: FontService
     private let fontSize: CGFloat = 18
     private let defaultFontWeight: UIFont.Weight = .regular
         
     let textColor: UIColor
     
-    required init(textModel: ContentTextModelType, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?, fontService: FontService) {
+    required init(textModel: ContentTextModelType, rendererPageModel: MobileContentRendererPageModel, fontService: FontService) {
         
         self.textModel = textModel
         self.rendererPageModel = rendererPageModel
-        self.containerModel = containerModel
         self.fontService = fontService
         
         self.textColor = textModel.getTextColor()

@@ -84,32 +84,3 @@ extension MultiplatformCard: MobileContentRenderableModel {
         return childModels
     }
 }
-
-// MARK: - MobileContentRenderableModelContainer
-
-extension MultiplatformCard: MobileContentRenderableModelContainer {
-    
-    var buttonColor: UIColor? {
-        return nil
-    }
-    
-    var buttonStyle: Button.Style? {
-        return nil
-    }
-    
-    var primaryColor: UIColor? {
-        return nil
-    }
-    
-    var primaryTextColor: UIColor? {
-        return nil
-    }
-    
-    var textAlignment: Text.Align? {
-        return nil
-    }
-    
-    var textColor: UIColor? {
-        return nil
-    }
-}

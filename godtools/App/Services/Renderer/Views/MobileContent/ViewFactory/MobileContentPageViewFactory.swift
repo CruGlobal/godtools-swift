@@ -27,14 +27,13 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         self.analytics = analytics
     }
     
-    func viewForRenderableModel(renderableModel: MobileContentRenderableModel, renderableModelParent: MobileContentRenderableModel?, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) -> MobileContentView? {
+    func viewForRenderableModel(renderableModel: MobileContentRenderableModel, renderableModelParent: MobileContentRenderableModel?, rendererPageModel: MobileContentRendererPageModel) -> MobileContentView? {
         
         if let paragraphModel = renderableModel as? Paragraph {
         
             let viewModel = MobileContentParagraphViewModel(
                 paragraphModel: paragraphModel,
-                rendererPageModel: rendererPageModel,
-                containerModel: containerModel
+                rendererPageModel: rendererPageModel
             )
             
             let view = MobileContentParagraphView(viewModel: viewModel, contentInsets: .zero, itemSpacing: 5, scrollIsEnabled: false)
@@ -46,7 +45,6 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             let viewModel = MobileContentTextViewModel(
                 textModel: textModel,
                 rendererPageModel: rendererPageModel,
-                containerModel: containerModel,
                 fontService: fontService
             )
             
@@ -70,7 +68,6 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             let viewModel = MobileContentButtonViewModel(
                 buttonModel: buttonModel,
                 rendererPageModel: rendererPageModel,
-                containerModel: containerModel,
                 mobileContentAnalytics: mobileContentAnalytics,
                 fontService: fontService
             )
@@ -196,8 +193,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = MobileContentAnimationViewModel(
                 animationModel: animationModel,
-                rendererPageModel: rendererPageModel,
-                containerModel: containerModel
+                rendererPageModel: rendererPageModel
             )
             
             let view = MobileContentAnimationView(viewModel: viewModel)

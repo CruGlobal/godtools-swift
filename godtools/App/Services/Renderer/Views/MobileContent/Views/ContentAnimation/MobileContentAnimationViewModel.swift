@@ -13,15 +13,13 @@ class MobileContentAnimationViewModel: MobileContentAnimationViewModelType {
     
     private let animationModel: Animation
     private let rendererPageModel: MobileContentRendererPageModel
-    private let containerModel: MobileContentRenderableModelContainer?
     
     let animatedViewModel: AnimatedViewModelType
     
-    required init(animationModel: Animation, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) {
+    required init(animationModel: Animation, rendererPageModel: MobileContentRendererPageModel) {
         
         self.animationModel = animationModel
         self.rendererPageModel = rendererPageModel
-        self.containerModel = containerModel
         
         let animationFilepath: String
         

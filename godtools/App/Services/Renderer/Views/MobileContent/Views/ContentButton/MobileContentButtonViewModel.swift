@@ -15,7 +15,6 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     
     private let buttonModel: Button
     private let rendererPageModel: MobileContentRendererPageModel
-    private let containerModel: MobileContentRenderableModelContainer?
     private let mobileContentAnalytics: MobileContentAnalytics
     private let fontService: FontService
     private let fontSize: CGFloat = 18
@@ -30,11 +29,10 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     let visibilityState: ObservableValue<MobileContentViewVisibilityState> = ObservableValue(value: .visible)
     let icon: MobileContentButtonIcon?
     
-    required init(buttonModel: Button, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
+    required init(buttonModel: Button, rendererPageModel: MobileContentRendererPageModel, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
         
         self.buttonModel = buttonModel
         self.rendererPageModel = rendererPageModel
-        self.containerModel = containerModel
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
         

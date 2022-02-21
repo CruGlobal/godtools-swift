@@ -13,17 +13,15 @@ class MobileContentParagraphViewModel: MobileContentParagraphViewModelType {
     
     private let paragraphModel: Paragraph
     private let rendererPageModel: MobileContentRendererPageModel
-    private let containerModel: MobileContentRenderableModelContainer?
     
     private var visibilityFlowWatcher: FlowWatcher?
     
     let visibilityState: ObservableValue<MobileContentViewVisibilityState> = ObservableValue(value: .visible)
     
-    required init(paragraphModel: Paragraph, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) {
+    required init(paragraphModel: Paragraph, rendererPageModel: MobileContentRendererPageModel) {
         
         self.paragraphModel = paragraphModel
         self.rendererPageModel = rendererPageModel
-        self.containerModel = containerModel
                 
         visibilityFlowWatcher = paragraphModel.watchVisibility(state: rendererPageModel.rendererState) { [weak self] (invisible: KotlinBoolean, gone: KotlinBoolean) in
                 
