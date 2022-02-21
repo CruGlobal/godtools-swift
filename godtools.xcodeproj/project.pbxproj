@@ -978,7 +978,6 @@
 		D182CA1E2721943900ABAAC8 /* TutorialPagerAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D182CA1D2721943900ABAAC8 /* TutorialPagerAnalytics.swift */; };
 		D182CA25272745BE00ABAAC8 /* UIImage+ScalePresevingAspectRatio.swift in Sources */ = {isa = PBXBuildFile; fileRef = D182CA24272745BE00ABAAC8 /* UIImage+ScalePresevingAspectRatio.swift */; };
 		D182CA2727274B1F00ABAAC8 /* UIButton+SetInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = D182CA2627274B1F00ABAAC8 /* UIButton+SetInsets.swift */; };
-		D182CA2927286D3100ABAAC8 /* IconGravity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D182CA2827286D3100ABAAC8 /* IconGravity.swift */; };
 		D1838479257E86B3004F5674 /* container in Resources */ = {isa = PBXBuildFile; fileRef = D1838478257E86B3004F5674 /* container */; };
 		D1878BC22718CFB000557E0A /* OnboardingTutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1878BC12718CFB000557E0A /* OnboardingTutorialViewModel.swift */; };
 		D1878BC42719BCE500557E0A /* OnboardingTutorialItemsRepositoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1878BC32719BCE500557E0A /* OnboardingTutorialItemsRepositoryType.swift */; };
@@ -2065,7 +2064,6 @@
 		D182CA1D2721943900ABAAC8 /* TutorialPagerAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPagerAnalytics.swift; sourceTree = "<group>"; };
 		D182CA24272745BE00ABAAC8 /* UIImage+ScalePresevingAspectRatio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+ScalePresevingAspectRatio.swift"; sourceTree = "<group>"; };
 		D182CA2627274B1F00ABAAC8 /* UIButton+SetInsets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+SetInsets.swift"; sourceTree = "<group>"; };
-		D182CA2827286D3100ABAAC8 /* IconGravity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconGravity.swift; sourceTree = "<group>"; };
 		D1838478257E86B3004F5674 /* container */ = {isa = PBXFileReference; lastKnownFileType = folder; path = container; sourceTree = "<group>"; };
 		D1878BC12718CFB000557E0A /* OnboardingTutorialViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialViewModel.swift; sourceTree = "<group>"; };
 		D1878BC32719BCE500557E0A /* OnboardingTutorialItemsRepositoryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialItemsRepositoryType.swift; sourceTree = "<group>"; };
@@ -5335,7 +5333,6 @@
 			children = (
 				45BD79AD26A20EEA0007426B /* ContentModelType.swift */,
 				45BD79AF26A20EEA0007426B /* ContentTextModelType.swift */,
-				D182CA2827286D3100ABAAC8 /* IconGravity.swift */,
 				45BEC52826A604E3005D8CA1 /* MobileContentRenderableModel.swift */,
 				45BD799E26A20EEA0007426B /* PageModelType.swift */,
 			);
@@ -7282,7 +7279,6 @@
 				45AD1B1725938A4E00A096A0 /* ArticleCategoriesViewModelType.swift in Sources */,
 				45AD200A25938A9800A096A0 /* TranslationDownloaderError.swift in Sources */,
 				D1DD79FD26690CAB000F1351 /* TrackScreenModel.swift in Sources */,
-				D182CA2927286D3100ABAAC8 /* IconGravity.swift in Sources */,
 				451550F12791E3DE00526CF2 /* DownloadToolView.swift in Sources */,
 				45CB9F9E261F8BA80036BEB3 /* ToolsMenuToolbarViewModelType.swift in Sources */,
 				45AD1B2D25938A4F00A096A0 /* AboutTextCellViewModel.swift in Sources */,

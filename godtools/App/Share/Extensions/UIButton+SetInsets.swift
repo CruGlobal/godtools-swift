@@ -10,6 +10,11 @@ import Foundation
 
 //found here: https://noahgilmore.com/blog/uibutton-padding/
 
+enum IconGravity {
+    case start
+    case end
+}
+
 extension UIButton {
     
     func setInsets(forContentPadding contentPadding: UIEdgeInsets, imageTitlePadding: CGFloat, iconGravity: IconGravity) {
