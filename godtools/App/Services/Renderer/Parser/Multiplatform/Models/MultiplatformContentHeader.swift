@@ -9,7 +9,7 @@
 import Foundation
 import GodToolsToolParser
 
-class MultiplatformContentHeader: ContentHeaderModelType {
+class MultiplatformContentHeader {
     
     private let text: Text
     
@@ -21,19 +21,7 @@ class MultiplatformContentHeader: ContentHeaderModelType {
 
 // MARK: - MobileContentRenderableModel
 
-extension MultiplatformContentHeader {
-    
-    var restrictTo: String? {
-        return nil
-    }
-    
-    var version: String? {
-        return nil
-    }
-    
-    var modelContentIsRenderable: Bool {
-        return true
-    }
+extension MultiplatformContentHeader: MobileContentRenderableModel {
     
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
         

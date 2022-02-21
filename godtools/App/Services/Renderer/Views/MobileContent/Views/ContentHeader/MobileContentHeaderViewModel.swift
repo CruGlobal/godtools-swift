@@ -10,10 +10,10 @@ import Foundation
 
 class MobileContentHeaderViewModel: MobileContentHeaderViewModelType {
     
-    private let headerModel: ContentHeaderModelType
+    private let headerModel: MultiplatformContentHeader
     private let rendererPageModel: MobileContentRendererPageModel
     
-    required init(headerModel: ContentHeaderModelType, rendererPageModel: MobileContentRendererPageModel) {
+    required init(headerModel: MultiplatformContentHeader, rendererPageModel: MobileContentRendererPageModel) {
         
         self.headerModel = headerModel
         self.rendererPageModel = rendererPageModel
