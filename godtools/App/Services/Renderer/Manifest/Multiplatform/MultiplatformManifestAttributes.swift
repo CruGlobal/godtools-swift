@@ -66,7 +66,7 @@ class MultiplatformManifestAttributes: MobileContentManifestAttributesType {
         return MobileContentColor(color: manifest.textColor)
     }
     
-    var textScale: MobileContentTextScale {
-        return MobileContentTextScale(doubleValue: manifest.textScale)
+    var textScale: Double {
+        return manifest.textScale
     }
 }

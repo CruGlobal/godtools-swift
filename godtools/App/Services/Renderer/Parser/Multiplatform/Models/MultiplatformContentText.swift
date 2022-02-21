@@ -42,8 +42,8 @@ class MultiplatformContentText: ContentTextModelType {
         return contentText.textAlign
     }
     
-    var textScale: MobileContentTextScale {
-        return MobileContentTextScale(doubleValue: contentText.textScale)
+    var textScale: Double {
+        return contentText.textScale
     }
     
     var minimumLines: Int32 {

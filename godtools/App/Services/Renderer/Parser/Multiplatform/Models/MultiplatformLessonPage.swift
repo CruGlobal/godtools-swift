@@ -40,8 +40,8 @@ class MultiplatformLessonPage: PageModelType {
         return Array(lessonPage.listeners)
     }
     
-    var textScale: MobileContentTextScale {
-        return MobileContentTextScale(doubleValue: lessonPage.textScale)
+    var textScale: Double {
+        return lessonPage.textScale
     }
     
     var isHidden: Bool {

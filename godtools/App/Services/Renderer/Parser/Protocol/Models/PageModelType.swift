@@ -17,7 +17,7 @@ protocol PageModelType: BackgroundImageModelType, MobileContentRenderableModel {
     var backgroundImageAlignment: Gravity? { get }
     var backgroundImageScale: ImageScaleType { get }
     var listeners: [EventId] { get }
-    var textScale: MobileContentTextScale { get }
+    var textScale: Double { get }
     var isHidden: Bool { get }
     var hero: Hero? { get }
     var callToAction: CallToAction? { get }

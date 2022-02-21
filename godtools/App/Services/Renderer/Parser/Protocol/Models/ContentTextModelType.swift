@@ -17,7 +17,7 @@ protocol ContentTextModelType: MobileContentRenderableModel {
     var startImageSize: Int32 { get }
     var text: String? { get }
     var textAlignment: Text.Align { get }
-    var textScale: MobileContentTextScale { get }
+    var textScale: Double { get }
     var minimumLines: Int32 { get }
     
     func getTextColor() -> UIColor

@@ -40,8 +40,8 @@ class MultiplatformTipPage: PageModelType {
         return Array()
     }
     
-    var textScale: MobileContentTextScale {
-        return MobileContentTextScale(doubleValue: 1)
+    var textScale: Double {
+        return 1
     }
     
     var isHidden: Bool {

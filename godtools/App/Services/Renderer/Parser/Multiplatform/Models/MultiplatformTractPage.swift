@@ -40,8 +40,8 @@ class MultiplatformTractPage: PageModelType {
         return Array(tractPage.listeners)
     }
     
-    var textScale: MobileContentTextScale {
-        return MobileContentTextScale(doubleValue: tractPage.textScale)
+    var textScale: Double {
+        return tractPage.textScale
     }
     
     var isHidden: Bool {

@@ -44,8 +44,8 @@ class MultiplatformCardCollectionPage: PageModelType {
         return Array(cardCollectionPage.listeners)
     }
     
-    var textScale: MobileContentTextScale {
-        return MobileContentTextScale(doubleValue: cardCollectionPage.textScale)
+    var textScale: Double {
+        return cardCollectionPage.textScale
     }
     
     var isHidden: Bool {

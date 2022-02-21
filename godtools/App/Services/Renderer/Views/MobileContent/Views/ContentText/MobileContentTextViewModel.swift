@@ -162,7 +162,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     
     private func getFontScale() -> CGFloat {
                 
-        let fontScale = CGFloat(textModel.textScale.doubleValue)
+        let fontScale = CGFloat(textModel.textScale)
                         
         return fontScale
     }

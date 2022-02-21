@@ -40,8 +40,8 @@ class MultiplatformContentPage: PageModelType {
         return Array(contentPage.listeners)
     }
     
-    var textScale: MobileContentTextScale {
-        return MobileContentTextScale(doubleValue: contentPage.textScale)
+    var textScale: Double {
+        return contentPage.textScale
     }
     
     var isHidden: Bool {

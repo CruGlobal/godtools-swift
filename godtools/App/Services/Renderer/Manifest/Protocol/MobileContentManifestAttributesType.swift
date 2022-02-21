@@ -23,5 +23,5 @@ protocol MobileContentManifestAttributesType: BackgroundImageModelType {
     var primaryColor: MobileContentColor { get }
     var primaryTextColor: MobileContentColor { get }
     var textColor: MobileContentColor { get }
-    var textScale: MobileContentTextScale { get }
+    var textScale: Double { get }
 }

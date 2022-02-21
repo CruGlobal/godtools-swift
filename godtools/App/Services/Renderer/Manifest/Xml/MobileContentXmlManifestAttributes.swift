@@ -104,7 +104,10 @@ class MobileContentXmlManifestAttributes: MobileContentManifestAttributesType {
         return MobileContentColor(stringColor: textColorString)
     }
     
-    var textScale: MobileContentTextScale {
-        return MobileContentTextScale(textScaleString: textScaleString)
+    var textScale: Double {
+        if let stringValue = textScaleString, let doubleValue = Double(stringValue) {
+            return doubleValue
+        }
+        return 1
     }
 }

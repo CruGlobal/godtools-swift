@@ -40,8 +40,8 @@ class MultiplatformChooseYourOwnAdventurePage: PageModelType {
         return Array(page.listeners)
     }
     
-    var textScale: MobileContentTextScale {
-        return MobileContentTextScale(doubleValue: page.textScale)
+    var textScale: Double {
+        return page.textScale
     }
     
     var isHidden: Bool {
