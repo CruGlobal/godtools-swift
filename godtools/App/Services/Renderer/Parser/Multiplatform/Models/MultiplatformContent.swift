@@ -9,7 +9,7 @@
 import Foundation
 import GodToolsToolParser
 
-class MultiplatformContent: ContentModelType {
+class MultiplatformContent {
     
     private let content: [Content]
     
@@ -28,19 +28,7 @@ class MultiplatformContent: ContentModelType {
 
 // MARK: - MobileContentRenderableModel
 
-extension MultiplatformContent {
-    
-    var restrictTo: String? {
-        return nil
-    }
-    
-    var version: String? {
-        return nil
-    }
-    
-    var modelContentIsRenderable: Bool {
-        return true
-    }
+extension MultiplatformContent: MobileContentRenderableModel {
     
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
         

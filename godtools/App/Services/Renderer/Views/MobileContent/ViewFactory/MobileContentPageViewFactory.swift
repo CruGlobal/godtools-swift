@@ -159,7 +159,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let contentModel = renderableModel as? ContentModelType {
+        else if let contentModel = renderableModel as? MultiplatformContent {
             
             return MobileContentStackView(
                 contentInsets: contentModel.contentInsets,
