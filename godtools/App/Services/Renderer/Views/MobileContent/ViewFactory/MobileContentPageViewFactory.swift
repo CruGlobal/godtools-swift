@@ -74,7 +74,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let contentCard = renderableModel as? MultiplatformContentCard {
+        else if let contentCard = renderableModel as? Card {
             
             let viewModel = MobileContentCardViewModel(
                 contentCard: contentCard,

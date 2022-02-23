@@ -35,7 +35,7 @@ class MultiplatformContentFactory {
             renderableModel = tip
         }
         else if let card = content as? Card {
-            return MultiplatformContentCard(contentCard: card)
+            renderableModel = card
         }
         else if let input = content as? Input {
             renderableModel = input
