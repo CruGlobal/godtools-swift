@@ -8,6 +8,7 @@
 
 import Foundation
 import GodToolsToolParser
+import SwiftUI
 
 class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
     
@@ -41,18 +42,15 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             return view
         }
         else if let textModel = renderableModel as? MultiplatformContentText {
-                          
-            let viewModel = MobileContentTextViewModel(
+                       
+            return getContentText(
                 textModel: textModel,
                 rendererPageModel: rendererPageModel,
-                fontService: fontService
+                viewType: nil,
+                additionalLabelAttributes: nil
             )
-            
-            let view = MobileContentTextView(viewModel: viewModel)
-            
-            return view
         }
-        else if let imageModel = renderableModel as? Image {
+        else if let imageModel = renderableModel as? GodToolsToolParser.Image {
             
             let viewModel = MobileContentImageViewModel(
                 imageModel: imageModel,
@@ -63,7 +61,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view            
         }
-        else if let buttonModel = renderableModel as? Button {
+        else if let buttonModel = renderableModel as? GodToolsToolParser.Button {
                         
             let viewModel = MobileContentButtonViewModel(
                 buttonModel: buttonModel,
@@ -87,7 +85,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let linkModel = renderableModel as? Link {
+        else if let linkModel = renderableModel as? GodToolsToolParser.Link {
                         
             let viewModel = MobileContentLinkViewModel(
                 linkModel: linkModel,
@@ -167,29 +165,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 scrollIsEnabled: contentModel.scrollIsEnabled
             )
         }
-        else if let titleModel = renderableModel as? MultiplatformTitle {
-                  
-            let viewModel = MobileContentTitleViewModel(
-                titleModel: titleModel,
-                rendererPageModel: rendererPageModel
-            )
-            
-            let view = MobileContentTitleView(viewModel: viewModel)
-            
-            return view
-        }
-        else if let numberModel = renderableModel as? MultiplatformNumber {
-            
-            let viewModel = MobileContentNumberViewModel(
-                numberModel: numberModel,
-                rendererPageModel: rendererPageModel
-            )
-            
-            let view = MobileContentNumberView(viewModel: viewModel)
-            
-            return view
-        }
-        else if let animationModel = renderableModel as? Animation {
+        else if let animationModel = renderableModel as? GodToolsToolParser.Animation {
             
             let viewModel = MobileContentAnimationViewModel(
                 animationModel: animationModel,
@@ -246,7 +222,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let formModel = renderableModel as? Form {
+        else if let formModel = renderableModel as? GodToolsToolParser.Form {
             
             let viewModel = MobileContentFormViewModel(
                 formModel: formModel,
@@ -257,7 +233,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let spacerModel = renderableModel as? Spacer {
+        else if let spacerModel = renderableModel as? GodToolsToolParser.Spacer {
                 
             let viewModel = MobileContentSpacerViewModel(
                 spacerModel: spacerModel,
@@ -347,5 +323,22 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         }
         
         return nil
+    }
+    
+    func getContentText(textModel: MultiplatformContentText, rendererPageModel: MobileContentRendererPageModel, viewType: MobileContentTextView.ViewType?, additionalLabelAttributes: MobileContentTextLabelAttributes?) -> MobileContentTextView {
+        
+        let viewModel = MobileContentTextViewModel(
+            textModel: textModel,
+            rendererPageModel: rendererPageModel,
+            fontService: fontService
+        )
+        
+        let view = MobileContentTextView(
+            viewModel: viewModel,
+            viewType: viewType,
+            additionalLabelAttributes: additionalLabelAttributes
+        )
+        
+        return view
     }
 }

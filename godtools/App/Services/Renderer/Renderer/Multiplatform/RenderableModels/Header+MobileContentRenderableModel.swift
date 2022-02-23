@@ -12,19 +12,11 @@ import GodToolsToolParser
 extension Header: MobileContentRenderableModel {
     
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
-                
+        
         var childModels: [MobileContentRenderableModel] = Array()
         
-        if let number = number {
-            childModels.append(MultiplatformNumber(text: number))
-        }
-        
-        if let title = title {
-            childModels.append(MultiplatformTitle(text: title))
-        }
-        
-        if let trainingTip = tip {
-            childModels.append(trainingTip)
+        if let tip = tip {
+            childModels.append(tip)
         }
         
         return childModels

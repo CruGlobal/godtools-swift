@@ -11,13 +11,15 @@ import UIKit
 class MobileContentTextView: MobileContentView {
     
     enum ViewType {
-        case labelOnly
+        case labelOnly(label: UILabel, shouldAddLabelAsSubview: Bool)
         case loadFromNib
     }
     
-    private let viewType: ViewType
+    private static let defaultLineSpacing: CGFloat = 2
+    private static let defaultNumberOfLines: Int = 0
     
-    private var textLabelRef: UILabel?
+    private let viewType: ViewType
+    private let additionalLabelAttributes: MobileContentTextLabelAttributes?
     
     let viewModel: MobileContentTextViewModelType
         
@@ -34,37 +36,40 @@ class MobileContentTextView: MobileContentView {
     @IBOutlet weak private var endImageViewWidth: NSLayoutConstraint!
     @IBOutlet weak private var endImageViewHeight: NSLayoutConstraint!
         
-    required init(viewModel: MobileContentTextViewModelType) {
+    required init(viewModel: MobileContentTextViewModelType, viewType: MobileContentTextView.ViewType?, additionalLabelAttributes: MobileContentTextLabelAttributes?) {
         
         self.viewModel = viewModel
-       
-        if viewModel.hidesStartImage && viewModel.hidesEndImage {
-            self.viewType = .labelOnly
+
+        if let providedViewType = viewType {
+            self.viewType = providedViewType
+        }
+        else if viewModel.hidesStartImage && viewModel.hidesEndImage {
+            self.viewType = .labelOnly(label: UILabel(), shouldAddLabelAsSubview: true)
         }
         else {
             self.viewType = .loadFromNib
         }
         
+        self.additionalLabelAttributes = additionalLabelAttributes
+        
         super.init(frame: UIScreen.main.bounds)
         
         // If content text doesn't have any images we will just instaniate a label rather than the entire nib.
         // Might help with performance since content:text is frequently used. ~Levi
-        if viewType == .labelOnly {
-            
-            let textLabel: UILabel = UILabel()
-            addSubview(textLabel)
-            textLabel.constrainEdgesToSuperview()
-            
-            self.textLabelRef = textLabel
-            self.textLabel = textLabel
-            
-            setupBinding(viewType: .labelOnly)
-        }
-        else if viewType == .loadFromNib {
+        
+        switch self.viewType {
+        case .labelOnly(let label, let shouldAddLabelAsSubview):
+            if shouldAddLabelAsSubview {
+                addSubview(label)
+                label.translatesAutoresizingMaskIntoConstraints = false
+                label.constrainEdgesToView(view: self, edgeInsets: .zero)
+            }
+            self.textLabel = label
+        case .loadFromNib:
             initializeNib()
-            self.textLabelRef = textLabel
-            setupBinding(viewType: .loadFromNib)
         }
+        
+        setupBinding()
     }
     
     required init?(coder: NSCoder) {
@@ -84,14 +89,26 @@ class MobileContentTextView: MobileContentView {
         }
     }
     
-    private func setupBinding(viewType: ViewType) {
+    private func setupBinding() {
         
-        let lineSpacing = CGFloat(2)
+        let font: UIFont
+        let lineSpacing: CGFloat = additionalLabelAttributes?.lineSpacing ?? MobileContentTextView.defaultLineSpacing
+        let numberOfLines: Int = additionalLabelAttributes?.numberOfLines ?? MobileContentTextView.defaultNumberOfLines
+        
+        if let additionalLabelAttributes = self.additionalLabelAttributes {
+            font = viewModel.getScaledFont(
+                fontSizeToScale: additionalLabelAttributes.fontSize,
+                fontWeightElseUseTextDefault: additionalLabelAttributes.fontWeight
+            )
+        }
+        else {
+            font = viewModel.font
+        }
         
         textLabel.backgroundColor = UIColor.clear
-        textLabel.numberOfLines = 0
+        textLabel.numberOfLines = numberOfLines
         textLabel.lineBreakMode = .byWordWrapping
-        textLabel.font = viewModel.font
+        textLabel.font = font
         textLabel.text = viewModel.text
         textLabel.textColor = viewModel.textColor
         textLabel.textAlignment = viewModel.textAlignment
@@ -108,7 +125,12 @@ class MobileContentTextView: MobileContentView {
             textLabel.addHeightConstraint(constant: minimumHeight, relatedBy: NSLayoutConstraint.Relation.greaterThanOrEqual, priority: 1000)
         }
         
-        if viewType == .loadFromNib {
+        switch viewType {
+        
+        case .labelOnly( _):
+            break
+        
+        case .loadFromNib:
             
             if let startImage = viewModel.startImage {
                 startImageView.image = startImage
@@ -172,11 +194,6 @@ class MobileContentTextView: MobileContentView {
     
     func getTextLabel() -> UILabel {
         return textLabel
-    }
-    
-    func removeTextLabel() -> UILabel? {
-        textLabelRef?.removeFromSuperview()
-        return textLabelRef
     }
     
     // MARK: - MobileContentView
