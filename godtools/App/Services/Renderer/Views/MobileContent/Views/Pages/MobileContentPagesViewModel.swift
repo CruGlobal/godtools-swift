@@ -15,7 +15,7 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     private let initialPageRenderingType: MobileContentPagesInitialPageRenderingType
     private let startingPage: Int?
     
-    private var currentRenderer: MobileContentRendererType?
+    private var currentRenderer: MobileContentMultiplatformRenderer?
     private var safeArea: UIEdgeInsets?
     private var pageModels: [PageModelType] = Array()
     
@@ -25,14 +25,14 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     private(set) weak var window: UIViewController?
     private(set) weak var flowDelegate: FlowDelegate?
     
-    let renderers: [MobileContentRendererType]
+    let renderers: [MobileContentMultiplatformRenderer]
     let numberOfPages: ObservableValue<Int> = ObservableValue(value: 0)
     let pageNavigationSemanticContentAttribute: UISemanticContentAttribute
     let rendererWillChangeSignal: Signal = Signal()
     let pageNavigation: ObservableValue<MobileContentPagesNavigationModel?> = ObservableValue(value: nil)
     let pagesRemoved: ObservableValue<[IndexPath]> = ObservableValue(value: [])
     
-    required init(flowDelegate: FlowDelegate, renderers: [MobileContentRendererType], primaryLanguage: LanguageModel, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType) {
+    required init(flowDelegate: FlowDelegate, renderers: [MobileContentMultiplatformRenderer], primaryLanguage: LanguageModel, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType) {
         
         self.flowDelegate = flowDelegate
         self.renderers = renderers
@@ -58,11 +58,11 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
 
     }
     
-    func getCurrentRenderer() -> MobileContentRendererType? {
+    func getCurrentRenderer() -> MobileContentMultiplatformRenderer? {
         return currentRenderer
     }
     
-    private func getRendererPageModelsMatchingCurrentRenderedPageModels(renderer: MobileContentRendererType) -> [PageModelType] {
+    private func getRendererPageModelsMatchingCurrentRenderedPageModels(renderer: MobileContentMultiplatformRenderer) -> [PageModelType] {
         
         var rendererPageModelsMatchingCurrentRenderedPageModels: [PageModelType] = Array()
         
@@ -187,7 +187,7 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         }
     }
     
-    var primaryRenderer: MobileContentRendererType {
+    var primaryRenderer: MobileContentMultiplatformRenderer {
         
         guard let primaryRenderer = renderers.first else {
             assertionFailure("ViewModel does not contain any renderers.  Should have at least 1 renderer.")
@@ -221,7 +221,7 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         setRenderer(renderer: renderer)
     }
     
-    func setRenderer(renderer: MobileContentRendererType) {
+    func setRenderer(renderer: MobileContentMultiplatformRenderer) {
         
         let pageModelsToRender: [PageModelType]
         

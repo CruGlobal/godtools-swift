@@ -9,30 +9,26 @@
 import UIKit
 import GodToolsToolParser
 
-class MobileContentMultiplatformRenderer: MobileContentRendererType {
+class MobileContentMultiplatformRenderer {
     
-    private let multiplatformParser: MobileContentMultiplatformParser
     private let rendererState: State = State()
     
     let resource: ResourceModel
     let language: LanguageModel
     let pageViewFactories: MobileContentRendererPageViewFactories
+    let parser: MobileContentMultiplatformParser
     
     required init(resource: ResourceModel, language: LanguageModel, multiplatformParser: MobileContentMultiplatformParser, pageViewFactories: MobileContentRendererPageViewFactories) {
         
-        self.multiplatformParser = multiplatformParser
+        self.parser = multiplatformParser
         self.pageViewFactories = pageViewFactories
         self.resource = resource
         self.language = language
     }
     
-    var parser: MobileContentParserType {
-        return multiplatformParser
-    }
-    
     func renderPage(page: Int, window: UIViewController, safeArea: UIEdgeInsets, primaryRendererLanguage: LanguageModel) -> Result<MobileContentView, Error> {
         
-        if let pageModel = multiplatformParser.getPageModel(page: page) {
+        if let pageModel = parser.getPageModel(page: page) {
                     
             // TODO: Could this get moved to MobileContentRendererType? ~Levi
             return renderPageModel(

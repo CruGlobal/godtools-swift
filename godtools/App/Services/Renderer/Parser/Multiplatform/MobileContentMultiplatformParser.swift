@@ -9,7 +9,7 @@
 import Foundation
 import GodToolsToolParser
 
-class MobileContentMultiplatformParser: MobileContentParserType {
+class MobileContentMultiplatformParser {
             
     let manifest: MobileContentManifestType
     let manifestResourcesCache: ManifestResourcesCacheType
@@ -94,5 +94,33 @@ class MobileContentMultiplatformParser: MobileContentParserType {
         self.manifestResourcesCache = ManifestResourcesCache(manifest: manifest, translationsFileCache: translationsFileCache)
         self.pageModels = pageModels
         self.errors = Array()
+    }
+    
+    func getPageModel(page: Int) -> PageModelType? {
+        guard page >= 0 && page < pageModels.count else {
+            return nil
+        }
+        return pageModels[page]
+    }
+    
+    func getVisiblePageModels() -> [PageModelType] {
+        return pageModels.filter({!$0.isHidden})
+    }
+    
+    func getPageForListenerEvents(eventIds: [EventId]) -> Int? {
+                
+        for pageIndex in 0 ..< pageModels.count {
+            
+            let pageModel: PageModelType = pageModels[pageIndex]
+            
+            for listener in pageModel.listeners {
+               
+                if eventIds.contains(listener) {
+                    return pageIndex
+                }
+            }
+        }
+        
+        return nil
     }
 }

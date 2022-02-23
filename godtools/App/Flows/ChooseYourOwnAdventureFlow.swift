@@ -41,7 +41,7 @@ class ChooseYourOwnAdventureFlow: Flow {
             pageViewFactories: pageViewFactories
         )
         
-        var renderers: [MobileContentRendererType] = Array()
+        var renderers: [MobileContentMultiplatformRenderer] = Array()
         
         renderers.append(primaryRenderer)
         
