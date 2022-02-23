@@ -31,7 +31,7 @@ extension MultiplatformHeading: MobileContentRenderableModel {
         
         var childModels: [MobileContentRenderableModel] = Array()
                 
-        childModels.append(MultiplatformContentText(text: contentText))
+        childModels.append(contentText)
         
         return childModels
     }

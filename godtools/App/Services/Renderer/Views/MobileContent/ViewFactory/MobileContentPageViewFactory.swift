@@ -41,7 +41,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let textModel = renderableModel as? MultiplatformContentText {
+        else if let textModel = renderableModel as? GodToolsToolParser.Text {
                        
             return getContentText(
                 textModel: textModel,
@@ -325,7 +325,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         return nil
     }
     
-    func getContentText(textModel: MultiplatformContentText, rendererPageModel: MobileContentRendererPageModel, viewType: MobileContentTextView.ViewType?, additionalLabelAttributes: MobileContentTextLabelAttributes?) -> MobileContentTextView {
+    func getContentText(textModel: GodToolsToolParser.Text, rendererPageModel: MobileContentRendererPageModel, viewType: MobileContentTextView.ViewType?, additionalLabelAttributes: MobileContentTextLabelAttributes?) -> MobileContentTextView {
         
         let viewModel = MobileContentTextViewModel(
             textModel: textModel,

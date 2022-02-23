@@ -13,7 +13,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     
     private static let numberFormatter: NumberFormatter = NumberFormatter()
     
-    private let textModel: MultiplatformContentText
+    private let textModel: Text
     private let rendererPageModel: MobileContentRendererPageModel
     private let fontService: FontService
     private let fontSize: CGFloat = 18
@@ -21,18 +21,18 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
         
     let textColor: UIColor
     
-    required init(textModel: MultiplatformContentText, rendererPageModel: MobileContentRendererPageModel, fontService: FontService) {
+    required init(textModel: Text, rendererPageModel: MobileContentRendererPageModel, fontService: FontService) {
         
         self.textModel = textModel
         self.rendererPageModel = rendererPageModel
         self.fontService = fontService
         
-        self.textColor = textModel.getTextColor()
+        self.textColor = textModel.textColor
     }
     
     var startImage: UIImage? {
         
-        guard let resource = textModel.startImage, !resource.isEmpty else {
+        guard let resource = startImageResourceName, !resource.isEmpty else {
             return nil
         }
         
@@ -49,7 +49,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     }
     
     var hidesStartImage: Bool {
-        guard let resource = textModel.startImage else {
+        guard let resource = startImageResourceName else {
             return true
         }
         return resource.isEmpty
@@ -78,7 +78,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     
     var endImage: UIImage? {
         
-        guard let resource = textModel.endImage, !resource.isEmpty else {
+        guard let resource = endImageResourceName, !resource.isEmpty else {
             return nil
         }
         
@@ -95,25 +95,37 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     }
     
     var hidesEndImage: Bool {
-        guard let resource = textModel.endImage else {
+        guard let resource = endImageResourceName else {
             return true
         }
         return resource.isEmpty
+    }
+    
+    private var startImageResourceName: String? {
+        return textModel.startImage?.name
+    }
+    
+    private var endImageResourceName: String? {
+        return textModel.endImage?.name
+    }
+    
+    private func getTextStylesArray() -> [Text.Style] {
+        return Array(textModel.textStyles)
     }
     
     private func getLanguageTextAlign() -> Text.Align {
         
         if language.languageDirection == .rightToLeft {
             
-            if textModel.textAlignment == .start {
+            if textModel.textAlign == .start {
                 return .end
             }
-            else if textModel.textAlignment == .end {
+            else if textModel.textAlign == .end {
                 return .start
             }
         }
         
-        return textModel.textAlignment
+        return textModel.textAlign
     }
     
     private func mapTextAlignToTextAlignment(textAlign: Text.Align) -> NSTextAlignment {
@@ -134,7 +146,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
         
         let fontWeight: UIFont.Weight
         
-        let textStyles: [Text.Style] = textModel.getTextStyles()
+        let textStyles: [Text.Style] = getTextStylesArray()
         
         // TODO: Need to add support for multiple textStyles. ~Levi
         if let textStyle = textStyles.first {

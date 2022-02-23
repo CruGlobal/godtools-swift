@@ -23,7 +23,7 @@ class MultiplatformContentFactory {
             renderableModel = paragraph
         }
         else if let text = content as? Text {
-            renderableModel = MultiplatformContentText(text: text)
+            renderableModel = text
         }
         else if let button = content as? Button {
             renderableModel = button

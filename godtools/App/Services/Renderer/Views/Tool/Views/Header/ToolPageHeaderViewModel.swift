@@ -50,7 +50,7 @@ class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
         )
         
         return mobileContentPageViewFactory?.getContentText(
-            textModel: MultiplatformContentText(text: numberTextModel),
+            textModel: numberTextModel,
             rendererPageModel: rendererPageModel,
             viewType: .labelOnly(label: numberLabel, shouldAddLabelAsSubview: false),
             additionalLabelAttributes: numberLabelAttributes
@@ -71,7 +71,7 @@ class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
         )
                 
         return mobileContentPageViewFactory?.getContentText(
-            textModel: MultiplatformContentText(text: titleTextModel),
+            textModel: titleTextModel,
             rendererPageModel: rendererPageModel,
             viewType: .labelOnly(label: titleLabel, shouldAddLabelAsSubview: false),
             additionalLabelAttributes: titleLabelAttributes
