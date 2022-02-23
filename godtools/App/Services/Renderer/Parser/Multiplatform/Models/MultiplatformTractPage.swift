@@ -86,18 +86,6 @@ class MultiplatformTractPage: PageModelType {
 
 extension MultiplatformTractPage {
     
-    var restrictTo: String? {
-        return nil
-    }
-    
-    var version: String? {
-        return nil
-    }
-    
-    var modelContentIsRenderable: Bool {
-        return true
-    }
-    
     func getRenderableChildModels() -> [MobileContentRenderableModel] {
         
         var childModels: [MobileContentRenderableModel] = Array()
