@@ -27,7 +27,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PU9-rf-kta" userLabel="numberLabel">
-                            <rect key="frame" x="15" y="24" width="19" height="36"/>
+                            <rect key="frame" x="15" y="14" width="19" height="36"/>
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="30"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -41,12 +41,12 @@
                     </subviews>
                     <color key="backgroundColor" systemColor="systemGray6Color"/>
                     <constraints>
+                        <constraint firstItem="gDD-DD-R3G" firstAttribute="top" secondItem="GaW-Xr-cq8" secondAttribute="top" constant="24" id="0zw-Fm-1ec"/>
                         <constraint firstItem="gDD-DD-R3G" firstAttribute="leading" secondItem="PU9-rf-kta" secondAttribute="trailing" constant="15" id="6Ga-0e-suL"/>
                         <constraint firstAttribute="trailing" secondItem="gDD-DD-R3G" secondAttribute="trailing" constant="15" id="SIg-mo-K9r"/>
-                        <constraint firstItem="PU9-rf-kta" firstAttribute="top" secondItem="GaW-Xr-cq8" secondAttribute="top" constant="24" id="X03-PC-jyx"/>
+                        <constraint firstItem="PU9-rf-kta" firstAttribute="top" secondItem="GaW-Xr-cq8" secondAttribute="top" constant="14" id="X03-PC-jyx"/>
                         <constraint firstAttribute="bottom" secondItem="gDD-DD-R3G" secondAttribute="bottom" constant="15" id="dGM-U0-FSD"/>
                         <constraint firstItem="PU9-rf-kta" firstAttribute="leading" secondItem="GaW-Xr-cq8" secondAttribute="leading" constant="15" id="inK-rr-Gfe"/>
-                        <constraint firstItem="gDD-DD-R3G" firstAttribute="top" secondItem="PU9-rf-kta" secondAttribute="top" id="tJW-rJ-yOi"/>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="65" id="ymN-LL-gna"/>
                     </constraints>
                 </view>
