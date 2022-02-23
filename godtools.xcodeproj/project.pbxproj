@@ -236,7 +236,6 @@
 		45558417269F2F6100C3FF14 /* MobileContentAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45558414269F2F6100C3FF14 /* MobileContentAnalytics.swift */; };
 		45558496269F2F9E00C3FF14 /* MobileContentRendererType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45558457269F2F9E00C3FF14 /* MobileContentRendererType.swift */; };
 		45558498269F2F9E00C3FF14 /* MobileContentRendererPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45558459269F2F9E00C3FF14 /* MobileContentRendererPageModel.swift */; };
-		45558499269F2F9E00C3FF14 /* MobileContentRendererVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4555845A269F2F9E00C3FF14 /* MobileContentRendererVersion.swift */; };
 		4555849A269F2F9E00C3FF14 /* TrainingTipEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4555845C269F2F9E00C3FF14 /* TrainingTipEvent.swift */; };
 		4556AECD23E22185002C15E8 /* SF-Pro-Display-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AECA23E22185002C15E8 /* SF-Pro-Display-Light.otf */; };
 		4556AECE23E22185002C15E8 /* SF-Pro-Text-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AECB23E22185002C15E8 /* SF-Pro-Text-Light.otf */; };
@@ -1273,7 +1272,6 @@
 		45558414269F2F6100C3FF14 /* MobileContentAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentAnalytics.swift; sourceTree = "<group>"; };
 		45558457269F2F9E00C3FF14 /* MobileContentRendererType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentRendererType.swift; sourceTree = "<group>"; };
 		45558459269F2F9E00C3FF14 /* MobileContentRendererPageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentRendererPageModel.swift; sourceTree = "<group>"; };
-		4555845A269F2F9E00C3FF14 /* MobileContentRendererVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentRendererVersion.swift; sourceTree = "<group>"; };
 		4555845C269F2F9E00C3FF14 /* TrainingTipEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrainingTipEvent.swift; sourceTree = "<group>"; };
 		4556AECA23E22185002C15E8 /* SF-Pro-Display-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Light.otf"; sourceTree = "<group>"; };
 		4556AECB23E22185002C15E8 /* SF-Pro-Text-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Light.otf"; sourceTree = "<group>"; };
@@ -3108,7 +3106,6 @@
 			children = (
 				45558459269F2F9E00C3FF14 /* MobileContentRendererPageModel.swift */,
 				45558457269F2F9E00C3FF14 /* MobileContentRendererType.swift */,
-				4555845A269F2F9E00C3FF14 /* MobileContentRendererVersion.swift */,
 				45BD7A6F26A235780007426B /* MobileContentRendererPageViewFactories.swift */,
 				45BD7A7126A235F60007426B /* MobileContentRendererPageViewFactoriesType.swift */,
 				4555845B269F2F9E00C3FF14 /* Events */,
@@ -7080,7 +7077,6 @@
 				451CCF0A27A9A96F00E8D2D3 /* MobileContentPageColors.swift in Sources */,
 				45750837279A409300943197 /* ChooseYourOwnAdventureView.swift in Sources */,
 				45F506DA26A3822E00EC04A9 /* ManifestResourcesCacheType.swift in Sources */,
-				45558499269F2F9E00C3FF14 /* MobileContentRendererVersion.swift in Sources */,
 				45AD20A525938CF100A096A0 /* ConfigType.swift in Sources */,
 				45AD1AF425938A4E00A096A0 /* WebContentView.swift in Sources */,
 				45AD1F8725938A9800A096A0 /* SHA256FileModel.swift in Sources */,
