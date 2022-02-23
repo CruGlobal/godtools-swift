@@ -275,6 +275,7 @@
 		4561C41027C6891600C4A367 /* MobileContentAccordionSectionViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4561C40C27C6891600C4A367 /* MobileContentAccordionSectionViewModelType.swift */; };
 		4561C41127C6891600C4A367 /* MobileContentAccordionSectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4561C40D27C6891600C4A367 /* MobileContentAccordionSectionView.xib */; };
 		4561C41227C6891600C4A367 /* MobileContentAccordionSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4561C40E27C6891600C4A367 /* MobileContentAccordionSectionViewModel.swift */; };
+		4561C41427C68BF500C4A367 /* MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4561C41327C68BF500C4A367 /* MobileContentRenderableModel.swift */; };
 		456383CB27B5B32B00DD6BBC /* Button+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456383CA27B5B32B00DD6BBC /* Button+MobileContentRenderableModel.swift */; };
 		4566A3BA27A5C3BE003EAA39 /* MobileContentCardCollectionPageItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4566A3B927A5C3BE003EAA39 /* MobileContentCardCollectionPageItemViewModel.swift */; };
 		4566A3BC27A5C4E2003EAA39 /* MobileContentCardCollectionPageItemViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4566A3BB27A5C4E2003EAA39 /* MobileContentCardCollectionPageItemViewModelType.swift */; };
@@ -825,7 +826,6 @@
 		45BD79C126A20EEA0007426B /* PageModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BD799E26A20EEA0007426B /* PageModelType.swift */; };
 		45BD7A7026A235780007426B /* MobileContentRendererPageViewFactories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BD7A6F26A235780007426B /* MobileContentRendererPageViewFactories.swift */; };
 		45BD7A7226A235F60007426B /* MobileContentRendererPageViewFactoriesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BD7A7126A235F60007426B /* MobileContentRendererPageViewFactoriesType.swift */; };
-		45BEC53426A604E4005D8CA1 /* MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BEC52826A604E3005D8CA1 /* MobileContentRenderableModel.swift */; };
 		45BF2B9E27A9573F00D23EDA /* MobileContentPagesInitialPageRenderingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BF2B9D27A9573F00D23EDA /* MobileContentPagesInitialPageRenderingType.swift */; };
 		45BF6EB72704FD2D003596A4 /* PrimaryEvaluationOptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BF6EB62704FD2D003596A4 /* PrimaryEvaluationOptionButton.swift */; };
 		45BF6EBA27050A29003596A4 /* TransparentModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BF6EB927050A29003596A4 /* TransparentModalView.swift */; };
@@ -1311,6 +1311,7 @@
 		4561C40C27C6891600C4A367 /* MobileContentAccordionSectionViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentAccordionSectionViewModelType.swift; sourceTree = "<group>"; };
 		4561C40D27C6891600C4A367 /* MobileContentAccordionSectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MobileContentAccordionSectionView.xib; sourceTree = "<group>"; };
 		4561C40E27C6891600C4A367 /* MobileContentAccordionSectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentAccordionSectionViewModel.swift; sourceTree = "<group>"; };
+		4561C41327C68BF500C4A367 /* MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentRenderableModel.swift; sourceTree = "<group>"; };
 		456383CA27B5B32B00DD6BBC /* Button+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Button+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
 		4566A3B927A5C3BE003EAA39 /* MobileContentCardCollectionPageItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentCardCollectionPageItemViewModel.swift; sourceTree = "<group>"; };
 		4566A3BB27A5C4E2003EAA39 /* MobileContentCardCollectionPageItemViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentCardCollectionPageItemViewModelType.swift; sourceTree = "<group>"; };
@@ -1844,7 +1845,6 @@
 		45BD799E26A20EEA0007426B /* PageModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageModelType.swift; sourceTree = "<group>"; };
 		45BD7A6F26A235780007426B /* MobileContentRendererPageViewFactories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRendererPageViewFactories.swift; sourceTree = "<group>"; };
 		45BD7A7126A235F60007426B /* MobileContentRendererPageViewFactoriesType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRendererPageViewFactoriesType.swift; sourceTree = "<group>"; };
-		45BEC52826A604E3005D8CA1 /* MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentRenderableModel.swift; sourceTree = "<group>"; };
 		45BF2B9D27A9573F00D23EDA /* MobileContentPagesInitialPageRenderingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentPagesInitialPageRenderingType.swift; sourceTree = "<group>"; };
 		45BF6EB62704FD2D003596A4 /* PrimaryEvaluationOptionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryEvaluationOptionButton.swift; sourceTree = "<group>"; };
 		45BF6EB927050A29003596A4 /* TransparentModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentModalView.swift; sourceTree = "<group>"; };
@@ -3104,6 +3104,7 @@
 		45558456269F2F9E00C3FF14 /* Renderer */ = {
 			isa = PBXGroup;
 			children = (
+				4561C41327C68BF500C4A367 /* MobileContentRenderableModel.swift */,
 				45558459269F2F9E00C3FF14 /* MobileContentRendererPageModel.swift */,
 				45558457269F2F9E00C3FF14 /* MobileContentRendererType.swift */,
 				45BD7A6F26A235780007426B /* MobileContentRendererPageViewFactories.swift */,
@@ -5295,7 +5296,6 @@
 		45BD799D26A20EEA0007426B /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				45BEC52826A604E3005D8CA1 /* MobileContentRenderableModel.swift */,
 				45BD799E26A20EEA0007426B /* PageModelType.swift */,
 			);
 			path = Models;
@@ -6537,6 +6537,7 @@
 				45A0030A27B8413D008F404D /* MockMobileContentManifestAttributes.swift in Sources */,
 				450E442227565D6F00D4311E /* GetTutorialIsAvailableUseCase.swift in Sources */,
 				45AD1F8125938A9800A096A0 /* FavoritedResourceTranslationDownloader.swift in Sources */,
+				4561C41427C68BF500C4A367 /* MobileContentRenderableModel.swift in Sources */,
 				45585BCF2687BB8F00A21D12 /* ToolDeepLinkParser.swift in Sources */,
 				45AD1B0425938A4E00A096A0 /* ShareArticleViewModel.swift in Sources */,
 				455E799A26A6205800972EC0 /* MobileContentMultiplatformRenderer.swift in Sources */,
@@ -6772,7 +6773,6 @@
 				453F0B6226EA369000436EE4 /* MobileContentMultiSelectOptionViewModel.swift in Sources */,
 				45558335269F2C7B00C3FF14 /* ToolPageCallToActionViewModelType.swift in Sources */,
 				45C93B12261D314C00592FFF /* ArticleFlow.swift in Sources */,
-				45BEC53426A604E4005D8CA1 /* MobileContentRenderableModel.swift in Sources */,
 				45C93ADE261D310900592FFF /* CacheArticleAemWebArchivePlistError.swift in Sources */,
 				45AD21022593953100A096A0 /* RealmDownloadedLanguage.swift in Sources */,
 				45AD201225938A9800A096A0 /* TranslationZipFileModelType.swift in Sources */,
