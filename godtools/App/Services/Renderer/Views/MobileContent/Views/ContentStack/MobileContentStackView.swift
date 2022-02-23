@@ -623,7 +623,7 @@ extension MobileContentStackView {
 
 extension MobileContentStackView: MobileContentAccordionViewDelegate {
     
-    func accordionViewDidChangeSectionViewTextHiddenState(accordionView: MobileContentAccordionView, sectionView: MobileContentSectionView, textIsHidden: Bool, textHeight: CGFloat) {
+    func accordionViewDidChangeSectionViewTextHiddenState(accordionView: MobileContentAccordionView, sectionView: MobileContentAccordionSectionView, textIsHidden: Bool, textHeight: CGFloat) {
         
         layoutIfNeeded()
         

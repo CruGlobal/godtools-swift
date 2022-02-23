@@ -1,5 +1,5 @@
 //
-//  MobileContentSectionViewModel.swift
+//  MobileContentAccordionSectionViewModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 4/20/21.
@@ -9,7 +9,7 @@
 import Foundation
 import GodToolsToolParser
 
-class MobileContentSectionViewModel: MobileContentSectionViewModelType {
+class MobileContentAccordionSectionViewModel: MobileContentAccordionSectionViewModelType {
     
     private let sectionModel: Accordion.Section
     private let rendererPageModel: MobileContentRendererPageModel

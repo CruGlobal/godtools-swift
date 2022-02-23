@@ -301,12 +301,12 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let sectionModel = renderableModel as? Accordion.Section {
             
-            let viewModel = MobileContentSectionViewModel(
+            let viewModel = MobileContentAccordionSectionViewModel(
                 sectionModel: sectionModel,
                 rendererPageModel: rendererPageModel
             )
             
-            let view = MobileContentSectionView(viewModel: viewModel)
+            let view = MobileContentAccordionSectionView(viewModel: viewModel)
             
             return view
         }

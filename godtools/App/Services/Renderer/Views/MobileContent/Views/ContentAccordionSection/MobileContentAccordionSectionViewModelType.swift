@@ -1,5 +1,5 @@
 //
-//  MobileContentSectionViewModelType.swift
+//  MobileContentAccordionSectionViewModelType.swift
 //  godtools
 //
 //  Created by Levi Eggert on 4/20/21.
@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol MobileContentSectionViewModelType {
+protocol MobileContentAccordionSectionViewModelType {
     
 }

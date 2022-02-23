@@ -1,5 +1,5 @@
 //
-//  MobileContentSectionView.swift
+//  MobileContentAccordionSectionView.swift
 //  godtools
 //
 //  Created by Levi Eggert on 4/20/21.
@@ -8,21 +8,21 @@
 
 import Foundation
 
-protocol MobileContentSectionViewDelegate: AnyObject {
+protocol MobileContentAccordionSectionViewDelegate: AnyObject {
     
-    func sectionViewDidChangeTextHiddenState(sectionView: MobileContentSectionView, textIsHidden: Bool, textHeight: CGFloat)
+    func sectionViewDidChangeTextHiddenState(sectionView: MobileContentAccordionSectionView, textIsHidden: Bool, textHeight: CGFloat)
 }
 
-class MobileContentSectionView: MobileContentView {
+class MobileContentAccordionSectionView: MobileContentView {
  
-    private let viewModel: MobileContentSectionViewModelType
+    private let viewModel: MobileContentAccordionSectionViewModelType
     private let viewCornerRadius: CGFloat = 10
     
     private var headerView: MobileContentHeaderView?
     private var textView: MobileContentTextView?
     private(set) var textIsHidden: Bool = true
     
-    private weak var delegate: MobileContentSectionViewDelegate?
+    private weak var delegate: MobileContentAccordionSectionViewDelegate?
     
     @IBOutlet weak private var shadowView: UIView!
     @IBOutlet weak private var contentView: UIView!
@@ -35,7 +35,7 @@ class MobileContentSectionView: MobileContentView {
     @IBOutlet private var textContainerBottomToView: NSLayoutConstraint!
     @IBOutlet weak private var textStateImageTrailing: NSLayoutConstraint!
     
-    required init(viewModel: MobileContentSectionViewModelType) {
+    required init(viewModel: MobileContentAccordionSectionViewModelType) {
         
         self.viewModel = viewModel
         
@@ -53,7 +53,7 @@ class MobileContentSectionView: MobileContentView {
     
     private func initializeNib() {
         
-        let nib: UINib = UINib(nibName: String(describing: MobileContentSectionView.self), bundle: nil)
+        let nib: UINib = UINib(nibName: String(describing: MobileContentAccordionSectionView.self), bundle: nil)
         let contents: [Any]? = nib.instantiate(withOwner: self, options: nil)
         if let rootNibView = (contents as? [UIView])?.first {
             addSubview(rootNibView)
@@ -105,7 +105,7 @@ class MobileContentSectionView: MobileContentView {
         return textContainerView.frame.size.height
     }
     
-    func setDelegate(delegate: MobileContentSectionViewDelegate?) {
+    func setDelegate(delegate: MobileContentAccordionSectionViewDelegate?) {
         self.delegate = delegate
     }
     
@@ -171,7 +171,7 @@ class MobileContentSectionView: MobileContentView {
 
 // MARK: - Header Text
 
-extension MobileContentSectionView {
+extension MobileContentAccordionSectionView {
     
     private func addHeaderView(headerView: MobileContentHeaderView) {
         
@@ -187,7 +187,7 @@ extension MobileContentSectionView {
 
 // MARK: - Text
 
-extension MobileContentSectionView {
+extension MobileContentAccordionSectionView {
     
     private func addTextView(textView: MobileContentTextView) {
         
