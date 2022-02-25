@@ -11,7 +11,7 @@ import GodToolsToolParser
 
 class MultiplatformModals {
     
-    private let modals: [Modal]
+    let modals: [Modal]
     
     required init(modals: [Modal]) {
         

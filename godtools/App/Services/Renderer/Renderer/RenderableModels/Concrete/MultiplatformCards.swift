@@ -11,25 +11,11 @@ import GodToolsToolParser
 
 class MultiplatformCards {
     
-    let cards: [MultiplatformCard]
+    let cards: [TractPage.Card]
     
     required init(cards: [TractPage.Card]) {
         
-        let numberOfVisibleCards: Int = cards.filter({!$0.isHidden}).count
-        
-        self.cards = cards.map({MultiplatformCard(card: $0, numberOfVisibleCards: numberOfVisibleCards)})
-    }
-    
-    var visibleCards: [MultiplatformCard] {
-        return cards.filter({!$0.isHidden})
-    }
-    
-    var numberOfCards: Int {
-        return cards.count
-    }
-    
-    var numberOfVisibleCards: Int {
-        return visibleCards.count
+        self.cards = cards
     }
 }
 
@@ -38,6 +24,11 @@ class MultiplatformCards {
 extension MultiplatformCards: MobileContentRenderableModel {
     
     func getRenderableChildModels() -> [AnyObject] {
+       
+        let numberOfVisibleCards: Int = cards.filter({!$0.isHidden}).count
+        
+        let cards: [MultiplatformCard] = cards.map({MultiplatformCard(card: $0, numberOfVisibleCards: numberOfVisibleCards)})
+        
         return cards
     }
 }

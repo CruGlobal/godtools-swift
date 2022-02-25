@@ -7,10 +7,11 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class ToolPageCardsViewModel: NSObject, ToolPageCardsViewModelType {
     
-    private let cardsModel: MultiplatformCards
+    private let cards: [TractPage.Card]
     private let rendererPageModel: MobileContentRendererPageModel
     private let cardJumpService: CardJumpService
     
@@ -18,13 +19,15 @@ class ToolPageCardsViewModel: NSObject, ToolPageCardsViewModelType {
     let numberOfCards: Int
     let numberOfVisibleCards: Int
     
-    required init(cardsModel: MultiplatformCards, rendererPageModel: MobileContentRendererPageModel, cardJumpService: CardJumpService) {
+    required init(cards: [TractPage.Card], rendererPageModel: MobileContentRendererPageModel, cardJumpService: CardJumpService) {
         
-        self.cardsModel = cardsModel
+        let visibleCards: [TractPage.Card] = cards.filter({!$0.isHidden})
+        
+        self.cards = cards
         self.rendererPageModel = rendererPageModel
         self.cardJumpService = cardJumpService
-        self.numberOfCards = cardsModel.numberOfCards
-        self.numberOfVisibleCards = cardsModel.numberOfVisibleCards
+        self.numberOfCards = cards.count
+        self.numberOfVisibleCards = visibleCards.count
         
         super.init()
         

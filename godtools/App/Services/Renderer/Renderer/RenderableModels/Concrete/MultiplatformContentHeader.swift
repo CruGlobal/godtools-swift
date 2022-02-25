@@ -11,7 +11,7 @@ import GodToolsToolParser
 
 class MultiplatformContentHeader {
     
-    private let text: Text
+    let text: Text
     
     required init(text: Text) {
         

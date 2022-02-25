@@ -12,7 +12,7 @@ import GodToolsToolParser
 class ToolPageCardViewModel: ToolPageCardViewModelType {
     
     private let rendererPageModel: MobileContentRendererPageModel
-    private let cardModel: MultiplatformCard
+    private let cardModel: TractPage.Card
     private let analytics: AnalyticsContainer
     private let fontService: FontService
     private let localizationServices: LocalizationServices
@@ -27,7 +27,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     let hidesNextButton: Bool
     let isHiddenCard: Bool
     
-    required init(cardModel: MultiplatformCard, rendererPageModel: MobileContentRendererPageModel, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, trainingTipsEnabled: Bool) {
+    required init(cardModel: TractPage.Card, rendererPageModel: MobileContentRendererPageModel, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, numberOfCards: Int, trainingTipsEnabled: Bool) {
                         
         self.cardModel = cardModel
         self.rendererPageModel = rendererPageModel
@@ -35,8 +35,8 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
         self.fontService = fontService
         self.localizationServices = localizationServices
         self.trainingTipsEnabled = trainingTipsEnabled
-        self.cardPosition = cardModel.cardPositionInVisibleCards
-        self.numberOfCards = cardModel.numberOfVisibleCards
+        self.cardPosition = cardModel.visiblePosition?.intValue ?? 0
+        self.numberOfCards = numberOfCards
         self.isHiddenCard = cardModel.isHidden
         
         if isHiddenCard {
@@ -52,7 +52,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
         }
         
         analyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
-            analyticsEvents: cardModel.getAnalyticsEvents(),
+            analyticsEvents: cardModel.analyticsEvents,
             mobileContentAnalytics: mobileContentAnalytics,
             rendererPageModel: rendererPageModel
         )
@@ -61,16 +61,17 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
             hidesHeaderTrainingTip = true
         }
         else {
-            hidesHeaderTrainingTip = !cardModel.hasTrainingTip
+            let hasTrainingTip: Bool = cardModel.tips.count > 0
+            hidesHeaderTrainingTip = !hasTrainingTip
         }
     }
     
     var title: String? {
-        return cardModel.title
+        return cardModel.label?.text
     }
     
     var titleColor: UIColor {
-        return cardModel.getTitleColor() ?? rendererPageModel.pageModel.primaryColor
+        return cardModel.label?.textColor ?? rendererPageModel.pageModel.primaryColor
     }
     
     var titleFont: UIFont {
@@ -122,28 +123,23 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     }
     
     var dismissListeners: [EventId] {
-        return cardModel.dismissListeners
+        return Array(cardModel.dismissListeners)
     }
     
     var listeners: [EventId] {
-        return cardModel.listeners
+        return Array(cardModel.listeners)
     }
     
     func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel? {
         
-        guard let backgroundImageFileName = cardModel.backgroundImage else {
-            return nil
-        }
-        
-        // TODO: This may not need to be optional once fully switching to shared parser.  ~Levi
-        guard let backgroundImageAlignment = cardModel.backgroundImageAlignment else {
+        guard let backgroundImageFileName = cardModel.backgroundImage?.name else {
             return nil
         }
         
         let backgroundImageModel = BackgroundImageModel(
             backgroundImageFileName: backgroundImageFileName,
-            backgroundImageAlignment: backgroundImageAlignment,
-            backgroundImageScale: cardModel.backgroundImageScale
+            backgroundImageAlignment: cardModel.backgroundImageGravity,
+            backgroundImageScale: cardModel.backgroundImageScaleType
         )
         
         return MobileContentBackgroundImageViewModel(

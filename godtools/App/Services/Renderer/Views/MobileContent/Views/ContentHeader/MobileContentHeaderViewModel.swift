@@ -7,15 +7,16 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class MobileContentHeaderViewModel: MobileContentHeaderViewModelType {
     
-    private let headerModel: MultiplatformContentHeader
+    private let header: Text
     private let rendererPageModel: MobileContentRendererPageModel
     
-    required init(headerModel: MultiplatformContentHeader, rendererPageModel: MobileContentRendererPageModel) {
+    required init(header: Text, rendererPageModel: MobileContentRendererPageModel) {
         
-        self.headerModel = headerModel
+        self.header = header
         self.rendererPageModel = rendererPageModel
     }
     

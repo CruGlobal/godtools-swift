@@ -11,15 +11,11 @@ import GodToolsToolParser
 
 class MultiplatformHeading {
     
-    private let contentText: Text
+    let text: Text
     
     required init(text: Text) {
         
-        self.contentText = text
-    }
-    
-    func getTextColor() -> UIColor {
-        return contentText.textColor
+        self.text = text
     }
 }
 
@@ -31,7 +27,7 @@ extension MultiplatformHeading: MobileContentRenderableModel {
         
         var childModels: [AnyObject] = Array()
                 
-        childModels.append(contentText)
+        childModels.append(text)
         
         return childModels
     }

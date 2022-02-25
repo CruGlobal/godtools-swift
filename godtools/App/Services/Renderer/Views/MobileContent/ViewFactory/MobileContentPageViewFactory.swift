@@ -149,7 +149,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         else if let headingModel = renderableModel as? MultiplatformHeading {
             
             let viewModel = MobileContentHeadingViewModel(
-                headingModel: headingModel,
+                heading: headingModel.text,
                 rendererPageModel: rendererPageModel
             )
             
@@ -247,7 +247,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         else if let headerModel = renderableModel as? MultiplatformContentHeader {
             
             let viewModel = MobileContentHeaderViewModel(
-                headerModel: headerModel,
+                header: headerModel.text,
                 rendererPageModel: rendererPageModel
             )
             

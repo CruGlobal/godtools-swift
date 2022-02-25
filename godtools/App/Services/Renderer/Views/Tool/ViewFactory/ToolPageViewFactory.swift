@@ -44,12 +44,13 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
         if let cardModel = renderableModel as? MultiplatformCard {
             
             let viewModel = ToolPageCardViewModel(
-                cardModel: cardModel,
+                cardModel: cardModel.card,
                 rendererPageModel: rendererPageModel,
                 analytics: analytics,
                 mobileContentAnalytics: mobileContentAnalytics,
                 fontService: fontService,
                 localizationServices: localizationServices,
+                numberOfCards: cardModel.numberOfVisibleCards,
                 trainingTipsEnabled: trainingTipsEnabled
             )
             
@@ -92,7 +93,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
         else if let cardsModel = renderableModel as? MultiplatformCards {
             
             let viewModel = ToolPageCardsViewModel(
-                cardsModel: cardsModel,
+                cards: cardsModel.cards,
                 rendererPageModel: rendererPageModel,
                 cardJumpService: cardJumpService
             )
@@ -131,7 +132,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
         else if let modalsModel = renderableModel as? MultiplatformModals {
             
             let viewModel = ToolPageModalsViewModel(
-                modalsModel: modalsModel,
+                modals: modalsModel.modals,
                 rendererPageModel: rendererPageModel
             )
             

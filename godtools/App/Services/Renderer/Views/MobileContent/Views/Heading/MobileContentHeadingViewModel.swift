@@ -7,15 +7,16 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class MobileContentHeadingViewModel: MobileContentHeadingViewModelType {
     
-    private let headingModel: MultiplatformHeading
+    private let heading: Text
     private let rendererPageModel: MobileContentRendererPageModel
     
-    required init(headingModel: MultiplatformHeading, rendererPageModel: MobileContentRendererPageModel) {
+    required init(heading: Text, rendererPageModel: MobileContentRendererPageModel) {
         
-        self.headingModel = headingModel
+        self.heading = heading
         self.rendererPageModel = rendererPageModel
     }
     
@@ -29,6 +30,6 @@ class MobileContentHeadingViewModel: MobileContentHeadingViewModelType {
     
     var textColor: UIColor {
         
-        return headingModel.getTextColor()
+        return heading.textColor
     }
 }
