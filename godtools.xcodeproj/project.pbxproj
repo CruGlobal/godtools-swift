@@ -18,6 +18,43 @@
 		45051207275AA71F0081BF56 /* MobileContentParagraphViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45051206275AA71F0081BF56 /* MobileContentParagraphViewModel.swift */; };
 		45051209275AA7260081BF56 /* MobileContentParagraphViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45051208275AA7260081BF56 /* MobileContentParagraphViewModelType.swift */; };
 		4509D6B927C860E00047B19B /* MobileContentMultiplatformParserFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6B827C860E00047B19B /* MobileContentMultiplatformParserFactory.swift */; };
+		4509D6E227C863B80047B19B /* MultiplatformHeading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6BC27C863B80047B19B /* MultiplatformHeading.swift */; };
+		4509D6E327C863B80047B19B /* MultiplatformCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6BD27C863B80047B19B /* MultiplatformCards.swift */; };
+		4509D6E427C863B80047B19B /* MultiplatformCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6BE27C863B80047B19B /* MultiplatformCard.swift */; };
+		4509D6E527C863B80047B19B /* MultiplatformModals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6BF27C863B80047B19B /* MultiplatformModals.swift */; };
+		4509D6E627C863B80047B19B /* MultiplatformContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6C027C863B80047B19B /* MultiplatformContent.swift */; };
+		4509D6E727C863B80047B19B /* MultiplatformContentHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6C127C863B80047B19B /* MultiplatformContentHeader.swift */; };
+		4509D6E827C863B80047B19B /* Video+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6C327C863B80047B19B /* Video+MobileContentRenderableModel.swift */; };
+		4509D6E927C863B80047B19B /* FlowItem+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6C427C863B80047B19B /* FlowItem+MobileContentRenderableModel.swift */; };
+		4509D6EA27C863B80047B19B /* TractPage+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6C527C863B80047B19B /* TractPage+MobileContentRenderableModel.swift */; };
+		4509D6EB27C863B80047B19B /* Modal+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6C627C863B80047B19B /* Modal+MobileContentRenderableModel.swift */; };
+		4509D6EC27C863B80047B19B /* CallToAction+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6C727C863B80047B19B /* CallToAction+MobileContentRenderableModel.swift */; };
+		4509D6ED27C863B80047B19B /* Button+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6C827C863B80047B19B /* Button+MobileContentRenderableModel.swift */; };
+		4509D6EE27C863B80047B19B /* Header+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6C927C863B80047B19B /* Header+MobileContentRenderableModel.swift */; };
+		4509D6EF27C863B80047B19B /* Flow+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6CA27C863B80047B19B /* Flow+MobileContentRenderableModel.swift */; };
+		4509D6F027C863B80047B19B /* InlineTip+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6CB27C863B80047B19B /* InlineTip+MobileContentRenderableModel.swift */; };
+		4509D6F127C863B80047B19B /* AccordionSection+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6CC27C863B80047B19B /* AccordionSection+MobileContentRenderableModel.swift */; };
+		4509D6F227C863B80047B19B /* Animation+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6CD27C863B80047B19B /* Animation+MobileContentRenderableModel.swift */; };
+		4509D6F327C863B80047B19B /* Tabs+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6CE27C863B80047B19B /* Tabs+MobileContentRenderableModel.swift */; };
+		4509D6F427C863B80047B19B /* Multiselect+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6CF27C863B80047B19B /* Multiselect+MobileContentRenderableModel.swift */; };
+		4509D6F527C863B80047B19B /* LessonPage+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6D027C863B80047B19B /* LessonPage+MobileContentRenderableModel.swift */; };
+		4509D6F627C863B80047B19B /* Hero+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6D127C863B80047B19B /* Hero+MobileContentRenderableModel.swift */; };
+		4509D6F727C863B80047B19B /* Paragraph+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6D227C863B80047B19B /* Paragraph+MobileContentRenderableModel.swift */; };
+		4509D6F827C863B80047B19B /* Image+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6D327C863B80047B19B /* Image+MobileContentRenderableModel.swift */; };
+		4509D6F927C863B80047B19B /* CardCollectionPageCard+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6D427C863B80047B19B /* CardCollectionPageCard+MobileContentRenderableModel.swift */; };
+		4509D6FA27C863B80047B19B /* Tab+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6D527C863B80047B19B /* Tab+MobileContentRenderableModel.swift */; };
+		4509D6FB27C863B80047B19B /* ContentPage+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6D627C863B80047B19B /* ContentPage+MobileContentRenderableModel.swift */; };
+		4509D6FC27C863B80047B19B /* Input+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6D727C863B80047B19B /* Input+MobileContentRenderableModel.swift */; };
+		4509D6FD27C863B80047B19B /* Spacer+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6D827C863B80047B19B /* Spacer+MobileContentRenderableModel.swift */; };
+		4509D6FE27C863B80047B19B /* Form+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6D927C863B80047B19B /* Form+MobileContentRenderableModel.swift */; };
+		4509D6FF27C863B80047B19B /* MultiSelectOption+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6DA27C863B80047B19B /* MultiSelectOption+MobileContentRenderableModel.swift */; };
+		4509D70027C863B80047B19B /* TipPage+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6DB27C863B80047B19B /* TipPage+MobileContentRenderableModel.swift */; };
+		4509D70127C863B80047B19B /* Accordion+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6DC27C863B80047B19B /* Accordion+MobileContentRenderableModel.swift */; };
+		4509D70227C863B80047B19B /* Link+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6DD27C863B80047B19B /* Link+MobileContentRenderableModel.swift */; };
+		4509D70327C863B80047B19B /* CardCollectionPage+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6DE27C863B80047B19B /* CardCollectionPage+MobileContentRenderableModel.swift */; };
+		4509D70427C863B80047B19B /* Tip+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6DF27C863B80047B19B /* Tip+MobileContentRenderableModel.swift */; };
+		4509D70527C863B80047B19B /* Card+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6E027C863B80047B19B /* Card+MobileContentRenderableModel.swift */; };
+		4509D70627C863B80047B19B /* Text+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509D6E127C863B80047B19B /* Text+MobileContentRenderableModel.swift */; };
 		450E441427565D1C00D4311E /* TutorialFlowDiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E440827565D1C00D4311E /* TutorialFlowDiContainer.swift */; };
 		450E441527565D1C00D4311E /* TutorialFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E440927565D1C00D4311E /* TutorialFlow.swift */; };
 		450E441627565D1C00D4311E /* GetTutorialUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E440C27565D1C00D4311E /* GetTutorialUseCase.swift */; };
@@ -106,38 +143,6 @@
 		45428A7B26712A3A0022A66D /* FirebaseAnalytics+MobileContentAnalyticsSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45428A7A26712A3A0022A66D /* FirebaseAnalytics+MobileContentAnalyticsSystem.swift */; };
 		45428A7D26712ABA0022A66D /* SnowplowAnalytics+MobileContentAnalyticsSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45428A7C26712ABA0022A66D /* SnowplowAnalytics+MobileContentAnalyticsSystem.swift */; };
 		45428A8126712B1C0022A66D /* AppsFlyerAnalytics+MobileContentAnalyticsSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45428A8026712B1C0022A66D /* AppsFlyerAnalytics+MobileContentAnalyticsSystem.swift */; };
-		45461EF627C6B28F00800E55 /* MultiplatformHeading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45461ECD27C6B28F00800E55 /* MultiplatformHeading.swift */; };
-		45461EF827C6B29000800E55 /* MultiplatformCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45461ECF27C6B28F00800E55 /* MultiplatformCards.swift */; };
-		45461EF927C6B29000800E55 /* MultiplatformCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45461ED027C6B28F00800E55 /* MultiplatformCard.swift */; };
-		45461EFD27C6B29000800E55 /* MultiplatformModals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45461ED427C6B28F00800E55 /* MultiplatformModals.swift */; };
-		45461EFE27C6B29000800E55 /* MultiplatformContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45461ED527C6B28F00800E55 /* MultiplatformContent.swift */; };
-		45461EFF27C6B29000800E55 /* MultiplatformContentHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45461ED627C6B28F00800E55 /* MultiplatformContentHeader.swift */; };
-		45461F0127C6B29000800E55 /* Video+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45461ED927C6B28F00800E55 /* Video+MobileContentRenderableModel.swift */; };
-		45461F0227C6B29000800E55 /* FlowItem+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45461EDA27C6B28F00800E55 /* FlowItem+MobileContentRenderableModel.swift */; };
-		45461F0327C6B29000800E55 /* Modal+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45461EDB27C6B28F00800E55 /* Modal+MobileContentRenderableModel.swift */; };
-		45461F0427C6B29000800E55 /* CallToAction+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45461EDC27C6B28F00800E55 /* CallToAction+MobileContentRenderableModel.swift */; };
-		45461F0527C6B29000800E55 /* Button+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45461EDD27C6B28F00800E55 /* Button+MobileContentRenderableModel.swift */; };
-		45461F0627C6B29000800E55 /* Header+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45461EDE27C6B28F00800E55 /* Header+MobileContentRenderableModel.swift */; };
-		45461F0727C6B29000800E55 /* Flow+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45461EDF27C6B28F00800E55 /* Flow+MobileContentRenderableModel.swift */; };
-		45461F0827C6B29000800E55 /* AccordionSection+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45461EE027C6B28F00800E55 /* AccordionSection+MobileContentRenderableModel.swift */; };
-		45461F0927C6B29000800E55 /* Animation+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45461EE127C6B28F00800E55 /* Animation+MobileContentRenderableModel.swift */; };
-		45461F0A27C6B29000800E55 /* Tabs+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45461EE227C6B28F00800E55 /* Tabs+MobileContentRenderableModel.swift */; };
-		45461F0B27C6B29000800E55 /* Multiselect+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45461EE327C6B28F00800E55 /* Multiselect+MobileContentRenderableModel.swift */; };
-		45461F0C27C6B29000800E55 /* Hero+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45461EE427C6B28F00800E55 /* Hero+MobileContentRenderableModel.swift */; };
-		45461F0D27C6B29000800E55 /* Paragraph+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45461EE527C6B28F00800E55 /* Paragraph+MobileContentRenderableModel.swift */; };
-		45461F0E27C6B29000800E55 /* Image+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45461EE627C6B28F00800E55 /* Image+MobileContentRenderableModel.swift */; };
-		45461F0F27C6B29000800E55 /* CardCollectionPageCard+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45461EE727C6B28F00800E55 /* CardCollectionPageCard+MobileContentRenderableModel.swift */; };
-		45461F1027C6B29000800E55 /* Tab+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45461EE827C6B28F00800E55 /* Tab+MobileContentRenderableModel.swift */; };
-		45461F1127C6B29000800E55 /* Input+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45461EE927C6B28F00800E55 /* Input+MobileContentRenderableModel.swift */; };
-		45461F1227C6B29000800E55 /* Spacer+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45461EEA27C6B28F00800E55 /* Spacer+MobileContentRenderableModel.swift */; };
-		45461F1327C6B29000800E55 /* Form+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45461EEB27C6B28F00800E55 /* Form+MobileContentRenderableModel.swift */; };
-		45461F1427C6B29000800E55 /* MultiSelectOption+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45461EEC27C6B28F00800E55 /* MultiSelectOption+MobileContentRenderableModel.swift */; };
-		45461F1527C6B29000800E55 /* Accordion+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45461EED27C6B28F00800E55 /* Accordion+MobileContentRenderableModel.swift */; };
-		45461F1627C6B29000800E55 /* Link+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45461EEE27C6B28F00800E55 /* Link+MobileContentRenderableModel.swift */; };
-		45461F1727C6B29000800E55 /* Tip+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45461EEF27C6B28F00800E55 /* Tip+MobileContentRenderableModel.swift */; };
-		45461F1827C6B29000800E55 /* Text+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45461EF027C6B28F00800E55 /* Text+MobileContentRenderableModel.swift */; };
-		45461F1C27C6B33D00800E55 /* Card+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45461F1B27C6B33D00800E55 /* Card+MobileContentRenderableModel.swift */; };
-		45461F1E27C6B4BA00800E55 /* InlineTip+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45461F1D27C6B4BA00800E55 /* InlineTip+MobileContentRenderableModel.swift */; };
 		454B53F527305C7100DDA8F9 /* LessonDeepLinkPathComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454B53F427305C7100DDA8F9 /* LessonDeepLinkPathComponents.swift */; };
 		454D1C4227A4BDD700ED7F99 /* HorizontallyCenteredCollectionViewCellSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454D1C4127A4BDD700ED7F99 /* HorizontallyCenteredCollectionViewCellSize.swift */; };
 		455416832794C9540060D4F1 /* DownloadedToolData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455416822794C9540060D4F1 /* DownloadedToolData.swift */; };
@@ -285,11 +290,6 @@
 		4561C41427C68BF500C4A367 /* MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4561C41327C68BF500C4A367 /* MobileContentRenderableModel.swift */; };
 		4565AB8D27C8150F0094160D /* MobileContentAnalyticsEventTrigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4565AB8C27C8150F0094160D /* MobileContentAnalyticsEventTrigger.swift */; };
 		4565AB9027C816710094160D /* AnalyticsEvent+MobileContentAnalyticsEventTrigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4565AB8F27C816710094160D /* AnalyticsEvent+MobileContentAnalyticsEventTrigger.swift */; };
-		4565AB9227C820AE0094160D /* ContentPage+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4565AB9127C820AE0094160D /* ContentPage+MobileContentRenderableModel.swift */; };
-		4565AB9427C821810094160D /* CardCollectionPage+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4565AB9327C821810094160D /* CardCollectionPage+MobileContentRenderableModel.swift */; };
-		4565AB9627C8230D0094160D /* TractPage+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4565AB9527C8230D0094160D /* TractPage+MobileContentRenderableModel.swift */; };
-		4565AB9827C824090094160D /* LessonPage+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4565AB9727C824090094160D /* LessonPage+MobileContentRenderableModel.swift */; };
-		4565AB9A27C824AA0094160D /* TipPage+MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4565AB9927C824AA0094160D /* TipPage+MobileContentRenderableModel.swift */; };
 		4566A3BA27A5C3BE003EAA39 /* MobileContentCardCollectionPageItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4566A3B927A5C3BE003EAA39 /* MobileContentCardCollectionPageItemViewModel.swift */; };
 		4566A3BC27A5C4E2003EAA39 /* MobileContentCardCollectionPageItemViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4566A3BB27A5C4E2003EAA39 /* MobileContentCardCollectionPageItemViewModelType.swift */; };
 		456BB02427C583650087CCA4 /* MobileContentTextLabelAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456BB02327C583650087CCA4 /* MobileContentTextLabelAttributes.swift */; };
@@ -1030,6 +1030,43 @@
 		45051206275AA71F0081BF56 /* MobileContentParagraphViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentParagraphViewModel.swift; sourceTree = "<group>"; };
 		45051208275AA7260081BF56 /* MobileContentParagraphViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentParagraphViewModelType.swift; sourceTree = "<group>"; };
 		4509D6B827C860E00047B19B /* MobileContentMultiplatformParserFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentMultiplatformParserFactory.swift; sourceTree = "<group>"; };
+		4509D6BC27C863B80047B19B /* MultiplatformHeading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiplatformHeading.swift; sourceTree = "<group>"; };
+		4509D6BD27C863B80047B19B /* MultiplatformCards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiplatformCards.swift; sourceTree = "<group>"; };
+		4509D6BE27C863B80047B19B /* MultiplatformCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiplatformCard.swift; sourceTree = "<group>"; };
+		4509D6BF27C863B80047B19B /* MultiplatformModals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiplatformModals.swift; sourceTree = "<group>"; };
+		4509D6C027C863B80047B19B /* MultiplatformContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiplatformContent.swift; sourceTree = "<group>"; };
+		4509D6C127C863B80047B19B /* MultiplatformContentHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiplatformContentHeader.swift; sourceTree = "<group>"; };
+		4509D6C327C863B80047B19B /* Video+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Video+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
+		4509D6C427C863B80047B19B /* FlowItem+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FlowItem+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
+		4509D6C527C863B80047B19B /* TractPage+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractPage+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
+		4509D6C627C863B80047B19B /* Modal+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Modal+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
+		4509D6C727C863B80047B19B /* CallToAction+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CallToAction+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
+		4509D6C827C863B80047B19B /* Button+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Button+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
+		4509D6C927C863B80047B19B /* Header+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Header+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
+		4509D6CA27C863B80047B19B /* Flow+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Flow+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
+		4509D6CB27C863B80047B19B /* InlineTip+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InlineTip+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
+		4509D6CC27C863B80047B19B /* AccordionSection+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AccordionSection+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
+		4509D6CD27C863B80047B19B /* Animation+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Animation+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
+		4509D6CE27C863B80047B19B /* Tabs+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tabs+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
+		4509D6CF27C863B80047B19B /* Multiselect+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Multiselect+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
+		4509D6D027C863B80047B19B /* LessonPage+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LessonPage+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
+		4509D6D127C863B80047B19B /* Hero+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Hero+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
+		4509D6D227C863B80047B19B /* Paragraph+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Paragraph+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
+		4509D6D327C863B80047B19B /* Image+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Image+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
+		4509D6D427C863B80047B19B /* CardCollectionPageCard+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CardCollectionPageCard+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
+		4509D6D527C863B80047B19B /* Tab+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tab+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
+		4509D6D627C863B80047B19B /* ContentPage+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ContentPage+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
+		4509D6D727C863B80047B19B /* Input+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Input+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
+		4509D6D827C863B80047B19B /* Spacer+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Spacer+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
+		4509D6D927C863B80047B19B /* Form+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Form+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
+		4509D6DA27C863B80047B19B /* MultiSelectOption+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MultiSelectOption+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
+		4509D6DB27C863B80047B19B /* TipPage+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TipPage+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
+		4509D6DC27C863B80047B19B /* Accordion+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Accordion+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
+		4509D6DD27C863B80047B19B /* Link+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Link+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
+		4509D6DE27C863B80047B19B /* CardCollectionPage+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CardCollectionPage+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
+		4509D6DF27C863B80047B19B /* Tip+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tip+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
+		4509D6E027C863B80047B19B /* Card+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Card+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
+		4509D6E127C863B80047B19B /* Text+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Text+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
 		450E440827565D1C00D4311E /* TutorialFlowDiContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialFlowDiContainer.swift; sourceTree = "<group>"; };
 		450E440927565D1C00D4311E /* TutorialFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialFlow.swift; sourceTree = "<group>"; };
 		450E440C27565D1C00D4311E /* GetTutorialUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetTutorialUseCase.swift; sourceTree = "<group>"; };
@@ -1117,38 +1154,6 @@
 		45428A7A26712A3A0022A66D /* FirebaseAnalytics+MobileContentAnalyticsSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseAnalytics+MobileContentAnalyticsSystem.swift"; sourceTree = "<group>"; };
 		45428A7C26712ABA0022A66D /* SnowplowAnalytics+MobileContentAnalyticsSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SnowplowAnalytics+MobileContentAnalyticsSystem.swift"; sourceTree = "<group>"; };
 		45428A8026712B1C0022A66D /* AppsFlyerAnalytics+MobileContentAnalyticsSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppsFlyerAnalytics+MobileContentAnalyticsSystem.swift"; sourceTree = "<group>"; };
-		45461ECD27C6B28F00800E55 /* MultiplatformHeading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiplatformHeading.swift; sourceTree = "<group>"; };
-		45461ECF27C6B28F00800E55 /* MultiplatformCards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiplatformCards.swift; sourceTree = "<group>"; };
-		45461ED027C6B28F00800E55 /* MultiplatformCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiplatformCard.swift; sourceTree = "<group>"; };
-		45461ED427C6B28F00800E55 /* MultiplatformModals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiplatformModals.swift; sourceTree = "<group>"; };
-		45461ED527C6B28F00800E55 /* MultiplatformContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiplatformContent.swift; sourceTree = "<group>"; };
-		45461ED627C6B28F00800E55 /* MultiplatformContentHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiplatformContentHeader.swift; sourceTree = "<group>"; };
-		45461ED927C6B28F00800E55 /* Video+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Video+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
-		45461EDA27C6B28F00800E55 /* FlowItem+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FlowItem+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
-		45461EDB27C6B28F00800E55 /* Modal+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Modal+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
-		45461EDC27C6B28F00800E55 /* CallToAction+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CallToAction+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
-		45461EDD27C6B28F00800E55 /* Button+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Button+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
-		45461EDE27C6B28F00800E55 /* Header+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Header+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
-		45461EDF27C6B28F00800E55 /* Flow+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Flow+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
-		45461EE027C6B28F00800E55 /* AccordionSection+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AccordionSection+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
-		45461EE127C6B28F00800E55 /* Animation+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Animation+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
-		45461EE227C6B28F00800E55 /* Tabs+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tabs+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
-		45461EE327C6B28F00800E55 /* Multiselect+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Multiselect+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
-		45461EE427C6B28F00800E55 /* Hero+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Hero+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
-		45461EE527C6B28F00800E55 /* Paragraph+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Paragraph+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
-		45461EE627C6B28F00800E55 /* Image+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Image+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
-		45461EE727C6B28F00800E55 /* CardCollectionPageCard+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CardCollectionPageCard+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
-		45461EE827C6B28F00800E55 /* Tab+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tab+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
-		45461EE927C6B28F00800E55 /* Input+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Input+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
-		45461EEA27C6B28F00800E55 /* Spacer+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Spacer+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
-		45461EEB27C6B28F00800E55 /* Form+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Form+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
-		45461EEC27C6B28F00800E55 /* MultiSelectOption+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MultiSelectOption+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
-		45461EED27C6B28F00800E55 /* Accordion+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Accordion+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
-		45461EEE27C6B28F00800E55 /* Link+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Link+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
-		45461EEF27C6B28F00800E55 /* Tip+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tip+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
-		45461EF027C6B28F00800E55 /* Text+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Text+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
-		45461F1B27C6B33D00800E55 /* Card+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Card+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
-		45461F1D27C6B4BA00800E55 /* InlineTip+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InlineTip+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
 		454B53F427305C7100DDA8F9 /* LessonDeepLinkPathComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDeepLinkPathComponents.swift; sourceTree = "<group>"; };
 		454D1C4127A4BDD700ED7F99 /* HorizontallyCenteredCollectionViewCellSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontallyCenteredCollectionViewCellSize.swift; sourceTree = "<group>"; };
 		455416822794C9540060D4F1 /* DownloadedToolData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadedToolData.swift; sourceTree = "<group>"; };
@@ -1298,11 +1303,6 @@
 		4561C41327C68BF500C4A367 /* MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentRenderableModel.swift; sourceTree = "<group>"; };
 		4565AB8C27C8150F0094160D /* MobileContentAnalyticsEventTrigger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentAnalyticsEventTrigger.swift; sourceTree = "<group>"; };
 		4565AB8F27C816710094160D /* AnalyticsEvent+MobileContentAnalyticsEventTrigger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnalyticsEvent+MobileContentAnalyticsEventTrigger.swift"; sourceTree = "<group>"; };
-		4565AB9127C820AE0094160D /* ContentPage+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentPage+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
-		4565AB9327C821810094160D /* CardCollectionPage+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CardCollectionPage+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
-		4565AB9527C8230D0094160D /* TractPage+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TractPage+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
-		4565AB9727C824090094160D /* LessonPage+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LessonPage+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
-		4565AB9927C824AA0094160D /* TipPage+MobileContentRenderableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TipPage+MobileContentRenderableModel.swift"; sourceTree = "<group>"; };
 		4566A3B927A5C3BE003EAA39 /* MobileContentCardCollectionPageItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentCardCollectionPageItemViewModel.swift; sourceTree = "<group>"; };
 		4566A3BB27A5C4E2003EAA39 /* MobileContentCardCollectionPageItemViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentCardCollectionPageItemViewModelType.swift; sourceTree = "<group>"; };
 		456BB02327C583650087CCA4 /* MobileContentTextLabelAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentTextLabelAttributes.swift; sourceTree = "<group>"; };
@@ -2157,6 +2157,66 @@
 			path = ContentParagraph;
 			sourceTree = "<group>";
 		};
+		4509D6BA27C863B80047B19B /* RenderableModels */ = {
+			isa = PBXGroup;
+			children = (
+				4509D6BB27C863B80047B19B /* Concrete */,
+				4509D6C227C863B80047B19B /* Extensions */,
+			);
+			path = RenderableModels;
+			sourceTree = "<group>";
+		};
+		4509D6BB27C863B80047B19B /* Concrete */ = {
+			isa = PBXGroup;
+			children = (
+				4509D6BE27C863B80047B19B /* MultiplatformCard.swift */,
+				4509D6BD27C863B80047B19B /* MultiplatformCards.swift */,
+				4509D6C027C863B80047B19B /* MultiplatformContent.swift */,
+				4509D6C127C863B80047B19B /* MultiplatformContentHeader.swift */,
+				4509D6BC27C863B80047B19B /* MultiplatformHeading.swift */,
+				4509D6BF27C863B80047B19B /* MultiplatformModals.swift */,
+			);
+			path = Concrete;
+			sourceTree = "<group>";
+		};
+		4509D6C227C863B80047B19B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4509D6DC27C863B80047B19B /* Accordion+MobileContentRenderableModel.swift */,
+				4509D6CC27C863B80047B19B /* AccordionSection+MobileContentRenderableModel.swift */,
+				4509D6CD27C863B80047B19B /* Animation+MobileContentRenderableModel.swift */,
+				4509D6C827C863B80047B19B /* Button+MobileContentRenderableModel.swift */,
+				4509D6C727C863B80047B19B /* CallToAction+MobileContentRenderableModel.swift */,
+				4509D6E027C863B80047B19B /* Card+MobileContentRenderableModel.swift */,
+				4509D6DE27C863B80047B19B /* CardCollectionPage+MobileContentRenderableModel.swift */,
+				4509D6D427C863B80047B19B /* CardCollectionPageCard+MobileContentRenderableModel.swift */,
+				4509D6D627C863B80047B19B /* ContentPage+MobileContentRenderableModel.swift */,
+				4509D6CA27C863B80047B19B /* Flow+MobileContentRenderableModel.swift */,
+				4509D6C427C863B80047B19B /* FlowItem+MobileContentRenderableModel.swift */,
+				4509D6D927C863B80047B19B /* Form+MobileContentRenderableModel.swift */,
+				4509D6C927C863B80047B19B /* Header+MobileContentRenderableModel.swift */,
+				4509D6D127C863B80047B19B /* Hero+MobileContentRenderableModel.swift */,
+				4509D6D327C863B80047B19B /* Image+MobileContentRenderableModel.swift */,
+				4509D6CB27C863B80047B19B /* InlineTip+MobileContentRenderableModel.swift */,
+				4509D6D727C863B80047B19B /* Input+MobileContentRenderableModel.swift */,
+				4509D6D027C863B80047B19B /* LessonPage+MobileContentRenderableModel.swift */,
+				4509D6DD27C863B80047B19B /* Link+MobileContentRenderableModel.swift */,
+				4509D6C627C863B80047B19B /* Modal+MobileContentRenderableModel.swift */,
+				4509D6CF27C863B80047B19B /* Multiselect+MobileContentRenderableModel.swift */,
+				4509D6DA27C863B80047B19B /* MultiSelectOption+MobileContentRenderableModel.swift */,
+				4509D6D227C863B80047B19B /* Paragraph+MobileContentRenderableModel.swift */,
+				4509D6D827C863B80047B19B /* Spacer+MobileContentRenderableModel.swift */,
+				4509D6D527C863B80047B19B /* Tab+MobileContentRenderableModel.swift */,
+				4509D6CE27C863B80047B19B /* Tabs+MobileContentRenderableModel.swift */,
+				4509D6E127C863B80047B19B /* Text+MobileContentRenderableModel.swift */,
+				4509D6DF27C863B80047B19B /* Tip+MobileContentRenderableModel.swift */,
+				4509D6DB27C863B80047B19B /* TipPage+MobileContentRenderableModel.swift */,
+				4509D6C527C863B80047B19B /* TractPage+MobileContentRenderableModel.swift */,
+				4509D6C327C863B80047B19B /* Video+MobileContentRenderableModel.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		450E440A27565D1C00D4311E /* Domain */ = {
 			isa = PBXGroup;
 			children = (
@@ -2472,74 +2532,6 @@
 				453F0B5D26EA369000436EE4 /* MobileContentMultiSelectOptionViewModelType.swift */,
 			);
 			path = ContentMultiSelectOption;
-			sourceTree = "<group>";
-		};
-		45461EC827C6B28F00800E55 /* Multiplatform */ = {
-			isa = PBXGroup;
-			children = (
-				45461EC927C6B28F00800E55 /* RenderableModels */,
-			);
-			path = Multiplatform;
-			sourceTree = "<group>";
-		};
-		45461EC927C6B28F00800E55 /* RenderableModels */ = {
-			isa = PBXGroup;
-			children = (
-				45461ECA27C6B28F00800E55 /* Concrete */,
-				45461ED827C6B28F00800E55 /* Extensions */,
-			);
-			path = RenderableModels;
-			sourceTree = "<group>";
-		};
-		45461ECA27C6B28F00800E55 /* Concrete */ = {
-			isa = PBXGroup;
-			children = (
-				45461ED027C6B28F00800E55 /* MultiplatformCard.swift */,
-				45461ECF27C6B28F00800E55 /* MultiplatformCards.swift */,
-				45461ED527C6B28F00800E55 /* MultiplatformContent.swift */,
-				45461ED627C6B28F00800E55 /* MultiplatformContentHeader.swift */,
-				45461ECD27C6B28F00800E55 /* MultiplatformHeading.swift */,
-				45461ED427C6B28F00800E55 /* MultiplatformModals.swift */,
-			);
-			path = Concrete;
-			sourceTree = "<group>";
-		};
-		45461ED827C6B28F00800E55 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				45461EED27C6B28F00800E55 /* Accordion+MobileContentRenderableModel.swift */,
-				45461EE027C6B28F00800E55 /* AccordionSection+MobileContentRenderableModel.swift */,
-				45461EE127C6B28F00800E55 /* Animation+MobileContentRenderableModel.swift */,
-				45461EDD27C6B28F00800E55 /* Button+MobileContentRenderableModel.swift */,
-				45461EDC27C6B28F00800E55 /* CallToAction+MobileContentRenderableModel.swift */,
-				45461F1B27C6B33D00800E55 /* Card+MobileContentRenderableModel.swift */,
-				4565AB9327C821810094160D /* CardCollectionPage+MobileContentRenderableModel.swift */,
-				45461EE727C6B28F00800E55 /* CardCollectionPageCard+MobileContentRenderableModel.swift */,
-				4565AB9127C820AE0094160D /* ContentPage+MobileContentRenderableModel.swift */,
-				45461EDF27C6B28F00800E55 /* Flow+MobileContentRenderableModel.swift */,
-				45461EDA27C6B28F00800E55 /* FlowItem+MobileContentRenderableModel.swift */,
-				45461EEB27C6B28F00800E55 /* Form+MobileContentRenderableModel.swift */,
-				45461EDE27C6B28F00800E55 /* Header+MobileContentRenderableModel.swift */,
-				45461EE427C6B28F00800E55 /* Hero+MobileContentRenderableModel.swift */,
-				45461EE627C6B28F00800E55 /* Image+MobileContentRenderableModel.swift */,
-				45461F1D27C6B4BA00800E55 /* InlineTip+MobileContentRenderableModel.swift */,
-				45461EE927C6B28F00800E55 /* Input+MobileContentRenderableModel.swift */,
-				4565AB9727C824090094160D /* LessonPage+MobileContentRenderableModel.swift */,
-				45461EEE27C6B28F00800E55 /* Link+MobileContentRenderableModel.swift */,
-				45461EDB27C6B28F00800E55 /* Modal+MobileContentRenderableModel.swift */,
-				45461EE327C6B28F00800E55 /* Multiselect+MobileContentRenderableModel.swift */,
-				45461EEC27C6B28F00800E55 /* MultiSelectOption+MobileContentRenderableModel.swift */,
-				45461EE527C6B28F00800E55 /* Paragraph+MobileContentRenderableModel.swift */,
-				45461EEA27C6B28F00800E55 /* Spacer+MobileContentRenderableModel.swift */,
-				45461EE827C6B28F00800E55 /* Tab+MobileContentRenderableModel.swift */,
-				45461EE227C6B28F00800E55 /* Tabs+MobileContentRenderableModel.swift */,
-				45461EF027C6B28F00800E55 /* Text+MobileContentRenderableModel.swift */,
-				45461EEF27C6B28F00800E55 /* Tip+MobileContentRenderableModel.swift */,
-				4565AB9927C824AA0094160D /* TipPage+MobileContentRenderableModel.swift */,
-				4565AB9527C8230D0094160D /* TractPage+MobileContentRenderableModel.swift */,
-				45461ED927C6B28F00800E55 /* Video+MobileContentRenderableModel.swift */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		45557AE3252D085B00ACFA95 /* Services */ = {
@@ -3126,7 +3118,7 @@
 				45BD7A6F26A235780007426B /* MobileContentRendererPageViewFactories.swift */,
 				45BD7A7126A235F60007426B /* MobileContentRendererPageViewFactoriesType.swift */,
 				4555845B269F2F9E00C3FF14 /* Events */,
-				45461EC827C6B28F00800E55 /* Multiplatform */,
+				4509D6BA27C863B80047B19B /* RenderableModels */,
 			);
 			path = Renderer;
 			sourceTree = "<group>";
@@ -6296,7 +6288,6 @@
 				450F94DC27A1F0F6009DEA43 /* MobileContentCardCollectionPageCardViewModelType.swift in Sources */,
 				45AD20D525938F6800A096A0 /* FollowUpModelType.swift in Sources */,
 				45AD20BD25938F1A00A096A0 /* Signal.swift in Sources */,
-				45461F0427C6B29000800E55 /* CallToAction+MobileContentRenderableModel.swift in Sources */,
 				4561AC9C279C4CD4003718C0 /* MobileContentCardCollectionPageViewModel.swift in Sources */,
 				45AD1BC625938A4F00A096A0 /* UIKit+Extensions.swift in Sources */,
 				45AD1FFF25938A9800A096A0 /* ViewsApi.swift in Sources */,
@@ -6334,13 +6325,14 @@
 				45AD1BB825938A4F00A096A0 /* ModalNavigationController.swift in Sources */,
 				45AD1B9925938A4F00A096A0 /* ToolNavBarViewModel.swift in Sources */,
 				45AD1B8B25938A4F00A096A0 /* OnboardingTutorialAvailabilityType.swift in Sources */,
-				45461F1227C6B29000800E55 /* Spacer+MobileContentRenderableModel.swift in Sources */,
+				4509D6F727C863B80047B19B /* Paragraph+MobileContentRenderableModel.swift in Sources */,
 				45AD1BA025938A4F00A096A0 /* DownloadedResource.swift in Sources */,
 				45C93AF2261D310900592FFF /* ArticleAemDownloader.swift in Sources */,
 				454B53F527305C7100DDA8F9 /* LessonDeepLinkPathComponents.swift in Sources */,
 				45AD1BD025938A4F00A096A0 /* LoadingViewModelType.swift in Sources */,
 				451CCF1D27A9D87600E8D2D3 /* MobileContentCardCollectionPagePositionState.swift in Sources */,
 				45AD1FFB25938A9800A096A0 /* DetermineNewUserIfPrimaryLanguageSet.swift in Sources */,
+				4509D6F627C863B80047B19B /* Hero+MobileContentRenderableModel.swift in Sources */,
 				455583ED269F2DA500C3FF14 /* MobileContentSpacerViewModel.swift in Sources */,
 				450E442527565D7000D4311E /* TutorialSupportedLanguagesType.swift in Sources */,
 				455D275E27B6A3F700FB85B3 /* MobileContentSpacerHeight.swift in Sources */,
@@ -6348,11 +6340,13 @@
 				45EC429B272C87430052F2AA /* PassthroughValue.swift in Sources */,
 				45AD1F9925938A9800A096A0 /* RealmResource.swift in Sources */,
 				45AD1FF825938A9800A096A0 /* IsNewUserService.swift in Sources */,
+				4509D6E427C863B80047B19B /* MultiplatformCard.swift in Sources */,
 				450F94DF27A1F38E009DEA43 /* MobileContentCardCollectionPageItemView.swift in Sources */,
 				45AD1F5E25938A9800A096A0 /* StarscreamWebSocket.swift in Sources */,
 				45B116C22625FC6D007A7127 /* LanguageDirection+SemanticContentAttribute.swift in Sources */,
 				457E199E27C6EA4C00BABD49 /* NSError+Error.swift in Sources */,
 				45AD1FED25938A9800A096A0 /* OpenTutorialCalloutUserDefaultsCache.swift in Sources */,
+				4509D70027C863B80047B19B /* TipPage+MobileContentRenderableModel.swift in Sources */,
 				457739EB27A0984200999270 /* MobileContentFlowRow.swift in Sources */,
 				45AD1B7325938A4F00A096A0 /* OnboardingTutorialItemsRepository.swift in Sources */,
 				45C93AE6261D310900592FFF /* ArticleAemRepository.swift in Sources */,
@@ -6401,6 +6395,7 @@
 				45AD1F8C25938A9800A096A0 /* AttachmentModel.swift in Sources */,
 				45AD21592593A4D900A096A0 /* ShareToolScreenTutorialViewModel.swift in Sources */,
 				45AD1AE825938A4E00A096A0 /* ShareToolScreenCustomTutorialViewBuilder.swift in Sources */,
+				4509D6F527C863B80047B19B /* LessonPage+MobileContentRenderableModel.swift in Sources */,
 				45AD1BC925938A4F00A096A0 /* UIView+ProgressView.swift in Sources */,
 				45828BCA279CCB6900F6B5F3 /* MobileContentCardViewModel.swift in Sources */,
 				45AD1FD425938A9800A096A0 /* WebArchiveQueueResult.swift in Sources */,
@@ -6421,7 +6416,9 @@
 				45AD206525938B1300A096A0 /* AlertMessage.swift in Sources */,
 				45E39EC327457856006A59E4 /* TutorialAssetContent.swift in Sources */,
 				45558351269F2D1000C3FF14 /* LessonPageViewModel.swift in Sources */,
+				4509D70327C863B80047B19B /* CardCollectionPage+MobileContentRenderableModel.swift in Sources */,
 				45AD1FD325938A9800A096A0 /* HTMLDocument+ResourceUrls.swift in Sources */,
+				4509D6F327C863B80047B19B /* Tabs+MobileContentRenderableModel.swift in Sources */,
 				45CB9FA0261F8BA80036BEB3 /* ToolsMenuToolbarViewModel.swift in Sources */,
 				45B6482025E58EE70098BAF1 /* (null) in Sources */,
 				45AD21152593958E00A096A0 /* LanguageModelType.swift in Sources */,
@@ -6438,11 +6435,11 @@
 				45AD1FCE25938A9800A096A0 /* SHA256FileLocation.swift in Sources */,
 				45AD20C925938F3900A096A0 /* CallbackValueHandler.swift in Sources */,
 				45AD201725938A9800A096A0 /* ToolShortcutItem.swift in Sources */,
+				4509D6E827C863B80047B19B /* Video+MobileContentRenderableModel.swift in Sources */,
 				D1AF02F1273076E700BEC921 /* VideoPlayerViewModel.swift in Sources */,
 				45AD1B1A25938A4E00A096A0 /* InMemoryLearnToShareToolItems.swift in Sources */,
 				45E39ECC27457A14006A59E4 /* AnimatedResource.swift in Sources */,
 				45AD1F7925938A9800A096A0 /* DeviceLanguageType.swift in Sources */,
-				45461F0A27C6B29000800E55 /* Tabs+MobileContentRenderableModel.swift in Sources */,
 				45CB9FFC261FB0BE0036BEB3 /* LessonListItemViewModelType.swift in Sources */,
 				450F94DB27A1F0F6009DEA43 /* MobileContentCardCollectionPageCardView.swift in Sources */,
 				458EFED926B1A6CC009EEB03 /* ArticleFlowCompletedState.swift in Sources */,
@@ -6469,17 +6466,19 @@
 				455583C9269F2DA500C3FF14 /* MobileContentPageViewModel.swift in Sources */,
 				45AD205125938AC300A096A0 /* ToolOpenedAnalytics.swift in Sources */,
 				45AD1B0E25938A4E00A096A0 /* ArticleCellViewModelType.swift in Sources */,
+				4509D70527C863B80047B19B /* Card+MobileContentRenderableModel.swift in Sources */,
 				45AD1F9825938A9800A096A0 /* RealmResourcesCache.swift in Sources */,
 				4502BD3E279F3B4D000C544A /* MobileContentFlowItemView.swift in Sources */,
 				D1878BC22718CFB000557E0A /* OnboardingTutorialViewModel.swift in Sources */,
 				D1D5691C270636A600BBE2A6 /* OnboardingTutorialIntroViewModelType.swift in Sources */,
 				45AD205D25938AC300A096A0 /* AnalyticsContainer.swift in Sources */,
 				D1878BC42719BCE500557E0A /* OnboardingTutorialItemsRepositoryType.swift in Sources */,
+				4509D6F227C863B80047B19B /* Animation+MobileContentRenderableModel.swift in Sources */,
+				4509D70627C863B80047B19B /* Text+MobileContentRenderableModel.swift in Sources */,
 				450E44532756B6E000D4311E /* MenuItemView.swift in Sources */,
 				45AD1B5725938A4F00A096A0 /* AccountItem.swift in Sources */,
 				456E504325D0CEEE0075FF6A /* URL+DeepLinkHost.swift in Sources */,
 				45AD1FFA25938A9800A096A0 /* DetermineIfNewUserType.swift in Sources */,
-				45461F0B27C6B29000800E55 /* Multiselect+MobileContentRenderableModel.swift in Sources */,
 				4555833F269F2C7B00C3FF14 /* ToolPageModalViewModel.swift in Sources */,
 				45AD20BC25938F1A00A096A0 /* SignalValue.swift in Sources */,
 				45AD20E32593915300A096A0 /* GlobalActivityAnalytics.swift in Sources */,
@@ -6491,13 +6490,13 @@
 				D119788F271A090400E08580 /* TutorialPagerViewModel.swift in Sources */,
 				45AD1B0525938A4E00A096A0 /* ArticlesErrorMessage.swift in Sources */,
 				45AD1FFE25938A9800A096A0 /* ResourceViewModelType.swift in Sources */,
+				4509D6E627C863B80047B19B /* MultiplatformContent.swift in Sources */,
 				45AD1F9025938A9800A096A0 /* TranslationModel.swift in Sources */,
 				45B6480925E581660098BAF1 /* (null) in Sources */,
 				45558407269F2DA500C3FF14 /* MobileContentPagesViewModel.swift in Sources */,
 				45E3FAC02759898200D0CAFA /* AuthUserModelType.swift in Sources */,
 				455582E1269F2C1000C3FF14 /* TrainingViewFactory.swift in Sources */,
 				45AD1F7A25938A9800A096A0 /* DeviceLanguage.swift in Sources */,
-				45461EF627C6B28F00800E55 /* MultiplatformHeading.swift in Sources */,
 				45AD1F7625938A9800A096A0 /* ViewedTrainingTipType.swift in Sources */,
 				D10AD0E02790C379004859C4 /* SetupParallelLanguageViewedUserDefaultsCache.swift in Sources */,
 				45558405269F2DA500C3FF14 /* MobileContentPagesView.swift in Sources */,
@@ -6531,7 +6530,6 @@
 				45AD22B32593D1FB00A096A0 /* UIImage+CreateImageWithColor.swift in Sources */,
 				45CB9FFA261FB0BE0036BEB3 /* LessonsListView.swift in Sources */,
 				4561AC98279C4CA7003718C0 /* MobileContentContentPageViewModelType.swift in Sources */,
-				45461EFF27C6B29000800E55 /* MultiplatformContentHeader.swift in Sources */,
 				45AD1B2A25938A4F00A096A0 /* AboutViewModel.swift in Sources */,
 				45AD200825938A9800A096A0 /* DownloadedTranslationResult.swift in Sources */,
 				45AD1F9425938A9800A096A0 /* ResourcesDownloaderError.swift in Sources */,
@@ -6541,19 +6539,18 @@
 				45F5A03F2689FD7E0081C507 /* LessonQueryParameters.swift in Sources */,
 				45558410269F2DA500C3FF14 /* MobileContentTextViewModelType.swift in Sources */,
 				D1E98EDF27974F0100D1B738 /* LessonEvaluationViewModel.swift in Sources */,
-				45461F1627C6B29000800E55 /* Link+MobileContentRenderableModel.swift in Sources */,
 				45C93AF0261D310900592FFF /* ArticleAemDownloaderError.swift in Sources */,
 				4555849A269F2F9E00C3FF14 /* TrainingTipEvent.swift in Sources */,
 				455583F1269F2DA500C3FF14 /* MobileContentTabView.swift in Sources */,
 				457E199A27C6E3AF00BABD49 /* MobileContentRenderer.swift in Sources */,
 				45AD205025938AC300A096A0 /* PageViewedAnalytics.swift in Sources */,
-				45461F1527C6B29000800E55 /* Accordion+MobileContentRenderableModel.swift in Sources */,
+				4509D6FC27C863B80047B19B /* Input+MobileContentRenderableModel.swift in Sources */,
 				45AD1B2325938A4F00A096A0 /* LearnToShareToolViewModelType.swift in Sources */,
 				45CBA009261FB0D30036BEB3 /* LessonView.swift in Sources */,
-				4565AB9427C821810094160D /* CardCollectionPage+MobileContentRenderableModel.swift in Sources */,
 				45AD20A625938CF100A096A0 /* AppBuild.swift in Sources */,
 				45FC4760279313D90028F797 /* DetermineToolTranslationsToDownloadError.swift in Sources */,
 				455583FA269F2DA500C3FF14 /* MobileContentInputViewModelType.swift in Sources */,
+				4509D6E527C863B80047B19B /* MultiplatformModals.swift in Sources */,
 				45558417269F2F6100C3FF14 /* MobileContentAnalytics.swift in Sources */,
 				45AD1B8C25938A4F00A096A0 /* OnboardingTutorialViewedUserDefaultsCache.swift in Sources */,
 				4513C2EA2704681300614F79 /* SetupParallelLanguageViewModel.swift in Sources */,
@@ -6562,7 +6559,6 @@
 				45AD1B3425938A4F00A096A0 /* LanguageSettingsViewModelType.swift in Sources */,
 				45AD1AC725938A4E00A096A0 /* FavoritedToolsView.swift in Sources */,
 				451CCF1A27A9D42200E8D2D3 /* MobileContentPagePositionState.swift in Sources */,
-				45461F0F27C6B29000800E55 /* CardCollectionPageCard+MobileContentRenderableModel.swift in Sources */,
 				45AD1B4C25938A4F00A096A0 /* ToolTrainingViewModel.swift in Sources */,
 				45AD1F8D25938A9800A096A0 /* ResourcesPlusLatestTranslationsAndAttachmentsModel.swift in Sources */,
 				4561C41027C6891600C4A367 /* MobileContentAccordionSectionViewModelType.swift in Sources */,
@@ -6570,16 +6566,17 @@
 				45AD1BC725938A4F00A096A0 /* UIView+Animations.swift in Sources */,
 				451A17602757B1FF00D35D78 /* MenuSection.swift in Sources */,
 				45C93AF8261D310900592FFF /* CategoryArticleModel.swift in Sources */,
+				4509D6ED27C863B80047B19B /* Button+MobileContentRenderableModel.swift in Sources */,
 				45558406269F2DA500C3FF14 /* MobileContentPagesNavigationModel.swift in Sources */,
 				45C93AE4261D310900592FFF /* RealmArticleAemData.swift in Sources */,
 				450E444F2756B66300D4311E /* MenuView.swift in Sources */,
 				45AD1F6225938A9800A096A0 /* ActionCableEventType.swift in Sources */,
-				45461F1027C6B29000800E55 /* Tab+MobileContentRenderableModel.swift in Sources */,
 				45AD20EB259391B000A096A0 /* JsonServices.swift in Sources */,
 				4502BD42279F3B72000C544A /* MobileContentFlowItemViewModel.swift in Sources */,
 				45AD1F8F25938A9800A096A0 /* ResourceType.swift in Sources */,
 				45AD201025938A9800A096A0 /* TranslationsFileCache.swift in Sources */,
 				45AD1B6425938A4F00A096A0 /* GlobalActivityHeaderViewModel.swift in Sources */,
+				4509D6F927C863B80047B19B /* CardCollectionPageCard+MobileContentRenderableModel.swift in Sources */,
 				45CBA01B261FB0EA0036BEB3 /* LessonViewModelType.swift in Sources */,
 				45AD1AF325938A4E00A096A0 /* ShareAStoryWithUsWebContent.swift in Sources */,
 				45FC123927A833BF00F4EC4F /* NavBarSelectorView.swift in Sources */,
@@ -6590,6 +6587,7 @@
 				45AD1BDD25938A4F00A096A0 /* GTSegmentType.swift in Sources */,
 				45AC60192624BAB100253217 /* ToolItemInitialDownloadProgress.swift in Sources */,
 				45558325269F2C7B00C3FF14 /* ToolPageFormViewModel.swift in Sources */,
+				4509D70127C863B80047B19B /* Accordion+MobileContentRenderableModel.swift in Sources */,
 				45E39ECA27457A14006A59E4 /* AnimatedViewModel.swift in Sources */,
 				45AD1FDD25938A9800A096A0 /* EmailSignUpApi.swift in Sources */,
 				455583C3269F2DA500C3FF14 /* MobileContentPageViewFactory.swift in Sources */,
@@ -6600,6 +6598,7 @@
 				45C93AD9261D310900592FFF /* ArticleResource.swift in Sources */,
 				45AD20F82593950300A096A0 /* DownloadedLanguagesCache.swift in Sources */,
 				45AD1B0025938A4E00A096A0 /* ShareArticleViewModelType.swift in Sources */,
+				4509D6E227C863B80047B19B /* MultiplatformHeading.swift in Sources */,
 				D182CA2727274B1F00ABAAC8 /* UIButton+SetInsets.swift in Sources */,
 				4555833C269F2C7B00C3FF14 /* ToolPageModalViewModelType.swift in Sources */,
 				455A6C6E27C16FFB00968277 /* MobileContentButtonIcon.swift in Sources */,
@@ -6628,13 +6627,11 @@
 				45AD201225938A9800A096A0 /* TranslationZipFileModelType.swift in Sources */,
 				45AD1AD425938A4E00A096A0 /* OpenTutorialViewModel.swift in Sources */,
 				45AD1B8A25938A4F00A096A0 /* OnboardingTutorialAvailability.swift in Sources */,
-				4565AB9627C8230D0094160D /* TractPage+MobileContentRenderableModel.swift in Sources */,
 				45AD1FBD25938A9800A096A0 /* TractRemoteShareNavigationEvent.swift in Sources */,
 				45AD1B9D25938A4F00A096A0 /* Language.swift in Sources */,
 				D1AC1491274C1ADF003510AC /* OnboardingQuickStartCellViewModelType.swift in Sources */,
 				45AD1B5825938A4F00A096A0 /* AccountViewModelType.swift in Sources */,
 				458EFED326B19A2C009EEB03 /* ToolNavigationFlow.swift in Sources */,
-				45461F0127C6B29000800E55 /* Video+MobileContentRenderableModel.swift in Sources */,
 				D1AF02EF2730767D00BEC921 /* VideoPlayerViewModelType.swift in Sources */,
 				45558342269F2C7B00C3FF14 /* ToolPageHeaderViewModelType.swift in Sources */,
 				45AD21162593958E00A096A0 /* LanguageModel+Direction.swift in Sources */,
@@ -6650,12 +6647,11 @@
 				45AD1AC925938A4E00A096A0 /* ToolsTableView.swift in Sources */,
 				45C93AE5261D310900592FFF /* RealmArticleJcrContent.swift in Sources */,
 				4599251B2704F36A008F7844 /* ChooseScaleSliderView.swift in Sources */,
-				45461F0C27C6B29000800E55 /* Hero+MobileContentRenderableModel.swift in Sources */,
 				45E3FABF2759898200D0CAFA /* AuthUserModel.swift in Sources */,
-				45461EFD27C6B29000800E55 /* MultiplatformModals.swift in Sources */,
 				45828BC8279CCB5300F6B5F3 /* MobileContentCardView.swift in Sources */,
 				45AD1AFA25938A4E00A096A0 /* MailViewModelType.swift in Sources */,
 				45558341269F2C7B00C3FF14 /* ToolPageHeaderView.swift in Sources */,
+				4509D6FB27C863B80047B19B /* ContentPage+MobileContentRenderableModel.swift in Sources */,
 				45AD1BA725938A4F00A096A0 /* ShareToolMenuFlow.swift in Sources */,
 				45AD1AEF25938A4E00A096A0 /* ContactUsWebContent.swift in Sources */,
 				45AD1F7425938A9800A096A0 /* ViewedTrainingTipsCacheType.swift in Sources */,
@@ -6673,7 +6669,6 @@
 				450E441527565D1C00D4311E /* TutorialFlow.swift in Sources */,
 				45AD1BD325938A4F00A096A0 /* LoadingView.swift in Sources */,
 				4578783027C41C08004552D5 /* MobileContentBackgroundImageAlignment.swift in Sources */,
-				45461F0627C6B29000800E55 /* Header+MobileContentRenderableModel.swift in Sources */,
 				4581B83827984B1300470F1D /* GetToolTranslationManifestsFromCache.swift in Sources */,
 				45CB9FA8261F8BA80036BEB3 /* ToolCell.swift in Sources */,
 				45AD1B1925938A4E00A096A0 /* LearnToShareToolViewModel.swift in Sources */,
@@ -6682,7 +6677,6 @@
 				45AD1F8425938A9800A096A0 /* ResourcesDownloader.swift in Sources */,
 				45AD1F8625938A9800A096A0 /* SHA256FileModelType.swift in Sources */,
 				45AD1AFF25938A4E00A096A0 /* ArticlesView.swift in Sources */,
-				45461F0827C6B29000800E55 /* AccordionSection+MobileContentRenderableModel.swift in Sources */,
 				45AD1F7C25938A9800A096A0 /* SharedIgnoreCacheSession.swift in Sources */,
 				45CB9FA4261F8BA80036BEB3 /* ToolsMenuToolbarItemViewModel.swift in Sources */,
 				45AD1AC425938A4E00A096A0 /* FavoritedToolsViewModelType.swift in Sources */,
@@ -6704,6 +6698,7 @@
 				457579E426E96ABE00C898D2 /* MobileContentMultiSelectView.swift in Sources */,
 				45AD1B0725938A4E00A096A0 /* ArticleWebViewModel.swift in Sources */,
 				45AD1FCC25938A9800A096A0 /* LanguageTranslationsDownloader.swift in Sources */,
+				4509D6EC27C863B80047B19B /* CallToAction+MobileContentRenderableModel.swift in Sources */,
 				45AD1BC525938A4F00A096A0 /* UIViewController+NavItem.swift in Sources */,
 				45AD1B0225938A4E00A096A0 /* ArticleCategoriesViewModel.swift in Sources */,
 				45AD1F9B25938A9800A096A0 /* RealmTranslation.swift in Sources */,
@@ -6728,7 +6723,6 @@
 				45B6480C25E581660098BAF1 /* (null) in Sources */,
 				455582E5269F2C1000C3FF14 /* TrainingTipView.swift in Sources */,
 				45AD201125938A9800A096A0 /* TranslationManifestData.swift in Sources */,
-				45461F1827C6B29000800E55 /* Text+MobileContentRenderableModel.swift in Sources */,
 				45C93B13261D314C00592FFF /* ArticleDeepLinkFlow.swift in Sources */,
 				45AD205925938AC300A096A0 /* SnowplowAnalyticsType.swift in Sources */,
 				45AD1F7025938A9800A096A0 /* FollowUpsService.swift in Sources */,
@@ -6775,12 +6769,10 @@
 				45AD1B1B25938A4E00A096A0 /* LearnToShareToolItem.swift in Sources */,
 				45AD1F8825938A9800A096A0 /* RealmSHA256File.swift in Sources */,
 				45AD1B2825938A4F00A096A0 /* AboutTextProviderType.swift in Sources */,
-				4565AB9A27C824AA0094160D /* TipPage+MobileContentRenderableModel.swift in Sources */,
 				45828BD1279CCBD200F6B5F3 /* MobileContentFlowView.swift in Sources */,
 				455583D1269F2DA500C3FF14 /* MobileContentFormInputModel.swift in Sources */,
 				45AD1AEE25938A4E00A096A0 /* TermsOfUseWebContent.swift in Sources */,
 				45AD209625938C4900A096A0 /* GlobalActivityAnalyticsUserDefaultsCache.swift in Sources */,
-				45461F0E27C6B29000800E55 /* Image+MobileContentRenderableModel.swift in Sources */,
 				45F7E7602701F1AA00CC9FB9 /* MobileContentViewVisibilityState.swift in Sources */,
 				455583E8269F2DA500C3FF14 /* MobileContentButtonViewModelType.swift in Sources */,
 				45558353269F2D1000C3FF14 /* LessonPageViewModelType.swift in Sources */,
@@ -6790,8 +6782,10 @@
 				45AD1F9225938A9800A096A0 /* AttachmentModelType+SHA256FileLocation.swift in Sources */,
 				45428A7B26712A3A0022A66D /* FirebaseAnalytics+MobileContentAnalyticsSystem.swift in Sources */,
 				455583CD269F2DA500C3FF14 /* MobileContentPageView.swift in Sources */,
+				4509D70227C863B80047B19B /* Link+MobileContentRenderableModel.swift in Sources */,
 				D133071A273989750058450B /* OnboardingQuickStartViewModelType.swift in Sources */,
 				45AD20B225938EE500A096A0 /* FileCache.swift in Sources */,
+				4509D6F427C863B80047B19B /* Multiselect+MobileContentRenderableModel.swift in Sources */,
 				459C93B027581FD0006207D2 /* OktaUserAuthentication.swift in Sources */,
 				45AD1B1D25938A4E00A096A0 /* LearnToShareToolView.swift in Sources */,
 				45AD1ACC25938A4E00A096A0 /* FavoritingToolMessageViewModelType.swift in Sources */,
@@ -6804,7 +6798,6 @@
 				4579A1DE2792331200F18B3E /* DownloadToolViewModel.swift in Sources */,
 				45AD209B25938C4900A096A0 /* GlobalActivityAnalyticsApi.swift in Sources */,
 				45AD1F8925938A9800A096A0 /* ResourcesApiType.swift in Sources */,
-				4565AB9827C824090094160D /* LessonPage+MobileContentRenderableModel.swift in Sources */,
 				45558401269F2DA500C3FF14 /* MobileContentBackgroundImageViewModel.swift in Sources */,
 				45D95CCE271F3F1100263D46 /* MobileContentEventAnalyticsTracking.swift in Sources */,
 				45C93ADF261D310900592FFF /* ArticleAemCacheError.swift in Sources */,
@@ -6826,16 +6819,17 @@
 				45AD202B25938A9800A096A0 /* CardJumpUserDefaultsCache.swift in Sources */,
 				45AD1AD825938A4E00A096A0 /* ToolsMenuViewModelType.swift in Sources */,
 				451A175D2757B1FF00D35D78 /* MenuDataSource.swift in Sources */,
+				4509D6FA27C863B80047B19B /* Tab+MobileContentRenderableModel.swift in Sources */,
 				45558402269F2DA500C3FF14 /* MobileContentBackgroundImageView.swift in Sources */,
 				45051205275AA7050081BF56 /* MobileContentParagraphView.swift in Sources */,
 				D1AC1493274C2542003510AC /* OnboardingFlowCompletedState.swift in Sources */,
-				4565AB9227C820AE0094160D /* ContentPage+MobileContentRenderableModel.swift in Sources */,
 				45163635268B7F950010876B /* DeepLinkPathType.swift in Sources */,
 				45AD1F9D25938A9800A096A0 /* ResourcesCache.swift in Sources */,
 				D1FF263825BA0C0E00C825DB /* FirebaseInAppMessagingType.swift in Sources */,
 				45AD1AEB25938A4E00A096A0 /* WebContentViewModelType.swift in Sources */,
 				45AD1F5F25938A9800A096A0 /* WebSocketChannelSubscriberType.swift in Sources */,
 				45D266E9277499AD00960990 /* UIViewController+DismissPresented.swift in Sources */,
+				4509D6E327C863B80047B19B /* MultiplatformCards.swift in Sources */,
 				45AD223C2593C90000A096A0 /* CrashReportingType.swift in Sources */,
 				45AD1B1225938A4E00A096A0 /* ArticleCategoryCellViewModelType.swift in Sources */,
 				D1FF263E25BA0C1C00C825DB /* FirebaseInAppMessaging.swift in Sources */,
@@ -6846,7 +6840,6 @@
 				45CB9FFE261FB0BE0036BEB3 /* LessonListItemView.swift in Sources */,
 				45AD1BE425938A4F00A096A0 /* CustomViewBuilderType.swift in Sources */,
 				455583D2269F2DA500C3FF14 /* MobileContentFormViewModel.swift in Sources */,
-				45461F1E27C6B4BA00800E55 /* InlineTip+MobileContentRenderableModel.swift in Sources */,
 				45AD1AFE25938A4E00A096A0 /* ArticleWebView.swift in Sources */,
 				45AD1B4E25938A4F00A096A0 /* ToolTrainingAnimatedTransitioning.swift in Sources */,
 				456FBE0527A48D2D0033FBCB /* HorizontallyCenteredCollectionViewCell.swift in Sources */,
@@ -6864,7 +6857,6 @@
 				45AD1B3225938A4F00A096A0 /* ChooseLanguageViewModelType.swift in Sources */,
 				45D6D02E2708B8FF0063C38A /* RealmLessonEvaluation.swift in Sources */,
 				45AD1B2F25938A4F00A096A0 /* ChooseLanguageViewModel.swift in Sources */,
-				45461F0927C6B29000800E55 /* Animation+MobileContentRenderableModel.swift in Sources */,
 				45CB9FF9261FB0BE0036BEB3 /* LessonsListViewType.swift in Sources */,
 				45AD205B25938AC300A096A0 /* AppsFlyerAnalyticsType.swift in Sources */,
 				4561C40F27C6891600C4A367 /* MobileContentAccordionSectionView.swift in Sources */,
@@ -6892,17 +6884,21 @@
 				45AD1B6925938A4F00A096A0 /* ToolDetailViewModel.swift in Sources */,
 				45AD1F6B25938A9800A096A0 /* LanguageSettingsUserDefaultsCache.swift in Sources */,
 				4509D6B927C860E00047B19B /* MobileContentMultiplatformParserFactory.swift in Sources */,
+				4509D6FD27C863B80047B19B /* Spacer+MobileContentRenderableModel.swift in Sources */,
+				4509D6EE27C863B80047B19B /* Header+MobileContentRenderableModel.swift in Sources */,
 				45C93AD7261D310900592FFF /* ArticleCategory.swift in Sources */,
 				45AD1B5E25938A4F00A096A0 /* AccountItemCell.swift in Sources */,
+				4509D6E727C863B80047B19B /* MultiplatformContentHeader.swift in Sources */,
 				45AD1BAA25938A4F00A096A0 /* Flow.swift in Sources */,
 				455583F7269F2DA500C3FF14 /* MobileContentLinkView.swift in Sources */,
-				45461EFE27C6B29000800E55 /* MultiplatformContent.swift in Sources */,
+				4509D6EF27C863B80047B19B /* Flow+MobileContentRenderableModel.swift in Sources */,
 				45E39ED927457D32006A59E4 /* LearnToShareToolAssetContent.swift in Sources */,
 				45AD1B1C25938A4E00A096A0 /* LearnToShareToolItemsProviderType.swift in Sources */,
 				456E504D25D0CF7E0075FF6A /* ParsedDeepLinkType.swift in Sources */,
 				45CB9FA5261F8BA80036BEB3 /* ToolsMenuToolbarView.swift in Sources */,
+				4509D6EB27C863B80047B19B /* Modal+MobileContentRenderableModel.swift in Sources */,
+				4509D70427C863B80047B19B /* Tip+MobileContentRenderableModel.swift in Sources */,
 				455583EC269F2DA500C3FF14 /* MobileContentSpacerView.swift in Sources */,
-				45461F0D27C6B29000800E55 /* Paragraph+MobileContentRenderableModel.swift in Sources */,
 				45428A8126712B1C0022A66D /* AppsFlyerAnalytics+MobileContentAnalyticsSystem.swift in Sources */,
 				45AD208625938B6A00A096A0 /* KeyboardStateChange.swift in Sources */,
 				45AD21362593A47800A096A0 /* ShareToolMenuViewModel.swift in Sources */,
@@ -6916,6 +6912,7 @@
 				4513C2E8270467F400614F79 /* SetupParallelLanguageView.swift in Sources */,
 				4575083B279A40BD00943197 /* ChooseYourOwnAdventureViewModelType.swift in Sources */,
 				45CBA015261FB0E30036BEB3 /* LessonViewModel.swift in Sources */,
+				4509D6E927C863B80047B19B /* FlowItem+MobileContentRenderableModel.swift in Sources */,
 				45AD1B6E25938A4F00A096A0 /* ToolDetailViewModelType.swift in Sources */,
 				451CCF0A27A9A96F00E8D2D3 /* MobileContentPageColors.swift in Sources */,
 				45750837279A409300943197 /* ChooseYourOwnAdventureView.swift in Sources */,
@@ -6976,12 +6973,14 @@
 				45AD208325938B6A00A096A0 /* KeyboardNotificationObserver.swift in Sources */,
 				45AD1FEB25938A9800A096A0 /* InitialDeviceResourcesLoader.swift in Sources */,
 				45AD1AFD25938A4E00A096A0 /* DownloadArticlesErrorViewModel.swift in Sources */,
+				4509D6F127C863B80047B19B /* AccordionSection+MobileContentRenderableModel.swift in Sources */,
 				45C93AEC261D310900592FFF /* ArticleJcrContentType.swift in Sources */,
 				45AD1B0D25938A4E00A096A0 /* ArticlesErrorMessageView.swift in Sources */,
 				45AD201525938A9800A096A0 /* RealmTranslationZipFile.swift in Sources */,
 				45AD205725938AC300A096A0 /* FirebaseAnalyticsType.swift in Sources */,
 				45558350269F2D1000C3FF14 /* LessonPageViewFactory.swift in Sources */,
 				45AD1AAF25938A4E00A096A0 /* TutorialCell.swift in Sources */,
+				4509D6FE27C863B80047B19B /* Form+MobileContentRenderableModel.swift in Sources */,
 				45AD1B5625938A4F00A096A0 /* GlobalActivityResults.swift in Sources */,
 				45C93AED261D310900592FFF /* ArticleAemDataType.swift in Sources */,
 				45AD1B5F25938A4F00A096A0 /* AccountItemCellViewModel.swift in Sources */,
@@ -7001,11 +7000,11 @@
 				456BB02427C583650087CCA4 /* MobileContentTextLabelAttributes.swift in Sources */,
 				450F94DA27A1F0F6009DEA43 /* MobileContentCardCollectionPageCardViewModel.swift in Sources */,
 				455583EB269F2DA500C3FF14 /* MobileContentSpacerViewModelType.swift in Sources */,
+				4509D6F827C863B80047B19B /* Image+MobileContentRenderableModel.swift in Sources */,
 				4581657626F4DD4D000D660F /* MobileContentRowView.swift in Sources */,
 				D10AD0D82790C0E5004859C4 /* SetupParallelLanguageAvailabilityType.swift in Sources */,
 				45AD1F6E25938A9800A096A0 /* FollowUpsApi.swift in Sources */,
 				45AD1FF025938A9800A096A0 /* NoAttachmentData.swift in Sources */,
-				45461F0727C6B29000800E55 /* Flow+MobileContentRenderableModel.swift in Sources */,
 				45AD1B5D25938A4F00A096A0 /* AccountActivityViewModel.swift in Sources */,
 				4578D1DB2795CB1C0044F7BF /* LanguageViewModel.swift in Sources */,
 				45AD21372593A47800A096A0 /* ShareToolMenuView.swift in Sources */,
@@ -7026,7 +7025,6 @@
 				45AD1AED25938A4E00A096A0 /* WebContent.swift in Sources */,
 				455582EA269F2C1000C3FF14 /* TrainingPageViewModel.swift in Sources */,
 				45AD21632593A62800A096A0 /* AppDiContainer.swift in Sources */,
-				45461F1327C6B29000800E55 /* Form+MobileContentRenderableModel.swift in Sources */,
 				45C93AF5261D310900592FFF /* ArticleManifestAemRepository.swift in Sources */,
 				45AD1BDE25938A4F00A096A0 /* GTSegment.swift in Sources */,
 				45C93AEE261D310900592FFF /* ArticleAemData.swift in Sources */,
@@ -7035,18 +7033,17 @@
 				45AD1FD925938A9800A096A0 /* WebArchiveOperationError.swift in Sources */,
 				45AD200B25938A9800A096A0 /* DownloadTranslationsReceipt.swift in Sources */,
 				45AD1FDA25938A9800A096A0 /* WebArchiveOperation.swift in Sources */,
-				45461F0527C6B29000800E55 /* Button+MobileContentRenderableModel.swift in Sources */,
 				45AD1FEA25938A9800A096A0 /* InitialDataDownloader.swift in Sources */,
 				457579E226E96ABE00C898D2 /* MobileContentMultiSelectViewModel.swift in Sources */,
 				45AD1BCE25938A4F00A096A0 /* Locale+Extensions.swift in Sources */,
+				4509D6FF27C863B80047B19B /* MultiSelectOption+MobileContentRenderableModel.swift in Sources */,
 				45AD1F6025938A9800A096A0 /* ActionCableChannelPublisher.swift in Sources */,
 				D10AD0DA2790C140004859C4 /* SetupParallelLanguageAvailability.swift in Sources */,
 				457E199C27C6E40A00BABD49 /* MobileContentParser.swift in Sources */,
+				4509D6F027C863B80047B19B /* InlineTip+MobileContentRenderableModel.swift in Sources */,
 				456BB02A27C588E80087CCA4 /* MobileContentHeadingView.swift in Sources */,
 				455582E9269F2C1000C3FF14 /* TrainingPageView.swift in Sources */,
 				45AD1BB225938A4F00A096A0 /* LanguageSettingsFlow.swift in Sources */,
-				45461F1727C6B29000800E55 /* Tip+MobileContentRenderableModel.swift in Sources */,
-				45461EF927C6B29000800E55 /* MultiplatformCard.swift in Sources */,
 				45C93B27261D31B900592FFF /* LoadingArticleViewModel.swift in Sources */,
 				45BD7A7026A235780007426B /* MobileContentRendererPageViewFactories.swift in Sources */,
 				45AD1BAD25938A4F00A096A0 /* MenuFlow.swift in Sources */,
@@ -7062,8 +7059,6 @@
 				45AD1FDE25938A9800A096A0 /* RealmEmailSignUpsCache.swift in Sources */,
 				45AD1BA625938A4F00A096A0 /* FlowStep.swift in Sources */,
 				D1E98EDD27974F0000D1B738 /* LessonEvaluationViewModelType.swift in Sources */,
-				45461F0227C6B29000800E55 /* FlowItem+MobileContentRenderableModel.swift in Sources */,
-				45461EF827C6B29000800E55 /* MultiplatformCards.swift in Sources */,
 				45AD22A12593CE8900A096A0 /* ColorPalette.swift in Sources */,
 				45AD1B2225938A4F00A096A0 /* LearnToShareToolCellViewModelType.swift in Sources */,
 				45AD1BE125938A4F00A096A0 /* ProgressView.swift in Sources */,
@@ -7078,6 +7073,7 @@
 				45AD1B2D25938A4F00A096A0 /* AboutTextCellViewModel.swift in Sources */,
 				45E3FAAD2759424900D0CAFA /* OktaAuthenticationConfiguration.swift in Sources */,
 				45AD1AD725938A4E00A096A0 /* ToolsViewModelType.swift in Sources */,
+				4509D6EA27C863B80047B19B /* TractPage+MobileContentRenderableModel.swift in Sources */,
 				45C93AE8261D310900592FFF /* ArticleAemDataParser.swift in Sources */,
 				45AD1B9E25938A4F00A096A0 /* Translation.swift in Sources */,
 				D1D56918270632B200BBE2A6 /* OnboardingTutorialCustomViewBuilder.swift in Sources */,
@@ -7090,16 +7086,12 @@
 				45AD1BCB25938A4F00A096A0 /* UIViewController+Containment.swift in Sources */,
 				45A3A0C626B0B497005DA490 /* TractFlow.swift in Sources */,
 				45C93ADD261D310900592FFF /* ArticleAemWebArchiveFileCache.swift in Sources */,
-				45461F1127C6B29000800E55 /* Input+MobileContentRenderableModel.swift in Sources */,
 				45AD1BA825938A4F00A096A0 /* AppRootController.swift in Sources */,
 				45828BCC279CCB7600F6B5F3 /* MobileContentCardViewModelType.swift in Sources */,
 				45AD1B0A25938A4E00A096A0 /* ShareArticleView.swift in Sources */,
-				45461F1427C6B29000800E55 /* MultiSelectOption+MobileContentRenderableModel.swift in Sources */,
-				45461F1C27C6B33D00800E55 /* Card+MobileContentRenderableModel.swift in Sources */,
 				45AD21422593A49900A096A0 /* ShareToolRemoteSessionURLViewModelType.swift in Sources */,
 				45AD1B6825938A4F00A096A0 /* AccountItemViewType.swift in Sources */,
 				45558416269F2F6100C3FF14 /* MobileContentAnalyticsSystem.swift in Sources */,
-				45461F0327C6B29000800E55 /* Modal+MobileContentRenderableModel.swift in Sources */,
 				450E442427565D6F00D4311E /* TutorialSupportedLanguages.swift in Sources */,
 				45AD1FE925938A9800A096A0 /* LegacyRealmMigration.swift in Sources */,
 				45558326269F2C7B00C3FF14 /* ToolPageFormView.swift in Sources */,
