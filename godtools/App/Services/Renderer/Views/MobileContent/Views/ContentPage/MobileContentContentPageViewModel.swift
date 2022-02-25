@@ -7,14 +7,15 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class MobileContentContentPageViewModel: MobileContentPageViewModel, MobileContentContentPageViewModelType {
     
-    private let contentPage: MultiplatformContentPage
+    private let contentPage: Page
     private let rendererPageModel: MobileContentRendererPageModel
     private let analytics: AnalyticsContainer
     
-    required init(flowDelegate: FlowDelegate, contentPage: MultiplatformContentPage, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, contentPage: Page, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, analytics: AnalyticsContainer) {
         
         self.contentPage = contentPage
         self.rendererPageModel = rendererPageModel
@@ -23,7 +24,7 @@ class MobileContentContentPageViewModel: MobileContentPageViewModel, MobileConte
         super.init(flowDelegate: flowDelegate, pageModel: contentPage, rendererPageModel: rendererPageModel, deepLinkService: deepLinkService, hidesBackgroundImage: false)
     }
     
-    required init(flowDelegate: FlowDelegate, pageModel: PageModelType, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, hidesBackgroundImage: Bool) {
+    required init(flowDelegate: FlowDelegate, pageModel: Page, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, hidesBackgroundImage: Bool) {
         fatalError("init(flowDelegate:pageModel:rendererPageModel:deepLinkService:hidesBackgroundImage:) has not been implemented")
     }
     

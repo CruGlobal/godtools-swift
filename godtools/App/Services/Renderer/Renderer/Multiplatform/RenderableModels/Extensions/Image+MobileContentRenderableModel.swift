@@ -11,7 +11,7 @@ import GodToolsToolParser
 
 extension Image: MobileContentRenderableModel {
     
-    func getRenderableChildModels() -> [MobileContentRenderableModel] {
+    func getRenderableChildModels() -> [Any] {
         return Array()
     }
 }

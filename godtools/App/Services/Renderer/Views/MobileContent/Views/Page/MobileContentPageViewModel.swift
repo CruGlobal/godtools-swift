@@ -7,17 +7,18 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class MobileContentPageViewModel: MobileContentPageViewModelType {
     
-    private let pageModel: PageModelType
+    private let pageModel: Page
     private let rendererPageModel: MobileContentRendererPageModel
     private let deepLinkService: DeepLinkingServiceType
     private let hidesBackgroundImage: Bool
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, pageModel: PageModelType, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, hidesBackgroundImage: Bool) {
+    required init(flowDelegate: FlowDelegate, pageModel: Page, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, hidesBackgroundImage: Bool) {
         
         self.flowDelegate = flowDelegate
         self.pageModel = pageModel
@@ -42,7 +43,7 @@ class MobileContentPageViewModel: MobileContentPageViewModelType {
     }
     
     var backgroundColor: UIColor {
-        return rendererPageModel.pageColors.backgroundColor
+        return pageModel.backgroundColor
     }
     
     func getFlowDelegate() -> FlowDelegate? {
@@ -55,29 +56,40 @@ class MobileContentPageViewModel: MobileContentPageViewModelType {
             return nil
         }
         
-        let manifestAttributes: MobileContentManifestAttributesType = rendererPageModel.manifest.attributes
+        let manifest: Manifest = rendererPageModel.manifest
         
-        let backgroundImageModel: BackgroundImageModelType?
+        let backgroundImageModel: BackgroundImageModel?
         
-        if pageModel.backgroundImageExists {
-            backgroundImageModel = pageModel
+        if let pageBackgroundImageFileName = pageModel.backgroundImage?.name {
+            
+            backgroundImageModel = BackgroundImageModel(
+                backgroundImageFileName: pageBackgroundImageFileName,
+                backgroundImageAlignment: pageModel.backgroundImageGravity,
+                backgroundImageScale: pageModel.backgroundImageScaleType
+            )
         }
-        else if manifestAttributes.backgroundImageExists {
-            backgroundImageModel = manifestAttributes
+        else if let manifestBackgroundImageFileName = manifest.backgroundImage?.name {
+            
+            backgroundImageModel = BackgroundImageModel(
+                backgroundImageFileName: manifestBackgroundImageFileName,
+                backgroundImageAlignment: manifest.backgroundImageGravity,
+                backgroundImageScale: manifest.backgroundImageScaleType
+            )
         }
         else {
+            
             backgroundImageModel = nil
         }
         
-        if let backgroundImageModel = backgroundImageModel {
-            return MobileContentBackgroundImageViewModel(
-                backgroundImageModel: backgroundImageModel,
-                manifestResourcesCache: rendererPageModel.resourcesCache,
-                languageDirection: rendererPageModel.language.languageDirection
-            )
+        guard let model = backgroundImageModel else {
+            return nil
         }
         
-        return nil
+        return MobileContentBackgroundImageViewModel(
+            backgroundImageModel: model,
+            manifestResourcesCache: rendererPageModel.resourcesCache,
+            languageDirection: rendererPageModel.language.languageDirection
+        )
     }
     
     func buttonWithUrlTapped(url: String) {

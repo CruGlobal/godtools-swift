@@ -23,7 +23,7 @@ class MultiplatformContentHeader {
 
 extension MultiplatformContentHeader: MobileContentRenderableModel {
     
-    func getRenderableChildModels() -> [MobileContentRenderableModel] {
+    func getRenderableChildModels() -> [Any] {
         
         var childModels: [MobileContentRenderableModel] = Array()
         

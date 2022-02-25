@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
-class ManifestResourcesCache: ManifestResourcesCacheType {
+class ManifestResourcesCache {
     
-    private let manifest: MobileContentManifestType
+    private let manifest: Manifest
     private let translationsFileCache: TranslationsFileCache
     
-    required init(manifest: MobileContentManifestType, translationsFileCache: TranslationsFileCache) {
+    required init(manifest: Manifest, translationsFileCache: TranslationsFileCache) {
         
         self.manifest = manifest
         self.translationsFileCache = translationsFileCache
@@ -21,11 +22,11 @@ class ManifestResourcesCache: ManifestResourcesCacheType {
     
     private func getSHA256FileLocation(fileName: String) -> SHA256FileLocation? {
         
-        guard let resource = manifest.getResource(fileName: fileName) else {
+        guard let localeName = manifest.resources[fileName]?.localName else {
             return nil
         }
         
-        let location: SHA256FileLocation = SHA256FileLocation(sha256WithPathExtension: resource.src)
+        let location: SHA256FileLocation = SHA256FileLocation(sha256WithPathExtension: localeName)
         
         return location
     }

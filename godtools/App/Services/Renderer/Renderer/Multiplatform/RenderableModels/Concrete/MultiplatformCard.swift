@@ -66,8 +66,8 @@ class MultiplatformCard {
         return nil
     }
     
-    func getAnalyticsEvents() -> [AnalyticsEventModelType] {
-        return card.analyticsEvents.map({MultiplatformAnalyticsEvent(analyticsEvent: $0)})
+    func getAnalyticsEvents() -> [AnalyticsEvent] {
+        return card.analyticsEvents
     }
 }
 
@@ -75,12 +75,8 @@ class MultiplatformCard {
 
 extension MultiplatformCard: MobileContentRenderableModel {
         
-    func getRenderableChildModels() -> [MobileContentRenderableModel] {
+    func getRenderableChildModels() -> [Any] {
         
-        var childModels: [MobileContentRenderableModel] = Array()
-
-        addContentToChildModels(childModels: &childModels, content: card.content)
-                
-        return childModels
+        return card.content
     }
 }

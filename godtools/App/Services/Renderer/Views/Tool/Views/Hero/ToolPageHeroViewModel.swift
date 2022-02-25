@@ -19,11 +19,9 @@ class ToolPageHeroViewModel: ToolPageHeroViewModelType {
         
         self.heroModel = heroModel
         self.rendererPageModel = rendererPageModel
-        
-        let analyticsEvents: [AnalyticsEventModelType] = heroModel.analyticsEvents.map({MultiplatformAnalyticsEvent(analyticsEvent: $0)})
-        
+                
         analyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
-            analyticsEvents: analyticsEvents,
+            analyticsEvents: heroModel.analyticsEvents,
             mobileContentAnalytics: mobileContentAnalytics,
             rendererPageModel: rendererPageModel
         )

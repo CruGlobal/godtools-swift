@@ -8,10 +8,11 @@
 
 import Foundation
 
-enum MobileContentAnalyticsEventTrigger: String {
+// TODO: Is this provided by shared multiplatform parser? ~Levi
+enum MobileContentAnalyticsEventTrigger {
     
-    case dependentOnContainingElement = "dependentoncontainingelement"
-    case hidden = "hidden"
-    case selected = "selected"
-    case visible = "visible"
+    case dependentOnContainingElement
+    case hidden
+    case selected
+    case visible
 }

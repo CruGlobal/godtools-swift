@@ -7,12 +7,17 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
-class MobileContentRendererPageViewFactories {
+class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
+    
+    private(set) weak var flowDelegate: FlowDelegate?
     
     let factories: [MobileContentPageViewFactoryType]
     
     required init(type: MobileContentRendererPageViewFactoriesType, flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, trainingTipsEnabled: Bool, deepLinkingService: DeepLinkingServiceType) {
+        
+        self.flowDelegate = flowDelegate
         
         var pageViewFactories: [MobileContentPageViewFactoryType] = Array()
         
@@ -122,16 +127,14 @@ class MobileContentRendererPageViewFactories {
         self.factories = pageViewFactories
     }
     
-    func getViewFromViewFactory(renderableModel: MobileContentRenderableModel, renderableModelParent: MobileContentRenderableModel?, rendererPageModel: MobileContentRendererPageModel) -> MobileContentView? {
+    func viewForRenderableModel(renderableModel: Any, rendererPageModel: MobileContentRendererPageModel) -> MobileContentView? {
         
         for pageViewFactory in factories {
-            
-            if let view = pageViewFactory.viewForRenderableModel(renderableModel: renderableModel, renderableModelParent: renderableModelParent, rendererPageModel: rendererPageModel) {
-            
+            if let view = pageViewFactory.viewForRenderableModel(renderableModel: renderableModel, rendererPageModel: rendererPageModel) {
                 return view
             }
         }
-        
+
         return nil
     }
 }

@@ -1,15 +1,15 @@
 //
-//  Tab+MobileContentRenderableModel.swift
+//  TipPage+MobileContentRenderableModel.swift
 //  godtools
 //
-//  Created by Levi Eggert on 2/10/22.
+//  Created by Levi Eggert on 2/24/22.
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
 import Foundation
 import GodToolsToolParser
 
-extension Tabs.Tab: MobileContentRenderableModel {
+extension TipPage: MobileContentRenderableModel {
     
     func getRenderableChildModels() -> [Any] {
         

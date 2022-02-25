@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class ToolViewModel: MobileContentPagesViewModel, ToolViewModelType {
     
@@ -25,7 +26,7 @@ class ToolViewModel: MobileContentPagesViewModel, ToolViewModelType {
     let navBarViewModel: ToolNavBarViewModel
     let didSubscribeForRemoteSharePublishing: ObservableValue<Bool> = ObservableValue(value: false)
         
-    required init(flowDelegate: FlowDelegate, backButtonImageType: ToolBackButtonImageType, renderers: [MobileContentMultiplatformRenderer], resource: ResourceModel, primaryLanguage: LanguageModel, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, localizationServices: LocalizationServices, fontService: FontService, viewsService: ViewsService, analytics: AnalyticsContainer, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
+    required init(flowDelegate: FlowDelegate, backButtonImageType: ToolBackButtonImageType, renderers: [MobileContentRenderer], resource: ResourceModel, primaryLanguage: LanguageModel, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, localizationServices: LocalizationServices, fontService: FontService, viewsService: ViewsService, analytics: AnalyticsContainer, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
         
         self.backButtonImageType = backButtonImageType
         self.resource = resource
@@ -39,13 +40,14 @@ class ToolViewModel: MobileContentPagesViewModel, ToolViewModelType {
         self.toolOpenedAnalytics = toolOpenedAnalytics
         self.liveShareStream = liveShareStream
         
-        let primaryManifest: MobileContentManifestType = renderers.first!.parser.manifest
+        // TODO: I'd like to not even load a Tool if the manifest is null. ~Levi
+        let primaryManifest: Manifest = renderers.first!.parser.manifest!
         let languages: [LanguageModel] = renderers.map({$0.language})
         
         navBarViewModel = ToolNavBarViewModel(
             backButtonImageType: backButtonImageType,
             resource: resource,
-            manifestAttributes: primaryManifest.attributes,
+            manifest: primaryManifest,
             languages: languages,
             tractRemoteSharePublisher: tractRemoteSharePublisher,
             tractRemoteShareSubscriber: tractRemoteShareSubscriber,
@@ -60,7 +62,7 @@ class ToolViewModel: MobileContentPagesViewModel, ToolViewModelType {
         setupBinding()
     }
     
-    required init(flowDelegate: FlowDelegate, renderers: [MobileContentMultiplatformRenderer], primaryLanguage: LanguageModel, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType) {
+    required init(flowDelegate: FlowDelegate, renderers: [MobileContentRenderer], primaryLanguage: LanguageModel, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType) {
         fatalError("init(flowDelegate:renderers:primaryLanguage:page:mobileContentEventAnalytics:initialPageRenderingType:) has not been implemented")
     }
     
@@ -99,7 +101,7 @@ class ToolViewModel: MobileContentPagesViewModel, ToolViewModelType {
         return nil
     }
     
-    private func getRenderer(language: LanguageModel) -> MobileContentMultiplatformRenderer? {
+    private func getRenderer(language: LanguageModel) -> MobileContentRenderer? {
         for renderer in renderers {
             if renderer.language.code.lowercased() == language.code.lowercased() {
                 return renderer

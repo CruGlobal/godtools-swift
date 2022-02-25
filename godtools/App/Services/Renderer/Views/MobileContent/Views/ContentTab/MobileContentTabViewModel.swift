@@ -31,7 +31,7 @@ class MobileContentTabViewModel: MobileContentTabViewModelType {
     }
     
     func tabTapped() {
-        let events: [AnalyticsEventModelType] = tabModel.analyticsEvents.map({MultiplatformAnalyticsEvent(analyticsEvent: $0)})
-        mobileContentAnalytics.trackEvents(events: events, rendererPageModel: rendererPageModel)
+        
+        mobileContentAnalytics.trackEvents(events: tabModel.analyticsEvents, rendererPageModel: rendererPageModel)
     }
 }

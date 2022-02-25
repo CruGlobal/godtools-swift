@@ -45,7 +45,7 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
         
         case .contained:
             backgroundColor = buttonColor
-            titleColor = buttonTitleColor ?? rendererPageModel.pageColors.primaryTextColor
+            titleColor = buttonTitleColor ?? rendererPageModel.pageModel.primaryTextColor
             borderColor = UIColor.clear
         case .outlined:
             backgroundColor = buttonModel.backgroundColor
@@ -53,11 +53,11 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
             borderColor = buttonColor
         case .unknown:
             backgroundColor = buttonColor
-            titleColor = buttonTitleColor ?? rendererPageModel.pageColors.primaryTextColor
+            titleColor = buttonTitleColor ?? rendererPageModel.pageModel.primaryTextColor
             borderColor = UIColor.clear
         default:
             backgroundColor = buttonColor
-            titleColor = buttonTitleColor ?? rendererPageModel.pageColors.primaryTextColor
+            titleColor = buttonTitleColor ?? rendererPageModel.pageModel.primaryTextColor
             borderColor = UIColor.clear
         }
         
@@ -136,9 +136,6 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     }
     
     func buttonTapped() {
-        
-        let analyticsEvents: [AnalyticsEventModelType] = buttonModel.analyticsEvents.map({MultiplatformAnalyticsEvent(analyticsEvent: $0)})
-        
-        mobileContentAnalytics.trackEvents(events: analyticsEvents, rendererPageModel: rendererPageModel)
+        mobileContentAnalytics.trackEvents(events: buttonModel.analyticsEvents, rendererPageModel: rendererPageModel)
     }
 }

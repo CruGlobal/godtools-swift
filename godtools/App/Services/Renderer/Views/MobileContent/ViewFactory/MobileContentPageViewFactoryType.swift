@@ -7,14 +7,16 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 protocol MobileContentPageViewFactoryType {
     
     var flowDelegate: FlowDelegate? { get }
     
-    func viewForRenderableModel(renderableModel: MobileContentRenderableModel, renderableModelParent: MobileContentRenderableModel?, rendererPageModel: MobileContentRendererPageModel) -> MobileContentView?
+    func viewForRenderableModel(renderableModel: Any, rendererPageModel: MobileContentRendererPageModel) -> MobileContentView?
 }
 
+// TODO: Return optional here. ~Levi
 extension MobileContentPageViewFactoryType {
     
     func getFlowDelegate() -> FlowDelegate {

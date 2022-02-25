@@ -34,23 +34,23 @@ class ChooseYourOwnAdventureFlow: Flow {
             deepLinkingService: deepLinkingService
         )
         
-        let primaryRenderer = MobileContentMultiplatformRenderer(
+        let primaryRenderer = MobileContentRenderer(
             resource: resource,
             language: primaryLanguage,
-            multiplatformParser: MobileContentMultiplatformParser(translationManifestData: primaryTranslationManifest, translationsFileCache: translationsFileCache),
+            parser: MobileContentParser(translationManifestData: primaryTranslationManifest, translationsFileCache: translationsFileCache),
             pageViewFactories: pageViewFactories
         )
         
-        var renderers: [MobileContentMultiplatformRenderer] = Array()
+        var renderers: [MobileContentRenderer] = Array()
         
         renderers.append(primaryRenderer)
         
         if let parallelLanguage = parallelLanguage, let parallelTranslationManifest = parallelTranslationManifest, parallelLanguage.code != primaryLanguage.code {
             
-            let parallelRenderer = MobileContentMultiplatformRenderer(
+            let parallelRenderer = MobileContentRenderer(
                 resource: resource,
                 language: parallelLanguage,
-                multiplatformParser: MobileContentMultiplatformParser(translationManifestData: parallelTranslationManifest, translationsFileCache: translationsFileCache),
+                parser: MobileContentParser(translationManifestData: parallelTranslationManifest, translationsFileCache: translationsFileCache),
                 pageViewFactories: pageViewFactories
             )
                         

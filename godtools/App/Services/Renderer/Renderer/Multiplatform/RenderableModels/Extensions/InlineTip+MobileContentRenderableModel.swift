@@ -11,7 +11,7 @@ import GodToolsToolParser
 
 extension InlineTip: MobileContentRenderableModel {
     
-    func getRenderableChildModels() -> [MobileContentRenderableModel] {
+    func getRenderableChildModels() -> [Any] {
         
         var childModels: [MobileContentRenderableModel] = Array()
         

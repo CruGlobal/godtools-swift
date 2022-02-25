@@ -9,9 +9,9 @@
 import Foundation
 import GodToolsToolParser
 
-struct BackgroundImageModel: BackgroundImageModelType {
+struct BackgroundImageModel {
     
-    let backgroundImage: String?
-    let backgroundImageAlignment: Gravity?
+    let backgroundImageFileName: String
+    let backgroundImageAlignment: Gravity
     let backgroundImageScale: ImageScaleType
 }

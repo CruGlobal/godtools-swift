@@ -11,13 +11,12 @@ import GodToolsToolParser
 
 class MobileContentRendererPageModel {
     
-    let pageModel: PageModelType
+    let pageModel: Page
     let page: Int
     let isLastPage: Bool
-    let pageColors: MobileContentPageColors
     let safeArea: UIEdgeInsets
-    let manifest: MobileContentManifestType
-    let resourcesCache: ManifestResourcesCacheType
+    let manifest: Manifest
+    let resourcesCache: ManifestResourcesCache
     let resource: ResourceModel
     let language: LanguageModel
     let pageViewFactories: MobileContentRendererPageViewFactories
@@ -26,12 +25,11 @@ class MobileContentRendererPageModel {
     
     private weak var weakWindow: UIViewController?
     
-    required init(pageModel: PageModelType, page: Int, isLastPage: Bool, window: UIViewController, safeArea: UIEdgeInsets, manifest: MobileContentManifestType, resourcesCache: ManifestResourcesCacheType, resource: ResourceModel, language: LanguageModel, pageViewFactories: MobileContentRendererPageViewFactories, primaryRendererLanguage: LanguageModel, rendererState: State) {
+    required init(pageModel: Page, page: Int, isLastPage: Bool, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, resourcesCache: ManifestResourcesCache, resource: ResourceModel, language: LanguageModel, pageViewFactories: MobileContentRendererPageViewFactories, primaryRendererLanguage: LanguageModel, rendererState: State) {
         
         self.pageModel = pageModel
         self.page = page
         self.isLastPage = isLastPage
-        self.pageColors = MobileContentPageColors(pageModel: pageModel, manifest: manifest)
         self.weakWindow = window
         self.safeArea = safeArea
         self.manifest = manifest

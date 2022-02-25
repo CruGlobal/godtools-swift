@@ -1,18 +1,18 @@
 //
-//  Tab+MobileContentRenderableModel.swift
+//  CardCollectionPage+MobileContentRenderableModel.swift
 //  godtools
 //
-//  Created by Levi Eggert on 2/10/22.
+//  Created by Levi Eggert on 2/24/22.
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
 import Foundation
 import GodToolsToolParser
 
-extension Tabs.Tab: MobileContentRenderableModel {
+extension CardCollectionPage: MobileContentRenderableModel {
     
     func getRenderableChildModels() -> [Any] {
         
-        return content
+        return cards
     }
 }

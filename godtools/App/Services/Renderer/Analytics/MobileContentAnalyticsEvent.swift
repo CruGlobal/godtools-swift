@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class MobileContentAnalyticsEvent: NSObject {
     
@@ -14,11 +15,11 @@ class MobileContentAnalyticsEvent: NSObject {
     private var triggered: Bool = false
     private let rendererPageModel: MobileContentRendererPageModel
     
-    let analyticsEvent: AnalyticsEventModelType
+    let analyticsEvent: AnalyticsEvent
     
     private weak var mobileContentAnalytics: MobileContentAnalytics?
         
-    required init(analyticsEvent: AnalyticsEventModelType, mobileContentAnalytics: MobileContentAnalytics, rendererPageModel: MobileContentRendererPageModel) {
+    required init(analyticsEvent: AnalyticsEvent, mobileContentAnalytics: MobileContentAnalytics, rendererPageModel: MobileContentRendererPageModel) {
         
         self.analyticsEvent = analyticsEvent
         self.mobileContentAnalytics = mobileContentAnalytics
@@ -27,7 +28,7 @@ class MobileContentAnalyticsEvent: NSObject {
         super.init()
     }
     
-    static func initAnalyticsEvents(analyticsEvents: [AnalyticsEventModelType], mobileContentAnalytics: MobileContentAnalytics, rendererPageModel: MobileContentRendererPageModel) -> [MobileContentAnalyticsEvent] {
+    static func initAnalyticsEvents(analyticsEvents: [AnalyticsEvent], mobileContentAnalytics: MobileContentAnalytics, rendererPageModel: MobileContentRendererPageModel) -> [MobileContentAnalyticsEvent] {
         
         let events: [MobileContentAnalyticsEvent] = analyticsEvents.map({MobileContentAnalyticsEvent(analyticsEvent: $0, mobileContentAnalytics: mobileContentAnalytics, rendererPageModel: rendererPageModel)})
         
@@ -78,15 +79,13 @@ class MobileContentAnalyticsEvent: NSObject {
         
         triggered = true
         
-        let delaySeconds: Double
-        if let delayString = analyticsEvent.delay, !delayString.isEmpty {
-            delaySeconds = Double(delayString) ?? 0
+        let delaySeconds: Double = Double(analyticsEvent.delay)
+        
+        if delaySeconds == 0 {
+            
+            trackEvent()
         }
         else {
-            delaySeconds = 0
-        }
-        
-        guard delaySeconds == 0 else {
             
             let timer = Timer.scheduledTimer(
                 timeInterval: delaySeconds,
@@ -97,11 +96,7 @@ class MobileContentAnalyticsEvent: NSObject {
             )
             
             self.delayTimer = timer
-            
-            return
         }
-                
-        trackEvent()
     }
     
     @objc func handleDelayTimer() {

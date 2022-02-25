@@ -50,11 +50,7 @@ class MobileContentLinkViewModel: MobileContentLinkViewModelType {
     }
     
     func linkTapped() {
-        
-        // TODO: Remove MultiplatformAnalyticsEvent. ~Levi
-        
-        let events: [AnalyticsEventModelType] = linkModel.analyticsEvents.map({MultiplatformAnalyticsEvent(analyticsEvent: $0)})
-        
-        mobileContentAnalytics.trackEvents(events: events, rendererPageModel: rendererPageModel)
+                        
+        mobileContentAnalytics.trackEvents(events: linkModel.analyticsEvents, rendererPageModel: rendererPageModel)
     }
 }

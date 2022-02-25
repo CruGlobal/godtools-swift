@@ -39,7 +39,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
         self.trainingTipsEnabled = trainingTipsEnabled
     }
     
-    func viewForRenderableModel(renderableModel: MobileContentRenderableModel, renderableModelParent: MobileContentRenderableModel?, rendererPageModel: MobileContentRendererPageModel) -> MobileContentView? {
+    func viewForRenderableModel(renderableModel: Any, rendererPageModel: MobileContentRendererPageModel) -> MobileContentView? {
         
         if let cardModel = renderableModel as? MultiplatformCard {
             
@@ -142,7 +142,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let pageModel = renderableModel as? PageModelType {
+        else if let pageModel = renderableModel as? TractPage {
                         
             let viewModel = ToolPageViewModel(
                 flowDelegate: getFlowDelegate(),

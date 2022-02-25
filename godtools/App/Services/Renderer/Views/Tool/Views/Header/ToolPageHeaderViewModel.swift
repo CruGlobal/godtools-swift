@@ -33,7 +33,7 @@ class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
     }
     
     var backgroundColor: UIColor {
-        return rendererPageModel.pageColors.primaryColor
+        return rendererPageModel.pageModel.primaryColor
     }
     
     func getNumber(numberLabel: UILabel) -> MobileContentTextView? {

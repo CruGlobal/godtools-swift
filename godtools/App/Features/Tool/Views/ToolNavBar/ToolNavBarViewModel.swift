@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
     
@@ -27,7 +28,7 @@ class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
     let selectedLanguage: ObservableValue<Int> = ObservableValue(value: 0)
     let hidesShareButton: Bool
     
-    required init(backButtonImageType: ToolBackButtonImageType, resource: ResourceModel, manifestAttributes: MobileContentManifestAttributesType, languages: [LanguageModel], tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, localizationServices: LocalizationServices, fontService: FontService, analytics: AnalyticsContainer, hidesShareButton: Bool) {
+    required init(backButtonImageType: ToolBackButtonImageType, resource: ResourceModel, manifest: Manifest, languages: [LanguageModel], tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, localizationServices: LocalizationServices, fontService: FontService, analytics: AnalyticsContainer, hidesShareButton: Bool) {
         
         self.backButtonImageType = backButtonImageType
         self.resource = resource
@@ -40,8 +41,8 @@ class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
         self.hidesShareButton = hidesShareButton
         
         backButtonImage = backButtonImageType.getImage()
-        navBarColor = manifestAttributes.navbarColor?.uiColor ?? .darkGray
-        navBarControlColor = manifestAttributes.navbarControlColor?.uiColor ?? .lightGray
+        navBarColor = manifest.navBarColor
+        navBarControlColor = manifest.navBarControlColor
         hidesChooseLanguageControl = languages.count <= 1
         
         super.init()

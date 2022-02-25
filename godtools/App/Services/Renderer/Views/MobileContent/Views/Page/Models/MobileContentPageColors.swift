@@ -7,7 +7,9 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
+// TODO: Is this class still needed with using the multiplatform parser? ~Levi
 class MobileContentPageColors {
     
     let backgroundColor: UIColor
@@ -16,12 +18,18 @@ class MobileContentPageColors {
     let primaryTextColor: UIColor
     let textColor: UIColor
     
-    required init(pageModel: PageModelType, manifest: MobileContentManifestType) {
+    required init(pageModel: Page, manifest: Manifest) {
         
-        backgroundColor = pageModel.getBackgroundColor() ?? manifest.attributes.backgroundColor.uiColor
-        cardTextColor = pageModel.getCardTextColor()
-        primaryColor = pageModel.getPrimaryColor() ?? manifest.attributes.primaryColor.uiColor
-        primaryTextColor = pageModel.getPrimaryTextColor() ?? manifest.attributes.primaryTextColor.uiColor
-        textColor = pageModel.getTextColor() ?? manifest.attributes.textColor.uiColor
+        //backgroundColor = pageModel.getBackgroundColor() ?? manifest.attributes.backgroundColor.uiColor
+        //cardTextColor = pageModel.getCardTextColor()
+        //primaryColor = pageModel.getPrimaryColor() ?? manifest.attributes.primaryColor.uiColor
+        //primaryTextColor = pageModel.getPrimaryTextColor() ?? manifest.attributes.primaryTextColor.uiColor
+        //textColor = pageModel.getTextColor() ?? manifest.attributes.textColor.uiColor
+                
+        backgroundColor = .white
+        cardTextColor = .black
+        primaryColor = .white
+        primaryTextColor = .black
+        textColor = .black
     }
 }

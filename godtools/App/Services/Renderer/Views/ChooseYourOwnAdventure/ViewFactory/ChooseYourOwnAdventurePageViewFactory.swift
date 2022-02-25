@@ -23,9 +23,9 @@ class ChooseYourOwnAdventurePageViewFactory: MobileContentPageViewFactoryType {
         self.analytics = analytics
     }
     
-    func viewForRenderableModel(renderableModel: MobileContentRenderableModel, renderableModelParent: MobileContentRenderableModel?, rendererPageModel: MobileContentRendererPageModel) -> MobileContentView? {
+    func viewForRenderableModel(renderableModel: Any, rendererPageModel: MobileContentRendererPageModel) -> MobileContentView? {
         
-        if let contentPage = renderableModel as? MultiplatformContentPage {
+        if let contentPage = renderableModel as? ContentPage {
             
             guard let flowDelegate = self.flowDelegate else {
                 return nil

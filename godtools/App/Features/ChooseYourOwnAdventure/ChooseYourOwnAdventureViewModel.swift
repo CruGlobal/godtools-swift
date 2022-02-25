@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOwnAdventureViewModelType {
     
@@ -19,7 +20,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOw
     let navBarColors: ObservableValue<ChooseYourOwnAdventureNavBarModel>
     let navBarTitleType: ChooseYourOwnAdventureNavBarTitleType
     
-    required init(flowDelegate: FlowDelegate, renderers: [MobileContentMultiplatformRenderer], primaryLanguage: LanguageModel, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, localizationServices: LocalizationServices, fontService: FontService) {
+    required init(flowDelegate: FlowDelegate, renderers: [MobileContentRenderer], primaryLanguage: LanguageModel, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, localizationServices: LocalizationServices, fontService: FontService) {
         
         self.localizationServices = localizationServices
         self.fontService = fontService
@@ -28,16 +29,14 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOw
         
         let navBarColor: UIColor
         let navBarControlColor: UIColor
+
+        let manifest: Manifest? = renderers.first?.parser.manifest
         
-        if let manifestAttributes = renderers.first?.parser.manifest.attributes,
-            let barColor = manifestAttributes.navbarColor?.uiColor,
-            let controlColor = manifestAttributes.navbarControlColor?.uiColor {
-            
-            navBarColor = barColor
-            navBarControlColor = controlColor
+        if let manifest = manifest {
+            navBarColor = manifest.navBarColor
+            navBarControlColor = manifest.navBarControlColor
         }
         else {
-            
             navBarColor = ColorPalette.gtBlue.color
             navBarControlColor = .white
         }
@@ -63,7 +62,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOw
         super.init(flowDelegate: flowDelegate, renderers: renderers, primaryLanguage: primaryLanguage, page: page, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .chooseYourOwnAdventure)
     }
 
-    required init(flowDelegate: FlowDelegate, renderers: [MobileContentMultiplatformRenderer], primaryLanguage: LanguageModel, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType) {
+    required init(flowDelegate: FlowDelegate, renderers: [MobileContentRenderer], primaryLanguage: LanguageModel, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType) {
         fatalError("init(flowDelegate:renderers:primaryLanguage:page:mobileContentEventAnalytics:initialPageRenderingType:) has not been implemented")
     }
     
@@ -103,7 +102,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOw
     
     func navLanguageTapped(index: Int) {
         
-        let renderer: MobileContentMultiplatformRenderer = renderers[index]
+        let renderer: MobileContentRenderer = renderers[index]
         setRenderer(renderer: renderer)
     }
 }

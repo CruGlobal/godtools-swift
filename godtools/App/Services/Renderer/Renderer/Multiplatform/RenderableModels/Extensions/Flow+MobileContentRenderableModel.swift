@@ -11,7 +11,7 @@ import GodToolsToolParser
 
 extension GodToolsToolParser.Flow: MobileContentRenderableModel {
     
-    func getRenderableChildModels() -> [MobileContentRenderableModel] {
+    func getRenderableChildModels() -> [Any] {
         
         return items
     }

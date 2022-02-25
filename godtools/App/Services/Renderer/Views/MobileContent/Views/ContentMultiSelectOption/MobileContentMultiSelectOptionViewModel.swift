@@ -46,9 +46,7 @@ class MobileContentMultiSelectOptionViewModel: MobileContentMultiSelectOptionVie
     func multiSelectOptionTapped() {
         
         multiSelectOptionModel.toggleSelected(state: rendererPageModel.rendererState)
-                
-        let analyticsEvents: [AnalyticsEventModelType] = multiSelectOptionModel.getAnalyticsEvents(type: .clicked).map({MultiplatformAnalyticsEvent(analyticsEvent: $0)})
-                
-        mobileContentAnalytics.trackEvents(events: analyticsEvents, rendererPageModel: rendererPageModel)
+                                
+        mobileContentAnalytics.trackEvents(events: multiSelectOptionModel.getAnalyticsEvents(type: .clicked), rendererPageModel: rendererPageModel)
     }
 }

@@ -11,11 +11,11 @@ import GodToolsToolParser
 
 class MobileContentCardCollectionPageViewModel: MobileContentPageViewModel, MobileContentCardCollectionPageViewModelType {
     
-    private let cardCollectionPage: MultiplatformCardCollectionPage
+    private let cardCollectionPage: CardCollectionPage
     private let rendererPageModel: MobileContentRendererPageModel
     private let analytics: AnalyticsContainer
         
-    required init(flowDelegate: FlowDelegate, cardCollectionPage: MultiplatformCardCollectionPage, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, cardCollectionPage: CardCollectionPage, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, analytics: AnalyticsContainer) {
         
         self.cardCollectionPage = cardCollectionPage
         self.rendererPageModel = rendererPageModel
@@ -24,7 +24,7 @@ class MobileContentCardCollectionPageViewModel: MobileContentPageViewModel, Mobi
         super.init(flowDelegate: flowDelegate, pageModel: cardCollectionPage, rendererPageModel: rendererPageModel, deepLinkService: deepLinkService, hidesBackgroundImage: false)
     }
     
-    required init(flowDelegate: FlowDelegate, pageModel: PageModelType, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, hidesBackgroundImage: Bool) {
+    required init(flowDelegate: FlowDelegate, pageModel: Page, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, hidesBackgroundImage: Bool) {
         fatalError("init(flowDelegate:pageModel:rendererPageModel:deepLinkService:hidesBackgroundImage:) has not been implemented")
     }
     

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class MobileContentAnalytics {
     
@@ -23,24 +24,25 @@ class MobileContentAnalytics {
         self.analyticsSystems = analyticsSystems
     }
         
-    func trackEvents(events: [AnalyticsEventModelType], rendererPageModel: MobileContentRendererPageModel) {
+    func trackEvents(events: [AnalyticsEvent], rendererPageModel: MobileContentRendererPageModel) {
         
         for event in events {
             trackEvent(event: event, rendererPageModel: rendererPageModel)
         }
     }
     
-    private func trackEvent(event: AnalyticsEventModelType, rendererPageModel: MobileContentRendererPageModel) {
+    private func trackEvent(event: AnalyticsEvent, rendererPageModel: MobileContentRendererPageModel) {
         
         guard let action = event.action, !action.isEmpty else {
             return
         }
                 
-        let data: [String: String] = event.getAttributes()
+        let data: [String: String] = event.attributes
+        let systems: [AnalyticsEvent.System] = Array(event.systems)
         
-        for system in event.systems {
+        for system in systems {
              
-            if let analyticsSystem = analyticsSystems[system.lowercased()] {
+            if let analyticsSystem = analyticsSystems[system.name.lowercased()] {
                 
                 let resourceAbbreviation = rendererPageModel.resource.abbreviation
                 let pageNumber = rendererPageModel.page

@@ -28,7 +28,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         self.analytics = analytics
     }
     
-    func viewForRenderableModel(renderableModel: MobileContentRenderableModel, renderableModelParent: MobileContentRenderableModel?, rendererPageModel: MobileContentRendererPageModel) -> MobileContentView? {
+    func viewForRenderableModel(renderableModel: Any, rendererPageModel: MobileContentRendererPageModel) -> MobileContentView? {
         
         if let paragraphModel = renderableModel as? Paragraph {
         
@@ -108,7 +108,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let contentPage = renderableModel as? MultiplatformContentPage {
+        else if let contentPage = renderableModel as? ContentPage {
             
             guard let flowDelegate = self.flowDelegate else {
                 // TODO: Return an error here if flowDelegate is null for some reason. ~Levi
@@ -127,7 +127,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let cardCollectionPage = renderableModel as? MultiplatformCardCollectionPage {
+        else if let cardCollectionPage = renderableModel as? CardCollectionPage {
             
             guard let flowDelegate = self.flowDelegate else {
                 // TODO: Return an error here if flowDelegate is null for some reason. ~Levi

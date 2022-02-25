@@ -41,10 +41,10 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
         
         let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
            
-        let primaryRenderer = MobileContentMultiplatformRenderer(
+        let primaryRenderer = MobileContentRenderer(
             resource: resource,
             language: primaryLanguage,
-            multiplatformParser: MobileContentMultiplatformParser(
+            parser: MobileContentParser(
                 translationManifestData: primaryTranslationManifest,
                 translationsFileCache: translationsFileCache
             ),

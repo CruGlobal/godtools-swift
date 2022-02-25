@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class TractFlow: NSObject, ToolNavigationFlow, Flow {
     
@@ -43,23 +44,23 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             deepLinkingService: deepLinkingService
         )
           
-        let primaryRenderer = MobileContentMultiplatformRenderer(
+        let primaryRenderer = MobileContentRenderer(
             resource: resource,
             language: primaryLanguage,
-            multiplatformParser: MobileContentMultiplatformParser(translationManifestData: primaryTranslationManifest, translationsFileCache: translationsFileCache),
+            parser: MobileContentParser(translationManifestData: primaryTranslationManifest, translationsFileCache: translationsFileCache),
             pageViewFactories: pageViewFactories
         )
                 
-        var renderers: [MobileContentMultiplatformRenderer] = Array()
+        var renderers: [MobileContentRenderer] = Array()
         
         renderers.append(primaryRenderer)
         
         if !trainingTipsEnabled, let parallelLanguage = parallelLanguage, let parallelTranslationManifest = parallelTranslationManifest, parallelLanguage.code != primaryLanguage.code {
             
-            let parallelRenderer = MobileContentMultiplatformRenderer(
+            let parallelRenderer = MobileContentRenderer(
                 resource: resource,
                 language: parallelLanguage,
-                multiplatformParser: MobileContentMultiplatformParser(translationManifestData: parallelTranslationManifest, translationsFileCache: translationsFileCache),
+                parser: MobileContentParser(translationManifestData: parallelTranslationManifest, translationsFileCache: translationsFileCache),
                 pageViewFactories: pageViewFactories
             )
                         
@@ -241,8 +242,10 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
     
     private func navigateToToolTraining(event: TrainingTipEvent) {
         
-        // TODO: Eventually need to remove MultiplatformTipPage. ~Levi
-        let pageModels: [PageModelType] = event.tipModel.pages.map({MultiplatformTipPage(tipPage: $0)})
+        // TODO: Need to fix this. ~Levi
+        
+        /*
+        let pageModels: [Page] = event.tipModel.pages
         
         if pageModels.isEmpty {
             assertionFailure("Pages should not be empty for training tip.")
@@ -256,10 +259,10 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             deepLinkingService: deepLinkingService
         )
         
-        let renderer = MobileContentMultiplatformRenderer(
+        let renderer = MobileContentRenderer(
             resource: event.rendererPageModel.resource,
             language: event.rendererPageModel.language,
-            multiplatformParser: MobileContentMultiplatformParser(manifest: event.rendererPageModel.manifest, pageModels: pageModels, translationsFileCache: appDiContainer.translationsFileCache),
+            parser: MobileContentParser(manifest: event.rendererPageModel.manifest, pageModels: pageModels, translationsFileCache: appDiContainer.translationsFileCache),
             pageViewFactories: pageViewFactories
         )
               
@@ -275,6 +278,6 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
         
         let view = ToolTrainingView(viewModel: viewModel)
         
-        navigationController.present(view, animated: true, completion: nil)
+        navigationController.present(view, animated: true, completion: nil)*/
     }
 }

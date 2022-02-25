@@ -70,7 +70,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     }
     
     var titleColor: UIColor {
-        return cardModel.getTitleColor() ?? rendererPageModel.pageColors.primaryColor
+        return cardModel.getTitleColor() ?? rendererPageModel.pageModel.primaryColor
     }
     
     var titleFont: UIFont {
@@ -131,13 +131,17 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     
     func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel? {
         
+        guard let backgroundImageFileName = cardModel.backgroundImage else {
+            return nil
+        }
+        
         // TODO: This may not need to be optional once fully switching to shared parser.  ~Levi
         guard let backgroundImageAlignment = cardModel.backgroundImageAlignment else {
             return nil
         }
         
         let backgroundImageModel = BackgroundImageModel(
-            backgroundImage: cardModel.backgroundImage,
+            backgroundImageFileName: backgroundImageFileName,
             backgroundImageAlignment: backgroundImageAlignment,
             backgroundImageScale: cardModel.backgroundImageScale
         )

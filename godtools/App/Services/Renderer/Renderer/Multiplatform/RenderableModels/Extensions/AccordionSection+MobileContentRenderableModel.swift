@@ -11,16 +11,16 @@ import GodToolsToolParser
 
 extension Accordion.Section: MobileContentRenderableModel {
     
-    func getRenderableChildModels() -> [MobileContentRenderableModel] {
+    func getRenderableChildModels() -> [Any] {
         
-        var childModels: [MobileContentRenderableModel] = Array()
+        var childModels: [Any] = Array()
         
         if let headerText = header {
             childModels.append(MultiplatformContentHeader(text: headerText))
         }
-                
-        addContentToChildModels(childModels: &childModels, content: content)
         
+        childModels.append(contentsOf: content)
+                                
         return childModels
     }
 }

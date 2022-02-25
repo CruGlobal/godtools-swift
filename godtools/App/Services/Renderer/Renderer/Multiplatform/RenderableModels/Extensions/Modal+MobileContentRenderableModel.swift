@@ -11,12 +11,8 @@ import GodToolsToolParser
 
 extension Modal: MobileContentRenderableModel {
     
-    func getRenderableChildModels() -> [MobileContentRenderableModel] {
+    func getRenderableChildModels() -> [Any] {
         
-        var childModels: [MobileContentRenderableModel] = Array()
-        
-        addContentToChildModels(childModels: &childModels, content: content)
-        
-        return childModels
+        return content
     }
 }

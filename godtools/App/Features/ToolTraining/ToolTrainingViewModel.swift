@@ -11,7 +11,7 @@ import GodToolsToolParser
 
 class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     
-    private let renderer: MobileContentMultiplatformRenderer
+    private let renderer: MobileContentRenderer
     private let resource: ResourceModel
     private let language: LanguageModel
     private let trainingTipId: String
@@ -31,7 +31,7 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     let continueButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     let numberOfTipPages: ObservableValue<Int> = ObservableValue(value: 0)
     
-    required init(flowDelegate: FlowDelegate, renderer: MobileContentMultiplatformRenderer, trainingTipId: String, tipModel: Tip, analytics: AnalyticsContainer, localizationServices: LocalizationServices, viewedTrainingTips: ViewedTrainingTipsService) {
+    required init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, trainingTipId: String, tipModel: Tip, analytics: AnalyticsContainer, localizationServices: LocalizationServices, viewedTrainingTips: ViewedTrainingTipsService) {
         
         self.flowDelegate = flowDelegate
         self.renderer = renderer

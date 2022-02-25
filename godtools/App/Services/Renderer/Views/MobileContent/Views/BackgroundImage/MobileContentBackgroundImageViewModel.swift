@@ -10,20 +10,20 @@ import UIKit
 
 class MobileContentBackgroundImageViewModel {
     
-    private let backgroundImageModel: BackgroundImageModelType
-    private let manifestResourcesCache: ManifestResourcesCacheType
+    private let backgroundImageModel: BackgroundImageModel
+    private let manifestResourcesCache: ManifestResourcesCache
     private let languageDirection: LanguageDirection
     private let backgroundImageRenderer: MobileContentBackgroundImageRenderer = MobileContentBackgroundImageRenderer()
         
     let backgroundImage: UIImage?
     
-    required init(backgroundImageModel: BackgroundImageModelType, manifestResourcesCache: ManifestResourcesCacheType, languageDirection: LanguageDirection) {
+    required init(backgroundImageModel: BackgroundImageModel, manifestResourcesCache: ManifestResourcesCache, languageDirection: LanguageDirection) {
         
         self.backgroundImageModel = backgroundImageModel
         self.manifestResourcesCache = manifestResourcesCache
         self.languageDirection = languageDirection
         
-        if let resource = backgroundImageModel.backgroundImage, let backgroundImage = manifestResourcesCache.getImageFromManifestResources(fileName: resource) {
+        if let backgroundImage = manifestResourcesCache.getImageFromManifestResources(fileName: backgroundImageModel.backgroundImageFileName) {
             self.backgroundImage = backgroundImage
         }
         else {
@@ -43,15 +43,11 @@ class MobileContentBackgroundImageViewModel {
     
     private func getRenderPositionForBackgroundImage(container: CGRect, imageSizePixels: CGSize) -> CGRect? {
         
-        guard let backgroundImageAlignment = backgroundImageModel.backgroundImageAlignment else {
-            return nil
-        }
-        
         return backgroundImageRenderer.getBackgroundImageRectForRenderingInContainer(
             container: container,
             backgroundImageSizePixels: imageSizePixels,
             scale: backgroundImageModel.backgroundImageScale,
-            alignment: backgroundImageAlignment,
+            alignment: backgroundImageModel.backgroundImageAlignment,
             languageDirection: languageDirection
         )
     }

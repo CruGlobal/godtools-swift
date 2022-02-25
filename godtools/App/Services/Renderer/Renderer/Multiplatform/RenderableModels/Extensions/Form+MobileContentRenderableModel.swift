@@ -11,12 +11,7 @@ import GodToolsToolParser
 
 extension Form: MobileContentRenderableModel {
     
-    func getRenderableChildModels() -> [MobileContentRenderableModel] {
-        
-        var childModels: [MobileContentRenderableModel] = Array()
-        
-        addContentToChildModels(childModels: &childModels, content: content)
-        
-        return childModels
+    func getRenderableChildModels() -> [Any] {
+        return content
     }
 }
