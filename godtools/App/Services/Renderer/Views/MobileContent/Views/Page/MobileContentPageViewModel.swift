@@ -46,10 +46,6 @@ class MobileContentPageViewModel: MobileContentPageViewModelType {
         return pageModel.backgroundColor
     }
     
-    func getFlowDelegate() -> FlowDelegate? {
-        return flowDelegate
-    }
-    
     func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel? {
                
         guard !hidesBackgroundImage else {

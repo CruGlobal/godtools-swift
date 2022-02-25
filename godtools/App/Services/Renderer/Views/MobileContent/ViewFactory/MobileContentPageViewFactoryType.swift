@@ -15,15 +15,3 @@ protocol MobileContentPageViewFactoryType {
     
     func viewForRenderableModel(renderableModel: Any, rendererPageModel: MobileContentRendererPageModel) -> MobileContentView?
 }
-
-// TODO: Return optional here. ~Levi
-extension MobileContentPageViewFactoryType {
-    
-    func getFlowDelegate() -> FlowDelegate {
-        guard let flowDelegate = self.flowDelegate else {
-            assertionFailure("FlowDelegate should not be nil.")
-            return self.flowDelegate!
-        }
-        return flowDelegate
-    }
-}

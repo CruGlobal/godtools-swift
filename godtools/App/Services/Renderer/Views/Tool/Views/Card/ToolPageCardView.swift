@@ -98,7 +98,7 @@ class ToolPageCardView: MobileContentView {
         
         super.layoutSubviews()
         
-        bottomGradientLayer.frame = bottomGradientView.bounds
+        relayoutBottomGradient()
     }
     
     private func initializeNib() {
@@ -187,6 +187,10 @@ class ToolPageCardView: MobileContentView {
         nextButton.isHidden = viewModel.hidesNextButton
     }
     
+    private func relayoutBottomGradient() {
+        bottomGradientLayer.frame = bottomGradientView.bounds
+    }
+    
     func setDelegate(delegate: ToolPageCardViewDelegate?) {
         self.delegate = delegate
     }
@@ -212,6 +216,12 @@ class ToolPageCardView: MobileContentView {
             self.formView = formView
             enableKeyboardObserving()
         }
+    }
+    
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        
+        relayoutBottomGradient()
     }
     
     override func viewDidDisappear() {

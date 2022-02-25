@@ -143,9 +143,13 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             return view
         }
         else if let pageModel = renderableModel as? TractPage {
-                        
+                    
+            guard let flowDelegate = self.flowDelegate else {
+                return nil
+            }
+            
             let viewModel = ToolPageViewModel(
-                flowDelegate: getFlowDelegate(),
+                flowDelegate: flowDelegate,
                 pageModel: pageModel,
                 rendererPageModel: rendererPageModel,
                 deepLinkService: deepLinkService,

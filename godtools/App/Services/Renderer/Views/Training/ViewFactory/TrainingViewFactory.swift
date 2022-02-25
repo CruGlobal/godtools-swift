@@ -43,8 +43,12 @@ class TrainingViewFactory: MobileContentPageViewFactoryType {
         }
         else if let pageModel = renderableModel as? Page {
             
+            guard let flowDelegate = self.flowDelegate else {
+                return nil
+            }
+            
             let viewModel = TrainingPageViewModel(
-                flowDelegate: getFlowDelegate(),
+                flowDelegate: flowDelegate,
                 pageModel: pageModel,
                 rendererPageModel: rendererPageModel,
                 deepLinkService: deepLinkService

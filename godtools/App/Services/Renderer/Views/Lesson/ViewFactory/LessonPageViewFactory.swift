@@ -28,9 +28,13 @@ class LessonPageViewFactory: MobileContentPageViewFactoryType {
     func viewForRenderableModel(renderableModel: Any, rendererPageModel: MobileContentRendererPageModel) -> MobileContentView? {
         
         if let pageModel = renderableModel as? Page {
-                        
+                    
+            guard let flowDelegate = self.flowDelegate else {
+                return nil
+            }
+            
             let viewModel = LessonPageViewModel(
-                flowDelegate: getFlowDelegate(),
+                flowDelegate: flowDelegate,
                 pageModel: pageModel,
                 rendererPageModel: rendererPageModel,
                 deepLinkService: deepLinkService,
