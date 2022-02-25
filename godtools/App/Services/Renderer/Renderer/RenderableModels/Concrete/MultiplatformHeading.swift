@@ -27,9 +27,9 @@ class MultiplatformHeading {
 
 extension MultiplatformHeading: MobileContentRenderableModel {
     
-    func getRenderableChildModels() -> [Any] {
+    func getRenderableChildModels() -> [AnyObject] {
         
-        var childModels: [MobileContentRenderableModel] = Array()
+        var childModels: [AnyObject] = Array()
                 
         childModels.append(contentText)
         

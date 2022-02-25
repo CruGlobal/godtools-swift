@@ -75,7 +75,7 @@ class MultiplatformCard {
 
 extension MultiplatformCard: MobileContentRenderableModel {
         
-    func getRenderableChildModels() -> [Any] {
+    func getRenderableChildModels() -> [AnyObject] {
         
         return card.content
     }

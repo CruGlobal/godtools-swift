@@ -11,9 +11,9 @@ import GodToolsToolParser
 
 extension Accordion.Section: MobileContentRenderableModel {
     
-    func getRenderableChildModels() -> [Any] {
+    func getRenderableChildModels() -> [AnyObject] {
         
-        var childModels: [Any] = Array()
+        var childModels: [AnyObject] = Array()
         
         if let headerText = header {
             childModels.append(MultiplatformContentHeader(text: headerText))

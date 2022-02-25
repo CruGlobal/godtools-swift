@@ -11,9 +11,9 @@ import GodToolsToolParser
 
 extension LessonPage: MobileContentRenderableModel {
     
-    func getRenderableChildModels() -> [Any] {
+    func getRenderableChildModels() -> [AnyObject] {
         
-        var childModels: [MobileContentRenderableModel] = Array()
+        var childModels: [AnyObject] = Array()
 
         let contentHorizontalInsets: CGFloat = 30
         

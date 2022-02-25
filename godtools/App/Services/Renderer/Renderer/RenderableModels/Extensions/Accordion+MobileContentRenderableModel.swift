@@ -11,7 +11,7 @@ import GodToolsToolParser
 
 extension Accordion: MobileContentRenderableModel {
     
-    func getRenderableChildModels() -> [Any] {
+    func getRenderableChildModels() -> [AnyObject] {
         
         return sections
     }

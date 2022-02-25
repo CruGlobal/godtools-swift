@@ -22,7 +22,7 @@ class MultiplatformModals {
 // MARK: - MobileContentRenderableModel
 
 extension MultiplatformModals: MobileContentRenderableModel {
-    func getRenderableChildModels() -> [Any] {
+    func getRenderableChildModels() -> [AnyObject] {
         return modals
     }
 }

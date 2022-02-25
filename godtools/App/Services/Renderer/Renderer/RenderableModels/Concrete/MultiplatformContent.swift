@@ -30,7 +30,7 @@ class MultiplatformContent {
 
 extension MultiplatformContent: MobileContentRenderableModel {
     
-    func getRenderableChildModels() -> [Any] {
+    func getRenderableChildModels() -> [AnyObject] {
         
         return content
     }

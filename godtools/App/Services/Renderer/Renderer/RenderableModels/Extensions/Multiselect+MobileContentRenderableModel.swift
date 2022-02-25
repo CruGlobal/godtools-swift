@@ -11,7 +11,7 @@ import GodToolsToolParser
 
 extension Multiselect: MobileContentRenderableModel {
     
-    func getRenderableChildModels() -> [Any] {
+    func getRenderableChildModels() -> [AnyObject] {
         
         return options
     }

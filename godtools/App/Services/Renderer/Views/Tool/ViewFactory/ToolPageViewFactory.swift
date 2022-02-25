@@ -39,7 +39,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
         self.trainingTipsEnabled = trainingTipsEnabled
     }
     
-    func viewForRenderableModel(renderableModel: Any, rendererPageModel: MobileContentRendererPageModel) -> MobileContentView? {
+    func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, rendererPageModel: MobileContentRendererPageModel) -> MobileContentView? {
         
         if let cardModel = renderableModel as? MultiplatformCard {
             

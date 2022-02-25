@@ -11,9 +11,9 @@ import GodToolsToolParser
 
 extension TractPage: MobileContentRenderableModel {
     
-    func getRenderableChildModels() -> [Any] {
+    func getRenderableChildModels() -> [AnyObject] {
         
-        var childModels: [MobileContentRenderableModel] = Array()
+        var childModels: [AnyObject] = Array()
         
         if let header = header {
             childModels.append(header)

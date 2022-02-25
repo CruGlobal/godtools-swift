@@ -11,9 +11,9 @@ import GodToolsToolParser
 
 extension Hero: MobileContentRenderableModel {
     
-    func getRenderableChildModels() -> [Any] {
+    func getRenderableChildModels() -> [AnyObject] {
         
-        var childModels: [Any] = Array()
+        var childModels: [AnyObject] = Array()
         
         if let heading = heading {
             childModels.append(MultiplatformHeading(text: heading))

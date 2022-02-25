@@ -11,7 +11,7 @@ import GodToolsToolParser
 
 extension Tabs: MobileContentRenderableModel {
     
-    func getRenderableChildModels() -> [Any] {
+    func getRenderableChildModels() -> [AnyObject] {
         
         return tabs
     }

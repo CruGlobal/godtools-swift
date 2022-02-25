@@ -11,7 +11,7 @@ import GodToolsToolParser
 
 extension CardCollectionPage: MobileContentRenderableModel {
     
-    func getRenderableChildModels() -> [Any] {
+    func getRenderableChildModels() -> [AnyObject] {
         
         return cards
     }

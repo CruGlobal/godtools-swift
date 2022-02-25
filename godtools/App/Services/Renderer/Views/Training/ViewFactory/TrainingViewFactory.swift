@@ -27,12 +27,13 @@ class TrainingViewFactory: MobileContentPageViewFactoryType {
         self.trainingTipsEnabled = trainingTipsEnabled
     }
     
-    func viewForRenderableModel(renderableModel: Any, rendererPageModel: MobileContentRendererPageModel) -> MobileContentView? {
+    func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, rendererPageModel: MobileContentRendererPageModel) -> MobileContentView? {
         
-        if let tipModel = renderableModel as? Tip {
-            
-            // TODO: Need to implement this back in to determine what view type to use based on the parent. ~Levi
-            let parentIsHeader: Bool = true//renderableModelParent is Header
+        let tipModel: Tip? = (renderableModel as? Tip) ?? (renderableModel as? InlineTip)?.tip
+        
+        if let tipModel = tipModel {
+                        
+            let parentIsHeader: Bool = renderableModelParent is Header
             let trainingViewType: TrainingTipViewType = parentIsHeader ? .upArrow : .rounded
             
             return getTrainingTipView(

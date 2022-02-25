@@ -12,7 +12,7 @@ import UIKit
 
 extension CardCollectionPage.Card: MobileContentRenderableModel {
     
-    func getRenderableChildModels() -> [Any] {
+    func getRenderableChildModels() -> [AnyObject] {
                 
         let content = MultiplatformContent(
             content: content,

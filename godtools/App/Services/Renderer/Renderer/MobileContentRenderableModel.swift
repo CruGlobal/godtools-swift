@@ -10,5 +10,5 @@ import Foundation
 
 protocol MobileContentRenderableModel {
     
-    func getRenderableChildModels() -> [Any]
+    func getRenderableChildModels() -> [AnyObject]
 }

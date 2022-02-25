@@ -11,9 +11,9 @@ import GodToolsToolParser
 
 extension ContentPage: MobileContentRenderableModel {
     
-    func getRenderableChildModels() -> [Any] {
+    func getRenderableChildModels() -> [AnyObject] {
         
-        var childModels: [MobileContentRenderableModel] = Array()
+        var childModels: [AnyObject] = Array()
                 
         let multiplatformContent: MultiplatformContent = MultiplatformContent(
             content: content,
