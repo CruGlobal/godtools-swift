@@ -62,6 +62,7 @@ class MobileContentParser {
     }
     
     func getPageModel(page: Int) -> Page? {
+        
         guard page >= 0 && page < pageModels.count else {
             return nil
         }

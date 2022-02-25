@@ -245,8 +245,8 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
         // TODO: Need to fix this. ~Levi
         
         /*
-        let pageModels: [Page] = event.tipModel.pages
-        
+        let pageModels: [TipPage] = event.tipModel.pages
+                
         if pageModels.isEmpty {
             assertionFailure("Pages should not be empty for training tip.")
         }
@@ -259,10 +259,16 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             deepLinkingService: deepLinkingService
         )
         
+        let parser = MobileContentParser(
+            manifest: event.rendererPageModel.manifest,
+            pageModels: pageModels,
+            translationsFileCache: appDiContainer.translationsFileCache
+        )
+        
         let renderer = MobileContentRenderer(
             resource: event.rendererPageModel.resource,
             language: event.rendererPageModel.language,
-            parser: MobileContentParser(manifest: event.rendererPageModel.manifest, pageModels: pageModels, translationsFileCache: appDiContainer.translationsFileCache),
+            parser: parser,
             pageViewFactories: pageViewFactories
         )
               
