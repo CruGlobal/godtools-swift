@@ -33,6 +33,7 @@ target 'godtools' do
     target 'godtoolsTests' do
         inherit! :search_paths
         # Pods for testing
+        pod 'GodtoolsToolParser', '0.5.0'
     end
 end
 

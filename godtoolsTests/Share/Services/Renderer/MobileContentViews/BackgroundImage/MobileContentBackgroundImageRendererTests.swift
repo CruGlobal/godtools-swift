@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import GodToolsToolParser
 @testable import godtools
 
 class MobileContentBackgroundImageRendererTests: XCTestCase {
@@ -36,7 +37,7 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
     
     func testRectIsPositionedCorrectlyInContainerWithScaleFitAndAlignCenter() {
         
-        let scale: MobileContentBackgroundImageScale = .fit
+        let scale: ImageScaleType = .fit
         let alignment: MobileContentImageAlignment = MobileContentImageAlignment(isCenter: true, isCenterX: false, isCenterY: false, isStart: false, isEnd: false, isTop: false, isBottom: false)
         let languageDirection: LanguageDirection = .leftToRight
         
@@ -125,7 +126,7 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
     
     func testRectIsPositionedCorrectlyInContainerWithScaleFillAndAlignCenter() {
         
-        let scale: MobileContentBackgroundImageScale = .fill
+        let scale: ImageScaleType = .fill
         let alignment: MobileContentImageAlignment = MobileContentImageAlignment(isCenter: true, isCenterX: false, isCenterY: false, isStart: false, isEnd: false, isTop: false, isBottom: false)
         let languageDirection: LanguageDirection = .leftToRight
         
@@ -214,7 +215,7 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
     
     func testIphone11BackgroundImageWithAlignBottomAndFillHorizontally() {
         
-        let scale: MobileContentBackgroundImageScale = .fillHorizontally
+        let scale: ImageScaleType = .fillX
         let alignment: MobileContentImageAlignment = MobileContentImageAlignment(isCenter: false, isCenterX: false, isCenterY: false, isStart: false, isEnd: false, isTop: false, isBottom: true)
         let languageDirection: LanguageDirection = .leftToRight
         
