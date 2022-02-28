@@ -18,7 +18,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
     private let translationDownloader: TranslationDownloader
-    private let translationsFileCache: TranslationsFileCache
+    private let mobileContentParser: MobileContentParser
     private let analytics: AnalyticsContainer
     
     private weak var flowDelegate: FlowDelegate?
@@ -43,7 +43,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     let aboutDetails: ObservableValue<String> = ObservableValue(value: "")
     let languageDetails: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, translationDownloader: TranslationDownloader, translationsFileCache: TranslationsFileCache, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, translationDownloader: TranslationDownloader, mobileContentParser: MobileContentParser, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -52,7 +52,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
         self.translationDownloader = translationDownloader
-        self.translationsFileCache = translationsFileCache
+        self.mobileContentParser = mobileContentParser
         self.analytics = analytics
                 
         super.init()
@@ -212,22 +212,24 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     private func handleTranslationManifestDownloaded(result: Result<TranslationManifestData, TranslationDownloaderError>) {
         
         let tips: [String: Tip]
+        let emptyTips: [String: Tip] = Dictionary()
         let hidesLearnToShareButton: Bool
         
         switch result {
         
         case .success(let translationManifest):
             
-            let contentParser: MobileContentParser = MobileContentParser(
-                translationManifestData: translationManifest,
-                translationsFileCache: translationsFileCache
-            )
+            let result: Result<Manifest, Error> = mobileContentParser.parse(translationManifestData: translationManifest)
             
-            tips = contentParser.manifest?.tips ?? Dictionary()
-            
+            switch result {
+            case .success(let manifest):
+                tips = manifest.tips
+            case .failure(let error):
+                tips = emptyTips
+            }
+                        
         case .failure(let error):
-            
-            tips = Dictionary()
+            tips = emptyTips
         }
         
         hidesLearnToShareButton = tips.isEmpty

@@ -9,6 +9,7 @@
 import UIKit
 import GodToolsToolParser
 
+// TODO: Should I rename this class to MobileContentRenderedPageModel? ~Levi
 class MobileContentRendererPageModel {
     
     let pageModel: Page

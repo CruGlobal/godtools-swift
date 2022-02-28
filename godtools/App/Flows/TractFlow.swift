@@ -25,7 +25,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
     var lessonFlow: LessonFlow?
     var tractFlow: TractFlow?
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController?, resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
+    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController?, resource: ResourceModel, primaryLanguage: LanguageModel, primaryLanguageManifest: Manifest, parallelLanguage: LanguageModel?, parallelLanguageManifest: Manifest?, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -36,6 +36,20 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             
         let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
         
+        var languageTranslationManifests: [MobileContentRendererLanguageTranslationManifest] = Array()
+        
+        let primaryLanguageTranslationManifest = MobileContentRendererLanguageTranslationManifest(
+            manifest: primaryLanguageManifest,
+            language: primaryLanguage
+        )
+        
+        languageTranslationManifests.append(primaryLanguageTranslationManifest)
+        
+        if !trainingTipsEnabled, let parallelLanguage = parallelLanguage, let parallelLanguageManifest = parallelLanguageManifest, parallelLanguage.code != primaryLanguage.code {
+            
+            languageTranslationManifests.append(MobileContentRendererLanguageTranslationManifest(manifest: parallelLanguageManifest, language: parallelLanguage))
+        }
+
         let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
             type: .tract,
             flowDelegate: self,
@@ -43,38 +57,21 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             trainingTipsEnabled: trainingTipsEnabled,
             deepLinkingService: deepLinkingService
         )
-          
-        let primaryRenderer = MobileContentRenderer(
-            resource: resource,
-            language: primaryLanguage,
-            parser: MobileContentParser(translationManifestData: primaryTranslationManifest, translationsFileCache: translationsFileCache),
-            pageViewFactories: pageViewFactories
-        )
                 
-        var renderers: [MobileContentRenderer] = Array()
-        
-        renderers.append(primaryRenderer)
-        
-        if !trainingTipsEnabled, let parallelLanguage = parallelLanguage, let parallelTranslationManifest = parallelTranslationManifest, parallelLanguage.code != primaryLanguage.code {
-            
-            let parallelRenderer = MobileContentRenderer(
-                resource: resource,
-                language: parallelLanguage,
-                parser: MobileContentParser(translationManifestData: parallelTranslationManifest, translationsFileCache: translationsFileCache),
-                pageViewFactories: pageViewFactories
-            )
-                        
-            renderers.append(parallelRenderer)
-        }
+        let renderer = MobileContentRenderer(
+            resource: resource,
+            primaryLanguage: primaryLanguage,
+            languageTranslationManifests: languageTranslationManifests,
+            pageViewFactories: pageViewFactories,
+            translationsFileCache: translationsFileCache
+        )
         
         let parentFlowIsHomeFlow: Bool = flowDelegate is AppFlow
         
         let viewModel = ToolViewModel(
             flowDelegate: self,
             backButtonImageType: (parentFlowIsHomeFlow) ? .home : .backArrow,
-            renderers: renderers,
-            resource: resource,
-            primaryLanguage: primaryLanguage,
+            renderer: renderer,
             tractRemoteSharePublisher: appDiContainer.tractRemoteSharePublisher,
             tractRemoteShareSubscriber: appDiContainer.tractRemoteShareSubscriber,
             localizationServices: appDiContainer.localizationServices,
@@ -242,9 +239,8 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
     
     private func navigateToToolTraining(event: TrainingTipEvent) {
         
-        // TODO: Need to fix this. ~Levi
+        assertionFailure("Fix. ToolTrainingViewModel really just needs a renderer since we have all the tip pages.")
         
-        /*
         let pageModels: [TipPage] = event.tipModel.pages
                 
         if pageModels.isEmpty {
@@ -259,22 +255,20 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             deepLinkingService: deepLinkingService
         )
         
-        let parser = MobileContentParser(
-            manifest: event.rendererPageModel.manifest,
-            pageModels: pageModels,
+        let languageTranslationManifest = MobileContentRendererLanguageTranslationManifest(manifest: event.rendererPageModel.manifest, language: event.rendererPageModel.language)
+        
+        let pageRenderer = MobileContentPageRenderer(
+            sharedState: State(),
+            resource: event.rendererPageModel.resource,
+            primaryLanguage: event.rendererPageModel.primaryRendererLanguage,
+            languageTranslationManifest: languageTranslationManifest,
+            pageViewFactories: pageViewFactories,
             translationsFileCache: appDiContainer.translationsFileCache
         )
-        
-        let renderer = MobileContentRenderer(
-            resource: event.rendererPageModel.resource,
-            language: event.rendererPageModel.language,
-            parser: parser,
-            pageViewFactories: pageViewFactories
-        )
-              
+                   
         let viewModel = ToolTrainingViewModel(
             flowDelegate: self,
-            renderer: renderer,
+            pageRenderer: pageRenderer,
             trainingTipId: event.trainingTipId,
             tipModel: event.tipModel,
             analytics: appDiContainer.analytics,
@@ -284,6 +278,6 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
         
         let view = ToolTrainingView(viewModel: viewModel)
         
-        navigationController.present(view, animated: true, completion: nil)*/
+        navigationController.present(view, animated: true, completion: nil)
     }
 }

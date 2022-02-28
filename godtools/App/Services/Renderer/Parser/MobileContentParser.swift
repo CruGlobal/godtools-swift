@@ -10,13 +10,10 @@ import Foundation
 import GodToolsToolParser
 
 class MobileContentParser {
-            
-    let manifest: Manifest?
-    let manifestResourcesCache: ManifestResourcesCache?
-    let pageModels: [Page]
-    let errors: [Error]
+                
+    private let iOSManifestParser: IosManifestParser
     
-    required init(translationManifestData: TranslationManifestData, translationsFileCache: TranslationsFileCache) {
+    required init(translationsFileCache: TranslationsFileCache) {
                         
         let enabledFeatures: [String] = [
             ParserConfigKt.FEATURE_ANIMATION,
@@ -27,67 +24,20 @@ class MobileContentParser {
                         
         ParserConfig().supportedFeatures = Set(enabledFeatures)
         
-        let manifestParser = IosManifestParser(parserFactory: MobileContentMultiplatformParserFactory(translationsFileCache: translationsFileCache))
+        iOSManifestParser = IosManifestParser(parserFactory: MobileContentMultiplatformParserFactory(translationsFileCache: translationsFileCache))
+    }
+    
+    func parse(translationManifestData: TranslationManifestData) -> Result<Manifest, Error> {
         
-        let result = manifestParser.parseManifestBlocking(fileName: translationManifestData.translationZipFile.translationManifestFilename)
-        
-        var errors: [Error] = Array()
+        let result = iOSManifestParser.parseManifestBlocking(fileName: translationManifestData.translationZipFile.translationManifestFilename)
         
         if let resultData = result as? ParserResult.Data {
-            
-            let manifest: Manifest = resultData.manifest
-            
-            self.pageModels = manifest.pages
-            
-            self.manifest = manifest
-            self.manifestResourcesCache = ManifestResourcesCache(manifest: manifest, translationsFileCache: translationsFileCache)
+            return .success(resultData.manifest)
         }
         else {
-            let failedToParseManifest: Error = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Multiplatform failed to parse manifest."])
-            errors.append(failedToParseManifest)
-            self.manifest = nil
-            self.manifestResourcesCache = nil
-            self.pageModels = Array()
+            let error: Error = NSError.errorWithDescription(description: "Failed to parse tool manifest.")
+            return .failure(error)
         }
-
-        self.errors = errors
-    }
-    
-    required init(manifest: Manifest, pageModels: [Page], translationsFileCache: TranslationsFileCache) {
-        
-        self.manifest = manifest
-        self.manifestResourcesCache = ManifestResourcesCache(manifest: manifest, translationsFileCache: translationsFileCache)
-        self.pageModels = pageModels
-        self.errors = Array()
-    }
-    
-    func getPageModel(page: Int) -> Page? {
-        
-        guard page >= 0 && page < pageModels.count else {
-            return nil
-        }
-        return pageModels[page]
-    }
-    
-    func getVisiblePageModels() -> [Page] {
-        return pageModels.filter({!$0.isHidden})
-    }
-    
-    func getPageForListenerEvents(eventIds: [EventId]) -> Int? {
-                
-        for pageIndex in 0 ..< pageModels.count {
-            
-            let pageModel: Page = pageModels[pageIndex]
-            
-            for listener in pageModel.listeners {
-               
-                if eventIds.contains(listener) {
-                    return pageIndex
-                }
-            }
-        }
-        
-        return nil
     }
 }
 

@@ -20,7 +20,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOw
     let navBarColors: ObservableValue<ChooseYourOwnAdventureNavBarModel>
     let navBarTitleType: ChooseYourOwnAdventureNavBarTitleType
     
-    required init(flowDelegate: FlowDelegate, renderers: [MobileContentRenderer], primaryLanguage: LanguageModel, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, localizationServices: LocalizationServices, fontService: FontService) {
+    required init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, localizationServices: LocalizationServices, fontService: FontService) {
         
         self.localizationServices = localizationServices
         self.fontService = fontService
@@ -30,7 +30,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOw
         let navBarColor: UIColor
         let navBarControlColor: UIColor
 
-        let manifest: Manifest? = renderers.first?.parser.manifest
+        let manifest: Manifest? = renderer.pageRenderers.first?.manifest
         
         if let manifest = manifest {
             navBarColor = manifest.navBarColor
@@ -52,18 +52,18 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOw
         
         navBarColors = ObservableValue(value: navBarModel)
         
-        if renderers.count > 1 {
+        if renderer.pageRenderers.count > 1 {
             navBarTitleType = .languageToggle
         }
         else {
             navBarTitleType = .title(title: "GodTools")
         }
         
-        super.init(flowDelegate: flowDelegate, renderers: renderers, primaryLanguage: primaryLanguage, page: page, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .chooseYourOwnAdventure)
+        super.init(flowDelegate: flowDelegate, renderer: renderer, page: page, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .chooseYourOwnAdventure)
     }
 
-    required init(flowDelegate: FlowDelegate, renderers: [MobileContentRenderer], primaryLanguage: LanguageModel, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType) {
-        fatalError("init(flowDelegate:renderers:primaryLanguage:page:mobileContentEventAnalytics:initialPageRenderingType:) has not been implemented")
+    required init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType) {
+        fatalError("init(flowDelegate:renderer:page:mobileContentEventAnalytics:initialPageRenderingType:) has not been implemented")
     }
     
     override func pageDidAppear(page: Int) {
@@ -84,7 +84,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOw
     
     func getNavBarLanguageTitles() -> [String] {
         
-        let languageTitles: [String] = renderers.map({ LanguageViewModel(language: $0.language, localizationServices: localizationServices).translatedLanguageName })
+        let languageTitles: [String] = renderer.pageRenderers.map({ LanguageViewModel(language: $0.language, localizationServices: localizationServices).translatedLanguageName })
         guard languageTitles.count > 1 else {
             return Array()
         }
@@ -102,7 +102,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOw
     
     func navLanguageTapped(index: Int) {
         
-        let renderer: MobileContentRenderer = renderers[index]
-        setRenderer(renderer: renderer)
+        let pageRenderer: MobileContentPageRenderer = renderer.pageRenderers[index]
+        setPageRenderer(pageRenderer: pageRenderer)
     }
 }
