@@ -69,7 +69,6 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
                 flowDelegate: flowDelegate,
                 translationsFileCache: translationsFileCache,
                 viewedTrainingTipsService: viewedTrainingTipsService,
-                deepLinkService: deepLinkingService,
                 trainingTipsEnabled: trainingTipsEnabled
             )
             
@@ -95,7 +94,6 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
                 flowDelegate: flowDelegate,
                 translationsFileCache: translationsFileCache,
                 viewedTrainingTipsService: viewedTrainingTipsService,
-                deepLinkService: deepLinkingService,
                 trainingTipsEnabled: trainingTipsEnabled
             )
             
@@ -107,7 +105,6 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
                 flowDelegate: flowDelegate,
                 translationsFileCache: translationsFileCache,
                 viewedTrainingTipsService: viewedTrainingTipsService,
-                deepLinkService: deepLinkingService,
                 trainingTipsEnabled: false
             )
             
@@ -127,10 +124,10 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
         self.factories = pageViewFactories
     }
     
-    func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, rendererPageModel: MobileContentRendererPageModel) -> MobileContentView? {
+    func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
         
         for pageViewFactory in factories {
-            if let view = pageViewFactory.viewForRenderableModel(renderableModel: renderableModel, renderableModelParent: renderableModelParent, rendererPageModel: rendererPageModel) {
+            if let view = pageViewFactory.viewForRenderableModel(renderableModel: renderableModel, renderableModelParent: renderableModelParent, renderedPageContext: renderedPageContext) {
                 return view
             }
         }

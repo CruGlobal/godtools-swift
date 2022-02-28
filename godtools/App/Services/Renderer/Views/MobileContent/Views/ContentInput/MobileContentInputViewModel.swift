@@ -12,7 +12,7 @@ import GodToolsToolParser
 class MobileContentInputViewModel: MobileContentInputViewModelType {
     
     private let inputModel: Input
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let renderedPageContext: MobileContentRenderedPageContext
     private let fontService: FontService
     
     private var inputValue: String?
@@ -20,10 +20,10 @@ class MobileContentInputViewModel: MobileContentInputViewModelType {
     let inputLabel: String?
     let placeholder: String?
     
-    required init(inputModel: Input, rendererPageModel: MobileContentRendererPageModel, fontService: FontService) {
+    required init(inputModel: Input, renderedPageContext: MobileContentRenderedPageContext, fontService: FontService) {
         
         self.inputModel = inputModel
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
         self.fontService = fontService
         
         inputLabel = inputModel.label?.text

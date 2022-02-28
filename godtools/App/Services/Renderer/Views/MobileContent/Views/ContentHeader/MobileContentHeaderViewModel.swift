@@ -12,12 +12,12 @@ import GodToolsToolParser
 class MobileContentHeaderViewModel: MobileContentHeaderViewModelType {
     
     private let header: Text
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let renderedPageContext: MobileContentRenderedPageContext
     
-    required init(header: Text, rendererPageModel: MobileContentRendererPageModel) {
+    required init(header: Text, renderedPageContext: MobileContentRenderedPageContext) {
         
         self.header = header
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
     }
     
     var fontSize: CGFloat {

@@ -12,18 +12,18 @@ import GodToolsToolParser
 class MobileContentParagraphViewModel: MobileContentParagraphViewModelType {
     
     private let paragraphModel: Paragraph
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let renderedPageContext: MobileContentRenderedPageContext
     
     private var visibilityFlowWatcher: FlowWatcher?
     
     let visibilityState: ObservableValue<MobileContentViewVisibilityState> = ObservableValue(value: .visible)
     
-    required init(paragraphModel: Paragraph, rendererPageModel: MobileContentRendererPageModel) {
+    required init(paragraphModel: Paragraph, renderedPageContext: MobileContentRenderedPageContext) {
         
         self.paragraphModel = paragraphModel
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
                 
-        visibilityFlowWatcher = paragraphModel.watchVisibility(state: rendererPageModel.rendererState) { [weak self] (invisible: KotlinBoolean, gone: KotlinBoolean) in
+        visibilityFlowWatcher = paragraphModel.watchVisibility(state: renderedPageContext.rendererState) { [weak self] (invisible: KotlinBoolean, gone: KotlinBoolean) in
                 
             let visibilityStateValue: MobileContentViewVisibilityState
             

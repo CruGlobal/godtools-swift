@@ -12,7 +12,7 @@ import GodToolsToolParser
 class ToolPageViewModel: MobileContentPageViewModel, ToolPageViewModelType {
     
     private let pageModel: TractPage
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let renderedPageContext: MobileContentRenderedPageContext
     private let analytics: AnalyticsContainer
     private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
     
@@ -20,30 +20,30 @@ class ToolPageViewModel: MobileContentPageViewModel, ToolPageViewModelType {
     
     let hidesCallToAction: Bool
     
-    required init(flowDelegate: FlowDelegate, pageModel: TractPage, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics) {
+    required init(flowDelegate: FlowDelegate, pageModel: TractPage, renderedPageContext: MobileContentRenderedPageContext, deepLinkService: DeepLinkingServiceType, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics) {
                 
         self.pageModel = pageModel
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
         self.analytics = analytics
         self.hidesCallToAction = pageModel.isLastPage
         
         self.analyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
             analyticsEvents: pageModel.getAnalyticsEvents(type: .visible),
             mobileContentAnalytics: mobileContentAnalytics,
-            rendererPageModel: rendererPageModel
+            renderedPageContext: renderedPageContext
         )
         
-        super.init(flowDelegate: flowDelegate, pageModel: pageModel, rendererPageModel: rendererPageModel, deepLinkService: deepLinkService, hidesBackgroundImage: false)
+        super.init(flowDelegate: flowDelegate, pageModel: pageModel, renderedPageContext: renderedPageContext, deepLinkService: deepLinkService, hidesBackgroundImage: false)
     }
     
-    required init(flowDelegate: FlowDelegate, pageModel: Page, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, hidesBackgroundImage: Bool) {
-        fatalError("init(flowDelegate:pageModel:rendererPageModel:deepLinkService:hidesBackgroundImage:) has not been implemented")
+    required init(flowDelegate: FlowDelegate, pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, deepLinkService: DeepLinkingServiceType, hidesBackgroundImage: Bool) {
+        fatalError("init(flowDelegate:pageModel:renderedPageContext:deepLinkService:hidesBackgroundImage:) has not been implemented")
     }
     
     override var analyticsScreenName: String {
         
-        let resource: ResourceModel = rendererPageModel.resource
-        let page: Int = rendererPageModel.page
+        let resource: ResourceModel = renderedPageContext.resource
+        let page: Int = renderedPageContext.page
         
         let cardAnalyticsScreenName: String
         
@@ -59,23 +59,23 @@ class ToolPageViewModel: MobileContentPageViewModel, ToolPageViewModelType {
     
     var bottomViewColor: UIColor {
         
-        let manifest: Manifest = rendererPageModel.manifest
+        let manifest: Manifest = renderedPageContext.manifest
         let color: UIColor = manifest.navBarColor
         
         return color.withAlphaComponent(0.1)
     }
     
     var page: Int {
-        return rendererPageModel.page
+        return renderedPageContext.page
     }
     
     func callToActionWillAppear() -> ToolPageCallToActionView? {
         
         if !hidesCallToAction && pageModel.callToAction == nil {
             
-            for viewFactory in rendererPageModel.pageViewFactories.factories {
+            for viewFactory in renderedPageContext.pageViewFactories.factories {
                 if let toolPageViewFactory = viewFactory as? ToolPageViewFactory {
-                    return toolPageViewFactory.getCallToActionView(callToActionModel: nil, rendererPageModel: rendererPageModel)
+                    return toolPageViewFactory.getCallToActionView(callToActionModel: nil, renderedPageContext: renderedPageContext)
                 }
             }
         }
@@ -86,8 +86,8 @@ class ToolPageViewModel: MobileContentPageViewModel, ToolPageViewModelType {
     func pageDidAppear() {
         mobileContentDidAppear()
         
-        let resource: ResourceModel = rendererPageModel.resource
-        let page: Int = rendererPageModel.page
+        let resource: ResourceModel = renderedPageContext.resource
+        let page: Int = renderedPageContext.page
         
         analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: resource.abbreviation + "-" + String(page), siteSection: resource.abbreviation, siteSubSection: ""))
     }
@@ -102,7 +102,7 @@ class ToolPageViewModel: MobileContentPageViewModel, ToolPageViewModelType {
 extension ToolPageViewModel: MobileContentViewModelType {
     
     var language: LanguageModel {
-        return rendererPageModel.language
+        return renderedPageContext.language
     }
     
     var analyticsEvents: [MobileContentAnalyticsEvent] {

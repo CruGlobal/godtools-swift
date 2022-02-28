@@ -13,18 +13,18 @@ import RealmSwift
 class MobileContentImageViewModel: MobileContentImageViewModelType {
     
     private let imageModel: Image
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let renderedPageContext: MobileContentRenderedPageContext
     
     let image: UIImage?
     let imageWidth: MobileContentViewWidth
     
-    required init(imageModel: Image, rendererPageModel: MobileContentRendererPageModel) {
+    required init(imageModel: Image, renderedPageContext: MobileContentRenderedPageContext) {
         
         self.imageModel = imageModel
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
         self.imageWidth = MobileContentViewWidth(dimension: imageModel.width)
                 
-        if let imageResource = imageModel.resource?.name, !imageResource.isEmpty, let cachedImage = rendererPageModel.resourcesCache.getImageFromManifestResources(fileName: imageResource) {
+        if let imageResource = imageModel.resource?.name, !imageResource.isEmpty, let cachedImage = renderedPageContext.resourcesCache.getImageFromManifestResources(fileName: imageResource) {
             self.image = cachedImage
         }
         else {
@@ -37,6 +37,6 @@ class MobileContentImageViewModel: MobileContentImageViewModelType {
     }
     
     var rendererState: State {
-        return rendererPageModel.rendererState
+        return renderedPageContext.rendererState
     }
 }

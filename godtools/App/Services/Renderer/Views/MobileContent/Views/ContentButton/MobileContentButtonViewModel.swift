@@ -14,7 +14,7 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     private let maxAllowedIconSize = 40
     
     private let buttonModel: Button
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let renderedPageContext: MobileContentRenderedPageContext
     private let mobileContentAnalytics: MobileContentAnalytics
     private let fontService: FontService
     private let fontSize: CGFloat = 18
@@ -29,10 +29,10 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     let visibilityState: ObservableValue<MobileContentViewVisibilityState> = ObservableValue(value: .visible)
     let icon: MobileContentButtonIcon?
     
-    required init(buttonModel: Button, rendererPageModel: MobileContentRendererPageModel, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
+    required init(buttonModel: Button, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
         
         self.buttonModel = buttonModel
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
         
@@ -45,7 +45,7 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
         
         case .contained:
             backgroundColor = buttonColor
-            titleColor = buttonTitleColor ?? rendererPageModel.pageModel.primaryTextColor
+            titleColor = buttonTitleColor ?? renderedPageContext.pageModel.primaryTextColor
             borderColor = UIColor.clear
         case .outlined:
             backgroundColor = buttonModel.backgroundColor
@@ -53,16 +53,16 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
             borderColor = buttonColor
         case .unknown:
             backgroundColor = buttonColor
-            titleColor = buttonTitleColor ?? rendererPageModel.pageModel.primaryTextColor
+            titleColor = buttonTitleColor ?? renderedPageContext.pageModel.primaryTextColor
             borderColor = UIColor.clear
         default:
             backgroundColor = buttonColor
-            titleColor = buttonTitleColor ?? rendererPageModel.pageModel.primaryTextColor
+            titleColor = buttonTitleColor ?? renderedPageContext.pageModel.primaryTextColor
             borderColor = UIColor.clear
         }
         
         if let name = buttonModel.icon?.name,
-            let image = rendererPageModel.resourcesCache.getImageFromManifestResources(fileName: name)  {
+            let image = renderedPageContext.resourcesCache.getImageFromManifestResources(fileName: name)  {
             
             let iconSize = min(Int(buttonModel.iconSize), maxAllowedIconSize)
                     
@@ -76,7 +76,7 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
         
         super.init()
         
-        visibilityFlowWatcher = buttonModel.watchVisibility(state: rendererPageModel.rendererState, block: { [weak self] (invisible: KotlinBoolean, gone: KotlinBoolean) in
+        visibilityFlowWatcher = buttonModel.watchVisibility(state: renderedPageContext.rendererState, block: { [weak self] (invisible: KotlinBoolean, gone: KotlinBoolean) in
             
             let visibilityStateValue: MobileContentViewVisibilityState
             
@@ -132,10 +132,10 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     }
     
     var rendererState: State {
-        return rendererPageModel.rendererState
+        return renderedPageContext.rendererState
     }
     
     func buttonTapped() {
-        mobileContentAnalytics.trackEvents(events: buttonModel.analyticsEvents, rendererPageModel: rendererPageModel)
+        mobileContentAnalytics.trackEvents(events: buttonModel.analyticsEvents, renderedPageContext: renderedPageContext)
     }
 }

@@ -12,11 +12,11 @@ import GodToolsToolParser
 class MobileContentFormViewModel: MobileContentFormViewModelType {
     
     private let formModel: Form
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let renderedPageContext: MobileContentRenderedPageContext
             
-    required init(formModel: Form, rendererPageModel: MobileContentRendererPageModel) {
+    required init(formModel: Form, renderedPageContext: MobileContentRenderedPageContext) {
         
         self.formModel = formModel
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
     }
 }

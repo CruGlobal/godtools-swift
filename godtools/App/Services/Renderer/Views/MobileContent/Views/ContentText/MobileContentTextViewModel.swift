@@ -14,17 +14,17 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     private static let numberFormatter: NumberFormatter = NumberFormatter()
     
     private let textModel: Text
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let renderedPageContext: MobileContentRenderedPageContext
     private let fontService: FontService
     private let fontSize: CGFloat = 18
     private let defaultFontWeight: UIFont.Weight = .regular
         
     let textColor: UIColor
     
-    required init(textModel: Text, rendererPageModel: MobileContentRendererPageModel, fontService: FontService) {
+    required init(textModel: Text, renderedPageContext: MobileContentRenderedPageContext, fontService: FontService) {
         
         self.textModel = textModel
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
         self.fontService = fontService
         
         self.textColor = textModel.textColor
@@ -36,7 +36,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
             return nil
         }
         
-        guard let resourceImage = rendererPageModel.resourcesCache.getImageFromManifestResources(fileName: resource) else {
+        guard let resourceImage = renderedPageContext.resourcesCache.getImageFromManifestResources(fileName: resource) else {
             return nil
         }
         
@@ -82,7 +82,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
             return nil
         }
         
-        guard let resourceImage = rendererPageModel.resourcesCache.getImageFromManifestResources(fileName: resource) else {
+        guard let resourceImage = renderedPageContext.resourcesCache.getImageFromManifestResources(fileName: resource) else {
             return nil
         }
         
@@ -193,7 +193,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
 extension MobileContentTextViewModel: MobileContentViewModelType {
     
     var language: LanguageModel {
-        return rendererPageModel.language
+        return renderedPageContext.language
     }
     
     var analyticsEvents: [MobileContentAnalyticsEvent] {

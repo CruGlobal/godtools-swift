@@ -12,18 +12,18 @@ import GodToolsToolParser
 class ToolPageHeroViewModel: ToolPageHeroViewModelType {
     
     private let heroModel: Hero
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let renderedPageContext: MobileContentRenderedPageContext
     private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
     
-    required init(heroModel: Hero, rendererPageModel: MobileContentRendererPageModel, mobileContentAnalytics: MobileContentAnalytics) {
+    required init(heroModel: Hero, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.heroModel = heroModel
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
                 
         analyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
             analyticsEvents: heroModel.analyticsEvents,
             mobileContentAnalytics: mobileContentAnalytics,
-            rendererPageModel: rendererPageModel
+            renderedPageContext: renderedPageContext
         )
     }
     
@@ -45,7 +45,7 @@ class ToolPageHeroViewModel: ToolPageHeroViewModelType {
 extension ToolPageHeroViewModel: MobileContentViewModelType {
     
     var language: LanguageModel {
-        return rendererPageModel.language
+        return renderedPageContext.language
     }
     
     var analyticsEvents: [MobileContentAnalyticsEvent] {

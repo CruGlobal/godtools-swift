@@ -12,13 +12,13 @@ import GodToolsToolParser
 class MobileContentTabViewModel: MobileContentTabViewModelType {
     
     private let tabModel: Tabs.Tab
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let renderedPageContext: MobileContentRenderedPageContext
     private let mobileContentAnalytics: MobileContentAnalytics
     
-    required init(tabModel: Tabs.Tab, rendererPageModel: MobileContentRendererPageModel, mobileContentAnalytics: MobileContentAnalytics) {
+    required init(tabModel: Tabs.Tab, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.tabModel = tabModel
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
         self.mobileContentAnalytics = mobileContentAnalytics
     }
     
@@ -32,6 +32,6 @@ class MobileContentTabViewModel: MobileContentTabViewModelType {
     
     func tabTapped() {
         
-        mobileContentAnalytics.trackEvents(events: tabModel.analyticsEvents, rendererPageModel: rendererPageModel)
+        mobileContentAnalytics.trackEvents(events: tabModel.analyticsEvents, renderedPageContext: renderedPageContext)
     }
 }

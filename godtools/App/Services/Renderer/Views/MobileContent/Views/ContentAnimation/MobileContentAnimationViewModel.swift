@@ -12,18 +12,18 @@ import GodToolsToolParser
 class MobileContentAnimationViewModel: MobileContentAnimationViewModelType {
     
     private let animationModel: Animation
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let renderedPageContext: MobileContentRenderedPageContext
     
     let animatedViewModel: AnimatedViewModelType
     
-    required init(animationModel: Animation, rendererPageModel: MobileContentRendererPageModel) {
+    required init(animationModel: Animation, renderedPageContext: MobileContentRenderedPageContext) {
         
         self.animationModel = animationModel
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
         
         let animationFilepath: String
         
-        let animationfileResult: Result<URL, Error> = rendererPageModel.resourcesCache.getFile(fileName: animationModel.resource?.name ?? "")
+        let animationfileResult: Result<URL, Error> = renderedPageContext.resourcesCache.getFile(fileName: animationModel.resource?.name ?? "")
         
         switch animationfileResult {
         case .success(let fileUrl):

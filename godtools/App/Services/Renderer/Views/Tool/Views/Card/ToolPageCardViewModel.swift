@@ -11,7 +11,7 @@ import GodToolsToolParser
 
 class ToolPageCardViewModel: ToolPageCardViewModelType {
     
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let renderedPageContext: MobileContentRenderedPageContext
     private let cardModel: TractPage.Card
     private let analytics: AnalyticsContainer
     private let fontService: FontService
@@ -27,10 +27,10 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     let hidesNextButton: Bool
     let isHiddenCard: Bool
     
-    required init(cardModel: TractPage.Card, rendererPageModel: MobileContentRendererPageModel, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, numberOfCards: Int, trainingTipsEnabled: Bool) {
+    required init(cardModel: TractPage.Card, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, numberOfCards: Int, trainingTipsEnabled: Bool) {
                         
         self.cardModel = cardModel
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
         self.analytics = analytics
         self.fontService = fontService
         self.localizationServices = localizationServices
@@ -54,7 +54,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
         analyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
             analyticsEvents: cardModel.analyticsEvents,
             mobileContentAnalytics: mobileContentAnalytics,
-            rendererPageModel: rendererPageModel
+            renderedPageContext: renderedPageContext
         )
         
         if !trainingTipsEnabled {
@@ -71,7 +71,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     }
     
     var titleColor: UIColor {
-        return cardModel.label?.textColor ?? rendererPageModel.pageModel.primaryColor
+        return cardModel.label?.textColor ?? renderedPageContext.pageModel.primaryColor
     }
     
     var titleFont: UIFont {
@@ -95,7 +95,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     }
     
     var previousButtonTitle: String? {
-        return localizationServices.stringForLanguage(language: rendererPageModel.language, key: "card_status1")
+        return localizationServices.stringForLanguage(language: renderedPageContext.language, key: "card_status1")
     }
     
     var previousButtonTitleColor: UIColor {
@@ -107,7 +107,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     }
     
     var nextButtonTitle: String? {
-        return localizationServices.stringForLanguage(language: rendererPageModel.language, key: "card_status2")
+        return localizationServices.stringForLanguage(language: renderedPageContext.language, key: "card_status2")
     }
     
     var nextButtonTitleColor: UIColor {
@@ -119,7 +119,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return rendererPageModel.language.languageDirection.semanticContentAttribute
+        return renderedPageContext.language.languageDirection.semanticContentAttribute
     }
     
     var dismissListeners: [EventId] {
@@ -144,16 +144,16 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
         
         return MobileContentBackgroundImageViewModel(
             backgroundImageModel: backgroundImageModel,
-            manifestResourcesCache: rendererPageModel.resourcesCache,
-            languageDirection: rendererPageModel.language.languageDirection
+            manifestResourcesCache: renderedPageContext.resourcesCache,
+            languageDirection: renderedPageContext.language.languageDirection
         )
     }
         
     func cardDidAppear() {
         mobileContentDidAppear()
         
-        let resource: ResourceModel = rendererPageModel.resource
-        let page: Int = rendererPageModel.page
+        let resource: ResourceModel = renderedPageContext.resource
+        let page: Int = renderedPageContext.page
         
         let pageAnalyticsScreenName: String = resource.abbreviation + "-" + String(page)
         let screenName: String = pageAnalyticsScreenName + ToolPageCardAnalyticsScreenName(cardPosition: cardPosition).screenName
@@ -170,7 +170,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
 extension ToolPageCardViewModel: MobileContentViewModelType {
     
     var language: LanguageModel {
-        return rendererPageModel.language
+        return renderedPageContext.language
     }
     
     var analyticsEvents: [MobileContentAnalyticsEvent] {

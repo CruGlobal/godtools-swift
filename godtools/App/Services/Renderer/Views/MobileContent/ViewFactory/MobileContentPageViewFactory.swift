@@ -28,13 +28,13 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         self.analytics = analytics
     }
     
-    func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, rendererPageModel: MobileContentRendererPageModel) -> MobileContentView? {
+    func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
         
         if let paragraphModel = renderableModel as? Paragraph {
         
             let viewModel = MobileContentParagraphViewModel(
                 paragraphModel: paragraphModel,
-                rendererPageModel: rendererPageModel
+                renderedPageContext: renderedPageContext
             )
             
             let view = MobileContentParagraphView(viewModel: viewModel, contentInsets: .zero, itemSpacing: 5, scrollIsEnabled: false)
@@ -45,7 +45,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                        
             return getContentText(
                 textModel: textModel,
-                rendererPageModel: rendererPageModel,
+                renderedPageContext: renderedPageContext,
                 viewType: nil,
                 additionalLabelAttributes: nil
             )
@@ -54,7 +54,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = MobileContentImageViewModel(
                 imageModel: imageModel,
-                rendererPageModel: rendererPageModel
+                renderedPageContext: renderedPageContext
             )
             
             let view = MobileContentImageView(viewModel: viewModel)
@@ -65,7 +65,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                         
             let viewModel = MobileContentButtonViewModel(
                 buttonModel: buttonModel,
-                rendererPageModel: rendererPageModel,
+                renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics,
                 fontService: fontService
             )
@@ -78,7 +78,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = MobileContentCardViewModel(
                 contentCard: contentCard,
-                rendererPageModel: rendererPageModel
+                renderedPageContext: renderedPageContext
             )
             
             let view = MobileContentCardView(viewModel: viewModel)
@@ -89,7 +89,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                         
             let viewModel = MobileContentLinkViewModel(
                 linkModel: linkModel,
-                rendererPageModel: rendererPageModel,
+                renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics,
                 fontService: fontService
             )
@@ -118,7 +118,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             let viewModel = MobileContentContentPageViewModel(
                 flowDelegate: flowDelegate,
                 contentPage: contentPage,
-                rendererPageModel: rendererPageModel,
+                renderedPageContext: renderedPageContext,
                 deepLinkService: deepLinkingService,
                 analytics: analytics
             )
@@ -137,7 +137,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             let viewModel = MobileContentCardCollectionPageViewModel(
                 flowDelegate: flowDelegate,
                 cardCollectionPage: cardCollectionPage,
-                rendererPageModel: rendererPageModel,
+                renderedPageContext: renderedPageContext,
                 deepLinkService: deepLinkingService,
                 analytics: analytics
             )
@@ -150,7 +150,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = MobileContentHeadingViewModel(
                 heading: headingModel.text,
-                rendererPageModel: rendererPageModel
+                renderedPageContext: renderedPageContext
             )
             
             let view = MobileContentHeadingView(viewModel: viewModel)
@@ -169,7 +169,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = MobileContentAnimationViewModel(
                 animationModel: animationModel,
-                rendererPageModel: rendererPageModel
+                renderedPageContext: renderedPageContext
             )
             
             let view = MobileContentAnimationView(viewModel: viewModel)
@@ -180,7 +180,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = MobileContentEmbeddedVideoViewModel(
                 videoModel: videoModel,
-                rendererPageModel: rendererPageModel
+                renderedPageContext: renderedPageContext
             )
             
             let view = MobileContentEmbeddedVideoView(viewModel: viewModel)
@@ -191,7 +191,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = MobileContentTabViewModel(
                 tabModel: tabModel,
-                rendererPageModel: rendererPageModel,
+                renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
@@ -203,7 +203,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
 
             let viewModel = MobileContentTabsViewModel(
                 tabsModel: tabsModel,
-                rendererPageModel: rendererPageModel
+                renderedPageContext: renderedPageContext
             )
             
             let view = MobileContentTabsView(viewModel: viewModel)
@@ -214,7 +214,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = MobileContentInputViewModel(
                 inputModel: inputModel,
-                rendererPageModel: rendererPageModel,
+                renderedPageContext: renderedPageContext,
                 fontService: fontService
             )
             
@@ -226,7 +226,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = MobileContentFormViewModel(
                 formModel: formModel,
-                rendererPageModel: rendererPageModel
+                renderedPageContext: renderedPageContext
             )
             
             let view = MobileContentFormView(viewModel: viewModel)
@@ -237,7 +237,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 
             let viewModel = MobileContentSpacerViewModel(
                 spacerModel: spacerModel,
-                rendererPageModel: rendererPageModel
+                renderedPageContext: renderedPageContext
             )
             
             let view = MobileContentSpacerView(viewModel: viewModel)
@@ -248,7 +248,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = MobileContentHeaderViewModel(
                 header: headerModel.text,
-                rendererPageModel: rendererPageModel
+                renderedPageContext: renderedPageContext
             )
             
             let view = MobileContentHeaderView(viewModel: viewModel)
@@ -259,7 +259,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = MobileContentFlowViewModel(
                 contentFlow: contentFlow,
-                rendererPageModel: rendererPageModel
+                renderedPageContext: renderedPageContext
             )
             
             let view = MobileContentFlowView(viewModel: viewModel, itemSpacing: 16)
@@ -280,7 +280,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = MobileContentMultiSelectOptionViewModel(
                 multiSelectOptionModel: multiSelectOptionModel,
-                rendererPageModel: rendererPageModel,
+                renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
@@ -292,7 +292,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = MobileContentMultiSelectViewModel(
                 multiSelectModel: multiSelectModel,
-                rendererPageModel: rendererPageModel
+                renderedPageContext: renderedPageContext
             )
             
             let view = MobileContentMultiSelectView(viewModel: viewModel)
@@ -303,7 +303,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = MobileContentAccordionSectionViewModel(
                 sectionModel: sectionModel,
-                rendererPageModel: rendererPageModel
+                renderedPageContext: renderedPageContext
             )
             
             let view = MobileContentAccordionSectionView(viewModel: viewModel)
@@ -314,7 +314,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = MobileContentAccordionViewModel(
                 accordionModel: accordionModel,
-                rendererPageModel: rendererPageModel
+                renderedPageContext: renderedPageContext
             )
             
             let view = MobileContentAccordionView(viewModel: viewModel)
@@ -325,11 +325,11 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         return nil
     }
     
-    func getContentText(textModel: GodToolsToolParser.Text, rendererPageModel: MobileContentRendererPageModel, viewType: MobileContentTextView.ViewType?, additionalLabelAttributes: MobileContentTextLabelAttributes?) -> MobileContentTextView {
+    func getContentText(textModel: GodToolsToolParser.Text, renderedPageContext: MobileContentRenderedPageContext, viewType: MobileContentTextView.ViewType?, additionalLabelAttributes: MobileContentTextLabelAttributes?) -> MobileContentTextView {
         
         let viewModel = MobileContentTextViewModel(
             textModel: textModel,
-            rendererPageModel: rendererPageModel,
+            renderedPageContext: renderedPageContext,
             fontService: fontService
         )
         

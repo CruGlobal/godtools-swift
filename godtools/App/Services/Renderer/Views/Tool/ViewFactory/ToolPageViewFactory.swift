@@ -39,13 +39,13 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
         self.trainingTipsEnabled = trainingTipsEnabled
     }
     
-    func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, rendererPageModel: MobileContentRendererPageModel) -> MobileContentView? {
+    func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
         
         if let cardModel = renderableModel as? MultiplatformCard {
             
             let viewModel = ToolPageCardViewModel(
                 cardModel: cardModel.card,
-                rendererPageModel: rendererPageModel,
+                renderedPageContext: renderedPageContext,
                 analytics: analytics,
                 mobileContentAnalytics: mobileContentAnalytics,
                 fontService: fontService,
@@ -62,14 +62,14 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             
             return getCallToActionView(
                 callToActionModel: callToActionModel,
-                rendererPageModel: rendererPageModel
+                renderedPageContext: renderedPageContext
             )
         }
         else if let headerModel = renderableModel as? Header {
             
             let viewModel = ToolPageHeaderViewModel(
                 headerModel: headerModel,
-                rendererPageModel: rendererPageModel,
+                renderedPageContext: renderedPageContext,
                 translationsFileCache: translationsFileCache,
                 viewedTrainingTipsService: viewedTrainingTipsService
             )
@@ -82,7 +82,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = ToolPageHeroViewModel(
                 heroModel: heroModel,
-                rendererPageModel: rendererPageModel,
+                renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
@@ -94,13 +94,13 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = ToolPageCardsViewModel(
                 cards: cardsModel.cards,
-                rendererPageModel: rendererPageModel,
+                renderedPageContext: renderedPageContext,
                 cardJumpService: cardJumpService
             )
             
             let view = ToolPageCardsView(
                 viewModel: viewModel,
-                safeArea: rendererPageModel.safeArea
+                safeArea: renderedPageContext.safeArea
             )
             
             return view
@@ -109,7 +109,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = ToolPageFormViewModel(
                 formModel: formModel,
-                rendererPageModel: rendererPageModel,
+                renderedPageContext: renderedPageContext,
                 followUpService: followUpService,
                 localizationServices: localizationServices
             )
@@ -122,7 +122,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = ToolPageModalViewModel(
                 modalModel: modalModel,
-                rendererPageModel: rendererPageModel
+                renderedPageContext: renderedPageContext
             )
             
             let view = ToolPageModalView(viewModel: viewModel)
@@ -133,12 +133,12 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = ToolPageModalsViewModel(
                 modals: modalsModel.modals,
-                rendererPageModel: rendererPageModel
+                renderedPageContext: renderedPageContext
             )
             
             let view = ToolPageModalsView(
                 viewModel: viewModel,
-                windowViewController: rendererPageModel.window
+                windowViewController: renderedPageContext.window
             )
             
             return view
@@ -152,7 +152,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             let viewModel = ToolPageViewModel(
                 flowDelegate: flowDelegate,
                 pageModel: pageModel,
-                rendererPageModel: rendererPageModel,
+                renderedPageContext: renderedPageContext,
                 deepLinkService: deepLinkService,
                 analytics: analytics,
                 mobileContentAnalytics: mobileContentAnalytics
@@ -160,7 +160,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             
             let view = ToolPageView(
                 viewModel: viewModel,
-                safeArea: rendererPageModel.safeArea
+                safeArea: renderedPageContext.safeArea
             )
             
             return view
@@ -169,11 +169,11 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
         return nil
     }
     
-    func getCallToActionView(callToActionModel: CallToAction?, rendererPageModel: MobileContentRendererPageModel) -> ToolPageCallToActionView {
+    func getCallToActionView(callToActionModel: CallToAction?, renderedPageContext: MobileContentRenderedPageContext) -> ToolPageCallToActionView {
         
         let viewModel = ToolPageCallToActionViewModel(
             callToActionModel: callToActionModel,
-            rendererPageModel: rendererPageModel,
+            renderedPageContext: renderedPageContext,
             fontService: fontService
         )
         

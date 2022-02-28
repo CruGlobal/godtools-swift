@@ -1,5 +1,5 @@
 //
-//  MobileContentRendererPageModel.swift
+//  MobileContentRenderedPageContext.swift
 //  godtools
 //
 //  Created by Levi Eggert on 3/20/21.
@@ -9,8 +9,7 @@
 import UIKit
 import GodToolsToolParser
 
-// TODO: Should I rename this class to MobileContentRenderedPageModel? ~Levi
-class MobileContentRendererPageModel {
+class MobileContentRenderedPageContext {
     
     let pageModel: Page
     let page: Int

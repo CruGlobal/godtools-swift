@@ -13,21 +13,19 @@ class TrainingViewFactory: MobileContentPageViewFactoryType {
     
     private let translationsFileCache: TranslationsFileCache
     private let viewedTrainingTipsService: ViewedTrainingTipsService
-    private let deepLinkService: DeepLinkingServiceType
     private let trainingTipsEnabled: Bool
     
     private(set) weak var flowDelegate: FlowDelegate?
-    
-    required init(flowDelegate: FlowDelegate, translationsFileCache: TranslationsFileCache, viewedTrainingTipsService: ViewedTrainingTipsService, deepLinkService: DeepLinkingServiceType, trainingTipsEnabled: Bool) {
+        
+    required init(flowDelegate: FlowDelegate, translationsFileCache: TranslationsFileCache, viewedTrainingTipsService: ViewedTrainingTipsService, trainingTipsEnabled: Bool) {
         
         self.flowDelegate = flowDelegate
         self.translationsFileCache = translationsFileCache
         self.viewedTrainingTipsService = viewedTrainingTipsService
-        self.deepLinkService = deepLinkService
         self.trainingTipsEnabled = trainingTipsEnabled
     }
     
-    func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, rendererPageModel: MobileContentRendererPageModel) -> MobileContentView? {
+    func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
         
         let tipModel: Tip? = (renderableModel as? Tip) ?? (renderableModel as? InlineTip)?.tip
         
@@ -38,21 +36,15 @@ class TrainingViewFactory: MobileContentPageViewFactoryType {
             
             return getTrainingTipView(
                 tipModel: tipModel,
-                rendererPageModel: rendererPageModel,
+                renderedPageContext: renderedPageContext,
                 trainingTipViewType: trainingViewType
             )
         }
-        else if let pageModel = renderableModel as? Page {
-            
-            guard let flowDelegate = self.flowDelegate else {
-                return nil
-            }
+        else if let pageModel = renderableModel as? TipPage {
             
             let viewModel = TrainingPageViewModel(
-                flowDelegate: flowDelegate,
                 pageModel: pageModel,
-                rendererPageModel: rendererPageModel,
-                deepLinkService: deepLinkService
+                renderedPageContext: renderedPageContext
             )
             
             let view = TrainingPageView(viewModel: viewModel)
@@ -63,7 +55,7 @@ class TrainingViewFactory: MobileContentPageViewFactoryType {
         return nil
     }
     
-    private func getTrainingTipView(tipModel: Tip, rendererPageModel: MobileContentRendererPageModel, trainingTipViewType: TrainingTipViewType) -> TrainingTipView? {
+    private func getTrainingTipView(tipModel: Tip, renderedPageContext: MobileContentRenderedPageContext, trainingTipViewType: TrainingTipViewType) -> TrainingTipView? {
         
         guard trainingTipsEnabled else {
             return nil
@@ -71,7 +63,7 @@ class TrainingViewFactory: MobileContentPageViewFactoryType {
         
         let viewModel = TrainingTipViewModel(
             tipModel: tipModel,
-            rendererPageModel: rendererPageModel,
+            renderedPageContext: renderedPageContext,
             viewType: trainingTipViewType,
             translationsFileCache: translationsFileCache,
             viewedTrainingTipsService: viewedTrainingTipsService

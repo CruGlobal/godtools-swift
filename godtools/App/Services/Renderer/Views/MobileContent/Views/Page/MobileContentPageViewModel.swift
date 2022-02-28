@@ -12,32 +12,32 @@ import GodToolsToolParser
 class MobileContentPageViewModel: MobileContentPageViewModelType {
     
     private let pageModel: Page
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let renderedPageContext: MobileContentRenderedPageContext
     private let deepLinkService: DeepLinkingServiceType
     private let hidesBackgroundImage: Bool
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, pageModel: Page, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, hidesBackgroundImage: Bool) {
+    required init(flowDelegate: FlowDelegate, pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, deepLinkService: DeepLinkingServiceType, hidesBackgroundImage: Bool) {
         
         self.flowDelegate = flowDelegate
         self.pageModel = pageModel
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
         self.deepLinkService = deepLinkService
         self.hidesBackgroundImage = hidesBackgroundImage
     }
     
     var analyticsScreenName: String {
         
-        let resource: ResourceModel = rendererPageModel.resource
-        let page: Int = rendererPageModel.page
+        let resource: ResourceModel = renderedPageContext.resource
+        let page: Int = renderedPageContext.page
         
         return resource.abbreviation + "-" + String(page)
     }
     
     var analyticsSiteSection: String {
         
-        let resource: ResourceModel = rendererPageModel.resource
+        let resource: ResourceModel = renderedPageContext.resource
  
         return resource.abbreviation
     }
@@ -52,7 +52,7 @@ class MobileContentPageViewModel: MobileContentPageViewModelType {
             return nil
         }
         
-        let manifest: Manifest = rendererPageModel.manifest
+        let manifest: Manifest = renderedPageContext.manifest
         
         let backgroundImageModel: BackgroundImageModel?
         
@@ -83,8 +83,8 @@ class MobileContentPageViewModel: MobileContentPageViewModelType {
         
         return MobileContentBackgroundImageViewModel(
             backgroundImageModel: model,
-            manifestResourcesCache: rendererPageModel.resourcesCache,
-            languageDirection: rendererPageModel.language.languageDirection
+            manifestResourcesCache: renderedPageContext.resourcesCache,
+            languageDirection: renderedPageContext.language.languageDirection
         )
     }
     

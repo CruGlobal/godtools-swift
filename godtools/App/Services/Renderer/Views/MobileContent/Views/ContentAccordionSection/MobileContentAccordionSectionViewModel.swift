@@ -12,11 +12,11 @@ import GodToolsToolParser
 class MobileContentAccordionSectionViewModel: MobileContentAccordionSectionViewModelType {
     
     private let sectionModel: Accordion.Section
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let renderedPageContext: MobileContentRenderedPageContext
     
-    required init(sectionModel: Accordion.Section, rendererPageModel: MobileContentRendererPageModel) {
+    required init(sectionModel: Accordion.Section, renderedPageContext: MobileContentRenderedPageContext) {
         
         self.sectionModel = sectionModel
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
     }
 }

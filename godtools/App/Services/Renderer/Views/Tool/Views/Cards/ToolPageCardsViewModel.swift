@@ -12,19 +12,19 @@ import GodToolsToolParser
 class ToolPageCardsViewModel: NSObject, ToolPageCardsViewModelType {
     
     private let cards: [TractPage.Card]
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let renderedPageContext: MobileContentRenderedPageContext
     private let cardJumpService: CardJumpService
     
     let hidesCardJump: ObservableValue<Bool> = ObservableValue(value: true)
     let numberOfCards: Int
     let numberOfVisibleCards: Int
     
-    required init(cards: [TractPage.Card], rendererPageModel: MobileContentRendererPageModel, cardJumpService: CardJumpService) {
+    required init(cards: [TractPage.Card], renderedPageContext: MobileContentRenderedPageContext, cardJumpService: CardJumpService) {
         
         let visibleCards: [TractPage.Card] = cards.filter({!$0.isHidden})
         
         self.cards = cards
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
         self.cardJumpService = cardJumpService
         self.numberOfCards = cards.count
         self.numberOfVisibleCards = visibleCards.count

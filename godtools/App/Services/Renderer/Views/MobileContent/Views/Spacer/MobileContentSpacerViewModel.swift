@@ -12,14 +12,14 @@ import GodToolsToolParser
 class MobileContentSpacerViewModel: MobileContentSpacerViewModelType {
     
     private let spacerModel: Spacer
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let renderedPageContext: MobileContentRenderedPageContext
     
     let height: MobileContentSpacerHeight
     
-    required init(spacerModel: Spacer, rendererPageModel: MobileContentRendererPageModel) {
+    required init(spacerModel: Spacer, renderedPageContext: MobileContentRenderedPageContext) {
         
         self.spacerModel = spacerModel
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
         
         switch spacerModel.mode {
         case .auto_:

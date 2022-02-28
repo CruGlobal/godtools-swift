@@ -12,16 +12,16 @@ import GodToolsToolParser
 class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
     
     private let headerModel: Header
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let renderedPageContext: MobileContentRenderedPageContext
     
     private var mobileContentPageViewFactory: MobileContentPageViewFactory?
             
-    required init(headerModel: Header, rendererPageModel: MobileContentRendererPageModel, translationsFileCache: TranslationsFileCache, viewedTrainingTipsService: ViewedTrainingTipsService) {
+    required init(headerModel: Header, renderedPageContext: MobileContentRenderedPageContext, translationsFileCache: TranslationsFileCache, viewedTrainingTipsService: ViewedTrainingTipsService) {
         
         self.headerModel = headerModel
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
         
-        for factory in rendererPageModel.pageViewFactories.factories {
+        for factory in renderedPageContext.pageViewFactories.factories {
             if let mobileContentPageViewFactory = factory as? MobileContentPageViewFactory {
                 self.mobileContentPageViewFactory = mobileContentPageViewFactory
             }
@@ -29,11 +29,11 @@ class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return rendererPageModel.language.languageDirection.semanticContentAttribute
+        return renderedPageContext.language.languageDirection.semanticContentAttribute
     }
     
     var backgroundColor: UIColor {
-        return rendererPageModel.pageModel.primaryColor
+        return renderedPageContext.pageModel.primaryColor
     }
     
     func getNumber(numberLabel: UILabel) -> MobileContentTextView? {
@@ -51,7 +51,7 @@ class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
         
         return mobileContentPageViewFactory?.getContentText(
             textModel: numberTextModel,
-            rendererPageModel: rendererPageModel,
+            renderedPageContext: renderedPageContext,
             viewType: .labelOnly(label: numberLabel, shouldAddLabelAsSubview: false),
             additionalLabelAttributes: numberLabelAttributes
         )
@@ -72,7 +72,7 @@ class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
                 
         return mobileContentPageViewFactory?.getContentText(
             textModel: titleTextModel,
-            rendererPageModel: rendererPageModel,
+            renderedPageContext: renderedPageContext,
             viewType: .labelOnly(label: titleLabel, shouldAddLabelAsSubview: false),
             additionalLabelAttributes: titleLabelAttributes
         )
@@ -84,7 +84,7 @@ class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
 extension ToolPageHeaderViewModel: MobileContentViewModelType {
     
     var language: LanguageModel {
-        return rendererPageModel.language
+        return renderedPageContext.language
     }
     
     var analyticsEvents: [MobileContentAnalyticsEvent] {

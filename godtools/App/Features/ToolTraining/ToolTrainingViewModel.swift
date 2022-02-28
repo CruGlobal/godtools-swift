@@ -12,6 +12,8 @@ import GodToolsToolParser
 class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     
     private let pageRenderer: MobileContentPageRenderer
+    private let renderedPageContext: MobileContentRenderedPageContext
+    private let tipPages: [TipPage]
     private let trainingTipId: String
     private let tipModel: Tip
     private let analytics: AnalyticsContainer
@@ -29,9 +31,11 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     let continueButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     let numberOfTipPages: ObservableValue<Int> = ObservableValue(value: 0)
     
-    required init(flowDelegate: FlowDelegate, pageRenderer: MobileContentPageRenderer, trainingTipId: String, tipModel: Tip, analytics: AnalyticsContainer, localizationServices: LocalizationServices, viewedTrainingTips: ViewedTrainingTipsService) {
+    required init(flowDelegate: FlowDelegate, pageRenderer: MobileContentPageRenderer, renderedPageContext: MobileContentRenderedPageContext, tipPages: [TipPage], trainingTipId: String, tipModel: Tip, analytics: AnalyticsContainer, localizationServices: LocalizationServices, viewedTrainingTips: ViewedTrainingTipsService) {
         
         self.flowDelegate = flowDelegate
+        self.renderedPageContext = renderedPageContext
+        self.tipPages = tipPages
         self.pageRenderer = pageRenderer
         self.trainingTipId = trainingTipId
         self.tipModel = tipModel
@@ -46,7 +50,7 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
             trainingTipViewed: viewedTrainingTips.containsViewedTrainingTip(viewedTrainingTip: ViewedTrainingTip(trainingTipId: trainingTipId, resourceId: resource.id, languageId: language.id))
         )
         
-        numberOfTipPages.accept(value: pageRenderer.getRenderablePageModels().count)
+        numberOfTipPages.accept(value: tipPages.count)
         setPage(page: 0, animated: false)
     }
     
@@ -155,26 +159,15 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     
     func tipPageWillAppear(page: Int, window: UIViewController, safeArea: UIEdgeInsets) -> MobileContentView? {
               
-        // TODO: Implement back in. ~Levi
-        assertionFailure("Implement back in.")
-        return nil
-        
-        /*
-        let renderPageResult: Result<MobileContentView, Error> = renderer.renderPage(
-            page: page,
-            window: window,
-            safeArea: safeArea,
-            primaryRendererLanguage: renderer.language
-        )
-        
-        switch renderPageResult {
-        
-        case .success(let mobileContentView):
-            return mobileContentView
-            
-        case .failure(let error):
+        guard page >= 0 && page < tipPages.count else {
             return nil
-        }*/
+        }
+        
+        return pageRenderer.recurseAndRender(
+            renderableModel: tipPages[page],
+            renderableModelParent: nil,
+            renderedPageContext: renderedPageContext
+        )
     }
     
     func tipPageDidChange(page: Int) {

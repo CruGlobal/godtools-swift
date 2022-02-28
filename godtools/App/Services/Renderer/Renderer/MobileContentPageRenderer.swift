@@ -11,14 +11,13 @@ import GodToolsToolParser
 
 class MobileContentPageRenderer {
     
-    private let sharedState: State
-    private let primaryLanguage: LanguageModel
-    private let manifestResourcesCache: ManifestResourcesCache
-    private let pageViewFactories: MobileContentRendererPageViewFactories
-    
+    let sharedState: State
     let resource: ResourceModel
+    let primaryLanguage: LanguageModel
     let manifest: Manifest
     let language: LanguageModel
+    let manifestResourcesCache: ManifestResourcesCache
+    let pageViewFactories: MobileContentRendererPageViewFactories
     
     required init(sharedState: State, resource: ResourceModel, primaryLanguage: LanguageModel, languageTranslationManifest: MobileContentRendererLanguageTranslationManifest, pageViewFactories: MobileContentRendererPageViewFactories, translationsFileCache: TranslationsFileCache) {
         
@@ -71,9 +70,9 @@ class MobileContentPageRenderer {
     
     // MARK: - Page Renderering
     
-    private func getRendererPageModel(pageModel: Page, page: Int, numberOfPages: Int, window: UIViewController, safeArea: UIEdgeInsets) -> MobileContentRendererPageModel {
+    private func getRenderedPageContext(pageModel: Page, page: Int, numberOfPages: Int, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, manifestResourcesCache: ManifestResourcesCache, resource: ResourceModel, language: LanguageModel, pageViewFactories: MobileContentRendererPageViewFactories, primaryLanguage: LanguageModel, sharedState: State) -> MobileContentRenderedPageContext {
         
-        let rendererPageModel = MobileContentRendererPageModel(
+        let renderedPageContext = MobileContentRenderedPageContext(
             pageModel: pageModel,
             page: page,
             isLastPage: page == numberOfPages - 1,
@@ -88,32 +87,39 @@ class MobileContentPageRenderer {
             rendererState: sharedState
         )
         
-        return rendererPageModel
+        return renderedPageContext
     }
     
     func renderPageModel(pageModel: Page, page: Int, numberOfPages: Int, window: UIViewController, safeArea: UIEdgeInsets) -> Result<MobileContentView, Error> {
         
-        let rendererPageModel: MobileContentRendererPageModel = getRendererPageModel(
+        let renderedPageContext: MobileContentRenderedPageContext = getRenderedPageContext(
             pageModel: pageModel,
             page: page,
             numberOfPages: numberOfPages,
             window: window,
-            safeArea: safeArea
+            safeArea: safeArea,
+            manifest: manifest,
+            manifestResourcesCache: manifestResourcesCache,
+            resource: resource,
+            language: language,
+            pageViewFactories: pageViewFactories,
+            primaryLanguage: primaryLanguage,
+            sharedState: sharedState
         )
         
-        guard let renderableView = recurseAndRender(renderableModel: pageModel, renderableModelParent: nil, rendererPageModel: rendererPageModel) else {
+        guard let renderableView = recurseAndRender(renderableModel: pageModel, renderableModelParent: nil, renderedPageContext: renderedPageContext) else {
             return .failure(NSError.errorWithDescription(description: "Failed to render page."))
         }
                 
         return .success(renderableView)
     }
     
-    private func recurseAndRender(renderableModel: AnyObject, renderableModelParent: AnyObject?, rendererPageModel: MobileContentRendererPageModel) -> MobileContentView? {
+    func recurseAndRender(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
                    
         let mobileContentView: MobileContentView? = pageViewFactories.viewForRenderableModel(
             renderableModel: renderableModel,
             renderableModelParent: renderableModelParent,
-            rendererPageModel: rendererPageModel
+            renderedPageContext: renderedPageContext
         )
                 
         let childModels: [AnyObject]
@@ -130,7 +136,7 @@ class MobileContentPageRenderer {
             let childMobileContentView: MobileContentView? = recurseAndRender(
                 renderableModel: childModel,
                 renderableModelParent: renderableModel,
-                rendererPageModel: rendererPageModel
+                renderedPageContext: renderedPageContext
             )
             
             if let childMobileContentView = childMobileContentView, let mobileContentView = mobileContentView {

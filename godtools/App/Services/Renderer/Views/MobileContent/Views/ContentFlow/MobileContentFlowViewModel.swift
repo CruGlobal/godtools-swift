@@ -12,12 +12,12 @@ import GodToolsToolParser
 class MobileContentFlowViewModel: MobileContentFlowViewModelType {
     
     private let contentFlow: GodToolsToolParser.Flow
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let renderedPageContext: MobileContentRenderedPageContext
     
-    required init(contentFlow: GodToolsToolParser.Flow, rendererPageModel: MobileContentRendererPageModel) {
+    required init(contentFlow: GodToolsToolParser.Flow, renderedPageContext: MobileContentRenderedPageContext) {
         
         self.contentFlow = contentFlow
-        self.rendererPageModel = rendererPageModel        
+        self.renderedPageContext = renderedPageContext        
     }
     
     var rowGravity: Gravity.Horizontal {

@@ -24,14 +24,14 @@ class MobileContentAnalytics {
         self.analyticsSystems = analyticsSystems
     }
         
-    func trackEvents(events: [AnalyticsEvent], rendererPageModel: MobileContentRendererPageModel) {
+    func trackEvents(events: [AnalyticsEvent], renderedPageContext: MobileContentRenderedPageContext) {
         
         for event in events {
-            trackEvent(event: event, rendererPageModel: rendererPageModel)
+            trackEvent(event: event, renderedPageContext: renderedPageContext)
         }
     }
     
-    private func trackEvent(event: AnalyticsEvent, rendererPageModel: MobileContentRendererPageModel) {
+    private func trackEvent(event: AnalyticsEvent, renderedPageContext: MobileContentRenderedPageContext) {
         
         guard let action = event.action, !action.isEmpty else {
             return
@@ -44,8 +44,8 @@ class MobileContentAnalytics {
              
             if let analyticsSystem = analyticsSystems[system.name.lowercased()] {
                 
-                let resourceAbbreviation = rendererPageModel.resource.abbreviation
-                let pageNumber = rendererPageModel.page
+                let resourceAbbreviation = renderedPageContext.resource.abbreviation
+                let pageNumber = renderedPageContext.page
                 let screenName = resourceAbbreviation + "-" + String(pageNumber)
                 
                 analyticsSystem.trackMobileContentAction(

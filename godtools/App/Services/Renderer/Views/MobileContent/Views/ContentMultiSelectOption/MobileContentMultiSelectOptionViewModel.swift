@@ -12,22 +12,22 @@ import GodToolsToolParser
 class MobileContentMultiSelectOptionViewModel: MobileContentMultiSelectOptionViewModelType {
     
     private let multiSelectOptionModel: Multiselect.Option
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let renderedPageContext: MobileContentRenderedPageContext
     private let mobileContentAnalytics: MobileContentAnalytics
     
     private var isSelectedFlowWatcher: FlowWatcher?
     
     let backgroundColor: ObservableValue<UIColor>
     
-    required init(multiSelectOptionModel: Multiselect.Option, rendererPageModel: MobileContentRendererPageModel, mobileContentAnalytics: MobileContentAnalytics) {
+    required init(multiSelectOptionModel: Multiselect.Option, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.multiSelectOptionModel = multiSelectOptionModel
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
         self.mobileContentAnalytics = mobileContentAnalytics
         
         backgroundColor = ObservableValue(value: multiSelectOptionModel.backgroundColor)
         
-        isSelectedFlowWatcher = multiSelectOptionModel.watchIsSelected(state: rendererPageModel.rendererState) { [weak self] (isSelected: KotlinBoolean) in
+        isSelectedFlowWatcher = multiSelectOptionModel.watchIsSelected(state: renderedPageContext.rendererState) { [weak self] (isSelected: KotlinBoolean) in
 
             guard let weakSelf = self else {
                 return
@@ -45,8 +45,8 @@ class MobileContentMultiSelectOptionViewModel: MobileContentMultiSelectOptionVie
     
     func multiSelectOptionTapped() {
         
-        multiSelectOptionModel.toggleSelected(state: rendererPageModel.rendererState)
+        multiSelectOptionModel.toggleSelected(state: renderedPageContext.rendererState)
                                 
-        mobileContentAnalytics.trackEvents(events: multiSelectOptionModel.getAnalyticsEvents(type: .clicked), rendererPageModel: rendererPageModel)
+        mobileContentAnalytics.trackEvents(events: multiSelectOptionModel.getAnalyticsEvents(type: .clicked), renderedPageContext: renderedPageContext)
     }
 }

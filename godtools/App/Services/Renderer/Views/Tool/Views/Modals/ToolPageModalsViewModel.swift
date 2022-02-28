@@ -12,11 +12,11 @@ import GodToolsToolParser
 class ToolPageModalsViewModel: ToolPageModalsViewModelType {
     
     private let modals: [Modal]
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let renderedPageContext: MobileContentRenderedPageContext
     
-    required init(modals: [Modal], rendererPageModel: MobileContentRendererPageModel) {
+    required init(modals: [Modal], renderedPageContext: MobileContentRenderedPageContext) {
         
         self.modals = modals
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
     }
 }

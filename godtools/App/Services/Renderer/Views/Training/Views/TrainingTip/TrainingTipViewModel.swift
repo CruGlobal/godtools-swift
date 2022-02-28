@@ -12,7 +12,7 @@ import GodToolsToolParser
 class TrainingTipViewModel: TrainingTipViewModelType {
     
     private let tipModel: Tip
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let renderedPageContext: MobileContentRenderedPageContext
     private let viewedTrainingTipsService: ViewedTrainingTipsService
     
     private var viewType: TrainingTipViewType = .rounded
@@ -20,10 +20,10 @@ class TrainingTipViewModel: TrainingTipViewModelType {
     let trainingTipBackgroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     let trainingTipForegroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     
-    required init(tipModel: Tip, rendererPageModel: MobileContentRendererPageModel, viewType: TrainingTipViewType, translationsFileCache: TranslationsFileCache, viewedTrainingTipsService: ViewedTrainingTipsService) {
+    required init(tipModel: Tip, renderedPageContext: MobileContentRenderedPageContext, viewType: TrainingTipViewType, translationsFileCache: TranslationsFileCache, viewedTrainingTipsService: ViewedTrainingTipsService) {
         
         self.tipModel = tipModel
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
         self.viewType = viewType
         self.viewedTrainingTipsService = viewedTrainingTipsService
             
@@ -44,8 +44,8 @@ class TrainingTipViewModel: TrainingTipViewModelType {
         
         let viewedTrainingTip = ViewedTrainingTip(
             trainingTipId: trainingTipId,
-            resourceId: rendererPageModel.resource.id,
-            languageId: rendererPageModel.language.id
+            resourceId: renderedPageContext.resource.id,
+            languageId: renderedPageContext.language.id
         )
         
         let trainingTipViewed: Bool = viewedTrainingTipsService.containsViewedTrainingTip(viewedTrainingTip: viewedTrainingTip)
@@ -99,6 +99,6 @@ class TrainingTipViewModel: TrainingTipViewModelType {
                
         reloadTipIcon(tipModel: tipModel, viewType: viewType, trainingTipViewed: true)
         
-        return TrainingTipEvent(rendererPageModel: rendererPageModel, trainingTipId: trainingTipId, tipModel: tipModel)
+        return TrainingTipEvent(renderedPageContext: renderedPageContext, trainingTipId: trainingTipId, tipModel: tipModel)
     }
 }

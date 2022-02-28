@@ -11,13 +11,13 @@ import GodToolsToolParser
 
 class TrainingTipEvent {
     
-    let rendererPageModel: MobileContentRendererPageModel
+    let renderedPageContext: MobileContentRenderedPageContext
     let trainingTipId: String
     let tipModel: Tip
     
-    required init(rendererPageModel: MobileContentRendererPageModel, trainingTipId: String, tipModel: Tip) {
+    required init(renderedPageContext: MobileContentRenderedPageContext, trainingTipId: String, tipModel: Tip) {
         
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
         self.trainingTipId = trainingTipId
         self.tipModel = tipModel
     }

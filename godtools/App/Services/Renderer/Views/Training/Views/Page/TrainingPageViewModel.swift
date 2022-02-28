@@ -9,20 +9,14 @@
 import Foundation
 import GodToolsToolParser
 
-class TrainingPageViewModel: MobileContentPageViewModel, TrainingPageViewModelType {
+class TrainingPageViewModel: TrainingPageViewModelType {
     
-    private let pageModel: Page
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let pageModel: TipPage
+    private let renderedPageContext: MobileContentRenderedPageContext
     
-    required init(flowDelegate: FlowDelegate, pageModel: Page, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType) {
+    required init(pageModel: TipPage, renderedPageContext: MobileContentRenderedPageContext) {
         
         self.pageModel = pageModel
-        self.rendererPageModel = rendererPageModel
-        
-        super.init(flowDelegate: flowDelegate, pageModel: pageModel, rendererPageModel: rendererPageModel, deepLinkService: deepLinkService, hidesBackgroundImage: true)
-    }
-    
-    required init(flowDelegate: FlowDelegate, pageModel: Page, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, hidesBackgroundImage: Bool) {
-        fatalError("init(flowDelegate:pageModel:rendererPageModel:deepLinkService:hidesBackgroundImage:) has not been implemented")
+        self.renderedPageContext = renderedPageContext
     }
 }

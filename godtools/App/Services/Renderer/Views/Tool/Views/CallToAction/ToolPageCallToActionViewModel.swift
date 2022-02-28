@@ -12,18 +12,18 @@ import GodToolsToolParser
 class ToolPageCallToActionViewModel: ToolPageCallToActionViewModelType {
     
     private let callToActionModel: CallToAction?
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let renderedPageContext: MobileContentRenderedPageContext
     private let fontService: FontService
         
-    required init(callToActionModel: CallToAction?, rendererPageModel: MobileContentRendererPageModel, fontService: FontService) {
+    required init(callToActionModel: CallToAction?, renderedPageContext: MobileContentRenderedPageContext, fontService: FontService) {
         
         self.callToActionModel = callToActionModel
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
         self.fontService = fontService
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return rendererPageModel.primaryRendererLanguage.languageDirection.semanticContentAttribute
+        return renderedPageContext.primaryRendererLanguage.languageDirection.semanticContentAttribute
     }
     
     var title: String? {
@@ -36,7 +36,7 @@ class ToolPageCallToActionViewModel: ToolPageCallToActionViewModelType {
     
     var titleTextAlignment: NSTextAlignment {
         
-        switch rendererPageModel.language.languageDirection {
+        switch renderedPageContext.language.languageDirection {
         case .leftToRight:
             return .left
         case .rightToLeft:
@@ -45,11 +45,11 @@ class ToolPageCallToActionViewModel: ToolPageCallToActionViewModelType {
     }
     
     var titleColor: UIColor {
-        return callToActionModel?.label?.textColor ?? rendererPageModel.pageModel.textColor
+        return callToActionModel?.label?.textColor ?? renderedPageContext.pageModel.textColor
     }
     
     var nextButtonColor: UIColor {
-        return callToActionModel?.controlColor ?? rendererPageModel.pageModel.primaryColor
+        return callToActionModel?.controlColor ?? renderedPageContext.pageModel.primaryColor
     }
     
     var nextButtonImage: UIImage? {

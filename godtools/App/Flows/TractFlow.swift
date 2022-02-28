@@ -238,14 +238,6 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
     }
     
     private func navigateToToolTraining(event: TrainingTipEvent) {
-        
-        assertionFailure("Fix. ToolTrainingViewModel really just needs a renderer since we have all the tip pages.")
-        
-        let pageModels: [TipPage] = event.tipModel.pages
-                
-        if pageModels.isEmpty {
-            assertionFailure("Pages should not be empty for training tip.")
-        }
                         
         let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
             type: .trainingTip,
@@ -255,12 +247,12 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             deepLinkingService: deepLinkingService
         )
         
-        let languageTranslationManifest = MobileContentRendererLanguageTranslationManifest(manifest: event.rendererPageModel.manifest, language: event.rendererPageModel.language)
+        let languageTranslationManifest = MobileContentRendererLanguageTranslationManifest(manifest: event.renderedPageContext.manifest, language: event.renderedPageContext.language)
         
         let pageRenderer = MobileContentPageRenderer(
             sharedState: State(),
-            resource: event.rendererPageModel.resource,
-            primaryLanguage: event.rendererPageModel.primaryRendererLanguage,
+            resource: event.renderedPageContext.resource,
+            primaryLanguage: event.renderedPageContext.primaryRendererLanguage,
             languageTranslationManifest: languageTranslationManifest,
             pageViewFactories: pageViewFactories,
             translationsFileCache: appDiContainer.translationsFileCache
@@ -269,6 +261,8 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
         let viewModel = ToolTrainingViewModel(
             flowDelegate: self,
             pageRenderer: pageRenderer,
+            renderedPageContext: event.renderedPageContext,
+            tipPages: event.tipModel.pages,
             trainingTipId: event.trainingTipId,
             tipModel: event.tipModel,
             analytics: appDiContainer.analytics,
