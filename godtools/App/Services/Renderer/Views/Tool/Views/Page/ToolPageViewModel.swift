@@ -108,8 +108,4 @@ extension ToolPageViewModel: MobileContentViewModelType {
     var analyticsEvents: [MobileContentAnalyticsEvent] {
         return analyticsEventsObjects
     }
-    
-    var defaultAnalyticsEventsTrigger: MobileContentAnalyticsEventTrigger {
-        return .visible
-    }
 }

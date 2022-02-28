@@ -11,13 +11,14 @@ import GodToolsToolParser
 
 class MobileContentAnalyticsEvent: NSObject {
     
-    private var delayTimer: Timer?
-    private var triggered: Bool = false
     private let renderedPageContext: MobileContentRenderedPageContext
     
-    let analyticsEvent: AnalyticsEvent
+    private var delayTimer: Timer?
+    private var triggered: Bool = false
     
     private weak var mobileContentAnalytics: MobileContentAnalytics?
+    
+    let analyticsEvent: AnalyticsEvent
         
     required init(analyticsEvent: AnalyticsEvent, mobileContentAnalytics: MobileContentAnalytics, renderedPageContext: MobileContentRenderedPageContext) {
         

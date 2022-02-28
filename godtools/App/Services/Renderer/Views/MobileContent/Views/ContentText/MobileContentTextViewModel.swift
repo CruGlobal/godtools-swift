@@ -199,8 +199,4 @@ extension MobileContentTextViewModel: MobileContentViewModelType {
     var analyticsEvents: [MobileContentAnalyticsEvent] {
         return []
     }
-    
-    var defaultAnalyticsEventsTrigger: MobileContentAnalyticsEventTrigger {
-        return .visible
-    }
 }
