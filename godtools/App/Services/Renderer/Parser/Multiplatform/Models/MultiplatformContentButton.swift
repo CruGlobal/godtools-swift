@@ -80,7 +80,7 @@ class MultiplatformContentButton: ContentButtonModelType {
     }
     
     var textScale: MobileContentTextScale {
-        return MobileContentTextScale(doubleValue: button.textScale)
+        return MobileContentTextScale(doubleValue: button.text?.textScale ?? button.textScale)
     }
     
     var buttonWidth: GodToolsToolParser.Dimension {
