@@ -169,7 +169,17 @@ extension ToolNavigationFlow {
         }
         
         guard let primaryLanguageManifest = primaryManifest else {
-            // TODO: Present error, unable to parse primary manifest.
+            
+            let viewModel = AlertMessageViewModel(
+                title: "Internal Error",
+                message: "Unable to fetch manifest for tool.",
+                cancelTitle: nil,
+                acceptTitle: "OK",
+                acceptHandler: nil
+            )
+            
+            presentAlertMessage(viewModel: viewModel)
+            
             return
         }
         
@@ -287,6 +297,11 @@ extension ToolNavigationFlow {
             downloadToolError: downloadToolError,
             localizationServices: appDiContainer.localizationServices
         )
+        
+        presentAlertMessage(viewModel: viewModel)
+    }
+    
+    private func presentAlertMessage(viewModel: AlertMessageViewModelType) {
         
         let view = AlertMessageView(viewModel: viewModel)
         
