@@ -257,12 +257,11 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             pageViewFactories: pageViewFactories,
             translationsFileCache: appDiContainer.translationsFileCache
         )
-                   
+                           
         let viewModel = ToolTrainingViewModel(
             flowDelegate: self,
             pageRenderer: pageRenderer,
             renderedPageContext: event.renderedPageContext,
-            tipPages: event.tipModel.pages,
             trainingTipId: event.trainingTipId,
             tipModel: event.tipModel,
             analytics: appDiContainer.analytics,
