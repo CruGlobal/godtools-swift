@@ -38,29 +38,33 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
         
         buttonWidth = MobileContentViewWidth(dimension: buttonModel.width)
         
-        let buttonColor: UIColor = buttonModel.buttonColor
-        let buttonTitleColor: UIColor? = buttonModel.text?.textColor
-                
+        let defaultBackgroundColor: UIColor = buttonModel.buttonColor
+        let defaultTitleColor: UIColor = buttonModel.text?.textColor ?? renderedPageContext.pageModel.primaryTextColor
+        let defaultBorderColor: UIColor = .clear
+                                
         switch buttonModel.style {
         
         case .contained:
-            backgroundColor = buttonColor
-            titleColor = buttonTitleColor ?? renderedPageContext.pageModel.primaryTextColor
-            borderColor = UIColor.clear
+            backgroundColor = defaultBackgroundColor
+            titleColor = defaultTitleColor
+            borderColor = defaultBorderColor
+            
         case .outlined:
             backgroundColor = buttonModel.backgroundColor
-            titleColor = buttonColor
-            borderColor = buttonColor
+            titleColor = buttonModel.buttonColor
+            borderColor = buttonModel.buttonColor
+            
         case .unknown:
-            backgroundColor = buttonColor
-            titleColor = buttonTitleColor ?? renderedPageContext.pageModel.primaryTextColor
-            borderColor = UIColor.clear
+            backgroundColor = defaultBackgroundColor
+            titleColor = defaultTitleColor
+            borderColor = defaultBorderColor
+            
         default:
-            backgroundColor = buttonColor
-            titleColor = buttonTitleColor ?? renderedPageContext.pageModel.primaryTextColor
-            borderColor = UIColor.clear
+            backgroundColor = defaultBackgroundColor
+            titleColor = defaultTitleColor
+            borderColor = defaultBorderColor
         }
-        
+                
         if let name = buttonModel.icon?.name,
             let image = renderedPageContext.resourcesCache.getImageFromManifestResources(fileName: name)  {
             
