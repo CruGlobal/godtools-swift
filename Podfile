@@ -10,6 +10,12 @@ use_frameworks!
 # Specs finder:
 # https://github.com/CocoaPods/Specs/find/master
 
+def shared_pods
+  
+  # CruGlobal pods
+  pod 'GodtoolsToolParser', '0.5.0'
+end
+
 target 'godtools' do
         
     pod 'GoogleConversionTracking', '~> 3.4.0'
@@ -27,13 +33,11 @@ target 'godtools' do
     pod 'TTTAttributedLabel', '~> 2.0.0'
     pod 'youtube-ios-player-helper', '~> 1.0.3'
     
-    # CruGlobal pods
-    pod 'GodtoolsToolParser', '0.5.0'
+    shared_pods
+end
+
+target 'godtoolsTests' do
     
-    target 'godtoolsTests' do
-        inherit! :search_paths
-        # Pods for testing
-        pod 'GodtoolsToolParser', '0.5.0'
-    end
+  shared_pods
 end
 

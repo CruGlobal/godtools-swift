@@ -11,7 +11,7 @@ import GodToolsToolParser
 
 protocol MobileContentBackgroundImageRendererType {
     
-    func getBackgroundImageRectForRenderingInContainer(container: CGRect, backgroundImageSizePixels: CGSize, scale: ImageScaleType, alignment: Gravity, languageDirection: LanguageDirection) -> CGRect
+    func getBackgroundImageRectForRenderingInContainer(container: CGRect, backgroundImageSizePixels: CGSize, scale: ImageScaleType, horizontal: Gravity.Horizontal, vertical: Gravity.Vertical, languageDirection: LanguageDirection) -> CGRect
 }
 
 extension MobileContentBackgroundImageRendererType {

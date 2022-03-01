@@ -47,7 +47,8 @@ class MobileContentBackgroundImageViewModel {
             container: container,
             backgroundImageSizePixels: imageSizePixels,
             scale: backgroundImageModel.backgroundImageScale,
-            alignment: backgroundImageModel.backgroundImageAlignment,
+            horizontal: backgroundImageModel.backgroundImageAlignment.horizontal,
+            vertical: backgroundImageModel.backgroundImageAlignment.vertical,
             languageDirection: languageDirection
         )
     }
