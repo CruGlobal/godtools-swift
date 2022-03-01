@@ -56,6 +56,7 @@ class ChooseYourOwnAdventureFlow: Flow {
         
         let viewModel = ChooseYourOwnAdventureViewModel(
             flowDelegate: self,
+            primaryManifest: primaryLanguageManifest,
             renderer: renderer,
             page: nil,
             mobileContentEventAnalytics: appDiContainer.getMobileContentEventAnalyticsTracking(),

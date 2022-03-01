@@ -81,7 +81,7 @@ class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
     
     var navTitle: String {
         return "GodTools"
-    }
+    } 
     
     var numberOfLanguages: Int {
         return languages.count

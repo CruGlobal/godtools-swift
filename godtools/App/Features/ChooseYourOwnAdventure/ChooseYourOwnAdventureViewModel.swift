@@ -20,7 +20,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOw
     let navBarColors: ObservableValue<ChooseYourOwnAdventureNavBarModel>
     let navBarTitleType: ChooseYourOwnAdventureNavBarTitleType
     
-    required init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, localizationServices: LocalizationServices, fontService: FontService) {
+    required init(flowDelegate: FlowDelegate, primaryManifest: Manifest, renderer: MobileContentRenderer, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, localizationServices: LocalizationServices, fontService: FontService) {
         
         self.localizationServices = localizationServices
         self.fontService = fontService
@@ -30,16 +30,8 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOw
         let navBarColor: UIColor
         let navBarControlColor: UIColor
 
-        let manifest: Manifest? = renderer.pageRenderers.first?.manifest
-        
-        if let manifest = manifest {
-            navBarColor = manifest.navBarColor
-            navBarControlColor = manifest.navBarControlColor
-        }
-        else {
-            navBarColor = ColorPalette.gtBlue.color
-            navBarControlColor = .white
-        }
+        navBarColor = primaryManifest.navBarColor
+        navBarControlColor = primaryManifest.navBarControlColor
         
         let navBarModel = ChooseYourOwnAdventureNavBarModel(
             barColor: navBarColor,
