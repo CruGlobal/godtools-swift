@@ -140,6 +140,6 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     }
     
     func buttonTapped() {
-        mobileContentAnalytics.trackEvents(events: buttonModel.analyticsEvents, renderedPageContext: renderedPageContext)
+        mobileContentAnalytics.trackEvents(events: buttonModel.getAnalyticsEvents(type: .clicked), renderedPageContext: renderedPageContext)
     }
 }
