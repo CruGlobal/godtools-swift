@@ -211,10 +211,8 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     
     private func handleTranslationManifestDownloaded(result: Result<TranslationManifestData, TranslationDownloaderError>) {
         
-        let tips: [String: Tip]
-        let emptyTips: [String: Tip] = Dictionary()
-        let hidesLearnToShareButton: Bool
-        
+        let toolManifest: Manifest?
+                
         switch result {
         
         case .success(let translationManifest):
@@ -223,16 +221,17 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
             
             switch result {
             case .success(let manifest):
-                tips = manifest.tips
+                toolManifest = manifest
             case .failure(let error):
-                tips = emptyTips
+                toolManifest = nil
             }
                         
         case .failure(let error):
-            tips = emptyTips
+            toolManifest = nil
         }
         
-        hidesLearnToShareButton = tips.isEmpty
+        let tips: [String: Tip] = toolManifest?.tips ?? Dictionary()
+        let hidesLearnToShareButton: Bool = tips.isEmpty
         
         hidesLearnToShareToolButton.accept(value: hidesLearnToShareButton)
     }
