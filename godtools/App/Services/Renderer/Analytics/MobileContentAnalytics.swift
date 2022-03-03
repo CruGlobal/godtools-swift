@@ -11,14 +11,14 @@ import GodToolsToolParser
 
 class MobileContentAnalytics {
     
-    private let analyticsSystems: [String: MobileContentAnalyticsSystem]
+    private let analyticsSystems: [AnalyticsEvent.System: MobileContentAnalyticsSystem]
         
     required init(analytics: AnalyticsContainer) {
-           
-        let analyticsSystems = [
-            "appsflyer": analytics.appsFlyerAnalytics,
-            "firebase": analytics.firebaseAnalytics,
-            "snowplow": analytics.snowplowAnalytics
+        
+        let analyticsSystems: [AnalyticsEvent.System: MobileContentAnalyticsSystem] = [
+            .appsflyer: analytics.appsFlyerAnalytics,
+            .firebase: analytics.firebaseAnalytics,
+            .snowplow: analytics.snowplowAnalytics
         ]
  
         self.analyticsSystems = analyticsSystems
@@ -41,20 +41,21 @@ class MobileContentAnalytics {
         let systems: [AnalyticsEvent.System] = Array(event.systems)
         
         for system in systems {
-             
-            if let analyticsSystem = analyticsSystems[system.name.lowercased()] {
-                
-                let resourceAbbreviation = renderedPageContext.resource.abbreviation
-                let pageNumber = renderedPageContext.page
-                let screenName = resourceAbbreviation + "-" + String(pageNumber)
-                
-                analyticsSystem.trackMobileContentAction(
-                    screenName: screenName,
-                    siteSection: resourceAbbreviation,
-                    action: action,
-                    data: data
-                )
+            
+            guard let analyticsSystem = analyticsSystems[system] else {
+                continue
             }
+             
+            let resourceAbbreviation = renderedPageContext.resource.abbreviation
+            let pageNumber = renderedPageContext.page
+            let screenName = resourceAbbreviation + "-" + String(pageNumber)
+            
+            analyticsSystem.trackMobileContentAction(
+                screenName: screenName,
+                siteSection: resourceAbbreviation,
+                action: action,
+                data: data
+            )
         }
     }
 }
