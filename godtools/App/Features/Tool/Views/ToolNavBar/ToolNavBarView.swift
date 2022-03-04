@@ -67,6 +67,8 @@ class ToolNavBarView: NSObject {
         parentViewController.removeAllBarButtonItems()
         chooseLanguageControl.removeAllSegments()
         
+        remoteShareActiveNavItem = nil
+        
         parentViewController.title = viewModel.navTitle
         
         navigationController?.navigationBar.setupNavigationBarAppearance(
