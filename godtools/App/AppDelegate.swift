@@ -127,7 +127,7 @@ extension AppDelegate {
             
         case .tool:
             
-            appDiContainer.analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: "", actionName: AnalyticsConstants.Values.toolOpenedShortcut, siteSection: "", siteSubSection: "", url: nil, data: [
+            appDiContainer.analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: "", actionName: AnalyticsConstants.ActionNames.toolOpenedShortcut, siteSection: "", siteSubSection: "", url: nil, data: [
                 AnalyticsConstants.Keys.toolOpenedShortcutCountKey: 1
             ]))
             

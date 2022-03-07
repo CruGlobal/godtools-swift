@@ -22,7 +22,7 @@ class TutorialVideoAnalytics {
         trackActionAnalytics.trackAction(
             trackAction: TrackActionModel(
                 screenName: screenName,
-                actionName: "Tutorial Video",
+                actionName: AnalyticsConstants.ActionNames.tutorialVideo,
                 siteSection: "",
                 siteSubSection: "",
                 url: nil,

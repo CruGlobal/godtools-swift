@@ -26,7 +26,7 @@ class ShareToolRemoteSessionURLViewModel: ShareToolRemoteSessionURLViewModelType
     
     func pageViewed() {
         
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: "", actionName: AnalyticsConstants.Values.shareScreenEngaged, siteSection: "", siteSubSection: "", url: nil, data: [
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: "", actionName: AnalyticsConstants.ActionNames.shareScreenEngaged, siteSection: "", siteSubSection: "", url: nil, data: [
             AnalyticsConstants.Keys.shareScreenEngagedCountKey: 1
         ]))
     }

@@ -36,13 +36,19 @@ class ShareToolViewModel: ShareToolViewModelType {
         )
     }
     
+    private var analyticsScreenName: String {
+        return resource.abbreviation + "-" + String(pageNumber)
+    }
+    
+    private var analyticsSiteSection: String {
+        return resource.abbreviation
+    }
+    
     func pageViewed() {
         
-        let analyticsScreenName: String = resource.abbreviation + "-" + String(pageNumber)
-        
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: resource.abbreviation, siteSubSection: ""))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: ""))
                 
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.Values.shareIconEngaged, siteSection: resource.abbreviation, siteSubSection: "", url: nil, data: [
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.ActionNames.shareIconEngaged, siteSection: analyticsSiteSection, siteSubSection: "", url: nil, data: [
             AnalyticsConstants.Keys.shareAction: 1
         ]))
     }

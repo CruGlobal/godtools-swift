@@ -42,6 +42,10 @@ class OpenTutorialViewModel: NSObject, OpenTutorialViewModelType {
         }
     }
     
+    private var analyticsScreenName: String {
+        return "home"
+    }
+        
     func openTutorialTapped() {
         openTutorialCalloutCache.disableOpenTutorialCallout()
         flowDelegate?.navigate(step: .openTutorialTappedFromTools)
@@ -49,6 +53,6 @@ class OpenTutorialViewModel: NSObject, OpenTutorialViewModelType {
     
     func closeTapped() {
         openTutorialCalloutCache.disableOpenTutorialCallout()
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: "home", actionName: "Tutorial Home Dismiss", siteSection: "", siteSubSection: "", url: nil, data: [AnalyticsConstants.Keys.tutorialDismissAction: 1]))
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.ActionNames.tutorialHomeDismiss, siteSection: "", siteSubSection: "", url: nil, data: [AnalyticsConstants.Keys.tutorialDismissAction: 1]))
     }
 }

@@ -47,7 +47,6 @@ struct AnalyticsConstants {
         static let godTools = "GodTools App"
         static let isLoggedIn = "true"
         static let notLoggedIn = "false"
-        static let share = "Share Icon Engaged"
         static let exitLink = "Exit Link Engaged"
         static let kgpUSCircleToggled = "KGP-US Circle Toggled"
         static let kgpCircleToggled = "KGP Circle Toggled"
@@ -63,13 +62,8 @@ struct AnalyticsConstants {
         static let theFourNewProfessingBeliever = "TheFour New Professing Believer"
         static let kgpEmailSignUp = "KGP Email Sign Up"
         static let fourLawsEmailSignUp = "FourLaws Email Sign Up"
-        static let parallelLanguageToggle = "Parallel Language Toggled"
         static let debugIsTrue = "true"
         static let debugIsFalse = "false"
-        static let toolOpenedShortcut = "Tool Opened Shortcut"
-        static let shareIconEngaged = "Share Icon Engaged"
-        static let shareScreenEngaged = "Share Screen Engaged"
-        static let shareScreenOpened = "Share Screen Opened"
     }
     
     struct ScreenNames {
@@ -77,6 +71,16 @@ struct AnalyticsConstants {
     }
     
     struct ActionNames {
-        
+        static let aboutToolOpened = "About Tool Open Button"
+        static let parallelLanguageToggle = "Parallel Language Toggled"
+        static let share = "Share Icon Engaged"
+        static let shareIconEngaged = "Share Icon Engaged"
+        static let shareScreenEngaged = "Share Screen Engaged"
+        static let shareScreenOpened = "Share Screen Opened"
+        static let toolOpenedShortcut = "Tool Opened Shortcut"
+        static let toolOpenTapAction = "Tool Open Tap"
+        static let toolOpenedAction = "Tool Open Button"
+        static let tutorialHomeDismiss = "Tutorial Home Dismiss"
+        static let tutorialVideo = "Tutorial Video"
     }
 }
