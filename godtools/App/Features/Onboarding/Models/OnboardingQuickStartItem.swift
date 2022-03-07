@@ -13,4 +13,5 @@ struct OnboardingQuickStartItem {
     var title: String
     var linkButtonTitle: String
     var linkButtonFlowStep: FlowStep
+    var linkButtonAnalyticsAction: String
 }
