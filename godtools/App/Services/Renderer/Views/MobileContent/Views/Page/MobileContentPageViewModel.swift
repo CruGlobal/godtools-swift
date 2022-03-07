@@ -56,18 +56,18 @@ class MobileContentPageViewModel: MobileContentPageViewModelType {
         
         let backgroundImageModel: BackgroundImageModel?
         
-        if let pageBackgroundImageFileName = pageModel.backgroundImage?.name {
+        if let pageBackgroundImageResource = pageModel.backgroundImage {
             
             backgroundImageModel = BackgroundImageModel(
-                backgroundImageFileName: pageBackgroundImageFileName,
+                backgroundImageResource: pageBackgroundImageResource,
                 backgroundImageAlignment: pageModel.backgroundImageGravity,
                 backgroundImageScale: pageModel.backgroundImageScaleType
             )
         }
-        else if let manifestBackgroundImageFileName = manifest.backgroundImage?.name {
+        else if let manifestBackgroundImageResource = manifest.backgroundImage {
             
             backgroundImageModel = BackgroundImageModel(
-                backgroundImageFileName: manifestBackgroundImageFileName,
+                backgroundImageResource: manifestBackgroundImageResource,
                 backgroundImageAlignment: manifest.backgroundImageGravity,
                 backgroundImageScale: manifest.backgroundImageScaleType
             )

@@ -40,9 +40,13 @@ class ManifestResourcesCache {
         return translationsFileCache.getFile(location: location)
     }
     
-    func getImageFromManifestResources(fileName: String) -> UIImage? {
+    func getImageFromManifestResources(resource: Resource) -> UIImage? {
         
-        guard let location = getSHA256FileLocation(fileName: fileName) else {
+        guard let resourceName = resource.name, !resourceName.isEmpty else {
+            return nil
+        }
+        
+        guard let location = getSHA256FileLocation(fileName: resourceName) else {
             return nil
         }
         

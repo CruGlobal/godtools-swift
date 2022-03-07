@@ -132,12 +132,12 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     
     func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel? {
         
-        guard let backgroundImageFileName = cardModel.backgroundImage?.name else {
+        guard let backgroundImageResource = cardModel.backgroundImage else {
             return nil
         }
         
         let backgroundImageModel = BackgroundImageModel(
-            backgroundImageFileName: backgroundImageFileName,
+            backgroundImageResource: backgroundImageResource,
             backgroundImageAlignment: cardModel.backgroundImageGravity,
             backgroundImageScale: cardModel.backgroundImageScaleType
         )

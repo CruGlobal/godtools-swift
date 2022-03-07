@@ -65,8 +65,7 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
             borderColor = defaultBorderColor
         }
                 
-        if let name = buttonModel.icon?.name,
-            let image = renderedPageContext.resourcesCache.getImageFromManifestResources(fileName: name)  {
+        if let resource = buttonModel.icon, let image = renderedPageContext.resourcesCache.getImageFromManifestResources(resource: resource)  {
             
             let iconSize = min(Int(buttonModel.iconSize), maxAllowedIconSize)
                     

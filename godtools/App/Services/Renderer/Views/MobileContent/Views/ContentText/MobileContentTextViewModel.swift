@@ -32,11 +32,11 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     
     var startImage: UIImage? {
         
-        guard let resource = startImageResourceName, !resource.isEmpty else {
+        guard let resource = textModel.startImage else {
             return nil
         }
         
-        guard let resourceImage = renderedPageContext.resourcesCache.getImageFromManifestResources(fileName: resource) else {
+        guard let resourceImage = renderedPageContext.resourcesCache.getImageFromManifestResources(resource: resource) else {
             return nil
         }
         
@@ -78,11 +78,11 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     
     var endImage: UIImage? {
         
-        guard let resource = endImageResourceName, !resource.isEmpty else {
+        guard let resource = textModel.endImage else {
             return nil
         }
         
-        guard let resourceImage = renderedPageContext.resourcesCache.getImageFromManifestResources(fileName: resource) else {
+        guard let resourceImage = renderedPageContext.resourcesCache.getImageFromManifestResources(resource: resource) else {
             return nil
         }
         

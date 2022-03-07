@@ -11,7 +11,7 @@ import GodToolsToolParser
 
 struct BackgroundImageModel {
     
-    let backgroundImageFileName: String
+    let backgroundImageResource: Resource
     let backgroundImageAlignment: Gravity
     let backgroundImageScale: ImageScaleType
 }

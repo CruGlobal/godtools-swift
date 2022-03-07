@@ -24,7 +24,7 @@ class MobileContentImageViewModel: MobileContentImageViewModelType {
         self.renderedPageContext = renderedPageContext
         self.imageWidth = MobileContentViewWidth(dimension: imageModel.width)
                 
-        if let imageResource = imageModel.resource?.name, !imageResource.isEmpty, let cachedImage = renderedPageContext.resourcesCache.getImageFromManifestResources(fileName: imageResource) {
+        if let resource = imageModel.resource, let cachedImage = renderedPageContext.resourcesCache.getImageFromManifestResources(resource: resource) {
             self.image = cachedImage
         }
         else {
