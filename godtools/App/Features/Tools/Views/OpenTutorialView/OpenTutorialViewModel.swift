@@ -49,6 +49,6 @@ class OpenTutorialViewModel: NSObject, OpenTutorialViewModelType {
     
     func closeTapped() {
         openTutorialCalloutCache.disableOpenTutorialCallout()
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: "home", actionName: "Tutorial Home Dismiss", siteSection: "", siteSubSection: "", url: nil, data: ["cru.tutorial_home_dismiss": 1]))
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: "home", actionName: "Tutorial Home Dismiss", siteSection: "", siteSubSection: "", url: nil, data: [AnalyticsConstants.Keys.tutorialDismissAction: 1]))
     }
 }

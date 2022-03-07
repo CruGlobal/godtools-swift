@@ -26,7 +26,7 @@ class TutorialVideoAnalytics {
                 siteSection: "",
                 siteSubSection: "",
                 url: nil,
-                data: ["cru.tutorial_video": 1, "video_id": videoId]
+                data: [AnalyticsConstants.Keys.tutorialVideo: 1, AnalyticsConstants.Keys.tutorialVideoId: videoId]
             )
         )
     }
