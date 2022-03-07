@@ -78,7 +78,6 @@ class OnboardingQuickStartViewModel: OnboardingQuickStartViewModelType {
     }
     
     func endTutorialButtonTapped() {
-        trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.Values.onboardingStart, siteSection: "", siteSubSection: "", url: nil, data: nil))
         
         flowDelegate?.navigate(step: .endTutorialFromOnboardingQuickStart)
     }

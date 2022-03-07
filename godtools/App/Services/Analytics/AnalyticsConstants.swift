@@ -54,7 +54,6 @@ struct AnalyticsConstants {
         static let shareIconEngaged = "Share Icon Engaged"
         static let shareScreenEngaged = "Share Screen Engaged"
         static let shareScreenOpened = "Share Screen Opened"
-        static let onboardingStart = "onboarding_start"
         static let onboardingQuickStartArticles = "onboarding_link_articles"
         static let onboardingQuickStartLessons = "onboarding_link_lessons"
         static let onboardingQuickStartTools = "onboarding_link_tools"
