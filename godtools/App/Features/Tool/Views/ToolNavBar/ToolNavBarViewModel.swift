@@ -120,11 +120,11 @@ class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
         let language: LanguageModel = languages[index]
         
         let data: [String: String] = [
-            AnalyticsConstants.ActionNames.parallelLanguageToggle: "",
+            AnalyticsConstants.ActionNames.parallelLanguageToggled: "",
             AnalyticsConstants.Keys.contentLanguageSecondary: language.code,
         ]
         
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.ActionNames.parallelLanguageToggle, siteSection: analyticsSiteSection, siteSubSection: "", url: nil, data: data)
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.ActionNames.parallelLanguageToggled, siteSection: analyticsSiteSection, siteSubSection: "", url: nil, data: data)
         )
     }
 }
