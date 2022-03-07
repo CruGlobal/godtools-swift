@@ -43,7 +43,7 @@ class ShareToolViewModel: ShareToolViewModelType {
         analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: resource.abbreviation, siteSubSection: ""))
                 
         analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.Values.shareIconEngaged, siteSection: resource.abbreviation, siteSubSection: "", url: nil, data: [
-            AnalyticsConstants.ActionNames.shareIconEngagedCountKey: 1
+            AnalyticsConstants.Keys.shareAction: 1
         ]))
     }
 }

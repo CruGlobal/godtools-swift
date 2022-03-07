@@ -24,6 +24,15 @@ struct AnalyticsConstants {
         static let siteSubSection = "cru.siteSubSection"
         static let ssoguid = "cru.ssoguid"
         static let snowplowid = "cru.snowplowid"
+        static let toggleAction = "cru.toggleswitch"
+        static let gospelPresentedTimedAction = "cru.presentingthegospel"
+        static let presentingHolySpiritTimedAction = "cru.presentingtheholyspirit"
+        static let newProfessingBelieverAction = "cru.newprofessingbelievers"
+        static let emailSignUpAction = "cru.emailsignup"
+        static let parallelLanguageToggle = "cru.parallellanguagetoggle"
+        static let toolOpenedShortcutCountKey = "cru.tool-opened-shortcut"
+        static let shareScreenEngagedCountKey = "cru.sharescreenengaged"
+        static let shareScreenOpenedCountKey = "cru.share_screen_opened"
         static let debug = "debug"
     }
     
@@ -56,16 +65,11 @@ struct AnalyticsConstants {
         static let shareScreenOpened = "Share Screen Opened"
     }
     
+    struct ScreenNames {
+        
+    }
+    
     struct ActionNames {
-        static let shareIconEngagedCountKey = "cru.shareiconengaged"
-        static let toggleAction = "cru.toggleswitch"
-        static let gospelPresentedTimedAction = "cru.presentingthegospel"
-        static let presentingHolySpiritTimedAction = "cru.presentingtheholyspirit"
-        static let newProfessingBelieverAction = "cru.newprofessingbelievers"
-        static let emailSignUpAction = "cru.emailsignup"
-        static let parallelLanguageToggle = "cru.parallellanguagetoggle"
-        static let toolOpenedShortcutCountKey = "cru.tool-opened-shortcut"
-        static let shareScreenEngagedCountKey = "cru.sharescreenengaged"
-        static let shareScreenOpenedCountKey = "cru.share_screen_opened"
+        
     }
 }
