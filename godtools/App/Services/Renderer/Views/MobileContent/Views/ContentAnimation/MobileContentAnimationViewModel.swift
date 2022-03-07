@@ -14,29 +14,33 @@ class MobileContentAnimationViewModel: MobileContentAnimationViewModelType {
     private let animationModel: Animation
     private let renderedPageContext: MobileContentRenderedPageContext
     
-    let animatedViewModel: AnimatedViewModelType
+    let animatedViewModel: AnimatedViewModelType?
     
     required init(animationModel: Animation, renderedPageContext: MobileContentRenderedPageContext) {
         
         self.animationModel = animationModel
         self.renderedPageContext = renderedPageContext
-        
-        let animationFilepath: String
-        
-        let animationfileResult: Result<URL, Error> = renderedPageContext.resourcesCache.getFile(fileName: animationModel.resource?.name ?? "")
-        
-        switch animationfileResult {
-        case .success(let fileUrl):
-            animationFilepath = fileUrl.path
-        case .failure(let error):
-            animationFilepath = ""
+                
+        if let resource = animationModel.resource {
+            
+            let animationfileResult: Result<URL, Error> = renderedPageContext.resourcesCache.getFile(resource: resource)
+            
+            switch animationfileResult {
+            
+            case .success(let fileUrl):
+                animatedViewModel = AnimatedViewModel(
+                    animationDataResource: .filepathJsonFile(filepath: fileUrl.path),
+                    autoPlay: animationModel.autoPlay,
+                    loop: animationModel.loop
+                )
+            
+            case .failure(let error):
+                animatedViewModel = nil
+            }
         }
-        
-        self.animatedViewModel = AnimatedViewModel(
-            animationDataResource: .filepathJsonFile(filepath: animationFilepath),
-            autoPlay: animationModel.autoPlay,
-            loop: animationModel.loop
-        )
+        else {
+            animatedViewModel = nil
+        }
     }
     
     func animationTapped() {

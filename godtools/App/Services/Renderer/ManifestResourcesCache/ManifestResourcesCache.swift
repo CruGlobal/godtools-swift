@@ -20,9 +20,13 @@ class ManifestResourcesCache {
         self.translationsFileCache = translationsFileCache
     }
     
-    private func getSHA256FileLocation(fileName: String) -> SHA256FileLocation? {
+    private func getSHA256FileLocation(resource: Resource) -> SHA256FileLocation? {
         
-        guard let localeName = manifest.resources[fileName]?.localName else {
+        guard let resourceName = resource.name else {
+            return nil
+        }
+        
+        guard let localeName = manifest.resources[resourceName]?.localName else {
             return nil
         }
         
@@ -31,9 +35,9 @@ class ManifestResourcesCache {
         return location
     }
     
-    func getFile(fileName: String) -> Result<URL, Error> {
+    func getFile(resource: Resource) -> Result<URL, Error> {
         
-        guard let location = getSHA256FileLocation(fileName: fileName) else {
+        guard let location = getSHA256FileLocation(resource: resource) else {
             return .failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to find file."]))
         }
         
@@ -42,11 +46,7 @@ class ManifestResourcesCache {
     
     func getImageFromManifestResources(resource: Resource) -> UIImage? {
         
-        guard let resourceName = resource.name, !resourceName.isEmpty else {
-            return nil
-        }
-        
-        guard let location = getSHA256FileLocation(fileName: resourceName) else {
+        guard let location = getSHA256FileLocation(resource: resource) else {
             return nil
         }
         
