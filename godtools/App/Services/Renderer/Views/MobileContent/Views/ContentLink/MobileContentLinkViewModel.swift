@@ -51,6 +51,6 @@ class MobileContentLinkViewModel: MobileContentLinkViewModelType {
     
     func linkTapped() {
                         
-        mobileContentAnalytics.trackEvents(events: linkModel.analyticsEvents, renderedPageContext: renderedPageContext)
+        mobileContentAnalytics.trackEvents(events: linkModel.getAnalyticsEvents(type: .clicked), renderedPageContext: renderedPageContext)
     }
 }
