@@ -12,13 +12,13 @@ class LessonViewModel: MobileContentPagesViewModel, LessonViewModelType {
         
     let progress: ObservableValue<AnimatableValue<CGFloat>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
     
-    required init(flowDelegate: FlowDelegate, renderers: [MobileContentRendererType], resource: ResourceModel, primaryLanguage: LanguageModel, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking) {
+    required init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, resource: ResourceModel, primaryLanguage: LanguageModel, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking) {
                 
-        super.init(flowDelegate: flowDelegate, renderers: renderers, primaryLanguage: primaryLanguage, page: page, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .visiblePages)
+        super.init(flowDelegate: flowDelegate, renderer: renderer, page: page, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .visiblePages)
     }
     
-    required init(flowDelegate: FlowDelegate, renderers: [MobileContentRendererType], primaryLanguage: LanguageModel, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType) {
-        fatalError("init(flowDelegate:renderers:primaryLanguage:page:mobileContentEventAnalytics:initialPageRenderingType:) has not been implemented")
+    required init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType) {
+        fatalError("init(flowDelegate:renderer:page:mobileContentEventAnalytics:initialPageRenderingType:) has not been implemented")
     }
     
     private func updateProgress(page: Int) {
@@ -43,10 +43,7 @@ class LessonViewModel: MobileContentPagesViewModel, LessonViewModelType {
     
     func closeTapped() {
         
-        guard let lesson = getCurrentRenderer()?.resource else {
-            assertionFailure("Internal error, unable to fetch current renderer resource.  Resource should not be nil.")
-            return
-        }
+        let lesson: ResourceModel = renderer.resource
         
         flowDelegate?.navigate(step: .closeTappedFromLesson(lesson: lesson, highestPageNumberViewed: highestPageNumberViewed))
     }

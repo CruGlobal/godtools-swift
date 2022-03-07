@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 protocol ToolPageCardsViewDelegate: AnyObject {
     
@@ -106,7 +107,7 @@ class ToolPageCardsView: MobileContentView {
         }
     }
     
-    override func didReceiveEvents(eventIds: [MultiplatformEventId]) {
+    override func didReceiveEvents(eventIds: [EventId]) {
                 
         for eventId in eventIds {
             

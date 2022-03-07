@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class MobileContentStackView: MobileContentView {
         
@@ -205,11 +206,11 @@ class MobileContentStackView: MobileContentView {
     
     private func addAutoSpacerView(spacerView: MobileContentSpacerView) {
         
-        guard spacerView.mode == .auto else {
+        guard spacerView.height.isAuto else {
             assertionFailure("Only spacer's with mode auto can be added.")
             return
         }
-        
+
         spacerView.setHeight(height: 0)
         autoSpacerViews.append(spacerView)
     }
@@ -526,7 +527,7 @@ extension MobileContentStackView {
             
             if let spacerView = childView as? MobileContentSpacerView {
                                 
-                if spacerView.mode == .auto {
+                if spacerView.height.isAuto {
                     addAutoSpacerView(spacerView: spacerView)
                 }
             }
@@ -622,7 +623,7 @@ extension MobileContentStackView {
 
 extension MobileContentStackView: MobileContentAccordionViewDelegate {
     
-    func accordionViewDidChangeSectionViewTextHiddenState(accordionView: MobileContentAccordionView, sectionView: MobileContentSectionView, textIsHidden: Bool, textHeight: CGFloat) {
+    func accordionViewDidChangeSectionViewTextHiddenState(accordionView: MobileContentAccordionView, sectionView: MobileContentAccordionSectionView, textIsHidden: Bool, textHeight: CGFloat) {
         
         layoutIfNeeded()
         

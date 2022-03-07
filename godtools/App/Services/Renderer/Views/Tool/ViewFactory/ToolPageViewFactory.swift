@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class ToolPageViewFactory: MobileContentPageViewFactoryType {
         
@@ -38,17 +39,18 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
         self.trainingTipsEnabled = trainingTipsEnabled
     }
     
-    func viewForRenderableModel(renderableModel: MobileContentRenderableModel, renderableModelParent: MobileContentRenderableModel?, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) -> MobileContentView? {
+    func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
         
-        if let cardModel = renderableModel as? CardModelType {
+        if let cardModel = renderableModel as? MultiplatformCard {
             
             let viewModel = ToolPageCardViewModel(
-                cardModel: cardModel,
-                rendererPageModel: rendererPageModel,
+                cardModel: cardModel.card,
+                renderedPageContext: renderedPageContext,
                 analytics: analytics,
                 mobileContentAnalytics: mobileContentAnalytics,
                 fontService: fontService,
                 localizationServices: localizationServices,
+                numberOfCards: cardModel.numberOfVisibleCards,
                 trainingTipsEnabled: trainingTipsEnabled
             )
             
@@ -56,18 +58,18 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let callToActionModel = renderableModel as? CallToActionModelType {
+        else if let callToActionModel = renderableModel as? CallToAction {
             
             return getCallToActionView(
                 callToActionModel: callToActionModel,
-                rendererPageModel: rendererPageModel
+                renderedPageContext: renderedPageContext
             )
         }
-        else if let headerModel = renderableModel as? HeaderModelType {
+        else if let headerModel = renderableModel as? Header {
             
             let viewModel = ToolPageHeaderViewModel(
                 headerModel: headerModel,
-                rendererPageModel: rendererPageModel,
+                renderedPageContext: renderedPageContext,
                 translationsFileCache: translationsFileCache,
                 viewedTrainingTipsService: viewedTrainingTipsService
             )
@@ -76,11 +78,11 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let heroModel = renderableModel as? HeroModelType {
+        else if let heroModel = renderableModel as? Hero {
             
             let viewModel = ToolPageHeroViewModel(
                 heroModel: heroModel,
-                rendererPageModel: rendererPageModel,
+                renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
@@ -88,26 +90,26 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let cardsModel = renderableModel as? CardsModelType {
+        else if let cardsModel = renderableModel as? MultiplatformCards {
             
             let viewModel = ToolPageCardsViewModel(
-                cardsModel: cardsModel,
-                rendererPageModel: rendererPageModel,
+                cards: cardsModel.cards,
+                renderedPageContext: renderedPageContext,
                 cardJumpService: cardJumpService
             )
             
             let view = ToolPageCardsView(
                 viewModel: viewModel,
-                safeArea: rendererPageModel.safeArea
+                safeArea: renderedPageContext.safeArea
             )
             
             return view
         }
-        else if let formModel = renderableModel as? ContentFormModelType {
+        else if let formModel = renderableModel as? Form {
             
             let viewModel = ToolPageFormViewModel(
                 formModel: formModel,
-                rendererPageModel: rendererPageModel,
+                renderedPageContext: renderedPageContext,
                 followUpService: followUpService,
                 localizationServices: localizationServices
             )
@@ -116,37 +118,41 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let modalModel = renderableModel as? ModalModelType {
+        else if let modalModel = renderableModel as? Modal {
             
             let viewModel = ToolPageModalViewModel(
                 modalModel: modalModel,
-                rendererPageModel: rendererPageModel
+                renderedPageContext: renderedPageContext
             )
             
             let view = ToolPageModalView(viewModel: viewModel)
             
             return view
         }
-        else if let modalsModel = renderableModel as? ModalsModelType {
+        else if let modalsModel = renderableModel as? MultiplatformModals {
             
             let viewModel = ToolPageModalsViewModel(
-                modalsModel: modalsModel,
-                rendererPageModel: rendererPageModel
+                modals: modalsModel.modals,
+                renderedPageContext: renderedPageContext
             )
             
             let view = ToolPageModalsView(
                 viewModel: viewModel,
-                windowViewController: rendererPageModel.window
+                windowViewController: renderedPageContext.window
             )
             
             return view
         }
-        else if let pageModel = renderableModel as? PageModelType {
-                        
+        else if let pageModel = renderableModel as? TractPage {
+                    
+            guard let flowDelegate = self.flowDelegate else {
+                return nil
+            }
+            
             let viewModel = ToolPageViewModel(
-                flowDelegate: getFlowDelegate(),
+                flowDelegate: flowDelegate,
                 pageModel: pageModel,
-                rendererPageModel: rendererPageModel,
+                renderedPageContext: renderedPageContext,
                 deepLinkService: deepLinkService,
                 analytics: analytics,
                 mobileContentAnalytics: mobileContentAnalytics
@@ -154,7 +160,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             
             let view = ToolPageView(
                 viewModel: viewModel,
-                safeArea: rendererPageModel.safeArea
+                safeArea: renderedPageContext.safeArea
             )
             
             return view
@@ -163,11 +169,11 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
         return nil
     }
     
-    func getCallToActionView(callToActionModel: CallToActionModelType?, rendererPageModel: MobileContentRendererPageModel) -> ToolPageCallToActionView {
+    func getCallToActionView(callToActionModel: CallToAction?, renderedPageContext: MobileContentRenderedPageContext) -> ToolPageCallToActionView {
         
         let viewModel = ToolPageCallToActionViewModel(
             callToActionModel: callToActionModel,
-            rendererPageModel: rendererPageModel,
+            renderedPageContext: renderedPageContext,
             fontService: fontService
         )
         

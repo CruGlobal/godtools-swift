@@ -7,16 +7,17 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class MobileContentHeadingViewModel: MobileContentHeadingViewModelType {
     
-    private let headingModel: HeadingModelType
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let heading: Text
+    private let renderedPageContext: MobileContentRenderedPageContext
     
-    required init(headingModel: HeadingModelType, rendererPageModel: MobileContentRendererPageModel) {
+    required init(heading: Text, renderedPageContext: MobileContentRenderedPageContext) {
         
-        self.headingModel = headingModel
-        self.rendererPageModel = rendererPageModel
+        self.heading = heading
+        self.renderedPageContext = renderedPageContext
     }
     
     var fontSize: CGFloat {
@@ -29,6 +30,6 @@ class MobileContentHeadingViewModel: MobileContentHeadingViewModelType {
     
     var textColor: UIColor {
         
-        return headingModel.getTextColor()?.uiColor ?? rendererPageModel.pageColors.primaryColor.uiColor
+        return heading.textColor
     }
 }

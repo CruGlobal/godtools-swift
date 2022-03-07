@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class MobileContentSpacerView: MobileContentView {
     
@@ -18,7 +19,7 @@ class MobileContentSpacerView: MobileContentView {
         
         self.viewModel = viewModel
         
-        let height: CGFloat = viewModel.height
+        let height: CGFloat = viewModel.height.fixedHeightValue
     
         super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: height))
         
@@ -41,8 +42,8 @@ class MobileContentSpacerView: MobileContentView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var mode: MobileContentSpacerMode {
-        return viewModel.mode
+    var height: MobileContentSpacerHeight {
+        return viewModel.height
     }
     
     func setHeight(height: CGFloat) {

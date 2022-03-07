@@ -46,8 +46,10 @@ class MobileContentAnimationView: MobileContentView {
     
     private func setupBinding() {
         
-        animatedView.configure(viewModel: viewModel.animatedViewModel)
-        animatedView.setAnimationContentMode(contentMode: .scaleAspectFill)
+        if let animatedViewModel = viewModel.animatedViewModel {
+            animatedView.configure(viewModel: animatedViewModel)
+            animatedView.setAnimationContentMode(contentMode: .scaleAspectFill)
+        }
     }
     
     @objc private func touchAreaTapped() {
@@ -57,8 +59,15 @@ class MobileContentAnimationView: MobileContentView {
     
     override var heightConstraintType: MobileContentViewHeightConstraintType {
         
-        let animationAssetSize: CGSize = viewModel.animatedViewModel.getAssetSize()
+        let animationSize: CGSize
         
-        return .setToAspectRatioOfProvidedSize(size: CGSize(width: animationAssetSize.width, height: animationAssetSize.height))
+        if let animatedViewModel = viewModel.animatedViewModel {
+            animationSize = animatedViewModel.getAssetSize()
+        }
+        else {
+            animationSize = CGSize(width: bounds.size.width, height: 40)
+        }
+                
+        return .setToAspectRatioOfProvidedSize(size: CGSize(width: animationSize.width, height: animationSize.height))
     }
 }

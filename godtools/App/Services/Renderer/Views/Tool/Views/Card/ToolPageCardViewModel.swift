@@ -7,11 +7,12 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class ToolPageCardViewModel: ToolPageCardViewModelType {
     
-    private let rendererPageModel: MobileContentRendererPageModel
-    private let cardModel: CardModelType
+    private let renderedPageContext: MobileContentRenderedPageContext
+    private let cardModel: TractPage.Card
     private let analytics: AnalyticsContainer
     private let fontService: FontService
     private let localizationServices: LocalizationServices
@@ -26,16 +27,16 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     let hidesNextButton: Bool
     let isHiddenCard: Bool
     
-    required init(cardModel: CardModelType, rendererPageModel: MobileContentRendererPageModel, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, trainingTipsEnabled: Bool) {
+    required init(cardModel: TractPage.Card, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, numberOfCards: Int, trainingTipsEnabled: Bool) {
                         
         self.cardModel = cardModel
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
         self.analytics = analytics
         self.fontService = fontService
         self.localizationServices = localizationServices
         self.trainingTipsEnabled = trainingTipsEnabled
-        self.cardPosition = cardModel.cardPositionInVisibleCards
-        self.numberOfCards = cardModel.numberOfVisibleCards
+        self.cardPosition = cardModel.visiblePosition?.intValue ?? 0
+        self.numberOfCards = numberOfCards
         self.isHiddenCard = cardModel.isHidden
         
         if isHiddenCard {
@@ -51,25 +52,26 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
         }
         
         analyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
-            analyticsEvents: cardModel.getAnalyticsEvents(),
+            analyticsEvents: cardModel.analyticsEvents,
             mobileContentAnalytics: mobileContentAnalytics,
-            rendererPageModel: rendererPageModel
+            renderedPageContext: renderedPageContext
         )
         
         if !trainingTipsEnabled {
             hidesHeaderTrainingTip = true
         }
         else {
-            hidesHeaderTrainingTip = !cardModel.hasTrainingTip
+            let hasTrainingTip: Bool = cardModel.tips.count > 0
+            hidesHeaderTrainingTip = !hasTrainingTip
         }
     }
     
     var title: String? {
-        return cardModel.title
+        return cardModel.label?.text
     }
     
     var titleColor: UIColor {
-        return cardModel.getTitleColor()?.uiColor ?? rendererPageModel.pageColors.primaryColor.uiColor
+        return cardModel.label?.textColor ?? renderedPageContext.pageModel.primaryColor
     }
     
     var titleFont: UIFont {
@@ -93,7 +95,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     }
     
     var previousButtonTitle: String? {
-        return localizationServices.stringForLanguage(language: rendererPageModel.language, key: "card_status1")
+        return localizationServices.stringForLanguage(language: renderedPageContext.language, key: "card_status1")
     }
     
     var previousButtonTitleColor: UIColor {
@@ -105,7 +107,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     }
     
     var nextButtonTitle: String? {
-        return localizationServices.stringForLanguage(language: rendererPageModel.language, key: "card_status2")
+        return localizationServices.stringForLanguage(language: renderedPageContext.language, key: "card_status2")
     }
     
     var nextButtonTitleColor: UIColor {
@@ -117,30 +119,41 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return rendererPageModel.language.languageDirection.semanticContentAttribute
+        return renderedPageContext.language.languageDirection.semanticContentAttribute
     }
     
-    var dismissListeners: [MultiplatformEventId] {
-        return cardModel.dismissListeners
+    var dismissListeners: [EventId] {
+        return Array(cardModel.dismissListeners)
     }
     
-    var listeners: [MultiplatformEventId] {
-        return cardModel.listeners
+    var listeners: [EventId] {
+        return Array(cardModel.listeners)
     }
     
-    func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel {
+    func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel? {
+        
+        guard let backgroundImageResource = cardModel.backgroundImage else {
+            return nil
+        }
+        
+        let backgroundImageModel = BackgroundImageModel(
+            backgroundImageResource: backgroundImageResource,
+            backgroundImageAlignment: cardModel.backgroundImageGravity,
+            backgroundImageScale: cardModel.backgroundImageScaleType
+        )
+        
         return MobileContentBackgroundImageViewModel(
-            backgroundImageModel: cardModel,
-            manifestResourcesCache: rendererPageModel.resourcesCache,
-            languageDirection: rendererPageModel.language.languageDirection
+            backgroundImageModel: backgroundImageModel,
+            manifestResourcesCache: renderedPageContext.resourcesCache,
+            languageDirection: renderedPageContext.language.languageDirection
         )
     }
         
     func cardDidAppear() {
         mobileContentDidAppear()
         
-        let resource: ResourceModel = rendererPageModel.resource
-        let page: Int = rendererPageModel.page
+        let resource: ResourceModel = renderedPageContext.resource
+        let page: Int = renderedPageContext.page
         
         let pageAnalyticsScreenName: String = resource.abbreviation + "-" + String(page)
         let screenName: String = pageAnalyticsScreenName + ToolPageCardAnalyticsScreenName(cardPosition: cardPosition).screenName
@@ -157,14 +170,10 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
 extension ToolPageCardViewModel: MobileContentViewModelType {
     
     var language: LanguageModel {
-        return rendererPageModel.language
+        return renderedPageContext.language
     }
     
     var analyticsEvents: [MobileContentAnalyticsEvent] {
         return analyticsEventsObjects
-    }
-    
-    var defaultAnalyticsEventsTrigger: MobileContentAnalyticsEventTrigger {
-        return .visible
     }
 }

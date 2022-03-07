@@ -7,10 +7,11 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 protocol LessonPageViewModelType: MobileContentPageViewModelType {
     
-    var manifestDismissListeners: [MultiplatformEventId] { get }
+    var manifestDismissListeners: [EventId] { get }
     
     func pageDidAppear()
 }

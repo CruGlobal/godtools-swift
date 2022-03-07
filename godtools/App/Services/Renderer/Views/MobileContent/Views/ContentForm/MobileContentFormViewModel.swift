@@ -7,15 +7,16 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class MobileContentFormViewModel: MobileContentFormViewModelType {
     
-    private let formModel: ContentFormModelType
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let formModel: Form
+    private let renderedPageContext: MobileContentRenderedPageContext
             
-    required init(formModel: ContentFormModelType, rendererPageModel: MobileContentRendererPageModel) {
+    required init(formModel: Form, renderedPageContext: MobileContentRenderedPageContext) {
         
         self.formModel = formModel
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
     }
 }

@@ -13,7 +13,7 @@ protocol TrainingPageViewDelegate: AnyObject {
     func trainingPageButtonWithUrlTapped(trainingPage: TrainingPageView, url: String)
 }
 
-class TrainingPageView: MobileContentPageView {
+class TrainingPageView: MobileContentView {
     
     private let viewModel: TrainingPageViewModelType
     private let contentStackView: MobileContentStackView = MobileContentStackView(contentInsets: .zero, itemSpacing: 15, scrollIsEnabled: true)
@@ -27,19 +27,31 @@ class TrainingPageView: MobileContentPageView {
         
         self.viewModel = viewModel
         
-        super.init(viewModel: viewModel, nibName: String(describing: TrainingPageView.self))
+        super.init(frame: UIScreen.main.bounds)
+        
+        initializeNib(nibName: String(describing: TrainingPageView.self))
+        setupLayout()
+        setupBinding()
+    }
+    
+    private func initializeNib(nibName: String) {
+        
+        let nib: UINib = UINib(nibName: nibName, bundle: nil)
+        let contents: [Any]? = nib.instantiate(withOwner: self, options: nil)
+        if let rootNibView = (contents as? [UIView])?.first {
+            addSubview(rootNibView)
+            rootNibView.backgroundColor = .clear
+            rootNibView.frame = bounds
+            rootNibView.translatesAutoresizingMaskIntoConstraints = false
+            rootNibView.constrainEdgesToView(view: self)
+        }
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    required init(viewModel: MobileContentPageViewModelType, nibName: String?) {
-        fatalError("init(viewModel:nibName:) has not been implemented")
-    }
-    
-    override func setupLayout() {
-        super.setupLayout()
+    private func setupLayout() {
         
         // contentStackView
         contentStackContainerView.addSubview(contentStackView)
@@ -66,8 +78,7 @@ class TrainingPageView: MobileContentPageView {
         bottomGradientView.layer.insertSublayer(bottomGradient, at: 0)
     }
     
-    override func setupBinding() {
-        super.setupBinding()
+    private func setupBinding() {
         
     }
     

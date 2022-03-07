@@ -7,16 +7,17 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class MobileContentHeaderViewModel: MobileContentHeaderViewModelType {
     
-    private let headerModel: ContentHeaderModelType
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let header: Text
+    private let renderedPageContext: MobileContentRenderedPageContext
     
-    required init(headerModel: ContentHeaderModelType, rendererPageModel: MobileContentRendererPageModel) {
+    required init(header: Text, renderedPageContext: MobileContentRenderedPageContext) {
         
-        self.headerModel = headerModel
-        self.rendererPageModel = rendererPageModel
+        self.header = header
+        self.renderedPageContext = renderedPageContext
     }
     
     var fontSize: CGFloat {

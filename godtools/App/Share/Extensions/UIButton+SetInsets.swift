@@ -8,22 +8,29 @@
 
 import Foundation
 
+//found here: https://noahgilmore.com/blog/uibutton-padding/
+
+enum IconGravity {
+    case start
+    case end
+}
+
 extension UIButton {
-    //found here: https://noahgilmore.com/blog/uibutton-padding/
-    func setInsets(
-        forContentPadding contentPadding: UIEdgeInsets,
-        imageTitlePadding: CGFloat,
-        iconGravity: IconGravity
-    ) {
+    
+    func setInsets(forContentPadding contentPadding: UIEdgeInsets, imageTitlePadding: CGFloat, iconGravity: IconGravity) {
+        
         switch iconGravity {
+        
         case .start:
-            self.contentEdgeInsets = UIEdgeInsets(
+            
+            contentEdgeInsets = UIEdgeInsets(
                 top: contentPadding.top,
                 left: contentPadding.left,
                 bottom: contentPadding.bottom,
                 right: contentPadding.right + imageTitlePadding
             )
-            self.titleEdgeInsets = UIEdgeInsets(
+            
+            titleEdgeInsets = UIEdgeInsets(
                 top: 0,
                 left: imageTitlePadding,
                 bottom: 0,
@@ -31,13 +38,15 @@ extension UIButton {
             )
             
         case .end:
-            self.contentEdgeInsets = UIEdgeInsets(
+            
+            contentEdgeInsets = UIEdgeInsets(
                 top: contentPadding.top,
                 left: contentPadding.left + imageTitlePadding,
                 bottom: contentPadding.bottom,
                 right: contentPadding.right
             )
-            self.titleEdgeInsets = UIEdgeInsets(
+            
+            titleEdgeInsets = UIEdgeInsets(
                 top: 0,
                 left: -imageTitlePadding,
                 bottom: 0,

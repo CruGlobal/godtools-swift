@@ -7,12 +7,12 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 protocol MobileContentViewModelType {
     
     var language: LanguageModel { get }
     var analyticsEvents: [MobileContentAnalyticsEvent] { get }
-    var defaultAnalyticsEventsTrigger: MobileContentAnalyticsEventTrigger { get }
     
     func mobileContentDidAppear()
     func mobileContentDidDisappear()
@@ -27,8 +27,10 @@ extension MobileContentViewModelType {
     func mobileContentDidAppear() {
         
         for event in analyticsEvents {
-            let trigger: MobileContentAnalyticsEventTrigger = event.analyticsEvent.getTrigger()
-            if trigger == .visible || (trigger == .dependentOnContainingElement && defaultAnalyticsEventsTrigger == .visible) {
+            
+            let trigger: AnalyticsEvent.Trigger = event.analyticsEvent.trigger
+
+            if trigger == .visible {
                 event.trigger()
             }
         }
@@ -37,8 +39,10 @@ extension MobileContentViewModelType {
     func mobileContentDidDisappear() {
         
         for event in analyticsEvents {
-            let trigger: MobileContentAnalyticsEventTrigger = event.analyticsEvent.getTrigger()
-            if trigger == .visible || (trigger == .dependentOnContainingElement && defaultAnalyticsEventsTrigger == .visible) {
+            
+            let trigger: AnalyticsEvent.Trigger = event.analyticsEvent.trigger
+            
+            if trigger == .visible {
                 event.cancel()
             }
         }

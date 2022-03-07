@@ -7,11 +7,12 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 protocol MobileContentTabViewModelType {
     
     var labelText: String? { get }
-    var tabListeners: [MultiplatformEventId] { get }
+    var tabListeners: [EventId] { get }
     
     func tabTapped()
 }

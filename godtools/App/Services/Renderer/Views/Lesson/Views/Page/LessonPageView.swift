@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 protocol LessonPageViewDelegate: AnyObject {
     
@@ -87,7 +88,7 @@ class LessonPageView: MobileContentPageView {
         }
     }
     
-    override func didReceiveEvents(eventIds: [MultiplatformEventId]) {
+    override func didReceiveEvents(eventIds: [EventId]) {
         
         super.didReceiveEvents(eventIds: eventIds)
         

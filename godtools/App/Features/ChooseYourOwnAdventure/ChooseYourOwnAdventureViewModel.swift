@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOwnAdventureViewModelType {
     
@@ -19,7 +20,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOw
     let navBarColors: ObservableValue<ChooseYourOwnAdventureNavBarModel>
     let navBarTitleType: ChooseYourOwnAdventureNavBarTitleType
     
-    required init(flowDelegate: FlowDelegate, renderers: [MobileContentRendererType], primaryLanguage: LanguageModel, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, localizationServices: LocalizationServices, fontService: FontService) {
+    required init(flowDelegate: FlowDelegate, primaryManifest: Manifest, renderer: MobileContentRenderer, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, localizationServices: LocalizationServices, fontService: FontService) {
         
         self.localizationServices = localizationServices
         self.fontService = fontService
@@ -28,19 +29,9 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOw
         
         let navBarColor: UIColor
         let navBarControlColor: UIColor
-        
-        if let manifestAttributes = renderers.first?.parser.manifest.attributes,
-            let barColor = manifestAttributes.navbarColor?.uiColor,
-            let controlColor = manifestAttributes.navbarControlColor?.uiColor {
-            
-            navBarColor = barColor
-            navBarControlColor = controlColor
-        }
-        else {
-            
-            navBarColor = ColorPalette.gtBlue.color
-            navBarControlColor = .white
-        }
+
+        navBarColor = primaryManifest.navBarColor
+        navBarControlColor = primaryManifest.navBarControlColor
         
         let navBarModel = ChooseYourOwnAdventureNavBarModel(
             barColor: navBarColor,
@@ -53,18 +44,18 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOw
         
         navBarColors = ObservableValue(value: navBarModel)
         
-        if renderers.count > 1 {
+        if renderer.pageRenderers.count > 1 {
             navBarTitleType = .languageToggle
         }
         else {
             navBarTitleType = .title(title: "GodTools")
         }
         
-        super.init(flowDelegate: flowDelegate, renderers: renderers, primaryLanguage: primaryLanguage, page: page, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .chooseYourOwnAdventure)
+        super.init(flowDelegate: flowDelegate, renderer: renderer, page: page, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .chooseYourOwnAdventure)
     }
 
-    required init(flowDelegate: FlowDelegate, renderers: [MobileContentRendererType], primaryLanguage: LanguageModel, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType) {
-        fatalError("init(flowDelegate:renderers:primaryLanguage:page:mobileContentEventAnalytics:initialPageRenderingType:) has not been implemented")
+    required init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType) {
+        fatalError("init(flowDelegate:renderer:page:mobileContentEventAnalytics:initialPageRenderingType:) has not been implemented")
     }
     
     override func pageDidAppear(page: Int) {
@@ -85,7 +76,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOw
     
     func getNavBarLanguageTitles() -> [String] {
         
-        let languageTitles: [String] = renderers.map({ LanguageViewModel(language: $0.language, localizationServices: localizationServices).translatedLanguageName })
+        let languageTitles: [String] = renderer.pageRenderers.map({ LanguageViewModel(language: $0.language, localizationServices: localizationServices).translatedLanguageName })
         guard languageTitles.count > 1 else {
             return Array()
         }
@@ -103,7 +94,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOw
     
     func navLanguageTapped(index: Int) {
         
-        let renderer: MobileContentRendererType = renderers[index]
-        setRenderer(renderer: renderer)
+        let pageRenderer: MobileContentPageRenderer = renderer.pageRenderers[index]
+        setPageRenderer(pageRenderer: pageRenderer)
     }
 }

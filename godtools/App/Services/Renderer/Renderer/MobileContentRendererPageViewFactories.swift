@@ -7,12 +7,17 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
-class MobileContentRendererPageViewFactories {
+class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
+    
+    private(set) weak var flowDelegate: FlowDelegate?
     
     let factories: [MobileContentPageViewFactoryType]
     
     required init(type: MobileContentRendererPageViewFactoriesType, flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, trainingTipsEnabled: Bool, deepLinkingService: DeepLinkingServiceType) {
+        
+        self.flowDelegate = flowDelegate
         
         var pageViewFactories: [MobileContentPageViewFactoryType] = Array()
         
@@ -64,7 +69,6 @@ class MobileContentRendererPageViewFactories {
                 flowDelegate: flowDelegate,
                 translationsFileCache: translationsFileCache,
                 viewedTrainingTipsService: viewedTrainingTipsService,
-                deepLinkService: deepLinkingService,
                 trainingTipsEnabled: trainingTipsEnabled
             )
             
@@ -90,7 +94,6 @@ class MobileContentRendererPageViewFactories {
                 flowDelegate: flowDelegate,
                 translationsFileCache: translationsFileCache,
                 viewedTrainingTipsService: viewedTrainingTipsService,
-                deepLinkService: deepLinkingService,
                 trainingTipsEnabled: trainingTipsEnabled
             )
             
@@ -102,7 +105,6 @@ class MobileContentRendererPageViewFactories {
                 flowDelegate: flowDelegate,
                 translationsFileCache: translationsFileCache,
                 viewedTrainingTipsService: viewedTrainingTipsService,
-                deepLinkService: deepLinkingService,
                 trainingTipsEnabled: false
             )
             
@@ -122,16 +124,14 @@ class MobileContentRendererPageViewFactories {
         self.factories = pageViewFactories
     }
     
-    func getViewFromViewFactory(renderableModel: MobileContentRenderableModel, renderableModelParent: MobileContentRenderableModel?, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) -> MobileContentView? {
+    func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
         
         for pageViewFactory in factories {
-            
-            if let view = pageViewFactory.viewForRenderableModel(renderableModel: renderableModel, renderableModelParent: renderableModelParent, rendererPageModel: rendererPageModel, containerModel: containerModel) {
-            
+            if let view = pageViewFactory.viewForRenderableModel(renderableModel: renderableModel, renderableModelParent: renderableModelParent, renderedPageContext: renderedPageContext) {
                 return view
             }
         }
-        
+
         return nil
     }
 }
