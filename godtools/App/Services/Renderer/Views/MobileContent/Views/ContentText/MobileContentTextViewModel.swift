@@ -49,10 +49,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     }
     
     var hidesStartImage: Bool {
-        guard let resource = startImageResourceName else {
-            return true
-        }
-        return resource.isEmpty
+        return textModel.startImage == nil
     }
     
     var font: UIFont {
@@ -95,18 +92,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     }
     
     var hidesEndImage: Bool {
-        guard let resource = endImageResourceName else {
-            return true
-        }
-        return resource.isEmpty
-    }
-    
-    private var startImageResourceName: String? {
-        return textModel.startImage?.name
-    }
-    
-    private var endImageResourceName: String? {
-        return textModel.endImage?.name
+        return textModel.endImage == nil
     }
     
     private func getTextStylesArray() -> [Text.Style] {
