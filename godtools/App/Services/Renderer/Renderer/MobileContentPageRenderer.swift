@@ -26,7 +26,7 @@ class MobileContentPageRenderer {
         self.primaryLanguage = primaryLanguage
         self.manifest = languageTranslationManifest.manifest
         self.language = languageTranslationManifest.language
-        self.manifestResourcesCache = ManifestResourcesCache(manifest: languageTranslationManifest.manifest, translationsFileCache: translationsFileCache)
+        self.manifestResourcesCache = ManifestResourcesCache(translationsFileCache: translationsFileCache)
         self.pageViewFactories = pageViewFactories
     }
     

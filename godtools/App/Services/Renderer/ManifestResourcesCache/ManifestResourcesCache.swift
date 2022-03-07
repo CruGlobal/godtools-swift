@@ -11,26 +11,20 @@ import GodToolsToolParser
 
 class ManifestResourcesCache {
     
-    private let manifest: Manifest
     private let translationsFileCache: TranslationsFileCache
     
-    required init(manifest: Manifest, translationsFileCache: TranslationsFileCache) {
+    required init(translationsFileCache: TranslationsFileCache) {
         
-        self.manifest = manifest
         self.translationsFileCache = translationsFileCache
     }
     
     private func getSHA256FileLocation(resource: Resource) -> SHA256FileLocation? {
         
-        guard let resourceName = resource.name else {
+        guard let localName = resource.localName else {
             return nil
         }
         
-        guard let localeName = manifest.resources[resourceName]?.localName else {
-            return nil
-        }
-        
-        let location: SHA256FileLocation = SHA256FileLocation(sha256WithPathExtension: localeName)
+        let location: SHA256FileLocation = SHA256FileLocation(sha256WithPathExtension: localName)
         
         return location
     }
