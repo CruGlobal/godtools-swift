@@ -55,6 +55,18 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
         languageSettingsService.parallelLanguage.removeObserver(self)
     }
     
+    private var analyticsScreenName: String {
+        return "Language Settings"
+    }
+    
+    private var analyticsSiteSection: String {
+        return "menu"
+    }
+    
+    private var analyticsSiteSubSection: String {
+        return ""
+    }
+    
     private func setupBinding() {
         
         dataDownloader.cachedResourcesAvailable.addObserver(self) { [weak self] (cachedResourcesAvailable: Bool) in
@@ -120,7 +132,7 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
     }
     
     func pageViewed() {
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: "Language Settings", siteSection: "menu", siteSubSection: ""))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
     }
     
     func choosePrimaryLanguageTapped() {

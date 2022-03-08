@@ -55,6 +55,14 @@ class LessonsListViewModel: NSObject, LessonsListViewModelType {
         return "lessons"
     }
     
+    private var analyticsSiteSection: String {
+        return "lessons"
+    }
+    
+    private var analyticsSiteSubSection: String {
+        return ""
+    }
+    
     private func setupBinding() {
         
         dataDownloader.cachedResourcesAvailable.addObserver(self) { [weak self] (cachedResourcesAvailable: Bool) in
@@ -78,7 +86,7 @@ class LessonsListViewModel: NSObject, LessonsListViewModelType {
     
     func pageViewed() {
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: "lessons", siteSubSection: ""))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
         analytics.appsFlyerAnalytics.trackAction(actionName: analyticsScreenName, data:  nil)
     } 
     

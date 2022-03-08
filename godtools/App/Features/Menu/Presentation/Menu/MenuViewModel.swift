@@ -52,6 +52,26 @@ class MenuViewModel: NSObject, MenuViewModelType {
         userAuthentication.didSignOutSignal.removeObserver(self)
     }
     
+    private func getMenuAnalyticsScreenName () -> String {
+        return "Menu"
+    }
+    
+    private func getShareAppAnalyticsScreenName () -> String {
+        return "Share App"
+    }
+    
+    private func getShareStoryAnalyticsScreenName () -> String {
+        return "Share Story"
+    }
+    
+    private var analyticsSiteSection: String {
+        return "menu"
+    }
+    
+    private var analyticsSiteSubSection: String {
+        return ""
+    }
+    
     private func setupBinding() {
         
         userAuthentication.didAuthenticateSignal.addObserver(self) { [weak self] (result: Result<AuthUserModelType, Error>) in
@@ -150,7 +170,7 @@ class MenuViewModel: NSObject, MenuViewModelType {
     }
     
     func pageViewed() {
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: "Menu", siteSection: "", siteSubSection: ""))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: getMenuAnalyticsScreenName(), siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
     }
     
     func doneTapped() {
@@ -203,16 +223,16 @@ extension MenuViewModel {
         
         flowDelegate?.navigate(step: .shareGodToolsTappedFromMenu)
         
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: "Share App", actionName: AnalyticsConstants.ActionNames.shareIconEngaged, siteSection: "", siteSubSection: "", url: nil, data: [AnalyticsConstants.Keys.shareAction: 1]))
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: getShareAppAnalyticsScreenName(), actionName: AnalyticsConstants.ActionNames.shareIconEngaged, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection, url: nil, data: [AnalyticsConstants.Keys.shareAction: 1]))
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: "Share App", siteSection: "", siteSubSection: ""))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: getShareAppAnalyticsScreenName(), siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
     }
     
     func shareAStoryWithUsTapped() {
         
         flowDelegate?.navigate(step: .shareAStoryWithUsTappedFromMenu)
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: "Share Story", siteSection: "", siteSubSection: ""))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: getShareStoryAnalyticsScreenName(), siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
     }
     
     func termsOfUseTapped() {

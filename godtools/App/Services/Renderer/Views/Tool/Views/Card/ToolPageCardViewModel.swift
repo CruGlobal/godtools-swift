@@ -64,6 +64,22 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
         }
     }
     
+    private var analyticsScreenName: String {
+        let resource: ResourceModel = rendererPageModel.resource
+        let page: Int = rendererPageModel.page
+        
+        let pageAnalyticsScreenName: String = resource.abbreviation + "-" + String(page)
+        return pageAnalyticsScreenName + ToolPageCardAnalyticsScreenName(cardPosition: cardPosition).screenName
+    }
+    
+    private var analyticsSiteSection: String {
+        return "tools"
+    }
+    
+    private var analyticsSiteSubSection: String {
+        return ""
+    }
+    
     var title: String? {
         return cardModel.title
     }
@@ -139,12 +155,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     func cardDidAppear() {
         mobileContentDidAppear()
         
-        let resource: ResourceModel = rendererPageModel.resource
-        let page: Int = rendererPageModel.page
-        
-        let pageAnalyticsScreenName: String = resource.abbreviation + "-" + String(page)
-        let screenName: String = pageAnalyticsScreenName + ToolPageCardAnalyticsScreenName(cardPosition: cardPosition).screenName
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: screenName, siteSection: "", siteSubSection: ""))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
     }
     
     func cardDidDisappear() {

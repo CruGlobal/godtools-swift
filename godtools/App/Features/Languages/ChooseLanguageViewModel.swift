@@ -65,6 +65,18 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
         dataDownloader.resourcesUpdatedFromRemoteDatabase.removeObserver(self)
     }
     
+    private var analyticsScreenName: String {
+        return "Select Language"
+    }
+    
+    private var analyticsSiteSection: String {
+        return "menu"
+    }
+    
+    private var analyticsSiteSubSection: String {
+        return "language settings"
+    }
+    
     private func setupBinding() {
         
         dataDownloader.cachedResourcesAvailable.addObserver(self) { [weak self] (cachedResourcesAvailable: Bool) in
@@ -184,7 +196,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
     
     func pageViewed() {
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: "Select Language", siteSection: "menu", siteSubSection: "language settings"))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
     }
     
     func deleteLanguageTapped() {

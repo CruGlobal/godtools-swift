@@ -57,6 +57,14 @@ class ArticleCategoriesViewModel: NSObject, ArticleCategoriesViewModelType {
         return "categories"
     }
     
+    private var analyticsSiteSection: String {
+        return resource.abbreviation
+    }
+    
+    private var analyticsSiteSubSection: String {
+        return ""
+    }
+    
     private func cancelArticleDownload() {
         downloadArticlesReceipt?.cancel()
         downloadArticlesReceipt = nil
@@ -83,7 +91,7 @@ class ArticleCategoriesViewModel: NSObject, ArticleCategoriesViewModelType {
 
     func pageViewed() {
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: resource.abbreviation, siteSubSection: ""))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
         analytics.appsFlyerAnalytics.trackAction(actionName: analyticsScreenName, data: nil)
     }
     

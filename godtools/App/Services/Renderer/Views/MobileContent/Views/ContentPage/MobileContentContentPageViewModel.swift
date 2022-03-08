@@ -40,6 +40,6 @@ class MobileContentContentPageViewModel: MobileContentPageViewModel, MobileConte
     
     func pageDidAppear() {
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: getPageAnalyticsScreenName(), siteSection: rendererPageModel.resource.abbreviation, siteSubSection: ""))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: getPageAnalyticsScreenName(), siteSection:analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
     }
 }

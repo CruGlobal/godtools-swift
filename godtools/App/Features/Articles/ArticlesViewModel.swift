@@ -66,6 +66,18 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
         downloadArticlesReceipt?.cancel()
     }
     
+    private var analyticsScreenName: String {
+        return "Category : \(category.title)"
+    }
+    
+    private var analyticsSiteSection: String {
+        return resource.abbreviation
+    }
+    
+    private var analyticsSiteSubSection: String {
+        return "articles-list"
+    }
+    
     private var shouldShowLoadingIndicator: Bool {
         return numberOfArticles.value == 0
     }
@@ -169,7 +181,7 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
     
     func pageViewed() {
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: "Category : \(category.title)", siteSection: resource.abbreviation, siteSubSection: "articles-list"))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
     }
     
     func articleTapped(index: Int) {

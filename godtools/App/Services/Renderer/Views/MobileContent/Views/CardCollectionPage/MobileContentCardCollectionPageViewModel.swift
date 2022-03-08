@@ -29,7 +29,7 @@ class MobileContentCardCollectionPageViewModel: MobileContentPageViewModel, Mobi
     }
     
     private func getPageAnalyticsScreenName() -> String {
-        
+
         let resource: ResourceModel = rendererPageModel.resource
         let pageId: String = rendererPageModel.pageModel.id
         let separator: String = ":"
@@ -83,11 +83,11 @@ class MobileContentCardCollectionPageViewModel: MobileContentPageViewModel, Mobi
     
     func pageDidAppear() {
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: getPageAnalyticsScreenName(), siteSection: rendererPageModel.resource.abbreviation, siteSubSection: ""))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: getPageAnalyticsScreenName(), siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
     }
     
     func cardDidAppear(card: Int) {
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: getCardAnalyticsScreenName(card: card), siteSection: rendererPageModel.resource.abbreviation, siteSubSection: ""))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: getCardAnalyticsScreenName(card: card), siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
     }
 }
