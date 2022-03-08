@@ -7,36 +7,37 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class MobileContentPageViewModel: MobileContentPageViewModelType {
     
-    private let pageModel: PageModelType
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let pageModel: Page
+    private let renderedPageContext: MobileContentRenderedPageContext
     private let deepLinkService: DeepLinkingServiceType
     private let hidesBackgroundImage: Bool
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, pageModel: PageModelType, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, hidesBackgroundImage: Bool) {
+    required init(flowDelegate: FlowDelegate, pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, deepLinkService: DeepLinkingServiceType, hidesBackgroundImage: Bool) {
         
         self.flowDelegate = flowDelegate
         self.pageModel = pageModel
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
         self.deepLinkService = deepLinkService
         self.hidesBackgroundImage = hidesBackgroundImage
     }
     
     var analyticsScreenName: String {
         
-        let resource: ResourceModel = rendererPageModel.resource
-        let page: Int = rendererPageModel.page
+        let resource: ResourceModel = renderedPageContext.resource
+        let page: Int = renderedPageContext.page
         
         return resource.abbreviation + "-" + String(page)
     }
     
     var analyticsSiteSection: String {
         
-        let resource: ResourceModel = rendererPageModel.resource
+        let resource: ResourceModel = renderedPageContext.resource
  
         return resource.abbreviation
     }
@@ -46,11 +47,7 @@ class MobileContentPageViewModel: MobileContentPageViewModelType {
     }
     
     var backgroundColor: UIColor {
-        return rendererPageModel.pageColors.backgroundColor.uiColor
-    }
-    
-    func getFlowDelegate() -> FlowDelegate? {
-        return flowDelegate
+        return pageModel.backgroundColor
     }
     
     func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel? {
@@ -59,29 +56,40 @@ class MobileContentPageViewModel: MobileContentPageViewModelType {
             return nil
         }
         
-        let manifestAttributes: MobileContentManifestAttributesType = rendererPageModel.manifest.attributes
+        let manifest: Manifest = renderedPageContext.manifest
         
-        let backgroundImageModel: BackgroundImageModelType?
+        let backgroundImageModel: BackgroundImageModel?
         
-        if pageModel.backgroundImageExists {
-            backgroundImageModel = pageModel
+        if let pageBackgroundImageResource = pageModel.backgroundImage {
+            
+            backgroundImageModel = BackgroundImageModel(
+                backgroundImageResource: pageBackgroundImageResource,
+                backgroundImageAlignment: pageModel.backgroundImageGravity,
+                backgroundImageScale: pageModel.backgroundImageScaleType
+            )
         }
-        else if manifestAttributes.backgroundImageExists {
-            backgroundImageModel = manifestAttributes
+        else if let manifestBackgroundImageResource = manifest.backgroundImage {
+            
+            backgroundImageModel = BackgroundImageModel(
+                backgroundImageResource: manifestBackgroundImageResource,
+                backgroundImageAlignment: manifest.backgroundImageGravity,
+                backgroundImageScale: manifest.backgroundImageScaleType
+            )
         }
         else {
+            
             backgroundImageModel = nil
         }
         
-        if let backgroundImageModel = backgroundImageModel {
-            return MobileContentBackgroundImageViewModel(
-                backgroundImageModel: backgroundImageModel,
-                manifestResourcesCache: rendererPageModel.resourcesCache,
-                languageDirection: rendererPageModel.language.languageDirection
-            )
+        guard let model = backgroundImageModel else {
+            return nil
         }
         
-        return nil
+        return MobileContentBackgroundImageViewModel(
+            backgroundImageModel: model,
+            manifestResourcesCache: renderedPageContext.resourcesCache,
+            languageDirection: renderedPageContext.language.languageDirection
+        )
     }
     
     func buttonWithUrlTapped(url: String) {

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class LessonPageViewFactory: MobileContentPageViewFactoryType {
     
@@ -24,14 +25,18 @@ class LessonPageViewFactory: MobileContentPageViewFactoryType {
         self.mobileContentAnalytics = mobileContentAnalytics
     }
     
-    func viewForRenderableModel(renderableModel: MobileContentRenderableModel, renderableModelParent: MobileContentRenderableModel?, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) -> MobileContentView? {
+    func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
         
-        if let pageModel = renderableModel as? PageModelType {
-                        
+        if let pageModel = renderableModel as? Page {
+                    
+            guard let flowDelegate = self.flowDelegate else {
+                return nil
+            }
+            
             let viewModel = LessonPageViewModel(
-                flowDelegate: getFlowDelegate(),
+                flowDelegate: flowDelegate,
                 pageModel: pageModel,
-                rendererPageModel: rendererPageModel,
+                renderedPageContext: renderedPageContext,
                 deepLinkService: deepLinkService,
                 analytics: analytics,
                 mobileContentAnalytics: mobileContentAnalytics
@@ -39,7 +44,7 @@ class LessonPageViewFactory: MobileContentPageViewFactoryType {
             
             let view = LessonPageView(
                 viewModel: viewModel,
-                safeArea: rendererPageModel.safeArea
+                safeArea: renderedPageContext.safeArea
             )
             
             return view

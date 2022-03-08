@@ -12,7 +12,6 @@ protocol MobileContentPageViewModelType {
     
     var backgroundColor: UIColor { get }
     
-    func getFlowDelegate() -> FlowDelegate?
     func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel?
     func buttonWithUrlTapped(url: String)
     func trainingTipTapped(event: TrainingTipEvent)

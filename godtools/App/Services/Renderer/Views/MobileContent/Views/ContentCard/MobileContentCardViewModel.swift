@@ -11,20 +11,20 @@ import GodToolsToolParser
 
 class MobileContentCardViewModel: MobileContentCardViewModelType {
     
-    private let contentCard: MultiplatformContentCard
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let contentCard: Card
+    private let renderedPageContext: MobileContentRenderedPageContext
     
-    required init(contentCard: MultiplatformContentCard, rendererPageModel: MobileContentRendererPageModel) {
+    required init(contentCard: Card, renderedPageContext: MobileContentRenderedPageContext) {
         
         self.contentCard = contentCard
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
     }
     
-    var events: [MultiplatformEventId] {
+    var events: [EventId] {
         return contentCard.events
     }
     
-    var rendererState: MobileContentMultiplatformState {
-        return rendererPageModel.rendererState
+    var rendererState: State {
+        return renderedPageContext.rendererState
     }
 }

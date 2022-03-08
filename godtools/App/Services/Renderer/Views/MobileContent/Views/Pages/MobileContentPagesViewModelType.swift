@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 protocol MobileContentPagesViewModelType {
     
@@ -21,6 +22,6 @@ protocol MobileContentPagesViewModelType {
     func pageWillAppear(page: Int) -> MobileContentView?
     func pageDidAppear(page: Int)
     func pageDidDisappear(page: Int)
-    func pageDidReceiveEvents(eventIds: [MultiplatformEventId])
+    func pageDidReceiveEvents(eventIds: [EventId])
     func didChangeMostVisiblePage(page: Int)
 }

@@ -12,4 +12,7 @@ protocol ToolPageHeaderViewModelType: MobileContentViewModelType {
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute { get }
     var backgroundColor: UIColor { get }
+    
+    func getNumber(numberLabel: UILabel) -> MobileContentTextView?
+    func getTitle(titleLabel: UILabel) -> MobileContentTextView?
 }

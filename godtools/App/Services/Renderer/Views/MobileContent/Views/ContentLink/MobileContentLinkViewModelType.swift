@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 protocol MobileContentLinkViewModelType {
     
@@ -14,8 +15,8 @@ protocol MobileContentLinkViewModelType {
     var font: UIFont { get }
     var title: String? { get }
     var titleColor: UIColor { get }
-    var linkEvents: [MultiplatformEventId] { get }
-    var rendererState: MobileContentMultiplatformState { get }
+    var linkEvents: [EventId] { get }
+    var rendererState: State { get }
     
     func linkTapped()
 }

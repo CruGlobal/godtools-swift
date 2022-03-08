@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class MobileContentTabsView: MobileContentView {
     
@@ -76,13 +77,13 @@ class MobileContentTabsView: MobileContentView {
         return .constrainedToChildren
     }
     
-    override func didReceiveEvents(eventIds: [MultiplatformEventId]) {
+    override func didReceiveEvents(eventIds: [EventId]) {
                 
         for eventId in eventIds {
             
             for tabIndex in 0 ..< tabViews.count {
                 
-                let tabListeners: [MultiplatformEventId] = tabViews[tabIndex].viewModel.tabListeners
+                let tabListeners: [EventId] = tabViews[tabIndex].viewModel.tabListeners
                 
                 if tabListeners.contains(eventId) {
                     setSelectedTabIndex(selectedTabIndex: tabIndex)

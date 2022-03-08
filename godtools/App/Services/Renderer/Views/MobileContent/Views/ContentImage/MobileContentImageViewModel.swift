@@ -8,22 +8,23 @@
 
 import UIKit
 import GodToolsToolParser
+import RealmSwift
 
 class MobileContentImageViewModel: MobileContentImageViewModelType {
     
-    private let imageModel: ContentImageModelType
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let imageModel: Image
+    private let renderedPageContext: MobileContentRenderedPageContext
     
     let image: UIImage?
     let imageWidth: MobileContentViewWidth
     
-    required init(imageModel: ContentImageModelType, rendererPageModel: MobileContentRendererPageModel) {
+    required init(imageModel: Image, renderedPageContext: MobileContentRenderedPageContext) {
         
         self.imageModel = imageModel
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
         self.imageWidth = MobileContentViewWidth(dimension: imageModel.width)
-        
-        if let imageResource = imageModel.resource, !imageResource.isEmpty, let cachedImage = rendererPageModel.resourcesCache.getImageFromManifestResources(fileName: imageResource) {
+                
+        if let resource = imageModel.resource, let cachedImage = renderedPageContext.resourcesCache.getImageFromManifestResources(resource: resource) {
             self.image = cachedImage
         }
         else {
@@ -31,11 +32,11 @@ class MobileContentImageViewModel: MobileContentImageViewModelType {
         }
     }
     
-    var imageEvents: [MultiplatformEventId] {
+    var imageEvents: [EventId] {
         return imageModel.events
     }
     
-    var rendererState: MobileContentMultiplatformState {
-        return rendererPageModel.rendererState
+    var rendererState: State {
+        return renderedPageContext.rendererState
     }
 }

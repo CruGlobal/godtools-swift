@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class MobileContentEventAnalyticsTracking {
     
@@ -20,17 +21,17 @@ class MobileContentEventAnalyticsTracking {
         self.firebaseAnalytics = firebaseAnalytics
     }
     
-    func trackContentEvents(eventIds: [MultiplatformEventId], resource: ResourceModel, language: LanguageModel) {
+    func trackContentEvents(eventIds: [EventId], resource: ResourceModel, language: LanguageModel) {
         
         for eventId in eventIds {
             trackContentEvent(eventId: eventId, resource: resource, language: language)
         }
     }
     
-    func trackContentEvent(eventId: MultiplatformEventId, resource: ResourceModel, language: LanguageModel) {
+    func trackContentEvent(eventId: EventId, resource: ResourceModel, language: LanguageModel) {
         
         let data: [String: Any] = [
-            MobileContentEventAnalyticsTracking.paramEventId: eventId.name,
+            MobileContentEventAnalyticsTracking.paramEventId: eventId.description(),
             AnalyticsConstants.Keys.contentLanguage: language.code
         ]
         

@@ -8,6 +8,7 @@
 
 import Foundation
 import GodToolsToolParser
+import SwiftUI
 
 class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
     
@@ -27,50 +28,44 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         self.analytics = analytics
     }
     
-    func viewForRenderableModel(renderableModel: MobileContentRenderableModel, renderableModelParent: MobileContentRenderableModel?, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) -> MobileContentView? {
+    func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
         
-        if let paragraphModel = renderableModel as? ContentParagraphModelType {
+        if let paragraphModel = renderableModel as? Paragraph {
         
             let viewModel = MobileContentParagraphViewModel(
                 paragraphModel: paragraphModel,
-                rendererPageModel: rendererPageModel,
-                containerModel: containerModel
+                renderedPageContext: renderedPageContext
             )
             
             let view = MobileContentParagraphView(viewModel: viewModel, contentInsets: .zero, itemSpacing: 5, scrollIsEnabled: false)
             
             return view
         }
-        else if let textModel = renderableModel as? ContentTextModelType {
-                          
-            let viewModel = MobileContentTextViewModel(
+        else if let textModel = renderableModel as? GodToolsToolParser.Text {
+                       
+            return getContentText(
                 textModel: textModel,
-                rendererPageModel: rendererPageModel,
-                containerModel: containerModel,
-                fontService: fontService
+                renderedPageContext: renderedPageContext,
+                viewType: nil,
+                additionalLabelAttributes: nil
             )
-            
-            let view = MobileContentTextView(viewModel: viewModel)
-            
-            return view
         }
-        else if let imageModel = renderableModel as? ContentImageModelType {
+        else if let imageModel = renderableModel as? GodToolsToolParser.Image {
             
             let viewModel = MobileContentImageViewModel(
                 imageModel: imageModel,
-                rendererPageModel: rendererPageModel
+                renderedPageContext: renderedPageContext
             )
             
             let view = MobileContentImageView(viewModel: viewModel)
             
             return view            
         }
-        else if let buttonModel = renderableModel as? ContentButtonModelType {
+        else if let buttonModel = renderableModel as? GodToolsToolParser.Button {
                         
             let viewModel = MobileContentButtonViewModel(
                 buttonModel: buttonModel,
-                rendererPageModel: rendererPageModel,
-                containerModel: containerModel,
+                renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics,
                 fontService: fontService
             )
@@ -79,22 +74,22 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let contentCard = renderableModel as? MultiplatformContentCard {
+        else if let contentCard = renderableModel as? Card {
             
             let viewModel = MobileContentCardViewModel(
                 contentCard: contentCard,
-                rendererPageModel: rendererPageModel
+                renderedPageContext: renderedPageContext
             )
             
             let view = MobileContentCardView(viewModel: viewModel)
             
             return view
         }
-        else if let linkModel = renderableModel as? ContentLinkModelType {
+        else if let linkModel = renderableModel as? GodToolsToolParser.Link {
                         
             let viewModel = MobileContentLinkViewModel(
                 linkModel: linkModel,
-                rendererPageModel: rendererPageModel,
+                renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics,
                 fontService: fontService
             )
@@ -113,7 +108,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let contentPage = renderableModel as? MultiplatformContentPage {
+        else if let contentPage = renderableModel as? ContentPage {
             
             guard let flowDelegate = self.flowDelegate else {
                 // TODO: Return an error here if flowDelegate is null for some reason. ~Levi
@@ -123,7 +118,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             let viewModel = MobileContentContentPageViewModel(
                 flowDelegate: flowDelegate,
                 contentPage: contentPage,
-                rendererPageModel: rendererPageModel,
+                renderedPageContext: renderedPageContext,
                 deepLinkService: deepLinkingService,
                 analytics: analytics
             )
@@ -132,7 +127,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let cardCollectionPage = renderableModel as? MultiplatformCardCollectionPage {
+        else if let cardCollectionPage = renderableModel as? CardCollectionPage {
             
             guard let flowDelegate = self.flowDelegate else {
                 // TODO: Return an error here if flowDelegate is null for some reason. ~Levi
@@ -142,7 +137,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             let viewModel = MobileContentCardCollectionPageViewModel(
                 flowDelegate: flowDelegate,
                 cardCollectionPage: cardCollectionPage,
-                rendererPageModel: rendererPageModel,
+                renderedPageContext: renderedPageContext,
                 deepLinkService: deepLinkingService,
                 analytics: analytics
             )
@@ -151,18 +146,18 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let headingModel = renderableModel as? HeadingModelType {
+        else if let headingModel = renderableModel as? MultiplatformHeading {
             
             let viewModel = MobileContentHeadingViewModel(
-                headingModel: headingModel,
-                rendererPageModel: rendererPageModel
+                heading: headingModel.text,
+                renderedPageContext: renderedPageContext
             )
             
             let view = MobileContentHeadingView(viewModel: viewModel)
             
             return view
         }
-        else if let contentModel = renderableModel as? ContentModelType {
+        else if let contentModel = renderableModel as? MultiplatformContent {
             
             return MobileContentStackView(
                 contentInsets: contentModel.contentInsets,
@@ -170,53 +165,33 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 scrollIsEnabled: contentModel.scrollIsEnabled
             )
         }
-        else if let titleModel = renderableModel as? TitleModelType {
-                  
-            let viewModel = MobileContentTitleViewModel(
-                titleModel: titleModel,
-                rendererPageModel: rendererPageModel
-            )
-            
-            let view = MobileContentTitleView(viewModel: viewModel)
-            
-            return view
-        }
-        else if let numberModel = renderableModel as? NumberModelType {
-            
-            let viewModel = MobileContentNumberViewModel(
-                numberModel: numberModel,
-                rendererPageModel: rendererPageModel
-            )
-            
-            let view = MobileContentNumberView(viewModel: viewModel)
-            
-            return view
-        }
-        else if let animationModel = renderableModel as? ContentAnimationModelType {
+        else if let animationModel = renderableModel as? GodToolsToolParser.Animation {
             
             let viewModel = MobileContentAnimationViewModel(
                 animationModel: animationModel,
-                rendererPageModel: rendererPageModel,
-                containerModel: containerModel
+                renderedPageContext: renderedPageContext
             )
             
             let view = MobileContentAnimationView(viewModel: viewModel)
             
             return view
         }
-        else if let videoModel = renderableModel as? ContentVideoModelType {
+        else if let videoModel = renderableModel as? Video {
             
-            let viewModel = MobileContentEmbeddedVideoViewModel(videoModel: videoModel)
+            let viewModel = MobileContentEmbeddedVideoViewModel(
+                videoModel: videoModel,
+                renderedPageContext: renderedPageContext
+            )
             
             let view = MobileContentEmbeddedVideoView(viewModel: viewModel)
             
             return view
         }
-        else if let tabModel = renderableModel as? ContentTabModelType {
+        else if let tabModel = renderableModel as? Tabs.Tab {
             
             let viewModel = MobileContentTabViewModel(
                 tabModel: tabModel,
-                rendererPageModel: rendererPageModel,
+                renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
@@ -224,22 +199,22 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let tabsModel = renderableModel as? ContentTabsModelType {
+        else if let tabsModel = renderableModel as? Tabs {
 
             let viewModel = MobileContentTabsViewModel(
                 tabsModel: tabsModel,
-                rendererPageModel: rendererPageModel
+                renderedPageContext: renderedPageContext
             )
             
             let view = MobileContentTabsView(viewModel: viewModel)
             
             return view
         }
-        else if let inputModel = renderableModel as? ContentInputModelType {
+        else if let inputModel = renderableModel as? Input {
             
             let viewModel = MobileContentInputViewModel(
                 inputModel: inputModel,
-                rendererPageModel: rendererPageModel,
+                renderedPageContext: renderedPageContext,
                 fontService: fontService
             )
             
@@ -247,33 +222,33 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let formModel = renderableModel as? ContentFormModelType {
+        else if let formModel = renderableModel as? GodToolsToolParser.Form {
             
             let viewModel = MobileContentFormViewModel(
                 formModel: formModel,
-                rendererPageModel: rendererPageModel
+                renderedPageContext: renderedPageContext
             )
             
             let view = MobileContentFormView(viewModel: viewModel)
             
             return view
         }
-        else if let spacerModel = renderableModel as? ContentSpacerModelType {
+        else if let spacerModel = renderableModel as? GodToolsToolParser.Spacer {
                 
             let viewModel = MobileContentSpacerViewModel(
                 spacerModel: spacerModel,
-                rendererPageModel: rendererPageModel
+                renderedPageContext: renderedPageContext
             )
             
             let view = MobileContentSpacerView(viewModel: viewModel)
             
             return view
         }
-        else if let headerModel = renderableModel as? ContentHeaderModelType {
+        else if let headerModel = renderableModel as? MultiplatformContentHeader {
             
             let viewModel = MobileContentHeaderViewModel(
-                headerModel: headerModel,
-                rendererPageModel: rendererPageModel
+                header: headerModel.text,
+                renderedPageContext: renderedPageContext
             )
             
             let view = MobileContentHeaderView(viewModel: viewModel)
@@ -284,7 +259,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = MobileContentFlowViewModel(
                 contentFlow: contentFlow,
-                rendererPageModel: rendererPageModel
+                renderedPageContext: renderedPageContext
             )
             
             let view = MobileContentFlowView(viewModel: viewModel, itemSpacing: 16)
@@ -301,11 +276,11 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let multiSelectOptionModel = renderableModel as? ContentMultiSelectOptionModelType {
+        else if let multiSelectOptionModel = renderableModel as? Multiselect.Option {
             
             let viewModel = MobileContentMultiSelectOptionViewModel(
                 multiSelectOptionModel: multiSelectOptionModel,
-                rendererPageModel: rendererPageModel,
+                renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
@@ -313,33 +288,33 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let multiSelectModel = renderableModel as? ContentMultiSelectModelType {
+        else if let multiSelectModel = renderableModel as? Multiselect {
             
             let viewModel = MobileContentMultiSelectViewModel(
                 multiSelectModel: multiSelectModel,
-                rendererPageModel: rendererPageModel
+                renderedPageContext: renderedPageContext
             )
             
             let view = MobileContentMultiSelectView(viewModel: viewModel)
             
             return view
         }
-        else if let sectionModel = renderableModel as? ContentSectionModelType {
+        else if let sectionModel = renderableModel as? Accordion.Section {
             
-            let viewModel = MobileContentSectionViewModel(
+            let viewModel = MobileContentAccordionSectionViewModel(
                 sectionModel: sectionModel,
-                rendererPageModel: rendererPageModel
+                renderedPageContext: renderedPageContext
             )
             
-            let view = MobileContentSectionView(viewModel: viewModel)
+            let view = MobileContentAccordionSectionView(viewModel: viewModel)
             
             return view
         }
-        else if let accordionModel = renderableModel as? ContentAccordionModelType {
+        else if let accordionModel = renderableModel as? Accordion {
             
             let viewModel = MobileContentAccordionViewModel(
                 accordionModel: accordionModel,
-                rendererPageModel: rendererPageModel
+                renderedPageContext: renderedPageContext
             )
             
             let view = MobileContentAccordionView(viewModel: viewModel)
@@ -348,5 +323,22 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         }
         
         return nil
+    }
+    
+    func getContentText(textModel: GodToolsToolParser.Text, renderedPageContext: MobileContentRenderedPageContext, viewType: MobileContentTextView.ViewType?, additionalLabelAttributes: MobileContentTextLabelAttributes?) -> MobileContentTextView {
+        
+        let viewModel = MobileContentTextViewModel(
+            textModel: textModel,
+            renderedPageContext: renderedPageContext,
+            fontService: fontService
+        )
+        
+        let view = MobileContentTextView(
+            viewModel: viewModel,
+            viewType: viewType,
+            additionalLabelAttributes: additionalLabelAttributes
+        )
+        
+        return view
     }
 }

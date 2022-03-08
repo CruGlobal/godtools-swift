@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 protocol ToolNavigationFlow: Flow {
     
@@ -138,6 +139,7 @@ extension ToolNavigationFlow {
     
     private func navigateToToolWithToolData(toolData: DownloadedToolData, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
         
+        let mobileContentParser: MobileContentParser = appDiContainer.getMobileContentParser()
         let resource: ResourceModel = toolData.resource
         let toolLanguageTranslations: [ToolTranslationData] = toolData.languageTranslations
         
@@ -155,17 +157,51 @@ extension ToolNavigationFlow {
             return
         }
         
+        // primaryLanguageManifest
+        let primaryManifest: Manifest?
+        
+        switch mobileContentParser.parse(translationManifestData: primaryLanguageTranslation.translationManifestData) {
+        
+        case .success(let manifest):
+            primaryManifest = manifest
+        case .failure(let error):
+            primaryManifest = nil
+        }
+        
+        guard let primaryLanguageManifest = primaryManifest else {
+            
+            let viewModel = AlertMessageViewModel(
+                title: "Internal Error",
+                message: "Unable to fetch manifest for tool.",
+                cancelTitle: nil,
+                acceptTitle: "OK",
+                acceptHandler: nil
+            )
+            
+            presentAlertMessage(viewModel: viewModel)
+            
+            return
+        }
+        
+        // parallelLanguageManifest
         let parallelLanguageTranslation: ToolTranslationData?
+        let parallelLanguageManifest: Manifest?
         
         if toolLanguageTranslations.count > 1 {
-            
-            parallelLanguageTranslation = toolLanguageTranslations[1]
+            let parallelLanguageTranslationData: ToolTranslationData = toolLanguageTranslations[1]
+            parallelLanguageTranslation = parallelLanguageTranslationData
+            switch mobileContentParser.parse(translationManifestData: parallelLanguageTranslationData.translationManifestData) {
+            case .success(let manifest):
+                parallelLanguageManifest = manifest
+            case .failure(let error):
+                parallelLanguageManifest = nil
+            }
         }
         else {
-            
             parallelLanguageTranslation = nil
+            parallelLanguageManifest = nil
         }
-                
+        
         let resourceType: ResourceType = resource.resourceTypeEnum
         
         switch resourceType {
@@ -188,7 +224,7 @@ extension ToolNavigationFlow {
                 sharedNavigationController: navigationController,
                 resource: resource,
                 primaryLanguage: primaryLanguageTranslation.language,
-                primaryTranslationManifest: primaryLanguageTranslation.translationManifestData,
+                primaryLanguageManifest: primaryLanguageManifest,
                 trainingTipsEnabled: trainingTipsEnabled,
                 page: page
             )
@@ -201,9 +237,9 @@ extension ToolNavigationFlow {
                 sharedNavigationController: navigationController,
                 resource: resource,
                 primaryLanguage: primaryLanguageTranslation.language,
-                primaryTranslationManifest: primaryLanguageTranslation.translationManifestData,
+                primaryLanguageManifest: primaryLanguageManifest,
                 parallelLanguage: parallelLanguageTranslation?.language,
-                parallelTranslationManifest: parallelLanguageTranslation?.translationManifestData,
+                parallelLanguageManifest: parallelLanguageManifest,
                 liveShareStream: liveShareStream,
                 trainingTipsEnabled: trainingTipsEnabled,
                 page: page
@@ -217,9 +253,9 @@ extension ToolNavigationFlow {
                 sharedNavigationController: navigationController,
                 resource: resource,
                 primaryLanguage: primaryLanguageTranslation.language,
-                primaryTranslationManifest: primaryLanguageTranslation.translationManifestData,
+                primaryLanguageManifest: primaryLanguageManifest,
                 parallelLanguage: parallelLanguageTranslation?.language,
-                parallelTranslationManifest: parallelLanguageTranslation?.translationManifestData
+                parallelLanguageManifest: parallelLanguageManifest
             )
             
         case .unknown:
@@ -261,6 +297,11 @@ extension ToolNavigationFlow {
             downloadToolError: downloadToolError,
             localizationServices: appDiContainer.localizationServices
         )
+        
+        presentAlertMessage(viewModel: viewModel)
+    }
+    
+    private func presentAlertMessage(viewModel: AlertMessageViewModelType) {
         
         let view = AlertMessageView(viewModel: viewModel)
         

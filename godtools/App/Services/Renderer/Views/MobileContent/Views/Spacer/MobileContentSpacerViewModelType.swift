@@ -8,8 +8,8 @@
 
 import Foundation
 
+
 protocol MobileContentSpacerViewModelType {
     
-    var mode: MobileContentSpacerMode { get }
-    var height: CGFloat { get }
+    var height: MobileContentSpacerHeight { get }
 }

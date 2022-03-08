@@ -7,11 +7,12 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class MobileContentLinkViewModel: MobileContentLinkViewModelType {
     
-    private let linkModel: ContentLinkModelType
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let linkModel: Link
+    private let renderedPageContext: MobileContentRenderedPageContext
     private let mobileContentAnalytics: MobileContentAnalytics
     private let fontService: FontService
     private let fontSize: CGFloat = 18
@@ -19,13 +20,13 @@ class MobileContentLinkViewModel: MobileContentLinkViewModelType {
     
     let titleColor: UIColor
     
-    required init(linkModel: ContentLinkModelType, rendererPageModel: MobileContentRendererPageModel, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
+    required init(linkModel: Link, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
         
         self.linkModel = linkModel
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
-        self.titleColor = linkModel.getTextColor()?.uiColor ?? rendererPageModel.pageColors.primaryColor.uiColor
+        self.titleColor = linkModel.text?.textColor ?? linkModel.textColor
     }
     
     var backgroundColor: UIColor {
@@ -37,18 +38,19 @@ class MobileContentLinkViewModel: MobileContentLinkViewModelType {
     }
     
     var title: String? {
-        return linkModel.text
+        return linkModel.text?.text
     }
     
-    var linkEvents: [MultiplatformEventId] {
+    var linkEvents: [EventId] {
         return linkModel.events
     }
     
-    var rendererState: MobileContentMultiplatformState {
-        return rendererPageModel.rendererState
+    var rendererState: State {
+        return renderedPageContext.rendererState
     }
     
     func linkTapped() {
-        mobileContentAnalytics.trackEvents(events: linkModel.getAnalyticsEvents(), rendererPageModel: rendererPageModel)
+                        
+        mobileContentAnalytics.trackEvents(events: linkModel.getAnalyticsEvents(type: .clicked), renderedPageContext: renderedPageContext)
     }
 }

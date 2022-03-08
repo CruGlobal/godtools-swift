@@ -7,45 +7,36 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class MobileContentTextViewModel: MobileContentTextViewModelType {
     
     private static let numberFormatter: NumberFormatter = NumberFormatter()
     
-    private let textModel: ContentTextModelType
-    private let rendererPageModel: MobileContentRendererPageModel
-    private let containerModel: MobileContentRenderableModelContainer?
+    private let textModel: Text
+    private let renderedPageContext: MobileContentRenderedPageContext
     private let fontService: FontService
     private let fontSize: CGFloat = 18
     private let defaultFontWeight: UIFont.Weight = .regular
         
     let textColor: UIColor
     
-    required init(textModel: ContentTextModelType, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?, fontService: FontService) {
+    required init(textModel: Text, renderedPageContext: MobileContentRenderedPageContext, fontService: FontService) {
         
         self.textModel = textModel
-        self.rendererPageModel = rendererPageModel
-        self.containerModel = containerModel
+        self.renderedPageContext = renderedPageContext
         self.fontService = fontService
         
-        let containerTextColor: UIColor?
-        if containerModel is CardModelType {
-            containerTextColor = rendererPageModel.pageColors.cardTextColor?.uiColor
-        }
-        else {
-            containerTextColor = containerModel?.textColor?.uiColor
-        }
-        
-        self.textColor = textModel.getTextColor()?.uiColor ?? containerTextColor ?? rendererPageModel.pageColors.textColor.uiColor
+        self.textColor = textModel.textColor
     }
     
     var startImage: UIImage? {
         
-        guard let resource = textModel.startImage, !resource.isEmpty else {
+        guard let resource = textModel.startImage else {
             return nil
         }
         
-        guard let resourceImage = rendererPageModel.resourcesCache.getImageFromManifestResources(fileName: resource) else {
+        guard let resourceImage = renderedPageContext.resourcesCache.getImageFromManifestResources(resource: resource) else {
             return nil
         }
         
@@ -58,10 +49,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     }
     
     var hidesStartImage: Bool {
-        guard let resource = textModel.startImage else {
-            return true
-        }
-        return resource.isEmpty
+        return textModel.startImage == nil
     }
     
     var font: UIFont {
@@ -77,38 +65,8 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     }
     
     var textAlignment: NSTextAlignment {
-        
-        let textModelAlignment = textModel.textAlignment
-        let containerModelAlignment = containerModel?.textAlignment
-        
-        var modelTextAlignment = textModelAlignment ?? containerModelAlignment
-        
-        if languageTextAlignment == .right {
-            
-            if modelTextAlignment == .left {
                 
-                modelTextAlignment = .right
-            } else if modelTextAlignment == .right {
-                
-                modelTextAlignment = .left
-            }
-        }
-        
-        if let textAlignment = modelTextAlignment {
-            
-            switch textAlignment {
-            case .left:
-                return .left
-            
-            case .center:
-                return .center
-            
-            case .right:
-                return .right
-            }
-        }
-        
-        return languageTextAlignment
+        return mapTextAlignToTextAlignment(textAlign: getLanguageTextAlign())
     }
     
     var minimumLines: CGFloat {
@@ -117,11 +75,11 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     
     var endImage: UIImage? {
         
-        guard let resource = textModel.endImage, !resource.isEmpty else {
+        guard let resource = textModel.endImage else {
             return nil
         }
         
-        guard let resourceImage = rendererPageModel.resourcesCache.getImageFromManifestResources(fileName: resource) else {
+        guard let resourceImage = renderedPageContext.resourcesCache.getImageFromManifestResources(resource: resource) else {
             return nil
         }
         
@@ -134,17 +92,47 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     }
     
     var hidesEndImage: Bool {
-        guard let resource = textModel.endImage else {
-            return true
+        return textModel.endImage == nil
+    }
+    
+    private func getTextStylesArray() -> [Text.Style] {
+        return Array(textModel.textStyles)
+    }
+    
+    private func getLanguageTextAlign() -> Text.Align {
+        
+        if language.languageDirection == .rightToLeft {
+            
+            if textModel.textAlign == .start {
+                return .end
+            }
+            else if textModel.textAlign == .end {
+                return .start
+            }
         }
-        return resource.isEmpty
+        
+        return textModel.textAlign
+    }
+    
+    private func mapTextAlignToTextAlignment(textAlign: Text.Align) -> NSTextAlignment {
+        
+        switch textAlign {
+        case .start:
+            return .left
+        case .center:
+            return .center
+        case .end:
+            return .right
+        default:
+            return .left
+        }
     }
     
     private func getFontWeight() -> UIFont.Weight {
         
         let fontWeight: UIFont.Weight
         
-        let textStyles: [MobileContentTextStyle] = textModel.getTextStyles()
+        let textStyles: [Text.Style] = getTextStylesArray()
         
         // TODO: Need to add support for multiple textStyles. ~Levi
         if let textStyle = textStyles.first {
@@ -172,16 +160,8 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     
     private func getFontScale() -> CGFloat {
                 
-        let fontScale: CGFloat
-        
-        // TODO: Remove commented out code once XmlNodeRenderer is removed. ~Levi
-        //let manifestTextScale: Double = rendererPageModel.manifest.attributes.textScale.doubleValue
-        //let pageTextScale: Double = rendererPageModel.pageModel.textScale.doubleValue
-        //let textScale: Double = textModel.textScale.doubleValue
-        //fontScale = CGFloat(manifestTextScale * pageTextScale * textScale)
-        
-        fontScale = CGFloat(textModel.textScale.doubleValue)
-        
+        let fontScale = CGFloat(textModel.textScale)
+                        
         return fontScale
     }
     
@@ -199,14 +179,10 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
 extension MobileContentTextViewModel: MobileContentViewModelType {
     
     var language: LanguageModel {
-        return rendererPageModel.language
+        return renderedPageContext.language
     }
     
     var analyticsEvents: [MobileContentAnalyticsEvent] {
         return []
-    }
-    
-    var defaultAnalyticsEventsTrigger: MobileContentAnalyticsEventTrigger {
-        return .visible
     }
 }

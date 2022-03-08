@@ -656,6 +656,7 @@ extension AppFlow {
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
             translationDownloader: appDiContainer.translationDownloader,
+            mobileContentParser: appDiContainer.getMobileContentParser(),
             analytics: appDiContainer.analytics
         )
         let view = ToolDetailView(viewModel: viewModel)

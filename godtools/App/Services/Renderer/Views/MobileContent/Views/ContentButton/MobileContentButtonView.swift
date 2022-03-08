@@ -118,7 +118,7 @@ class MobileContentButtonView: MobileContentView {
             buttonView.addSubview(buttonImageView)
             buttonImageView.translatesAutoresizingMaskIntoConstraints = false
             buttonImageView.constrainCenterVerticallyInView(view: self)
-            
+                        
             switch buttonIcon.gravity {
             
             case .start:
@@ -148,6 +148,20 @@ class MobileContentButtonView: MobileContentView {
                 )
                 
                 addConstraint(leading)
+            
+            default:
+                
+                let trailing: NSLayoutConstraint = NSLayoutConstraint(
+                    item: buttonImageView,
+                    attribute: .trailing,
+                    relatedBy: .equal,
+                    toItem: buttonTitle,
+                    attribute: .leading,
+                    multiplier: 1,
+                    constant: buttonImagePaddingToButtonTitle * -1
+                )
+                
+                addConstraint(trailing)
             }
             
             buttonImageView.addWidthConstraint(constant: CGFloat(buttonIcon.size))
@@ -190,6 +204,8 @@ class MobileContentButtonView: MobileContentView {
             super.sendButtonWithUrlEventToRootView(url: viewModel.buttonUrl)
        
         case .unknown:
+            break
+        default:
             break
         }
         

@@ -63,11 +63,7 @@ struct AnalyticsConstants {
         static let kgpEmailSignUp = "KGP Email Sign Up"
         static let fourLawsEmailSignUp = "FourLaws Email Sign Up"
         static let debugIsTrue = "true"
-        static let debugIsFalse = "false"
-    }
-    
-    struct ScreenNames {
-        
+        static let debugIsFalse = "false"      
     }
     
     struct ActionNames {
@@ -81,5 +77,8 @@ struct AnalyticsConstants {
         static let toolOpened = "Tool Open Button"
         static let tutorialHomeDismiss = "Tutorial Home Dismiss"
         static let tutorialVideo = "Tutorial Video"
+        static let onboardingQuickStartArticles = "onboarding_link_articles"
+        static let onboardingQuickStartLessons = "onboarding_link_lessons"
+        static let onboardingQuickStartTools = "onboarding_link_tools"
     }
 }

@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 protocol MobileContentPageViewDelegate: AnyObject {
     
-    func pageViewDidReceiveEvents(pageView: MobileContentPageView, eventIds: [MultiplatformEventId])
+    func pageViewDidReceiveEvents(pageView: MobileContentPageView, eventIds: [EventId])
 }
 
 class MobileContentPageView: MobileContentView {
@@ -87,7 +88,7 @@ class MobileContentPageView: MobileContentView {
         
     // MARK: - MobileContentView
     
-    override func didReceiveEvents(eventIds: [MultiplatformEventId]) {
+    override func didReceiveEvents(eventIds: [EventId]) {
         super.didReceiveEvents(eventIds: eventIds)
         
         delegate?.pageViewDidReceiveEvents(pageView: self, eventIds: eventIds)

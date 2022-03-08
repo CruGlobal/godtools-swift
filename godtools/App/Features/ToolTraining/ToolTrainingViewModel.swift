@@ -7,14 +7,14 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     
-    private let renderer: MobileContentRendererType
-    private let resource: ResourceModel
-    private let language: LanguageModel
+    private let pageRenderer: MobileContentPageRenderer
+    private let renderedPageContext: MobileContentRenderedPageContext
     private let trainingTipId: String
-    private let tipModel: TipModelType
+    private let tipModel: Tip
     private let analytics: AnalyticsContainer
     private let localizationServices: LocalizationServices
     private let viewedTrainingTips: ViewedTrainingTipsService
@@ -30,12 +30,11 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     let continueButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     let numberOfTipPages: ObservableValue<Int> = ObservableValue(value: 0)
     
-    required init(flowDelegate: FlowDelegate, renderer: MobileContentRendererType, trainingTipId: String, tipModel: TipModelType, analytics: AnalyticsContainer, localizationServices: LocalizationServices, viewedTrainingTips: ViewedTrainingTipsService) {
+    required init(flowDelegate: FlowDelegate, pageRenderer: MobileContentPageRenderer, renderedPageContext: MobileContentRenderedPageContext, trainingTipId: String, tipModel: Tip, analytics: AnalyticsContainer, localizationServices: LocalizationServices, viewedTrainingTips: ViewedTrainingTipsService) {
         
         self.flowDelegate = flowDelegate
-        self.renderer = renderer
-        self.resource = renderer.resource
-        self.language = renderer.language
+        self.renderedPageContext = renderedPageContext
+        self.pageRenderer = pageRenderer
         self.trainingTipId = trainingTipId
         self.tipModel = tipModel
         self.analytics = analytics
@@ -49,8 +48,16 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
             trainingTipViewed: viewedTrainingTips.containsViewedTrainingTip(viewedTrainingTip: ViewedTrainingTip(trainingTipId: trainingTipId, resourceId: resource.id, languageId: language.id))
         )
         
-        numberOfTipPages.accept(value: renderer.parser.pageModels.count)
+        numberOfTipPages.accept(value: tipModel.pages.count)
         setPage(page: 0, animated: false)
+    }
+
+    private var resource: ResourceModel {
+        return pageRenderer.resource
+    }
+    
+    private var language: LanguageModel {
+        return pageRenderer.language
     }
     
     private func getExitAnalyticsScreenName () -> String {
@@ -88,14 +95,13 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
         }
     }
     
-    private func reloadTitleAndTipIcon(tipModel: TipModelType, trainingTipViewed: Bool) {
+    private func reloadTitleAndTipIcon(tipModel: Tip, trainingTipViewed: Bool) {
         
-        let trainingTipType: MobileContentTrainingTipType = tipModel.tipType
         let tipBackgroundImageName: String = trainingTipViewed ? "training_tip_red_square_bg" : "training_tip_square_bg"
         let tipImageName: String
         let localizedTipTitle: String
         
-        switch trainingTipType {
+        switch tipModel.type {
         case .ask:
             tipImageName = trainingTipViewed ? "training_tip_ask_filled_red" : "training_tip_ask"
             localizedTipTitle = "training_tip_ask"
@@ -111,7 +117,7 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
         case .tip:
             tipImageName = trainingTipViewed ? "training_tip_tip_filled_red" : "training_tip_tip"
             localizedTipTitle = "training_tip_tip"
-        case .unknown:
+        default:
             tipImageName = ""
             localizedTipTitle = ""
         }
@@ -158,22 +164,16 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     }
     
     func tipPageWillAppear(page: Int, window: UIViewController, safeArea: UIEdgeInsets) -> MobileContentView? {
-                
-        let renderPageResult: Result<MobileContentView, Error> = renderer.renderPage(
-            page: page,
-            window: window,
-            safeArea: safeArea,
-            primaryRendererLanguage: renderer.language
-        )
-        
-        switch renderPageResult {
-        
-        case .success(let mobileContentView):
-            return mobileContentView
-            
-        case .failure(let error):
+              
+        guard page >= 0 && page < tipModel.pages.count else {
             return nil
         }
+        
+        return pageRenderer.recurseAndRender(
+            renderableModel: tipModel.pages[page],
+            renderableModelParent: nil,
+            renderedPageContext: renderedPageContext
+        )
     }
     
     func tipPageDidChange(page: Int) {

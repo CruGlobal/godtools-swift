@@ -7,52 +7,55 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class MobileContentAnalytics {
     
-    private let analyticsSystems: [String: MobileContentAnalyticsSystem]
+    private let analyticsSystems: [AnalyticsEvent.System: MobileContentAnalyticsSystem]
         
     required init(analytics: AnalyticsContainer) {
-           
-        let analyticsSystems = [
-            "appsflyer": analytics.appsFlyerAnalytics,
-            "firebase": analytics.firebaseAnalytics,
-            "snowplow": analytics.snowplowAnalytics
+        
+        let analyticsSystems: [AnalyticsEvent.System: MobileContentAnalyticsSystem] = [
+            .appsflyer: analytics.appsFlyerAnalytics,
+            .firebase: analytics.firebaseAnalytics,
+            .snowplow: analytics.snowplowAnalytics
         ]
  
         self.analyticsSystems = analyticsSystems
     }
         
-    func trackEvents(events: [AnalyticsEventModelType], rendererPageModel: MobileContentRendererPageModel) {
+    func trackEvents(events: [AnalyticsEvent], renderedPageContext: MobileContentRenderedPageContext) {
         
         for event in events {
-            trackEvent(event: event, rendererPageModel: rendererPageModel)
+            trackEvent(event: event, renderedPageContext: renderedPageContext)
         }
     }
     
-    private func trackEvent(event: AnalyticsEventModelType, rendererPageModel: MobileContentRendererPageModel) {
+    private func trackEvent(event: AnalyticsEvent, renderedPageContext: MobileContentRenderedPageContext) {
         
         guard let action = event.action, !action.isEmpty else {
             return
         }
                 
-        let data: [String: String] = event.getAttributes()
+        let data: [String: String] = event.attributes
+        let systems: [AnalyticsEvent.System] = Array(event.systems)
         
-        for system in event.systems {
-             
-            if let analyticsSystem = analyticsSystems[system.lowercased()] {
-                
-                let resourceAbbreviation = rendererPageModel.resource.abbreviation
-                let pageNumber = rendererPageModel.page
-                let screenName = resourceAbbreviation + "-" + String(pageNumber)
-                
-                analyticsSystem.trackMobileContentAction(
-                    screenName: screenName,
-                    siteSection: resourceAbbreviation,
-                    action: action,
-                    data: data
-                )
+        for system in systems {
+            
+            guard let analyticsSystem = analyticsSystems[system] else {
+                continue
             }
+             
+            let resourceAbbreviation = renderedPageContext.resource.abbreviation
+            let pageNumber = renderedPageContext.page
+            let screenName = resourceAbbreviation + "-" + String(pageNumber)
+            
+            analyticsSystem.trackMobileContentAction(
+                screenName: screenName,
+                siteSection: resourceAbbreviation,
+                action: action,
+                data: data
+            )
         }
     }
 }

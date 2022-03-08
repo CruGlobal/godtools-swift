@@ -263,6 +263,10 @@ class AppDiContainer {
         return MobileContentEventAnalyticsTracking(firebaseAnalytics: analytics.firebaseAnalytics)
     }
     
+    func getMobileContentParser() -> MobileContentParser {
+        return MobileContentParser(translationsFileCache: translationsFileCache)
+    }
+    
     func getOnboardingTutorialAvailability() -> OnboardingTutorialAvailabilityType {
         return OnboardingTutorialAvailability(
             getTutorialIsAvailableUseCase: getTutorialIsAvailableUseCase(),

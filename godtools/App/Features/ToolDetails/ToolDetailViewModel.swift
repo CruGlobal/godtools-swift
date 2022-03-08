@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GodToolsToolParser
 import RealmSwift
 
 class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
@@ -17,6 +18,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
     private let translationDownloader: TranslationDownloader
+    private let mobileContentParser: MobileContentParser
     private let analytics: AnalyticsContainer
     
     private weak var flowDelegate: FlowDelegate?
@@ -41,7 +43,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     let aboutDetails: ObservableValue<String> = ObservableValue(value: "")
     let languageDetails: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, translationDownloader: TranslationDownloader, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, translationDownloader: TranslationDownloader, mobileContentParser: MobileContentParser, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -50,6 +52,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
         self.translationDownloader = translationDownloader
+        self.mobileContentParser = mobileContentParser
         self.analytics = analytics
                 
         super.init()
@@ -209,15 +212,20 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     private func handleTranslationManifestDownloaded(result: Result<TranslationManifestData, TranslationDownloaderError>) {
         
         let hidesLearnToShareButton: Bool
-        
+                
         switch result {
         
         case .success(let translationManifest):
+                        
+            switch mobileContentParser.parse(translationManifestData: translationManifest) {
             
-            let manifest: MobileContentXmlManifest = MobileContentXmlManifest(translationManifestData: translationManifest)
+            case .success(let manifest):
+                hidesLearnToShareButton = manifest.tips.isEmpty
             
-            hidesLearnToShareButton = manifest.tips.isEmpty
-            
+            case .failure(let error):
+                hidesLearnToShareButton = true
+            }
+        
         case .failure(let error):
             hidesLearnToShareButton = true
         }

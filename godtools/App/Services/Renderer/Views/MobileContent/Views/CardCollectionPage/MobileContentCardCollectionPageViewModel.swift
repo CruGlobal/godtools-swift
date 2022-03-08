@@ -11,27 +11,27 @@ import GodToolsToolParser
 
 class MobileContentCardCollectionPageViewModel: MobileContentPageViewModel, MobileContentCardCollectionPageViewModelType {
     
-    private let cardCollectionPage: MultiplatformCardCollectionPage
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let cardCollectionPage: CardCollectionPage
+    private let renderedPageContext: MobileContentRenderedPageContext
     private let analytics: AnalyticsContainer
         
-    required init(flowDelegate: FlowDelegate, cardCollectionPage: MultiplatformCardCollectionPage, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, cardCollectionPage: CardCollectionPage, renderedPageContext: MobileContentRenderedPageContext, deepLinkService: DeepLinkingServiceType, analytics: AnalyticsContainer) {
         
         self.cardCollectionPage = cardCollectionPage
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
         self.analytics = analytics
         
-        super.init(flowDelegate: flowDelegate, pageModel: cardCollectionPage, rendererPageModel: rendererPageModel, deepLinkService: deepLinkService, hidesBackgroundImage: false)
+        super.init(flowDelegate: flowDelegate, pageModel: cardCollectionPage, renderedPageContext: renderedPageContext, deepLinkService: deepLinkService, hidesBackgroundImage: false)
     }
     
-    required init(flowDelegate: FlowDelegate, pageModel: PageModelType, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, hidesBackgroundImage: Bool) {
-        fatalError("init(flowDelegate:pageModel:rendererPageModel:deepLinkService:hidesBackgroundImage:) has not been implemented")
+    required init(flowDelegate: FlowDelegate, pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, deepLinkService: DeepLinkingServiceType, hidesBackgroundImage: Bool) {
+        fatalError("init(flowDelegate:pageModel:renderedPageContext:deepLinkService:hidesBackgroundImage:) has not been implemented")
     }
     
     private func getPageAnalyticsScreenName() -> String {
-
-        let resource: ResourceModel = rendererPageModel.resource
-        let pageId: String = rendererPageModel.pageModel.id
+        
+        let resource: ResourceModel = renderedPageContext.resource
+        let pageId: String = renderedPageContext.pageModel.id
         let separator: String = ":"
         
         let screenName: String = resource.abbreviation + separator + pageId
@@ -41,8 +41,8 @@ class MobileContentCardCollectionPageViewModel: MobileContentPageViewModel, Mobi
     
     private func getCardAnalyticsScreenName(card: Int) -> String {
         
-        let resource: ResourceModel = rendererPageModel.resource
-        let pageId: String = rendererPageModel.pageModel.id
+        let resource: ResourceModel = renderedPageContext.resource
+        let pageId: String = renderedPageContext.pageModel.id
         let cardId: String = getCardId(card: card)
         let separator: String = ":"
         

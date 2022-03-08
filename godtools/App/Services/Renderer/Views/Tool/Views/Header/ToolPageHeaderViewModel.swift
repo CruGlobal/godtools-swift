@@ -7,24 +7,75 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
     
-    private let headerModel: HeaderModelType
-    private let rendererPageModel: MobileContentRendererPageModel
-        
-    required init(headerModel: HeaderModelType, rendererPageModel: MobileContentRendererPageModel, translationsFileCache: TranslationsFileCache, viewedTrainingTipsService: ViewedTrainingTipsService) {
+    private let headerModel: Header
+    private let renderedPageContext: MobileContentRenderedPageContext
+    
+    private var mobileContentPageViewFactory: MobileContentPageViewFactory?
+            
+    required init(headerModel: Header, renderedPageContext: MobileContentRenderedPageContext, translationsFileCache: TranslationsFileCache, viewedTrainingTipsService: ViewedTrainingTipsService) {
         
         self.headerModel = headerModel
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
+        
+        for factory in renderedPageContext.pageViewFactories.factories {
+            if let mobileContentPageViewFactory = factory as? MobileContentPageViewFactory {
+                self.mobileContentPageViewFactory = mobileContentPageViewFactory
+            }
+        }
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return rendererPageModel.language.languageDirection.semanticContentAttribute
+        return renderedPageContext.language.languageDirection.semanticContentAttribute
     }
     
     var backgroundColor: UIColor {
-        return rendererPageModel.pageColors.primaryColor.uiColor
+        return headerModel.backgroundColor
+    }
+    
+    func getNumber(numberLabel: UILabel) -> MobileContentTextView? {
+        
+        guard let numberTextModel = headerModel.number else {
+            return nil
+        }
+        
+        let numberLabelAttributes = MobileContentTextLabelAttributes(
+            fontSize: 54,
+            fontWeight: .regular,
+            lineSpacing: nil,
+            numberOfLines: 1
+        )
+        
+        return mobileContentPageViewFactory?.getContentText(
+            textModel: numberTextModel,
+            renderedPageContext: renderedPageContext,
+            viewType: .labelOnly(label: numberLabel, shouldAddLabelAsSubview: false),
+            additionalLabelAttributes: numberLabelAttributes
+        )
+    }
+    
+    func getTitle(titleLabel: UILabel) -> MobileContentTextView? {
+        
+        guard let titleTextModel = headerModel.title else {
+            return nil
+        }
+        
+        let titleLabelAttributes = MobileContentTextLabelAttributes(
+            fontSize: 19,
+            fontWeight: .regular,
+            lineSpacing: 2,
+            numberOfLines: 0
+        )
+                
+        return mobileContentPageViewFactory?.getContentText(
+            textModel: titleTextModel,
+            renderedPageContext: renderedPageContext,
+            viewType: .labelOnly(label: titleLabel, shouldAddLabelAsSubview: false),
+            additionalLabelAttributes: titleLabelAttributes
+        )
     }
 }
 
@@ -33,15 +84,11 @@ class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
 extension ToolPageHeaderViewModel: MobileContentViewModelType {
     
     var language: LanguageModel {
-        return rendererPageModel.language
+        return renderedPageContext.language
     }
     
     var analyticsEvents: [MobileContentAnalyticsEvent] {
         return []
-    }
-    
-    var defaultAnalyticsEventsTrigger: MobileContentAnalyticsEventTrigger {
-        return .visible
     }
 }
 

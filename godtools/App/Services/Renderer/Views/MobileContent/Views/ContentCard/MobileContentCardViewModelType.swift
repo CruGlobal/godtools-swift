@@ -7,9 +7,10 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 protocol MobileContentCardViewModelType {
     
-    var events: [MultiplatformEventId] { get }
-    var rendererState: MobileContentMultiplatformState { get }
+    var events: [EventId] { get }
+    var rendererState: State { get }
 }
