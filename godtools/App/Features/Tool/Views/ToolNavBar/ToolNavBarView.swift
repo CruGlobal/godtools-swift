@@ -47,7 +47,6 @@ class ToolNavBarView: NSObject {
         self.delegate = delegate
         
         setupNavigationBar(parentViewController: parentViewController, viewModel: viewModel)
-        setupBinding(viewModel: viewModel)
     }
     
     func reloadAppearance() {
@@ -67,6 +66,8 @@ class ToolNavBarView: NSObject {
              
         parentViewController.removeAllBarButtonItems()
         chooseLanguageControl.removeAllSegments()
+        
+        remoteShareActiveNavItem = nil
         
         parentViewController.title = viewModel.navTitle
         
@@ -131,17 +132,10 @@ class ToolNavBarView: NSObject {
                 for: .valueChanged
             )
         }
-    }
-    
-    private func setupBinding(viewModel: ToolNavBarViewModelType) {
         
-        viewModel.remoteShareIsActive.addObserver(self) { [weak self] (isActive: Bool) in
-            self?.setRemoteShareActiveNavItem(hidden: !isActive)
-        }
+        setRemoteShareActiveNavItem(hidden: !viewModel.remoteShareIsActive.value)
         
-        viewModel.selectedLanguage.addObserver(self) { [weak self] (index: Int) in
-            self?.chooseLanguageControl.selectedSegmentIndex = index
-        }
+        chooseLanguageControl.selectedSegmentIndex = viewModel.selectedLanguage.value
     }
     
     @objc private func backButtonTapped() {

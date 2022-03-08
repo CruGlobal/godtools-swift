@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class MobileContentView: UIView {
         
@@ -129,14 +130,14 @@ class MobileContentView: UIView {
     
     // MARK: - Events
     
-    func sendEventsToAllViews(eventIds: [MultiplatformEventId], rendererState: MobileContentMultiplatformState) {
+    func sendEventsToAllViews(eventIds: [EventId], rendererState: State) {
         
-        let eventIds: [MultiplatformEventId] = eventIds.flatMap({$0.resolve(rendererState: rendererState)})
+        let eventIds: [EventId] = eventIds.flatMap({$0.resolve(state: rendererState)})
         
         recurseChildrenAndSendEvents(view: getRootView(), eventIds: eventIds)
     }
     
-    private func recurseChildrenAndSendEvents(view: MobileContentView, eventIds: [MultiplatformEventId]) {
+    private func recurseChildrenAndSendEvents(view: MobileContentView, eventIds: [EventId]) {
         
         for childView in view.children {
             recurseChildrenAndSendEvents(view: childView, eventIds: eventIds)
@@ -145,7 +146,7 @@ class MobileContentView: UIView {
         view.didReceiveEvents(eventIds: eventIds)
     }
     
-    func didReceiveEvents(eventIds: [MultiplatformEventId]) {
+    func didReceiveEvents(eventIds: [EventId]) {
         
     }
     

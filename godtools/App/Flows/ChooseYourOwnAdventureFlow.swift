@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class ChooseYourOwnAdventureFlow: Flow {
     
@@ -17,14 +18,25 @@ class ChooseYourOwnAdventureFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?) {
+    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, resource: ResourceModel, primaryLanguage: LanguageModel, primaryLanguageManifest: Manifest, parallelLanguage: LanguageModel?, parallelLanguageManifest: Manifest?) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
         self.deepLinkingService = appDiContainer.getDeepLinkingService()
+            
+        var languageTranslationManifests: [MobileContentRendererLanguageTranslationManifest] = Array()
         
-        let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
+        let primaryLanguageTranslationManifest = MobileContentRendererLanguageTranslationManifest(
+            manifest: primaryLanguageManifest,
+            language: primaryLanguage
+        )
+        
+        languageTranslationManifests.append(primaryLanguageTranslationManifest)
+        
+        if let manifest = parallelLanguageManifest, let language = parallelLanguage {
+            languageTranslationManifests.append(MobileContentRendererLanguageTranslationManifest(manifest: manifest, language: language))
+        }
         
         let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
             type: .chooseYourOwnAdventure,
@@ -34,33 +46,18 @@ class ChooseYourOwnAdventureFlow: Flow {
             deepLinkingService: deepLinkingService
         )
         
-        let primaryRenderer = MobileContentMultiplatformRenderer(
+        let renderer = MobileContentRenderer(
             resource: resource,
-            language: primaryLanguage,
-            multiplatformParser: MobileContentMultiplatformParser(translationManifestData: primaryTranslationManifest, translationsFileCache: translationsFileCache),
-            pageViewFactories: pageViewFactories
+            primaryLanguage: primaryLanguage,
+            languageTranslationManifests: languageTranslationManifests,
+            pageViewFactories: pageViewFactories,
+            translationsFileCache: appDiContainer.translationsFileCache
         )
-        
-        var renderers: [MobileContentRendererType] = Array()
-        
-        renderers.append(primaryRenderer)
-        
-        if let parallelLanguage = parallelLanguage, let parallelTranslationManifest = parallelTranslationManifest, parallelLanguage.code != primaryLanguage.code {
-            
-            let parallelRenderer = MobileContentMultiplatformRenderer(
-                resource: resource,
-                language: parallelLanguage,
-                multiplatformParser: MobileContentMultiplatformParser(translationManifestData: parallelTranslationManifest, translationsFileCache: translationsFileCache),
-                pageViewFactories: pageViewFactories
-            )
-                        
-            renderers.append(parallelRenderer)
-        }
         
         let viewModel = ChooseYourOwnAdventureViewModel(
             flowDelegate: self,
-            renderers: renderers,
-            primaryLanguage: primaryLanguage,
+            primaryManifest: primaryLanguageManifest,
+            renderer: renderer,
             page: nil,
             mobileContentEventAnalytics: appDiContainer.getMobileContentEventAnalyticsTracking(),
             localizationServices: appDiContainer.localizationServices,

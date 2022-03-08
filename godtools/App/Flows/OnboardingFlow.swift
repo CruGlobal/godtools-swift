@@ -73,7 +73,7 @@ class OnboardingFlow: Flow {
         
         if appDiContainer.deviceLanguage.isEnglish {
             
-            let viewModel = OnboardingQuickStartViewModel(flowDelegate: self, localizationServices: appDiContainer.localizationServices)
+            let viewModel = OnboardingQuickStartViewModel(flowDelegate: self, localizationServices: appDiContainer.localizationServices, trackActionAnalytics: appDiContainer.analytics.trackActionAnalytics)
             let view = OnboardingQuickStartView(viewModel: viewModel)
             
             navigationController.setViewControllers([view], animated: true)

@@ -98,7 +98,7 @@ class ToolPageCardView: MobileContentView {
         
         super.layoutSubviews()
         
-        bottomGradientLayer.frame = bottomGradientView.bounds
+        relayoutBottomGradient()
     }
     
     private func initializeNib() {
@@ -157,11 +157,14 @@ class ToolPageCardView: MobileContentView {
     }
     
     private func setupBinding() {
-                
-        let backgroundImageParent: UIView = cardBackgroundImageContainer
-        self.backgroundImageParent = backgroundImageParent
-        backgroundImageView.configure(viewModel: viewModel.backgroundImageWillAppear(), parentView: backgroundImageParent)
-        backgroundImageView.addParentBoundsChangeObserver(parentView: backgroundImageParent)
+        
+        if let backgroundImageViewModel = viewModel.backgroundImageWillAppear() {
+            
+            let backgroundImageParent: UIView = cardBackgroundImageContainer
+            self.backgroundImageParent = backgroundImageParent
+            backgroundImageView.configure(viewModel: backgroundImageViewModel, parentView: backgroundImageParent)
+            backgroundImageView.addParentBoundsChangeObserver(parentView: backgroundImageParent)
+        }
         
         titleLabel.text = viewModel.title
         titleLabel.font = viewModel.titleFont
@@ -182,6 +185,10 @@ class ToolPageCardView: MobileContentView {
         nextButton.setTitle(viewModel.nextButtonTitle, for: .normal)
         nextButton.setTitleColor(viewModel.nextButtonTitleColor, for: .normal)
         nextButton.isHidden = viewModel.hidesNextButton
+    }
+    
+    private func relayoutBottomGradient() {
+        bottomGradientLayer.frame = bottomGradientView.bounds
     }
     
     func setDelegate(delegate: ToolPageCardViewDelegate?) {
@@ -209,6 +216,12 @@ class ToolPageCardView: MobileContentView {
             self.formView = formView
             enableKeyboardObserving()
         }
+    }
+    
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        
+        relayoutBottomGradient()
     }
     
     override func viewDidDisappear() {

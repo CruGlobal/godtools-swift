@@ -7,29 +7,31 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class MobileContentAnalyticsEvent: NSObject {
     
+    private let renderedPageContext: MobileContentRenderedPageContext
+    
     private var delayTimer: Timer?
     private var triggered: Bool = false
-    private let rendererPageModel: MobileContentRendererPageModel
-    
-    let analyticsEvent: AnalyticsEventModelType
     
     private weak var mobileContentAnalytics: MobileContentAnalytics?
+    
+    let analyticsEvent: AnalyticsEvent
         
-    required init(analyticsEvent: AnalyticsEventModelType, mobileContentAnalytics: MobileContentAnalytics, rendererPageModel: MobileContentRendererPageModel) {
+    required init(analyticsEvent: AnalyticsEvent, mobileContentAnalytics: MobileContentAnalytics, renderedPageContext: MobileContentRenderedPageContext) {
         
         self.analyticsEvent = analyticsEvent
         self.mobileContentAnalytics = mobileContentAnalytics
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
         
         super.init()
     }
     
-    static func initAnalyticsEvents(analyticsEvents: [AnalyticsEventModelType], mobileContentAnalytics: MobileContentAnalytics, rendererPageModel: MobileContentRendererPageModel) -> [MobileContentAnalyticsEvent] {
+    static func initAnalyticsEvents(analyticsEvents: [AnalyticsEvent], mobileContentAnalytics: MobileContentAnalytics, renderedPageContext: MobileContentRenderedPageContext) -> [MobileContentAnalyticsEvent] {
         
-        let events: [MobileContentAnalyticsEvent] = analyticsEvents.map({MobileContentAnalyticsEvent(analyticsEvent: $0, mobileContentAnalytics: mobileContentAnalytics, rendererPageModel: rendererPageModel)})
+        let events: [MobileContentAnalyticsEvent] = analyticsEvents.map({MobileContentAnalyticsEvent(analyticsEvent: $0, mobileContentAnalytics: mobileContentAnalytics, renderedPageContext: renderedPageContext)})
         
         return events
     }
@@ -58,7 +60,7 @@ class MobileContentAnalyticsEvent: NSObject {
         
         stopDelayTimer()
         
-        mobileContentAnalytics?.trackEvents(events: [analyticsEvent], rendererPageModel: rendererPageModel)
+        mobileContentAnalytics?.trackEvents(events: [analyticsEvent], renderedPageContext: renderedPageContext)
         
         endTrigger()
     }
@@ -78,15 +80,13 @@ class MobileContentAnalyticsEvent: NSObject {
         
         triggered = true
         
-        let delaySeconds: Double
-        if let delayString = analyticsEvent.delay, !delayString.isEmpty {
-            delaySeconds = Double(delayString) ?? 0
+        let delaySeconds: Double = Double(analyticsEvent.delay)
+        
+        if delaySeconds == 0 {
+            
+            trackEvent()
         }
         else {
-            delaySeconds = 0
-        }
-        
-        guard delaySeconds == 0 else {
             
             let timer = Timer.scheduledTimer(
                 timeInterval: delaySeconds,
@@ -97,11 +97,7 @@ class MobileContentAnalyticsEvent: NSObject {
             )
             
             self.delayTimer = timer
-            
-            return
         }
-                
-        trackEvent()
     }
     
     @objc func handleDelayTimer() {

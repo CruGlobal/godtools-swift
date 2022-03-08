@@ -7,23 +7,27 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class MobileContentSpacerViewModel: MobileContentSpacerViewModelType {
     
-    private let spacerModel: ContentSpacerModelType
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let spacerModel: Spacer
+    private let renderedPageContext: MobileContentRenderedPageContext
     
-    required init(spacerModel: ContentSpacerModelType, rendererPageModel: MobileContentRendererPageModel) {
+    let height: MobileContentSpacerHeight
+    
+    required init(spacerModel: Spacer, renderedPageContext: MobileContentRenderedPageContext) {
         
         self.spacerModel = spacerModel
-        self.rendererPageModel = rendererPageModel
-    }
-    
-    var mode: MobileContentSpacerMode {
-        return spacerModel.mode
-    }
-    
-    var height: CGFloat {
-        return CGFloat(spacerModel.height)
+        self.renderedPageContext = renderedPageContext
+        
+        switch spacerModel.mode {
+        case .auto_:
+            height = .auto
+        case .fixed:
+            height = .fixed(height: CGFloat(spacerModel.height))
+        default:
+            height = .auto
+        }
     }
 }

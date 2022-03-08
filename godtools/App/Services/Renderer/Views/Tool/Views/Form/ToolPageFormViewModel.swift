@@ -7,36 +7,37 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class ToolPageFormViewModel: MobileContentFormViewModel {
     
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let renderedPageContext: MobileContentRenderedPageContext
     private let followUpService: FollowUpsService
     private let localizationServices: LocalizationServices
     
-    let didSendFollowUpSignal: SignalValue<[MultiplatformEventId]> = SignalValue()
+    let didSendFollowUpSignal: SignalValue<[EventId]> = SignalValue()
     let error: ObservableValue<MobileContentErrorViewModel?> = ObservableValue(value: nil)
     
-    required init(formModel: ContentFormModelType, rendererPageModel: MobileContentRendererPageModel, followUpService: FollowUpsService, localizationServices: LocalizationServices) {
+    required init(formModel: Form, renderedPageContext: MobileContentRenderedPageContext, followUpService: FollowUpsService, localizationServices: LocalizationServices) {
         
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
         self.followUpService = followUpService
         self.localizationServices = localizationServices
         
-        super.init(formModel: formModel, rendererPageModel: rendererPageModel)
+        super.init(formModel: formModel, renderedPageContext: renderedPageContext)
     }
     
-    required init(formModel: ContentFormModelType, rendererPageModel: MobileContentRendererPageModel) {
-        fatalError("init(formModel:rendererPageModel:) has not been implemented")
+    required init(formModel: Form, renderedPageContext: MobileContentRenderedPageContext) {
+        fatalError("init(formModel:renderedPageContext:) has not been implemented")
     }
     
-    var rendererState: MobileContentMultiplatformState {
-        return rendererPageModel.rendererState
+    var rendererState: State {
+        return renderedPageContext.rendererState
     }
     
     // MARK: - Follow Up
     
-    func sendFollowUp(inputModels: [MobileContentFormInputModel], eventIds: [MultiplatformEventId]) {
+    func sendFollowUp(inputModels: [MobileContentFormInputModel], eventIds: [EventId]) {
            
         let destinationIdField: String = "destination_id"
         let nameField: String = "name"
@@ -74,7 +75,7 @@ class ToolPageFormViewModel: MobileContentFormViewModel {
         }
         
         
-        let languageId: Int = Int(rendererPageModel.language.id) ?? 0
+        let languageId: Int = Int(renderedPageContext.language.id) ?? 0
         
         let followUpModel = FollowUpModel(
             name: name,

@@ -7,20 +7,20 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     
     private let maxAllowedIconSize = 40
     
-    private let buttonModel: ContentButtonModelType
-    private let rendererPageModel: MobileContentRendererPageModel
-    private let containerModel: MobileContentRenderableModelContainer?
+    private let buttonModel: Button
+    private let renderedPageContext: MobileContentRenderedPageContext
     private let mobileContentAnalytics: MobileContentAnalytics
     private let fontService: FontService
     private let fontSize: CGFloat = 18
     private let fontWeight: UIFont.Weight = .regular
     
-    private var visibilityFlowWatcher: MobileContentFlowWatcherType?
+    private var visibilityFlowWatcher: FlowWatcher?
     
     let backgroundColor: UIColor
     let buttonWidth: MobileContentViewWidth
@@ -29,34 +29,43 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     let visibilityState: ObservableValue<MobileContentViewVisibilityState> = ObservableValue(value: .visible)
     let icon: MobileContentButtonIcon?
     
-    required init(buttonModel: ContentButtonModelType, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
+    required init(buttonModel: Button, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
         
         self.buttonModel = buttonModel
-        self.rendererPageModel = rendererPageModel
-        self.containerModel = containerModel
+        self.renderedPageContext = renderedPageContext
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
         
-        buttonWidth = MobileContentViewWidth(dimension: buttonModel.buttonWidth)
+        buttonWidth = MobileContentViewWidth(dimension: buttonModel.width)
         
-        let buttonColor: UIColor = buttonModel.getColor()?.uiColor ?? containerModel?.buttonColor?.uiColor ?? rendererPageModel.pageColors.primaryColor.uiColor
-        let buttonTitleColor: UIColor? = buttonModel.getTextColor()?.uiColor
-        
-        let buttonStyle: MobileContentButtonStyle = buttonModel.style ?? containerModel?.buttonStyle ?? .contained
-        
-        switch buttonStyle {
+        let defaultBackgroundColor: UIColor = buttonModel.buttonColor
+        let defaultTitleColor: UIColor = buttonModel.text?.textColor ?? renderedPageContext.pageModel.primaryTextColor
+        let defaultBorderColor: UIColor = .clear
+                                
+        switch buttonModel.style {
         
         case .contained:
-            backgroundColor = buttonColor
-            titleColor = buttonTitleColor ?? rendererPageModel.pageColors.primaryTextColor.uiColor
-            borderColor = UIColor.clear
+            backgroundColor = defaultBackgroundColor
+            titleColor = defaultTitleColor
+            borderColor = defaultBorderColor
+            
         case .outlined:
-            backgroundColor = buttonModel.getBackgroundColor()?.uiColor ?? .clear
-            titleColor = buttonColor
-            borderColor = buttonColor
+            backgroundColor = buttonModel.backgroundColor
+            titleColor = buttonModel.buttonColor
+            borderColor = buttonModel.buttonColor
+            
+        case .unknown:
+            backgroundColor = defaultBackgroundColor
+            titleColor = defaultTitleColor
+            borderColor = defaultBorderColor
+            
+        default:
+            backgroundColor = defaultBackgroundColor
+            titleColor = defaultTitleColor
+            borderColor = defaultBorderColor
         }
-        
-        if let name = buttonModel.iconName, let image = rendererPageModel.resourcesCache.getImageFromManifestResources(fileName: name)  {
+                
+        if let resource = buttonModel.icon, let image = renderedPageContext.resourcesCache.getImageFromManifestResources(resource: resource)  {
             
             let iconSize = min(Int(buttonModel.iconSize), maxAllowedIconSize)
                     
@@ -70,14 +79,14 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
         
         super.init()
         
-        visibilityFlowWatcher = buttonModel.watchVisibility(rendererState: rendererPageModel.rendererState, visibilityChanged: { [weak self] (visibility: MobileContentVisibility) in
+        visibilityFlowWatcher = buttonModel.watchVisibility(state: renderedPageContext.rendererState, block: { [weak self] (invisible: KotlinBoolean, gone: KotlinBoolean) in
             
             let visibilityStateValue: MobileContentViewVisibilityState
             
-            if visibility.isGone {
+            if gone.boolValue {
                 visibilityStateValue = .gone
             }
-            else if visibility.isInvisible {
+            else if invisible.boolValue {
                 visibilityStateValue = .hidden
             }
             else {
@@ -94,7 +103,7 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     
     var font: UIFont {
         
-        let fontScale = CGFloat(buttonModel.textScale.doubleValue)
+        let fontScale = CGFloat(buttonModel.textScale)
         
         return fontService.getFont(
             size: fontSize * fontScale,
@@ -103,7 +112,7 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     }
     
     var title: String? {
-        return buttonModel.text
+        return buttonModel.text?.text
     }
     
     var borderWidth: CGFloat? {
@@ -113,23 +122,23 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
         return 1
     }
     
-    var buttonType: MobileContentButtonType {
+    var buttonType: Button.Type_ {
         return buttonModel.type
     }
     
-    var buttonEvents: [MultiplatformEventId] {
+    var buttonEvents: [EventId] {
         return buttonModel.events
     }
     
     var buttonUrl: String {
-        return buttonModel.url ?? ""
+        return buttonModel.url?.absoluteString ?? ""
     }
     
-    var rendererState: MobileContentMultiplatformState {
-        return rendererPageModel.rendererState
+    var rendererState: State {
+        return renderedPageContext.rendererState
     }
     
     func buttonTapped() {
-        mobileContentAnalytics.trackEvents(events: buttonModel.getAnalyticsEvents(), rendererPageModel: rendererPageModel)
+        mobileContentAnalytics.trackEvents(events: buttonModel.getAnalyticsEvents(type: .clicked), renderedPageContext: renderedPageContext)
     }
 }

@@ -7,27 +7,28 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class ToolPageModalViewModel: ToolPageModalViewModelType {
     
-    private let modalModel: ModalModelType
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let modalModel: Modal
+    private let renderedPageContext: MobileContentRenderedPageContext
             
-    required init(modalModel: ModalModelType, rendererPageModel: MobileContentRendererPageModel) {
+    required init(modalModel: Modal, renderedPageContext: MobileContentRenderedPageContext) {
         
         self.modalModel = modalModel
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
     }
     
     var backgroundColor: UIColor {
         return UIColor.black.withAlphaComponent(0.9)
     }
     
-    var listeners: [MultiplatformEventId] {
-        return modalModel.listeners
+    var listeners: [EventId] {
+        return Array(modalModel.listeners)
     }
     
-    var dismissListeners: [MultiplatformEventId] {
-        return modalModel.dismissListeners
+    var dismissListeners: [EventId] {
+        return Array(modalModel.dismissListeners)
     }
 }

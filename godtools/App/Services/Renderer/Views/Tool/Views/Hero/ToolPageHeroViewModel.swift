@@ -7,22 +7,23 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class ToolPageHeroViewModel: ToolPageHeroViewModelType {
     
-    private let heroModel: HeroModelType
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let heroModel: Hero
+    private let renderedPageContext: MobileContentRenderedPageContext
     private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
     
-    required init(heroModel: HeroModelType, rendererPageModel: MobileContentRendererPageModel, mobileContentAnalytics: MobileContentAnalytics) {
+    required init(heroModel: Hero, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.heroModel = heroModel
-        self.rendererPageModel = rendererPageModel
-        
+        self.renderedPageContext = renderedPageContext
+                
         analyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
-            analyticsEvents: heroModel.getAnalyticsEvents(),
+            analyticsEvents: heroModel.analyticsEvents,
             mobileContentAnalytics: mobileContentAnalytics,
-            rendererPageModel: rendererPageModel
+            renderedPageContext: renderedPageContext
         )
     }
     
@@ -44,14 +45,10 @@ class ToolPageHeroViewModel: ToolPageHeroViewModelType {
 extension ToolPageHeroViewModel: MobileContentViewModelType {
     
     var language: LanguageModel {
-        return rendererPageModel.language
+        return renderedPageContext.language
     }
     
     var analyticsEvents: [MobileContentAnalyticsEvent] {
         return analyticsEventsObjects
-    }
-    
-    var defaultAnalyticsEventsTrigger: MobileContentAnalyticsEventTrigger {
-        return .visible
     }
 }

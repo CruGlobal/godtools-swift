@@ -7,19 +7,20 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class MobileContentMultiSelectViewModel: MobileContentMultiSelectViewModelType {
     
-    private let multiSelectModel: ContentMultiSelectModelType
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let multiSelectModel: Multiselect
+    private let renderedPageContext: MobileContentRenderedPageContext
     
-    required init(multiSelectModel: ContentMultiSelectModelType, rendererPageModel: MobileContentRendererPageModel) {
+    required init(multiSelectModel: Multiselect, renderedPageContext: MobileContentRenderedPageContext) {
         
         self.multiSelectModel = multiSelectModel
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
     }
     
     var numberOfColumnsForOptions: Int {
-        return Int(multiSelectModel.numberOfColumns)
+        return Int(multiSelectModel.columns)
     }
 }

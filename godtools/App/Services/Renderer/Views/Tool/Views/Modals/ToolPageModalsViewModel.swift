@@ -7,15 +7,16 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class ToolPageModalsViewModel: ToolPageModalsViewModelType {
     
-    private let modalsModel: ModalsModelType
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let modals: [Modal]
+    private let renderedPageContext: MobileContentRenderedPageContext
     
-    required init(modalsModel: ModalsModelType, rendererPageModel: MobileContentRendererPageModel) {
+    required init(modals: [Modal], renderedPageContext: MobileContentRenderedPageContext) {
         
-        self.modalsModel = modalsModel
-        self.rendererPageModel = rendererPageModel
+        self.modals = modals
+        self.renderedPageContext = renderedPageContext
     }
 }

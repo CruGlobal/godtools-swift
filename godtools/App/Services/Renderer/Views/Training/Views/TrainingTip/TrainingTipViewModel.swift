@@ -7,11 +7,12 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class TrainingTipViewModel: TrainingTipViewModelType {
     
-    private let tipModel: TipModelType
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let tipModel: Tip
+    private let renderedPageContext: MobileContentRenderedPageContext
     private let viewedTrainingTipsService: ViewedTrainingTipsService
     
     private var viewType: TrainingTipViewType = .rounded
@@ -19,10 +20,10 @@ class TrainingTipViewModel: TrainingTipViewModelType {
     let trainingTipBackgroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     let trainingTipForegroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     
-    required init(tipModel: TipModelType, rendererPageModel: MobileContentRendererPageModel, viewType: TrainingTipViewType, translationsFileCache: TranslationsFileCache, viewedTrainingTipsService: ViewedTrainingTipsService) {
+    required init(tipModel: Tip, renderedPageContext: MobileContentRenderedPageContext, viewType: TrainingTipViewType, translationsFileCache: TranslationsFileCache, viewedTrainingTipsService: ViewedTrainingTipsService) {
         
         self.tipModel = tipModel
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
         self.viewType = viewType
         self.viewedTrainingTipsService = viewedTrainingTipsService
             
@@ -43,8 +44,8 @@ class TrainingTipViewModel: TrainingTipViewModelType {
         
         let viewedTrainingTip = ViewedTrainingTip(
             trainingTipId: trainingTipId,
-            resourceId: rendererPageModel.resource.id,
-            languageId: rendererPageModel.language.id
+            resourceId: renderedPageContext.resource.id,
+            languageId: renderedPageContext.language.id
         )
         
         let trainingTipViewed: Bool = viewedTrainingTipsService.containsViewedTrainingTip(viewedTrainingTip: viewedTrainingTip)
@@ -52,7 +53,7 @@ class TrainingTipViewModel: TrainingTipViewModelType {
         return trainingTipViewed
     }
     
-    private func reloadTipIcon(tipModel: TipModelType, viewType: TrainingTipViewType, trainingTipViewed: Bool) {
+    private func reloadTipIcon(tipModel: Tip, viewType: TrainingTipViewType, trainingTipViewed: Bool) {
         
         let backgroundImageName: String
         switch viewType {
@@ -62,9 +63,9 @@ class TrainingTipViewModel: TrainingTipViewModelType {
             backgroundImageName = trainingTipViewed ? "training_tip_red_square_bg" : "training_tip_square_bg"
         }
         
-        let trainingTipType: MobileContentTrainingTipType = tipModel.tipType
         let imageName: String
-        switch trainingTipType {
+        
+        switch tipModel.type {
         case .ask:
             imageName = trainingTipViewed ? "training_tip_ask_filled_red" : "training_tip_ask"
         case .consider:
@@ -75,7 +76,7 @@ class TrainingTipViewModel: TrainingTipViewModelType {
             imageName = trainingTipViewed ? "training_tip_quote_filled_red" : "training_tip_quote"
         case .tip:
             imageName = trainingTipViewed ? "training_tip_tip_filled_red" : "training_tip_tip"
-        case .unknown:
+        default:
             imageName = ""
         }
         
@@ -98,6 +99,6 @@ class TrainingTipViewModel: TrainingTipViewModelType {
                
         reloadTipIcon(tipModel: tipModel, viewType: viewType, trainingTipViewed: true)
         
-        return TrainingTipEvent(rendererPageModel: rendererPageModel, trainingTipId: trainingTipId, tipModel: tipModel)
+        return TrainingTipEvent(renderedPageContext: renderedPageContext, trainingTipId: trainingTipId, tipModel: tipModel)
     }
 }

@@ -23,15 +23,15 @@ class ChooseYourOwnAdventurePageViewFactory: MobileContentPageViewFactoryType {
         self.analytics = analytics
     }
     
-    func viewForRenderableModel(renderableModel: MobileContentRenderableModel, renderableModelParent: MobileContentRenderableModel?, rendererPageModel: MobileContentRendererPageModel, containerModel: MobileContentRenderableModelContainer?) -> MobileContentView? {
+    func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
         
-        if let contentPage = renderableModel as? MultiplatformContentPage {
+        if let contentPage = renderableModel as? ContentPage {
             
             guard let flowDelegate = self.flowDelegate else {
                 return nil
             }
             
-            let page: Int = rendererPageModel.page
+            let page: Int = renderedPageContext.page
             let contentInsets: UIEdgeInsets
             let itemSpacing: CGFloat
             
@@ -54,7 +54,7 @@ class ChooseYourOwnAdventurePageViewFactory: MobileContentPageViewFactoryType {
             let viewModel = MobileContentContentPageViewModel(
                 flowDelegate: flowDelegate,
                 contentPage: contentPage,
-                rendererPageModel: rendererPageModel,
+                renderedPageContext: renderedPageContext,
                 deepLinkService: deepLinkingService,
                 analytics: analytics
             )
@@ -71,7 +71,7 @@ class ChooseYourOwnAdventurePageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = MobileContentFlowViewModel(
                 contentFlow: contentFlow,
-                rendererPageModel: rendererPageModel
+                renderedPageContext: renderedPageContext
             )
             
             let view = MobileContentFlowView(viewModel: viewModel, itemSpacing: 16)

@@ -7,29 +7,31 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class MobileContentTabViewModel: MobileContentTabViewModelType {
     
-    private let tabModel: ContentTabModelType
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let tabModel: Tabs.Tab
+    private let renderedPageContext: MobileContentRenderedPageContext
     private let mobileContentAnalytics: MobileContentAnalytics
     
-    required init(tabModel: ContentTabModelType, rendererPageModel: MobileContentRendererPageModel, mobileContentAnalytics: MobileContentAnalytics) {
+    required init(tabModel: Tabs.Tab, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.tabModel = tabModel
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
         self.mobileContentAnalytics = mobileContentAnalytics
     }
     
     var labelText: String? {
-        return tabModel.text
+        return tabModel.label?.text
     }
     
-    var tabListeners: [MultiplatformEventId] {
-        return tabModel.listeners
+    var tabListeners: [EventId] {
+        return Array(tabModel.listeners)
     }
     
     func tabTapped() {
-        mobileContentAnalytics.trackEvents(events: tabModel.getAnalyticsEvents(), rendererPageModel: rendererPageModel)
+        
+        mobileContentAnalytics.trackEvents(events: tabModel.analyticsEvents, renderedPageContext: renderedPageContext)
     }
 }

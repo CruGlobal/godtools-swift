@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class LessonFlow: NSObject, ToolNavigationFlow, Flow {
     
@@ -22,7 +23,7 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
     var lessonFlow: LessonFlow?
     var tractFlow: TractFlow?
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, trainingTipsEnabled: Bool, page: Int?) {
+    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, resource: ResourceModel, primaryLanguage: LanguageModel, primaryLanguageManifest: Manifest, trainingTipsEnabled: Bool, page: Int?) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -31,6 +32,15 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
         
         super.init()
         
+        var languageTranslationManifests: [MobileContentRendererLanguageTranslationManifest] = Array()
+        
+        let primaryLanguageTranslationManifest = MobileContentRendererLanguageTranslationManifest(
+            manifest: primaryLanguageManifest,
+            language: primaryLanguage
+        )
+        
+        languageTranslationManifests.append(primaryLanguageTranslationManifest)
+        
         let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
             type: .lesson,
             flowDelegate: self,
@@ -38,22 +48,18 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
             trainingTipsEnabled: trainingTipsEnabled,
             deepLinkingService: deepLinkingService
         )
-        
-        let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
-           
-        let primaryRenderer = MobileContentMultiplatformRenderer(
+                   
+        let renderer = MobileContentRenderer(
             resource: resource,
-            language: primaryLanguage,
-            multiplatformParser: MobileContentMultiplatformParser(
-                translationManifestData: primaryTranslationManifest,
-                translationsFileCache: translationsFileCache
-            ),
-            pageViewFactories: pageViewFactories
+            primaryLanguage: primaryLanguage,
+            languageTranslationManifests: languageTranslationManifests,
+            pageViewFactories: pageViewFactories,
+            translationsFileCache: appDiContainer.translationsFileCache
         )
                 
         let viewModel = LessonViewModel(
             flowDelegate: self,
-            renderers: [primaryRenderer],
+            renderer: renderer,
             resource: resource,
             primaryLanguage: primaryLanguage,
             page: page,

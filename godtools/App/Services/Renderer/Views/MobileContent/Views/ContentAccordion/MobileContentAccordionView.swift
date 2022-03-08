@@ -10,7 +10,7 @@ import UIKit
 
 protocol MobileContentAccordionViewDelegate: AnyObject {
     
-    func accordionViewDidChangeSectionViewTextHiddenState(accordionView: MobileContentAccordionView, sectionView: MobileContentSectionView, textIsHidden: Bool, textHeight: CGFloat)
+    func accordionViewDidChangeSectionViewTextHiddenState(accordionView: MobileContentAccordionView, sectionView: MobileContentAccordionSectionView, textIsHidden: Bool, textHeight: CGFloat)
 }
 
 class MobileContentAccordionView: MobileContentView {
@@ -18,7 +18,7 @@ class MobileContentAccordionView: MobileContentView {
     private let viewModel: MobileContentAccordionViewModelType
     private let allowsOnlyOneExpandedSectionAtATime: Bool = true
     
-    private var sectionViews: [MobileContentSectionView] = Array()
+    private var sectionViews: [MobileContentAccordionSectionView] = Array()
     private var spacingBetweenSections: CGFloat = 15
     private var sectionViewsAdded: Bool = false
     
@@ -58,7 +58,7 @@ class MobileContentAccordionView: MobileContentView {
         
         super.renderChild(childView: childView)
         
-        if let sectionView = childView as? MobileContentSectionView {
+        if let sectionView = childView as? MobileContentAccordionSectionView {
             sectionViews.append(sectionView)
             sectionView.setDelegate(delegate: self)
         }
@@ -78,7 +78,7 @@ class MobileContentAccordionView: MobileContentView {
 
 extension MobileContentAccordionView {
     
-    private func addSectionViews(sectionViews: [MobileContentSectionView]) {
+    private func addSectionViews(sectionViews: [MobileContentAccordionSectionView]) {
         
         guard !sectionViewsAdded else {
             return
@@ -93,7 +93,7 @@ extension MobileContentAccordionView {
         
         for index in stride(from: lastSectionIndex, through: 0, by: -1) {
             
-            let sectionView: MobileContentSectionView = sectionViews[index]
+            let sectionView: MobileContentAccordionSectionView = sectionViews[index]
             
             sectionView.translatesAutoresizingMaskIntoConstraints = false
             
@@ -198,9 +198,9 @@ extension MobileContentAccordionView {
 
 // MARK: - MobileContentSectionViewDelegate
 
-extension MobileContentAccordionView: MobileContentSectionViewDelegate {
+extension MobileContentAccordionView: MobileContentAccordionSectionViewDelegate {
     
-    func sectionViewDidChangeTextHiddenState(sectionView: MobileContentSectionView, textIsHidden: Bool, textHeight: CGFloat) {
+    func sectionViewDidChangeTextHiddenState(sectionView: MobileContentAccordionSectionView, textIsHidden: Bool, textHeight: CGFloat) {
         
         if allowsOnlyOneExpandedSectionAtATime && !textIsHidden {
             for otherSectionView in sectionViews {

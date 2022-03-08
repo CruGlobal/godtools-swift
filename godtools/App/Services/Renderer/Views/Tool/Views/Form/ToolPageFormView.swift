@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class ToolPageFormView: MobileContentFormView {
         
@@ -35,14 +36,14 @@ class ToolPageFormView: MobileContentFormView {
     
     private func setupBinding() {
         
-        pageFormViewModel.didSendFollowUpSignal.addObserver(self) { [weak self] (eventIds: [MultiplatformEventId]) in
+        pageFormViewModel.didSendFollowUpSignal.addObserver(self) { [weak self] (eventIds: [EventId]) in
             
             guard let formView = self else {
                 return
             }
             
-            if let indexForFollowUpEvent = eventIds.firstIndex(of: MultiplatformEventId.followUp) {
-                var eventsWithoutFollowUp: [MultiplatformEventId] = eventIds
+            if let indexForFollowUpEvent = eventIds.firstIndex(of: EventId.Companion().FOLLOWUP) {
+                var eventsWithoutFollowUp: [EventId] = eventIds
                 eventsWithoutFollowUp.remove(at: indexForFollowUpEvent)
                 formView.sendEventsToAllViews(eventIds: eventsWithoutFollowUp, rendererState: formView.pageFormViewModel.rendererState)
                 formView.resignCurrentEditedTextField()
@@ -58,9 +59,9 @@ class ToolPageFormView: MobileContentFormView {
     
     // MARK: - MobileContenView
     
-    override func didReceiveEvents(eventIds: [MultiplatformEventId]) {
+    override func didReceiveEvents(eventIds: [EventId]) {
                       
-        if eventIds.contains(MultiplatformEventId.followUp) {
+        if eventIds.contains(EventId.Companion().FOLLOWUP) {
             pageFormViewModel.sendFollowUp(inputModels: super.getInputModels(), eventIds: eventIds)
         }
     }

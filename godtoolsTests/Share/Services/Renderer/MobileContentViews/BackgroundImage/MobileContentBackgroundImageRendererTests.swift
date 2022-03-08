@@ -7,12 +7,11 @@
 //
 
 import XCTest
+import GodToolsToolParser
 @testable import godtools
 
 class MobileContentBackgroundImageRendererTests: XCTestCase {
 
-    private let backgroundImageRenderer: MobileContentBackgroundImageRenderer = MobileContentBackgroundImageRenderer()
-    
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         
@@ -36,8 +35,11 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
     
     func testRectIsPositionedCorrectlyInContainerWithScaleFitAndAlignCenter() {
         
-        let scale: MobileContentBackgroundImageScale = .fit
-        let alignment: MobileContentImageAlignment = MobileContentImageAlignment(isCenter: true, isCenterX: false, isCenterY: false, isStart: false, isEnd: false, isTop: false, isBottom: false)
+        let backgroundImageRenderer: MobileContentBackgroundImageRenderer = MobileContentBackgroundImageRenderer()
+        
+        let scale: ImageScaleType = .fit
+        let horizontal: Gravity.Horizontal = .center
+        let vertical: Gravity.Vertical = .center
         let languageDirection: LanguageDirection = .leftToRight
         
         let container: CGRect = CGRect(x: 0, y: 0, width: 320, height: 568)
@@ -52,7 +54,8 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
             container: container,
             backgroundImageSizePixels: rect_A.size,
             scale: scale,
-            alignment: alignment,
+            horizontal: horizontal,
+            vertical: vertical,
             languageDirection: languageDirection
         )
         
@@ -68,7 +71,8 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
             container: container,
             backgroundImageSizePixels: rect_B.size,
             scale: scale,
-            alignment: alignment,
+            horizontal: horizontal,
+            vertical: vertical,
             languageDirection: languageDirection
         )
         
@@ -84,7 +88,8 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
             container: container,
             backgroundImageSizePixels: rect_C.size,
             scale: scale,
-            alignment: alignment,
+            horizontal: horizontal,
+            vertical: vertical,
             languageDirection: languageDirection
         )
         
@@ -100,7 +105,8 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
             container: container,
             backgroundImageSizePixels: rect_D.size,
             scale: scale,
-            alignment: alignment,
+            horizontal: horizontal,
+            vertical: vertical,
             languageDirection: languageDirection
         )
         
@@ -116,7 +122,8 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
             container: container,
             backgroundImageSizePixels: rect_E.size,
             scale: scale,
-            alignment: alignment,
+            horizontal: horizontal,
+            vertical: vertical,
             languageDirection: languageDirection
         )
         
@@ -125,8 +132,11 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
     
     func testRectIsPositionedCorrectlyInContainerWithScaleFillAndAlignCenter() {
         
-        let scale: MobileContentBackgroundImageScale = .fill
-        let alignment: MobileContentImageAlignment = MobileContentImageAlignment(isCenter: true, isCenterX: false, isCenterY: false, isStart: false, isEnd: false, isTop: false, isBottom: false)
+        let backgroundImageRenderer: MobileContentBackgroundImageRenderer = MobileContentBackgroundImageRenderer()
+        
+        let scale: ImageScaleType = .fill
+        let horizontal: Gravity.Horizontal = .center
+        let vertical: Gravity.Vertical = .center
         let languageDirection: LanguageDirection = .leftToRight
         
         let container: CGRect = CGRect(x: 0, y: 0, width: 320, height: 568)
@@ -141,7 +151,8 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
             container: container,
             backgroundImageSizePixels: rect_A.size,
             scale: scale,
-            alignment: alignment,
+            horizontal: horizontal,
+            vertical: vertical,
             languageDirection: languageDirection
         )
         
@@ -157,7 +168,8 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
             container: container,
             backgroundImageSizePixels: rect_B.size,
             scale: scale,
-            alignment: alignment,
+            horizontal: horizontal,
+            vertical: vertical,
             languageDirection: languageDirection
         )
         
@@ -173,7 +185,8 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
             container: container,
             backgroundImageSizePixels: rect_C.size,
             scale: scale,
-            alignment: alignment,
+            horizontal: horizontal,
+            vertical: vertical,
             languageDirection: languageDirection
         )
         
@@ -189,7 +202,8 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
             container: container,
             backgroundImageSizePixels: rect_D.size,
             scale: scale,
-            alignment: alignment,
+            horizontal: horizontal,
+            vertical: vertical,
             languageDirection: languageDirection
         )
         
@@ -205,7 +219,8 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
             container: container,
             backgroundImageSizePixels: rect_E.size,
             scale: scale,
-            alignment: alignment,
+            horizontal: horizontal,
+            vertical: vertical,
             languageDirection: languageDirection
         )
         
@@ -214,8 +229,11 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
     
     func testIphone11BackgroundImageWithAlignBottomAndFillHorizontally() {
         
-        let scale: MobileContentBackgroundImageScale = .fillHorizontally
-        let alignment: MobileContentImageAlignment = MobileContentImageAlignment(isCenter: false, isCenterX: false, isCenterY: false, isStart: false, isEnd: false, isTop: false, isBottom: true)
+        let backgroundImageRenderer: MobileContentBackgroundImageRenderer = MobileContentBackgroundImageRenderer()
+        
+        let scale: ImageScaleType = .fillX
+        let horizontal: Gravity.Horizontal = .center
+        let vertical: Gravity.Vertical = .bottom
         let languageDirection: LanguageDirection = .leftToRight
         
         let container: CGRect = CGRect(x: 0, y: 0, width: 414, height: 896)
@@ -230,7 +248,8 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
             container: container,
             backgroundImageSizePixels: rect_A.size,
             scale: scale,
-            alignment: alignment,
+            horizontal: horizontal,
+            vertical: vertical,
             languageDirection: languageDirection
         )
         

@@ -17,9 +17,11 @@ class OnboardingQuickStartViewModel: OnboardingQuickStartViewModelType {
     
     private let quickStartItems: [OnboardingQuickStartItem]
     
+    private let trackActionAnalytics: TrackActionAnalytics
+    
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices) {
+    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, trackActionAnalytics: TrackActionAnalytics) {
         
         title = localizationServices.stringForMainBundle(key: "onboardingQuickStart.title")
         skipButtonTitle = localizationServices.stringForMainBundle(key: "navigationBar.navigationItem.skip")
@@ -27,25 +29,34 @@ class OnboardingQuickStartViewModel: OnboardingQuickStartViewModelType {
         
         self.flowDelegate = flowDelegate
         
+        self.trackActionAnalytics = trackActionAnalytics
+        
         quickStartItems = [
             OnboardingQuickStartItem(
                 title: localizationServices.stringForMainBundle(key: "onboardingQuickStart.0.title"),
                 linkButtonTitle: localizationServices.stringForMainBundle(key:  "onboardingQuickStart.0.button.title"),
-                linkButtonFlowStep: .readArticlesTappedFromOnboardingQuickStart
+                linkButtonFlowStep: .readArticlesTappedFromOnboardingQuickStart,
+                linkButtonAnalyticsAction: AnalyticsConstants.Values.onboardingQuickStartArticles
             ),
             OnboardingQuickStartItem(
                 title: localizationServices.stringForMainBundle(key: "onboardingQuickStart.1.title"),
                 linkButtonTitle: localizationServices.stringForMainBundle(key:  "onboardingQuickStart.1.button.title"),
-                linkButtonFlowStep: .tryLessonsTappedFromOnboardingQuickStart
+                linkButtonFlowStep: .tryLessonsTappedFromOnboardingQuickStart,
+                linkButtonAnalyticsAction: AnalyticsConstants.Values.onboardingQuickStartLessons
             ),
             OnboardingQuickStartItem(
                 title: localizationServices.stringForMainBundle(key: "onboardingQuickStart.2.title"),
                 linkButtonTitle: localizationServices.stringForMainBundle(key:  "onboardingQuickStart.2.button.title"),
-                linkButtonFlowStep: .chooseToolTappedFromOnboardingQuickStart
+                linkButtonFlowStep: .chooseToolTappedFromOnboardingQuickStart,
+                linkButtonAnalyticsAction: AnalyticsConstants.Values.onboardingQuickStartTools
             ),
         ]
         
         quickStartItemCount = quickStartItems.count
+    }
+    
+    private var analyticsScreenName: String {
+        return "onboarding-quick-start"
     }
     
     func quickStartCellWillAppear(index: Int) -> OnboardingQuickStartCellViewModelType {
@@ -54,9 +65,11 @@ class OnboardingQuickStartViewModel: OnboardingQuickStartViewModelType {
     }
     
     func quickStartCellTapped(index: Int) {
-        let flowStep = quickStartItems[index].linkButtonFlowStep
+        let item = quickStartItems[index]
         
-        flowDelegate?.navigate(step: flowStep)
+        trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: item.linkButtonAnalyticsAction, siteSection: "", siteSubSection: "", url: nil, data: nil))
+        
+        flowDelegate?.navigate(step: item.linkButtonFlowStep)
     }
     
     func skipButtonTapped() {

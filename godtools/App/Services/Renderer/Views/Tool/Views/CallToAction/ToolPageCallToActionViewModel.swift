@@ -7,26 +7,27 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class ToolPageCallToActionViewModel: ToolPageCallToActionViewModelType {
     
-    private let callToActionModel: CallToActionModelType?
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let callToActionModel: CallToAction?
+    private let renderedPageContext: MobileContentRenderedPageContext
     private let fontService: FontService
         
-    required init(callToActionModel: CallToActionModelType?, rendererPageModel: MobileContentRendererPageModel, fontService: FontService) {
+    required init(callToActionModel: CallToAction?, renderedPageContext: MobileContentRenderedPageContext, fontService: FontService) {
         
         self.callToActionModel = callToActionModel
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
         self.fontService = fontService
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return rendererPageModel.primaryRendererLanguage.languageDirection.semanticContentAttribute
+        return renderedPageContext.primaryRendererLanguage.languageDirection.semanticContentAttribute
     }
     
     var title: String? {
-        return callToActionModel?.text
+        return callToActionModel?.label?.text
     }
     
     var titleFont: UIFont {
@@ -35,7 +36,7 @@ class ToolPageCallToActionViewModel: ToolPageCallToActionViewModelType {
     
     var titleTextAlignment: NSTextAlignment {
         
-        switch rendererPageModel.language.languageDirection {
+        switch renderedPageContext.language.languageDirection {
         case .leftToRight:
             return .left
         case .rightToLeft:
@@ -44,11 +45,11 @@ class ToolPageCallToActionViewModel: ToolPageCallToActionViewModelType {
     }
     
     var titleColor: UIColor {
-        return callToActionModel?.getTextColor()?.uiColor ?? rendererPageModel.pageColors.textColor.uiColor
+        return callToActionModel?.label?.textColor ?? renderedPageContext.pageModel.textColor
     }
     
     var nextButtonColor: UIColor {
-        return callToActionModel?.getControlColor()?.uiColor ?? rendererPageModel.pageColors.primaryColor.uiColor
+        return callToActionModel?.controlColor ?? renderedPageContext.pageModel.primaryColor
     }
     
     var nextButtonImage: UIImage? {

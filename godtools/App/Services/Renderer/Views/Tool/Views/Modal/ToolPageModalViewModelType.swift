@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 protocol ToolPageModalViewModelType {
     
     var backgroundColor: UIColor { get }
-    var listeners: [MultiplatformEventId] { get }
-    var dismissListeners: [MultiplatformEventId] { get }
+    var listeners: [EventId] { get }
+    var dismissListeners: [EventId] { get }
 }

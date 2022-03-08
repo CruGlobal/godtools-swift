@@ -15,7 +15,7 @@ class MobileContentBackgroundImageRenderer: MobileContentBackgroundImageRenderer
         
     }
     
-    func getBackgroundImageRectForRenderingInContainer(container: CGRect, backgroundImageSizePixels: CGSize, scale: MobileContentBackgroundImageScale, alignment: MobileContentImageAlignmentType, languageDirection: LanguageDirection) -> CGRect {
+    func getBackgroundImageRectForRenderingInContainer(container: CGRect, backgroundImageSizePixels: CGSize, scale: ImageScaleType, horizontal: Gravity.Horizontal, vertical: Gravity.Vertical, languageDirection: LanguageDirection) -> CGRect {
         
         let scaledRect: CGRect = scaleRectToContainer(
             container: container,
@@ -26,14 +26,15 @@ class MobileContentBackgroundImageRenderer: MobileContentBackgroundImageRenderer
         let scaledAndPositioned: CGRect = positionRectInContainer(
             container: container,
             rect: scaledRect,
-            alignment: alignment,
+            horizontal: horizontal,
+            vertical: vertical,
             languageDirection: languageDirection
         )
         
         return floorRect(rect: scaledAndPositioned)
     }
         
-    private func scaleRectToContainer(container: CGRect, rect: CGRect, scale: MobileContentBackgroundImageScale) -> CGRect {
+    private func scaleRectToContainer(container: CGRect, rect: CGRect, scale: ImageScaleType) -> CGRect {
         
         switch scale {
         
@@ -42,41 +43,50 @@ class MobileContentBackgroundImageRenderer: MobileContentBackgroundImageRenderer
         
         case .fill:
             return scaleRectToFillContainer(container: container, rect: rect)
-        
-        case .fillHorizontally:
+                    
+        case .fillX:
             return scaleRectToHorizontallyFitContainer(container: container, rect: rect)
         
-        case .fillVertically:
+        case .fillY:
             return scaleRectToVerticallyFitContainer(container: container, rect: rect)
+            
+        default:
+            return scaleRectToFitContainer(container: container, rect: rect)
         }
     }
     
-    private func positionRectInContainer(container: CGRect, rect: CGRect, alignment: MobileContentImageAlignmentType, languageDirection: LanguageDirection) -> CGRect {
+    private func positionRectInContainer(container: CGRect, rect: CGRect, horizontal: Gravity.Horizontal, vertical: Gravity.Vertical, languageDirection: LanguageDirection) -> CGRect {
         
         var positionedRect: CGRect = rect
         
-        if alignment.isStart {
+        switch horizontal {
+        
+        case .start:
             positionedRect = positionRectInContainer(container: container, rect: positionedRect, align: .start, languageDirection: languageDirection)
-        }
-        else if alignment.isEnd {
+        
+        case .end:
             positionedRect = positionRectInContainer(container: container, rect: positionedRect, align: .end, languageDirection: languageDirection)
-        }
-        else if alignment.isCenterX {
+       
+        case .center:
+            positionedRect = centerRectHorizontallyInContainer(container: container, rect: positionedRect)
+            
+        default:
             positionedRect = centerRectHorizontallyInContainer(container: container, rect: positionedRect)
         }
         
-        if alignment.isTop {
-            positionedRect = positionRectInContainer(container: container, rect: positionedRect, align: .top, languageDirection: languageDirection)
-        }
-        else if alignment.isBottom {
-            positionedRect = positionRectInContainer(container: container, rect: positionedRect, align: .bottom, languageDirection: languageDirection)
-        }
-        else if alignment.isCenterY {
-            positionedRect = centerRectVerticallyInContainer(container: container, rect: positionedRect)
-        }
+        switch vertical {
         
-        if alignment.isCenter {
-            positionedRect = centerRectInContainer(container: container, rect: positionedRect)
+        case .top:
+            positionedRect = positionRectInContainer(container: container, rect: positionedRect, align: .top, languageDirection: languageDirection)
+            
+        case .bottom:
+            positionedRect = positionRectInContainer(container: container, rect: positionedRect, align: .bottom, languageDirection: languageDirection)
+            
+        case .center:
+            positionedRect = centerRectVerticallyInContainer(container: container, rect: positionedRect)
+            
+        default:
+            positionedRect = centerRectVerticallyInContainer(container: container, rect: positionedRect)
         }
         
         return positionedRect

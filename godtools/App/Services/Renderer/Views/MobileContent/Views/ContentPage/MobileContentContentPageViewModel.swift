@@ -7,30 +7,31 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class MobileContentContentPageViewModel: MobileContentPageViewModel, MobileContentContentPageViewModelType {
     
-    private let contentPage: MultiplatformContentPage
-    private let rendererPageModel: MobileContentRendererPageModel
+    private let contentPage: Page
+    private let renderedPageContext: MobileContentRenderedPageContext
     private let analytics: AnalyticsContainer
     
-    required init(flowDelegate: FlowDelegate, contentPage: MultiplatformContentPage, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, contentPage: Page, renderedPageContext: MobileContentRenderedPageContext, deepLinkService: DeepLinkingServiceType, analytics: AnalyticsContainer) {
         
         self.contentPage = contentPage
-        self.rendererPageModel = rendererPageModel
+        self.renderedPageContext = renderedPageContext
         self.analytics = analytics
         
-        super.init(flowDelegate: flowDelegate, pageModel: contentPage, rendererPageModel: rendererPageModel, deepLinkService: deepLinkService, hidesBackgroundImage: false)
+        super.init(flowDelegate: flowDelegate, pageModel: contentPage, renderedPageContext: renderedPageContext, deepLinkService: deepLinkService, hidesBackgroundImage: false)
     }
     
-    required init(flowDelegate: FlowDelegate, pageModel: PageModelType, rendererPageModel: MobileContentRendererPageModel, deepLinkService: DeepLinkingServiceType, hidesBackgroundImage: Bool) {
-        fatalError("init(flowDelegate:pageModel:rendererPageModel:deepLinkService:hidesBackgroundImage:) has not been implemented")
+    required init(flowDelegate: FlowDelegate, pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, deepLinkService: DeepLinkingServiceType, hidesBackgroundImage: Bool) {
+        fatalError("init(flowDelegate:pageModel:renderedPageContext:deepLinkService:hidesBackgroundImage:) has not been implemented")
     }
     
     private func getPageAnalyticsScreenName() -> String {
         
-        let resource: ResourceModel = rendererPageModel.resource
-        let pageId: String = rendererPageModel.pageModel.id
+        let resource: ResourceModel = renderedPageContext.resource
+        let pageId: String = renderedPageContext.pageModel.id
         let separator: String = ":"
         
         let screenName: String = resource.abbreviation + separator + pageId
@@ -40,6 +41,6 @@ class MobileContentContentPageViewModel: MobileContentPageViewModel, MobileConte
     
     func pageDidAppear() {
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: getPageAnalyticsScreenName(), siteSection: rendererPageModel.resource.abbreviation, siteSubSection: ""))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: getPageAnalyticsScreenName(), siteSection: renderedPageContext.resource.abbreviation, siteSubSection: ""))
     }
 }
