@@ -30,7 +30,7 @@ class WebContentViewModel: WebContentViewModelType {
     }
     
     private var analyticsSiteSection: String {
-        return "web"
+        return webContent.analyticsSiteSection
     }
     
     private var analyticsSiteSubSection: String {

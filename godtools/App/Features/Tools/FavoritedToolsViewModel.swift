@@ -64,7 +64,7 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     }
     
     private var analyticsSiteSection: String {
-        return "tools"
+        return "home"
     }
     
     private var analyticsSiteSubSection: String {

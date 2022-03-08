@@ -50,7 +50,7 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     }
     
     private var analyticsSiteSection: String {
-        return "tools"
+        return "home"
     }
     
     private var analyticsSiteSubSection: String {

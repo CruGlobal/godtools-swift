@@ -73,7 +73,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     }
     
     private var analyticsSiteSection: String {
-        return "tools"
+        return rendererPageModel.resource.abbreviation
     }
     
     private var analyticsSiteSubSection: String {

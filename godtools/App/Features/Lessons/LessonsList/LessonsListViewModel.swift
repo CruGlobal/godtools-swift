@@ -52,11 +52,11 @@ class LessonsListViewModel: NSObject, LessonsListViewModelType {
     }
     
     var analyticsScreenName: String {
-        return "lessons"
+        return "Lessons"
     }
     
     private var analyticsSiteSection: String {
-        return "lessons"
+        return "home"
     }
     
     private var analyticsSiteSubSection: String {
