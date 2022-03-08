@@ -10,8 +10,8 @@ import Foundation
 
 struct OnboardingQuickStartItem {
     
-    var title: String
-    var linkButtonTitle: String
-    var linkButtonFlowStep: FlowStep
-    var linkButtonAnalyticsAction: String
+    let title: String
+    let linkButtonTitle: String
+    let linkButtonFlowStep: FlowStep
+    let linkButtonAnalyticsAction: String
 }
