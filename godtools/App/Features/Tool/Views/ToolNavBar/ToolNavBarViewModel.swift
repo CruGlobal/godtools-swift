@@ -57,6 +57,14 @@ class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
         tractRemoteShareSubscriber.subscribedToChannelObserver.removeObserver(self)
     }
     
+    private var analyticsScreenName: String {
+        return ""
+    }
+    
+    private var analyticsSiteSection: String {
+        return resource.abbreviation
+    }
+    
     private func setupBinding() {
         
         tractRemoteSharePublisher.didCreateNewSubscriberChannelIdForPublish.addObserver(self) { [weak self] (channel: TractRemoteShareChannel) in
@@ -113,12 +121,11 @@ class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
         let language: LanguageModel = languages[index]
         
         let data: [String: String] = [
-            AnalyticsConstants.Values.parallelLanguageToggle: "",
+            AnalyticsConstants.ActionNames.parallelLanguageToggled: "",
             AnalyticsConstants.Keys.contentLanguageSecondary: language.code,
-            AnalyticsConstants.Keys.siteSection: resource.abbreviation
         ]
         
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: "", actionName: AnalyticsConstants.Values.parallelLanguageToggle, siteSection: "", siteSubSection: "", url: nil, data: data)
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.ActionNames.parallelLanguageToggled, siteSection: analyticsSiteSection, siteSubSection: "", url: nil, data: data)
         )
     }
 }

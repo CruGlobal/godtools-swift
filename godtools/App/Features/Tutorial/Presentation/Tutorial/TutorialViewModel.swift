@@ -95,9 +95,11 @@ class TutorialViewModel: TutorialViewModelType {
         currentPage.accept(value: page)
         
         let analyticsScreenName = tutorialPagerAnalyticsModel.analyticsScreenName(page: page)
+        let analyticsSiteSection = tutorialPagerAnalyticsModel.siteSection
+        let analyticsSiteSubSection = tutorialPagerAnalyticsModel.siteSubsection
         
-        let trackScreenData = TrackScreenModel(screenName: analyticsScreenName, siteSection: tutorialPagerAnalyticsModel.siteSection, siteSubSection: tutorialPagerAnalyticsModel.siteSubsection)
-        let trackActionData = TrackActionModel(screenName: analyticsScreenName, actionName: analyticsScreenName, siteSection: tutorialPagerAnalyticsModel.siteSection, siteSubSection: tutorialPagerAnalyticsModel.siteSubsection, url: nil, data: nil)
+        let trackScreenData = TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection)
+        let trackActionData = TrackActionModel(screenName: analyticsScreenName, actionName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection, url: nil, data: nil)
         
         analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreenData)
         

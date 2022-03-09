@@ -178,7 +178,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     }
     
     private var analyticsScreenName: String {
-        return resource.abbreviation + "-" + siteSubSection
+        return resource.abbreviation + "-tool-info"
     }
     
     private var siteSection: String {
@@ -239,7 +239,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     }
     
     func openToolTapped() {
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: "About Tool Open Button", siteSection: siteSection, siteSubSection: siteSubSection, url: nil, data: ["cru.tool_about_button": 1]))
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.ActionNames.aboutToolOpened, siteSection: siteSection, siteSubSection: siteSubSection, url: nil, data: [AnalyticsConstants.Keys.toolAboutOpened: 1]))
         flowDelegate?.navigate(step: .openToolTappedFromToolDetails(resource: resource))
     }
     

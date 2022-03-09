@@ -36,19 +36,19 @@ class OnboardingQuickStartViewModel: OnboardingQuickStartViewModelType {
                 title: localizationServices.stringForMainBundle(key: "onboardingQuickStart.0.title"),
                 linkButtonTitle: localizationServices.stringForMainBundle(key:  "onboardingQuickStart.0.button.title"),
                 linkButtonFlowStep: .readArticlesTappedFromOnboardingQuickStart,
-                linkButtonAnalyticsAction: AnalyticsConstants.Values.onboardingQuickStartArticles
+                linkButtonAnalyticsAction: AnalyticsConstants.ActionNames.onboardingQuickStartArticles
             ),
             OnboardingQuickStartItem(
                 title: localizationServices.stringForMainBundle(key: "onboardingQuickStart.1.title"),
                 linkButtonTitle: localizationServices.stringForMainBundle(key:  "onboardingQuickStart.1.button.title"),
                 linkButtonFlowStep: .tryLessonsTappedFromOnboardingQuickStart,
-                linkButtonAnalyticsAction: AnalyticsConstants.Values.onboardingQuickStartLessons
+                linkButtonAnalyticsAction: AnalyticsConstants.ActionNames.onboardingQuickStartLessons
             ),
             OnboardingQuickStartItem(
                 title: localizationServices.stringForMainBundle(key: "onboardingQuickStart.2.title"),
                 linkButtonTitle: localizationServices.stringForMainBundle(key:  "onboardingQuickStart.2.button.title"),
                 linkButtonFlowStep: .chooseToolTappedFromOnboardingQuickStart,
-                linkButtonAnalyticsAction: AnalyticsConstants.Values.onboardingQuickStartTools
+                linkButtonAnalyticsAction: AnalyticsConstants.ActionNames.onboardingQuickStartTools
             ),
         ]
         

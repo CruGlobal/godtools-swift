@@ -88,11 +88,19 @@ class ToolViewModel: MobileContentPagesViewModel, ToolViewModelType {
             }
         }
     }
-    
+
     private var resource: ResourceModel {
         return renderer.resource
     }
+
+    private var analyticsScreenName: String {
+        return resource.abbreviation
+    }
     
+    private var analyticsSiteSection: String {
+        return resource.abbreviation
+    }
+        
     private var parallelLanguage: LanguageModel? {
         if renderer.pageRenderers.count > 1 {
             return renderer.pageRenderers[1].language
@@ -152,8 +160,8 @@ extension ToolViewModel {
     
     private func trackShareScreenOpened() {
         
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: resource.abbreviation, actionName: AnalyticsConstants.Values.shareScreenOpened, siteSection: resource.abbreviation, siteSubSection: "", url: nil, data: [
-            AnalyticsConstants.ActionNames.shareScreenOpenedCountKey: 1
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.ActionNames.shareScreenOpened, siteSection: analyticsSiteSection, siteSubSection: "", url: nil, data: [
+            AnalyticsConstants.Keys.shareScreenOpenedCountKey: 1
         ]))
     }
     

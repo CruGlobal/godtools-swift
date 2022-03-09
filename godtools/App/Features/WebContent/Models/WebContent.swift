@@ -13,4 +13,5 @@ struct WebContent: WebContentType {
     let navTitle: String
     let url: URL?
     let analyticsScreenName: String
+    let analyticsSiteSection: String
 }

@@ -49,6 +49,14 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
         return "All Tools"
     }
     
+    private var analyticsSiteSection: String {
+        return "home"
+    }
+    
+    private var analyticsSiteSubSection: String {
+        return ""
+    }
+    
     deinit {
         print("x deinit: \(type(of: self))")
         dataDownloader.cachedResourcesAvailable.removeObserver(self)
@@ -102,7 +110,7 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     
     func pageViewed() {
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: "tools", siteSubSection: ""))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
     }
     
     func favoritingToolMessageWillAppear() -> FavoritingToolMessageViewModelType {

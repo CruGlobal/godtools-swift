@@ -13,6 +13,7 @@ struct ShareAStoryWithUsWebContent: WebContentType {
     let navTitle: String
     let url: URL? = URL(string: "http://www.godtoolsapp.com/#contact")
     let analyticsScreenName: String = "Share Story"
+    let analyticsSiteSection: String = "menu"
     
     init(localizationServices: LocalizationServices) {
         

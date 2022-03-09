@@ -35,6 +35,20 @@ class AccountViewModel: AccountViewModelType {
         reloadAccountItems()
     }
     
+    private func getAnalyticsScreenName (page: Int) -> String {
+        let accountItem: AccountItem = accountItems.value[page]
+        
+        return accountItem.analyticsScreenName
+    }
+    
+    private var analyticsSiteSection: String {
+        return "account"
+    }
+    
+    private var analyticsSiteSubSection: String {
+        return ""
+    }
+    
     private func reloadUserProfile() {
         
         isLoadingProfile.accept(value: true)
@@ -79,8 +93,6 @@ class AccountViewModel: AccountViewModelType {
 
     func accountPageDidAppear(page: Int) {
         
-        let accountItem: AccountItem = accountItems.value[page]
-
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: accountItem.analyticsScreenName, siteSection: "", siteSubSection: ""))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: getAnalyticsScreenName(page: page), siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
     }
 }

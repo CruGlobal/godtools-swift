@@ -38,13 +38,21 @@ class ShareArticleViewModel: ShareArticleViewModelType {
         return "Article : \(articleAemData.articleJcrContent?.title ?? "GodTools")"
     }
     
+    private var analyticsSiteSection: String {
+        return "articles"
+    }
+    
+    private var analyticsSiteSubSection: String {
+        return ""
+    }
+    
     func pageViewed() {
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: "", siteSubSection: ""))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
     }
     
     func articleShared() {
                 
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.Values.share, siteSection: "", siteSubSection: "", url: nil, data: [AnalyticsConstants.Keys.shareAction: 1]))
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.ActionNames.shareIconEngaged, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection, url: nil, data: [AnalyticsConstants.Keys.shareAction: 1]))
     }
 }

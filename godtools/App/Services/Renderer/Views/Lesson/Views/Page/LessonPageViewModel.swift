@@ -42,10 +42,7 @@ class LessonPageViewModel: MobileContentPageViewModel, LessonPageViewModelType {
     func pageDidAppear() {
         mobileContentDidAppear()
         
-        let resource: ResourceModel = renderedPageContext.resource
-        let page: Int = renderedPageContext.page
-        
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: resource.abbreviation + "-" + String(page), siteSection: resource.abbreviation, siteSubSection: ""))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
     }
 }
 
