@@ -4,14 +4,14 @@
 "parallelLanguage.selectLanguageButton.title" = "Velg språk";
 "parellelLanguage.prompt" = "Vil du velg et språk til?";
 "onboardingTutorial.beginButton.title" = "Begynn";
-"onboardingTutorial.quickStart.2.message" = "Jeg vil dele Guds ord med noen";
-"onboardingTutorial.quickStart.2.link" = "Velg et av de fire verktøyene våre";
+"onboardingQuickStart.2.title" = "Jeg vil dele Guds ord med noen";
+"onboardingQuickStart.2.button.title" = "Velg et av de fire verktøyene våre";
 "onboardingTutorial.nextButton.title" = "Neste";
-"onboardingTutorial.quickstart.title" = "Koblinger for å komme i gang";
-"onboardingTutorial.quickStart.0.message" = "Jeg vil utforske kristendommen";
-"onboardingTutorial.quickStart.0.link" = "Les artiklene våre";
-"onboardingTutorial.quickStart.1.message" = "Jeg vil lære meg hvordan jeg kan ha samtaler om Guds ord";
-"onboardingTutorial.quickStart.1.link" = "Prøv leksjonene våre";
+"onboardingQuickStart.title" = "Koblinger for å komme i gang";
+"onboardingQuickStart.0.title" = "Jeg vil utforske kristendommen";
+"onboardingQuickStart.0.button.title" = "Les artiklene våre";
+"onboardingQuickStart.1.title" = "Jeg vil lære meg hvordan jeg kan ha samtaler om Guds ord";
+"onboardingQuickStart.1.button.title" = "Prøv leksjonene våre";
 "tool_offline_favorite_message" = "Gjør et verktøy tilgjengelig offline ved å trykke på hjerteikonet – det legges da i Favoritter.";
 
 /* This is a category description of a tool that helps you start a conversation */

@@ -4,14 +4,14 @@
 "parallelLanguage.selectLanguageButton.title" = "Επιλέξτε μία γλώσσα";
 "parellelLanguage.prompt" = "Θα θέλατε να ορίσετε μία δευτερεύουσα γλώσσα;";
 "onboardingTutorial.beginButton.title" = "Αρχίστε";
-"onboardingTutorial.quickStart.2.message" = "Θέλω να μοιραστώ το Ευαγγέλιο με κάποιον";
-"onboardingTutorial.quickStart.2.link" = "Διαλέξτε ένα από τα εργαλεία μας";
+"onboardingQuickStart.2.title" = "Θέλω να μοιραστώ το Ευαγγέλιο με κάποιον";
+"onboardingQuickStart.2.button.title" = "Διαλέξτε ένα από τα εργαλεία μας";
 "onboardingTutorial.nextButton.title" = "Επόμενο";
-"onboardingTutorial.quickstart.title" = "Σύνδεσμοι γρήγορης εκκίνησης";
-"onboardingTutorial.quickStart.0.message" = "Θέλω να εξερευνήσω τον Χριστιανισμό";
-"onboardingTutorial.quickStart.0.link" = "Διαβάστε τα άρθρα μας";
-"onboardingTutorial.quickStart.1.message" = "Θέλω να μάθω πώς να κάνω συζητήσεις για το Ευαγγέλιο";
-"onboardingTutorial.quickStart.1.link" = "Δοκιμάστε τα μαθήματά μας";
+"onboardingQuickStart.title" = "Σύνδεσμοι γρήγορης εκκίνησης";
+"onboardingQuickStart.0.title" = "Θέλω να εξερευνήσω τον Χριστιανισμό";
+"onboardingQuickStart.0.button.title" = "Διαβάστε τα άρθρα μας";
+"onboardingQuickStart.1.title" = "Θέλω να μάθω πώς να κάνω συζητήσεις για το Ευαγγέλιο";
+"onboardingQuickStart.1.button.title" = "Δοκιμάστε τα μαθήματά μας";
 "tool_offline_favorite_message" = "Κάντε το εργαλείο διαθέσιμο offline πατώντας το εικονίδιο με την καρδιά που το προσθέτει στα αγαπημένα σας.";
 
 /* This is a category description of a tool that helps you start a conversation */

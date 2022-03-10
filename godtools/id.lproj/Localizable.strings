@@ -4,14 +4,14 @@
 "parallelLanguage.selectLanguageButton.title" = "Pilih bahasa";
 "parellelLanguage.prompt" = "Apakah Anda ingin menyetel bahasa sekunder?";
 "onboardingTutorial.beginButton.title" = "Mulai";
-"onboardingTutorial.quickStart.2.message" = "Saya ingin membagikan Injil dengan seseorang";
-"onboardingTutorial.quickStart.2.link" = "Pilih salah satu alat kami";
+"onboardingQuickStart.2.title" = "Saya ingin membagikan Injil dengan seseorang";
+"onboardingQuickStart.2.button.title" = "Pilih salah satu alat kami";
 "onboardingTutorial.nextButton.title" = "Berikutnya";
-"onboardingTutorial.quickstart.title" = "Tautan mulai cepat";
-"onboardingTutorial.quickStart.0.message" = "Saya ingin menjelajahi agama Kristen";
-"onboardingTutorial.quickStart.0.link" = "Baca artikel kami";
-"onboardingTutorial.quickStart.1.message" = "Saya ingin belajar tentang melakukan percakapan Injil";
-"onboardingTutorial.quickStart.1.link" = "Coba Pelajaran kami";
+"onboardingQuickStart.title" = "Tautan mulai cepat";
+"onboardingQuickStart.0.title" = "Saya ingin menjelajahi agama Kristen";
+"onboardingQuickStart.0.button.title" = "Baca artikel kami";
+"onboardingQuickStart.1.title" = "Saya ingin belajar tentang melakukan percakapan Injil";
+"onboardingQuickStart.1.button.title" = "Coba Pelajaran kami";
 "tool_offline_favorite_message" = "Jadikan sarana tersedia secara offline dengan mengetuk ikon hati yang menambahkannya ke favorit Saudara.";
 
 /* This is a category description of a tool that helps you start a conversation */

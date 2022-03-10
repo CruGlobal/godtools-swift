@@ -4,14 +4,14 @@
 "parallelLanguage.selectLanguageButton.title" = "Vybrat jazyk";
 "parellelLanguage.prompt" = "Chcete si nastavit druhý jazyk?";
 "onboardingTutorial.beginButton.title" = "Začněte";
-"onboardingTutorial.quickStart.2.message" = "Chci se s někým podělit o evangelium";
-"onboardingTutorial.quickStart.2.link" = "Vyberte si jeden z našich nástrojů";
+"onboardingQuickStart.2.title" = "Chci se s někým podělit o evangelium";
+"onboardingQuickStart.2.button.title" = "Vyberte si jeden z našich nástrojů";
 "onboardingTutorial.nextButton.title" = "Další";
-"onboardingTutorial.quickstart.title" = "Odkazy pro rychlý start";
-"onboardingTutorial.quickStart.0.message" = "Chci prozkoumat křesťanství";
-"onboardingTutorial.quickStart.0.link" = "Přečtěte si naše články";
-"onboardingTutorial.quickStart.1.message" = "Chci se dozvědět, jak vést rozhovory o evangeliu";
-"onboardingTutorial.quickStart.1.link" = "Vyzkoušejte naše lekce";
+"onboardingQuickStart.title" = "Odkazy pro rychlý start";
+"onboardingQuickStart.0.title" = "Chci prozkoumat křesťanství";
+"onboardingQuickStart.0.button.title" = "Přečtěte si naše články";
+"onboardingQuickStart.1.title" = "Chci se dozvědět, jak vést rozhovory o evangeliu";
+"onboardingQuickStart.1.button.title" = "Vyzkoušejte naše lekce";
 "tool_offline_favorite_message" = "Klepnutím na ikonu srdíčka přidáte nástroj do svých oblíbených a budete jej mít k dispozici offline.";
 
 /* This is a category description of a tool that helps you start a conversation */
