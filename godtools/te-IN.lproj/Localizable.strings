@@ -4,14 +4,14 @@
 "parallelLanguage.selectLanguageButton.title" = "ఒక భాషను ఎంచుకోండి";
 "parellelLanguage.prompt" = "మీరు సెకండరీ భాషను సెట్ చేయాలనుకుంటున్నారా?";
 "onboardingTutorial.beginButton.title" = "ప్రారంభించండి";
-"onboardingTutorial.quickStart.2.message" = "నేను సువార్తను ఎవరితోనైనా పంచుకోవాలనుకుంటున్నాను";
-"onboardingTutorial.quickStart.2.link" = "మా సాధనాల్లో ఒకదాన్ని ఎంచుకోండి";
+"onboardingQuickStart.2.title" = "నేను సువార్తను ఎవరితోనైనా పంచుకోవాలనుకుంటున్నాను";
+"onboardingQuickStart.2.button.title" = "మా సాధనాల్లో ఒకదాన్ని ఎంచుకోండి";
 "onboardingTutorial.nextButton.title" = "తదుపరి";
-"onboardingTutorial.quickstart.title" = "త్వరిత ప్రారంభ లింక్స్";
-"onboardingTutorial.quickStart.0.message" = "నేను క్రైస్తవ మతాన్ని అన్వేషించాలనుకుంటున్నాను";
-"onboardingTutorial.quickStart.0.link" = "మా కథనాలను చదవండి";
-"onboardingTutorial.quickStart.1.message" = "సువార్త సంభాషణల గురించి నేను నేర్చుకోవాలనుకుంటున్నాను";
-"onboardingTutorial.quickStart.1.link" = "మా పాఠాలు ప్రయత్నించండి";
+"onboardingQuickStart.title" = "త్వరిత ప్రారంభ లింక్స్";
+"onboardingQuickStart.0.title" = "నేను క్రైస్తవ మతాన్ని అన్వేషించాలనుకుంటున్నాను";
+"onboardingQuickStart.0.button.title" = "మా కథనాలను చదవండి";
+"onboardingQuickStart.1.title" = "సువార్త సంభాషణల గురించి నేను నేర్చుకోవాలనుకుంటున్నాను";
+"onboardingQuickStart.1.button.title" = "మా పాఠాలు ప్రయత్నించండి";
 "tool_offline_favorite_message" = "మీ ఇష్టమైన వాటికి జోడించే హృదయ ఐకాన్‌ను తట్టడం ద్వారా ఒక సాధనాన్ని ఆఫ్‌లైన్‌లో అందుబాటులో ఉంచండి.";
 
 /* This is a category description of a tool that helps you start a conversation */

@@ -42,6 +42,10 @@ class MobileContentPageViewModel: MobileContentPageViewModelType {
         return resource.abbreviation
     }
     
+    var analyticsSiteSubSection: String {
+        return ""
+    }
+    
     var backgroundColor: UIColor {
         return pageModel.backgroundColor
     }
@@ -99,7 +103,7 @@ class MobileContentPageViewModel: MobileContentPageViewModelType {
         let exitLink = ExitLinkModel(
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
-            siteSubSection: "",
+            siteSubSection: analyticsSiteSubSection,
             url: url
         )
         

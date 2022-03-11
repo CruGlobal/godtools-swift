@@ -4,14 +4,14 @@
 "parallelLanguage.selectLanguageButton.title" = "Chagua lugha";
 "parellelLanguage.prompt" = "Je, ungependa kuweka lugha ya sekondari?";
 "onboardingTutorial.beginButton.title" = "Anza";
-"onboardingTutorial.quickStart.2.message" = "Ninataka kushirikisha mwingine na injili";
-"onboardingTutorial.quickStart.2.link" = "Chagua moja ya zana zetu";
+"onboardingQuickStart.2.title" = "Ninataka kushirikisha mwingine na injili";
+"onboardingQuickStart.2.button.title" = "Chagua moja ya zana zetu";
 "onboardingTutorial.nextButton.title" = "Ijayo";
-"onboardingTutorial.quickstart.title" = "Viungo muhimo vya kuanza";
-"onboardingTutorial.quickStart.0.message" = "Ninataka kuchunguza Ukristo";
-"onboardingTutorial.quickStart.0.link" = "Soma makala yetu";
-"onboardingTutorial.quickStart.1.message" = "Ninataka kuanza kuwa na mazungumzo ya injili";
-"onboardingTutorial.quickStart.1.link" = "Jaribu Masomo yetu";
+"onboardingQuickStart.title" = "Viungo muhimo vya kuanza";
+"onboardingQuickStart.0.title" = "Ninataka kuchunguza Ukristo";
+"onboardingQuickStart.0.button.title" = "Soma makala yetu";
+"onboardingQuickStart.1.title" = "Ninataka kuanza kuwa na mazungumzo ya injili";
+"onboardingQuickStart.1.button.title" = "Jaribu Masomo yetu";
 "tool_offline_favorite_message" = "Fanya zana ipatikane nje ya mkondo kwa kudonoa ikoni ya moyo inayoiongeza kwenye Vipendwa vyako.";
 
 /* This is a category description of a tool that helps you start a conversation */

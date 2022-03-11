@@ -13,6 +13,7 @@ struct ContactUsWebContent: WebContentType {
     let navTitle: String
     let url: URL? = URL(string: "http://www.godtoolsapp.com/#contact")
     let analyticsScreenName: String = "Contact Us"
+    let analyticsSiteSection: String = "menu"
     
     init(localizationServices: LocalizationServices) {
         

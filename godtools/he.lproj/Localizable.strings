@@ -4,14 +4,14 @@
 "parallelLanguage.selectLanguageButton.title" = "בחרו שפה";
 "parellelLanguage.prompt" = "האם ברצונכם להגדיר שפה שניה?";
 "onboardingTutorial.beginButton.title" = "התחלה";
-"onboardingTutorial.quickStart.2.message" = "אני רוצה לחלוק את הבשורה עם מישהו";
-"onboardingTutorial.quickStart.2.link" = "בחרו את אחד מהכלים שלנו";
+"onboardingQuickStart.2.title" = "אני רוצה לחלוק את הבשורה עם מישהו";
+"onboardingQuickStart.2.button.title" = "בחרו את אחד מהכלים שלנו";
 "onboardingTutorial.nextButton.title" = "הבא";
-"onboardingTutorial.quickstart.title" = "קישורי התחלה מהירה";
-"onboardingTutorial.quickStart.0.message" = "אני רוצה לחקור את הנצרות";
-"onboardingTutorial.quickStart.0.link" = "קראו את המאמרים שלנו";
-"onboardingTutorial.quickStart.1.message" = "אני רוצה ללמוד על ניהול שיחות בשורה";
-"onboardingTutorial.quickStart.1.link" = "נסה את השיעורים שלנו";
+"onboardingQuickStart.title" = "קישורי התחלה מהירה";
+"onboardingQuickStart.0.title" = "אני רוצה לחקור את הנצרות";
+"onboardingQuickStart.0.button.title" = "קראו את המאמרים שלנו";
+"onboardingQuickStart.1.title" = "אני רוצה ללמוד על ניהול שיחות בשורה";
+"onboardingQuickStart.1.button.title" = "נסה את השיעורים שלנו";
 "tool_offline_favorite_message" = "הפוך כלי לזמין במצב לא מקוון על ידי הקשה על סמל הלב שמוסיף אותו למועדפים שלך.";
 
 /* This is a category description of a tool that helps you start a conversation */

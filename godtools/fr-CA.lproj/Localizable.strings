@@ -4,14 +4,14 @@
 "parallelLanguage.selectLanguageButton.title" = "Sélectionner une langue";
 "parellelLanguage.prompt" = "Voudriez-vous définir une langue secondaire?";
 "onboardingTutorial.beginButton.title" = "Commencer";
-"onboardingTutorial.quickStart.2.message" = "Je veux partager l’évangile avec quelqu’un";
-"onboardingTutorial.quickStart.2.link" = "Choisissez un de nos outils";
+"onboardingQuickStart.2.title" = "Je veux partager l’évangile avec quelqu’un";
+"onboardingQuickStart.2.button.title" = "Choisissez un de nos outils";
 "onboardingTutorial.nextButton.title" = "Suivant";
-"onboardingTutorial.quickstart.title" = "Liens de démarrage rapide";
-"onboardingTutorial.quickStart.0.message" = "Je veux explorer le christianisme";
-"onboardingTutorial.quickStart.0.link" = "Lire nos articles";
-"onboardingTutorial.quickStart.1.message" = "Je veux apprendre comment avoir des conversations sur l’évangile";
-"onboardingTutorial.quickStart.1.link" = "Essayer nos cours";
+"onboardingQuickStart.title" = "Liens de démarrage rapide";
+"onboardingQuickStart.0.title" = "Je veux explorer le christianisme";
+"onboardingQuickStart.0.button.title" = "Lire nos articles";
+"onboardingQuickStart.1.title" = "Je veux apprendre comment avoir des conversations sur l’évangile";
+"onboardingQuickStart.1.button.title" = "Essayer nos cours";
 "tool_offline_favorite_message" = "Appuyez sur l'icône en forme de cœur pour ajouter un outil à vos favoris et le rendre disponible hors ligne.";
 
 /* This is a category description of a tool that helps you start a conversation */

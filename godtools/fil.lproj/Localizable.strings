@@ -4,14 +4,14 @@
 "parallelLanguage.selectLanguageButton.title" = "Pumili ng wika";
 "parellelLanguage.prompt" = "Gusto mo bang mag-set ng pangalawang wika?";
 "onboardingTutorial.beginButton.title" = "Magsimula";
-"onboardingTutorial.quickStart.2.message" = "Gusto kong magbahagi ng ebanghelyo sa isang tao";
-"onboardingTutorial.quickStart.2.link" = "Piliin ang isa sa aming mga tool";
+"onboardingQuickStart.2.title" = "Gusto kong magbahagi ng ebanghelyo sa isang tao";
+"onboardingQuickStart.2.button.title" = "Piliin ang isa sa aming mga tool";
 "onboardingTutorial.nextButton.title" = "Susunod";
-"onboardingTutorial.quickstart.title" = "Mga link para sa mabilis na simula";
-"onboardingTutorial.quickStart.0.message" = "Gusto kong ma-explore ang Kristiyanismo";
-"onboardingTutorial.quickStart.0.link" = "Basahin ang aming mga artikulo";
-"onboardingTutorial.quickStart.1.message" = "Gusto kong matutong magkaroon ng mga pag-uusap tungkol sa ebanghelyo";
-"onboardingTutorial.quickStart.1.link" = "Subukan ang aming mga Lesson";
+"onboardingQuickStart.title" = "Mga link para sa mabilis na simula";
+"onboardingQuickStart.0.title" = "Gusto kong ma-explore ang Kristiyanismo";
+"onboardingQuickStart.0.button.title" = "Basahin ang aming mga artikulo";
+"onboardingQuickStart.1.title" = "Gusto kong matutong magkaroon ng mga pag-uusap tungkol sa ebanghelyo";
+"onboardingQuickStart.1.button.title" = "Subukan ang aming mga Lesson";
 "tool_offline_favorite_message" = "Gawing available offline ang isang tool sa pamamagitan ng pag-tap sa pusong icon na magdaragdag dito sa mga paborito mo.";
 
 /* This is a category description of a tool that helps you start a conversation */

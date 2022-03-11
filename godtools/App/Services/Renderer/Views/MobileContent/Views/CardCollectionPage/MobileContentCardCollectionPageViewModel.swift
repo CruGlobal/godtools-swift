@@ -83,11 +83,11 @@ class MobileContentCardCollectionPageViewModel: MobileContentPageViewModel, Mobi
     
     func pageDidAppear() {
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: getPageAnalyticsScreenName(), siteSection: renderedPageContext.resource.abbreviation, siteSubSection: ""))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: getPageAnalyticsScreenName(), siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
     }
     
     func cardDidAppear(card: Int) {
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: getCardAnalyticsScreenName(card: card), siteSection: renderedPageContext.resource.abbreviation, siteSubSection: ""))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: getCardAnalyticsScreenName(card: card), siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
     }
 }

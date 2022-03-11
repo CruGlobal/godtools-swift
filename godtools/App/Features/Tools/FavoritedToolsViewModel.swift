@@ -63,6 +63,14 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
         return "Favorites"
     }
     
+    private var analyticsSiteSection: String {
+        return "home"
+    }
+    
+    private var analyticsSiteSubSection: String {
+        return ""
+    }
+    
     private func getFlowDelegate() -> FlowDelegate {
         guard let flowDelegate = self.flowDelegate else {
             assertionFailure("FlowDelegate should not be nil.")
@@ -144,7 +152,7 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     
     func pageViewed() {
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: "tools", siteSubSection: ""))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
     }
     
     func openTutorialWillAppear() -> OpenTutorialViewModelType {

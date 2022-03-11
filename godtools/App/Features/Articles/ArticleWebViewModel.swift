@@ -34,9 +34,12 @@ class ArticleWebViewModel: NSObject, ArticleWebViewModelType {
                 
         hidesShareButton.accept(value: aemCacheObject.aemData.articleJcrContent?.canonical == nil)
     }
-
-    func pageViewed() {
-        
+    
+    private var analyticsScreenName: String {
+        return "Article : \(aemCacheObject.aemData.articleJcrContent?.title ?? "")"
+    }
+    
+    private var analyticsSiteSection: String {
         let siteSection: String
         
         switch flowType {
@@ -47,8 +50,17 @@ class ArticleWebViewModel: NSObject, ArticleWebViewModelType {
         case .tool(let resource):
             siteSection = resource.abbreviation
         }
+        
+        return siteSection
+    }
+    
+    private var analyticsSiteSubSection: String {
+        return "article"
+    }
+
+    func pageViewed() {
                 
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: "Article : \(aemCacheObject.aemData.articleJcrContent?.title ?? "")", siteSection: siteSection, siteSubSection: "article"))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
     }
     
     func sharedTapped() {

@@ -51,7 +51,7 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
         numberOfTipPages.accept(value: tipModel.pages.count)
         setPage(page: 0, animated: false)
     }
-    
+
     private var resource: ResourceModel {
         return pageRenderer.resource
     }
@@ -60,12 +60,20 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
         return pageRenderer.language
     }
     
-    private var analyticsScreenName: String {
+    private func getExitAnalyticsScreenName () -> String {
         return resource.abbreviation + "-tool-training"
     }
     
-    private var siteSection: String {
+    private func getTipPageAnalyticsScreenName (tipPage: Int) -> String {
+        return "\(resource.abbreviation)-tip-\(trainingTipId)-\(tipPage)"
+    }
+    
+    private var analyticsSiteSection: String {
         return resource.abbreviation
+    }
+    
+    private var analyticsSiteSubSection: String {
+        return ""
     }
     
     private func setPage(page: Int, animated: Bool) {
@@ -146,9 +154,9 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     func buttonWithUrlTapped(url: String) {
         
         let exitLink = ExitLinkModel(
-            screenName: analyticsScreenName,
-            siteSection: siteSection,
-            siteSubSection: "",
+            screenName: getExitAnalyticsScreenName(),
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
             url: url
         )
         
@@ -175,8 +183,6 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     func tipPageDidAppear(page: Int) {
         setPage(page: page, animated: true)
         
-        let tipPage: Int = page
-        let analyticsScreenName: String = "\(resource.abbreviation)-tip-\(trainingTipId)-\(tipPage)"
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: "", siteSubSection: ""))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: getTipPageAnalyticsScreenName(tipPage: page), siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
     }
 }

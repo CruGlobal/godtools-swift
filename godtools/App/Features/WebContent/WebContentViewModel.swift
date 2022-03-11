@@ -25,8 +25,20 @@ class WebContentViewModel: WebContentViewModelType {
         url.accept(value: webContent.url)
     }
     
+    private var analyticsScreenName: String {
+        return webContent.analyticsScreenName
+    }
+    
+    private var analyticsSiteSection: String {
+        return webContent.analyticsSiteSection
+    }
+    
+    private var analyticsSiteSubSection: String {
+        return ""
+    }
+    
     func pageViewed() {
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: webContent.analyticsScreenName, siteSection: "", siteSubSection: ""))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
     }
 }

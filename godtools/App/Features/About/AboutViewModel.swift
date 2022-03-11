@@ -26,7 +26,19 @@ class AboutViewModel: AboutViewModelType {
         aboutTexts.accept(value: aboutTextProvider.aboutTexts)
     }
     
+    private var analyticsScreenName: String {
+        return "About"
+    }
+    
+    private var analyticsSiteSection: String {
+        return "menu"
+    }
+    
+    private var analyticsSiteSubSection: String {
+        return ""
+    }
+    
     func pageViewed() {
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: "About", siteSection: "menu", siteSubSection: ""))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
     }
 }

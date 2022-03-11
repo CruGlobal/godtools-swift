@@ -4,14 +4,14 @@
 "parallelLanguage.selectLanguageButton.title" = "एक भाषा चुनें";
 "parellelLanguage.prompt" = "क्या आप कोई द्वितीय भाषा सेट करना चाहेंगे?";
 "onboardingTutorial.beginButton.title" = "शुरू करें";
-"onboardingTutorial.quickStart.2.message" = "मुझे इंजील किसी के साथ साझा करना है";
-"onboardingTutorial.quickStart.2.link" = "हमारा कोई टूल चुनें";
+"onboardingQuickStart.2.title" = "मुझे इंजील किसी के साथ साझा करना है";
+"onboardingQuickStart.2.button.title" = "हमारा कोई टूल चुनें";
 "onboardingTutorial.nextButton.title" = "अगला";
-"onboardingTutorial.quickstart.title" = "तुरंत शुरुआत के लिंक";
-"onboardingTutorial.quickStart.0.message" = "मुझे ईसाईयत के बारे में अधिक जानना है";
-"onboardingTutorial.quickStart.0.link" = "हमारे लेख पढ़ें";
-"onboardingTutorial.quickStart.1.message" = "मुझे इंजील वार्तालापों के बारे में जानना है";
-"onboardingTutorial.quickStart.1.link" = "हमारे अध्याय आज़माएँ";
+"onboardingQuickStart.title" = "तुरंत शुरुआत के लिंक";
+"onboardingQuickStart.0.title" = "मुझे ईसाईयत के बारे में अधिक जानना है";
+"onboardingQuickStart.0.button.title" = "हमारे लेख पढ़ें";
+"onboardingQuickStart.1.title" = "मुझे इंजील वार्तालापों के बारे में जानना है";
+"onboardingQuickStart.1.button.title" = "हमारे अध्याय आज़माएँ";
 "tool_offline_favorite_message" = "टूल को पसंदीदा में जोड़ने वाले 'दिल' चिन्ह को टैप करके आप उस टूल को ऑफलाइन उपलब्ध कर सकते हैं।";
 
 /* This is a category description of a tool that helps you start a conversation */

@@ -52,7 +52,15 @@ class LessonsListViewModel: NSObject, LessonsListViewModelType {
     }
     
     var analyticsScreenName: String {
-        return "lessons"
+        return "Lessons"
+    }
+    
+    private var analyticsSiteSection: String {
+        return "home"
+    }
+    
+    private var analyticsSiteSubSection: String {
+        return ""
     }
     
     private func setupBinding() {
@@ -78,7 +86,7 @@ class LessonsListViewModel: NSObject, LessonsListViewModelType {
     
     func pageViewed() {
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: "lessons", siteSubSection: ""))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
         analytics.appsFlyerAnalytics.trackAction(actionName: analyticsScreenName, data:  nil)
     } 
     

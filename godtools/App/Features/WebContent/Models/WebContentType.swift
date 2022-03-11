@@ -13,4 +13,5 @@ protocol WebContentType {
     var navTitle: String { get }
     var url: URL? { get }
     var analyticsScreenName: String { get }
+    var analyticsSiteSection: String { get }
 }
