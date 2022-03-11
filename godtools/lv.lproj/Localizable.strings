@@ -1,17 +1,18 @@
+"tool_menu_item.lessons" = "Nodarbības";
 "parallelLanguage.yesButton.title" = "Jā";
 "parallelLanguage.noButton.title" = "Nē, paldies";
 "parallelLanguage.getStartedButton.title" = "Sākt";
 "parallelLanguage.selectLanguageButton.title" = "Atlasīt valodu";
 "parellelLanguage.prompt" = "Vai vēlaties iestatīt otro valodu?";
 "onboardingTutorial.beginButton.title" = "Sākt";
-"onboardingTutorial.quickStart.2.message" = "Vēlos runāt par gospeli ar kādu citu";
-"onboardingTutorial.quickStart.2.link" = "Izvēlieties vienu no mūsu rīkiem";
+"onboardingQuickStart.2.title" = "Vēlos runāt par gospeli ar kādu citu";
+"onboardingQuickStart.2.button.title" = "Izvēlieties vienu no mūsu rīkiem";
 "onboardingTutorial.nextButton.title" = "Tālāk";
-"onboardingTutorial.quickstart.title" = "Ātrās sākšanas saites";
-"onboardingTutorial.quickStart.0.message" = "Es vēlos iepazīt kristietību";
-"onboardingTutorial.quickStart.0.link" = "Lasiet mūsu rakstus";
-"onboardingTutorial.quickStart.1.message" = "Es vēlos uzzināt par sarunām par gospeli";
-"onboardingTutorial.quickStart.1.link" = "Izmēģiniet mūsu Mācību stundas";
+"onboardingQuickStart.title" = "Ātrās sākšanas saites";
+"onboardingQuickStart.0.title" = "Es vēlos iepazīt kristietību";
+"onboardingQuickStart.0.button.title" = "Lasiet mūsu rakstus";
+"onboardingQuickStart.1.title" = "Es vēlos uzzināt par sarunām par gospeli";
+"onboardingQuickStart.1.button.title" = "Izmēģiniet mūsu Mācību stundas";
 "tool_offline_favorite_message" = "Padari rīku pieejamu bezsaistē, nospiežot sirds ikonu, lai pievienotu to Izlasei.";
 
 /* This is a category description of a tool that helps you start a conversation */

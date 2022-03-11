@@ -4,14 +4,14 @@
 "parallelLanguage.selectLanguageButton.title" = "Изаберите језик";
 "parellelLanguage.prompt" = "Желите ли да поставите секундарни језик?";
 "onboardingTutorial.beginButton.title" = "Почни";
-"onboardingTutorial.quickStart.2.message" = "Желим да поделим јеванђеље са неким";
-"onboardingTutorial.quickStart.2.link" = "Одаберите један од наших алатки";
+"onboardingQuickStart.2.title" = "Желим да поделим јеванђеље са неким";
+"onboardingQuickStart.2.button.title" = "Одаберите један од наших алатки";
 "onboardingTutorial.nextButton.title" = "Следеће";
-"onboardingTutorial.quickstart.title" = "Линкови за брзи почетак";
-"onboardingTutorial.quickStart.0.message" = "Желим да истражим хришћанство";
-"onboardingTutorial.quickStart.0.link" = "Прочитајте наше чланке";
-"onboardingTutorial.quickStart.1.message" = "Желим да учим о разговорима о јеванђељу";
-"onboardingTutorial.quickStart.1.link" = "Испробајте наше лекције";
+"onboardingQuickStart.title" = "Линкови за брзи почетак";
+"onboardingQuickStart.0.title" = "Желим да истражим хришћанство";
+"onboardingQuickStart.0.button.title" = "Прочитајте наше чланке";
+"onboardingQuickStart.1.title" = "Желим да учим о разговорима о јеванђељу";
+"onboardingQuickStart.1.button.title" = "Испробајте наше лекције";
 "tool_offline_favorite_message" = "Омогући да алатка буде доступна ван мреже тако што ћете додирнути иконицу срце која ће је додати у омиљене.";
 
 /* This is a category description of a tool that helps you start a conversation */

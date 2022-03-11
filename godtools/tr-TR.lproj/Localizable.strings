@@ -5,14 +5,14 @@
 "parallelLanguage.selectLanguageButton.title" = "Bir dil seçin";
 "parellelLanguage.prompt" = "İkinci bir dil ayarlamak ister misiniz?";
 "onboardingTutorial.beginButton.title" = "Başla";
-"onboardingTutorial.quickStart.2.message" = "Hakikati birisiyle paylaşmak istiyorum";
-"onboardingTutorial.quickStart.2.link" = "Araçlarımızdan birini seç";
+"onboardingQuickStart.2.title" = "Hakikati birisiyle paylaşmak istiyorum";
+"onboardingQuickStart.2.button.title" = "Araçlarımızdan birini seç";
 "onboardingTutorial.nextButton.title" = "Sonraki";
-"onboardingTutorial.quickstart.title" = "Hızlı başlangıç bağlantıları";
-"onboardingTutorial.quickStart.0.message" = "Hristiyanlığı keşfetmek istiyorum";
-"onboardingTutorial.quickStart.0.link" = "Makalelerimizi oku";
-"onboardingTutorial.quickStart.1.message" = "İncil sohbetleri gerçekleştirme konusunda bilgi edinmek istiyorum";
-"onboardingTutorial.quickStart.1.link" = "Derslerimizi dene";
+"onboardingQuickStart.title" = "Hızlı başlangıç bağlantıları";
+"onboardingQuickStart.0.title" = "Hristiyanlığı keşfetmek istiyorum";
+"onboardingQuickStart.0.button.title" = "Makalelerimizi oku";
+"onboardingQuickStart.1.title" = "İncil sohbetleri gerçekleştirme konusunda bilgi edinmek istiyorum";
+"onboardingQuickStart.1.button.title" = "Derslerimizi dene";
 "tool_offline_favorite_message" = "Kalp simgesine dokunup favorilerine ekleyerek bir aracı çevrim dışı kullanılabilir hâle getir.";
 
 /* This is a category description of a tool that helps you start a conversation */

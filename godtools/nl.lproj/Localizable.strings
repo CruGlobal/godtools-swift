@@ -4,14 +4,14 @@
 "parallelLanguage.selectLanguageButton.title" = "Selecteer een taal";
 "parellelLanguage.prompt" = "Wil je een tweede taal instellen?";
 "onboardingTutorial.beginButton.title" = "Beginnen";
-"onboardingTutorial.quickStart.2.message" = "Ik wil het evangelie met iemand delen";
-"onboardingTutorial.quickStart.2.link" = "Kies een van onze programma's";
+"onboardingQuickStart.2.title" = "Ik wil het evangelie met iemand delen";
+"onboardingQuickStart.2.button.title" = "Kies een van onze programma's";
 "onboardingTutorial.nextButton.title" = "Volgende";
-"onboardingTutorial.quickstart.title" = "Links voor snelle start";
-"onboardingTutorial.quickStart.0.message" = "Ik wil het Christendom leren kennen";
-"onboardingTutorial.quickStart.0.link" = "Lees onze artikelen";
-"onboardingTutorial.quickStart.1.message" = "Ik wil evangeliegesprekken leren voeren";
-"onboardingTutorial.quickStart.1.link" = "Probeer onze lessen";
+"onboardingQuickStart.title" = "Links voor snelle start";
+"onboardingQuickStart.0.title" = "Ik wil het Christendom leren kennen";
+"onboardingQuickStart.0.button.title" = "Lees onze artikelen";
+"onboardingQuickStart.1.title" = "Ik wil evangeliegesprekken leren voeren";
+"onboardingQuickStart.1.button.title" = "Probeer onze lessen";
 "tool_offline_favorite_message" = "Maak een hulpprogramma ook offline beschikbaar door op het hartje te tikken en het toe te voegen aan je favorieten.";
 
 /* This is a category description of a tool that helps you start a conversation */

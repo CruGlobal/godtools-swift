@@ -4,14 +4,14 @@
 "parallelLanguage.selectLanguageButton.title" = "کوئی زبان منتخب کریں";
 "parellelLanguage.prompt" = "کیا آپ کوئی ثانوی زبان سیٹ کرنا چاہیں گے؟";
 "onboardingTutorial.beginButton.title" = "شروع کریں";
-"onboardingTutorial.quickStart.2.message" = "میں کسی کے ساتھ انجیل ساجھا کرنا چاہتا ہوں";
-"onboardingTutorial.quickStart.2.link" = "ہمارے ٹولز میں سے کسی ایک کا انتخاب کریں";
+"onboardingQuickStart.2.title" = "میں کسی کے ساتھ انجیل ساجھا کرنا چاہتا ہوں";
+"onboardingQuickStart.2.button.title" = "ہمارے ٹولز میں سے کسی ایک کا انتخاب کریں";
 "onboardingTutorial.nextButton.title" = "اگلا";
-"onboardingTutorial.quickstart.title" = "فوری آغاز کے لنکس";
-"onboardingTutorial.quickStart.0.message" = "میں عیسائیت کو دریافت کرنا چاہتا ہوں";
-"onboardingTutorial.quickStart.0.link" = "ہمارے مضامین پڑھیں";
-"onboardingTutorial.quickStart.1.message" = "میں انجیل کے متعلق گفتگو کرنے کے بارے میں جاننا چاہتا ہوں";
-"onboardingTutorial.quickStart.1.link" = "ہمارے سبق آزمائیں";
+"onboardingQuickStart.title" = "فوری آغاز کے لنکس";
+"onboardingQuickStart.0.title" = "میں عیسائیت کو دریافت کرنا چاہتا ہوں";
+"onboardingQuickStart.0.button.title" = "ہمارے مضامین پڑھیں";
+"onboardingQuickStart.1.title" = "میں انجیل کے متعلق گفتگو کرنے کے بارے میں جاننا چاہتا ہوں";
+"onboardingQuickStart.1.button.title" = "ہمارے سبق آزمائیں";
 "tool_offline_favorite_message" = "دل کے آئیکن پر ٹیپ کر کے کسی ٹول کو آف لائن دستیاب کرائیں جو اسے آپ کے پسندیدگان میں شامل کر دیتا ہے۔";
 
 /* This is a category description of a tool that helps you start a conversation */

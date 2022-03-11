@@ -1,12 +1,12 @@
 "onboardingTutorial.beginButton.title" = "ເລີ່ມ";
-"onboardingTutorial.quickStart.2.message" = "ຂ້ອຍຕ້ອງການແບ່ງປັນຂ່າວປະເສີດກັບຄົນອື່ນ";
-"onboardingTutorial.quickStart.2.link" = "ເລືອກເຄື່ອງມືໃດໜຶ່ງຂອງພວກເຮົາ";
+"onboardingQuickStart.2.title" = "ຂ້ອຍຕ້ອງການແບ່ງປັນຂ່າວປະເສີດກັບຄົນອື່ນ";
+"onboardingQuickStart.2.button.title" = "ເລືອກເຄື່ອງມືໃດໜຶ່ງຂອງພວກເຮົາ";
 "onboardingTutorial.nextButton.title" = "ຖັດໄປ";
-"onboardingTutorial.quickstart.title" = "ລິ້ງສໍາລັບການເລີ່ມດ່ວນ";
-"onboardingTutorial.quickStart.0.message" = "ຂ້ອຍຕ້ອງການສໍາຫຼວດສາສະໜາຄຣິສ";
-"onboardingTutorial.quickStart.0.link" = "ອ່ານບົດຄວາມຂອງພວກເຮົາ";
-"onboardingTutorial.quickStart.1.message" = "ຂ້ອຍຕ້ອງການຮຽນຮູ້ກ່ຽວກັບການສົນທະນາຂ່າວປະເສີດ";
-"onboardingTutorial.quickStart.1.link" = "ລອງເບິ່ງບົດຮຽນຂອງພວກເຮົາ";
+"onboardingQuickStart.title" = "ລິ້ງສໍາລັບການເລີ່ມດ່ວນ";
+"onboardingQuickStart.0.title" = "ຂ້ອຍຕ້ອງການສໍາຫຼວດສາສະໜາຄຣິສ";
+"onboardingQuickStart.0.button.title" = "ອ່ານບົດຄວາມຂອງພວກເຮົາ";
+"onboardingQuickStart.1.title" = "ຂ້ອຍຕ້ອງການຮຽນຮູ້ກ່ຽວກັບການສົນທະນາຂ່າວປະເສີດ";
+"onboardingQuickStart.1.button.title" = "ລອງເບິ່ງບົດຮຽນຂອງພວກເຮົາ";
 "tool_offline_favorite_message" = "ເຮັດໃຫ້ສາມາດໃຊ້ເຄື່ອງມືແບບອອບລາຍໂດຍການແຕະໄອຄອນຫົວໃຈ ເຊິ່ງຈະເປັນການເພີ່ມເຄື່ອງມືໃສ່ລາຍການທີ່ມັກຂອງທ່ານ.";
 
 /* This is a category description of a tool that helps you start a conversation */

@@ -4,14 +4,14 @@
 "parallelLanguage.selectLanguageButton.title" = "언어 선택";
 "parellelLanguage.prompt" = "제2의 언어를 설정하시겠습니까?";
 "onboardingTutorial.beginButton.title" = "시작";
-"onboardingTutorial.quickStart.2.message" = "누군가와 복음을 나누고 싶습니다";
-"onboardingTutorial.quickStart.2.link" = "도구를 선택하세요";
+"onboardingQuickStart.2.title" = "누군가와 복음을 나누고 싶습니다";
+"onboardingQuickStart.2.button.title" = "도구를 선택하세요";
 "onboardingTutorial.nextButton.title" = "다음";
-"onboardingTutorial.quickstart.title" = "빠른 시작 링크";
-"onboardingTutorial.quickStart.0.message" = "기독교를 알아보고 싶습니다";
-"onboardingTutorial.quickStart.0.link" = "글 읽어보기";
-"onboardingTutorial.quickStart.1.message" = "복음 대화에 대해 배우고 싶습니다";
-"onboardingTutorial.quickStart.1.link" = "수업 듣기";
+"onboardingQuickStart.title" = "빠른 시작 링크";
+"onboardingQuickStart.0.title" = "기독교를 알아보고 싶습니다";
+"onboardingQuickStart.0.button.title" = "글 읽어보기";
+"onboardingQuickStart.1.title" = "복음 대화에 대해 배우고 싶습니다";
+"onboardingQuickStart.1.button.title" = "수업 듣기";
 "tool_offline_favorite_message" = "하트 아이콘을 탭하여 즐겨찾기에 추가해서 오프라인에서도 도구를 사용하세요.";
 
 /* This is a category description of a tool that helps you start a conversation */

@@ -3,13 +3,13 @@
 "parallelLanguage.selectLanguageButton.title" = "Chọn một ngôn ngữ";
 "parellelLanguage.prompt" = "Bạn có muốn thiết lập ngôn ngữ thứ hai không?";
 "onboardingTutorial.beginButton.title" = "Bắt đầu";
-"onboardingTutorial.quickStart.2.message" = "Tôi muốn chia sẻ Phúc Âm với người khác";
-"onboardingTutorial.quickStart.2.link" = "Chọn một trong số bốn công cụ";
+"onboardingQuickStart.2.title" = "Tôi muốn chia sẻ Phúc Âm với người khác";
+"onboardingQuickStart.2.button.title" = "Chọn một trong số bốn công cụ";
 "onboardingTutorial.nextButton.title" = "Tiếp theo";
-"onboardingTutorial.quickStart.0.message" = "Tôi muốn biết nhiều hơn về Chúa";
-"onboardingTutorial.quickStart.0.link" = "Đọc bài viết";
-"onboardingTutorial.quickStart.1.message" = "Tôi muốn học biết về việc chia sẻ Phúc Âm";
-"onboardingTutorial.quickStart.1.link" = "Xem bài học";
+"onboardingQuickStart.0.title" = "Tôi muốn biết nhiều hơn về Chúa";
+"onboardingQuickStart.0.button.title" = "Đọc bài viết";
+"onboardingQuickStart.1.title" = "Tôi muốn học biết về việc chia sẻ Phúc Âm";
+"onboardingQuickStart.1.button.title" = "Xem bài học";
 "tool_offline_favorite_message" = "Để công cụ ngoại tuyến bằng cách gõ vào biểu tượng trái tìm để thêm vào phần ưa thích của bạn.";
 
 /* This is a category description of a tool that helps you start a conversation */

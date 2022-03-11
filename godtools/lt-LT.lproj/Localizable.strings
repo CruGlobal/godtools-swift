@@ -4,14 +4,14 @@
 "parallelLanguage.selectLanguageButton.title" = "Pasirinkite kalbą";
 "parellelLanguage.prompt" = "Ar norėtumėte nustatyti papildomą kalbą?";
 "onboardingTutorial.beginButton.title" = "Pradėti";
-"onboardingTutorial.quickStart.2.message" = "Noriu su kuo nors pasidalyti evangelija";
-"onboardingTutorial.quickStart.2.link" = "Pasirinkite vieną iš mūsų įrankių";
+"onboardingQuickStart.2.title" = "Noriu su kuo nors pasidalyti evangelija";
+"onboardingQuickStart.2.button.title" = "Pasirinkite vieną iš mūsų įrankių";
 "onboardingTutorial.nextButton.title" = "Kitas";
-"onboardingTutorial.quickstart.title" = "Greitos pradžios nuorodos";
-"onboardingTutorial.quickStart.0.message" = "Noriu susipažinti su Krikščionybe";
-"onboardingTutorial.quickStart.0.link" = "Skaitykite mūsų straipsnius";
-"onboardingTutorial.quickStart.1.message" = "Noriu sužinoti, kaip rengti pokalbius apie evangeliją";
-"onboardingTutorial.quickStart.1.link" = "Išbandykite mūsų pamokas";
+"onboardingQuickStart.title" = "Greitos pradžios nuorodos";
+"onboardingQuickStart.0.title" = "Noriu susipažinti su Krikščionybe";
+"onboardingQuickStart.0.button.title" = "Skaitykite mūsų straipsnius";
+"onboardingQuickStart.1.title" = "Noriu sužinoti, kaip rengti pokalbius apie evangeliją";
+"onboardingQuickStart.1.button.title" = "Išbandykite mūsų pamokas";
 "tool_offline_favorite_message" = "Įrankį galima naudoti atsijungus, paspaudus širdelės piktogramą, kuri prideda ją prie mėgstamiausių.";
 
 /* This is a category description of a tool that helps you start a conversation */

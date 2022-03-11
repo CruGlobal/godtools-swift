@@ -1,3 +1,12 @@
+"training_tip_ask" = "Ask";
+"training_tip_consider" = "Consider";
+"training_tip_prepare" = "Prepare";
+"training_tip_quote" = "Quote";
+"training_tip_tip" = "Tip";
+"articles.downloadingArticles.errorMessage.title" = "Error Downloading Articles";
+"start_training" = "Start Training";
+"close" = "Close";
+"tool_menu_item.lessons" = "Lessons";
 "parallelLanguage.yesButton.title" = "Yes";
 "parallelLanguage.noButton.title" = "No thanks";
 "parallelLanguage.selectButton.title" = "Select";
@@ -36,14 +45,14 @@
 "tutorial.findTutorial.title" = "Find this tutorial in the menu whenever you need it.";
 
 "onboardingTutorial.beginButton.title" = "Begin";
-"onboardingTutorial.quickStart.2.message" = "I want to share the gospel with someone";
-"onboardingTutorial.quickStart.2.link" = "Choose one of our tools";
+"onboardingQuickStart.2.title" = "I want to share the gospel with someone";
+"onboardingQuickStart.2.button.title" = "Choose one of our tools";
 "onboardingTutorial.nextButton.title" = "Next";
-"onboardingTutorial.quickstart.title" = "Quick start links";
-"onboardingTutorial.quickStart.0.message" = "I want to explore Christianity";
-"onboardingTutorial.quickStart.0.link" = "Read our articles";
-"onboardingTutorial.quickStart.1.message" = "I want to learn about having gospel conversations";
-"onboardingTutorial.quickStart.1.link" = "Try our Lessons";
+"onboardingQuickStart.title" = "Quick start links";
+"onboardingQuickStart.0.title" = "I want to explore Christianity";
+"onboardingQuickStart.0.button.title" = "Read our articles";
+"onboardingQuickStart.1.title" = "I want to learn about having gospel conversations";
+"onboardingQuickStart.1.button.title" = "Try our Lessons";
 "tool_offline_favorite_message" = "Make a tool available offline by tapping the heart icon which adds it to your favorites.";
 
 /* This is a category description of a tool that helps you start a conversation */

@@ -3,14 +3,14 @@
 "parallelLanguage.selectLanguageButton.title" = "選擇語言";
 "parellelLanguage.prompt" = "您想要設定次要語言嗎？";
 "onboardingTutorial.beginButton.title" = "開始";
-"onboardingTutorial.quickStart.2.message" = "我想要與某人分享福音";
-"onboardingTutorial.quickStart.2.link" = "選擇一個我們的工具";
+"onboardingQuickStart.2.title" = "我想要與某人分享福音";
+"onboardingQuickStart.2.button.title" = "選擇一個我們的工具";
 "onboardingTutorial.nextButton.title" = "下一頁";
-"onboardingTutorial.quickstart.title" = "快速入門連結";
-"onboardingTutorial.quickStart.0.message" = "我想要了解基督教";
-"onboardingTutorial.quickStart.0.link" = "閱讀我們的文章";
-"onboardingTutorial.quickStart.1.message" = "我想要瞭解福音對話";
-"onboardingTutorial.quickStart.1.link" = "試試我們的課程";
+"onboardingQuickStart.title" = "快速入門連結";
+"onboardingQuickStart.0.title" = "我想要了解基督教";
+"onboardingQuickStart.0.button.title" = "閱讀我們的文章";
+"onboardingQuickStart.1.title" = "我想要瞭解福音對話";
+"onboardingQuickStart.1.button.title" = "試試我們的課程";
 "tool_offline_favorite_message" = "點擊愛心圖示，將工具新增至你的最愛，就能離線使用工具。";
 
 /* This is a category description of a tool that helps you start a conversation */
