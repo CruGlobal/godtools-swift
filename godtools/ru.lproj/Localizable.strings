@@ -1,3 +1,7 @@
+"training_tip_ask" = "Задать вопрос";
+"training_tip_consider" = "Подумайте";
+"training_tip_prepare" = "Подготовьтесь";
+"training_tip_tip" = "Подсказка";
 "parallelLanguage.yesButton.title" = "Да";
 "parallelLanguage.noButton.title" = "Нет, спасибо";
 "parallelLanguage.getStartedButton.title" = "Начать";
