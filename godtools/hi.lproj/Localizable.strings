@@ -1,3 +1,10 @@
+"training_tip_ask" = "पूछें";
+"training_tip_consider" = "विचार करें";
+"training_tip_prepare" = "तैयारी करें";
+"training_tip_quote" = "हवाला";
+"training_tip_tip" = "टिप";
+"start_training" = "प्रशिक्षण शुरू करें";
+"close" = "बन्द करें";
 "parallelLanguage.yesButton.title" = "हां";
 "parallelLanguage.noButton.title" = "नहीं, धन्यवाद";
 "parallelLanguage.getStartedButton.title" = "शुरू करें";
@@ -32,6 +39,7 @@
 "share_tool_remote_link_message" = "हैलो, अपनी स्क्रीन को साझा करते हुए मेरे साथ GodTools में अनुसरण करें।  लिंक यहाँ है:%@ यदि आपको यह संदेश बाद में भी नहीं मिलता है, तो लिंक अभी भी काम नहीं कर सकता है। हम एक बार फिर से कोशिश कर सकते हैं।";
 "exit_tract_remote_share_session.message" = "अब दूरस्थ साझाकरण सत्र से बाहर निकलें?";
 "load_tool_remote_session.message" = "स्क्रीन साझा करना शुरू...";
+"learn_to_share_tool.learn_to_share.message" = "ईश्वर के साथ अपने संबंधों की शुरुआत कैसे की जाए, वार्तालाप को इस विषय पर लाने में यह टूल मदद करता है। दिए गए सुझावों का उपयोग कर विषयवस्तु को साझा करना सीखें, ताकि आप किसी से भी बात करने के लिए तैयार रह सकें।";
 "onboardingTutorial.0.title" = "हर वार्तालाप के लिए तैयार";
 "onboardingTutorial.0.videoLink.title" = "वीडियो देखें";
 "onboardingTutorial.1.title" = "परमेश्वर के बारे में किसी से भी वार्तालाप करें";

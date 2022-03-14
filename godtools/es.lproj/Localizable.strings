@@ -1,3 +1,11 @@
+"training_tip_ask" = "Pregunta";
+"training_tip_consider" = "Considera";
+"training_tip_prepare" = "Prepara";
+"training_tip_quote" = "Citar";
+"training_tip_tip" = "Consejo";
+"start_training" = "Comenzar entrenamiento";
+"close" = "Cerrar";
+"tool_menu_item.lessons" = "Lecciones";
 "parallelLanguage.yesButton.title" = "Sí";
 "parallelLanguage.noButton.title" = "No, gracias";
 "parallelLanguage.getStartedButton.title" = "Comenzar";
@@ -32,6 +40,7 @@
 "share_tool_remote_link_message" = "¡Hola! Acompáñame en GodTools con la pantalla compartida. Aquí tienes el enlace: %@ Si no recibes este mensaje en un tiempo, puede que el enlace ya no funcione. Podemos volver a intentarlo en otro momento.";
 "exit_tract_remote_share_session.message" = "¿Salir ahora de la sesión de pantalla compartida?";
 "load_tool_remote_session.message" = "Iniciando pantalla compartida...";
+"learn_to_share_tool.learn_to_share.message" = "Practica utilizando tantos consejos como necesites para sentirte seguro al compartir esta herramienta con los demás.";
 "lesson_evaluation.title" = "Evaluación";
 "lesson_evaluation.wasThisHelpful" = "¿Esta lección te ha sido útil?";
 "lesson_evaluation.shareFaith" = "¿Qué tan preparado te sientes para iniciar una conversación espiritual?";

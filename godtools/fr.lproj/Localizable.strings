@@ -1,3 +1,8 @@
+"training_tip_ask" = "Demandez";
+"training_tip_consider" = "Considérez";
+"training_tip_prepare" = "Préparez";
+"training_tip_quote" = "Citation";
+"training_tip_tip" = "Conseil";
 "parallelLanguage.yesButton.title" = "Oui";
 "parallelLanguage.noButton.title" = "Non, merci";
 "parallelLanguage.getStartedButton.title" = "Commencer";

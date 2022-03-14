@@ -1,3 +1,11 @@
+"training_tip_ask" = "Hỏi";
+"training_tip_consider" = "Xem xét";
+"training_tip_prepare" = "Chuẩn bị";
+"training_tip_quote" = "Trích dẫn";
+"training_tip_tip" = "Lời gợi ý";
+"start_training" = "Bắt đầu";
+"close" = "Đóng";
+"tool_menu_item.lessons" = "Bài học";
 "parallelLanguage.noButton.title" = "Không, cám ơn";
 "parallelLanguage.getStartedButton.title" = "Bắt đầu";
 "parallelLanguage.selectLanguageButton.title" = "Chọn một ngôn ngữ";
@@ -31,6 +39,7 @@
 "exit_tract_remote_share_session.message" = "Thoát khỏi phiên chia sẻ từ xa bây giờ?";
 "load_tool_remote_session.message" = "Bắt đầu chia sẻ màn hình…";
 "learn_to_share_tool.learn_to_share.title" = "Học cách chia sẻ về công cụ này với người khác";
+"learn_to_share_tool.learn_to_share.message" = "Thực hành sử dụng các lời gợi ý sẽ giúp bạn tự tin khi chia sẻ với người khác.";
 "learn_to_share_tool.tips_light_the_way.title" = "Những gợi ý để chỉ dẫn";
 "learn_to_share_tool.tips_light_the_way.message" = "Trên màn hình, bạn sẽ thấy một số biểu tượng. Bấm vào biểu tượng để xem lời gợi ý giúp bạn trình bày về nội dung bạn đang xem trên màn hình.";
 "learn_to_share_tool.light_up_the_tips.title" = "Bật sáng lời gợi ý";

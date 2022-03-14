@@ -13,24 +13,22 @@ import FBSDKCoreKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private let appWindow: UIWindow = UIWindow(frame: UIScreen.main.bounds)
-    private let appDeepLinkingService: DeepLinkingServiceType = AppDiContainer.getNewDeepLinkingService(loggingEnabled: false)
-    private let appDiContainer: AppDiContainer
-    private let appFlow: AppFlow
+        
+    private lazy var appDeepLinkingService: DeepLinkingServiceType = AppDiContainer.getNewDeepLinkingService(loggingEnabled: false)
+    private lazy var appDiContainer: AppDiContainer = {
+        AppDiContainer(appDeepLinkingService: appDeepLinkingService)
+    }()
+    
+    private lazy var appFlow: AppFlow = {
+        AppFlow(appDiContainer: appDiContainer, window: appWindow, appDeepLinkingService: appDeepLinkingService)
+    }()
     
     var window: UIWindow?
     
     static func setWindowBackgroundColorForStatusBarColor(color: UIColor) {
         (UIApplication.shared.delegate as? AppDelegate)?.window?.backgroundColor = color
     }
-    
-    override init() {
-        
-        appDiContainer = AppDiContainer(appDeepLinkingService: appDeepLinkingService)
-        appFlow = AppFlow(appDiContainer: appDiContainer, window: appWindow, appDeepLinkingService: appDeepLinkingService)
-        
-        super.init()
-    }
-    
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
                 
         appDiContainer.config.logConfiguration()
