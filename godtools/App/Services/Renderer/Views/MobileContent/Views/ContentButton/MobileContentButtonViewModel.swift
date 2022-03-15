@@ -101,9 +101,13 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
         visibilityFlowWatcher?.close()
     }
     
+    private var textScale: Double {
+        return buttonModel.text?.textScale ?? buttonModel.textScale
+    }
+    
     var font: UIFont {
-        
-        let fontScale = CGFloat(buttonModel.textScale)
+                
+        let fontScale = CGFloat(textScale)
         
         return fontService.getFont(
             size: fontSize * fontScale,
