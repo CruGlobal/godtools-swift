@@ -74,7 +74,8 @@ class LessonDeepLinkParser: DeepLinkParserType {
             primaryLanguageCodes: primaryLanguageCodes,
             parallelLanguageCodes: [],
             liveShareStream: nil,
-            page: nil
+            page: nil,
+            pageId: nil
         )
                        
         return .tool(toolDeepLink: toolDeepLink)
