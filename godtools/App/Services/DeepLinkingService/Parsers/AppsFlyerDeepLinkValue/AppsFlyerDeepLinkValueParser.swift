@@ -85,7 +85,8 @@ class AppsFlyerDeepLinkValueParser: DeepLinkParserType {
                     primaryLanguageCodes: [language],
                     parallelLanguageCodes: [],
                     liveShareStream: nil,
-                    page: nil
+                    page: nil,
+                    pageId: nil
                 )
             )
             

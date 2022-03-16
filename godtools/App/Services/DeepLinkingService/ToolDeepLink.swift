@@ -15,4 +15,5 @@ struct ToolDeepLink {
     let parallelLanguageCodes: [String]
     let liveShareStream: String?
     let page: Int?
+    let pageId: String?
 }

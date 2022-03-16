@@ -298,7 +298,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                         primaryLanguageCodes: ["en"],
                         parallelLanguageCodes: [],
                         liveShareStream: nil,
-                        page: nil
+                        page: nil,
+                        pageId: nil
                     )
                     
                     self?.navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
