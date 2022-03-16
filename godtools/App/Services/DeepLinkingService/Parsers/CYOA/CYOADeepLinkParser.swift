@@ -9,10 +9,7 @@
 import Foundation
 
 class CYOADeepLinkParser: DeepLinkParserType {
-    
-    let supportedUrlHosts: [DeepLinkHostType] = [.godToolsApp, .knowGod]
-    let supportedUrlSchemes: [DeepLinkSchemeType] = [.godtools]
-    
+        
     required init() {
         
     }
