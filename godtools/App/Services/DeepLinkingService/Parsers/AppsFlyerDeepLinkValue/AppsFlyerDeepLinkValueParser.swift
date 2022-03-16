@@ -61,16 +61,23 @@ class AppsFlyerDeepLinkValueParser: DeepLinkParserType {
             guard let language = deepLinkValueComponents[safe: 3] else {
                 return nil
             }
+            
+            var pageNumber: Int?
+            var pageId: String?
                                     
             switch locationComponent {
             case "tract":
-                break
+                if let pageStringValue = deepLinkValueComponents[safe: 3], let pageIntValue = Int(pageStringValue) {
+                    pageNumber = pageIntValue
+                }
                 
             case "lesson":
                 break
                 
             case "cyoa":
-                break
+                if let pageIdValue = deepLinkValueComponents[safe: 3] {
+                    pageId = pageIdValue
+                }
                                 
             case "article":
                 break
@@ -85,8 +92,8 @@ class AppsFlyerDeepLinkValueParser: DeepLinkParserType {
                     primaryLanguageCodes: [language],
                     parallelLanguageCodes: [],
                     liveShareStream: nil,
-                    page: nil,
-                    pageId: nil
+                    page: pageNumber,
+                    pageId: pageId
                 )
             )
             
