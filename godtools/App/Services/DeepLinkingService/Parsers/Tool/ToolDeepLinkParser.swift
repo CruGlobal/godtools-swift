@@ -10,9 +10,6 @@ import Foundation
 
 class ToolDeepLinkParser: DeepLinkParserType {
     
-    let supportedUrlHosts: [DeepLinkHostType] = [.godToolsApp, .knowGod]
-    let supportedUrlSchemes: [DeepLinkSchemeType] = [.godtools]
-    
     required init() {
         
     }
@@ -64,7 +61,8 @@ class ToolDeepLinkParser: DeepLinkParserType {
             primaryLanguageCodes: [],
             parallelLanguageCodes: [],
             liveShareStream: nil,
-            page: nil
+            page: nil,
+            pageId: nil
         )
         
         return .tool(toolDeepLink: toolDeepLink)
@@ -113,7 +111,8 @@ class ToolDeepLinkParser: DeepLinkParserType {
             primaryLanguageCodes: primaryLanguageCodes,
             parallelLanguageCodes: toolQuery?.getParallelLanguageCodes() ?? [],
             liveShareStream: toolQuery?.liveShareStream,
-            page: pageFromUrlPath
+            page: pageFromUrlPath,
+            pageId: nil
         )
         
         return .tool(toolDeepLink: toolDeepLink)
@@ -146,7 +145,8 @@ class ToolDeepLinkParser: DeepLinkParserType {
             primaryLanguageCodes: toolQuery?.getPrimaryLanguageCodes() ?? [],
             parallelLanguageCodes: toolQuery?.getParallelLanguageCodes() ?? [],
             liveShareStream: toolQuery?.liveShareStream,
-            page: page
+            page: page,
+            pageId: nil
         )
         
         return .tool(toolDeepLink: toolDeepLink)
