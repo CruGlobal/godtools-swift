@@ -136,16 +136,9 @@ Online verziju možete pronaći na adresi: https://knowgod.com/";
 
 // Alert & Info Controllers
 "download_error" = "Pogreška preuzimanja";
-"language_download_error" = "Dostupne jezike trenutno nije moguće preuzeti. Provjerite svoju vezu ili pokušajte kasnije.";
-"tract_loading_error_message" = "Postoji problem s otvaranjem ovog resursa. Ponovno preuzimanje često rješava ovaj problem.\n\n Želite li ponovno preuzeti?";
 "no_internet_title" = "Nema internetske veze";
 "no_internet" = "Provjerite svoju internetsku vezu i pokušajte ponovno.";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "Najnovije alate za engleski jezik trenutno nije moguće preuzeti. Dostupni su alati za engleski jezik. Provjerite svoju vezu ili pokušajte kasnije.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "Moguće je preuzeti najnovije alate za engleski jezik. \n\n Želite li engleski jezik postaviti kao primarni jezik i preuzeti te sadržaje?";
 "the_tool_you_requested_is_loading" = "Alat koji ste tražili se učitava...";
 "loading" = "Učitaavnje...";
 
@@ -169,10 +162,8 @@ Aplikaciju je moguće preuzeti na adresi: http://godtoolsapp.com";
 
 // Alerts
 "error" = "Pogreška";
-"ok" = "U redu";
 "OK" = "U redu";
 "cancel" = "Otkaži";
-"error_can_not_send_email" = "Nema konfigurirane e-pošte na vašem uređaju";
 "required_field_missing" = "\"%@\" je obvezno polje.";
 
 "onboardingTutorial.getStartedButton.title" = "Započnite";
@@ -200,4 +191,3 @@ Aplikaciju je moguće preuzeti na adresi: http://godtoolsapp.com";
 // Language Name Strings
 "language_name_fa" = "Perzijski (farsi)";
 
-"onboardingTutorial.continueButton.title" = "Nastavi";

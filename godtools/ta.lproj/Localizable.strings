@@ -97,13 +97,6 @@
 
 // Alert & Info Controllers
 "download_error" = "பதிவிறக்க பிழை";
-"language_download_error" = "கிடைக்கபெறு மொழிகளை இப்பொழுது பதிவிறக்கம் செய்யமுடியாது. உங்களுடைய தொடர்பினை சரிபார்க்கவும் அல்லது பின்னர் முயற்சிக்கவும்";
-"tract_loading_error_message" = "இந்த மூலகோப்பை திறப்பதில் பிரச்சனை உள்ளது.  மறுபடியும் பதிவிறக்கம் செய்வது பிரச்சனைக்கு தீர்வை கொண்டுவரும்.    இதை மறுபடியும் பதிவிறக்கம் செய்ய விரும்புகிறீரா?";
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "சமீபத்திய தமிழ் உபகரணங்களை இப்போது பதிவிறக்கம் செய்யமுடியாது.  ஆங்கில உபகரணங்கள் உள்ளன.  உங்களுடைய தொடர்பினை சரிபாருங்கள் அல்லது பின்னர் முயற்சியுங்கள்";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "சமீபத்திய ஆங்கில உபகரணங்களை  இப்போது பதிவிறக்கம் செய்யலாம்\n\nஉங்களுடைய பிரதான மொழியாக  தமிழை அமைத்து இந்த ஆதாரங்களை பதிவிறக்கம் செய்யவேண்டும்";
 // Actions
 "yes" = "ஆம்";
 "no" = "இல்லை";
@@ -118,7 +111,6 @@
 "remove" = "அகற்று";
 "clear" = "தெளிவாக்கு";
 "cancel" = "ரத்துசெய்";
-"error_can_not_send_email" = "உங்களுடைய சாதனத்திலே கட்டமைக்கப்பட்ட மின்னஞ்சல் இல்லை";
 "onboardingTutorial.getStartedButton.title" = "தொடங்கவும்";
 
 // About
@@ -145,4 +137,3 @@
 // Language Name Strings
 "language_name_fa" = "பாரசீக (ஃபார்ஸி)";
 
-"onboardingTutorial.continueButton.title" = "தொடரவும்";

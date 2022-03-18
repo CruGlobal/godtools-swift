@@ -135,16 +135,9 @@ Retrouvez également la version en ligne à l'adresse : https://knowgod.com/";
 
 // Alert & Info Controllers
 "download_error" = "Erreur de téléchargement";
-"language_download_error" = "Les langues disponibles n'ont pas pu être téléchargées à ce moment. Veuillez vérifier votre connectivité ou réessayer plus tard.";
-"tract_loading_error_message" = "Une erreur s'est produite lors de l'ouverture de cette ressource. La télécharger à nouveau règle souvent ce problème.\n\nSouhaitez-vous la télécharger à nouveau?";
 "no_internet_title" = "Aucune connexion à internet";
 "no_internet" = "Veuillez vérifier votre connexion internet et réessayer.";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "Les outils en français les plus récents n'ont pas pu être téléchargés à ce moment. Les outils en anglais sont disponibles. Veuillez vérifier votre connectivité ou réessayer plus tard.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "Les outils en anglais les plus récents peuvent être téléchargés.\n\nSouhaitez-vous régler votre langue primaire à l'anglais et télécharger ces ressources?";
 "the_tool_you_requested_is_loading" = "Chargement de l'outil que vous avez demandé...";
 "loading" = "Chargement...";
 
@@ -168,10 +161,8 @@ L'application est téléchargeable sur https://godtoolsapp.com";
 
 // Alerts
 "error" = "Erreur";
-"ok" = "D'accord";
 "OK" = "OK";
 "cancel" = "Annuler";
-"error_can_not_send_email" = "Il n'y a aucune adresse courriel configurée sur votre appareil.";
 "required_field_missing" = "« %@ » est un champ requis.";
 
 "onboardingTutorial.getStartedButton.title" = "Commencer";
@@ -199,4 +190,3 @@ L'application est téléchargeable sur https://godtoolsapp.com";
 // Language Name Strings
 "language_name_fa" = "Perse (Farsi)";
 
-"onboardingTutorial.continueButton.title" = "Continuer";

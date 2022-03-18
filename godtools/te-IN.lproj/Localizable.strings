@@ -143,16 +143,9 @@
 
 // Alert & Info Controllers
 "download_error" = "డౌన్లోడ్ ఎర్రర్";
-"language_download_error" = "అందుబాటులో ఉన్న భాషలు ఇప్పుడు డౌన్లోడ్ కావడం లేదు. మీ కనెక్షన్ సరి చూసుకోండి లేక తరువాత ప్రయత్నించండి. ";
-"tract_loading_error_message" = "ఈ నిధిని తెరచుటలో సమస్య ఉంది. దీనిని మరలా డౌన్లోడ్ చేయుట ద్వారా చాలా సార్లు సమస్య పరిష్కరించబడుతుంది.\nమీరు దీనిని మరలా డౌన్లోడ్ చెయ్యాలని అనుకుంటున్నారా? ";
 "no_internet_title" = "ఇంటర్నెట్ కనెక్షన్ లేదు";
 "no_internet" = "దయచేసి మీ ఇంటర్నెట్ కనెక్షన్ సరిచూడండి మరియు మళ్ళీ ప్రయత్నించండి.";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "అధునాతన తెలుగు టూల్స్ ఇప్పుడు డౌన్లోడ్ అవ్వడం లేదు. తెలుగు టూల్స్ లభ్యమవుతాయి. కనెక్షన్ సరి చూసుకోండి లేక తరువాత ప్రయత్నించండి. ";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "అధునాతన తెలుగు టూల్స్ డౌన్లోడ్ చేసుకోవచ్చు.\nమీ ప్రాథమిక భాషను తెలుగుగా సెట్ చేసి ఈ నిధులను డౌన్లోడ్ చెయ్యాలనుకుంటున్నారా? ";
 "the_tool_you_requested_is_loading" = "మీ అభ్యర్థించిన పరికరము లోడ్ అవుతున్నది…";
 "loading" = "లోడ్‌చేస్తున్నా...";
 
@@ -176,10 +169,8 @@
 
 // Alerts
 "error" = "error";
-"ok" = "సరే";
 "OK" = "సరే";
 "cancel" = "రద్దు చేయి";
-"error_can_not_send_email" = "మీ డివైస్ లో ఈమెయిలు అందుబాటులో లేదు. ";
 "required_field_missing" = "\"%@\" ఇది అవసరమైనది. ";
 
 "onboardingTutorial.getStartedButton.title" = "ప్రారంభించడానికి";
@@ -231,16 +222,12 @@
 "accountActivity.globalAnalytics.users.title" = "ప్రత్యేక వినియోగదారులు";
 "onboardingWelcome.titleLabel.tagline" = "మీ విశ్వాసాన్ని పంచుకోవడానికి మీకు సహాయం చేస్తుంది";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "సువార్త ప్రదర్శనలు";
-"onboardingWelcome.beginButton" = "ప్రారంభించండి";
-
 "accountActivity.globalAnalytics.launches.title" = "సమావేశములు";
 // OnboardingTutorial
 "onboardingTutorial.aboutAppItem.0.title" = "ఇతరులతో పంచుకోండి";
 "accountActivity.globalAnalytics.countries.title" = "దేశాలు";
 
 "onboardingTutorial.aboutAppItem.0.message" = "మీ విశ్వాస సంభాషణలకు మార్గనిర్దేశం చేయడానికి GodTools నిర్మించబడ్డాయి";
-// Alerts
-"alert.action.ok" = "సరే";
 "onboardingTutorial.aboutAppItem.1.title" = "మీ సాధనాలను ఎంచుకోండి";
 "onboardingTutorial.aboutAppItem.1.message" = "ఆధ్యాత్మిక సంభాషణకు ముందు, సమయంలో మరియు తర్వాత GodTools మీకు సహాయం చేస్తుంది";
 "onboardingTutorial.aboutAppItem.2.title" = "ఎల్లప్పుడూ సిద్ధం";
@@ -250,4 +237,3 @@
 "onboardingTutorial.appUsageItem.2.message" = "రెండు భాషలను పక్కపక్కనే చూడండి";
 "onboardingTutorial.appUsageItem.3.message" = "90 కి పైగా భాషల నుండి ఎంచుకోండి";
 "onboardingTutorial.appUsageItem.4.message" = "క్రైస్తవుడిగా ప్రారంభించడానికి ఎవరైనా సహాయం చేయండి";
-"onboardingTutorial.continueButton.title" = "కొనసాగించండి";

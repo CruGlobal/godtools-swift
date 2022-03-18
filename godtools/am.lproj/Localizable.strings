@@ -55,7 +55,6 @@
 /* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
 "toolinfo_opentool" = "ክፈት";
 
-"ok" = "እሺ";
 "OK" = "እሺ";
 "cancel" = "ውጣ";
 // About
@@ -80,5 +79,3 @@
 // Language Name Strings
 "language_name_fa" = "ፐርሽያን (ፋርሲ)";
 
-// Alerts
-"alert.action.ok" = "እሺ";

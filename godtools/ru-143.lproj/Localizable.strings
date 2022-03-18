@@ -51,13 +51,6 @@
 
 // Alert & Info Controllers
 "download_error" = "Ошибка загрузки";
-"language_download_error" = "Доступные языки не могут быть загружены в настоящее время. Проверьте подключение к сети и попробуйте еще раз позднее.";
-"tract_loading_error_message" = "Возникла проблема при открытии данного ресурса. Повторная загрузка может помочь устранить эту проблему.\n\nХотите выполнить загрузку снова?";
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "Не удалось загрузить последние инструменты на русском языке. Инструменты доступны на английском языке. Проверьте подключение к сети или повторите попытку позже.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "Доступны для загрузки последние инструменты на русском языке. \n\nХотите сделать основным языком русский и загрузить эти материалы?";
 "the_tool_you_requested_is_loading" = "Загрузка требуемого инструмента...";
 // Actions
 "yes" = "Да";
@@ -74,8 +67,6 @@
 "clear" = "Очистить";
 // Alerts
 "error" = "Ошибка";
-"ok" = "ОК";
-"error_can_not_send_email" = "На вашем устройстве нет настроенной учетной записи эл. почты.";
 "required_field_missing" = "\"%@\" является обязательным полем.";
 
 // About

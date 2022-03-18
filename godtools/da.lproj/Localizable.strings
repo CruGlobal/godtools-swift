@@ -135,16 +135,9 @@ Du kan finde en onlineversion på https://knowgod.com/";
 
 // Alert & Info Controllers
 "download_error" = "Overførselsfejl";
-"language_download_error" = "De tilgængelige sprog kunne ikke hentes i øjeblikket. Tjek din forbindelse, eller prøv igen senere.";
-"tract_loading_error_message" = "Der var et problem med at åbne denne ressource. Det løser ofte problemet at prøve at hente den igen. \n\n Vil du hente den igen?";
 "no_internet_title" = "Ingen internetforbindelse";
 "no_internet" = "Tjek din internetforbindelse, og prøv igen.";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "De seneste danske værktøjer kunne ikke hentes i øjeblikket. Værktøjer på engelsk er tilgængelig. Tjek din forbindelse, eller prøv igen senere.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "De seneste danske værktøjer kan hentes. \n\n Vil du angive dit primære sprog til dansk og hente disse ressourcer?";
 "the_tool_you_requested_is_loading" = "Det værktøj, du anmodede om, indlæses...";
 "loading" = "Indlæser";
 
@@ -168,10 +161,8 @@ Appen kan downloades fra https://godtoolsapp.com";
 
 // Alerts
 "error" = "Fejl";
-"ok" = "OK";
 "OK" = "OK";
 "cancel" = "Annuller";
-"error_can_not_send_email" = "Der er ingen konfigureret e-mail på din enhed.";
 "required_field_missing" = "\"%@\" er et påkrævet felt.";
 
 "onboardingTutorial.getStartedButton.title" = "Kom godt i gang";
@@ -199,4 +190,3 @@ Appen kan downloades fra https://godtoolsapp.com";
 // Language Name Strings
 "language_name_fa" = "Persisk (Farsi)";
 
-"onboardingTutorial.continueButton.title" = "Fortsæt";

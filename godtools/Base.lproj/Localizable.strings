@@ -204,16 +204,9 @@ An online version can be found at https://knowgod.com/";
 
 // Alert & Info Controllers
 "download_error" = "Download Error";
-"language_download_error" = "The available languages could not be downloaded at this time. Please check your connectivity or retry later.";
-"tract_loading_error_message" = "There was a problem opening this resource. Downloading it again often solves this problem. \n\n Would you like to download it again?";
 "no_internet_title" = "No internet connection";
 "no_internet" = "Please check your internet connection and try again.";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
 "the_tool_you_requested_is_loading" = "The tool you requested is loading...";
 "loading" = "Loading...";
 
@@ -239,10 +232,8 @@ The app can be downloaded from https://godtoolsapp.com";
 
 // Alerts
 "error" = "Error";
-"ok" = "Ok";
 "OK" = "OK";
 "cancel" = "Cancel";
-"error_can_not_send_email" = "There is no configured email on your device.";
 "required_field_missing" = "\"%@\" is a required field.";
 
 "onboardingTutorial.getStartedButton.title" = "Get Started";
@@ -298,16 +289,12 @@ Press the About button on any tool for more info.";
 "accountActivity.globalAnalytics.users.title" = "Unique\nUsers";
 "onboardingWelcome.titleLabel.tagline" = "Helping You Share Your Faith";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Gospel\nPresentations";
-"onboardingWelcome.beginButton" = "Begin";
-
 "accountActivity.globalAnalytics.launches.title" = "Sessions";
 // OnboardingTutorial
 "onboardingTutorial.aboutAppItem.0.title" = "Share With Others";
 "accountActivity.globalAnalytics.countries.title" = "Countries";
 
 "onboardingTutorial.aboutAppItem.0.message" = "GodTools is built to guide your faith conversations";
-// Alerts
-"alert.action.ok" = "OK";
 "onboardingTutorial.aboutAppItem.1.title" = "Choose Your Tools";
 "onboardingTutorial.aboutAppItem.1.message" = "GodTools helps you before, during, and after a spiritual conversation";
 "onboardingTutorial.aboutAppItem.2.title" = "Always Ready";
@@ -317,5 +304,4 @@ Press the About button on any tool for more info.";
 "onboardingTutorial.appUsageItem.2.message" = "View two languages side by side";
 "onboardingTutorial.appUsageItem.3.message" = "Choose from over 90 languages";
 "onboardingTutorial.appUsageItem.4.message" = "Help someone get started as a Christian";
-"onboardingTutorial.continueButton.title" = "Continue";
 "onboardingTutorial.showMoreButton.title" = "Show Me More";

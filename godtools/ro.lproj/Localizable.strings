@@ -135,16 +135,9 @@ Găsești versiunea online aici https://knowgod.com/";
 
 // Alert & Info Controllers
 "download_error" = "Eroare de descărcare";
-"language_download_error" = "Limbile disponibile nu au putut fi descărcate în acest moment. Verifică conexiunea sau încearcă mai târziu.";
-"tract_loading_error_message" = "A apărut o problemă la descărcarea resursei. Descărcarea din nou rezolvă deseori problema. \n\n Vrei să o descarci din nou?";
 "no_internet_title" = "Nu există conexiune la internet";
 "no_internet" = "Verificați conexiunea la internet și încercați din nou.";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "Ultimele instrumente în limba engleză nu au putut fi descărcate în acest moment. Sunt disponibile instrumente în limba engleză. Verifică conexiunea sau încearcă mai târziu.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "Ultimele instrumente în limba engleză pot fi descărcate. Dorești să setezi engleza ca limbă principală și să descarci aceste resurse?";
 "the_tool_you_requested_is_loading" = "Instrumentul solicitat se încarcă...";
 "loading" = "Se încarcă...";
 
@@ -168,10 +161,8 @@ Aplicația poate fi descărcată de pe https://godtoolsapp.com";
 
 // Alerts
 "error" = "Eroare";
-"ok" = "Ok";
 "OK" = "OK";
 "cancel" = "Anulează";
-"error_can_not_send_email" = "Nu există e-mail configurat pe dispozitivul tău.";
 "required_field_missing" = "\"%@\" este un câmp obligatoriu.";
 
 // About
@@ -197,4 +188,3 @@ Aplicația poate fi descărcată de pe https://godtoolsapp.com";
 // Language Name Strings
 "language_name_fa" = "Persană (Farsi)";
 
-"onboardingTutorial.continueButton.title" = "Continuaţi";

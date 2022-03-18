@@ -110,16 +110,9 @@ https://godtoolsapp.com";
 
 // Alert & Info Controllers
 "download_error" = "Yükləmə xətası";
-"language_download_error" = "Mövcud dillər hal-hazırda yüklənə bilmir. İnternet bağlantınızı yoxlayıb təkrar cəhd edin.";
-"tract_loading_error_message" = "Bu resursu açmaqda problem yarandı. Onu təkrar yükləmək çox vaxt problemi həll edir.\n\nOnu təkrar yükləmək istərdiniz?";
 "no_internet_title" = "İnterner bağlantısı yoxdur";
 "no_internet" = "Zəhmət olmasa internet bağlantınızı yoxlayıb yenidən cəhd edin.";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "Ən yeni ingilis dilli alətlər hal-hazırda yüklənə bilmir. İngilis dilli alətlər mövcuddur. İnternet bağlantınızı yoxlayıb təkrar cəhd edin.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "Ən yeni ingilis dilli alətlər yüklənə bilir. \n\nƏsas dilinizi ingilis dili təyin edib bu resursları yükləmək istərdiniz?";
 "the_tool_you_requested_is_loading" = "Sorğuladığınız alət yüklənir...";
 "loading" = "Yüklənir...";
 
@@ -144,10 +137,8 @@ https://godtoolsapp.com";
 
 // Alerts
 "error" = "Xəta";
-"ok" = "Ok";
 "OK" = "OK";
 "cancel" = "Ləğv et";
-"error_can_not_send_email" = "Cihazınızda quraşdırılmış e-poçt yoxdur.";
 "required_field_missing" = "\"%@\" tələb olunan sahədir.";
 
 "onboardingTutorial.getStartedButton.title" = "Başla";
@@ -176,4 +167,3 @@ Colossians 4.6";
 // Language Name Strings
 "language_name_fa" = "Fars dili";
 
-"onboardingTutorial.continueButton.title" = "Davam et";

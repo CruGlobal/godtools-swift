@@ -138,16 +138,9 @@ https://godtoolsapp.com
 
 // Alert & Info Controllers
 "download_error" = "خطای دانلود";
-"language_download_error" = "زبان‌های در دسترس را می‌توان هم اکنون دانلود کرد. لطفاً اتصال خود را بررسی و دوباره امتحان کنید.";
-"tract_loading_error_message" = "در هنگام باز کردن این منبع اشکالی به وجود آمد. معمولاً دانلود دوباره این مشکل را حل می‌کند.\n\nآیا مایلید دوباره آن را دانلود کنید؟";
 "no_internet_title" = "اتصال اینترنتی وجود ندارد";
 "no_internet" = "لطفا اتصال اینترنتی خود را بررسی و دوباره امتحان کنید.";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "در حال حاضر امکان دانلود جدیدترین ابزار انگلیسی وجود ندارد. ابزار انگلیسی در دسترس هستند. لطفاً اتصال خود را بررسی یا بعداً دوباره امتحان کنید.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "می‌توان آخرین ابزار انگلیسی را دانلود کرد.\n\nآیا مایل هستید زبان اصلی خود را روی انگلیسی تنظیم و این منابع را دانلود کنید؟";
 "the_tool_you_requested_is_loading" = "ابزاری که درخواست کردید در حال بارگیری است...";
 "loading" = "در حال بارگیری...";
 
@@ -171,10 +164,8 @@ https://godtoolsapp.com
 
 // Alerts
 "error" = "خطا";
-"ok" = "تأیید";
 "OK" = "تایید";
 "cancel" = "لغو";
-"error_can_not_send_email" = "هیچ ایمیلی روی دستگاه شما پیکربندی نشده است.";
 "required_field_missing" = "کادر «%@» باید تکمیل شود.";
 
 "onboardingTutorial.getStartedButton.title" = "شروع کنید";
@@ -227,16 +218,12 @@ https://godtoolsapp.com
 "accountActivity.globalAnalytics.users.title" = "کاربران بی نظیر";
 "onboardingWelcome.titleLabel.tagline" = "کمک برای به اشتراک گذاشتن ایمان مسیحی";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "ارائه انجیل";
-"onboardingWelcome.beginButton" = "شروع";
-
 "accountActivity.globalAnalytics.launches.title" = "جلسات";
 // OnboardingTutorial
 "onboardingTutorial.aboutAppItem.0.title" = "با دیگران به اشتراک بگذارید";
 "accountActivity.globalAnalytics.countries.title" = "کشورها";
 
 "onboardingTutorial.aboutAppItem.0.message" = "این برنامه برای کمک به اشتراک گذاری ایمان شما طراحی شده است";
-// Alerts
-"alert.action.ok" = "تایید";
 "onboardingTutorial.aboutAppItem.1.title" = "انتخاب ابزار";
 "onboardingTutorial.aboutAppItem.1.message" = "God tools یاری دهنده شما برای آغاز و پایان یک گفتگوی روحانی می باشد";
 "onboardingTutorial.aboutAppItem.2.title" = "همیشه آماده است";
@@ -246,5 +233,4 @@ https://godtoolsapp.com
 "onboardingTutorial.appUsageItem.2.message" = "دو زبان را کنار هم اجرا کنید";
 "onboardingTutorial.appUsageItem.3.message" = "از بین بیش از 90 زبان انتخاب کنید";
 "onboardingTutorial.appUsageItem.4.message" = "کمک کردن به دیگران برای شروع به عنوان یک مسیحی";
-"onboardingTutorial.continueButton.title" = "ادامه";
 "onboardingTutorial.showMoreButton.title" = "موارد بیشتری را نشان بده";

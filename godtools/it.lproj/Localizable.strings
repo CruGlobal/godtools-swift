@@ -136,16 +136,9 @@ La versione online è disponibile all'indirizzo https://knowgod.com/";
 
 // Alert & Info Controllers
 "download_error" = "Errore di download";
-"language_download_error" = "Non è attualmente possibile scaricare le lingue disponibili. Verifica di essere collegato a Internet e riprova.";
-"tract_loading_error_message" = "Si è verificato un problema in fase di apertura della risorsa. Il problema è normalmente risolvibile effettuando nuovamente il download. \n\nPuoi effettuare di nuovo il download?";
 "no_internet_title" = "Nessuna connessione internet";
 "no_internet" = "Verifica di essere connesso a internet e riprova.";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "Non è attualmente possibile scaricare i nuovi strumenti in italiano. Sono disponibili gli strumenti in inglese. Verifica di essere collegato a Internet e riprova.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "I nuovi strumenti in italiano sono ora disponibili per il download. \n\nVuoi impostare l'italiano come lingua principale e scaricare queste risorse?";
 "the_tool_you_requested_is_loading" = "Caricamento dello strumento richiesto in corso...";
 "loading" = "Caricamento...";
 
@@ -169,10 +162,8 @@ La versione online è disponibile all'indirizzo https://knowgod.com/";
 
 // Alerts
 "error" = "Errore";
-"ok" = "OK";
 "OK" = "OK";
 "cancel" = "Annulla";
-"error_can_not_send_email" = "Non è stata configurata nessuna e-mail sul dispositivo.";
 "required_field_missing" = "\"%@\" è un campo obbligatorio.";
 
 "onboardingTutorial.getStartedButton.title" = "Per iniziare";
@@ -200,4 +191,3 @@ La versione online è disponibile all'indirizzo https://knowgod.com/";
 // Language Name Strings
 "language_name_fa" = "Persiano (farsi)";
 
-"onboardingTutorial.continueButton.title" = "continua";
