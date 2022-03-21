@@ -135,16 +135,9 @@ Een onlineversie is te vinden op https://knowgod.com/";
 
 // Alert & Info Controllers
 "download_error" = "Downloadfout";
-"language_download_error" = "De beschikbare talen kunnen op dit moment niet worden gedownload. Controleer alstublieft je connectiviteit of probeer het later opnieuw.";
-"tract_loading_error_message" = "Er was een probleem bij het openen van deze bron. Met het opnieuw downloaden kun je dit probleem vaak oplossen.\n\n Wil je het nogmaals downloaden?";
 "no_internet_title" = "Geen internetverbinding";
 "no_internet" = "Controleer je internetverbinding en probeer het opnieuw.";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "De nieuwste Nederlandse tools kunnen op dit moment niet worden gedownload. Nederlandse gereedschappen zijn beschikbaar. Controleer alstublieft je connectiviteit of probeer het later opnieuw.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "De nieuwste Nederlandse tools kunnen worden gedownload.\n\nWil je je hoofdtaal naar Nederlands veranderen en deze bronnen downloaden?";
 "the_tool_you_requested_is_loading" = "Het hulpmiddel dat je hebt opgevraagd wordt geladen...";
 "loading" = "Bezig met laden…";
 
@@ -168,10 +161,8 @@ De app is te downloaden vanaf https://godtoolsapp.com";
 
 // Alerts
 "error" = "Fout";
-"ok" = "Oke";
 "OK" = "OK";
 "cancel" = "Annuleren";
-"error_can_not_send_email" = "Er is geen geconfigureerd e-mailadres op je apparaat.";
 "required_field_missing" = "\"%@\" Is een verplicht veld.";
 
 "onboardingTutorial.getStartedButton.title" = "Aan de slag";
@@ -199,4 +190,3 @@ De app is te downloaden vanaf https://godtoolsapp.com";
 // Language Name Strings
 "language_name_fa" = "Perzisch (Farsi)";
 
-"onboardingTutorial.continueButton.title" = "doorgaan";

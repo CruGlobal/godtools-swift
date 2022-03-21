@@ -134,16 +134,9 @@
 
 // Alert & Info Controllers
 "download_error" = "ข้อผิดพลาดในการดาวน์โหลด";
-"language_download_error" = "ไม่สามารถดาวน์โหลดภาษาที่มีได้ตอนนี้ โปรดตรวจสอบการเชื่อมต่อหรือลองอีกครั้งภายหลัง";
-"tract_loading_error_message" = "เกิดปัญหาในการเปิดทรัพยากรนี้ การดาวน์โหลดอีกครั้งอาจช่วยแก้ปัญหาได้\n\nต้องการดาวน์โหลดอีกครั้งหรือไม่";
 "no_internet_title" = "ไม่มีการเชื่อมต่ออินเทอร์เน็ต";
 "no_internet" = "โปรดตรวจสอบการเชื่อมต่ออินเทอร์เน็ต แล้วลองอีกครั้ง";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "ไม่สามารถดาวน์โหลดเครื่องมือภาษาไทยได้ตอนนี้ มีเครื่องมือภาษาอังกฤษให้บริการ โปรดตรวจสอบการเชื่อมต่อหรือลองใหม่ภายหลัง";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "คุณสามารถดาวน์โหลดเครื่องมือภาษาไทยล่าสุดได้\n\nต้องการตั้งค่าภาษาหลักเป็นภาษาไทยแล้วดาวน์โหลดเครื่องมือเหล่านี้ไหม";
 "the_tool_you_requested_is_loading" = "กำลังโหลดเครื่องมือที่คุณร้องขอ…";
 "loading" = "กำลังโหลด...";
 
@@ -167,10 +160,8 @@
 
 // Alerts
 "error" = "ข้อผิดพลาด";
-"ok" = "โอเค";
 "OK" = "ตกลง";
 "cancel" = "ยกเลิก";
-"error_can_not_send_email" = "ไม่มีอีเมลที่กำหนดค่าในอุปกรณ์ของคุณ";
 "required_field_missing" = "\"%@\" เป็นช่องบังคับ";
 
 "onboardingTutorial.getStartedButton.title" = "เริ่มต้นใช้งาน";
@@ -198,4 +189,3 @@
 // Language Name Strings
 "language_name_fa" = "เปอร์เซีย (ฟาร์ซี)";
 
-"onboardingTutorial.continueButton.title" = "ต่อไป";

@@ -118,16 +118,9 @@ Veebiversioon on saadaval lehel https://knowgod.com";
 
 // Alert & Info Controllers
 "download_error" = "Allalaadimisviga";
-"language_download_error" = "Saadaval keeli ei olnud võimalik alla laadida. Kontrolli võrguühenduse olemasolu või proovi hiljem uuesti.";
-"tract_loading_error_message" = "Vahendit ei olnud võimalik avada. Sageli on kasu selle uuesti allalaadimisest.";
 "no_internet_title" = "Võrguühenduseta";
 "no_internet" = "Palun veenduge võrguühenduse olemasolus ja proovige uuesti.";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "Viimaseid eestikeelseid tööriistu ei olnud võimalik seekord alla laadida. Kontrolli võrguühenduse olemasolu või proovi hiljem uuesti.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "Nüüd on võimalik alla laadida uusimaid eestikeelseid tööriistu.\n\nKas tahad seada põhikeeleks eesti keele ja need tööriistad alla laadida?";
 "the_tool_you_requested_is_loading" = "Soovitud tööriista laadimine ...";
 "loading" = "Laadimine...";
 
@@ -151,10 +144,8 @@ Rakenduse saab alla laadida lehelt godtoolsapp.com";
 
 // Alerts
 "error" = "Viga";
-"ok" = "Nõus";
 "OK" = "Nõus";
 "cancel" = "Tühista";
-"error_can_not_send_email" = "Sa ei ole oma seadmes meilikontot seadistanud.";
 "required_field_missing" = "%@ on kohustuslik väli.";
 
 "onboardingTutorial.getStartedButton.title" = "Alustamine";
@@ -182,4 +173,3 @@ Rakenduse saab alla laadida lehelt godtoolsapp.com";
 // Language Name Strings
 "language_name_fa" = "Pärsia (farsi)";
 
-"onboardingTutorial.continueButton.title" = "Jätka";

@@ -136,16 +136,9 @@
 
 // Alert & Info Controllers
 "download_error" = "İndirme Hatası";
-"language_download_error" = "Mevcut diller bu kez indirilemedi. Lütfen bağlantınızı kontrol edin veya daha sonra tekrar deneyin.";
-"tract_loading_error_message" = "Bu kaynağın açılmasında bir sorun oluştu. Kaynağı tekrar indirmek genelde bu sorunu çözer.\n\nKaynağı tekrar indirmek ister misiniz?";
 "no_internet_title" = "İnternet bağlantısı yok";
 "no_internet" = "Lütfen internet bağlantınızı kontrol edip yeniden deneyin.";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "En güncel Türkçe araçlar bu seferlik indirilemedi. Türkçe araçlar kullanıma hazır. Lütfen bağlantınızı kontrol edin veya daha sonra tekrar deneyin.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "En güncel Türkçe araçlar indirilebilir.\n\nBirincil dilinizi Türkçeye ayarlayıp bu kaynakları indirmek ister misiniz?";
 "the_tool_you_requested_is_loading" = "Talep ettiğiniz araç yükleniyor...";
 "loading" = "Yükleniyor";
 
@@ -169,10 +162,8 @@ Uygulama http://godtoolsapp.com adresinden indirilebilir";
 
 // Alerts
 "error" = "Hata";
-"ok" = "Tamam";
 "OK" = "Tamam";
 "cancel" = "İptal";
-"error_can_not_send_email" = "Cihazınızda yapılandırılmış bir e-posta yok.";
 "required_field_missing" = "\"%@\" gerekli bir alandır.";
 
 "onboardingTutorial.getStartedButton.title" = "Başlayın";
@@ -200,4 +191,3 @@ Uygulama http://godtoolsapp.com adresinden indirilebilir";
 // Language Name Strings
 "language_name_fa" = "Persçe (Farsça)";
 
-"onboardingTutorial.continueButton.title" = "devam";

@@ -159,16 +159,9 @@ Một phiên bản trực tuyến có thể tìm thấy ở https://knowgod.com/
 
 // Alert & Info Controllers
 "download_error" = "Lỗi Tải về";
-"language_download_error" = "Không thể tải về các ngôn ngữ sẵn có vào lúc này. Xin vui lòng kiểm tra kết nối của bạn hoặc thử lại sau.";
-"tract_loading_error_message" = "Đã xảy ra lỗi khi mở nguồn này. Tải nó về lần nữa sẽ giải quyết được vấn đề này.\n\nBạn có muốn tải nó về lần nữa không?";
 "no_internet_title" = "Không có kết nối internet";
 "no_internet" = "Vui lòng kiểm tra kết nối internet của bạn và thử lại.";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "Không thể tải về các công cụ tiếng Việt mới nhất vào lúc này. Các công cụ tiếng Anh luôn sẵn có. Xin hãy kiểm tra kết nối của bạn hoặc thử lại sau.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "Có thể tải về các công cụ tiếng Việt mới nhất.\n\nBạn có muốn thiết lập ngôn ngữ chính của mình thành tiếng Anh và tải về các nguồn tài liệu này?";
 "the_tool_you_requested_is_loading" = "Công cụ bạn yêu cầu đang tải...";
 "loading" = "Đang tải...";
 
@@ -194,10 +187,8 @@ Có thể tải xuống ứng dụng từ https://godtoolsapp.com";
 
 // Alerts
 "error" = "Lỗi";
-"ok" = "Ok";
 "OK" = "OK";
 "cancel" = "Hủy";
-"error_can_not_send_email" = "Không có email được cấu hình nào trên thiết bị của bạn.";
 "required_field_missing" = "\"%@\" là một trường bắt buộc.";
 
 "onboardingTutorial.getStartedButton.title" = "Bắt đầu";
@@ -253,16 +244,12 @@ Nhấn nút thông tin trên bất kỳ công cụ nào để xem thêm thông t
 "accountActivity.globalAnalytics.users.title" = "Người dùng\nduy nhất";
 "onboardingWelcome.titleLabel.tagline" = "Giúp bạn chia sẻ đức tin của mình";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Bài thuyết trình\nKinh Phúc âm";
-"onboardingWelcome.beginButton" = "Bắt đầu";
-
 "accountActivity.globalAnalytics.launches.title" = "Các phiên";
 // OnboardingTutorial
 "onboardingTutorial.aboutAppItem.0.title" = "Chia sẻ với người khác";
 "accountActivity.globalAnalytics.countries.title" = "Các quốc gia";
 
 "onboardingTutorial.aboutAppItem.0.message" = "GodTools được xây dựng để dẫn dắt các cuộc trò chuyện về đức tin của bạn";
-// Alerts
-"alert.action.ok" = "OK";
 "onboardingTutorial.aboutAppItem.1.title" = "Chọn công cụ của bạn";
 "onboardingTutorial.aboutAppItem.1.message" = "GodTools trợ giúp bạn trước, trong và sau một cuộc trò chuyện về tâm linh";
 "onboardingTutorial.aboutAppItem.2.title" = "Luôn sẵn sàng ";
@@ -272,5 +259,4 @@ Nhấn nút thông tin trên bất kỳ công cụ nào để xem thêm thông t
 "onboardingTutorial.appUsageItem.2.message" = "Xem hai ngôn ngữ cạnh nhau";
 "onboardingTutorial.appUsageItem.3.message" = "Chọn từ hơn 90 ngôn ngữ";
 "onboardingTutorial.appUsageItem.4.message" = "Trợ giúp ai đó bắt đầu với tư cách là Cơ đốc Nhân";
-"onboardingTutorial.continueButton.title" = "Tiếp tục";
 "onboardingTutorial.showMoreButton.title" = "Cho tôi xem nhiều hơn";

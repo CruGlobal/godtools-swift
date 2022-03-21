@@ -119,16 +119,9 @@ https://godtoolsapp.com
 
 // Alert & Info Controllers
 "download_error" = "خلل في التحميل";
-"language_download_error" = "لا يمكن تحميل اللغات المتوفرة في هذا الوقت. الرّجاء تفقد اتصالك أو أعد المحاولة لاحقاً.";
-"tract_loading_error_message" = "كان هناك مشكل في فتح هذ المصدر. تحميله مجدداً يحل المشكل عادة.\n\nهل ترغب في تحميله مجدداً؟";
 "no_internet_title" = "لا يوجد اتصال بالإنترنت";
 "no_internet" = "يرجى التأكد من اتصالك بالانترنت وإعادة المحاولة.";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "لا يمكن تحميل وسائل اللغة الإنجليزية الحديثة في هذا الوقت. أدوات اللغة الإنجليزية متوفرة. الرّجاء تفقد اتصالك أو أعد المحاولة لاحقاً.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "يمكن تحميل أدوات اللغة الإنجليزية الحديثة.\n\nهل ترغب في جعل الإنجليزية هي اللغة الرئيسية و تحميل هذه المصادر؟";
 "the_tool_you_requested_is_loading" = "جاري تحميل الأداة التي طلبتها...";
 "loading" = "جارٍ التحميل...";
 
@@ -152,10 +145,8 @@ https://godtoolsapp.com
 
 // Alerts
 "error" = "خطأ";
-"ok" = "موافق";
 "OK" = "موافق";
 "cancel" = "إلغاء";
-"error_can_not_send_email" = "لا يوجد هناك بريد الكتروني معد على جهازك.";
 "required_field_missing" = "\"%@\" هو حقل مطلوب.";
 
 "onboardingTutorial.getStartedButton.title" = "ابدأ";
@@ -183,4 +174,3 @@ https://godtoolsapp.com
 // Language Name Strings
 "language_name_fa" = "فارسية";
 
-"onboardingTutorial.continueButton.title" = "استمرار";

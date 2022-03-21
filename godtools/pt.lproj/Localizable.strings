@@ -148,16 +148,9 @@ Pode encontrar uma versão online em https://knowgod.com/";
 
 // Alert & Info Controllers
 "download_error" = "Erro ao transferir";
-"language_download_error" = "Neste momento, não é possível transferir os idiomas disponíveis. Verifica a ligação à Internet ou tenta novamente mais tarde.";
-"tract_loading_error_message" = "Ocorreu um problema ao abrir este recurso. Voltar a transferir costuma resolver este problema. \n\n Gostarias de voltar a transferi-lo?";
 "no_internet_title" = "Sem ligação à Internet";
 "no_internet" = "Verifique sua ligação à Internet e tente novamente.";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "Neste momento, não é possível transferir as ferramentas em português mais recentes. Verifique a ligação à Internet ou tente novamente mais tarde.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "É possível transferir as ferramentas em português mais recentes. \n\n Gostaria de definir o seu idioma principal como Português e transferir esses recursos?";
 "the_tool_you_requested_is_loading" = "A ferramenta que solicitou está carregando...";
 "loading" = "Carregando...";
 
@@ -183,10 +176,8 @@ Pode baixar o aplicativo em https://godtoolsapp.com";
 
 // Alerts
 "error" = "Erro";
-"ok" = "OK";
 "OK" = "OK";
 "cancel" = "Cancelar";
-"error_can_not_send_email" = "Não existe nenhum e-mail configurado no teu dispositivo.";
 "required_field_missing" = "\"%@\" é um campo obrigatório.";
 
 "onboardingTutorial.getStartedButton.title" = "Começar";
@@ -242,16 +233,12 @@ Prima o botão de informações em qualquer ferramenta para obter mais informaç
 "accountActivity.globalAnalytics.users.title" = "Utilizadores\núnicos";
 "onboardingWelcome.titleLabel.tagline" = "Ajudando você a compartilhar a sua fé";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Apresentações do\nevangelho";
-"onboardingWelcome.beginButton" = "Começar";
-
 "accountActivity.globalAnalytics.launches.title" = "Sessões";
 // OnboardingTutorial
 "onboardingTutorial.aboutAppItem.0.title" = "Compartilhe com outras pessoas";
 "accountActivity.globalAnalytics.countries.title" = "Países";
 
 "onboardingTutorial.aboutAppItem.0.message" = "O GodTools foi criado para guiar as suas conversas sobre a fé";
-// Alerts
-"alert.action.ok" = "OK";
 "onboardingTutorial.aboutAppItem.1.title" = "Escolha as suas ferramentas";
 "onboardingTutorial.aboutAppItem.1.message" = "O GodTools ajuda antes, durante e depois de uma conversa espiritual";
 "onboardingTutorial.aboutAppItem.2.title" = "Sempre pronto";
@@ -261,5 +248,4 @@ Prima o botão de informações em qualquer ferramenta para obter mais informaç
 "onboardingTutorial.appUsageItem.2.message" = "Veja dois idiomas lado a lado";
 "onboardingTutorial.appUsageItem.3.message" = "Escolha entre mais de 90 idiomas";
 "onboardingTutorial.appUsageItem.4.message" = "Ajude alguém a começar como cristão";
-"onboardingTutorial.continueButton.title" = "Continuar";
 "onboardingTutorial.showMoreButton.title" = "Mostrar mais";

@@ -134,16 +134,9 @@ On-line verzi naleznete na https://knowgod.com/";
 
 // Alert & Info Controllers
 "download_error" = "Chyba při stahování";
-"language_download_error" = "Dostupné jazykové verze nemohly být teď staženy. Zkontrolujte své připojení k internetu a zkuste to později znovu.";
-"tract_loading_error_message" = "Při otevírání tohoto zdroje nastala chyba. Častým řešením tohoto problému je jeho opětovné stažení.\n\nChcete ho stáhnout znovu?";
 "no_internet_title" = "Nemáte připojení k internetu";
 "no_internet" = "Prosím, ověřte své připojení k internetu a zkuste to znovu.";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "Nejnovější české nástroje teď nemohly být staženy. Zkontrolujte své připojení k internetu a zkuste to později znovu.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "Nejnovější české nástroje jsou připraveny ke stažení.\n\nChcete si nastavit češtinu jako primární jazyk a stáhnout tyto zdroje?";
 "the_tool_you_requested_is_loading" = "Požadovaný nástroj se načítá...";
 "loading" = "Načítání...";
 
@@ -167,10 +160,8 @@ Aplikaci si můžete stáhnout z https://godtoolsapp.com";
 
 // Alerts
 "error" = "Chyba";
-"ok" = "OK";
 "OK" = "OK";
 "cancel" = "Zrušit";
-"error_can_not_send_email" = "Na svém přístroji nemáte nakonfigurován e-mail.";
 "required_field_missing" = "\"%@\" je povinné pole.";
 
 "onboardingTutorial.getStartedButton.title" = "Začít";
@@ -198,4 +189,3 @@ Aplikaci si můžete stáhnout z https://godtoolsapp.com";
 // Language Name Strings
 "language_name_fa" = "Perština (fársí)";
 
-"onboardingTutorial.continueButton.title" = "Pokračovat";

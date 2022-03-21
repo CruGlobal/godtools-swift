@@ -115,16 +115,9 @@ https://knowgod.com/";
 
 // Alert & Info Controllers
 "download_error" = "Aflaai fout";
-"language_download_error" = "Die beskikbare tale kon nie hierdie keer afgelaai word nie. Kontroleer asseblief jou verbinding of probeer weer later.";
-"tract_loading_error_message" = "Daar was ’n probleem om hierdie hulpbron oop te maak. Om dit weer af te laai los dikwels dié probleem op.\n\nWil jy dit weer aflaai?";
 "no_internet_title" = "Geen internetverbinding";
 "no_internet" = "Kontroleer asseblief u internetverbinding en probeer weer.";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "Die nuutste Engelse hulpmiddels kon nie hierdie keer afgelaai word nie. Engelse hulpmiddels is beskikbaar. Kontroleer asseblief jou verbinding of probeer weer later.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "Die nuutste Engelse hulpmiddels kan afgelaai word.\n\nWil jy graag jou primêre taal na Engels instel en hierdie hulpbronne aflaai?";
 "the_tool_you_requested_is_loading" = "Die hulpmiddel wat jy aangevra het is besig om te laai...";
 "loading" = "Besig om te laai...";
 
@@ -148,10 +141,8 @@ https://godtoolsapp.com";
 
 // Alerts
 "error" = "Fout";
-"ok" = "Oukei";
 "OK" = "Ok";
 "cancel" = "Kanselleer";
-"error_can_not_send_email" = "Daar is geen gekonfigureerde e-pos op jou toestel nie.";
 "required_field_missing" = "%@ is ’n benodigde veld.";
 
 "onboardingTutorial.getStartedButton.title" = "Kom ons begin";
@@ -179,4 +170,3 @@ https://godtoolsapp.com";
 // Language Name Strings
 "language_name_fa" = "Persies (Farsi)";
 
-"onboardingTutorial.continueButton.title" = "Gaan voort";

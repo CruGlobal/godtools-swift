@@ -134,17 +134,9 @@ Spletna različica je na voljo na https://knowgod.com/";
 
 // Alert & Info Controllers
 "download_error" = "Napaka pri nalaganju";
-"language_download_error" = "Trenutno ni mogoče naložiti razpoložjivih jezikov. Preveri svojo povezavo ali poskusi ponovno kasneje.";
-"tract_loading_error_message" = "Prišlo je do napake pri odpiranju tega gradiva. Ponovno nalaganje pogosto reši ta problem. \n\nAli ga želiš naložiti še enkrat?";
 "no_internet_title" = "Brez internetne povezave";
 "no_internet" = "Preverite internetno povezavo in poskusite znova.";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "Trenutno ni mogoče naložiti najsodobnejših slovenskih orodij. Na voljo so angleška orodja. 
-Preveri svojo povezavo ali poskusi ponovno kasneje.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "Naložiš lahko najsodobnejša slovenska orodja. \n\nAli želiš nastaviti slovenščino za svoj osnovni jezik in prenesti ta gradiva?";
 "the_tool_you_requested_is_loading" = "Zahtevano orodje se nalaga...";
 "loading" = "Nalaganje ...";
 
@@ -168,10 +160,8 @@ Aplikacijo lahko preneseš na https://godtoolsapp.com";
 
 // Alerts
 "error" = "Napaka";
-"ok" = "V redu";
 "OK" = "V redu";
 "cancel" = "Prekliči";
-"error_can_not_send_email" = "Na napravi nimaš sinhorniziranega računa za elektronsko pošto.";
 "required_field_missing" = "\"%@\" je obvesno polje.";
 
 "onboardingTutorial.getStartedButton.title" = "Začetek";
@@ -199,4 +189,3 @@ Aplikacijo lahko preneseš na https://godtoolsapp.com";
 // Language Name Strings
 "language_name_fa" = "Perzijščina (farsi)";
 
-"onboardingTutorial.continueButton.title" = "Nadaljuj";

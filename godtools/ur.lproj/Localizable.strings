@@ -137,16 +137,9 @@ https://knowgod.com
 
 // Alert & Info Controllers
 "download_error" = "ڈاؤن لوڈ میں غلطی";
-"language_download_error" = " اس وقت دستیاب زبانیں ڈاؤن لوڈ نہیں کر سکتے۔ برائے مہربانی آپ اپنی جوڑنے والی چیز کی جانچ کریں یا بعد میں دوبارہ کوشش کریں۔";
-"tract_loading_error_message" = " اس ذرائع کو کھولنے میں پریشانی تھی۔ دوبارہ سے ڈاؤن لوڈ کرنے سے یہ پریشانی اکثر دور ہو جاتی ہے۔  \n\n کیا اس کو دوبارہ سے ڈاؤن لوڈ کرنا چاہیں گے؟";
 "no_internet_title" = "کوئی انٹرنیٹ کنیکشن نہیں ہے";
 "no_internet" = "براہِ کرم اپنا انٹرنیٹ کنیکشن چیک کریں اور دوبارہ کوشش کریں۔";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "ابھی نئی انگریزی ٹول ڈاؤن لوڈ نہیں کی جاسکتی۔ انگریزی ٹول دستیاب ہے  برائے مہربانی آپ اپنی جوڑنے والی تکنیک کوچیک کیجئے یاپھر بعد میں دوبارہ کوشش کیجئے۔";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "نئی موجودہ انگریزی ٹول ڈاؤن لوڈ کیا جا سکتاہے۔\nکیا آپ اپنی پرائمری زبان انگریزی میں سیٹ کرنا چاہتے ہیں اور ان ذرائع کو ڈاؤن لوڈ کرناچاہتے ہیں؟ ";
 "the_tool_you_requested_is_loading" = "جس ازار کی آپ نے درخواست کی ہے وہ لوڈ ہو رہاہے۔";
 "loading" = "لوڈ ہو رہا ہے۔۔۔";
 
@@ -171,10 +164,8 @@ https://godtoolsapp.com";
 
 // Alerts
 "error" = "غلطی";
-"ok" = "ٹھیک ہے";
 "OK" = "ٹھیک ہے";
 "cancel" = "کینسل";
-"error_can_not_send_email" = " آپ کے ڈیوائس پرکوئی ترتیب شدہ ای میل نہیں ہے۔";
 "required_field_missing" = "\"%@\" ضرورت شدہ فیلڈ ہے۔";
 
 "onboardingTutorial.getStartedButton.title" = "شروع کریں";
@@ -202,4 +193,3 @@ https://godtoolsapp.com";
 // Language Name Strings
 "language_name_fa" = "فارسی";
 
-"onboardingTutorial.continueButton.title" = "جاری";

@@ -134,16 +134,9 @@ Toleo la mtandao linaweza kupatikana kwenye https://knowgod.com/";
 
 // Alert & Info Controllers
 "download_error" = "Makosa ya Upakuzi";
-"language_download_error" = "Lugha zilizopo hazikuweza kupakuliwa kwa wakati huu.  Tafadhali angalia uunganisho wako au ujaribu tena baadaye.";
-"tract_loading_error_message" = "Kulikuwa na tatizo kupakua rasilimali hii. Kuipakua tena kwa mara nyingi husuluhisha hili tatizo.\n\nJe, ungependa kupakua rasilimali hii tena?";
 "no_internet_title" = "Hakuna muunganisho wa mtandao.";
 "no_internet" = "Tafadhali angalia muunganisho wako wa mtandao na ujaribu tena.";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "Vifaa vya hivi karibuni ve Kiingereza havingeweza kupakuliwa kwa wakati huu. Vifaa vya Kiingereza vinapatikana. Tafadhali angalia uunganisho wako ama ujaribu tena baadaye.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "Vifaa vya hivi karibuni vya Kiingereza vinaweza kupakuliwa.\n\nJe, ungependa kuweka lugha yako ya msingi iwe Kiingereza na upakue rasilimali hizi?\n";
 "the_tool_you_requested_is_loading" = "Kifaa ulichoagiza kinapakia";
 "loading" = "Inapakia...";
 
@@ -167,10 +160,8 @@ Programu inaweza kupakuliwa kwenye https://godtoolsapp.com";
 
 // Alerts
 "error" = "Kosa";
-"ok" = "Sawa";
 "OK" = "Sawasawa";
 "cancel" = "Futa";
-"error_can_not_send_email" = "Hakuna barua pepe iliyowekwa kwenye kifaa chako.";
 "required_field_missing" = " \"%@\" ni sharti ambalo lazima litimizwe.";
 
 "onboardingTutorial.getStartedButton.title" = "Anza";
@@ -199,4 +190,3 @@ Programu inaweza kupakuliwa kwenye https://godtoolsapp.com";
 // Language Name Strings
 "language_name_fa" = "Kipersia (Kifarsi)";
 
-"onboardingTutorial.continueButton.title" = "Endelea";
