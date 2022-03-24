@@ -46,13 +46,6 @@
 
 // Alert & Info Controllers
 "download_error" = "Download Error";
-"language_download_error" = "The available languages could not be downloaded at this time. Please check your connectivity or retry later.";
-"tract_loading_error_message" = "There was a problem opening this resource. Downloading it again often solves this problem. \n\nWould you like to download it again?";
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "The latest English tools can be downloaded. \n\nWould you like to set your primary language to English and download these resources?";
 // Actions
 "yes" = "Eny";
 "no" = "Tsia";
@@ -68,8 +61,6 @@
 "clear" = "Mazava";
 // Alerts
 "error" = "Error";
-"ok" = "OK";
-"error_can_not_send_email" = "There is no configured email on your device.";
 "required_field_missing" = "\"%@\" is a required field.";
 
 // About

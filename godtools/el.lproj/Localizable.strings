@@ -135,16 +135,9 @@
 
 // Alert & Info Controllers
 "download_error" = "Σφάλμα Λήψης";
-"language_download_error" = "Δεν ήταν δυνατή η λήψη των διαθέσιμων γλωσσών αυτήν τη στιγμή. Ελέγξτε τη σύνδεσή σας ή ξαναδοκιμάστε αργότερα.";
-"tract_loading_error_message" = "Παρουσιάστηκε πρόβλημα κατά το άνοιγμα αυτού του πόρου. Η λήψη του ξανά συχνά επιλύει αυτό το πρόβλημα.\n\nΘα θέλατε να τον κατεβάσετε ξανά;";
 "no_internet_title" = "Χωρίς σύνδεση στο διαδίκτυο";
 "no_internet" = "Ελέγξτε τη σύνδεσή σας στο διαδίκτυο και ξαναδοκιμάστε.";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "Δεν ήταν δυνατή η λήψη των πιο πρόσφατων εργαλείων Ελληνικών αυτήν τη στιγμή. Εργαλεία Ελληνικών είναι διαθέσιμα. Ελέγξτε τη σύνδεσή σας ή ξαναδοκιμάστε αργότερα.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "Μπορείτε να κατεβάσετε τα πιο πρόσφατα εργαλεία Ελληνικών.\n\nΘέλετε να ορίσετε ως κύρια γλώσσα σας τα Ελληνικά και να κατεβάσετε αυτά τα μέσα;";
 "the_tool_you_requested_is_loading" = "Το εργαλείο που ζητήσατε φορτώνει...";
 "loading" = "Φόρτωση...";
 
@@ -168,10 +161,8 @@
 
 // Alerts
 "error" = "Σφάλμα";
-"ok" = "Ok";
 "OK" = "Εντάξει";
 "cancel" = "Ακύρωση";
-"error_can_not_send_email" = "Δεν υπάρχει διαμορφωμένο email στη συσκευή σας.";
 "required_field_missing" = "\"%@\" είναι απαιτούμενο πεδίο.";
 
 "onboardingTutorial.getStartedButton.title" = "Αρχίστε";
@@ -199,4 +190,3 @@
 // Language Name Strings
 "language_name_fa" = "Περσικά (Φαρσί)";
 
-"onboardingTutorial.continueButton.title" = "Συνέχεια";

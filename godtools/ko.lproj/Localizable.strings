@@ -135,16 +135,9 @@
 
 // Alert & Info Controllers
 "download_error" = "다운로드 오류";
-"language_download_error" = "이용 가능한 언어를 지금 다운로드할 수 없습니다. 연결을 확인하거나 나중에 다시 시도하세요.";
-"tract_loading_error_message" = "이 리소스를 열 때 문제가 생겼습니다. 다시 다운로드하면 가끔 이 문제가 해결됩니다.\n\n다시 다운로드하시겠습니까?";
 "no_internet_title" = "인터넷 연결 없음";
 "no_internet" = "인터넷 연결을 확인하고 다시 시도하세요.";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "최신 영어 도구를 지금 다운로드할 수 없습니다. 영어 도구를 이용할 수 있습니다. 연결을 확인하거나 나중에 다시 시도하세요.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "최신 영어 도구를 다운로드할 수 있습니다.\n\n기본 언어를 영어로 설정하고 관련 리소스를 다운로드하시겠습니까?";
 "the_tool_you_requested_is_loading" = "귀하가 요청한 툴을 로딩 중입니다...";
 "loading" = "불러오는 중...";
 
@@ -168,10 +161,8 @@
 
 // Alerts
 "error" = "오류";
-"ok" = "확인";
 "OK" = "확인";
 "cancel" = "취소";
-"error_can_not_send_email" = "장치에 구성된 이메일이 없습니다.";
 "required_field_missing" = "\"%@\"은(는) 필수 입력란입니다.";
 
 "onboardingTutorial.getStartedButton.title" = "시작하기";
@@ -199,4 +190,3 @@
 // Language Name Strings
 "language_name_fa" = "페르시아어";
 
-"onboardingTutorial.continueButton.title" = "계속";

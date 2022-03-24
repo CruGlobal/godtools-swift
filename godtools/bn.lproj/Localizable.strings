@@ -108,13 +108,6 @@ http://godtoolsapp.com";
 
 // Alert & Info Controllers
 "download_error" = "ডাউনলোড এরর";
-"language_download_error" = "এই সময়ে উপলব্ধ ভাষার ডাউনলোড করা উপলব্ধ নয়. দয়া করে আপনার সংযোগ পরীক্ষা করুন বা পরে আবার চেষ্টা করুন.";
-"tract_loading_error_message" = "এই পুজি খোলার দরুন একটা সমস্যা হয়েছে. পুনরয় ডাউনলোড করলে বেশিরভাগ সমসস্যা সমাধান করে থাকে.\n\nকি আপনি এটি পুনুরায় ডাউনলোড করতে চান?";
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "এই মুহুর্তে সর্বশেষ ইংরেজি সরঞ্জামগুলি ডাউনলোড করা যায়নি. ইংরেজি সরঞ্জাম উপলব্ধ. দয়া করে আপনার সংযোগ পরীক্ষা করুন বা পরে আবার চেষ্টা করুন.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "সর্বশেষ ইংরেজি সরঞ্জাম ডাউনলোড করা যাবে.\n\nআপনি কি আপনার প্রাথমিক ভাষা ইংরেজিতে সেট করতে এবং এই সম্পদগুলি ডাউনলোড করতে চান?";
 "the_tool_you_requested_is_loading" = "আপনি যা সরঞ্জাম খুজচ্ছেন সেটি লোড হচ্ছে";
 // Actions
 "yes" = "হ্যা";
@@ -135,10 +128,8 @@ http://godtoolsapp.com";
 
 // Alerts
 "error" = "ভুল";
-"ok" = "থক আছে";
 "OK" = "থক আছে";
 "cancel" = "বাতিল করুন";
-"error_can_not_send_email" = "আপনার ডিভাইসে কোনও কনফিগার করা ইমেল নেই.";
 "required_field_missing" = "\"%@\" একটি প্রয়োজনীয় ক্ষেত্র";
 
 "onboardingTutorial.getStartedButton.title" = "শুরু করুন";
@@ -192,16 +183,12 @@ knowgod.com. আপনার নিজের সাইটে স্থাপ  �
 "accountActivity.globalAnalytics.users.title" = "অনন্য ইউজার";
 "onboardingWelcome.titleLabel.tagline" = "আপনার বিশ্বাস শেয়ার করতে সাহায্য করা";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "সুসমাচার উপস্থাপন";
-"onboardingWelcome.beginButton" = "আরম্ভ করুন";
-
 "accountActivity.globalAnalytics.launches.title" = "সেশনস";
 // OnboardingTutorial
 "onboardingTutorial.aboutAppItem.0.title" = "অন্যদের সাথে শেয়ার করুন";
 "accountActivity.globalAnalytics.countries.title" = "দেশ সমূহ";
 
 "onboardingTutorial.aboutAppItem.0.message" = "আপনার বিশ্বাসের কথোপকথনকে গাইড করতে GodTools তৈরী করা হয়েছে  I";
-// Alerts
-"alert.action.ok" = "থক আছে";
 "onboardingTutorial.aboutAppItem.1.title" = "আপনার টুলস পছন্দ করুন I";
 "onboardingTutorial.aboutAppItem.1.message" = "একটি আধ্যাত্মিক কথোপকথনের পূর্বে. মধ্যে, এবং পরে GodTools আপনাকে সাহায্য করে";
 "onboardingTutorial.aboutAppItem.2.title" = "সর্বদা প্রস্তুত";
@@ -211,5 +198,4 @@ knowgod.com. আপনার নিজের সাইটে স্থাপ  �
 "onboardingTutorial.appUsageItem.2.message" = "দুটি ভাষাকে পাশাপাশি দেখুন";
 "onboardingTutorial.appUsageItem.3.message" = "90 টি ভাষার অধিক থেকে পছন্দ করুন";
 "onboardingTutorial.appUsageItem.4.message" = "একজন খ্রীষ্টান হিসাবে শুরু করতে কাউকে সাহায্য করুন";
-"onboardingTutorial.continueButton.title" = "চালিয়ে যান";
 "onboardingTutorial.showMoreButton.title" = "আমাকে আরও দেখান";

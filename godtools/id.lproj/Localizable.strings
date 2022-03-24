@@ -147,17 +147,9 @@ Versi online dapat ditemukan di https://knowgod.com/id";
 
 // Alert & Info Controllers
 "download_error" = "Kesalahan Unduhan";
-"language_download_error" = "Bahasa yang tersedia tidak dapat diunduh saat ini. Silakan periksa jaringan koneksi atau coba lagi nanti.";
-"tract_loading_error_message" = "Terjadi masalah saat membuka sumber daya. Undah kembali untuk menyelesaikan masalah ini.\n\nAnda ingin mengunduh kembali?";
 "no_internet_title" = "Tidak ada koneksi internet";
 "no_internet" = "Silakan periksa koneksi internet dan coba lagi.";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "Alat Bahasa Inggris tidak dapat diunduh saat ini.
-Alat Bahasa Inggris tersedia. Silahkan periksa konektivitas atau coba lagi nanti.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "Alat Bahasa Inggris terbaru dapat diunduh.\n\nApakah Anda mau menetapkan bahasa utama ke Bahasa Inggris dan mengunduh sumber daya ini?";
 "the_tool_you_requested_is_loading" = "Alat yang Anda minta sedang dimuat....";
 "loading" = "Memuat...";
 
@@ -181,10 +173,8 @@ Aplikasi dapat diunduh dari https://godtoolsapp.com";
 
 // Alerts
 "error" = "Kesalahan";
-"ok" = "Oke";
 "OK" = "OKE";
 "cancel" = "Batal";
-"error_can_not_send_email" = "Tidak ada email yang dikonfigurasi dalam perangkat Anda.";
 "required_field_missing" = "\"%@\" wajib diisi.";
 
 "onboardingTutorial.getStartedButton.title" = "Mari Mulai";
@@ -232,13 +222,9 @@ Kolose 4:6";
 // OnboardingWelcome
 "onboardingWelcome.titleLabel.welcome" = "Selamat Datang";
 "onboardingWelcome.titleLabel.tagline" = "Membantu Saudara Membagikan Iman Saudara";
-"onboardingWelcome.beginButton" = "Mulai";
-
 // OnboardingTutorial
 "onboardingTutorial.aboutAppItem.0.title" = "Bagikan Dengan Orang Lain";
 "onboardingTutorial.aboutAppItem.0.message" = "GodTools dibangun untuk memandu percakapan iman Saudara";
-// Alerts
-"alert.action.ok" = "Oke";
 "onboardingTutorial.aboutAppItem.1.title" = "Pilih Sarana Saudara";
 "onboardingTutorial.aboutAppItem.1.message" = "GodTools membantu Saudara sebelum, selama, dan setelah percakapan rohani";
 "onboardingTutorial.aboutAppItem.2.title" = "Selalu Siap";
@@ -248,5 +234,4 @@ Kolose 4:6";
 "onboardingTutorial.appUsageItem.2.message" = "Lihat dua bahasa secara berdampingan";
 "onboardingTutorial.appUsageItem.3.message" = "Pilih dari lebih dari 90 bahasa";
 "onboardingTutorial.appUsageItem.4.message" = "Membantu seseorang memulai sebagai seorang Kristen";
-"onboardingTutorial.continueButton.title" = "Lanjutkan";
 "onboardingTutorial.showMoreButton.title" = "Lebih";

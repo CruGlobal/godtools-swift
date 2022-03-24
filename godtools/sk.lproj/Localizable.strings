@@ -127,16 +127,9 @@ Online verzia je k dispozícii na https://knowgod.com/";
 
 // Alert & Info Controllers
 "download_error" = "Chyba sťahovania";
-"language_download_error" = "Dostupné jazyky sa momentálne nepodarilo stiahnuť. Skontrolujte si pripojenie na internet alebo to skúste znova.";
-"tract_loading_error_message" = "Pri otváraní zdroja sa vyskytol problém. Tento problém sa často vyrieši opätovným stiahnutím zdroja.\n\nChcete ho stiahnuť znova?";
 "no_internet_title" = "Žiadne internetové pripojenie";
 "no_internet" = "Skontrolujte si internetové pripojenie a skúste to znova.";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "Najnovšie slovenské nástroje sa momentálne nepodarilo stiahnuť. K dispozícii sú anglické nástroje. Skontrolujte si svoje pripojenie alebo to skúste znova neskôr.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "Je možné stiahnuť najnovšie slovenské nástroje.\n\nChcete nastaviť svoj hlavný jazyk na slovenčinu a stiahnuť si tieto zdroje?";
 "the_tool_you_requested_is_loading" = "Nástroj, o ktorý ste požiadali, sa načítava…";
 "loading" = "Načítava sa...";
 
@@ -160,10 +153,8 @@ Aplikácia sa dá stiahnuť na https://godtoolsapp.com";
 
 // Alerts
 "error" = "Chyba";
-"ok" = "OK";
 "OK" = "OK";
 "cancel" = "Zrušiť";
-"error_can_not_send_email" = "Vo vašom zariadení nie je nastavený e-mail.";
 "required_field_missing" = "%@ je povinné pole.";
 
 "onboardingTutorial.getStartedButton.title" = "Začať";
@@ -191,4 +182,3 @@ Aplikácia sa dá stiahnuť na https://godtoolsapp.com";
 // Language Name Strings
 "language_name_fa" = "Perzština (fársí)";
 
-"onboardingTutorial.continueButton.title" = "Pokračovať";

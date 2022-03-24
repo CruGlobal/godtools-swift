@@ -162,18 +162,9 @@
 "download_error" = "टीपा
 नियंत्रकांस सावध करा
 डाऊनलोडच्या चुका";
-"language_download_error" = "या वेळी उपलब्ध भाषा डाऊनलोड करता आल्या नाहीत. कृपा करून आपली कनेक्टिविटी तपासून पाहा अथवा नंतर प्रयत्न करा.";
-"tract_loading_error_message" = "हे साहित्य अर्थात रिसोर्स शोधण्यात समस्या होती. ते पुन्हा डाऊनलोड केल्यास बरेचदा ही समस्या दूर होते.\nआपण ते पुन्हा डाऊनलोड करू इच्छिता काय?\n";
 "no_internet_title" = "इंटरनेट कनेक्शन नाही";
 "no_internet" = "कृपया इंटरनेट कनेक्शन तपासून परत प्रयास करा";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "टीपा
-पहिल्यांदा “इंग्रजी” शब्द साधनांचे वर्णन करणारे विशेषण आहे आणि त्या जागे साधनांचे वर्णन करणारे विशेषण म्हणून ह्या भाषांतराच्या भाषेचे स्थानिक नाव टाकावे. दुसर्यांदा “इंग्रजी” भाषेचा शब्द देखील नाम आहे, परंतु ह्या भाषांतराच्या भाषेत भाषांतर केलेले “इंग्रजी” राहावे.
-या वेळी अद्यतन इंग्रजी साधने डाऊनलोड करता आली नाहीत. इंग्रजी साधने उपलब्ध आहेत. कृपा करून आपली कनेक्टिविटी तपासून पाहा अथवा नंतर प्रयत्न करा.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "टीपा\nपहिल्यांदा “इंग्रजी” शब्द साधनांचे वर्णन करणारे विशेषण आहे आणि त्या जागे साधनांचे वर्णन करणारे विशेषण म्हणून ह्या भाषांतराच्या भाषेचे स्थानिक नाव टाकावे. दुसर्यांदा “इंग्रजी” भाषेचा शब्द देखील नाम आहे, परंतु ह्या भाषांतराच्या भाषेत भाषांतर केलेले “इंग्रजी” राहावे.\n\nअगदी अलीकडील इंग्रजी साधने डाऊनलोड करता येऊ शकतात.\n\nआपण आपली मूळ भाषा इंग्रजीसोबत सेट कराल काय आणि हे रिसोर्सेस म्हणजे डाऊनलोड कराल काय? ";
 "the_tool_you_requested_is_loading" = "आपण विनंती केलेले साधन लोड होत आहे";
 "loading" = "लोड करीत आहे..";
 
@@ -203,11 +194,8 @@
 "error" = "टीपा
 सावध
 चुका ";
-"ok" = "ठीक आहे
-";
 "OK" = "ओके";
 "cancel" = "रद्द करा";
-"error_can_not_send_email" = "आपल्या डिवाईसवर काॅन्फिगर्ड ईमेल नाही. ";
 "required_field_missing" = "\"%@\" जरूरी फिल्ड म्हणजे क्षेत्र आहे.";
 
 "onboardingTutorial.getStartedButton.title" = "सुरूवात करा";
@@ -262,16 +250,12 @@
 "accountActivity.globalAnalytics.users.title" = "अनन्य वापरकर्ते";
 "onboardingWelcome.titleLabel.tagline" = "आपला विश्वास पसरवण्यात आपल्या मदतीसाठी";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "सुवार्ता सादरीकरण";
-"onboardingWelcome.beginButton" = "सुरू करा";
-
 "accountActivity.globalAnalytics.launches.title" = "सत्रे";
 // OnboardingTutorial
 "onboardingTutorial.aboutAppItem.0.title" = "इतरांस सांगा";
 "accountActivity.globalAnalytics.countries.title" = "देश";
 
 "onboardingTutorial.aboutAppItem.0.message" = "GodTools आपल्या विश्वासात संभाषणांचे मार्गदर्शन करण्यासाठी तयार केले गेले आहेत";
-// Alerts
-"alert.action.ok" = "ओके";
 "onboardingTutorial.aboutAppItem.1.title" = "आपले टूल्स निवडा";
 "onboardingTutorial.aboutAppItem.1.message" = "GodTools आपल्याला आत्मिक संभाषणापूर्वी, दरम्यान आणि नंतर मदत करतात";
 "onboardingTutorial.aboutAppItem.2.title" = "सदैव तयार";
@@ -281,5 +265,4 @@
 "onboardingTutorial.appUsageItem.2.message" = "दोन भाषा आजूबाजूला पाहा";
 "onboardingTutorial.appUsageItem.3.message" = "90 पेक्षा जास्त भाषांमधून निवडा";
 "onboardingTutorial.appUsageItem.4.message" = "एखाद्याला ख्रिस्ती म्हणून प्रारंभ करण्यास मदत करा";
-"onboardingTutorial.continueButton.title" = "सुरू";
 "onboardingTutorial.showMoreButton.title" = "मला आणखी दाखवा";

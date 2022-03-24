@@ -135,16 +135,9 @@ Versi dalam talian boleh ditemui di https://knowgod.com/";
 
 // Alert & Info Controllers
 "download_error" = "Ralat Muat Turun";
-"language_download_error" = "Bahasa yang tersedia tidak dapat dimuat turun buat masa ini. Sila semak ketersambungan anda atau cuba semula kemudian.";
-"tract_loading_error_message" = "Terdapat masalah membuka sumber ini.\nMuat turunnya sekali lagi sering menyelesaikan masalah ini.\n\nAdakah anda ingin memuat turunnya sekali lagi?";
 "no_internet_title" = "Tiada sambungan Internet";
 "no_internet" = "Sila semak sambungan Internet anda dan cuba lagi.";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "Alat bahasa Melayu terkini tidak dapat dimuat turun pada masa ini. Alat bahasa Inggeris tersedia. Sila semak ketersambungan anda atau cuba semula kemudian.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "Alat bahasa Melayu terkini boleh dimuat turun.\n\nAdakah anda mahu menetapkan bahasa utama anda ke bahasa Inggeris dan memuat turun sumber-sumber ini?";
 "the_tool_you_requested_is_loading" = "Alat yang anda minta sedang dimuatkan...";
 "loading" = "Memuat...";
 
@@ -168,10 +161,8 @@ Aplikasi boleh dimuat turun daripada https://godtoolsapp.com";
 
 // Alerts
 "error" = "Ralat";
-"ok" = "Ok";
 "OK" = "OK";
 "cancel" = "Batal";
-"error_can_not_send_email" = "Tiada e-mel yang dikonfigurasikan pada peranti anda.";
 "required_field_missing" = "\"%@\" ialah medan yang diperlukan.";
 
 "onboardingTutorial.getStartedButton.title" = "Bermula";
@@ -199,4 +190,3 @@ Aplikasi boleh dimuat turun daripada https://godtoolsapp.com";
 // Language Name Strings
 "language_name_fa" = "Bahasa Parsi (Parsi)";
 
-"onboardingTutorial.continueButton.title" = "Teruskan";

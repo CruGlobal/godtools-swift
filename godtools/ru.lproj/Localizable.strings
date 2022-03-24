@@ -137,16 +137,9 @@
 
 // Alert & Info Controllers
 "download_error" = "Ошибка загрузки";
-"language_download_error" = "Доступные языки не могут быть загружены в настоящее время. Проверьте подключение к сети и попробуйте еще раз позднее.";
-"tract_loading_error_message" = "Возникла проблема при открытии данного ресурса. Повторная загрузка может помочь устранить эту проблему.\n\nХотите выполнить загрузку снова?";
 "no_internet_title" = "Отсутствует подключение к Интернету";
 "no_internet" = "Проверьте подключение к сети и попробуйте еще раз.";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "Не удалось загрузить последние инструменты на русском языке. Инструменты доступны на английском языке. Проверьте подключение к сети или повторите попытку позже.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "Доступны для загрузки последние инструменты на русском языке. \n\nХотите сделать основным языком русский и загрузить эти материалы?";
 "the_tool_you_requested_is_loading" = "Загрузка требуемого инструмента...";
 "loading" = "Загрузка...";
 
@@ -172,10 +165,8 @@
 
 // Alerts
 "error" = "Ошибка";
-"ok" = "ОК";
 "OK" = "ОК";
 "cancel" = "Отмена";
-"error_can_not_send_email" = "На вашем устройстве нет настроенной учетной записи эл. почты.";
 "required_field_missing" = "\"%@\" является обязательным полем.";
 
 "onboardingTutorial.getStartedButton.title" = "Начать";
@@ -229,16 +220,12 @@
 "accountActivity.globalAnalytics.users.title" = "Уникальные\nПользователи";
 "onboardingWelcome.titleLabel.tagline" = "Помогая вам говорить с другими о своей вере";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Презентации\nПроповедей";
-"onboardingWelcome.beginButton" = "Начать";
-
 "accountActivity.globalAnalytics.launches.title" = "Сеансы";
 // OnboardingTutorial
 "onboardingTutorial.aboutAppItem.0.title" = "Поделитесь в другими";
 "accountActivity.globalAnalytics.countries.title" = "Страны";
 
 "onboardingTutorial.aboutAppItem.0.message" = "GodTools создан для того, чтобы помочь вам говорить с другими о своей вере";
-// Alerts
-"alert.action.ok" = "ОК";
 "onboardingTutorial.aboutAppItem.1.title" = "Выберите свои инструменты";
 "onboardingTutorial.aboutAppItem.1.message" = "GodTools поможет вам во время разговора с человеком о Боге, до и после";
 "onboardingTutorial.aboutAppItem.2.title" = "Всегда в доступе и готово помочь";
@@ -248,5 +235,4 @@
 "onboardingTutorial.appUsageItem.2.message" = "Выбрать два параллельных языка для просмотра";
 "onboardingTutorial.appUsageItem.3.message" = "Выберите свой язык из 90+ представленных в приложении";
 "onboardingTutorial.appUsageItem.4.message" = "Помогите другим в их духовном росте";
-"onboardingTutorial.continueButton.title" = "Продолжить";
 "onboardingTutorial.showMoreButton.title" = "Покажите еще";

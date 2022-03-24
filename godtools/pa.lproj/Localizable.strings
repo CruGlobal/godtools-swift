@@ -133,16 +133,9 @@
 
 // Alert & Info Controllers
 "download_error" = "ਡਾਊਨਲੋਡ ਗਲਤੀ";
-"language_download_error" = "ਇਸ ਸਮੇਂ ਉਪਲਬਧ ਭਾਸ਼ਾਵਾਂ ਨੂੰ ਡਾਉਨਲੋਡ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸੱਕਦਾ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੀ ਕੁਨੈਕਟਵਿਟੀ ਦੀ ਜਾਂਚ ਕਰੋ ਜਾਂ ਬਾਅਦ ਵਿੱਚ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।";
-"tract_loading_error_message" = "ਇਸ ਸਾਮ੍ਰਗੀ ਨੂੰ ਖੋਲ੍ਹਣ ਵਿੱਚ ਇੱਕ ਸਮੱਸਿਆ ਪੈਦਾ ਹੋਈ ਹੈ। ਇਸ ਸਮੱਸਿਆ ਦਾ ਹੱਲ ਅਕਸਰ ਦੁਬਾਰਾ ਡਾਊਨਲੋਡ ਕਰਨ ਦੇ ਨਾਲ ਹੋ ਜਾਂਦਾ ਹੈ।\n\nਕੀ ਤੁਸੀਂ ਇਸਨੂੰ ਦੁਬਾਰਾ ਡਾਊਨਲੋਡ ਕਰਨਾ ਚਾਹੋਗੇ?";
 "no_internet_title" = "ਕੋਈ ਇੰਟਰਨੈਟ ਕਨੈਕਸ਼ਨ ਨਹੀਂ";
 "no_internet" = "ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੇ ਇੰਟਰਨੈਟ ਕਨੈਕਸ਼ਨ ਦੀ ਜਾਂਚ ਕਰੋ ਅਤੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "ਤਾਜ਼ਾ ਅੰਗ੍ਰੇਜ਼ੀ ਟੂਲ ਇਸ ਸਮੇਂ ਡਾਊਨਲੋਡ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ। ਅੰਗ੍ਰੇਜ਼ੀ ਟੂਲ ਉਪਲਬਧ ਹਨ। ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੀ ਕੁਨੈਕਟਵਿਟੀ ਦੀ ਜਾਂਚ ਕਰੋ ਜਾਂ ਬਾਅਦ ਵਿੱਚ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "ਤਾਜ਼ਾ ਅੰਗ੍ਰੇਜ਼ੀ ਟੂਲ ਇਸ ਸਮੇਂ ਡਾਊਨਲੋਡ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ। \n\nਕੀ ਤੁਸੀਂ ਆਪਣੀ ਮੁਢਲੀ ਭਾਸ਼ਾ ਅੰਗ੍ਰੇਜ਼ੀ ਵਿਚ ਸੈਟ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ ਅਤੇ ਇਨ੍ਹਾਂ ਸਾਮਗ੍ਰਿਆਂ ਨੂੰ ਡਾਊਨਲੋਡ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ?";
 "the_tool_you_requested_is_loading" = "ਬੇਨਤੀ ਕੀਤੇ ਜਾਣ ਵਾਲਾ ਟੂਲ ਲੋ਼ਡ ਹੋ ਰਿਹਾ ਹੈ";
 "loading" = "ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ ...";
 
@@ -166,10 +159,8 @@
 
 // Alerts
 "error" = "ਗਲਤੀ";
-"ok" = "ਠੀਕ ਹੈ";
 "OK" = "ਠੀਕ ਹੈ";
 "cancel" = "ਰੱਦ ਕਰੋ";
-"error_can_not_send_email" = "ਤੁਹਾਡੀ ਡਿਵਾਈਸ ਤੇ ਕੋਈ ਕੌਂਫਿਗਰ ਈਮੇਲ ਨਹੀਂ ਕੀਤੀ ਗਈ ਹੈ।";
 "required_field_missing" = "\"%@\" ਇੱਕ ਲੋੜੀਂਦਾ ਖੇਤਰ ਹੈ।";
 
 "onboardingTutorial.getStartedButton.title" = "ਅਰੰਭ ਕਰੋ";
@@ -197,4 +188,3 @@
 // Language Name Strings
 "language_name_fa" = "ਫ਼ਾਰਸੀ (ਫਾਰਸੀ)";
 
-"onboardingTutorial.continueButton.title" = "ਜਾਰੀ ਰੱਖੋ";

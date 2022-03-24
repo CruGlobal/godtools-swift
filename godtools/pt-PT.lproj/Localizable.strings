@@ -135,16 +135,9 @@ Podes encontrar uma versão online em https://knowgod.com/";
 
 // Alert & Info Controllers
 "download_error" = "Erro ao transferir";
-"language_download_error" = "Neste momento, não é possível transferir os idiomas disponíveis. Verifica a ligação à Internet ou tenta novamente mais tarde.";
-"tract_loading_error_message" = "Ocorreu um problema ao abrir este recurso. Voltar a transferir costuma resolver este problema. \n\n Gostarias de voltar a transferi-lo?";
 "no_internet_title" = "Sem ligação à Internet";
 "no_internet" = "Verifica a tua ligação à Internet e tenta novamente.";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "Neste momento, não é possível transferir as ferramentas em português mais recentes. Verifica a ligação à Internet ou tenta novamente mais tarde.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "É possível transferir as ferramentas em português mais recentes. \n\n Gostarias de definir o teu idioma principal como Português e transferir estes recursos?";
 "the_tool_you_requested_is_loading" = "A ferramenta que solicitaste está a carregar...";
 "loading" = "A carregar...";
 
@@ -168,10 +161,8 @@ Podes transferir a aplicação em https://godtoolsapp.com";
 
 // Alerts
 "error" = "Erro";
-"ok" = "OK";
 "OK" = "OK";
 "cancel" = "Cancelar";
-"error_can_not_send_email" = "Não existe nenhum e-mail configurado no teu dispositivo.";
 "required_field_missing" = "\"%@\" é um campo obrigatório.";
 
 "onboardingTutorial.getStartedButton.title" = "Começar";
@@ -199,4 +190,3 @@ Podes transferir a aplicação em https://godtoolsapp.com";
 // Language Name Strings
 "language_name_fa" = "Persa (parse)";
 
-"onboardingTutorial.continueButton.title" = "Continuar";

@@ -135,16 +135,9 @@ A https://knowgod.com/ címen egy online verzió található";
 
 // Alert & Info Controllers
 "download_error" = "Letöltés hibája";
-"language_download_error" = "Az elérhető nyelvek letöltése ezúttal sikertelen volt. Ellenőrizd a kapcsolatot, vagy próbálkozz később.";
-"tract_loading_error_message" = "A forrás megnyitásánál hiba történt.\nAz ismételt letöltés gyakran megoldja a problémát.\n\nKívánod letölteni újra?";
 "no_internet_title" = "Nincs internetkapcsolat";
 "no_internet" = "Ellenőrizze az internetkapcsolatot, majd próbálja újra";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "A legújabb magyar nyelvű eszközök most nem tölthetők le. Angol nyelvű eszközök rendelkezésre állnak. Ellenőrizd a kapcsolatot, vagy próbálkozz később.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "A legújabb angol nyelvű eszközök letölthetők.\n\nKívánod az elsődleges nyelvedet angolra állítani, és letölteni ezeket a forrásokat?";
 "the_tool_you_requested_is_loading" = "A kért eszköz betöltése folyamatban...";
 "loading" = "Betöltés...";
 
@@ -168,10 +161,8 @@ Az alkalmazás a https://godtoolsapp.com címről tölthető le";
 
 // Alerts
 "error" = "Hiba";
-"ok" = "OK";
 "OK" = "OK";
 "cancel" = "Mégse";
-"error_can_not_send_email" = "Az eszközödön nincs e-mail konfigurálva";
 "required_field_missing" = "A \"%@\" kötelező mező.";
 
 "onboardingTutorial.getStartedButton.title" = "Első lépések";
@@ -199,4 +190,3 @@ Az alkalmazás a https://godtoolsapp.com címről tölthető le";
 // Language Name Strings
 "language_name_fa" = "Perzsa (fárszi)";
 
-"onboardingTutorial.continueButton.title" = "Folytasd";

@@ -146,16 +146,9 @@
 
 // Alert & Info Controllers
 "download_error" = "下載錯誤";
-"language_download_error" = "目前無法下載可用語言。請確認您的網路已連線，或稍後再試。";
-"tract_loading_error_message" = "下載此資源時遇到了問題。可嘗試重新下載以解決此問題。\n\n您要重新嘗試下載嗎？";
 "no_internet_title" = "無網路連線";
 "no_internet" = "請檢查您的網路連線狀態，然後再試一次。";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "目前無法下載最新英文工具。有英文工具可供使用。請確認您的網路已連線，或稍後再試。";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "最新的英文工具現在可以下載了。\n\n您想將您的主要語言設定成英文，下載這些資源嗎？";
 "the_tool_you_requested_is_loading" = "工具正在載入中⋯⋯";
 "loading" = "正在載入⋯⋯";
 
@@ -181,10 +174,8 @@
 
 // Alerts
 "error" = "錯誤";
-"ok" = "好";
 "OK" = "好";
 "cancel" = "取消";
-"error_can_not_send_email" = "您的裝置上沒有建立電子郵件帳戶。";
 "required_field_missing" = "必須輸入「%@」。";
 
 "onboardingTutorial.getStartedButton.title" = "開始使用";
@@ -240,16 +231,12 @@
 "accountActivity.globalAnalytics.users.title" = "獨特\n用戶";
 "onboardingWelcome.titleLabel.tagline" = "幫助你分享信念";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "福音演示";
-"onboardingWelcome.beginButton" = "開始";
-
 "accountActivity.globalAnalytics.launches.title" = "節";
 // OnboardingTutorial
 "onboardingTutorial.aboutAppItem.0.title" = "與他人分享";
 "accountActivity.globalAnalytics.countries.title" = "國家或地區";
 
 "onboardingTutorial.aboutAppItem.0.message" = "GodTools 為引導您的信仰對話而設";
-// Alerts
-"alert.action.ok" = "好";
 "onboardingTutorial.aboutAppItem.1.title" = "選擇工具";
 "onboardingTutorial.aboutAppItem.1.message" = "GodTools 協助您準備、進行及回顧靈性對話";
 "onboardingTutorial.aboutAppItem.2.title" = "隨時就緒";
@@ -259,5 +246,4 @@
 "onboardingTutorial.appUsageItem.2.message" = "兩種語言並列顯示";
 "onboardingTutorial.appUsageItem.3.message" = "共有超過 90 種語言可選";
 "onboardingTutorial.appUsageItem.4.message" = "引導他人成為教徒";
-"onboardingTutorial.continueButton.title" = "繼續";
 "onboardingTutorial.showMoreButton.title" = "展示更多";

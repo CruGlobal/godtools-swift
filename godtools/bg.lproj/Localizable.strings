@@ -140,16 +140,9 @@
 
 // Alert & Info Controllers
 "download_error" = "Грешка в изтеглянето";
-"language_download_error" = "Неуспешно изтегляне на наличните езици. Моля, проверете Вашата връзка или опитайте отново по-късно.";
-"tract_loading_error_message" = "Имаше проблем с отварянето на този източник. Повторното му изтегляне често разрешава този проблем.\n\nИскате ли да го изтеглите отново?";
 "no_internet_title" = "Няма връзка с интернет";
 "no_internet" = "Моля, проверете връзката с интернет и опитайте отново.";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "Неуспешно изтегляне на най-новите инструменти на английски език. Налични са инструменти на английски език. Моля, проверете Вашата връзка или опитайте отново по-късно.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "Най-новите инструменти на английски език могат да бъдат изтеглени.\nИскате ли да изберете английския за Ваш главен език и да изтеглите тези ресурси?\n";
 "the_tool_you_requested_is_loading" = "Изискваният от Вас инструмент се зарежда";
 "loading" = "Зареждане...";
 
@@ -173,10 +166,8 @@
 
 // Alerts
 "error" = "Грешка";
-"ok" = "ОК";
 "OK" = "OK";
 "cancel" = "Отмяна";
-"error_can_not_send_email" = "Няма конфигуриран имейл на Вашето устройство.";
 "required_field_missing" = "\"%@\" е задължително поле.";
 
 "onboardingTutorial.getStartedButton.title" = "Започнете";
@@ -228,16 +219,12 @@
 "accountActivity.globalAnalytics.users.title" = "Уникални потребители";
 "onboardingWelcome.titleLabel.tagline" = "Помагайки ви да споделяте вярата си";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Презентации на Евангелието";
-"onboardingWelcome.beginButton" = "Начало";
-
 "accountActivity.globalAnalytics.launches.title" = "Сесии";
 // OnboardingTutorial
 "onboardingTutorial.aboutAppItem.0.title" = "Споделете с други";
 "accountActivity.globalAnalytics.countries.title" = "Държави";
 
 "onboardingTutorial.aboutAppItem.0.message" = "GodTools е създаден, за да ви помогне във вашите духовни разговори";
-// Alerts
-"alert.action.ok" = "OK";
 "onboardingTutorial.aboutAppItem.1.title" = "Изберете вашите инструменти";
 "onboardingTutorial.aboutAppItem.1.message" = "GodTools ви помага преди, по време на, и след духовен разговор";
 "onboardingTutorial.aboutAppItem.2.title" = "Винаги готов";
@@ -247,5 +234,4 @@
 "onboardingTutorial.appUsageItem.2.message" = "Вижте два езика един до друг";
 "onboardingTutorial.appUsageItem.3.message" = "Изберете от над 90 езика";
 "onboardingTutorial.appUsageItem.4.message" = "Помогнете на някого да израсне като християнин";
-"onboardingTutorial.continueButton.title" = "Продължете";
 "onboardingTutorial.showMoreButton.title" = "Покажете повече";

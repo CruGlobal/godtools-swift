@@ -133,16 +133,9 @@ Internetinę versiją galima rasti adresu https://knowgod.com/";
 
 // Alert & Info Controllers
 "download_error" = "Parsisiuntimo klaida";
-"language_download_error" = "Šiuo metu siūlomų kalbų nepavyko parsisiųsti. Patikrinkite savo ryšį arba pabandykite dar kartą vėliau.";
-"tract_loading_error_message" = "Atidarant šį išteklių, iškilo problema. Problema dažniausiai pašalinama parsisiuntus jį iš naujo.\n\nAr norėtumėte parsisiųsti jį dar kartą?";
 "no_internet_title" = "Nėra interneto ryšio";
 "no_internet" = "Patikrinkite savo interneto ryšį ir bandykite dar kartą.";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "Šiuo metu nepavyko parsisiųsti naujausių lietuviškų įrankių. Siūlomi įrankiai anglų kalba. Patikrinkite savo ryšį arba pabandykite dar kartą vėliau.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "Galima parsisiųsti naujausius lietuviškus įrankius.\n\nAr norėtumėte nustatyti lietuvių savo pagrindine kalba ir parsisiųsti šiuos išteklius.";
 "the_tool_you_requested_is_loading" = "Jūsų prašomas įrankis įkeliamas...";
 "loading" = "Įkeliama...";
 
@@ -166,10 +159,8 @@ Programėlę galima atsisiųsti adresu https://godtoolsapp.com";
 
 // Alerts
 "error" = "Klaida";
-"ok" = "Gerai";
 "OK" = "GERAI";
 "cancel" = "Atšaukti";
-"error_can_not_send_email" = "Jūsų įrenginyje nėra konfigūruoto el. pašto.";
 "required_field_missing" = "„%@“ yra reikalingas laukelis.";
 
 "onboardingTutorial.getStartedButton.title" = "Pradėti";
@@ -197,4 +188,3 @@ Programėlę galima atsisiųsti adresu https://godtoolsapp.com";
 // Language Name Strings
 "language_name_fa" = "Persų (Farsi)";
 
-"onboardingTutorial.continueButton.title" = "Tęsti";

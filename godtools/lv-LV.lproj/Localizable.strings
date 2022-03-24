@@ -146,16 +146,9 @@ Tiešsaistes versija ir pieejama: https://KnowGod.com/lv";
 
 // Alert & Info Controllers
 "download_error" = "Lejupielādes kļūda";
-"language_download_error" = "Šobrīd pieejamās valodas nav iespējams lejupielādēt. Lūdzu, pārbaudi pieslēgumu vai mēģini vēlreiz.";
-"tract_loading_error_message" = "Resursa atvēršanas kļūda. Atkārtota lejupielāde bieži palīdz atrisināt šo problēmu. \n\nVai vēlies lejupielādēt atkārtoti?";
 "no_internet_title" = "Nav savienojuma ar internetu";
 "no_internet" = "Lūdzu, pārbaudi savienojumu ar internetu un mēģini vēlreiz.";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "Jaunākos latviešu valodas rīkus nav iespējams lejupielādēt. Ir pieejami rīki angļu valodā. Lūdzu, pārbaudi pieslēgumu vai mēģini vēlāk.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "Ir iespējams lejupielādēt jaunākos rīkus angļu valodā. \n\nVai vēlaties iestatīt latviešu valodu par pirmo valodu un lejupielādēt šos resursus?";
 "the_tool_you_requested_is_loading" = "Tavs pieprasītais rīks tiek ielādēts…";
 "loading" = "Ielādē...";
 
@@ -181,10 +174,8 @@ Lietotni var lejupielādēt no: https://godtoolsapp.com";
 
 // Alerts
 "error" = "Kļūda";
-"ok" = "Ok";
 "OK" = "OK";
 "cancel" = "Atcelt";
-"error_can_not_send_email" = "Jūsu ierīcē nav iestatīts e-pasts.";
 "required_field_missing" = "\"%@\" ir obligāts lauks.";
 
 "onboardingTutorial.getStartedButton.title" = "Sākt";
@@ -212,4 +203,3 @@ Lietotni var lejupielādēt no: https://godtoolsapp.com";
 // Language Name Strings
 "language_name_fa" = "Persiešu (Farsi)";
 
-"onboardingTutorial.continueButton.title" = "Turpināt";

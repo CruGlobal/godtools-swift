@@ -134,16 +134,9 @@
 
 // Alert & Info Controllers
 "download_error" = "Не завантажено";
-"language_download_error" = "Доступні мови наразі не вдається завантажити. Перевірте з'єднання з Інтернетом або повторіть спробу пізніше.";
-"tract_loading_error_message" = "Сталася помилка під час завантаження. Спобуйте завантажити знову.\n\nЗавантажити зараз?";
 "no_internet_title" = "Немає підключення до Інтернету";
 "no_internet" = "Перевірте підключення до Інтернету і повторіть спробу.";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "Останню версію на українській мові наразі не вдається завантажити. Перевірте з'єднання з Інтернетом або повторіть спробу пізніше.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "Останню версію на українській мові наразі не вдається завантажити. \n\nБажаєте встановити англійську мову і завантажити ресурси на цій мові?";
 "the_tool_you_requested_is_loading" = "Ваш інструмент завантажується...";
 "loading" = "Завантажується...";
 
@@ -167,10 +160,8 @@
 
 // Alerts
 "error" = "Помилка";
-"ok" = "Добре";
 "OK" = "Добре";
 "cancel" = "Скасувати";
-"error_can_not_send_email" = "Ел. пошту не налаштовано на вашому пристрої.";
 "required_field_missing" = "\"%@\" є обов'язковим пунктом";
 
 "onboardingTutorial.getStartedButton.title" = "Розпочати";
@@ -198,4 +189,3 @@
 // Language Name Strings
 "language_name_fa" = "Перська (фарсі)";
 
-"onboardingTutorial.continueButton.title" = "Продовжити";

@@ -108,13 +108,6 @@ http://godtoolsapp.com";
 
 // Alert & Info Controllers
 "download_error" = "ડાઉનલોડમાં ભૂલ થઈ";
-"language_download_error" = "પ્રાપ્ય ભાષાઓ આ સમયે ડાઉનલોડ થઈ શકશે નહિ. તમારા જોડાણની ખાતરી કરો અથવા થોડા સમય પછી ફરીથી પ્રયત્ન કરો.";
-"tract_loading_error_message" = "આ સામગ્રી ખોલવામાં સમસ્યા આવી રહી છે. \nતેને ફરી ડાઉનલોડ કરવાથી આ સમસ્યા મોટેભાગે હલ થઈ જાય છે.";
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "અદ્યતન અંગ્રેજી સાધનો/ટુલ્સ આ સમયે ડાઉનલોડ થઈ શકશે નહિ. અંગ્રેજી સાધનો/ટુલ્સ પ્રાપ્ય છે. તમારા જોડાણની ખાતરી કરો અથવા થોડા સમય પછી  ફરીથી પ્રયત્ન કરો.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "અદ્યતન અંગ્રેજી સાધનો/ટુલ્સ ડાઉનલોડ થઈ શકશે.\n\nશું તમારી પ્રાથમિક ભાષા તરીકે અંગ્રેજી સ્થાપિત કરી અને આ સામગ્રી ડાઉનલોડ કરવા માંગો છો?";
 "the_tool_you_requested_is_loading" = "જે સાધન/ટુલ તમે માંગો છો તે લોડ થઈ રહ્યું છે...";
 // Actions
 "yes" = "હા";
@@ -134,10 +127,8 @@ http://godtoolsapp.com";
 
 // Alerts
 "error" = "ભૂલ";
-"ok" = "બરાબર";
 "OK" = "બરાબર";
 "cancel" = "રદ કરો";
-"error_can_not_send_email" = "તમારા સાધન સાથે કોઈ ઈ-મેલ અંકિત નથી.";
 "required_field_missing" = "%@ આ ખાનું  ફરજીયાત છે.";
 
 "onboardingTutorial.getStartedButton.title" = "શરૂ કરો";
@@ -188,16 +179,12 @@ http://godtoolsapp.com";
 "accountActivity.globalAnalytics.users.title" = "અનન્ય વપરાશકર્તાઓ";
 "onboardingWelcome.titleLabel.tagline" = "તમને તમારો વિશ્વાસ વહેંચવામાં મદદ કરશે";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "સુવાર્તા પ્રસ્તુતિઓ";
-"onboardingWelcome.beginButton" = "શરૂઆત";
-
 "accountActivity.globalAnalytics.launches.title" = "સત્રો";
 // OnboardingTutorial
 "onboardingTutorial.aboutAppItem.0.title" = "અન્ય લોકો સાથે શેર કરો";
 "accountActivity.globalAnalytics.countries.title" = "દેશો";
 
 "onboardingTutorial.aboutAppItem.0.message" = "GodTools તમારા વિશ્વાસ વાર્તાલાપને માર્ગદર્શન આપવા માટે બનાવવામાં આવ્યું છે";
-// Alerts
-"alert.action.ok" = "બરાબર";
 "onboardingTutorial.aboutAppItem.1.title" = "તમારા ટુલ્સ પસંદ કરો";
 "onboardingTutorial.aboutAppItem.1.message" = "GodTools આધ્યાત્મિક વાતચીત પહેલાં, દરમ્યાન અને પછી તમને મદદ કરે છે";
 "onboardingTutorial.aboutAppItem.2.title" = "હંમેશા તૈયાર";
@@ -207,5 +194,4 @@ http://godtoolsapp.com";
 "onboardingTutorial.appUsageItem.2.message" = "એક સાથે બે ભાષાઓ જુઓ";
 "onboardingTutorial.appUsageItem.3.message" = "90 થી વધુ ભાષાઓમાંથી પસંદ કરો";
 "onboardingTutorial.appUsageItem.4.message" = "કોઈને ખ્રિસ્તી તરીકે પ્રારંભ કરવામાં સહાય કરો";
-"onboardingTutorial.continueButton.title" = "ચાલુ રાખો";
 "onboardingTutorial.showMoreButton.title" = "મને વધુ બતાવો";

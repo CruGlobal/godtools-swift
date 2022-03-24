@@ -133,16 +133,9 @@
 
 // Alert & Info Controllers
 "download_error" = "Грешка приликом преузимања";
-"language_download_error" = "Преузимање доступних језика није могуће у овом тренутку. Проверите могућност повезивања или покушајте касније.";
-"tract_loading_error_message" = "Дошло је до проблема приликом отварања овог ресурса. Поновно преузимање обично решава тај проблем. \n\n Желите ли да га преузмете поново?";
 "no_internet_title" = "Нема интернет везе";
 "no_internet" = "Проверите везу са интернетом и покушајте поново.";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "Преузимање алата на енглеском није могуће у овом тренутку. Алати на енглеском су доступни. Проверите могућност повезивања или покушајте касније.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "Најновији алати на енглеском се могу преузети. \n\n Желите ли да поставите свој примарни језик на енглески и да преузмете ове ресурсе?";
 "the_tool_you_requested_is_loading" = "Алатка коју сте тражили се учитава…";
 "loading" = "Учитавање...";
 
@@ -166,10 +159,8 @@
 
 // Alerts
 "error" = "Грешка";
-"ok" = "У реду";
 "OK" = "У реду";
 "cancel" = "Откажи";
-"error_can_not_send_email" = "На вашем уређају е-пошта није конфигурисана.";
 "required_field_missing" = "\"%@\" је обавезно поље.";
 
 "onboardingTutorial.getStartedButton.title" = "Започни";
@@ -197,4 +188,3 @@
 // Language Name Strings
 "language_name_fa" = "Персијски (фарси)";
 
-"onboardingTutorial.continueButton.title" = "Настави";

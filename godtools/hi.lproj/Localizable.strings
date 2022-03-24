@@ -155,16 +155,9 @@
 
 // Alert & Info Controllers
 "download_error" = "डाउनलोड त्रुटि";
-"language_download_error" = "इस समय उपलब्ध भाषाएं डाउनलोड नहीं हो सकीं। कृपया अपना कनेक्शन जांचे या बाद में पुनः प्रयास करें।";
-"tract_loading_error_message" = "इस संसाधन को खोलने में एक समस्या आई। इसे दुबारा डाउनलोड करना अक्सर समस्या का समाधान कर देता है।\n\nक्या आप इसे दुबारा डाउनलोड करना चाहते हैं?";
 "no_internet_title" = "कोई इंटरनेट कनेक्शन नहीं";
 "no_internet" = "कृपया अपना इंटरनेट कनेक्शन जांचें और पुनः प्रयास करें।";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "नवीनतम अंग्रेजी के टूल्स अभी डाउनलोड नहीं किए जा सके। अंग्रेजी के टूल्स उपलब्ध हैं। अपना कनेक्शन जांचें या बाद में दुबारा प्रयास करें।";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "नवीनतम अंग्रेजी के टूल्स डाउनलोड किए जा सकते हैं।\n\nक्या आप अपनी प्राथमिक भाषा अंग्रेजी निर्धारित कर इन संसाधनों को डाउनलोड करना चाहते हैं?";
 "the_tool_you_requested_is_loading" = "अनुरोधित टूल लोड हो रहा है ...";
 "loading" = "लोड हो रहा है...";
 
@@ -190,10 +183,8 @@
 
 // Alerts
 "error" = "त्रुटि";
-"ok" = "ठीक";
 "OK" = "ठीक है";
 "cancel" = "रद्द करें";
-"error_can_not_send_email" = "आपके डिवाइस पर कोई भी ईमेल कनफिगर नहीं है।";
 "required_field_missing" = "\"%@\" एक आवश्यक फील्ड है।";
 
 "onboardingTutorial.getStartedButton.title" = "शुरू हो जाएं";
@@ -248,16 +239,12 @@
 "accountActivity.globalAnalytics.users.title" = "खास\nउपयोगकर्ता";
 "onboardingWelcome.titleLabel.tagline" = "आपके विश्वास को शेयर करने में सहायक";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "इंजील\nप्रस्तुतिकरण";
-"onboardingWelcome.beginButton" = "शुरू करें";
-
 "accountActivity.globalAnalytics.launches.title" = "सत्र";
 // OnboardingTutorial
 "onboardingTutorial.aboutAppItem.0.title" = "अन्यों से शेयर करें";
 "accountActivity.globalAnalytics.countries.title" = "देश";
 
 "onboardingTutorial.aboutAppItem.0.message" = "GodTools को आपके विश्वास वार्तालापों में मदद के लिए बनाया गया है";
-// Alerts
-"alert.action.ok" = "ठीक";
 "onboardingTutorial.aboutAppItem.1.title" = "अपने टूल चुनें";
 "onboardingTutorial.aboutAppItem.1.message" = "GodTools आपको आध्यात्मिक वार्तालाप से पहले, उसेक दौरान और उसके बाद मदद करता है";
 "onboardingTutorial.aboutAppItem.2.title" = "हमेशा तैयार";
@@ -267,5 +254,4 @@
 "onboardingTutorial.appUsageItem.2.message" = "दो भाषाएं एक साथ देखें";
 "onboardingTutorial.appUsageItem.3.message" = "90 से अधिक भाषाओं में से चुनें";
 "onboardingTutorial.appUsageItem.4.message" = "किसी को मसीही के रूप में आरम्भ करने में मदद करें।";
-"onboardingTutorial.continueButton.title" = "जारी रखें";
 "onboardingTutorial.showMoreButton.title" = "अधिक दिखाएं";

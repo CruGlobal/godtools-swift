@@ -135,16 +135,9 @@ Du finner en nettversjon på https://knowgod.com/";
 
 // Alert & Info Controllers
 "download_error" = "Nedlastingsfeil";
-"language_download_error" = "De tilgjengelige språkene kunne ikke lastes ned nå. Sjekk tilkoblingen din eller prøv igjen senere.";
-"tract_loading_error_message" = "Et problem oppstod med åpning av ressursen. En ny nedlasting løser ofte problemet. \n\n Vil du last den ned igjen?";
 "no_internet_title" = "Ingen internettilkobling";
 "no_internet" = "Sjekk internettilkoblingen og prøv igjen.";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "De nyeste engelske verktøyene kunne ikke lastes ned nå. Engelske verktøy er tilgjengelig. Sjekk tilkoblingen din eller prøv igjen senere.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "De nyeste engelske verktøyene kan lastes ned. \n\n Vil du angi engelsk som hovedspråk og laste ned disse ressursene?";
 "the_tool_you_requested_is_loading" = "Verktøyet du forespurte lastes inn …";
 "loading" = "Laster inn …";
 
@@ -168,10 +161,8 @@ Appen kan lastes ned på https://godtoolsapp.com";
 
 // Alerts
 "error" = "Feil";
-"ok" = "Ok";
 "OK" = "Ok";
 "cancel" = "Avbryt";
-"error_can_not_send_email" = "Det finnes ingen konfigurert e-post på enheten.";
 "required_field_missing" = "«%@» er et obligatorisk felt.";
 
 "onboardingTutorial.getStartedButton.title" = "Kom i gang";
@@ -199,4 +190,3 @@ Appen kan lastes ned på https://godtoolsapp.com";
 // Language Name Strings
 "language_name_fa" = "Persisk (farsi)";
 
-"onboardingTutorial.continueButton.title" = "Fortsett";

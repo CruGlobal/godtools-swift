@@ -11,8 +11,8 @@ import UIKit
 class ToolsMenuView: UIViewController {
     
     private let viewModel: ToolsMenuViewModelType
-    private let startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView
     
+    private var startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView = .favoritedTools
     private var lessonsView: LessonsListView?
     private var favoritedToolsView: FavoritedToolsView?
     private var allToolsView: AllToolsView?
@@ -109,6 +109,11 @@ class ToolsMenuView: UIViewController {
     }
     
     func reset(toolbarItem: ToolsMenuToolbarView.ToolbarItemView, animated: Bool) {
+        
+        guard didLayoutSubviews else {
+            startingToolbarItem = toolbarItem
+            return
+        }
         
         guard self.view != nil else {
             return

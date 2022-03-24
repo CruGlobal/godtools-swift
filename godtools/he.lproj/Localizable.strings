@@ -133,16 +133,9 @@
 
 // Alert & Info Controllers
 "download_error" = "שגיאה בהורדה";
-"language_download_error" = "לא ניתן להוריד את השפות הזמינות בזמן זה. יש לבדוק את החיבור או לנסות מאוחר יותר.";
-"tract_loading_error_message" = "הייתה בעיה בפתיחת משאב זה. הורדתו שוב לעתים קרובות פותרת את הבעיה.\n\nהאם ברצונכם להוריד אותו שוב?";
 "no_internet_title" = "אין חיבור לאינטרנט";
 "no_internet" = "אנא בדקו את חיבור האינטרנט שלם ונסו שוב.";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "לא ניתן להוריד את הכלים האחרונים באנגלית כרגע. כלים באנגלית זמינים. בדקו את הקישוריות שלכם או נסו שוב מאוחר יותר.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "ניתן להוריד את הכלים העדכניים ביותר באנגלית.\n\nהאם ברצונך להגדיר את השפה הראשית שלך לאנגלית ולהוריד את המשאבים האלה?";
 "the_tool_you_requested_is_loading" = "הכלי שביקשת נטען...";
 "loading" = "טוען...";
 
@@ -166,10 +159,8 @@
 
 // Alerts
 "error" = "שגיאה";
-"ok" = "בסדר";
 "OK" = "בסדר";
 "cancel" = "בטל";
-"error_can_not_send_email" = "אין דוא\"ל מוגדר במכשירך";
 "required_field_missing" = "\"%@\" הינו שדה חובה.";
 
 "onboardingTutorial.getStartedButton.title" = "בואו נתחיל";
@@ -199,4 +190,3 @@ support@godtoolsapp.com";
 // Language Name Strings
 "language_name_fa" = "פרסית (פרסית)";
 
-"onboardingTutorial.continueButton.title" = "המשך";
