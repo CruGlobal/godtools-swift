@@ -89,6 +89,12 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     
     private func removePage(page: Int) {
         
+        let pageIsInArrayBounds: Bool = page >= 0 && page < pageModels.count
+        
+        guard pageIsInArrayBounds else {
+            return
+        }
+        
         pageModels.remove(at: page)
         numberOfPages.setValue(value: pageModels.count)
         pagesRemoved.accept(value: [IndexPath(item: page, section: 0)])
