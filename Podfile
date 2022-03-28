@@ -3,7 +3,7 @@ source 'https://cdn.cocoapods.org/'
 source 'https://github.com/CruGlobal/cocoapods-specs.git'
 
 # Uncomment this line to define a global platform for your project
-platform :ios, '11.0'
+platform :ios, '13.0'
 
 use_frameworks!
 
