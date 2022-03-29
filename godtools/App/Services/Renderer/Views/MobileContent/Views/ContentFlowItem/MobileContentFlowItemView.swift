@@ -8,9 +8,16 @@
 
 import UIKit
 
+protocol MobileContentFlowItemViewDelegate: AnyObject {
+    
+    func flowItemViewDidChangeVisibilityState(flowItemView: MobileContentFlowItemView, previousVisibilityState: MobileContentViewVisibilityState, visibilityState: MobileContentViewVisibilityState)
+}
+
 class MobileContentFlowItemView: MobileContentStackView, MobileContentFlowRowItem {
     
     private let viewModel: MobileContentFlowItemViewModelType
+    
+    private weak var delegate: MobileContentFlowItemViewDelegate?
     
     var itemWidth: MobileContentViewWidth {
         return viewModel.width
@@ -37,7 +44,21 @@ class MobileContentFlowItemView: MobileContentStackView, MobileContentFlowRowIte
     private func setupBinding() {
         
         viewModel.visibilityState.addObserver(self) { [weak self] (visibilityState: MobileContentViewVisibilityState) in            
-            self?.setVisibilityState(visibilityState: visibilityState)
+            
+            guard let weakSelf = self else {
+                return
+            }
+            
+            let previousVisibilityState: MobileContentViewVisibilityState = weakSelf.visibilityState
+            
+            weakSelf.setVisibilityState(visibilityState: visibilityState)
+            
+            weakSelf.delegate?.flowItemViewDidChangeVisibilityState(flowItemView: weakSelf, previousVisibilityState: previousVisibilityState, visibilityState: visibilityState)
         }
+    }
+    
+    func setDelegate(delegate: MobileContentFlowItemViewDelegate?) {
+        
+        self.delegate = delegate
     }
 }
