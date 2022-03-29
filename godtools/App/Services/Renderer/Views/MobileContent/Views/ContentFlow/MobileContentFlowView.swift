@@ -79,6 +79,10 @@ extension MobileContentFlowView {
         
         flowItemViews.append(flowItemView)
         
+        guard flowItemView.visibilityState != .gone else {
+            return
+        }
+        
         let row: MobileContentFlowRow
         
         if let currentRow = flowItemRows.last, currentRow.renderFlowItem(flowItemView: flowItemView) {
