@@ -22,6 +22,8 @@ class MobileContentFlowItemView: MobileContentStackView, MobileContentFlowRowIte
         self.viewModel = viewModel
         
         super.init(contentInsets: .zero, itemSpacing: 0, scrollIsEnabled: false)
+        
+        setupBinding()
     }
     
     required init?(coder: NSCoder) {
@@ -30,5 +32,12 @@ class MobileContentFlowItemView: MobileContentStackView, MobileContentFlowRowIte
     
     required init(contentInsets: UIEdgeInsets, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
         fatalError("init(contentInsets:itemSpacing:scrollIsEnabled:) has not been implemented")
+    }
+    
+    private func setupBinding() {
+        
+        viewModel.visibilityState.addObserver(self) { [weak self] (visibilityState: MobileContentViewVisibilityState) in            
+            self?.setVisibilityState(visibilityState: visibilityState)
+        }
     }
 }

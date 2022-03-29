@@ -11,5 +11,6 @@ import GodToolsToolParser
 
 protocol MobileContentFlowItemViewModelType {
     
+    var visibilityState: ObservableValue<MobileContentViewVisibilityState> { get }
     var width: MobileContentViewWidth { get }
 }
