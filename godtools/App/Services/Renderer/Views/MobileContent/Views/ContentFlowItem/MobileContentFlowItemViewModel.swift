@@ -16,12 +16,26 @@ class MobileContentFlowItemViewModel: NSObject, MobileContentFlowItemViewModelTy
     
     private var visibilityFlowWatcher: FlowWatcher?
     
-    let visibilityState: ObservableValue<MobileContentViewVisibilityState> = ObservableValue(value: .visible)
+    let visibilityState: ObservableValue<MobileContentViewVisibilityState>
     
     required init(flowItem: GodToolsToolParser.Flow.Item, renderedPageContext: MobileContentRenderedPageContext) {
         
         self.flowItem = flowItem
         self.renderedPageContext = renderedPageContext
+        
+        let visibility: MobileContentViewVisibilityState
+        
+        if flowItem.isGone(state: renderedPageContext.rendererState) {
+            visibility = .gone
+        }
+        else if flowItem.isInvisible(state: renderedPageContext.rendererState) {
+            visibility = .hidden
+        }
+        else {
+            visibility = .visible
+        }
+        
+        visibilityState = ObservableValue(value: visibility)
         
         super.init()
         
