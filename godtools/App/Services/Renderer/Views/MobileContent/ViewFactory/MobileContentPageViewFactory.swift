@@ -269,7 +269,8 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         else if let contentFlowItem = renderableModel as? GodToolsToolParser.Flow.Item {
             
             let viewModel = MobileContentFlowItemViewModel(
-                flowItem: contentFlowItem
+                flowItem: contentFlowItem,
+                renderedPageContext: renderedPageContext
             )
             
             let view = MobileContentFlowItemView(viewModel: viewModel)
