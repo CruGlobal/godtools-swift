@@ -67,12 +67,9 @@ class MobileContentAccordionSectionView: MobileContentView {
     
     private func setupLayout() {
         
-        // shadowView
-        shadowView.layer.cornerRadius = viewCornerRadius
-        shadowView.layer.shadowOffset = CGSize(width: 1, height: 1)
-        shadowView.layer.shadowColor = UIColor.black.cgColor
-        shadowView.layer.shadowRadius = 3
-        shadowView.layer.shadowOpacity = 0.3
+        layer.cornerRadius = viewCornerRadius
+        
+        drawShadow()
         
         // contentView
         contentView.backgroundColor = .white

@@ -134,10 +134,7 @@ class ToolPageCardView: MobileContentView {
         
         // shadow
         layer.cornerRadius = cardCornerRadius
-        layer.shadowColor = UIColor.black.cgColor
-        layer.shadowRadius = 6.0
-        layer.shadowOffset = CGSize(width: 1.5, height: 1.5)
-        layer.shadowOpacity = 0.3
+        drawShadow(shadowOffset: CGSize(width: 1.5, height: 1.5), shadowRadius: 6, shadowOpacity: 0.3)
         
         // background corner radius
         let rootView: UIView? = subviews.first
