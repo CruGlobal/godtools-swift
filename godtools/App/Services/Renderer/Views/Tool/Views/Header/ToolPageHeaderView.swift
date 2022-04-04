@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ToolPageHeaderView: MobileContentView {
+class ToolPageHeaderView: MobileContentView, NibBased {
     
     private let numberLabelWidthForHiddenState: CGFloat = 50
     private let trainingTipLeadingToTitleForNumberHiddenState: CGFloat = 5
@@ -37,7 +37,7 @@ class ToolPageHeaderView: MobileContentView {
         
         super.init(frame: UIScreen.main.bounds)
         
-        initializeNib()
+        loadNib()
         
         numberLabelStartingLeadingToHeaderView = numberLabelLeadingToHeaderView.constant
         trainingTipStartingLeadingToTitle = trainingTipLeadingToTitle.constant
@@ -48,18 +48,6 @@ class ToolPageHeaderView: MobileContentView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func initializeNib() {
-        
-        let nib: UINib = UINib(nibName: String(describing: ToolPageHeaderView.self), bundle: nil)
-        let contents: [Any]? = nib.instantiate(withOwner: self, options: nil)
-        if let rootNibView = (contents as? [UIView])?.first {
-            addSubview(rootNibView)
-            rootNibView.translatesAutoresizingMaskIntoConstraints = false
-            rootNibView.constrainEdgesToView(view: self, edgeInsets: .zero)
-            rootNibView.backgroundColor = .clear
-        }
     }
     
     private func setupLayout() {

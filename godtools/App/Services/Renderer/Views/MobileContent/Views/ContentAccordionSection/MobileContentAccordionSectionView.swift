@@ -13,7 +13,7 @@ protocol MobileContentAccordionSectionViewDelegate: AnyObject {
     func sectionViewDidChangeTextHiddenState(sectionView: MobileContentAccordionSectionView, textIsHidden: Bool, textHeight: CGFloat)
 }
 
-class MobileContentAccordionSectionView: MobileContentView {
+class MobileContentAccordionSectionView: MobileContentView, NibBased {
  
     private let viewModel: MobileContentAccordionSectionViewModelType
     private let viewCornerRadius: CGFloat = 10
@@ -41,7 +41,7 @@ class MobileContentAccordionSectionView: MobileContentView {
         
         super.init(frame: UIScreen.main.bounds)
         
-        initializeNib()
+        loadNib()
         setupLayout()
         
         revealTextButton.addTarget(self, action: #selector(revealTextButtonTapped), for: .touchUpInside)
@@ -51,21 +51,9 @@ class MobileContentAccordionSectionView: MobileContentView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func initializeNib() {
-        
-        let nib: UINib = UINib(nibName: String(describing: MobileContentAccordionSectionView.self), bundle: nil)
-        let contents: [Any]? = nib.instantiate(withOwner: self, options: nil)
-        if let rootNibView = (contents as? [UIView])?.first {
-            addSubview(rootNibView)
-            rootNibView.frame = bounds
-            rootNibView.translatesAutoresizingMaskIntoConstraints = false
-            rootNibView.constrainEdgesToSuperview()
-            rootNibView.backgroundColor = .clear
-            backgroundColor = .clear
-        }
-    }
-    
     private func setupLayout() {
+        
+        backgroundColor = .clear
         
         // shadowView
         shadowView.layer.cornerRadius = viewCornerRadius
