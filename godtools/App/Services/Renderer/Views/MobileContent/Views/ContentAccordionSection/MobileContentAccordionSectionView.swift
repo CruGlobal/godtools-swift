@@ -24,7 +24,6 @@ class MobileContentAccordionSectionView: MobileContentView {
     
     private weak var delegate: MobileContentAccordionSectionViewDelegate?
     
-    @IBOutlet weak private var shadowView: UIView!
     @IBOutlet weak private var contentView: UIView!
     @IBOutlet weak private var textContainerView: UIView!
     @IBOutlet weak private var headerContainerView: UIView!
