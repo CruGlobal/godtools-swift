@@ -53,6 +53,10 @@ class MobileContentFlowView: MobileContentStackView {
         for row in flowItemRows {
             row.finishedRenderingChildren()
         }
+        
+        for flowItem in flowItemViews {
+            flowItem.setDelegate(delegate: self)
+        }
     }
 
     private func relayoutFlowForBoundsChange() {
@@ -79,6 +83,10 @@ extension MobileContentFlowView {
         
         flowItemViews.append(flowItemView)
         
+        guard flowItemView.visibilityState != .gone else {
+            return
+        }
+        
         let row: MobileContentFlowRow
         
         if let currentRow = flowItemRows.last, currentRow.renderFlowItem(flowItemView: flowItemView) {
@@ -98,5 +106,23 @@ extension MobileContentFlowView {
             
             row.renderFlowItem(flowItemView: flowItemView)
         }
+    }
+}
+
+// MARK: - MobileContentFlowItemViewDelegate
+
+extension MobileContentFlowView: MobileContentFlowItemViewDelegate {
+    
+    func flowItemViewDidChangeVisibilityState(flowItemView: MobileContentFlowItemView, previousVisibilityState: MobileContentViewVisibilityState, visibilityState: MobileContentViewVisibilityState) {
+        
+        guard previousVisibilityState != visibilityState else {
+            return
+        }
+        
+        if previousVisibilityState == .gone || visibilityState == .gone {
+            relayoutFlowForBoundsChange()
+        }
+                
+        flowItemView.isHidden = visibilityState != .visible
     }
 }
