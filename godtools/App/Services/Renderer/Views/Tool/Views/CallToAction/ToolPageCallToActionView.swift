@@ -13,7 +13,7 @@ protocol ToolPageCallToActionViewDelegate: AnyObject {
     func toolPageCallToActionNextButtonTapped(callToActionView: ToolPageCallToActionView)
 }
 
-class ToolPageCallToActionView: MobileContentView {
+class ToolPageCallToActionView: MobileContentView, NibBased {
         
     let viewModel: ToolPageCallToActionViewModelType
         
@@ -28,7 +28,8 @@ class ToolPageCallToActionView: MobileContentView {
         
         super.init(frame: UIScreen.main.bounds)
         
-        initializeNib()
+        let rootNibView: UIView? = loadNib()
+        rootNibView?.semanticContentAttribute = viewModel.languageDirectionSemanticContentAttribute
         setupLayout()
         setupBinding()
         
@@ -39,19 +40,6 @@ class ToolPageCallToActionView: MobileContentView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func initializeNib() {
-        
-        let nib: UINib = UINib(nibName: String(describing: ToolPageCallToActionView.self), bundle: nil)
-        let contents: [Any]? = nib.instantiate(withOwner: self, options: nil)
-        if let rootNibView = (contents as? [UIView])?.first {
-            rootNibView.semanticContentAttribute = viewModel.languageDirectionSemanticContentAttribute
-            addSubview(rootNibView)
-            rootNibView.backgroundColor = .clear
-            rootNibView.frame = bounds
-            rootNibView.constrainEdgesToSuperview()
-        }
-    }
-    
     private func setupLayout() {
         
     }

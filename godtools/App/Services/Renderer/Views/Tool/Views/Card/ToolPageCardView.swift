@@ -17,7 +17,7 @@ protocol ToolPageCardViewDelegate: AnyObject {
     func toolPageCardDidSwipeCardDown(cardView: ToolPageCardView)
 }
 
-class ToolPageCardView: MobileContentView {
+class ToolPageCardView: MobileContentView, NibBased {
         
     private let backgroundImageView: MobileContentBackgroundImageView = MobileContentBackgroundImageView()
     private let swipeUpGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer()
@@ -39,7 +39,7 @@ class ToolPageCardView: MobileContentView {
     private weak var delegate: ToolPageCardViewDelegate?
         
     let viewModel: ToolPageCardViewModelType
-            
+           
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var headerTrainingTipImageView: UIImageView!
     @IBOutlet weak private var titleSeparatorLine: UIView!
@@ -59,7 +59,8 @@ class ToolPageCardView: MobileContentView {
         
         super.init(frame: UIScreen.main.bounds)
                 
-        initializeNib()
+        let rootNibView: UIView? = loadNib()
+        rootNibView?.semanticContentAttribute = viewModel.languageDirectionSemanticContentAttribute
         setupLayout()
         setupBinding()
         
@@ -101,19 +102,9 @@ class ToolPageCardView: MobileContentView {
         relayoutBottomGradient()
     }
     
-    private func initializeNib() {
-        
-        let nib: UINib = UINib(nibName: String(describing: ToolPageCardView.self), bundle: nil)
-        let contents: [Any]? = nib.instantiate(withOwner: self, options: nil)
-        if let rootNibView = (contents as? [UIView])?.first {
-            rootNibView.semanticContentAttribute = viewModel.languageDirectionSemanticContentAttribute
-            addSubview(rootNibView)
-            rootNibView.frame = bounds
-            rootNibView.constrainEdgesToSuperview()
-        }
-    }
-    
     private func setupLayout() {
+        
+        backgroundColor = .white
         
         let cardCornerRadius: CGFloat = 8
         
