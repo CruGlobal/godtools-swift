@@ -9,7 +9,7 @@
 import UIKit
 import GodToolsToolParser
 
-class MobileContentTabsView: MobileContentView {
+class MobileContentTabsView: MobileContentView, NibBased {
     
     private let viewModel: MobileContentTabsViewModelType
     
@@ -24,7 +24,7 @@ class MobileContentTabsView: MobileContentView {
         
         super.init(frame: UIScreen.main.bounds)
         
-        initializeNib()
+        loadNib()
         setupLayout()
         setupBinding()
         
@@ -33,18 +33,6 @@ class MobileContentTabsView: MobileContentView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func initializeNib() {
-        
-        let nib: UINib = UINib(nibName: String(describing: MobileContentTabsView.self), bundle: nil)
-        let contents: [Any]? = nib.instantiate(withOwner: self, options: nil)
-        if let rootNibView = (contents as? [UIView])?.first {
-            addSubview(rootNibView)
-            rootNibView.frame = bounds
-            rootNibView.translatesAutoresizingMaskIntoConstraints = false
-            rootNibView.constrainEdgesToSuperview()
-        }
     }
     
     private func setupLayout() {

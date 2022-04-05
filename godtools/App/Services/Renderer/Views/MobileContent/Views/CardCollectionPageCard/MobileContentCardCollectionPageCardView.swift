@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MobileContentCardCollectionPageCardView: MobileContentView {
+class MobileContentCardCollectionPageCardView: MobileContentView, NibBased {
     
     private let viewModel: MobileContentCardCollectionPageCardViewModelType
     
@@ -23,7 +23,7 @@ class MobileContentCardCollectionPageCardView: MobileContentView {
         
         super.init(frame: UIScreen.main.bounds)
         
-        initializeNib()
+        loadNib()
         setupLayout()
         setupBinding()
     }
@@ -32,22 +32,9 @@ class MobileContentCardCollectionPageCardView: MobileContentView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func initializeNib() {
-        
-        let nib: UINib = UINib(nibName: String(describing: MobileContentCardCollectionPageCardView.self), bundle: nil)
-        let contents: [Any]? = nib.instantiate(withOwner: self, options: nil)
-        if let rootNibView = (contents as? [UIView])?.first {
-            addSubview(rootNibView)
-            rootNibView.frame = bounds
-            rootNibView.translatesAutoresizingMaskIntoConstraints = false
-            rootNibView.constrainEdgesToView(view: self)
-            rootNibView.backgroundColor = .clear
-            backgroundColor = .clear
-        }
-    }
-    
     private func setupLayout() {
-                
+               
+        backgroundColor = .clear
     }
     
     private func setupBinding() {
