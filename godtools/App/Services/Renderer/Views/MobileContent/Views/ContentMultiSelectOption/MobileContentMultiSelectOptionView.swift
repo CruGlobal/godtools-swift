@@ -83,8 +83,10 @@ class MobileContentMultiSelectOptionView: MobileContentStackView {
         
         if !subviews.contains(overlayButton) {
             
-            addSubview(overlayButton)
-            overlayButton.constrainEdgesToSuperview()
+            let parentView: UIView = self
+            parentView.addSubview(overlayButton)
+            overlayButton.translatesAutoresizingMaskIntoConstraints = false
+            overlayButton.constrainEdgesToView(view: parentView)
             overlayButton.setTitle(nil, for: .normal)
             overlayButton.backgroundColor = .clear
         }

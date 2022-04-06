@@ -32,8 +32,10 @@ class MobileContentLinkView: MobileContentView {
     private func setupLayout() {
         
         // linkButton
-        addSubview(linkButton)
-        linkButton.constrainEdgesToSuperview()
+        let parentView: UIView = self
+        parentView.addSubview(linkButton)
+        linkButton.translatesAutoresizingMaskIntoConstraints = false
+        linkButton.constrainEdgesToView(view: parentView)
         
         let heightConstraint: NSLayoutConstraint = NSLayoutConstraint(
             item: linkButton,

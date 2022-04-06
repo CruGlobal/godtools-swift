@@ -61,8 +61,10 @@ extension MobileContentHeadingView {
             return
         }
         
-        addSubview(textView)
-        textView.constrainEdgesToSuperview()
+        let parentView: UIView = self
+        parentView.addSubview(textView)
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.constrainEdgesToView(view: parentView)
         self.textView = textView
         
         let scaledFont: UIFont = textView.viewModel.getScaledFont(

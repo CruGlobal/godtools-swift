@@ -48,7 +48,8 @@ class ToolPageModalView: MobileContentView, NibBased {
         
         // contentStackView
         contentContainerView.addSubview(contentStackView)
-        contentStackView.constrainEdgesToSuperview()
+        contentStackView.translatesAutoresizingMaskIntoConstraints = false
+        contentStackView.constrainEdgesToView(view: contentContainerView)
         setParentAndAddChild(childView: contentStackView)
     }
     
