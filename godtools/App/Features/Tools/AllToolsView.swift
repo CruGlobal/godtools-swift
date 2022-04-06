@@ -7,17 +7,25 @@
 //
 
 import UIKit
+import SwiftUI
 
 class AllToolsView: UIViewController {
     
+    // MARK: - Properties
+    
     private let viewModel: AllToolsViewModelType
-            
+    private let contentView = UIHostingController(rootView: AllToolsContentView())
+    
+    // MARK: - Outlets
+    
     @IBOutlet weak private var favoritingToolMessageView: FavoritingToolMessageView!
     @IBOutlet weak private var toolsView: ToolsTableView!
     @IBOutlet weak private var messageLabel: UILabel!
     @IBOutlet weak private var loadingView: UIActivityIndicatorView!
     
     @IBOutlet weak private var favoritingToolMessageViewTop: NSLayoutConstraint!
+    
+    // MARK: - Lifecycle
     
     required init(viewModel: AllToolsViewModelType) {
         self.viewModel = viewModel
@@ -36,6 +44,9 @@ class AllToolsView: UIViewController {
         super.viewDidLoad()
         print("view didload: \(type(of: self))")
         
+        addChild(contentView)
+        view.addSubview(contentView.view)
+        
         setupLayout()
         setupBinding()
     }
@@ -45,8 +56,17 @@ class AllToolsView: UIViewController {
         viewModel.pageViewed()
     }
     
+    // MARK: - Private
+    
     private func setupLayout() {
+        // TODO: - remove toolsView/test other existing child views to make sure they work on top of SwiftUI
+        toolsView.isHidden = true
         
+        contentView.view.translatesAutoresizingMaskIntoConstraints = false
+        contentView.view.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        contentView.view.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        contentView.view.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        contentView.view.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
     }
     
     private func setupBinding() {
@@ -92,6 +112,8 @@ class AllToolsView: UIViewController {
             view.layoutIfNeeded()
         }
     }
+    
+    // MARK: - Public
     
     func scrollToTopOfToolsList(animated: Bool) {
         
