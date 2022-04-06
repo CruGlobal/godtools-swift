@@ -53,8 +53,10 @@ class MobileContentMultiSelectOptionView: MobileContentStackView {
             return
         }
         
-        insertSubview(shadowView, at: 0)
-        shadowView.constrainEdgesToSuperview(edgeInsets: shadowEdgeInsetsToSuperView)
+        let parentView: UIView = self
+        parentView.insertSubview(shadowView, at: 0)
+        shadowView.translatesAutoresizingMaskIntoConstraints = false
+        shadowView.constrainEdgesToView(view: parentView, edgeInsets: shadowEdgeInsetsToSuperView)
         shadowView.backgroundColor = .white
         shadowView.layer.cornerRadius = cornerRadius
         shadowView.layer.shadowOffset = CGSize(width: 1, height: 1)
