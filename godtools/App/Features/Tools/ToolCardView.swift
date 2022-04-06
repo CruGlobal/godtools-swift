@@ -9,6 +9,9 @@
 import SwiftUI
 
 struct ToolCardView: View {
+    
+    // MARK: - Properties
+    
     var isSpotlight: Bool = false
     
     private var cardHeight: CGFloat { isSpotlight ? Sizes.cardHeightSpotlight : Sizes.cardHeight }
@@ -22,6 +25,8 @@ struct ToolCardView: View {
         }
     }
     
+    // MARK: - Constants
+    
     private enum Sizes {
         static let cardHeight: CGFloat = 150
         static let cardHeightSpotlight: CGFloat = 240
@@ -31,6 +36,8 @@ struct ToolCardView: View {
         static let bannerImageHeightSpotlight: CGFloat = 162
         static let leadingPadding: CGFloat = 15
     }
+    
+    // MARK: - Body
     
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -60,6 +67,8 @@ struct ToolCardView: View {
         }
     }
 }
+
+// MARK: - Preview
 
 struct ToolCardView_Previews: PreviewProvider {
     static var previews: some View {

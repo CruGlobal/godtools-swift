@@ -986,6 +986,7 @@
 		D1FF263825BA0C0E00C825DB /* FirebaseInAppMessagingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FF263725BA0C0E00C825DB /* FirebaseInAppMessagingType.swift */; };
 		D1FF263E25BA0C1C00C825DB /* FirebaseInAppMessaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FF263D25BA0C1C00C825DB /* FirebaseInAppMessaging.swift */; };
 		D49F80F527FCD63A001AE5B3 /* ToolCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F80F427FCD63A001AE5B3 /* ToolCardView.swift */; };
+		D49F80F727FDC610001AE5B3 /* AllToolsContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F80F627FDC610001AE5B3 /* AllToolsContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2042,6 +2043,7 @@
 		D1FF263D25BA0C1C00C825DB /* FirebaseInAppMessaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseInAppMessaging.swift; sourceTree = "<group>"; };
 		D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtoolsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D49F80F427FCD63A001AE5B3 /* ToolCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardView.swift; sourceTree = "<group>"; };
+		D49F80F627FDC610001AE5B3 /* AllToolsContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllToolsContentView.swift; sourceTree = "<group>"; };
 		D61FF360D11F854476B6E206 /* Pods_godtools.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtools.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0F338026DD564DE8D5B7CE2 /* Pods-godtoolsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EBE523140714C16DAAB6B473 /* Pods-godtools.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.production.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.production.xcconfig"; sourceTree = "<group>"; };
@@ -3535,6 +3537,7 @@
 				45AD177525938A4D00A096A0 /* Models */,
 				45AD177F25938A4D00A096A0 /* Views */,
 				D49F80F427FCD63A001AE5B3 /* ToolCardView.swift */,
+				D49F80F627FDC610001AE5B3 /* AllToolsContentView.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -6669,6 +6672,7 @@
 				45AE974627C97A9400C2CB33 /* Button+MobileContentRenderableModel.swift in Sources */,
 				45AD1BDD25938A4F00A096A0 /* GTSegmentType.swift in Sources */,
 				45AC60192624BAB100253217 /* ToolItemInitialDownloadProgress.swift in Sources */,
+				D49F80F727FDC610001AE5B3 /* AllToolsContentView.swift in Sources */,
 				45558325269F2C7B00C3FF14 /* ToolPageFormViewModel.swift in Sources */,
 				45E39ECA27457A14006A59E4 /* AnimatedViewModel.swift in Sources */,
 				45AD1FDD25938A9800A096A0 /* EmailSignUpApi.swift in Sources */,
