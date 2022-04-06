@@ -41,10 +41,7 @@ extension NibBased where Self: UIView {
         rootNibView.translatesAutoresizingMaskIntoConstraints = false
         rootNibView.constrainEdgesToView(view: self)
         rootNibView.backgroundColor = .clear
-        
-        // TODO: This method will need to be removed as it's not guaranteed this view is attached to a superview at this point.  Any view's that load a custom nib via loadNib() should be responsible for attaching those custom views to the superview and setting up any necessary constraints. ~Levi
-        constrainEdgesToSuperview()
-        
+                
         return rootNibView
     }
 }
