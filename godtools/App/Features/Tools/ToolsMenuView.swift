@@ -128,12 +128,12 @@ class ToolsMenuView: UIViewController {
     
     private func configureNavigationBarAppearance(shouldAnimateNavigationBarHiddenState: Bool) {
                 
-        AppDelegate.setWindowBackgroundColorForStatusBarColor(color: ColorPalette.primaryNavBar.color)
+        AppDelegate.setWindowBackgroundColorForStatusBarColor(color: ColorPalette.primaryNavBar.uiColor)
         
         navigationController?.setNavigationBarHidden(false, animated: shouldAnimateNavigationBarHiddenState)
                 
         navigationController?.navigationBar.setupNavigationBarAppearance(
-            backgroundColor: ColorPalette.primaryNavBar.color,
+            backgroundColor: ColorPalette.primaryNavBar.uiColor,
             controlColor: .white,
             titleFont: viewModel.navTitleFont,
             titleColor: .white,

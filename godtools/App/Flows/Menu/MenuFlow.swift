@@ -30,7 +30,7 @@ class MenuFlow: Flow {
         navigationController.setNavigationBarHidden(false, animated: false)
         
         navigationController.navigationBar.setupNavigationBarAppearance(
-            backgroundColor: ColorPalette.primaryNavBar.color,
+            backgroundColor: ColorPalette.primaryNavBar.uiColor,
             controlColor: .white,
             titleFont: fontService.getFont(size: 17, weight: .semibold),
             titleColor: .white,

@@ -49,6 +49,7 @@ struct ToolCardView: View {
                 VStack(alignment: .leading, spacing: 3) {
                     Text("Knowing God Personally")
                         .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(ColorPalette.gtGrey.color)
                     Text("Subtitle")
                         .font(.system(size: 12))
                 }
