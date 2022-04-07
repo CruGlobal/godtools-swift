@@ -37,6 +37,10 @@
 Ja saņēmi šo ziņojumu novēloti, iespējams, ka saite vairs nedarbojas. Mēs varam vēlreiz pamēģināt kādu citu reizi.";
 "exit_tract_remote_share_session.message" = "Iziet no attālinātās koplietošanas sesijas?";
 "load_tool_remote_session.message" = "Sākas ekrāna koplietošana...";
+"lesson_evaluation.title" = "Atsauksmes";
+"lesson_evaluation.wasThisHelpful" = "Vai šī nodarbībā bija tev noderīga?";
+"lesson_evaluation.shareFaith" = "Cik gatavs tu esi uzsākt sarunu par garīgiem jautājumiem?";
+"lesson_evaluation.sendButtonTitle" = "Nosūtīt";
 "onboardingTutorial.0.title" = "Gatavs jebkurai sarunai";
 "onboardingTutorial.0.videoLink.title" = "Skatīties video";
 "onboardingTutorial.1.title" = "Runājiet par Dievu ar citiem";
@@ -77,6 +81,8 @@ Ja saņēmi šo ziņojumu novēloti, iespējams, ka saite vairs nedarbojas. Mēs
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Raksti";
 
+"articles.downloadArticlesButton.title.retryDownload" = "Mēģināt vēlreiz";
+
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "Versija";
 
@@ -104,9 +110,12 @@ Ja saņēmi šo ziņojumu novēloti, iespējams, ka saite vairs nedarbojas. Mēs
 "okay" = "Labi";
 // Menu
 "menu_general" = "Vispārīgi";
+"menu_account" = "Konts";
 "menu_share" = "Dalies";
-"menu_legal" = "Juridiskie paziņojumi";
+"menu_legal" = "Juridiskie paziņojumi (angļu val.)";
 "language_settings" = "Valodas iestatījumi";
+"menu.my_account" = "Mans konts";
+
 // Login
 "login" = "Pierakstīties";
 "logout" = "Izrakstīties";
@@ -191,7 +200,7 @@ Lietotni var lejupielādēt no: https://godtoolsapp.com";
 "general_about_8" = "Apmeklē GodToolsApp.com, lai uzzinātu vairāk.";
 "tutorial.continueButton.title.continue" = "Turpināt";
 "general_about_9" = "Uzņemoties iniciatīvu dalīties savā ticībā, atcerieties, ka Dievs pārliecina cilvēku. Mīliet ikvienu, uzklausot un meklējot sapratni.";
-"general_about_10" = "\"Lai tava runa vienmēr ir labvēlīga, pieredzes bagāta, lai tu vienmēr spētu atbildēt ikvienam.\" Kolosieši 4:6";
+"general_about_10" = "“Jūsu runa lai vienmēr ir labvēlīga, lai tajā ir sāls, un lai jūs zinātu, kā jums ikvienam jāatbild.” (Kolosiešiem 4:6)";
 
 // Downloads
 "Download in progress" = "Notiek lejupielāde";
