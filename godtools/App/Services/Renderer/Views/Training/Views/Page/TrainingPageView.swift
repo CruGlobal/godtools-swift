@@ -42,7 +42,8 @@ class TrainingPageView: MobileContentView, NibBased {
         
         // contentStackView
         contentStackContainerView.addSubview(contentStackView)
-        contentStackView.constrainEdgesToSuperview()
+        contentStackView.translatesAutoresizingMaskIntoConstraints = false
+        contentStackView.constrainEdgesToView(view: contentStackContainerView)
         contentStackView.setScrollViewContentInset(contentInset: UIEdgeInsets(
             top: 0,
             left: 0,

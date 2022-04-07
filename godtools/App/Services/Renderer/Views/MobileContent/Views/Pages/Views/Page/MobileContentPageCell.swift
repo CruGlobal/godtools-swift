@@ -34,7 +34,8 @@ class MobileContentPageCell: UICollectionViewCell {
     func configure(mobileContentView: MobileContentView) {
         
         contentView.addSubview(mobileContentView)
-        mobileContentView.constrainEdgesToSuperview()
+        mobileContentView.translatesAutoresizingMaskIntoConstraints = false
+        mobileContentView.constrainEdgesToView(view: contentView)
         
         self.mobileContentView = mobileContentView
     }

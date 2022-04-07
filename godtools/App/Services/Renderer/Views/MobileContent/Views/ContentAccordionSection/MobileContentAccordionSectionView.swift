@@ -161,8 +161,10 @@ extension MobileContentAccordionSectionView {
             return
         }
         
-        headerContainerView.addSubview(headerView)
-        headerView.constrainEdgesToSuperview(edgeInsets: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: textStateImageTrailing.constant + textStateImageView.frame.size.width + 10))
+        let parentView: UIView = headerContainerView
+        parentView.addSubview(headerView)
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        headerView.constrainEdgesToView(view: parentView, edgeInsets: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: textStateImageTrailing.constant + textStateImageView.frame.size.width + 10))
         self.headerView = headerView
     }
 }
@@ -177,8 +179,10 @@ extension MobileContentAccordionSectionView {
             return
         }
         
-        textContainerView.addSubview(textView)
-        textView.constrainEdgesToSuperview(edgeInsets: UIEdgeInsets(top: 0, left: 20, bottom: 20, right: 20))
+        let parentView: UIView = textContainerView
+        parentView.addSubview(textView)
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.constrainEdgesToView(view: parentView, edgeInsets: UIEdgeInsets(top: 0, left: 20, bottom: 20, right: 20))
         self.textView = textView
     }
 }

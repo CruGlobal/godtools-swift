@@ -112,7 +112,8 @@ class ToolPageCardView: MobileContentView, NibBased {
         
         // contentStackView
         contentStackContainer.addSubview(contentStackView)
-        contentStackView.constrainEdgesToSuperview()
+        contentStackView.translatesAutoresizingMaskIntoConstraints = false
+        contentStackView.constrainEdgesToView(view: contentStackContainer)
         layoutIfNeeded()
         contentStackView.setScrollViewContentInset(contentInset: UIEdgeInsets(
             top: 0,
