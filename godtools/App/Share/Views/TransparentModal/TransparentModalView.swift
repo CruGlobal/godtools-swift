@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class TransparentModalView: UIViewController {
     
@@ -159,12 +160,14 @@ extension TransparentModalView {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = .white
         view.addSubview(scrollView)
-        scrollView.constrainEdgesToSuperview()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.constrainEdgesToView(view: view)
         
         let contentView = UIView()
         contentView.backgroundColor = .clear
         scrollView.addSubview(contentView)
-        contentView.constrainEdgesToSuperview()
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.constrainEdgesToView(view: scrollView)
         
         let equalWidths: NSLayoutConstraint = NSLayoutConstraint(
             item: scrollView,
@@ -179,7 +182,8 @@ extension TransparentModalView {
         scrollView.addConstraint(equalWidths)
         
         contentView.addSubview(modalView.modal)
-        modalView.modal.constrainEdgesToSuperview()
+        modalView.modal.translatesAutoresizingMaskIntoConstraints = false
+        modalView.modal.constrainEdgesToView(view: contentView)
     }
 }
 

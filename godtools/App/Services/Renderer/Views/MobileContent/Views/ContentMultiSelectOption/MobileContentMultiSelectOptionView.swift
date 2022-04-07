@@ -53,8 +53,10 @@ class MobileContentMultiSelectOptionView: MobileContentStackView {
             return
         }
         
-        insertSubview(shadowView, at: 0)
-        shadowView.constrainEdgesToSuperview(edgeInsets: shadowEdgeInsetsToSuperView)
+        let parentView: UIView = self
+        parentView.insertSubview(shadowView, at: 0)
+        shadowView.translatesAutoresizingMaskIntoConstraints = false
+        shadowView.constrainEdgesToView(view: parentView, edgeInsets: shadowEdgeInsetsToSuperView)
         shadowView.backgroundColor = .white
         shadowView.layer.cornerRadius = cornerRadius
         shadowView.layer.shadowOffset = CGSize(width: 1, height: 1)
@@ -83,8 +85,10 @@ class MobileContentMultiSelectOptionView: MobileContentStackView {
         
         if !subviews.contains(overlayButton) {
             
-            addSubview(overlayButton)
-            overlayButton.constrainEdgesToSuperview()
+            let parentView: UIView = self
+            parentView.addSubview(overlayButton)
+            overlayButton.translatesAutoresizingMaskIntoConstraints = false
+            overlayButton.constrainEdgesToView(view: parentView)
             overlayButton.setTitle(nil, for: .normal)
             overlayButton.backgroundColor = .clear
         }

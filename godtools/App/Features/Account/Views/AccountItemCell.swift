@@ -41,10 +41,13 @@ class AccountItemCell: UICollectionViewCell {
         
         clearItemParentView()
         
-        itemParentView.addSubview(viewModel.itemView)
-        viewModel.itemView.frame = itemParentView.bounds
-        viewModel.itemView.constrainEdgesToSuperview()
-        viewModel.itemView.delegate = self
+        let itemView: AccountItemViewType = viewModel.itemView
+        
+        itemParentView.addSubview(itemView)
+        itemView.frame = itemParentView.bounds
+        itemView.translatesAutoresizingMaskIntoConstraints = false
+        itemView.constrainEdgesToView(view: itemParentView)
+        itemView.delegate = self
     }
 }
 

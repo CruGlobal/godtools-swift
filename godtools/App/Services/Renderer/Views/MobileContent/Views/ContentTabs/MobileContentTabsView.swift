@@ -120,9 +120,8 @@ extension MobileContentTabsView {
         }
                 
         tabContentContainerView.addSubview(tabView)
-        
         tabView.translatesAutoresizingMaskIntoConstraints = false
-        tabView.constrainEdgesToSuperview()
+        tabView.constrainEdgesToView(view: tabContentContainerView)
         
         layoutIfNeeded()
     }
