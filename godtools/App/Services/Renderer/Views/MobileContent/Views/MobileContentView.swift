@@ -133,10 +133,6 @@ class MobileContentView: UIView {
     
     func drawShadow(shadowOffset: CGSize = CGSize(width: 1, height: 1), shadowRadius: CGFloat = 3, shadowOpacity: Float = 0.3) {
         
-        guard !drawsShadow else {
-            return
-        }
-        
         drawsShadow = true
         
         layer.shadowOffset = shadowOffset
