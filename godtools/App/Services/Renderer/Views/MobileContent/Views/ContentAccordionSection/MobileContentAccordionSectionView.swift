@@ -24,7 +24,6 @@ class MobileContentAccordionSectionView: MobileContentView, NibBased {
     
     private weak var delegate: MobileContentAccordionSectionViewDelegate?
     
-    @IBOutlet weak private var shadowView: UIView!
     @IBOutlet weak private var contentView: UIView!
     @IBOutlet weak private var textContainerView: UIView!
     @IBOutlet weak private var headerContainerView: UIView!
@@ -53,14 +52,9 @@ class MobileContentAccordionSectionView: MobileContentView, NibBased {
     
     private func setupLayout() {
         
-        backgroundColor = .clear
+        layer.cornerRadius = viewCornerRadius
         
-        // shadowView
-        shadowView.layer.cornerRadius = viewCornerRadius
-        shadowView.layer.shadowOffset = CGSize(width: 1, height: 1)
-        shadowView.layer.shadowColor = UIColor.black.cgColor
-        shadowView.layer.shadowRadius = 3
-        shadowView.layer.shadowOpacity = 0.3
+        drawShadow()
         
         // contentView
         contentView.backgroundColor = .white
