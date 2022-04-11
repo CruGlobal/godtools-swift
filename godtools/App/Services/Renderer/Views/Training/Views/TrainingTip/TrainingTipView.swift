@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TrainingTipView: MobileContentView {
+class TrainingTipView: MobileContentView, NibBased {
     
     private let viewModel: TrainingTipViewModelType
     
@@ -21,7 +21,7 @@ class TrainingTipView: MobileContentView {
         
         super.init(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         
-        initializeNib()
+        loadNib()
         setupLayout()
         setupBinding()
         
@@ -30,19 +30,6 @@ class TrainingTipView: MobileContentView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func initializeNib() {
-        
-        let nib: UINib = UINib(nibName: String(describing: TrainingTipView.self), bundle: nil)
-        let contents: [Any]? = nib.instantiate(withOwner: self, options: nil)
-        if let rootNibView = (contents as? [UIView])?.first {
-            addSubview(rootNibView)
-            rootNibView.frame = bounds
-            rootNibView.translatesAutoresizingMaskIntoConstraints = false
-            rootNibView.constrainEdgesToSuperview()
-            rootNibView.backgroundColor = .clear
-        }
     }
     
     private func setupLayout() {

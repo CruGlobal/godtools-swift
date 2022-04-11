@@ -14,7 +14,6 @@
                 <outlet property="headerContainerBottomToView" destination="Eyg-3t-XVl" id="L9a-jL-9p9"/>
                 <outlet property="headerContainerView" destination="fT8-zZ-Ha7" id="Xry-6a-jsV"/>
                 <outlet property="revealTextButton" destination="rxU-wm-wOn" id="FfB-zU-UL5"/>
-                <outlet property="shadowView" destination="xvp-mb-V7d" id="bgU-5F-D0k"/>
                 <outlet property="textContainerBottomToView" destination="kS1-Gg-ibk" id="FhA-Zo-N56"/>
                 <outlet property="textContainerView" destination="Bho-ue-3qC" id="W6p-HW-sMq"/>
                 <outlet property="textStateImageTrailing" destination="0Jj-5G-sqx" id="hTZ-g2-Xm7"/>
@@ -26,10 +25,6 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="74"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xvp-mb-V7d" userLabel="shadowView">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="74"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UiB-zw-0fl" userLabel="contentView">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="74"/>
                     <subviews>
@@ -87,12 +82,8 @@
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="UiB-zw-0fl" secondAttribute="bottom" id="0Qz-Bp-NEw"/>
-                <constraint firstItem="xvp-mb-V7d" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="6zi-Yh-VVK"/>
-                <constraint firstAttribute="trailing" secondItem="xvp-mb-V7d" secondAttribute="trailing" id="P1Y-xA-TlF"/>
                 <constraint firstItem="UiB-zw-0fl" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="PAX-wy-RAI"/>
-                <constraint firstItem="xvp-mb-V7d" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="ioI-Qi-YUI"/>
                 <constraint firstAttribute="trailing" secondItem="UiB-zw-0fl" secondAttribute="trailing" id="mgK-ek-XUg"/>
-                <constraint firstAttribute="bottom" secondItem="xvp-mb-V7d" secondAttribute="bottom" id="rVu-N0-BiV"/>
                 <constraint firstItem="UiB-zw-0fl" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="zng-66-hgN"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

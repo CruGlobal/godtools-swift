@@ -10,64 +10,6 @@ import UIKit
 
 extension UIView {
     
-    func constrainEdgesToSuperview(edgeInsets: UIEdgeInsets = .zero) {
-        
-        guard let superview = self.superview else {
-            // TODO: Instead of checking for superview, force view as argument. ~Levi
-            //assertionFailure("Failed to constrain view edges to superview because a superview does not exist.  Is view added to a view hierarchy?")
-            print("\n WARNING: Failed to constrain edges to superview because superview is null.")
-            return
-        }
-        
-        // TODO: Don't set this here, require caller to make this. ~Levi
-        translatesAutoresizingMaskIntoConstraints = false
-        
-        let leading: NSLayoutConstraint = NSLayoutConstraint(
-            item: self,
-            attribute: .leading,
-            relatedBy: .equal,
-            toItem: superview,
-            attribute: .leading,
-            multiplier: 1,
-            constant: edgeInsets.left
-        )
-        
-        let trailing: NSLayoutConstraint = NSLayoutConstraint(
-            item: self,
-            attribute: .trailing,
-            relatedBy: .equal,
-            toItem: superview,
-            attribute: .trailing,
-            multiplier: 1,
-            constant: edgeInsets.right * -1
-        )
-        
-        let top: NSLayoutConstraint = NSLayoutConstraint(
-            item: self,
-            attribute: .top,
-            relatedBy: .equal,
-            toItem: superview,
-            attribute: .top,
-            multiplier: 1,
-            constant: edgeInsets.top
-        )
-        
-        let bottom: NSLayoutConstraint = NSLayoutConstraint(
-            item: self,
-            attribute: .bottom,
-            relatedBy: .equal,
-            toItem: superview,
-            attribute: .bottom,
-            multiplier: 1,
-            constant: edgeInsets.bottom * -1
-        )
-        
-        superview.addConstraint(leading)
-        superview.addConstraint(trailing)
-        superview.addConstraint(top)
-        superview.addConstraint(bottom)
-    }
-    
     func constrainEdgesToView(view: UIView, edgeInsets: UIEdgeInsets = .zero) {
         
         constrainTopToView(view: view, constant: edgeInsets.top)
