@@ -12,6 +12,7 @@ struct ToolCardView: View {
     
     // MARK: - Properties
     
+    var viewModel: ToolCardViewModel
     var isSpotlight: Bool = false
     
     private var cardHeight: CGFloat { isSpotlight ? Sizes.cardHeightSpotlight : Sizes.cardHeight }
@@ -72,7 +73,7 @@ struct ToolCardView: View {
 
 struct ToolCardView_Previews: PreviewProvider {
     static var previews: some View {
-        ToolCardView()
+        ToolCardView(viewModel: ToolCardViewModel())
             .previewLayout(.sizeThatFits)
             .padding()
     }
