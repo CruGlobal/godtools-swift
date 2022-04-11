@@ -18,6 +18,7 @@ class MobileContentMultiSelectOptionViewModel: MobileContentMultiSelectOptionVie
     private var isSelectedFlowWatcher: FlowWatcher?
     
     let backgroundColor: ObservableValue<UIColor>
+    let hidesShadow: Bool
     
     required init(multiSelectOptionModel: Multiselect.Option, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
@@ -26,6 +27,8 @@ class MobileContentMultiSelectOptionViewModel: MobileContentMultiSelectOptionVie
         self.mobileContentAnalytics = mobileContentAnalytics
         
         backgroundColor = ObservableValue(value: multiSelectOptionModel.backgroundColor)
+        
+        hidesShadow = multiSelectOptionModel.style == .flat
         
         isSelectedFlowWatcher = multiSelectOptionModel.watchIsSelected(state: renderedPageContext.rendererState) { [weak self] (isSelected: KotlinBoolean) in
 

@@ -11,6 +11,7 @@ import UIKit
 protocol MobileContentMultiSelectOptionViewModelType {
     
     var backgroundColor: ObservableValue<UIColor> { get }
+    var hidesShadow: Bool { get }
     
     func multiSelectOptionTapped()
 }
