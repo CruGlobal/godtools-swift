@@ -142,18 +142,6 @@ class MobileContentStackView: MobileContentView {
         scrollView?.showsHorizontalScrollIndicator = !hidden
     }
     
-    func setContentBackgroundColor(color: UIColor) {
-        contentView.backgroundColor = color
-    }
-    
-    func setContentCornerRadius(cornerRadius: CGFloat) {
-        contentView.layer.cornerRadius = cornerRadius
-    }
-    
-    func setContentClipsToBounds(clipsToBounds: Bool) {
-        contentView.clipsToBounds = clipsToBounds
-    }
-    
     func setScrollViewDelegate(delegate: UIScrollViewDelegate) {
         scrollView?.delegate = delegate
     }
@@ -289,7 +277,6 @@ extension MobileContentStackView {
             scrollView.addConstraint(equalWidths)
         }
         
-        backgroundColor = .clear
         contentView.backgroundColor = .clear
         
         // build layout if needed

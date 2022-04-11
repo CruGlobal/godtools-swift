@@ -179,7 +179,8 @@ extension ToolPageView {
         
         headerContainerView.isHidden = false
         headerContainerView.addSubview(headerView)
-        headerView.constrainEdgesToSuperview()
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        headerView.constrainEdgesToView(view: headerContainerView)
         self.headerView = headerView
         
         setHeaderHidden(hidden: false, animated: false)
@@ -224,7 +225,8 @@ extension ToolPageView {
         
         heroContainerView.isHidden = false
         heroContainerView.addSubview(heroView)
-        heroView.constrainEdgesToSuperview()
+        heroView.translatesAutoresizingMaskIntoConstraints = false
+        heroView.constrainEdgesToView(view: heroContainerView)
         self.heroView = heroView
     }
     
@@ -276,7 +278,8 @@ extension ToolPageView: ToolPageCallToActionViewDelegate {
                 
         callToActionContainerView.isHidden = false
         callToActionContainerView.addSubview(callToActionView)
-        callToActionView.constrainEdgesToSuperview()
+        callToActionView.translatesAutoresizingMaskIntoConstraints = false
+        callToActionView.constrainEdgesToView(view: callToActionContainerView)
         self.callToActionView = callToActionView
         
         callToActionContainerView.layoutIfNeeded()

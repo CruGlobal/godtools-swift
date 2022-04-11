@@ -15,6 +15,7 @@ class MobileContentView: UIView {
     
     private(set) var children: [MobileContentView] = Array()
     private(set) var visibilityState: MobileContentViewVisibilityState = .visible
+    private(set) var drawsShadow: Bool = false
     
     var paddingInsets: UIEdgeInsets {
         return .zero
@@ -126,6 +127,18 @@ class MobileContentView: UIView {
     
     func viewDidDisappear() {
         // NOTE: Subclasses should override and do any clean up here on view did disappear.
+    }
+    
+    // MARK: - Shadow
+    
+    func drawShadow(shadowOffset: CGSize = CGSize(width: 1, height: 1), shadowRadius: CGFloat = 3, shadowOpacity: Float = 0.3) {
+        
+        drawsShadow = true
+        
+        layer.shadowOffset = shadowOffset
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowRadius = shadowRadius
+        layer.shadowOpacity = shadowOpacity
     }
     
     // MARK: - Events

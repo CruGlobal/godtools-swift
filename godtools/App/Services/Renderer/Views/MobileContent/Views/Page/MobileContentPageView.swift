@@ -14,7 +14,7 @@ protocol MobileContentPageViewDelegate: AnyObject {
     func pageViewDidReceiveEvents(pageView: MobileContentPageView, eventIds: [EventId])
 }
 
-class MobileContentPageView: MobileContentView {
+class MobileContentPageView: MobileContentView, NibBased {
     
     private let viewModel: MobileContentPageViewModelType
     
@@ -30,7 +30,7 @@ class MobileContentPageView: MobileContentView {
         super.init(frame: UIScreen.main.bounds)
         
         if let nibName = nibName {
-            initializeNib(nibName: nibName)
+            loadNib(nibName: nibName)
         }
         setupLayout()
         setupBinding()
@@ -44,18 +44,6 @@ class MobileContentPageView: MobileContentView {
         
         if let backgroundImageParent = self.backgroundImageParent {
             backgroundImageView?.removeParentBoundsChangeObserver(parentView: backgroundImageParent)
-        }
-    }
-    
-    private func initializeNib(nibName: String) {
-        
-        let nib: UINib = UINib(nibName: nibName, bundle: nil)
-        let contents: [Any]? = nib.instantiate(withOwner: self, options: nil)
-        if let rootNibView = (contents as? [UIView])?.first {
-            addSubview(rootNibView)
-            rootNibView.backgroundColor = .clear
-            rootNibView.frame = bounds
-            rootNibView.constrainEdgesToSuperview()
         }
     }
     

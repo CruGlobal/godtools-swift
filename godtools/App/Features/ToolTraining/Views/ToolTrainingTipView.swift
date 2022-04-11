@@ -28,8 +28,10 @@ class ToolTrainingTipView: UICollectionViewCell {
     
     func configure(mobileContentView: MobileContentView) {
             
-        contentView.addSubview(mobileContentView)
-        mobileContentView.constrainEdgesToSuperview()
+        let parentView: UIView = contentView
+        parentView.addSubview(mobileContentView)
+        mobileContentView.translatesAutoresizingMaskIntoConstraints = false
+        mobileContentView.constrainEdgesToView(view: parentView)
         self.mobileContentView = mobileContentView
     }
 }

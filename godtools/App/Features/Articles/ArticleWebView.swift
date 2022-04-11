@@ -62,7 +62,8 @@ class ArticleWebView: UIViewController {
         
         // webView
         view.addSubview(webView)
-        webView.constrainEdgesToSuperview()
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        webView.constrainEdgesToView(view: view)
         webView.alpha = 0
         webView.scrollView.showsVerticalScrollIndicator = true
         webView.scrollView.showsHorizontalScrollIndicator = false
