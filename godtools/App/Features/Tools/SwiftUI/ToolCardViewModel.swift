@@ -7,7 +7,21 @@
 //
 
 import Foundation
+import SwiftUI
 
 class ToolCardViewModel: ObservableObject {
     
+    // MARK: - Properties
+    
+    private let getBannerImageUseCase: GetBannerImageUseCase
+    
+    // MARK: - Published
+    
+    @Published var bannerImage: Image?
+    
+    init(getBannerImageUseCase: GetBannerImageUseCase) {
+        self.getBannerImageUseCase = getBannerImageUseCase
+        
+        bannerImage = getBannerImageUseCase.getBannerImage()
+    }
 }

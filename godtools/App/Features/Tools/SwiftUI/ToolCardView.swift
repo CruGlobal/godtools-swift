@@ -12,7 +12,7 @@ struct ToolCardView: View {
     
     // MARK: - Properties
     
-    var viewModel: ToolCardViewModel
+    @ObservedObject var viewModel: ToolCardViewModel
     var isSpotlight: Bool = false
     
     private var cardHeight: CGFloat { isSpotlight ? Sizes.cardHeightSpotlight : Sizes.cardHeight }
@@ -36,23 +36,24 @@ struct ToolCardView: View {
         static let bannerImageHeight: CGFloat = 87
         static let bannerImageHeightSpotlight: CGFloat = 162
         static let leadingPadding: CGFloat = 15
+        static let cornerRadius: CGFloat = 6
     }
     
     // MARK: - Body
     
     var body: some View {
         ZStack(alignment: .topLeading) {
-            RoundedRectangle(cornerRadius: 6, style: .circular)
+            RoundedRectangle(cornerRadius: Sizes.cornerRadius, style: .circular)
                 .fill(.white)
                 .frame(width: cardWidth, height: cardHeight)
                 .shadow(color: .black.opacity(0.25), radius: 4, y: 2)
             
             VStack(alignment: .leading, spacing: 12) {
-                Image("share_tool_tutorial_people")
+                viewModel.bannerImage?
                     .resizable()
-                    .aspectRatio(contentMode: .fill)
                     .frame(width: cardWidth, height: bannerImageHeight)
                     .clipped()
+                    .cornerRadius(Sizes.cornerRadius)
                 
                 VStack(alignment: .leading, spacing: 3) {
                     Text("Knowing God Personally")
@@ -72,8 +73,10 @@ struct ToolCardView: View {
 // MARK: - Preview
 
 struct ToolCardView_Previews: PreviewProvider {
+    private static let viewModel = ToolCardViewModel(getBannerImageUseCase: MockGetBannerImageUseCase())
+    
     static var previews: some View {
-        ToolCardView(viewModel: ToolCardViewModel())
+        ToolCardView(viewModel: viewModel)
             .previewLayout(.sizeThatFits)
             .padding()
     }

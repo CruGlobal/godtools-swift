@@ -7,10 +7,13 @@
 //
 
 import Foundation
+import SwiftUI
 
 protocol GetBannerImageUseCase {
-    func getBannerImage() -> UIImage?
+    func getBannerImage() -> Image?
 }
+
+// MARK: - Default
 
 class DefaultGetBannerImageUseCase: GetBannerImageUseCase {
     
@@ -24,16 +27,27 @@ class DefaultGetBannerImageUseCase: GetBannerImageUseCase {
         self.deviceAttachmentBanners = deviceAttachmentBanners
     }
     
-    func getBannerImage() -> UIImage? {
-            
+    func getBannerImage() -> Image? {
+        
+        // TODO: - Eventually refactor existing code to use SwiftUI's Image rather than UIImage
         if let cachedImage = dataDownloader.attachmentsFileCache.getAttachmentBanner(attachmentId: resource.attrBanner) {
-            return cachedImage
+            return Image(uiImage: cachedImage)
         }
         else if let deviceImage = deviceAttachmentBanners.getDeviceBanner(resourceId: resource.id) {
-            return deviceImage
+            return Image(uiImage: deviceImage)
         }
         else {
             return nil
         }
+    }
+}
+
+// MARK: - Mock
+
+class MockGetBannerImageUseCase: GetBannerImageUseCase {
+    private static let bannerImageNames = ["banner1_wide", "banner2_wide", "banner3_wide"]
+    
+    func getBannerImage() -> Image? {
+        return Image(MockGetBannerImageUseCase.bannerImageNames.randomElement()!)
     }
 }
