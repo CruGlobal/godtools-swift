@@ -987,6 +987,8 @@
 		D1FF263E25BA0C1C00C825DB /* FirebaseInAppMessaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FF263D25BA0C1C00C825DB /* FirebaseInAppMessaging.swift */; };
 		D44C6933280479720000B970 /* ToolCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C6932280479720000B970 /* ToolCardViewModel.swift */; };
 		D44C69362804A6730000B970 /* GetBannerImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C69352804A6730000B970 /* GetBannerImageUseCase.swift */; };
+		D44C69392804B6D40000B970 /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C69382804B6D40000B970 /* RoundedCorner.swift */; };
+		D44C693B2804B8050000B970 /* View+CustomModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C693A2804B8050000B970 /* View+CustomModifiers.swift */; };
 		D49F80F527FCD63A001AE5B3 /* ToolCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F80F427FCD63A001AE5B3 /* ToolCardView.swift */; };
 		D49F80F727FDC610001AE5B3 /* AllToolsContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F80F627FDC610001AE5B3 /* AllToolsContentView.swift */; };
 /* End PBXBuildFile section */
@@ -2045,6 +2047,8 @@
 		D1FF263D25BA0C1C00C825DB /* FirebaseInAppMessaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseInAppMessaging.swift; sourceTree = "<group>"; };
 		D44C6932280479720000B970 /* ToolCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardViewModel.swift; sourceTree = "<group>"; };
 		D44C69352804A6730000B970 /* GetBannerImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBannerImageUseCase.swift; sourceTree = "<group>"; };
+		D44C69382804B6D40000B970 /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
+		D44C693A2804B8050000B970 /* View+CustomModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+CustomModifiers.swift"; sourceTree = "<group>"; };
 		D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtoolsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D49F80F427FCD63A001AE5B3 /* ToolCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardView.swift; sourceTree = "<group>"; };
 		D49F80F627FDC610001AE5B3 /* AllToolsContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllToolsContentView.swift; sourceTree = "<group>"; };
@@ -4072,6 +4076,7 @@
 				45AD18D725938A4E00A096A0 /* Protocols */,
 				45AD189B25938A4E00A096A0 /* ViewModels */,
 				45AD18BD25938A4E00A096A0 /* Views */,
+				D44C69372804B6AF0000B970 /* SwiftUI Views */,
 			);
 			path = Share;
 			sourceTree = "<group>";
@@ -4115,6 +4120,7 @@
 				45D266E8277499AD00960990 /* UIViewController+DismissPresented.swift */,
 				45AD18B525938A4E00A096A0 /* UIViewController+NavBackItem.swift */,
 				45AD18B225938A4E00A096A0 /* UIViewController+NavItem.swift */,
+				D44C693A2804B8050000B970 /* View+CustomModifiers.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -5840,6 +5846,14 @@
 			path = Domain;
 			sourceTree = "<group>";
 		};
+		D44C69372804B6AF0000B970 /* SwiftUI Views */ = {
+			isa = PBXGroup;
+			children = (
+				D44C69382804B6D40000B970 /* RoundedCorner.swift */,
+			);
+			path = "SwiftUI Views";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -6826,6 +6840,7 @@
 				45F5A04B268A7BD90081C507 /* ToolsDeepLinkParser.swift in Sources */,
 				45AD1AF025938A4E00A096A0 /* WebContentType.swift in Sources */,
 				45D6D02D2708B8FF0063C38A /* LessonEvaluationModel.swift in Sources */,
+				D44C693B2804B8050000B970 /* View+CustomModifiers.swift in Sources */,
 				45558328269F2C7B00C3FF14 /* ToolPageCardViewModel.swift in Sources */,
 				45558329269F2C7B00C3FF14 /* ToolPageCardView.swift in Sources */,
 				4566A3BA27A5C3BE003EAA39 /* MobileContentCardCollectionPageItemViewModel.swift in Sources */,
@@ -7061,6 +7076,7 @@
 				45D6D0302708B8FF0063C38A /* LessonEvaluationRealmCache.swift in Sources */,
 				456BB02927C588E80087CCA4 /* MobileContentHeadingViewModelType.swift in Sources */,
 				45AD202C25938A9800A096A0 /* SharedUserDefaultsCache.swift in Sources */,
+				D44C69392804B6D40000B970 /* RoundedCorner.swift in Sources */,
 				45AD1B2B25938A4F00A096A0 /* AboutTextCell.swift in Sources */,
 				453F0B6026EA369000436EE4 /* MobileContentMultiSelectOptionViewModelType.swift in Sources */,
 				45AD1FD625938A9800A096A0 /* HTMLDocumentData.swift in Sources */,

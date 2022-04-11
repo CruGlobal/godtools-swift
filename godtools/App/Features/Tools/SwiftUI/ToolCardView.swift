@@ -53,7 +53,7 @@ struct ToolCardView: View {
                     .resizable()
                     .frame(width: cardWidth, height: bannerImageHeight)
                     .clipped()
-                    .cornerRadius(Sizes.cornerRadius)
+                    .cornerRadius(Sizes.cornerRadius, corners: [.topLeft, .topRight])
                 
                 VStack(alignment: .leading, spacing: 3) {
                     Text("Knowing God Personally")
