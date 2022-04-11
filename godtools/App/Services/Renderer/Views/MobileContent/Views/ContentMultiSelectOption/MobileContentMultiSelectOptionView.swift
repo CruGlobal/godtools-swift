@@ -38,14 +38,16 @@ class MobileContentMultiSelectOptionView: MobileContentStackView {
     private func setupLayout() {
                         
         layer.cornerRadius = 10
-        
-        drawShadow()
     }
     
     private func setupBinding() {
         
         viewModel.backgroundColor.addObserver(self) { [weak self] (backgroundColor: UIColor) in
             self?.backgroundColor = backgroundColor
+        }
+        
+        if !viewModel.hidesShadow {
+            drawShadow()
         }
     }
     
