@@ -11,13 +11,16 @@ import GodToolsToolParser
 
 class MobileContentStackView: MobileContentView {
         
+    private let minimumContentInsetToPreventShadowClippingOnScrollableContent: CGFloat = 10
+    
     private var scrollView: UIScrollView?
     private var contentView: UIView = UIView()
     private var childViews: [MobileContentView] = Array()
     private var lastAddedChildView: MobileContentView?
     private var lastAddedChildBottomConstraint: NSLayoutConstraint?
     private var autoSpacerViews: [MobileContentSpacerView] = Array()
-    private var contentInsets: UIEdgeInsets = .zero
+    private var contentInsetsForScrollableContent: UIEdgeInsets = .zero
+    private var contentInsetsForNonScrollableContent: UIEdgeInsets = .zero
     private var itemSpacing: CGFloat = 0
     private var scrollIsEnabled: Bool = true
             
@@ -70,6 +73,27 @@ class MobileContentStackView: MobileContentView {
     }
     
     // MARK: -
+    
+    private var contentInsets: UIEdgeInsets {
+        
+        get {
+            
+            return scrollIsEnabled ? contentInsetsForScrollableContent : contentInsetsForNonScrollableContent
+        }
+        set (newValue) {
+            
+            let minimumContentInsetsToScrollViewToPreventShadowClipping = UIEdgeInsets(
+                top: max(newValue.top, minimumContentInsetToPreventShadowClippingOnScrollableContent),
+                left: max(newValue.left, minimumContentInsetToPreventShadowClippingOnScrollableContent),
+                bottom: max(newValue.bottom, minimumContentInsetToPreventShadowClippingOnScrollableContent),
+                right: max(newValue.right, minimumContentInsetToPreventShadowClippingOnScrollableContent)
+            )
+            
+            self.contentInsetsForScrollableContent = minimumContentInsetsToScrollViewToPreventShadowClipping
+            
+            self.contentInsetsForNonScrollableContent = newValue
+        }
+    }
     
     var isEmpty: Bool {
         return contentView.subviews.isEmpty
