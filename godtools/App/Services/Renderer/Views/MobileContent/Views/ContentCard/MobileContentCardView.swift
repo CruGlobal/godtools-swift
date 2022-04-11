@@ -46,11 +46,6 @@ class MobileContentCardView: MobileContentStackView {
         
     }
     
-    override func renderChild(childView: MobileContentView) {
-        
-        super.renderChild(childView: childView)
-    }
-    
     override func finishedRenderingChildren() {
         super.finishedRenderingChildren()
         
