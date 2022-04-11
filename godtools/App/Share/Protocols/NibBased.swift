@@ -9,31 +9,39 @@
 import UIKit
 
 protocol NibBased: AnyObject {
-    static var nib: UINib { get }
+    static var nibName: String { get }
 }
 
 extension NibBased {
-    static var nib: UINib {
-        return UINib(nibName: String(describing: self), bundle: Bundle(for: self))
+    
+    static var nibName: String {
+        return String(describing: self)
     }
 }
 
 extension NibBased where Self: UIView {
     
-    func loadNib() {
+    @discardableResult func loadNib(nibName: String = Self.nibName) -> UIView? {
         
-        let contents: [Any]? = Self.nib.instantiate(withOwner: self, options: nil)
+        let nib: UINib = UINib(nibName: nibName, bundle: nil)
         
-        if let views = contents as? [UIView] {
-            
-            if let rootView = views.first {
-                                
-                addSubview(rootView)
-                rootView.frame = bounds
-                rootView.constrainEdgesToSuperview()
-                
-                constrainEdgesToSuperview()
-            }
+        guard let contents = nib.instantiate(withOwner: self, options: nil) as? [UIView] else {
+            assertionFailure("\n WARNING: Failed to load top level UIView objects from nib with nibName: \(nibName)")
+            return nil
         }
+        
+        guard let rootNibView = contents.first else {
+            
+            assertionFailure("\n WARNING: Top level object does not contain any child elements on nib with nibName: \(nibName)")
+            return nil
+        }
+        
+        addSubview(rootNibView)
+        rootNibView.frame = bounds
+        rootNibView.translatesAutoresizingMaskIntoConstraints = false
+        rootNibView.constrainEdgesToView(view: self)
+        rootNibView.backgroundColor = .clear
+                
+        return rootNibView
     }
 }

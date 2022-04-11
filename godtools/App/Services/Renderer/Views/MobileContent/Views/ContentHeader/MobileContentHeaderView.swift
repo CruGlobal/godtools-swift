@@ -6,7 +6,7 @@
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class MobileContentHeaderView: MobileContentView {
     
@@ -61,8 +61,10 @@ extension MobileContentHeaderView {
             return
         }
         
-        addSubview(textView)
-        textView.constrainEdgesToSuperview()
+        let parentView: UIView = self
+        parentView.addSubview(textView)
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.constrainEdgesToView(view: parentView)
         self.textView = textView
         
         let scaledFont: UIFont = textView.viewModel.getScaledFont(

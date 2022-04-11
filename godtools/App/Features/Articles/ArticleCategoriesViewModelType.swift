@@ -10,7 +10,6 @@ import Foundation
 
 protocol ArticleCategoriesViewModelType {
     
-    var navTitle: ObservableValue<String> { get }
     var numberOfCategories: ObservableValue<Int> { get }
     var isLoading: ObservableValue<Bool> { get }
     

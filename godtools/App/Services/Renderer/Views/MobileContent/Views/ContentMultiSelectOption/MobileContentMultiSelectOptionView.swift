@@ -36,34 +36,17 @@ class MobileContentMultiSelectOptionView: MobileContentStackView {
     }
     
     private func setupLayout() {
-                      
+                        
+        layer.cornerRadius = 10
+        
+        drawShadow()
     }
     
     private func setupBinding() {
         
         viewModel.backgroundColor.addObserver(self) { [weak self] (backgroundColor: UIColor) in
-            self?.setContentBackgroundColor(color: backgroundColor)
-            self?.shadowView.backgroundColor = backgroundColor
+            self?.backgroundColor = backgroundColor
         }
-    }
-    
-    func drawShadow(shadowEdgeInsetsToSuperView: UIEdgeInsets, cornerRadius: CGFloat) {
-        
-        guard !subviews.contains(shadowView) else {
-            return
-        }
-        
-        insertSubview(shadowView, at: 0)
-        shadowView.constrainEdgesToSuperview(edgeInsets: shadowEdgeInsetsToSuperView)
-        shadowView.backgroundColor = .white
-        shadowView.layer.cornerRadius = cornerRadius
-        shadowView.layer.shadowOffset = CGSize(width: 1, height: 1)
-        shadowView.layer.shadowColor = UIColor.black.cgColor
-        shadowView.layer.shadowRadius = 3
-        shadowView.layer.shadowOpacity = 0.3
-        
-        setContentCornerRadius(cornerRadius: cornerRadius)
-        setContentClipsToBounds(clipsToBounds: true)
     }
     
     @objc func overlayButtonTapped() {
@@ -83,8 +66,10 @@ class MobileContentMultiSelectOptionView: MobileContentStackView {
         
         if !subviews.contains(overlayButton) {
             
-            addSubview(overlayButton)
-            overlayButton.constrainEdgesToSuperview()
+            let parentView: UIView = self
+            parentView.addSubview(overlayButton)
+            overlayButton.translatesAutoresizingMaskIntoConstraints = false
+            overlayButton.constrainEdgesToView(view: parentView)
             overlayButton.setTitle(nil, for: .normal)
             overlayButton.backgroundColor = .clear
         }

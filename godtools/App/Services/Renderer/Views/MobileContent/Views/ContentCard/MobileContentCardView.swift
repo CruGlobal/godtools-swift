@@ -11,6 +11,7 @@ import UIKit
 class MobileContentCardView: MobileContentStackView {
     
     private let viewModel: MobileContentCardViewModelType
+    private let viewCornerRadius: CGFloat = 10
     
     private var shadowView: UIView?
     private var buttonOverlay: UIButton?
@@ -20,6 +21,9 @@ class MobileContentCardView: MobileContentStackView {
         self.viewModel = viewModel
         
         super.init(contentInsets: UIEdgeInsets(top: 20, left: 15, bottom: 20, right: 15), itemSpacing: 0, scrollIsEnabled: false)
+        
+        setupLayout()
+        setupBinding()
     }
     
     required init?(coder: NSCoder) {
@@ -30,6 +34,18 @@ class MobileContentCardView: MobileContentStackView {
         fatalError("init(contentInsets:itemSpacing:scrollIsEnabled:) has not been implemented")
     }
     
+    private func setupLayout() {
+        
+        backgroundColor = .white
+        layer.cornerRadius = viewCornerRadius
+        
+        drawShadow()
+    }
+    
+    private func setupBinding() {
+        
+    }
+    
     override var paddingInsets: UIEdgeInsets {
         return UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
     }
@@ -37,30 +53,7 @@ class MobileContentCardView: MobileContentStackView {
     override func finishedRenderingChildren() {
         super.finishedRenderingChildren()
         
-        drawShadow()
         addButtonOverlay()
-    }
-    
-    private func drawShadow() {
-        
-        if let shadowView = self.shadowView {
-            shadowView.removeFromSuperview()
-            self.shadowView = nil
-        }
-        
-        let shadowView: UIView = UIView()
-        
-        insertSubview(shadowView, at: 0)
-        shadowView.translatesAutoresizingMaskIntoConstraints = false
-        shadowView.constrainEdgesToView(view: self)
-        shadowView.backgroundColor = .white
-        shadowView.layer.cornerRadius = 10
-        shadowView.layer.shadowOffset = CGSize(width: 1, height: 1)
-        shadowView.layer.shadowColor = UIColor.black.cgColor
-        shadowView.layer.shadowRadius = 3
-        shadowView.layer.shadowOpacity = 0.3
-        
-        self.shadowView = shadowView
     }
     
     private func addButtonOverlay() {

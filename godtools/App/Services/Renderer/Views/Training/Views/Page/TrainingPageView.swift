@@ -13,7 +13,7 @@ protocol TrainingPageViewDelegate: AnyObject {
     func trainingPageButtonWithUrlTapped(trainingPage: TrainingPageView, url: String)
 }
 
-class TrainingPageView: MobileContentView {
+class TrainingPageView: MobileContentView, NibBased {
     
     private let viewModel: TrainingPageViewModelType
     private let contentStackView: MobileContentStackView = MobileContentStackView(contentInsets: .zero, itemSpacing: 15, scrollIsEnabled: true)
@@ -29,22 +29,9 @@ class TrainingPageView: MobileContentView {
         
         super.init(frame: UIScreen.main.bounds)
         
-        initializeNib(nibName: String(describing: TrainingPageView.self))
+        loadNib(nibName: String(describing: TrainingPageView.self))
         setupLayout()
         setupBinding()
-    }
-    
-    private func initializeNib(nibName: String) {
-        
-        let nib: UINib = UINib(nibName: nibName, bundle: nil)
-        let contents: [Any]? = nib.instantiate(withOwner: self, options: nil)
-        if let rootNibView = (contents as? [UIView])?.first {
-            addSubview(rootNibView)
-            rootNibView.backgroundColor = .clear
-            rootNibView.frame = bounds
-            rootNibView.translatesAutoresizingMaskIntoConstraints = false
-            rootNibView.constrainEdgesToView(view: self)
-        }
     }
     
     required init?(coder: NSCoder) {
@@ -55,7 +42,8 @@ class TrainingPageView: MobileContentView {
         
         // contentStackView
         contentStackContainerView.addSubview(contentStackView)
-        contentStackView.constrainEdgesToSuperview()
+        contentStackView.translatesAutoresizingMaskIntoConstraints = false
+        contentStackView.constrainEdgesToView(view: contentStackContainerView)
         contentStackView.setScrollViewContentInset(contentInset: UIEdgeInsets(
             top: 0,
             left: 0,
