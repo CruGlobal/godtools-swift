@@ -24,7 +24,8 @@ struct AllToolsContentView: View {
             Text("Categories")
             
             ForEach(0..<10) { i in
-                ToolCardView(viewModel: ToolCardViewModel(getBannerImageUseCase: MockGetBannerImageUseCase()))
+                // TODO: - use real view model!
+                ToolCardView(viewModel: ToolCardViewModel(getBannerImageUseCase: MockGetBannerImageUseCase(), getToolDataUseCase: MockGetToolDataUseCase()))
             }
         }
         .frame(maxWidth: .infinity)

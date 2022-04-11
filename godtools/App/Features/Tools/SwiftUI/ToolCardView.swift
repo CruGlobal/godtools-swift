@@ -45,10 +45,10 @@ struct ToolCardView: View {
                     .cornerRadius(Sizes.cornerRadius, corners: [.topLeft, .topRight])
                 
                 VStack(alignment: .leading, spacing: 3) {
-                    Text("Knowing God Personally")
+                    Text(viewModel.title)
                         .font(.system(size: 16, weight: .bold))
                         .foregroundColor(ColorPalette.gtGrey.color)
-                    Text("Subtitle")
+                    Text(viewModel.category)
                         .font(.system(size: 12))
                 }
                 .padding([.leading, .trailing], 15)
@@ -61,7 +61,10 @@ struct ToolCardView: View {
 // MARK: - Preview
 
 struct ToolCardView_Previews: PreviewProvider {
-    private static let viewModel = ToolCardViewModel(getBannerImageUseCase: MockGetBannerImageUseCase())
+    private static let viewModel = ToolCardViewModel(
+        getBannerImageUseCase: MockGetBannerImageUseCase(),
+        getToolDataUseCase: MockGetToolDataUseCase()
+    )
     
     static var previews: some View {
         ToolCardView(viewModel: viewModel)
