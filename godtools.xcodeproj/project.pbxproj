@@ -990,6 +990,7 @@
 		D44C69392804B6D40000B970 /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C69382804B6D40000B970 /* RoundedCorner.swift */; };
 		D44C693B2804B8050000B970 /* View+CustomModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C693A2804B8050000B970 /* View+CustomModifiers.swift */; };
 		D44C693D2804BE9D0000B970 /* GetToolDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C693C2804BE9D0000B970 /* GetToolDataUseCase.swift */; };
+		D44C693F2805AE910000B970 /* AllToolsContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C693E2805AE910000B970 /* AllToolsContentViewModel.swift */; };
 		D49F80F527FCD63A001AE5B3 /* ToolCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F80F427FCD63A001AE5B3 /* ToolCardView.swift */; };
 		D49F80F727FDC610001AE5B3 /* AllToolsContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F80F627FDC610001AE5B3 /* AllToolsContentView.swift */; };
 /* End PBXBuildFile section */
@@ -2051,6 +2052,7 @@
 		D44C69382804B6D40000B970 /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
 		D44C693A2804B8050000B970 /* View+CustomModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+CustomModifiers.swift"; sourceTree = "<group>"; };
 		D44C693C2804BE9D0000B970 /* GetToolDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetToolDataUseCase.swift; sourceTree = "<group>"; };
+		D44C693E2805AE910000B970 /* AllToolsContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllToolsContentViewModel.swift; sourceTree = "<group>"; };
 		D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtoolsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D49F80F427FCD63A001AE5B3 /* ToolCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardView.swift; sourceTree = "<group>"; };
 		D49F80F627FDC610001AE5B3 /* AllToolsContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllToolsContentView.swift; sourceTree = "<group>"; };
@@ -5836,6 +5838,7 @@
 				D49F80F627FDC610001AE5B3 /* AllToolsContentView.swift */,
 				D49F80F427FCD63A001AE5B3 /* ToolCardView.swift */,
 				D44C6932280479720000B970 /* ToolCardViewModel.swift */,
+				D44C693E2805AE910000B970 /* AllToolsContentViewModel.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -6492,6 +6495,7 @@
 				45AD1FF325938A9800A096A0 /* DeviceAttachmentBanners.swift in Sources */,
 				45714ACB262100C800EF41FB /* LessonProgressView.swift in Sources */,
 				450E44472756B66300D4311E /* MenuViewModelType.swift in Sources */,
+				D44C693F2805AE910000B970 /* AllToolsContentViewModel.swift in Sources */,
 				45558404269F2DA500C3FF14 /* MobileContentPagesViewModelType.swift in Sources */,
 				45AD1B3325938A4F00A096A0 /* LanguageSettingsView.swift in Sources */,
 				45BD7A7226A235F60007426B /* MobileContentRendererPageViewFactoriesType.swift in Sources */,

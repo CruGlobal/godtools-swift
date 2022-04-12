@@ -14,7 +14,7 @@ class AllToolsView: UIViewController {
     // MARK: - Properties
     
     private let viewModel: AllToolsViewModelType
-    private let contentView = UIHostingController(rootView: AllToolsContentView())
+    private let contentView: UIHostingController<AllToolsContentView>
     
     // MARK: - Outlets
     
@@ -29,6 +29,11 @@ class AllToolsView: UIViewController {
     
     required init(viewModel: AllToolsViewModelType) {
         self.viewModel = viewModel
+        
+        // TODO: - actually pass in the view model
+        let allToolsContentViewModel = AllToolsContentViewModel(dataDownloader: viewModel.dataDownloader, deviceAttachmentBanners: viewModel.deviceAttachmentBanners, languageSettingsService: viewModel.languageSettingsService, localizationServices: viewModel.localizationServices)
+        contentView = UIHostingController(rootView: AllToolsContentView(viewModel: allToolsContentViewModel))
+        
         super.init(nibName: String(describing: AllToolsView.self), bundle: nil)
     }
     

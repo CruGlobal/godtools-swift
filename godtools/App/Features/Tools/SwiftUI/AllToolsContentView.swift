@@ -9,7 +9,16 @@
 import SwiftUI
 
 struct AllToolsContentView: View {
-    init() {
+    
+    // MARK: - Properties
+    
+    @ObservedObject var viewModel: AllToolsContentViewModel
+    
+    // MARK: - Init
+    
+    init(viewModel: AllToolsContentViewModel) {
+        self.viewModel = viewModel
+        
         // TODO: - In iOS 14/15, remove this and use appropriate modifiers instead.
         // List is built on UITableView. For iOS 13, modifiers don't yet exist to override certain default styles on List, so we use `appearance` on UITableView instead. This changes the style system-wide, so we'll have to watch out for this causing issues in other areas.
         UITableView.appearance().separatorColor = .clear
@@ -23,9 +32,8 @@ struct AllToolsContentView: View {
             Text("Spotlight")
             Text("Categories")
             
-            ForEach(0..<10) { i in
-                // TODO: - use real view model!
-                ToolCardView(viewModel: ToolCardViewModel(getBannerImageUseCase: MockGetBannerImageUseCase(), getToolDataUseCase: MockGetToolDataUseCase()))
+            ForEach(viewModel.tools) { tool in
+                ToolCardView(viewModel: viewModel.cardViewModel(for: tool))
             }
         }
         .frame(maxWidth: .infinity)
@@ -36,8 +44,17 @@ struct AllToolsContentView: View {
 
 // MARK: - Preview
 
-struct AllToolsContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        AllToolsContentView()
-    }
-}
+// TODO: - Figure out how to fix this preview
+
+//struct AllToolsContentView_Previews: PreviewProvider {
+//    static let viewModel = AllToolsContentViewModel(
+//        dataDownloader: MockInitialDataDownloader(),
+//        deviceAttachmentBanners: DeviceAttachmentBanners(),
+//        languageSettingsService: <#LanguageSettingsService#>,
+//        localizationServices: <#LocalizationServices#>
+//    )
+//
+//    static var previews: some View {
+//        AllToolsContentView(viewModel: viewModel)
+//    }
+//}

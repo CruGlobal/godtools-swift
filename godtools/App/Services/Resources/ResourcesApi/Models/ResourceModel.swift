@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ResourceModel: ResourceModelType, Decodable {
+struct ResourceModel: ResourceModelType, Decodable, Identifiable {
     
     let abbreviation: String
     let attrAboutOverviewVideoYoutube: String
