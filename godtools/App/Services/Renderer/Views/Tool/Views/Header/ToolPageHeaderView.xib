@@ -14,8 +14,11 @@
                 <outlet property="numberLabel" destination="PU9-rf-kta" id="a2p-by-xtk"/>
                 <outlet property="numberLabelLeadingToHeaderView" destination="inK-rr-Gfe" id="TR1-rR-fcs"/>
                 <outlet property="titleLabel" destination="gDD-DD-R3G" id="3AA-ca-Abx"/>
+                <outlet property="trainingTipBottomToView" destination="EXv-JH-sl4" id="L2E-E7-YsW"/>
                 <outlet property="trainingTipContainerView" destination="O9b-bx-Kxd" id="5tr-Dl-mZH"/>
+                <outlet property="trainingTipHeight" destination="akS-VK-7P0" id="ZI4-wN-UxQ"/>
                 <outlet property="trainingTipLeadingToTitle" destination="ihZ-UF-bM4" id="AG8-fv-s2z"/>
+                <outlet property="trainingTipTopToTextBackground" destination="oVR-Dh-vEL" id="KCO-rh-Hdb"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
