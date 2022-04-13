@@ -10,11 +10,13 @@ import Foundation
 
 protocol GetToolDataUseCase {
     func getToolData() -> ToolDataModel
+//    func toolIsFavorited
 }
 
 struct ToolDataModel {
     let title: String
     let category: String
+    let isFavorited: Bool
     let semanticContentAttribute: UISemanticContentAttribute
 }
 
@@ -26,12 +28,14 @@ class DefaultGetToolDataUseCase: GetToolDataUseCase {
     private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
+    private let favoritedResourcesCache: FavoritedResourcesCache
 
-    init(resource: ResourceModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices) {
+    init(resource: ResourceModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache) {
         self.resource = resource
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
+        self.favoritedResourcesCache = favoritedResourcesCache
     }
     
     func getToolData() -> ToolDataModel {
@@ -69,8 +73,25 @@ class DefaultGetToolDataUseCase: GetToolDataUseCase {
         return ToolDataModel(
             title: toolName,
             category: localizationServices.stringForBundle(bundle: languageBundle, key: "tool_category_\(resource.attrCategory)"),
+            isFavorited: favoritedResourcesCache.isFavorited(resourceId: resource.id),
             semanticContentAttribute: semanticContentAttribute
         )
+    }
+
+    // MARK: - Private
+    
+    private func setupBinding() {
+//        favoritedResourcesCache.resourceFavorited.addObserver(self) { [weak self] (resourceId: String) in
+//            DispatchQueue.main.async { [weak self] in
+//                self?.reloadTool(resourceId: resourceId)
+//            }
+//        }
+//        
+//        favoritedResourcesCache.resourceUnfavorited.addObserver(self) { [weak self] (resourceId: String) in
+//            DispatchQueue.main.async { [weak self] in
+//                self?.reloadTool(resourceId: resourceId)
+//            }
+//        }
     }
 }
 
@@ -78,6 +99,6 @@ class DefaultGetToolDataUseCase: GetToolDataUseCase {
 
 class MockGetToolDataUseCase: GetToolDataUseCase {
     func getToolData() -> ToolDataModel {
-        return ToolDataModel(title: "Tool Data Title", category: "Tool Category", semanticContentAttribute: .forceLeftToRight)
+        return ToolDataModel(title: "Tool Data Title", category: "Tool Category", isFavorited: Bool.random(), semanticContentAttribute: .forceLeftToRight)
     }
 }

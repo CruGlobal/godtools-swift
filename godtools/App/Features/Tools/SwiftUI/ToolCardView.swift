@@ -40,12 +40,20 @@ struct ToolCardView: View {
                 .shadow(color: .black.opacity(0.25), radius: 4, y: 2)
             
             VStack(alignment: .leading, spacing: 12) {
-                viewModel.bannerImage?
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: cardWidth, height: cardWidth / Sizes.bannerImageAspectRatio)
-                    .clipped()
-                    .cornerRadius(Sizes.cornerRadius, corners: [.topLeft, .topRight])
+                ZStack(alignment: .topTrailing) {
+                    viewModel.bannerImage?
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: cardWidth, height: cardWidth / Sizes.bannerImageAspectRatio)
+                        .clipped()
+                        .cornerRadius(Sizes.cornerRadius, corners: [.topLeft, .topRight])
+                    
+                    Image(viewModel.isFavorited ? "favorited_circle" : "unfavorited_circle")
+                        .padding([.top, .trailing], 10)
+                        .onTapGesture {
+                            viewModel.favoritedButtonTapped()
+                        }
+                }
                 
                 VStack(alignment: .leading, spacing: 3) {
                     Text(viewModel.title)

@@ -31,7 +31,7 @@ class AllToolsView: UIViewController {
         self.viewModel = viewModel
         
         // TODO: - actually pass in the view model
-        let allToolsContentViewModel = AllToolsContentViewModel(dataDownloader: viewModel.dataDownloader, deviceAttachmentBanners: viewModel.deviceAttachmentBanners, languageSettingsService: viewModel.languageSettingsService, localizationServices: viewModel.localizationServices)
+        let allToolsContentViewModel = AllToolsContentViewModel(dataDownloader: viewModel.dataDownloader, deviceAttachmentBanners: viewModel.deviceAttachmentBanners, languageSettingsService: viewModel.languageSettingsService, localizationServices: viewModel.localizationServices, favoritedResourcesCache: viewModel.favoritedResourcesCache)
         contentView = UIHostingController(rootView: AllToolsContentView(viewModel: allToolsContentViewModel))
         
         super.init(nibName: String(describing: AllToolsView.self), bundle: nil)

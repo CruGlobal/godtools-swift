@@ -16,6 +16,7 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     private let deviceAttachmentBanners: DeviceAttachmentBanners
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
+    private let favoritedResourcesCache: FavoritedResourcesCache
     
     // MARK: - Published
     
@@ -23,15 +24,24 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices) {
+    init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache) {
         self.dataDownloader = dataDownloader
         self.deviceAttachmentBanners = deviceAttachmentBanners
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
+        self.favoritedResourcesCache = favoritedResourcesCache
         
         super.init()
         
         setupBinding()
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
+        dataDownloader.cachedResourcesAvailable.removeObserver(self)
+        dataDownloader.resourcesUpdatedFromRemoteDatabase.removeObserver(self)
+//        favoritedResourcesCache.resourceFavorited.removeObserver(self)
+//        favoritedResourcesCache.resourceUnfavorited.removeObserver(self)
     }
 }
 
@@ -49,7 +59,9 @@ extension AllToolsContentViewModel {
             resource: tool,
             dataDownloader: dataDownloader,
             languageSettingsService: languageSettingsService,
-            localizationServices: localizationServices)
+            localizationServices: localizationServices,
+            favoritedResourcesCache: favoritedResourcesCache
+        )
         
         return ToolCardViewModel(
             getBannerImageUseCase: getBannerImageUseCase,

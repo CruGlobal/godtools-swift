@@ -19,6 +19,7 @@ class ToolCardViewModel: ObservableObject {
     // MARK: - Published
     
     @Published var bannerImage: Image?
+    @Published var isFavorited = false
     @Published var title: String = ""
     @Published var category: String = ""
     // TODO: - figure out semantic content for SwiftUI
@@ -33,8 +34,14 @@ class ToolCardViewModel: ObservableObject {
         let toolData = getToolDataUseCase.getToolData()
         title = toolData.title
         category = toolData.category
+        isFavorited = toolData.isFavorited
         toolSemanticContentAttribute = toolData.semanticContentAttribute
         
         // TODO: - figure out where binding to observers should happen (like listening for language change.  In a use case?  Here?
+    }
+    
+    func favoritedButtonTapped() {
+        // TODO: - hook this up to real data
+        isFavorited.toggle()
     }
 }
