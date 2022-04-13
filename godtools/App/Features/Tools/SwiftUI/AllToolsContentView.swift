@@ -14,6 +14,13 @@ struct AllToolsContentView: View {
     
     @ObservedObject var viewModel: AllToolsContentViewModel
     
+    // MARK: - Constants
+    
+    private enum Sizes {
+        static let toolsLeadingTrailingPadding: CGFloat = 20
+        static let toolsVerticalSpacing: CGFloat = 15
+    }
+    
     // MARK: - Init
     
     init(viewModel: AllToolsContentViewModel) {
@@ -34,9 +41,9 @@ struct AllToolsContentView: View {
                 Text("Categories")
                 
                 ForEach(viewModel.tools) { tool in
-                    // TODO: - fix the hardcoded -40.  List is automatically padding the left, so need to figure out how to duplicate that padding on right
-                    ToolCardView(viewModel: viewModel.cardViewModel(for: tool), cardWidth: geo.size.width - 40)
+                    ToolCardView(viewModel: viewModel.cardViewModel(for: tool), cardWidth: geo.size.width - (2 * Sizes.toolsLeadingTrailingPadding))
                 }
+                .listRowInsets(EdgeInsets(top: 0, leading: Sizes.toolsLeadingTrailingPadding, bottom: Sizes.toolsVerticalSpacing, trailing: Sizes.toolsLeadingTrailingPadding))
             }
             .frame(maxWidth: .infinity)
             .edgesIgnoringSafeArea([.leading, .trailing])
