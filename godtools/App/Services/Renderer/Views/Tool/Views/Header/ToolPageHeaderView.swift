@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ToolPageHeaderView: MobileContentView {
+class ToolPageHeaderView: MobileContentView, NibBased {
     
     private let numberLabelWidthForHiddenState: CGFloat = 50
     private let trainingTipLeadingToTitleForNumberHiddenState: CGFloat = 5
@@ -18,6 +18,7 @@ class ToolPageHeaderView: MobileContentView {
     private var trainingTipView: TrainingTipView?
     private var numberLabelStartingLeadingToHeaderView: CGFloat = 0
     private var trainingTipStartingLeadingToTitle: CGFloat = 0
+    private var trainingTipStartingTopToTextBackground: CGFloat = 0
     
     @IBOutlet weak private var backgroundView: UIView!
     @IBOutlet weak private var numberLabel: UILabel!
@@ -25,7 +26,10 @@ class ToolPageHeaderView: MobileContentView {
     @IBOutlet weak private var trainingTipContainerView: UIView!
     
     @IBOutlet weak private var numberLabelLeadingToHeaderView: NSLayoutConstraint!
+    @IBOutlet weak private var trainingTipTopToTextBackground: NSLayoutConstraint!
     @IBOutlet weak private var trainingTipLeadingToTitle: NSLayoutConstraint!
+    @IBOutlet weak private var trainingTipBottomToView: NSLayoutConstraint!
+    @IBOutlet weak private var trainingTipHeight: NSLayoutConstraint!
     
     private var numberLabelWidthConstraint: NSLayoutConstraint?
     
@@ -37,10 +41,11 @@ class ToolPageHeaderView: MobileContentView {
         
         super.init(frame: UIScreen.main.bounds)
         
-        initializeNib()
+        loadNib()
         
         numberLabelStartingLeadingToHeaderView = numberLabelLeadingToHeaderView.constant
         trainingTipStartingLeadingToTitle = trainingTipLeadingToTitle.constant
+        trainingTipStartingTopToTextBackground = trainingTipTopToTextBackground.constant
         
         setupLayout()
         setupBinding()
@@ -50,22 +55,10 @@ class ToolPageHeaderView: MobileContentView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func initializeNib() {
-        
-        let nib: UINib = UINib(nibName: String(describing: ToolPageHeaderView.self), bundle: nil)
-        let contents: [Any]? = nib.instantiate(withOwner: self, options: nil)
-        if let rootNibView = (contents as? [UIView])?.first {
-            addSubview(rootNibView)
-            rootNibView.translatesAutoresizingMaskIntoConstraints = false
-            rootNibView.constrainEdgesToView(view: self, edgeInsets: .zero)
-            rootNibView.backgroundColor = .clear
-        }
-    }
-    
     private func setupLayout() {
-                            
+                    
         trainingTipContainerView.backgroundColor = .clear
-        trainingTipContainerView.isHidden = true
+        setTrainingTipHidden(hidden: true)
     }
     
     private func setupBinding() {
@@ -107,6 +100,26 @@ class ToolPageHeaderView: MobileContentView {
         layoutIfNeeded()
     }
     
+    private func setTrainingTipHidden(hidden: Bool) {
+        
+        trainingTipContainerView.isHidden = hidden
+        
+        let trainingTipTopConstant: CGFloat
+        
+        if hidden {
+            
+            trainingTipTopConstant = (trainingTipHeight.constant + trainingTipBottomToView.constant) * -1
+        }
+        else {
+            
+            trainingTipTopConstant = trainingTipStartingTopToTextBackground
+        }
+        
+        trainingTipTopToTextBackground.constant = trainingTipTopConstant
+        
+        layoutIfNeeded()
+    }
+    
     private func addWidthConstraintToNumberLabelForHiddenState() {
         
         guard numberLabelWidthConstraint == nil else {
@@ -137,7 +150,7 @@ class ToolPageHeaderView: MobileContentView {
             trainingTipContainerView.addSubview(trainingTipView)
             trainingTipView.translatesAutoresizingMaskIntoConstraints = false
             trainingTipView.constrainEdgesToView(view: trainingTipContainerView)
-            trainingTipContainerView.isHidden = false
+            setTrainingTipHidden(hidden: false)
         }
     }
 }

@@ -143,10 +143,12 @@ class MobileContentImageView: MobileContentView {
             return
         }
         
+        let parentView: UIView = self
         let emptyView = UIView()
         emptyView.backgroundColor = .clear
-        addSubview(emptyView)
-        emptyView.constrainEdgesToSuperview()
+        parentView.addSubview(emptyView)
+        emptyView.translatesAutoresizingMaskIntoConstraints = false
+        emptyView.constrainEdgesToView(view: parentView)
         
         let heightConstraint: NSLayoutConstraint = NSLayoutConstraint(
             item: emptyView,

@@ -67,10 +67,6 @@ class ArticleCategoriesView: UIViewController {
     }
     
     private func setupBinding() {
-
-        viewModel.navTitle.addObserver(self) { [weak self] (navTitle: String) in
-            self?.title = navTitle
-        }
         
         viewModel.numberOfCategories.addObserver(self) { [weak self] (numberOfCategories: Int) in
             

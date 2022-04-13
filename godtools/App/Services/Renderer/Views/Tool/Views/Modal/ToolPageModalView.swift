@@ -15,7 +15,7 @@ protocol ToolPageModalViewDelegate: AnyObject {
     func toolPageModalDismissListenerActivated(modalView: ToolPageModalView)
 }
 
-class ToolPageModalView: MobileContentView {
+class ToolPageModalView: MobileContentView, NibBased {
     
     private let viewModel: ToolPageModalViewModelType
     
@@ -31,7 +31,7 @@ class ToolPageModalView: MobileContentView {
         
         super.init(frame: UIScreen.main.bounds)
         
-        initializeNib()
+        loadNib()
         setupLayout()
         setupBinding()        
     }
@@ -44,24 +44,12 @@ class ToolPageModalView: MobileContentView {
         fatalError("init(itemSpacing:scrollIsEnabled:) has not been implemented")
     }
     
-    private func initializeNib() {
-            
-            let nib: UINib = UINib(nibName: String(describing: ToolPageModalView.self), bundle: nil)
-            let contents: [Any]? = nib.instantiate(withOwner: self, options: nil)
-            if let rootNibView = (contents as? [UIView])?.first {
-                addSubview(rootNibView)
-                rootNibView.backgroundColor = .clear
-                rootNibView.frame = bounds
-                rootNibView.translatesAutoresizingMaskIntoConstraints = false
-                rootNibView.constrainEdgesToSuperview()
-            }
-        }
-    
     private func setupLayout() {
         
         // contentStackView
         contentContainerView.addSubview(contentStackView)
-        contentStackView.constrainEdgesToSuperview()
+        contentStackView.translatesAutoresizingMaskIntoConstraints = false
+        contentStackView.constrainEdgesToView(view: contentContainerView)
         setParentAndAddChild(childView: contentStackView)
     }
     

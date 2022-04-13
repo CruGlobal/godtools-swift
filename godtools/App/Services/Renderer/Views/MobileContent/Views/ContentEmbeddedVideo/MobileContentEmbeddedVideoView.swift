@@ -36,8 +36,10 @@ class MobileContentEmbeddedVideoView: MobileContentView {
         
         // videoView
         videoView.backgroundColor = .clear
-        addSubview(videoView)
-        videoView.constrainEdgesToSuperview()
+        let parentView: UIView = self
+        parentView.addSubview(videoView)
+        videoView.translatesAutoresizingMaskIntoConstraints = false
+        videoView.constrainEdgesToView(view: parentView)
     }
     
     private func setupBinding() {

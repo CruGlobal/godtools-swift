@@ -13,7 +13,7 @@ protocol MobileContentAccordionSectionViewDelegate: AnyObject {
     func sectionViewDidChangeTextHiddenState(sectionView: MobileContentAccordionSectionView, textIsHidden: Bool, textHeight: CGFloat)
 }
 
-class MobileContentAccordionSectionView: MobileContentView {
+class MobileContentAccordionSectionView: MobileContentView, NibBased {
  
     private let viewModel: MobileContentAccordionSectionViewModelType
     private let viewCornerRadius: CGFloat = 10
@@ -24,7 +24,6 @@ class MobileContentAccordionSectionView: MobileContentView {
     
     private weak var delegate: MobileContentAccordionSectionViewDelegate?
     
-    @IBOutlet weak private var shadowView: UIView!
     @IBOutlet weak private var contentView: UIView!
     @IBOutlet weak private var textContainerView: UIView!
     @IBOutlet weak private var headerContainerView: UIView!
@@ -41,7 +40,7 @@ class MobileContentAccordionSectionView: MobileContentView {
         
         super.init(frame: UIScreen.main.bounds)
         
-        initializeNib()
+        loadNib()
         setupLayout()
         
         revealTextButton.addTarget(self, action: #selector(revealTextButtonTapped), for: .touchUpInside)
@@ -51,28 +50,11 @@ class MobileContentAccordionSectionView: MobileContentView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func initializeNib() {
-        
-        let nib: UINib = UINib(nibName: String(describing: MobileContentAccordionSectionView.self), bundle: nil)
-        let contents: [Any]? = nib.instantiate(withOwner: self, options: nil)
-        if let rootNibView = (contents as? [UIView])?.first {
-            addSubview(rootNibView)
-            rootNibView.frame = bounds
-            rootNibView.translatesAutoresizingMaskIntoConstraints = false
-            rootNibView.constrainEdgesToSuperview()
-            rootNibView.backgroundColor = .clear
-            backgroundColor = .clear
-        }
-    }
-    
     private func setupLayout() {
         
-        // shadowView
-        shadowView.layer.cornerRadius = viewCornerRadius
-        shadowView.layer.shadowOffset = CGSize(width: 1, height: 1)
-        shadowView.layer.shadowColor = UIColor.black.cgColor
-        shadowView.layer.shadowRadius = 3
-        shadowView.layer.shadowOpacity = 0.3
+        layer.cornerRadius = viewCornerRadius
+        
+        drawShadow()
         
         // contentView
         contentView.backgroundColor = .white
@@ -179,8 +161,10 @@ extension MobileContentAccordionSectionView {
             return
         }
         
-        headerContainerView.addSubview(headerView)
-        headerView.constrainEdgesToSuperview(edgeInsets: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: textStateImageTrailing.constant + textStateImageView.frame.size.width + 10))
+        let parentView: UIView = headerContainerView
+        parentView.addSubview(headerView)
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        headerView.constrainEdgesToView(view: parentView, edgeInsets: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: textStateImageTrailing.constant + textStateImageView.frame.size.width + 10))
         self.headerView = headerView
     }
 }
@@ -195,8 +179,10 @@ extension MobileContentAccordionSectionView {
             return
         }
         
-        textContainerView.addSubview(textView)
-        textView.constrainEdgesToSuperview(edgeInsets: UIEdgeInsets(top: 0, left: 20, bottom: 20, right: 20))
+        let parentView: UIView = textContainerView
+        parentView.addSubview(textView)
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.constrainEdgesToView(view: parentView, edgeInsets: UIEdgeInsets(top: 0, left: 20, bottom: 20, right: 20))
         self.textView = textView
     }
 }

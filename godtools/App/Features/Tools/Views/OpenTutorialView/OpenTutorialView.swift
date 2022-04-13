@@ -29,6 +29,9 @@ class OpenTutorialView: UIView, NibBased {
     }
     
     func configure(viewModel: OpenTutorialViewModelType) {
+        
+        backgroundColor = ColorPalette.bannerColor
+        
         self.viewModel = viewModel
         showTutorialLabel.text = viewModel.showTutorialTitle
         openTutorialButton.setTitle(viewModel.openTutorialTitle, for: .normal)

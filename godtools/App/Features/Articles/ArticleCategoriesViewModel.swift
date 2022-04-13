@@ -24,7 +24,6 @@ class ArticleCategoriesViewModel: NSObject, ArticleCategoriesViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    let navTitle: ObservableValue<String> = ObservableValue(value: "")
     let numberOfCategories: ObservableValue<Int> = ObservableValue(value: 0)
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
         
@@ -40,9 +39,7 @@ class ArticleCategoriesViewModel: NSObject, ArticleCategoriesViewModelType {
         self.articleManifest = ArticleManifestXmlParser(xmlData: translationManifest.manifestXmlData)
         
         super.init()
-                                
-        navTitle.accept(value: resource.name)
-            
+                                            
         reloadCategories()
         
         downloadArticles(forceDownload: false)

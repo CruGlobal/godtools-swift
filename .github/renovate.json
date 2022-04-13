@@ -4,6 +4,10 @@
   "labels": ["dependencies"],
   "packageRules": [
     {
+      "matchManagers": ["bundler"],
+      "rangeStrategy": "update-lockfile"
+    },
+    {
       "matchManagers": ["cocoapods"],
       "enabled": true,
       "labels": ["dependencies", "cocoapods"],
