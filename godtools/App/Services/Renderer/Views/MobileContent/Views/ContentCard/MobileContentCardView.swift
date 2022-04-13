@@ -20,7 +20,7 @@ class MobileContentCardView: MobileContentStackView {
         
         self.viewModel = viewModel
         
-        super.init(contentInsets: UIEdgeInsets(top: 20, left: 15, bottom: 20, right: 15), itemSpacing: 0, scrollIsEnabled: false)
+        super.init(contentInsets: UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8), itemSpacing: 0, scrollIsEnabled: false)
         
         setupLayout()
         setupBinding()
@@ -44,10 +44,6 @@ class MobileContentCardView: MobileContentStackView {
     
     private func setupBinding() {
         
-    }
-    
-    override var paddingInsets: UIEdgeInsets {
-        return UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
     }
     
     override func finishedRenderingChildren() {
