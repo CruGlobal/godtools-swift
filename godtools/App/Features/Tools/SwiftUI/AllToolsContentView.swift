@@ -27,18 +27,21 @@ struct AllToolsContentView: View {
     // MARK: - Body
     
     var body: some View {
-        List {
-            // TODO: - These sections will be completed in GT-1265 & GT-1498
-            Text("Spotlight")
-            Text("Categories")
-            
-            ForEach(viewModel.tools) { tool in
-                ToolCardView(viewModel: viewModel.cardViewModel(for: tool))
+        GeometryReader { geo in
+            List {
+                // TODO: - These sections will be completed in GT-1265 & GT-1498
+                Text("Spotlight")
+                Text("Categories")
+                
+                ForEach(viewModel.tools) { tool in
+                    // TODO: - fix the hardcoded -40.  List is automatically padding the left, so need to figure out how to duplicate that padding on right
+                    ToolCardView(viewModel: viewModel.cardViewModel(for: tool), cardWidth: geo.size.width - 40)
+                }
             }
+            .frame(maxWidth: .infinity)
+            .edgesIgnoringSafeArea([.leading, .trailing])
+            .listStyle(.plain)
         }
-        .frame(maxWidth: .infinity)
-        .edgesIgnoringSafeArea([.leading, .trailing])
-        .listStyle(.plain)
     }
 }
 

@@ -13,6 +13,7 @@ struct ToolCardView: View {
     // MARK: - Properties
     
     @ObservedObject var viewModel: ToolCardViewModel
+    var cardWidth: CGFloat
     
     // MARK: - Constants
     
@@ -32,16 +33,18 @@ struct ToolCardView: View {
     // MARK: - Body
     
     var body: some View {
-        ZStack(alignment: .topLeading) {
+        ZStack(alignment: .top) {
             RoundedRectangle(cornerRadius: Sizes.cornerRadius, style: .circular)
                 .fill(.white)
-                .aspectRatio(Sizes.cardAspectRatio, contentMode: .fit)
+                .frame(width: cardWidth, height: cardWidth / Sizes.cardAspectRatio)
                 .shadow(color: .black.opacity(0.25), radius: 4, y: 2)
             
             VStack(alignment: .leading, spacing: 12) {
                 viewModel.bannerImage?
                     .resizable()
-                    .aspectRatio(Sizes.bannerImageAspectRatio, contentMode: .fit)
+                    .scaledToFill()
+                    .frame(width: cardWidth, height: cardWidth / Sizes.bannerImageAspectRatio)
+                    .clipped()
                     .cornerRadius(Sizes.cornerRadius, corners: [.topLeft, .topRight])
                 
                 VStack(alignment: .leading, spacing: 3) {
@@ -52,9 +55,11 @@ struct ToolCardView: View {
                         .font(.system(size: 12))
                 }
                 .padding([.leading, .trailing], 15)
+                
             }
             
         }
+        .frame(width: cardWidth, height: cardWidth / Sizes.cardAspectRatio)
     }
 }
 
@@ -67,7 +72,9 @@ struct ToolCardView_Previews: PreviewProvider {
     )
     
     static var previews: some View {
-        ToolCardView(viewModel: viewModel)
+        GeometryReader { geo in
+            ToolCardView(viewModel: viewModel, cardWidth: geo.size.width)
+        }
             .padding()
     }
 }

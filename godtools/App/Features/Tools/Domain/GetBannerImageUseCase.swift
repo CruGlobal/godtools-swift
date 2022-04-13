@@ -45,7 +45,9 @@ class DefaultGetBannerImageUseCase: GetBannerImageUseCase {
 // MARK: - Mock
 
 class MockGetBannerImageUseCase: GetBannerImageUseCase {
-    private static let bannerImageNames = ["banner1_wide", "banner2_wide", "banner3_wide"]
+    private static let wideBannerImageNames = ["banner1_wide", "banner2_wide", "banner3_wide"]
+    private static let bannerImageNames = ["banner1", "banner2", "banner3"]
+
     
     func getBannerImage() -> Image? {
         return Image(MockGetBannerImageUseCase.bannerImageNames.randomElement()!)
