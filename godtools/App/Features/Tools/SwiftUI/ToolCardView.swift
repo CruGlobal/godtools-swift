@@ -74,12 +74,17 @@ struct ToolCardView: View {
 // MARK: - Preview
 
 struct ToolCardView_Previews: PreviewProvider {
-    private static let viewModel = ToolCardViewModel(
-        getBannerImageUseCase: MockGetBannerImageUseCase(),
-        getToolDataUseCase: MockGetToolDataUseCase()
-    )
-    
     static var previews: some View {
+        
+        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
+        
+        let viewModel = ToolCardViewModel(
+            resourceId: "abc123",
+            getBannerImageUseCase: MockGetBannerImageUseCase(),
+            getToolDataUseCase: MockGetToolDataUseCase(),
+            favoritedResourcesCache: appDiContainer.favoritedResourcesCache
+        )
+        
         GeometryReader { geo in
             ToolCardView(viewModel: viewModel, cardWidth: geo.size.width)
         }

@@ -40,8 +40,6 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
         print("x deinit: \(type(of: self))")
         dataDownloader.cachedResourcesAvailable.removeObserver(self)
         dataDownloader.resourcesUpdatedFromRemoteDatabase.removeObserver(self)
-//        favoritedResourcesCache.resourceFavorited.removeObserver(self)
-//        favoritedResourcesCache.resourceUnfavorited.removeObserver(self)
     }
 }
 
@@ -59,13 +57,14 @@ extension AllToolsContentViewModel {
             resource: tool,
             dataDownloader: dataDownloader,
             languageSettingsService: languageSettingsService,
-            localizationServices: localizationServices,
-            favoritedResourcesCache: favoritedResourcesCache
+            localizationServices: localizationServices
         )
         
         return ToolCardViewModel(
+            resourceId: tool.id,
             getBannerImageUseCase: getBannerImageUseCase,
-            getToolDataUseCase: getToolDataUseCase
+            getToolDataUseCase: getToolDataUseCase,
+            favoritedResourcesCache: favoritedResourcesCache
         )
     }
 }
