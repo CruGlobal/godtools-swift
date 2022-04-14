@@ -304,6 +304,7 @@
 		458EFEDC26B1D08C009EEB03 /* ToolBackButtonImageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458EFEDB26B1D08C009EEB03 /* ToolBackButtonImageType.swift */; };
 		458EFEDE26B1D135009EEB03 /* ToolBackButtonImageType+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458EFEDD26B1D135009EEB03 /* ToolBackButtonImageType+Image.swift */; };
 		4590F73927B17018007424F4 /* MobileContentCardCollectionPageCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4590F73827B17018007424F4 /* MobileContentCardCollectionPageCardView.xib */; };
+		45935B8828084E250035ACA2 /* SwiftUIPreviewDiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45935B8728084E240035ACA2 /* SwiftUIPreviewDiContainer.swift */; };
 		4596622727BBFEFB0059F70B /* ChooseYourOwnAdventureNavBarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4596622627BBFEFB0059F70B /* ChooseYourOwnAdventureNavBarModel.swift */; };
 		4599251B2704F36A008F7844 /* ChooseScaleSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4599251A2704F36A008F7844 /* ChooseScaleSliderView.swift */; };
 		4599251D2704F37B008F7844 /* ChooseScaleSliderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4599251C2704F37B008F7844 /* ChooseScaleSliderView.xib */; };
@@ -1327,6 +1328,7 @@
 		458EFEDB26B1D08C009EEB03 /* ToolBackButtonImageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolBackButtonImageType.swift; sourceTree = "<group>"; };
 		458EFEDD26B1D135009EEB03 /* ToolBackButtonImageType+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ToolBackButtonImageType+Image.swift"; sourceTree = "<group>"; };
 		4590F73827B17018007424F4 /* MobileContentCardCollectionPageCardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MobileContentCardCollectionPageCardView.xib; sourceTree = "<group>"; };
+		45935B8728084E240035ACA2 /* SwiftUIPreviewDiContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftUIPreviewDiContainer.swift; sourceTree = "<group>"; };
 		4596622627BBFEFB0059F70B /* ChooseYourOwnAdventureNavBarModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseYourOwnAdventureNavBarModel.swift; sourceTree = "<group>"; };
 		4599251A2704F36A008F7844 /* ChooseScaleSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseScaleSliderView.swift; sourceTree = "<group>"; };
 		4599251C2704F37B008F7844 /* ChooseScaleSliderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChooseScaleSliderView.xib; sourceTree = "<group>"; };
@@ -3481,6 +3483,7 @@
 			children = (
 				45AD21602593A62800A096A0 /* AppDelegate.swift */,
 				45AD21612593A62800A096A0 /* AppDiContainer.swift */,
+				45935B8728084E240035ACA2 /* SwiftUIPreviewDiContainer.swift */,
 				45AD174D25938A4D00A096A0 /* Features */,
 				45AD188B25938A4E00A096A0 /* Flows */,
 				45AD187D25938A4E00A096A0 /* Legacy */,
@@ -6648,6 +6651,7 @@
 				4555840D269F2DA500C3FF14 /* MobileContentTextViewModel.swift in Sources */,
 				D1C8FEAE275E95FA00C71E80 /* ParallelLanguageListViewModelType.swift in Sources */,
 				45558331269F2C7B00C3FF14 /* ToolPageCardsViewModelType.swift in Sources */,
+				45935B8828084E250035ACA2 /* SwiftUIPreviewDiContainer.swift in Sources */,
 				45C93AEF261D310900592FFF /* ArticleAemDownloaderResult.swift in Sources */,
 				456E504C25D0CF7E0075FF6A /* DeepLinkParserType.swift in Sources */,
 				45585BD02687BB8F00A21D12 /* ArticleDeepLinkParser.swift in Sources */,
