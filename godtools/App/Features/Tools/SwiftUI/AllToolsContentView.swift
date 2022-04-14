@@ -17,7 +17,7 @@ struct AllToolsContentView: View {
     // MARK: - Constants
     
     private enum Sizes {
-        static let toolsLeadingTrailingPadding: CGFloat = 20
+        static let toolsPaddingMultiplier: CGFloat = 20/375
         static let toolsVerticalSpacing: CGFloat = 15
     }
     
@@ -35,15 +35,18 @@ struct AllToolsContentView: View {
     
     var body: some View {
         GeometryReader { geo in
+            let width = geo.size.width
+            let leadingTrailingPadding = width * Sizes.toolsPaddingMultiplier
+            
             List {
                 // TODO: - These sections will be completed in GT-1265 & GT-1498
                 Text("Spotlight")
                 Text("Categories")
                 
                 ForEach(viewModel.tools) { tool in
-                    ToolCardView(viewModel: viewModel.cardViewModel(for: tool), cardWidth: geo.size.width - (2 * Sizes.toolsLeadingTrailingPadding))
+                    ToolCardView(viewModel: viewModel.cardViewModel(for: tool), cardWidth: geo.size.width - (2 * leadingTrailingPadding))
                 }
-                .listRowInsets(EdgeInsets(top: 0, leading: Sizes.toolsLeadingTrailingPadding, bottom: Sizes.toolsVerticalSpacing, trailing: Sizes.toolsLeadingTrailingPadding))
+                .listRowInsets(EdgeInsets(top: 0, leading: leadingTrailingPadding, bottom: Sizes.toolsVerticalSpacing, trailing: leadingTrailingPadding))
             }
             .frame(maxWidth: .infinity)
             .edgesIgnoringSafeArea([.leading, .trailing])
