@@ -10,6 +10,12 @@ import Foundation
 
 class AppsFlyerDeepLinkValueParser: DeepLinkParserType {
     
+    private let appsFlyerComponentsParser: AppsFlyerDeepLinkValueComponentsParser = AppsFlyerDeepLinkValueComponentsParser()
+    
+    required init() {
+        
+    }
+    
     func parse(incomingDeepLink: IncomingDeepLinkType) -> ParsedDeepLinkType? {
                 
         switch incomingDeepLink {
@@ -29,76 +35,7 @@ class AppsFlyerDeepLinkValueParser: DeepLinkParserType {
         }
         
         let deepLinkValueComponents: [String] = deepLinkValue.components(separatedBy: "|")
-        
-        guard let rootComponent = deepLinkValueComponents[safe: 0] else {
-            return nil
-        }
-        
-        guard let locationComponent = deepLinkValueComponents[safe: 1] else {
-            return nil
-        }
-        
-        switch rootComponent {
-        case "dashboard":
-
-            switch locationComponent {
-            case "tools":
-                return .allToolsList
-            case "home":
-                return .favoritedToolsList
-            case "lessons":
-                return .lessonsList
-            default:
-                return nil
-            }
-            
-        case "tool":
-            
-            guard let resourceAbbreviation = deepLinkValueComponents[safe: 2] else {
-                return nil
-            }
-            
-            guard let language = deepLinkValueComponents[safe: 3] else {
-                return nil
-            }
-            
-            var pageNumber: Int?
-            var pageId: String?
-                                    
-            switch locationComponent {
-            case "tract":
-                if let pageStringValue = deepLinkValueComponents[safe: 3], let pageIntValue = Int(pageStringValue) {
-                    pageNumber = pageIntValue
-                }
                 
-            case "lesson":
-                break
-                
-            case "cyoa":
-                if let pageIdValue = deepLinkValueComponents[safe: 3] {
-                    pageId = pageIdValue
-                }
-                                
-            case "article":
-                break
-                
-            default:
-                return nil
-            }
-            
-            return .tool(
-                toolDeepLink: ToolDeepLink(
-                    resourceAbbreviation: resourceAbbreviation,
-                    primaryLanguageCodes: [language],
-                    parallelLanguageCodes: [],
-                    liveShareStream: nil,
-                    page: pageNumber,
-                    pageId: pageId
-                )
-            )
-            
-        default:
-            return nil
-        }        
+        return appsFlyerComponentsParser.getParsedDeepLink(components: deepLinkValueComponents)
     }
 }

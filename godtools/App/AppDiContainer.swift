@@ -198,6 +198,7 @@ class AppDiContainer {
     static func getNewDeepLinkingService(loggingEnabled: Bool) -> DeepLinkingServiceType {
         return DeepLinkingService(
             deepLinkParsers: [
+                OrgCruGodToolsDeepLinkParser(),
                 AppsFlyerDeepLinkValueParser(),
                 ToolDeepLinkParser(),
                 ToolsDeepLinkParser(),

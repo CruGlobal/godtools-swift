@@ -798,6 +798,8 @@
 		45BF6EBC27050A3F003596A4 /* TransparentModalView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45BF6EBB27050A3F003596A4 /* TransparentModalView.xib */; };
 		45BF6EBF27050D35003596A4 /* FadeAnimationTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BF6EBE27050D35003596A4 /* FadeAnimationTransition.swift */; };
 		45C5386124B8EFA700CABDAC /* godtoolsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C5386024B8EFA700CABDAC /* godtoolsUITests.swift */; };
+		45C61DB1280896E60058946F /* AppsFlyerDeepLinkValueComponentsParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C61DB0280896E50058946F /* AppsFlyerDeepLinkValueComponentsParser.swift */; };
+		45C61DB4280896F40058946F /* OrgCruGodToolsDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C61DB3280896F30058946F /* OrgCruGodToolsDeepLinkParser.swift */; };
 		45C93AD6261D310900592FFF /* ArticleManifestXmlParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C93AA4261D310900592FFF /* ArticleManifestXmlParser.swift */; };
 		45C93AD7261D310900592FFF /* ArticleCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C93AA6261D310900592FFF /* ArticleCategory.swift */; };
 		45C93AD8261D310900592FFF /* ArticleManifestAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C93AA7261D310900592FFF /* ArticleManifestAttributes.swift */; };
@@ -1795,6 +1797,8 @@
 		45BF6EBB27050A3F003596A4 /* TransparentModalView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransparentModalView.xib; sourceTree = "<group>"; };
 		45BF6EBE27050D35003596A4 /* FadeAnimationTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FadeAnimationTransition.swift; sourceTree = "<group>"; };
 		45C5386024B8EFA700CABDAC /* godtoolsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = godtoolsUITests.swift; sourceTree = "<group>"; };
+		45C61DB0280896E50058946F /* AppsFlyerDeepLinkValueComponentsParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsFlyerDeepLinkValueComponentsParser.swift; sourceTree = "<group>"; };
+		45C61DB3280896F30058946F /* OrgCruGodToolsDeepLinkParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrgCruGodToolsDeepLinkParser.swift; sourceTree = "<group>"; };
 		45C93AA4261D310900592FFF /* ArticleManifestXmlParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleManifestXmlParser.swift; sourceTree = "<group>"; };
 		45C93AA6261D310900592FFF /* ArticleCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleCategory.swift; sourceTree = "<group>"; };
 		45C93AA7261D310900592FFF /* ArticleManifestAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleManifestAttributes.swift; sourceTree = "<group>"; };
@@ -2442,6 +2446,7 @@
 		45363FCF27E2420B0000546A /* AppsFlyerDeepLinkValue */ = {
 			isa = PBXGroup;
 			children = (
+				45C61DB0280896E50058946F /* AppsFlyerDeepLinkValueComponentsParser.swift */,
 				45363FD027E2420B0000546A /* AppsFlyerDeepLinkValueParser.swift */,
 			);
 			path = AppsFlyerDeepLinkValue;
@@ -3217,6 +3222,7 @@
 				45585BCB2687BB8F00A21D12 /* Article */,
 				45585BCD2687BB8F00A21D12 /* Lesson */,
 				45F5A0402689FEC80081C507 /* Lessons */,
+				45C61DB2280896F30058946F /* OrgCruGodTools */,
 				45585BC92687BB8F00A21D12 /* Tool */,
 				45F5A049268A7BCD0081C507 /* Tools */,
 			);
@@ -5173,6 +5179,14 @@
 			path = AnimationTransitions;
 			sourceTree = "<group>";
 		};
+		45C61DB2280896F30058946F /* OrgCruGodTools */ = {
+			isa = PBXGroup;
+			children = (
+				45C61DB3280896F30058946F /* OrgCruGodToolsDeepLinkParser.swift */,
+			);
+			path = OrgCruGodTools;
+			sourceTree = "<group>";
+		};
 		45C93AA3261D310900592FFF /* Manifest */ = {
 			isa = PBXGroup;
 			children = (
@@ -6619,6 +6633,7 @@
 				45558410269F2DA500C3FF14 /* MobileContentTextViewModelType.swift in Sources */,
 				D1E98EDF27974F0100D1B738 /* LessonEvaluationViewModel.swift in Sources */,
 				45C93AF0261D310900592FFF /* ArticleAemDownloaderError.swift in Sources */,
+				45C61DB4280896F40058946F /* OrgCruGodToolsDeepLinkParser.swift in Sources */,
 				4555849A269F2F9E00C3FF14 /* TrainingTipEvent.swift in Sources */,
 				455583F1269F2DA500C3FF14 /* MobileContentTabView.swift in Sources */,
 				457E199A27C6E3AF00BABD49 /* MobileContentRenderer.swift in Sources */,
@@ -6866,6 +6881,7 @@
 				45AE975327C97A9500C2CB33 /* Tab+MobileContentRenderableModel.swift in Sources */,
 				45428A7B26712A3A0022A66D /* FirebaseAnalytics+MobileContentAnalyticsSystem.swift in Sources */,
 				455583CD269F2DA500C3FF14 /* MobileContentPageView.swift in Sources */,
+				45C61DB1280896E60058946F /* AppsFlyerDeepLinkValueComponentsParser.swift in Sources */,
 				D133071A273989750058450B /* OnboardingQuickStartViewModelType.swift in Sources */,
 				45AD20B225938EE500A096A0 /* FileCache.swift in Sources */,
 				459C93B027581FD0006207D2 /* OktaUserAuthentication.swift in Sources */,
