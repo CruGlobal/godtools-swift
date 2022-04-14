@@ -54,17 +54,20 @@ struct AllToolsContentView: View {
 
 // MARK: - Preview
 
-// TODO: - Figure out how to fix this preview
-
-//struct AllToolsContentView_Previews: PreviewProvider {
-//    static let viewModel = AllToolsContentViewModel(
-//        dataDownloader: MockInitialDataDownloader(),
-//        deviceAttachmentBanners: DeviceAttachmentBanners(),
-//        languageSettingsService: <#LanguageSettingsService#>,
-//        localizationServices: <#LocalizationServices#>
-//    )
-//
-//    static var previews: some View {
-//        AllToolsContentView(viewModel: viewModel)
-//    }
-//}
+struct AllToolsContentView_Previews: PreviewProvider {
+    
+    static var previews: some View {
+        
+        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
+        
+        let viewModel = AllToolsContentViewModel(
+            dataDownloader: appDiContainer.initialDataDownloader,
+            deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
+            languageSettingsService: appDiContainer.languageSettingsService,
+            localizationServices: appDiContainer.localizationServices,
+            favoritedResourcesCache: appDiContainer.favoritedResourcesCache
+        )
+        
+        AllToolsContentView(viewModel: viewModel)
+    }
+}
