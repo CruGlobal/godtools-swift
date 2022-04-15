@@ -31,8 +31,7 @@ class ToolCardViewModel: NSObject, ObservableObject {
     @Published var title: String = ""
     @Published var category: String = ""
     @Published var parallelLanguageName: String = ""
-    // TODO: - figure out semantic content for SwiftUI
-    @Published var toolSemanticContentAttribute: UISemanticContentAttribute = .forceLeftToRight
+    @Published var layoutDirection: LayoutDirection = .leftToRight
     
     // MARK: - Init
     
@@ -109,7 +108,7 @@ class ToolCardViewModel: NSObject, ObservableObject {
         let toolData = getToolDataUseCase.getToolData()
         title = toolData.title
         category = toolData.category
-        toolSemanticContentAttribute = toolData.semanticContentAttribute
+        layoutDirection = LayoutDirection.from(languageDirection: toolData.languageDirection)
     }
     
     private func reloadParallelLanguageName() {

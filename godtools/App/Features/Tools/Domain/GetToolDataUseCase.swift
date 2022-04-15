@@ -15,7 +15,7 @@ protocol GetToolDataUseCase {
 struct ToolDataModel {
     let title: String
     let category: String
-    let semanticContentAttribute: UISemanticContentAttribute
+    let languageDirection: LanguageDirection
 }
 
 // MARK: - Default
@@ -39,37 +39,31 @@ class DefaultGetToolDataUseCase: GetToolDataUseCase {
              
         let toolName: String
         let languageBundle: Bundle
-        let semanticContentAttribute: UISemanticContentAttribute
+        let languageDirection: LanguageDirection
         
         if let primaryLanguage = languageSettingsService.primaryLanguage.value, let primaryTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageId: primaryLanguage.id) {
             
             toolName = primaryTranslation.translatedName
             languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.code) ?? Bundle.main
-            
-            switch primaryLanguage.languageDirection {
-            case .leftToRight:
-                semanticContentAttribute = .forceLeftToRight
-            case .rightToLeft:
-                semanticContentAttribute = .forceRightToLeft
-            }
+            languageDirection = primaryLanguage.languageDirection
         }
         else if let englishTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageCode: "en") {
             
             toolName = englishTranslation.translatedName
             languageBundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
-            semanticContentAttribute = .forceLeftToRight
+            languageDirection = .leftToRight
         }
         else {
             
             toolName = resource.name
             languageBundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
-            semanticContentAttribute = .forceLeftToRight
+            languageDirection = .leftToRight
         }
         
         return ToolDataModel(
             title: toolName,
             category: localizationServices.stringForBundle(bundle: languageBundle, key: "tool_category_\(resource.attrCategory)"),
-            semanticContentAttribute: semanticContentAttribute
+            languageDirection: languageDirection
         )
     }
 }
@@ -77,7 +71,13 @@ class DefaultGetToolDataUseCase: GetToolDataUseCase {
 // MARK: - Mock
 
 class MockGetToolDataUseCase: GetToolDataUseCase {
+    let languageDirection: LanguageDirection
+    
+    init(languageDirection: LanguageDirection) {
+        self.languageDirection = languageDirection
+    }
+    
     func getToolData() -> ToolDataModel {
-        return ToolDataModel(title: "Tool Data Title", category: "Tool Category", semanticContentAttribute: .forceLeftToRight)
+        return ToolDataModel(title: "Tool Data Title", category: "Tool Category", languageDirection: languageDirection)
     }
 }

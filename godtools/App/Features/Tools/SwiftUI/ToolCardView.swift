@@ -79,6 +79,7 @@ struct ToolCardView: View {
             
         }
         .frame(width: cardWidth, height: cardWidth / Sizes.cardAspectRatio)
+        .environment(\.layoutDirection, viewModel.layoutDirection)
     }
 }
 
@@ -92,7 +93,7 @@ struct ToolCardView_Previews: PreviewProvider {
         let viewModel = ToolCardViewModel(
             resourceId: "abc123",
             getBannerImageUseCase: MockGetBannerImageUseCase(),
-            getToolDataUseCase: MockGetToolDataUseCase(),
+            getToolDataUseCase: MockGetToolDataUseCase(languageDirection: .leftToRight),
             getLanguageNameUseCase: MockGetDefaultLanguageNameUseCase(),
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             languageSettingsService: appDiContainer.languageSettingsService
