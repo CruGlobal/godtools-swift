@@ -18,9 +18,11 @@ class ToolCardViewModel: NSObject, ObservableObject {
     // UseCases
     private let getBannerImageUseCase: GetBannerImageUseCase
     private let getToolDataUseCase: GetToolDataUseCase
+    private let getLanguageNameUseCase: GetLanguageNameUseCase
     
     // Services
     private let favoritedResourcesCache: FavoritedResourcesCache
+    private let languageSettingsService: LanguageSettingsService
     
     // MARK: - Published
     
@@ -28,34 +30,32 @@ class ToolCardViewModel: NSObject, ObservableObject {
     @Published var isFavorited = false
     @Published var title: String = ""
     @Published var category: String = ""
+    @Published var parallelLanguageName: String = ""
     // TODO: - figure out semantic content for SwiftUI
     @Published var toolSemanticContentAttribute: UISemanticContentAttribute = .forceLeftToRight
     
     // MARK: - Init
     
-    init(resourceId: String, getBannerImageUseCase: GetBannerImageUseCase, getToolDataUseCase: GetToolDataUseCase, favoritedResourcesCache: FavoritedResourcesCache) {
+    init(resourceId: String, getBannerImageUseCase: GetBannerImageUseCase, getToolDataUseCase: GetToolDataUseCase, getLanguageNameUseCase: GetLanguageNameUseCase, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService) {
         
         self.resourceId = resourceId
         self.getBannerImageUseCase = getBannerImageUseCase
         self.getToolDataUseCase = getToolDataUseCase
+        self.getLanguageNameUseCase = getLanguageNameUseCase
         self.favoritedResourcesCache = favoritedResourcesCache
-        
-        bannerImage = getBannerImageUseCase.getBannerImage()
-        isFavorited = favoritedResourcesCache.isFavorited(resourceId: resourceId)
-
-        let toolData = getToolDataUseCase.getToolData()
-        title = toolData.title
-        category = toolData.category
-        toolSemanticContentAttribute = toolData.semanticContentAttribute
+        self.languageSettingsService = languageSettingsService
                 
         super.init()
         
+        setupPublishedProperties()
         setupBinding()
     }
     
     deinit {
         favoritedResourcesCache.resourceFavorited.removeObserver(self)
         favoritedResourcesCache.resourceUnfavorited.removeObserver(self)
+        languageSettingsService.primaryLanguage.removeObserver(self)
+        languageSettingsService.parallelLanguage.removeObserver(self)
     }
     
     // MARK: - Public
@@ -65,6 +65,13 @@ class ToolCardViewModel: NSObject, ObservableObject {
     }
     
     // MARK: - Private
+    
+    private func setupPublishedProperties() {
+        bannerImage = getBannerImageUseCase.getBannerImage()
+        isFavorited = favoritedResourcesCache.isFavorited(resourceId: resourceId)
+        
+        reloadDataForPrimaryLanguage()
+    }
     
     private func setupBinding() {
         favoritedResourcesCache.resourceFavorited.addObserver(self) { [weak self] (resourceId: String) in
@@ -76,7 +83,6 @@ class ToolCardViewModel: NSObject, ObservableObject {
                 }
             }
         }
-
         favoritedResourcesCache.resourceUnfavorited.addObserver(self) { [weak self] (resourceId: String) in
             guard let self = self else { return }
 
@@ -86,5 +92,28 @@ class ToolCardViewModel: NSObject, ObservableObject {
                 }
             }
         }
+        
+        languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
+            DispatchQueue.main.async { [weak self] in
+                self?.reloadDataForPrimaryLanguage()
+            }
+        }
+        languageSettingsService.parallelLanguage.addObserver(self) { [weak self] (parallelLanguage: LanguageModel?) in
+            DispatchQueue.main.async { [weak self] in
+                self?.reloadParallelLanguageName()
+            }
+        }
+    }
+    
+    private func reloadDataForPrimaryLanguage() {
+        let toolData = getToolDataUseCase.getToolData()
+        title = toolData.title
+        category = toolData.category
+        toolSemanticContentAttribute = toolData.semanticContentAttribute
+    }
+    
+    private func reloadParallelLanguageName() {
+        let parallelLanguage = languageSettingsService.parallelLanguage.value
+        parallelLanguageName = getLanguageNameUseCase.getLanguageName(language: parallelLanguage)
     }
 }

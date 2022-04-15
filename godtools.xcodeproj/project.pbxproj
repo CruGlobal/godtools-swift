@@ -992,6 +992,7 @@
 		D44C693B2804B8050000B970 /* View+CustomModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C693A2804B8050000B970 /* View+CustomModifiers.swift */; };
 		D44C693D2804BE9D0000B970 /* GetToolDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C693C2804BE9D0000B970 /* GetToolDataUseCase.swift */; };
 		D44C693F2805AE910000B970 /* AllToolsContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C693E2805AE910000B970 /* AllToolsContentViewModel.swift */; };
+		D44C69412808F93B0000B970 /* GetLanguageNameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C69402808F93B0000B970 /* GetLanguageNameUseCase.swift */; };
 		D49F80F527FCD63A001AE5B3 /* ToolCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F80F427FCD63A001AE5B3 /* ToolCardView.swift */; };
 		D49F80F727FDC610001AE5B3 /* AllToolsContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F80F627FDC610001AE5B3 /* AllToolsContentView.swift */; };
 /* End PBXBuildFile section */
@@ -2055,6 +2056,7 @@
 		D44C693A2804B8050000B970 /* View+CustomModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+CustomModifiers.swift"; sourceTree = "<group>"; };
 		D44C693C2804BE9D0000B970 /* GetToolDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetToolDataUseCase.swift; sourceTree = "<group>"; };
 		D44C693E2805AE910000B970 /* AllToolsContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllToolsContentViewModel.swift; sourceTree = "<group>"; };
+		D44C69402808F93B0000B970 /* GetLanguageNameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLanguageNameUseCase.swift; sourceTree = "<group>"; };
 		D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtoolsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D49F80F427FCD63A001AE5B3 /* ToolCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardView.swift; sourceTree = "<group>"; };
 		D49F80F627FDC610001AE5B3 /* AllToolsContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllToolsContentView.swift; sourceTree = "<group>"; };
@@ -5851,6 +5853,7 @@
 			children = (
 				D44C69352804A6730000B970 /* GetBannerImageUseCase.swift */,
 				D44C693C2804BE9D0000B970 /* GetToolDataUseCase.swift */,
+				D44C69402808F93B0000B970 /* GetLanguageNameUseCase.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -6470,6 +6473,7 @@
 				45AE975B27C97A9500C2CB33 /* Link+MobileContentRenderableModel.swift in Sources */,
 				45AD1FFB25938A9800A096A0 /* DetermineNewUserIfPrimaryLanguageSet.swift in Sources */,
 				455583ED269F2DA500C3FF14 /* MobileContentSpacerViewModel.swift in Sources */,
+				D44C69412808F93B0000B970 /* GetLanguageNameUseCase.swift in Sources */,
 				450E442527565D7000D4311E /* TutorialSupportedLanguagesType.swift in Sources */,
 				455D275E27B6A3F700FB85B3 /* MobileContentSpacerHeight.swift in Sources */,
 				45B6480B25E581660098BAF1 /* (null) in Sources */,

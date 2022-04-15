@@ -59,12 +59,18 @@ extension AllToolsContentViewModel {
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices
         )
+        let getLanguageNameUseCase = DefaultGetLanguageNameUseCase(
+            resource: tool,
+            localizationServices: localizationServices
+        )
         
         return ToolCardViewModel(
             resourceId: tool.id,
             getBannerImageUseCase: getBannerImageUseCase,
             getToolDataUseCase: getToolDataUseCase,
-            favoritedResourcesCache: favoritedResourcesCache
+            getLanguageNameUseCase: getLanguageNameUseCase,
+            favoritedResourcesCache: favoritedResourcesCache,
+            languageSettingsService: languageSettingsService
         )
     }
 }

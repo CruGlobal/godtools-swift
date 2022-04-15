@@ -55,14 +55,25 @@ struct ToolCardView: View {
                         }
                 }
                 
-                VStack(alignment: .leading, spacing: 3) {
-                    Text(viewModel.title)
-                        .font(.system(size: 16, weight: .bold))
+                HStack(alignment: .top) {
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text(viewModel.title)
+                            .font(.system(size: 16, weight: .bold))
+                            .foregroundColor(ColorPalette.gtGrey.color)
+                        Text(viewModel.category)
+                            .font(.system(size: 12))
+                    }
+                    .padding(.leading, Sizes.leadingPadding)
+                    
+                    Spacer()
+                    
+                    Text(viewModel.parallelLanguageName)
+                        .font(.system(size: 10))
                         .foregroundColor(ColorPalette.gtGrey.color)
-                    Text(viewModel.category)
-                        .font(.system(size: 12))
+                        .padding(.trailing, 10)
+                        .padding(.top, 4)
                 }
-                .padding([.leading, .trailing], 15)
+                .frame(width: cardWidth)
                 
             }
             
@@ -82,7 +93,9 @@ struct ToolCardView_Previews: PreviewProvider {
             resourceId: "abc123",
             getBannerImageUseCase: MockGetBannerImageUseCase(),
             getToolDataUseCase: MockGetToolDataUseCase(),
-            favoritedResourcesCache: appDiContainer.favoritedResourcesCache
+            getLanguageNameUseCase: MockGetDefaultLanguageNameUseCase(),
+            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
+            languageSettingsService: appDiContainer.languageSettingsService
         )
         
         GeometryReader { geo in
