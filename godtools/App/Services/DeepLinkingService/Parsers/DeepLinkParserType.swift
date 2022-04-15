@@ -9,6 +9,8 @@
 import Foundation
 
 protocol DeepLinkParserType {
-                
-    func parse(incomingDeepLink: IncomingDeepLinkType) -> ParsedDeepLinkType?
+      
+    init()
+    
+    func parse(pathComponents: [String], queryParameters: [String: Any]) -> ParsedDeepLinkType?
 }

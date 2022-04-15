@@ -10,30 +10,43 @@ import Foundation
 
 class DeepLinkingService: NSObject, DeepLinkingServiceType {
     
-    private let deepLinkParsers: [DeepLinkParserType]
-    private let loggingEnabled: Bool
+    private let manifest: DeepLinkingManifest
     
     let deepLinkObserver: PassthroughValue<ParsedDeepLinkType?> = PassthroughValue()
         
-    required init(deepLinkParsers: [DeepLinkParserType], loggingEnabled: Bool) {
+    required init(manifest: DeepLinkingManifest) {
         
-        self.deepLinkParsers = deepLinkParsers
-        self.loggingEnabled = loggingEnabled
+        self.manifest = manifest
         
         super.init()
     }
      
     func parseDeepLinkAndNotify(incomingDeepLink: IncomingDeepLinkType) -> Bool {
         
-        if loggingEnabled {
-            print("\n DeepLinkingService: parseDeepLink()")
-            print("  incomingDeepLink: \(incomingDeepLink)")
-        }
+        for parserManifest in manifest.parserManifests {
+            
+            switch incomingDeepLink {
+            
+            case .appsFlyer(let data):
+                break
+            
+            case .url(let incomingUrl):
                 
-        for deepLinkParser in deepLinkParsers {
-            if let deepLink = deepLinkParser.parse(incomingDeepLink: incomingDeepLink) {
-                deepLinkObserver.accept(value: deepLink)
-                return true
+                for parserManifestUrl in parserManifest.urls {
+                    
+                    guard parserManifestUrl.matchesIncomingUrl(incomingUrl: incomingUrl) else {
+                        continue
+                    }
+                    
+                    let parser: DeepLinkParserType = parserManifest.parserClass.init()
+                    
+                    guard let deepLink = parser.parse(pathComponents: incomingUrl.pathComponents, queryParameters: incomingUrl.queryParameters) else {
+                        continue
+                    }
+                    
+                    deepLinkObserver.accept(value: deepLink)
+                    return true
+                }
             }
         }
         

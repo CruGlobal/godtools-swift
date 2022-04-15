@@ -14,59 +14,19 @@ class LessonDeepLinkParser: DeepLinkParserType {
         
     }
     
-    func parse(incomingDeepLink: IncomingDeepLinkType) -> ParsedDeepLinkType? {
+    func parse(pathComponents: [String], queryParameters: [String : Any]) -> ParsedDeepLinkType? {
         
-        switch incomingDeepLink {
-        
-        case .appsFlyer(let data):
-            return parseDeepLinkFromAppsFlyer(data: data)
-            
-        case .url(let incomingUrl):
-            return parseDeepLinkFromUrl(incomingUrl: incomingUrl)
-        }
-    }
-    
-    private func parseDeepLinkFromAppsFlyer(data: [AnyHashable: Any]) -> ParsedDeepLinkType? {
-        
-        return nil
-    }
-    
-    private func parseDeepLinkFromUrl(incomingUrl: IncomingDeepLinkUrl) -> ParsedDeepLinkType? {
-        
-        let pathComponents: [String] = incomingUrl.pathComponents
-        
-        guard let rootPath = pathComponents.first, rootPath == DeepLinkPathType.lessons.rawValue else {
+        guard let resourceAbbreviation = pathComponents[safe: 1] else {
             return nil
         }
         
-        let lessonPathComponents: LessonDeepLinkPathComponents = LessonDeepLinkPathComponents(pathComponents: pathComponents)
+        let primaryLanguageCodes: [String]
         
-        let lessonQuery: LessonQueryParameters? = JsonServices().decodeJsonObject(jsonObject: incomingUrl.queryParameters)
-        
-        let lessonAbbreviation: String?
-        
-        if let queryAbbreviation = lessonQuery?.abbreviation {
-            lessonAbbreviation = queryAbbreviation
-        }
-        else if let pathAbbreviation = lessonPathComponents.abbreviation {
-            lessonAbbreviation = pathAbbreviation
+        if let language = pathComponents[safe: 2] {
+            primaryLanguageCodes = [language]
         }
         else {
-            lessonAbbreviation = nil
-        }
-        
-        var primaryLanguageCodes: [String] = Array()
-        
-        if let pathPrimaryLanguage = lessonPathComponents.primaryLanguageCode {
-            primaryLanguageCodes.append(pathPrimaryLanguage)
-        }
-        
-        let queryPrimaryLanguageCodes: [String] = lessonQuery?.getPrimaryLanguageCodes() ?? []
-        
-        primaryLanguageCodes.append(contentsOf: queryPrimaryLanguageCodes)
-        
-        guard let resourceAbbreviation = lessonAbbreviation else {
-            return nil
+            primaryLanguageCodes = Array()
         }
         
         let toolDeepLink = ToolDeepLink(

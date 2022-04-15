@@ -28,6 +28,11 @@ class AppsFlyerDeepLinkValueParser: DeepLinkParserType {
         }
     }
     
+    func parse(pathComponents: [String], queryParameters: [String : Any]) -> ParsedDeepLinkType? {
+        
+        return nil
+    }
+    
     private func parseDeepLinkFromAppsFlyer(data: [AnyHashable: Any]) -> ParsedDeepLinkType? {
          
         guard let deepLinkValue = data["deep_link_value"] as? String else {

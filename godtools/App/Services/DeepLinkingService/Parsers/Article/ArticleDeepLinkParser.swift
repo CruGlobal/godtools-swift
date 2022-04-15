@@ -14,34 +14,16 @@ class ArticleDeepLinkParser: DeepLinkParserType {
         
     }
     
-    func parse(incomingDeepLink: IncomingDeepLinkType) -> ParsedDeepLinkType? {
-        switch incomingDeepLink {
+    func parse(pathComponents: [String], queryParameters: [String : Any]) -> ParsedDeepLinkType? {
         
-        case .url(let incomingUrl):
-            return parseDeepLinkFromUrl(incomingUrl: incomingUrl)
-        default:
+        guard pathComponents[safe: 1] == "aem" else {
             return nil
         }
-    }
-    
-    private func parseDeepLinkFromUrl(incomingUrl: IncomingDeepLinkUrl) -> ParsedDeepLinkType? {
-        // Example url:
-        //  https://godtoolsapp.com/article/aem?uri=https://www.cru.org/content/experience-fragments/shared-library/language-masters/en/how-to-know-god/what-is-christianity/does-god-answer-our-prayers-/godtools
-        
-        let pathComponents: [String] = incomingUrl.pathComponents
-        
-        guard pathComponents.count >= 2, pathComponents[0] == "article", pathComponents[1] == "aem"  else {
-            return nil
-        }
-                
-        let queryParameters: [String: Any] = incomingUrl.queryParameters
-        
-        let articleURIFromURL: String? = queryParameters["uri"] as? String
-        
-        guard let articleURI = articleURIFromURL else {
+                        
+        guard let articleUri = queryParameters["uri"] as? String else {
             return nil
         }
         
-        return .article(articleURI: articleURI)
+        return .article(articleURI: articleUri)
     }
 }
