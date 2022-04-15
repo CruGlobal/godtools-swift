@@ -46,6 +46,16 @@
 				<string>org.cru.godtools.okta</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>org.cru.godtools</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>godtools</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
