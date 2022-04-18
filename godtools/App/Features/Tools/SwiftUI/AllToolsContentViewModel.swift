@@ -21,6 +21,7 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     // MARK: - Published
     
     @Published var tools: [ResourceModel] = []
+    @Published var isLoading: Bool = false
     
     // MARK: - Init
     
@@ -73,6 +74,10 @@ extension AllToolsContentViewModel {
             languageSettingsService: languageSettingsService
         )
     }
+    
+    func refreshTools() {
+        dataDownloader.downloadInitialData()
+    }
 }
 
 // MARK: - Private
@@ -82,33 +87,22 @@ extension AllToolsContentViewModel {
         
         dataDownloader.cachedResourcesAvailable.addObserver(self) { [weak self] (cachedResourcesAvailable: Bool) in
             DispatchQueue.main.async { [weak self] in
-//                self?.isLoading.accept(value: !cachedResourcesAvailable)
+                guard let self = self else { return }
+                
+                self.isLoading = !cachedResourcesAvailable
                 if cachedResourcesAvailable {
-                    self?.reloadResourcesFromCache()
+                    self.reloadResourcesFromCache()
                 }
             }
         }
         
         dataDownloader.resourcesUpdatedFromRemoteDatabase.addObserver(self) { [weak self] (error: InitialDataDownloaderError?) in
             DispatchQueue.main.async { [weak self] in
-//                self?.didEndRefreshing.accept()
                 if error == nil {
                     self?.reloadResourcesFromCache()
                 }
             }
         }
-        
-//        favoritedResourcesCache.resourceFavorited.addObserver(self) { [weak self] (resourceId: String) in
-//            DispatchQueue.main.async { [weak self] in
-//                self?.reloadTool(resourceId: resourceId)
-//            }
-//        }
-//
-//        favoritedResourcesCache.resourceUnfavorited.addObserver(self) { [weak self] (resourceId: String) in
-//            DispatchQueue.main.async { [weak self] in
-//                self?.reloadTool(resourceId: resourceId)
-//            }
-//        }
     }
     
     private func reloadResourcesFromCache() {
@@ -119,6 +113,6 @@ extension AllToolsContentViewModel {
         })
         
         tools = resources
-//        isLoading.accept(value: false)
+        isLoading = false
     }
 }

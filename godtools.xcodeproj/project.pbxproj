@@ -994,6 +994,8 @@
 		D44C693F2805AE910000B970 /* AllToolsContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C693E2805AE910000B970 /* AllToolsContentViewModel.swift */; };
 		D44C69412808F93B0000B970 /* GetLanguageNameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C69402808F93B0000B970 /* GetLanguageNameUseCase.swift */; };
 		D44C69432809B1150000B970 /* LayoutDirection+LanguageDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C69422809B1150000B970 /* LayoutDirection+LanguageDirection.swift */; };
+		D44C69452809B6880000B970 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C69442809B6880000B970 /* ActivityIndicator.swift */; };
+		D47C49D12809EDE20084F4DE /* UIScrollView+PullToRefresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D02809EDE20084F4DE /* UIScrollView+PullToRefresh.swift */; };
 		D49F80F527FCD63A001AE5B3 /* ToolCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F80F427FCD63A001AE5B3 /* ToolCardView.swift */; };
 		D49F80F727FDC610001AE5B3 /* AllToolsContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F80F627FDC610001AE5B3 /* AllToolsContentView.swift */; };
 /* End PBXBuildFile section */
@@ -2059,6 +2061,8 @@
 		D44C693E2805AE910000B970 /* AllToolsContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllToolsContentViewModel.swift; sourceTree = "<group>"; };
 		D44C69402808F93B0000B970 /* GetLanguageNameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLanguageNameUseCase.swift; sourceTree = "<group>"; };
 		D44C69422809B1150000B970 /* LayoutDirection+LanguageDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LayoutDirection+LanguageDirection.swift"; sourceTree = "<group>"; };
+		D44C69442809B6880000B970 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
+		D47C49D02809EDE20084F4DE /* UIScrollView+PullToRefresh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+PullToRefresh.swift"; sourceTree = "<group>"; };
 		D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtoolsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D49F80F427FCD63A001AE5B3 /* ToolCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardView.swift; sourceTree = "<group>"; };
 		D49F80F627FDC610001AE5B3 /* AllToolsContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllToolsContentView.swift; sourceTree = "<group>"; };
@@ -4131,8 +4135,9 @@
 				45D266E8277499AD00960990 /* UIViewController+DismissPresented.swift */,
 				45AD18B525938A4E00A096A0 /* UIViewController+NavBackItem.swift */,
 				45AD18B225938A4E00A096A0 /* UIViewController+NavItem.swift */,
-				D44C693A2804B8050000B970 /* View+CustomModifiers.swift */,
 				D44C69422809B1150000B970 /* LayoutDirection+LanguageDirection.swift */,
+				D47C49D02809EDE20084F4DE /* UIScrollView+PullToRefresh.swift */,
+				D44C693A2804B8050000B970 /* View+CustomModifiers.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -5865,6 +5870,7 @@
 			isa = PBXGroup;
 			children = (
 				D44C69382804B6D40000B970 /* RoundedCorner.swift */,
+				D44C69442809B6880000B970 /* ActivityIndicator.swift */,
 			);
 			path = "SwiftUI Views";
 			sourceTree = "<group>";
@@ -6548,6 +6554,7 @@
 				45558333269F2C7B00C3FF14 /* ToolPageModalsView.swift in Sources */,
 				45AD1FF925938A9800A096A0 /* IsNewUserDefaultsCache.swift in Sources */,
 				45FF25E7260BED6F00D771B6 /* ToolViewModelType.swift in Sources */,
+				D47C49D12809EDE20084F4DE /* UIScrollView+PullToRefresh.swift in Sources */,
 				45AD1B3525938A4F00A096A0 /* ChooseLanguageCell.swift in Sources */,
 				455416832794C9540060D4F1 /* DownloadedToolData.swift in Sources */,
 				450E44552756B6E000D4311E /* MenuItemViewModel.swift in Sources */,
@@ -6642,6 +6649,7 @@
 				453A93F72705FDB80046B4FC /* PrimaryEvaluationOptionState.swift in Sources */,
 				45AD1B2025938A4E00A096A0 /* LearnToShareToolCellViewModel.swift in Sources */,
 				45AD1BDB25938A4F00A096A0 /* ResponseErrorAlertMessage.swift in Sources */,
+				D44C69452809B6880000B970 /* ActivityIndicator.swift in Sources */,
 				45AD1F6825938A9800A096A0 /* LanguageDirectionService.swift in Sources */,
 				45AD1B9F25938A4F00A096A0 /* Attachment.swift in Sources */,
 				45FC475E279313750028F797 /* DetermineDeepLinkedToolTranslationsToDownload.swift in Sources */,

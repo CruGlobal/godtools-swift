@@ -34,23 +34,50 @@ struct AllToolsContentView: View {
     // MARK: - Body
     
     var body: some View {
-        GeometryReader { geo in
-            let width = geo.size.width
-            let leadingTrailingPadding = width * Sizes.toolsPaddingMultiplier
+        if viewModel.isLoading {
             
-            List {
-                // TODO: - These sections will be completed in GT-1265 & GT-1498
-                Text("Spotlight")
-                Text("Categories")
+            ActivityIndicator(style: .medium, isAnimating: .constant(true))
+            
+        } else {
+            
+            GeometryReader { geo in
+                let width = geo.size.width
+                let leadingTrailingPadding = width * Sizes.toolsPaddingMultiplier
                 
-                ForEach(viewModel.tools) { tool in
-                    ToolCardView(viewModel: viewModel.cardViewModel(for: tool), cardWidth: geo.size.width - (2 * leadingTrailingPadding))
+                // TODO: - Pull to refresh is supported only in iOS 15+. Need to figure out how we want to address this.
+                if #available(iOS 15.0, *) {
+                    // TODO: - figure out how to move the List into a separate var/method/etc so we don't have repeated code
+                    List {
+                        // TODO: - Spotlight and Category filter sections will be completed in GT-1265 & GT-1498
+
+                        ForEach(viewModel.tools) { tool in
+                            ToolCardView(viewModel: viewModel.cardViewModel(for: tool), cardWidth: geo.size.width - (2 * leadingTrailingPadding))
+                        }
+                        .listRowInsets(EdgeInsets(top: 0, leading: leadingTrailingPadding, bottom: Sizes.toolsVerticalSpacing, trailing: leadingTrailingPadding))
+                    }
+                    .frame(maxWidth: .infinity)
+                    .edgesIgnoringSafeArea([.leading, .trailing])
+                    .listStyle(.plain)
+                    .padding(.top, 20)
+                    .refreshable {
+                        viewModel.refreshTools()
+                    }
+                    
+                } else {
+                    
+                    List {
+                        // TODO: - Spotlight and Category filter sections will be completed in GT-1265 & GT-1498
+
+                        ForEach(viewModel.tools) { tool in
+                            ToolCardView(viewModel: viewModel.cardViewModel(for: tool), cardWidth: geo.size.width - (2 * leadingTrailingPadding))
+                        }
+                        .listRowInsets(EdgeInsets(top: 0, leading: leadingTrailingPadding, bottom: Sizes.toolsVerticalSpacing, trailing: leadingTrailingPadding))
+                    }
+                    .frame(maxWidth: .infinity)
+                    .edgesIgnoringSafeArea([.leading, .trailing])
+                    .listStyle(.plain)
                 }
-                .listRowInsets(EdgeInsets(top: 0, leading: leadingTrailingPadding, bottom: Sizes.toolsVerticalSpacing, trailing: leadingTrailingPadding))
             }
-            .frame(maxWidth: .infinity)
-            .edgesIgnoringSafeArea([.leading, .trailing])
-            .listStyle(.plain)
         }
     }
 }
