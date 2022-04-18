@@ -20,7 +20,7 @@ class MobileContentCardView: MobileContentStackView {
         
         self.viewModel = viewModel
         
-        super.init(contentInsets: UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8), itemSpacing: 0, scrollIsEnabled: false)
+        super.init(contentInsets: UIEdgeInsets(top: 14, left: 10, bottom: 14, right: 10), itemSpacing: 0, scrollIsEnabled: false)
         
         setupLayout()
         setupBinding()
@@ -32,6 +32,10 @@ class MobileContentCardView: MobileContentStackView {
     
     required init(contentInsets: UIEdgeInsets, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
         fatalError("init(contentInsets:itemSpacing:scrollIsEnabled:) has not been implemented")
+    }
+    
+    override var paddingInsets: UIEdgeInsets {
+        return UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
     }
     
     private func setupLayout() {
