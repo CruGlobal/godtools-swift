@@ -71,15 +71,17 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
         )
     }
     
-    func allToolsWillAppear() -> AllToolsViewModelType {
-
-        return AllToolsViewModel(
-            flowDelegate: getFlowDelegate(),
+    func allToolsWillAppear() -> AllToolsContentViewModel {
+        
+        let reloadAllToolsFromCacheUseCase = ReloadAllToolsFromCacheUseCase(dataDownloader: initialDataDownloader)
+        
+        return AllToolsContentViewModel(
+            reloadAllToolsFromCacheUseCase: reloadAllToolsFromCacheUseCase,
             dataDownloader: initialDataDownloader,
+            deviceAttachmentBanners: deviceAttachmentBanners,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
             favoritedResourcesCache: favoritedResourcesCache,
-            deviceAttachmentBanners: deviceAttachmentBanners,
             favoritingToolMessageCache: favoritingToolMessageCache,
             analytics: analytics
         )

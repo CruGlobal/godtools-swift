@@ -21,6 +21,8 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
     private let favoritedResourcesCache: FavoritedResourcesCache
+    private let favoritingToolMessageCache: FavoritingToolMessageCache
+    private let analytics: AnalyticsContainer
     
     // MARK: - Published
     
@@ -29,13 +31,15 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     
     // MARK: - Init
     
-    init(reloadAllToolsFromCacheUseCase: ReloadAllToolsFromCacheUseCase, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache) {
+    init(reloadAllToolsFromCacheUseCase: ReloadAllToolsFromCacheUseCase, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer) {
         self.reloadAllToolsFromCacheUseCase = reloadAllToolsFromCacheUseCase
         self.dataDownloader = dataDownloader
         self.deviceAttachmentBanners = deviceAttachmentBanners
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
         self.favoritedResourcesCache = favoritedResourcesCache
+        self.favoritingToolMessageCache = favoritingToolMessageCache
+        self.analytics = analytics
         
         super.init()
         
@@ -83,6 +87,14 @@ extension AllToolsContentViewModel {
     func refreshTools() {
         dataDownloader.downloadInitialData()
     }
+    
+    func createFavoritingToolMessageViewModel() -> FavoritingToolMessageViewModelType {
+        
+        return FavoritingToolMessageViewModel(
+            favoritingToolMessageCache: favoritingToolMessageCache,
+            localizationServices: localizationServices
+        )
+    }
 }
 
 // MARK: - Private
@@ -113,5 +125,26 @@ extension AllToolsContentViewModel {
     private func reloadResourcesFromCache() {        
         tools = reloadAllToolsFromCacheUseCase.reload()
         isLoading = false
+    }
+}
+
+// MARK: - Analytics
+
+extension AllToolsContentViewModel {
+    var analyticsScreenName: String {
+        return "All Tools"
+    }
+    
+    private var analyticsSiteSection: String {
+        return "home"
+    }
+    
+    private var analyticsSiteSubSection: String {
+        return ""
+    }
+    
+    func pageViewed() {
+        
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
     }
 }

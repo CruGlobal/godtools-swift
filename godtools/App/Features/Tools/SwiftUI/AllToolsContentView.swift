@@ -96,7 +96,9 @@ struct AllToolsContentView_Previews: PreviewProvider {
             deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
-            favoritedResourcesCache: appDiContainer.favoritedResourcesCache
+            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
+            favoritingToolMessageCache: appDiContainer.favoritingToolMessageCache,
+            analytics: appDiContainer.analytics
         )
         
         AllToolsContentView(viewModel: viewModel)

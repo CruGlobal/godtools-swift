@@ -13,28 +13,21 @@ class AllToolsView: UIViewController {
     
     // MARK: - Properties
     
-    private let viewModel: AllToolsViewModelType
+    private let viewModel: AllToolsContentViewModel
     private let contentView: UIHostingController<AllToolsContentView>
     
     // MARK: - Outlets
     
     @IBOutlet weak private var favoritingToolMessageView: FavoritingToolMessageView!
-    @IBOutlet weak private var toolsView: ToolsTableView!
     @IBOutlet weak private var messageLabel: UILabel!
-    @IBOutlet weak private var loadingView: UIActivityIndicatorView!
     
     @IBOutlet weak private var favoritingToolMessageViewTop: NSLayoutConstraint!
     
     // MARK: - Lifecycle
     
-    required init(viewModel: AllToolsViewModelType) {
+    required init(viewModel: AllToolsContentViewModel) {
         self.viewModel = viewModel
-        
-        let dataDownloader = viewModel.dataDownloader
-        
-        // TODO: - actually pass in the view model
-        let allToolsContentViewModel = AllToolsContentViewModel(reloadAllToolsFromCacheUseCase: ReloadAllToolsFromCacheUseCase(dataDownloader: dataDownloader), dataDownloader: dataDownloader, deviceAttachmentBanners: viewModel.deviceAttachmentBanners, languageSettingsService: viewModel.languageSettingsService, localizationServices: viewModel.localizationServices, favoritedResourcesCache: viewModel.favoritedResourcesCache)
-        contentView = UIHostingController(rootView: AllToolsContentView(viewModel: allToolsContentViewModel))
+        contentView = UIHostingController(rootView: AllToolsContentView(viewModel: viewModel))
         
         super.init(nibName: String(describing: AllToolsView.self), bundle: nil)
     }
@@ -66,9 +59,6 @@ class AllToolsView: UIViewController {
     // MARK: - Private
     
     private func setupLayout() {
-        // TODO: - remove toolsView/test other existing child views to make sure they work on top of SwiftUI
-        toolsView.isHidden = true
-        
         contentView.view.translatesAutoresizingMaskIntoConstraints = false
         contentView.view.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         contentView.view.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
@@ -78,25 +68,22 @@ class AllToolsView: UIViewController {
     
     private func setupBinding() {
         
-        toolsView.configure(viewModel: viewModel)
-        
-        let favoritingToolMessageViewModel = viewModel.favoritingToolMessageWillAppear()
+        // TODO: - Fix favoriting message in followup ticket
+        let favoritingToolMessageViewModel = viewModel.createFavoritingToolMessageViewModel()
         favoritingToolMessageView.configure(viewModel: favoritingToolMessageViewModel)
         
         favoritingToolMessageViewModel.hidesMessage.addObserver(self) { [weak self] (animatableValue: AnimatableValue<Bool>) in
             self?.setFavoritingToolMessageHidden(animatableValue.value, animated: animatableValue.animated)
         }
         
-        viewModel.message.addObserver(self, onObserve: { [weak self] (message: String) in
-            self?.messageLabel.isHidden = message.isEmpty
-            self?.messageLabel.text = message
-        })
-        
-        viewModel.isLoading.addObserver(self) { [weak self] (isLoading: Bool) in
-            isLoading ? self?.loadingView.startAnimating() : self?.loadingView.stopAnimating()
-        }
+        // TODO: - Fix message label in followup ticket
+//        viewModel.message.addObserver(self, onObserve: { [weak self] (message: String) in
+//            self?.messageLabel.isHidden = message.isEmpty
+//            self?.messageLabel.text = message
+//        })
     }
     
+    // TODO: - Fix favoriting message in followup ticket
     private func setFavoritingToolMessageHidden(_ hidden: Bool, animated: Bool) {
                 
         favoritingToolMessageViewTop.constant = hidden ? (favoritingToolMessageView.frame.size.height * -1) : 0
@@ -123,7 +110,7 @@ class AllToolsView: UIViewController {
     // MARK: - Public
     
     func scrollToTopOfToolsList(animated: Bool) {
-        
-        toolsView.scrollToTopOfTools(animated: animated)
+        // TODO: - scroll to top of tools list
+//        toolsView.scrollToTopOfTools(animated: animated)
     }
 }
