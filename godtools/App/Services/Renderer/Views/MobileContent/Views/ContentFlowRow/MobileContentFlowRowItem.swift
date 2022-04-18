@@ -12,11 +12,16 @@ protocol MobileContentFlowRowItem: MobileContentView {
     
     var itemWidth: MobileContentViewWidth { get }
     var widthConstraint: NSLayoutConstraint? { get set }
+    var widthConstraintConstant: CGFloat { get }
     
     func setWidthConstraint(constant: CGFloat)
 }
 
 extension MobileContentFlowRowItem {
+    
+    var widthConstraintConstant: CGFloat {
+        return widthConstraint?.constant ?? 0
+    }
     
     func setWidthConstraint(constant: CGFloat) {
         
