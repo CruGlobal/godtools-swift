@@ -74,7 +74,7 @@ class ChooseYourOwnAdventurePageViewFactory: MobileContentPageViewFactoryType {
                 renderedPageContext: renderedPageContext
             )
             
-            let view = MobileContentFlowView(viewModel: viewModel, itemSpacing: 16)
+            let view = MobileContentFlowView(viewModel: viewModel)
             
             return view
         }
