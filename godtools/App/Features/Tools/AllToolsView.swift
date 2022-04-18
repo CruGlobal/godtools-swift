@@ -30,8 +30,10 @@ class AllToolsView: UIViewController {
     required init(viewModel: AllToolsViewModelType) {
         self.viewModel = viewModel
         
+        let dataDownloader = viewModel.dataDownloader
+        
         // TODO: - actually pass in the view model
-        let allToolsContentViewModel = AllToolsContentViewModel(dataDownloader: viewModel.dataDownloader, deviceAttachmentBanners: viewModel.deviceAttachmentBanners, languageSettingsService: viewModel.languageSettingsService, localizationServices: viewModel.localizationServices, favoritedResourcesCache: viewModel.favoritedResourcesCache)
+        let allToolsContentViewModel = AllToolsContentViewModel(reloadAllToolsFromCacheUseCase: ReloadAllToolsFromCacheUseCase(dataDownloader: dataDownloader), dataDownloader: dataDownloader, deviceAttachmentBanners: viewModel.deviceAttachmentBanners, languageSettingsService: viewModel.languageSettingsService, localizationServices: viewModel.localizationServices, favoritedResourcesCache: viewModel.favoritedResourcesCache)
         contentView = UIHostingController(rootView: AllToolsContentView(viewModel: allToolsContentViewModel))
         
         super.init(nibName: String(describing: AllToolsView.self), bundle: nil)

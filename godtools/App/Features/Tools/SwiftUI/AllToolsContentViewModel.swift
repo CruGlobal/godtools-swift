@@ -12,6 +12,10 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     
     // MARK: - Properties
     
+    // UseCases
+    private let reloadAllToolsFromCacheUseCase: ReloadAllToolsFromCacheUseCase
+    
+    // Services
     private let dataDownloader: InitialDataDownloader
     private let deviceAttachmentBanners: DeviceAttachmentBanners
     private let languageSettingsService: LanguageSettingsService
@@ -25,7 +29,8 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache) {
+    init(reloadAllToolsFromCacheUseCase: ReloadAllToolsFromCacheUseCase, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache) {
+        self.reloadAllToolsFromCacheUseCase = reloadAllToolsFromCacheUseCase
         self.dataDownloader = dataDownloader
         self.deviceAttachmentBanners = deviceAttachmentBanners
         self.languageSettingsService = languageSettingsService
@@ -105,14 +110,8 @@ extension AllToolsContentViewModel {
         }
     }
     
-    private func reloadResourcesFromCache() {
-        let sortedResources: [ResourceModel] = dataDownloader.resourcesCache.getSortedResources()
-        let resources: [ResourceModel] = sortedResources.filter({
-            let resourceType: ResourceType = $0.resourceTypeEnum
-            return (resourceType == .tract || resourceType == .article || resourceType == .chooseYourOwnAdventure) && !$0.isHidden
-        })
-        
-        tools = resources
+    private func reloadResourcesFromCache() {        
+        tools = reloadAllToolsFromCacheUseCase.reload()
         isLoading = false
     }
 }

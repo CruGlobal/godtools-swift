@@ -91,6 +91,7 @@ struct AllToolsContentView_Previews: PreviewProvider {
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
         let viewModel = AllToolsContentViewModel(
+            reloadAllToolsFromCacheUseCase: ReloadAllToolsFromCacheUseCase(dataDownloader: appDiContainer.initialDataDownloader),
             dataDownloader: appDiContainer.initialDataDownloader,
             deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
             languageSettingsService: appDiContainer.languageSettingsService,
