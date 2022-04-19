@@ -45,16 +45,15 @@ struct AllToolsContentView: View {
                 
                 if #available(iOS 15.0, *) {
                     
-                    // TODO: - Pull to refresh is supported only in iOS 15+. Need to figure out how we want to address this.
-                    AllToolsList_iOS14(viewModel: viewModel, width: width)
+                    // Pull to refresh is supported only in iOS 15+
+                    AllToolsListWithScrollToTop(viewModel: viewModel, width: width)
                         .refreshable {
                             viewModel.refreshTools()
                         }
                     
                 } else if #available(iOS 14.0, *) {
                     
-                    // TODO: - Scroll to item is only available in iOS 14+
-                    AllToolsList_iOS14(viewModel: viewModel, width: width)
+                    AllToolsListWithScrollToTop(viewModel: viewModel, width: width)
                     
                 } else {
                     
@@ -62,62 +61,6 @@ struct AllToolsContentView: View {
                 }
             }
         }
-    }
-}
-
-
-// Allows scroll to top -- ScrollViewReader only supported in iOS 14+
-@available(iOS 14.0, *)
-struct AllToolsList_iOS14: View {
-    @ObservedObject var viewModel: AllToolsContentViewModel
-    var width: CGFloat
-    
-    var body: some View {
-        ScrollViewReader { scrollProxy in
-            
-           AllToolsList(viewModel: viewModel, width: width)
-            .padding(.top, 20)
-            .onReceive(viewModel.scrollToTopSignal) { isAnimated in
-                guard let firstToolId = viewModel.tools.first?.id else { return }
-                
-                if isAnimated {
-                    withAnimation {
-                        scrollProxy.scrollTo(firstToolId, anchor: .top)
-                    }
-                } else {
-                    scrollProxy.scrollTo(firstToolId, anchor: .top)
-                }
-            }
-        }
-    }
-}
-
-struct AllToolsList: View {
-    @ObservedObject var viewModel: AllToolsContentViewModel
-    var width: CGFloat
-        
-    private enum Sizes {
-        static let toolsPaddingMultiplier: CGFloat = 20/375
-        static let toolsVerticalSpacing: CGFloat = 15
-    }
-    
-    var body: some View {
-        let leadingTrailingPadding = width * Sizes.toolsPaddingMultiplier
-
-        List {
-            // TODO: - Spotlight and Category filter sections will be completed in GT-1265 & GT-1498
-            
-            ForEach(viewModel.tools) { tool in
-                ToolCardView(viewModel: viewModel.cardViewModel(for: tool), cardWidth: width - (2 * leadingTrailingPadding))
-                    .onTapGesture {
-                        viewModel.toolTapped(resource: tool)
-                    }
-            }
-            .listRowInsets(EdgeInsets(top: 0, leading: leadingTrailingPadding, bottom: Sizes.toolsVerticalSpacing, trailing: leadingTrailingPadding))
-        }
-        .frame(maxWidth: .infinity)
-        .edgesIgnoringSafeArea([.leading, .trailing])
-        .listStyle(.plain)
     }
 }
 
