@@ -7,10 +7,13 @@
 //
 
 import Foundation
+import Combine
 
 class AllToolsContentViewModel: NSObject, ObservableObject {
     
     // MARK: - Properties
+    
+    var scrollToTopSignal = PassthroughSubject<Bool, Never>()
     
     // UseCases
     private let reloadAllToolsFromCacheUseCase: ReloadAllToolsFromCacheUseCase
@@ -94,6 +97,10 @@ extension AllToolsContentViewModel {
             favoritingToolMessageCache: favoritingToolMessageCache,
             localizationServices: localizationServices
         )
+    }
+    
+    func scrollToTop(animated: Bool) {
+        scrollToTopSignal.send(animated)
     }
 }
 

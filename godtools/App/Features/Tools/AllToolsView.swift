@@ -110,7 +110,6 @@ class AllToolsView: UIViewController {
     // MARK: - Public
     
     func scrollToTopOfToolsList(animated: Bool) {
-        // TODO: - scroll to top of tools list
-//        toolsView.scrollToTopOfTools(animated: animated)
+        viewModel.scrollToTop(animated: animated)
     }
 }
