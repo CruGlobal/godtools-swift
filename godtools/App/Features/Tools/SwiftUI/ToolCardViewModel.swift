@@ -15,12 +15,10 @@ class ToolCardViewModel: NSObject, ObservableObject {
     
     private let resourceId: String
     
-    // UseCases
     private let getBannerImageUseCase: GetBannerImageUseCase
     private let getToolDataUseCase: GetToolDataUseCase
     private let getLanguageNameUseCase: GetLanguageNameUseCase
     
-    // Services
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let languageSettingsService: LanguageSettingsService
     
@@ -56,14 +54,20 @@ class ToolCardViewModel: NSObject, ObservableObject {
         languageSettingsService.primaryLanguage.removeObserver(self)
         languageSettingsService.parallelLanguage.removeObserver(self)
     }
-    
-    // MARK: - Public
+}
+ 
+// MARK: - Public
+
+extension ToolCardViewModel {
     
     func favoritedButtonTapped() {
         favoritedResourcesCache.toggleFavorited(resourceId: resourceId)
     }
-    
-    // MARK: - Private
+}
+ 
+// MARK: - Private
+
+extension ToolCardViewModel {
     
     private func setupPublishedProperties() {
         bannerImage = getBannerImageUseCase.getBannerImage()

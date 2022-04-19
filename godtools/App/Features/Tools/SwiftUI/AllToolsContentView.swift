@@ -26,9 +26,10 @@ struct AllToolsContentView: View {
     init(viewModel: AllToolsContentViewModel) {
         self.viewModel = viewModel
         
-        // TODO: - In iOS 14/15, remove this and use appropriate modifiers instead.
+        // TODO: - GT-1528: This doesn't work on iOS 14, and iOS 15 has a modifier that will do it.
         // List is built on UITableView. For iOS 13, modifiers don't yet exist to override certain default styles on List, so we use `appearance` on UITableView instead. This changes the style system-wide, so we'll have to watch out for this causing issues in other areas.
         UITableView.appearance().separatorColor = .clear
+        
     }
     
     // MARK: - Body

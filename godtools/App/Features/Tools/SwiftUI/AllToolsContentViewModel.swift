@@ -15,10 +15,8 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     
     var scrollToTopSignal = PassthroughSubject<Bool, Never>()
     
-    // UseCases
     private let reloadAllToolsFromCacheUseCase: ReloadAllToolsFromCacheUseCase
     
-    // Services
     private weak var flowDelegate: FlowDelegate?
     private let dataDownloader: InitialDataDownloader
     private let deviceAttachmentBanners: DeviceAttachmentBanners
@@ -114,6 +112,7 @@ extension AllToolsContentViewModel {
 // MARK: - Private
 
 extension AllToolsContentViewModel {
+    
     private func setupBinding() {
         
         dataDownloader.cachedResourcesAvailable.addObserver(self) { [weak self] (cachedResourcesAvailable: Bool) in
@@ -145,6 +144,7 @@ extension AllToolsContentViewModel {
 // MARK: - Analytics
 
 extension AllToolsContentViewModel {
+    
     var analyticsScreenName: String {
         return "All Tools"
     }

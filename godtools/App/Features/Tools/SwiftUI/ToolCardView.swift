@@ -20,12 +20,9 @@ struct ToolCardView: View {
     private enum Sizes {
         static let cardAspectRatio: CGFloat = cardWidth/cardHeight
         static let cardHeight: CGFloat = 150
-        static let cardHeightSpotlight: CGFloat = 240
         static let cardWidth: CGFloat = 335
-        static let cardWidthSpotlight: CGFloat = 200
         static let bannerImageAspectRatio: CGFloat = cardWidth/bannerImageHeight
         static let bannerImageHeight: CGFloat = 87
-        static let bannerImageHeightSpotlight: CGFloat = 162
         static let leadingPadding: CGFloat = 15
         static let cornerRadius: CGFloat = 6
     }
