@@ -19,6 +19,7 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     private let reloadAllToolsFromCacheUseCase: ReloadAllToolsFromCacheUseCase
     
     // Services
+    private weak var flowDelegate: FlowDelegate?
     private let dataDownloader: InitialDataDownloader
     private let deviceAttachmentBanners: DeviceAttachmentBanners
     private let languageSettingsService: LanguageSettingsService
@@ -34,7 +35,8 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     
     // MARK: - Init
     
-    init(reloadAllToolsFromCacheUseCase: ReloadAllToolsFromCacheUseCase, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer) {
+    init(flowDelegate: FlowDelegate, reloadAllToolsFromCacheUseCase: ReloadAllToolsFromCacheUseCase, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer) {
+        self.flowDelegate = flowDelegate
         self.reloadAllToolsFromCacheUseCase = reloadAllToolsFromCacheUseCase
         self.dataDownloader = dataDownloader
         self.deviceAttachmentBanners = deviceAttachmentBanners
@@ -102,6 +104,11 @@ extension AllToolsContentViewModel {
     func scrollToTop(animated: Bool) {
         scrollToTopSignal.send(animated)
     }
+    
+    func toolTapped(resource: ResourceModel) {
+        trackToolTappedAnalytics()
+        flowDelegate?.navigate(step: .toolTappedFromAllTools(resource: resource))
+    }
 }
 
 // MARK: - Private
@@ -153,5 +160,9 @@ extension AllToolsContentViewModel {
     func pageViewed() {
         
         analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
+    }
+            
+    private func trackToolTappedAnalytics() {
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.ActionNames.toolOpenTapped, siteSection: "", siteSubSection: "", url: nil, data: [AnalyticsConstants.Keys.toolOpenTapped: 1]))
     }
 }

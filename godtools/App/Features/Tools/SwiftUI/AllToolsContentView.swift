@@ -109,6 +109,9 @@ struct AllToolsList: View {
             
             ForEach(viewModel.tools) { tool in
                 ToolCardView(viewModel: viewModel.cardViewModel(for: tool), cardWidth: width - (2 * leadingTrailingPadding))
+                    .onTapGesture {
+                        viewModel.toolTapped(resource: tool)
+                    }
             }
             .listRowInsets(EdgeInsets(top: 0, leading: leadingTrailingPadding, bottom: Sizes.toolsVerticalSpacing, trailing: leadingTrailingPadding))
         }
@@ -127,6 +130,7 @@ struct AllToolsContentView_Previews: PreviewProvider {
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
         let viewModel = AllToolsContentViewModel(
+            flowDelegate: MockFlowDelegate(),
             reloadAllToolsFromCacheUseCase: ReloadAllToolsFromCacheUseCase(dataDownloader: appDiContainer.initialDataDownloader),
             dataDownloader: appDiContainer.initialDataDownloader,
             deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
