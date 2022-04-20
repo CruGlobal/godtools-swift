@@ -38,11 +38,7 @@ struct ToolCardView: View {
             
             VStack(alignment: .leading, spacing: 12) {
                 ZStack(alignment: .topTrailing) {
-                    viewModel.bannerImage?
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: cardWidth, height: cardWidth / Sizes.bannerImageAspectRatio)
-                        .clipped()
+                    OptionalImage(image: viewModel.bannerImage, width: cardWidth, height: cardWidth / Sizes.bannerImageAspectRatio)
                         .cornerRadius(Sizes.cornerRadius, corners: [.topLeft, .topRight])
                     
                     Image(viewModel.isFavorited ? "favorited_circle" : "unfavorited_circle")
@@ -51,6 +47,7 @@ struct ToolCardView: View {
                             viewModel.favoritedButtonTapped()
                         }
                 }
+                .transition(.opacity)
                 
                 HStack(alignment: .top) {
                     VStack(alignment: .leading, spacing: 3) {
@@ -89,7 +86,7 @@ struct ToolCardView_Previews: PreviewProvider {
         
         let viewModel = ToolCardViewModel(
             resourceId: "abc123",
-            getBannerImageUseCase: MockGetBannerImageUseCase(),
+            getBannerImageUseCase: MockGetBannerImageUseCase(nilImage: true),
             getToolDataUseCase: MockGetToolDataUseCase(languageDirection: .leftToRight),
             getLanguageNameUseCase: MockGetDefaultLanguageNameUseCase(),
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,

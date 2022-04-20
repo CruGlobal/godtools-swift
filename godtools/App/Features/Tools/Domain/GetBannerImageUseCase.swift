@@ -45,11 +45,17 @@ class DefaultGetBannerImageUseCase: GetBannerImageUseCase {
 // MARK: - Mock
 
 class MockGetBannerImageUseCase: GetBannerImageUseCase {
+    
+    var nilImage: Bool = false
+    
     private static let wideBannerImageNames = ["banner1_wide", "banner2_wide", "banner3_wide"]
     private static let bannerImageNames = ["banner1", "banner2", "banner3"]
-
+    
+    init(nilImage: Bool = false) {
+        self.nilImage = nilImage
+    }
     
     func getBannerImage() -> Image? {
-        return Image(MockGetBannerImageUseCase.bannerImageNames.randomElement()!)
+        return nilImage ? nil : Image(MockGetBannerImageUseCase.bannerImageNames.randomElement()!)
     }
 }
