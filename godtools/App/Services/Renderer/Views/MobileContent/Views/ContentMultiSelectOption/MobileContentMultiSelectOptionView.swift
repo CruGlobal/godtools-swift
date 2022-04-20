@@ -19,7 +19,7 @@ class MobileContentMultiSelectOptionView: MobileContentStackView {
         
         self.viewModel = viewModel
         
-        super.init(contentInsets: .zero, itemSpacing: 10, scrollIsEnabled: false)
+        super.init(contentInsets: UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15), itemSpacing: 10, scrollIsEnabled: false)
         
         setupLayout()
         setupBinding()
@@ -38,14 +38,16 @@ class MobileContentMultiSelectOptionView: MobileContentStackView {
     private func setupLayout() {
                         
         layer.cornerRadius = 10
-        
-        drawShadow()
     }
     
     private func setupBinding() {
         
         viewModel.backgroundColor.addObserver(self) { [weak self] (backgroundColor: UIColor) in
             self?.backgroundColor = backgroundColor
+        }
+        
+        if !viewModel.hidesShadow {
+            drawShadow()
         }
     }
     

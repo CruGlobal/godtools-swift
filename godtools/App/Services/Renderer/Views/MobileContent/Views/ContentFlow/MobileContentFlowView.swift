@@ -16,11 +16,11 @@ class MobileContentFlowView: MobileContentStackView {
     private var flowItemRows: [MobileContentFlowRow] = Array()
     private var flowItemViews: [MobileContentFlowItemView] = Array()
     
-    required init(viewModel: MobileContentFlowViewModelType, itemSpacing: CGFloat) {
+    required init(viewModel: MobileContentFlowViewModelType) {
         
         self.viewModel = viewModel
         
-        super.init(contentInsets: .zero, itemSpacing: itemSpacing, scrollIsEnabled: false)
+        super.init(contentInsets: .zero, itemSpacing: 0, scrollIsEnabled: false)
     }
     
     required init?(coder: NSCoder) {
