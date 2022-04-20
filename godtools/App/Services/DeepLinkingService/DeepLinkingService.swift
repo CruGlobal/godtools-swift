@@ -25,12 +25,10 @@ class DeepLinkingService: NSObject, DeepLinkingServiceType {
         
         for parserManifest in manifest.parserManifests {
             
-            guard parserManifest.matchesIncomingDeepLink(incomingDeepLink: incomingDeepLink) else {
+            guard let parser = parserManifest.getParserIfValidIncomingDeepLink(incomingDeepLink: incomingDeepLink) else {
                 continue
             }
-            
-            let parser: DeepLinkParserType = parserManifest.parserClass.init()
-            
+                        
             let parsedDeepLink: ParsedDeepLinkType?
             
             switch incomingDeepLink {

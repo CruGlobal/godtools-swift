@@ -23,28 +23,28 @@ class DeepLinkingParserManifestUrl: DeepLinkingParserManifestType {
         self.parserClass = parserClass
     }
     
-    func matchesIncomingDeepLink(incomingDeepLink: IncomingDeepLinkType) -> Bool {
+    func getParserIfValidIncomingDeepLink(incomingDeepLink: IncomingDeepLinkType) -> DeepLinkParserType? {
         
         switch incomingDeepLink {
         
         case .url(let incomingUrl):
             
             guard scheme == incomingUrl.url.scheme else {
-                return false
+                return nil
             }
             
             guard host == incomingUrl.url.host else {
-                return false
+                return nil
             }
             
             if let rootPathComponent = self.rootPathComponent, rootPathComponent != incomingUrl.rootPath {
-                return false
+                return nil
             }
             
-            return true
+            return parserClass.init()
             
         default:
-            return false
+            return nil
         }
     }
 }

@@ -11,6 +11,6 @@ import Foundation
 protocol DeepLinkingParserManifestType {
     
     var parserClass: DeepLinkParserType.Type { get }
-    
-    func matchesIncomingDeepLink(incomingDeepLink: IncomingDeepLinkType) -> Bool
+        
+    func getParserIfValidIncomingDeepLink(incomingDeepLink: IncomingDeepLinkType) -> DeepLinkParserType?
 }

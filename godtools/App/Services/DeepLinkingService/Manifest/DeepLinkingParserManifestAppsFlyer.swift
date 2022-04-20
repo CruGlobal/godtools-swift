@@ -17,8 +17,8 @@ class DeepLinkingParserManifestAppsFlyer: DeepLinkingParserManifestType {
         self.parserClass = parserClass
     }
     
-    func matchesIncomingDeepLink(incomingDeepLink: IncomingDeepLinkType) -> Bool {
+    func getParserIfValidIncomingDeepLink(incomingDeepLink: IncomingDeepLinkType) -> DeepLinkParserType? {
         
-        return true
+        return parserClass.init()
     }
 }
