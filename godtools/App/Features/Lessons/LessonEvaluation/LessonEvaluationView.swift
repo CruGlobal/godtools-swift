@@ -51,6 +51,8 @@ class LessonEvaluationView: UIView, NibBased {
     
     private func setupLayout() {
         
+        backgroundColor = .white
+        
         yesButton.layer.cornerRadius = buttonCornerRadius
         noButton.layer.cornerRadius = buttonCornerRadius
         sendButton.layer.cornerRadius = buttonCornerRadius
