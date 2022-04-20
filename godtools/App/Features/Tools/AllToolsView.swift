@@ -69,7 +69,7 @@ class AllToolsView: UIViewController {
     
     private func setupBinding() {
         
-        // TODO: - Fix favoriting message in followup ticket
+        // TODO: - GT-1532: make messages work again
         let favoritingToolMessageViewModel = viewModel.createFavoritingToolMessageViewModel()
         favoritingToolMessageView.configure(viewModel: favoritingToolMessageViewModel)
         

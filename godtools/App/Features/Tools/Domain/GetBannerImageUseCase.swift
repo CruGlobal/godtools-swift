@@ -48,8 +48,7 @@ class MockGetBannerImageUseCase: GetBannerImageUseCase {
     
     var nilImage: Bool = false
     
-    private static let wideBannerImageNames = ["banner1_wide", "banner2_wide", "banner3_wide"]
-    private static let bannerImageNames = ["banner1", "banner2", "banner3"]
+    private static let bannerImageNames = ["banner1", "banner2"]
     
     init(nilImage: Bool = false) {
         self.nilImage = nilImage
