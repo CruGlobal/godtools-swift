@@ -10,9 +10,9 @@ import Foundation
 
 class DeepLinkingManifest {
     
-    let parserManifests: [DeepLinkingParserManifest]
+    let parserManifests: [DeepLinkingParserManifestType]
     
-    required init(parserManifests: [DeepLinkingParserManifest]) {
+    required init(parserManifests: [DeepLinkingParserManifestType]) {
         
         self.parserManifests = parserManifests
     }

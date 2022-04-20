@@ -8,7 +8,7 @@
 
 import Foundation
 
-class LessonDeepLinkParser: DeepLinkParserType {
+class LessonDeepLinkParser: DeepLinkUrlParserType {
         
     required init() {
         

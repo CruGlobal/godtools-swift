@@ -8,7 +8,7 @@
 
 import Foundation
 
-class DashboardDeepLinkParser: DeepLinkParserType {
+class DashboardDeepLinkParser: DeepLinkUrlParserType {
     
     required init() {
         

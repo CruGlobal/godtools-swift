@@ -8,22 +8,10 @@
 
 import Foundation
 
-class ToolDeepLinkParser: DeepLinkParserType {
+class ToolDeepLinkParser: DeepLinkUrlParserType {
     
     required init() {
         
-    }
-    
-    func parse(incomingDeepLink: IncomingDeepLinkType) -> ParsedDeepLinkType? {
-                
-        switch incomingDeepLink {
-        
-        case .appsFlyer(let data):
-            return parseDeepLinkFromAppsFlyer(data: data)
-        
-        case .url(let incomingUrl):
-            return nil
-        }
     }
     
     func parse(pathComponents: [String], queryParameters: [String : Any]) -> ParsedDeepLinkType? {
@@ -38,6 +26,23 @@ class ToolDeepLinkParser: DeepLinkParserType {
             
             switch toolPath {
             
+            case .article:
+                pageNumber = nil
+                pageId = nil
+                
+            case .cyoa:
+                pageNumber = nil
+                if let pageIdValue = pathComponents[safe: 4] {
+                    pageId = pageIdValue
+                }
+                else {
+                    pageId = nil
+                }
+                
+            case .lesson:
+                pageNumber = nil
+                pageId = nil
+                
             case .tract:
                 if let pageStringValue = pathComponents[safe: 4], let pageIntValue = Int(pageStringValue) {
                     pageNumber = pageIntValue
@@ -47,19 +52,6 @@ class ToolDeepLinkParser: DeepLinkParserType {
                 }
                 
                 pageId = nil
-            
-            case .lesson:
-                pageNumber = nil
-                pageId = nil
-            
-            case .cyoa:
-                pageNumber = nil
-                if let pageIdValue = pathComponents[safe: 4] {
-                    pageId = pageIdValue
-                }
-                else {
-                    pageId = nil
-                }
             }
             
             return .tool(
@@ -75,40 +67,5 @@ class ToolDeepLinkParser: DeepLinkParserType {
         }
         
         return nil
-    }
-    
-    // TODO: Need to implement. ~Levi
-    private func parseDeepLinkFromAppsFlyer(data: [AnyHashable: Any]) -> ParsedDeepLinkType? {
-        
-        let resourceAbbreviation: String?
-        
-        if let deepLinkValue = data["deep_link_value"] as? String {
-            resourceAbbreviation = deepLinkValue
-        }
-        else if let link = data["link"] as? String,
-                let linkComponents = URLComponents(string: link),
-                let deepLinkValue = linkComponents.queryItems?.first(where: { $0.name == "deep_link_value" })?.value {
-            
-            resourceAbbreviation = deepLinkValue
-        }
-        else {
-            
-            resourceAbbreviation = nil
-        }
-
-        guard let resourceAbbreviation = resourceAbbreviation else {
-            return nil
-        }
-        
-        let toolDeepLink = ToolDeepLink(
-            resourceAbbreviation: resourceAbbreviation,
-            primaryLanguageCodes: [],
-            parallelLanguageCodes: [],
-            liveShareStream: nil,
-            page: nil,
-            pageId: nil
-        )
-        
-        return .tool(toolDeepLink: toolDeepLink)
     }
 }

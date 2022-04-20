@@ -10,7 +10,8 @@ import Foundation
 
 enum ToolDeepLinkToolPath: String {
     
-    case tract = "tract"
-    case lesson = "lesson"
+    case article = "article"
     case cyoa = "cyoa"
+    case lesson = "lesson"
+    case tract = "tract"
 }

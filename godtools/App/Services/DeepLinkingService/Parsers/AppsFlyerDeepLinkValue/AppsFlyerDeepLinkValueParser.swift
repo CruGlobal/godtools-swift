@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AppsFlyerDeepLinkValueParser: DeepLinkParserType {
+class AppsFlyerDeepLinkValueParser: DeepLinkAppsFlyerParserType {
     
     private let appsFlyerComponentsParser: AppsFlyerDeepLinkValueComponentsParser = AppsFlyerDeepLinkValueComponentsParser()
     
@@ -16,25 +16,8 @@ class AppsFlyerDeepLinkValueParser: DeepLinkParserType {
         
     }
     
-    func parse(incomingDeepLink: IncomingDeepLinkType) -> ParsedDeepLinkType? {
-                
-        switch incomingDeepLink {
+    func parse(data: [AnyHashable : Any]) -> ParsedDeepLinkType? {
         
-        case .appsFlyer(let data):
-            return parseDeepLinkFromAppsFlyer(data: data)
-        
-        default:
-            return nil
-        }
-    }
-    
-    func parse(pathComponents: [String], queryParameters: [String : Any]) -> ParsedDeepLinkType? {
-        
-        return nil
-    }
-    
-    private func parseDeepLinkFromAppsFlyer(data: [AnyHashable: Any]) -> ParsedDeepLinkType? {
-         
         guard let deepLinkValue = data["deep_link_value"] as? String else {
             return nil
         }

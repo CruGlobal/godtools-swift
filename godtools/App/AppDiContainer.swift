@@ -197,42 +197,7 @@ class AppDiContainer {
     
     static func getNewDeepLinkingService(loggingEnabled: Bool) -> DeepLinkingServiceType {
         
-        let parserManifests = [
-            DeepLinkingParserManifest(
-                urls: [
-                    DeepLinkingParserManifestUrl(scheme: "godtools", host: "org.cru.godtools", rootPathComponent: "tool")
-                ],
-                parserClass: ToolDeepLinkParser.self
-            ),
-            DeepLinkingParserManifest(
-                urls: [
-                    DeepLinkingParserManifestUrl(scheme: "https", host: "godtoolsapp.com", rootPathComponent: "lessons")
-                ],
-                parserClass: LessonDeepLinkParser.self
-            ),
-            DeepLinkingParserManifest(
-                urls: [
-                    DeepLinkingParserManifestUrl(scheme: "https", host: "godtoolsapp.com", rootPathComponent: "article")
-                ],
-                parserClass: ArticleDeepLinkParser.self
-            ),
-            DeepLinkingParserManifest(
-                urls: [
-                    DeepLinkingParserManifestUrl(scheme: "godtools", host: "org.cru.godtools", rootPathComponent: "dashboard"),
-                    DeepLinkingParserManifestUrl(scheme: "https", host: "knowgod.com", rootPathComponent: "lessons"),
-                    DeepLinkingParserManifestUrl(scheme: "https", host: "godtoolsapp.com", rootPathComponent: "lessons")
-                ],
-                parserClass: DashboardDeepLinkParser.self
-            ),
-            DeepLinkingParserManifest(
-                urls: [
-                    DeepLinkingParserManifestUrl(scheme: "https", host: "knowgod.com", rootPathComponent: nil)
-                ],
-                parserClass: KnowGodTractDeepLinkParser.self
-            )
-        ]
-        
-        let manifest = DeepLinkingManifest(parserManifests: parserManifests)
+        let manifest = GodToolsDeepLinkingManifest()
         
         return DeepLinkingService(manifest: manifest)
         

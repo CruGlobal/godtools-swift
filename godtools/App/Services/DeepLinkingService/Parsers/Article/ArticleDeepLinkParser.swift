@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ArticleDeepLinkParser: DeepLinkParserType {
+class ArticleDeepLinkParser: DeepLinkUrlParserType {
     
     required init() {
         
