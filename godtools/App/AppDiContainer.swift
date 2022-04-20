@@ -200,20 +200,6 @@ class AppDiContainer {
         let manifest = GodToolsDeepLinkingManifest()
         
         return DeepLinkingService(manifest: manifest)
-        
-        /*
-        return DeepLinkingService(
-            deepLinkParsers: [
-                OrgCruGodToolsDeepLinkParser(),
-                AppsFlyerDeepLinkValueParser(),
-                ToolDeepLinkParser(),
-                ToolsDeepLinkParser(),
-                LessonDeepLinkParser(),
-                LessonsDeepLinkParser(),
-                ArticleDeepLinkParser()
-            ],
-            loggingEnabled: loggingEnabled
-        )*/
     }
     
     func getArticleAemRepository() -> ArticleAemRepository {
