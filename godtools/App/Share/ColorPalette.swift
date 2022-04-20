@@ -27,7 +27,7 @@ enum ColorPalette {
     
     var uiColor: UIColor {
         // This initializer that creates a `UIColor` from SwiftUI's `Color` is only available in iOS 14, so for now we'll have duplicate definitions for each color-- one for SwiftUI in the Asset Catalog, and the second one here for UIColor.
-        // TODO: - Once we bump the minimum deployment target to iOS 14, we can remove all the UIColor logic here and define colors in the Asset Catalog only.
+        // TODO: - GT-1533: Once we bump the minimum deployment target to iOS 14, we can remove all the UIColor logic here and define colors in the Asset Catalog only.
         if #available(iOS 14.0, *) {
             return UIColor(color)
             
