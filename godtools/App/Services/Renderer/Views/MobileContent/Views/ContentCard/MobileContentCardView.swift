@@ -20,7 +20,7 @@ class MobileContentCardView: MobileContentStackView {
         
         self.viewModel = viewModel
         
-        super.init(contentInsets: UIEdgeInsets(top: 20, left: 15, bottom: 20, right: 15), itemSpacing: 0, scrollIsEnabled: false)
+        super.init(contentInsets: UIEdgeInsets(top: 14, left: 10, bottom: 14, right: 10), itemSpacing: 0, scrollIsEnabled: false)
         
         setupLayout()
         setupBinding()
@@ -34,6 +34,10 @@ class MobileContentCardView: MobileContentStackView {
         fatalError("init(contentInsets:itemSpacing:scrollIsEnabled:) has not been implemented")
     }
     
+    override var paddingInsets: UIEdgeInsets {
+        return UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+    }
+    
     private func setupLayout() {
         
         backgroundColor = .white
@@ -44,10 +48,6 @@ class MobileContentCardView: MobileContentStackView {
     
     private func setupBinding() {
         
-    }
-    
-    override var paddingInsets: UIEdgeInsets {
-        return UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
     }
     
     override func finishedRenderingChildren() {

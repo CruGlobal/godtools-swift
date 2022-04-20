@@ -12,6 +12,8 @@ import SwiftUI
 
 enum ColorPalette {
     
+    static let bannerColor: UIColor = UIColor(red: 219 / 255, green: 243 / 255, blue: 255 / 255, alpha: 1)
+    
     case gtBlue
     case gtGrey
     case primaryNavBar
