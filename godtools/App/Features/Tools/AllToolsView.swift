@@ -18,6 +18,7 @@ class AllToolsView: UIViewController {
     
     // MARK: - Outlets
     
+    // TODO: - GT-1532: make messages work again
     @IBOutlet weak private var favoritingToolMessageView: FavoritingToolMessageView!
     @IBOutlet weak private var messageLabel: UILabel!
     
@@ -76,14 +77,14 @@ class AllToolsView: UIViewController {
             self?.setFavoritingToolMessageHidden(animatableValue.value, animated: animatableValue.animated)
         }
         
-        // TODO: - Fix message label in followup ticket
+        // TODO: - GT-1532: make messages work again
 //        viewModel.message.addObserver(self, onObserve: { [weak self] (message: String) in
 //            self?.messageLabel.isHidden = message.isEmpty
 //            self?.messageLabel.text = message
 //        })
     }
     
-    // TODO: - Fix favoriting message in followup ticket
+    // TODO: - GT-1532: make messages work again
     private func setFavoritingToolMessageHidden(_ hidden: Bool, animated: Bool) {
                 
         favoritingToolMessageViewTop.constant = hidden ? (favoritingToolMessageView.frame.size.height * -1) : 0
