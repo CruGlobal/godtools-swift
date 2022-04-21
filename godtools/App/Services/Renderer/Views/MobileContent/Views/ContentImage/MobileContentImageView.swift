@@ -47,31 +47,6 @@ class MobileContentImageView: MobileContentView {
         return frame.size.width
     }
     
-    private func addImage(image: UIImage, contentViewWidth: MobileContentViewWidth) {
-        
-        guard imageView == nil else {
-            return
-        }
-        
-        let imageView: UIImageView = UIImageView()
-        
-        self.imageView = imageView
-        
-        imageView.image = image
-        imageView.backgroundColor = .clear
-        imageView.contentMode = .scaleAspectFit
-        
-        addSubview(imageView)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.constrainEdgesToView(view: self)
-                
-        // add image tap gesture
-        let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer()
-        tapGesture.addTarget(self, action: #selector(handleImageTapped))
-        imageView.isUserInteractionEnabled = true
-        imageView.addGestureRecognizer(tapGesture)
-    }
-    
     private func getImageViewSize(image: UIImage, contentViewWidth: MobileContentViewWidth) -> CGSize {
         
         let imageViewWidth: CGFloat
@@ -102,6 +77,52 @@ class MobileContentImageView: MobileContentView {
         return CGSize(width: imageViewWidth, height: imageViewHeight)
     }
     
+    @objc func handleImageTapped() {
+        
+        super.sendEventsToAllViews(eventIds: viewModel.imageEvents, rendererState: viewModel.rendererState)
+    }
+    
+    // MARK: - MobileContentView
+
+    override var heightConstraintType: MobileContentViewHeightConstraintType {
+        return .constrainedToChildren
+    }
+}
+
+// MARK: - Add Image
+
+extension MobileContentImageView {
+    
+    private func addImage(image: UIImage, contentViewWidth: MobileContentViewWidth) {
+        
+        guard imageView == nil else {
+            return
+        }
+        
+        let imageView: UIImageView = UIImageView()
+        
+        self.imageView = imageView
+        
+        imageView.image = image
+        imageView.backgroundColor = .clear
+        imageView.contentMode = .scaleAspectFit
+        
+        addSubview(imageView)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.constrainEdgesToView(view: self)
+                
+        // add image tap gesture
+        let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer()
+        tapGesture.addTarget(self, action: #selector(handleImageTapped))
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(tapGesture)
+    }
+}
+
+// MARK: - Add Empty Space
+
+extension MobileContentImageView {
+    
     private func addEmptySpace() {
         
         guard emptyView == nil else {
@@ -129,17 +150,4 @@ class MobileContentImageView: MobileContentView {
         
         self.emptyView = emptyView
     }
-    
-    @objc func handleImageTapped() {
-        
-        super.sendEventsToAllViews(eventIds: viewModel.imageEvents, rendererState: viewModel.rendererState)
-    }
-    
-    // MARK: - MobileContentView
-
-    override var heightConstraintType: MobileContentViewHeightConstraintType {
-        return .constrainedToChildren
-    }
-    
-    // MARK: -
 }
