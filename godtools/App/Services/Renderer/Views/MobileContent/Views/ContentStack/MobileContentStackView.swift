@@ -11,6 +11,7 @@ import GodToolsToolParser
 
 class MobileContentStackView: MobileContentView {
         
+    private let boundsKeyPath: String = #keyPath(UIView.bounds)
     private let minimumContentInsetToPreventShadowClippingOnScrollableContent: CGFloat = 10
     
     private var scrollView: UIScrollView?
@@ -23,12 +24,16 @@ class MobileContentStackView: MobileContentView {
     private var contentInsetsForNonScrollableContent: UIEdgeInsets = .zero
     private var itemSpacing: CGFloat = 0
     private var scrollIsEnabled: Bool = true
+    private var isObservingBoundsChanges: Bool = false
+    private var lastRenderedParentBounds: CGRect = .zero
             
     required init(contentInsets: UIEdgeInsets, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
                 
         super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: itemSpacing))
         
         configureLayout(contentInsets: contentInsets, itemSpacing: itemSpacing, scrollIsEnabled: scrollIsEnabled)
+        
+        addBoundsChangeObserver()
     }
     
     required init?(coder: NSCoder) {
@@ -36,7 +41,7 @@ class MobileContentStackView: MobileContentView {
     }
     
     deinit {
-
+        removeBoundsChangeObserver()
     }
     
     override func didMoveToSuperview() {
@@ -225,6 +230,56 @@ class MobileContentStackView: MobileContentView {
 
         spacerView.setHeight(height: 0)
         autoSpacerViews.append(spacerView)
+    }
+}
+
+// MARK: - Bounds Change Observing
+
+extension MobileContentStackView {
+    
+    func renderForBoundsChangeIfNeeded() {
+             
+        let currentBounds: CGRect = bounds
+        let boundsChanged: Bool = !currentBounds.equalTo(lastRenderedParentBounds)
+        
+        guard boundsChanged else{
+            return
+        }
+                        
+        lastRenderedParentBounds = currentBounds
+    }
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+            
+        guard let objectValue = object as? NSObject else {
+            return
+        }
+        
+        if objectValue == self && keyPath == boundsKeyPath {
+            renderForBoundsChangeIfNeeded()
+        }
+    }
+    
+    private func removeBoundsChangeObserver() {
+        
+        guard isObservingBoundsChanges else {
+            return
+        }
+        
+        isObservingBoundsChanges = false
+        
+        removeObserver(self, forKeyPath: boundsKeyPath, context: nil)
+    }
+    
+    private func addBoundsChangeObserver() {
+        
+        guard !isObservingBoundsChanges else {
+            return
+        }
+        
+        isObservingBoundsChanges = true
+        
+        addObserver(self, forKeyPath: boundsKeyPath, options: [.new], context: nil)
     }
 }
 
