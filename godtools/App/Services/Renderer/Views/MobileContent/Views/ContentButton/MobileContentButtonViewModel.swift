@@ -39,7 +39,7 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
         buttonWidth = MobileContentViewWidth(dimension: buttonModel.width)
         
         let defaultBackgroundColor: UIColor = buttonModel.buttonColor
-        let defaultTitleColor: UIColor = buttonModel.text?.textColor ?? renderedPageContext.pageModel.primaryTextColor
+        let defaultTitleColor: UIColor = buttonModel.text.textColor
         let defaultBorderColor: UIColor = .clear
                                 
         switch buttonModel.style {
@@ -102,7 +102,7 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     }
     
     private var textScale: Double {
-        return buttonModel.text?.textScale ?? buttonModel.textScale
+        return buttonModel.text.textScale
     }
     
     var font: UIFont {
@@ -116,7 +116,7 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     }
     
     var title: String? {
-        return buttonModel.text?.text
+        return buttonModel.text.text
     }
     
     var borderWidth: CGFloat? {
