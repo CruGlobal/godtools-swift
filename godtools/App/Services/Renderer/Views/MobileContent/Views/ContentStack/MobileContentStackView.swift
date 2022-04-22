@@ -15,7 +15,7 @@ class MobileContentStackView: MobileContentView {
     private let minimumContentInsetToPreventShadowClippingOnScrollableContent: CGFloat = 10
     
     private var scrollView: UIScrollView?
-    private var contentView: UIView = UIView()
+    private var childrenParentView: UIView = UIView()
     private var childViews: [MobileContentView] = Array()
     private var lastAddedChildView: MobileContentView?
     private var lastAddedChildBottomConstraint: NSLayoutConstraint?
@@ -25,15 +25,13 @@ class MobileContentStackView: MobileContentView {
     private var itemSpacing: CGFloat = 0
     private var scrollIsEnabled: Bool = true
     private var isObservingBoundsChanges: Bool = false
-    private var lastRenderedParentBounds: CGRect = .zero
+    private var lastRenderedParentBounds: CGRect?
             
     required init(contentInsets: UIEdgeInsets, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
                 
         super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: itemSpacing))
         
         configureLayout(contentInsets: contentInsets, itemSpacing: itemSpacing, scrollIsEnabled: scrollIsEnabled)
-        
-        addBoundsChangeObserver()
     }
     
     required init?(coder: NSCoder) {
@@ -41,7 +39,7 @@ class MobileContentStackView: MobileContentView {
     }
     
     deinit {
-        removeBoundsChangeObserver()
+        removeBoundsChangeObserverOnChildrenParentView()
     }
     
     override func didMoveToSuperview() {
@@ -101,7 +99,7 @@ class MobileContentStackView: MobileContentView {
     }
     
     var isEmpty: Bool {
-        return contentView.subviews.isEmpty
+        return childrenParentView.subviews.isEmpty
     }
     
     var scrollViewFrame: CGRect? {
@@ -109,7 +107,7 @@ class MobileContentStackView: MobileContentView {
     }
     
     var contentSize: CGSize {
-        return scrollView?.contentSize ?? contentView.frame.size
+        return scrollView?.contentSize ?? childrenParentView.frame.size
     }
     
     func setScrollViewContentSize(size: CGSize) {
@@ -237,16 +235,63 @@ class MobileContentStackView: MobileContentView {
 
 extension MobileContentStackView {
     
-    func renderForBoundsChangeIfNeeded() {
+    private func renderForBoundsChangeIfNeeded() {
              
-        let currentBounds: CGRect = bounds
-        let boundsChanged: Bool = !currentBounds.equalTo(lastRenderedParentBounds)
+        let currentBounds: CGRect = childrenParentView.frame
+        
+        guard currentBounds.width > 0 && currentBounds.height > 0 else {
+            return
+        }
+        
+        let boundsChanged: Bool
+        
+        if let lastRenderedParentBounds = lastRenderedParentBounds {
+            boundsChanged = !currentBounds.equalTo(lastRenderedParentBounds)
+        }
+        else {
+            boundsChanged = true
+        }
         
         guard boundsChanged else{
             return
         }
+        
+        var needsLayoutUpdate: Bool = false
+        
+        for childView in childViews {
+                        
+            switch childView.heightConstraintType {
+            
+            case .lessThanOrEqualToWidthPercentageSizeOfContainer(let widthPercentageSizeOfContainer, let maintainsAspectRatioSize):
+                
+                needsLayoutUpdate = true
+                
+                addWidthAndHeightConstraintsToChildViewWithMaxWidthSizePercentageOfContainer(
+                    childView: childView,
+                    widthPercentageSizeOfContainer: widthPercentageSizeOfContainer,
+                    maintainsAspectRatioSize: maintainsAspectRatioSize
+                )
+            
+            case .lessThanOrEqualToWidthPointSize(let widthPointSize, let maintainsAspectRatioSize):
+                
+                needsLayoutUpdate = true
+                
+                addWidthAndHeightConstraintsToChildViewWithMaxWidthSize(
+                    childView: childView,
+                    maxWidthSize: widthPointSize,
+                    maintainsAspectRatioSize: maintainsAspectRatioSize
+                )
+            
+            default:
+                continue
+            }
+        }
                         
         lastRenderedParentBounds = currentBounds
+        
+        if needsLayoutUpdate {
+            childrenParentView.layoutIfNeeded()
+        }
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -255,12 +300,12 @@ extension MobileContentStackView {
             return
         }
         
-        if objectValue == self && keyPath == boundsKeyPath {
+        if objectValue == childrenParentView && keyPath == boundsKeyPath {
             renderForBoundsChangeIfNeeded()
         }
     }
     
-    private func removeBoundsChangeObserver() {
+    private func removeBoundsChangeObserverOnChildrenParentView() {
         
         guard isObservingBoundsChanges else {
             return
@@ -268,10 +313,10 @@ extension MobileContentStackView {
         
         isObservingBoundsChanges = false
         
-        removeObserver(self, forKeyPath: boundsKeyPath, context: nil)
+        childrenParentView.removeObserver(self, forKeyPath: boundsKeyPath, context: nil)
     }
     
-    private func addBoundsChangeObserver() {
+    private func addBoundsChangeObserverOnChildrenParentView() {
         
         guard !isObservingBoundsChanges else {
             return
@@ -279,7 +324,7 @@ extension MobileContentStackView {
         
         isObservingBoundsChanges = true
         
-        addObserver(self, forKeyPath: boundsKeyPath, options: [.new], context: nil)
+        childrenParentView.addObserver(self, forKeyPath: boundsKeyPath, options: [.new], context: nil)
     }
 }
 
@@ -289,13 +334,15 @@ extension MobileContentStackView {
     
     func configureLayout(contentInsets: UIEdgeInsets?, itemSpacing: CGFloat?, scrollIsEnabled: Bool?) {
         
-        // remove current layout
+        removeBoundsChangeObserverOnChildrenParentView()
+
         scrollView?.removeFromSuperview()
-        contentView.removeFromSuperview()
+        childrenParentView.removeFromSuperview()
         autoSpacerViews.removeAll()
         lastAddedChildView = nil
         lastAddedChildBottomConstraint = nil
         scrollView = nil
+        lastRenderedParentBounds = nil
         
         //
         if let contentInsets = contentInsets {
@@ -314,15 +361,12 @@ extension MobileContentStackView {
         translatesAutoresizingMaskIntoConstraints = false
         
         let contentViewParent: UIView
-        contentView = UIView()
-        contentView.translatesAutoresizingMaskIntoConstraints = false
         
         if self.scrollIsEnabled {
             
             let newScrollView: UIScrollView = UIScrollView()
-            newScrollView.translatesAutoresizingMaskIntoConstraints = false
-            
             addSubview(newScrollView)
+            newScrollView.translatesAutoresizingMaskIntoConstraints = false
             newScrollView.constrainEdgesToView(view: self)
             
             contentViewParent = newScrollView
@@ -334,8 +378,11 @@ extension MobileContentStackView {
             contentViewParent = self
         }
         
-        contentViewParent.addSubview(contentView)
-        contentView.constrainEdgesToView(view: contentViewParent)
+        childrenParentView = UIView()
+        contentViewParent.addSubview(childrenParentView)
+        childrenParentView.translatesAutoresizingMaskIntoConstraints = false
+        childrenParentView.constrainEdgesToView(view: contentViewParent)
+        childrenParentView.backgroundColor = .clear
         
         if let scrollView = self.scrollView {
             
@@ -347,7 +394,7 @@ extension MobileContentStackView {
                 item: scrollView,
                 attribute: .width,
                 relatedBy: .equal,
-                toItem: contentView,
+                toItem: childrenParentView,
                 attribute: .width,
                 multiplier: 1,
                 constant: 0
@@ -356,7 +403,7 @@ extension MobileContentStackView {
             scrollView.addConstraint(equalWidths)
         }
         
-        contentView.backgroundColor = .clear
+        addBoundsChangeObserverOnChildrenParentView()
         
         // build layout if needed
         guard childViews.count > 0 else {
@@ -441,7 +488,7 @@ extension MobileContentStackView {
              
         let childContentView: UIView = childView
                       
-        contentView.addSubview(childContentView)
+        childrenParentView.addSubview(childContentView)
         
         childViews.append(childView)
                 
@@ -463,14 +510,14 @@ extension MobileContentStackView {
         lastAddedChildView = nil
         lastAddedChildBottomConstraint = nil
         
-        let contentViewConstraints: [NSLayoutConstraint] = contentView.constraints
+        let contentViewConstraints: [NSLayoutConstraint] = childrenParentView.constraints
         
         for index in stride(from: contentViewConstraints.count - 1, through: 0, by: -1) {
             
             let constraint: NSLayoutConstraint = contentViewConstraints[index]
             
             if constraint.firstAttribute == .top || constraint.firstAttribute == .bottom {
-                contentView.removeConstraint(constraint)
+                childrenParentView.removeConstraint(constraint)
             }
         }
         
@@ -480,7 +527,7 @@ extension MobileContentStackView {
             }
         }
         
-        contentView.layoutIfNeeded()
+        childrenParentView.layoutIfNeeded()
         
         relayoutForSpacerViews()
     }
@@ -569,6 +616,32 @@ extension MobileContentStackView {
             // Do nothing because view is instrinsic and we use the intrinsic content size.
             break
             
+        case .lessThanOrEqualToWidthPercentageSizeOfContainer(let widthPercentageSizeOfContainer, let maintainsAspectRatioSize):
+            
+            constrainLeadingToSuperviewLeading = false
+            constrainTrailingToSuperviewTrailing = false
+            
+            addWidthAndHeightConstraintsToChildViewWithMaxWidthSizePercentageOfContainer(
+                childView: childView,
+                widthPercentageSizeOfContainer: widthPercentageSizeOfContainer,
+                maintainsAspectRatioSize: maintainsAspectRatioSize
+            )
+            
+            childView.constrainCenterHorizontallyInView(view: childrenParentView)
+            
+        case .lessThanOrEqualToWidthPointSize(let widthPointSize, let maintainsAspectRatioSize):
+            
+            constrainLeadingToSuperviewLeading = false
+            constrainTrailingToSuperviewTrailing = false
+            
+            addWidthAndHeightConstraintsToChildViewWithMaxWidthSize(
+                childView: childView,
+                maxWidthSize: widthPointSize,
+                maintainsAspectRatioSize: maintainsAspectRatioSize
+            )
+            
+            childView.constrainCenterHorizontallyInView(view: childrenParentView)
+            
         case .setToAspectRatioOfProvidedSize(let size):
                    
             constrainLeadingToSuperviewLeading = true
@@ -608,13 +681,13 @@ extension MobileContentStackView {
                 item: childView,
                 attribute: .leading,
                 relatedBy: .equal,
-                toItem: contentView,
+                toItem: childrenParentView,
                 attribute: .leading,
                 multiplier: 1,
                 constant: contentInsets.left + childView.paddingInsets.left
             )
             
-            contentView.addConstraint(leading)
+            childrenParentView.addConstraint(leading)
         }
         
         if constrainTrailingToSuperviewTrailing {
@@ -623,13 +696,13 @@ extension MobileContentStackView {
                 item: childView,
                 attribute: .trailing,
                 relatedBy: .equal,
-                toItem: contentView,
+                toItem: childrenParentView,
                 attribute: .trailing,
                 multiplier: 1,
                 constant: (contentInsets.right * -1) + (childView.paddingInsets.right * -1)
             )
             
-            contentView.addConstraint(trailing)
+            childrenParentView.addConstraint(trailing)
         }
     }
     
@@ -639,17 +712,17 @@ extension MobileContentStackView {
             item: childView,
             attribute: .bottom,
             relatedBy: .equal,
-            toItem: contentView,
+            toItem: childrenParentView,
             attribute: .bottom,
             multiplier: 1,
             constant: (contentInsets.bottom * -1) + (childView.paddingInsets.bottom * -1)
         )
         
         if let lastAddedChildBottomConstraint = self.lastAddedChildBottomConstraint {
-            contentView.removeConstraint(lastAddedChildBottomConstraint)
+            childrenParentView.removeConstraint(lastAddedChildBottomConstraint)
         }
         
-        contentView.addConstraint(bottom)
+        childrenParentView.addConstraint(bottom)
         
         let top: NSLayoutConstraint
         
@@ -671,17 +744,115 @@ extension MobileContentStackView {
                 item: childView,
                 attribute: .top,
                 relatedBy: .equal,
-                toItem: contentView,
+                toItem: childrenParentView,
                 attribute: .top,
                 multiplier: 1,
                 constant: contentInsets.top + childView.paddingInsets.top
             )
         }
         
-        contentView.addConstraint(top)
+        childrenParentView.addConstraint(top)
         
         lastAddedChildView = childView
         lastAddedChildBottomConstraint = bottom
+    }
+    
+    private func addWidthAndHeightConstraintsToChildViewWithMaxWidthSizePercentageOfContainer(childView: MobileContentView, widthPercentageSizeOfContainer: CGFloat, maintainsAspectRatioSize: CGSize?) {
+        
+        let parentWidth: CGFloat = childrenParentView.frame.size.width
+        let widthSize: CGFloat
+        
+        if parentWidth > 0 {
+            widthSize = parentWidth * widthPercentageSizeOfContainer
+        }
+        else {
+            
+            widthSize = 60
+        }
+        
+        addWidthAndHeightConstraintsToChildViewWithMaxWidthSize(childView: childView, maxWidthSize: widthSize, maintainsAspectRatioSize: maintainsAspectRatioSize)
+    }
+    
+    private func addWidthAndHeightConstraintsToChildViewWithMaxWidthSize(childView: MobileContentView, maxWidthSize: CGFloat, maintainsAspectRatioSize: CGSize?) {
+        
+        let size: CGSize = calculateSizeFromWidth(width: maxWidthSize, maintainsAspectRatioSize: maintainsAspectRatioSize)
+        let clampedSize: CGSize = clampSizeToChildrenParentSizeAndInsets(size: size)
+        
+        var widthConstraint: NSLayoutConstraint?
+        var heightConstraint: NSLayoutConstraint?
+        
+        for constraint in childView.constraints {
+            
+            if constraint.firstAttribute == .width {
+                widthConstraint = constraint
+            }
+            else if constraint.firstAttribute == .height {
+                heightConstraint = constraint
+            }
+            
+            if widthConstraint != nil && heightConstraint != nil {
+                break
+            }
+        }
+        
+        if let widthConstraint = widthConstraint {
+            widthConstraint.constant = clampedSize.width
+        }
+        else {
+            _ = childView.addWidthConstraint(constant: clampedSize.width, priority: 1000)
+        }
+        
+        if let heightConstraint = heightConstraint {
+            heightConstraint.constant = clampedSize.height
+        }
+        else {
+            _ = childView.addHeightConstraint(constant: clampedSize.height, priority: 1000)
+        }
+    }
+    
+    private func calculateSizeFromWidth(width: CGFloat, maintainsAspectRatioSize: CGSize?) -> CGSize {
+        
+        guard let aspectRatioSize = maintainsAspectRatioSize else {
+            return CGSize(width: width, height: width)
+        }
+        
+        let height: CGFloat
+        
+        if aspectRatioSize.width > 0 && aspectRatioSize.height > 0 {
+            
+            height = (width / aspectRatioSize.width) * aspectRatioSize.height
+        }
+        else {
+            
+            height = width
+        }
+        
+        return CGSize(width: width, height: height)
+    }
+    
+    private func clampSizeToChildrenParentSizeAndInsets(size: CGSize) -> CGSize {
+        
+        let parentWidth: CGFloat = childrenParentView.frame.size.width
+        let parentWidthMinusContentInsets: CGFloat = parentWidth - (contentInsets.left + contentInsets.right)
+        
+        let pointsToTrim: CGFloat
+        
+        if size.width > parentWidthMinusContentInsets && parentWidthMinusContentInsets > 0 {
+            pointsToTrim = size.width - parentWidthMinusContentInsets
+        }
+        else if size.width > parentWidth && parentWidth > 0 {
+            pointsToTrim = size.width - parentWidth
+        }
+        else {
+            pointsToTrim = 0
+        }
+        
+        let clampedSize: CGSize = CGSize(
+            width: floor(size.width - pointsToTrim),
+            height: floor(size.height - pointsToTrim)
+        )
+                
+        return clampedSize
     }
 }
 

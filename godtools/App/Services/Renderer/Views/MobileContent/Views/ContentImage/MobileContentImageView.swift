@@ -85,7 +85,23 @@ class MobileContentImageView: MobileContentView {
     // MARK: - MobileContentView
 
     override var heightConstraintType: MobileContentViewHeightConstraintType {
-        return .constrainedToChildren
+        
+        guard emptyView == nil else {
+            return .constrainedToChildren
+        }
+        
+        guard let imageSize = viewModel.image?.size else {
+            return .constrainedToChildren
+        }
+        
+        switch viewModel.imageWidth {
+        
+        case .percentageOfContainer(let value):
+            return .lessThanOrEqualToWidthPercentageSizeOfContainer(widthPercentageSizeOfContainer: value, maintainsAspectRatioSize: imageSize)
+        
+        case .points(let value):
+            return .lessThanOrEqualToWidthPointSize(widthPointSize: value, maintainsAspectRatioSize: imageSize)
+        }
     }
 }
 
