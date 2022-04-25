@@ -10,15 +10,23 @@ import SwiftUI
 
 class MockGetBannerImageUseCase: GetBannerImageUseCase {
     
+    private let deviceAttachmentBanners: DeviceAttachmentBanners
     var nilImage: Bool = false
-    
-    private static let bannerImageNames = ["banner1", "banner2"]
-    
-    init(nilImage: Bool = false) {
+        
+    init(deviceAttachmentBanners: DeviceAttachmentBanners, nilImage: Bool = false) {
+        self.deviceAttachmentBanners = deviceAttachmentBanners
         self.nilImage = nilImage
     }
     
     func getBannerImage() -> Image? {
-        return nilImage ? nil : Image(MockGetBannerImageUseCase.bannerImageNames.randomElement()!)
+        if nilImage {
+            return nil
+        }
+        else if let deviceImage = deviceAttachmentBanners.getDeviceBanner(resourceId: "1") {
+            return Image(uiImage: deviceImage)
+        }
+        else {
+            return nil
+        }
     }
 }

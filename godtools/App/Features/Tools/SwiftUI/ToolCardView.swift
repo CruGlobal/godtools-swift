@@ -82,11 +82,12 @@ struct ToolCardView: View {
 struct ToolCardView_Previews: PreviewProvider {
     static var previews: some View {
         
+        let imageIsNil = false
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
         let viewModel = ToolCardViewModel(
             resourceId: "abc123",
-            getBannerImageUseCase: MockGetBannerImageUseCase(nilImage: true),
+            getBannerImageUseCase: MockGetBannerImageUseCase(deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners, nilImage: imageIsNil),
             getToolDataUseCase: MockGetToolDataUseCase(languageDirection: .leftToRight),
             getLanguageNameUseCase: MockGetLanguageNameUseCase(),
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
