@@ -6,7 +6,7 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherType {
     
