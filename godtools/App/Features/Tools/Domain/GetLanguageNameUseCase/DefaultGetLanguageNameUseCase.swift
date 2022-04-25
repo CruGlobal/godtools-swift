@@ -1,18 +1,12 @@
 //
-//  GetLanguageNameUseCase.swift
+//  DefaultGetLanguageNameUseCase.swift
 //  godtools
 //
-//  Created by Rachael Skeath on 4/14/22.
+//  Created by Rachael Skeath on 4/25/22.
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
 import Foundation
-
-protocol GetLanguageNameUseCase {
-    func getLanguageName(language: LanguageModel?) -> String
-}
-
-// MARK: - Default
 
 class DefaultGetLanguageNameUseCase: GetLanguageNameUseCase {
     
@@ -36,13 +30,5 @@ class DefaultGetLanguageNameUseCase: GetLanguageNameUseCase {
             }
         }
         return ""
-    }
-}
-
-// MARK: - Mock
-
-class MockGetDefaultLanguageNameUseCase: GetLanguageNameUseCase {
-    func getLanguageName(language: LanguageModel?) -> String {
-        return "French ✓"
     }
 }

@@ -12,7 +12,3 @@ protocol FlowDelegate: AnyObject {
     
     func navigate(step: FlowStep)
 }
-
-class MockFlowDelegate: FlowDelegate {
-    func navigate(step: FlowStep) { }
-}

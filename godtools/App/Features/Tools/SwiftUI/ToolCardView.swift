@@ -88,7 +88,7 @@ struct ToolCardView_Previews: PreviewProvider {
             resourceId: "abc123",
             getBannerImageUseCase: MockGetBannerImageUseCase(nilImage: true),
             getToolDataUseCase: MockGetToolDataUseCase(languageDirection: .leftToRight),
-            getLanguageNameUseCase: MockGetDefaultLanguageNameUseCase(),
+            getLanguageNameUseCase: MockGetLanguageNameUseCase(),
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             languageSettingsService: appDiContainer.languageSettingsService
         )
