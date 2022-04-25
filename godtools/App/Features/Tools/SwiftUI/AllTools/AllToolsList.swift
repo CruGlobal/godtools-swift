@@ -8,38 +8,6 @@
 
 import SwiftUI
 
-// MARK: - AllToolsListWithScrollToTop
-
-// ScrollViewReader only supported on iOS 14+
-@available(iOS 14.0, *)
-struct AllToolsListWithScrollToTop: View {
-    
-    // MARK: - Properties
-    
-    @ObservedObject var viewModel: AllToolsContentViewModel
-    var width: CGFloat
-    
-    // MARK: - Body
-    
-    var body: some View {
-        ScrollViewReader { scrollProxy in
-            
-           AllToolsList(viewModel: viewModel, width: width)
-            .onReceive(viewModel.scrollToTopSignal) { isAnimated in
-                guard let firstToolId = viewModel.tools.first?.id else { return }
-                
-                if isAnimated {
-                    withAnimation {
-                        scrollProxy.scrollTo(firstToolId, anchor: .top)
-                    }
-                } else {
-                    scrollProxy.scrollTo(firstToolId, anchor: .top)
-                }
-            }
-        }
-    }
-}
-
 // MARK: - AllToolsList
 
 struct AllToolsList: View {
