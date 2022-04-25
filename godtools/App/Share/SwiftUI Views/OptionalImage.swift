@@ -9,9 +9,9 @@
 import SwiftUI
 
 struct OptionalImage: View {
-    var image: Image?
-    var width: CGFloat
-    var height: CGFloat
+    let image: Image?
+    let width: CGFloat
+    let height: CGFloat
     var placeholderColor: Color = .white
     
     var body: some View {
