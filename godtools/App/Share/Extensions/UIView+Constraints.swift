@@ -108,12 +108,12 @@ extension UIView {
         view.addConstraint(centerVertically)
     }
     
-    func addWidthConstraint(constant: CGFloat, priority: CGFloat = 1000) -> NSLayoutConstraint {
+    func addWidthConstraint(constant: CGFloat, relatedBy: NSLayoutConstraint.Relation = .equal, priority: CGFloat = 1000) -> NSLayoutConstraint {
         
         let widthConstraint: NSLayoutConstraint = NSLayoutConstraint(
             item: self,
             attribute: .width,
-            relatedBy: .equal,
+            relatedBy: relatedBy,
             toItem: nil,
             attribute: .notAnAttribute,
             multiplier: 1,
