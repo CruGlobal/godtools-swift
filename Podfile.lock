@@ -5,110 +5,12 @@ PODS:
   - FBSDKCoreKit/Basics (8.2.0)
   - FBSDKCoreKit/Core (8.2.0):
     - FBSDKCoreKit/Basics
-  - FirebaseABTesting (7.11.0):
-    - FirebaseCore (~> 7.0)
-  - FirebaseAnalytics (7.11.0):
-    - FirebaseAnalytics/AdIdSupport (= 7.11.0)
-    - FirebaseCore (~> 7.0)
-    - FirebaseInstallations (~> 7.0)
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
-    - GoogleUtilities/MethodSwizzler (~> 7.0)
-    - GoogleUtilities/Network (~> 7.0)
-    - "GoogleUtilities/NSData+zlib (~> 7.0)"
-    - nanopb (~> 2.30908.0)
-  - FirebaseAnalytics/AdIdSupport (7.11.0):
-    - FirebaseAnalytics/Base (= 7.11.0)
-    - FirebaseCore (~> 7.0)
-    - FirebaseInstallations (~> 7.0)
-    - GoogleAppMeasurement/AdIdSupport (= 7.11.0)
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
-    - GoogleUtilities/MethodSwizzler (~> 7.0)
-    - GoogleUtilities/Network (~> 7.0)
-    - "GoogleUtilities/NSData+zlib (~> 7.0)"
-    - nanopb (~> 2.30908.0)
-  - FirebaseAnalytics/Base (7.11.0):
-    - FirebaseCore (~> 7.0)
-    - FirebaseInstallations (~> 7.0)
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
-    - GoogleUtilities/MethodSwizzler (~> 7.0)
-    - GoogleUtilities/Network (~> 7.0)
-    - "GoogleUtilities/NSData+zlib (~> 7.0)"
-    - nanopb (~> 2.30908.0)
-  - FirebaseCore (7.11.0):
-    - FirebaseCoreDiagnostics (~> 7.4)
-    - GoogleUtilities/Environment (~> 7.0)
-    - GoogleUtilities/Logger (~> 7.0)
-  - FirebaseCoreDiagnostics (7.11.0):
-    - GoogleDataTransport (~> 8.4)
-    - GoogleUtilities/Environment (~> 7.0)
-    - GoogleUtilities/Logger (~> 7.0)
-    - nanopb (~> 2.30908.0)
-  - FirebaseCrashlytics (7.11.0):
-    - FirebaseCore (~> 7.0)
-    - FirebaseInstallations (~> 7.0)
-    - GoogleDataTransport (~> 8.4)
-    - nanopb (~> 2.30908.0)
-    - PromisesObjC (~> 1.2)
-  - FirebaseInAppMessaging (7.11.0-beta):
-    - FirebaseABTesting (~> 7.0)
-    - FirebaseCore (~> 7.0)
-    - FirebaseInstallations (~> 7.0)
-    - GoogleUtilities/Environment (~> 7.0)
-    - nanopb (~> 2.30908.0)
-  - FirebaseInstallations (7.11.0):
-    - FirebaseCore (~> 7.0)
-    - GoogleUtilities/Environment (~> 7.0)
-    - GoogleUtilities/UserDefaults (~> 7.0)
-    - PromisesObjC (~> 1.2)
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
   - Fuzi (3.1.3)
   - GodtoolsToolParser (0.5.0)
-  - GoogleAnalytics (3.20.0)
-  - GoogleAppMeasurement/AdIdSupport (7.11.0):
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
-    - GoogleUtilities/MethodSwizzler (~> 7.0)
-    - GoogleUtilities/Network (~> 7.0)
-    - "GoogleUtilities/NSData+zlib (~> 7.0)"
-    - nanopb (~> 2.30908.0)
   - GoogleConversionTracking (3.4.0)
-  - GoogleDataTransport (8.4.0):
-    - GoogleUtilities/Environment (~> 7.2)
-    - nanopb (~> 2.30908.0)
-    - PromisesObjC (~> 1.2)
-  - GoogleSymbolUtilities (1.1.2)
-  - GoogleTagManager (7.2.0):
-    - FirebaseAnalytics (~> 7.0)
-    - GoogleAnalytics (~> 3.17)
-    - GoogleUtilitiesLegacy (~> 1.3)
-  - GoogleUtilities/AppDelegateSwizzler (7.7.0):
-    - GoogleUtilities/Environment
-    - GoogleUtilities/Logger
-    - GoogleUtilities/Network
-  - GoogleUtilities/Environment (7.7.0):
-    - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/Logger (7.7.0):
-    - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (7.7.0):
-    - GoogleUtilities/Logger
-  - GoogleUtilities/Network (7.7.0):
-    - GoogleUtilities/Logger
-    - "GoogleUtilities/NSData+zlib"
-    - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (7.7.0)"
-  - GoogleUtilities/Reachability (7.7.0):
-    - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (7.7.0):
-    - GoogleUtilities/Logger
-  - GoogleUtilitiesLegacy (1.3.2):
-    - GoogleSymbolUtilities (~> 1.1)
-  - nanopb (2.30908.0):
-    - nanopb/decode (= 2.30908.0)
-    - nanopb/encode (= 2.30908.0)
-  - nanopb/decode (2.30908.0)
-  - nanopb/encode (2.30908.0)
-  - PromisesObjC (1.2.12)
   - SnowplowTracker (1.7.1):
     - FMDB (~> 2.6)
   - SSZipArchive (2.4.2)
@@ -119,14 +21,9 @@ PODS:
 
 DEPENDENCIES:
   - FBSDKCoreKit (~> 8.2.0)
-  - FirebaseAnalytics (= 7.11.0)
-  - FirebaseCore (= 7.11.0)
-  - FirebaseCrashlytics (= 7.11.0)
-  - FirebaseInAppMessaging (= 7.11.0-beta)
   - Fuzi (~> 3.1.1)
   - GodtoolsToolParser (= 0.5.0)
   - GoogleConversionTracking (~> 3.4.0)
-  - GoogleTagManager (~> 7.2.0)
   - SnowplowTracker (~> 1.3)
   - SSZipArchive (~> 2.4.0)
   - Starscream (~> 4.0.0)
@@ -139,25 +36,9 @@ SPEC REPOS:
     - GodtoolsToolParser
   trunk:
     - FBSDKCoreKit
-    - FirebaseABTesting
-    - FirebaseAnalytics
-    - FirebaseCore
-    - FirebaseCoreDiagnostics
-    - FirebaseCrashlytics
-    - FirebaseInAppMessaging
-    - FirebaseInstallations
     - FMDB
     - Fuzi
-    - GoogleAnalytics
-    - GoogleAppMeasurement
     - GoogleConversionTracking
-    - GoogleDataTransport
-    - GoogleSymbolUtilities
-    - GoogleTagManager
-    - GoogleUtilities
-    - GoogleUtilitiesLegacy
-    - nanopb
-    - PromisesObjC
     - SnowplowTracker
     - SSZipArchive
     - Starscream
@@ -167,26 +48,10 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   FBSDKCoreKit: 4afd6ff53d8133a433dbcda44451c9498f8c6ce4
-  FirebaseABTesting: e66f1f80747792630d9b292966de206d5df9853b
-  FirebaseAnalytics: cd3bd84d722a24a8923918af8af8e5236f615d77
-  FirebaseCore: 907447d8917a4d3eb0cce2829c5a0ad21d90b432
-  FirebaseCoreDiagnostics: 68ad972f99206cef818230f3f3179d52ccfb7f8c
-  FirebaseCrashlytics: 272b675aa9d1e9bae1f9e1449fcc1f2cf6042806
-  FirebaseInAppMessaging: 03f39409c6f5ce5fb2d0db9cc99e043c0a538ba0
-  FirebaseInstallations: a58d4f72ec5861840b84df489f2668d970df558a
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   Fuzi: 4c10d6449c0b49a85cd75b13844c559c0fc71220
   GodtoolsToolParser: 6127dd51cb6e80adcde331e179cab8269d1719d3
-  GoogleAnalytics: 01e4c5a04544a3608f93e970ce0817836897c5a5
-  GoogleAppMeasurement: fd19169c3034975cb934e865e5667bfdce59df7f
   GoogleConversionTracking: ca8c89abda2bd28bb6472b316eeb4ece9264e279
-  GoogleDataTransport: cd9db2180fcecd8da1b561aea31e3e56cf834aa7
-  GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
-  GoogleTagManager: 9d8981519a985e37d5d86e46b9a58d404094a814
-  GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
-  GoogleUtilitiesLegacy: 5501bedec1646bd284286eb5fc9453f7e23a12f4
-  nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
-  PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   SnowplowTracker: c393b26c456142ad5a78f4e4d771c71cb194f06c
   SSZipArchive: e7b4f3d9e780c2acc1764cd88fbf2de28f26e5b2
   Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
@@ -194,6 +59,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   youtube-ios-player-helper: e9b97535e816db3152179d84d999bc1807ecd689
 
-PODFILE CHECKSUM: 4d5025ca4ffc2571d396b7c3382103e77c64b834
+PODFILE CHECKSUM: 111f3506432393d61e9c4638c7fca5fc8162e35c
 
 COCOAPODS: 1.11.2
