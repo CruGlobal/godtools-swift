@@ -43,40 +43,6 @@ class MobileContentImageView: MobileContentView {
         }
     }
     
-    private var containerWidth: CGFloat {
-        return frame.size.width
-    }
-    
-    private func getImageViewSize(image: UIImage, contentViewWidth: MobileContentViewWidth) -> CGSize {
-        
-        let imageViewWidth: CGFloat
-        let imageViewHeight: CGFloat
-        
-        switch contentViewWidth {
-        
-        case .percentageOfContainer(let widthPercentageOfContainer):
-            
-            imageViewWidth = containerWidth * widthPercentageOfContainer
-        
-        case .points(let widthPoints):
-            
-            imageViewWidth = widthPoints
-        }
-        
-        let imageSize: CGSize = image.size
-        
-        if imageSize.width > 0 && imageSize.height > 0 {
-            
-            imageViewHeight = (imageViewWidth / imageSize.width) * imageSize.height
-        }
-        else {
-            
-            imageViewHeight = imageViewWidth
-        }
-        
-        return CGSize(width: imageViewWidth, height: imageViewHeight)
-    }
-    
     @objc func handleImageTapped() {
         
         super.sendEventsToAllViews(eventIds: viewModel.imageEvents, rendererState: viewModel.rendererState)
