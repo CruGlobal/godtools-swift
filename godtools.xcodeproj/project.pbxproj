@@ -3546,7 +3546,6 @@
 		45AD176A25938A4D00A096A0 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
-				D44C69342804A65F0000B970 /* Domain */,
 				45AD176B25938A4D00A096A0 /* AllToolsView.swift */,
 				45AD176C25938A4D00A096A0 /* AllToolsView.xib */,
 				45AD178E25938A4D00A096A0 /* AllToolsViewModel.swift */,
@@ -3562,8 +3561,9 @@
 				45AD177E25938A4D00A096A0 /* ToolsTableView.swift */,
 				45AD176D25938A4D00A096A0 /* ToolsTableView.xib */,
 				45AD178F25938A4D00A096A0 /* ToolsViewModelType.swift */,
-				D44C692F280478FC0000B970 /* SwiftUI */,
+				D44C69342804A65F0000B970 /* Domain */,
 				45AD177525938A4D00A096A0 /* Models */,
+				D44C692F280478FC0000B970 /* SwiftUI */,
 				45AD177F25938A4D00A096A0 /* Views */,
 			);
 			path = Tools;
@@ -4093,9 +4093,9 @@
 				45AD18B025938A4E00A096A0 /* Extensions */,
 				45AD18A125938A4E00A096A0 /* NavControllers */,
 				45AD18D725938A4E00A096A0 /* Protocols */,
+				D44C69372804B6AF0000B970 /* SwiftUI Views */,
 				45AD189B25938A4E00A096A0 /* ViewModels */,
 				45AD18BD25938A4E00A096A0 /* Views */,
-				D44C69372804B6AF0000B970 /* SwiftUI Views */,
 			);
 			path = Share;
 			sourceTree = "<group>";
@@ -4122,6 +4122,7 @@
 			children = (
 				D115B25C27C0318100C18EF6 /* Collection+SafeLookup.swift */,
 				45B116C12625FC6D007A7127 /* LanguageDirection+SemanticContentAttribute.swift */,
+				D44C69422809B1150000B970 /* LayoutDirection+LanguageDirection.swift */,
 				45AD18BB25938A4E00A096A0 /* Locale+Extensions.swift */,
 				457E199D27C6EA4C00BABD49 /* NSError+Error.swift */,
 				D182CA2627274B1F00ABAAC8 /* UIButton+SetInsets.swift */,
@@ -4139,7 +4140,6 @@
 				45D266E8277499AD00960990 /* UIViewController+DismissPresented.swift */,
 				45AD18B525938A4E00A096A0 /* UIViewController+NavBackItem.swift */,
 				45AD18B225938A4E00A096A0 /* UIViewController+NavItem.swift */,
-				D44C69422809B1150000B970 /* LayoutDirection+LanguageDirection.swift */,
 				D44C693A2804B8050000B970 /* View+CustomModifiers.swift */,
 			);
 			path = Extensions;
@@ -5852,10 +5852,10 @@
 			isa = PBXGroup;
 			children = (
 				D49F80F627FDC610001AE5B3 /* AllToolsContentView.swift */,
+				D44C693E2805AE910000B970 /* AllToolsContentViewModel.swift */,
 				D47C49D7280EF0B10084F4DE /* AllToolsList.swift */,
 				D49F80F427FCD63A001AE5B3 /* ToolCardView.swift */,
 				D44C6932280479720000B970 /* ToolCardViewModel.swift */,
-				D44C693E2805AE910000B970 /* AllToolsContentViewModel.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -5864,8 +5864,8 @@
 			isa = PBXGroup;
 			children = (
 				D44C69352804A6730000B970 /* GetBannerImageUseCase.swift */,
-				D44C693C2804BE9D0000B970 /* GetToolDataUseCase.swift */,
 				D44C69402808F93B0000B970 /* GetLanguageNameUseCase.swift */,
+				D44C693C2804BE9D0000B970 /* GetToolDataUseCase.swift */,
 				D47C49D5280DAD4A0084F4DE /* ReloadAllToolsFromCacheUseCase.swift */,
 			);
 			path = Domain;
@@ -5874,9 +5874,9 @@
 		D44C69372804B6AF0000B970 /* SwiftUI Views */ = {
 			isa = PBXGroup;
 			children = (
-				D44C69382804B6D40000B970 /* RoundedCorner.swift */,
 				D44C69442809B6880000B970 /* ActivityIndicator.swift */,
 				D47C49D928104E0B0084F4DE /* OptionalImage.swift */,
+				D44C69382804B6D40000B970 /* RoundedCorner.swift */,
 			);
 			path = "SwiftUI Views";
 			sourceTree = "<group>";
