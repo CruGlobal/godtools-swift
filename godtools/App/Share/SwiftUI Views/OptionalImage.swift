@@ -12,6 +12,7 @@ struct OptionalImage: View {
     var image: Image?
     var width: CGFloat
     var height: CGFloat
+    var placeholderColor: Color = .white
     
     var body: some View {
         if let image = image {
@@ -23,7 +24,7 @@ struct OptionalImage: View {
             
         } else {
             Rectangle()
-                .fill(.white)
+                .fill(placeholderColor)
                 .frame(width: width, height: height)
         }
     }
@@ -34,7 +35,7 @@ struct OptionalImage_Previews: PreviewProvider {
         ZStack {
             Rectangle()
                 .fill(.pink)
-            OptionalImage(image: nil, width: 300, height: 150)
+            OptionalImage(image: nil, width: 300, height: 150, placeholderColor: .blue)
         }
     }
 }
