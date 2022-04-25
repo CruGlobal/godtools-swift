@@ -8,7 +8,6 @@
 
 import SwiftUI
 
-/// For use in the custom .cornerRadius modifier
 struct RoundedCorner: Shape {
 
     var radius: CGFloat = .infinity
