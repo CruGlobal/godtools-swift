@@ -9,4 +9,6 @@
 #ifndef godtools_Bridging_Header_h
 #define godtools_Bridging_Header_h
 
+#import <GoogleConversionTracking/ACTReporter.h>
+
 #endif /* godtools_Bridging_Header_h */
