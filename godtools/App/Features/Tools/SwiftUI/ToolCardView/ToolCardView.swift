@@ -13,7 +13,7 @@ struct ToolCardView: View {
     // MARK: - Properties
     
     @ObservedObject var viewModel: ToolCardViewModel
-    var cardWidth: CGFloat
+    let cardWidth: CGFloat
     
     // MARK: - Constants
     
