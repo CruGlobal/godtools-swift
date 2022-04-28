@@ -9,6 +9,6 @@
 import Foundation
 
 protocol DeepLinkParserType {
-                
-    func parse(incomingDeepLink: IncomingDeepLinkType) -> ParsedDeepLinkType?
+      
+    init()
 }

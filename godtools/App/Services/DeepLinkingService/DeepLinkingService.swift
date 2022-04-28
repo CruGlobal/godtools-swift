@@ -10,31 +10,52 @@ import Foundation
 
 class DeepLinkingService: NSObject, DeepLinkingServiceType {
     
-    private let deepLinkParsers: [DeepLinkParserType]
-    private let loggingEnabled: Bool
+    private let manifest: DeepLinkingManifestType
     
     let deepLinkObserver: PassthroughValue<ParsedDeepLinkType?> = PassthroughValue()
         
-    required init(deepLinkParsers: [DeepLinkParserType], loggingEnabled: Bool) {
+    required init(manifest: DeepLinkingManifestType) {
         
-        self.deepLinkParsers = deepLinkParsers
-        self.loggingEnabled = loggingEnabled
+        self.manifest = manifest
         
         super.init()
     }
      
     func parseDeepLinkAndNotify(incomingDeepLink: IncomingDeepLinkType) -> Bool {
         
-        if loggingEnabled {
-            print("\n DeepLinkingService: parseDeepLink()")
-            print("  incomingDeepLink: \(incomingDeepLink)")
-        }
-                
-        for deepLinkParser in deepLinkParsers {
-            if let deepLink = deepLinkParser.parse(incomingDeepLink: incomingDeepLink) {
-                deepLinkObserver.accept(value: deepLink)
-                return true
+        for parserManifest in manifest.parserManifests {
+            
+            guard let parser = parserManifest.getParserIfValidIncomingDeepLink(incomingDeepLink: incomingDeepLink) else {
+                continue
             }
+                        
+            let parsedDeepLink: ParsedDeepLinkType?
+            
+            switch incomingDeepLink {
+            
+            case .appsFlyer(let data):
+                
+                guard let appsFlyerParser = parser as? DeepLinkAppsFlyerParserType else {
+                    continue
+                }
+                
+                parsedDeepLink = appsFlyerParser.parse(data: data)
+            
+            case .url(let incomingUrl):
+                
+                guard let urlParser = parser as? DeepLinkUrlParserType else {
+                    continue
+                }
+                
+                parsedDeepLink = urlParser.parse(pathComponents: incomingUrl.pathComponents, queryParameters: incomingUrl.queryParameters)
+            }
+                        
+            guard let deepLink = parsedDeepLink else {
+                continue
+            }
+            
+            deepLinkObserver.accept(value: deepLink)
+            return true
         }
         
         return false
