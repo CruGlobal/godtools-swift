@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class ToolsMenuView: UIViewController {
     
@@ -15,7 +16,7 @@ class ToolsMenuView: UIViewController {
     private var startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView = .favoritedTools
     private var lessonsView: LessonsListView?
     private var favoritedToolsView: FavoritedToolsView?
-    private var allToolsView: AllToolsView?
+    private var allToolsView: UIHostingController<AllToolsContentView>?
     private var toolsListsViews: [UIView] = Array()
     private var isAnimatingNavigationToToolsList: Bool = false
     private var chooseLanguageButton: UIBarButtonItem?
@@ -69,7 +70,7 @@ class ToolsMenuView: UIViewController {
         
         let lessonsView: LessonsListView = LessonsListView(viewModel: viewModel.lessonsWillAppear())
         let favoritedToolsView: FavoritedToolsView = FavoritedToolsView(viewModel: viewModel.favoritedToolsWillAppear())
-        let allToolsView: AllToolsView = AllToolsView(viewModel: viewModel.allToolsWillAppear())
+        let allToolsView = UIHostingController(rootView: AllToolsContentView(viewModel: viewModel.allToolsWillAppear()))
         
         addToolsListView(toolsListView: lessonsView.view)
         addToolsListView(toolsListView: favoritedToolsView.view)
@@ -121,7 +122,9 @@ class ToolsMenuView: UIViewController {
         
         lessonsView?.scrollToTopOfLessonsList(animated: false)
         favoritedToolsView?.scrollToTopOfToolsList(animated: false)
-        allToolsView?.scrollToTopOfToolsList(animated: false)
+        
+        // TODO: - GT-1541 Remove the ability to programmatically scroll to the top and just reset the whole view instead
+        allToolsView?.rootView.viewModel.scrollToTop(animated: false)
         
         navigateToToolsListForToolbarItem(toolbarItem: toolbarItem, animated: animated)
     }

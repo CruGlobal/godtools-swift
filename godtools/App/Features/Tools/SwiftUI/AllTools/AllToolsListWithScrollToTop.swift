@@ -8,6 +8,8 @@
 
 import SwiftUI
 
+// TODO: - GT-1541 will remove the ability to programmatically scroll to the top and just reset the whole view instead, so this whole file can be trashed.
+
 // ScrollViewReader only supported on iOS 14+
 @available(iOS 14.0, *)
 struct AllToolsListWithScrollToTop: View {
@@ -15,7 +17,7 @@ struct AllToolsListWithScrollToTop: View {
     // MARK: - Properties
     
     @ObservedObject var viewModel: AllToolsContentViewModel
-    var width: CGFloat
+    let width: CGFloat
     
     // MARK: - Body
     

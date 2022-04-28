@@ -15,7 +15,7 @@ struct AllToolsList: View {
     // MARK: - Properties
     
     @ObservedObject var viewModel: AllToolsContentViewModel
-    var width: CGFloat
+    let width: CGFloat
         
     // MARK: - Constants
     
@@ -43,6 +43,9 @@ struct AllToolsList: View {
         .frame(maxWidth: .infinity)
         .edgesIgnoringSafeArea([.leading, .trailing])
         .listStyle(.plain)
+        .onAppear {
+            viewModel.pageViewed()
+        }
     }
 }
 

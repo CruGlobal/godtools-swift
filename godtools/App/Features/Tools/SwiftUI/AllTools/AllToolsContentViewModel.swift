@@ -13,6 +13,7 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     
     // MARK: - Properties
     
+    // TODO: - GT-1541 Remove the ability to programmatically scroll to the top and just reset the whole view instead.
     var scrollToTopSignal = PassthroughSubject<Bool, Never>()
     
     private let reloadAllToolsFromCacheUseCase: ReloadAllToolsFromCacheUseCase
@@ -99,6 +100,7 @@ extension AllToolsContentViewModel {
         )
     }
     
+    // TODO: - GT-1541
     func scrollToTop(animated: Bool) {
         scrollToTopSignal.send(animated)
     }
