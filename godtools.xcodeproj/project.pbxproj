@@ -985,7 +985,6 @@
 		D1FF263825BA0C0E00C825DB /* FirebaseInAppMessagingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FF263725BA0C0E00C825DB /* FirebaseInAppMessagingType.swift */; };
 		D1FF263E25BA0C1C00C825DB /* FirebaseInAppMessaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FF263D25BA0C1C00C825DB /* FirebaseInAppMessaging.swift */; };
 		D44C6933280479720000B970 /* ToolCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C6932280479720000B970 /* ToolCardViewModel.swift */; };
-		D44C69362804A6730000B970 /* GetBannerImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C69352804A6730000B970 /* GetBannerImageUseCase.swift */; };
 		D44C69392804B6D40000B970 /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C69382804B6D40000B970 /* RoundedCorner.swift */; };
 		D44C693B2804B8050000B970 /* View+CustomModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C693A2804B8050000B970 /* View+CustomModifiers.swift */; };
 		D44C693D2804BE9D0000B970 /* GetToolDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C693C2804BE9D0000B970 /* GetToolDataUseCase.swift */; };
@@ -997,11 +996,9 @@
 		D47C49D8280EF0B10084F4DE /* AllToolsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D7280EF0B10084F4DE /* AllToolsList.swift */; };
 		D47C49DA28104E0B0084F4DE /* OptionalImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D928104E0B0084F4DE /* OptionalImage.swift */; };
 		D47C49E02816EEBD0084F4DE /* MockFlowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49DF2816EEBD0084F4DE /* MockFlowDelegate.swift */; };
-		D47C49E32816EF370084F4DE /* MockGetBannerImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49E22816EF370084F4DE /* MockGetBannerImageUseCase.swift */; };
 		D47C49E52816EF640084F4DE /* MockGetLanguageNameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49E42816EF640084F4DE /* MockGetLanguageNameUseCase.swift */; };
 		D47C49E72816EFCA0084F4DE /* MockGetToolDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49E62816EFCA0084F4DE /* MockGetToolDataUseCase.swift */; };
 		D47C49EA2816F0110084F4DE /* ToolDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49E92816F0110084F4DE /* ToolDataModel.swift */; };
-		D47C49EF2816F0A00084F4DE /* DefaultGetBannerImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49EE2816F0A00084F4DE /* DefaultGetBannerImageUseCase.swift */; };
 		D47C49F12816F1280084F4DE /* DefaultGetLanguageNameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49F02816F1280084F4DE /* DefaultGetLanguageNameUseCase.swift */; };
 		D47C49F32816F14F0084F4DE /* DefaultGetToolDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49F22816F14F0084F4DE /* DefaultGetToolDataUseCase.swift */; };
 		D49F80F527FCD63A001AE5B3 /* ToolCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F80F427FCD63A001AE5B3 /* ToolCardView.swift */; };
@@ -2061,7 +2058,6 @@
 		D1FF263725BA0C0E00C825DB /* FirebaseInAppMessagingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseInAppMessagingType.swift; sourceTree = "<group>"; };
 		D1FF263D25BA0C1C00C825DB /* FirebaseInAppMessaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseInAppMessaging.swift; sourceTree = "<group>"; };
 		D44C6932280479720000B970 /* ToolCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardViewModel.swift; sourceTree = "<group>"; };
-		D44C69352804A6730000B970 /* GetBannerImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBannerImageUseCase.swift; sourceTree = "<group>"; };
 		D44C69382804B6D40000B970 /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
 		D44C693A2804B8050000B970 /* View+CustomModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+CustomModifiers.swift"; sourceTree = "<group>"; };
 		D44C693C2804BE9D0000B970 /* GetToolDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetToolDataUseCase.swift; sourceTree = "<group>"; };
@@ -2073,11 +2069,9 @@
 		D47C49D7280EF0B10084F4DE /* AllToolsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllToolsList.swift; sourceTree = "<group>"; };
 		D47C49D928104E0B0084F4DE /* OptionalImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalImage.swift; sourceTree = "<group>"; };
 		D47C49DF2816EEBD0084F4DE /* MockFlowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFlowDelegate.swift; sourceTree = "<group>"; };
-		D47C49E22816EF370084F4DE /* MockGetBannerImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockGetBannerImageUseCase.swift; sourceTree = "<group>"; };
 		D47C49E42816EF640084F4DE /* MockGetLanguageNameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockGetLanguageNameUseCase.swift; sourceTree = "<group>"; };
 		D47C49E62816EFCA0084F4DE /* MockGetToolDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockGetToolDataUseCase.swift; sourceTree = "<group>"; };
 		D47C49E92816F0110084F4DE /* ToolDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolDataModel.swift; sourceTree = "<group>"; };
-		D47C49EE2816F0A00084F4DE /* DefaultGetBannerImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGetBannerImageUseCase.swift; sourceTree = "<group>"; };
 		D47C49F02816F1280084F4DE /* DefaultGetLanguageNameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGetLanguageNameUseCase.swift; sourceTree = "<group>"; };
 		D47C49F22816F14F0084F4DE /* DefaultGetToolDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGetToolDataUseCase.swift; sourceTree = "<group>"; };
 		D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtoolsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -5873,7 +5867,6 @@
 		D44C69342804A65F0000B970 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				D47C49EB2816F0480084F4DE /* GetBannerImageUseCase */,
 				D47C49EC2816F0550084F4DE /* GetLanguageNameUseCase */,
 				D47C49E82816EFF50084F4DE /* GetToolDataUseCase */,
 				D47C49ED2816F05F0084F4DE /* ReloadAllToolsFromCacheUseCase */,
@@ -5900,16 +5893,6 @@
 				D47C49E92816F0110084F4DE /* ToolDataModel.swift */,
 			);
 			path = GetToolDataUseCase;
-			sourceTree = "<group>";
-		};
-		D47C49EB2816F0480084F4DE /* GetBannerImageUseCase */ = {
-			isa = PBXGroup;
-			children = (
-				D47C49EE2816F0A00084F4DE /* DefaultGetBannerImageUseCase.swift */,
-				D44C69352804A6730000B970 /* GetBannerImageUseCase.swift */,
-				D47C49E22816EF370084F4DE /* MockGetBannerImageUseCase.swift */,
-			);
-			path = GetBannerImageUseCase;
 			sourceTree = "<group>";
 		};
 		D47C49EC2816F0550084F4DE /* GetLanguageNameUseCase */ = {
@@ -6633,7 +6616,6 @@
 				45AD1B3525938A4F00A096A0 /* ChooseLanguageCell.swift in Sources */,
 				455416832794C9540060D4F1 /* DownloadedToolData.swift in Sources */,
 				450E44552756B6E000D4311E /* MenuItemViewModel.swift in Sources */,
-				D44C69362804A6730000B970 /* GetBannerImageUseCase.swift in Sources */,
 				455583FE269F2DA500C3FF14 /* MobileContentEmbeddedVideoView.swift in Sources */,
 				45AD1FBE25938A9800A096A0 /* TractRemoteSharePublisherNavigationEvent.swift in Sources */,
 				45AD206525938B1300A096A0 /* AlertMessage.swift in Sources */,
@@ -7055,7 +7037,6 @@
 				45558402269F2DA500C3FF14 /* MobileContentBackgroundImageView.swift in Sources */,
 				D47C49E02816EEBD0084F4DE /* MockFlowDelegate.swift in Sources */,
 				45051205275AA7050081BF56 /* MobileContentParagraphView.swift in Sources */,
-				D47C49EF2816F0A00084F4DE /* DefaultGetBannerImageUseCase.swift in Sources */,
 				45163635268B7F950010876B /* DeepLinkPathType.swift in Sources */,
 				45AD1F9D25938A9800A096A0 /* ResourcesCache.swift in Sources */,
 				D1FF263825BA0C0E00C825DB /* FirebaseInAppMessagingType.swift in Sources */,
@@ -7132,7 +7113,6 @@
 				45AD1FDB25938A9800A096A0 /* WebArchiveQueue.swift in Sources */,
 				45C93AEB261D310900592FFF /* ArticleJcrContent.swift in Sources */,
 				D1C8FEB92714E7010071BD07 /* TutorialCellViewModelType.swift in Sources */,
-				D47C49E32816EF370084F4DE /* MockGetBannerImageUseCase.swift in Sources */,
 				45363FD427E244380000546A /* ParsedDeepLinkType.swift in Sources */,
 				45AD1F8A25938A9800A096A0 /* TranslationModelType.swift in Sources */,
 				45AD200125938A9800A096A0 /* ResourceViewModel.swift in Sources */,

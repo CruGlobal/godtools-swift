@@ -62,11 +62,6 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
 extension AllToolsContentViewModel {
     
     func cardViewModel(for tool: ResourceModel) -> ToolCardViewModel {
-        let getBannerImageUseCase = DefaultGetBannerImageUseCase(
-            resource: tool,
-            dataDownloader: dataDownloader,
-            deviceAttachmentBanners: deviceAttachmentBanners
-        )
         let getToolDataUseCase = DefaultGetToolDataUseCase(
             resource: tool,
             dataDownloader: dataDownloader,
@@ -79,8 +74,9 @@ extension AllToolsContentViewModel {
         )
         
         return ToolCardViewModel(
-            resourceId: tool.id,
-            getBannerImageUseCase: getBannerImageUseCase,
+            resource: tool,
+            dataDownloader: dataDownloader,
+            deviceAttachmentBanners: deviceAttachmentBanners,
             getToolDataUseCase: getToolDataUseCase,
             getLanguageNameUseCase: getLanguageNameUseCase,
             favoritedResourcesCache: favoritedResourcesCache,

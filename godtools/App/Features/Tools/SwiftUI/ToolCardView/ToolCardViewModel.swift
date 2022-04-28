@@ -13,12 +13,13 @@ class ToolCardViewModel: NSObject, ObservableObject {
     
     // MARK: - Properties
     
-    private let resourceId: String
+    private let resource: ResourceModel
     
-    private let getBannerImageUseCase: GetBannerImageUseCase
     private let getToolDataUseCase: GetToolDataUseCase
     private let getLanguageNameUseCase: GetLanguageNameUseCase
     
+    private let dataDownloader: InitialDataDownloader
+    private let deviceAttachmentBanners: DeviceAttachmentBanners
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let languageSettingsService: LanguageSettingsService
     
@@ -33,10 +34,11 @@ class ToolCardViewModel: NSObject, ObservableObject {
     
     // MARK: - Init
     
-    init(resourceId: String, getBannerImageUseCase: GetBannerImageUseCase, getToolDataUseCase: GetToolDataUseCase, getLanguageNameUseCase: GetLanguageNameUseCase, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService) {
+    init(resource: ResourceModel, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, getToolDataUseCase: GetToolDataUseCase, getLanguageNameUseCase: GetLanguageNameUseCase, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService) {
         
-        self.resourceId = resourceId
-        self.getBannerImageUseCase = getBannerImageUseCase
+        self.resource = resource
+        self.dataDownloader = dataDownloader
+        self.deviceAttachmentBanners = deviceAttachmentBanners
         self.getToolDataUseCase = getToolDataUseCase
         self.getLanguageNameUseCase = getLanguageNameUseCase
         self.favoritedResourcesCache = favoritedResourcesCache
@@ -61,7 +63,7 @@ class ToolCardViewModel: NSObject, ObservableObject {
 extension ToolCardViewModel {
     
     func favoritedButtonTapped() {
-        favoritedResourcesCache.toggleFavorited(resourceId: resourceId)
+        favoritedResourcesCache.toggleFavorited(resourceId: resource.id)
     }
 }
  
@@ -70,8 +72,8 @@ extension ToolCardViewModel {
 extension ToolCardViewModel {
     
     private func setupPublishedProperties() {
-        bannerImage = getBannerImageUseCase.getBannerImage()
-        isFavorited = favoritedResourcesCache.isFavorited(resourceId: resourceId)
+        bannerImage = getBannerImage()
+        isFavorited = favoritedResourcesCache.isFavorited(resourceId: resource.id)
         
         reloadDataForPrimaryLanguage()
     }
@@ -80,7 +82,7 @@ extension ToolCardViewModel {
         favoritedResourcesCache.resourceFavorited.addObserver(self) { [weak self] (resourceId: String) in
             guard let self = self else { return }
 
-            if resourceId == self.resourceId {
+            if resourceId == self.resource.id {
                 DispatchQueue.main.async { [weak self] in
                     self?.isFavorited = true
                 }
@@ -89,7 +91,7 @@ extension ToolCardViewModel {
         favoritedResourcesCache.resourceUnfavorited.addObserver(self) { [weak self] (resourceId: String) in
             guard let self = self else { return }
 
-            if resourceId == self.resourceId {
+            if resourceId == self.resource.id {
                 DispatchQueue.main.async { [weak self] in
                     self?.isFavorited = false
                 }
@@ -105,6 +107,20 @@ extension ToolCardViewModel {
             DispatchQueue.main.async { [weak self] in
                 self?.reloadParallelLanguageName()
             }
+        }
+    }
+    
+    private func getBannerImage() -> Image? {
+        
+        // TODO: - Eventually refactor existing code to use SwiftUI's Image rather than UIImage
+        if let cachedImage = dataDownloader.attachmentsFileCache.getAttachmentBanner(attachmentId: resource.attrBanner) {
+            return Image(uiImage: cachedImage)
+        }
+        else if let deviceImage = deviceAttachmentBanners.getDeviceBanner(resourceId: resource.id) {
+            return Image(uiImage: deviceImage)
+        }
+        else {
+            return nil
         }
     }
     
