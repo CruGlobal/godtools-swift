@@ -14,9 +14,6 @@ class ToolCardViewModel: NSObject, ObservableObject {
     // MARK: - Properties
     
     private let resource: ResourceModel
-    
-    private let getToolDataUseCase: GetToolDataUseCase
-    
     private let dataDownloader: InitialDataDownloader
     private let deviceAttachmentBanners: DeviceAttachmentBanners
     private let favoritedResourcesCache: FavoritedResourcesCache
@@ -34,12 +31,11 @@ class ToolCardViewModel: NSObject, ObservableObject {
     
     // MARK: - Init
     
-    init(resource: ResourceModel, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, getToolDataUseCase: GetToolDataUseCase, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices) {
+    init(resource: ResourceModel, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices) {
         
         self.resource = resource
         self.dataDownloader = dataDownloader
         self.deviceAttachmentBanners = deviceAttachmentBanners
-        self.getToolDataUseCase = getToolDataUseCase
         self.favoritedResourcesCache = favoritedResourcesCache
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
@@ -125,10 +121,34 @@ extension ToolCardViewModel {
     }
     
     private func reloadDataForPrimaryLanguage() {
-        let toolData = getToolDataUseCase.getToolData()
-        title = toolData.title
-        category = toolData.category
-        layoutDirection = LayoutDirection.from(languageDirection: toolData.languageDirection)
+        let resourcesCache: ResourcesCache = dataDownloader.resourcesCache
+             
+        let toolName: String
+        let languageBundle: Bundle
+        let languageDirection: LanguageDirection
+        
+        if let primaryLanguage = languageSettingsService.primaryLanguage.value, let primaryTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageId: primaryLanguage.id) {
+            
+            toolName = primaryTranslation.translatedName
+            languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.code) ?? Bundle.main
+            languageDirection = primaryLanguage.languageDirection
+        }
+        else if let englishTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageCode: "en") {
+            
+            toolName = englishTranslation.translatedName
+            languageBundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
+            languageDirection = .leftToRight
+        }
+        else {
+            
+            toolName = resource.name
+            languageBundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
+            languageDirection = .leftToRight
+        }
+        
+        title = toolName
+        category = localizationServices.stringForBundle(bundle: languageBundle, key: "tool_category_\(resource.attrCategory)")
+        layoutDirection = LayoutDirection.from(languageDirection: languageDirection)
     }
     
     private func reloadParallelLanguageName() {
@@ -136,7 +156,7 @@ extension ToolCardViewModel {
         parallelLanguageName = getLanguageName(language: parallelLanguage)
     }
     
-    func getLanguageName(language: LanguageModel?) -> String {
+    private func getLanguageName(language: LanguageModel?) -> String {
         
         if let language = language {
             

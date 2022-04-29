@@ -62,18 +62,10 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
 extension AllToolsContentViewModel {
     
     func cardViewModel(for tool: ResourceModel) -> ToolCardViewModel {
-        let getToolDataUseCase = DefaultGetToolDataUseCase(
-            resource: tool,
-            dataDownloader: dataDownloader,
-            languageSettingsService: languageSettingsService,
-            localizationServices: localizationServices
-        )
-        
         return ToolCardViewModel(
             resource: tool,
             dataDownloader: dataDownloader,
             deviceAttachmentBanners: deviceAttachmentBanners,
-            getToolDataUseCase: getToolDataUseCase,
             favoritedResourcesCache: favoritedResourcesCache,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices

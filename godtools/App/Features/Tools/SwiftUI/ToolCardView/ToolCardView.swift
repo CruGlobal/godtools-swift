@@ -88,7 +88,6 @@ struct ToolCardView_Previews: PreviewProvider {
             resource: appDiContainer.initialDataDownloader.resourcesCache.getResource(id: "2")!,
             dataDownloader: appDiContainer.initialDataDownloader,
             deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
-            getToolDataUseCase: MockGetToolDataUseCase(languageDirection: .leftToRight),
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices
