@@ -35,9 +35,10 @@ struct FavoritingToolBannerView: View {
                         Spacer()
                         
                         Text(viewModel.message)
-                            .font(.system(size: 15))
+                            .font(.system(size: 18))
+                            .multilineTextAlignment(.center)
                             .foregroundColor(ColorPalette.gtGrey.color)
-                            .padding([.top, .bottom], 25)
+                            .padding([.top, .bottom], 30)
                             .padding(.leading, 45)
                             .padding(.trailing, 55)
                         

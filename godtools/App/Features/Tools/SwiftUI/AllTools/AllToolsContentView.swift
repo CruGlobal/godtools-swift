@@ -36,7 +36,7 @@ struct AllToolsContentView: View {
     
     var body: some View {
         VStack {
-//            FavoritingToolBannerView()
+            FavoritingToolBannerView(viewModel: viewModel.favoritingToolBannerViewModel())
             
             if viewModel.isLoading {
                 

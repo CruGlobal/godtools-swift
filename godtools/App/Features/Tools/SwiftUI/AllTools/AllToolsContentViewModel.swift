@@ -69,6 +69,11 @@ extension AllToolsContentViewModel {
         )
     }
     
+    func favoritingToolBannerViewModel() -> FavoritingToolBannerViewModel {
+        
+        return FavoritingToolBannerViewModel(favoritingToolMessageCache: favoritingToolMessageCache, localizationServices: localizationServices)
+    }
+    
     func refreshTools() {
         dataDownloader.downloadInitialData()
     }
