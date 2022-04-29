@@ -15,9 +15,7 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     
     // TODO: - GT-1541 Remove the ability to programmatically scroll to the top and just reset the whole view instead.
     var scrollToTopSignal = PassthroughSubject<Bool, Never>()
-    
-    private let reloadAllToolsFromCacheUseCase: ReloadAllToolsFromCacheUseCase
-    
+        
     private weak var flowDelegate: FlowDelegate?
     private let dataDownloader: InitialDataDownloader
     private let deviceAttachmentBanners: DeviceAttachmentBanners
@@ -34,9 +32,8 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     
     // MARK: - Init
     
-    init(flowDelegate: FlowDelegate, reloadAllToolsFromCacheUseCase: ReloadAllToolsFromCacheUseCase, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer) {
         self.flowDelegate = flowDelegate
-        self.reloadAllToolsFromCacheUseCase = reloadAllToolsFromCacheUseCase
         self.dataDownloader = dataDownloader
         self.deviceAttachmentBanners = deviceAttachmentBanners
         self.languageSettingsService = languageSettingsService
@@ -121,8 +118,14 @@ extension AllToolsContentViewModel {
         }
     }
     
-    private func reloadResourcesFromCache() {        
-        tools = reloadAllToolsFromCacheUseCase.reload()
+    private func reloadResourcesFromCache() {
+        let sortedResources: [ResourceModel] = dataDownloader.resourcesCache.getSortedResources()
+        let resources: [ResourceModel] = sortedResources.filter({
+            let resourceType: ResourceType = $0.resourceTypeEnum
+            return (resourceType == .tract || resourceType == .article || resourceType == .chooseYourOwnAdventure) && !$0.isHidden
+        })
+        
+        tools = resources
         isLoading = false
     }
 }

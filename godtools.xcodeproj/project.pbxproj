@@ -990,7 +990,6 @@
 		D44C693F2805AE910000B970 /* AllToolsContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C693E2805AE910000B970 /* AllToolsContentViewModel.swift */; };
 		D44C69432809B1150000B970 /* LayoutDirection+LanguageDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C69422809B1150000B970 /* LayoutDirection+LanguageDirection.swift */; };
 		D44C69452809B6880000B970 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C69442809B6880000B970 /* ActivityIndicator.swift */; };
-		D47C49D6280DAD4A0084F4DE /* ReloadAllToolsFromCacheUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D5280DAD4A0084F4DE /* ReloadAllToolsFromCacheUseCase.swift */; };
 		D47C49D8280EF0B10084F4DE /* AllToolsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D7280EF0B10084F4DE /* AllToolsList.swift */; };
 		D47C49DA28104E0B0084F4DE /* OptionalImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D928104E0B0084F4DE /* OptionalImage.swift */; };
 		D47C49E02816EEBD0084F4DE /* MockFlowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49DF2816EEBD0084F4DE /* MockFlowDelegate.swift */; };
@@ -2056,7 +2055,6 @@
 		D44C693E2805AE910000B970 /* AllToolsContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllToolsContentViewModel.swift; sourceTree = "<group>"; };
 		D44C69422809B1150000B970 /* LayoutDirection+LanguageDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LayoutDirection+LanguageDirection.swift"; sourceTree = "<group>"; };
 		D44C69442809B6880000B970 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
-		D47C49D5280DAD4A0084F4DE /* ReloadAllToolsFromCacheUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReloadAllToolsFromCacheUseCase.swift; sourceTree = "<group>"; };
 		D47C49D7280EF0B10084F4DE /* AllToolsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllToolsList.swift; sourceTree = "<group>"; };
 		D47C49D928104E0B0084F4DE /* OptionalImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalImage.swift; sourceTree = "<group>"; };
 		D47C49DF2816EEBD0084F4DE /* MockFlowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFlowDelegate.swift; sourceTree = "<group>"; };
@@ -3553,7 +3551,6 @@
 				45AD177E25938A4D00A096A0 /* ToolsTableView.swift */,
 				45AD176D25938A4D00A096A0 /* ToolsTableView.xib */,
 				45AD178F25938A4D00A096A0 /* ToolsViewModelType.swift */,
-				D44C69342804A65F0000B970 /* Domain */,
 				45AD177525938A4D00A096A0 /* Models */,
 				D44C692F280478FC0000B970 /* SwiftUI */,
 				45AD177F25938A4D00A096A0 /* Views */,
@@ -5850,14 +5847,6 @@
 			path = SwiftUI;
 			sourceTree = "<group>";
 		};
-		D44C69342804A65F0000B970 /* Domain */ = {
-			isa = PBXGroup;
-			children = (
-				D47C49ED2816F05F0084F4DE /* ReloadAllToolsFromCacheUseCase */,
-			);
-			path = Domain;
-			sourceTree = "<group>";
-		};
 		D44C69372804B6AF0000B970 /* SwiftUI Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -5866,14 +5855,6 @@
 				D44C69382804B6D40000B970 /* RoundedCorner.swift */,
 			);
 			path = "SwiftUI Views";
-			sourceTree = "<group>";
-		};
-		D47C49ED2816F05F0084F4DE /* ReloadAllToolsFromCacheUseCase */ = {
-			isa = PBXGroup;
-			children = (
-				D47C49D5280DAD4A0084F4DE /* ReloadAllToolsFromCacheUseCase.swift */,
-			);
-			path = ReloadAllToolsFromCacheUseCase;
 			sourceTree = "<group>";
 		};
 		D4F719EC2817276C00E079DA /* AllTools */ = {
@@ -6774,7 +6755,6 @@
 				45BF2B9E27A9573F00D23EDA /* MobileContentPagesInitialPageRenderingType.swift in Sources */,
 				45AD1AD625938A4E00A096A0 /* AllToolsViewModel.swift in Sources */,
 				45AD1BD225938A4F00A096A0 /* LoadingViewModel.swift in Sources */,
-				D47C49D6280DAD4A0084F4DE /* ReloadAllToolsFromCacheUseCase.swift in Sources */,
 				45AD202A25938A9800A096A0 /* CardJumpService.swift in Sources */,
 				45AD1AC125938A4E00A096A0 /* FavoritingToolMessageCache.swift in Sources */,
 				45FB161727DBDDB60009DF8E /* ArticleFlow.swift in Sources */,

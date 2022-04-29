@@ -72,12 +72,8 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
     }
     
     func allToolsWillAppear() -> AllToolsContentViewModel {
-        
-        let reloadAllToolsFromCacheUseCase = ReloadAllToolsFromCacheUseCase(dataDownloader: initialDataDownloader)
-        
         return AllToolsContentViewModel(
             flowDelegate: getFlowDelegate(),
-            reloadAllToolsFromCacheUseCase: reloadAllToolsFromCacheUseCase,
             dataDownloader: initialDataDownloader,
             deviceAttachmentBanners: deviceAttachmentBanners,
             languageSettingsService: languageSettingsService,

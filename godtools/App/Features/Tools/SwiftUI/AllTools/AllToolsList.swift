@@ -58,7 +58,6 @@ struct AllToolsList_Previews: PreviewProvider {
         
         let viewModel = AllToolsContentViewModel(
             flowDelegate: MockFlowDelegate(),
-            reloadAllToolsFromCacheUseCase: ReloadAllToolsFromCacheUseCase(dataDownloader: appDiContainer.initialDataDownloader),
             dataDownloader: appDiContainer.initialDataDownloader,
             deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
             languageSettingsService: appDiContainer.languageSettingsService,
