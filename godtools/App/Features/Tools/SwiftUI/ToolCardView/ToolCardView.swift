@@ -89,9 +89,9 @@ struct ToolCardView_Previews: PreviewProvider {
             dataDownloader: appDiContainer.initialDataDownloader,
             deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
             getToolDataUseCase: MockGetToolDataUseCase(languageDirection: .leftToRight),
-            getLanguageNameUseCase: MockGetLanguageNameUseCase(),
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
-            languageSettingsService: appDiContainer.languageSettingsService
+            languageSettingsService: appDiContainer.languageSettingsService,
+            localizationServices: appDiContainer.localizationServices
         )
         
         GeometryReader { geo in

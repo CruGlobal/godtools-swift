@@ -16,12 +16,12 @@ class ToolCardViewModel: NSObject, ObservableObject {
     private let resource: ResourceModel
     
     private let getToolDataUseCase: GetToolDataUseCase
-    private let getLanguageNameUseCase: GetLanguageNameUseCase
     
     private let dataDownloader: InitialDataDownloader
     private let deviceAttachmentBanners: DeviceAttachmentBanners
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let languageSettingsService: LanguageSettingsService
+    private let localizationServices: LocalizationServices
     
     // MARK: - Published
     
@@ -34,15 +34,15 @@ class ToolCardViewModel: NSObject, ObservableObject {
     
     // MARK: - Init
     
-    init(resource: ResourceModel, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, getToolDataUseCase: GetToolDataUseCase, getLanguageNameUseCase: GetLanguageNameUseCase, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService) {
+    init(resource: ResourceModel, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, getToolDataUseCase: GetToolDataUseCase, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices) {
         
         self.resource = resource
         self.dataDownloader = dataDownloader
         self.deviceAttachmentBanners = deviceAttachmentBanners
         self.getToolDataUseCase = getToolDataUseCase
-        self.getLanguageNameUseCase = getLanguageNameUseCase
         self.favoritedResourcesCache = favoritedResourcesCache
         self.languageSettingsService = languageSettingsService
+        self.localizationServices = localizationServices
                 
         super.init()
         
@@ -133,6 +133,20 @@ extension ToolCardViewModel {
     
     private func reloadParallelLanguageName() {
         let parallelLanguage = languageSettingsService.parallelLanguage.value
-        parallelLanguageName = getLanguageNameUseCase.getLanguageName(language: parallelLanguage)
+        parallelLanguageName = getLanguageName(language: parallelLanguage)
+    }
+    
+    func getLanguageName(language: LanguageModel?) -> String {
+        
+        if let language = language {
+            
+            if resource.supportsLanguage(languageId: language.id) {
+                let nameAvailableSuffix: String = " ✓"
+                let translatedName: String = LanguageViewModel(language: language, localizationServices: localizationServices).translatedLanguageName
+                
+                return translatedName + nameAvailableSuffix
+            }
+        }
+        return ""
     }
 }

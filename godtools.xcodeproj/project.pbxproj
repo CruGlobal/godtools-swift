@@ -989,17 +989,14 @@
 		D44C693B2804B8050000B970 /* View+CustomModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C693A2804B8050000B970 /* View+CustomModifiers.swift */; };
 		D44C693D2804BE9D0000B970 /* GetToolDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C693C2804BE9D0000B970 /* GetToolDataUseCase.swift */; };
 		D44C693F2805AE910000B970 /* AllToolsContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C693E2805AE910000B970 /* AllToolsContentViewModel.swift */; };
-		D44C69412808F93B0000B970 /* GetLanguageNameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C69402808F93B0000B970 /* GetLanguageNameUseCase.swift */; };
 		D44C69432809B1150000B970 /* LayoutDirection+LanguageDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C69422809B1150000B970 /* LayoutDirection+LanguageDirection.swift */; };
 		D44C69452809B6880000B970 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C69442809B6880000B970 /* ActivityIndicator.swift */; };
 		D47C49D6280DAD4A0084F4DE /* ReloadAllToolsFromCacheUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D5280DAD4A0084F4DE /* ReloadAllToolsFromCacheUseCase.swift */; };
 		D47C49D8280EF0B10084F4DE /* AllToolsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D7280EF0B10084F4DE /* AllToolsList.swift */; };
 		D47C49DA28104E0B0084F4DE /* OptionalImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D928104E0B0084F4DE /* OptionalImage.swift */; };
 		D47C49E02816EEBD0084F4DE /* MockFlowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49DF2816EEBD0084F4DE /* MockFlowDelegate.swift */; };
-		D47C49E52816EF640084F4DE /* MockGetLanguageNameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49E42816EF640084F4DE /* MockGetLanguageNameUseCase.swift */; };
 		D47C49E72816EFCA0084F4DE /* MockGetToolDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49E62816EFCA0084F4DE /* MockGetToolDataUseCase.swift */; };
 		D47C49EA2816F0110084F4DE /* ToolDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49E92816F0110084F4DE /* ToolDataModel.swift */; };
-		D47C49F12816F1280084F4DE /* DefaultGetLanguageNameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49F02816F1280084F4DE /* DefaultGetLanguageNameUseCase.swift */; };
 		D47C49F32816F14F0084F4DE /* DefaultGetToolDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49F22816F14F0084F4DE /* DefaultGetToolDataUseCase.swift */; };
 		D49F80F527FCD63A001AE5B3 /* ToolCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F80F427FCD63A001AE5B3 /* ToolCardView.swift */; };
 		D49F80F727FDC610001AE5B3 /* AllToolsContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F80F627FDC610001AE5B3 /* AllToolsContentView.swift */; };
@@ -2062,17 +2059,14 @@
 		D44C693A2804B8050000B970 /* View+CustomModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+CustomModifiers.swift"; sourceTree = "<group>"; };
 		D44C693C2804BE9D0000B970 /* GetToolDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetToolDataUseCase.swift; sourceTree = "<group>"; };
 		D44C693E2805AE910000B970 /* AllToolsContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllToolsContentViewModel.swift; sourceTree = "<group>"; };
-		D44C69402808F93B0000B970 /* GetLanguageNameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLanguageNameUseCase.swift; sourceTree = "<group>"; };
 		D44C69422809B1150000B970 /* LayoutDirection+LanguageDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LayoutDirection+LanguageDirection.swift"; sourceTree = "<group>"; };
 		D44C69442809B6880000B970 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		D47C49D5280DAD4A0084F4DE /* ReloadAllToolsFromCacheUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReloadAllToolsFromCacheUseCase.swift; sourceTree = "<group>"; };
 		D47C49D7280EF0B10084F4DE /* AllToolsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllToolsList.swift; sourceTree = "<group>"; };
 		D47C49D928104E0B0084F4DE /* OptionalImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalImage.swift; sourceTree = "<group>"; };
 		D47C49DF2816EEBD0084F4DE /* MockFlowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFlowDelegate.swift; sourceTree = "<group>"; };
-		D47C49E42816EF640084F4DE /* MockGetLanguageNameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockGetLanguageNameUseCase.swift; sourceTree = "<group>"; };
 		D47C49E62816EFCA0084F4DE /* MockGetToolDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockGetToolDataUseCase.swift; sourceTree = "<group>"; };
 		D47C49E92816F0110084F4DE /* ToolDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolDataModel.swift; sourceTree = "<group>"; };
-		D47C49F02816F1280084F4DE /* DefaultGetLanguageNameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGetLanguageNameUseCase.swift; sourceTree = "<group>"; };
 		D47C49F22816F14F0084F4DE /* DefaultGetToolDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGetToolDataUseCase.swift; sourceTree = "<group>"; };
 		D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtoolsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D49F80F427FCD63A001AE5B3 /* ToolCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardView.swift; sourceTree = "<group>"; };
@@ -5867,7 +5861,6 @@
 		D44C69342804A65F0000B970 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				D47C49EC2816F0550084F4DE /* GetLanguageNameUseCase */,
 				D47C49E82816EFF50084F4DE /* GetToolDataUseCase */,
 				D47C49ED2816F05F0084F4DE /* ReloadAllToolsFromCacheUseCase */,
 			);
@@ -5893,16 +5886,6 @@
 				D47C49E92816F0110084F4DE /* ToolDataModel.swift */,
 			);
 			path = GetToolDataUseCase;
-			sourceTree = "<group>";
-		};
-		D47C49EC2816F0550084F4DE /* GetLanguageNameUseCase */ = {
-			isa = PBXGroup;
-			children = (
-				D47C49F02816F1280084F4DE /* DefaultGetLanguageNameUseCase.swift */,
-				D44C69402808F93B0000B970 /* GetLanguageNameUseCase.swift */,
-				D47C49E42816EF640084F4DE /* MockGetLanguageNameUseCase.swift */,
-			);
-			path = GetLanguageNameUseCase;
 			sourceTree = "<group>";
 		};
 		D47C49ED2816F05F0084F4DE /* ReloadAllToolsFromCacheUseCase */ = {
@@ -6540,7 +6523,6 @@
 				45AE975B27C97A9500C2CB33 /* Link+MobileContentRenderableModel.swift in Sources */,
 				45AD1FFB25938A9800A096A0 /* DetermineNewUserIfPrimaryLanguageSet.swift in Sources */,
 				455583ED269F2DA500C3FF14 /* MobileContentSpacerViewModel.swift in Sources */,
-				D44C69412808F93B0000B970 /* GetLanguageNameUseCase.swift in Sources */,
 				450E442527565D7000D4311E /* TutorialSupportedLanguagesType.swift in Sources */,
 				455D275E27B6A3F700FB85B3 /* MobileContentSpacerHeight.swift in Sources */,
 				45B6480B25E581660098BAF1 /* (null) in Sources */,
@@ -6902,7 +6884,6 @@
 				45AD214C2593A4B700A096A0 /* ShareToolView.swift in Sources */,
 				450E441427565D1C00D4311E /* TutorialFlowDiContainer.swift in Sources */,
 				45AD1F7D25938A9800A096A0 /* ResourcesCleanUpError.swift in Sources */,
-				D47C49F12816F1280084F4DE /* DefaultGetLanguageNameUseCase.swift in Sources */,
 				45AD21042593953100A096A0 /* DownloadedLanguageModel.swift in Sources */,
 				45AD20CA25938F3900A096A0 /* CallbackHandler.swift in Sources */,
 				457739E827A0955000999270 /* MobileContentViewWidth.swift in Sources */,
@@ -7124,7 +7105,6 @@
 				45AD1B6E25938A4F00A096A0 /* ToolDetailViewModelType.swift in Sources */,
 				45750837279A409300943197 /* ChooseYourOwnAdventureView.swift in Sources */,
 				45AD20A525938CF100A096A0 /* ConfigType.swift in Sources */,
-				D47C49E52816EF640084F4DE /* MockGetLanguageNameUseCase.swift in Sources */,
 				45AD1AF425938A4E00A096A0 /* WebContentView.swift in Sources */,
 				45AD1F8725938A9800A096A0 /* SHA256FileModel.swift in Sources */,
 				4559D67A270B55F8006C015C /* LessonFeedbackAnalytics.swift in Sources */,
