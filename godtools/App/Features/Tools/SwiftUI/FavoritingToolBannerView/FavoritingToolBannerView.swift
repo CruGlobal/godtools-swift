@@ -11,6 +11,8 @@ import SwiftUI
 struct FavoritingToolBannerView: View {
     var body: some View {
         ZStack(alignment: .topTrailing) {
+            ColorPalette.banner.color
+            
             Image("nav_item_close")
                 .padding(.top, 14)
                 .padding(.trailing, 18)
@@ -26,6 +28,7 @@ struct FavoritingToolBannerView: View {
                 Spacer()
             }
         }
+        .fixedSize(horizontal: false, vertical: true)
     }
 }
 
