@@ -995,6 +995,7 @@
 		D47C49E02816EEBD0084F4DE /* MockFlowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49DF2816EEBD0084F4DE /* MockFlowDelegate.swift */; };
 		D49F80F527FCD63A001AE5B3 /* ToolCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F80F427FCD63A001AE5B3 /* ToolCardView.swift */; };
 		D49F80F727FDC610001AE5B3 /* AllToolsContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F80F627FDC610001AE5B3 /* AllToolsContentView.swift */; };
+		D4EAE99E281C219C002B5B9D /* FavoritingToolBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EAE99D281C219C002B5B9D /* FavoritingToolBannerView.swift */; };
 		D4F719EB281726F800E079DA /* AllToolsListWithScrollToTop.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F719EA281726F800E079DA /* AllToolsListWithScrollToTop.swift */; };
 /* End PBXBuildFile section */
 
@@ -2061,6 +2062,7 @@
 		D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtoolsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D49F80F427FCD63A001AE5B3 /* ToolCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardView.swift; sourceTree = "<group>"; };
 		D49F80F627FDC610001AE5B3 /* AllToolsContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllToolsContentView.swift; sourceTree = "<group>"; };
+		D4EAE99D281C219C002B5B9D /* FavoritingToolBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritingToolBannerView.swift; sourceTree = "<group>"; };
 		D4F719EA281726F800E079DA /* AllToolsListWithScrollToTop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllToolsListWithScrollToTop.swift; sourceTree = "<group>"; };
 		D61FF360D11F854476B6E206 /* Pods_godtools.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtools.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0F338026DD564DE8D5B7CE2 /* Pods-godtoolsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -5842,6 +5844,7 @@
 			isa = PBXGroup;
 			children = (
 				D4F719EC2817276C00E079DA /* AllTools */,
+				D45D68C5281C21F90007A223 /* FavoritingToolBannerView */,
 				D4F719ED2817278600E079DA /* ToolCardView */,
 			);
 			path = SwiftUI;
@@ -5855,6 +5858,14 @@
 				D44C69382804B6D40000B970 /* RoundedCorner.swift */,
 			);
 			path = "SwiftUI Views";
+			sourceTree = "<group>";
+		};
+		D45D68C5281C21F90007A223 /* FavoritingToolBannerView */ = {
+			isa = PBXGroup;
+			children = (
+				D4EAE99D281C219C002B5B9D /* FavoritingToolBannerView.swift */,
+			);
+			path = FavoritingToolBannerView;
 			sourceTree = "<group>";
 		};
 		D4F719EC2817276C00E079DA /* AllTools */ = {
@@ -6722,6 +6733,7 @@
 				45AD1F8F25938A9800A096A0 /* ResourceType.swift in Sources */,
 				45AD201025938A9800A096A0 /* TranslationsFileCache.swift in Sources */,
 				45AD1B6425938A4F00A096A0 /* GlobalActivityHeaderViewModel.swift in Sources */,
+				D4EAE99E281C219C002B5B9D /* FavoritingToolBannerView.swift in Sources */,
 				45CBA01B261FB0EA0036BEB3 /* LessonViewModelType.swift in Sources */,
 				45AD1AF325938A4E00A096A0 /* ShareAStoryWithUsWebContent.swift in Sources */,
 				45FC123927A833BF00F4EC4F /* NavBarSelectorView.swift in Sources */,
