@@ -13,49 +13,45 @@ struct FavoritingToolBannerView: View {
     // MARK: - Properties
     
     @ObservedObject var viewModel: FavoritingToolBannerViewModel
+    @Binding var hideBanner: Bool
     
     // MARK: - Body
     
     var body: some View {
-        Group {
+        ZStack(alignment: .topTrailing) {
+            ColorPalette.banner.color
             
-            if viewModel.hidesMessage.value {
-                EmptyView()
+            HStack {
+                Spacer()
                 
-            } else {
+                Text(viewModel.message)
+                    .font(.system(size: 18))
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(ColorPalette.gtGrey.color)
+                    .padding([.top, .bottom], 30)
+                    .padding(.leading, 45)
+                    .padding(.trailing, 55)
                 
-                ZStack(alignment: .topTrailing) {
-                    ColorPalette.banner.color
-                    
-                    Image("nav_item_close")
-                        .padding(.top, 14)
-                        .padding(.trailing, 18)
-                    
-                    HStack {
-                        Spacer()
-                        
-                        Text(viewModel.message)
-                            .font(.system(size: 18))
-                            .multilineTextAlignment(.center)
-                            .foregroundColor(ColorPalette.gtGrey.color)
-                            .padding([.top, .bottom], 30)
-                            .padding(.leading, 45)
-                            .padding(.trailing, 55)
-                        
-                        Spacer()
+                Spacer()
+            }
+            
+            Image("nav_item_close")
+                .padding(.top, 14)
+                .padding(.trailing, 18)
+                .onTapGesture {
+                    withAnimation {
+                        hideBanner = true
                     }
                 }
-                .fixedSize(horizontal: false, vertical: true)
-            }
         }
-        .transition(.slide)
+        .fixedSize(horizontal: false, vertical: true)
     }
 }
 
 struct FavoritingToolBannerView_Previews: PreviewProvider {
     static var previews: some View {
         
-        FavoritingToolBannerView(viewModel: MockFavoritingToolBannerViewModel(message: "This is a test message.  It's pretty long.  Let's see what happens when the lines need to wrap.", hidesMessage: false))
+        FavoritingToolBannerView(viewModel: MockFavoritingToolBannerViewModel(message: "This is a test message.  It's pretty long.  Let's see what happens when the lines need to wrap."), hideBanner: .constant(false))
             .frame(width: 375)
             .previewLayout(.sizeThatFits)
     }

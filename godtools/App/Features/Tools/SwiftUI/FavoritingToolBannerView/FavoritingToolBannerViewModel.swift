@@ -18,7 +18,6 @@ class FavoritingToolBannerViewModel: NSObject, ObservableObject {
     // MARK: - Published
     
     @Published var message: String
-    @Published var hidesMessage: AnimatableValue<Bool>
     
     // MARK: - Init
     
@@ -28,17 +27,5 @@ class FavoritingToolBannerViewModel: NSObject, ObservableObject {
         self.localizationServices = localizationServices
         
         message = localizationServices.stringForMainBundle(key: "tool_offline_favorite_message")
-        hidesMessage = AnimatableValue(value: favoritingToolMessageCache.favoritingToolMessageDisabled, animated: false)
-    }
-}
-
-// MARK: - Public
-
-extension FavoritingToolBannerViewModel {
-    
-    func closeTapped() {
-        
-        favoritingToolMessageCache.disableFavoritingToolMessage()
-        hidesMessage = AnimatableValue(value: true, animated: true)
     }
 }

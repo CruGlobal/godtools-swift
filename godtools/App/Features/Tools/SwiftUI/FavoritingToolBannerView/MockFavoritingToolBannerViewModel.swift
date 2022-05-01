@@ -12,10 +12,9 @@ class MockFavoritingToolBannerViewModel: FavoritingToolBannerViewModel {
     
     let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
     
-    init(message: String, hidesMessage: Bool) {
+    init(message: String) {
         super.init(favoritingToolMessageCache: appDiContainer.favoritingToolMessageCache, localizationServices: appDiContainer.localizationServices)
         
         self.message = message
-        self.hidesMessage = AnimatableValue(value: hidesMessage, animated: true)
     }
 }
