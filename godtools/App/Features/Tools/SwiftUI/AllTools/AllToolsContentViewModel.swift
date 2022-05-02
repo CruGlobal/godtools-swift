@@ -134,7 +134,7 @@ extension AllToolsContentViewModel {
 extension AllToolsContentViewModel: FavoritingToolBannerDelegate {
     
     func closeBanner() {
-        self.hideFavoritingToolBanner = true
+        hideFavoritingToolBanner = true
         favoritingToolMessageCache.disableFavoritingToolMessage()
     }
 }
