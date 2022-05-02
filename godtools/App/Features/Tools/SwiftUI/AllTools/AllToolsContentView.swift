@@ -53,14 +53,10 @@ struct AllToolsContentView: View {
                     if #available(iOS 15.0, *) {
                         
                         // Pull to refresh is supported only in iOS 15+
-                        AllToolsListWithScrollToTop(viewModel: viewModel, width: width)
+                        AllToolsList(viewModel: viewModel, width: width)
                             .refreshable {
                                 viewModel.refreshTools()
                             }
-                        
-                    } else if #available(iOS 14.0, *) {
-                        
-                        AllToolsListWithScrollToTop(viewModel: viewModel, width: width)
                         
                     } else {
                         
