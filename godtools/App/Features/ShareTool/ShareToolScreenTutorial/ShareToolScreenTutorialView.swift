@@ -102,7 +102,7 @@ class ShareToolScreenTutorialView: UIViewController {
                 to: buttonPosition,
                 title: viewModel.skipTitle,
                 style: .done,
-                color: ColorPalette.gtBlue.color,
+                color: ColorPalette.gtBlue.uiColor,
                 target: self,
                 action: #selector(handleSkip(barButtonItem:))
             )

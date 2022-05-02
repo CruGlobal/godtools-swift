@@ -106,7 +106,7 @@ class SetupParallelLanguageView: UIViewController {
         yesButton.layer.cornerRadius = buttonCornerRadius
         
         noButton.layer.cornerRadius = buttonCornerRadius
-        noButton.drawBorder(color: ColorPalette.gtBlue.color)
+        noButton.drawBorder(color: ColorPalette.gtBlue.uiColor)
         noButton.layer.borderWidth = 1
         
         getStartedButton.layer.cornerRadius = buttonCornerRadius
