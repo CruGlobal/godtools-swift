@@ -14,6 +14,8 @@ enum MobileContentViewHeightConstraintType {
     case equalToHeight(height: CGFloat)
     case equalToSize(size: CGSize)
     case intrinsic
+    case lessThanOrEqualToWidthPointSize(widthPointSize: CGFloat, maintainsAspectRatioSize: CGSize?)
+    case lessThanOrEqualToWidthPercentageSizeOfContainer(widthPercentageSizeOfContainer: CGFloat, maintainsAspectRatioSize: CGSize?)
     case setToAspectRatioOfProvidedSize(size: CGSize)
     case spacer
     

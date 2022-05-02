@@ -1,14 +1,14 @@
 //
-//  ToolQueryParameters.swift
+//  KnowGodTractDeepLinkQueryParameters.swift
 //  godtools
 //
-//  Created by Levi Eggert on 6/26/21.
-//  Copyright © 2021 Cru. All rights reserved.
+//  Created by Levi Eggert on 4/14/22.
+//  Copyright © 2022 Cru. All rights reserved.
 //
 
 import Foundation
 
-struct ToolQueryParameters: Codable {
+struct KnowGodTractDeepLinkQueryParameters: Codable {
     
     let abbreviation: String?
     let icid: String?
@@ -27,7 +27,7 @@ struct ToolQueryParameters: Codable {
     }
 }
 
-extension ToolQueryParameters {
+extension KnowGodTractDeepLinkQueryParameters {
     
     func getPrimaryLanguageCodes() -> [String] {
         guard let primaryLanguageCodesString = self.primaryLanguageCodesString else {
