@@ -37,8 +37,7 @@ struct AllToolsContentView: View {
     var body: some View {
         VStack {
             if viewModel.hideFavoritingToolBanner == false {
-                
-                FavoritingToolBannerView(viewModel: viewModel.favoritingToolBannerViewModel(), hideBanner: $viewModel.hideFavoritingToolBanner)
+                FavoritingToolBannerView(viewModel: viewModel.favoritingToolBannerViewModel())
                     .transition(.move(edge: .top))
             }
             

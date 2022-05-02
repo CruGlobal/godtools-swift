@@ -8,12 +8,18 @@
 
 import Foundation
 
+protocol FavoritingToolBannerDelegate: AnyObject {
+    
+    func closeBanner()
+}
+
 class FavoritingToolBannerViewModel: NSObject, ObservableObject {
     
     // MARK: - Properties
     
     private let favoritingToolMessageCache: FavoritingToolMessageCache
     private let localizationServices: LocalizationServices
+    weak private var delegate: FavoritingToolBannerDelegate?
     
     // MARK: - Published
     
@@ -21,11 +27,17 @@ class FavoritingToolBannerViewModel: NSObject, ObservableObject {
     
     // MARK: - Init
     
-    init(favoritingToolMessageCache: FavoritingToolMessageCache, localizationServices: LocalizationServices) {
-        
+    init(favoritingToolMessageCache: FavoritingToolMessageCache, localizationServices: LocalizationServices, delegate: FavoritingToolBannerDelegate?) {
         self.favoritingToolMessageCache = favoritingToolMessageCache
         self.localizationServices = localizationServices
+        self.delegate = delegate
         
         message = localizationServices.stringForMainBundle(key: "tool_offline_favorite_message")
+    }
+    
+    // MARK: - Public
+    
+    func closeTapped() {
+        delegate?.closeBanner()
     }
 }

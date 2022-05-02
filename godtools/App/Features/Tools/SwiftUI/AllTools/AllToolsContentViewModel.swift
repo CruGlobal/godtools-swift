@@ -29,14 +29,7 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     
     @Published var tools: [ResourceModel] = []
     @Published var isLoading: Bool = false
-    @Published var hideFavoritingToolBanner: Bool {
-        didSet {
-            
-            if oldValue == false && hideFavoritingToolBanner == true {
-                favoritingToolMessageCache.disableFavoritingToolMessage()
-            }
-        }
-    }
+    @Published var hideFavoritingToolBanner: Bool
     
     // MARK: - Init
     
@@ -80,7 +73,7 @@ extension AllToolsContentViewModel {
     
     func favoritingToolBannerViewModel() -> FavoritingToolBannerViewModel {
         
-        return FavoritingToolBannerViewModel(favoritingToolMessageCache: favoritingToolMessageCache, localizationServices: localizationServices)
+        return FavoritingToolBannerViewModel(favoritingToolMessageCache: favoritingToolMessageCache, localizationServices: localizationServices, delegate: self)
     }
     
     func refreshTools() {
@@ -133,6 +126,16 @@ extension AllToolsContentViewModel {
         
         tools = resources
         isLoading = false
+    }
+}
+
+// MARK: - FavoritingToolBannerDelegate
+
+extension AllToolsContentViewModel: FavoritingToolBannerDelegate {
+    
+    func closeBanner() {
+        self.hideFavoritingToolBanner = true
+        favoritingToolMessageCache.disableFavoritingToolMessage()
     }
 }
 

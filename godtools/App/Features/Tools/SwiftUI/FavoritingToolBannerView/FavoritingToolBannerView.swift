@@ -13,7 +13,6 @@ struct FavoritingToolBannerView: View {
     // MARK: - Properties
     
     @ObservedObject var viewModel: FavoritingToolBannerViewModel
-    @Binding var hideBanner: Bool
     
     // MARK: - Body
     
@@ -29,8 +28,7 @@ struct FavoritingToolBannerView: View {
                     .multilineTextAlignment(.center)
                     .foregroundColor(ColorPalette.gtGrey.color)
                     .padding([.top, .bottom], 30)
-                    .padding(.leading, 45)
-                    .padding(.trailing, 55)
+                    .padding([.leading, .trailing], 45)
                 
                 Spacer()
             }
@@ -40,7 +38,7 @@ struct FavoritingToolBannerView: View {
                 .padding(.trailing, 18)
                 .onTapGesture {
                     withAnimation {
-                        hideBanner = true
+                        viewModel.closeTapped()
                     }
                 }
         }
@@ -51,7 +49,7 @@ struct FavoritingToolBannerView: View {
 struct FavoritingToolBannerView_Previews: PreviewProvider {
     static var previews: some View {
         
-        FavoritingToolBannerView(viewModel: MockFavoritingToolBannerViewModel(message: "This is a test message.  It's pretty long.  Let's see what happens when the lines need to wrap."), hideBanner: .constant(false))
+        FavoritingToolBannerView(viewModel: MockFavoritingToolBannerViewModel(message: "This is a test message.  It's pretty long.  Let's see what happens when the lines need to wrap."))
             .frame(width: 375)
             .previewLayout(.sizeThatFits)
     }

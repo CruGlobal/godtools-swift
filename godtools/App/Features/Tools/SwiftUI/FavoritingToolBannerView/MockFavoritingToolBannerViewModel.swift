@@ -13,7 +13,7 @@ class MockFavoritingToolBannerViewModel: FavoritingToolBannerViewModel {
     let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
     
     init(message: String) {
-        super.init(favoritingToolMessageCache: appDiContainer.favoritingToolMessageCache, localizationServices: appDiContainer.localizationServices)
+        super.init(favoritingToolMessageCache: appDiContainer.favoritingToolMessageCache, localizationServices: appDiContainer.localizationServices, delegate: nil)
         
         self.message = message
     }
