@@ -21,6 +21,12 @@ class LessonViewModel: MobileContentPagesViewModel, LessonViewModelType {
         fatalError("init(flowDelegate:renderer:page:mobileContentEventAnalytics:initialPageRenderingType:) has not been implemented")
     }
     
+    override func dismissPages() {
+        super.dismissPages()
+        
+        closeTapped()
+    }
+    
     private func updateProgress(page: Int) {
         
         let currentPage: CGFloat = CGFloat(page + 1)

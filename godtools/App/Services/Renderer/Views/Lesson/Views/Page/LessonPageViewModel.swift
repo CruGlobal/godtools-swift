@@ -35,10 +35,6 @@ class LessonPageViewModel: MobileContentPageViewModel, LessonPageViewModelType {
         fatalError("init(flowDelegate:pageModel:renderedPageContext:deepLinkService:hidesBackgroundImage:) has not been implemented")
     }
     
-    var manifestDismissListeners: [EventId] {
-        return Array(renderedPageContext.manifest.dismissListeners)
-    }
-    
     func pageDidAppear() {
         mobileContentDidAppear()
         
