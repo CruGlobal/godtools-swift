@@ -13,10 +13,9 @@ class MobileContentFlowRow: MobileContentView {
     
     private let rowGravity: Gravity.Horizontal
     
-    private var remainingSpaceInPercentage: CGFloat = 1
     private var didLayoutHorizontalConstraints: Bool = false
     
-    private var childItems: [MobileContentFlowRowItem] = Array()
+    private var flowItems: [MobileContentFlowRowItem] = Array()
     
     required init(frame: CGRect, rowGravity: Gravity.Horizontal) {
         
@@ -50,7 +49,7 @@ class MobileContentFlowRow: MobileContentView {
         
         super.finishedRenderingChildren()
         
-        for childView in childItems {
+        for childView in flowItems {
             childView.finishedRenderingChildren()
         }
         
@@ -64,6 +63,14 @@ class MobileContentFlowRow: MobileContentView {
     private var containerWidth: CGFloat {
         let containerWidth: CGFloat = frame.size.width
         return containerWidth
+    }
+    
+    private func getRemainingSpaceInRowMinusFlowItems() -> CGFloat {
+        
+        let combinedAddedFlowItemsWidth: CGFloat = flowItems.reduce(0) { $0 + $1.widthConstraintConstant }
+        let remainingSpaceInRowMinusFlowItems: CGFloat = containerWidth - combinedAddedFlowItemsWidth
+        
+        return remainingSpaceInRowMinusFlowItems
     }
     
     private func getFlowItemWidthPercentageOfContainer(flowItem: MobileContentFlowRowItem) -> CGFloat {
@@ -87,25 +94,26 @@ class MobileContentFlowRow: MobileContentView {
     private func addFlowItemView(flowItem: MobileContentFlowRowItem) -> Bool {
         
         let widthPercentage: CGFloat = getFlowItemWidthPercentageOfContainer(flowItem: flowItem)
+        let flowItemWidth: CGFloat = floor(widthPercentage * containerWidth)
         
-        guard childItems.isEmpty || widthPercentage <= remainingSpaceInPercentage else {
+        let remainingSpaceInRowMinusFlowItems: CGFloat = getRemainingSpaceInRowMinusFlowItems()
+        
+        guard flowItems.isEmpty || flowItemWidth <= remainingSpaceInRowMinusFlowItems else {
             return false
         }
                 
         super.renderChild(childView: flowItem)
         
-        childItems.append(flowItem)
+        flowItems.append(flowItem)
         
         addSubview(flowItem)
-        
-        remainingSpaceInPercentage -= widthPercentage
-        
+                
         flowItem.translatesAutoresizingMaskIntoConstraints = false
         
         flowItem.constrainTopToView(view: self)
         flowItem.constrainBottomToView(view: self)
-        flowItem.setWidthConstraint(constant: widthPercentage * containerWidth)
-        
+        flowItem.setWidthConstraint(constant: flowItemWidth)
+                        
         return true
     }
     
@@ -114,37 +122,53 @@ class MobileContentFlowRow: MobileContentView {
         guard !didLayoutHorizontalConstraints else {
             return
         }
-        
+                
         didLayoutHorizontalConstraints = true
         
-        let itemSpacing: CGFloat
+        let remainingSpaceInRowMinusFlowItems: CGFloat = getRemainingSpaceInRowMinusFlowItems()
+        
+        let itemsLeadingToRow: CGFloat
+        let itemsTrailingToRow: CGFloat
+        let spacingBetweenItems: CGFloat
         
         switch rowGravity {
             
         case .start:
-            itemSpacing = 0
+            itemsLeadingToRow = 0
+            itemsTrailingToRow = remainingSpaceInRowMinusFlowItems
+            spacingBetweenItems = 0
             
         case.center:
-            // TODO: itemSpacing should be equally set depending on remaining space.
-            itemSpacing = 0
+                    
+            let spacesNeededForLeading: CGFloat = 1
+            let spacesNeededForTrailing: CGFloat = 1
+            let spacesNeededForItems: CGFloat = CGFloat(flowItems.count) - 1
+            let numberOfSpacesNeeded: CGFloat = spacesNeededForLeading + spacesNeededForTrailing + spacesNeededForItems
+            let equalSpacing: CGFloat = remainingSpaceInRowMinusFlowItems / numberOfSpacesNeeded
+            
+            spacingBetweenItems = equalSpacing
+            itemsLeadingToRow = equalSpacing
+            itemsTrailingToRow = equalSpacing
             
         case .end:
-            itemSpacing = 0
+            itemsLeadingToRow = remainingSpaceInRowMinusFlowItems
+            itemsTrailingToRow = 0
+            spacingBetweenItems = 0
             
         default:
-            itemSpacing = 0
+            itemsLeadingToRow = 0
+            itemsTrailingToRow = remainingSpaceInRowMinusFlowItems
+            spacingBetweenItems = 0
         }
-        
-        let nextItem: MobileContentFlowRowItem
-        
-        for index in 0 ..< childItems.count {
+                
+        for index in 0 ..< flowItems.count {
             
-            let currentItem: MobileContentFlowRowItem = childItems[index]
+            let currentItem: MobileContentFlowRowItem = flowItems[index]
             let nextIndex: Int = index + 1
             
-            if nextIndex < childItems.count {
+            if nextIndex < flowItems.count {
                 
-                let nextItem: MobileContentFlowRowItem = childItems[nextIndex]
+                let nextItem: MobileContentFlowRowItem = flowItems[nextIndex]
                 
                 let leading: NSLayoutConstraint = NSLayoutConstraint(
                     item: nextItem,
@@ -153,34 +177,18 @@ class MobileContentFlowRow: MobileContentView {
                     toItem: currentItem,
                     attribute: .trailing,
                     multiplier: 1,
-                    constant: itemSpacing
+                    constant: spacingBetweenItems
                 )
                 
                 addConstraint(leading)
             }
         }
         
-        switch rowGravity {
-            
-        case .start:
-            if let firstItem = childItems.first {
-                firstItem.constrainLeadingToView(view: self)
-            }
-            
-        case.center:
-            if let firstItem = childItems.first {
-                firstItem.constrainLeadingToView(view: self)
-            }
-            
-        case .end:
-            if let lastItem = childItems.last {
-                lastItem.constrainTrailingToView(view: self)
-            }
-            
-        default:
-            if let firstItem = childItems.first {
-                firstItem.constrainLeadingToView(view: self)
-            }
+        if let firstItem = flowItems.first {
+            firstItem.constrainLeadingToView(view: self, constant: itemsLeadingToRow)
+        }
+        if let lastItem = flowItems.last {
+            lastItem.constrainTrailingToView(view: self, constant: itemsTrailingToRow)
         }
     }
 }

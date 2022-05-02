@@ -196,17 +196,10 @@ class AppDiContainer {
     }
     
     static func getNewDeepLinkingService(loggingEnabled: Bool) -> DeepLinkingServiceType {
-        return DeepLinkingService(
-            deepLinkParsers: [
-                AppsFlyerDeepLinkValueParser(),
-                ToolDeepLinkParser(),
-                ToolsDeepLinkParser(),
-                LessonDeepLinkParser(),
-                LessonsDeepLinkParser(),
-                ArticleDeepLinkParser()
-            ],
-            loggingEnabled: loggingEnabled
-        )
+        
+        let manifest = GodToolsDeepLinkingManifest()
+        
+        return DeepLinkingService(manifest: manifest)
     }
     
     func getArticleAemRepository() -> ArticleAemRepository {
