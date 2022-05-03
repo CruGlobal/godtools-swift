@@ -32,7 +32,7 @@ extension UIViewController {
         
         return addBarButtonItem(
             to: .left,
-            image: ImageCatalog.navBack.image,
+            image: ImageCatalog.navBack.uiImage,
             color: nil,
             target: target,
             action: action

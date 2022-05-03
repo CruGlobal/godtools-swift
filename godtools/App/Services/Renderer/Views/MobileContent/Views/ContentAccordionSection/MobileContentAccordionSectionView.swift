@@ -104,14 +104,14 @@ class MobileContentAccordionSectionView: MobileContentView, NibBased {
             textAlpha = 0
             textContainerBottomToView.isActive = false
             headerContainerBottomToView.isActive = true
-            textStateImage = ImageCatalog.accordionSectionPlus.image
+            textStateImage = ImageCatalog.accordionSectionPlus.uiImage
         }
         else {
             
             textAlpha = 1
             headerContainerBottomToView.isActive = false
             textContainerBottomToView.isActive = true
-            textStateImage = ImageCatalog.accordionSectionMinus.image
+            textStateImage = ImageCatalog.accordionSectionMinus.uiImage
         }
         
         textStateImageView.image = textStateImage
