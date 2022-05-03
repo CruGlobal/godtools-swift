@@ -13,9 +13,9 @@ extension ToolBackButtonImageType {
     func getImage() -> UIImage {
         switch self {
         case .backArrow:
-            return ImageCatalog.navBack.uiImage ?? UIImage()
+            return ImageCatalog.navBack.image ?? UIImage()
         case .home:
-            return ImageCatalog.navHome.uiImage ?? UIImage()
+            return ImageCatalog.navHome.image ?? UIImage()
         }
     }
 }

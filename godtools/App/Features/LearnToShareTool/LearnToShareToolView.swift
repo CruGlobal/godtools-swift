@@ -97,7 +97,7 @@ class LearnToShareToolView: UIViewController {
         if backButton == nil && !hidden {
             backButton = addBarButtonItem(
                 to: backButtonPosition,
-                image: ImageCatalog.navBack.uiImage,
+                image: ImageCatalog.navBack.image,
                 color: nil,
                 target: self,
                 action: #selector(handleBack(barButtonItem:))

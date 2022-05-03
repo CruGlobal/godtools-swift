@@ -49,7 +49,7 @@ class ToolsMenuView: UIViewController {
         
         _ = addBarButtonItem(
             to: .left,
-            image: ImageCatalog.navMenu.uiImage,
+            image: ImageCatalog.navMenu.image,
             color: .white,
             target: self,
             action: #selector(handleMenu(barButtonItem:))
@@ -216,7 +216,7 @@ class ToolsMenuView: UIViewController {
             
             chooseLanguageButton = addBarButtonItem(
                 to: .right,
-                image: ImageCatalog.navLanguage.uiImage,
+                image: ImageCatalog.navLanguage.image,
                 color: .white,
                 target: self,
                 action: #selector(handleLanguage(barButtonItem:))

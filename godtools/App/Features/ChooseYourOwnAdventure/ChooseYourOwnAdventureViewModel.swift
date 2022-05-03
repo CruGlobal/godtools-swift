@@ -11,7 +11,7 @@ import GodToolsToolParser
 
 class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOwnAdventureViewModelType {
     
-    private static let navHomeImage: UIImage? = ImageCatalog.navHome.uiImage
+    private static let navHomeImage: UIImage? = ImageCatalog.navHome.image
     
     private let localizationServices: LocalizationServices
     private let fontService: FontService
@@ -68,7 +68,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOw
             navBackImage = ChooseYourOwnAdventureViewModel.navHomeImage
         }
         else {
-            navBackImage = ImageCatalog.navBack.uiImage
+            navBackImage = ImageCatalog.navBack.image
         }
         
         backButtonImage.accept(value: navBackImage)

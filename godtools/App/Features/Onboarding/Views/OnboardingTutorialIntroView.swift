@@ -67,7 +67,7 @@ class OnboardingTutorialIntroView: UIView, NibBased {
         titleLabel.text = viewModel.title
         
         videoButton.setTitle(viewModel.videoLinkLabel, for: .normal)
-        videoButton.setImage(ImageCatalog.playIcon.uiImage, for: .normal)
+        videoButton.setImage(ImageCatalog.playIcon.image, for: .normal)
         videoButton.setImageColor(color: UIColor(red: 0.23, green: 0.64, blue: 0.86, alpha: 1.0))
         layoutVideoButtonTitleAndImage()
         

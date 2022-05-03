@@ -94,7 +94,7 @@ class ToolNavBarView: NSObject {
             _ = parentViewController.addBarButtonItem(
                 to: .right,
                 index: RightNavbarPosition.shareMenu.rawValue,
-                image: ImageCatalog.navShare.uiImage,
+                image: ImageCatalog.navShare.image,
                 color: navBarControlColor,
                 target: self,
                 action: #selector(shareButtonTapped)

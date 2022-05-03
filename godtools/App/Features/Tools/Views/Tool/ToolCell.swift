@@ -125,10 +125,10 @@ class ToolCell: UITableViewCell {
         viewModel.isFavorited.addObserver(self) { [weak self] (isFavorited: Bool) in
             let favoritedImage: UIImage?
             if isFavorited {
-                favoritedImage = ImageCatalog.favorited.uiImage
+                favoritedImage = ImageCatalog.favorited.image
             }
             else {
-                favoritedImage = ImageCatalog.notFavorited.uiImage
+                favoritedImage = ImageCatalog.notFavorited.image
             }
             self?.favoriteButton.setImage(favoritedImage, for: .normal)
         }

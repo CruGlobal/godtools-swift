@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SwiftUI
 
 enum ImageCatalog: String {
     
@@ -36,12 +35,8 @@ enum ImageCatalog: String {
     case tutorialToolNonEnglish = "tutorial_tool_non_english"
     case tutorialPeople = "tutorial_people"
     
-    var uiImage: UIImage? {
+    var image: UIImage? {
         return UIImage(named: rawValue)
-    }
-    
-    var image: Image {
-        return Image(rawValue)
     }
     
     var name: String {

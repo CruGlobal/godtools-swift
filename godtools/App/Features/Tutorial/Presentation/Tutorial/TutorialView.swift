@@ -44,7 +44,7 @@ class TutorialView: UIViewController {
         
         closeButton = addBarButtonItem(
             to: .right,
-            image: ImageCatalog.navClose.uiImage,
+            image: ImageCatalog.navClose.image,
             color: nil,
             target: self,
             action: #selector(closeButtonTapped)
@@ -93,7 +93,7 @@ class TutorialView: UIViewController {
         if backButton == nil && !hidden {
             backButton = addBarButtonItem(
                 to: backButtonPosition,
-                image: ImageCatalog.navBack.uiImage,
+                image: ImageCatalog.navBack.image,
                 color: nil,
                 target: self,
                 action: #selector(backButtonTapped)

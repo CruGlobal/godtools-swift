@@ -21,7 +21,7 @@ class ToolsMenuToolbarViewModel: ToolsMenuToolbarViewModelType {
         
         return ToolsMenuToolbarItemViewModel(
             title: localizationServices.stringForMainBundle(key: "tool_menu_item.lessons"),
-            image: ImageCatalog.toolsMenuLessons.uiImage
+            image: ImageCatalog.toolsMenuLessons.image
         )
     }
     
@@ -29,7 +29,7 @@ class ToolsMenuToolbarViewModel: ToolsMenuToolbarViewModelType {
         
         return ToolsMenuToolbarItemViewModel(
             title: localizationServices.stringForMainBundle(key: "my_tools"),
-            image: ImageCatalog.toolsMenuFavorites.uiImage
+            image: ImageCatalog.toolsMenuFavorites.image
         )
     }
     
@@ -37,7 +37,7 @@ class ToolsMenuToolbarViewModel: ToolsMenuToolbarViewModelType {
         
         return ToolsMenuToolbarItemViewModel(
             title: localizationServices.stringForMainBundle(key: "find_tools"),
-            image: ImageCatalog.toolsMenuAllTools.uiImage
+            image: ImageCatalog.toolsMenuAllTools.image
         )
     }
 }

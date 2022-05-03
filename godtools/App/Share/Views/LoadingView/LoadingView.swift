@@ -75,7 +75,7 @@ class LoadingView: UIViewController {
             closeButton = addBarButtonItem(
                 to: position,
                 index: 0,
-                image: ImageCatalog.navClose.uiImage,
+                image: ImageCatalog.navClose.image,
                 color: UIColor.black,
                 target: self,
                 action: #selector(handleClose(barButtonItem:))
