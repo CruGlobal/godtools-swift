@@ -6307,7 +6307,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "curl -o godtools/Assets/InitialResources/languages.json https://mobile-content-api.cru.org/languages.json\ncurl -o godtools/Assets/InitialResources/resources.json https://mobile-content-api.cru.org/resources?include=latest-translations,attachments.json\n";
+			shellScript = "curl -o godtools/Assets/InitialResources/languages.json https://mobile-content-api.cru.org/languages\ncurl -o godtools/Assets/InitialResources/resources.json https://mobile-content-api.cru.org/resources?include=latest-translations,attachments\n";
 		};
 		45AD220F2593C66B00A096A0 /* Run Crashlytics */ = {
 			isa = PBXShellScriptBuildPhase;
