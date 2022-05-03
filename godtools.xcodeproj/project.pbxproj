@@ -5912,9 +5912,9 @@
 		D4F719ED2817278600E079DA /* ToolCardView */ = {
 			isa = PBXGroup;
 			children = (
+				D4ACAD572821B23F00249490 /* MockToolCardViewModel.swift */,
 				D49F80F427FCD63A001AE5B3 /* ToolCardView.swift */,
 				D44C6932280479720000B970 /* ToolCardViewModel.swift */,
-				D4ACAD572821B23F00249490 /* MockToolCardViewModel.swift */,
 			);
 			path = ToolCardView;
 			sourceTree = "<group>";
