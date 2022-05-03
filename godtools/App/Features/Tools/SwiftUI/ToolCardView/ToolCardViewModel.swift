@@ -52,20 +52,16 @@ class ToolCardViewModel: NSObject, ObservableObject {
         languageSettingsService.primaryLanguage.removeObserver(self)
         languageSettingsService.parallelLanguage.removeObserver(self)
     }
-}
  
-// MARK: - Public
-
-extension ToolCardViewModel {
+    
+    // MARK: - Public
     
     func favoritedButtonTapped() {
         favoritedResourcesCache.toggleFavorited(resourceId: resource.id)
     }
-}
  
-// MARK: - Private
-
-extension ToolCardViewModel {
+    
+    // MARK: - Private
     
     private func setupPublishedProperties() {
         bannerImage = getBannerImage()
@@ -120,7 +116,7 @@ extension ToolCardViewModel {
         }
     }
     
-    private func reloadDataForPrimaryLanguage() {
+    internal func reloadDataForPrimaryLanguage() {
         let resourcesCache: ResourcesCache = dataDownloader.resourcesCache
              
         let toolName: String
