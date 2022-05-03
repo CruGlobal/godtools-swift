@@ -132,6 +132,6 @@ enum FlowStep {
     case backTappedFromChooseYourOwnAdventure
     case chooseYourOwnAdventureFlowCompleted(state: ChooseYourOwnAdventureFlowCompletedState)
     
-    // renderer
-    case dismissRendererPages
+    // mobile content renderer events
+    case didTriggerDismissToolEventFromMobileContentRenderer
 }

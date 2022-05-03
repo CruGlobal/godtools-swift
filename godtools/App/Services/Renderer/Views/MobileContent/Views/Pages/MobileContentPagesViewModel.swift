@@ -323,7 +323,7 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         
         for eventId in eventIds {
             if currentPageRenderer.manifest.dismissListeners.contains(eventId) {
-                dismissPages()
+                handleDismissToolEvent()
                 return
             }
         }
@@ -343,8 +343,8 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         currentPage = page
     }
     
-    func dismissPages() {
+    func handleDismissToolEvent() {
         
-        flowDelegate?.navigate(step: .dismissRendererPages)
+        flowDelegate?.navigate(step: .didTriggerDismissToolEventFromMobileContentRenderer)
     }
 }
