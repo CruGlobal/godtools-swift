@@ -14,6 +14,8 @@
 		4502BD3E279F3B4D000C544A /* MobileContentFlowItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4502BD3D279F3B4D000C544A /* MobileContentFlowItemView.swift */; };
 		4502BD40279F3B6B000C544A /* MobileContentFlowItemViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4502BD3F279F3B6B000C544A /* MobileContentFlowItemViewModelType.swift */; };
 		4502BD42279F3B72000C544A /* MobileContentFlowItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4502BD41279F3B72000C544A /* MobileContentFlowItemViewModel.swift */; };
+		4503BEFE2821B7D800629692 /* resources.json in Resources */ = {isa = PBXBuildFile; fileRef = 4503BEFC2821B7D800629692 /* resources.json */; };
+		4503BEFF2821B7D800629692 /* languages.json in Resources */ = {isa = PBXBuildFile; fileRef = 4503BEFD2821B7D800629692 /* languages.json */; };
 		45051205275AA7050081BF56 /* MobileContentParagraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45051204275AA7050081BF56 /* MobileContentParagraphView.swift */; };
 		45051207275AA71F0081BF56 /* MobileContentParagraphViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45051206275AA71F0081BF56 /* MobileContentParagraphViewModel.swift */; };
 		45051209275AA7260081BF56 /* MobileContentParagraphViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45051208275AA7260081BF56 /* MobileContentParagraphViewModelType.swift */; };
@@ -69,8 +71,6 @@
 		451CCF1A27A9D42200E8D2D3 /* MobileContentPagePositionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CCF1927A9D42200E8D2D3 /* MobileContentPagePositionState.swift */; };
 		451CCF1D27A9D87600E8D2D3 /* MobileContentCardCollectionPagePositionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CCF1C27A9D87600E8D2D3 /* MobileContentCardCollectionPagePositionState.swift */; };
 		451CCF2027A9DB2D00E8D2D3 /* PageNavigationCollectionViewNavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CCF1F27A9DB2D00E8D2D3 /* PageNavigationCollectionViewNavigationModel.swift */; };
-		451EBE2724AD968B00C4D6DD /* languages.json in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE0D24AD968A00C4D6DD /* languages.json */; };
-		451EBE2824AD968B00C4D6DD /* resources.json in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE0E24AD968A00C4D6DD /* resources.json */; };
 		451EBE2924AD968B00C4D6DD /* bae08d104b5ad1e9d7f97a25a88800adbce94cf36c508deaf3a2067f45919a36.png in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE1024AD968A00C4D6DD /* bae08d104b5ad1e9d7f97a25a88800adbce94cf36c508deaf3a2067f45919a36.png */; };
 		451EBE2A24AD968B00C4D6DD /* a6765002e46cea44dc6245bcb842ce01a0134c147c47cf108134a4c4d1a5c129.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE1124AD968A00C4D6DD /* a6765002e46cea44dc6245bcb842ce01a0134c147c47cf108134a4c4d1a5c129.jpg */; };
 		451EBE2B24AD968B00C4D6DD /* e5dd66976d53a69bbd12867079750e14732c5112a254022c038738f7f12953a8.png in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE1224AD968A00C4D6DD /* e5dd66976d53a69bbd12867079750e14732c5112a254022c038738f7f12953a8.png */; };
@@ -1034,6 +1034,8 @@
 		4502BD3D279F3B4D000C544A /* MobileContentFlowItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentFlowItemView.swift; sourceTree = "<group>"; };
 		4502BD3F279F3B6B000C544A /* MobileContentFlowItemViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentFlowItemViewModelType.swift; sourceTree = "<group>"; };
 		4502BD41279F3B72000C544A /* MobileContentFlowItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentFlowItemViewModel.swift; sourceTree = "<group>"; };
+		4503BEFC2821B7D800629692 /* resources.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = resources.json; sourceTree = "<group>"; };
+		4503BEFD2821B7D800629692 /* languages.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = languages.json; sourceTree = "<group>"; };
 		45051204275AA7050081BF56 /* MobileContentParagraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentParagraphView.swift; sourceTree = "<group>"; };
 		45051206275AA71F0081BF56 /* MobileContentParagraphViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentParagraphViewModel.swift; sourceTree = "<group>"; };
 		45051208275AA7260081BF56 /* MobileContentParagraphViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentParagraphViewModelType.swift; sourceTree = "<group>"; };
@@ -1086,8 +1088,6 @@
 		451CCF1927A9D42200E8D2D3 /* MobileContentPagePositionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentPagePositionState.swift; sourceTree = "<group>"; };
 		451CCF1C27A9D87600E8D2D3 /* MobileContentCardCollectionPagePositionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentCardCollectionPagePositionState.swift; sourceTree = "<group>"; };
 		451CCF1F27A9DB2D00E8D2D3 /* PageNavigationCollectionViewNavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageNavigationCollectionViewNavigationModel.swift; sourceTree = "<group>"; };
-		451EBE0D24AD968A00C4D6DD /* languages.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = languages.json; sourceTree = "<group>"; };
-		451EBE0E24AD968A00C4D6DD /* resources.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = resources.json; sourceTree = "<group>"; };
 		451EBE1024AD968A00C4D6DD /* bae08d104b5ad1e9d7f97a25a88800adbce94cf36c508deaf3a2067f45919a36.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bae08d104b5ad1e9d7f97a25a88800adbce94cf36c508deaf3a2067f45919a36.png; sourceTree = "<group>"; };
 		451EBE1124AD968A00C4D6DD /* a6765002e46cea44dc6245bcb842ce01a0134c147c47cf108134a4c4d1a5c129.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = a6765002e46cea44dc6245bcb842ce01a0134c147c47cf108134a4c4d1a5c129.jpg; sourceTree = "<group>"; };
 		451EBE1224AD968A00C4D6DD /* e5dd66976d53a69bbd12867079750e14732c5112a254022c038738f7f12953a8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = e5dd66976d53a69bbd12867079750e14732c5112a254022c038738f7f12953a8.png; sourceTree = "<group>"; };
@@ -2385,8 +2385,8 @@
 				451EBE1F24AD968A00C4D6DD /* attachment_about_banners */,
 				451EBE0F24AD968A00C4D6DD /* attachment_banners */,
 				451EBE1A24AD968A00C4D6DD /* english_translations */,
-				451EBE0D24AD968A00C4D6DD /* languages.json */,
-				451EBE0E24AD968A00C4D6DD /* resources.json */,
+				4503BEFD2821B7D800629692 /* languages.json */,
+				4503BEFC2821B7D800629692 /* resources.json */,
 			);
 			path = InitialResources;
 			sourceTree = "<group>";
@@ -5907,6 +5907,7 @@
 				4F5732861EA69CF00082035C /* Frameworks */,
 				4F5732871EA69CF00082035C /* Resources */,
 				D28899168EA8F78D5A9CD0D1 /* [CP] Embed Pods Frameworks */,
+				4503BEFB2821B6E500629692 /* Download And Add Initial Resources and Languages JSON Files */,
 				45AD220F2593C66B00A096A0 /* Run Crashlytics */,
 			);
 			buildRules = (
@@ -6147,7 +6148,6 @@
 				45B6482925E593110098BAF1 /* (null) in Resources */,
 				451EBE2E24AD968B00C4D6DD /* 1958f6ba22b659adfc7eb43dcfac7cc5cfe192df45437355aa99a8752192ed92.jpg in Resources */,
 				45CB9FA3261F8BA80036BEB3 /* ToolsMenuToolbarItemView.xib in Resources */,
-				451EBE2724AD968B00C4D6DD /* languages.json in Resources */,
 				455583FC269F2DA500C3FF14 /* MobileContentInputView.xib in Resources */,
 				451A17542756C10400D35D78 /* tutorial_tooltip.json in Resources */,
 				451EBE2D24AD968B00C4D6DD /* e999c849242ba4abf20560274f92dd6c77631992d10db0eca5515e80ffb431c6.jpg in Resources */,
@@ -6172,6 +6172,7 @@
 				45AD217F2593ABC800A096A0 /* README.md in Resources */,
 				4F5732971EA69CF00082035C /* Assets.xcassets in Resources */,
 				451EBE2C24AD968B00C4D6DD /* 057e056ad4c27921d537c74f8e59396214330a1ed084efcb5d265d01cb7f0d4e.jpg in Resources */,
+				4503BEFE2821B7D800629692 /* resources.json in Resources */,
 				4555840A269F2DA500C3FF14 /* MobileContentPageCell.xib in Resources */,
 				4555832B269F2C7B00C3FF14 /* ToolPageCardView.xib in Resources */,
 				45AD1B6025938A4F00A096A0 /* GlobalActivityHeaderView.xib in Resources */,
@@ -6188,7 +6189,6 @@
 				451EBE3224AD968B00C4D6DD /* 86c8e65bddaa4b889e572aa89714ee846f27294abc62b69d291b52ea1cc05144.jpg in Resources */,
 				45AD1B5925938A4F00A096A0 /* AccountView.xib in Resources */,
 				451A17532756C10400D35D78 /* tutorial_lessons.json in Resources */,
-				451EBE2824AD968B00C4D6DD /* resources.json in Resources */,
 				4556AECE23E22185002C15E8 /* SF-Pro-Text-Light.otf in Resources */,
 				45BF6EBC27050A3F003596A4 /* TransparentModalView.xib in Resources */,
 				451EBE3424AD968B00C4D6DD /* 2615.zip in Resources */,
@@ -6214,6 +6214,7 @@
 				4513C2EE2704683400614F79 /* SetupParallelLanguageView.xib in Resources */,
 				450E444D2756B66300D4311E /* MenuSectionHeaderView.xib in Resources */,
 				451EBE2B24AD968B00C4D6DD /* e5dd66976d53a69bbd12867079750e14732c5112a254022c038738f7f12953a8.png in Resources */,
+				4503BEFF2821B7D800629692 /* languages.json in Resources */,
 				45AD1ABC25938A4E00A096A0 /* FavoritedToolsView.xib in Resources */,
 				451EBE2A24AD968B00C4D6DD /* a6765002e46cea44dc6245bcb842ce01a0134c147c47cf108134a4c4d1a5c129.jpg in Resources */,
 				D19EB5DE259BB39300685156 /* training_tip_callout.json in Resources */,
@@ -6289,6 +6290,24 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		4503BEFB2821B6E500629692 /* Download And Add Initial Resources and Languages JSON Files */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Download And Add Initial Resources and Languages JSON Files";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "curl -o godtools/Assets/InitialResources/languages.json https://mobile-content-api.cru.org/languages.json\ncurl -o godtools/Assets/InitialResources/resources.json https://mobile-content-api.cru.org/resources?include=latest-translations,attachments.json\n";
 		};
 		45AD220F2593C66B00A096A0 /* Run Crashlytics */ = {
 			isa = PBXShellScriptBuildPhase;
