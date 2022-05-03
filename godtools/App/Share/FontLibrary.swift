@@ -17,6 +17,7 @@ enum FontLibrary: String {
     case notoSansMyanmarBold = "NotoSansMyanmarUI-CondensedBold"
     case notoSansMyanmar = "NotoSansMyanmarUI-Condensed"
     case sfProDisplayLight = "SFProDisplay-Light"
+    case sfProTextBold = "SFProText-Bold"
     case sfProTextLight = "SFProText-Light"
     case sfProTextRegular = "SFProText-Regular"
     case sfProTextSemibold = "SFProText-Semibold"
