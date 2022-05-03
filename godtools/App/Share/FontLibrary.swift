@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 enum FontLibrary: String {
     
@@ -20,7 +21,7 @@ enum FontLibrary: String {
     case sfProTextRegular = "SFProText-Regular"
     case sfProTextSemibold = "SFProText-Semibold"
     
-    func font(size: CGFloat) -> UIFont? {
+    func uiFont(size: CGFloat) -> UIFont? {
         
         if let font = UIFont(name: rawValue, size: size) {
             return font
@@ -31,6 +32,10 @@ enum FontLibrary: String {
         FontLibrary.logAvailableFonts()
         
         return nil
+    }
+    
+    func font(size: CGFloat) -> Font {
+        return Font.custom(rawValue, size: size)
     }
     
     static func logAvailableFonts() {
