@@ -131,4 +131,7 @@ enum FlowStep {
     // choose your own adventure
     case backTappedFromChooseYourOwnAdventure
     case chooseYourOwnAdventureFlowCompleted(state: ChooseYourOwnAdventureFlowCompletedState)
+    
+    // mobile content renderer events
+    case didTriggerDismissToolEventFromMobileContentRenderer
 }

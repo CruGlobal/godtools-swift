@@ -70,28 +70,12 @@ class LessonView: MobileContentPagesView {
         viewModel.lessonMostVisiblePageDidChange(page: page)
     }
     
-    override func didConfigurePageView(pageView: MobileContentPageView) {
-        super.didConfigurePageView(pageView: pageView)
-        
-        if let lessonPage = pageView as? LessonPageView {
-            lessonPage.setLessonPageDelegate(delegate: self)
-        }
-    }
-    
     @objc func previousPageButtonTapped() {
         pageNavigationView.scrollToPreviousPage(animated: true)
     }
     
     @objc func nextPageButtonTapped() {
         pageNavigationView.scrollToNextPage(animated: true)
-    }
-}
-
-// MARK: - LessonPageViewDelegate
-
-extension LessonView: LessonPageViewDelegate {
-    func lessonPageCloseLessonTapped(lessonPage: LessonPageView) {
-        viewModel.closeTapped()
     }
 }
 
