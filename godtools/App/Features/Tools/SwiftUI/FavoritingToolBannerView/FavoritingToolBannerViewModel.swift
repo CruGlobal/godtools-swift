@@ -17,7 +17,6 @@ class FavoritingToolBannerViewModel: NSObject, ObservableObject {
     
     // MARK: - Properties
     
-    private let favoritingToolMessageCache: FavoritingToolMessageCache
     private let localizationServices: LocalizationServices
     weak private var delegate: FavoritingToolBannerDelegate?
     
@@ -28,7 +27,6 @@ class FavoritingToolBannerViewModel: NSObject, ObservableObject {
     // MARK: - Init
     
     init(favoritingToolMessageCache: FavoritingToolMessageCache, localizationServices: LocalizationServices, delegate: FavoritingToolBannerDelegate?) {
-        self.favoritingToolMessageCache = favoritingToolMessageCache
         self.localizationServices = localizationServices
         self.delegate = delegate
         
