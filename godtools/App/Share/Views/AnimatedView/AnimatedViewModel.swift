@@ -6,7 +6,7 @@
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import Lottie
 
 class AnimatedViewModel: AnimatedViewModelType {

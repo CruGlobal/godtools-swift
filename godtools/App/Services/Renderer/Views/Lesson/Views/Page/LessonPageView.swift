@@ -9,20 +9,13 @@
 import UIKit
 import GodToolsToolParser
 
-protocol LessonPageViewDelegate: AnyObject {
-    
-    func lessonPageCloseLessonTapped(lessonPage: LessonPageView)
-}
-
 class LessonPageView: MobileContentPageView {
     
     private let viewModel: LessonPageViewModelType
     private let safeArea: UIEdgeInsets
     
     private var contentView: MobileContentStackView?
-    
-    private weak var delegate: LessonPageViewDelegate?
-    
+        
     @IBOutlet weak private var topInset: UIView!
     @IBOutlet weak private var contentContainerView: UIView!
     @IBOutlet weak private var bottomInset: UIView!
@@ -73,10 +66,6 @@ class LessonPageView: MobileContentPageView {
         
     }
     
-    func setLessonPageDelegate(delegate: LessonPageViewDelegate?) {
-        self.delegate = delegate
-    }
-    
     // MARK: - MobileContentView
 
     override func renderChild(childView: MobileContentView) {
@@ -85,17 +74,6 @@ class LessonPageView: MobileContentPageView {
         
         if let contentView = childView as? MobileContentStackView {
             addContentView(contentView: contentView)
-        }
-    }
-    
-    override func didReceiveEvents(eventIds: [EventId]) {
-        
-        super.didReceiveEvents(eventIds: eventIds)
-        
-        for eventId in eventIds {
-            if viewModel.manifestDismissListeners.contains(eventId) {
-                delegate?.lessonPageCloseLessonTapped(lessonPage: self)
-            }
         }
     }
     

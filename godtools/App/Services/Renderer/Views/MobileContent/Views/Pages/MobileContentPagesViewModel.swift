@@ -316,9 +316,20 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     func pageDidReceiveEvents(eventIds: [EventId]) {
     
         trackContentEvents(eventIds: eventIds)
+
+        guard let currentPageRenderer = currentPageRenderer else {
+            return
+        }
         
-        if let didReceivePageListenerForPageNumber = currentPageRenderer?.getPageForListenerEvents(eventIds: eventIds),
-           let didReceivePageListenerEventForPageModel = currentPageRenderer?.getPageModel(page: didReceivePageListenerForPageNumber)  {
+        for eventId in eventIds {
+            if currentPageRenderer.manifest.dismissListeners.contains(eventId) {
+                handleDismissToolEvent()
+                return
+            }
+        }
+                        
+        if let didReceivePageListenerForPageNumber = currentPageRenderer.getPageForListenerEvents(eventIds: eventIds),
+           let didReceivePageListenerEventForPageModel = currentPageRenderer.getPageModel(page: didReceivePageListenerForPageNumber)  {
             
             didReceivePageListenerForPage(
                 page: didReceivePageListenerForPageNumber,
@@ -330,5 +341,10 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     func didChangeMostVisiblePage(page: Int) {
         
         currentPage = page
+    }
+    
+    func handleDismissToolEvent() {
+        
+        flowDelegate?.navigate(step: .didTriggerDismissToolEventFromMobileContentRenderer)
     }
 }

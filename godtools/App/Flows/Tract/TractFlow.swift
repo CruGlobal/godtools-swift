@@ -227,6 +227,9 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             
             lessonFlow = nil
             
+        case .didTriggerDismissToolEventFromMobileContentRenderer:
+            closeTool()
+            
         default:
             break
         }
