@@ -12,7 +12,7 @@ struct FavoritingToolBannerView: View {
     
     // MARK: - Properties
     
-    @ObservedObject var viewModel: FavoritingToolBannerViewModel
+    @ObservedObject var viewModel: BaseFavoritingToolBannerViewModel
     
     // MARK: - Body
     
@@ -49,7 +49,7 @@ struct FavoritingToolBannerView: View {
 struct FavoritingToolBannerView_Previews: PreviewProvider {
     static var previews: some View {
         
-        FavoritingToolBannerView(viewModel: MockFavoritingToolBannerViewModel(message: "This is a test message.  It's pretty long.  Let's see what happens when the lines need to wrap."))
+        FavoritingToolBannerView(viewModel: BaseFavoritingToolBannerViewModel(message: "This is a test message.  It's pretty long.  Let's see what happens when the lines need to wrap.", delegate: nil))
             .frame(width: 375)
             .previewLayout(.sizeThatFits)
     }

@@ -8,34 +8,25 @@
 
 import Foundation
 
-protocol FavoritingToolBannerDelegate: AnyObject {
-    
-    func closeBanner()
-}
-
-class FavoritingToolBannerViewModel: NSObject, ObservableObject {
+class FavoritingToolBannerViewModel: BaseFavoritingToolBannerViewModel {
     
     // MARK: - Properties
     
     private let localizationServices: LocalizationServices
-    weak private var delegate: FavoritingToolBannerDelegate?
-    
-    // MARK: - Published
-    
-    @Published var message: String
     
     // MARK: - Init
     
     init(favoritingToolMessageCache: FavoritingToolMessageCache, localizationServices: LocalizationServices, delegate: FavoritingToolBannerDelegate?) {
         self.localizationServices = localizationServices
-        self.delegate = delegate
         
-        message = localizationServices.stringForMainBundle(key: "tool_offline_favorite_message")
+        let message = localizationServices.stringForMainBundle(key: "tool_offline_favorite_message")
+        
+        super.init(message: message, delegate: delegate)
     }
     
     // MARK: - Public
     
-    func closeTapped() {
+    override func closeTapped() {
         delegate?.closeBanner()
     }
 }
