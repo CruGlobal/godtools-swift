@@ -24,7 +24,7 @@ struct FavoritingToolBannerView: View {
                 Spacer()
                 
                 Text(viewModel.message)
-                    .font(.system(size: 18))
+                    .font(FontLibrary.sfProTextRegular.font(size: 18))
                     .multilineTextAlignment(.center)
                     .foregroundColor(ColorPalette.gtGrey.color)
                     .padding([.top, .bottom], 30)
