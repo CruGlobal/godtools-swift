@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-class ToolCardViewModel: NSObject, ObservableObject {
+class ToolCardViewModel: BaseToolCardViewModel {
     
     // MARK: - Properties
     
@@ -20,25 +20,7 @@ class ToolCardViewModel: NSObject, ObservableObject {
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
     
-    // MARK: - Published
-    
-    @Published var bannerImage: Image?
-    @Published var isFavorited = false
-    @Published var title: String = ""
-    @Published var category: String = ""
-    @Published var parallelLanguageName: String = ""
-    @Published var layoutDirection: LayoutDirection = .leftToRight
-    
     // MARK: - Init
-    
-    static func setup(resource: ResourceModel, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices) -> ToolCardViewModel {
-        
-        let toolCardViewModel = ToolCardViewModel(resource: resource, dataDownloader: dataDownloader, deviceAttachmentBanners: deviceAttachmentBanners, favoritedResourcesCache: favoritedResourcesCache, languageSettingsService: languageSettingsService, localizationServices: localizationServices)
-        
-        toolCardViewModel.setup()
-        
-        return toolCardViewModel
-    }
     
     init(resource: ResourceModel, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices) {
         
@@ -50,6 +32,8 @@ class ToolCardViewModel: NSObject, ObservableObject {
         self.localizationServices = localizationServices
                 
         super.init()
+        
+        setup()
     }
     
     deinit {
@@ -62,7 +46,7 @@ class ToolCardViewModel: NSObject, ObservableObject {
     
     // MARK: - Public
     
-    func favoritedButtonTapped() {
+    override func favoritedButtonTapped() {
         favoritedResourcesCache.toggleFavorited(resourceId: resource.id)
     }
  

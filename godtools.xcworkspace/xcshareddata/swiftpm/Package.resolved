@@ -1,70 +1,68 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "AppsFlyerLib",
-        "repositoryURL": "https://github.com/AppsFlyerSDK/AppsFlyerFramework.git",
-        "state": {
-          "branch": null,
-          "revision": "0021c8848a3e1f022989a01763d3678a6b6b15e7",
-          "version": "6.4.2"
-        }
-      },
-      {
-        "package": "Lottie",
-        "repositoryURL": "https://github.com/airbnb/lottie-ios.git",
-        "state": {
-          "branch": null,
-          "revision": "79a0b70547f7c40ea54c67487f935fa2f2eaaadc",
-          "version": "3.2.3"
-        }
-      },
-      {
-        "package": "OktaAuthentication",
-        "repositoryURL": "https://github.com/CruGlobal/okta-authentication-ios.git",
-        "state": {
-          "branch": null,
-          "revision": "1af791ad7baf2e9cfd3a9332c0d2a01dc90eaf7c",
-          "version": "1.2.1"
-        }
-      },
-      {
-        "package": "OktaOidc",
-        "repositoryURL": "https://github.com/okta/okta-oidc-ios.git",
-        "state": {
-          "branch": null,
-          "revision": "555cac26344a9562837f1e24dfa2fcceb98d274f",
-          "version": "3.10.8"
-        }
-      },
-      {
-        "package": "Realm",
-        "repositoryURL": "https://github.com/realm/realm-cocoa.git",
-        "state": {
-          "branch": null,
-          "revision": "328425bfc372ce77ec1f4f2701f61ececbb97d84",
-          "version": "10.19.0"
-        }
-      },
-      {
-        "package": "RealmDatabase",
-        "repositoryURL": "https://github.com/realm/realm-core",
-        "state": {
-          "branch": null,
-          "revision": "b170db6a47789ff5f2fbc3eeed0220b4b0a3f6b7",
-          "version": "11.6.0"
-        }
-      },
-      {
-        "package": "RequestOperation",
-        "repositoryURL": "https://github.com/CruGlobal/request-operation-ios.git",
-        "state": {
-          "branch": null,
-          "revision": "9b222164f89e8437cb985640da979687bbb7b919",
-          "version": "1.2.1"
-        }
+  "pins" : [
+    {
+      "identity" : "appsflyerframework",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/AppsFlyerSDK/AppsFlyerFramework.git",
+      "state" : {
+        "revision" : "0021c8848a3e1f022989a01763d3678a6b6b15e7",
+        "version" : "6.4.2"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "lottie-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/airbnb/lottie-ios.git",
+      "state" : {
+        "revision" : "79a0b70547f7c40ea54c67487f935fa2f2eaaadc",
+        "version" : "3.2.3"
+      }
+    },
+    {
+      "identity" : "okta-authentication-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/CruGlobal/okta-authentication-ios.git",
+      "state" : {
+        "revision" : "1af791ad7baf2e9cfd3a9332c0d2a01dc90eaf7c",
+        "version" : "1.2.1"
+      }
+    },
+    {
+      "identity" : "okta-oidc-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/okta/okta-oidc-ios.git",
+      "state" : {
+        "revision" : "555cac26344a9562837f1e24dfa2fcceb98d274f",
+        "version" : "3.10.8"
+      }
+    },
+    {
+      "identity" : "realm-cocoa",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/realm/realm-cocoa.git",
+      "state" : {
+        "revision" : "328425bfc372ce77ec1f4f2701f61ececbb97d84",
+        "version" : "10.19.0"
+      }
+    },
+    {
+      "identity" : "realm-core",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/realm/realm-core",
+      "state" : {
+        "revision" : "b170db6a47789ff5f2fbc3eeed0220b4b0a3f6b7",
+        "version" : "11.6.0"
+      }
+    },
+    {
+      "identity" : "request-operation-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/CruGlobal/request-operation-ios.git",
+      "state" : {
+        "revision" : "9b222164f89e8437cb985640da979687bbb7b919",
+        "version" : "1.2.1"
+      }
+    }
+  ],
+  "version" : 2
 }
