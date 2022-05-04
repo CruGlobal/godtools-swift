@@ -33,9 +33,9 @@ struct FavoritingToolBannerView: View {
                 Spacer()
             }
             
-            Image("nav_item_close")
-                .padding(.top, 14)
-                .padding(.trailing, 18)
+            Image(ImageCatalog.navClose.name)
+                .padding(.trailing, 4)
+                .frame(width: 44, height: 44)
                 .onTapGesture {
                     withAnimation {
                         viewModel.closeTapped()
