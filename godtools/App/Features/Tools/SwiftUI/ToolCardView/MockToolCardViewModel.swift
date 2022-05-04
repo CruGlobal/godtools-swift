@@ -6,12 +6,12 @@
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
 
 class MockToolCardViewModel: ToolCardViewModel {
     let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
     
-    init(title: String, category: String, showParallelLanguage: Bool) {
+    init(title: String, category: String, showParallelLanguage: Bool, showBannerImage: Bool) {
         super.init(
                 resource: appDiContainer.initialDataDownloader.resourcesCache.getResource(id: "2")!,
                 dataDownloader: appDiContainer.initialDataDownloader,
@@ -27,7 +27,9 @@ class MockToolCardViewModel: ToolCardViewModel {
         if showParallelLanguage {
             parallelLanguageName = "Arabic (Bahrain) ✓"
         }
+        
+        if showBannerImage, let deviceImage = appDiContainer.deviceAttachmentBanners.getDeviceBanner(resourceId: "2") {
+            bannerImage = Image(uiImage: deviceImage)
+        }
     }
-    
-    override func reloadDataForPrimaryLanguage() {}
 }

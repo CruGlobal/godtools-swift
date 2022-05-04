@@ -90,7 +90,8 @@ struct ToolCardView_Previews: PreviewProvider {
                             MockToolCardViewModel(
                                 title: "Knowing God Personally",
                                 category: "Gospel Invitation",
-                                showParallelLanguage: true
+                                showParallelLanguage: true,
+                                showBannerImage: true
                             ),
                          cardWidth: geo.size.width)
         }

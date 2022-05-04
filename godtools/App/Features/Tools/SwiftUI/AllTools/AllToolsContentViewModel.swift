@@ -59,7 +59,7 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
 extension AllToolsContentViewModel {
     
     func cardViewModel(for tool: ResourceModel) -> ToolCardViewModel {
-        return ToolCardViewModel(
+        return ToolCardViewModel.setup(
             resource: tool,
             dataDownloader: dataDownloader,
             deviceAttachmentBanners: deviceAttachmentBanners,
