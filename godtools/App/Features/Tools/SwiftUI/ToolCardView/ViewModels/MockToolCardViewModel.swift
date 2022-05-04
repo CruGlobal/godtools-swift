@@ -8,18 +8,11 @@
 
 import SwiftUI
 
-class MockToolCardViewModel: ToolCardViewModel {
+class MockToolCardViewModel: BaseToolCardViewModel {
     let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
     
     init(title: String, category: String, showParallelLanguage: Bool, showBannerImage: Bool) {
-        super.init(
-                resource: appDiContainer.initialDataDownloader.resourcesCache.getResource(id: "2")!,
-                dataDownloader: appDiContainer.initialDataDownloader,
-                deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
-                favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
-                languageSettingsService: appDiContainer.languageSettingsService,
-                localizationServices: appDiContainer.localizationServices
-            )
+        super.init()
         
         self.title = title
         self.category = category
