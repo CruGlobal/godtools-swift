@@ -14,6 +14,7 @@ enum ColorPalette {
     
     case gtBlue
     case gtGrey
+    case gtLightGrey
     case primaryNavBar
     case banner
     
@@ -22,6 +23,7 @@ enum ColorPalette {
         switch self {
         case .gtBlue:           return Color("gtBlue")
         case .gtGrey:           return Color("gtGrey")
+        case .gtLightGrey:      return Color("gtLightGrey")
         case .primaryNavBar:    return Color("gtBlue")
         case .banner:           return Color("banner")
         }
@@ -37,6 +39,7 @@ enum ColorPalette {
             switch self {
             case .gtBlue:           return getGtBlueColor()
             case .gtGrey:           return getGtBlueColor()
+            case .gtLightGrey:      return getGtLightGreyColor()
             case .primaryNavBar:    return getGtBlueColor()
             case .banner:           return getBannerColor()
             }
@@ -44,13 +47,17 @@ enum ColorPalette {
     }
     
     private func getGtBlueColor() -> UIColor {
-        return UIColor(red: 59.0 / 255.0, green: 164.0 / 255.0, blue: 219.0 / 255.0, alpha: 1.0)
+        return UIColor(red: 59 / 255, green: 164 / 255, blue: 219 / 255, alpha: 1.0)
     }
     
     private func getGtGreyColor() -> UIColor {
-        return UIColor(red: 90.0 / 255.0, green: 90.0 / 255.0, blue: 90.0 / 255.0, alpha: 1.0)
+        return UIColor(red: 90 / 255, green: 90 / 255, blue: 90 / 255, alpha: 1.0)
     }
     
+    private func getGtLightGreyColor() -> UIColor {
+        return UIColor(red: 128 / 255.0, green: 130 / 255, blue: 132 / 255, alpha: 1.0)
+    }
+
     private func getBannerColor() -> UIColor {
         return UIColor(red: 219 / 255, green: 243 / 255, blue: 255 / 255, alpha: 1)
     }
