@@ -73,7 +73,7 @@ extension AllToolsContentViewModel {
     
     func favoritingToolBannerViewModel() -> FavoritingToolBannerViewModel {
         
-        return FavoritingToolBannerViewModel(favoritingToolMessageCache: favoritingToolMessageCache, localizationServices: localizationServices, delegate: self)
+        return FavoritingToolBannerViewModel(localizationServices: localizationServices, delegate: self)
     }
     
     func refreshTools() {

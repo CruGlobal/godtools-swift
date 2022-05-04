@@ -16,7 +16,7 @@ class FavoritingToolBannerViewModel: BaseFavoritingToolBannerViewModel {
     
     // MARK: - Init
     
-    init(favoritingToolMessageCache: FavoritingToolMessageCache, localizationServices: LocalizationServices, delegate: FavoritingToolBannerDelegate?) {
+    init(localizationServices: LocalizationServices, delegate: FavoritingToolBannerDelegate?) {
         self.localizationServices = localizationServices
         
         let message = localizationServices.stringForMainBundle(key: "tool_offline_favorite_message")
