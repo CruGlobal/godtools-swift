@@ -23,7 +23,6 @@ struct ToolCardView: View {
         static let cardWidth: CGFloat = 335
         static let bannerImageAspectRatio: CGFloat = cardWidth/bannerImageHeight
         static let bannerImageHeight: CGFloat = 87
-        static let leadingPadding: CGFloat = 15
         static let cornerRadius: CGFloat = 6
     }
     
@@ -53,9 +52,9 @@ struct ToolCardView: View {
                 
                 // MARK: - Progress Bars
                 ZStack {
-                    ProgressBarView(color: .yellow, progress: 0.75)
-                    ProgressBarView(color: .purple, progress: 0.55)
-                    ProgressBarView(color: ColorPalette.progressBarBlue.color, progress: 0.25)
+                    ProgressBarView(color: .yellow, progress: viewModel.attachmentsDownloadProgressValue)
+                    ProgressBarView(color: .purple, progress: viewModel.articlesDownloadProgressValue)
+                    ProgressBarView(color: ColorPalette.progressBarBlue.color, progress: viewModel.translationDownloadProgressValue)
                 }
                 .frame(height: 2)
                 
@@ -71,8 +70,7 @@ struct ToolCardView: View {
                             .font(FontLibrary.sfProTextRegular.font(size: 14))
                             .foregroundColor(ColorPalette.gtGrey.color)
                     }
-                    .padding(.leading, Sizes.leadingPadding)
-                    .padding(.bottom, 15)
+                    .padding([.leading, .bottom], 15)
                     
                     Spacer()
                     
