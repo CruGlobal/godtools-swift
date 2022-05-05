@@ -94,7 +94,7 @@ class ToolPageModalView: MobileContentView, NibBased {
         if viewModel.listeners.contains(eventId) && !isFollowUpEvent {
             delegate?.toolPageModalListenerActivated(modalView: self)
         }
-        else if viewModel.dismissListeners.contains(eventId) {
+        else if viewModel.dismissListeners.contains(eventId) && !isFollowUpEvent {
             delegate?.toolPageModalDismissListenerActivated(modalView: self)
         }
         
