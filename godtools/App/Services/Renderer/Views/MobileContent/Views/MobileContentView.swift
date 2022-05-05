@@ -151,7 +151,7 @@ class MobileContentView: UIView {
                 
         walkUpHierarchyAndSendEventsToChildren(view: self, eventIds: &eventIds)
                 
-        recurseChildrenAndSendEvents(view: getRootView(), eventIds: &eventIds)
+        recurseChildrenAndSendEventsFromView(view: getRootView(), eventIds: &eventIds)
     }
     
     private func walkUpHierarchyAndSendEventsToChildren(view: MobileContentView, eventIds: inout [EventId]) {
@@ -172,14 +172,14 @@ class MobileContentView: UIView {
         }
     }
     
-    private func recurseChildrenAndSendEvents(view: MobileContentView, eventIds: inout [EventId]) {
+    private func recurseChildrenAndSendEventsFromView(view: MobileContentView, eventIds: inout [EventId]) {
         
         guard !eventIds.isEmpty else {
             return
         }
         
         for childView in view.children {
-            recurseChildrenAndSendEvents(view: childView, eventIds: &eventIds)
+            recurseChildrenAndSendEventsFromView(view: childView, eventIds: &eventIds)
         }
         
         sendEventsToView(view: view, eventIds: &eventIds)
