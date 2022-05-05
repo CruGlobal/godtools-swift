@@ -59,20 +59,15 @@ class ToolPageFormView: MobileContentFormView {
     
     // MARK: - MobileContenView
     
-    override func didReceiveEvent(eventId: EventId, eventIdsGroup: [EventId]) -> MobileContentView.DidSuccessfullyProcessEvent {
+    override func didReceiveEvent(eventId: EventId, eventIdsGroup: [EventId]) -> ProcessedEventResult? {
         
         let isFollowUpEvent: Bool = eventId == EventId.Companion().FOLLOWUP
-        
-        let didSuccessfullyProcessEvent: Bool
-        
+                
         if isFollowUpEvent {
             pageFormViewModel.sendFollowUp(inputModels: super.getInputModels(), eventIds: eventIdsGroup)
-            didSuccessfullyProcessEvent = true
-        }
-        else {
-            didSuccessfullyProcessEvent = false
+            return ProcessedEventResult(shouldRemoveEventId: true, successfullyProcessed: true)
         }
         
-        return didSuccessfullyProcessEvent
+        return nil
     }
 }

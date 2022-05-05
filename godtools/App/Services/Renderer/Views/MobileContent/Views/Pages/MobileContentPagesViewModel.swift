@@ -315,17 +315,16 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     }
     
     
-    func pageDidReceiveEvent(eventId: EventId) -> MobileContentPageView.DidSuccessfullyProcessEvent {
+    func pageDidReceiveEvent(eventId: EventId) -> ProcessedEventResult? {
         
         trackContentEvent(eventId: eventId)
         
         guard let currentPageRenderer = currentPageRenderer else {
-            return false
+            return nil
         }
         
         if currentPageRenderer.manifest.dismissListeners.contains(eventId) {
             handleDismissToolEvent()
-            return true
         }
                                 
         if let didReceivePageListenerForPageNumber = currentPageRenderer.getPageForListenerEvents(eventIds: [eventId]),
@@ -335,11 +334,9 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
                 page: didReceivePageListenerForPageNumber,
                 pageModel: didReceivePageListenerEventForPageModel
             )
-            
-            return true
         }
         
-        return false
+        return nil
     }
     
     func didChangeMostVisiblePage(page: Int) {

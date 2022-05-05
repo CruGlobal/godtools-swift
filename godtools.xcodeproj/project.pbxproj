@@ -311,6 +311,7 @@
 		459C56D325FF954F00F15967 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		459C93A427581B23006207D2 /* OktaAuthentication in Frameworks */ = {isa = PBXBuildFile; productRef = 459C93A327581B23006207D2 /* OktaAuthentication */; };
 		459C93B027581FD0006207D2 /* OktaUserAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459C93AF27581FD0006207D2 /* OktaUserAuthentication.swift */; };
+		459F7F8328246CA5002C75FA /* ProcessedEventResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459F7F8228246CA5002C75FA /* ProcessedEventResult.swift */; };
 		45A3A0C826B0BD54005DA490 /* Flow+NavigateToUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A3A0C726B0BD54005DA490 /* Flow+NavigateToUrl.swift */; };
 		45A45CED2731B8C5005D4E74 /* MobileContentBackgroundImageRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457032A426D0055A00F5BADC /* MobileContentBackgroundImageRenderer.swift */; };
 		45A45CEE2731B8C9005D4E74 /* MobileContentBackgroundImageRendererType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457032A626D0056F00F5BADC /* MobileContentBackgroundImageRendererType.swift */; };
@@ -1332,6 +1333,7 @@
 		4599251A2704F36A008F7844 /* ChooseScaleSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseScaleSliderView.swift; sourceTree = "<group>"; };
 		4599251C2704F37B008F7844 /* ChooseScaleSliderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChooseScaleSliderView.xib; sourceTree = "<group>"; };
 		459C93AF27581FD0006207D2 /* OktaUserAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OktaUserAuthentication.swift; sourceTree = "<group>"; };
+		459F7F8228246CA5002C75FA /* ProcessedEventResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessedEventResult.swift; sourceTree = "<group>"; };
 		45A3A0C726B0BD54005DA490 /* Flow+NavigateToUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Flow+NavigateToUrl.swift"; sourceTree = "<group>"; };
 		45A5200D26C481DB009B68D4 /* ManifestResourcesCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManifestResourcesCache.swift; sourceTree = "<group>"; };
 		45A63AB2265441B60090E09D /* ExitLinkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitLinkModel.swift; sourceTree = "<group>"; };
@@ -2343,6 +2345,7 @@
 			isa = PBXGroup;
 			children = (
 				451CCF1227A9AA4600E8D2D3 /* PositionState */,
+				459F7F8128246C93002C75FA /* ProcessedEventResult */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3474,6 +3477,14 @@
 				459C93AF27581FD0006207D2 /* OktaUserAuthentication.swift */,
 			);
 			path = Okta;
+			sourceTree = "<group>";
+		};
+		459F7F8128246C93002C75FA /* ProcessedEventResult */ = {
+			isa = PBXGroup;
+			children = (
+				459F7F8228246CA5002C75FA /* ProcessedEventResult.swift */,
+			);
+			path = ProcessedEventResult;
 			sourceTree = "<group>";
 		};
 		45A7BAF3252CBC5500D70465 /* Extensions */ = {
@@ -7038,6 +7049,7 @@
 				45AE975A27C97A9500C2CB33 /* Accordion+MobileContentRenderableModel.swift in Sources */,
 				45AD1AFB25938A4E00A096A0 /* MailViewModel.swift in Sources */,
 				45AD202825938A9800A096A0 /* LocalizationServices.swift in Sources */,
+				459F7F8328246CA5002C75FA /* ProcessedEventResult.swift in Sources */,
 				D1C8FEB0275E9BBB00C71E80 /* ParallelLanguageListViewModel.swift in Sources */,
 				4561AC9A279C4CC6003718C0 /* MobileContentCardCollectionPageView.swift in Sources */,
 				45FB161827DBDDB60009DF8E /* AppFlow.swift in Sources */,

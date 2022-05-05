@@ -325,7 +325,7 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
 
 extension MobileContentPagesView: MobileContentPageViewDelegate {
     
-    func pageViewDidReceiveEvent(pageView: MobileContentPageView, eventId: EventId) -> MobileContentView.DidSuccessfullyProcessEvent {
+    func pageViewDidReceiveEvent(pageView: MobileContentPageView, eventId: EventId) -> ProcessedEventResult? {
         return viewModel.pageDidReceiveEvent(eventId: eventId)
     }
 }

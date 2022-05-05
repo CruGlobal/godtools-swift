@@ -10,9 +10,7 @@ import UIKit
 import GodToolsToolParser
 
 class MobileContentView: UIView {
-        
-    typealias DidSuccessfullyProcessEvent = Bool
-    
+            
     private(set) weak var parent: MobileContentView?
     
     private(set) var children: [MobileContentView] = Array()
@@ -187,11 +185,19 @@ class MobileContentView: UIView {
     
     private func sendEventsToView(view: MobileContentView, eventIds: inout [EventId]) {
 
-        for eventId in eventIds {
+        guard !eventIds.isEmpty else {
+            return
+        }
+        
+        for index in stride(from: eventIds.count - 1, through: 0, by: -1) {
             
-            let didSuccessfullyProcessEvent: Bool = view.didReceiveEvent(eventId: eventId, eventIdsGroup: eventIds)
+            let eventId: EventId = eventIds[index]
             
-            if didSuccessfullyProcessEvent {
+            guard let processedEventResult = view.didReceiveEvent(eventId: eventId, eventIdsGroup: eventIds) else {
+                continue
+            }
+            
+            if processedEventResult.shouldRemoveEventId {
                 removeEventIdFromEventIds(eventIds: &eventIds, eventIdToRemove: eventId)
             }
         }
@@ -203,9 +209,9 @@ class MobileContentView: UIView {
         }
     }
     
-    func didReceiveEvent(eventId: EventId, eventIdsGroup: [EventId]) -> DidSuccessfullyProcessEvent {
+    func didReceiveEvent(eventId: EventId, eventIdsGroup: [EventId]) -> ProcessedEventResult? {
         
-        return false
+        return nil
     }
     
     // MARK: - Url Events

@@ -107,23 +107,19 @@ class ToolPageCardsView: MobileContentView {
         }
     }
     
-    override func didReceiveEvent(eventId: EventId, eventIdsGroup: [EventId]) -> MobileContentView.DidSuccessfullyProcessEvent {
-        
-        var didSuccessfullyProcessEvent: Bool = false
-        
+    override func didReceiveEvent(eventId: EventId, eventIdsGroup: [EventId]) -> ProcessedEventResult? {
+                
         for cardView in cardViews {
             
             if cardView.viewModel.dismissListeners.contains(eventId) {
                 dismissCard(cardView: cardView)
-                didSuccessfullyProcessEvent = true
             }
             else if cardView.viewModel.listeners.contains(eventId) {
                 presentCard(cardView: cardView)
-                didSuccessfullyProcessEvent = true
             }
         }
         
-        return didSuccessfullyProcessEvent
+        return nil
     }
     
     // MARK: -

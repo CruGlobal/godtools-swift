@@ -22,6 +22,6 @@ protocol MobileContentPagesViewModelType {
     func pageWillAppear(page: Int) -> MobileContentView?
     func pageDidAppear(page: Int)
     func pageDidDisappear(page: Int)
-    func pageDidReceiveEvent(eventId: EventId) -> MobileContentView.DidSuccessfullyProcessEvent
+    func pageDidReceiveEvent(eventId: EventId) -> ProcessedEventResult?
     func didChangeMostVisiblePage(page: Int)
 }
