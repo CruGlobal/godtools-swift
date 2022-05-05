@@ -11,7 +11,7 @@ import GodToolsToolParser
 
 protocol MobileContentPageViewDelegate: AnyObject {
     
-    func pageViewDidReceiveEvents(pageView: MobileContentPageView, eventIds: [EventId])
+    func pageViewDidReceiveEvent(pageView: MobileContentPageView, eventId: EventId) -> MobileContentView.DidSuccessfullyProcessEvent
 }
 
 class MobileContentPageView: MobileContentView, NibBased {
@@ -76,10 +76,9 @@ class MobileContentPageView: MobileContentView, NibBased {
         
     // MARK: - MobileContentView
     
-    override func didReceiveEvents(eventIds: [EventId]) {
-        super.didReceiveEvents(eventIds: eventIds)
+    override func didReceiveEvent(eventId: EventId, eventIdsGroup: [EventId]) -> MobileContentView.DidSuccessfullyProcessEvent {
         
-        delegate?.pageViewDidReceiveEvents(pageView: self, eventIds: eventIds)
+        return delegate?.pageViewDidReceiveEvent(pageView: self, eventId: eventId) ?? false
     }
     
     override func didReceiveButtonWithUrlEvent(url: String) {
