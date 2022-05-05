@@ -28,16 +28,16 @@ class FontService {
         
         if primaryLanguageCode == "am" {
             if weight == UIFont.Weight.semibold || weight == UIFont.Weight.bold {
-                font = FontLibrary.notoSansEthiopicBold.font(size: size)
+                font = FontLibrary.notoSansEthiopicBold.uiFont(size: size)
             } else {
-                font = FontLibrary.notoSansEthiopic.font(size: size)
+                font = FontLibrary.notoSansEthiopic.uiFont(size: size)
             }
         }
         else if primaryLanguageCode == "my" {
             if weight == UIFont.Weight.semibold || weight == UIFont.Weight.bold {
-                font = FontLibrary.notoSansMyanmarBold.font(size: size)
+                font = FontLibrary.notoSansMyanmarBold.uiFont(size: size)
             } else {
-                font = FontLibrary.notoSansMyanmar.font(size: size)
+                font = FontLibrary.notoSansMyanmar.uiFont(size: size)
             }
         }
         else {

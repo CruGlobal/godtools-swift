@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-class ToolCardViewModel: NSObject, ObservableObject {
+class ToolCardViewModel: BaseToolCardViewModel {
     
     // MARK: - Properties
     
@@ -19,15 +19,6 @@ class ToolCardViewModel: NSObject, ObservableObject {
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
-    
-    // MARK: - Published
-    
-    @Published var bannerImage: Image?
-    @Published var isFavorited = false
-    @Published var title: String = ""
-    @Published var category: String = ""
-    @Published var parallelLanguageName: String = ""
-    @Published var layoutDirection: LayoutDirection = .leftToRight
     
     // MARK: - Init
     
@@ -42,8 +33,7 @@ class ToolCardViewModel: NSObject, ObservableObject {
                 
         super.init()
         
-        setupPublishedProperties()
-        setupBinding()
+        setup()
     }
     
     deinit {
@@ -52,20 +42,21 @@ class ToolCardViewModel: NSObject, ObservableObject {
         languageSettingsService.primaryLanguage.removeObserver(self)
         languageSettingsService.parallelLanguage.removeObserver(self)
     }
-}
  
-// MARK: - Public
-
-extension ToolCardViewModel {
     
-    func favoritedButtonTapped() {
+    // MARK: - Public
+    
+    override func favoritedButtonTapped() {
         favoritedResourcesCache.toggleFavorited(resourceId: resource.id)
     }
-}
  
-// MARK: - Private
-
-extension ToolCardViewModel {
+    
+    // MARK: - Private
+    
+    private func setup() {
+        setupPublishedProperties()
+        setupBinding()
+    }
     
     private func setupPublishedProperties() {
         bannerImage = getBannerImage()

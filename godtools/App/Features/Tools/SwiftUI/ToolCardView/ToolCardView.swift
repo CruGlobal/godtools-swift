@@ -12,7 +12,7 @@ struct ToolCardView: View {
     
     // MARK: - Properties
     
-    @ObservedObject var viewModel: ToolCardViewModel
+    @ObservedObject var viewModel: BaseToolCardViewModel
     let cardWidth: CGFloat
     
     // MARK: - Constants
@@ -33,7 +33,6 @@ struct ToolCardView: View {
         ZStack(alignment: .top) {
             RoundedRectangle(cornerRadius: Sizes.cornerRadius, style: .circular)
                 .fill(.white)
-                .frame(width: cardWidth, height: cardWidth / Sizes.cardAspectRatio)
                 .shadow(color: .black.opacity(0.25), radius: 4, y: 2)
             
             VStack(alignment: .leading, spacing: 12) {
@@ -41,7 +40,7 @@ struct ToolCardView: View {
                     OptionalImage(image: viewModel.bannerImage, width: cardWidth, height: cardWidth / Sizes.bannerImageAspectRatio)
                         .cornerRadius(Sizes.cornerRadius, corners: [.topLeft, .topRight])
                     
-                    Image(viewModel.isFavorited ? "favorited_circle" : "unfavorited_circle")
+                    Image(viewModel.isFavorited ? ImageCatalog.favoritedCircle.rawValue : ImageCatalog.unfavoritedCircle.rawValue)
                         .padding([.top, .trailing], 10)
                         .onTapGesture {
                             viewModel.favoritedButtonTapped()
@@ -52,18 +51,22 @@ struct ToolCardView: View {
                 HStack(alignment: .top) {
                     VStack(alignment: .leading, spacing: 3) {
                         Text(viewModel.title)
-                            .font(.system(size: 16, weight: .bold))
+                            .font(FontLibrary.sfProTextBold.font(size: 18))
                             .foregroundColor(ColorPalette.gtGrey.color)
+                            .fixedSize(horizontal: false, vertical: true)
+                        
                         Text(viewModel.category)
-                            .font(.system(size: 12))
+                            .font(FontLibrary.sfProTextRegular.font(size: 14))
+                            .foregroundColor(ColorPalette.gtGrey.color)
                     }
                     .padding(.leading, Sizes.leadingPadding)
+                    .padding(.bottom, 15)
                     
                     Spacer()
                     
                     Text(viewModel.parallelLanguageName)
-                        .font(.system(size: 10))
-                        .foregroundColor(ColorPalette.gtGrey.color)
+                        .font(FontLibrary.sfProTextRegular.font(size: 12))
+                        .foregroundColor(ColorPalette.gtLightGrey.color)
                         .padding(.trailing, 10)
                         .padding(.top, 4)
                 }
@@ -72,7 +75,7 @@ struct ToolCardView: View {
             }
             
         }
-        .frame(width: cardWidth, height: cardWidth / Sizes.cardAspectRatio)
+        .fixedSize(horizontal: false, vertical: true)
         .environment(\.layoutDirection, viewModel.layoutDirection)
     }
 }
@@ -82,19 +85,15 @@ struct ToolCardView: View {
 struct ToolCardView_Previews: PreviewProvider {
     static var previews: some View {
         
-        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
-        
-        let viewModel = ToolCardViewModel(
-            resource: appDiContainer.initialDataDownloader.resourcesCache.getResource(id: "2")!,
-            dataDownloader: appDiContainer.initialDataDownloader,
-            deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
-            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
-            languageSettingsService: appDiContainer.languageSettingsService,
-            localizationServices: appDiContainer.localizationServices
-        )
-        
         GeometryReader { geo in
-            ToolCardView(viewModel: viewModel, cardWidth: geo.size.width)
+            ToolCardView(viewModel:
+                            MockToolCardViewModel(
+                                title: "Knowing God Personally",
+                                category: "Gospel Invitation",
+                                showParallelLanguage: true,
+                                showBannerImage: true
+                            ),
+                         cardWidth: geo.size.width)
         }
             .padding()
     }
