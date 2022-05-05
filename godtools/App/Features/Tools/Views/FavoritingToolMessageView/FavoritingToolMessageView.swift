@@ -27,7 +27,7 @@ class FavoritingToolMessageView: UIView, NibBased {
     
     func configure(viewModel: FavoritingToolMessageViewModelType) {
         
-        backgroundColor = ColorPalette.bannerColor
+        backgroundColor = ColorPalette.banner.uiColor
         
         self.viewModel = viewModel
         messageLabel.text = viewModel.message
