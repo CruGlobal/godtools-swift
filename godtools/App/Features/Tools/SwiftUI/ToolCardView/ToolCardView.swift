@@ -31,11 +31,14 @@ struct ToolCardView: View {
     
     var body: some View {
         ZStack(alignment: .top) {
+            // MARK: - Card Background
             RoundedRectangle(cornerRadius: Sizes.cornerRadius, style: .circular)
                 .fill(.white)
                 .shadow(color: .black.opacity(0.25), radius: 4, y: 2)
             
-            VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: 0) {
+                
+                // MARK: - Image
                 ZStack(alignment: .topTrailing) {
                     OptionalImage(image: viewModel.bannerImage, width: cardWidth, height: cardWidth / Sizes.bannerImageAspectRatio)
                         .cornerRadius(Sizes.cornerRadius, corners: [.topLeft, .topRight])
@@ -48,6 +51,15 @@ struct ToolCardView: View {
                 }
                 .transition(.opacity)
                 
+                // MARK: - Progress Bars
+                ZStack {
+                    ProgressBarView(color: .yellow, progress: 0.75)
+                    ProgressBarView(color: .purple, progress: 0.55)
+                    ProgressBarView(color: ColorPalette.progressBarBlue.color, progress: 0.25)
+                }
+                .frame(height: 2)
+                
+                // MARK: - Text
                 HStack(alignment: .top) {
                     VStack(alignment: .leading, spacing: 3) {
                         Text(viewModel.title)
@@ -71,6 +83,7 @@ struct ToolCardView: View {
                         .padding(.top, 4)
                 }
                 .frame(width: cardWidth)
+                .padding(.top, 12)
                 
             }
             

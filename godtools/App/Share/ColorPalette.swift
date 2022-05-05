@@ -18,6 +18,7 @@ enum ColorPalette {
     case gtGrey
     case gtLightGrey
     case primaryNavBar
+    case progressBarBlue
     
     // This var uses custom SwiftUI color sets in the asset catalog
     var color: Color {
@@ -26,6 +27,7 @@ enum ColorPalette {
         case .gtGrey:           return Color("gtGrey")
         case .gtLightGrey:      return Color("gtLightGrey")
         case .primaryNavBar:    return Color("gtBlue")
+        case .progressBarBlue:  return Color("progressBarBlue")
         }
     }
     
@@ -41,6 +43,7 @@ enum ColorPalette {
             case .gtGrey:           return getGtBlueColor()
             case .gtLightGrey:      return getGtLightGreyColor()
             case .primaryNavBar:    return getGtBlueColor()
+            case .progressBarBlue:  return getProgressBarBlueColor()
             }
         }
     }
@@ -54,6 +57,10 @@ enum ColorPalette {
     }
     
     private func getGtLightGreyColor() -> UIColor {
-        return UIColor(red: 128 / 255.0, green: 130 / 255, blue: 132 / 255, alpha: 1.0)
+        return UIColor(red: 128 / 255, green: 130 / 255, blue: 132 / 255, alpha: 1.0)
+    }
+    
+    private func getProgressBarBlueColor() -> UIColor {
+        return UIColor(red: 54 / 255, green: 147 / 255, blue: 227 / 255, alpha: 1.0)
     }
 }
