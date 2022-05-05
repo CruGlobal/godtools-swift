@@ -21,13 +21,6 @@ class MobileContentEventAnalyticsTracking {
         self.firebaseAnalytics = firebaseAnalytics
     }
     
-    func trackContentEvents(eventIds: [EventId], resource: ResourceModel, language: LanguageModel) {
-        
-        for eventId in eventIds {
-            trackContentEvent(eventId: eventId, resource: resource, language: language)
-        }
-    }
-    
     func trackContentEvent(eventId: EventId, resource: ResourceModel, language: LanguageModel) {
         
         let data: [String: Any] = [

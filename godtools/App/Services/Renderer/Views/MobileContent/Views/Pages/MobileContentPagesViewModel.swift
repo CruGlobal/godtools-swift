@@ -126,14 +126,15 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         removePage(page: page)
     }
     
-    private func trackContentEvents(eventIds: [EventId]) {
+    private func trackContentEvent(eventId: EventId) {
         
         guard let language = currentPageRenderer?.language else {
             assertionFailure("Failed to track content event for current page renderer.  Language was not found.")
             return
         }
         
-        mobileContentEventAnalytics.trackContentEvents(eventIds: eventIds, resource: renderer.resource, language: language)
+        
+        mobileContentEventAnalytics.trackContentEvent(eventId: eventId, resource: renderer.resource, language: language)
     }
     
     private func didReceivePageListenerForPage(page: Int, pageModel: Page) {
@@ -313,29 +314,32 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         removePageIfHidden(page: page)
     }
     
-    func pageDidReceiveEvents(eventIds: [EventId]) {
     
-        trackContentEvents(eventIds: eventIds)
-
+    func pageDidReceiveEvent(eventId: EventId) -> MobileContentPageView.DidSuccessfullyProcessEvent {
+        
+        trackContentEvent(eventId: eventId)
+        
         guard let currentPageRenderer = currentPageRenderer else {
-            return
+            return false
         }
         
-        for eventId in eventIds {
-            if currentPageRenderer.manifest.dismissListeners.contains(eventId) {
-                handleDismissToolEvent()
-                return
-            }
+        if currentPageRenderer.manifest.dismissListeners.contains(eventId) {
+            handleDismissToolEvent()
+            return true
         }
-                        
-        if let didReceivePageListenerForPageNumber = currentPageRenderer.getPageForListenerEvents(eventIds: eventIds),
+                                
+        if let didReceivePageListenerForPageNumber = currentPageRenderer.getPageForListenerEvents(eventIds: [eventId]),
            let didReceivePageListenerEventForPageModel = currentPageRenderer.getPageModel(page: didReceivePageListenerForPageNumber)  {
             
             didReceivePageListenerForPage(
                 page: didReceivePageListenerForPageNumber,
                 pageModel: didReceivePageListenerEventForPageModel
             )
+            
+            return true
         }
+        
+        return false
     }
     
     func didChangeMostVisiblePage(page: Int) {
