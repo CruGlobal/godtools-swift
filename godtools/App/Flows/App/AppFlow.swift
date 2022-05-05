@@ -261,6 +261,10 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 }
             }
             
+            if state == .userClosedTractToLessonsList {
+                toolsMenuInNavigationStack?.reset(toolbarItem: .lessons, animated: false)
+            }
+        
             if let toolsMenuInNavigationStack = toolsMenuInNavigationStack {
                 navigationController.popToViewController(toolsMenuInNavigationStack, animated: true)
             }

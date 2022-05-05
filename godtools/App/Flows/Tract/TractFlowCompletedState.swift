@@ -11,4 +11,5 @@ import Foundation
 enum TractFlowCompletedState {
     
     case userClosedTract
+    case userClosedTractToLessonsList
 }
