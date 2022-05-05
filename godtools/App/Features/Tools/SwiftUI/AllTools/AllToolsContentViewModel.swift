@@ -88,7 +88,7 @@ extension AllToolsContentViewModel {
     
     func toolTapped(resource: ResourceModel) {
         trackToolTappedAnalytics()
-        flowDelegate?.navigate(step: .toolTappedFromAllTools(resource: resource))
+        flowDelegate?.navigate(step: .aboutToolTappedFromAllTools(resource: resource))
     }
 }
 
