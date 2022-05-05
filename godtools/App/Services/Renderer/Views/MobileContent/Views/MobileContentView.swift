@@ -146,26 +146,60 @@ class MobileContentView: UIView {
     // MARK: - Events
     
     func sendEventsToAllViews(eventIds: [EventId], rendererState: State) {
-        
-        let eventIds: [EventId] = eventIds.flatMap({$0.resolve(state: rendererState)})
-        
-        recurseChildrenAndSendEvents(view: getRootView(), eventIds: eventIds)
+            
+        var eventIds: [EventId] = eventIds.flatMap({$0.resolve(state: rendererState)})
+                
+        walkUpHierarchyAndSendEventsToChildren(view: self, eventIds: &eventIds)
+                
+        recurseChildrenAndSendEvents(view: getRootView(), eventIds: &eventIds)
     }
     
-    private func recurseChildrenAndSendEvents(view: MobileContentView, eventIds: [EventId]) {
+    private func walkUpHierarchyAndSendEventsToChildren(view: MobileContentView, eventIds: inout [EventId]) {
         
-        for childView in view.children {
-            recurseChildrenAndSendEvents(view: childView, eventIds: eventIds)
+        var nextParentView: MobileContentView? = view.parent
+        
+        while nextParentView != nil && !eventIds.isEmpty {
+            
+            if let children = nextParentView?.children {
+                
+                for childView in children {
+                    
+                    sendEventsToView(view: childView, eventIds: &eventIds)
+                }
+            }
+            
+            nextParentView = nextParentView?.parent
+        }
+    }
+    
+    private func recurseChildrenAndSendEvents(view: MobileContentView, eventIds: inout [EventId]) {
+        
+        guard !eventIds.isEmpty else {
+            return
         }
         
-        sendEventsToView(view: view, eventIds: eventIds)
+        for childView in view.children {
+            recurseChildrenAndSendEvents(view: childView, eventIds: &eventIds)
+        }
+        
+        sendEventsToView(view: view, eventIds: &eventIds)
     }
     
-    private func sendEventsToView(view: MobileContentView, eventIds: [EventId]) {
+    private func sendEventsToView(view: MobileContentView, eventIds: inout [EventId]) {
 
         for eventId in eventIds {
             
             let didSuccessfullyProcessEvent: Bool = view.didReceiveEvent(eventId: eventId, eventIdsGroup: eventIds)
+            
+            if didSuccessfullyProcessEvent {
+                removeEventIdFromEventIds(eventIds: &eventIds, eventIdToRemove: eventId)
+            }
+        }
+    }
+    
+    private func removeEventIdFromEventIds(eventIds: inout [EventId], eventIdToRemove: EventId) {
+        if let index = eventIds.firstIndex(of: eventIdToRemove) {
+            eventIds.remove(at: index)
         }
     }
     
