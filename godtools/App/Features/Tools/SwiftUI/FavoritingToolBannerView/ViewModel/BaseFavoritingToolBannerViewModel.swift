@@ -8,15 +8,7 @@
 
 import Foundation
 
-protocol FavoritingToolBannerDelegate: AnyObject {
-    func closeBanner()
-}
-
 class BaseFavoritingToolBannerViewModel: NSObject, ObservableObject {
-    
-    // MARK: - Properties
-    
-    weak var delegate: FavoritingToolBannerDelegate?
     
     // MARK: - Published
     
@@ -24,9 +16,8 @@ class BaseFavoritingToolBannerViewModel: NSObject, ObservableObject {
     
     // MARK: - Init
     
-    init(message: String, delegate: FavoritingToolBannerDelegate?) {
+    init(message: String) {
         self.message = message
-        self.delegate = delegate
     }
     
     // MARK: - Public Methods
