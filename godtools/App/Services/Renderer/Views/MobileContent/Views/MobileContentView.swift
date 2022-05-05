@@ -11,6 +11,8 @@ import GodToolsToolParser
 
 class MobileContentView: UIView {
         
+    typealias DidSuccessfullyProcessEvent = Bool
+    
     private(set) weak var parent: MobileContentView?
     
     private(set) var children: [MobileContentView] = Array()
@@ -156,11 +158,20 @@ class MobileContentView: UIView {
             recurseChildrenAndSendEvents(view: childView, eventIds: eventIds)
         }
         
-        view.didReceiveEvents(eventIds: eventIds)
+        sendEventsToView(view: view, eventIds: eventIds)
     }
     
-    func didReceiveEvents(eventIds: [EventId]) {
+    private func sendEventsToView(view: MobileContentView, eventIds: [EventId]) {
+
+        for eventId in eventIds {
+            
+            let didSuccessfullyProcessEvent: Bool = view.didReceiveEvent(eventId: eventId, eventIdsGroup: eventIds)
+        }
+    }
+    
+    func didReceiveEvent(eventId: EventId, eventIdsGroup: [EventId]) -> DidSuccessfullyProcessEvent {
         
+        return false
     }
     
     // MARK: - Url Events

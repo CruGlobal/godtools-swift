@@ -107,6 +107,11 @@ class ToolPageCardsView: MobileContentView {
         }
     }
     
+    override func didReceiveEvent(eventId: EventId, eventIdsGroup: [EventId]) -> MobileContentView.DidSuccessfullyProcessEvent {
+        
+        let didSuccessfullyProcessEvent: Bool
+    }
+    
     override func didReceiveEvents(eventIds: [EventId]) {
                 
         for eventId in eventIds {
