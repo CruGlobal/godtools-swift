@@ -134,7 +134,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
                 break
             
             case .lessonsList:
-                break
+                flowDelegate?.navigate(step: .tractFlowCompleted(state: .userClosedTractToLessonsList))
             
             case .tool(let toolDeepLink):
                 
@@ -226,6 +226,9 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
             
             lessonFlow = nil
+            
+        case .didTriggerDismissToolEventFromMobileContentRenderer:
+            closeTool()
             
         default:
             break

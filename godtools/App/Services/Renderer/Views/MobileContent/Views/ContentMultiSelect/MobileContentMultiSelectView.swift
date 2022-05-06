@@ -20,7 +20,7 @@ class MobileContentMultiSelectView: MobileContentStackView {
     required init(viewModel: MobileContentMultiSelectViewModelType) {
         
         let isSingleColumn: Bool = viewModel.numberOfColumnsForOptions == 1
-        let itemSpacing: CGFloat = isSingleColumn ? 35 : 15
+        let itemSpacing: CGFloat = 15
         
         self.viewModel = viewModel
         self.itemSpacing = itemSpacing

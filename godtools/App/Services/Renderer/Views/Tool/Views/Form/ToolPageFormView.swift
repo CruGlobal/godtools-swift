@@ -59,12 +59,15 @@ class ToolPageFormView: MobileContentFormView {
     
     // MARK: - MobileContenView
     
-    override func didReceiveEvents(eventIds: [EventId]) {
-                      
-        if eventIds.contains(EventId.Companion().FOLLOWUP) {
-            pageFormViewModel.sendFollowUp(inputModels: super.getInputModels(), eventIds: eventIds)
+    override func didReceiveAncestryEventFromWalkingUpViewHierarchy(eventId: EventId, eventIdsGroup: [EventId]) -> ProcessedEventResult? {
+        
+        let isFollowUpEvent: Bool = eventId == EventId.Companion().FOLLOWUP
+                
+        if isFollowUpEvent {
+            pageFormViewModel.sendFollowUp(inputModels: super.getInputModels(), eventIds: eventIdsGroup)
+            return ProcessedEventResult(shouldRemoveEventId: true)
         }
+        
+        return nil
     }
-    
-    // MARK: -
 }
