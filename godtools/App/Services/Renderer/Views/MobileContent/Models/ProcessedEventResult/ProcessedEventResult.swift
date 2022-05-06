@@ -11,5 +11,4 @@ import Foundation
 struct ProcessedEventResult {
     
     let shouldRemoveEventId: Bool
-    let successfullyProcessed: Bool
 }

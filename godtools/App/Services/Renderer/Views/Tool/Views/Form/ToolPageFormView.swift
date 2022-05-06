@@ -65,7 +65,7 @@ class ToolPageFormView: MobileContentFormView {
                 
         if isFollowUpEvent {
             pageFormViewModel.sendFollowUp(inputModels: super.getInputModels(), eventIds: eventIdsGroup)
-            return ProcessedEventResult(shouldRemoveEventId: true, successfullyProcessed: true)
+            return ProcessedEventResult(shouldRemoveEventId: true)
         }
         
         return nil
