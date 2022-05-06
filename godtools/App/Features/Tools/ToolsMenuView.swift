@@ -123,8 +123,8 @@ class ToolsMenuView: UIViewController {
         lessonsView?.scrollToTopOfLessonsList(animated: false)
         favoritedToolsView?.scrollToTopOfToolsList(animated: false)
         
-        // TODO: - GT-1541 Remove the ability to programmatically scroll to the top and just reset the whole view instead
-        allToolsView?.rootView.viewModel.scrollToTop(animated: false)
+        // Programmatically scrolling to the top in SwiftUI is only available on iOS 14+, so we'll just reset the whole view instead
+        allToolsView?.rootView = AllToolsContentView(viewModel: viewModel.allToolsWillAppear())
         
         navigateToToolsListForToolbarItem(toolbarItem: toolbarItem, animated: animated)
     }
