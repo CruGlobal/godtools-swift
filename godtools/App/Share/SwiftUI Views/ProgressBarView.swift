@@ -18,7 +18,6 @@ struct ProgressBarView: View {
                 .frame(width: geo.size.width * progress)
                 .opacity(progress == 1 ? 0 : 1)
         }
-        
     }
 }
 
