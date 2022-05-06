@@ -35,30 +35,37 @@ struct AllToolsContentView: View {
     // MARK: - Body
     
     var body: some View {
-        if viewModel.isLoading {
+        VStack {
+            if viewModel.hideFavoritingToolBanner == false {
+                FavoritingToolBannerView(viewModel: viewModel.favoritingToolBannerViewModel())
+                    .transition(.move(edge: .top))
+            }
             
-            ActivityIndicator(style: .medium, isAnimating: .constant(true))
-            
-        } else {
-            
-            GeometryReader { geo in
-                let width = geo.size.width
+            if viewModel.isLoading {
                 
-                if #available(iOS 15.0, *) {
+                ActivityIndicator(style: .medium, isAnimating: .constant(true))
+                
+            } else {
+                
+                GeometryReader { geo in
+                    let width = geo.size.width
                     
-                    // Pull to refresh is supported only in iOS 15+
-                    AllToolsListWithScrollToTop(viewModel: viewModel, width: width)
-                        .refreshable {
-                            viewModel.refreshTools()
-                        }
-                    
-                } else if #available(iOS 14.0, *) {
-                    
-                    AllToolsListWithScrollToTop(viewModel: viewModel, width: width)
-                    
-                } else {
-                    
-                    AllToolsList(viewModel: viewModel, width: width)
+                    if #available(iOS 15.0, *) {
+                        
+                        // Pull to refresh is supported only in iOS 15+
+                        AllToolsListWithScrollToTop(viewModel: viewModel, width: width)
+                            .refreshable {
+                                viewModel.refreshTools()
+                            }
+                        
+                    } else if #available(iOS 14.0, *) {
+                        
+                        AllToolsListWithScrollToTop(viewModel: viewModel, width: width)
+                        
+                    } else {
+                        
+                        AllToolsList(viewModel: viewModel, width: width)
+                    }
                 }
             }
         }

@@ -29,6 +29,7 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     
     @Published var tools: [ResourceModel] = []
     @Published var isLoading: Bool = false
+    @Published var hideFavoritingToolBanner: Bool
     
     // MARK: - Init
     
@@ -41,6 +42,7 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
         self.favoritedResourcesCache = favoritedResourcesCache
         self.favoritingToolMessageCache = favoritingToolMessageCache
         self.analytics = analytics
+        self.hideFavoritingToolBanner = favoritingToolMessageCache.favoritingToolMessageDisabled
         
         super.init()
         
@@ -69,16 +71,13 @@ extension AllToolsContentViewModel {
         )
     }
     
-    func refreshTools() {
-        dataDownloader.downloadInitialData()
+    func favoritingToolBannerViewModel() -> FavoritingToolBannerViewModel {
+        
+        return FavoritingToolBannerViewModel(localizationServices: localizationServices, delegate: self)
     }
     
-    func createFavoritingToolMessageViewModel() -> FavoritingToolMessageViewModelType {
-        
-        return FavoritingToolMessageViewModel(
-            favoritingToolMessageCache: favoritingToolMessageCache,
-            localizationServices: localizationServices
-        )
+    func refreshTools() {
+        dataDownloader.downloadInitialData()
     }
     
     // TODO: - GT-1541
@@ -127,6 +126,16 @@ extension AllToolsContentViewModel {
         
         tools = resources
         isLoading = false
+    }
+}
+
+// MARK: - FavoritingToolBannerDelegate
+
+extension AllToolsContentViewModel: FavoritingToolBannerDelegate {
+    
+    func closeBanner() {
+        hideFavoritingToolBanner = true
+        favoritingToolMessageCache.disableFavoritingToolMessage()
     }
 }
 

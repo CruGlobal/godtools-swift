@@ -12,13 +12,12 @@ import SwiftUI
 
 enum ColorPalette {
     
-    static let bannerColor: UIColor = UIColor(red: 219 / 255, green: 243 / 255, blue: 255 / 255, alpha: 1)
-    
     case gtBlue
     case gtGrey
     case gtLightGrey
     case primaryNavBar
     case progressBarBlue
+    case banner
     
     // This var uses custom SwiftUI color sets in the asset catalog
     var color: Color {
@@ -28,6 +27,7 @@ enum ColorPalette {
         case .gtLightGrey:      return Color("gtLightGrey")
         case .primaryNavBar:    return Color("gtBlue")
         case .progressBarBlue:  return Color("progressBarBlue")
+        case .banner:           return Color("banner")
         }
     }
     
@@ -44,6 +44,7 @@ enum ColorPalette {
             case .gtLightGrey:      return getGtLightGreyColor()
             case .primaryNavBar:    return getGtBlueColor()
             case .progressBarBlue:  return getProgressBarBlueColor()
+            case .banner:           return getBannerColor()
             }
         }
     }
@@ -62,5 +63,9 @@ enum ColorPalette {
     
     private func getProgressBarBlueColor() -> UIColor {
         return UIColor(red: 54 / 255, green: 147 / 255, blue: 227 / 255, alpha: 1.0)
+    }
+
+    private func getBannerColor() -> UIColor {
+        return UIColor(red: 219 / 255, green: 243 / 255, blue: 255 / 255, alpha: 1)
     }
 }

@@ -42,7 +42,7 @@ struct ToolCardView: View {
                     OptionalImage(image: viewModel.bannerImage, width: cardWidth, height: cardWidth / Sizes.bannerImageAspectRatio)
                         .cornerRadius(Sizes.cornerRadius, corners: [.topLeft, .topRight])
                     
-                    Image(viewModel.isFavorited ? ImageCatalog.favoritedCircle.rawValue : ImageCatalog.unfavoritedCircle.rawValue)
+                    Image(viewModel.isFavorited ? ImageCatalog.favoritedCircle.name : ImageCatalog.unfavoritedCircle.name)
                         .padding([.top, .trailing], 10)
                         .onTapGesture {
                             viewModel.favoritedButtonTapped()
