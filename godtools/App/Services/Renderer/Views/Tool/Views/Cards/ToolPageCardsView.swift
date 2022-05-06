@@ -107,20 +107,19 @@ class ToolPageCardsView: MobileContentView {
         }
     }
     
-    override func didReceiveEvents(eventIds: [EventId]) {
+    override func didReceiveEvent(eventId: EventId, eventIdsGroup: [EventId]) -> ProcessedEventResult? {
                 
-        for eventId in eventIds {
+        for cardView in cardViews {
             
-            for cardView in cardViews {
-                
-                if cardView.viewModel.dismissListeners.contains(eventId) {
-                    dismissCard(cardView: cardView)
-                }
-                else if cardView.viewModel.listeners.contains(eventId) {
-                    presentCard(cardView: cardView)
-                }
+            if cardView.viewModel.dismissListeners.contains(eventId) {
+                dismissCard(cardView: cardView)
+            }
+            else if cardView.viewModel.listeners.contains(eventId) {
+                presentCard(cardView: cardView)
             }
         }
+        
+        return nil
     }
     
     // MARK: -

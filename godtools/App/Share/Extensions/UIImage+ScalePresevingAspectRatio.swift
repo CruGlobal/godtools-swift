@@ -6,7 +6,7 @@
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension UIImage {
     //found here: https://www.advancedswift.com/resize-uiimage-no-stretching-swift/
