@@ -16,6 +16,7 @@ struct ProgressBarView: View {
         GeometryReader { geo in
             color
                 .frame(width: geo.size.width * progress)
+                .opacity(progress == 1 ? 0 : 1)
         }
         
     }

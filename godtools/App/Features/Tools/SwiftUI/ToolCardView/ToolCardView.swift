@@ -53,7 +53,6 @@ struct ToolCardView: View {
                 // MARK: - Progress Bars
                 ZStack {
                     ProgressBarView(color: .yellow, progress: viewModel.attachmentsDownloadProgressValue)
-                    ProgressBarView(color: .purple, progress: viewModel.articlesDownloadProgressValue)
                     ProgressBarView(color: ColorPalette.progressBarBlue.color, progress: viewModel.translationDownloadProgressValue)
                 }
                 .frame(height: 2)
