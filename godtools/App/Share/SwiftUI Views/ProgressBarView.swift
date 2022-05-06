@@ -14,9 +14,14 @@ struct ProgressBarView: View {
     
     var body: some View {
         GeometryReader { geo in
-            color
-                .frame(width: geo.size.width * progress)
-                .opacity(progress == 1 ? 0 : 1)
+            
+            HStack {
+                color
+                    .frame(width: geo.size.width * progress)
+                    .opacity(progress == 1 ? 0 : 1)
+                
+                Spacer()
+            }
         }
     }
 }
