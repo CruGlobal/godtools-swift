@@ -10,7 +10,13 @@ import UIKit
 import GodToolsToolParser
 
 class MobileContentView: UIView {
+            
+    enum EventTriggerType {
         
+        case recursivelyFromRootView
+        case walkingUpViewHierarchy
+    }
+    
     private(set) weak var parent: MobileContentView?
     
     private(set) var children: [MobileContentView] = Array()
@@ -144,23 +150,81 @@ class MobileContentView: UIView {
     // MARK: - Events
     
     func sendEventsToAllViews(eventIds: [EventId], rendererState: State) {
-        
-        let eventIds: [EventId] = eventIds.flatMap({$0.resolve(state: rendererState)})
-        
-        recurseChildrenAndSendEvents(view: getRootView(), eventIds: eventIds)
+            
+        var eventIds: [EventId] = eventIds.flatMap({$0.resolve(state: rendererState)})
+                
+        walkUpHierarchyAndSendEventsToEachAncestor(view: self, eventIds: &eventIds)
+                
+        recurseChildrenAndSendEventsFromView(view: getRootView(), eventIds: &eventIds, eventTrigger: .recursivelyFromRootView)
     }
     
-    private func recurseChildrenAndSendEvents(view: MobileContentView, eventIds: [EventId]) {
+    private func walkUpHierarchyAndSendEventsToEachAncestor(view: MobileContentView, eventIds: inout [EventId]) {
         
-        for childView in view.children {
-            recurseChildrenAndSendEvents(view: childView, eventIds: eventIds)
+        guard let parent = view.parent, !eventIds.isEmpty else {
+            return
         }
         
-        view.didReceiveEvents(eventIds: eventIds)
+        sendEventsToView(view: parent, eventIds: &eventIds, eventTrigger: .walkingUpViewHierarchy)
+        
+        walkUpHierarchyAndSendEventsToEachAncestor(view: parent, eventIds: &eventIds)
     }
     
-    func didReceiveEvents(eventIds: [EventId]) {
+    private func recurseChildrenAndSendEventsFromView(view: MobileContentView, eventIds: inout [EventId], eventTrigger: EventTriggerType) {
         
+        guard !eventIds.isEmpty else {
+            return
+        }
+        
+        for childView in view.children {
+            recurseChildrenAndSendEventsFromView(view: childView, eventIds: &eventIds, eventTrigger: eventTrigger)
+        }
+        
+        sendEventsToView(view: view, eventIds: &eventIds, eventTrigger: eventTrigger)
+    }
+    
+    private func sendEventsToView(view: MobileContentView, eventIds: inout [EventId], eventTrigger: EventTriggerType) {
+
+        guard !eventIds.isEmpty else {
+            return
+        }
+        
+        for index in stride(from: eventIds.count - 1, through: 0, by: -1) {
+            
+            let eventId: EventId = eventIds[index]
+            
+            let processedEventResult: ProcessedEventResult?
+            
+            switch eventTrigger {
+            case .recursivelyFromRootView:
+                processedEventResult = view.didReceiveEvent(eventId: eventId, eventIdsGroup: eventIds)
+            case .walkingUpViewHierarchy:
+                processedEventResult = view.didReceiveAncestryEventFromWalkingUpViewHierarchy(eventId: eventId, eventIdsGroup: eventIds)
+            }
+            
+            guard let processedEventResult = processedEventResult else {
+                continue
+            }
+            
+            if processedEventResult.shouldRemoveEventId {
+                removeEventIdFromEventIds(eventIds: &eventIds, eventIdToRemove: eventId)
+            }
+        }
+    }
+    
+    private func removeEventIdFromEventIds(eventIds: inout [EventId], eventIdToRemove: EventId) {
+        if let index = eventIds.firstIndex(of: eventIdToRemove) {
+            eventIds.remove(at: index)
+        }
+    }
+    
+    func didReceiveEvent(eventId: EventId, eventIdsGroup: [EventId]) -> ProcessedEventResult? {
+        
+        return nil
+    }
+    
+    func didReceiveAncestryEventFromWalkingUpViewHierarchy(eventId: EventId, eventIdsGroup: [EventId]) -> ProcessedEventResult? {
+        
+        return nil
     }
     
     // MARK: - Url Events
