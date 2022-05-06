@@ -18,6 +18,7 @@ protocol ToolsMenuViewModelType {
     func toolbarWillAppear() -> ToolsMenuToolbarViewModelType
     func menuTapped()
     func languageTapped()
+    func didViewLessonsList()
     func didViewFavoritedToolsList()
     func didViewAllToolsList()
 }

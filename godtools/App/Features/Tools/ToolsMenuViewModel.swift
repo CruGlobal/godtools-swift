@@ -97,12 +97,21 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
         flowDelegate?.navigate(step: .languageSettingsTappedFromTools)
     }
     
+    func didViewLessonsList() {
+        
+        analytics.firebaseAnalytics.trackAction(screenName: "", siteSection: "", siteSubSection: "", actionName: AnalyticsConstants.ActionNames.viewedLessonsAction, data: nil)
+    }
+    
     func didViewFavoritedToolsList() {
+        
+        analytics.firebaseAnalytics.trackAction(screenName: "", siteSection: "", siteSubSection: "", actionName: AnalyticsConstants.ActionNames.viewedMyToolsAction, data: nil)
         
         flowDelegate?.navigate(step: .userViewedFavoritedToolsListFromTools)
     }
     
     func didViewAllToolsList() {
+        
+        analytics.firebaseAnalytics.trackAction(screenName: "", siteSection: "", siteSubSection: "", actionName: AnalyticsConstants.ActionNames.viewedToolsAction, data: nil)
         
         flowDelegate?.navigate(step: .userViewedAllToolsListFromTools)
     }

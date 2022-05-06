@@ -97,7 +97,9 @@ class ToolsMenuView: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
                 
-        toolsListDidAppear()
+        if let mostVisibleItem = getMostVisibleToolsList() {
+            toolsListDidAppear(toolbarItem: mostVisibleItem)
+        }
     }
     
     @objc func handleMenu(barButtonItem: UIBarButtonItem) {
@@ -141,16 +143,12 @@ class ToolsMenuView: UIViewController {
         )
     }
     
-    private func toolsListDidAppear() {
+    private func toolsListDidAppear(toolbarItem: ToolsMenuToolbarView.ToolbarItemView) {
         
-        guard let toolsList = getMostVisibleToolsList() else {
-            return
-        }
-        
-        switch toolsList {
+        switch toolbarItem {
         
         case .lessons:
-            break
+            viewModel.didViewLessonsList()
         
         case .favoritedTools:
             viewModel.didViewFavoritedToolsList()
@@ -198,8 +196,6 @@ class ToolsMenuView: UIViewController {
         )
         
         didChangeToolbarItem(toolbarItem: toolbarItem)
-        
-        toolsListDidAppear()
     }
     
     private func setChooseLanguageButtonHidden(hidden: Bool) {
@@ -282,14 +278,23 @@ extension ToolsMenuView: UIScrollViewDelegate {
            let mostVisibleItem = getMostVisibleToolsList() {
             
             didChangeToolbarItem(toolbarItem: mostVisibleItem)
-            
-            toolsListDidAppear()
         }
     }
     
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         if scrollView == toolsListsScrollView {
             isAnimatingNavigationToToolsList = false
+            
+            if let mostVisibleItem = getMostVisibleToolsList() {
+                toolsListDidAppear(toolbarItem: mostVisibleItem)
+            }
+        }
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        
+        if scrollView == toolsListsScrollView, let mostVisibleItem = getMostVisibleToolsList() {
+            toolsListDidAppear(toolbarItem: mostVisibleItem)
         }
     }
 }
