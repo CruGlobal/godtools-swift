@@ -11,6 +11,12 @@ import GodToolsToolParser
 
 class MobileContentView: UIView {
             
+    enum EventTriggerType {
+        
+        case recursivelyFromRootView
+        case walkingUpViewHierarchy
+    }
+    
     private(set) weak var parent: MobileContentView?
     
     private(set) var children: [MobileContentView] = Array()
@@ -147,43 +153,36 @@ class MobileContentView: UIView {
             
         var eventIds: [EventId] = eventIds.flatMap({$0.resolve(state: rendererState)})
                 
-        walkUpHierarchyAndSendEventsToChildren(view: self, eventIds: &eventIds)
+        walkUpHierarchyAndSendEventsToEachAncestor(view: self, eventIds: &eventIds)
                 
-        recurseChildrenAndSendEventsFromView(view: getRootView(), eventIds: &eventIds)
+        recurseChildrenAndSendEventsFromView(view: getRootView(), eventIds: &eventIds, eventTrigger: .recursivelyFromRootView)
     }
     
-    private func walkUpHierarchyAndSendEventsToChildren(view: MobileContentView, eventIds: inout [EventId]) {
+    private func walkUpHierarchyAndSendEventsToEachAncestor(view: MobileContentView, eventIds: inout [EventId]) {
         
-        var nextParentView: MobileContentView? = view.parent
-        
-        while nextParentView != nil && !eventIds.isEmpty {
-            
-            if let children = nextParentView?.children {
-                
-                for childView in children {
-                    
-                    sendEventsToView(view: childView, eventIds: &eventIds)
-                }
-            }
-            
-            nextParentView = nextParentView?.parent
+        guard let parent = view.parent, !eventIds.isEmpty else {
+            return
         }
+        
+        sendEventsToView(view: parent, eventIds: &eventIds, eventTrigger: .walkingUpViewHierarchy)
+        
+        walkUpHierarchyAndSendEventsToEachAncestor(view: parent, eventIds: &eventIds)
     }
     
-    private func recurseChildrenAndSendEventsFromView(view: MobileContentView, eventIds: inout [EventId]) {
+    private func recurseChildrenAndSendEventsFromView(view: MobileContentView, eventIds: inout [EventId], eventTrigger: EventTriggerType) {
         
         guard !eventIds.isEmpty else {
             return
         }
         
         for childView in view.children {
-            recurseChildrenAndSendEventsFromView(view: childView, eventIds: &eventIds)
+            recurseChildrenAndSendEventsFromView(view: childView, eventIds: &eventIds, eventTrigger: eventTrigger)
         }
         
-        sendEventsToView(view: view, eventIds: &eventIds)
+        sendEventsToView(view: view, eventIds: &eventIds, eventTrigger: eventTrigger)
     }
     
-    private func sendEventsToView(view: MobileContentView, eventIds: inout [EventId]) {
+    private func sendEventsToView(view: MobileContentView, eventIds: inout [EventId], eventTrigger: EventTriggerType) {
 
         guard !eventIds.isEmpty else {
             return
@@ -193,7 +192,16 @@ class MobileContentView: UIView {
             
             let eventId: EventId = eventIds[index]
             
-            guard let processedEventResult = view.didReceiveEvent(eventId: eventId, eventIdsGroup: eventIds) else {
+            let processedEventResult: ProcessedEventResult?
+            
+            switch eventTrigger {
+            case .recursivelyFromRootView:
+                processedEventResult = view.didReceiveEvent(eventId: eventId, eventIdsGroup: eventIds)
+            case .walkingUpViewHierarchy:
+                processedEventResult = view.didReceiveAncestryEventFromWalkingUpViewHierarchy(eventId: eventId, eventIdsGroup: eventIds)
+            }
+            
+            guard let processedEventResult = processedEventResult else {
                 continue
             }
             
@@ -210,6 +218,11 @@ class MobileContentView: UIView {
     }
     
     func didReceiveEvent(eventId: EventId, eventIdsGroup: [EventId]) -> ProcessedEventResult? {
+        
+        return nil
+    }
+    
+    func didReceiveAncestryEventFromWalkingUpViewHierarchy(eventId: EventId, eventIdsGroup: [EventId]) -> ProcessedEventResult? {
         
         return nil
     }

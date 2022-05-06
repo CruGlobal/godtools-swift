@@ -59,7 +59,7 @@ class ToolPageFormView: MobileContentFormView {
     
     // MARK: - MobileContenView
     
-    override func didReceiveEvent(eventId: EventId, eventIdsGroup: [EventId]) -> ProcessedEventResult? {
+    override func didReceiveAncestryEventFromWalkingUpViewHierarchy(eventId: EventId, eventIdsGroup: [EventId]) -> ProcessedEventResult? {
         
         let isFollowUpEvent: Bool = eventId == EventId.Companion().FOLLOWUP
                 
