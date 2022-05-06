@@ -87,18 +87,17 @@ class ToolPageModalView: MobileContentView, NibBased {
         centerContentStackVerticallyIfNeeded()
     }
     
-    override func didReceiveEvents(eventIds: [EventId]) {
-            
-        let eventsContainFollowUp: Bool = eventIds.contains(EventId.Companion().FOLLOWUP)
+    override func didReceiveEvent(eventId: EventId, eventIdsGroup: [EventId]) -> ProcessedEventResult? {
         
-        for eventId in eventIds {
-            
-            if viewModel.listeners.contains(eventId) && !eventsContainFollowUp {
-                delegate?.toolPageModalListenerActivated(modalView: self)
-            }
-            else if viewModel.dismissListeners.contains(eventId) {
-                delegate?.toolPageModalDismissListenerActivated(modalView: self)
-            }
+        let isFollowUpEvent: Bool = eventId == EventId.Companion().FOLLOWUP
+                
+        if viewModel.listeners.contains(eventId) && !isFollowUpEvent {
+            delegate?.toolPageModalListenerActivated(modalView: self)
         }
+        else if viewModel.dismissListeners.contains(eventId) && !isFollowUpEvent {
+            delegate?.toolPageModalDismissListenerActivated(modalView: self)
+        }
+        
+        return nil
     }
 }
