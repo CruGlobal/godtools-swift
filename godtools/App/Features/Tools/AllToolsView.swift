@@ -40,11 +40,6 @@ class AllToolsView: UIViewController, ToolsMenuPageView {
         setupBinding()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        viewModel.pageViewed()
-    }
-    
     private func setupLayout() {
         
     }
@@ -95,6 +90,7 @@ class AllToolsView: UIViewController, ToolsMenuPageView {
     
     func pageViewed() {
         
+        viewModel.pageViewed()
     }
     
     func scrollToTop(animated: Bool) {

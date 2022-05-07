@@ -120,7 +120,7 @@ class ToolsMenuView: UIViewController {
         super.viewDidAppear(animated)
                 
         if let mostVisibleItem = getMostVisibleToolsList() {
-            toolsListDidAppear(toolbarItem: mostVisibleItem)
+            toolsMenuPageDidAppear(toolsMenuPageType: mostVisibleItem)
         }
     }
     
@@ -165,19 +165,9 @@ class ToolsMenuView: UIViewController {
         )
     }
         
-    private func toolsListDidAppear(toolbarItem: ToolsMenuPageType) {
+    private func toolsMenuPageDidAppear(toolsMenuPageType: ToolsMenuPageType) {
         
-        switch toolbarItem {
-        
-        case .lessons:
-            viewModel.didViewLessonsList()
-        
-        case .favoritedTools:
-            viewModel.didViewFavoritedToolsList()
-        
-        case .allTools:
-            viewModel.didViewAllToolsList()
-        }
+        toolsMenuPageViews[toolsMenuPageType]?.pageViewed()
     }
     
     private func didChangeToolbarItem(toolbarItem: ToolsMenuPageType) {
@@ -287,7 +277,7 @@ extension ToolsMenuView: UIScrollViewDelegate {
             isAnimatingNavigationToToolsMenuPageView = false
             
             if let mostVisibleItem = getMostVisibleToolsList() {
-                toolsListDidAppear(toolbarItem: mostVisibleItem)
+                toolsMenuPageDidAppear(toolsMenuPageType: mostVisibleItem)
             }
         }
     }
@@ -295,7 +285,7 @@ extension ToolsMenuView: UIScrollViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         
         if scrollView == toolsListsScrollView, let mostVisibleItem = getMostVisibleToolsList() {
-            toolsListDidAppear(toolbarItem: mostVisibleItem)
+            toolsMenuPageDidAppear(toolsMenuPageType: mostVisibleItem)
         }
     }
 }

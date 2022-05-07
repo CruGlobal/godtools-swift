@@ -51,12 +51,6 @@ class FavoritedToolsView: UIViewController, ToolsMenuPageView {
         findToolsButton.addTarget(self, action: #selector(handleFindTools(button:)), for: .touchUpInside)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        viewModel.pageViewed()
-    }
-    
     func setDelegate(delegate: FavoritedToolsViewDelegate?) {
         self.delegate = delegate
     }
@@ -119,6 +113,7 @@ class FavoritedToolsView: UIViewController, ToolsMenuPageView {
     
     func pageViewed() {
         
+        viewModel.pageViewed()
     }
     
     func scrollToTop(animated: Bool) {
