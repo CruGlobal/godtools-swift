@@ -13,7 +13,7 @@ protocol FavoritedToolsViewDelegate: AnyObject {
     func favoritedToolsViewFindToolsTapped(favoritedToolsView: FavoritedToolsView)
 }
 
-class FavoritedToolsView: UIViewController {
+class FavoritedToolsView: UIViewController, ToolsMenuPageView {
     
     private let viewModel: FavoritedToolsViewModelType
         
@@ -120,5 +120,9 @@ class FavoritedToolsView: UIViewController {
     func scrollToTopOfToolsList(animated: Bool) {
         
         toolsView.scrollToTopOfTools(animated: animated)
+    }
+    
+    func pageViewed() {
+        
     }
 }

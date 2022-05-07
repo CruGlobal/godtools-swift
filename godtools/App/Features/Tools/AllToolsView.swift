@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AllToolsView: UIViewController {
+class AllToolsView: UIViewController, ToolsMenuPageView {
     
     private let viewModel: AllToolsViewModelType
             
@@ -96,5 +96,9 @@ class AllToolsView: UIViewController {
     func scrollToTopOfToolsList(animated: Bool) {
         
         toolsView.scrollToTopOfTools(animated: animated)
+    }
+    
+    func pageViewed() {
+        
     }
 }

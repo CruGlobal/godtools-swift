@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LessonsListView: UIViewController {
+class LessonsListView: UIViewController, ToolsMenuPageView {
     
     private let viewModel: LessonsListViewModelType
     private let refreshControl: UIRefreshControl = UIRefreshControl()
@@ -89,6 +89,10 @@ class LessonsListView: UIViewController {
         }
         
         lessonsTableView.setContentOffset(.zero, animated: animated)
+    }
+    
+    func pageViewed() {
+        
     }
 }
 
