@@ -14,11 +14,7 @@ class ToolsMenuView: UIViewController {
     private let toolsMenuPageOrder: [ToolsMenuPageType] = [.lessons, .favorites, .allTools]
     
     private var startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView = .favoritedTools
-    private var toolsMenuPages: [ToolsMenuPageType: ToolsMenuPageView] = Dictionary()
-    private var lessonsView: LessonsListView?
-    private var favoritedToolsView: FavoritedToolsView?
-    private var allToolsView: AllToolsView?
-    private var toolsListsViews: [UIView] = Array()
+    private var toolsMenuPageViews: [ToolsMenuPageType: ToolsMenuPageView] = Dictionary()
     private var isAnimatingNavigationToToolsList: Bool = false
     private var chooseLanguageButton: UIBarButtonItem?
     private var didLayoutSubviews: Bool = false
@@ -69,24 +65,48 @@ class ToolsMenuView: UIViewController {
         }
         didLayoutSubviews = true
         
-        let lessonsView: LessonsListView = LessonsListView(viewModel: viewModel.lessonsWillAppear())
-        let favoritedToolsView: FavoritedToolsView = FavoritedToolsView(viewModel: viewModel.favoritedToolsWillAppear())
-        let allToolsView: AllToolsView = AllToolsView(viewModel: viewModel.allToolsWillAppear())
-        
-        addToolsListView(toolsListView: lessonsView.view)
-        addToolsListView(toolsListView: favoritedToolsView.view)
-        addToolsListView(toolsListView: allToolsView.view)
-        
+        for index in 0 ..< toolsMenuPageOrder.count {
+            
+            let toolsMenuPageType: ToolsMenuPageType = toolsMenuPageOrder[index]
+            let toolsMenuPageView: ToolsMenuPageView
+            
+            switch toolsMenuPageType {
+            
+            case .allTools:
+                let allToolsView: AllToolsView = AllToolsView(viewModel: viewModel.allToolsWillAppear())
+                toolsMenuPageView = allToolsView
+                
+            case .favorites:
+                let favoritedToolsView: FavoritedToolsView = FavoritedToolsView(viewModel: viewModel.favoritedToolsWillAppear())
+                favoritedToolsView.setDelegate(delegate: self)
+                toolsMenuPageView = favoritedToolsView
+            
+            case .lessons:
+                let lessonsView: LessonsListView = LessonsListView(viewModel: viewModel.lessonsWillAppear())
+                toolsMenuPageView = lessonsView
+            }
+            
+            toolsMenuPageViews[toolsMenuPageType] = toolsMenuPageView
+                        
+            toolsMenuPageView.view.frame = CGRect(
+                x: CGFloat(index) * toolsListsBounds.size.width,
+                y: 0,
+                width: toolsListsBounds.size.width,
+                height: toolsListsBounds.size.height
+            )
+                        
+            toolsListsScrollView.addSubview(toolsMenuPageView.view)
+            
+            toolsListsScrollView.contentSize = CGSize(
+                width: toolsListsBounds.size.width * CGFloat(index + 1),
+                height: toolsListsBounds.size.height
+            )
+        }
+                
         toolsListsScrollView.delegate = self
         
         toolbarView.configure(viewModel: viewModel.toolbarWillAppear(), delegate: self)
-                
-        favoritedToolsView.setDelegate(delegate: self)
-        
-        self.lessonsView = lessonsView
-        self.favoritedToolsView = favoritedToolsView
-        self.allToolsView = allToolsView
-        
+                                
         navigateToToolsListForToolbarItem(toolbarItem: startingToolbarItem, animated: false)
     }
     
@@ -144,7 +164,7 @@ class ToolsMenuView: UIViewController {
             isTranslucent: false
         )
     }
-    
+        
     private func toolsListDidAppear(toolbarItem: ToolsMenuToolbarView.ToolbarItemView) {
         
         switch toolbarItem {
@@ -222,28 +242,7 @@ class ToolsMenuView: UIViewController {
     private var toolsListsBounds: CGRect {
         return toolsListsScrollView.bounds
     }
-    
-    private func addToolsListView(toolsListView: UIView) {
         
-        let itemPosition: Int = toolsListsViews.count
-        
-        toolsListView.frame = CGRect(
-            x: CGFloat(itemPosition) * toolsListsBounds.size.width,
-            y: 0,
-            width: toolsListsBounds.size.width,
-            height: toolsListsBounds.size.height
-        )
-        
-        toolsListsViews.append(toolsListView)
-        
-        toolsListsScrollView.addSubview(toolsListView)
-        
-        toolsListsScrollView.contentSize = CGSize(
-            width: toolsListsBounds.size.width * CGFloat(toolsListsViews.count),
-            height: toolsListsBounds.size.height
-        )
-    }
-    
     private func getMostVisibleToolsList() -> ToolsMenuToolbarView.ToolbarItemView? {
         
         let mostVisibleItem: ToolsMenuToolbarView.ToolbarItemView?
