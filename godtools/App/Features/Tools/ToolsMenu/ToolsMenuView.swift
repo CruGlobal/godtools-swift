@@ -14,6 +14,7 @@ class ToolsMenuView: UIViewController {
     private let toolsMenuPageOrder: [ToolsMenuPageType] = [.lessons, .favorites, .allTools]
     
     private var startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView = .favoritedTools
+    private var toolsMenuPages: [ToolsMenuPageType: ToolsMenuPageView] = Dictionary()
     private var lessonsView: LessonsListView?
     private var favoritedToolsView: FavoritedToolsView?
     private var allToolsView: AllToolsView?
