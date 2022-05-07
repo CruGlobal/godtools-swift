@@ -53,7 +53,7 @@ class ToolsMenuView: UIViewController {
             image: ImageCatalog.navMenu.image,
             color: .white,
             target: self,
-            action: #selector(handleMenu(barButtonItem:))
+            action: #selector(menuButtonTapped(barButtonItem:))
         )
     }
     
@@ -104,11 +104,11 @@ class ToolsMenuView: UIViewController {
         }
     }
     
-    @objc func handleMenu(barButtonItem: UIBarButtonItem) {
+    @objc private func menuButtonTapped(barButtonItem: UIBarButtonItem) {
         viewModel.menuTapped()
     }
     
-    @objc func handleLanguage(barButtonItem: UIBarButtonItem) {
+    @objc private func chooseLanguageButtonTapped(barButtonItem: UIBarButtonItem) {
         viewModel.languageTapped()
     }
     
@@ -214,7 +214,7 @@ class ToolsMenuView: UIViewController {
                 image: ImageCatalog.navLanguage.image,
                 color: .white,
                 target: self,
-                action: #selector(handleLanguage(barButtonItem:))
+                action: #selector(chooseLanguageButtonTapped(barButtonItem:))
             )
         }
     }
