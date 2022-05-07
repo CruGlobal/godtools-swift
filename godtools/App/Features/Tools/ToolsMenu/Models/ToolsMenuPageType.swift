@@ -11,6 +11,6 @@ import Foundation
 enum ToolsMenuPageType {
     
     case allTools
-    case favorites
+    case favoritedTools
     case lessons
 }

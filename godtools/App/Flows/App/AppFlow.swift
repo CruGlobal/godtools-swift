@@ -11,7 +11,7 @@ import MessageUI
 
 class AppFlow: NSObject, ToolNavigationFlow, Flow {
     
-    private static let defaultStartingToolsMenu: ToolsMenuToolbarView.ToolbarItemView = .favoritedTools
+    private static let defaultStartingToolsMenu: ToolsMenuPageType = .favoritedTools
     
     private let window: UIWindow
     private let dataDownloader: InitialDataDownloader
@@ -494,7 +494,7 @@ extension AppFlow {
         self.toolsMenuView = toolsMenuView
     }
     
-    private func navigateToToolsMenu(toolbarItem: ToolsMenuToolbarView.ToolbarItemView?, animateToolMenuToolbarItemTransition: Bool, animatedDismissal: Bool, didCompleteDismissal: (() -> Void)? = nil) {
+    private func navigateToToolsMenu(toolbarItem: ToolsMenuPageType?, animateToolMenuToolbarItemTransition: Bool, animatedDismissal: Bool, didCompleteDismissal: (() -> Void)? = nil) {
         
         instantiateToolsMenuIfNeeded()
         
