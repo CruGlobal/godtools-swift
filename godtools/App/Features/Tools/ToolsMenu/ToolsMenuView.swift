@@ -68,23 +68,7 @@ class ToolsMenuView: UIViewController {
         for index in 0 ..< toolsMenuPageOrder.count {
             
             let toolsMenuPageType: ToolsMenuPageType = toolsMenuPageOrder[index]
-            let toolsMenuPageView: ToolsMenuPageView
-            
-            switch toolsMenuPageType {
-            
-            case .allTools:
-                let allToolsView: AllToolsView = AllToolsView(viewModel: viewModel.allToolsWillAppear())
-                toolsMenuPageView = allToolsView
-                
-            case .favoritedTools:
-                let favoritedToolsView: FavoritedToolsView = FavoritedToolsView(viewModel: viewModel.favoritedToolsWillAppear())
-                favoritedToolsView.setDelegate(delegate: self)
-                toolsMenuPageView = favoritedToolsView
-            
-            case .lessons:
-                let lessonsView: LessonsListView = LessonsListView(viewModel: viewModel.lessonsWillAppear())
-                toolsMenuPageView = lessonsView
-            }
+            let toolsMenuPageView: ToolsMenuPageView = getNewToolsMenuPageViewInstance(toolsMenuPageType: toolsMenuPageType)
             
             toolsMenuPageViews[toolsMenuPageType] = toolsMenuPageView
                         
@@ -148,6 +132,23 @@ class ToolsMenuView: UIViewController {
         toolsMenuPageViews[.allTools]?.scrollToTop(animated: false)
                 
         navigateToToolsListForToolbarItem(toolbarItem: toolbarItem, animated: animated)
+    }
+    
+    private func getNewToolsMenuPageViewInstance(toolsMenuPageType: ToolsMenuPageType) -> ToolsMenuPageView {
+        
+        switch toolsMenuPageType {
+        
+        case .allTools:
+            return AllToolsView(viewModel: viewModel.allToolsWillAppear())
+            
+        case .favoritedTools:
+            let favoritedToolsView: FavoritedToolsView = FavoritedToolsView(viewModel: viewModel.favoritedToolsWillAppear())
+            favoritedToolsView.setDelegate(delegate: self)
+            return favoritedToolsView
+        
+        case .lessons:
+            return LessonsListView(viewModel: viewModel.lessonsWillAppear())
+        }
     }
     
     private func configureNavigationBarAppearance(shouldAnimateNavigationBarHiddenState: Bool) {
