@@ -15,7 +15,7 @@ class ToolsMenuView: UIViewController {
     
     private var startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView = .favoritedTools
     private var toolsMenuPageViews: [ToolsMenuPageType: ToolsMenuPageView] = Dictionary()
-    private var isAnimatingNavigationToToolsList: Bool = false
+    private var isAnimatingNavigationToToolsMenuPageView: Bool = false
     private var chooseLanguageButton: UIBarButtonItem?
     private var didLayoutSubviews: Bool = false
                 
@@ -209,7 +209,7 @@ class ToolsMenuView: UIViewController {
         }
                 
         if animated {
-            isAnimatingNavigationToToolsList = true
+            isAnimatingNavigationToToolsMenuPageView = true
         }
         
         toolsListsScrollView.setContentOffset(
@@ -275,7 +275,7 @@ extension ToolsMenuView: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         if scrollView == toolsListsScrollView,
-           !isAnimatingNavigationToToolsList,
+           !isAnimatingNavigationToToolsMenuPageView,
            let mostVisibleItem = getMostVisibleToolsList() {
             
             didChangeToolbarItem(toolbarItem: mostVisibleItem)
@@ -284,7 +284,7 @@ extension ToolsMenuView: UIScrollViewDelegate {
     
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         if scrollView == toolsListsScrollView {
-            isAnimatingNavigationToToolsList = false
+            isAnimatingNavigationToToolsMenuPageView = false
             
             if let mostVisibleItem = getMostVisibleToolsList() {
                 toolsListDidAppear(toolbarItem: mostVisibleItem)
