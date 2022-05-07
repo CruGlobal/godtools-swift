@@ -324,6 +324,8 @@
 		45A3EFEB2825BBDA00C734CE /* ToolsMenuToolbarItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A3EFDF2825BBDA00C734CE /* ToolsMenuToolbarItemViewModel.swift */; };
 		45A3EFEC2825BBDA00C734CE /* ToolsMenuToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A3EFE02825BBDA00C734CE /* ToolsMenuToolbarView.swift */; };
 		45A3EFED2825BBDA00C734CE /* ToolsMenuViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A3EFE12825BBDA00C734CE /* ToolsMenuViewModelType.swift */; };
+		45A3EFEF2825BC9000C734CE /* ToolsMenuPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A3EFEE2825BC9000C734CE /* ToolsMenuPageView.swift */; };
+		45A3EFF22825F53000C734CE /* ToolsMenuPageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A3EFF12825F53000C734CE /* ToolsMenuPageType.swift */; };
 		45A45CED2731B8C5005D4E74 /* MobileContentBackgroundImageRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457032A426D0055A00F5BADC /* MobileContentBackgroundImageRenderer.swift */; };
 		45A45CEE2731B8C9005D4E74 /* MobileContentBackgroundImageRendererType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457032A626D0056F00F5BADC /* MobileContentBackgroundImageRendererType.swift */; };
 		45A5200E26C481DB009B68D4 /* ManifestResourcesCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A5200D26C481DB009B68D4 /* ManifestResourcesCache.swift */; };
@@ -1346,6 +1348,8 @@
 		45A3EFDF2825BBDA00C734CE /* ToolsMenuToolbarItemViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolsMenuToolbarItemViewModel.swift; sourceTree = "<group>"; };
 		45A3EFE02825BBDA00C734CE /* ToolsMenuToolbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolsMenuToolbarView.swift; sourceTree = "<group>"; };
 		45A3EFE12825BBDA00C734CE /* ToolsMenuViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolsMenuViewModelType.swift; sourceTree = "<group>"; };
+		45A3EFEE2825BC9000C734CE /* ToolsMenuPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsMenuPageView.swift; sourceTree = "<group>"; };
+		45A3EFF12825F53000C734CE /* ToolsMenuPageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsMenuPageType.swift; sourceTree = "<group>"; };
 		45A5200D26C481DB009B68D4 /* ManifestResourcesCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManifestResourcesCache.swift; sourceTree = "<group>"; };
 		45A63AB2265441B60090E09D /* ExitLinkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitLinkModel.swift; sourceTree = "<group>"; };
 		45A73E4B25CF19E600B7533F /* IncomingDeepLinkType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingDeepLinkType.swift; sourceTree = "<group>"; };
@@ -3482,10 +3486,12 @@
 		45A3EFD22825BBDA00C734CE /* ToolsMenu */ = {
 			isa = PBXGroup;
 			children = (
+				45A3EFEE2825BC9000C734CE /* ToolsMenuPageView.swift */,
 				45A3EFD42825BBDA00C734CE /* ToolsMenuView.swift */,
 				45A3EFD52825BBDA00C734CE /* ToolsMenuView.xib */,
 				45A3EFD32825BBDA00C734CE /* ToolsMenuViewModel.swift */,
 				45A3EFE12825BBDA00C734CE /* ToolsMenuViewModelType.swift */,
+				45A3EFF02825F50400C734CE /* Models */,
 				45A3EFD62825BBDA00C734CE /* Views */,
 			);
 			path = ToolsMenu;
@@ -3520,6 +3526,14 @@
 				45A3EFDD2825BBDA00C734CE /* ToolsMenuToolbarItemViewModelType.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		45A3EFF02825F50400C734CE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				45A3EFF12825F53000C734CE /* ToolsMenuPageType.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		45A7BAF3252CBC5500D70465 /* Extensions */ = {
@@ -6566,6 +6580,7 @@
 				D19D00F925AF51FA007C535B /* AppsFlyer.swift in Sources */,
 				45AE975127C97A9500C2CB33 /* Image+MobileContentRenderableModel.swift in Sources */,
 				45C93AF1261D310900592FFF /* ArticleAemDownloadOperationError.swift in Sources */,
+				45A3EFF22825F53000C734CE /* ToolsMenuPageType.swift in Sources */,
 				457579E326E96ABE00C898D2 /* MobileContentMultiSelectViewModelType.swift in Sources */,
 				4578176F279C7CDA00ED50F2 /* ChooseYourOwnAdventurePageViewFactory.swift in Sources */,
 				4542F401281080C00016C254 /* DeepLinkingParserManifestType.swift in Sources */,
@@ -7173,6 +7188,7 @@
 				45AD21632593A62800A096A0 /* AppDiContainer.swift in Sources */,
 				45C93AF5261D310900592FFF /* ArticleManifestAemRepository.swift in Sources */,
 				45AD1BDE25938A4F00A096A0 /* GTSegment.swift in Sources */,
+				45A3EFEF2825BC9000C734CE /* ToolsMenuPageView.swift in Sources */,
 				45C93AEE261D310900592FFF /* ArticleAemData.swift in Sources */,
 				45AD208425938B6A00A096A0 /* KeyboardObserverType.swift in Sources */,
 				45AD1FD525938A9800A096A0 /* WebArchiveError.swift in Sources */,
