@@ -143,10 +143,10 @@ class ToolsMenuView: UIViewController {
             return
         }
         
-        lessonsView?.scrollToTopOfLessonsList(animated: false)
-        favoritedToolsView?.scrollToTopOfToolsList(animated: false)
-        allToolsView?.scrollToTopOfToolsList(animated: false)
-        
+        toolsMenuPageViews[.lessons]?.scrollToTop(animated: false)
+        toolsMenuPageViews[.favorites]?.scrollToTop(animated: false)
+        toolsMenuPageViews[.allTools]?.scrollToTop(animated: false)
+                
         navigateToToolsListForToolbarItem(toolbarItem: toolbarItem, animated: animated)
     }
     

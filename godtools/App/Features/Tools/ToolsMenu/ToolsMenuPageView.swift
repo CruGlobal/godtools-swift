@@ -11,4 +11,5 @@ import UIKit
 protocol ToolsMenuPageView: UIViewController {
     
     func pageViewed()
+    func scrollToTop(animated: Bool)
 }

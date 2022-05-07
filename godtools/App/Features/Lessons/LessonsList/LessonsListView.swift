@@ -82,17 +82,17 @@ class LessonsListView: UIViewController, ToolsMenuPageView {
         viewModel.refreshLessons()
     }
     
-    func scrollToTopOfLessonsList(animated: Bool) {
+    func pageViewed() {
+        
+    }
+    
+    func scrollToTop(animated: Bool) {
         
         guard lessonsTableView != nil else {
             return
         }
         
         lessonsTableView.setContentOffset(.zero, animated: animated)
-    }
-    
-    func pageViewed() {
-        
     }
 }
 

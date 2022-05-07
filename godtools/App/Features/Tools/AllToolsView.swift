@@ -93,12 +93,12 @@ class AllToolsView: UIViewController, ToolsMenuPageView {
         }
     }
     
-    func scrollToTopOfToolsList(animated: Bool) {
-        
-        toolsView.scrollToTopOfTools(animated: animated)
-    }
-    
     func pageViewed() {
         
+    }
+    
+    func scrollToTop(animated: Bool) {
+        
+        toolsView.scrollToTopOfTools(animated: animated)
     }
 }
