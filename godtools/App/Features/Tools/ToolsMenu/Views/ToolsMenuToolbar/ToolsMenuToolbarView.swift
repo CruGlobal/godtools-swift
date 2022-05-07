@@ -63,13 +63,13 @@ class ToolsMenuToolbarView: UIView, NibBased {
         
     }
     
-    func setSelectedToolbarItem(toolbarItem: ToolsMenuPageType) {
+    func setSelectedToolbarItem(pageType: ToolsMenuPageType) {
         
         guard toolbarItemsCollectionView != nil else {
             return
         }
         
-        selectedToolbarItem = toolbarItem
+        selectedToolbarItem = pageType
         toolbarItemsCollectionView.reloadData()
     }
 }

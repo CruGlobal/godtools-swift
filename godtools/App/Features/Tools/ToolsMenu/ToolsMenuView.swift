@@ -11,11 +11,11 @@ import UIKit
 class ToolsMenuView: UIViewController {
     
     private let viewModel: ToolsMenuViewModelType
-    private let toolsMenuPageOrder: [ToolsMenuPageType] = [.lessons, .favoritedTools, .allTools]
+    private let pageOrder: [ToolsMenuPageType] = [.lessons, .favoritedTools, .allTools]
     
-    private var startingToolbarItem: ToolsMenuPageType = .favoritedTools
-    private var toolsMenuPageViews: [ToolsMenuPageType: ToolsMenuPageView] = Dictionary()
-    private var isAnimatingNavigationToToolsMenuPageView: Bool = false
+    private var startingPage: ToolsMenuPageType = .favoritedTools
+    private var pages: [ToolsMenuPageType: ToolsMenuPageView] = Dictionary()
+    private var isAnimatingNavigationToPage: Bool = false
     private var chooseLanguageButton: UIBarButtonItem?
     private var didLayoutSubviews: Bool = false
                 
@@ -23,10 +23,10 @@ class ToolsMenuView: UIViewController {
     @IBOutlet weak private var toolbarView: ToolsMenuToolbarView!
     @IBOutlet weak private var bottomView: UIView!
             
-    required init(viewModel: ToolsMenuViewModelType, startingToolbarItem: ToolsMenuPageType) {
+    required init(viewModel: ToolsMenuViewModelType, startingPage: ToolsMenuPageType) {
         
         self.viewModel = viewModel
-        self.startingToolbarItem = startingToolbarItem
+        self.startingPage = startingPage
         super.init(nibName: String(describing: ToolsMenuView.self), bundle: nil)
     }
     
@@ -65,33 +65,33 @@ class ToolsMenuView: UIViewController {
         }
         didLayoutSubviews = true
         
-        for index in 0 ..< toolsMenuPageOrder.count {
+        for index in 0 ..< pageOrder.count {
             
-            let toolsMenuPageType: ToolsMenuPageType = toolsMenuPageOrder[index]
-            let toolsMenuPageView: ToolsMenuPageView = getNewToolsMenuPageViewInstance(toolsMenuPageType: toolsMenuPageType)
+            let pageType: ToolsMenuPageType = pageOrder[index]
+            let page: ToolsMenuPageView = getNewPageViewInstance(pageType: pageType)
             
-            toolsMenuPageViews[toolsMenuPageType] = toolsMenuPageView
+            pages[pageType] = page
                         
-            toolsMenuPageView.view.frame = CGRect(
-                x: CGFloat(index) * toolsListsBounds.size.width,
+            page.view.frame = CGRect(
+                x: CGFloat(index) * toolsListsScrollView.bounds.size.width,
                 y: 0,
-                width: toolsListsBounds.size.width,
-                height: toolsListsBounds.size.height
+                width: toolsListsScrollView.bounds.size.width,
+                height: toolsListsScrollView.bounds.size.height
             )
                         
-            toolsListsScrollView.addSubview(toolsMenuPageView.view)
+            toolsListsScrollView.addSubview(page.view)
             
             toolsListsScrollView.contentSize = CGSize(
-                width: toolsListsBounds.size.width * CGFloat(index + 1),
-                height: toolsListsBounds.size.height
+                width: toolsListsScrollView.bounds.size.width * CGFloat(index + 1),
+                height: toolsListsScrollView.bounds.size.height
             )
         }
                 
         toolsListsScrollView.delegate = self
         
-        toolbarView.configure(viewModel: viewModel.toolbarWillAppear(), pageItemsOrder: toolsMenuPageOrder, delegate: self)
+        toolbarView.configure(viewModel: viewModel.toolbarWillAppear(), pageItemsOrder: pageOrder, delegate: self)
                                 
-        navigateToToolsListForToolbarItem(toolbarItem: startingToolbarItem, animated: false)
+        navigateToPage(pageType: startingPage, animated: false)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -103,8 +103,8 @@ class ToolsMenuView: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
                 
-        if let mostVisibleItem = getMostVisibleToolsList() {
-            toolsMenuPageDidAppear(toolsMenuPageType: mostVisibleItem)
+        if let mostVisiblePageType = getMostVisiblePage() {
+            toolsMenuPageDidAppear(pageType: mostVisiblePageType)
         }
     }
     
@@ -119,7 +119,7 @@ class ToolsMenuView: UIViewController {
     func reset(toolbarItem: ToolsMenuPageType, animated: Bool) {
         
         guard didLayoutSubviews else {
-            startingToolbarItem = toolbarItem
+            startingPage = toolbarItem
             return
         }
         
@@ -127,16 +127,16 @@ class ToolsMenuView: UIViewController {
             return
         }
         
-        toolsMenuPageViews[.lessons]?.scrollToTop(animated: false)
-        toolsMenuPageViews[.favoritedTools]?.scrollToTop(animated: false)
-        toolsMenuPageViews[.allTools]?.scrollToTop(animated: false)
+        pages[.lessons]?.scrollToTop(animated: false)
+        pages[.favoritedTools]?.scrollToTop(animated: false)
+        pages[.allTools]?.scrollToTop(animated: false)
                 
-        navigateToToolsListForToolbarItem(toolbarItem: toolbarItem, animated: animated)
+        navigateToPage(pageType: toolbarItem, animated: animated)
     }
     
-    private func getNewToolsMenuPageViewInstance(toolsMenuPageType: ToolsMenuPageType) -> ToolsMenuPageView {
+    private func getNewPageViewInstance(pageType: ToolsMenuPageType) -> ToolsMenuPageView {
         
-        switch toolsMenuPageType {
+        switch pageType {
         
         case .allTools:
             return AllToolsView(viewModel: viewModel.allToolsWillAppear())
@@ -166,16 +166,16 @@ class ToolsMenuView: UIViewController {
         )
     }
         
-    private func toolsMenuPageDidAppear(toolsMenuPageType: ToolsMenuPageType) {
+    private func toolsMenuPageDidAppear(pageType: ToolsMenuPageType) {
         
-        toolsMenuPageViews[toolsMenuPageType]?.pageViewed()
+        pages[pageType]?.pageViewed()
     }
     
-    private func didChangeToolbarItem(toolbarItem: ToolsMenuPageType) {
+    private func didChangeToolbarItem(pageType: ToolsMenuPageType) {
         
         let hidesChooseLanguageButton: Bool
         
-        switch toolbarItem {
+        switch pageType {
         case .lessons:
             hidesChooseLanguageButton = true
         case .allTools:
@@ -186,29 +186,29 @@ class ToolsMenuView: UIViewController {
         
         setChooseLanguageButtonHidden(hidden: hidesChooseLanguageButton)
         
-        toolbarView.setSelectedToolbarItem(toolbarItem: toolbarItem)
+        toolbarView.setSelectedToolbarItem(pageType: pageType)
     }
     
-    private func navigateToToolsListForToolbarItem(toolbarItem: ToolsMenuPageType, animated: Bool) {
+    private func navigateToPage(pageType: ToolsMenuPageType, animated: Bool) {
         
         guard toolsListsScrollView != nil else {
             return
         }
         
-        guard let page = toolbarView.pageItemsOrder.firstIndex(of: toolbarItem) else {
+        guard let page = pageOrder.firstIndex(of: pageType) else {
             return
         }
                 
         if animated {
-            isAnimatingNavigationToToolsMenuPageView = true
+            isAnimatingNavigationToPage = true
         }
         
         toolsListsScrollView.setContentOffset(
-            CGPoint(x: toolsListsBounds.size.width * CGFloat(page), y: 0),
+            CGPoint(x: toolsListsScrollView.bounds.size.width * CGFloat(page), y: 0),
             animated: animated
         )
         
-        didChangeToolbarItem(toolbarItem: toolbarItem)
+        didChangeToolbarItem(pageType: pageType)
     }
     
     private func setChooseLanguageButtonHidden(hidden: Bool) {
@@ -229,33 +229,29 @@ class ToolsMenuView: UIViewController {
             )
         }
     }
-    
-    private var toolsListsBounds: CGRect {
-        return toolsListsScrollView.bounds
-    }
         
-    private func getMostVisibleToolsList() -> ToolsMenuPageType? {
+    private func getMostVisiblePage() -> ToolsMenuPageType? {
         
-        let mostVisibleItem: ToolsMenuPageType?
-        let middleContentOffset: CGFloat = toolsListsScrollView.contentOffset.x + (toolsListsBounds.size.width / 2)
+        let mostVisiblePageType: ToolsMenuPageType?
+        let middleContentOffset: CGFloat = toolsListsScrollView.contentOffset.x + (toolsListsScrollView.bounds.size.width / 2)
         
-        var mostVisiblePage: Int = Int(middleContentOffset / toolsListsBounds.size.width)
+        var mostVisiblePageIndex: Int = Int(middleContentOffset / toolsListsScrollView.bounds.size.width)
         
-        if mostVisiblePage < 0 {
-            mostVisiblePage = 0
+        if mostVisiblePageIndex < 0 {
+            mostVisiblePageIndex = 0
         }
-        else if mostVisiblePage >= toolbarView.pageItemsOrder.count {
-            mostVisiblePage = toolbarView.pageItemsOrder.count - 1
+        else if mostVisiblePageIndex >= pageOrder.count {
+            mostVisiblePageIndex = pageOrder.count - 1
         }
         
-        if mostVisiblePage >= 0 && mostVisiblePage < toolbarView.pageItemsOrder.count {
-            mostVisibleItem = toolbarView.pageItemsOrder[mostVisiblePage]
+        if mostVisiblePageIndex >= 0 && mostVisiblePageIndex < pageOrder.count {
+            mostVisiblePageType = pageOrder[mostVisiblePageIndex]
         }
         else {
-            mostVisibleItem = nil
+            mostVisiblePageType = nil
         }
         
-        return mostVisibleItem
+        return mostVisiblePageType
     }
 }
 
@@ -266,27 +262,27 @@ extension ToolsMenuView: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         if scrollView == toolsListsScrollView,
-           !isAnimatingNavigationToToolsMenuPageView,
-           let mostVisibleItem = getMostVisibleToolsList() {
+           !isAnimatingNavigationToPage,
+           let mostVisiblePageType = getMostVisiblePage() {
             
-            didChangeToolbarItem(toolbarItem: mostVisibleItem)
+            didChangeToolbarItem(pageType: mostVisiblePageType)
         }
     }
     
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         if scrollView == toolsListsScrollView {
-            isAnimatingNavigationToToolsMenuPageView = false
+            isAnimatingNavigationToPage = false
             
-            if let mostVisibleItem = getMostVisibleToolsList() {
-                toolsMenuPageDidAppear(toolsMenuPageType: mostVisibleItem)
+            if let mostVisiblePageType = getMostVisiblePage() {
+                toolsMenuPageDidAppear(pageType: mostVisiblePageType)
             }
         }
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         
-        if scrollView == toolsListsScrollView, let mostVisibleItem = getMostVisibleToolsList() {
-            toolsMenuPageDidAppear(toolsMenuPageType: mostVisibleItem)
+        if scrollView == toolsListsScrollView, let mostVisiblePageType = getMostVisiblePage() {
+            toolsMenuPageDidAppear(pageType: mostVisiblePageType)
         }
     }
 }
@@ -297,7 +293,7 @@ extension ToolsMenuView: FavoritedToolsViewDelegate {
     
     func favoritedToolsViewFindToolsTapped(favoritedToolsView: FavoritedToolsView) {
               
-        navigateToToolsListForToolbarItem(toolbarItem: .allTools, animated: true)
+        navigateToPage(pageType: .allTools, animated: true)
     }
 }
 
@@ -307,16 +303,16 @@ extension ToolsMenuView: ToolsMenuToolbarViewDelegate {
     
     func toolsMenuToolbarLessonsTapped(toolsMenuToolbar: ToolsMenuToolbarView) {
         
-        navigateToToolsListForToolbarItem(toolbarItem: .lessons, animated: true)
+        navigateToPage(pageType: .lessons, animated: true)
     }
     
     func toolsMenuToolbarFavoritedToolsTapped(toolsMenuToolbar: ToolsMenuToolbarView) {
         
-        navigateToToolsListForToolbarItem(toolbarItem: .favoritedTools, animated: true)
+        navigateToPage(pageType: .favoritedTools, animated: true)
     }
     
     func toolsMenuToolbarAllToolsTapped(toolsMenuToolbar: ToolsMenuToolbarView) {
         
-        navigateToToolsListForToolbarItem(toolbarItem: .allTools, animated: true)
+        navigateToPage(pageType: .allTools, animated: true)
     }
 }
