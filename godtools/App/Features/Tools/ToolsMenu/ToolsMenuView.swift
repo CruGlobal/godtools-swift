@@ -11,6 +11,7 @@ import UIKit
 class ToolsMenuView: UIViewController {
     
     private let viewModel: ToolsMenuViewModelType
+    private let toolsMenuPageOrder: [ToolsMenuPageType] = [.lessons, .favorites, .allTools]
     
     private var startingToolbarItem: ToolsMenuToolbarView.ToolbarItemView = .favoritedTools
     private var lessonsView: LessonsListView?
