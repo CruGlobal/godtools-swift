@@ -11,6 +11,7 @@ import Foundation
 struct ResourceModel: ResourceModelType, Decodable {
     
     let abbreviation: String
+    let attrAboutBannerAnimation: String
     let attrAboutOverviewVideoYoutube: String
     let attrBanner: String
     let attrBannerAbout: String
@@ -39,6 +40,7 @@ struct ResourceModel: ResourceModelType, Decodable {
     
     enum AttributesKeys: String, CodingKey {
         case abbreviation = "abbreviation"
+        case attrAboutBannerAnimation = "attr-about-banner-animation"
         case attrAboutOverviewVideoYoutube = "attr-about-overview-video-youtube"
         case attrBanner = "attr-banner"
         case attrBannerAbout = "attr-banner-about"
@@ -65,6 +67,7 @@ struct ResourceModel: ResourceModelType, Decodable {
     init(realmResource: RealmResource) {
         
         abbreviation = realmResource.abbreviation
+        attrAboutBannerAnimation = realmResource.attrAboutBannerAnimation
         attrAboutOverviewVideoYoutube = realmResource.attrAboutOverviewVideoYoutube
         attrBanner = realmResource.attrBanner
         attrBannerAbout = realmResource.attrBannerAbout
@@ -109,6 +112,7 @@ struct ResourceModel: ResourceModelType, Decodable {
         
         // attributes
         abbreviation = try attributesContainer?.decodeIfPresent(String.self, forKey: .abbreviation) ?? ""
+        attrAboutBannerAnimation = try attributesContainer?.decodeIfPresent(String.self, forKey: .attrAboutBannerAnimation) ?? ""
         attrAboutOverviewVideoYoutube = try attributesContainer?.decodeIfPresent(String.self, forKey: .attrAboutOverviewVideoYoutube) ?? ""
         attrBanner = try attributesContainer?.decodeIfPresent(String.self, forKey: .attrBanner) ?? ""
         attrBannerAbout = try attributesContainer?.decodeIfPresent(String.self, forKey: .attrBannerAbout) ?? ""
