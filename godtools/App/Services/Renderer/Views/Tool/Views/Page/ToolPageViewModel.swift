@@ -26,7 +26,7 @@ class ToolPageViewModel: MobileContentPageViewModel, ToolPageViewModelType {
         self.renderedPageContext = renderedPageContext
         self.analytics = analytics
         self.hidesCallToAction = pageModel.isLastPage
-        
+                
         self.analyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
             analyticsEvents: pageModel.getAnalyticsEvents(type: .visible),
             mobileContentAnalytics: mobileContentAnalytics,
@@ -55,6 +55,10 @@ class ToolPageViewModel: MobileContentPageViewModel, ToolPageViewModelType {
         }
                         
         return resource.abbreviation + "-" + String(page) + cardAnalyticsScreenName
+    }
+    
+    var numberOfVisibleCards: Int {
+        return pageModel.visibleCards.count
     }
     
     var bottomViewColor: UIColor {

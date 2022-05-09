@@ -138,14 +138,6 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
         return renderedPageContext.language.languageDirection.semanticContentAttribute
     }
     
-    var dismissListeners: [EventId] {
-        return Array(cardModel.dismissListeners)
-    }
-    
-    var listeners: [EventId] {
-        return Array(cardModel.listeners)
-    }
-    
     func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel? {
         
         guard let backgroundImageResource = cardModel.backgroundImage else {
@@ -173,6 +165,14 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     
     func cardDidDisappear() {
         mobileContentDidDisappear()
+    }
+    
+    func containsDismissListener(eventId: EventId) -> Bool {
+        return cardModel.dismissListeners.contains(eventId)
+    }
+    
+    func containsListener(eventId: EventId) -> Bool {
+        return cardModel.listeners.contains(eventId)
     }
 }
 
