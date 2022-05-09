@@ -29,11 +29,11 @@ protocol ToolPageCardViewModelType: MobileContentViewModelType {
     var nextButtonTitleFont: UIFont { get }
     var hidesNextButton: Bool { get }
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute { get }
-    var dismissListeners: [EventId] { get }
-    var listeners: [EventId] { get }
     var isHiddenCard: Bool { get }
     
     func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel?
     func cardDidAppear()
     func cardDidDisappear()
+    func containsDismissListener(eventId: EventId) -> Bool
+    func containsListener(eventId: EventId) -> Bool
 }
