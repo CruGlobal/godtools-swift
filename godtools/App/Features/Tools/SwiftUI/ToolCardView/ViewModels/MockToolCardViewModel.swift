@@ -11,7 +11,7 @@ import SwiftUI
 class MockToolCardViewModel: BaseToolCardViewModel {
     let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
     
-    init(title: String, category: String, showParallelLanguage: Bool, showBannerImage: Bool) {
+    init(title: String, category: String, showParallelLanguage: Bool, showBannerImage: Bool, attachmentsDownloadProgress: Double, translationDownloadProgress: Double) {
         super.init()
         
         self.title = title
@@ -24,5 +24,8 @@ class MockToolCardViewModel: BaseToolCardViewModel {
         if showBannerImage, let deviceImage = appDiContainer.deviceAttachmentBanners.getDeviceBanner(resourceId: "2") {
             bannerImage = Image(uiImage: deviceImage)
         }
+        
+        attachmentsDownloadProgressValue = attachmentsDownloadProgress
+        translationDownloadProgressValue = translationDownloadProgress
     }
 }

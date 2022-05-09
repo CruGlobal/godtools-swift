@@ -23,7 +23,6 @@ struct ToolCardView: View {
         static let cardWidth: CGFloat = 335
         static let bannerImageAspectRatio: CGFloat = cardWidth/bannerImageHeight
         static let bannerImageHeight: CGFloat = 87
-        static let leadingPadding: CGFloat = 15
         static let cornerRadius: CGFloat = 6
     }
     
@@ -31,11 +30,14 @@ struct ToolCardView: View {
     
     var body: some View {
         ZStack(alignment: .top) {
+            // MARK: - Card Background
             RoundedRectangle(cornerRadius: Sizes.cornerRadius, style: .circular)
                 .fill(.white)
                 .shadow(color: .black.opacity(0.25), radius: 4, y: 2)
             
-            VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: 0) {
+                
+                // MARK: - Image
                 ZStack(alignment: .topTrailing) {
                     OptionalImage(image: viewModel.bannerImage, width: cardWidth, height: cardWidth / Sizes.bannerImageAspectRatio)
                         .cornerRadius(Sizes.cornerRadius, corners: [.topLeft, .topRight])
@@ -48,6 +50,14 @@ struct ToolCardView: View {
                 }
                 .transition(.opacity)
                 
+                // MARK: - Progress Bars
+                ZStack {
+                    ProgressBarView(color: .yellow, progress: viewModel.attachmentsDownloadProgressValue)
+                    ProgressBarView(color: ColorPalette.progressBarBlue.color, progress: viewModel.translationDownloadProgressValue)
+                }
+                .frame(height: 2)
+                
+                // MARK: - Text
                 HStack(alignment: .top) {
                     VStack(alignment: .leading, spacing: 3) {
                         Text(viewModel.title)
@@ -59,8 +69,7 @@ struct ToolCardView: View {
                             .font(FontLibrary.sfProTextRegular.font(size: 14))
                             .foregroundColor(ColorPalette.gtGrey.color)
                     }
-                    .padding(.leading, Sizes.leadingPadding)
-                    .padding(.bottom, 15)
+                    .padding([.leading, .bottom], 15)
                     
                     Spacer()
                     
@@ -71,6 +80,7 @@ struct ToolCardView: View {
                         .padding(.top, 4)
                 }
                 .frame(width: cardWidth)
+                .padding(.top, 12)
                 
             }
             
@@ -91,7 +101,9 @@ struct ToolCardView_Previews: PreviewProvider {
                                 title: "Knowing God Personally",
                                 category: "Gospel Invitation",
                                 showParallelLanguage: true,
-                                showBannerImage: true
+                                showBannerImage: true,
+                                attachmentsDownloadProgress: 0.80,
+                                translationDownloadProgress: 0.55
                             ),
                          cardWidth: geo.size.width)
         }

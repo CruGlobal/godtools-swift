@@ -9,16 +9,21 @@
 import Foundation
 import SwiftUI
 
-class ToolCardViewModel: BaseToolCardViewModel {
+class ToolCardViewModel: BaseToolCardViewModel, ToolItemInitialDownloadProgress {
     
     // MARK: - Properties
     
-    private let resource: ResourceModel
-    private let dataDownloader: InitialDataDownloader
+    let resource: ResourceModel
+    let dataDownloader: InitialDataDownloader
     private let deviceAttachmentBanners: DeviceAttachmentBanners
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
+    
+    var attachmentsDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
+    var translationDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
+    var downloadAttachmentsReceipt: DownloadAttachmentsReceipt?
+    var downloadResourceTranslationsReceipt: DownloadTranslationsReceipt?
     
     // MARK: - Init
     
@@ -37,6 +42,11 @@ class ToolCardViewModel: BaseToolCardViewModel {
     }
     
     deinit {
+        
+        removeDataDownloaderObservers()
+        
+        attachmentsDownloadProgress.removeObserver(self)
+        translationDownloadProgress.removeObserver(self)
         favoritedResourcesCache.resourceFavorited.removeObserver(self)
         favoritedResourcesCache.resourceUnfavorited.removeObserver(self)
         languageSettingsService.primaryLanguage.removeObserver(self)
@@ -50,6 +60,9 @@ class ToolCardViewModel: BaseToolCardViewModel {
         favoritedResourcesCache.toggleFavorited(resourceId: resource.id)
     }
  
+    func didDownloadAttachments() {
+        reloadBannerImage()
+    }
     
     // MARK: - Private
     
@@ -59,13 +72,31 @@ class ToolCardViewModel: BaseToolCardViewModel {
     }
     
     private func setupPublishedProperties() {
-        bannerImage = getBannerImage()
         isFavorited = favoritedResourcesCache.isFavorited(resourceId: resource.id)
         
         reloadDataForPrimaryLanguage()
+        reloadBannerImage()
     }
     
     private func setupBinding() {
+        
+        addDataDownloaderObservers()
+        
+        attachmentsDownloadProgress.addObserver(self) { [weak self] (progress: Double) in
+            DispatchQueue.main.async {
+                withAnimation {
+                    self?.attachmentsDownloadProgressValue = progress
+                }
+            }
+        }
+        translationDownloadProgress.addObserver(self) { [weak self] (progress: Double) in
+            DispatchQueue.main.async {
+                withAnimation {
+                    self?.translationDownloadProgressValue = progress
+                }
+            }
+        }
+        
         favoritedResourcesCache.resourceFavorited.addObserver(self) { [weak self] (resourceId: String) in
             guard let self = self else { return }
 
@@ -97,18 +128,21 @@ class ToolCardViewModel: BaseToolCardViewModel {
         }
     }
     
-    private func getBannerImage() -> Image? {
+    private func reloadBannerImage() {
+        let image: Image?
         
         // TODO: - Eventually refactor existing code to use SwiftUI's Image rather than UIImage
         if let cachedImage = dataDownloader.attachmentsFileCache.getAttachmentBanner(attachmentId: resource.attrBanner) {
-            return Image(uiImage: cachedImage)
+            image = Image(uiImage: cachedImage)
         }
         else if let deviceImage = deviceAttachmentBanners.getDeviceBanner(resourceId: resource.id) {
-            return Image(uiImage: deviceImage)
+            image = Image(uiImage: deviceImage)
         }
         else {
-            return nil
+            image = nil
         }
+        
+        bannerImage = image
     }
     
     private func reloadDataForPrimaryLanguage() {
