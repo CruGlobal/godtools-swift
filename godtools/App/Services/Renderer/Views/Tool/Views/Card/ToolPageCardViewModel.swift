@@ -18,8 +18,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     private let localizationServices: LocalizationServices
     private let trainingTipsEnabled: Bool
     private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
-    private let cardPosition: Int
-    private let numberOfCards: Int
+    private let numberOfVisbleCards: Int
      
     let hidesHeaderTrainingTip: Bool
     let hidesCardPositionLabel: Bool
@@ -27,7 +26,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     let hidesNextButton: Bool
     let isHiddenCard: Bool
     
-    required init(cardModel: TractPage.Card, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, numberOfCards: Int, trainingTipsEnabled: Bool) {
+    required init(cardModel: TractPage.Card, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, numberOfVisbleCards: Int, trainingTipsEnabled: Bool) {
                         
         self.cardModel = cardModel
         self.renderedPageContext = renderedPageContext
@@ -35,20 +34,20 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
         self.fontService = fontService
         self.localizationServices = localizationServices
         self.trainingTipsEnabled = trainingTipsEnabled
-        self.cardPosition = cardModel.visiblePosition?.intValue ?? 0
-        self.numberOfCards = numberOfCards
+        self.numberOfVisbleCards = numberOfVisbleCards
         self.isHiddenCard = cardModel.isHidden
         
-        if isHiddenCard {
-            hidesCardPositionLabel = true
-            hidesPreviousButton = true
-            hidesNextButton = true
-        }
-        else {
-            let isLastCard: Bool = cardPosition >= numberOfCards - 1
+        if let visiblePosition = cardModel.visiblePosition?.intValue {
+            
+            let isLastCard: Bool = visiblePosition >= numberOfVisbleCards - 1
             hidesCardPositionLabel = false
             hidesPreviousButton = false
             hidesNextButton = isLastCard ? true : false
+        } else {
+            
+            hidesCardPositionLabel = true
+            hidesPreviousButton = true
+            hidesNextButton = true
         }
         
         analyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
@@ -67,10 +66,13 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     }
     
     private var analyticsScreenName: String {
+        
         let resource: ResourceModel = renderedPageContext.resource
         let page: Int = renderedPageContext.page
+        let cardPosition: Int = Int(cardModel.position)
         
         let pageAnalyticsScreenName: String = resource.abbreviation + "-" + String(page)
+        
         return pageAnalyticsScreenName + ToolPageCardAnalyticsScreenName(cardPosition: cardPosition).screenName
     }
     
@@ -99,7 +101,12 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     }
     
     var cardPositionLabel: String? {
-        return String(cardPosition+1) + "/" + String(numberOfCards)
+        
+        guard let visiblePosition = cardModel.visiblePosition?.intValue else {
+            return nil
+        }
+        
+        return String(visiblePosition + 1) + "/" + String(numberOfVisbleCards)
     }
     
     var cardPositionLabelTextColor: UIColor {
@@ -160,7 +167,9 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     func cardDidAppear() {
         mobileContentDidAppear()
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
+        let screenName: String = analyticsScreenName
+        
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: screenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
     }
     
     func cardDidDisappear() {
