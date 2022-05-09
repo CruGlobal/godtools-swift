@@ -102,7 +102,7 @@ class ToolPageView: MobileContentPageView {
             return
         }
         
-        cardsView?.setCardsState(cardsState: .showingCard(showingCardAtPosition: toolPagePositions.cardPosition), animated: animated)
+        cardsView?.setRenderedCardsState(cardsState: .showingCard(showingCardAtPosition: toolPagePositions.cardPosition), animated: animated)
     }
     
     // MARK: - MobileContentView

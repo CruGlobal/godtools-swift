@@ -153,7 +153,7 @@ class ToolPageCardsView: MobileContentView {
             return
         }
         
-        setCardsState(cardsState: .showingCard(showingCardAtPosition: cardPosition), animated: true)
+        setRenderedCardsState(cardsState: .showingCard(showingCardAtPosition: cardPosition), animated: true)
     }
 }
 
@@ -170,9 +170,9 @@ extension ToolPageCardsView {
         switch keyboardStateChange.keyboardState {
 
         case .willShow:
-            setCardsState(cardsState: .showingKeyboard(showingCardAtPosition: currentCardPosition), animated: true)
+            setRenderedCardsState(cardsState: .showingKeyboard(showingCardAtPosition: currentCardPosition), animated: true)
         case .willHide:
-            setCardsState(cardsState: .showingCard(showingCardAtPosition: currentCardPosition), animated: true)
+            setRenderedCardsState(cardsState: .showingCard(showingCardAtPosition: currentCardPosition), animated: true)
         case .didShow:
             break
         case .didHide:
@@ -206,10 +206,10 @@ extension ToolPageCardsView: ToolPageCardViewDelegate {
         viewModel.cardHeaderTapped()
         
         if cardPosition != currentCardPosition {
-            setCardsState(cardsState: .showingCard(showingCardAtPosition: cardPosition), animated: true)
+            setRenderedCardsState(cardsState: .showingCard(showingCardAtPosition: cardPosition), animated: true)
         }
         else {
-            setCardsState(cardsState: .collapseAllCards, animated: true)
+            setRenderedCardsState(cardsState: .collapseAllCards, animated: true)
         }
     }
     
@@ -249,10 +249,10 @@ extension ToolPageCardsView: ToolPageCardViewDelegate {
         let previousCard: Int = cardPosition - 1
         
         if previousCard >= 0 {
-            setCardsState(cardsState: .showingCard(showingCardAtPosition: previousCard), animated: animated)
+            setRenderedCardsState(cardsState: .showingCard(showingCardAtPosition: previousCard), animated: animated)
         }
         else {
-            setCardsState(cardsState: .showingCard(showingCardAtPosition: nil), animated: animated)
+            setRenderedCardsState(cardsState: .showingCard(showingCardAtPosition: nil), animated: animated)
         }
     }
     
@@ -268,7 +268,7 @@ extension ToolPageCardsView: ToolPageCardViewDelegate {
             return
         }
         
-        setCardsState(cardsState: .showingCard(showingCardAtPosition: nextCard), animated: animated)
+        setRenderedCardsState(cardsState: .showingCard(showingCardAtPosition: nextCard), animated: animated)
     }
 }
 
@@ -316,7 +316,7 @@ extension ToolPageCardsView {
             addCardToRenderedCards(cardView: cardView)
         }
         
-        setCardsState(cardsState: .starting, animated: false)
+        setRenderedCardsState(cardsState: .starting, animated: false)
         
         addCardJumpObserving()
     }
@@ -494,7 +494,7 @@ extension ToolPageCardsView {
         }
     }
     
-    func setCardsState(cardsState: ToolPageCardsState, animated: Bool) {
+    func setRenderedCardsState(cardsState: ToolPageCardsState, animated: Bool) {
         
         switch cardsState {
             
@@ -517,7 +517,7 @@ extension ToolPageCardsView {
             }
             
             guard let showCardAtPosition = showingCardAtPosition else {
-                setCardsState(cardsState: .collapseAllCards, animated: animated)
+                setRenderedCardsState(cardsState: .collapseAllCards, animated: animated)
                 return
             }
             
@@ -602,7 +602,7 @@ extension ToolPageCardsView {
             break
                         
         case .collapseAllCards:
-            setCardsState(cardsState: .starting, animated: animated)
+            setRenderedCardsState(cardsState: .starting, animated: animated)
             
         case .initialized:
             break
