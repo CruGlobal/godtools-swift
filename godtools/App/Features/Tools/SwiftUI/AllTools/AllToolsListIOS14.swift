@@ -22,7 +22,6 @@ struct AllToolsListIOS14: View {
     
     private enum Sizes {
         static let toolsPaddingMultiplier: CGFloat = 20/375
-        static let toolsVerticalSpacing: CGFloat = 8
     }
     
     // MARK: - Body
@@ -41,10 +40,10 @@ struct AllToolsListIOS14: View {
                             viewModel.toolTapped(resource: tool)
                         }
                         .padding([.leading, .trailing], leadingTrailingPadding)
-                        .padding([.top, .bottom], Sizes.toolsVerticalSpacing)
+                        .padding([.top], 12)
                 }
             }
-            .padding(.top, Sizes.toolsVerticalSpacing)
+            .padding(.top, 8)
         }
         .onAppear {
             viewModel.pageViewed()

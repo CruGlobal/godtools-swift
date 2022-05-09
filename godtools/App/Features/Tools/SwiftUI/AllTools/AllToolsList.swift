@@ -21,7 +21,7 @@ struct AllToolsList: View {
     
     private enum Sizes {
         static let toolsPaddingMultiplier: CGFloat = 20/375
-        static let toolsVerticalSpacing: CGFloat = 8
+        static let toolsVerticalSpacing: CGFloat = 10
     }
     
     // MARK: - Body
@@ -47,11 +47,11 @@ struct AllToolsList: View {
                 }
             }
             .listRowInsets(EdgeInsets(top: Sizes.toolsVerticalSpacing, leading: leadingTrailingPadding, bottom: Sizes.toolsVerticalSpacing, trailing: leadingTrailingPadding))
-            .padding(.top, Sizes.toolsVerticalSpacing)
         }
         .frame(maxWidth: .infinity)
         .edgesIgnoringSafeArea([.leading, .trailing])
         .listStyle(.plain)
+        .padding(.top, 8)
         .onAppear {
             viewModel.pageViewed()
         }
