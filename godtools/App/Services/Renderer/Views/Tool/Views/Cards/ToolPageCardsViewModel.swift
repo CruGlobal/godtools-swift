@@ -16,8 +16,6 @@ class ToolPageCardsViewModel: NSObject, ToolPageCardsViewModelType {
     private let cardJumpService: CardJumpService
     
     let hidesCardJump: ObservableValue<Bool> = ObservableValue(value: true)
-    let numberOfCards: Int
-    let numberOfVisibleCards: Int
     
     required init(cards: [TractPage.Card], renderedPageContext: MobileContentRenderedPageContext, cardJumpService: CardJumpService) {
         
@@ -26,8 +24,6 @@ class ToolPageCardsViewModel: NSObject, ToolPageCardsViewModelType {
         self.cards = cards
         self.renderedPageContext = renderedPageContext
         self.cardJumpService = cardJumpService
-        self.numberOfCards = cards.count
-        self.numberOfVisibleCards = visibleCards.count
         
         super.init()
         

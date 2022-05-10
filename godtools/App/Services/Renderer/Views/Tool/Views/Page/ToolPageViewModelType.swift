@@ -13,6 +13,7 @@ protocol ToolPageViewModelType: MobileContentPageViewModelType {
     var bottomViewColor: UIColor { get }
     var page: Int { get }
     var hidesCallToAction: Bool { get }
+    var numberOfVisibleCards: Int { get }
     
     func callToActionWillAppear() -> ToolPageCallToActionView?
     func pageDidAppear()
