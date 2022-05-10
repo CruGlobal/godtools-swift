@@ -30,7 +30,11 @@ struct AllToolsList: View {
         let leadingTrailingPadding = width * Sizes.toolsPaddingMultiplier
 
         List {
-            // TODO: - Spotlight and Category filter sections will be completed in GT-1265 & GT-1498
+            
+            ToolSpotlightView()
+                .listRowInsets(EdgeInsets())
+            
+            // TODO: - Category filter sections will be completed in GT-1265
             
             ForEach(viewModel.tools) { tool in
                 Group {
