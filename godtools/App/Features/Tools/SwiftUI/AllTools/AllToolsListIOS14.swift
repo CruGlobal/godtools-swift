@@ -10,6 +10,9 @@ import SwiftUI
 
 // MARK: - AllToolsListIOS14
 
+
+ // This view should be visually equivalent to AllToolsList. iOS 14 has no way of removing separators on List, so this is the workaround.
+// TODO: - When we stop supporting iOS 14, remove this view.
 @available(iOS 14.0, *)
 struct AllToolsListIOS14: View {
     
@@ -40,10 +43,10 @@ struct AllToolsListIOS14: View {
                             viewModel.toolTapped(resource: tool)
                         }
                         .padding([.leading, .trailing], leadingTrailingPadding)
-                        .padding([.top], 12)
+                        .padding([.top, .bottom], 6)
                 }
             }
-            .padding(.top, 8)
+            .padding(.top, 12)
         }
         .onAppear {
             viewModel.pageViewed()

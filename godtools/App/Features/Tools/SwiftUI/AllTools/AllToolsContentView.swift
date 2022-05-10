@@ -26,11 +26,16 @@ struct AllToolsContentView: View {
     init(viewModel: AllToolsContentViewModel) {
         self.viewModel = viewModel
         
-        // TODO: - GT-1528: This doesn't work on iOS 14, and iOS 15 has a modifier that will do it.
-        // List is built on UITableView. For iOS 13, modifiers don't yet exist to override certain default styles on List, so we use `appearance` on UITableView instead. This changes the style system-wide, so we'll have to watch out for this causing issues in other areas.
-//        UITableView.appearance().separatorColor = .clear
-        UITableView.appearance().separatorStyle = .none
-        
+        /*
+         About removing the List separators:
+         - iOS 15 - use the `listRowSeparator` view modifier to hide the separators
+         - iOS 13 - list is built on UITableView, so `UITableView.appearance` works to set the separator style
+         - iOS 14 - `appearance` no longer works, and the modifier doesn't yet exist.  Solution is the AllToolsListIOS14 view.
+         */
+        if #available(iOS 14.0, *) {} else {
+            // TODO: - When we stop supporting iOS 13, get rid of this.
+            UITableView.appearance(whenContainedInInstancesOf: [UIHostingController<AllToolsContentView>.self]).separatorStyle = .none
+        }
     }
     
     // MARK: - Body
