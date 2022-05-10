@@ -11,8 +11,6 @@ import Foundation
 protocol ToolPageCardsViewModelType {
     
     var hidesCardJump: ObservableValue<Bool> { get }
-    var numberOfCards: Int { get }
-    var numberOfVisibleCards: Int { get }
     
     func cardHeaderTapped()
     func cardSwipedUp()
