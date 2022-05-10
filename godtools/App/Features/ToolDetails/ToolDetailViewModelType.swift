@@ -11,7 +11,7 @@ import UIKit
 protocol ToolDetailViewModelType {
     
     var navTitle: ObservableValue<String> { get }
-    var banner: ObservableValue<ToolDetailBanner> { get }
+    var banner: ObservableValue<ToolDetailBannerType> { get }
     var translationDownloadProgress: ObservableValue<Double> { get }
     var name: ObservableValue<String> { get }
     var totalViews: ObservableValue<String> { get }

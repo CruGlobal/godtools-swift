@@ -144,7 +144,7 @@ class ToolDetailView: UIViewController {
             self?.title = navTitle
         }
         
-        viewModel.banner.addObserver(self) { [weak self] (value: ToolDetailBanner) in
+        viewModel.banner.addObserver(self) { [weak self] (value: ToolDetailBannerType) in
             
             self?.animationView.stop()
             self?.animationView.isHidden = true

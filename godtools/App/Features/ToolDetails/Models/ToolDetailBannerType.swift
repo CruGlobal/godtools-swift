@@ -1,5 +1,5 @@
 //
-//  ToolDetailBanner.swift
+//  ToolDetailBannerType.swift
 //  godtools
 //
 //  Created by Levi Eggert on 5/9/22.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum ToolDetailBanner {
+enum ToolDetailBannerType {
     
     case animation(viewModel: AnimatedViewModelType)
     case image(image: UIImage)

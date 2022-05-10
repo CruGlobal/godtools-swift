@@ -24,7 +24,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     private weak var flowDelegate: FlowDelegate?
     
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
-    let banner: ObservableValue<ToolDetailBanner>
+    let banner: ObservableValue<ToolDetailBannerType>
     let translationDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
     let name: ObservableValue<String> = ObservableValue(value: "")
     let totalViews: ObservableValue<String> = ObservableValue(value: "")
@@ -52,7 +52,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         self.mobileContentParser = mobileContentParser
         self.analytics = analytics
         
-        let bannerValue: ToolDetailBanner
+        let bannerValue: ToolDetailBannerType
         
         if !resource.attrAboutOverviewVideoYoutube.isEmpty {
             
