@@ -75,6 +75,9 @@ struct AllToolsContentView: View {
                 }
             }
         }
+        .onAppear {
+            viewModel.pageViewed()
+        }
     }
 }
 

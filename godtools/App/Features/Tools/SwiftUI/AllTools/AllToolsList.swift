@@ -52,9 +52,6 @@ struct AllToolsList: View {
         .edgesIgnoringSafeArea([.leading, .trailing])
         .listStyle(.plain)
         .padding(.top, 8)
-        .onAppear {
-            viewModel.pageViewed()
-        }
     }
 }
 
