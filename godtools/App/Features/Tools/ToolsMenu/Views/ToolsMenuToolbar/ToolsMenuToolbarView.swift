@@ -17,17 +17,11 @@ protocol ToolsMenuToolbarViewDelegate: AnyObject {
 
 class ToolsMenuToolbarView: UIView, NibBased {
     
-    enum ToolbarItemView {
-        case lessons
-        case favoritedTools
-        case allTools
-    }
-    
     private var viewModel: ToolsMenuToolbarViewModelType?
-    private var selectedToolbarItem: ToolbarItemView = .lessons
-    private weak var delegate: ToolsMenuToolbarViewDelegate?
+    private var selectedToolbarItem: ToolsMenuPageType = .lessons
+    private(set) var pageItemsOrder: [ToolsMenuPageType] = Array()
     
-    let toolbarItemViews: [ToolbarItemView] = [.lessons, .favoritedTools, .allTools]
+    private weak var delegate: ToolsMenuToolbarViewDelegate?
     
     @IBOutlet weak private var toolbarItemsCollectionView: UICollectionView!
     
@@ -37,9 +31,10 @@ class ToolsMenuToolbarView: UIView, NibBased {
         setupLayout()
     }
     
-    func configure(viewModel: ToolsMenuToolbarViewModelType, delegate: ToolsMenuToolbarViewDelegate) {
+    func configure(viewModel: ToolsMenuToolbarViewModelType, pageItemsOrder: [ToolsMenuPageType], delegate: ToolsMenuToolbarViewDelegate) {
         
         self.viewModel = viewModel
+        self.pageItemsOrder = pageItemsOrder
         self.delegate = delegate
         
         setupBinding()
@@ -68,13 +63,13 @@ class ToolsMenuToolbarView: UIView, NibBased {
         
     }
     
-    func setSelectedToolbarItem(toolbarItem: ToolbarItemView) {
+    func setSelectedToolbarItem(pageType: ToolsMenuPageType) {
         
         guard toolbarItemsCollectionView != nil else {
             return
         }
         
-        selectedToolbarItem = toolbarItem
+        selectedToolbarItem = pageType
         toolbarItemsCollectionView.reloadData()
     }
 }
@@ -88,14 +83,14 @@ extension ToolsMenuToolbarView: UICollectionViewDelegateFlowLayout, UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return toolbarItemViews.count
+        return pageItemsOrder.count
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let toolbarItemView: ToolbarItemView = toolbarItemViews[indexPath.row]
+        let pageItem: ToolsMenuPageType = pageItemsOrder[indexPath.row]
         
-        switch toolbarItemView {
+        switch pageItem {
         case .lessons:
             delegate?.toolsMenuToolbarLessonsTapped(toolsMenuToolbar: self)
         case .favoritedTools:
@@ -104,7 +99,7 @@ extension ToolsMenuToolbarView: UICollectionViewDelegateFlowLayout, UICollection
             delegate?.toolsMenuToolbarAllToolsTapped(toolsMenuToolbar: self)
         }
         
-        selectedToolbarItem = toolbarItemView
+        selectedToolbarItem = pageItem
         toolbarItemsCollectionView.reloadData()
     }
     
@@ -115,11 +110,11 @@ extension ToolsMenuToolbarView: UICollectionViewDelegateFlowLayout, UICollection
             for: indexPath
         ) as! ToolsMenuToolbarItemView
         
-        let toolbarItemView: ToolbarItemView = toolbarItemViews[indexPath.row]
+        let pageItem: ToolsMenuPageType = pageItemsOrder[indexPath.row]
         
         let cellViewModel: ToolsMenuToolbarItemViewModelType?
         
-        switch toolbarItemView {
+        switch pageItem {
         case .lessons:
             cellViewModel = viewModel?.lessonsToolbarItemWillAppear()
         case .favoritedTools:
@@ -132,7 +127,7 @@ extension ToolsMenuToolbarView: UICollectionViewDelegateFlowLayout, UICollection
             
             cell.configure(
                 viewModel: cellViewModel,
-                isSelected: toolbarItemView == selectedToolbarItem
+                isSelected: pageItem == selectedToolbarItem
             )
         }
                 
@@ -141,7 +136,7 @@ extension ToolsMenuToolbarView: UICollectionViewDelegateFlowLayout, UICollection
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let numberOfItems: CGFloat = CGFloat(toolbarItemViews.count)
+        let numberOfItems: CGFloat = CGFloat(pageItemsOrder.count)
         let width: CGFloat = numberOfItems > 0 ? floor(UIScreen.main.bounds.size.width / numberOfItems) : bounds.size.height
         
         return CGSize(

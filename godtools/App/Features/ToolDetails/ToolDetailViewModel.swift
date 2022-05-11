@@ -24,10 +24,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     private weak var flowDelegate: FlowDelegate?
     
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
-    let bannerImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
-    let hidesBannerImage: ObservableValue<Bool> = ObservableValue(value: false)
-    let youTubePlayerId: ObservableValue<String?> = ObservableValue(value: nil)
-    let hidesYoutubePlayer: ObservableValue<Bool> = ObservableValue(value: false)
+    let banner: ObservableValue<ToolDetailBannerType>
     let translationDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
     let name: ObservableValue<String> = ObservableValue(value: "")
     let totalViews: ObservableValue<String> = ObservableValue(value: "")
@@ -54,21 +51,33 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         self.translationDownloader = translationDownloader
         self.mobileContentParser = mobileContentParser
         self.analytics = analytics
-                
-        super.init()
+        
+        let bannerValue: ToolDetailBannerType
         
         if !resource.attrAboutOverviewVideoYoutube.isEmpty {
-            hidesBannerImage.accept(value: true)
-            hidesYoutubePlayer.accept(value: false)
-            youTubePlayerId.accept(value: resource.attrAboutOverviewVideoYoutube)
+            
+            let playsInFullScreen: Int = 0
+            let playerParameters: [String: Any] = ["playsinline": playsInFullScreen]
+            
+            bannerValue = .youtube(videoId: resource.attrAboutOverviewVideoYoutube, playerParameters: playerParameters)
+        }
+        else if !resource.attrAboutBannerAnimation.isEmpty, let filePath = dataDownloader.attachmentsFileCache.getAttachmentFileUrl(attachmentId: resource.attrAboutBannerAnimation)?.path {
+            
+            let resource: AnimatedResource = .filepathJsonFile(filepath: filePath)
+            let viewModel = AnimatedViewModel(animationDataResource: resource, autoPlay: true, loop: true)
+            
+            bannerValue = .animation(viewModel: viewModel)
+        }
+        else if let image = dataDownloader.attachmentsFileCache.getAttachmentBanner(attachmentId: resource.attrBannerAbout) {
+            bannerValue = .image(image: image)
         }
         else {
-            hidesBannerImage.accept(value: false)
-            hidesYoutubePlayer.accept(value: true)
+            bannerValue = .empty
         }
         
-        let toolDetailImage: UIImage? = dataDownloader.attachmentsFileCache.getAttachmentBanner(attachmentId: resource.attrBannerAbout)
-        bannerImage.accept(value: toolDetailImage)
+        self.banner = ObservableValue(value: bannerValue)
+                
+        super.init()
         
         downloadResourceTranslation()
         
@@ -82,15 +91,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         favoritedResourcesCache.resourceFavorited.removeObserver(self)
         favoritedResourcesCache.resourceUnfavorited.removeObserver(self)
     }
-    
-    var youtubePlayerParameters: [String : Any]? {
-        let playsInFullScreen = 0
-        
-        return [
-            "playsinline": playsInFullScreen
-        ]
-    }
-    
+
     private func setupBinding() {
         
         favoritedResourcesCache.resourceFavorited.addObserver(self) { [weak self] (resourceId: String) in

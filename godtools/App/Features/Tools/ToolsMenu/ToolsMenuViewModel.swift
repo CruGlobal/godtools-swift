@@ -95,14 +95,4 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
     func languageTapped() {
         flowDelegate?.navigate(step: .languageSettingsTappedFromTools)
     }
-    
-    func didViewFavoritedToolsList() {
-        
-        flowDelegate?.navigate(step: .userViewedFavoritedToolsListFromTools)
-    }
-    
-    func didViewAllToolsList() {
-        
-        flowDelegate?.navigate(step: .userViewedAllToolsListFromTools)
-    }
 }
