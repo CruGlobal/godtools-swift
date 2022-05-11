@@ -169,6 +169,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             
         case .toolSettingsTappedFromTool(let tractRemoteShareSubscriber, let tractRemoteSharePublisher, let resource, let selectedLanguage, let primaryLanguage, let parallelLanguage, let pageNumber):
             
+            // TODO: Implement navigation in GT-1558 and remove ShareToolMenuFlow if not being used anywhere else. ~Levi
             assertionFailure("TODO: Navigate to ToolSettings")
             
             /*
