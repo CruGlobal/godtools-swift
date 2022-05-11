@@ -20,63 +20,37 @@ struct ToolCardView: View {
     
     private enum Sizes {
         static let cornerRadius: CGFloat = 6
-        
-        enum Default {
-            static let cardAspectRatio: CGFloat = cardWidth/cardHeight
-            static let cardHeight: CGFloat = 150
-            static let cardWidth: CGFloat = 335
-            static let bannerImageAspectRatio: CGFloat = cardWidth/bannerImageHeight
-            static let bannerImageHeight: CGFloat = 87
-        }
-        enum Spotlight {
-            static let cardAspectRatio: CGFloat = cardWidth/cardHeight
-            static let cardHeight: CGFloat = 240
-            static let cardWidth: CGFloat = 200
-            static let bannerImageAspectRatio: CGFloat = cardWidth/bannerImageHeight
-            static let bannerImageHeight: CGFloat = 162
-        }
     }
     
     // MARK: - Body
     
     var body: some View {
         ZStack(alignment: .top) {
-            // MARK: - Card Background
-            RoundedRectangle(cornerRadius: Sizes.cornerRadius, style: .circular)
-                .fill(.white)
-                .shadow(color: .black.opacity(0.25), radius: 4, y: 2)
+            
+            ToolCardBackgroundView(cornerRadius: Sizes.cornerRadius)
             
             VStack(alignment: .leading, spacing: 0) {
-                
-                // MARK: - Image
                 ZStack(alignment: .topTrailing) {
                     ToolCardBannerImageView(bannerImage: viewModel.bannerImage, isSpotlight: isSpotlight, cardWidth: cardWidth, cornerRadius: Sizes.cornerRadius)
                     
-                    Image(viewModel.isFavorited ? ImageCatalog.favoritedCircle.name : ImageCatalog.unfavoritedCircle.name)
-                        .padding([.top, .trailing], 10)
+                    ToolCardFavoritedView(isFavorited: viewModel.isFavorited)
                         .onTapGesture {
                             viewModel.favoritedButtonTapped()
                         }
                 }
-                .transition(.opacity)
                 
                 ToolCardProgressView(frontProgress: viewModel.translationDownloadProgressValue, backProgress: viewModel.attachmentsDownloadProgressValue)
                 
                 // MARK: - Text
                 HStack(alignment: .top) {
                     VStack(alignment: .leading, spacing: 3) {
-                        Text(viewModel.title)
-                            .font(FontLibrary.sfProTextBold.font(size: 18))
-                            .foregroundColor(ColorPalette.gtGrey.color)
-                            .fixedSize(horizontal: false, vertical: true)
+                        ToolCardTitleView(title: viewModel.title)
                         
                         if isSpotlight {
                             ToolCardParallelLanguageView(languageName: viewModel.parallelLanguageName)
                             
                         } else {
-                            Text(viewModel.category)
-                                .font(FontLibrary.sfProTextRegular.font(size: 14))
-                                .foregroundColor(ColorPalette.gtGrey.color)
+                            ToolCardCategoryView(category: viewModel.category)
                         }
                     }
                     .padding([.leading, .bottom], 15)
