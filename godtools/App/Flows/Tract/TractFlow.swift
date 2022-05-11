@@ -167,8 +167,11 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
                 closeTool()
             }
             
-        case .shareMenuTappedFromTool(let tractRemoteShareSubscriber, let tractRemoteSharePublisher, let resource, let selectedLanguage, let primaryLanguage, let parallelLanguage, let pageNumber):
+        case .toolSettingsTappedFromTool(let tractRemoteShareSubscriber, let tractRemoteSharePublisher, let resource, let selectedLanguage, let primaryLanguage, let parallelLanguage, let pageNumber):
             
+            assertionFailure("TODO: Navigate to ToolSettings")
+            
+            /*
             let shareToolMenuFlow = ShareToolMenuFlow(
                 flowDelegate: self,
                 appDiContainer: appDiContainer,
@@ -182,7 +185,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
                 hidesRemoteShareToolAction: tractRemoteShareSubscriber.isSubscribedToChannel
             )
             
-            self.shareToolMenuFlow = shareToolMenuFlow
+            self.shareToolMenuFlow = shareToolMenuFlow*/
 
         case .buttonWithUrlTappedFromMobileContentRenderer(let url, let exitLink):
             guard let webUrl = URL(string: url) else {

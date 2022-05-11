@@ -11,14 +11,14 @@ import UIKit
 protocol ToolNavBarViewDelegate: AnyObject {
     
     func navBarHomeTapped(navBar: ToolNavBarView, remoteShareIsActive: Bool)
-    func navBarShareTapped(navBar: ToolNavBarView, selectedLanguage: LanguageModel)
+    func navBarToolSettingsTapped(navBar: ToolNavBarView, selectedLanguage: LanguageModel)
     func navBarLanguageChanged(navBar: ToolNavBarView)
 }
 
 class ToolNavBarView: NSObject {
     
     enum RightNavbarPosition: Int {
-        case shareMenu = 0
+        case toolSettings = 0
         case remoteShareActive = 1
     }
     
@@ -89,17 +89,14 @@ class ToolNavBarView: NSObject {
             action: #selector(backButtonTapped)
         )
         
-        if !viewModel.hidesShareButton {
-            
-            _ = parentViewController.addBarButtonItem(
-                to: .right,
-                index: RightNavbarPosition.shareMenu.rawValue,
-                image: ImageCatalog.navShare.image,
-                color: navBarControlColor,
-                target: self,
-                action: #selector(shareButtonTapped)
-            )
-        }
+        _ = parentViewController.addBarButtonItem(
+            to: .right,
+            index: RightNavbarPosition.toolSettings.rawValue,
+            image: ImageCatalog.navShare.image,
+            color: navBarControlColor,
+            target: self,
+            action: #selector(toolSettingsTapped)
+        )
         
         if !viewModel.hidesChooseLanguageControl {
                             
@@ -163,13 +160,13 @@ class ToolNavBarView: NSObject {
         )
     }
 
-    @objc private func shareButtonTapped() {
+    @objc private func toolSettingsTapped() {
         
         guard let viewModel = self.viewModel else {
             return
         }
         
-        delegate?.navBarShareTapped(
+        delegate?.navBarToolSettingsTapped(
             navBar: self,
             selectedLanguage: viewModel.language
         )

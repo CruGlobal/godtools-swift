@@ -48,8 +48,7 @@ class ToolViewModel: MobileContentPagesViewModel, ToolViewModelType {
             tractRemoteShareSubscriber: tractRemoteShareSubscriber,
             localizationServices: localizationServices,
             fontService: fontService,
-            analytics: analytics,
-            hidesShareButton: trainingTipsEnabled
+            analytics: analytics
         )
         
         super.init(flowDelegate: flowDelegate, renderer: renderer, page: page, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .visiblePages)
@@ -253,11 +252,11 @@ extension ToolViewModel {
         flowDelegate?.navigate(step: .homeTappedFromTool(isScreenSharing: remoteShareIsActive))
     }
     
-    func navShareTapped(page: Int, selectedLanguage: LanguageModel) {
+    func navToolSettingsTapped(page: Int, selectedLanguage: LanguageModel) {
         
         let primaryLanguage: LanguageModel = renderer.primaryLanguage
         
-        flowDelegate?.navigate(step: .shareMenuTappedFromTool(tractRemoteShareSubscriber: tractRemoteShareSubscriber, tractRemoteSharePublisher: tractRemoteSharePublisher, resource: resource, selectedLanguage: selectedLanguage, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, pageNumber: page))
+        flowDelegate?.navigate(step: .toolSettingsTappedFromTool(tractRemoteShareSubscriber: tractRemoteShareSubscriber, tractRemoteSharePublisher: tractRemoteSharePublisher, resource: resource, selectedLanguage: selectedLanguage, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, pageNumber: page))
     }
     
     func navLanguageChanged(page: Int, pagePositions: ToolPagePositions) {
