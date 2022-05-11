@@ -35,8 +35,14 @@ class LazyHListCoordinator<Content: View>: NSObject, UICollectionViewDelegateFlo
         let itemView: Content = lazyHList.viewForItem(indexPath.row)
         let hostingView: UIHostingController = UIHostingController(rootView: itemView)
         
-        cell.addSubview(hostingView.view)
-        hostingView.view.frame = cell.bounds
+        let hostingParent: UIView = cell.contentView
+        
+        for subview in hostingParent.subviews {
+            subview.removeFromSuperview()
+        }
+            
+        hostingParent.addSubview(hostingView.view)
+        hostingView.view.frame = hostingParent.bounds
         
         return cell
     }
