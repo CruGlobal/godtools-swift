@@ -10,7 +10,7 @@ import Foundation
 
 struct SHA256FileLocation {
     
-    private static let supportedExtensions: [String] = ["png", "jpg", "xml", "txt", "zip"]
+    private static let supportedExtensions: [String] = ["png", "jpg", "xml", "txt", "zip", "json"]
     
     let sha256: String
     let pathExtension: String
