@@ -43,9 +43,6 @@ struct AllToolsList: View {
         .frame(maxWidth: .infinity)
         .edgesIgnoringSafeArea([.leading, .trailing])
         .listStyle(.plain)
-        .onAppear {
-            viewModel.pageViewed()
-        }
     }
 }
 

@@ -14,6 +14,7 @@ protocol ResourceModelType {
     associatedtype AttachmentIds = Sequence
     
     var abbreviation: String { get }
+    var attrAboutBannerAnimation: String { get }
     var attrAboutOverviewVideoYoutube: String { get }
     var attrBanner: String { get }
     var attrBannerAbout: String { get }

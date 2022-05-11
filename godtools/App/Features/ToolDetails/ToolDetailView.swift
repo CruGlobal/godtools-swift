@@ -19,6 +19,7 @@ class ToolDetailView: UIViewController {
     
     //topMediaView
     @IBOutlet weak private var topMediaView: UIView!
+    @IBOutlet weak private var animationView: AnimatedView!
     @IBOutlet weak private var youTubePlayerContentView: UIView!
     @IBOutlet weak private var youTubePlayerView: YTPlayerView!
     @IBOutlet weak private var youTubeLoadingView: UIView!
@@ -143,24 +144,27 @@ class ToolDetailView: UIViewController {
             self?.title = navTitle
         }
         
-        viewModel.bannerImage.addObserver(self) { [weak self] (image: UIImage?) in
-            self?.setTopBannerImage(image: image)
-        }
-        
-        viewModel.hidesBannerImage.addObserver(self) { [weak self] (isHidden: Bool) in
-            self?.bannerImageView.isHidden = isHidden
-        }
-        
-        viewModel.youTubePlayerId.addObserver(self) { [weak self] (youTubePlayerId: String?) in
-            if let youTubePlayerId = youTubePlayerId {
-                self?.loadYoutubePlayerVideo(videoId: youTubePlayerId)
-            }
-        }
-        
-        viewModel.hidesYoutubePlayer.addObserver(self) { [weak self] (isHidden: Bool) in
-            self?.youTubePlayerContentView.isHidden = isHidden
-            if isHidden {
-                self?.youTubePlayerView.stopVideo()
+        viewModel.banner.addObserver(self) { [weak self] (value: ToolDetailBannerType) in
+            
+            self?.animationView.stop()
+            self?.animationView.isHidden = true
+            self?.bannerImageView.image = nil
+            self?.bannerImageView.isHidden = true
+            self?.youTubePlayerView.stopVideo()
+            self?.youTubePlayerContentView.isHidden = true
+            
+            switch value {
+            case .animation(let viewModel):
+                self?.animationView.isHidden = false
+                self?.animationView.configure(viewModel: viewModel)
+            case .image(let image):
+                self?.bannerImageView.isHidden = false
+                self?.setTopBannerImage(image: image)
+            case .youtube(let videoId, let playerParameters):
+                self?.youTubePlayerContentView.isHidden = false
+                self?.loadYoutubePlayerVideo(videoId: videoId, playerParameters: playerParameters)
+            case .empty:
+                break
             }
         }
         
@@ -303,16 +307,19 @@ class ToolDetailView: UIViewController {
         }
     }
      
-    private func loadYoutubePlayerVideo(videoId: String) {
+    private func loadYoutubePlayerVideo(videoId: String, playerParameters: [String: Any]?) {
         youTubeActivityIndicator.startAnimating()
         youTubePlayerView.delegate = self
-        youTubePlayerView.load(withVideoId: videoId, playerVars: viewModel.youtubePlayerParameters)
+        youTubePlayerView.load(withVideoId: videoId, playerVars: playerParameters)
     }
     
     private func recueVideo() {
-        guard let youtubeVideoId = viewModel.youTubePlayerId.value else { return }
         
-        youTubePlayerView.cueVideo(byId: youtubeVideoId, startSeconds: 0.0)
+        guard let videoId = viewModel.banner.value.getYoutubeVideoId() else {
+            return
+        }
+        
+        youTubePlayerView.cueVideo(byId: videoId, startSeconds: 0.0)
     }
 
     private func reloadDetailsTextViews() {
@@ -427,9 +434,15 @@ extension ToolDetailView: YTPlayerViewDelegate {
             print("default")
         }
         
-        if state == .ended, let youTubePlayerId = viewModel.youTubePlayerId.value {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-                self?.loadYoutubePlayerVideo(videoId: youTubePlayerId)
+        if state == .ended {
+            
+            switch viewModel.banner.value {
+            case .youtube(let videoId, let playerParameters):
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                    self?.loadYoutubePlayerVideo(videoId: videoId, playerParameters: playerParameters)
+                }
+            default:
+                break
             }
         }
     }

@@ -153,6 +153,10 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     func pageViewed() {
         
         analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
+        
+        analytics.firebaseAnalytics.trackAction(screenName: "", siteSection: "", siteSubSection: "", actionName: AnalyticsConstants.ActionNames.viewedMyToolsAction, data: nil)
+        
+        flowDelegate?.navigate(step: .userViewedFavoritedToolsListFromTools)
     }
     
     func openTutorialWillAppear() -> OpenTutorialViewModelType {
