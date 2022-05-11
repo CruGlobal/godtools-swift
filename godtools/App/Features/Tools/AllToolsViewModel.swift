@@ -111,6 +111,10 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     func pageViewed() {
         
         analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
+        
+        analytics.firebaseAnalytics.trackAction(screenName: "", siteSection: "", siteSubSection: "", actionName: AnalyticsConstants.ActionNames.viewedToolsAction, data: nil)
+        
+        flowDelegate?.navigate(step: .userViewedAllToolsListFromTools)
     }
     
     func favoritingToolMessageWillAppear() -> FavoritingToolMessageViewModelType {

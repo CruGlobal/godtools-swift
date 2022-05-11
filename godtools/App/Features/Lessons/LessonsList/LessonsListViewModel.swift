@@ -87,7 +87,10 @@ class LessonsListViewModel: NSObject, LessonsListViewModelType {
     func pageViewed() {
         
         analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
+        
         analytics.appsFlyerAnalytics.trackAction(actionName: analyticsScreenName, data:  nil)
+        
+        analytics.firebaseAnalytics.trackAction(screenName: "", siteSection: "", siteSubSection: "", actionName: AnalyticsConstants.ActionNames.viewedLessonsAction, data: nil)
     } 
     
     private func getLessonsFromCache() -> [ResourceModel] {

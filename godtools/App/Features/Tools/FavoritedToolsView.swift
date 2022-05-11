@@ -13,7 +13,7 @@ protocol FavoritedToolsViewDelegate: AnyObject {
     func favoritedToolsViewFindToolsTapped(favoritedToolsView: FavoritedToolsView)
 }
 
-class FavoritedToolsView: UIViewController {
+class FavoritedToolsView: UIViewController, ToolsMenuPageView {
     
     private let viewModel: FavoritedToolsViewModelType
         
@@ -49,12 +49,6 @@ class FavoritedToolsView: UIViewController {
         setupBinding()
         
         findToolsButton.addTarget(self, action: #selector(handleFindTools(button:)), for: .touchUpInside)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        viewModel.pageViewed()
     }
     
     func setDelegate(delegate: FavoritedToolsViewDelegate?) {
@@ -117,7 +111,12 @@ class FavoritedToolsView: UIViewController {
         }
     }
     
-    func scrollToTopOfToolsList(animated: Bool) {
+    func pageViewed() {
+        
+        viewModel.pageViewed()
+    }
+    
+    func scrollToTop(animated: Bool) {
         
         toolsView.scrollToTopOfTools(animated: animated)
     }

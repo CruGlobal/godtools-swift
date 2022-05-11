@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LessonsListView: UIViewController {
+class LessonsListView: UIViewController, ToolsMenuPageView {
     
     private let viewModel: LessonsListViewModelType
     private let refreshControl: UIRefreshControl = UIRefreshControl()
@@ -47,11 +47,6 @@ class LessonsListView: UIViewController {
         )
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        viewModel.pageViewed()
-    }
-    
     private func setupLayout() {
         
         // lessonsTableView
@@ -82,7 +77,12 @@ class LessonsListView: UIViewController {
         viewModel.refreshLessons()
     }
     
-    func scrollToTopOfLessonsList(animated: Bool) {
+    func pageViewed() {
+        
+        viewModel.pageViewed()
+    }
+    
+    func scrollToTop(animated: Bool) {
         
         guard lessonsTableView != nil else {
             return
