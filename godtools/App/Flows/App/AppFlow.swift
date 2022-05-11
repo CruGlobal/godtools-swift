@@ -11,7 +11,7 @@ import MessageUI
 
 class AppFlow: NSObject, ToolNavigationFlow, Flow {
     
-    private static let defaultStartingToolsMenu: ToolsMenuToolbarView.ToolbarItemView = .favoritedTools
+    private static let defaultStartingToolsMenuPage: ToolsMenuPageType = .favoritedTools
     
     private let window: UIWindow
     private let dataDownloader: InitialDataDownloader
@@ -486,7 +486,7 @@ extension AppFlow {
         
         let toolsMenuView = ToolsMenuView(
             viewModel: toolsMenuViewModel,
-            startingToolbarItem: AppFlow.defaultStartingToolsMenu
+            startingPage: AppFlow.defaultStartingToolsMenuPage
         )
         
         navigationController.setViewControllers([toolsMenuView], animated: false)
@@ -494,7 +494,7 @@ extension AppFlow {
         self.toolsMenuView = toolsMenuView
     }
     
-    private func navigateToToolsMenu(toolbarItem: ToolsMenuToolbarView.ToolbarItemView?, animateToolMenuToolbarItemTransition: Bool, animatedDismissal: Bool, didCompleteDismissal: (() -> Void)? = nil) {
+    private func navigateToToolsMenu(toolbarItem: ToolsMenuPageType?, animateToolMenuToolbarItemTransition: Bool, animatedDismissal: Bool, didCompleteDismissal: (() -> Void)? = nil) {
         
         instantiateToolsMenuIfNeeded()
         
@@ -513,7 +513,7 @@ extension AppFlow {
         tractFlow = nil
         articleFlow = nil
                 
-        toolsMenuView.reset(toolbarItem: toolbarItem ?? AppFlow.defaultStartingToolsMenu, animated: animateToolMenuToolbarItemTransition)
+        toolsMenuView.reset(toolbarItem: toolbarItem ?? AppFlow.defaultStartingToolsMenuPage, animated: animateToolMenuToolbarItemTransition)
                 
         navigationController.popToRootViewController(animated: false)
         

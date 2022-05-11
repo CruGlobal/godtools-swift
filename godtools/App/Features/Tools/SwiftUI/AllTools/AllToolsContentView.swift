@@ -79,6 +79,10 @@ struct AllToolsContentView: View {
             viewModel.pageViewed()
         }
     }
+    
+    func pageViewed() {
+        viewModel.pageViewed()
+    }
 }
 
 // MARK: - Preview
