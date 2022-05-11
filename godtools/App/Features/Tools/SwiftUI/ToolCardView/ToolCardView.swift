@@ -14,16 +14,27 @@ struct ToolCardView: View {
     
     @ObservedObject var viewModel: BaseToolCardViewModel
     let cardWidth: CGFloat
+    var isSpotlight = false
     
     // MARK: - Constants
     
     private enum Sizes {
-        static let cardAspectRatio: CGFloat = cardWidth/cardHeight
-        static let cardHeight: CGFloat = 150
-        static let cardWidth: CGFloat = 335
-        static let bannerImageAspectRatio: CGFloat = cardWidth/bannerImageHeight
-        static let bannerImageHeight: CGFloat = 87
         static let cornerRadius: CGFloat = 6
+        
+        enum Default {
+            static let cardAspectRatio: CGFloat = cardWidth/cardHeight
+            static let cardHeight: CGFloat = 150
+            static let cardWidth: CGFloat = 335
+            static let bannerImageAspectRatio: CGFloat = cardWidth/bannerImageHeight
+            static let bannerImageHeight: CGFloat = 87
+        }
+        enum Spotlight {
+            static let cardAspectRatio: CGFloat = cardWidth/cardHeight
+            static let cardHeight: CGFloat = 240
+            static let cardWidth: CGFloat = 200
+            static let bannerImageAspectRatio: CGFloat = cardWidth/bannerImageHeight
+            static let bannerImageHeight: CGFloat = 162
+        }
     }
     
     // MARK: - Body
@@ -39,8 +50,7 @@ struct ToolCardView: View {
                 
                 // MARK: - Image
                 ZStack(alignment: .topTrailing) {
-                    OptionalImage(image: viewModel.bannerImage, width: cardWidth, height: cardWidth / Sizes.bannerImageAspectRatio)
-                        .cornerRadius(Sizes.cornerRadius, corners: [.topLeft, .topRight])
+                    ToolCardBannerImageView(bannerImage: viewModel.bannerImage, isSpotlight: isSpotlight, cardWidth: cardWidth, cornerRadius: Sizes.cornerRadius)
                     
                     Image(viewModel.isFavorited ? ImageCatalog.favoritedCircle.name : ImageCatalog.unfavoritedCircle.name)
                         .padding([.top, .trailing], 10)
@@ -50,12 +60,7 @@ struct ToolCardView: View {
                 }
                 .transition(.opacity)
                 
-                // MARK: - Progress Bars
-                ZStack {
-                    ProgressBarView(color: .yellow, progress: viewModel.attachmentsDownloadProgressValue)
-                    ProgressBarView(color: ColorPalette.progressBarBlue.color, progress: viewModel.translationDownloadProgressValue)
-                }
-                .frame(height: 2)
+                ToolCardProgressView(frontProgress: viewModel.translationDownloadProgressValue, backProgress: viewModel.attachmentsDownloadProgressValue)
                 
                 // MARK: - Text
                 HStack(alignment: .top) {
@@ -65,19 +70,24 @@ struct ToolCardView: View {
                             .foregroundColor(ColorPalette.gtGrey.color)
                             .fixedSize(horizontal: false, vertical: true)
                         
-                        Text(viewModel.category)
-                            .font(FontLibrary.sfProTextRegular.font(size: 14))
-                            .foregroundColor(ColorPalette.gtGrey.color)
+                        if isSpotlight {
+                            ToolCardParallelLanguageView(languageName: viewModel.parallelLanguageName)
+                            
+                        } else {
+                            Text(viewModel.category)
+                                .font(FontLibrary.sfProTextRegular.font(size: 14))
+                                .foregroundColor(ColorPalette.gtGrey.color)
+                        }
                     }
                     .padding([.leading, .bottom], 15)
                     
                     Spacer()
                     
-                    Text(viewModel.parallelLanguageName)
-                        .font(FontLibrary.sfProTextRegular.font(size: 12))
-                        .foregroundColor(ColorPalette.gtLightGrey.color)
-                        .padding(.trailing, 10)
-                        .padding(.top, 4)
+                    if isSpotlight == false {
+                        ToolCardParallelLanguageView(languageName: viewModel.parallelLanguageName)
+                            .padding(.top, 4)
+                            .padding(.trailing, 10)
+                    }
                 }
                 .frame(width: cardWidth)
                 .padding(.top, 12)
@@ -85,7 +95,7 @@ struct ToolCardView: View {
             }
             
         }
-        .fixedSize(horizontal: false, vertical: true)
+        .fixedSize(horizontal: true, vertical: true)
         .environment(\.layoutDirection, viewModel.layoutDirection)
     }
 }
@@ -93,7 +103,10 @@ struct ToolCardView: View {
 // MARK: - Preview
 
 struct ToolCardView_Previews: PreviewProvider {
+    
     static var previews: some View {
+        let isSpotlight = true
+        
         ToolCardView(viewModel:
                         MockToolCardViewModel(
                             title: "Knowing God Personally",
@@ -103,7 +116,8 @@ struct ToolCardView_Previews: PreviewProvider {
                             attachmentsDownloadProgress: 0.80,
                             translationDownloadProgress: 0.55
                         ),
-                     cardWidth: 375
+                     cardWidth: isSpotlight ? 200 : 375,
+                     isSpotlight: isSpotlight
         )
         .padding()
         .previewLayout(.sizeThatFits)
