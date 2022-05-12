@@ -60,7 +60,7 @@ struct ItemsList<ListItem: Identifiable, ListItemView: View>: View {
             }
         }
         else if #available(iOS 14.0, *) {
-            swiftUILazyVList
+            swiftUILazyVStack
         }
         else {
             swiftUIList
@@ -68,7 +68,7 @@ struct ItemsList<ListItem: Identifiable, ListItemView: View>: View {
     }
     
     @available(iOS 14.0, *)
-    private var swiftUILazyVList: some View {
+    private var swiftUILazyVStack: some View {
         
         return ScrollView {
             LazyVStack {
