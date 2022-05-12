@@ -14,23 +14,6 @@ struct AllToolsContentView: View {
     
     @ObservedObject var viewModel: AllToolsContentViewModel
     
-    // MARK: - Init
-    
-    init(viewModel: AllToolsContentViewModel) {
-        self.viewModel = viewModel
-        
-        /*
-         About removing the List separators:
-         - iOS 15 - use the `listRowSeparator` view modifier to hide the separators
-         - iOS 13 - list is built on UITableView, so `UITableView.appearance` works to set the separator style
-         - iOS 14 - `appearance` no longer works, and the modifier doesn't yet exist.  Solution is the AllToolsListIOS14 view.
-         */
-        if #available(iOS 14.0, *) {} else {
-            // TODO: - When we stop supporting iOS 13, get rid of this.
-            UITableView.appearance(whenContainedInInstancesOf: [UIHostingController<AllToolsContentView>.self]).separatorStyle = .none
-        }
-    }
-    
     // MARK: - Body
     
     var body: some View {
@@ -46,25 +29,29 @@ struct AllToolsContentView: View {
                 
             } else {
                 
-                GeometryReader { geo in
-                    let width = geo.size.width
+                GeometryReader { geometry in
                     
-                    if #available(iOS 15.0, *) {
+                    let geometryWidth: CGFloat = geometry.size.width
+                    let toolsVerticalSpacing: CGFloat = 10
+                    let toolsPaddingMultiplier: CGFloat = 20/375
+                    let leadingTrailingPadding: CGFloat = geometryWidth * toolsPaddingMultiplier
+                    let cardWidth: CGFloat = geometryWidth - (2 * leadingTrailingPadding)
+                    
+                    ItemsList<ResourceModel, ToolCardView>(hidesSeparatorInContainerTypes: [UIHostingController<AllToolsContentView>.self], listItems: $viewModel.tools, refreshList: {
                         
-                        // Pull to refresh is supported only in iOS 15+
-                        AllToolsList(viewModel: viewModel, width: width)
-                            .refreshable {
-                                viewModel.refreshTools()
-                            }
+                        viewModel.refreshTools()
                         
-                    } else if #available(iOS 14.0, *) {
+                    }, viewForItem: { item in
                         
-                        AllToolsListIOS14(viewModel: viewModel, width: width)
+                        let cardViewModel = viewModel.cardViewModel(for: item)
                         
-                    } else {
+                        return ToolCardView(viewModel: cardViewModel, cardWidth: cardWidth)
                         
-                        AllToolsList(viewModel: viewModel, width: width)
-                    }
+                    }, itemTapped: { item in
+                        
+                        viewModel.toolTapped(resource: item)
+                        
+                    }, listTopPadding: 8, listRowInsets: EdgeInsets(top: toolsVerticalSpacing, leading: leadingTrailingPadding, bottom: toolsVerticalSpacing, trailing: leadingTrailingPadding), lazyVStackItemHorizontalPadding: leadingTrailingPadding, lazyVStackItemVerticalPadding: 6, lazyVStackTopPadding: 12)
                 }
             }
         }
