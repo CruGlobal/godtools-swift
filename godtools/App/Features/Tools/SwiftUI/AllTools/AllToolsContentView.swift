@@ -14,13 +14,6 @@ struct AllToolsContentView: View {
     
     @ObservedObject var viewModel: AllToolsContentViewModel
     
-    // MARK: - Constants
-    
-    private enum Sizes {
-        static let toolsPaddingMultiplier: CGFloat = 20/375
-        static let toolsVerticalSpacing: CGFloat = 15
-    }
-    
     // MARK: - Init
     
     init(viewModel: AllToolsContentViewModel) {
