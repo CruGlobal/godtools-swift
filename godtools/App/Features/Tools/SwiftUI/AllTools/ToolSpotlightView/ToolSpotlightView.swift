@@ -10,36 +10,39 @@ import SwiftUI
 
 struct ToolSpotlightView: View {
     
-    @ObservedObject var viewModel: BaseToolSpotlightViewModel
-    let viewModel1 = MockToolCardViewModel(title: "Title", category: "Category", showParallelLanguage: true, showBannerImage: true, attachmentsDownloadProgress: 0.2, translationDownloadProgress: 0.5)
+    @ObservedObject var viewModel: ToolSpotlightViewModel
     
     var body: some View {
-        VStack(alignment: .leading) {
-            VStack(alignment: .leading) {
-                
-                Text(viewModel.spotlightTitle)
-                    .font(FontLibrary.sfProTextRegular.font(size: 22))
-                Text(viewModel.spotlightSubtitle)
-                    .font(FontLibrary.sfProTextRegular.font(size: 12))
-            }
-            .padding(.leading, 20)
-            .padding(.top, 24)
+        
+        if viewModel.spotlightTools.isEmpty == false {
             
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 0) {
-                    ForEach(0..<10) { i in
-                        ToolCardView(viewModel: viewModel1, cardWidth: 150, isSpotlight: true)
-                            .padding(8)
-                    }
+            VStack(alignment: .leading) {
+                VStack(alignment: .leading) {
+                    
+                    Text(viewModel.spotlightTitle)
+                        .font(FontLibrary.sfProTextRegular.font(size: 22))
+                    Text(viewModel.spotlightSubtitle)
+                        .font(FontLibrary.sfProTextRegular.font(size: 12))
                 }
-                .padding(.leading, 12)
+                .padding(.leading, 20)
+                .padding(.top, 24)
+                
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 15) {
+                        ForEach(viewModel.spotlightTools) { tool in
+                            ToolCardView(viewModel: viewModel.cardViewModel(for: tool), cardWidth: 150, isSpotlight: true)
+                        }
+                    }
+                    .padding(.leading, 12)
+                }
             }
         }
+        
     }
 }
 
 struct ToolSpotlightView_Previews: PreviewProvider {
     static var previews: some View {
-        ToolSpotlightView(viewModel: BaseToolSpotlightViewModel(spotlightTitle: "Title Goes Here", spotlightSubtitle: "Subtitle goes here"))
+        ToolSpotlightView(viewModel: MockToolSpotlightViewModel())
     }
 }

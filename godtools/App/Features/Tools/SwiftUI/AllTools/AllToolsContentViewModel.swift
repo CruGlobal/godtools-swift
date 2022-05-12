@@ -58,7 +58,13 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
 extension AllToolsContentViewModel {
     
     func spotlightViewModel() -> ToolSpotlightViewModel {
-        return ToolSpotlightViewModel(localizationServices: localizationServices)
+        return ToolSpotlightViewModel(
+            dataDownloader: dataDownloader,
+            deviceAttachmentBanners: deviceAttachmentBanners,
+            favoritedResourcesCache: favoritedResourcesCache,
+            languageSettingsService: languageSettingsService,
+            localizationServices: localizationServices
+        )
     }
     
     func cardViewModel(for tool: ResourceModel) -> ToolCardViewModel {
