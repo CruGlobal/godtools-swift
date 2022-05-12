@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class ToolSettingsFlow: Flow {
     
@@ -19,7 +20,29 @@ class ToolSettingsFlow: Flow {
         self.navigationController = UINavigationController()
     }
     
+    func getInitialView() -> UIViewController {
+        
+        let toolSettingsView = ToolSettingsView()
+        let hostingView = ToolSettingsHostingView(view: toolSettingsView)
+        
+        let transparentModal = TransparentModalView(
+            flowDelegate: self,
+            modalView: hostingView,
+            closeModalFlowStep: .closeToolSettingsModal
+        )
+        
+        return transparentModal
+    }
+    
     func navigate(step: FlowStep) {
         
+        switch step {
+            
+        case .closeToolSettingsModal:
+            print("Close Modal...")
+            
+        default:
+            break
+        }
     }
 }

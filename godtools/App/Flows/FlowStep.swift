@@ -134,4 +134,7 @@ enum FlowStep {
     
     // mobile content renderer events
     case didTriggerDismissToolEventFromMobileContentRenderer
+    
+    // tool settings
+    case closeToolSettingsModal
 }
