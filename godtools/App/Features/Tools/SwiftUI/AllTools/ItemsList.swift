@@ -1,5 +1,5 @@
 //
-//  PlainItemsList.swift
+//  ItemsList.swift
 //  godtools
 //
 //  Created by Levi Eggert on 5/12/22.
