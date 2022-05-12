@@ -19,7 +19,7 @@ struct ToolSettingsTopBarView: View {
             Button {
                 print("tapped")
             } label: {
-                Image("tool_settings_close")
+                Image(ImageCatalog.navClose.name)
             }
             .frame(minWidth: 44, minHeight: 44)
         }

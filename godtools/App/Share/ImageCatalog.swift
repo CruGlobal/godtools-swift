@@ -28,6 +28,8 @@ enum ImageCatalog: String {
     case notFavorited = "not_favorited"
     case playIcon = "play_icon"
     case previousCard = "previous_card"
+    case toolSettingsLanguageDropDownArrow = "tool_settings_language_dropdown_arrow"
+    case toolSettingsOptionShareLink = "tool_settings_option_share_link"
     case toolsMenuLessons = "tools_menu_lessons"
     case toolsMenuFavorites = "tools_menu_favorites"
     case toolsMenuAllTools = "tools_menu_all_tools"

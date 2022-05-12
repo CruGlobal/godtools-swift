@@ -13,7 +13,7 @@ struct ToolSettingsLanguageDropDownView: View {
        
         HStack(alignment: .center, spacing: 6) {
             Text("Title Here")
-            Image("tool_settings_language_dropdown_arrow")
+            Image(ImageCatalog.toolSettingsLanguageDropDownArrow.name)
                 .frame(width: 10, height: 5)
         }
         .frame(minWidth: nil, idealWidth: nil, maxWidth: .infinity, minHeight: nil, idealHeight: nil, maxHeight: .infinity, alignment: .center)

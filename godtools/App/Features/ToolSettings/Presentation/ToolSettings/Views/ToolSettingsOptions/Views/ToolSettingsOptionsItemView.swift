@@ -12,7 +12,7 @@ struct ToolSettingsOptionsItemView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack {
-                Image("share_link")
+                Image(ImageCatalog.toolSettingsOptionShareLink.name)
                     .frame(width: 23, height: 23)
                 Text("Title Here")
                     .foregroundColor(Color.white)
