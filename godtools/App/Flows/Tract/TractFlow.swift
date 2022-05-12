@@ -176,9 +176,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             
             self.toolSettingsFlow = toolSettingsFlow
             
-            // TODO: Implement navigation in GT-1558 and remove ShareToolMenuFlow if not being used anywhere else. ~Levi
-            //assertionFailure("TODO: Navigate to ToolSettings")
-            
+            // TODO: GT-1565 remove ShareToolMenuFlow. ~Levi            
             /*
             let shareToolMenuFlow = ShareToolMenuFlow(
                 flowDelegate: self,
@@ -197,7 +195,13 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             
         case .toolSettingsFlowCompleted(let state):
             
+            guard toolSettingsFlow != nil else {
+                return
+            }
+            
             navigationController.dismiss(animated: true)
+            
+            toolSettingsFlow = nil
 
         case .buttonWithUrlTappedFromMobileContentRenderer(let url, let exitLink):
             guard let webUrl = URL(string: url) else {
