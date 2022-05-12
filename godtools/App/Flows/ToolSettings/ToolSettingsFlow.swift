@@ -11,24 +11,30 @@ import SwiftUI
 
 class ToolSettingsFlow: Flow {
     
+    private weak var flowDelegate: FlowDelegate?
+    
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
-    required init(appDiContainer: AppDiContainer) {
+    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer) {
         
+        self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = UINavigationController()
     }
     
     func getInitialView() -> UIViewController {
         
-        let toolSettingsView = ToolSettingsView()
+        let viewModel = ToolSettingsViewModel(flowDelegate: self)
+        
+        let toolSettingsView = ToolSettingsView(viewModel: viewModel)
+        
         let hostingView = ToolSettingsHostingView(view: toolSettingsView)
         
         let transparentModal = TransparentModalView(
             flowDelegate: self,
             modalView: hostingView,
-            closeModalFlowStep: .closeToolSettingsModal
+            closeModalFlowStep: .closeTappedFromToolSettings
         )
         
         return transparentModal
@@ -38,8 +44,8 @@ class ToolSettingsFlow: Flow {
         
         switch step {
             
-        case .closeToolSettingsModal:
-            print("Close Modal...")
+        case .closeTappedFromToolSettings:
+            flowDelegate?.navigate(step: .toolSettingsFlowCompleted(state: .userClosedToolSettings))
             
         default:
             break

@@ -170,7 +170,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             
         case .toolSettingsTappedFromTool(let tractRemoteShareSubscriber, let tractRemoteSharePublisher, let resource, let selectedLanguage, let primaryLanguage, let parallelLanguage, let pageNumber):
             
-            let toolSettingsFlow = ToolSettingsFlow(appDiContainer: appDiContainer)
+            let toolSettingsFlow = ToolSettingsFlow(flowDelegate: self, appDiContainer: appDiContainer)
             
             navigationController.present(toolSettingsFlow.getInitialView(), animated: true)
             
@@ -194,6 +194,10 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             )
             
             self.shareToolMenuFlow = shareToolMenuFlow*/
+            
+        case .toolSettingsFlowCompleted(let state):
+            
+            navigationController.dismiss(animated: true)
 
         case .buttonWithUrlTappedFromMobileContentRenderer(let url, let exitLink):
             guard let webUrl = URL(string: url) else {

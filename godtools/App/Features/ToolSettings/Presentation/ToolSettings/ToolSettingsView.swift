@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ToolSettingsView: View {
     
+    @ObservedObject var viewModel: BaseToolSettingsViewModel
+    
     private let contentInsets: EdgeInsets = EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 20)
     private let separatorLineSpacing: CGFloat = 25
     
@@ -17,7 +19,7 @@ struct ToolSettingsView: View {
             
             VStack {
                 
-                ToolSettingsTopBarView(leadingInset: contentInsets.leading, trailingInset: contentInsets.trailing)
+                ToolSettingsTopBarView(viewModel: viewModel.getTopBarViewModel(), leadingInset: contentInsets.leading, trailingInset: contentInsets.trailing)
                 
                 ScrollView(.vertical, showsIndicators: true) {
                     VStack {
@@ -56,7 +58,7 @@ struct ToolSettingsView: View {
         }
         .padding(EdgeInsets(top: contentInsets.top, leading: 0, bottom: 0, trailing: 0))
         .background(Color.white)
-        .cornerRadius(12)
+        .cornerRadius(12, corners: [.topLeft, .topRight])
     }
 }
 
@@ -64,6 +66,6 @@ struct ToolSettingsView_Preview: PreviewProvider {
     
     static var previews: some View {
         
-        ToolSettingsView()
+        ToolSettingsView(viewModel: BaseToolSettingsViewModel())
     }
 }

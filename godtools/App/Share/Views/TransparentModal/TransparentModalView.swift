@@ -18,6 +18,7 @@ class TransparentModalView: UIViewController {
     private let closeModalFlowStep: FlowStep
     
     private var didLayoutSubviews: Bool = false
+    private var didTriggerAnimationControllerForPresentationAnimation: Bool = false
     
     @IBOutlet weak private var overlayButton: UIButton!
     
@@ -60,6 +61,15 @@ class TransparentModalView: UIViewController {
         }
         
         modalView.transparentModalDidLayout()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if didTriggerAnimationControllerForPresentationAnimation {
+            didTriggerAnimationControllerForPresentationAnimation = false
+            modalView.transparentModalParentWillAnimateForPresented()
+        }
     }
     
     private func setupLayout() {
@@ -210,10 +220,14 @@ extension TransparentModalView: UIViewControllerTransitioningDelegate {
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
+        didTriggerAnimationControllerForPresentationAnimation = true
+        
         return FadeAnimationTransition(fade: .fadeIn)
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        
+        modalView.transparentModalParentWillAnimateForDismissed()
         
         return FadeAnimationTransition(fade: .fadeOut)
     }

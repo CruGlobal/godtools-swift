@@ -136,5 +136,6 @@ enum FlowStep {
     case didTriggerDismissToolEventFromMobileContentRenderer
     
     // tool settings
-    case closeToolSettingsModal
+    case closeTappedFromToolSettings
+    case toolSettingsFlowCompleted(state: ToolSettingsFlowCompletedState)
 }

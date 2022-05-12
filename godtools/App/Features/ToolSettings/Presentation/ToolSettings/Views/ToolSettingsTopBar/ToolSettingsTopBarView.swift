@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ToolSettingsTopBarView: View {
+        
+    @ObservedObject var viewModel: BaseToolSettingsTopBarViewModel
     
     let leadingInset: CGFloat
     let trailingInset: CGFloat
@@ -17,7 +19,7 @@ struct ToolSettingsTopBarView: View {
             Text("Tool Settings")
             Spacer()
             Button {
-                print("tapped")
+                viewModel.closeTapped()
             } label: {
                 Image(ImageCatalog.navClose.name)
             }
@@ -30,6 +32,6 @@ struct ToolSettingsTopBarView: View {
 
 struct ToolSettingsTopBarView_Preview: PreviewProvider {
     static var previews: some View {
-        ToolSettingsTopBarView(leadingInset: 20, trailingInset: 20)
+        ToolSettingsTopBarView(viewModel: BaseToolSettingsTopBarViewModel(), leadingInset: 20, trailingInset: 20)
     }
 }
