@@ -147,7 +147,15 @@ extension SetupParallelLanguageView: TransparentModalCustomView {
         return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     }
     
-    func transparentModalDidLayout() {
-        
+    var modalLayoutType: TransparentModalCustomViewLayoutType {
+        return .centerVertically
     }
+    
+    func addToParentForCustomLayout(parent: UIView) {}
+    
+    func transparentModalDidLayout() {}
+    
+    func transparentModalParentWillAnimateForPresented() {}
+    
+    func transparentModalParentWillAnimateForDismissed() {}
 }

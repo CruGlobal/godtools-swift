@@ -49,13 +49,17 @@ class TransparentModalView: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        if !didLayoutSubviews {
-            didLayoutSubviews = true
-            if modalView.modal.frame.size.height > view.frame.size.height {
-                addModalViewToScrollView()
-            }
-            modalView.transparentModalDidLayout()
+        guard !didLayoutSubviews else {
+            return
         }
+        
+        didLayoutSubviews = true
+        
+        if modalView.modalLayoutType == .centerVertically && modalView.modal.frame.size.height > view.frame.size.height {
+            addModalViewToScrollView()
+        }
+        
+        modalView.transparentModalDidLayout()
     }
     
     private func setupLayout() {
@@ -93,6 +97,20 @@ extension TransparentModalView {
         guard !view.subviews.contains(modalView.modal) else {
             return
         }
+        
+        switch modalView.modalLayoutType {
+            
+        case .centerVertically:
+            centerModalViewVertically(modalView: modalView)
+        
+        case .definedInCustomViewProtocol:
+            modalView.addToParentForCustomLayout(parent: view)
+        }
+        
+        modalView.transparentModalDidLayout()
+    }
+    
+    private func centerModalViewVertically(modalView: TransparentModalCustomView) {
         
         view.addSubview(modalView.modal)
                 
@@ -148,7 +166,6 @@ extension TransparentModalView {
         
         modalView.modal.layer.cornerRadius = modalCornerRadius
         modalView.modal.clipsToBounds = true
-        modalView.transparentModalDidLayout()
     }
     
     private func addModalViewToScrollView() {
