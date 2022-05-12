@@ -31,6 +31,7 @@ struct ToolCardView: View {
             
             VStack(alignment: .leading, spacing: 0) {
                 ZStack(alignment: .topTrailing) {
+                    
                     ToolCardBannerImageView(bannerImage: viewModel.bannerImage, isSpotlight: isSpotlight, cardWidth: cardWidth, cornerRadius: Sizes.cornerRadius)
                     
                     ToolCardFavoritedView(isFavorited: viewModel.isFavorited)
@@ -41,9 +42,9 @@ struct ToolCardView: View {
                 
                 ToolCardProgressView(frontProgress: viewModel.translationDownloadProgressValue, backProgress: viewModel.attachmentsDownloadProgressValue)
                 
-                // MARK: - Text
                 HStack(alignment: .top) {
                     VStack(alignment: .leading, spacing: 3) {
+                        
                         ToolCardTitleView(title: viewModel.title)
                         
                         if isSpotlight {
@@ -58,6 +59,7 @@ struct ToolCardView: View {
                     Spacer()
                     
                     if isSpotlight == false {
+                        
                         ToolCardParallelLanguageView(languageName: viewModel.parallelLanguageName)
                             .padding(.top, 4)
                             .padding(.trailing, 10)

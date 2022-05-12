@@ -9,14 +9,17 @@
 import SwiftUI
 
 struct ToolSpotlightView: View {
-    let viewModel = MockToolCardViewModel(title: "Title", category: "Category", showParallelLanguage: false, showBannerImage: true, attachmentsDownloadProgress: 0.2, translationDownloadProgress: 0.5)
+    
+    @ObservedObject var viewModel: BaseToolSpotlightViewModel
+    let viewModel1 = MockToolCardViewModel(title: "Title", category: "Category", showParallelLanguage: true, showBannerImage: true, attachmentsDownloadProgress: 0.2, translationDownloadProgress: 0.5)
     
     var body: some View {
         VStack(alignment: .leading) {
             VStack(alignment: .leading) {
-                Text("Tool Spotlight")
+                
+                Text(viewModel.spotlightTitle)
                     .font(FontLibrary.sfProTextRegular.font(size: 22))
-                Text("Here are some tools we thought you might like")
+                Text(viewModel.spotlightSubtitle)
                     .font(FontLibrary.sfProTextRegular.font(size: 12))
             }
             .padding(.leading, 20)
@@ -25,7 +28,7 @@ struct ToolSpotlightView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 0) {
                     ForEach(0..<10) { i in
-                        ToolCardView(viewModel: viewModel, cardWidth: 150)
+                        ToolCardView(viewModel: viewModel1, cardWidth: 150, isSpotlight: true)
                             .padding(8)
                     }
                 }
@@ -37,6 +40,6 @@ struct ToolSpotlightView: View {
 
 struct ToolSpotlightView_Previews: PreviewProvider {
     static var previews: some View {
-        ToolSpotlightView()
+        ToolSpotlightView(viewModel: BaseToolSpotlightViewModel(spotlightTitle: "Title Goes Here", spotlightSubtitle: "Subtitle goes here"))
     }
 }

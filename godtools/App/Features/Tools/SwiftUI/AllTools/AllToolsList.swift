@@ -31,8 +31,14 @@ struct AllToolsList: View {
 
         List {
             
-            ToolSpotlightView()
-                .listRowInsets(EdgeInsets())
+            if #available(iOS 15.0, *) {
+                ToolSpotlightView(viewModel: viewModel.spotlightViewModel())
+                    .listRowInsets(EdgeInsets())
+                    .listRowSeparator(.hidden)
+            } else {
+                ToolSpotlightView(viewModel: viewModel.spotlightViewModel())
+                    .listRowInsets(EdgeInsets())
+            }
             
             // TODO: - Category filter sections will be completed in GT-1265
             

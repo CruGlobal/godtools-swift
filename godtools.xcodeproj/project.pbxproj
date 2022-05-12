@@ -1007,6 +1007,8 @@
 		D42600D3282C00FE00E7A520 /* ToolCardCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42600D2282C00FE00E7A520 /* ToolCardCategoryView.swift */; };
 		D42600D5282C01B500E7A520 /* ToolCardBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42600D4282C01B500E7A520 /* ToolCardBackgroundView.swift */; };
 		D42600D7282C028F00E7A520 /* ToolCardFavoritedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42600D6282C028E00E7A520 /* ToolCardFavoritedView.swift */; };
+		D42600D9282D88F400E7A520 /* ToolSpotlightViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42600D8282D88F400E7A520 /* ToolSpotlightViewModel.swift */; };
+		D42600DB282D8B9400E7A520 /* BaseToolSpotlightViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42600DA282D8B9400E7A520 /* BaseToolSpotlightViewModel.swift */; };
 		D42B87CD2822F72D000B001D /* BaseToolCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B87CC2822F72D000B001D /* BaseToolCardViewModel.swift */; };
 		D42B87D028230CF2000B001D /* BaseFavoritingToolBannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B87CF28230CF2000B001D /* BaseFavoritingToolBannerViewModel.swift */; };
 		D44C6933280479720000B970 /* ToolCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C6932280479720000B970 /* ToolCardViewModel.swift */; };
@@ -2095,6 +2097,8 @@
 		D42600D2282C00FE00E7A520 /* ToolCardCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardCategoryView.swift; sourceTree = "<group>"; };
 		D42600D4282C01B500E7A520 /* ToolCardBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardBackgroundView.swift; sourceTree = "<group>"; };
 		D42600D6282C028E00E7A520 /* ToolCardFavoritedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardFavoritedView.swift; sourceTree = "<group>"; };
+		D42600D8282D88F400E7A520 /* ToolSpotlightViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolSpotlightViewModel.swift; sourceTree = "<group>"; };
+		D42600DA282D8B9400E7A520 /* BaseToolSpotlightViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseToolSpotlightViewModel.swift; sourceTree = "<group>"; };
 		D42B87CC2822F72D000B001D /* BaseToolCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseToolCardViewModel.swift; sourceTree = "<group>"; };
 		D42B87CF28230CF2000B001D /* BaseFavoritingToolBannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseFavoritingToolBannerViewModel.swift; sourceTree = "<group>"; };
 		D44C6932280479720000B970 /* ToolCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardViewModel.swift; sourceTree = "<group>"; };
@@ -5961,6 +5965,8 @@
 			isa = PBXGroup;
 			children = (
 				D420DA2C282AEE9C0035ABCB /* ToolSpotlightView.swift */,
+				D42600D8282D88F400E7A520 /* ToolSpotlightViewModel.swift */,
+				D42600DA282D8B9400E7A520 /* BaseToolSpotlightViewModel.swift */,
 			);
 			path = ToolSpotlightView;
 			sourceTree = "<group>";
@@ -6673,6 +6679,7 @@
 				45714ACB262100C800EF41FB /* LessonProgressView.swift in Sources */,
 				450E44472756B66300D4311E /* MenuViewModelType.swift in Sources */,
 				D44C693F2805AE910000B970 /* AllToolsContentViewModel.swift in Sources */,
+				D42600D9282D88F400E7A520 /* ToolSpotlightViewModel.swift in Sources */,
 				45558404269F2DA500C3FF14 /* MobileContentPagesViewModelType.swift in Sources */,
 				4505C68A282B4A0A0047951D /* ToolsMenuView.swift in Sources */,
 				45AD1B3325938A4F00A096A0 /* LanguageSettingsView.swift in Sources */,
@@ -7339,6 +7346,7 @@
 				45AD1FF025938A9800A096A0 /* NoAttachmentData.swift in Sources */,
 				45AD1B5D25938A4F00A096A0 /* AccountActivityViewModel.swift in Sources */,
 				4578D1DB2795CB1C0044F7BF /* LanguageViewModel.swift in Sources */,
+				D42600DB282D8B9400E7A520 /* BaseToolSpotlightViewModel.swift in Sources */,
 				45AD21372593A47800A096A0 /* ShareToolMenuView.swift in Sources */,
 				45AD1FD225938A9800A096A0 /* RealmDatabase.swift in Sources */,
 				45AD1F6C25938A9800A096A0 /* LanguageSettingType.swift in Sources */,
