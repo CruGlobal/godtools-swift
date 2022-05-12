@@ -32,11 +32,11 @@ struct AllToolsList: View {
         List {
             
             if #available(iOS 15.0, *) {
-                ToolSpotlightView(viewModel: viewModel.spotlightViewModel())
+                ToolSpotlightView(viewModel: viewModel.spotlightViewModel(), width: width)
                     .listRowInsets(EdgeInsets())
                     .listRowSeparator(.hidden)
             } else {
-                ToolSpotlightView(viewModel: viewModel.spotlightViewModel())
+                ToolSpotlightView(viewModel: viewModel.spotlightViewModel(), width: width)
                     .listRowInsets(EdgeInsets())
             }
             

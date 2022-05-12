@@ -10,7 +10,18 @@ import SwiftUI
 
 struct ToolSpotlightView: View {
     
+    // MARK: - Properties
+    
     @ObservedObject var viewModel: ToolSpotlightViewModel
+    let width: CGFloat
+    
+    // MARK: - Constants
+    
+    private enum Sizes {
+        static let spotlightCardWidthMultiplier: CGFloat = 200/375
+    }
+    
+    // MARK: - Body
     
     var body: some View {
         
@@ -30,7 +41,7 @@ struct ToolSpotlightView: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 15) {
                         ForEach(viewModel.spotlightTools) { tool in
-                            ToolCardView(viewModel: viewModel.cardViewModel(for: tool), cardWidth: 150, isSpotlight: true)
+                            ToolCardView(viewModel: viewModel.cardViewModel(for: tool), cardWidth: width * Sizes.spotlightCardWidthMultiplier, isSpotlight: true)
                         }
                     }
                     .padding(.leading, 12)
@@ -41,8 +52,10 @@ struct ToolSpotlightView: View {
     }
 }
 
+// MARK: - Preview
+
 struct ToolSpotlightView_Previews: PreviewProvider {
     static var previews: some View {
-        ToolSpotlightView(viewModel: MockToolSpotlightViewModel())
+        ToolSpotlightView(viewModel: MockToolSpotlightViewModel(), width: 375)
     }
 }
