@@ -48,7 +48,10 @@ class ToolSettingsFlow: Flow {
             flowDelegate?.navigate(step: .toolSettingsFlowCompleted(state: .userClosedToolSettings))
             
         case .enableTrainingTipsTappedFromToolSettings:
-            print("enable training tips...")
+            flowDelegate?.navigate(step: .toolSettingsFlowCompleted(state: .userEnabledTrainingTips))
+            
+        case .disableTrainingTipsTappedFromToolSettings:
+            flowDelegate?.navigate(step: .toolSettingsFlowCompleted(state: .userDisabledTrainingTips))
             
         default:
             break

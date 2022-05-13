@@ -15,6 +15,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
     
     private var shareToolMenuFlow: ShareToolMenuFlow?
     private var toolSettingsFlow: ToolSettingsFlow?
+    private var toolView: ToolView?
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -55,7 +56,6 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             type: .tract,
             flowDelegate: self,
             appDiContainer: appDiContainer,
-            trainingTipsEnabled: trainingTipsEnabled,
             deepLinkingService: deepLinkingService
         )
                 
@@ -82,10 +82,13 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             mobileContentEventAnalytics: appDiContainer.getMobileContentEventAnalyticsTracking(),
             toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics,
             liveShareStream: liveShareStream,
-            page: page
+            page: page,
+            trainingTipsEnabled: trainingTipsEnabled
         )
         
         let view = ToolView(viewModel: viewModel)
+        
+        self.toolView = view
                 
         if let sharedNavController = sharedNavigationController {
             sharedNavController.pushViewController(view, animated: true)
@@ -198,6 +201,18 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
                 return
             }
             
+            switch state {
+            
+            case .userClosedToolSettings:
+                break
+                
+            case .userDisabledTrainingTips:
+                toolView?.setTrainingTipsEnabled(enabled: false)
+                
+            case .userEnabledTrainingTips:
+                toolView?.setTrainingTipsEnabled(enabled: true)
+            }
+            
             navigationController.dismiss(animated: true)
             
             toolSettingsFlow = nil
@@ -264,7 +279,6 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             type: .trainingTip,
             flowDelegate: self,
             appDiContainer: appDiContainer,
-            trainingTipsEnabled: false,
             deepLinkingService: deepLinkingService
         )
         
