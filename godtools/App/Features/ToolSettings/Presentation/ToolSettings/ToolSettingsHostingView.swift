@@ -13,6 +13,7 @@ class ToolSettingsHostingView: UIHostingController<ToolSettingsView> {
     
     private let modalHeightPercentageOfScreen: CGFloat = 0.6
     private let modalHorizontalPadding: CGFloat = 12
+    private let modalCornerRadius: CGFloat = 12
     
     private var modalBottomToParent: NSLayoutConstraint?
     
@@ -23,12 +24,12 @@ class ToolSettingsHostingView: UIHostingController<ToolSettingsView> {
         setupLayout()
     }
     
-    private func setupLayout() {
-        view.backgroundColor = .clear
-    }
-    
     @MainActor required dynamic init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupLayout() {
+        view.backgroundColor = .clear
     }
 }
 

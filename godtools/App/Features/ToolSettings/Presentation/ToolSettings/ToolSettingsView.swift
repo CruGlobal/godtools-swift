@@ -58,7 +58,7 @@ struct ToolSettingsView: View {
         }
         .padding(EdgeInsets(top: contentInsets.top, leading: 0, bottom: 0, trailing: 0))
         .background(Color.white)
-        .cornerRadius(12, corners: [.topLeft, .topRight])
+        .cornerRadius(12)
     }
 }
 

@@ -342,6 +342,8 @@
 		458F7C91282DB68B00872013 /* ToolSettingsTopBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458F7C90282DB68B00872013 /* ToolSettingsTopBarViewModel.swift */; };
 		458F7C93282DB6CD00872013 /* BaseToolSettingsTopBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458F7C92282DB6CD00872013 /* BaseToolSettingsTopBarViewModel.swift */; };
 		458F7C95282DB7C400872013 /* BaseToolSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458F7C94282DB7C400872013 /* BaseToolSettingsViewModel.swift */; };
+		458F7C9D282E7F4600872013 /* ToolSettingsOptionItemBackgroundType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458F7C9B282E7F4600872013 /* ToolSettingsOptionItemBackgroundType.swift */; };
+		458F7C9E282E7F4600872013 /* ToolSettingsOptionItemTitleColorStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458F7C9C282E7F4600872013 /* ToolSettingsOptionItemTitleColorStyle.swift */; };
 		4590F73927B17018007424F4 /* MobileContentCardCollectionPageCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4590F73827B17018007424F4 /* MobileContentCardCollectionPageCardView.xib */; };
 		45935B8828084E250035ACA2 /* SwiftUIPreviewDiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45935B8728084E240035ACA2 /* SwiftUIPreviewDiContainer.swift */; };
 		4596622727BBFEFB0059F70B /* ChooseYourOwnAdventureNavBarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4596622627BBFEFB0059F70B /* ChooseYourOwnAdventureNavBarModel.swift */; };
@@ -1408,6 +1410,8 @@
 		458F7C90282DB68B00872013 /* ToolSettingsTopBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolSettingsTopBarViewModel.swift; sourceTree = "<group>"; };
 		458F7C92282DB6CD00872013 /* BaseToolSettingsTopBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseToolSettingsTopBarViewModel.swift; sourceTree = "<group>"; };
 		458F7C94282DB7C400872013 /* BaseToolSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseToolSettingsViewModel.swift; sourceTree = "<group>"; };
+		458F7C9B282E7F4600872013 /* ToolSettingsOptionItemBackgroundType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolSettingsOptionItemBackgroundType.swift; sourceTree = "<group>"; };
+		458F7C9C282E7F4600872013 /* ToolSettingsOptionItemTitleColorStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolSettingsOptionItemTitleColorStyle.swift; sourceTree = "<group>"; };
 		4590F73827B17018007424F4 /* MobileContentCardCollectionPageCardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MobileContentCardCollectionPageCardView.xib; sourceTree = "<group>"; };
 		45935B8728084E240035ACA2 /* SwiftUIPreviewDiContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftUIPreviewDiContainer.swift; sourceTree = "<group>"; };
 		4596622627BBFEFB0059F70B /* ChooseYourOwnAdventureNavBarModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseYourOwnAdventureNavBarModel.swift; sourceTree = "<group>"; };
@@ -2617,6 +2621,7 @@
 			children = (
 				451CEDE6282C31C6006E5105 /* ToolSettingsOptionsItemView.swift */,
 				451CEDE5282C31C6006E5105 /* ToolSettingsOptionsItemViewModel.swift */,
+				458F7C9A282E7F4600872013 /* Models */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3705,6 +3710,15 @@
 			children = (
 				458EFEDB26B1D08C009EEB03 /* ToolBackButtonImageType.swift */,
 				458EFEDD26B1D135009EEB03 /* ToolBackButtonImageType+Image.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		458F7C9A282E7F4600872013 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				458F7C9B282E7F4600872013 /* ToolSettingsOptionItemBackgroundType.swift */,
+				458F7C9C282E7F4600872013 /* ToolSettingsOptionItemTitleColorStyle.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -6618,7 +6632,7 @@
 		};
 		4503BEFB2821B6E500629692 /* Download And Add Initial Resources and Languages JSON Files */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputFileListPaths = (
@@ -6630,13 +6644,13 @@
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "curl -o godtools/Assets/InitialResources/languages.json https://mobile-content-api.cru.org/languages\ncurl -o godtools/Assets/InitialResources/resources.json https://mobile-content-api.cru.org/resources?include=latest-translations,attachments\n";
 		};
 		45AD220F2593C66B00A096A0 /* Run Crashlytics */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputFileListPaths = (
@@ -6650,7 +6664,7 @@
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
 		};
@@ -7077,6 +7091,7 @@
 				D115B25D27C0318200C18EF6 /* Collection+SafeLookup.swift in Sources */,
 				45AD1BCD25938A4F00A096A0 /* UIView+RemoveAllSubviews.swift in Sources */,
 				45AD202725938A9800A096A0 /* LocaleLocalizationBundle.swift in Sources */,
+				458F7C9E282E7F4600872013 /* ToolSettingsOptionItemTitleColorStyle.swift in Sources */,
 				4567CE4327CD15D300C3B543 /* MobileContentRendererLanguageTranslationManifest.swift in Sources */,
 				453F0B6226EA369000436EE4 /* MobileContentMultiSelectOptionViewModel.swift in Sources */,
 				45558335269F2C7B00C3FF14 /* ToolPageCallToActionViewModelType.swift in Sources */,
@@ -7561,6 +7576,7 @@
 				45AD1AD725938A4E00A096A0 /* ToolsViewModelType.swift in Sources */,
 				45C93AE8261D310900592FFF /* ArticleAemDataParser.swift in Sources */,
 				45AD1B9E25938A4F00A096A0 /* Translation.swift in Sources */,
+				458F7C9D282E7F4600872013 /* ToolSettingsOptionItemBackgroundType.swift in Sources */,
 				D1D56918270632B200BBE2A6 /* OnboardingTutorialCustomViewBuilder.swift in Sources */,
 				45AD1BCC25938A4F00A096A0 /* UIColor+HexColor.swift in Sources */,
 				45AD1F7F25938A9800A096A0 /* RealmFavoritedResource.swift in Sources */,
