@@ -20,6 +20,9 @@ struct ToolCardView: View {
     
     private enum Sizes {
         static let cornerRadius: CGFloat = 6
+        static let cardWidth: CGFloat = 200
+        static let cardHeight: CGFloat = 255
+        static let cardHeightRatio: CGFloat = cardHeight / cardWidth
     }
     
     // MARK: - Body
@@ -48,6 +51,8 @@ struct ToolCardView: View {
                         ToolCardTitleView(title: viewModel.title)
                         
                         if isSpotlight {
+                            
+                            Spacer(minLength: 0)
                             ToolCardParallelLanguageView(languageName: viewModel.parallelLanguageName)
                             
                         } else {
@@ -71,6 +76,7 @@ struct ToolCardView: View {
             }
             
         }
+        .frame(height: isSpotlight ? cardWidth * Sizes.cardHeightRatio : nil)
         .fixedSize(horizontal: true, vertical: true)
         .environment(\.layoutDirection, viewModel.layoutDirection)
     }

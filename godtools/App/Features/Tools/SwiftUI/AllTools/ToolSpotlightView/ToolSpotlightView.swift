@@ -27,7 +27,7 @@ struct ToolSpotlightView: View {
         
         if viewModel.spotlightTools.isEmpty == false {
             
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 5) {
                 VStack(alignment: .leading) {
                     
                     Text(viewModel.spotlightTitle)
@@ -42,13 +42,14 @@ struct ToolSpotlightView: View {
                     HStack(spacing: 15) {
                         ForEach(viewModel.spotlightTools) { tool in
                             ToolCardView(viewModel: viewModel.cardViewModel(for: tool), cardWidth: width * Sizes.spotlightCardWidthMultiplier, isSpotlight: true)
+                                .padding(.bottom, 12)
+                                .padding(.top, 5)
                         }
                     }
-                    .padding(.leading, 12)
+                    .padding(.leading, 20)
                 }
             }
         }
-        
     }
 }
 
