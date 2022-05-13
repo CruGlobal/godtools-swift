@@ -137,7 +137,9 @@ enum FlowStep {
     
     // tool settings
     case closeTappedFromToolSettings
-    case toolSettingsFlowCompleted(state: ToolSettingsFlowCompletedState)
+    case shareLinkTappedFromToolSettings
+    case screenShareTappedFromToolSettings
     case enableTrainingTipsTappedFromToolSettings
     case disableTrainingTipsTappedFromToolSettings
+    case toolSettingsFlowCompleted(state: ToolSettingsFlowCompletedState)
 }

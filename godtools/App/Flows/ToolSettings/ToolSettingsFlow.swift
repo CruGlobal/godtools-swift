@@ -47,6 +47,12 @@ class ToolSettingsFlow: Flow {
         case .closeTappedFromToolSettings:
             flowDelegate?.navigate(step: .toolSettingsFlowCompleted(state: .userClosedToolSettings))
             
+        case .shareLinkTappedFromToolSettings:
+            break
+            
+        case .screenShareTappedFromToolSettings:
+            break
+            
         case .enableTrainingTipsTappedFromToolSettings:
             flowDelegate?.navigate(step: .toolSettingsFlowCompleted(state: .userEnabledTrainingTips))
             

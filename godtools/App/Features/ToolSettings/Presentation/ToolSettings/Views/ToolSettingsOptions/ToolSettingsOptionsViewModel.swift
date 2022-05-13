@@ -19,11 +19,11 @@ class ToolSettingsOptionsViewModel: BaseToolSettingsOptionsViewModel {
     }
     
     override func shareLinkTapped() {
-        print("share link tapped...")
+        flowDelegate?.navigate(step: .shareLinkTappedFromToolSettings)
     }
     
     override func screenShareTapped() {
-        print("screen share tapped...")
+        flowDelegate?.navigate(step: .screenShareTappedFromToolSettings)
     }
     
     override func trainingTipsTapped() {
