@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ToolSettingsOptionsView: View {
             
+    @ObservedObject var viewModel: BaseToolSettingsOptionsViewModel
+    
     let leadingInset: CGFloat
     let trailingInset: CGFloat
     
@@ -24,6 +26,9 @@ struct ToolSettingsOptionsView: View {
                         title: "Share link",
                         titleColorStyle: .darkBackground
                     )
+                    .onTapGesture {
+                        viewModel.shareLinkTapped()
+                    }
                     
                     ToolSettingsOptionsItemView(
                         backgroundType: .color(color: Color(.sRGB, red: 245 / 256, green: 245 / 256, blue: 245 / 256, opacity: 1)),
@@ -31,6 +36,9 @@ struct ToolSettingsOptionsView: View {
                         title: "Screen share",
                         titleColorStyle: .lightBackground
                     )
+                    .onTapGesture {
+                        viewModel.screenShareTapped()
+                    }
                     
                     ToolSettingsOptionsItemView(
                         backgroundType: .image(name: ImageCatalog.toolSettingsOptionTrainingTipsBackground.name),
@@ -38,6 +46,9 @@ struct ToolSettingsOptionsView: View {
                         title: "Training tips",
                         titleColorStyle: .lightBackground
                     )
+                    .onTapGesture {
+                        viewModel.trainingTipsTapped()
+                    }
                 }
                 .padding(EdgeInsets(top: 0, leading: leadingInset, bottom: 0, trailing: trailingInset))
             }
@@ -47,6 +58,7 @@ struct ToolSettingsOptionsView: View {
 
 struct ToolSettingsOptionsView_Preview: PreviewProvider {
     static var previews: some View {
-        ToolSettingsOptionsView(leadingInset: 20, trailingInset: 20)
+        let viewModel = BaseToolSettingsOptionsViewModel()
+        ToolSettingsOptionsView(viewModel: viewModel, leadingInset: 20, trailingInset: 20)
     }
 }

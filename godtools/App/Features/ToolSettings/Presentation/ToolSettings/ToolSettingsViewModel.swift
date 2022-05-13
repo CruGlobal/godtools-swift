@@ -25,4 +25,14 @@ class ToolSettingsViewModel: BaseToolSettingsViewModel {
 
         return ToolSettingsTopBarViewModel(flowDelegate: flowDelegate)
     }
+    
+    override func getOptionsViewModel() -> BaseToolSettingsOptionsViewModel {
+        
+        guard let flowDelegate = flowDelegate else {
+            assertionFailure("Failed to instantiate viewModel, flowDelegate should not be nil.")
+            return BaseToolSettingsOptionsViewModel()
+        }
+        
+        return ToolSettingsOptionsViewModel(flowDelegate: flowDelegate)
+    }
 }
