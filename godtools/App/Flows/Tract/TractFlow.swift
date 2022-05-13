@@ -15,7 +15,6 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
     
     private var shareToolMenuFlow: ShareToolMenuFlow?
     private var toolSettingsFlow: ToolSettingsFlow?
-    private var toolView: ToolView?
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -87,9 +86,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
         )
         
         let view = ToolView(viewModel: viewModel)
-        
-        self.toolView = view
-                
+                        
         if let sharedNavController = sharedNavigationController {
             sharedNavController.pushViewController(view, animated: true)
         }
@@ -105,6 +102,18 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
     deinit {
         print("x deinit: \(type(of: self))")
         deepLinkingService.deepLinkObserver.removeObserver(self)
+    }
+    
+    private var toolView: ToolView? {
+        
+        for index in 0 ..< navigationController.viewControllers.count {
+            let view: UIViewController = navigationController.viewControllers[index]
+            guard let toolView = view as? ToolView else {
+                continue
+            }
+            return toolView
+        }
+        return nil
     }
     
     private func configureNavigationBar(shouldAnimateNavigationBarHiddenState: Bool) {
