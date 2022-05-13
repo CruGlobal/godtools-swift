@@ -9,10 +9,14 @@ import SwiftUI
 
 struct ToolSettingsLanguageDropDownView: View {
         
+    let primaryTextColor: Color
+    
     var body: some View {
        
         HStack(alignment: .center, spacing: 6) {
             Text("Title Here")
+                .foregroundColor(primaryTextColor)
+                .font(FontLibrary.sfProTextRegular.font(size: 16))
             Image(ImageCatalog.toolSettingsLanguageDropDownArrow.name)
                 .frame(width: 10, height: 5)
         }
@@ -22,6 +26,6 @@ struct ToolSettingsLanguageDropDownView: View {
 
 struct ToolSettingsLanguageDropDownView_Preview: PreviewProvider {
     static var previews: some View {
-        ToolSettingsLanguageDropDownView()
+        ToolSettingsLanguageDropDownView(primaryTextColor: Color.black)
     }
 }
