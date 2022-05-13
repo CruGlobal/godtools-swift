@@ -24,7 +24,7 @@ class ToolViewModel: MobileContentPagesViewModel, ToolViewModelType {
     let navBarViewModel: ToolNavBarViewModel
     let didSubscribeForRemoteSharePublishing: ObservableValue<Bool> = ObservableValue(value: false)
         
-    required init(flowDelegate: FlowDelegate, backButtonImageType: ToolBackButtonImageType, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, localizationServices: LocalizationServices, fontService: FontService, viewsService: ViewsService, analytics: AnalyticsContainer, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
+    required init(flowDelegate: FlowDelegate, backButtonImageType: ToolBackButtonImageType, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, localizationServices: LocalizationServices, fontService: FontService, viewsService: ViewsService, analytics: AnalyticsContainer, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, page: Int?) {
         
         self.backButtonImageType = backButtonImageType
         self.tractRemoteSharePublisher = tractRemoteSharePublisher

@@ -82,7 +82,6 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             mobileContentEventAnalytics: appDiContainer.getMobileContentEventAnalyticsTracking(),
             toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics,
             liveShareStream: liveShareStream,
-            trainingTipsEnabled: trainingTipsEnabled,
             page: page
         )
         
