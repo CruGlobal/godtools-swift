@@ -6,7 +6,7 @@
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import GodToolsToolParser
 
 class ChooseYourOwnAdventurePageViewFactory: MobileContentPageViewFactoryType {

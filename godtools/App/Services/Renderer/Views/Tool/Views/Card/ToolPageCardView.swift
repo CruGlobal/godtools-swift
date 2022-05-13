@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 protocol ToolPageCardViewDelegate: AnyObject {
     
@@ -19,6 +20,7 @@ protocol ToolPageCardViewDelegate: AnyObject {
 
 class ToolPageCardView: MobileContentView, NibBased {
         
+    private let viewModel: ToolPageCardViewModelType
     private let backgroundImageView: MobileContentBackgroundImageView = MobileContentBackgroundImageView()
     private let swipeUpGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer()
     private let swipeDownGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer()
@@ -35,10 +37,9 @@ class ToolPageCardView: MobileContentView, NibBased {
     private var didAddKeyboardHeightToContentSize: Bool = false
     private var cardSwipingIsEnabled: Bool = false
     private var isObservingKeyboard: Bool = false
+    private var heightConstraint: NSLayoutConstraint?
     
     private weak var delegate: ToolPageCardViewDelegate?
-        
-    let viewModel: ToolPageCardViewModelType
            
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var headerTrainingTipImageView: UIImageView!
@@ -180,6 +181,10 @@ class ToolPageCardView: MobileContentView, NibBased {
         bottomGradientLayer.frame = bottomGradientView.bounds
     }
     
+    var isHiddenCard: Bool {
+        return viewModel.isHiddenCard
+    }
+    
     func setDelegate(delegate: ToolPageCardViewDelegate?) {
         self.delegate = delegate
     }
@@ -190,6 +195,26 @@ class ToolPageCardView: MobileContentView, NibBased {
     
     func onCardHidden() {
         viewModel.cardDidDisappear()
+    }
+    
+    func containsDismissListener(eventId: EventId) -> Bool {
+        return viewModel.containsDismissListener(eventId: eventId)
+    }
+    
+    func containsListener(eventId: EventId) -> Bool {
+        return viewModel.containsListener(eventId: eventId)
+    }
+    
+    func setHeightConstraint(height: CGFloat) {
+                
+        if let heightConstraint = heightConstraint {
+            heightConstraint.constant = height
+        }
+        else {
+            heightConstraint = addHeightConstraint(constant: height)
+        }
+        
+        layoutIfNeeded()
     }
     
     // MARK: - MobileContentView

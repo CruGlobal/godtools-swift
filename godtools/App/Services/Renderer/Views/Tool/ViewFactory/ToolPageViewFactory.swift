@@ -50,7 +50,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics,
                 fontService: fontService,
                 localizationServices: localizationServices,
-                numberOfCards: cardModel.numberOfVisibleCards,
+                numberOfVisbleCards: cardModel.numberOfVisibleCards,
                 trainingTipsEnabled: trainingTipsEnabled
             )
             

@@ -17,6 +17,6 @@ protocol ToolViewModelType: MobileContentPagesViewModel {
     func pageChanged(page: Int, pagePositions: ToolPagePositions)
     func cardChanged(page: Int, pagePositions: ToolPagePositions)
     func navHomeTapped(remoteShareIsActive: Bool)
-    func navShareTapped(page: Int, selectedLanguage: LanguageModel)
+    func navToolSettingsTapped(page: Int, selectedLanguage: LanguageModel)
     func navLanguageChanged(page: Int, pagePositions: ToolPagePositions)
 }

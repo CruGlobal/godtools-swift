@@ -8,6 +8,7 @@
 
 import Foundation
 import FirebaseAnalytics
+import GoogleAnalytics
 
 class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
     

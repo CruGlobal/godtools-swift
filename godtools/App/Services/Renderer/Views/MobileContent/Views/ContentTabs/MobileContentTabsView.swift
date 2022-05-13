@@ -65,19 +65,18 @@ class MobileContentTabsView: MobileContentView, NibBased {
         return .constrainedToChildren
     }
     
-    override func didReceiveEvents(eventIds: [EventId]) {
+    override func didReceiveEvent(eventId: EventId, eventIdsGroup: [EventId]) -> ProcessedEventResult? {
                 
-        for eventId in eventIds {
+        for tabIndex in 0 ..< tabViews.count {
             
-            for tabIndex in 0 ..< tabViews.count {
-                
-                let tabListeners: [EventId] = tabViews[tabIndex].viewModel.tabListeners
-                
-                if tabListeners.contains(eventId) {
-                    setSelectedTabIndex(selectedTabIndex: tabIndex)
-                }
+            let tabListeners: [EventId] = tabViews[tabIndex].viewModel.tabListeners
+            
+            if tabListeners.contains(eventId) {
+                setSelectedTabIndex(selectedTabIndex: tabIndex)
             }
         }
+        
+        return nil
     }
 }
 

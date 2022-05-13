@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -21,6 +21,7 @@
             <connections>
                 <outlet property="aboutDetailsTextView" destination="dRz-gk-4aW" id="B6x-ed-RJI"/>
                 <outlet property="aboutDetailsTextViewLeading" destination="JJz-wz-bKN" id="seH-yh-6tH"/>
+                <outlet property="animationView" destination="yFx-a4-t5O" id="gZ0-iz-sPs"/>
                 <outlet property="bannerImageView" destination="6sd-7g-yCc" id="8eK-eS-AVc"/>
                 <outlet property="bottomView" destination="cn2-k1-rfu" id="ik1-Cc-zH0"/>
                 <outlet property="clipTopDetailsShadow" destination="d8D-pv-wIq" id="orn-ja-foK"/>
@@ -58,6 +59,10 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Ef-Qo-9Rm" userLabel="topMediaView">
                     <rect key="frame" x="0.0" y="44" width="414" height="242"/>
                     <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yFx-a4-t5O" userLabel="animationView" customClass="AnimatedView" customModule="godtools" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="242"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </view>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="375" placeholderIntrinsicHeight="178" image="cell_banner_placeholder" highlightedImage="cell_banner_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="6sd-7g-yCc" userLabel="bannerImageView">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="242"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -102,9 +107,13 @@
                         <constraint firstAttribute="bottom" secondItem="V1X-l5-dPn" secondAttribute="bottom" id="7az-F0-xbv"/>
                         <constraint firstItem="6sd-7g-yCc" firstAttribute="top" secondItem="9Ef-Qo-9Rm" secondAttribute="top" id="8wc-xD-Pib"/>
                         <constraint firstAttribute="trailing" secondItem="6sd-7g-yCc" secondAttribute="trailing" id="9VN-SE-J1Q"/>
+                        <constraint firstItem="yFx-a4-t5O" firstAttribute="top" secondItem="9Ef-Qo-9Rm" secondAttribute="top" id="D5x-Cc-5KU"/>
+                        <constraint firstAttribute="trailing" secondItem="yFx-a4-t5O" secondAttribute="trailing" id="JjV-Wd-l9b"/>
                         <constraint firstItem="V1X-l5-dPn" firstAttribute="top" secondItem="9Ef-Qo-9Rm" secondAttribute="top" id="K9x-bK-bB5"/>
                         <constraint firstItem="6sd-7g-yCc" firstAttribute="leading" secondItem="9Ef-Qo-9Rm" secondAttribute="leading" id="M6q-do-PeS"/>
+                        <constraint firstAttribute="bottom" secondItem="yFx-a4-t5O" secondAttribute="bottom" id="NRJ-3T-XN1"/>
                         <constraint firstAttribute="trailing" secondItem="V1X-l5-dPn" secondAttribute="trailing" id="O8I-ix-9Uy"/>
+                        <constraint firstItem="yFx-a4-t5O" firstAttribute="leading" secondItem="9Ef-Qo-9Rm" secondAttribute="leading" id="RCq-Fk-JRd"/>
                         <constraint firstAttribute="bottom" secondItem="6sd-7g-yCc" secondAttribute="bottom" id="Zid-M0-wQ5"/>
                         <constraint firstItem="V1X-l5-dPn" firstAttribute="leading" secondItem="9Ef-Qo-9Rm" secondAttribute="leading" id="vpk-cb-EUC"/>
                     </constraints>

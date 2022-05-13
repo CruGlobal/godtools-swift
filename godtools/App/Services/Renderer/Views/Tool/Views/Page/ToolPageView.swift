@@ -102,7 +102,7 @@ class ToolPageView: MobileContentPageView {
             return
         }
         
-        cardsView?.setCardsState(cardsState: .showingCard(showingCardAtPosition: toolPagePositions.cardPosition), animated: animated)
+        cardsView?.setRenderedCardsState(cardsState: .showingCard(showingCardAtPosition: toolPagePositions.cardPosition), animated: animated)
     }
     
     // MARK: - MobileContentView
@@ -132,14 +132,11 @@ class ToolPageView: MobileContentPageView {
             addCallToActionView(callToActionView: callToActionView)
         }
         
-        cardsView?.addCardsToView(
-            parentView: self,
-            cardParentContentInsets: getCardContentInsets()
-        )
+        cardsView?.renderCardsInParentView(renderedCardsParentView: self, cardInsets: getCardContentInsets())
         
         addBottomView()
-        
-        updateHeroPosition()
+                
+        updateHeroPosition(numberOfVisibleCards: viewModel.numberOfVisibleCards)
     }
     
     override func viewDidAppear() {
@@ -230,13 +227,12 @@ extension ToolPageView {
         self.heroView = heroView
     }
     
-    private func updateHeroPosition() {
+    private func updateHeroPosition(numberOfVisibleCards: Int) {
         
         if self.heroView == nil {
             return
         }
         
-        let numberOfVisibleCards: Int = cardsView?.numberOfVisibleCards ?? 0
         let hidesCards: Bool = numberOfVisibleCards == 0
         let hidesCallToAction: Bool = viewModel.hidesCallToAction
         
@@ -346,7 +342,7 @@ extension ToolPageView: ToolPageCardsViewDelegate {
                 return
             }
             
-            let isShowingLastVisibleCard: Bool = cardPosition >= cardsView.numberOfVisibleCards - 1
+            let isShowingLastVisibleCard: Bool = cardPosition >= cardsView.getNumberOfRenderedCards() - 1
             
             setHeaderHidden(hidden: true, animated: animated)
             setCallToActionHidden(hidden: !isShowingLastVisibleCard, animated: animated)

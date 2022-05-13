@@ -43,7 +43,7 @@ class PrimaryEvaluationOptionButton: UIButton {
     
     private func setupLayout() {
         
-        if let font = FontLibrary.sfProTextRegular.font(size: 17) {
+        if let font = FontLibrary.sfProTextRegular.uiFont(size: 17) {
             titleLabel?.font = font
         }
 

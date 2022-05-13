@@ -10,6 +10,5 @@
 #define godtools_Bridging_Header_h
 
 #import <GoogleConversionTracking/ACTReporter.h>
-#import <GoogleAnalytics/GAI.h>
 
 #endif /* godtools_Bridging_Header_h */

@@ -27,7 +27,7 @@ class GTSegmentedControl: UIView, NibBased {
             return LayoutConfig(
                 selectedTitleColor: UIColor(red: 0.353, green: 0.353, blue: 0.353, alpha: 1),
                 deselectedTitleColor: UIColor(red: 0.745, green: 0.745, blue: 0.745, alpha: 1),
-                segmentFont: FontLibrary.sfProTextSemibold.font(size: 19),
+                segmentFont: FontLibrary.sfProTextSemibold.uiFont(size: 19),
                 spacingBetweenSegments: 30,
                 segmentLabelBottomSpacingToUnderline: 4,
                 underlineWidthPercentageOfSegmentWidth: 1.2,

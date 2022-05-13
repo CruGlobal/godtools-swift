@@ -6,7 +6,7 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import RealmSwift
 
 class AttachmentsFileCache {
@@ -42,6 +42,20 @@ class AttachmentsFileCache {
         }
         
         return nil
+    }
+    
+    func getAttachmentFileUrl(attachmentId: String) -> URL? {
+                        
+        guard let attachment = realmDatabase.mainThreadRealm.object(ofType: RealmAttachment.self, forPrimaryKey: attachmentId) else {
+            return nil
+        }
+        
+        switch sha256FileCache.getFile(location: attachment.sha256FileLocation) {
+        case .success(let url):
+            return url
+        case .failure( _):
+            return nil
+        }
     }
     
     func attachmentExists(location: SHA256FileLocation) -> Bool {
