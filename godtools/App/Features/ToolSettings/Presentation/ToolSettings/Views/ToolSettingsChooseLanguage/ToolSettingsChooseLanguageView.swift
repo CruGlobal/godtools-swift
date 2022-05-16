@@ -1,5 +1,5 @@
 //
-//  ToolSettingsConfigureParallelLanguageView.swift
+//  ToolSettingsChooseLanguageView.swift
 //  ToolSettings
 //
 //  Created by Levi Eggert on 5/10/22.
@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct ToolSettingsConfigureParallelLanguageView: View {
+struct ToolSettingsChooseLanguageView: View {
     
     private let languageDropDownHeight: CGFloat = 52
     
-    @ObservedObject var viewModel: BaseToolSettingsConfigureParallelLanguageViewModel
+    @ObservedObject var viewModel: BaseToolSettingsChooseLanguageViewModel
     
     let geometryProxy: GeometryProxy
     let leadingInset: CGFloat
@@ -64,11 +64,11 @@ struct ToolSettingsConfigureParallelLanguageView: View {
     }
 }
 
-struct ToolSettingsConfigureParallelLanguageView_Preview: PreviewProvider {
+struct ToolSettingsChooseLanguageView_Preview: PreviewProvider {
     static var previews: some View {
         GeometryReader { geometry in
-            ToolSettingsConfigureParallelLanguageView(
-                viewModel: BaseToolSettingsConfigureParallelLanguageViewModel(),
+            ToolSettingsChooseLanguageView(
+                viewModel: BaseToolSettingsChooseLanguageViewModel(),
                 geometryProxy: geometry,
                 leadingInset: 20,
                 trailingInset: 20,

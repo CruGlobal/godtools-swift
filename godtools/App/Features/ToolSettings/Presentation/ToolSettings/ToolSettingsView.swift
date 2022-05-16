@@ -37,8 +37,8 @@ struct ToolSettingsView: View {
                             separatorTrailingInset: contentInsets.trailing
                         )
                         
-                        ToolSettingsConfigureParallelLanguageView(
-                            viewModel: viewModel.getConfigureParallelLanguageViewModel(),
+                        ToolSettingsChooseLanguageView(
+                            viewModel: viewModel.getChooseLanguageViewModel(),
                             geometryProxy: geometry,
                             leadingInset: contentInsets.leading,
                             trailingInset: contentInsets.trailing,

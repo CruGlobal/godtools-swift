@@ -1,5 +1,5 @@
 //
-//  BaseToolSettingsConfigureParallelLanguageViewModel.swift
+//  BaseToolSettingsChooseLanguageViewModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 5/16/22.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class BaseToolSettingsConfigureParallelLanguageViewModel: ObservableObject {
+class BaseToolSettingsChooseLanguageViewModel: ObservableObject {
     
     @Published var chooseLanguageEnabled: Bool = false
     

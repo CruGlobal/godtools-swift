@@ -20,7 +20,7 @@ class BaseToolSettingsViewModel: ObservableObject {
         return BaseToolSettingsOptionsViewModel()
     }
     
-    func getConfigureParallelLanguageViewModel() -> BaseToolSettingsConfigureParallelLanguageViewModel {
-        return ToolSettingsConfigureParallelLanguageViewModel()
+    func getChooseLanguageViewModel() -> BaseToolSettingsChooseLanguageViewModel {
+        return ToolSettingsChooseLanguageViewModel()
     }
 }
