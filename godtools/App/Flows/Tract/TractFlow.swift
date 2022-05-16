@@ -14,6 +14,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
     private let deepLinkingService: DeepLinkingServiceType
     
     private var shareToolMenuFlow: ShareToolMenuFlow?
+    private var toolSettingsFlow: ToolSettingsFlow?
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -169,9 +170,13 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             
         case .toolSettingsTappedFromTool(let tractRemoteShareSubscriber, let tractRemoteSharePublisher, let resource, let selectedLanguage, let primaryLanguage, let parallelLanguage, let pageNumber):
             
-            // TODO: Implement navigation in GT-1558 and remove ShareToolMenuFlow if not being used anywhere else. ~Levi
-            assertionFailure("TODO: Navigate to ToolSettings")
+            let toolSettingsFlow = ToolSettingsFlow(flowDelegate: self, appDiContainer: appDiContainer)
             
+            navigationController.present(toolSettingsFlow.getInitialView(), animated: true)
+            
+            self.toolSettingsFlow = toolSettingsFlow
+            
+            // TODO: GT-1565 remove ShareToolMenuFlow. ~Levi            
             /*
             let shareToolMenuFlow = ShareToolMenuFlow(
                 flowDelegate: self,
@@ -187,6 +192,16 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             )
             
             self.shareToolMenuFlow = shareToolMenuFlow*/
+            
+        case .toolSettingsFlowCompleted(let state):
+            
+            guard toolSettingsFlow != nil else {
+                return
+            }
+            
+            navigationController.dismiss(animated: true)
+            
+            toolSettingsFlow = nil
 
         case .buttonWithUrlTappedFromMobileContentRenderer(let url, let exitLink):
             guard let webUrl = URL(string: url) else {

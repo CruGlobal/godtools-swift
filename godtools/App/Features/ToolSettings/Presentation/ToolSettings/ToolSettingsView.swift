@@ -9,15 +9,18 @@ import SwiftUI
 
 struct ToolSettingsView: View {
     
+    @ObservedObject var viewModel: BaseToolSettingsViewModel
+    
     private let contentInsets: EdgeInsets = EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 20)
     private let separatorLineSpacing: CGFloat = 25
+    private let primaryTextColor: Color = Color(.sRGB, red: 84 / 256, green: 84 / 256, blue: 84 / 256, opacity: 1)
     
     var body: some View {
         GeometryReader { geometry in
             
             VStack {
                 
-                ToolSettingsTopBarView(leadingInset: contentInsets.leading, trailingInset: contentInsets.trailing)
+                ToolSettingsTopBarView(viewModel: viewModel.getTopBarViewModel(), leadingInset: contentInsets.leading, trailingInset: contentInsets.trailing)
                 
                 ScrollView(.vertical, showsIndicators: true) {
                     VStack {
@@ -36,7 +39,8 @@ struct ToolSettingsView: View {
                         ToolSettingsConfigureParallelLanguageView(
                             geometryProxy: geometry,
                             leadingInset: contentInsets.leading,
-                            trailingInset: contentInsets.trailing
+                            trailingInset: contentInsets.trailing,
+                            primaryTextColor: primaryTextColor
                         )
                         
                         ToolSettingsSeparatorView(
@@ -64,6 +68,6 @@ struct ToolSettingsView_Preview: PreviewProvider {
     
     static var previews: some View {
         
-        ToolSettingsView()
+        ToolSettingsView(viewModel: BaseToolSettingsViewModel())
     }
 }

@@ -7,6 +7,22 @@
 
 import Foundation
 
-class ToolSettingsViewModel {
+class ToolSettingsViewModel: BaseToolSettingsViewModel {
     
+    private weak var flowDelegate: FlowDelegate?
+        
+    required init(flowDelegate: FlowDelegate) {
+        
+        self.flowDelegate = flowDelegate
+    }
+    
+    override func getTopBarViewModel() -> BaseToolSettingsTopBarViewModel {
+        
+        guard let flowDelegate = flowDelegate else {
+            assertionFailure("Failed to instantiate viewModel, flowDelegate should not be nil.")
+            return BaseToolSettingsTopBarViewModel()
+        }
+
+        return ToolSettingsTopBarViewModel(flowDelegate: flowDelegate)
+    }
 }
