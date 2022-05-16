@@ -17,11 +17,11 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     
     private var safeArea: UIEdgeInsets?
     private var pageModels: [Page] = Array()
-    private var trainingTipsEnabled: Bool = false
     
     private(set) var currentPageRenderer: MobileContentPageRenderer?
     private(set) var currentPage: Int = 0
     private(set) var highestPageNumberViewed: Int = 0
+    private(set) var trainingTipsEnabled: Bool = false
     
     private(set) weak var window: UIViewController?
     private(set) weak var flowDelegate: FlowDelegate?

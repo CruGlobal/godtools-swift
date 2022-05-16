@@ -11,21 +11,24 @@ import SwiftUI
 
 class ToolSettingsFlow: Flow {
     
+    private let trainingTipsEnabled: Bool
+    
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer) {
+    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, trainingTipsEnabled: Bool) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = UINavigationController()
+        self.trainingTipsEnabled = trainingTipsEnabled
     }
     
     func getInitialView() -> UIViewController {
         
-        let viewModel = ToolSettingsViewModel(flowDelegate: self)
+        let viewModel = ToolSettingsViewModel(flowDelegate: self, trainingTipsEnabled: trainingTipsEnabled)
         
         let toolSettingsView = ToolSettingsView(viewModel: viewModel)
         

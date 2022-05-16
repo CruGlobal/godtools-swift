@@ -6,9 +6,12 @@
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
 
 class BaseToolSettingsOptionsViewModel: ObservableObject {
+    
+    @Published var trainingTipsIcon: Image = Image("")
+    @Published var trainingTipsTitle: String = ""
     
     init() {}
     

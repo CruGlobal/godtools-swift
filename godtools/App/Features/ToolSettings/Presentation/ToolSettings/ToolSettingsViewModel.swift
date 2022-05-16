@@ -9,11 +9,14 @@ import Foundation
 
 class ToolSettingsViewModel: BaseToolSettingsViewModel {
     
+    private let trainingTipsEnabled: Bool
+    
     private weak var flowDelegate: FlowDelegate?
         
-    required init(flowDelegate: FlowDelegate) {
+    required init(flowDelegate: FlowDelegate, trainingTipsEnabled: Bool) {
         
         self.flowDelegate = flowDelegate
+        self.trainingTipsEnabled = trainingTipsEnabled
     }
     
     override func getTopBarViewModel() -> BaseToolSettingsTopBarViewModel {
@@ -33,6 +36,6 @@ class ToolSettingsViewModel: BaseToolSettingsViewModel {
             return BaseToolSettingsOptionsViewModel()
         }
         
-        return ToolSettingsOptionsViewModel(flowDelegate: flowDelegate)
+        return ToolSettingsOptionsViewModel(flowDelegate: flowDelegate, trainingTipsEnabled: trainingTipsEnabled)
     }
 }

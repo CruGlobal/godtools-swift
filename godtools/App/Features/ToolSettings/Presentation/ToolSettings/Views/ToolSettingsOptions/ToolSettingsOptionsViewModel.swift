@@ -5,17 +5,23 @@
 //  Created by Levi Eggert on 5/11/22.
 //
 
-import Foundation
+import SwiftUI
 
 class ToolSettingsOptionsViewModel: BaseToolSettingsOptionsViewModel {
     
+    private let trainingTipsEnabled: Bool
+    
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate) {
+    required init(flowDelegate: FlowDelegate, trainingTipsEnabled: Bool) {
         
         self.flowDelegate = flowDelegate
+        self.trainingTipsEnabled = trainingTipsEnabled
         
         super.init()
+        
+        trainingTipsTitle = trainingTipsEnabled ? "Hide tips" : "Training tips"
+        trainingTipsIcon = trainingTipsEnabled ? Image(ImageCatalog.toolSettingsOptionHideTips.name) : Image(ImageCatalog.toolSettingsOptionTrainingTips.name)
     }
     
     override func shareLinkTapped() {
@@ -27,8 +33,9 @@ class ToolSettingsOptionsViewModel: BaseToolSettingsOptionsViewModel {
     }
     
     override func trainingTipsTapped() {
-        print("training tips tapped...")
+
+        let step: FlowStep = trainingTipsEnabled ? .disableTrainingTipsTappedFromToolSettings : .enableTrainingTipsTappedFromToolSettings
         
-        flowDelegate?.navigate(step: .enableTrainingTipsTappedFromToolSettings)
+        flowDelegate?.navigate(step: step)
     }
 }

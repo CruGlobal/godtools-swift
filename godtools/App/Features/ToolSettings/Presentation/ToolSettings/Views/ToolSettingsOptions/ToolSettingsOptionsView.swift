@@ -22,7 +22,7 @@ struct ToolSettingsOptionsView: View {
                     
                     ToolSettingsOptionsItemView(
                         backgroundType: .color(color: Color(.sRGB, red: 59 / 256, green: 164 / 256, blue: 219 / 256, opacity: 1)),
-                        imageName: ImageCatalog.toolSettingsOptionShareLink.name,
+                        iconImage: Image(ImageCatalog.toolSettingsOptionShareLink.name),
                         title: "Share link",
                         titleColorStyle: .darkBackground
                     )
@@ -32,7 +32,7 @@ struct ToolSettingsOptionsView: View {
                     
                     ToolSettingsOptionsItemView(
                         backgroundType: .color(color: Color(.sRGB, red: 245 / 256, green: 245 / 256, blue: 245 / 256, opacity: 1)),
-                        imageName: ImageCatalog.toolSettingsOptionScreenShare.name,
+                        iconImage: Image(ImageCatalog.toolSettingsOptionScreenShare.name),
                         title: "Screen share",
                         titleColorStyle: .lightBackground
                     )
@@ -41,9 +41,9 @@ struct ToolSettingsOptionsView: View {
                     }
                     
                     ToolSettingsOptionsItemView(
-                        backgroundType: .image(name: ImageCatalog.toolSettingsOptionTrainingTipsBackground.name),
-                        imageName: ImageCatalog.toolSettingsOptionTrainingTips.name,
-                        title: "Training tips",
+                        backgroundType: .image(image: Image(ImageCatalog.toolSettingsOptionTrainingTipsBackground.name)),
+                        iconImage: Image(ImageCatalog.toolSettingsOptionTrainingTips.name),
+                        title: viewModel.trainingTipsTitle,
                         titleColorStyle: .lightBackground
                     )
                     .onTapGesture {
