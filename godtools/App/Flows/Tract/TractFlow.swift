@@ -181,7 +181,20 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             
         case .toolSettingsTappedFromTool(let tractRemoteShareSubscriber, let tractRemoteSharePublisher, let resource, let selectedLanguage, let primaryLanguage, let parallelLanguage, let pageNumber, let trainingTipsEnabled):
             
-            let toolSettingsFlow = ToolSettingsFlow(flowDelegate: self, appDiContainer: appDiContainer, trainingTipsEnabled: trainingTipsEnabled)
+            let toolSettingsFlow = ToolSettingsFlow(
+                flowDelegate: self,
+                appDiContainer: appDiContainer,
+                sharedNavigationController: navigationController,
+                trainingTipsEnabled: trainingTipsEnabled,
+                tractRemoteSharePublisher: tractRemoteSharePublisher,
+                resource: resource,
+                selectedLanguage: selectedLanguage,
+                primaryLanguage: primaryLanguage,
+                parallelLanguage: parallelLanguage,
+                pageNumber: pageNumber,
+                hidesRemoteShareToolAction: tractRemoteShareSubscriber.isSubscribedToChannel
+                
+            )
             
             navigationController.present(toolSettingsFlow.getInitialView(), animated: true)
             
