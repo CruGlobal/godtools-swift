@@ -11,7 +11,7 @@ import SwiftUI
 enum ToolSettingsOptionItemBackgroundType {
     
     case color(color: Color)
-    case image(name: String)
+    case image(image: Image)
     
     func getColor() -> Color {
         switch self {
@@ -24,8 +24,8 @@ enum ToolSettingsOptionItemBackgroundType {
     
     func getImage() -> Image? {
         switch self {
-        case .image(let name):
-            return Image(name)
+        case .image(let image):
+            return image
         default:
             return nil
         }

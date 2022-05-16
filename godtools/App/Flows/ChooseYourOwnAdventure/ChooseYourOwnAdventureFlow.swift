@@ -42,7 +42,6 @@ class ChooseYourOwnAdventureFlow: Flow {
             type: .chooseYourOwnAdventure,
             flowDelegate: self,
             appDiContainer: appDiContainer,
-            trainingTipsEnabled: false,
             deepLinkingService: deepLinkingService
         )
         
@@ -61,7 +60,8 @@ class ChooseYourOwnAdventureFlow: Flow {
             page: nil,
             mobileContentEventAnalytics: appDiContainer.getMobileContentEventAnalyticsTracking(),
             localizationServices: appDiContainer.localizationServices,
-            fontService: appDiContainer.getFontService()
+            fontService: appDiContainer.getFontService(),
+            trainingTipsEnabled: false
         )
         
         let view = ChooseYourOwnAdventureView(viewModel: viewModel)

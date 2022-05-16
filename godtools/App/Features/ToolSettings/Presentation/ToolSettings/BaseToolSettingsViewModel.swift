@@ -15,4 +15,8 @@ class BaseToolSettingsViewModel: ObservableObject {
     func getTopBarViewModel() -> BaseToolSettingsTopBarViewModel {
         return BaseToolSettingsTopBarViewModel()
     }
+    
+    func getOptionsViewModel() -> BaseToolSettingsOptionsViewModel {
+        return BaseToolSettingsOptionsViewModel()
+    }
 }

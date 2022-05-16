@@ -21,6 +21,7 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     private(set) var currentPageRenderer: MobileContentPageRenderer?
     private(set) var currentPage: Int = 0
     private(set) var highestPageNumberViewed: Int = 0
+    private(set) var trainingTipsEnabled: Bool = false
     
     private(set) weak var window: UIViewController?
     private(set) weak var flowDelegate: FlowDelegate?
@@ -32,13 +33,14 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     let pageNavigation: ObservableValue<MobileContentPagesNavigationModel?> = ObservableValue(value: nil)
     let pagesRemoved: ObservableValue<[IndexPath]> = ObservableValue(value: [])
     
-    required init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType) {
+    required init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool) {
         
         self.flowDelegate = flowDelegate
         self.renderer = renderer
         self.startingPage = page
         self.mobileContentEventAnalytics = mobileContentEventAnalytics
         self.initialPageRenderingType = initialPageRenderingType
+        self.trainingTipsEnabled = trainingTipsEnabled
         
         switch renderer.primaryLanguage.languageDirection {
         case .leftToRight:
@@ -272,13 +274,14 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         guard page >= 0 && page < pageModels.count else {
             return nil
         }
-        
+                
         let renderPageResult: Result<MobileContentView, Error> =  currentPageRenderer.renderPageModel(
             pageModel: pageModels[page],
             page: page,
             numberOfPages: pageModels.count,
             window: window,
-            safeArea: safeArea
+            safeArea: safeArea,
+            trainingTipsEnabled: trainingTipsEnabled
         )
         
         switch renderPageResult {
@@ -347,5 +350,16 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     func handleDismissToolEvent() {
         
         flowDelegate?.navigate(step: .didTriggerDismissToolEventFromMobileContentRenderer)
+    }
+    
+    func setTrainingTipsEnabled(enabled: Bool) {
+        
+        guard trainingTipsEnabled != enabled, let pageRenderer = currentPageRenderer else {
+            return
+        }
+        
+        trainingTipsEnabled = enabled
+        
+        setPageRenderer(pageRenderer: pageRenderer)
     }
 }

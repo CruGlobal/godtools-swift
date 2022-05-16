@@ -11,4 +11,6 @@ import Foundation
 enum ToolSettingsFlowCompletedState {
     
     case userClosedToolSettings
+    case userDisabledTrainingTips
+    case userEnabledTrainingTips
 }

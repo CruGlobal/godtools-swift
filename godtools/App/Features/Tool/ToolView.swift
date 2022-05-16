@@ -86,6 +86,10 @@ class ToolView: MobileContentPagesView {
         
         viewModel.pageChanged(page: page, pagePositions: toolPagePositions)
     }
+    
+    func setTrainingTipsEnabled(enabled: Bool) {
+        viewModel.setTrainingTipsEnabled(enabled: enabled)
+    }
 }
 
 // MARK: - ToolNavBarViewDelegate

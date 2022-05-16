@@ -10,7 +10,7 @@ import SwiftUI
 struct ToolSettingsOptionsItemView: View {
         
     let backgroundType: ToolSettingsOptionItemBackgroundType
-    let imageName: String
+    let iconImage: Image
     let title: String
     let titleColorStyle: ToolSettingsOptionItemTitleColorStyle
     
@@ -25,7 +25,7 @@ struct ToolSettingsOptionsItemView: View {
             }
             
             VStack(alignment: .center, spacing: 10) {
-                Image(imageName)
+                iconImage
                     .frame(width: 23, height: 23)
                 Text(title)
                     .foregroundColor(titleColorStyle.getColor())
@@ -53,8 +53,8 @@ struct ToolSettingsOptionsItemView: View {
 struct ToolSettingsOptionView_Preview: PreviewProvider {
     static var previews: some View {
         ToolSettingsOptionsItemView(
-            backgroundType: .image(name: ImageCatalog.toolSettingsOptionTrainingTipsBackground.name),
-            imageName: ImageCatalog.toolSettingsOptionShareLink.name,
+            backgroundType: .image(image: Image(ImageCatalog.toolSettingsOptionTrainingTipsBackground.name)),
+            iconImage: Image(ImageCatalog.toolSettingsOptionShareLink.name),
             title: "Share link",
             titleColorStyle: .darkBackground
         )

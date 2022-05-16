@@ -29,6 +29,7 @@ enum ImageCatalog: String {
     case playIcon = "play_icon"
     case previousCard = "previous_card"
     case toolSettingsLanguageDropDownArrow = "tool_settings_language_dropdown_arrow"
+    case toolSettingsOptionHideTips = "tool_settings_option_hide_tips"
     case toolSettingsOptionScreenShare = "tool_settings_option_screen_share"
     case toolSettingsOptionShareLink = "tool_settings_option_share_link"
     case toolSettingsOptionTrainingTips = "tool_settings_option_training_tips"
