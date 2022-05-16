@@ -180,6 +180,15 @@ class ToolSettingsFlow: Flow {
         case .disableTrainingTipsTappedFromToolSettings:
             flowDelegate?.navigate(step: .toolSettingsFlowCompleted(state: .userDisabledTrainingTips))
             
+        case .primaryLanguageTappedFromToolSettings:
+            break
+            
+        case .parallelLanguageTappedFromToolSettings:
+            break
+            
+        case .swapLanguagesTappedFromToolSettings:
+            break
+            
         default:
             break
         }

@@ -141,5 +141,8 @@ enum FlowStep {
     case cancelledLoadingToolRemoteSession
     case enableTrainingTipsTappedFromToolSettings
     case disableTrainingTipsTappedFromToolSettings
+    case primaryLanguageTappedFromToolSettings
+    case parallelLanguageTappedFromToolSettings
+    case swapLanguagesTappedFromToolSettings
     case toolSettingsFlowCompleted(state: ToolSettingsFlowCompletedState)
 }

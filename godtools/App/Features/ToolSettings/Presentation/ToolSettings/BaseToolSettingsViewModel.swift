@@ -21,6 +21,6 @@ class BaseToolSettingsViewModel: ObservableObject {
     }
     
     func getChooseLanguageViewModel() -> BaseToolSettingsChooseLanguageViewModel {
-        return ToolSettingsChooseLanguageViewModel()
+        return BaseToolSettingsChooseLanguageViewModel()
     }
 }

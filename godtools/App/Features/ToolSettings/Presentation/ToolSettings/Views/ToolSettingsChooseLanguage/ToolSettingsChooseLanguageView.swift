@@ -38,14 +38,20 @@ struct ToolSettingsChooseLanguageView: View {
             if viewModel.chooseLanguageEnabled {
                 
                 HStack(alignment: .top, spacing: 0) {
-                    ToolSettingsLanguageDropDownView(primaryTextColor: primaryTextColor)
+                    ToolSettingsLanguageDropDownView(primaryTextColor: primaryTextColor, title: viewModel.primaryLanguageTitle)
+                        .onTapGesture {
+                            viewModel.primaryLanguageTapped()
+                        }
                     Button {
-                        print("swap language")
+                        viewModel.swapLanguageTapped()
                     } label: {
                         Image(ImageCatalog.toolSettingsSwapLanguage.name)
                     }
                     .frame(minWidth: 44, maxHeight: .infinity)
-                    ToolSettingsLanguageDropDownView(primaryTextColor: primaryTextColor)
+                    ToolSettingsLanguageDropDownView(primaryTextColor: primaryTextColor, title: viewModel.parallelLanguageTitle)
+                        .onTapGesture {
+                            viewModel.parallelLanguageTapped()
+                        }
                 }
                 .background(Color(.sRGB, red: 245 / 256, green: 245 / 256, blue: 245 / 256, opacity: 1))
                 .cornerRadius(6)

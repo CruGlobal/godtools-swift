@@ -38,4 +38,14 @@ class ToolSettingsViewModel: BaseToolSettingsViewModel {
         
         return ToolSettingsOptionsViewModel(flowDelegate: flowDelegate, trainingTipsEnabled: trainingTipsEnabled)
     }
+    
+    override func getChooseLanguageViewModel() -> BaseToolSettingsChooseLanguageViewModel {
+        
+        guard let flowDelegate = flowDelegate else {
+            assertionFailure("Failed to instantiate viewModel, flowDelegate should not be nil.")
+            return BaseToolSettingsChooseLanguageViewModel()
+        }
+        
+        return ToolSettingsChooseLanguageViewModel(flowDelegate: flowDelegate)
+    }
 }

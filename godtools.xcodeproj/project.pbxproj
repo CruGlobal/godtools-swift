@@ -3751,8 +3751,8 @@
 		45A450842832EA8E00A3DB0E /* ToolSettingsChooseLanguage */ = {
 			isa = PBXGroup;
 			children = (
-				45A450862832EA8E00A3DB0E /* BaseToolSettingsChooseLanguageViewModel.swift */,
 				45A450892832EA8E00A3DB0E /* ToolSettingsChooseLanguageView.swift */,
+				45A450862832EA8E00A3DB0E /* BaseToolSettingsChooseLanguageViewModel.swift */,
 				45A450852832EA8E00A3DB0E /* ToolSettingsChooseLanguageViewModel.swift */,
 				45A450872832EA8E00A3DB0E /* Views */,
 			);

@@ -9,8 +9,30 @@ import Foundation
 
 class ToolSettingsChooseLanguageViewModel: BaseToolSettingsChooseLanguageViewModel {
     
-    override init() {
+    private weak var flowDelegate: FlowDelegate?
+    
+    required init(flowDelegate: FlowDelegate) {
+        
+        self.flowDelegate = flowDelegate
         
         super.init()
+        
+        primaryLanguageTitle = "Primary"
+        parallelLanguageTitle = "Parallel"
+    }
+    
+    override func primaryLanguageTapped() {
+        
+        flowDelegate?.navigate(step: .primaryLanguageTappedFromToolSettings)
+    }
+    
+    override func parallelLanguageTapped() {
+        
+        flowDelegate?.navigate(step: .parallelLanguageTappedFromToolSettings)
+    }
+    
+    override func swapLanguageTapped() {
+        
+        flowDelegate?.navigate(step: .swapLanguagesTappedFromToolSettings)
     }
 }
