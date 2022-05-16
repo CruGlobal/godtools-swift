@@ -144,5 +144,5 @@ enum FlowStep {
     case primaryLanguageTappedFromToolSettings
     case parallelLanguageTappedFromToolSettings
     case swapLanguagesTappedFromToolSettings
-    case toolSettingsFlowCompleted(state: ToolSettingsFlowCompletedState)
+    case toolSettingsFlowCompleted
 }

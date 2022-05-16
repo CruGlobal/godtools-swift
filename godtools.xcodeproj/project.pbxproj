@@ -335,7 +335,6 @@
 		458AA38425D4252000E71B32 /* LocalizationBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458AA38325D4252000E71B32 /* LocalizationBundle.swift */; };
 		458EFEDC26B1D08C009EEB03 /* ToolBackButtonImageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458EFEDB26B1D08C009EEB03 /* ToolBackButtonImageType.swift */; };
 		458EFEDE26B1D135009EEB03 /* ToolBackButtonImageType+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458EFEDD26B1D135009EEB03 /* ToolBackButtonImageType+Image.swift */; };
-		458F7C8F282DAD4A00872013 /* ToolSettingsFlowCompletedState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458F7C8E282DAD4A00872013 /* ToolSettingsFlowCompletedState.swift */; };
 		458F7C91282DB68B00872013 /* ToolSettingsTopBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458F7C90282DB68B00872013 /* ToolSettingsTopBarViewModel.swift */; };
 		458F7C93282DB6CD00872013 /* BaseToolSettingsTopBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458F7C92282DB6CD00872013 /* BaseToolSettingsTopBarViewModel.swift */; };
 		458F7C95282DB7C400872013 /* BaseToolSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458F7C94282DB7C400872013 /* BaseToolSettingsViewModel.swift */; };
@@ -356,6 +355,7 @@
 		45A4508B2832EA8E00A3DB0E /* BaseToolSettingsChooseLanguageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A450862832EA8E00A3DB0E /* BaseToolSettingsChooseLanguageViewModel.swift */; };
 		45A4508C2832EA8E00A3DB0E /* ToolSettingsLanguageDropDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A450882832EA8E00A3DB0E /* ToolSettingsLanguageDropDownView.swift */; };
 		45A4508D2832EA8E00A3DB0E /* ToolSettingsChooseLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A450892832EA8E00A3DB0E /* ToolSettingsChooseLanguageView.swift */; };
+		45A450922832F31400A3DB0E /* ToolSettingsToolType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A450912832F31400A3DB0E /* ToolSettingsToolType.swift */; };
 		45A45CED2731B8C5005D4E74 /* MobileContentBackgroundImageRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457032A426D0055A00F5BADC /* MobileContentBackgroundImageRenderer.swift */; };
 		45A45CEE2731B8C9005D4E74 /* MobileContentBackgroundImageRendererType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457032A626D0056F00F5BADC /* MobileContentBackgroundImageRendererType.swift */; };
 		45A5200E26C481DB009B68D4 /* ManifestResourcesCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A5200D26C481DB009B68D4 /* ManifestResourcesCache.swift */; };
@@ -1406,7 +1406,6 @@
 		458AA38325D4252000E71B32 /* LocalizationBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationBundle.swift; sourceTree = "<group>"; };
 		458EFEDB26B1D08C009EEB03 /* ToolBackButtonImageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolBackButtonImageType.swift; sourceTree = "<group>"; };
 		458EFEDD26B1D135009EEB03 /* ToolBackButtonImageType+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ToolBackButtonImageType+Image.swift"; sourceTree = "<group>"; };
-		458F7C8E282DAD4A00872013 /* ToolSettingsFlowCompletedState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolSettingsFlowCompletedState.swift; sourceTree = "<group>"; };
 		458F7C90282DB68B00872013 /* ToolSettingsTopBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolSettingsTopBarViewModel.swift; sourceTree = "<group>"; };
 		458F7C92282DB6CD00872013 /* BaseToolSettingsTopBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseToolSettingsTopBarViewModel.swift; sourceTree = "<group>"; };
 		458F7C94282DB7C400872013 /* BaseToolSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseToolSettingsViewModel.swift; sourceTree = "<group>"; };
@@ -1424,6 +1423,7 @@
 		45A450862832EA8E00A3DB0E /* BaseToolSettingsChooseLanguageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseToolSettingsChooseLanguageViewModel.swift; sourceTree = "<group>"; };
 		45A450882832EA8E00A3DB0E /* ToolSettingsLanguageDropDownView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolSettingsLanguageDropDownView.swift; sourceTree = "<group>"; };
 		45A450892832EA8E00A3DB0E /* ToolSettingsChooseLanguageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolSettingsChooseLanguageView.swift; sourceTree = "<group>"; };
+		45A450912832F31400A3DB0E /* ToolSettingsToolType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolSettingsToolType.swift; sourceTree = "<group>"; };
 		45A5200D26C481DB009B68D4 /* ManifestResourcesCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManifestResourcesCache.swift; sourceTree = "<group>"; };
 		45A63AB2265441B60090E09D /* ExitLinkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitLinkModel.swift; sourceTree = "<group>"; };
 		45A73E4B25CF19E600B7533F /* IncomingDeepLinkType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingDeepLinkType.swift; sourceTree = "<group>"; };
@@ -2637,7 +2637,7 @@
 			isa = PBXGroup;
 			children = (
 				451CEDFC282C3239006E5105 /* ToolSettingsFlow.swift */,
-				458F7C8E282DAD4A00872013 /* ToolSettingsFlowCompletedState.swift */,
+				45A450912832F31400A3DB0E /* ToolSettingsToolType.swift */,
 			);
 			path = ToolSettings;
 			sourceTree = "<group>";
@@ -6999,6 +6999,7 @@
 				45AD1BA125938A4F00A096A0 /* ReferencedFile.swift in Sources */,
 				4555840D269F2DA500C3FF14 /* MobileContentTextViewModel.swift in Sources */,
 				D1C8FEAE275E95FA00C71E80 /* ParallelLanguageListViewModelType.swift in Sources */,
+				45A450922832F31400A3DB0E /* ToolSettingsToolType.swift in Sources */,
 				45558331269F2C7B00C3FF14 /* ToolPageCardsViewModelType.swift in Sources */,
 				45935B8828084E250035ACA2 /* SwiftUIPreviewDiContainer.swift in Sources */,
 				45C93AEF261D310900592FFF /* ArticleAemDownloaderResult.swift in Sources */,
@@ -7255,7 +7256,6 @@
 				45AD1B2625938A4F00A096A0 /* LocalizedAboutTextProvider.swift in Sources */,
 				4542F406281084D60016C254 /* DeepLinkUrlParserType.swift in Sources */,
 				45AD1BE325938A4F00A096A0 /* NibBased.swift in Sources */,
-				458F7C8F282DAD4A00872013 /* ToolSettingsFlowCompletedState.swift in Sources */,
 				45AD205A25938AC300A096A0 /* SnowplowAnalytics.swift in Sources */,
 				4561AC96279C4C94003718C0 /* MobileContentContentPageViewModel.swift in Sources */,
 				45AD1B6325938A4F00A096A0 /* AccountActivityView.swift in Sources */,

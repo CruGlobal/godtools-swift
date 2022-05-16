@@ -11,6 +11,7 @@ import SwiftUI
 
 class ToolSettingsFlow: Flow {
     
+    private let tool: ToolSettingsToolType
     private let trainingTipsEnabled: Bool
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
     private let resource: ResourceModel
@@ -27,11 +28,12 @@ class ToolSettingsFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, trainingTipsEnabled: Bool, tractRemoteSharePublisher: TractRemoteSharePublisher, resource: ResourceModel, selectedLanguage: LanguageModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, pageNumber: Int, hidesRemoteShareToolAction: Bool) {
+    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, tool: ToolSettingsToolType, trainingTipsEnabled: Bool, tractRemoteSharePublisher: TractRemoteSharePublisher, resource: ResourceModel, selectedLanguage: LanguageModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, pageNumber: Int, hidesRemoteShareToolAction: Bool) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
+        self.tool = tool
         self.trainingTipsEnabled = trainingTipsEnabled
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
         self.resource = resource
@@ -63,7 +65,7 @@ class ToolSettingsFlow: Flow {
         switch step {
             
         case .closeTappedFromToolSettings:
-            flowDelegate?.navigate(step: .toolSettingsFlowCompleted(state: .userClosedToolSettings))
+            flowDelegate?.navigate(step: .toolSettingsFlowCompleted)
             
         case .shareLinkTappedFromToolSettings:
             
@@ -116,7 +118,7 @@ class ToolSettingsFlow: Flow {
                         
             loadToolRemoteSessionModal?.dismiss(animated: true, completion: nil)
             loadToolRemoteSessionModal = nil
-            flowDelegate?.navigate(step: .toolSettingsFlowCompleted(state: .userClosedToolSettings))
+            flowDelegate?.navigate(step: .toolSettingsFlowCompleted)
             
             switch result {
                 
@@ -172,13 +174,19 @@ class ToolSettingsFlow: Flow {
             loadToolRemoteSessionModal?.dismiss(animated: true, completion: nil)
             loadToolRemoteSessionModal = nil
             
-            flowDelegate?.navigate(step: .toolSettingsFlowCompleted(state: .userClosedToolSettings))
+            flowDelegate?.navigate(step: .toolSettingsFlowCompleted)
             
         case .enableTrainingTipsTappedFromToolSettings:
-            flowDelegate?.navigate(step: .toolSettingsFlowCompleted(state: .userEnabledTrainingTips))
+            
+            tool.setTrainingTipsEnabled(enabled: true)
+            
+            flowDelegate?.navigate(step: .toolSettingsFlowCompleted)
             
         case .disableTrainingTipsTappedFromToolSettings:
-            flowDelegate?.navigate(step: .toolSettingsFlowCompleted(state: .userDisabledTrainingTips))
+            
+            tool.setTrainingTipsEnabled(enabled: false)
+            
+            flowDelegate?.navigate(step: .toolSettingsFlowCompleted)
             
         case .primaryLanguageTappedFromToolSettings:
             break
