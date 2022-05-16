@@ -96,11 +96,11 @@ extension ToolView: ToolNavBarViewDelegate {
         viewModel.navHomeTapped(remoteShareIsActive: remoteShareIsActive)
     }
     
-    func navBarShareTapped(navBar: ToolNavBarView, selectedLanguage: LanguageModel) {
+    func navBarToolSettingsTapped(navBar: ToolNavBarView, selectedLanguage: LanguageModel) {
         
         let page: Int = pageNavigationView.currentPage
         
-        viewModel.navShareTapped(page: page, selectedLanguage: selectedLanguage)
+        viewModel.navToolSettingsTapped(page: page, selectedLanguage: selectedLanguage)
     }
     
     func navBarLanguageChanged(navBar: ToolNavBarView) {
