@@ -7,6 +7,10 @@
 
 import Foundation
 
-class ToolSettingsConfigureParallelLanguageViewModel {
+class ToolSettingsConfigureParallelLanguageViewModel: BaseToolSettingsConfigureParallelLanguageViewModel {
     
+    override init() {
+        
+        super.init()
+    }
 }

@@ -38,6 +38,7 @@ struct ToolSettingsView: View {
                         )
                         
                         ToolSettingsConfigureParallelLanguageView(
+                            viewModel: viewModel.getConfigureParallelLanguageViewModel(),
                             geometryProxy: geometry,
                             leadingInset: contentInsets.leading,
                             trailingInset: contentInsets.trailing,

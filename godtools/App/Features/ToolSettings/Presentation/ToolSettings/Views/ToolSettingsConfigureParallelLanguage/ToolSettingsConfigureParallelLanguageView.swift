@@ -11,13 +11,13 @@ struct ToolSettingsConfigureParallelLanguageView: View {
     
     private let languageDropDownHeight: CGFloat = 52
     
+    @ObservedObject var viewModel: BaseToolSettingsConfigureParallelLanguageViewModel
+    
     let geometryProxy: GeometryProxy
     let leadingInset: CGFloat
     let trailingInset: CGFloat
     let primaryTextColor: Color
-    
-    @State private var vibrateOnRing = false
-    
+        
     var body: some View {
         VStack(alignment: .leading, spacing: 15) {
             HStack(alignment: .center, spacing: 0) {
@@ -31,31 +31,35 @@ struct ToolSettingsConfigureParallelLanguageView: View {
                 }
                 .frame(width: geometryProxy.size.width * 0.65)
                 .padding(EdgeInsets(top: 0, leading: leadingInset, bottom: 0, trailing: 0))
-                Toggle("", isOn: $vibrateOnRing)
+                Toggle("", isOn: $viewModel.chooseLanguageEnabled.animation())
                     .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: trailingInset))
             }
-            HStack(alignment: .top, spacing: 0) {
-                ToolSettingsLanguageDropDownView(primaryTextColor: primaryTextColor)
-                Button {
-                    print("swap language")
-                } label: {
-                    Image(ImageCatalog.toolSettingsSwapLanguage.name)
+            
+            if viewModel.chooseLanguageEnabled {
+                
+                HStack(alignment: .top, spacing: 0) {
+                    ToolSettingsLanguageDropDownView(primaryTextColor: primaryTextColor)
+                    Button {
+                        print("swap language")
+                    } label: {
+                        Image(ImageCatalog.toolSettingsSwapLanguage.name)
+                    }
+                    .frame(minWidth: 44, maxHeight: .infinity)
+                    ToolSettingsLanguageDropDownView(primaryTextColor: primaryTextColor)
                 }
-                .frame(minWidth: 44, maxHeight: .infinity)
-                ToolSettingsLanguageDropDownView(primaryTextColor: primaryTextColor)
+                .background(Color(.sRGB, red: 245 / 256, green: 245 / 256, blue: 245 / 256, opacity: 1))
+                .cornerRadius(6)
+                .frame(
+                    minWidth: nil,
+                    idealWidth: nil,
+                    maxWidth: .infinity,
+                    minHeight: languageDropDownHeight,
+                    idealHeight: nil,
+                    maxHeight: languageDropDownHeight,
+                    alignment: .leading
+                )
+                .padding(EdgeInsets(top: 0, leading: leadingInset, bottom: 0, trailing: trailingInset))
             }
-            .background(Color(.sRGB, red: 245 / 256, green: 245 / 256, blue: 245 / 256, opacity: 1))
-            .cornerRadius(6)
-            .frame(
-                minWidth: nil,
-                idealWidth: nil,
-                maxWidth: .infinity,
-                minHeight: languageDropDownHeight,
-                idealHeight: nil,
-                maxHeight: languageDropDownHeight,
-                alignment: .leading
-            )
-            .padding(EdgeInsets(top: 0, leading: leadingInset, bottom: 0, trailing: trailingInset))
         }
     }
 }
@@ -63,7 +67,13 @@ struct ToolSettingsConfigureParallelLanguageView: View {
 struct ToolSettingsConfigureParallelLanguageView_Preview: PreviewProvider {
     static var previews: some View {
         GeometryReader { geometry in
-            ToolSettingsConfigureParallelLanguageView(geometryProxy: geometry, leadingInset: 20, trailingInset: 20, primaryTextColor: .black)
+            ToolSettingsConfigureParallelLanguageView(
+                viewModel: BaseToolSettingsConfigureParallelLanguageViewModel(),
+                geometryProxy: geometry,
+                leadingInset: 20,
+                trailingInset: 20,
+                primaryTextColor: .black
+            )
         }
     }
 }
