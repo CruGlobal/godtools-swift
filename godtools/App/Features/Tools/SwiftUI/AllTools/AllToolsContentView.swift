@@ -70,7 +70,7 @@ struct AllToolsContentView: View {
                         
                     } else {
                         
-                        AllToolsList(viewModel: viewModel, width: width)
+                        AllToolsListIOS13(viewModel: viewModel, width: width)
                     }
                 }
             }
