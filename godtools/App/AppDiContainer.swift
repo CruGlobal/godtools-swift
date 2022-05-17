@@ -15,7 +15,7 @@ class AppDiContainer {
     private let realmDatabase: RealmDatabase
     private let resourcesSHA256FileCache: ResourcesSHA256FileCache = ResourcesSHA256FileCache() // TODO: Make private. ~Levi
     private let sharedIgnoringCacheSession: SharedIgnoreCacheSession = SharedIgnoreCacheSession()
-    private let languagesApi: LanguagesApiType
+    private let languagesApi: MobileContentLanguagesApi
     private let resourcesApi: ResourcesApiType
     private let translationsApi: TranslationsApiType
     private let realmResourcesCache: RealmResourcesCache
@@ -68,7 +68,7 @@ class AppDiContainer {
                 
         realmDatabase = RealmDatabase()
 
-        languagesApi = LanguagesApi(config: config, sharedSession: sharedIgnoringCacheSession)
+        languagesApi = MobileContentLanguagesApi(config: config, sharedSession: sharedIgnoringCacheSession)
         
         resourcesApi = ResourcesApi(config: config, sharedSession: sharedIgnoringCacheSession)
         
@@ -231,6 +231,10 @@ class AppDiContainer {
     
     func getFontService() -> FontService {
         return FontService(languageSettings: languageSettingsService)
+    }
+    
+    func getLanguagesRepository() -> LanguagesRepository {
+        return LanguagesRepository(cache: languagesCache)
     }
     
     func getLessonFeedbackAnalytics() -> LessonFeedbackAnalytics {
