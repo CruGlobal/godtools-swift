@@ -94,19 +94,18 @@ struct ToolCardView: View {
 
 struct ToolCardView_Previews: PreviewProvider {
     static var previews: some View {
-        
-        GeometryReader { geo in
-            ToolCardView(viewModel:
-                            MockToolCardViewModel(
-                                title: "Knowing God Personally",
-                                category: "Gospel Invitation",
-                                showParallelLanguage: true,
-                                showBannerImage: true,
-                                attachmentsDownloadProgress: 0.80,
-                                translationDownloadProgress: 0.55
-                            ),
-                         cardWidth: geo.size.width)
-        }
-            .padding()
+        ToolCardView(viewModel:
+                        MockToolCardViewModel(
+                            title: "Knowing God Personally",
+                            category: "Gospel Invitation",
+                            showParallelLanguage: true,
+                            showBannerImage: true,
+                            attachmentsDownloadProgress: 0.80,
+                            translationDownloadProgress: 0.55
+                        ),
+                     cardWidth: 375
+        )
+        .padding()
+        .previewLayout(.sizeThatFits)
     }
 }

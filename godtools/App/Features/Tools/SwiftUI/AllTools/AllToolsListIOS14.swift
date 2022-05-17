@@ -2,15 +2,18 @@
 //  AllToolsList.swift
 //  godtools
 //
-//  Created by Rachael Skeath on 4/19/22.
+//  Created by Rachael Skeath on 5/9/22.
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
 import SwiftUI
 
-// MARK: - AllToolsList
+// MARK: - AllToolsListIOS14
 
-struct AllToolsList: View {
+// This view should be visually equivalent to AllToolsList. iOS 14 has no way of removing separators on List, so this is the workaround.
+// TODO: - When we stop supporting iOS 14, remove this view.
+@available(iOS 14.0, *)
+struct AllToolsListIOS14: View {
     
     // MARK: - Properties
     
@@ -21,7 +24,6 @@ struct AllToolsList: View {
     
     private enum Sizes {
         static let toolsPaddingMultiplier: CGFloat = 20/375
-        static let toolsVerticalSpacing: CGFloat = 10
     }
     
     // MARK: - Body
@@ -29,35 +31,28 @@ struct AllToolsList: View {
     var body: some View {
         let leadingTrailingPadding = width * Sizes.toolsPaddingMultiplier
 
-        List {
-            // TODO: - Spotlight and Category filter sections will be completed in GT-1265 & GT-1498
-            
-            ForEach(viewModel.tools) { tool in
-                Group {
-                    if #available(iOS 15.0, *) {
-                        ToolCardView(viewModel: viewModel.cardViewModel(for: tool), cardWidth: width - (2 * leadingTrailingPadding))
-                            .listRowSeparator(.hidden)
+        ScrollView {
+            LazyVStack {
+                // TODO: - Spotlight and Category filter sections will be completed in GT-1265 & GT-1498
+                
+                ForEach(viewModel.tools) { tool in
 
-                    } else {
-                        ToolCardView(viewModel: viewModel.cardViewModel(for: tool), cardWidth: width - (2 * leadingTrailingPadding))
-                    }
-                }
-                .onTapGesture {
-                    viewModel.toolTapped(resource: tool)
+                    ToolCardView(viewModel: viewModel.cardViewModel(for: tool), cardWidth: width - (2 * leadingTrailingPadding))
+                        .onTapGesture {
+                            viewModel.toolTapped(resource: tool)
+                        }
+                        .padding([.leading, .trailing], leadingTrailingPadding)
+                        .padding([.top, .bottom], 6)
                 }
             }
-            .listRowInsets(EdgeInsets(top: Sizes.toolsVerticalSpacing, leading: leadingTrailingPadding, bottom: Sizes.toolsVerticalSpacing, trailing: leadingTrailingPadding))
+            .padding(.top, 12)
         }
-        .frame(maxWidth: .infinity)
-        .edgesIgnoringSafeArea([.leading, .trailing])
-        .listStyle(.plain)
-        .padding(.top, 8)
     }
 }
 
 // MARK: - Preview
 
-struct AllToolsList_Previews: PreviewProvider {
+struct AllToolsListIOS14_Previews: PreviewProvider {
     static var previews: some View {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
@@ -78,3 +73,4 @@ struct AllToolsList_Previews: PreviewProvider {
         }
     }
 }
+
