@@ -24,6 +24,7 @@ struct ToolCardsView: View {
             
             ToolCardView(viewModel: viewModel.cardViewModel(for: tool), cardWidth: width - 2 * leadingPadding)
                 .listRowInsets(EdgeInsets())
+                .contentShape(Rectangle())
                 .onTapGesture {
                     viewModel.toolTapped(resource: tool)
                 }

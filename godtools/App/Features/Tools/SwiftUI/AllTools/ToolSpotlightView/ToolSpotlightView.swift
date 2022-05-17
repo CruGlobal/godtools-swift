@@ -16,12 +16,6 @@ struct ToolSpotlightView: View {
     let width: CGFloat
     let leadingPadding: CGFloat
     
-    // MARK: - Constants
-    
-    private enum Sizes {
-        static let spotlightCardWidthMultiplier: CGFloat = 200/375
-    }
-    
     // MARK: - Body
     
     var body: some View {
@@ -35,16 +29,8 @@ struct ToolSpotlightView: View {
                 .padding(.top, 24)
                 
                 ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 15) {
-                        ForEach(viewModel.spotlightTools) { tool in
-                            ToolCardView(viewModel: viewModel.cardViewModel(for: tool), cardWidth: width * Sizes.spotlightCardWidthMultiplier, isSpotlight: true)
-                                .onTapGesture {
-                                    viewModel.spotlightToolTapped(resource: tool)
-                                }
-                                .padding(.bottom, 12)
-                                .padding(.top, 5)
-                        }
-                    }
+                    
+                    SpotlightToolCardsView(viewModel: viewModel, width: width)
                     .padding(.leading, leadingPadding)
                 }
             }
