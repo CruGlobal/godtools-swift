@@ -10,17 +10,31 @@ import SwiftUI
 
 struct LanguagesListItemView: View {
     
-    @ObservedObject var viewModel: BaseLanguagesListItemViewModel
+    private let verticalSpacing: CGFloat = 15
+    
+    @ObservedObject var viewModel: LanguagesListItemViewModel
     
     var body: some View {
-        VStack {
-            
+        VStack(alignment: .leading, spacing: 0) {
+            Rectangle()
+                .frame(maxWidth: .infinity, minHeight: verticalSpacing, maxHeight: verticalSpacing)
+                .foregroundColor(.clear)
+            Text(viewModel.name)
+                .foregroundColor(Color.black)
+                .font(FontLibrary.sfProTextRegular.font(size: 15))
+            Rectangle()
+                .frame(maxWidth: .infinity, minHeight: verticalSpacing, maxHeight: verticalSpacing)
+                .foregroundColor(.clear)
         }
+        .background(Color.white)
     }
 }
 
 struct LanguagesListItemView_Preview: PreviewProvider {
     static var previews: some View {
-        LanguagesListItemView(viewModel: BaseLanguagesListItemViewModel())
+        
+        let language = ToolLanguageModel(id: "en", name: "English")
+        
+        LanguagesListItemView(viewModel: LanguagesListItemViewModel(language: language))
     }
 }

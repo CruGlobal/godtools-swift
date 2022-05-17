@@ -1,5 +1,5 @@
 //
-//  BaseLanguagesListItemViewModel.swift
+//  ToolLanguageModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 5/17/22.
@@ -8,7 +8,8 @@
 
 import Foundation
 
-class BaseLanguagesListItemViewModel: ObservableObject {
+struct ToolLanguageModel: Identifiable {
     
-    init() {}
+    let id: String
+    let name: String
 }

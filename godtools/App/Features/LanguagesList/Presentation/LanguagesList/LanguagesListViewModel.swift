@@ -8,14 +8,31 @@
 
 import Foundation
 
-class LanguagesListViewModel: BaseLanguagesListViewModel {
+class LanguagesListViewModel: ObservableObject {
     
-    required init(languages: [LanguageModel]) {
+    @Published var languages: [ToolLanguageModel] = Array()
+    
+    let closeTappedClosure: (() -> Void)
+    let languageTappedClosure: ((_ language: ToolLanguageModel) -> Void)
         
-        super.init(languages: languages)
+    required init(languages: [ToolLanguageModel], closeTappedClosure: @escaping (() -> Void), languageTappedClosure: @escaping ((_ language: ToolLanguageModel) -> Void)) {
+        
+        self.languages = languages
+        self.closeTappedClosure = closeTappedClosure
+        self.languageTappedClosure = languageTappedClosure
     }
     
-    override func getLanguagesListItemViewModel(language: LanguageModel) -> BaseLanguagesListItemViewModel {
+    func getLanguagesListItemViewModel(language: ToolLanguageModel) -> LanguagesListItemViewModel {
         return LanguagesListItemViewModel(language: language)
+    }
+    
+    func closeTapped() {
+            
+        closeTappedClosure()
+    }
+    
+    func languageTapped(language: ToolLanguageModel) {
+            
+        languageTappedClosure(language)
     }
 }
