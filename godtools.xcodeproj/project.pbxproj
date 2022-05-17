@@ -930,6 +930,9 @@
 		45EC429B272C87430052F2AA /* PassthroughValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EC429A272C87430052F2AA /* PassthroughValue.swift */; };
 		45EDBCF027359CD70099495B /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 45EDBCEF27359CD70099495B /* Realm */; };
 		45EDBCF227359CD70099495B /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 45EDBCF127359CD70099495B /* RealmSwift */; };
+		45F38D152833D245009E3E15 /* LanguagesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F38D132833D245009E3E15 /* LanguagesListView.swift */; };
+		45F38D162833D245009E3E15 /* LanguagesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F38D142833D245009E3E15 /* LanguagesListViewModel.swift */; };
+		45F38D192833D59D009E3E15 /* LanguagesListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F38D182833D59D009E3E15 /* LanguagesListItemView.swift */; };
 		45F5A048268A72200081C507 /* IncomingDeepLinkUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5A047268A72200081C507 /* IncomingDeepLinkUrl.swift */; };
 		45F7E7602701F1AA00CC9FB9 /* MobileContentViewVisibilityState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F7E75F2701F1AA00CC9FB9 /* MobileContentViewVisibilityState.swift */; };
 		45FA696C24251CA00006878C /* TutorialLanguageAvailabilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FA696B24251CA00006878C /* TutorialLanguageAvailabilityTests.swift */; };
@@ -1979,6 +1982,9 @@
 		45E3FABE2759898200D0CAFA /* AuthUserModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthUserModelType.swift; sourceTree = "<group>"; };
 		45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Semibold.otf"; sourceTree = "<group>"; };
 		45EC429A272C87430052F2AA /* PassthroughValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassthroughValue.swift; sourceTree = "<group>"; };
+		45F38D132833D245009E3E15 /* LanguagesListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguagesListView.swift; sourceTree = "<group>"; };
+		45F38D142833D245009E3E15 /* LanguagesListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguagesListViewModel.swift; sourceTree = "<group>"; };
+		45F38D182833D59D009E3E15 /* LanguagesListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagesListItemView.swift; sourceTree = "<group>"; };
 		45F5A047268A72200081C507 /* IncomingDeepLinkUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingDeepLinkUrl.swift; sourceTree = "<group>"; };
 		45F7E75F2701F1AA00CC9FB9 /* MobileContentViewVisibilityState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentViewVisibilityState.swift; sourceTree = "<group>"; };
 		45FA696B24251CA00006878C /* TutorialLanguageAvailabilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialLanguageAvailabilityTests.swift; sourceTree = "<group>"; };
@@ -3799,6 +3805,7 @@
 				45750835279A408100943197 /* ChooseYourOwnAdventure */,
 				451550EC2791E3DE00526CF2 /* DownloadTool */,
 				45AD17F625938A4D00A096A0 /* Languages */,
+				45F38D0C2833D136009E3E15 /* LanguagesList */,
 				45AD17DB25938A4D00A096A0 /* LearnToShareTool */,
 				45CB9FB6261F918A0036BEB3 /* Lessons */,
 				45AD17B625938A4D00A096A0 /* Mail */,
@@ -5765,6 +5772,40 @@
 			path = ContentAnimation;
 			sourceTree = "<group>";
 		};
+		45F38D0C2833D136009E3E15 /* LanguagesList */ = {
+			isa = PBXGroup;
+			children = (
+				45F38D112833D245009E3E15 /* Presentation */,
+			);
+			path = LanguagesList;
+			sourceTree = "<group>";
+		};
+		45F38D112833D245009E3E15 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				45F38D122833D245009E3E15 /* LanguagesList */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		45F38D122833D245009E3E15 /* LanguagesList */ = {
+			isa = PBXGroup;
+			children = (
+				45F38D132833D245009E3E15 /* LanguagesListView.swift */,
+				45F38D142833D245009E3E15 /* LanguagesListViewModel.swift */,
+				45F38D172833D583009E3E15 /* Views */,
+			);
+			path = LanguagesList;
+			sourceTree = "<group>";
+		};
+		45F38D172833D583009E3E15 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				45F38D182833D59D009E3E15 /* LanguagesListItemView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		45FB15E827DBDDB40009DF8E /* Lesson */ = {
 			isa = PBXGroup;
 			children = (
@@ -6845,6 +6886,7 @@
 				45AD1AE925938A4E00A096A0 /* ShareToolScreenTutorialNumberOfViewsCache.swift in Sources */,
 				45AD1F9725938A9800A096A0 /* AttachmentFile.swift in Sources */,
 				455583D8269F2DA500C3FF14 /* MobileContentTabsViewModelType.swift in Sources */,
+				45F38D152833D245009E3E15 /* LanguagesListView.swift in Sources */,
 				455583E7269F2DA500C3FF14 /* MobileContentButtonView.swift in Sources */,
 				D1BF24522763B98600C6FEB0 /* ParallelLanguageListView.swift in Sources */,
 				D1DD79FF26690CBA000F1351 /* TrackActionModel.swift in Sources */,
@@ -6920,6 +6962,7 @@
 				45AD1AD125938A4E00A096A0 /* OpenTutorialViewModelType.swift in Sources */,
 				45AD207E25938B6A00A096A0 /* AnimatableValue.swift in Sources */,
 				45AD1F8325938A9800A096A0 /* FavoritedResourceModelType.swift in Sources */,
+				45F38D192833D59D009E3E15 /* LanguagesListItemView.swift in Sources */,
 				45AD1FEE25938A9800A096A0 /* OpenTutorialCalloutCacheType.swift in Sources */,
 				45AD21412593A49900A096A0 /* ShareToolRemoteSessionURLViewModel.swift in Sources */,
 				456BD2CC27020C75004D7B19 /* MobileContentViewHeightConstraintType.swift in Sources */,
@@ -7373,6 +7416,7 @@
 				45AD1FB925938A9800A096A0 /* TractRemoteShareURLBuilder.swift in Sources */,
 				45AD1B0125938A4E00A096A0 /* ArticleCategoriesView.swift in Sources */,
 				45AD1FF425938A9800A096A0 /* DownloadAttachmentsReceipt.swift in Sources */,
+				45F38D162833D245009E3E15 /* LanguagesListViewModel.swift in Sources */,
 				45AD21172593958E00A096A0 /* LanguagesApi.swift in Sources */,
 				D44C69432809B1150000B970 /* LayoutDirection+LanguageDirection.swift in Sources */,
 				45CB9FFB261FB0BE0036BEB3 /* LessonsListViewModel.swift in Sources */,
