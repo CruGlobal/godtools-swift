@@ -1014,7 +1014,7 @@
 		D1FF263825BA0C0E00C825DB /* FirebaseInAppMessagingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FF263725BA0C0E00C825DB /* FirebaseInAppMessagingType.swift */; };
 		D1FF263E25BA0C1C00C825DB /* FirebaseInAppMessaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FF263D25BA0C1C00C825DB /* FirebaseInAppMessaging.swift */; };
 		D40EE3AC281C69F800EAD1FE /* FavoritingToolBannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40EE3AB281C69F800EAD1FE /* FavoritingToolBannerViewModel.swift */; };
-		D420DA2B28295E5E0035ABCB /* AllToolsListIOS14.swift in Sources */ = {isa = PBXBuildFile; fileRef = D420DA2A28295E5E0035ABCB /* AllToolsListIOS14.swift */; };
+		D420DA2B28295E5E0035ABCB /* AllToolCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = D420DA2A28295E5E0035ABCB /* AllToolCards.swift */; };
 		D420DA2D282AEE9C0035ABCB /* ToolSpotlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D420DA2C282AEE9C0035ABCB /* ToolSpotlightView.swift */; };
 		D42600C8282BFA1200E7A520 /* ToolCardParallelLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42600C7282BFA1200E7A520 /* ToolCardParallelLanguageView.swift */; };
 		D42600CA282BFA7900E7A520 /* ToolCardProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42600C9282BFA7900E7A520 /* ToolCardProgressView.swift */; };
@@ -2121,7 +2121,7 @@
 		D1FF263725BA0C0E00C825DB /* FirebaseInAppMessagingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseInAppMessagingType.swift; sourceTree = "<group>"; };
 		D1FF263D25BA0C1C00C825DB /* FirebaseInAppMessaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseInAppMessaging.swift; sourceTree = "<group>"; };
 		D40EE3AB281C69F800EAD1FE /* FavoritingToolBannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritingToolBannerViewModel.swift; sourceTree = "<group>"; };
-		D420DA2A28295E5E0035ABCB /* AllToolsListIOS14.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllToolsListIOS14.swift; sourceTree = "<group>"; };
+		D420DA2A28295E5E0035ABCB /* AllToolCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllToolCards.swift; sourceTree = "<group>"; };
 		D420DA2C282AEE9C0035ABCB /* ToolSpotlightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolSpotlightView.swift; sourceTree = "<group>"; };
 		D42600C7282BFA1200E7A520 /* ToolCardParallelLanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardParallelLanguageView.swift; sourceTree = "<group>"; };
 		D42600C9282BFA7900E7A520 /* ToolCardProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardProgressView.swift; sourceTree = "<group>"; };
@@ -6211,7 +6211,7 @@
 				D49F80F627FDC610001AE5B3 /* AllToolsContentView.swift */,
 				D44C693E2805AE910000B970 /* AllToolsContentViewModel.swift */,
 				D47C49D7280EF0B10084F4DE /* AllToolsList.swift */,
-				D420DA2A28295E5E0035ABCB /* AllToolsListIOS14.swift */,
+				D420DA2A28295E5E0035ABCB /* AllToolCards.swift */,
 				D420DA2E282AEEA00035ABCB /* ToolSpotlightView */,
 			);
 			path = AllTools;
@@ -6914,7 +6914,7 @@
 				4505C68B282B4A0B0047951D /* ToolsMenuPageType.swift in Sources */,
 				45AD21152593958E00A096A0 /* LanguageModelType.swift in Sources */,
 				45C93AF7261D310900592FFF /* CategoryArticleUUID.swift in Sources */,
-				D420DA2B28295E5E0035ABCB /* AllToolsListIOS14.swift in Sources */,
+				D420DA2B28295E5E0035ABCB /* AllToolCards.swift in Sources */,
 				45AD1BD925938A4F00A096A0 /* AlertMessageView.swift in Sources */,
 				45AD205C25938AC300A096A0 /* AppsFlyerAnalytics.swift in Sources */,
 				45AD1B2525938A4F00A096A0 /* AboutViewModelType.swift in Sources */,

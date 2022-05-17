@@ -55,22 +55,42 @@ struct AllToolsContentView: View {
                 
                 GeometryReader { geo in
                     let width = geo.size.width
-                    
+                    let leadingTrailingPadding = width * Sizes.toolsPaddingMultiplier
+
                     if #available(iOS 15.0, *) {
-                        
                         // Pull to refresh is supported only in iOS 15+
-                        AllToolsList(viewModel: viewModel, width: width)
-                            .refreshable {
-                                viewModel.refreshTools()
-                            }
+                        
+                        List {
+                            AllToolCards(viewModel: viewModel, width: width)
+                                .listRowSeparator(.hidden)
+                                
+                        }
+                        .frame(maxWidth: .infinity)
+                        .edgesIgnoringSafeArea([.leading, .trailing])
+                        .listStyle(.plain)
+                        .padding(.top, 8)
+                        .refreshable {
+                            viewModel.refreshTools()
+                        }
                         
                     } else if #available(iOS 14.0, *) {
                         
-                        AllToolsListIOS14(viewModel: viewModel, width: width)
-                        
+                        ScrollView {
+                            LazyVStack(spacing: 12) {
+                                AllToolCards(viewModel: viewModel, width: width)
+                            }
+                        }
+                        .padding(.top, 12)
+                                                
                     } else {
                         
-                        AllToolsListIOS13(viewModel: viewModel, width: width)
+                        List {
+                            AllToolCards(viewModel: viewModel, width: width)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .edgesIgnoringSafeArea([.leading, .trailing])
+                        .listStyle(.plain)
+                        .padding(.top, 8)
                     }
                 }
             }

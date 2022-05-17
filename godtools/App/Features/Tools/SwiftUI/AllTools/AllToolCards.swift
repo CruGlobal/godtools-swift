@@ -2,15 +2,13 @@
 //  AllToolsList.swift
 //  godtools
 //
-//  Created by Rachael Skeath on 4/19/22.
+//  Created by Rachael Skeath on 5/9/22.
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
 import SwiftUI
 
-// AllToolsList built using a List, since that's the only type of view on iOS 13 that supports lazy loading
-
-struct AllToolsListIOS13: View {
+struct AllToolCards: View {
     
     // MARK: - Properties
     
@@ -29,32 +27,27 @@ struct AllToolsListIOS13: View {
     var body: some View {
         let leadingTrailingPadding = width * Sizes.toolsPaddingMultiplier
 
-        List {
-            ToolSpotlightView(viewModel: viewModel.spotlightViewModel(), width: width)
-                .listRowInsets(EdgeInsets())
+        ForEach(viewModel.tools) { tool in
             
-            // TODO: - Category filter sections will be completed in GT-1265
-            
-            ForEach(viewModel.tools) { tool in
-                Group {
-                    ToolCardView(viewModel: viewModel.cardViewModel(for: tool), cardWidth: width - (2 * leadingTrailingPadding))
-                }
-                .onTapGesture {
-                    viewModel.toolTapped(resource: tool)
-                }
+            HStack {
+                Spacer()
+                
+                ToolCardView(viewModel: viewModel.cardViewModel(for: tool), cardWidth: width - (2 * leadingTrailingPadding))
+                    .onTapGesture {
+                        viewModel.toolTapped(resource: tool)
+                    }
+                    .padding([.top, .bottom], 4)
+                
+                Spacer()
+                
             }
-            .listRowInsets(EdgeInsets(top: Sizes.toolsVerticalSpacing, leading: leadingTrailingPadding, bottom: Sizes.toolsVerticalSpacing, trailing: leadingTrailingPadding))
         }
-        .frame(maxWidth: .infinity)
-        .edgesIgnoringSafeArea([.leading, .trailing])
-        .listStyle(.plain)
-        .padding(.top, 8)
     }
 }
 
 // MARK: - Preview
 
-struct AllToolsListIOS13_Previews: PreviewProvider {
+struct AllToolCards_Previews: PreviewProvider {
     static var previews: some View {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
@@ -71,8 +64,7 @@ struct AllToolsListIOS13_Previews: PreviewProvider {
         )
         
         GeometryReader { geo in
-            AllToolsList(viewModel: viewModel, width: geo.size.width)
+            AllToolCards(viewModel: viewModel, width: geo.size.width)
         }
     }
 }
-
