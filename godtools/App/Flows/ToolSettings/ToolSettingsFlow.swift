@@ -22,6 +22,7 @@ class ToolSettingsFlow: Flow {
     
     private var shareToolScreenTutorialModal: UIViewController?
     private var loadToolRemoteSessionModal: UIViewController?
+    private var languagesListModal: UIViewController?
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -189,7 +190,22 @@ class ToolSettingsFlow: Flow {
             flowDelegate?.navigate(step: .toolSettingsFlowCompleted)
             
         case .primaryLanguageTappedFromToolSettings:
-            break
+                        
+            let languagesRepository: LanguagesRepository = appDiContainer.getLanguagesRepository()
+            let getToolLanguagesUseCase: GetToolLanguagesUseCase = GetToolLanguagesUseCase(languagesRepository: languagesRepository)
+            let languages: [ToolLanguageModel] = getToolLanguagesUseCase.getToolLanguages(resource: resource)
+            
+            let viewModel = LanguagesListViewModel(languages: languages, closeTappedClosure: { [weak self] in
+                self?.dismissLanguagesList()
+            }, languageTappedClosure: { [weak self] language in
+                self?.tool.setPrimaryLanguage(languageId: language.id)
+                self?.dismissLanguagesList()
+                self?.flowDelegate?.navigate(step: .toolSettingsFlowCompleted)
+            })
+            
+            let view = LanguagesListView(viewModel: viewModel)
+            
+            presentLanguagesList(languagesList: view)
             
         case .parallelLanguageTappedFromToolSettings:
             break
@@ -242,5 +258,26 @@ class ToolSettingsFlow: Flow {
         navigationController.present(modal, animated: true, completion: nil)
         
         loadToolRemoteSessionModal = modal
+    }
+    
+    private func presentLanguagesList(languagesList: LanguagesListView) {
+        
+        let hostingView: UIHostingController<LanguagesListView> = UIHostingController(rootView: languagesList)
+        hostingView.modalPresentationStyle = .fullScreen
+        hostingView.view.backgroundColor = .white
+        
+        navigationController.present(hostingView, animated: true)
+        
+        languagesListModal = hostingView
+    }
+    
+    private func dismissLanguagesList() {
+        
+        guard let languagesListModal = languagesListModal else {
+            return
+        }
+        
+        languagesListModal.dismiss(animated: true, completion: nil)
+        self.languagesListModal = nil
     }
 }
