@@ -27,7 +27,12 @@ struct SpotlightToolCardsView: View {
         
         HStack(spacing: 15) {
             ForEach(viewModel.spotlightTools) { tool in
-                ToolCardView(viewModel: viewModel.cardViewModel(for: tool), cardWidth: width * Sizes.spotlightCardWidthMultiplier, isSpotlight: true)
+                
+                ToolCardView(
+                    viewModel: viewModel.cardViewModel(for: tool),
+                    cardWidth: width * Sizes.spotlightCardWidthMultiplier,
+                    isSpotlight: true
+                )
                     // onTapGesture's tappable area doesn't always line up with the card's actual position-- possibly due to added padding (?).  This is especially noticeable on iOS14.  Adding .contentShape fixed this.
                     .contentShape(Rectangle())
                     .onTapGesture {

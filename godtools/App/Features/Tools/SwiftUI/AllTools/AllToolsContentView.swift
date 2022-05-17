@@ -48,7 +48,7 @@ struct AllToolsContentView: View {
                 
                 GeometryReader { geo in
                     let width = geo.size.width
-
+                    
                     if #available(iOS 15.0, *) {
                         // Pull to refresh is supported only in iOS 15+
                         

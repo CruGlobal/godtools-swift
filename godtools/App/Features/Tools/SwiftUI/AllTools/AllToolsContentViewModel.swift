@@ -142,7 +142,7 @@ extension AllToolsContentViewModel: FavoritingToolBannerDelegate {
     }
 }
 
-// MARk: -
+// MARK: - ToolSpotlightDelegate
 
 extension AllToolsContentViewModel: ToolSpotlightDelegate {
     

@@ -18,13 +18,13 @@ class ToolSpotlightViewModel: NSObject, ObservableObject {
     
     let spotlightTitle: String
     let spotlightSubtitle: String
-    private weak var delegate: ToolSpotlightDelegate?
     
     private let dataDownloader: InitialDataDownloader
     private let deviceAttachmentBanners: DeviceAttachmentBanners
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
+    private weak var delegate: ToolSpotlightDelegate?
     
     // MARK: - Published
     

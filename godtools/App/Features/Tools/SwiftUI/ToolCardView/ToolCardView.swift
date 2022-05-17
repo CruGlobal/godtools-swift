@@ -20,9 +20,9 @@ struct ToolCardView: View {
     
     private enum Sizes {
         static let cornerRadius: CGFloat = 6
-        static let cardWidth: CGFloat = 200
-        static let cardHeight: CGFloat = 255
-        static let cardHeightRatio: CGFloat = cardHeight / cardWidth
+        static let spotlightCardWidth: CGFloat = 200
+        static let spotlightCardHeight: CGFloat = 255
+        static let spotlightCardHeightRatio: CGFloat = spotlightCardHeight / spotlightCardWidth
     }
     
     // MARK: - Body
@@ -76,7 +76,7 @@ struct ToolCardView: View {
             }
             
         }
-        .frame(height: isSpotlight ? cardWidth * Sizes.cardHeightRatio : nil)
+        .frame(height: isSpotlight ? cardWidth * Sizes.spotlightCardHeightRatio : nil)
         .fixedSize(horizontal: true, vertical: true)
         .environment(\.layoutDirection, viewModel.layoutDirection)
     }
