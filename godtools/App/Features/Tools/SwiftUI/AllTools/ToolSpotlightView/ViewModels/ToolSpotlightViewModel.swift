@@ -8,12 +8,17 @@
 
 import Foundation
 
+protocol ToolSpotlightDelegate: AnyObject {
+    func spotlightCardTapped(resource: ResourceModel)
+}
+
 class ToolSpotlightViewModel: NSObject, ObservableObject {
     
     // MARK: - Properties
     
     let spotlightTitle: String
     let spotlightSubtitle: String
+    private weak var delegate: ToolSpotlightDelegate?
     
     private let dataDownloader: InitialDataDownloader
     private let deviceAttachmentBanners: DeviceAttachmentBanners
@@ -27,12 +32,13 @@ class ToolSpotlightViewModel: NSObject, ObservableObject {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices) {
+    init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: ToolSpotlightDelegate?) {
         self.dataDownloader = dataDownloader
         self.deviceAttachmentBanners = deviceAttachmentBanners
         self.favoritedResourcesCache = favoritedResourcesCache
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
+        self.delegate = delegate
         
         spotlightTitle = localizationServices.stringForMainBundle(key: "allTools.spotlight.title")
         spotlightSubtitle = localizationServices.stringForMainBundle(key: "allTools.spotlight.description")
@@ -97,5 +103,9 @@ extension ToolSpotlightViewModel {
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices
         )
+    }
+    
+    func spotlightToolTapped(resource: ResourceModel) {
+        delegate?.spotlightCardTapped(resource: resource)
     }
 }

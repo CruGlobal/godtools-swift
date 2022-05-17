@@ -29,13 +29,8 @@ struct ToolSpotlightView: View {
         if viewModel.spotlightTools.isEmpty == false {
             
             VStack(alignment: .leading, spacing: 5) {
-                VStack(alignment: .leading) {
-                    
-                    Text(viewModel.spotlightTitle)
-                        .font(FontLibrary.sfProTextRegular.font(size: 22))
-                    Text(viewModel.spotlightSubtitle)
-                        .font(FontLibrary.sfProTextRegular.font(size: 12))
-                }
+                
+                SpotlightTitleView(title: viewModel.spotlightTitle, subtitle: viewModel.spotlightSubtitle)
                 .padding(.leading, leadingPadding)
                 .padding(.top, 24)
                 
@@ -43,6 +38,9 @@ struct ToolSpotlightView: View {
                     HStack(spacing: 15) {
                         ForEach(viewModel.spotlightTools) { tool in
                             ToolCardView(viewModel: viewModel.cardViewModel(for: tool), cardWidth: width * Sizes.spotlightCardWidthMultiplier, isSpotlight: true)
+                                .onTapGesture {
+                                    viewModel.spotlightToolTapped(resource: tool)
+                                }
                                 .padding(.bottom, 12)
                                 .padding(.top, 5)
                         }

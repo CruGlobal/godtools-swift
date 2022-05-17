@@ -1043,6 +1043,7 @@
 		D4BCE3712824147E005757B5 /* ProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BCE3702824147E005757B5 /* ProgressBarView.swift */; };
 		D4EAE99E281C219C002B5B9D /* FavoritingToolBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EAE99D281C219C002B5B9D /* FavoritingToolBannerView.swift */; };
 		D4EB51DA2833E0A5009C185F /* PlainList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EB51D92833E0A5009C185F /* PlainList.swift */; };
+		D4EB51DD2833E42E009C185F /* SpotlightTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EB51DC2833E42E009C185F /* SpotlightTitleView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2152,6 +2153,7 @@
 		D4BCE3702824147E005757B5 /* ProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarView.swift; sourceTree = "<group>"; };
 		D4EAE99D281C219C002B5B9D /* FavoritingToolBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritingToolBannerView.swift; sourceTree = "<group>"; };
 		D4EB51D92833E0A5009C185F /* PlainList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainList.swift; sourceTree = "<group>"; };
+		D4EB51DC2833E42E009C185F /* SpotlightTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightTitleView.swift; sourceTree = "<group>"; };
 		D61FF360D11F854476B6E206 /* Pods_godtools.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtools.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0F338026DD564DE8D5B7CE2 /* Pods-godtoolsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EBE523140714C16DAAB6B473 /* Pods-godtools.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.production.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.production.xcconfig"; sourceTree = "<group>"; };
@@ -6130,9 +6132,8 @@
 			isa = PBXGroup;
 			children = (
 				D420DA2C282AEE9C0035ABCB /* ToolSpotlightView.swift */,
+				D4EB51DB2833E411009C185F /* Subviews */,
 				D42600DE282D9ADD00E7A520 /* ViewModels */,
-				D42600D8282D88F400E7A520 /* ToolSpotlightViewModel.swift */,
-				D42600DC282D998800E7A520 /* MockToolSpotlightViewModel.swift */,
 			);
 			path = ToolSpotlightView;
 			sourceTree = "<group>";
@@ -6154,6 +6155,8 @@
 		D42600DE282D9ADD00E7A520 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				D42600DC282D998800E7A520 /* MockToolSpotlightViewModel.swift */,
+				D42600D8282D88F400E7A520 /* ToolSpotlightViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -6214,6 +6217,14 @@
 				D4EB51D92833E0A5009C185F /* PlainList.swift */,
 			);
 			path = "SwiftUI Modifiers";
+			sourceTree = "<group>";
+		};
+		D4EB51DB2833E411009C185F /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				D4EB51DC2833E42E009C185F /* SpotlightTitleView.swift */,
+			);
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 		D4F719EC2817276C00E079DA /* AllTools */ = {
@@ -7107,6 +7118,7 @@
 				45E39ECA27457A14006A59E4 /* AnimatedViewModel.swift in Sources */,
 				45AD1FDD25938A9800A096A0 /* EmailSignUpApi.swift in Sources */,
 				455583C3269F2DA500C3FF14 /* MobileContentPageViewFactory.swift in Sources */,
+				D4EB51DD2833E42E009C185F /* SpotlightTitleView.swift in Sources */,
 				D420DA2D282AEE9C0035ABCB /* ToolSpotlightView.swift in Sources */,
 				45BF6EB72704FD2D003596A4 /* PrimaryEvaluationOptionButton.swift in Sources */,
 				45AD1B1525938A4E00A096A0 /* ArticleCategoryCellViewModel.swift in Sources */,

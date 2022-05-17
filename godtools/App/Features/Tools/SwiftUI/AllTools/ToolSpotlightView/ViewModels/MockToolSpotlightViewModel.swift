@@ -18,7 +18,8 @@ class MockToolSpotlightViewModel: ToolSpotlightViewModel {
             deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             languageSettingsService: appDiContainer.languageSettingsService,
-            localizationServices: appDiContainer.localizationServices
+            localizationServices: appDiContainer.localizationServices,
+            delegate: nil
         )
     }
 }

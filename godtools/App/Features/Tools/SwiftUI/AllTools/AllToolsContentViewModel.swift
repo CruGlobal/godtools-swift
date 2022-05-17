@@ -63,7 +63,8 @@ extension AllToolsContentViewModel {
             deviceAttachmentBanners: deviceAttachmentBanners,
             favoritedResourcesCache: favoritedResourcesCache,
             languageSettingsService: languageSettingsService,
-            localizationServices: localizationServices
+            localizationServices: localizationServices,
+            delegate: self
         )
     }
     
@@ -138,6 +139,15 @@ extension AllToolsContentViewModel: FavoritingToolBannerDelegate {
     func closeBanner() {
         hideFavoritingToolBanner = true
         favoritingToolMessageCache.disableFavoritingToolMessage()
+    }
+}
+
+// MARk: -
+
+extension AllToolsContentViewModel: ToolSpotlightDelegate {
+    
+    func spotlightCardTapped(resource: ResourceModel) {
+        toolTapped(resource: resource)
     }
 }
 
