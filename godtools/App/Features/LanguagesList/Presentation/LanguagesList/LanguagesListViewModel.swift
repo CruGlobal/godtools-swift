@@ -8,9 +8,14 @@
 
 import Foundation
 
-class LanguagesListViewModel {
+class LanguagesListViewModel: BaseLanguagesListViewModel {
     
     required init(languages: [LanguageModel]) {
         
+        super.init(languages: languages)
+    }
+    
+    override func getLanguagesListItemViewModel(language: LanguageModel) -> BaseLanguagesListItemViewModel {
+        return LanguagesListItemViewModel(language: language)
     }
 }

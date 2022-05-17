@@ -10,6 +10,8 @@ import SwiftUI
 
 struct LanguagesListItemView: View {
     
+    @ObservedObject var viewModel: BaseLanguagesListItemViewModel
+    
     var body: some View {
         VStack {
             
@@ -19,6 +21,6 @@ struct LanguagesListItemView: View {
 
 struct LanguagesListItemView_Preview: PreviewProvider {
     static var previews: some View {
-        LanguagesListItemView()
+        LanguagesListItemView(viewModel: BaseLanguagesListItemViewModel())
     }
 }

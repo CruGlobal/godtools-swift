@@ -10,21 +10,21 @@ import SwiftUI
 
 struct LanguagesListView: View {
     
-    var body: some View {
-        LazyVStack {
-            
-        }
-    }
+    @ObservedObject var viewModel: BaseLanguagesListViewModel
     
-    private func getLazyVStackList() -> LazyVStack<LanguagesListItemView> {
-        return LazyVStack {
+    var body: some View {
+        List(viewModel.languages) { language in
             
+            LanguagesListItemView(viewModel: viewModel.getLanguagesListItemViewModel(language: language))
         }
     }
 }
 
 struct LanguagesListView_Preview: PreviewProvider {
     static var previews: some View {
-        return LanguagesListView()
+        
+        let viewModel = BaseLanguagesListViewModel(languages: [])
+        
+        return LanguagesListView(viewModel: viewModel)
     }
 }
