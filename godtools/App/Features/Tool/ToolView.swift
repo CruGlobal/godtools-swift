@@ -139,4 +139,20 @@ extension ToolView: ToolSettingsToolType {
     func setTrainingTipsEnabled(enabled: Bool) {
         viewModel.setTrainingTipsEnabled(enabled: enabled)
     }
+    
+    func setPrimaryLanguage(languageId: String) {
+        
+    }
+    
+    func setParallelLanguage(languageId: String) {
+        
+    }
+    
+    func clearParallelLanguage() {
+        
+    }
+    
+    func swapLanguages(fromLanguageId: String, toLanguageId: String) {
+        
+    }
 }
