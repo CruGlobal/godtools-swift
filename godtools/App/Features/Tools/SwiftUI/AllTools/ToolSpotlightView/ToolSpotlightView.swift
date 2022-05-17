@@ -14,6 +14,7 @@ struct ToolSpotlightView: View {
     
     @ObservedObject var viewModel: ToolSpotlightViewModel
     let width: CGFloat
+    let leadingPadding: CGFloat
     
     // MARK: - Constants
     
@@ -35,7 +36,7 @@ struct ToolSpotlightView: View {
                     Text(viewModel.spotlightSubtitle)
                         .font(FontLibrary.sfProTextRegular.font(size: 12))
                 }
-                .padding(.leading, 20)
+                .padding(.leading, leadingPadding)
                 .padding(.top, 24)
                 
                 ScrollView(.horizontal, showsIndicators: false) {
@@ -46,7 +47,7 @@ struct ToolSpotlightView: View {
                                 .padding(.top, 5)
                         }
                     }
-                    .padding(.leading, 20)
+                    .padding(.leading, leadingPadding)
                 }
             }
         }
@@ -57,6 +58,6 @@ struct ToolSpotlightView: View {
 
 struct ToolSpotlightView_Previews: PreviewProvider {
     static var previews: some View {
-        ToolSpotlightView(viewModel: MockToolSpotlightViewModel(), width: 375)
+        ToolSpotlightView(viewModel: MockToolSpotlightViewModel(), width: 375, leadingPadding: 20)
     }
 }

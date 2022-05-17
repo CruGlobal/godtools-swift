@@ -14,13 +14,6 @@ struct AllToolsContentView: View {
     
     @ObservedObject var viewModel: AllToolsContentViewModel
     
-    // MARK: - Constants
-    
-    private enum Sizes {
-        static let toolsPaddingMultiplier: CGFloat = 20/375
-        static let toolsVerticalSpacing: CGFloat = 15
-    }
-    
     // MARK: - Init
     
     init(viewModel: AllToolsContentViewModel) {
@@ -55,20 +48,16 @@ struct AllToolsContentView: View {
                 
                 GeometryReader { geo in
                     let width = geo.size.width
-                    let leadingTrailingPadding = width * Sizes.toolsPaddingMultiplier
 
                     if #available(iOS 15.0, *) {
                         // Pull to refresh is supported only in iOS 15+
                         
                         List {
-                            AllToolCards(viewModel: viewModel, width: width)
+                            AllToolsList(viewModel: viewModel, width: width)
                                 .listRowSeparator(.hidden)
                                 
                         }
-                        .frame(maxWidth: .infinity)
-                        .edgesIgnoringSafeArea([.leading, .trailing])
-                        .listStyle(.plain)
-                        .padding(.top, 8)
+                        .modifier(PlainList())
                         .refreshable {
                             viewModel.refreshTools()
                         }
@@ -76,21 +65,17 @@ struct AllToolsContentView: View {
                     } else if #available(iOS 14.0, *) {
                         
                         ScrollView {
-                            LazyVStack(spacing: 12) {
-                                AllToolCards(viewModel: viewModel, width: width)
+                            LazyVStack(spacing: 0) {
+                                AllToolsList(viewModel: viewModel, width: width)
                             }
                         }
-                        .padding(.top, 12)
                                                 
                     } else {
                         
                         List {
-                            AllToolCards(viewModel: viewModel, width: width)
+                            AllToolsList(viewModel: viewModel, width: width)
                         }
-                        .frame(maxWidth: .infinity)
-                        .edgesIgnoringSafeArea([.leading, .trailing])
-                        .listStyle(.plain)
-                        .padding(.top, 8)
+                        .modifier(PlainList())
                     }
                 }
             }

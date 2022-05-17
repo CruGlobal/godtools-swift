@@ -8,8 +8,6 @@
 
 import SwiftUI
 
-// MARK: - AllToolsList
-
 struct AllToolsList: View {
     
     // MARK: - Properties
@@ -28,40 +26,17 @@ struct AllToolsList: View {
     
     var body: some View {
         let leadingTrailingPadding = width * Sizes.toolsPaddingMultiplier
-
-        List {
+        
+        Group {
             
-            if #available(iOS 15.0, *) {
-                ToolSpotlightView(viewModel: viewModel.spotlightViewModel(), width: width)
-                    .listRowInsets(EdgeInsets())
-                    .listRowSeparator(.hidden)
-            } else {
-                ToolSpotlightView(viewModel: viewModel.spotlightViewModel(), width: width)
-                    .listRowInsets(EdgeInsets())
-            }
+            ToolSpotlightView(viewModel: viewModel.spotlightViewModel(), width: width, leadingPadding: leadingTrailingPadding)
+                .listRowInsets(EdgeInsets())
             
-            // TODO: - Category filter sections will be completed in GT-1265
+            // TODO: - GT-1265: Categories Section
             
-            ForEach(viewModel.tools) { tool in
-                Group {
-                    if #available(iOS 15.0, *) {
-                        ToolCardView(viewModel: viewModel.cardViewModel(for: tool), cardWidth: width - (2 * leadingTrailingPadding))
-                            .listRowSeparator(.hidden)
-
-                    } else {
-                        ToolCardView(viewModel: viewModel.cardViewModel(for: tool), cardWidth: width - (2 * leadingTrailingPadding))
-                    }
-                }
-                .onTapGesture {
-                    viewModel.toolTapped(resource: tool)
-                }
-            }
-            .listRowInsets(EdgeInsets(top: Sizes.toolsVerticalSpacing, leading: leadingTrailingPadding, bottom: Sizes.toolsVerticalSpacing, trailing: leadingTrailingPadding))
+            ToolCardsView(viewModel: viewModel, width: width, leadingPadding: leadingTrailingPadding)
         }
-        .frame(maxWidth: .infinity)
-        .edgesIgnoringSafeArea([.leading, .trailing])
-        .listStyle(.plain)
-        .padding(.top, 8)
+        
     }
 }
 
@@ -88,3 +63,4 @@ struct AllToolsList_Previews: PreviewProvider {
         }
     }
 }
+

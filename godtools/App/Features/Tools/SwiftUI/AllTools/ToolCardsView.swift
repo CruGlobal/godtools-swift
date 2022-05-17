@@ -1,5 +1,5 @@
 //
-//  AllToolsList.swift
+//  ToolCardsView.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 5/9/22.
@@ -8,46 +8,35 @@
 
 import SwiftUI
 
-struct AllToolCards: View {
+struct ToolCardsView: View {
     
     // MARK: - Properties
     
     @ObservedObject var viewModel: AllToolsContentViewModel
     let width: CGFloat
-        
-    // MARK: - Constants
-    
-    private enum Sizes {
-        static let toolsPaddingMultiplier: CGFloat = 20/375
-        static let toolsVerticalSpacing: CGFloat = 10
-    }
+    let leadingPadding: CGFloat
     
     // MARK: - Body
     
     var body: some View {
-        let leadingTrailingPadding = width * Sizes.toolsPaddingMultiplier
-
+        
         ForEach(viewModel.tools) { tool in
             
-            HStack {
-                Spacer()
-                
-                ToolCardView(viewModel: viewModel.cardViewModel(for: tool), cardWidth: width - (2 * leadingTrailingPadding))
-                    .onTapGesture {
-                        viewModel.toolTapped(resource: tool)
-                    }
-                    .padding([.top, .bottom], 4)
-                
-                Spacer()
-                
-            }
+            ToolCardView(viewModel: viewModel.cardViewModel(for: tool), cardWidth: width - 2 * leadingPadding)
+                .listRowInsets(EdgeInsets())
+                .onTapGesture {
+                    viewModel.toolTapped(resource: tool)
+                }
+                .padding([.top, .bottom], 8)
+                .padding([.leading, .trailing], leadingPadding)
+            
         }
     }
 }
 
 // MARK: - Preview
 
-struct AllToolCards_Previews: PreviewProvider {
+struct ToolCardsView_Previews: PreviewProvider {
     static var previews: some View {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
@@ -64,7 +53,7 @@ struct AllToolCards_Previews: PreviewProvider {
         )
         
         GeometryReader { geo in
-            AllToolCards(viewModel: viewModel, width: geo.size.width)
+            ToolCardsView(viewModel: viewModel, width: geo.size.width, leadingPadding: 20)
         }
     }
 }
