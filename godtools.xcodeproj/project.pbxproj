@@ -319,6 +319,7 @@
 		4579A1D427922F6A00F18B3E /* DetermineToolTranslationsToDownloadType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4579A1D327922F6900F18B3E /* DetermineToolTranslationsToDownloadType.swift */; };
 		4579A1D62792300C00F18B3E /* DetermineToolTranslationsToDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4579A1D52792300C00F18B3E /* DetermineToolTranslationsToDownload.swift */; };
 		4579A1DE2792331200F18B3E /* DownloadToolViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4579A1DD2792331200F18B3E /* DownloadToolViewModel.swift */; };
+		4579DA7E283571D3007DE30E /* ToolSettingsLanguageListType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4579DA7D283571D3007DE30E /* ToolSettingsLanguageListType.swift */; };
 		457C8586242E50D70025E079 /* GoogleService-Info-Debug.plist in Resources */ = {isa = PBXBuildFile; fileRef = 457C8585242E50D70025E079 /* GoogleService-Info-Debug.plist */; };
 		457E199A27C6E3AF00BABD49 /* MobileContentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457E199927C6E3AF00BABD49 /* MobileContentRenderer.swift */; };
 		457E199E27C6EA4C00BABD49 /* NSError+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457E199D27C6EA4C00BABD49 /* NSError+Error.swift */; };
@@ -1397,6 +1398,7 @@
 		4579A1D327922F6900F18B3E /* DetermineToolTranslationsToDownloadType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetermineToolTranslationsToDownloadType.swift; sourceTree = "<group>"; };
 		4579A1D52792300C00F18B3E /* DetermineToolTranslationsToDownload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetermineToolTranslationsToDownload.swift; sourceTree = "<group>"; };
 		4579A1DD2792331200F18B3E /* DownloadToolViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadToolViewModel.swift; sourceTree = "<group>"; };
+		4579DA7D283571D3007DE30E /* ToolSettingsLanguageListType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolSettingsLanguageListType.swift; sourceTree = "<group>"; };
 		457C8585242E50D70025E079 /* GoogleService-Info-Debug.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Debug.plist"; sourceTree = "<group>"; };
 		457E199927C6E3AF00BABD49 /* MobileContentRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRenderer.swift; sourceTree = "<group>"; };
 		457E199D27C6EA4C00BABD49 /* NSError+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSError+Error.swift"; sourceTree = "<group>"; };
@@ -2651,6 +2653,7 @@
 			isa = PBXGroup;
 			children = (
 				451CEDFC282C3239006E5105 /* ToolSettingsFlow.swift */,
+				4579DA7D283571D3007DE30E /* ToolSettingsLanguageListType.swift */,
 				45A450912832F31400A3DB0E /* ToolSettingsToolType.swift */,
 			);
 			path = ToolSettings;
@@ -7433,6 +7436,7 @@
 				4579A1D427922F6A00F18B3E /* DetermineToolTranslationsToDownloadType.swift in Sources */,
 				45AD20BB25938F1A00A096A0 /* ObservableValue.swift in Sources */,
 				45AD202625938A9800A096A0 /* FirebaseConfiguration.swift in Sources */,
+				4579DA7E283571D3007DE30E /* ToolSettingsLanguageListType.swift in Sources */,
 				45AD1B1125938A4E00A096A0 /* ArticleCategoryCell.swift in Sources */,
 				45AD20B125938EE500A096A0 /* FileCacheLocationType.swift in Sources */,
 				451CEDF8282C31C7006E5105 /* ToolSettingsOptionsItemView.swift in Sources */,

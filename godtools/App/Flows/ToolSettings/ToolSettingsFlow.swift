@@ -192,25 +192,12 @@ class ToolSettingsFlow: Flow {
             tool.setTrainingTipsEnabled(enabled: false)
                         
         case .primaryLanguageTappedFromToolSettings:
-                        
-            let languagesRepository: LanguagesRepository = appDiContainer.getLanguagesRepository()
-            let getToolLanguagesUseCase: GetToolLanguagesUseCase = GetToolLanguagesUseCase(languagesRepository: languagesRepository)
-            let languages: [ToolLanguageModel] = getToolLanguagesUseCase.getToolLanguages(resource: resource)
-            
-            let viewModel = LanguagesListViewModel(languages: languages, closeTappedClosure: { [weak self] in
-                self?.dismissLanguagesList()
-            }, languageTappedClosure: { [weak self] language in
-                self?.tool.setPrimaryLanguage(languageId: language.id)
-                self?.dismissLanguagesList()
-                self?.flowDelegate?.navigate(step: .toolSettingsFlowCompleted)
-            })
-            
-            let view = LanguagesListView(viewModel: viewModel)
-            
-            presentLanguagesList(languagesList: view)
+                
+            presentLanguagesList(languageListType: .primary)
             
         case .parallelLanguageTappedFromToolSettings:
-            break
+            
+            presentLanguagesList(languageListType: .parallel)
             
         case .swapLanguagesTappedFromToolSettings:
             break
@@ -262,9 +249,32 @@ class ToolSettingsFlow: Flow {
         loadToolRemoteSessionModal = modal
     }
     
-    private func presentLanguagesList(languagesList: LanguagesListView) {
+    private func presentLanguagesList(languageListType: ToolSettingsLanguageListType) {
         
-        let hostingView: UIHostingController<LanguagesListView> = UIHostingController(rootView: languagesList)
+        let languagesRepository: LanguagesRepository = appDiContainer.getLanguagesRepository()
+        let getToolLanguagesUseCase: GetToolLanguagesUseCase = GetToolLanguagesUseCase(languagesRepository: languagesRepository)
+        let languages: [ToolLanguageModel] = getToolLanguagesUseCase.getToolLanguages(resource: resource)
+        
+        let viewModel = LanguagesListViewModel(languages: languages, closeTappedClosure: { [weak self] in
+            
+            self?.dismissLanguagesList()
+            
+        }, languageTappedClosure: { [weak self] language in
+            
+            switch languageListType {
+            case .primary:
+                self?.tool.setPrimaryLanguage(languageId: language.id)
+            case .parallel:
+                self?.tool.setParallelLanguage(languageId: language.id)
+            }
+            
+            self?.dismissLanguagesList()
+            self?.flowDelegate?.navigate(step: .toolSettingsFlowCompleted)
+        })
+        
+        let view = LanguagesListView(viewModel: viewModel)
+                
+        let hostingView: UIHostingController<LanguagesListView> = UIHostingController(rootView: view)
         hostingView.modalPresentationStyle = .fullScreen
         hostingView.view.backgroundColor = .white
         
