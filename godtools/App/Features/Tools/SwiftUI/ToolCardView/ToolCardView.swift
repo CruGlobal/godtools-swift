@@ -87,6 +87,7 @@ struct ToolCardView: View {
 struct ToolCardView_Previews: PreviewProvider {
     
     static var previews: some View {
+        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         let isSpotlight = true
         
         ToolCardView(viewModel:
@@ -96,7 +97,8 @@ struct ToolCardView_Previews: PreviewProvider {
                             showParallelLanguage: true,
                             showBannerImage: true,
                             attachmentsDownloadProgress: 0.80,
-                            translationDownloadProgress: 0.55
+                            translationDownloadProgress: 0.55,
+                            deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners
                         ),
                      cardWidth: isSpotlight ? 200 : 375,
                      isSpotlight: isSpotlight
