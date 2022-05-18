@@ -30,7 +30,7 @@ struct ToolCardView: View {
     var body: some View {
         ZStack(alignment: .top) {
             
-            ToolCardBackgroundView(cornerRadius: Sizes.cornerRadius)
+            RoundedCardBackgroundView(cornerRadius: Sizes.cornerRadius)
             
             VStack(alignment: .leading, spacing: 0) {
                 ZStack(alignment: .topTrailing) {
