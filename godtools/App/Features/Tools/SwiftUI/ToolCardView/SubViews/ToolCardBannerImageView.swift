@@ -47,9 +47,10 @@ struct ToolCardBannerImageView: View {
 struct ToolCardBannerImageView_Previews: PreviewProvider {
     static var previews: some View {
         let isSpotlight = true
+        let bannerImage = DeviceAttachmentBanners().getDeviceBanner(resourceId: "2")
         
         ToolCardBannerImageView(
-            bannerImage: Image.mockImage(),
+            bannerImage: Image.from(uiImage: bannerImage),
             isSpotlight: isSpotlight,
             cardWidth: isSpotlight ? 200 : 375,
             cornerRadius: 6

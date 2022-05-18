@@ -1019,7 +1019,6 @@
 		D42600C8282BFA1200E7A520 /* ToolCardParallelLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42600C7282BFA1200E7A520 /* ToolCardParallelLanguageView.swift */; };
 		D42600CA282BFA7900E7A520 /* ToolCardProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42600C9282BFA7900E7A520 /* ToolCardProgressView.swift */; };
 		D42600CC282BFBC400E7A520 /* ToolCardBannerImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42600CB282BFBC400E7A520 /* ToolCardBannerImageView.swift */; };
-		D42600CF282BFD6900E7A520 /* Image+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42600CE282BFD6900E7A520 /* Image+Mock.swift */; };
 		D42600D1282C007500E7A520 /* ToolCardTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42600D0282C007500E7A520 /* ToolCardTitleView.swift */; };
 		D42600D3282C00FE00E7A520 /* ToolCardCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42600D2282C00FE00E7A520 /* ToolCardCategoryView.swift */; };
 		D42600D5282C01B500E7A520 /* ToolCardBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42600D4282C01B500E7A520 /* ToolCardBackgroundView.swift */; };
@@ -1035,6 +1034,7 @@
 		D44C69432809B1150000B970 /* LayoutDirection+LanguageDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C69422809B1150000B970 /* LayoutDirection+LanguageDirection.swift */; };
 		D44C69452809B6880000B970 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C69442809B6880000B970 /* ActivityIndicator.swift */; };
 		D44F3AAA283424D50008390D /* SpotlightToolCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44F3AA9283424D50008390D /* SpotlightToolCardsView.swift */; };
+		D44F3AAC2835444F0008390D /* Image+OptionalUIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44F3AAB2835444F0008390D /* Image+OptionalUIImage.swift */; };
 		D47C49D8280EF0B10084F4DE /* AllToolsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D7280EF0B10084F4DE /* AllToolsList.swift */; };
 		D47C49DA28104E0B0084F4DE /* OptionalImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D928104E0B0084F4DE /* OptionalImage.swift */; };
 		D47C49E02816EEBD0084F4DE /* MockFlowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49DF2816EEBD0084F4DE /* MockFlowDelegate.swift */; };
@@ -2129,7 +2129,6 @@
 		D42600C7282BFA1200E7A520 /* ToolCardParallelLanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardParallelLanguageView.swift; sourceTree = "<group>"; };
 		D42600C9282BFA7900E7A520 /* ToolCardProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardProgressView.swift; sourceTree = "<group>"; };
 		D42600CB282BFBC400E7A520 /* ToolCardBannerImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardBannerImageView.swift; sourceTree = "<group>"; };
-		D42600CE282BFD6900E7A520 /* Image+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Mock.swift"; sourceTree = "<group>"; };
 		D42600D0282C007500E7A520 /* ToolCardTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardTitleView.swift; sourceTree = "<group>"; };
 		D42600D2282C00FE00E7A520 /* ToolCardCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardCategoryView.swift; sourceTree = "<group>"; };
 		D42600D4282C01B500E7A520 /* ToolCardBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardBackgroundView.swift; sourceTree = "<group>"; };
@@ -2145,6 +2144,7 @@
 		D44C69422809B1150000B970 /* LayoutDirection+LanguageDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LayoutDirection+LanguageDirection.swift"; sourceTree = "<group>"; };
 		D44C69442809B6880000B970 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		D44F3AA9283424D50008390D /* SpotlightToolCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightToolCardsView.swift; sourceTree = "<group>"; };
+		D44F3AAB2835444F0008390D /* Image+OptionalUIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+OptionalUIImage.swift"; sourceTree = "<group>"; };
 		D47C49D7280EF0B10084F4DE /* AllToolsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllToolsList.swift; sourceTree = "<group>"; };
 		D47C49D928104E0B0084F4DE /* OptionalImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalImage.swift; sourceTree = "<group>"; };
 		D47C49DF2816EEBD0084F4DE /* MockFlowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFlowDelegate.swift; sourceTree = "<group>"; };
@@ -4394,7 +4394,7 @@
 			isa = PBXGroup;
 			children = (
 				D115B25C27C0318100C18EF6 /* Collection+SafeLookup.swift */,
-				D42600CE282BFD6900E7A520 /* Image+Mock.swift */,
+				D44F3AAB2835444F0008390D /* Image+OptionalUIImage.swift */,
 				45B116C12625FC6D007A7127 /* LanguageDirection+SemanticContentAttribute.swift */,
 				D44C69422809B1150000B970 /* LayoutDirection+LanguageDirection.swift */,
 				45AD18BB25938A4E00A096A0 /* Locale+Extensions.swift */,
@@ -6897,6 +6897,7 @@
 				D1D5691E270637AB00BBE2A6 /* OnboardingTutorialIntroViewModel.swift in Sources */,
 				D1AC148F274C1AA8003510AC /* OnboardingQuickStartCellViewModel.swift in Sources */,
 				45AD1B5125938A4F00A096A0 /* ToolTrainingTipView.swift in Sources */,
+				D44F3AAC2835444F0008390D /* Image+OptionalUIImage.swift in Sources */,
 				458EFEDC26B1D08C009EEB03 /* ToolBackButtonImageType.swift in Sources */,
 				4561C41227C6891600C4A367 /* MobileContentAccordionSectionViewModel.swift in Sources */,
 				45AD21582593A4D900A096A0 /* ShareToolScreenTutorialView.swift in Sources */,
@@ -7355,7 +7356,6 @@
 				455583D3269F2DA500C3FF14 /* MobileContentHeaderView.swift in Sources */,
 				457032A726D0056F00F5BADC /* MobileContentBackgroundImageRendererType.swift in Sources */,
 				45B6482825E593110098BAF1 /* (null) in Sources */,
-				D42600CF282BFD6900E7A520 /* Image+Mock.swift in Sources */,
 				45C93AE2261D310900592FFF /* ArticleAemCacheObject.swift in Sources */,
 				45558327269F2C7B00C3FF14 /* ToolPageCardViewModelType.swift in Sources */,
 				45558415269F2F6100C3FF14 /* MobileContentAnalyticsEvent.swift in Sources */,

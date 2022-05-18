@@ -21,7 +21,7 @@ class MockToolCardViewModel: BaseToolCardViewModel {
         }
         
         if showBannerImage {
-            bannerImage = Image.mockImage()
+            bannerImage = Image.from(uiImage: DeviceAttachmentBanners().getDeviceBanner(resourceId: "2"))
         }
         
         attachmentsDownloadProgressValue = attachmentsDownloadProgress
