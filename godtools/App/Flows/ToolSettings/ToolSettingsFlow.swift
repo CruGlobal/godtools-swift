@@ -180,15 +180,11 @@ class ToolSettingsFlow: Flow {
         case .enableTrainingTipsTappedFromToolSettings:
             
             tool.setTrainingTipsEnabled(enabled: true)
-            
-            flowDelegate?.navigate(step: .toolSettingsFlowCompleted)
-            
+                        
         case .disableTrainingTipsTappedFromToolSettings:
             
             tool.setTrainingTipsEnabled(enabled: false)
-            
-            flowDelegate?.navigate(step: .toolSettingsFlowCompleted)
-            
+                        
         case .primaryLanguageTappedFromToolSettings:
                         
             let languagesRepository: LanguagesRepository = appDiContainer.getLanguagesRepository()
