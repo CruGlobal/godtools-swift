@@ -47,6 +47,18 @@ struct SpotlightToolCardsView: View {
 
 struct SpotlightToolCardsView_Previews: PreviewProvider {
     static var previews: some View {
-        SpotlightToolCardsView(viewModel: MockToolSpotlightViewModel(), width: 375)
+        
+        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
+
+        let viewModel = ToolSpotlightViewModel(
+            dataDownloader: appDiContainer.initialDataDownloader,
+            deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
+            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
+            languageSettingsService: appDiContainer.languageSettingsService,
+            localizationServices: appDiContainer.localizationServices,
+            delegate: nil
+        )
+        
+        SpotlightToolCardsView(viewModel: viewModel, width: 375)
     }
 }
