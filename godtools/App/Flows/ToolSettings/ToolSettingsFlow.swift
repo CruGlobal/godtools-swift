@@ -46,7 +46,13 @@ class ToolSettingsFlow: Flow {
     
     func getInitialView() -> UIViewController {
         
-        let viewModel = ToolSettingsViewModel(flowDelegate: self, trainingTipsEnabled: trainingTipsEnabled)
+        let viewModel = ToolSettingsViewModel(
+            flowDelegate: self,
+            localizationServices: appDiContainer.localizationServices,
+            primaryLanguage: primaryLanguage,
+            parallelLanguage: parallelLanguage,
+            trainingTipsEnabled: trainingTipsEnabled
+        )
         
         let toolSettingsView = ToolSettingsView(viewModel: viewModel)
         

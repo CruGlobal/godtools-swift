@@ -9,13 +9,19 @@ import Foundation
 
 class ToolSettingsViewModel: BaseToolSettingsViewModel {
     
+    private let localizationServices: LocalizationServices
+    private let primaryLanguage: LanguageModel
+    private let parallelLanguage: LanguageModel?
     private let trainingTipsEnabled: Bool
     
     private weak var flowDelegate: FlowDelegate?
         
-    required init(flowDelegate: FlowDelegate, trainingTipsEnabled: Bool) {
+    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, trainingTipsEnabled: Bool) {
         
         self.flowDelegate = flowDelegate
+        self.localizationServices = localizationServices
+        self.primaryLanguage = primaryLanguage
+        self.parallelLanguage = parallelLanguage
         self.trainingTipsEnabled = trainingTipsEnabled
     }
     
@@ -46,6 +52,6 @@ class ToolSettingsViewModel: BaseToolSettingsViewModel {
             return BaseToolSettingsChooseLanguageViewModel()
         }
         
-        return ToolSettingsChooseLanguageViewModel(flowDelegate: flowDelegate)
+        return ToolSettingsChooseLanguageViewModel(flowDelegate: flowDelegate, localizationServices: localizationServices, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage)
     }
 }

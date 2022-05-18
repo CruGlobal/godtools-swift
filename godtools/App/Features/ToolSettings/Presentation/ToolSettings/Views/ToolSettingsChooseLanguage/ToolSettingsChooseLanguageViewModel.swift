@@ -9,16 +9,25 @@ import Foundation
 
 class ToolSettingsChooseLanguageViewModel: BaseToolSettingsChooseLanguageViewModel {
     
+    private let localizationServices: LocalizationServices
+    
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate) {
+    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?) {
         
         self.flowDelegate = flowDelegate
+        self.localizationServices = localizationServices
         
         super.init()
+                
+        primaryLanguageTitle = LanguageViewModel(language: primaryLanguage, localizationServices: localizationServices).translatedLanguageName
         
-        primaryLanguageTitle = "Primary"
-        parallelLanguageTitle = "Parallel"
+        if let parallelLanguage = parallelLanguage {
+            parallelLanguageTitle = LanguageViewModel(language: parallelLanguage, localizationServices: localizationServices).translatedLanguageName
+        }
+        else {
+            parallelLanguageTitle = "Parallel"
+        }
     }
     
     override func primaryLanguageTapped() {
