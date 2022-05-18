@@ -42,7 +42,7 @@ struct ToolSettingsOptionsView: View {
                     
                     ToolSettingsOptionsItemView(
                         backgroundType: .image(image: Image(ImageCatalog.toolSettingsOptionTrainingTipsBackground.name)),
-                        iconImage: Image(ImageCatalog.toolSettingsOptionTrainingTips.name),
+                        iconImage: viewModel.trainingTipsIcon,
                         title: viewModel.trainingTipsTitle,
                         titleColorStyle: .lightBackground
                     )
