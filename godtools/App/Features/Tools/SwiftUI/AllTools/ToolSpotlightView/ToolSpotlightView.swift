@@ -42,6 +42,18 @@ struct ToolSpotlightView: View {
 
 struct ToolSpotlightView_Previews: PreviewProvider {
     static var previews: some View {
-        ToolSpotlightView(viewModel: MockToolSpotlightViewModel(), width: 375, leadingPadding: 20)
+        
+        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
+
+        let viewModel = ToolSpotlightViewModel(
+            dataDownloader: appDiContainer.initialDataDownloader,
+            deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
+            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
+            languageSettingsService: appDiContainer.languageSettingsService,
+            localizationServices: appDiContainer.localizationServices,
+            delegate: nil
+        )
+        
+        ToolSpotlightView(viewModel: viewModel, width: 375, leadingPadding: 20)
     }
 }
