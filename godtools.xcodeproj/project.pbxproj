@@ -344,6 +344,7 @@
 		458F7C95282DB7C400872013 /* BaseToolSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458F7C94282DB7C400872013 /* BaseToolSettingsViewModel.swift */; };
 		458F7C9D282E7F4600872013 /* ToolSettingsOptionItemBackgroundType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458F7C9B282E7F4600872013 /* ToolSettingsOptionItemBackgroundType.swift */; };
 		458F7C9E282E7F4600872013 /* ToolSettingsOptionItemTitleColorStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458F7C9C282E7F4600872013 /* ToolSettingsOptionItemTitleColorStyle.swift */; };
+		458F7CA0282EEB5D00872013 /* BaseToolSettingsOptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458F7C9F282EEB5D00872013 /* BaseToolSettingsOptionsViewModel.swift */; };
 		4590F73927B17018007424F4 /* MobileContentCardCollectionPageCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4590F73827B17018007424F4 /* MobileContentCardCollectionPageCardView.xib */; };
 		45935B8828084E250035ACA2 /* SwiftUIPreviewDiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45935B8728084E240035ACA2 /* SwiftUIPreviewDiContainer.swift */; };
 		4596622727BBFEFB0059F70B /* ChooseYourOwnAdventureNavBarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4596622627BBFEFB0059F70B /* ChooseYourOwnAdventureNavBarModel.swift */; };
@@ -1413,6 +1414,7 @@
 		458F7C94282DB7C400872013 /* BaseToolSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseToolSettingsViewModel.swift; sourceTree = "<group>"; };
 		458F7C9B282E7F4600872013 /* ToolSettingsOptionItemBackgroundType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolSettingsOptionItemBackgroundType.swift; sourceTree = "<group>"; };
 		458F7C9C282E7F4600872013 /* ToolSettingsOptionItemTitleColorStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolSettingsOptionItemTitleColorStyle.swift; sourceTree = "<group>"; };
+		458F7C9F282EEB5D00872013 /* BaseToolSettingsOptionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseToolSettingsOptionsViewModel.swift; sourceTree = "<group>"; };
 		4590F73827B17018007424F4 /* MobileContentCardCollectionPageCardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MobileContentCardCollectionPageCardView.xib; sourceTree = "<group>"; };
 		45935B8728084E240035ACA2 /* SwiftUIPreviewDiContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftUIPreviewDiContainer.swift; sourceTree = "<group>"; };
 		4596622627BBFEFB0059F70B /* ChooseYourOwnAdventureNavBarModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseYourOwnAdventureNavBarModel.swift; sourceTree = "<group>"; };
@@ -2612,6 +2614,7 @@
 			isa = PBXGroup;
 			children = (
 				451CEDE2282C31C6006E5105 /* ToolSettingsOptionsView.swift */,
+				458F7C9F282EEB5D00872013 /* BaseToolSettingsOptionsViewModel.swift */,
 				451CEDE3282C31C6006E5105 /* ToolSettingsOptionsViewModel.swift */,
 				451CEDE4282C31C6006E5105 /* Views */,
 			);
@@ -7558,6 +7561,7 @@
 				45AD1FDE25938A9800A096A0 /* RealmEmailSignUpsCache.swift in Sources */,
 				45AD1BA625938A4F00A096A0 /* FlowStep.swift in Sources */,
 				D1E98EDD27974F0000D1B738 /* LessonEvaluationViewModelType.swift in Sources */,
+				458F7CA0282EEB5D00872013 /* BaseToolSettingsOptionsViewModel.swift in Sources */,
 				45AD22A12593CE8900A096A0 /* ColorPalette.swift in Sources */,
 				45AD1B2225938A4F00A096A0 /* LearnToShareToolCellViewModelType.swift in Sources */,
 				45AD1BE125938A4F00A096A0 /* ProgressView.swift in Sources */,

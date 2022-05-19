@@ -45,7 +45,6 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
             type: .lesson,
             flowDelegate: self,
             appDiContainer: appDiContainer,
-            trainingTipsEnabled: trainingTipsEnabled,
             deepLinkingService: deepLinkingService
         )
                    
@@ -63,7 +62,8 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
             resource: resource,
             primaryLanguage: primaryLanguage,
             page: page,
-            mobileContentEventAnalytics: appDiContainer.getMobileContentEventAnalyticsTracking()
+            mobileContentEventAnalytics: appDiContainer.getMobileContentEventAnalyticsTracking(),
+            trainingTipsEnabled: trainingTipsEnabled
         )
         
         let view = LessonView(viewModel: viewModel)

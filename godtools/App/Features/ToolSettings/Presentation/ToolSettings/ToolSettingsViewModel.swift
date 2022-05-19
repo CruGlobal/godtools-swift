@@ -9,11 +9,14 @@ import Foundation
 
 class ToolSettingsViewModel: BaseToolSettingsViewModel {
     
+    private let trainingTipsEnabled: Bool
+    
     private weak var flowDelegate: FlowDelegate?
         
-    required init(flowDelegate: FlowDelegate) {
+    required init(flowDelegate: FlowDelegate, trainingTipsEnabled: Bool) {
         
         self.flowDelegate = flowDelegate
+        self.trainingTipsEnabled = trainingTipsEnabled
     }
     
     override func getTopBarViewModel() -> BaseToolSettingsTopBarViewModel {
@@ -24,5 +27,15 @@ class ToolSettingsViewModel: BaseToolSettingsViewModel {
         }
 
         return ToolSettingsTopBarViewModel(flowDelegate: flowDelegate)
+    }
+    
+    override func getOptionsViewModel() -> BaseToolSettingsOptionsViewModel {
+        
+        guard let flowDelegate = flowDelegate else {
+            assertionFailure("Failed to instantiate viewModel, flowDelegate should not be nil.")
+            return BaseToolSettingsOptionsViewModel()
+        }
+        
+        return ToolSettingsOptionsViewModel(flowDelegate: flowDelegate, trainingTipsEnabled: trainingTipsEnabled)
     }
 }
