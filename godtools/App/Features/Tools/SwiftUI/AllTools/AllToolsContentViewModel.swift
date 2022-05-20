@@ -57,6 +57,17 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
 
 extension AllToolsContentViewModel {
     
+    func spotlightViewModel() -> ToolSpotlightViewModel {
+        return ToolSpotlightViewModel(
+            dataDownloader: dataDownloader,
+            deviceAttachmentBanners: deviceAttachmentBanners,
+            favoritedResourcesCache: favoritedResourcesCache,
+            languageSettingsService: languageSettingsService,
+            localizationServices: localizationServices,
+            delegate: self
+        )
+    }
+    
     func cardViewModel(for tool: ResourceModel) -> ToolCardViewModel {
         return ToolCardViewModel(
             resource: tool,
@@ -128,6 +139,15 @@ extension AllToolsContentViewModel: FavoritingToolBannerDelegate {
     func closeBanner() {
         hideFavoritingToolBanner = true
         favoritingToolMessageCache.disableFavoritingToolMessage()
+    }
+}
+
+// MARK: - ToolSpotlightDelegate
+
+extension AllToolsContentViewModel: ToolSpotlightDelegate {
+    
+    func spotlightCardTapped(resource: ResourceModel) {
+        toolTapped(resource: resource)
     }
 }
 

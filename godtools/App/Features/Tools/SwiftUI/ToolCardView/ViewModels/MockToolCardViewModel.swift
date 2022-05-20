@@ -9,9 +9,8 @@
 import SwiftUI
 
 class MockToolCardViewModel: BaseToolCardViewModel {
-    let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
     
-    init(title: String, category: String, showParallelLanguage: Bool, showBannerImage: Bool, attachmentsDownloadProgress: Double, translationDownloadProgress: Double) {
+    init(title: String, category: String, showParallelLanguage: Bool, showBannerImage: Bool, attachmentsDownloadProgress: Double, translationDownloadProgress: Double, deviceAttachmentBanners: DeviceAttachmentBanners) {
         super.init()
         
         self.title = title
@@ -21,8 +20,8 @@ class MockToolCardViewModel: BaseToolCardViewModel {
             parallelLanguageName = "Arabic (Bahrain) ✓"
         }
         
-        if showBannerImage, let deviceImage = appDiContainer.deviceAttachmentBanners.getDeviceBanner(resourceId: "2") {
-            bannerImage = Image(uiImage: deviceImage)
+        if showBannerImage {
+            bannerImage = Image.from(uiImage: deviceAttachmentBanners.getDeviceBanner(resourceId: "2"))
         }
         
         attachmentsDownloadProgressValue = attachmentsDownloadProgress

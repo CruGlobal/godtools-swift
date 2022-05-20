@@ -14,13 +14,6 @@ struct AllToolsContentView: View {
     
     @ObservedObject var viewModel: AllToolsContentViewModel
     
-    // MARK: - Constants
-    
-    private enum Sizes {
-        static let toolsPaddingMultiplier: CGFloat = 20/375
-        static let toolsVerticalSpacing: CGFloat = 15
-    }
-    
     // MARK: - Init
     
     init(viewModel: AllToolsContentViewModel) {
@@ -57,20 +50,32 @@ struct AllToolsContentView: View {
                     let width = geo.size.width
                     
                     if #available(iOS 15.0, *) {
-                        
                         // Pull to refresh is supported only in iOS 15+
-                        AllToolsList(viewModel: viewModel, width: width)
-                            .refreshable {
-                                viewModel.refreshTools()
-                            }
+                        
+                        List {
+                            AllToolsList(viewModel: viewModel, width: width)
+                                .listRowSeparator(.hidden)
+                                
+                        }
+                        .modifier(PlainList())
+                        .refreshable {
+                            viewModel.refreshTools()
+                        }
                         
                     } else if #available(iOS 14.0, *) {
                         
-                        AllToolsListIOS14(viewModel: viewModel, width: width)
-                        
+                        ScrollView {
+                            LazyVStack(spacing: 0) {
+                                AllToolsList(viewModel: viewModel, width: width)
+                            }
+                        }
+                                                
                     } else {
                         
-                        AllToolsList(viewModel: viewModel, width: width)
+                        List {
+                            AllToolsList(viewModel: viewModel, width: width)
+                        }
+                        .modifier(PlainList())
                     }
                 }
             }

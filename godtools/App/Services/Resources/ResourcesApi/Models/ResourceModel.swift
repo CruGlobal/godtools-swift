@@ -17,6 +17,7 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
     let attrBannerAbout: String
     let attrCategory: String
     let attrDefaultOrder: Int
+    let attrSpotlight: Bool
     let id: String
     let isHidden: Bool
     let manifest: String
@@ -46,6 +47,7 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
         case attrBannerAbout = "attr-banner-about"
         case attrCategory = "attr-category"
         case attrDefaultOrder = "attr-default-order"
+        case attrSpotlight = "attr-spotlight"
         case description = "description"
         case isHidden = "attr-hidden"
         case manifest = "manifest"
@@ -73,6 +75,7 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
         attrBannerAbout = realmResource.attrBannerAbout
         attrCategory = realmResource.attrCategory
         attrDefaultOrder = realmResource.attrDefaultOrder
+        attrSpotlight = realmResource.attrSpotlight
         id = realmResource.id
         isHidden = realmResource.isHidden
         manifest = realmResource.manifest
@@ -117,6 +120,8 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
         attrBanner = try attributesContainer?.decodeIfPresent(String.self, forKey: .attrBanner) ?? ""
         attrBannerAbout = try attributesContainer?.decodeIfPresent(String.self, forKey: .attrBannerAbout) ?? ""
         attrCategory = try attributesContainer?.decodeIfPresent(String.self, forKey: .attrCategory) ?? ""
+        let attrSpotlightString: String = try attributesContainer?.decodeIfPresent(String.self, forKey: .attrSpotlight) ?? "false"
+        attrSpotlight = attrSpotlightString == "true" ? true : false
         let attrDefaultOrderString: String? = try attributesContainer?.decodeIfPresent(String.self, forKey: .attrDefaultOrder) ?? ""
         if let attrDefaultOrderString = attrDefaultOrderString, let attrDefaultOrderIntValue = Int(attrDefaultOrderString) {
             attrDefaultOrder = attrDefaultOrderIntValue
