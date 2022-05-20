@@ -40,7 +40,8 @@ class ToolSettingsFlow: Flow {
             localizationServices: appDiContainer.localizationServices,
             primaryLanguage: toolData.primaryLanguage,
             parallelLanguage: toolData.parallelLanguage,
-            trainingTipsEnabled: toolData.trainingTipsEnabled
+            trainingTipsEnabled: toolData.trainingTipsEnabled,
+            shareables: toolData.shareables
         )
         
         let toolSettingsView = ToolSettingsView(viewModel: viewModel)

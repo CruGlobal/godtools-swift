@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class ToolSettingsViewModel: BaseToolSettingsViewModel {
     
@@ -13,16 +14,18 @@ class ToolSettingsViewModel: BaseToolSettingsViewModel {
     private let primaryLanguage: LanguageModel
     private let parallelLanguage: LanguageModel?
     private let trainingTipsEnabled: Bool
+    private let shareables: [Shareable]
     
     private weak var flowDelegate: FlowDelegate?
         
-    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, trainingTipsEnabled: Bool) {
+    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, trainingTipsEnabled: Bool, shareables: [Shareable]) {
         
         self.flowDelegate = flowDelegate
         self.localizationServices = localizationServices
         self.primaryLanguage = primaryLanguage
         self.parallelLanguage = parallelLanguage
         self.trainingTipsEnabled = trainingTipsEnabled
+        self.shareables = shareables
     }
     
     override func getTopBarViewModel() -> BaseToolSettingsTopBarViewModel {
