@@ -6,8 +6,17 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class ToolSettingsShareablesViewModel: ObservableObject {
     
+    private let shareables: [Shareable]
+    
     @Published var numberOfItems: Int = 3
+    
+    required init(shareables: [Shareable]) {
+        
+        self.shareables = shareables
+        self.numberOfItems = shareables.count
+    }
 }

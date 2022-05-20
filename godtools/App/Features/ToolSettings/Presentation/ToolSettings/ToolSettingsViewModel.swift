@@ -57,4 +57,8 @@ class ToolSettingsViewModel: BaseToolSettingsViewModel {
         
         return ToolSettingsChooseLanguageViewModel(flowDelegate: flowDelegate, localizationServices: localizationServices, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage)
     }
+    
+    override func getShareablesViewModel() -> ToolSettingsShareablesViewModel {
+        return ToolSettingsShareablesViewModel(shareables: shareables)
+    }
 }

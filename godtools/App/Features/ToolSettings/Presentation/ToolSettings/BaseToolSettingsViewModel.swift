@@ -23,4 +23,8 @@ class BaseToolSettingsViewModel: ObservableObject {
     func getChooseLanguageViewModel() -> BaseToolSettingsChooseLanguageViewModel {
         return BaseToolSettingsChooseLanguageViewModel()
     }
+    
+    func getShareablesViewModel() -> ToolSettingsShareablesViewModel {
+        return ToolSettingsShareablesViewModel(shareables: [])
+    }
 }

@@ -36,7 +36,7 @@ struct ToolSettingsShareablesView: View {
 struct ToolSettingsShareablesView_Preview: PreviewProvider {
     static var previews: some View {
         
-        let viewModel = ToolSettingsShareablesViewModel()
+        let viewModel = ToolSettingsShareablesViewModel(shareables: [])
         
         ToolSettingsShareablesView(
             viewModel: viewModel,

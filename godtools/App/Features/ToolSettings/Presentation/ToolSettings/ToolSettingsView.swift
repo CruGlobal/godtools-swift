@@ -52,7 +52,7 @@ struct ToolSettingsView: View {
                         )
                         
                         ToolSettingsShareablesView(
-                            viewModel: ToolSettingsShareablesViewModel(),
+                            viewModel: viewModel.getShareablesViewModel(),
                             leadingInset: contentInsets.leading,
                             trailingInset: contentInsets.trailing
                         )
