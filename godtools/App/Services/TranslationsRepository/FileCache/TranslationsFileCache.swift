@@ -10,7 +10,7 @@ import UIKit
 import RealmSwift
 
 class TranslationsFileCache {
-    
+        
     private let realmDatabase: RealmDatabase
     private let resourcesCache: ResourcesCache
     private let sha256FileCache: ResourcesSHA256FileCache
@@ -68,9 +68,11 @@ class TranslationsFileCache {
     
     func getResourceLanguageTranslationManifest(realm: Realm, resourceId: String, languageId: String) -> Result<TranslationManifestData, TranslationsFileCacheError> {
         
-        let translation: TranslationModel? = resourcesCache.getResourceLanguageTranslation(resourceId: resourceId, languageId: languageId)
+        guard let translationModel = resourcesCache.getResourceLanguageTranslation(resourceId: resourceId, languageId: languageId) else {
+            return .failure(.translationDoesNotExistInCache)
+        }
         
-        return getTranslationManifest(realm: realm, translationId: translation?.id ?? "")
+        return getTranslationManifest(realm: realm, translationId: translationModel.id)
     }
     
     // MARK: - Get Translation Manifest By Translation Id
@@ -101,43 +103,58 @@ class TranslationsFileCache {
     
     func getTranslationManifest(realm: Realm, translationId: String) -> Result<TranslationManifestData, TranslationsFileCacheError> {
                 
-        let translationZipFileModel: TranslationZipFileModel?
-        let manifestData: Data?
-        let fileCacheError: TranslationsFileCacheError?
+        return getTranslationManifests(realm: realm, translationIds: [translationId])[0]
+    }
+    
+    func getTranslationManifests(realm: Realm, translationIds: [String]) -> [Result<TranslationManifestData, TranslationsFileCacheError>] {
+                
+        var results: [Result<TranslationManifestData, TranslationsFileCacheError>] = Array()
         
-        if let realmTranslationZipFile = realm.object(ofType: RealmTranslationZipFile.self, forPrimaryKey: translationId) {
+        for translationId in translationIds {
             
-            let translationZipFile = TranslationZipFileModel(realmTranslationZipFile: realmTranslationZipFile)
-            let location: SHA256FileLocation = translationZipFile.manifestSHA256FileLocation
+            let translationZipFileModel: TranslationZipFileModel?
+            let manifestData: Data?
+            let fileCacheError: TranslationsFileCacheError?
+            let result: Result<TranslationManifestData, TranslationsFileCacheError>
             
-            translationZipFileModel = translationZipFile
-            
-            let result: Result<Data?, Error> = sha256FileCache.getData(location: location)
-            
-            switch result {
-            case .success(let data):
-                manifestData = data
-                fileCacheError = nil
-            case .failure(let getDataError):
-                manifestData = nil
-                fileCacheError = .getManifestDataError(error: getDataError)
+            if let realmTranslationZipFile = realm.object(ofType: RealmTranslationZipFile.self, forPrimaryKey: translationId) {
+                
+                let translationZipFile = TranslationZipFileModel(realmTranslationZipFile: realmTranslationZipFile)
+                let location: SHA256FileLocation = translationZipFile.manifestSHA256FileLocation
+                
+                translationZipFileModel = translationZipFile
+                
+                let result: Result<Data?, Error> = sha256FileCache.getData(location: location)
+                
+                switch result {
+                case .success(let data):
+                    manifestData = data
+                    fileCacheError = nil
+                case .failure(let getDataError):
+                    manifestData = nil
+                    fileCacheError = .getManifestDataError(error: getDataError)
+                }
             }
-        }
-        else {
-            translationZipFileModel = nil
-            manifestData = nil
-            fileCacheError = nil
+            else {
+                translationZipFileModel = nil
+                manifestData = nil
+                fileCacheError = nil
+            }
+            
+            if let translationZipFile = translationZipFileModel, let manifestXmlData = manifestData {
+                result = .success(TranslationManifestData(translationZipFile: translationZipFile, manifestXmlData: manifestXmlData))
+            }
+            else if let fileCacheError = fileCacheError {
+                result = .failure(fileCacheError)
+            }
+            else {
+                result = .failure(.translationManifestDoesNotExistInFileCache)
+            }
+            
+            results.append(result)
         }
         
-        if let translationZipFile = translationZipFileModel, let manifestXmlData = manifestData {
-            return .success(TranslationManifestData(translationZipFile: translationZipFile, manifestXmlData: manifestXmlData))
-        }
-        else if let fileCacheError = fileCacheError {
-            return .failure(fileCacheError)
-        }
-        else {
-            return .failure(.translationManifestDoesNotExistInFileCache)
-        }
+        return results
     }
     
     // MARK: - Caching Translation ZipFile Data
