@@ -8,17 +8,12 @@
 
 import UIKit
 import SwiftUI
+import GodToolsToolParser
 
 class ToolSettingsFlow: Flow {
     
+    private let toolData: ToolSettingsFlowToolData
     private let tool: ToolSettingsToolType
-    private let trainingTipsEnabled: Bool
-    private let tractRemoteSharePublisher: TractRemoteSharePublisher
-    private let resource: ResourceModel
-    private let selectedLanguage: LanguageModel
-    private let primaryLanguage: LanguageModel
-    private let parallelLanguage: LanguageModel?
-    private let pageNumber: Int
     
     private var shareToolScreenTutorialModal: UIViewController?
     private var loadToolRemoteSessionModal: UIViewController?
@@ -29,19 +24,13 @@ class ToolSettingsFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, tool: ToolSettingsToolType, trainingTipsEnabled: Bool, tractRemoteSharePublisher: TractRemoteSharePublisher, resource: ResourceModel, selectedLanguage: LanguageModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, pageNumber: Int, hidesRemoteShareToolAction: Bool) {
+    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, toolData: ToolSettingsFlowToolData, tool: ToolSettingsToolType) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
+        self.toolData = toolData
         self.tool = tool
-        self.trainingTipsEnabled = trainingTipsEnabled
-        self.tractRemoteSharePublisher = tractRemoteSharePublisher
-        self.resource = resource
-        self.selectedLanguage = selectedLanguage
-        self.primaryLanguage = primaryLanguage
-        self.parallelLanguage = parallelLanguage
-        self.pageNumber = pageNumber
     }
     
     func getInitialView() -> UIViewController {
@@ -49,9 +38,9 @@ class ToolSettingsFlow: Flow {
         let viewModel = ToolSettingsViewModel(
             flowDelegate: self,
             localizationServices: appDiContainer.localizationServices,
-            primaryLanguage: primaryLanguage,
-            parallelLanguage: parallelLanguage,
-            trainingTipsEnabled: trainingTipsEnabled
+            primaryLanguage: toolData.primaryLanguage,
+            parallelLanguage: toolData.parallelLanguage,
+            trainingTipsEnabled: toolData.trainingTipsEnabled
         )
         
         let toolSettingsView = ToolSettingsView(viewModel: viewModel)
@@ -77,9 +66,9 @@ class ToolSettingsFlow: Flow {
         case .shareLinkTappedFromToolSettings:
             
             let viewModel = ShareToolViewModel(
-                resource: resource,
-                language: selectedLanguage,
-                pageNumber: pageNumber,
+                resource: toolData.resource,
+                language: toolData.selectedLanguage,
+                pageNumber: toolData.pageNumber,
                 localizationServices: appDiContainer.localizationServices,
                 analytics: appDiContainer.analytics
             )
@@ -95,12 +84,12 @@ class ToolSettingsFlow: Flow {
         case .screenShareTappedFromToolSettings:
             
             let shareToolScreenTutorialNumberOfViewsCache: ShareToolScreenTutorialNumberOfViewsCache = appDiContainer.shareToolScreenTutorialNumberOfViewsCache
-            let numberOfTutorialViews: Int = shareToolScreenTutorialNumberOfViewsCache.getNumberOfViews(resource: resource)
+            let numberOfTutorialViews: Int = shareToolScreenTutorialNumberOfViewsCache.getNumberOfViews(resource: toolData.resource)
             
-            if tractRemoteSharePublisher.webSocketIsConnected, let channel = tractRemoteSharePublisher.tractRemoteShareChannel {
+            if toolData.tractRemoteSharePublisher.webSocketIsConnected, let channel = toolData.tractRemoteSharePublisher.tractRemoteShareChannel {
                 navigate(step: .finishedLoadingToolRemoteSession(result: .success(channel)))
             }
-            else if numberOfTutorialViews >= 3 || (tractRemoteSharePublisher.webSocketIsConnected && tractRemoteSharePublisher.tractRemoteShareChannel != nil) {
+            else if numberOfTutorialViews >= 3 || (toolData.tractRemoteSharePublisher.webSocketIsConnected && toolData.tractRemoteSharePublisher.tractRemoteShareChannel != nil) {
                 navigateToLoadToolRemoteSession()
             }
             else {
@@ -133,7 +122,7 @@ class ToolSettingsFlow: Flow {
                 
                 let tractRemoteShareURLBuilder: TractRemoteShareURLBuilder = appDiContainer.tractRemoteShareURLBuilder
                 
-                guard let remoteShareUrl = tractRemoteShareURLBuilder.buildRemoteShareURL(resource: resource, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, subscriberChannelId: channel.subscriberChannelId) else {
+                guard let remoteShareUrl = tractRemoteShareURLBuilder.buildRemoteShareURL(resource: toolData.resource, primaryLanguage: toolData.primaryLanguage, parallelLanguage: toolData.parallelLanguage, subscriberChannelId: channel.subscriberChannelId) else {
                     
                     let viewModel = AlertMessageViewModel(
                         title: "Error",
@@ -216,7 +205,7 @@ class ToolSettingsFlow: Flow {
             localizationServices: appDiContainer.localizationServices,
             tutorialItemsProvider: tutorialItemsProvider,
             shareToolScreenTutorialNumberOfViewsCache: appDiContainer.shareToolScreenTutorialNumberOfViewsCache,
-            resource: resource,
+            resource: toolData.resource,
             analyticsContainer: appDiContainer.analytics,
             tutorialVideoAnalytics: appDiContainer.getTutorialVideoAnalytics()
         )
@@ -238,7 +227,7 @@ class ToolSettingsFlow: Flow {
         let viewModel = LoadToolRemoteSessionViewModel(
             flowDelegate: self,
             localizationServices: appDiContainer.localizationServices,
-            tractRemoteSharePublisher: tractRemoteSharePublisher
+            tractRemoteSharePublisher: toolData.tractRemoteSharePublisher
         )
         let view = LoadingView(viewModel: viewModel)
         
@@ -253,7 +242,7 @@ class ToolSettingsFlow: Flow {
         
         let languagesRepository: LanguagesRepository = appDiContainer.getLanguagesRepository()
         let getToolLanguagesUseCase: GetToolLanguagesUseCase = GetToolLanguagesUseCase(languagesRepository: languagesRepository)
-        let languages: [ToolLanguageModel] = getToolLanguagesUseCase.getToolLanguages(resource: resource)
+        let languages: [ToolLanguageModel] = getToolLanguagesUseCase.getToolLanguages(resource: toolData.resource)
         
         let viewModel = LanguagesListViewModel(languages: languages, closeTappedClosure: { [weak self] in
             

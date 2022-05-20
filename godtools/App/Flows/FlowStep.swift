@@ -67,7 +67,7 @@ enum FlowStep {
         
     // tool
     case homeTappedFromTool(isScreenSharing: Bool)
-    case toolSettingsTappedFromTool(tractRemoteShareSubscriber: TractRemoteShareSubscriber, tractRemoteSharePublisher: TractRemoteSharePublisher, resource: ResourceModel, selectedLanguage: LanguageModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, pageNumber: Int, trainingTipsEnabled: Bool)
+    case toolSettingsTappedFromTool(toolData: ToolSettingsFlowToolData)
     case buttonWithUrlTappedFromMobileContentRenderer(url: String, exitLink: ExitLinkModel)
     case trainingTipTappedFromMobileContentRenderer(event: TrainingTipEvent)
     case errorOccurredFromMobileContentRenderer(error: MobileContentErrorViewModel)
