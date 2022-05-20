@@ -1,5 +1,5 @@
 //
-//  ToolSettingsRelatedContentView.swift
+//  ToolSettingsShareablesView.swift
 //  ToolSettings
 //
 //  Created by Levi Eggert on 5/10/22.
@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct ToolSettingsRelatedContentView: View {
+struct ToolSettingsShareablesView: View {
     
     private let relatedContentSize: CGSize = CGSize(width: 112, height: 112)
     
-    @ObservedObject var viewModel: ToolSettingsRelatedContentViewModel
+    @ObservedObject var viewModel: ToolSettingsShareablesViewModel
     
     let leadingInset: CGFloat
     let trailingInset: CGFloat
@@ -23,9 +23,9 @@ struct ToolSettingsRelatedContentView: View {
             Text("Related graphics")
                 .padding(EdgeInsets(top: 0, leading: leadingInset, bottom: 0, trailing: 0))
             
-            LazyHList<ToolSettingsRelatedContentItemView>(itemSize: relatedContentSize, itemSpacing: 10, contentInsets: EdgeInsets(top: 0, leading: leadingInset, bottom: 0, trailing: trailingInset), showsScrollIndicator: false, numberOfItems: $viewModel.numberOfItems, viewForItem: { index in
+            LazyHList<ToolSettingsShareableItemView>(itemSize: relatedContentSize, itemSpacing: 10, contentInsets: EdgeInsets(top: 0, leading: leadingInset, bottom: 0, trailing: trailingInset), showsScrollIndicator: false, numberOfItems: $viewModel.numberOfItems, viewForItem: { index in
                 
-                return ToolSettingsRelatedContentItemView()
+                return ToolSettingsShareableItemView()
             })
                 .frame(minWidth: nil, idealWidth: nil, maxWidth: .infinity, minHeight: relatedContentSize.height, idealHeight: nil, maxHeight: relatedContentSize.height, alignment: .leading)
 
@@ -33,12 +33,12 @@ struct ToolSettingsRelatedContentView: View {
     }
 }
 
-struct ToolSettingsRelatedContentView_Preview: PreviewProvider {
+struct ToolSettingsShareablesView_Preview: PreviewProvider {
     static var previews: some View {
         
-        let viewModel = ToolSettingsRelatedContentViewModel()
+        let viewModel = ToolSettingsShareablesViewModel()
         
-        ToolSettingsRelatedContentView(
+        ToolSettingsShareablesView(
             viewModel: viewModel,
             leadingInset: 20,
             trailingInset: 20

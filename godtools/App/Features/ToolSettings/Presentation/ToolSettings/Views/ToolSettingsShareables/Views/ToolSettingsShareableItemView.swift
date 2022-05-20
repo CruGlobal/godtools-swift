@@ -1,5 +1,5 @@
 //
-//  ToolSettingsRelatedContentItemView.swift
+//  ToolSettingsShareableItemView.swift
 //  ToolSettings
 //
 //  Created by Levi Eggert on 5/10/22.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ToolSettingsRelatedContentItemView: View {
+struct ToolSettingsShareableItemView: View {
     
     var body: some View {
         GeometryReader { geometry in
@@ -24,8 +24,8 @@ struct ToolSettingsRelatedContentItemView: View {
     }
 }
 
-struct ToolSettingsRelatedContentItemView_Preview: PreviewProvider {
+struct ToolSettingsShareableItemView_Preview: PreviewProvider {
     static var previews: some View {
-        ToolSettingsRelatedContentItemView()
+        ToolSettingsShareableItemView()
     }
 }
