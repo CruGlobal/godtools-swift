@@ -12,11 +12,15 @@ class ToolSettingsShareablesViewModel: ObservableObject {
     
     private let shareables: [Shareable]
     
-    @Published var numberOfItems: Int = 3
+    @Published var numberOfItems: Int = 0
     
     required init(shareables: [Shareable]) {
         
         self.shareables = shareables
         self.numberOfItems = shareables.count
+    }
+    
+    func getShareableItemViewModel(index: Int) -> BaseToolSettingsShareableItemViewModel {
+        return ToolSettingsShareableItemViewModel(shareable: shareables[index])
     }
 }

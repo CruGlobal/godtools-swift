@@ -9,11 +9,13 @@ import SwiftUI
 
 struct ToolSettingsShareableItemView: View {
     
+    @ObservedObject var viewModel: BaseToolSettingsShareableItemViewModel
+    
     var body: some View {
         GeometryReader { geometry in
             VStack(alignment: .center, spacing: 0) {
                 Spacer()
-                Text("Title Goes Here")
+                Text(viewModel.title)
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
             }
@@ -26,6 +28,8 @@ struct ToolSettingsShareableItemView: View {
 
 struct ToolSettingsShareableItemView_Preview: PreviewProvider {
     static var previews: some View {
-        ToolSettingsShareableItemView()
+                
+        let viewModel = BaseToolSettingsShareableItemViewModel()
+        ToolSettingsShareableItemView(viewModel: viewModel)
     }
 }

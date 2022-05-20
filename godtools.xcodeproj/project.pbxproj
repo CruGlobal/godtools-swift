@@ -144,6 +144,8 @@
 		453B63732837EACE0086F046 /* ToolSettingsShareablesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453B636F2837EACE0086F046 /* ToolSettingsShareablesView.swift */; };
 		453B63742837EACE0086F046 /* ToolSettingsShareableItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453B63712837EACE0086F046 /* ToolSettingsShareableItemView.swift */; };
 		453B63752837EACE0086F046 /* ToolSettingsShareablesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453B63722837EACE0086F046 /* ToolSettingsShareablesViewModel.swift */; };
+		453B63772837EE4D0086F046 /* ToolSettingsShareableItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453B63762837EE4D0086F046 /* ToolSettingsShareableItemViewModel.swift */; };
+		453B63792837EEA60086F046 /* BaseToolSettingsShareableItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453B63782837EEA60086F046 /* BaseToolSettingsShareableItemViewModel.swift */; };
 		453D866A24E08461004EA89F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 453D866824E08461004EA89F /* Localizable.strings */; };
 		453F0B6026EA369000436EE4 /* MobileContentMultiSelectOptionViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453F0B5D26EA369000436EE4 /* MobileContentMultiSelectOptionViewModelType.swift */; };
 		453F0B6126EA369000436EE4 /* MobileContentMultiSelectOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453F0B5E26EA369000436EE4 /* MobileContentMultiSelectOptionView.swift */; };
@@ -1218,6 +1220,8 @@
 		453B636F2837EACE0086F046 /* ToolSettingsShareablesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolSettingsShareablesView.swift; sourceTree = "<group>"; };
 		453B63712837EACE0086F046 /* ToolSettingsShareableItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolSettingsShareableItemView.swift; sourceTree = "<group>"; };
 		453B63722837EACE0086F046 /* ToolSettingsShareablesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolSettingsShareablesViewModel.swift; sourceTree = "<group>"; };
+		453B63762837EE4D0086F046 /* ToolSettingsShareableItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolSettingsShareableItemViewModel.swift; sourceTree = "<group>"; };
+		453B63782837EEA60086F046 /* BaseToolSettingsShareableItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseToolSettingsShareableItemViewModel.swift; sourceTree = "<group>"; };
 		453D866324E08310004EA89F /* mn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = mn; path = mn.lproj/Localizable.strings; sourceTree = "<group>"; };
 		453D866424E08347004EA89F /* tpi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tpi; path = tpi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		453D866924E08461004EA89F /* no */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = no; path = Localizable.strings; sourceTree = "<group>"; };
@@ -2797,6 +2801,8 @@
 			isa = PBXGroup;
 			children = (
 				453B63712837EACE0086F046 /* ToolSettingsShareableItemView.swift */,
+				453B63762837EE4D0086F046 /* ToolSettingsShareableItemViewModel.swift */,
+				453B63782837EEA60086F046 /* BaseToolSettingsShareableItemViewModel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -7016,6 +7022,7 @@
 				45AD1B1A25938A4E00A096A0 /* InMemoryLearnToShareToolItems.swift in Sources */,
 				453B633D2837BF230086F046 /* TranslationsRepository.swift in Sources */,
 				45E39ECC27457A14006A59E4 /* AnimatedResource.swift in Sources */,
+				453B63792837EEA60086F046 /* BaseToolSettingsShareableItemViewModel.swift in Sources */,
 				45AE974027C97A9400C2CB33 /* MultiplatformContentHeader.swift in Sources */,
 				45AD1F7925938A9800A096A0 /* DeviceLanguageType.swift in Sources */,
 				45CB9FFC261FB0BE0036BEB3 /* LessonListItemViewModelType.swift in Sources */,
@@ -7355,6 +7362,7 @@
 				45FB160927DBDDB60009DF8E /* ArticleDeepLinkFlow.swift in Sources */,
 				45AD1BB125938A4F00A096A0 /* FlowDelegate.swift in Sources */,
 				D1C8FEBD2714E9650071BD07 /* OnboardingTutorialItem.swift in Sources */,
+				453B63772837EE4D0086F046 /* ToolSettingsShareableItemViewModel.swift in Sources */,
 				455582E3269F2C1000C3FF14 /* TrainingTipViewType.swift in Sources */,
 				45AE974927C97A9400C2CB33 /* InlineTip+MobileContentRenderableModel.swift in Sources */,
 				457032A526D0055A00F5BADC /* MobileContentBackgroundImageRenderer.swift in Sources */,

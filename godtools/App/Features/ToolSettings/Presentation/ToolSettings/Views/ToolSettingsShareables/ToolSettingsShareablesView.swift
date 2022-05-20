@@ -25,7 +25,7 @@ struct ToolSettingsShareablesView: View {
             
             LazyHList<ToolSettingsShareableItemView>(itemSize: relatedContentSize, itemSpacing: 10, contentInsets: EdgeInsets(top: 0, leading: leadingInset, bottom: 0, trailing: trailingInset), showsScrollIndicator: false, numberOfItems: $viewModel.numberOfItems, viewForItem: { index in
                 
-                return ToolSettingsShareableItemView()
+                return ToolSettingsShareableItemView(viewModel: viewModel.getShareableItemViewModel(index: index))
             })
                 .frame(minWidth: nil, idealWidth: nil, maxWidth: .infinity, minHeight: relatedContentSize.height, idealHeight: nil, maxHeight: relatedContentSize.height, alignment: .leading)
 
