@@ -6,23 +6,28 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class ToolSettingsViewModel: BaseToolSettingsViewModel {
     
+    private let manifestResourcesCache: ManifestResourcesCache
     private let localizationServices: LocalizationServices
     private let primaryLanguage: LanguageModel
     private let parallelLanguage: LanguageModel?
     private let trainingTipsEnabled: Bool
+    private let shareables: [Shareable]
     
     private weak var flowDelegate: FlowDelegate?
         
-    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, trainingTipsEnabled: Bool) {
+    required init(flowDelegate: FlowDelegate, manifestResourcesCache: ManifestResourcesCache, localizationServices: LocalizationServices, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, trainingTipsEnabled: Bool, shareables: [Shareable]) {
         
         self.flowDelegate = flowDelegate
+        self.manifestResourcesCache = manifestResourcesCache
         self.localizationServices = localizationServices
         self.primaryLanguage = primaryLanguage
         self.parallelLanguage = parallelLanguage
         self.trainingTipsEnabled = trainingTipsEnabled
+        self.shareables = shareables
     }
     
     override func getTopBarViewModel() -> BaseToolSettingsTopBarViewModel {
@@ -53,5 +58,14 @@ class ToolSettingsViewModel: BaseToolSettingsViewModel {
         }
         
         return ToolSettingsChooseLanguageViewModel(flowDelegate: flowDelegate, localizationServices: localizationServices, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage)
+    }
+    
+    override func getShareablesViewModel() -> BaseToolSettingsShareablesViewModel {
+        guard let flowDelegate = flowDelegate else {
+            assertionFailure("Failed to instantiate viewModel, flowDelegate should not be nil.")
+            return BaseToolSettingsShareablesViewModel()
+        }
+        
+        return ToolSettingsShareablesViewModel(flowDelegate: flowDelegate, shareables: shareables, manifestResourcesCache: manifestResourcesCache)
     }
 }

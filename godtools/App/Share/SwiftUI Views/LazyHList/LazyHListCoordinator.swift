@@ -25,6 +25,10 @@ class LazyHListCoordinator<Content: View>: NSObject, UICollectionViewDelegateFlo
         return lazyHList.numberOfItems
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        lazyHList.itemTapped(indexPath.row)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell: UICollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: lazyHList.cellIdentifier, for: indexPath)

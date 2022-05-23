@@ -51,8 +51,8 @@ struct ToolSettingsView: View {
                             separatorTrailingInset: contentInsets.trailing
                         )
                         
-                        ToolSettingsRelatedContentView(
-                            viewModel: ToolSettingsRelatedContentViewModel(),
+                        ToolSettingsShareablesView(
+                            viewModel: viewModel.getShareablesViewModel(),
                             leadingInset: contentInsets.leading,
                             trailingInset: contentInsets.trailing
                         )

@@ -6,7 +6,8 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
+import GodToolsToolParser
 
 enum FlowStep {
     
@@ -67,7 +68,7 @@ enum FlowStep {
         
     // tool
     case homeTappedFromTool(isScreenSharing: Bool)
-    case toolSettingsTappedFromTool(tractRemoteShareSubscriber: TractRemoteShareSubscriber, tractRemoteSharePublisher: TractRemoteSharePublisher, resource: ResourceModel, selectedLanguage: LanguageModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, pageNumber: Int, trainingTipsEnabled: Bool)
+    case toolSettingsTappedFromTool(toolData: ToolSettingsFlowToolData)
     case buttonWithUrlTappedFromMobileContentRenderer(url: String, exitLink: ExitLinkModel)
     case trainingTipTappedFromMobileContentRenderer(event: TrainingTipEvent)
     case errorOccurredFromMobileContentRenderer(error: MobileContentErrorViewModel)
@@ -144,5 +145,6 @@ enum FlowStep {
     case primaryLanguageTappedFromToolSettings
     case parallelLanguageTappedFromToolSettings
     case swapLanguagesTappedFromToolSettings
+    case shareableTappedFromToolSettings(shareable: Shareable, shareImage: UIImage)
     case toolSettingsFlowCompleted
 }

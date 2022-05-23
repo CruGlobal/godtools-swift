@@ -254,9 +254,26 @@ extension ToolViewModel {
     
     func navToolSettingsTapped(page: Int, selectedLanguage: LanguageModel) {
         
-        let primaryLanguage: LanguageModel = renderer.primaryLanguage
+        guard let pageRenderer = currentPageRenderer else {
+            return
+        }
         
-        flowDelegate?.navigate(step: .toolSettingsTappedFromTool(tractRemoteShareSubscriber: tractRemoteShareSubscriber, tractRemoteSharePublisher: tractRemoteSharePublisher, resource: resource, selectedLanguage: selectedLanguage, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, pageNumber: page, trainingTipsEnabled: trainingTipsEnabled))
+        let primaryLanguage: LanguageModel = renderer.primaryLanguage
+        let shareables: [Shareable] = pageRenderer.manifest.shareables
+        
+        let toolData = ToolSettingsFlowToolData(
+            manifestResourcesCache: pageRenderer.manifestResourcesCache,
+            tractRemoteSharePublisher: tractRemoteSharePublisher,
+            resource: resource,
+            selectedLanguage: selectedLanguage,
+            primaryLanguage: primaryLanguage,
+            parallelLanguage: parallelLanguage,
+            shareables: shareables,
+            pageNumber: page,
+            trainingTipsEnabled: trainingTipsEnabled
+        )
+        
+        flowDelegate?.navigate(step: .toolSettingsTappedFromTool(toolData: toolData))
     }
     
     func navLanguageChanged(page: Int, pagePositions: ToolPagePositions) {
