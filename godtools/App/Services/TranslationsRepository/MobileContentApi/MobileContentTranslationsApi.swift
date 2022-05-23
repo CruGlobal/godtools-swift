@@ -1,5 +1,5 @@
 //
-//  TranslationsApi.swift
+//  MobileContentTranslationsApi.swift
 //  godtools
 //
 //  Created by Levi Eggert on 4/20/20.
@@ -9,7 +9,7 @@
 import Foundation
 import RequestOperation
 
-class TranslationsApi: TranslationsApiType {
+class MobileContentTranslationsApi {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let baseUrl: String
@@ -65,6 +65,45 @@ class TranslationsApi: TranslationsApiType {
         
         queue.addOperations([translationZipDataOperation], waitUntilFinished: false)
         
+        return queue
+    }
+    
+    func getTranslationsZipData(translationIds: [String], didDownloadTranslation: @escaping ((_ translationId: String, _ result: Result<Data?, RequestResponseError<NoHttpClientErrorResponse>>) -> Void), completion: @escaping (() -> Void)) -> OperationQueue {
+        
+        let queue = OperationQueue()
+        
+        var operations: [RequestOperation] = Array()
+        
+        for translationId in translationIds {
+            
+            guard !translationId.isEmpty else {
+                continue
+            }
+            
+            let operation: RequestOperation = newTranslationZipDataOperation(translationId: translationId)
+                    
+            operations.append(operation)
+            
+            operation.setCompletionHandler { (response: RequestResponse) in
+                                
+                let result: RequestResponseResult<NoHttpClientSuccessResponse, NoHttpClientErrorResponse> = response.getResult()
+                
+                switch result {
+                
+                case .success( _, _):
+                    didDownloadTranslation(translationId, .success(response.data))
+                case .failure(let error):
+                    didDownloadTranslation(translationId, .failure(error))
+                }
+                
+                if queue.operations.isEmpty {
+                    completion()
+                }
+            }
+        }
+        
+        queue.addOperations(operations, waitUntilFinished: false)
+
         return queue
     }
 }
