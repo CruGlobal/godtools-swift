@@ -193,6 +193,9 @@ class ToolSettingsFlow: Flow {
         case .swapLanguagesTappedFromToolSettings:
             break
             
+        case .shareableTappedFromToolSettings(let shareable):
+            break
+            
         default:
             break
         }

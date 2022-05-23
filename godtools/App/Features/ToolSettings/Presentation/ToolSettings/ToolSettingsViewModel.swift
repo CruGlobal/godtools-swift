@@ -60,7 +60,12 @@ class ToolSettingsViewModel: BaseToolSettingsViewModel {
         return ToolSettingsChooseLanguageViewModel(flowDelegate: flowDelegate, localizationServices: localizationServices, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage)
     }
     
-    override func getShareablesViewModel() -> ToolSettingsShareablesViewModel {
-        return ToolSettingsShareablesViewModel(shareables: shareables, manifestResourcesCache: manifestResourcesCache)
+    override func getShareablesViewModel() -> BaseToolSettingsShareablesViewModel {
+        guard let flowDelegate = flowDelegate else {
+            assertionFailure("Failed to instantiate viewModel, flowDelegate should not be nil.")
+            return BaseToolSettingsShareablesViewModel()
+        }
+        
+        return ToolSettingsShareablesViewModel(flowDelegate: flowDelegate, shareables: shareables, manifestResourcesCache: manifestResourcesCache)
     }
 }

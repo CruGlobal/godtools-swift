@@ -17,4 +17,6 @@ class BaseToolSettingsShareablesViewModel: ObservableObject {
     func getShareableItemViewModel(index: Int) -> BaseToolSettingsShareableItemViewModel {
         return BaseToolSettingsShareableItemViewModel()
     }
+    
+    func shareableTapped(index: Int) {}
 }

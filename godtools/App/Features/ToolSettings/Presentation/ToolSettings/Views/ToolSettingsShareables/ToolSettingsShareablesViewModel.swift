@@ -13,8 +13,11 @@ class ToolSettingsShareablesViewModel: BaseToolSettingsShareablesViewModel {
     private let shareables: [Shareable]
     private let manifestResourcesCache: ManifestResourcesCache
     
-    required init(shareables: [Shareable], manifestResourcesCache: ManifestResourcesCache) {
+    private weak var flowDelegate: FlowDelegate?
+    
+    required init(flowDelegate: FlowDelegate, shareables: [Shareable], manifestResourcesCache: ManifestResourcesCache) {
         
+        self.flowDelegate = flowDelegate
         self.shareables = shareables
         self.manifestResourcesCache = manifestResourcesCache
         
@@ -25,5 +28,9 @@ class ToolSettingsShareablesViewModel: BaseToolSettingsShareablesViewModel {
     
     override func getShareableItemViewModel(index: Int) -> BaseToolSettingsShareableItemViewModel {
         return ToolSettingsShareableItemViewModel(shareable: shareables[index], manifestResourcesCache: manifestResourcesCache)
+    }
+    
+    override func shareableTapped(index: Int) {
+        flowDelegate?.navigate(step: .shareableTappedFromToolSettings(shareable: shareables[index]))
     }
 }
