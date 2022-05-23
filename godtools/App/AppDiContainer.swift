@@ -225,6 +225,14 @@ class AppDiContainer {
         return AppDiContainer.getNewDeepLinkingService(loggingEnabled: false)
     }
     
+    func getExitLinkAnalytics() -> ExitLinkAnalytics {
+        return ExitLinkAnalytics(firebaseAnalytics: analytics.firebaseAnalytics)
+    }
+    
+    func getFirebaseConfiguration() -> FirebaseConfiguration {
+        return FirebaseConfiguration(config: config)
+    }
+    
     func getFirebaseDebugArguments() -> FirebaseDebugArguments {
         return FirebaseDebugArguments()
     }
@@ -233,29 +241,27 @@ class AppDiContainer {
         return FontService(languageSettings: languageSettingsService)
     }
     
+    func getGoogleAdwordsAnalytics() -> GoogleAdwordsAnalytics {
+        return GoogleAdwordsAnalytics(config: config)
+    }
+    
     func getLanguagesRepository() -> LanguagesRepository {
         return LanguagesRepository(cache: languagesCache)
     }
     
-    func getLessonFeedbackAnalytics() -> LessonFeedbackAnalytics {
-        return LessonFeedbackAnalytics(
-            firebaseAnalytics: analytics.firebaseAnalytics
-        )
-    }
-    
-    func getTutorialIsAvailableUseCase() -> GetTutorialIsAvailableUseCase {
-        return GetTutorialIsAvailableUseCase(deviceLanguage: deviceLanguage)
-    }
-    
-    func getTutorialVideoAnalytics() -> TutorialVideoAnalytics {
-        return TutorialVideoAnalytics(
-            trackActionAnalytics: analytics.trackActionAnalytics
-        )
+    func getLearnToShareToolItemsProvider() -> LearnToShareToolItemsProviderType {
+        return InMemoryLearnToShareToolItems(localization: localizationServices)
     }
     
     func getLessonsEvaluationRepository() -> LessonEvaluationRepository {
         return LessonEvaluationRepository(
             cache: LessonEvaluationRealmCache(realmDatabase: realmDatabase)
+        )
+    }
+    
+    func getLessonFeedbackAnalytics() -> LessonFeedbackAnalytics {
+        return LessonFeedbackAnalytics(
+            firebaseAnalytics: analytics.firebaseAnalytics
         )
     }
     
@@ -274,9 +280,36 @@ class AppDiContainer {
     func getOnboardingTutorialAvailability() -> OnboardingTutorialAvailabilityType {
         return OnboardingTutorialAvailability(
             getTutorialIsAvailableUseCase: getTutorialIsAvailableUseCase(),
-            onboardingTutorialViewedCache: onboardingTutorialViewedCache,
+            onboardingTutorialViewedCache: getOnboardingTutorialViewedCache(),
             isNewUserCache: isNewUserService.isNewUserCache
         )
+    }
+    
+    func getOnboardingTutorialCustomViewBuilder(flowDelegate: FlowDelegate) -> CustomViewBuilderType {
+        return OnboardingTutorialCustomViewBuilder(flowDelegate: flowDelegate, deviceLanguage: deviceLanguage, localizationServices: localizationServices, tutorialVideoAnalytics: getTutorialVideoAnalytics(), analyticsScreenName: "onboarding")
+    }
+    
+    func getOnboardingTutorialViewedCache() -> OnboardingTutorialViewedCacheType {
+        return OnboardingTutorialViewedUserDefaultsCache()
+    }
+    
+    func getSetupParallelLanguageAvailability() -> SetupParallelLanguageAvailabilityType {
+        return SetupParallelLanguageAvailability(
+            setupParallelLanguageViewedCache: getSetupParallelLanguageViewedCache(),
+            isNewUserCache: isNewUserService.isNewUserCache
+        )
+    }
+    
+    func getSetupParallelLanguageViewedCache() -> SetupParallelLanguageViewedCacheType {
+        return SetupParallelLanguageViewedUserDefaultsCache()
+    }
+    
+    func getShareToolScreenTutorialNumberOfViewsCache() -> ShareToolScreenTutorialNumberOfViewsCache {
+        return ShareToolScreenTutorialNumberOfViewsCache(sharedUserDefaultsCache: sharedUserDefaultsCache)
+    }
+    
+    func getToolOpenedAnalytics() -> ToolOpenedAnalytics {
+        return ToolOpenedAnalytics(appsFlyerAnalytics: analytics.appsFlyerAnalytics)
     }
     
     func getToolTrainingTipsOnboardingViews() -> ToolTrainingTipsOnboardingViewsService {
@@ -285,58 +318,7 @@ class AppDiContainer {
         )
     }
     
-    func getSetupParallelLanguageAvailability() -> SetupParallelLanguageAvailabilityType {
-        return SetupParallelLanguageAvailability(
-            setupParallelLanguageViewedCache: setupParallelLanguageViewedCache,
-            isNewUserCache: isNewUserService.isNewUserCache
-        )
-    }
-    
-    func getViewedTrainingTipsService() -> ViewedTrainingTipsService {
-        return ViewedTrainingTipsService(
-            cache: ViewedTrainingTipsUserDefaultsCache(sharedUserDefaults: sharedUserDefaultsCache)
-        )
-    }
-    
-    func onboardingTutorialCustomViewBuilder(flowDelegate: FlowDelegate) -> CustomViewBuilderType {
-        return OnboardingTutorialCustomViewBuilder(flowDelegate: flowDelegate, deviceLanguage: deviceLanguage, localizationServices: localizationServices, tutorialVideoAnalytics: getTutorialVideoAnalytics(), analyticsScreenName: "onboarding")
-    }
-    
-    var firebaseConfiguration: FirebaseConfiguration {
-        return FirebaseConfiguration(config: config)
-    }
-    
-    var googleAdwordsAnalytics: GoogleAdwordsAnalytics {
-        return GoogleAdwordsAnalytics(config: config)
-    }
-    
-    var toolOpenedAnalytics: ToolOpenedAnalytics {
-        return ToolOpenedAnalytics(appsFlyerAnalytics: analytics.appsFlyerAnalytics)
-    }
-    
-    var exitLinkAnalytics: ExitLinkAnalytics {
-        return ExitLinkAnalytics(firebaseAnalytics: analytics.firebaseAnalytics)
-    }
-    
-    var onboardingTutorialViewedCache: OnboardingTutorialViewedCacheType {
-        return OnboardingTutorialViewedUserDefaultsCache()
-    }
-    
-    var setupParallelLanguageViewedCache: SetupParallelLanguageViewedCacheType {
-        return SetupParallelLanguageViewedUserDefaultsCache()
-    }
-        
-    var tractRemoteShareSubscriber: TractRemoteShareSubscriber {
-        let webSocket: WebSocketType = StarscreamWebSocket()
-        return TractRemoteShareSubscriber(
-            config: config,
-            webSocket: webSocket,
-            webSocketChannelSubscriber: ActionCableChannelSubscriber(webSocket: webSocket, loggingEnabled: config.isDebug),
-            loggingEnabled: config.isDebug
-        )
-    }
-    
-    var tractRemoteSharePublisher: TractRemoteSharePublisher {
+    func getTractRemoteSharePublisher() -> TractRemoteSharePublisher {
         let webSocket: WebSocketType = StarscreamWebSocket()
         return TractRemoteSharePublisher(
             config: config,
@@ -346,15 +328,33 @@ class AppDiContainer {
         )
     }
     
-    var tractRemoteShareURLBuilder: TractRemoteShareURLBuilder {
+    func  getTractRemoteShareSubscriber() -> TractRemoteShareSubscriber {
+        let webSocket: WebSocketType = StarscreamWebSocket()
+        return TractRemoteShareSubscriber(
+            config: config,
+            webSocket: webSocket,
+            webSocketChannelSubscriber: ActionCableChannelSubscriber(webSocket: webSocket, loggingEnabled: config.isDebug),
+            loggingEnabled: config.isDebug
+        )
+    }
+    
+    func getTractRemoteShareURLBuilder() -> TractRemoteShareURLBuilder {
         return TractRemoteShareURLBuilder()
     }
     
-    var shareToolScreenTutorialNumberOfViewsCache: ShareToolScreenTutorialNumberOfViewsCache {
-        return ShareToolScreenTutorialNumberOfViewsCache(sharedUserDefaultsCache: sharedUserDefaultsCache)
+    func getTutorialIsAvailableUseCase() -> GetTutorialIsAvailableUseCase {
+        return GetTutorialIsAvailableUseCase(deviceLanguage: deviceLanguage)
     }
     
-    var learnToShareToolItemsProvider: LearnToShareToolItemsProviderType {
-        return InMemoryLearnToShareToolItems(localization: localizationServices)
+    func getTutorialVideoAnalytics() -> TutorialVideoAnalytics {
+        return TutorialVideoAnalytics(
+            trackActionAnalytics: analytics.trackActionAnalytics
+        )
+    }
+    
+    func getViewedTrainingTipsService() -> ViewedTrainingTipsService {
+        return ViewedTrainingTipsService(
+            cache: ViewedTrainingTipsUserDefaultsCache(sharedUserDefaults: sharedUserDefaultsCache)
+        )
     }
 }
