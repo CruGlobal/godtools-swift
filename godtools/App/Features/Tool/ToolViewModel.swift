@@ -254,10 +254,15 @@ extension ToolViewModel {
     
     func navToolSettingsTapped(page: Int, selectedLanguage: LanguageModel) {
         
+        guard let pageRenderer = currentPageRenderer else {
+            return
+        }
+        
         let primaryLanguage: LanguageModel = renderer.primaryLanguage
-        let shareables: [Shareable] = currentPageRenderer?.manifest.shareables ?? []
+        let shareables: [Shareable] = pageRenderer.manifest.shareables
         
         let toolData = ToolSettingsFlowToolData(
+            manifestResourcesCache: pageRenderer.manifestResourcesCache,
             tractRemoteSharePublisher: tractRemoteSharePublisher,
             resource: resource,
             selectedLanguage: selectedLanguage,

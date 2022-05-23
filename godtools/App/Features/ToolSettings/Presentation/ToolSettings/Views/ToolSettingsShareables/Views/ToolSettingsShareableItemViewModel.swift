@@ -12,10 +12,12 @@ import GodToolsToolParser
 class ToolSettingsShareableItemViewModel: BaseToolSettingsShareableItemViewModel {
     
     private let shareable: Shareable
+    private let manifestResourcesCache: ManifestResourcesCache
     
-    required init(shareable: Shareable) {
+    required init(shareable: Shareable, manifestResourcesCache: ManifestResourcesCache) {
         
         self.shareable = shareable
+        self.manifestResourcesCache = manifestResourcesCache
         
         super.init()
                 

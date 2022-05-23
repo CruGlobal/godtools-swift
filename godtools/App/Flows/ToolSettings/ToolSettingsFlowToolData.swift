@@ -11,6 +11,7 @@ import GodToolsToolParser
 
 class ToolSettingsFlowToolData {
     
+    let manifestResourcesCache: ManifestResourcesCache
     let tractRemoteSharePublisher: TractRemoteSharePublisher
     let resource: ResourceModel
     let selectedLanguage: LanguageModel
@@ -20,8 +21,9 @@ class ToolSettingsFlowToolData {
     let pageNumber: Int
     let trainingTipsEnabled: Bool
     
-    required init(tractRemoteSharePublisher: TractRemoteSharePublisher, resource: ResourceModel, selectedLanguage: LanguageModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, shareables: [Shareable], pageNumber: Int, trainingTipsEnabled: Bool) {
+    required init(manifestResourcesCache: ManifestResourcesCache, tractRemoteSharePublisher: TractRemoteSharePublisher, resource: ResourceModel, selectedLanguage: LanguageModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, shareables: [Shareable], pageNumber: Int, trainingTipsEnabled: Bool) {
         
+        self.manifestResourcesCache = manifestResourcesCache
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
         self.resource = resource
         self.selectedLanguage = selectedLanguage

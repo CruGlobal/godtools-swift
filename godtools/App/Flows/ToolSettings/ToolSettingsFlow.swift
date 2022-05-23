@@ -37,6 +37,7 @@ class ToolSettingsFlow: Flow {
         
         let viewModel = ToolSettingsViewModel(
             flowDelegate: self,
+            manifestResourcesCache: toolData.manifestResourcesCache,
             localizationServices: appDiContainer.localizationServices,
             primaryLanguage: toolData.primaryLanguage,
             parallelLanguage: toolData.parallelLanguage,

@@ -10,6 +10,7 @@ import GodToolsToolParser
 
 class ToolSettingsViewModel: BaseToolSettingsViewModel {
     
+    private let manifestResourcesCache: ManifestResourcesCache
     private let localizationServices: LocalizationServices
     private let primaryLanguage: LanguageModel
     private let parallelLanguage: LanguageModel?
@@ -18,9 +19,10 @@ class ToolSettingsViewModel: BaseToolSettingsViewModel {
     
     private weak var flowDelegate: FlowDelegate?
         
-    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, trainingTipsEnabled: Bool, shareables: [Shareable]) {
+    required init(flowDelegate: FlowDelegate, manifestResourcesCache: ManifestResourcesCache, localizationServices: LocalizationServices, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, trainingTipsEnabled: Bool, shareables: [Shareable]) {
         
         self.flowDelegate = flowDelegate
+        self.manifestResourcesCache = manifestResourcesCache
         self.localizationServices = localizationServices
         self.primaryLanguage = primaryLanguage
         self.parallelLanguage = parallelLanguage
@@ -59,6 +61,6 @@ class ToolSettingsViewModel: BaseToolSettingsViewModel {
     }
     
     override func getShareablesViewModel() -> ToolSettingsShareablesViewModel {
-        return ToolSettingsShareablesViewModel(shareables: shareables)
+        return ToolSettingsShareablesViewModel(shareables: shareables, manifestResourcesCache: manifestResourcesCache)
     }
 }
