@@ -6,10 +6,11 @@
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
 
 class BaseToolSettingsShareableItemViewModel: ObservableObject {
     
+    @Published var image: Image = Image("")
     @Published var title: String = ""
     
     init() {}
