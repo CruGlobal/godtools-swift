@@ -193,8 +193,16 @@ class ToolSettingsFlow: Flow {
         case .swapLanguagesTappedFromToolSettings:
             break
             
-        case .shareableTappedFromToolSettings(let shareable):
-            break
+        case .shareableTappedFromToolSettings(let shareable, let imageToShare):
+            
+            let viewModel = ShareShareableViewModel(
+                shareable: shareable,
+                imageToShare: imageToShare
+            )
+            
+            let view = ShareShareableView(viewModel: viewModel)
+                        
+            navigationController.present(view, animated: true, completion: nil)
             
         default:
             break

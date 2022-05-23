@@ -6,7 +6,7 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import GodToolsToolParser
 
 enum FlowStep {
@@ -145,6 +145,6 @@ enum FlowStep {
     case primaryLanguageTappedFromToolSettings
     case parallelLanguageTappedFromToolSettings
     case swapLanguagesTappedFromToolSettings
-    case shareableTappedFromToolSettings(shareable: Shareable)
+    case shareableTappedFromToolSettings(shareable: Shareable, shareImage: UIImage)
     case toolSettingsFlowCompleted
 }

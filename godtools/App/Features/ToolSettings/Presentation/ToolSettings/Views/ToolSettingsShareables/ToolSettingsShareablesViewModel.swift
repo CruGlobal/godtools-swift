@@ -7,6 +7,7 @@
 
 import Foundation
 import GodToolsToolParser
+import UIKit
 
 class ToolSettingsShareablesViewModel: BaseToolSettingsShareablesViewModel {
     
@@ -31,6 +32,13 @@ class ToolSettingsShareablesViewModel: BaseToolSettingsShareablesViewModel {
     }
     
     override func shareableTapped(index: Int) {
-        flowDelegate?.navigate(step: .shareableTappedFromToolSettings(shareable: shareables[index]))
+        
+        let shareable: Shareable = shareables[index]
+        
+        guard let shareableImage = shareable as? ShareableImage, let resource = shareableImage.resource, let imageToShare = manifestResourcesCache.getImageFromManifestResources(resource: resource) else {
+            return
+        }
+        
+        flowDelegate?.navigate(step: .shareableTappedFromToolSettings(shareable: shareable, shareImage: imageToShare))
     }
 }

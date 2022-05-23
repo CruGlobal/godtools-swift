@@ -903,6 +903,8 @@
 		45CDFB502817324B00AC4F2E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 45CDFB4F2817324B00AC4F2E /* FirebaseAnalytics */; };
 		45CDFB522817324B00AC4F2E /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 45CDFB512817324B00AC4F2E /* FirebaseCrashlytics */; };
 		45CDFB5628173FE400AC4F2E /* FirebaseInAppMessaging-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 45CDFB5528173FE400AC4F2E /* FirebaseInAppMessaging-Beta */; };
+		45CEAC32283C1EA300A87985 /* ShareShareableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CEAC30283C1EA200A87985 /* ShareShareableView.swift */; };
+		45CEAC33283C1EA300A87985 /* ShareShareableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CEAC31283C1EA200A87985 /* ShareShareableViewModel.swift */; };
 		45CF09702784B910007F13D3 /* RequestOperation in Frameworks */ = {isa = PBXBuildFile; productRef = 45CF096F2784B910007F13D3 /* RequestOperation */; };
 		45D266E9277499AD00960990 /* UIViewController+DismissPresented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D266E8277499AD00960990 /* UIViewController+DismissPresented.swift */; };
 		45D6D02D2708B8FF0063C38A /* LessonEvaluationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D6D0292708B8FF0063C38A /* LessonEvaluationModel.swift */; };
@@ -1978,6 +1980,8 @@
 		45CBA008261FB0D30036BEB3 /* LessonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonView.swift; sourceTree = "<group>"; };
 		45CBA014261FB0E30036BEB3 /* LessonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonViewModel.swift; sourceTree = "<group>"; };
 		45CBA01A261FB0EA0036BEB3 /* LessonViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonViewModelType.swift; sourceTree = "<group>"; };
+		45CEAC30283C1EA200A87985 /* ShareShareableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareShareableView.swift; sourceTree = "<group>"; };
+		45CEAC31283C1EA200A87985 /* ShareShareableViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareShareableViewModel.swift; sourceTree = "<group>"; };
 		45D266E8277499AD00960990 /* UIViewController+DismissPresented.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+DismissPresented.swift"; sourceTree = "<group>"; };
 		45D6D0292708B8FF0063C38A /* LessonEvaluationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LessonEvaluationModel.swift; sourceTree = "<group>"; };
 		45D6D02A2708B8FF0063C38A /* RealmLessonEvaluation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmLessonEvaluation.swift; sourceTree = "<group>"; };
@@ -2599,6 +2603,7 @@
 		451CEDD0282C31C6006E5105 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				45CEAC2F283C1EA200A87985 /* ShareShareable */,
 				451CEDD1282C31C6006E5105 /* ToolSettings */,
 			);
 			path = Presentation;
@@ -5779,6 +5784,15 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		45CEAC2F283C1EA200A87985 /* ShareShareable */ = {
+			isa = PBXGroup;
+			children = (
+				45CEAC30283C1EA200A87985 /* ShareShareableView.swift */,
+				45CEAC31283C1EA200A87985 /* ShareShareableViewModel.swift */,
+			);
+			path = ShareShareable;
+			sourceTree = "<group>";
+		};
 		45D6D0282708B8FF0063C38A /* LessonEvaluation */ = {
 			isa = PBXGroup;
 			children = (
@@ -7630,6 +7644,7 @@
 				459845B4283BD36300459258 /* RealmTranslationZipFile.swift in Sources */,
 				450A3A4B282D38C300FC2E14 /* TransparentModalCustomViewLayoutType.swift in Sources */,
 				45AE974327C97A9400C2CB33 /* TractPage+MobileContentRenderableModel.swift in Sources */,
+				45CEAC33283C1EA300A87985 /* ShareShareableViewModel.swift in Sources */,
 				45AD1FF525938A9800A096A0 /* DownloadedAttachmentResult.swift in Sources */,
 				45AD1F9125938A9800A096A0 /* ResourceModel.swift in Sources */,
 				45558320269F2C7B00C3FF14 /* ToolPageView.swift in Sources */,
@@ -7803,6 +7818,7 @@
 				45AD1B9E25938A4F00A096A0 /* Translation.swift in Sources */,
 				458F7C9D282E7F4600872013 /* ToolSettingsOptionItemBackgroundType.swift in Sources */,
 				459845AB283BD36200459258 /* TranslationDownloader.swift in Sources */,
+				45CEAC32283C1EA300A87985 /* ShareShareableView.swift in Sources */,
 				D1D56918270632B200BBE2A6 /* OnboardingTutorialCustomViewBuilder.swift in Sources */,
 				45AD1BCC25938A4F00A096A0 /* UIColor+HexColor.swift in Sources */,
 				45AD1F7F25938A9800A096A0 /* RealmFavoritedResource.swift in Sources */,
