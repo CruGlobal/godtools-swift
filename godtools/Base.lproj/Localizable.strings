@@ -191,6 +191,11 @@ An online version can be found at https://knowgod.com/";
 // Add Tools
 "add_tools" = "Add Tools";
 
+// All Tools
+"allTools.spotlight.title" = "Tool Spotlight";
+"allTools.spotlight.description" = "Here are some tools we thought you might like";
+"allTools.categories.title" = "Categories";
+
 "total_views" = "%d views";
 "total_languages" = "%d languages";
 

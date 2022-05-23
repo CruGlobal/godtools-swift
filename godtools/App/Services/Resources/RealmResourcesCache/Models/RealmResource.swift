@@ -18,6 +18,7 @@ class RealmResource: Object, ResourceModelType {
     @objc dynamic var attrBannerAbout: String = ""
     @objc dynamic var attrCategory: String = ""
     @objc dynamic var attrDefaultOrder: Int = -1
+    @objc dynamic var attrSpotlight: Bool = false
     @objc dynamic var id: String = ""
     @objc dynamic var isHidden: Bool = false
     @objc dynamic var manifest: String = ""
@@ -47,6 +48,7 @@ class RealmResource: Object, ResourceModelType {
         attrBannerAbout = model.attrBannerAbout
         attrCategory = model.attrCategory
         attrDefaultOrder = model.attrDefaultOrder
+        attrSpotlight = model.attrSpotlight
         id = model.id
         isHidden = model.isHidden
         manifest = model.manifest

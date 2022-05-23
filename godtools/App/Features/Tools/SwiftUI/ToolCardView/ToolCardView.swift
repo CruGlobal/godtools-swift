@@ -14,70 +14,61 @@ struct ToolCardView: View {
     
     @ObservedObject var viewModel: BaseToolCardViewModel
     let cardWidth: CGFloat
+    var isSpotlight = false
     
     // MARK: - Constants
     
     private enum Sizes {
-        static let cardAspectRatio: CGFloat = cardWidth/cardHeight
-        static let cardHeight: CGFloat = 150
-        static let cardWidth: CGFloat = 335
-        static let bannerImageAspectRatio: CGFloat = cardWidth/bannerImageHeight
-        static let bannerImageHeight: CGFloat = 87
         static let cornerRadius: CGFloat = 6
+        static let spotlightCardWidth: CGFloat = 200
+        static let spotlightCardHeight: CGFloat = 255
+        static let spotlightCardHeightRatio: CGFloat = spotlightCardHeight / spotlightCardWidth
     }
     
     // MARK: - Body
     
     var body: some View {
         ZStack(alignment: .top) {
-            // MARK: - Card Background
-            RoundedRectangle(cornerRadius: Sizes.cornerRadius, style: .circular)
-                .fill(.white)
-                .shadow(color: .black.opacity(0.25), radius: 4, y: 2)
+            
+            ToolCardBackgroundView(cornerRadius: Sizes.cornerRadius)
             
             VStack(alignment: .leading, spacing: 0) {
-                
-                // MARK: - Image
                 ZStack(alignment: .topTrailing) {
-                    OptionalImage(image: viewModel.bannerImage, width: cardWidth, height: cardWidth / Sizes.bannerImageAspectRatio)
-                        .cornerRadius(Sizes.cornerRadius, corners: [.topLeft, .topRight])
                     
-                    Image(viewModel.isFavorited ? ImageCatalog.favoritedCircle.name : ImageCatalog.unfavoritedCircle.name)
-                        .padding([.top, .trailing], 10)
+                    ToolCardBannerImageView(bannerImage: viewModel.bannerImage, isSpotlight: isSpotlight, cardWidth: cardWidth, cornerRadius: Sizes.cornerRadius)
+                    
+                    ToolCardFavoritedView(isFavorited: viewModel.isFavorited)
                         .onTapGesture {
                             viewModel.favoritedButtonTapped()
                         }
                 }
-                .transition(.opacity)
                 
-                // MARK: - Progress Bars
-                ZStack {
-                    ProgressBarView(color: .yellow, progress: viewModel.attachmentsDownloadProgressValue)
-                    ProgressBarView(color: ColorPalette.progressBarBlue.color, progress: viewModel.translationDownloadProgressValue)
-                }
-                .frame(height: 2)
+                ToolCardProgressView(frontProgress: viewModel.translationDownloadProgressValue, backProgress: viewModel.attachmentsDownloadProgressValue)
                 
-                // MARK: - Text
                 HStack(alignment: .top) {
                     VStack(alignment: .leading, spacing: 3) {
-                        Text(viewModel.title)
-                            .font(FontLibrary.sfProTextBold.font(size: 18))
-                            .foregroundColor(ColorPalette.gtGrey.color)
-                            .fixedSize(horizontal: false, vertical: true)
                         
-                        Text(viewModel.category)
-                            .font(FontLibrary.sfProTextRegular.font(size: 14))
-                            .foregroundColor(ColorPalette.gtGrey.color)
+                        ToolCardTitleView(title: viewModel.title)
+                        
+                        if isSpotlight {
+                            
+                            Spacer(minLength: 0)
+                            ToolCardParallelLanguageView(languageName: viewModel.parallelLanguageName)
+                            
+                        } else {
+                            ToolCardCategoryView(category: viewModel.category)
+                        }
                     }
                     .padding([.leading, .bottom], 15)
                     
                     Spacer()
                     
-                    Text(viewModel.parallelLanguageName)
-                        .font(FontLibrary.sfProTextRegular.font(size: 12))
-                        .foregroundColor(ColorPalette.gtLightGrey.color)
-                        .padding(.trailing, 10)
-                        .padding(.top, 4)
+                    if isSpotlight == false {
+                        
+                        ToolCardParallelLanguageView(languageName: viewModel.parallelLanguageName)
+                            .padding(.top, 4)
+                            .padding(.trailing, 10)
+                    }
                 }
                 .frame(width: cardWidth)
                 .padding(.top, 12)
@@ -85,7 +76,8 @@ struct ToolCardView: View {
             }
             
         }
-        .fixedSize(horizontal: false, vertical: true)
+        .frame(height: isSpotlight ? cardWidth * Sizes.spotlightCardHeightRatio : nil)
+        .fixedSize(horizontal: true, vertical: true)
         .environment(\.layoutDirection, viewModel.layoutDirection)
     }
 }
@@ -93,7 +85,11 @@ struct ToolCardView: View {
 // MARK: - Preview
 
 struct ToolCardView_Previews: PreviewProvider {
+    
     static var previews: some View {
+        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
+        let isSpotlight = true
+        
         ToolCardView(viewModel:
                         MockToolCardViewModel(
                             title: "Knowing God Personally",
@@ -101,9 +97,11 @@ struct ToolCardView_Previews: PreviewProvider {
                             showParallelLanguage: true,
                             showBannerImage: true,
                             attachmentsDownloadProgress: 0.80,
-                            translationDownloadProgress: 0.55
+                            translationDownloadProgress: 0.55,
+                            deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners
                         ),
-                     cardWidth: 375
+                     cardWidth: isSpotlight ? 200 : 375,
+                     isSpotlight: isSpotlight
         )
         .padding()
         .previewLayout(.sizeThatFits)
