@@ -8,26 +8,6 @@
 
 import Foundation
 
-enum ToolCategoryButtonState {
-    case notSelected
-    case selected
-    case greyedOut
-    
-    init(category: String, selectedCategory: String?) {
-        guard let selectedCategory = selectedCategory else {
-            self = .notSelected
-            return
-        }
-
-        if selectedCategory == category {
-            self = .selected
-            
-        } else {
-            self = .greyedOut
-        }
-    }
-}
-
 class ToolCategoryButtonViewModel: ObservableObject {
     
     let category: String
@@ -39,6 +19,13 @@ class ToolCategoryButtonViewModel: ObservableObject {
     init(category: String, selectedCategory: String?) {
         self.category = category
         state = ToolCategoryButtonState(category: category, selectedCategory: selectedCategory)
+        
+        setPublishedValues()
+    }
+    
+    init(category: String, buttonState: ToolCategoryButtonState) {
+        self.category = category
+        self.state = buttonState
         
         setPublishedValues()
     }
