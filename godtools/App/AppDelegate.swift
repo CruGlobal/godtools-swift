@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             appDiContainer.getFirebaseDebugArguments().enable()
         }
                 
-        appDiContainer.firebaseConfiguration.configure()
+        appDiContainer.getFirebaseConfiguration().configure()
                 
         appDiContainer.appsFlyer.configure()
         
@@ -45,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         appDiContainer.analytics.appsFlyerAnalytics.configure()
         
-        appDiContainer.googleAdwordsAnalytics.recordAdwordsConversion()
+        appDiContainer.getGoogleAdwordsAnalytics().recordAdwordsConversion()
         
         appDiContainer.analytics.snowplowAnalytics.configure()
                 
