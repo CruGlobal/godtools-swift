@@ -68,6 +68,10 @@ extension AllToolsContentViewModel {
         )
     }
     
+    func categoriesViewModel() -> ToolCategoriesViewModel {
+        return ToolCategoriesViewModel()
+    }
+    
     func cardViewModel(for tool: ResourceModel) -> ToolCardViewModel {
         return ToolCardViewModel(
             resource: tool,

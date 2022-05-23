@@ -31,7 +31,8 @@ struct AllToolsList: View {
             ToolSpotlightView(viewModel: viewModel.spotlightViewModel(), width: width, leadingPadding: leadingTrailingPadding)
                 .listRowInsets(EdgeInsets())
             
-            // TODO: - GT-1265: Categories Section
+            ToolCategoriesView(viewModel: viewModel.categoriesViewModel(), leadingPadding: leadingTrailingPadding)
+                .listRowInsets(EdgeInsets())
             
             ToolCardsView(viewModel: viewModel, width: width, leadingPadding: leadingTrailingPadding)
         }
