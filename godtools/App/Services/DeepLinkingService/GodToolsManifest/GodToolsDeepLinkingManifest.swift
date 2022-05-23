@@ -57,6 +57,12 @@ class GodToolsDeepLinkingManifest: DeepLinkingManifestType {
                 rootPathComponent: nil,
                 parserClass: KnowGodTractDeepLinkParser.self
             ),
+            DeepLinkingParserManifestUrl(
+                scheme: "godtools",
+                host: "knowgod.com",
+                rootPathComponent: nil,
+                parserClass: KnowGodTractDeepLinkParser.self
+            ),
             DeepLinkingParserManifestAppsFlyer(
                 parserClass: AppsFlyerDeepLinkValueParser.self
             ),
