@@ -905,6 +905,8 @@
 		45CEAC47283C272E00A87985 /* ShareShareableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CEAC45283C272E00A87985 /* ShareShareableView.swift */; };
 		45CEAC48283C272E00A87985 /* ShareShareableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CEAC46283C272E00A87985 /* ShareShareableViewModel.swift */; };
 		45CEAC4A283C275400A87985 /* ToolSettingsFlowToolData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CEAC49283C275400A87985 /* ToolSettingsFlowToolData.swift */; };
+		45CEAC4D283C2AF500A87985 /* DownloadToolTranslationsFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CEAC4C283C2AF500A87985 /* DownloadToolTranslationsFlow.swift */; };
+		45CEAC4F283C2B0F00A87985 /* DownloadToolTranslationsFlowCompletedState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CEAC4E283C2B0F00A87985 /* DownloadToolTranslationsFlowCompletedState.swift */; };
 		45CF09702784B910007F13D3 /* RequestOperation in Frameworks */ = {isa = PBXBuildFile; productRef = 45CF096F2784B910007F13D3 /* RequestOperation */; };
 		45D266E9277499AD00960990 /* UIViewController+DismissPresented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D266E8277499AD00960990 /* UIViewController+DismissPresented.swift */; };
 		45D6D02D2708B8FF0063C38A /* LessonEvaluationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D6D0292708B8FF0063C38A /* LessonEvaluationModel.swift */; };
@@ -1982,6 +1984,8 @@
 		45CEAC45283C272E00A87985 /* ShareShareableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareShareableView.swift; sourceTree = "<group>"; };
 		45CEAC46283C272E00A87985 /* ShareShareableViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareShareableViewModel.swift; sourceTree = "<group>"; };
 		45CEAC49283C275400A87985 /* ToolSettingsFlowToolData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolSettingsFlowToolData.swift; sourceTree = "<group>"; };
+		45CEAC4C283C2AF500A87985 /* DownloadToolTranslationsFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadToolTranslationsFlow.swift; sourceTree = "<group>"; };
+		45CEAC4E283C2B0F00A87985 /* DownloadToolTranslationsFlowCompletedState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadToolTranslationsFlowCompletedState.swift; sourceTree = "<group>"; };
 		45D266E8277499AD00960990 /* UIViewController+DismissPresented.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+DismissPresented.swift"; sourceTree = "<group>"; };
 		45D6D0292708B8FF0063C38A /* LessonEvaluationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LessonEvaluationModel.swift; sourceTree = "<group>"; };
 		45D6D02A2708B8FF0063C38A /* RealmLessonEvaluation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmLessonEvaluation.swift; sourceTree = "<group>"; };
@@ -4391,6 +4395,7 @@
 				45FB160227DBDDB60009DF8E /* Article */,
 				45FB15EB27DBDDB50009DF8E /* ArticleDeepLink */,
 				45FB15FB27DBDDB50009DF8E /* ChooseYourOwnAdventure */,
+				45CEAC4B283C2AE400A87985 /* DownloadToolTranslations */,
 				45FB15F527DBDDB50009DF8E /* LanguageSettings */,
 				45FB15F727DBDDB50009DF8E /* LearnToShareTool */,
 				45FB15E827DBDDB40009DF8E /* Lesson */,
@@ -5791,6 +5796,15 @@
 				45CEAC46283C272E00A87985 /* ShareShareableViewModel.swift */,
 			);
 			path = ShareShareable;
+			sourceTree = "<group>";
+		};
+		45CEAC4B283C2AE400A87985 /* DownloadToolTranslations */ = {
+			isa = PBXGroup;
+			children = (
+				45CEAC4C283C2AF500A87985 /* DownloadToolTranslationsFlow.swift */,
+				45CEAC4E283C2B0F00A87985 /* DownloadToolTranslationsFlowCompletedState.swift */,
+			);
+			path = DownloadToolTranslations;
 			sourceTree = "<group>";
 		};
 		45D6D0282708B8FF0063C38A /* LessonEvaluation */ = {
@@ -7271,6 +7285,7 @@
 				45C93AE4261D310900592FFF /* RealmArticleAemData.swift in Sources */,
 				450E444F2756B66300D4311E /* MenuView.swift in Sources */,
 				45AD1F6225938A9800A096A0 /* ActionCableEventType.swift in Sources */,
+				45CEAC4D283C2AF500A87985 /* DownloadToolTranslationsFlow.swift in Sources */,
 				45AD20EB259391B000A096A0 /* JsonServices.swift in Sources */,
 				4502BD42279F3B72000C544A /* MobileContentFlowItemViewModel.swift in Sources */,
 				45AD1F8F25938A9800A096A0 /* ResourceType.swift in Sources */,
@@ -7528,6 +7543,7 @@
 				45C93AFA261D310900592FFF /* RealmCategoryArticlesCache.swift in Sources */,
 				455583D3269F2DA500C3FF14 /* MobileContentHeaderView.swift in Sources */,
 				457032A726D0056F00F5BADC /* MobileContentBackgroundImageRendererType.swift in Sources */,
+				45CEAC4F283C2B0F00A87985 /* DownloadToolTranslationsFlowCompletedState.swift in Sources */,
 				45B6482825E593110098BAF1 /* (null) in Sources */,
 				45C93AE2261D310900592FFF /* ArticleAemCacheObject.swift in Sources */,
 				45558327269F2C7B00C3FF14 /* ToolPageCardViewModelType.swift in Sources */,
