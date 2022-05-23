@@ -85,7 +85,7 @@ class ToolSettingsFlow: Flow {
             
         case .screenShareTappedFromToolSettings:
             
-            let shareToolScreenTutorialNumberOfViewsCache: ShareToolScreenTutorialNumberOfViewsCache = appDiContainer.shareToolScreenTutorialNumberOfViewsCache
+            let shareToolScreenTutorialNumberOfViewsCache: ShareToolScreenTutorialNumberOfViewsCache = appDiContainer.getShareToolScreenTutorialNumberOfViewsCache()
             let numberOfTutorialViews: Int = shareToolScreenTutorialNumberOfViewsCache.getNumberOfViews(resource: toolData.resource)
             
             if toolData.tractRemoteSharePublisher.webSocketIsConnected, let channel = toolData.tractRemoteSharePublisher.tractRemoteShareChannel {
@@ -122,7 +122,7 @@ class ToolSettingsFlow: Flow {
                 
             case .success(let channel):
                 
-                let tractRemoteShareURLBuilder: TractRemoteShareURLBuilder = appDiContainer.tractRemoteShareURLBuilder
+                let tractRemoteShareURLBuilder: TractRemoteShareURLBuilder = appDiContainer.getTractRemoteShareURLBuilder()
                 
                 guard let remoteShareUrl = tractRemoteShareURLBuilder.buildRemoteShareURL(resource: toolData.resource, primaryLanguage: toolData.primaryLanguage, parallelLanguage: toolData.parallelLanguage, subscriberChannelId: channel.subscriberChannelId) else {
                     
@@ -217,7 +217,7 @@ class ToolSettingsFlow: Flow {
             flowDelegate: self,
             localizationServices: appDiContainer.localizationServices,
             tutorialItemsProvider: tutorialItemsProvider,
-            shareToolScreenTutorialNumberOfViewsCache: appDiContainer.shareToolScreenTutorialNumberOfViewsCache,
+            shareToolScreenTutorialNumberOfViewsCache: appDiContainer.getShareToolScreenTutorialNumberOfViewsCache(),
             resource: toolData.resource,
             analyticsContainer: appDiContainer.analytics,
             tutorialVideoAnalytics: appDiContainer.getTutorialVideoAnalytics()
