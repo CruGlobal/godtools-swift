@@ -363,6 +363,8 @@
 		4590F73927B17018007424F4 /* MobileContentCardCollectionPageCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4590F73827B17018007424F4 /* MobileContentCardCollectionPageCardView.xib */; };
 		45935B8828084E250035ACA2 /* SwiftUIPreviewDiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45935B8728084E240035ACA2 /* SwiftUIPreviewDiContainer.swift */; };
 		4596622727BBFEFB0059F70B /* ChooseYourOwnAdventureNavBarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4596622627BBFEFB0059F70B /* ChooseYourOwnAdventureNavBarModel.swift */; };
+		45984584283BC9DF00459258 /* MockToolSettingsShareableItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45984583283BC9DF00459258 /* MockToolSettingsShareableItemViewModel.swift */; };
+		45984586283BD0FC00459258 /* BaseToolSettingsShareablesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45984585283BD0FC00459258 /* BaseToolSettingsShareablesViewModel.swift */; };
 		4599251B2704F36A008F7844 /* ChooseScaleSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4599251A2704F36A008F7844 /* ChooseScaleSliderView.swift */; };
 		4599251D2704F37B008F7844 /* ChooseScaleSliderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4599251C2704F37B008F7844 /* ChooseScaleSliderView.xib */; };
 		459C56D225FF954F00F15967 /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -1445,6 +1447,8 @@
 		4590F73827B17018007424F4 /* MobileContentCardCollectionPageCardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MobileContentCardCollectionPageCardView.xib; sourceTree = "<group>"; };
 		45935B8728084E240035ACA2 /* SwiftUIPreviewDiContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftUIPreviewDiContainer.swift; sourceTree = "<group>"; };
 		4596622627BBFEFB0059F70B /* ChooseYourOwnAdventureNavBarModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseYourOwnAdventureNavBarModel.swift; sourceTree = "<group>"; };
+		45984583283BC9DF00459258 /* MockToolSettingsShareableItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockToolSettingsShareableItemViewModel.swift; sourceTree = "<group>"; };
+		45984585283BD0FC00459258 /* BaseToolSettingsShareablesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseToolSettingsShareablesViewModel.swift; sourceTree = "<group>"; };
 		4599251A2704F36A008F7844 /* ChooseScaleSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseScaleSliderView.swift; sourceTree = "<group>"; };
 		4599251C2704F37B008F7844 /* ChooseScaleSliderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChooseScaleSliderView.xib; sourceTree = "<group>"; };
 		459C93AF27581FD0006207D2 /* OktaUserAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OktaUserAuthentication.swift; sourceTree = "<group>"; };
@@ -2792,6 +2796,7 @@
 			children = (
 				453B636F2837EACE0086F046 /* ToolSettingsShareablesView.swift */,
 				453B63722837EACE0086F046 /* ToolSettingsShareablesViewModel.swift */,
+				45984585283BD0FC00459258 /* BaseToolSettingsShareablesViewModel.swift */,
 				453B63702837EACE0086F046 /* Views */,
 			);
 			path = ToolSettingsShareables;
@@ -2803,6 +2808,7 @@
 				453B63712837EACE0086F046 /* ToolSettingsShareableItemView.swift */,
 				453B63762837EE4D0086F046 /* ToolSettingsShareableItemViewModel.swift */,
 				453B63782837EEA60086F046 /* BaseToolSettingsShareableItemViewModel.swift */,
+				45984583283BC9DF00459258 /* MockToolSettingsShareableItemViewModel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -7145,6 +7151,7 @@
 				457E199A27C6E3AF00BABD49 /* MobileContentRenderer.swift in Sources */,
 				45AD205025938AC300A096A0 /* PageViewedAnalytics.swift in Sources */,
 				453B63652837C6DD0086F046 /* NoTranslationZipData.swift in Sources */,
+				45984584283BC9DF00459258 /* MockToolSettingsShareableItemViewModel.swift in Sources */,
 				45C61DCE280901410058946F /* KnowGodTractDeepLinkParser.swift in Sources */,
 				45AD1B2325938A4F00A096A0 /* LearnToShareToolViewModelType.swift in Sources */,
 				45CBA009261FB0D30036BEB3 /* LessonView.swift in Sources */,
@@ -7389,6 +7396,7 @@
 				4542F3FF281080AD0016C254 /* DeepLinkingManifestType.swift in Sources */,
 				455583F2269F2DA500C3FF14 /* MobileContentTabViewModelType.swift in Sources */,
 				45AE976027C97A9500C2CB33 /* MobileContentRenderableModel.swift in Sources */,
+				45984586283BD0FC00459258 /* BaseToolSettingsShareablesViewModel.swift in Sources */,
 				45AD1F9225938A9800A096A0 /* AttachmentModelType+SHA256FileLocation.swift in Sources */,
 				45AE975327C97A9500C2CB33 /* Tab+MobileContentRenderableModel.swift in Sources */,
 				45428A7B26712A3A0022A66D /* FirebaseAnalytics+MobileContentAnalyticsSystem.swift in Sources */,

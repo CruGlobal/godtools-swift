@@ -11,7 +11,7 @@ struct ToolSettingsShareablesView: View {
     
     private let relatedContentSize: CGSize = CGSize(width: 112, height: 112)
     
-    @ObservedObject var viewModel: ToolSettingsShareablesViewModel
+    @ObservedObject var viewModel: BaseToolSettingsShareablesViewModel
     
     let leadingInset: CGFloat
     let trailingInset: CGFloat
@@ -36,7 +36,7 @@ struct ToolSettingsShareablesView: View {
 struct ToolSettingsShareablesView_Preview: PreviewProvider {
     static var previews: some View {
         
-        let viewModel = ToolSettingsShareablesViewModel(shareables: [])
+        let viewModel = BaseToolSettingsShareablesViewModel()
         
         ToolSettingsShareablesView(
             viewModel: viewModel,

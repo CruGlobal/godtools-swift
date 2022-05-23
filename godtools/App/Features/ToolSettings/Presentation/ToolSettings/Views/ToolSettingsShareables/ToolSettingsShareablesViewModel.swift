@@ -8,19 +8,22 @@
 import Foundation
 import GodToolsToolParser
 
-class ToolSettingsShareablesViewModel: ObservableObject {
+class ToolSettingsShareablesViewModel: BaseToolSettingsShareablesViewModel {
     
     private let shareables: [Shareable]
+    private let manifestResourcesCache: ManifestResourcesCache
     
-    @Published var numberOfItems: Int = 0
-    
-    required init(shareables: [Shareable]) {
+    required init(shareables: [Shareable], manifestResourcesCache: ManifestResourcesCache) {
         
         self.shareables = shareables
+        self.manifestResourcesCache = manifestResourcesCache
+        
+        super.init()
+        
         self.numberOfItems = shareables.count
     }
     
-    func getShareableItemViewModel(index: Int) -> BaseToolSettingsShareableItemViewModel {
-        return ToolSettingsShareableItemViewModel(shareable: shareables[index])
+    override func getShareableItemViewModel(index: Int) -> BaseToolSettingsShareableItemViewModel {
+        return ToolSettingsShareableItemViewModel(shareable: shareables[index], manifestResourcesCache: manifestResourcesCache)
     }
 }
