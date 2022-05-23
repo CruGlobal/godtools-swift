@@ -104,7 +104,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
         deepLinkingService.deepLinkObserver.removeObserver(self)
     }
     
-    private var toolView: ToolView? {
+    private func getFirstToolViewInFlow() -> ToolView? {
         
         for index in 0 ..< navigationController.viewControllers.count {
             let view: UIViewController = navigationController.viewControllers[index]
@@ -181,7 +181,26 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             
         case .toolSettingsTappedFromTool(let tractRemoteShareSubscriber, let tractRemoteSharePublisher, let resource, let selectedLanguage, let primaryLanguage, let parallelLanguage, let pageNumber, let trainingTipsEnabled):
             
-            let toolSettingsFlow = ToolSettingsFlow(flowDelegate: self, appDiContainer: appDiContainer, trainingTipsEnabled: trainingTipsEnabled)
+            guard let tool = getFirstToolViewInFlow() else {
+                assertionFailure("Failed to fetch ToolSettingsToolType for ToolSettingsFlow in the view hierarchy.  A view with protocol ToolSettingsToolType should exist.")
+                return
+            }
+            
+            let toolSettingsFlow = ToolSettingsFlow(
+                flowDelegate: self,
+                appDiContainer: appDiContainer,
+                sharedNavigationController: navigationController,
+                tool: tool,
+                trainingTipsEnabled: trainingTipsEnabled,
+                tractRemoteSharePublisher: tractRemoteSharePublisher,
+                resource: resource,
+                selectedLanguage: selectedLanguage,
+                primaryLanguage: primaryLanguage,
+                parallelLanguage: parallelLanguage,
+                pageNumber: pageNumber,
+                hidesRemoteShareToolAction: tractRemoteShareSubscriber.isSubscribedToChannel
+                
+            )
             
             navigationController.present(toolSettingsFlow.getInitialView(), animated: true)
             
@@ -204,24 +223,12 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             
             self.shareToolMenuFlow = shareToolMenuFlow*/
             
-        case .toolSettingsFlowCompleted(let state):
+        case .toolSettingsFlowCompleted:
             
             guard toolSettingsFlow != nil else {
                 return
             }
-            
-            switch state {
-            
-            case .userClosedToolSettings:
-                break
-                
-            case .userDisabledTrainingTips:
-                toolView?.setTrainingTipsEnabled(enabled: false)
-                
-            case .userEnabledTrainingTips:
-                toolView?.setTrainingTipsEnabled(enabled: true)
-            }
-            
+        
             navigationController.dismiss(animated: true)
             
             toolSettingsFlow = nil

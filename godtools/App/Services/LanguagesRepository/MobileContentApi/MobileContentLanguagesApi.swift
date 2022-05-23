@@ -1,15 +1,15 @@
 //
-//  LanguagesApi.swift
+//  MobileContentLanguagesApi.swift
 //  godtools
 //
-//  Created by Levi Eggert on 5/28/20.
-//  Copyright © 2020 Cru. All rights reserved.
+//  Created by Levi Eggert on 5/17/22.
+//  Copyright © 2022 Cru. All rights reserved.
 //
 
 import Foundation
 import RequestOperation
 
-class LanguagesApi: LanguagesApiType {
+class MobileContentLanguagesApi {
     
     private let session: URLSession
     private let requestBuilder: RequestBuilder = RequestBuilder()
@@ -71,7 +71,7 @@ class LanguagesApi: LanguagesApiType {
             switch result {
             case .success( let languagesData, let decodeError):
                 if let decodeError = decodeError {
-                    assertionFailure("LanguagesApi: Failed to decode languages: \(decodeError)")
+                    assertionFailure("MobileContentLanguagesApi: Failed to decode languages: \(decodeError)")
                 }
                 complete(.success(languagesData?.data ?? []))
             case .failure(let error):
