@@ -6,7 +6,7 @@
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
 import GodToolsToolParser
 
 class ToolSettingsShareableItemViewModel: BaseToolSettingsShareableItemViewModel {
@@ -22,7 +22,13 @@ class ToolSettingsShareableItemViewModel: BaseToolSettingsShareableItemViewModel
         super.init()
                 
         if let shareableImage = shareable as? ShareableImage {
+            
             self.title = shareableImage.description_?.text ?? ""
+            
+            if let resource = shareableImage.resource, let cachedImage = manifestResourcesCache.getImageFromManifestResources(resource: resource) {
+                
+                self.image = Image(uiImage: cachedImage)
+            }
         }
     }
 }
