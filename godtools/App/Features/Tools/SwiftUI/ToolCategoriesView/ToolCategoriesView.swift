@@ -23,6 +23,7 @@ struct ToolCategoriesView: View {
             Text("Categories")
                 .font(FontLibrary.sfProTextRegular.font(size: 22))
                 .padding(.leading, leadingPadding)
+                .padding(.top, 20)
             
             ScrollView(.horizontal, showsIndicators: false) {
                 
@@ -32,6 +33,7 @@ struct ToolCategoriesView: View {
                     ToolCategoryButtonView(viewModel: buttonViewModel)
                 }
                 .padding(.leading, leadingPadding)
+                .padding([.top, .bottom], 8)
             }
             .fixedSize(horizontal: false, vertical: true)
         }

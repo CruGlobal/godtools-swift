@@ -35,7 +35,6 @@ struct TwoRowHGrid<Content: View>: View {
                     content(topItemIndex)
                     content(bottomItemIndex)
                 }
-                .padding(8)
             }
         }
     }

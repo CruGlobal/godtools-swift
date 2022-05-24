@@ -34,6 +34,11 @@ struct AllToolsList: View {
             ToolCategoriesView(viewModel: viewModel.categoriesViewModel(), leadingPadding: leadingTrailingPadding)
                 .listRowInsets(EdgeInsets())
             
+            SeparatorView()
+                .listRowInsets(EdgeInsets())
+                .padding([.leading, .trailing], leadingTrailingPadding)
+            
+            
             ToolCardsView(viewModel: viewModel, width: width, leadingPadding: leadingTrailingPadding)
         }
         
@@ -59,7 +64,9 @@ struct AllToolsList_Previews: PreviewProvider {
         )
         
         GeometryReader { geo in
-            AllToolsList(viewModel: viewModel, width: geo.size.width)
+            VStack {
+                AllToolsList(viewModel: viewModel, width: geo.size.width)
+            }
         }
     }
 }
