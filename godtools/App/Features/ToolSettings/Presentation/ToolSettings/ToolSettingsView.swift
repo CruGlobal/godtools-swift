@@ -51,8 +51,9 @@ struct ToolSettingsView: View {
                             separatorTrailingInset: contentInsets.trailing
                         )
                         
-                        ToolSettingsRelatedContentView(
-                            viewModel: ToolSettingsRelatedContentViewModel(),
+                        ToolSettingsShareablesView(
+                            viewModel: viewModel.getShareablesViewModel(),
+                            primaryTextColor: primaryTextColor,
                             leadingInset: contentInsets.leading,
                             trailingInset: contentInsets.trailing
                         )
