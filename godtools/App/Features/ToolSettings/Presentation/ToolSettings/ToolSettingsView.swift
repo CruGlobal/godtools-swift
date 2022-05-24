@@ -53,6 +53,7 @@ struct ToolSettingsView: View {
                         
                         ToolSettingsShareablesView(
                             viewModel: viewModel.getShareablesViewModel(),
+                            primaryTextColor: primaryTextColor,
                             leadingInset: contentInsets.leading,
                             trailingInset: contentInsets.trailing
                         )
