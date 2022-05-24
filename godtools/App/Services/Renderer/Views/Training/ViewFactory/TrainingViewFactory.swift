@@ -13,12 +13,9 @@ class TrainingViewFactory: MobileContentPageViewFactoryType {
     
     private let translationsFileCache: TranslationsFileCache
     private let viewedTrainingTipsService: ViewedTrainingTipsService
-    
-    private(set) weak var flowDelegate: FlowDelegate?
+            
+    required init(translationsFileCache: TranslationsFileCache, viewedTrainingTipsService: ViewedTrainingTipsService) {
         
-    required init(flowDelegate: FlowDelegate, translationsFileCache: TranslationsFileCache, viewedTrainingTipsService: ViewedTrainingTipsService) {
-        
-        self.flowDelegate = flowDelegate
         self.translationsFileCache = translationsFileCache
         self.viewedTrainingTipsService = viewedTrainingTipsService
     }

@@ -10,15 +10,11 @@ import Foundation
 import GodToolsToolParser
 
 class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
-    
-    private(set) weak var flowDelegate: FlowDelegate?
-    
+        
     let factories: [MobileContentPageViewFactoryType]
     
     required init(type: MobileContentRendererPageViewFactoriesType, flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, deepLinkingService: DeepLinkingServiceType) {
-        
-        self.flowDelegate = flowDelegate
-        
+                
         var pageViewFactories: [MobileContentPageViewFactoryType] = Array()
         
         let analytics: AnalyticsContainer = appDiContainer.analytics
@@ -65,7 +61,6 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
             )
             
             let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
-                flowDelegate: flowDelegate,
                 translationsFileCache: translationsFileCache,
                 viewedTrainingTipsService: viewedTrainingTipsService
             )
@@ -88,7 +83,6 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
             )
             
             let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
-                flowDelegate: flowDelegate,
                 translationsFileCache: translationsFileCache,
                 viewedTrainingTipsService: viewedTrainingTipsService
             )
@@ -98,7 +92,6 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
         case .trainingTip:
             
             let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
-                flowDelegate: flowDelegate,
                 translationsFileCache: translationsFileCache,
                 viewedTrainingTipsService: viewedTrainingTipsService
             )
