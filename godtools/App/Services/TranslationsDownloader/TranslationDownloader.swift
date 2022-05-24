@@ -16,11 +16,11 @@ class TranslationDownloader: NSObject {
     
     private let realmDatabase: RealmDatabase
     private let resourcesCache: ResourcesCache
-    private let translationsApi: TranslationsApiType
+    private let translationsApi: MobileContentTranslationsApi
         
     let translationsFileCache: TranslationsFileCache
     
-    required init(realmDatabase: RealmDatabase, resourcesCache: ResourcesCache, translationsApi: TranslationsApiType, translationsFileCache: TranslationsFileCache) {
+    required init(realmDatabase: RealmDatabase, resourcesCache: ResourcesCache, translationsApi: MobileContentTranslationsApi, translationsFileCache: TranslationsFileCache) {
         
         self.realmDatabase = realmDatabase
         self.resourcesCache = resourcesCache

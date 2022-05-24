@@ -17,7 +17,7 @@ class AppDiContainer {
     private let sharedIgnoringCacheSession: SharedIgnoreCacheSession = SharedIgnoreCacheSession()
     private let languagesApi: MobileContentLanguagesApi
     private let resourcesApi: ResourcesApiType
-    private let translationsApi: TranslationsApiType
+    private let translationsApi: MobileContentTranslationsApi
     private let realmResourcesCache: RealmResourcesCache
     private let resourcesDownloader: ResourcesDownloader
     private let resourcesCache: ResourcesCache
@@ -72,7 +72,7 @@ class AppDiContainer {
         
         resourcesApi = ResourcesApi(config: config, sharedSession: sharedIgnoringCacheSession)
         
-        translationsApi = TranslationsApi(config: config, sharedSession: sharedIgnoringCacheSession)
+        translationsApi = MobileContentTranslationsApi(config: config, sharedSession: sharedIgnoringCacheSession)
                         
         realmResourcesCache = RealmResourcesCache(realmDatabase: realmDatabase)
         

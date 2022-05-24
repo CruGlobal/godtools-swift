@@ -2,8 +2,8 @@
 //  TranslationManifestData.swift
 //  godtools
 //
-//  Created by Levi Eggert on 6/23/20.
-//  Copyright © 2020 Cru. All rights reserved.
+//  Created by Levi Eggert on 5/20/22.
+//  Copyright © 2022 Cru. All rights reserved.
 //
 
 import Foundation
