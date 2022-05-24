@@ -19,6 +19,7 @@ struct LazyHList<Content: View>: UIViewRepresentable {
     @Binding var numberOfItems: Int
     
     let viewForItem: ((_ index: Int) -> Content)
+    let itemTapped: ((_ index: Int) -> Void)
     
     func makeCoordinator() -> LazyHListCoordinator<Content> {
         return LazyHListCoordinator(lazyHList: self)
