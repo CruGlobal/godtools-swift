@@ -13,6 +13,7 @@ struct ToolSettingsShareablesView: View {
     
     @ObservedObject var viewModel: BaseToolSettingsShareablesViewModel
     
+    let primaryTextColor: Color
     let leadingInset: CGFloat
     let trailingInset: CGFloat
         
@@ -21,6 +22,8 @@ struct ToolSettingsShareablesView: View {
         VStack(alignment: .leading, spacing: 10) {
             
             Text("Related graphics")
+                .foregroundColor(primaryTextColor)
+                .font(FontLibrary.sfProTextRegular.font(size: 19))
                 .padding(EdgeInsets(top: 0, leading: leadingInset, bottom: 0, trailing: 0))
             
             LazyHList<ToolSettingsShareableItemView>(itemSize: relatedContentSize, itemSpacing: 10, contentInsets: EdgeInsets(top: 0, leading: leadingInset, bottom: 0, trailing: trailingInset), showsScrollIndicator: false, numberOfItems: $viewModel.numberOfItems, viewForItem: { index in
@@ -47,6 +50,7 @@ struct ToolSettingsShareablesView_Preview: PreviewProvider {
         
         ToolSettingsShareablesView(
             viewModel: viewModel,
+            primaryTextColor: Color.black,
             leadingInset: 20,
             trailingInset: 20
         )

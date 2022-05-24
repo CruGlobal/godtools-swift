@@ -20,7 +20,12 @@ struct ToolSettingsView: View {
             
             VStack {
                 
-                ToolSettingsTopBarView(viewModel: viewModel.getTopBarViewModel(), leadingInset: contentInsets.leading, trailingInset: contentInsets.trailing)
+                ToolSettingsTopBarView(
+                    viewModel: viewModel.getTopBarViewModel(),
+                    primaryTextColor: primaryTextColor,
+                    leadingInset: contentInsets.leading,
+                    trailingInset: contentInsets.trailing
+                )
                 
                 ScrollView(.vertical, showsIndicators: true) {
                     VStack {
@@ -53,6 +58,7 @@ struct ToolSettingsView: View {
                         
                         ToolSettingsShareablesView(
                             viewModel: viewModel.getShareablesViewModel(),
+                            primaryTextColor: primaryTextColor,
                             leadingInset: contentInsets.leading,
                             trailingInset: contentInsets.trailing
                         )
