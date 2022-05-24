@@ -70,7 +70,22 @@ extension ToolCategoriesViewModel {
             .getAllVisibleToolsSorted()
             .sortedByPrimaryLanguageAvailable(languageSettingsService: languageSettingsService, dataDownloader: dataDownloader)
         
-        let categoryButtonViewModels: [ToolCategoryButtonViewModel] = sortedTools
+        var uniqueCategories = [String]()
+        let toolsWithDuplicateCategoriesRemoved = sortedTools
+            .filter({ tool in
+                let category = tool.attrCategory
+                
+                if uniqueCategories.contains(category) {
+                    return false
+                    
+                } else {
+                    uniqueCategories.append(category)
+                    return true
+                }
+            })
+        
+        
+        let categoryButtonViewModels: [ToolCategoryButtonViewModel] = toolsWithDuplicateCategoriesRemoved
             .map { resource in
                 
                 let category = resource.attrCategory
@@ -79,25 +94,4 @@ extension ToolCategoriesViewModel {
         
         buttonViewModels = categoryButtonViewModels
     }
-    
-//    private func reloadDataForPrimaryLanguage() {
-//        let resourcesCache: ResourcesCache = dataDownloader.resourcesCache
-//
-//        let languageBundle: Bundle
-//
-//        if let primaryLanguage = languageSettingsService.primaryLanguage.value, let primaryTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageId: primaryLanguage.id) {
-//
-//            languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.code) ?? Bundle.main
-//        }
-//        else if let englishTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageCode: "en") {
-//
-//            languageBundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
-//        }
-//        else {
-//
-//            languageBundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
-//        }
-//
-//        category = localizationServices.stringForBundle(bundle: languageBundle, key: "tool_category_\(resource.attrCategory)")
-//    }
 }
