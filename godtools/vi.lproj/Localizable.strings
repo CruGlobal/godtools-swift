@@ -1,3 +1,6 @@
+"allTools.spotlight.title" = "Nổi bật công cụ";
+"allTools.spotlight.description" = "Có lẽ bạn sẽ thích một số công cụ này";
+"allTools.categories.title" = "Các mục";
 "training_tip_ask" = "Hỏi";
 "training_tip_consider" = "Xem xét";
 "training_tip_prepare" = "Chuẩn bị";
@@ -6,37 +9,71 @@
 "start_training" = "Bắt đầu";
 "close" = "Đóng";
 "tool_menu_item.lessons" = "Bài học";
+"parallelLanguage.yesButton.title" = "Rồi";
 "parallelLanguage.noButton.title" = "Không, cám ơn";
+"parallelLanguage.selectButton.title" = "Chọn";
 "parallelLanguage.getStartedButton.title" = "Bắt đầu";
 "parallelLanguage.selectLanguageButton.title" = "Chọn một ngôn ngữ";
 "parellelLanguage.prompt" = "Bạn có muốn thiết lập ngôn ngữ thứ hai không?";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.continueButton.title.closeTutorial" = "Đóng hướng dẫn";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.tool.title" = "Công cụ";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.tool.message" = "Mỗi công cụ sẽ thích hợp với từng mức độ của cuộc trò chuyện - trước, trong và sau.";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.toolTip.title" = "Gợi ý";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.toolTip.message" = "Các gợi ý của God Tools sẽ hướng dẫn để bạn có thể giúp người khác hiểu về Phúc Âm và biết Chúa Giê-xu.";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.screenShare.title" = "Chia sẻ màn hình";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.screenShare.message" = "Bây giờ bạn có thể chia sẻ màn hình từ xa và người kia có thể cùng theo dõi trong lúc bạn sử dụng một công cụ để chia sẻ Phúc Âm.";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.lesson.title" = "Bài học";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.lesson.message" = "Trong mỗi bài học, bạn sẽ học cách giúp bạn có thể trò chuyện nói về Chúa.";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.findTutorial.title" = "Bạn có thể tìm thấy phần hướng dẫn trong mục lục bất cứ lúc nào.";
+
 "onboardingTutorial.beginButton.title" = "Bắt đầu";
 "onboardingQuickStart.2.title" = "Tôi muốn chia sẻ Phúc Âm với người khác";
 "onboardingQuickStart.2.button.title" = "Chọn một trong số bốn công cụ";
 "onboardingTutorial.nextButton.title" = "Tiếp theo";
+"onboardingQuickStart.title" = "Đường link";
 "onboardingQuickStart.0.title" = "Tôi muốn biết nhiều hơn về Chúa";
 "onboardingQuickStart.0.button.title" = "Đọc bài viết";
 "onboardingQuickStart.1.title" = "Tôi muốn học biết về việc chia sẻ Phúc Âm";
 "onboardingQuickStart.1.button.title" = "Xem bài học";
-"tool_offline_favorite_message" = "Để công cụ ngoại tuyến bằng cách gõ vào biểu tượng trái tìm để thêm vào phần ưa thích của bạn.";
+"tool_offline_favorite_message" = "Để sử dụng công cụ khi không có mạng internet, bấm vào biểu tượng trái tim để đưa công cụ vào phần Ưa thích của bạn.";
 
 /* This is a category description of a tool that helps you start a conversation */
-"tool_category_conversation_starter" = "Người khởi tạo Hội thoại";
+"tool_category_conversation_starter" = "Bắt đầu cuộc trò chuyện";
 
 /* This phrase describes a category of tool that helps someone grow in their Christian faith */
-"tool_category_growth" = "Tốc độ phát triển của Cơ đốc Nhân";
+"tool_category_growth" = "Tăng trưởng trong đời sống Cơ Đốc";
 
-"share_link" = "Chia sẻ một liên kết";
+"share_link" = "Chia sẻ đường link";
 "share_tool_menu.remote_share_tool" = "Chia sẻ màn hình của bạn";
 "share_tool_menu.send_tool" = "Gửi công cụ này";
 "share_tool_screen_tutorial.share_your_screen.title" = "Chia sẻ màn hình của bạn";
-"share_tool_screen_tutorial.share_your_screen.message" = "Tùy chọn này sẽ gửi một liên kết đến công cụ này cho một người bạn. Khi liên kết được mở, nó sẽ bắt đầu một phiên chia sẻ màn hình.";
-"share_tool_screen_tutorial.mirrored_experience.title" = "Trải nghiệm nhân đôi";
-"share_tool_screen_tutorial.mirrored_experience.message" = "Khi bạn cuộn công cụ trên điện thoại, màn hình của bạn bè sẽ phản hồi theo cách tương tự. Điều này sẽ giúp bạn xem một công cụ cùng nhau trên 2 thiết bị cùng một lúc.";
+"share_tool_screen_tutorial.share_your_screen.message" = "Tùy chọn này sẽ gửi một đường link về công cụ này cho một người bạn. Khi đường link được mở, nó sẽ bắt đầu phần chia sẻ màn hình.";
+"share_tool_screen_tutorial.mirrored_experience.title" = "Trải nghiệm song song";
+"share_tool_screen_tutorial.mirrored_experience.message" = "Khi bạn lướt công cụ trên điện thoại của mình, màn hình của bạn bè cũng sẽ được lướt theo. Điều này sẽ giúp bạn và người nghe có thể xem cùng công cụ cùng lúc trên 2 thiết bị khác nhau.";
 "share_tool_screen_tutorial.get_started.title" = "Bắt đầu";
-"share_tool_screen_tutorial.get_started.message" = "Gửi liên kết tới một hoặc nhiều người để bắt đầu phiên chia sẻ màn hình ngay bây giờ. Trải nghiệm này hiện yêu cầu tất cả người tham gia phải tải xuống ứng dụng GodTools trên thiết bị của họ.";
+"share_tool_screen_tutorial.get_started.message" = "Gửi link tới một hoặc nhiều người để bắt đầu chia sẻ màn hình ngay bây giờ.";
 "share_tool_remote_link_message" = "Xin chào, hãy theo dõi cùng tôi trong GodTools thông qua chia sẻ màn hình. Đây là liên kết: %@ Nếu bạn không nhận được thông báo này sau đó, liên kết có thể vẫn không hoạt động. Chúng ta có thể thử lại vào lúc khác.";
-"exit_tract_remote_share_session.message" = "Thoát khỏi phiên chia sẻ từ xa bây giờ?";
+"exit_tract_remote_share_session.message" = "Thoát khỏi chế độ chia sẻ từ xa?";
 "load_tool_remote_session.message" = "Bắt đầu chia sẻ màn hình…";
 "learn_to_share_tool.learn_to_share.title" = "Học cách chia sẻ về công cụ này với người khác";
 "learn_to_share_tool.learn_to_share.message" = "Thực hành sử dụng các lời gợi ý sẽ giúp bạn tự tin khi chia sẻ với người khác.";
@@ -44,6 +81,10 @@
 "learn_to_share_tool.tips_light_the_way.message" = "Trên màn hình, bạn sẽ thấy một số biểu tượng. Bấm vào biểu tượng để xem lời gợi ý giúp bạn trình bày về nội dung bạn đang xem trên màn hình.";
 "learn_to_share_tool.light_up_the_tips.title" = "Bật sáng lời gợi ý";
 "learn_to_share_tool.light_up_the_tips.message" = "Khi lời gợi ý bật sáng lên, nó báo hiệu rằng bạn đã hoàn thành phần hướng dẫn đó. Bạn không nhất thiết phải sử dụng tất cả các lời gợi ý trong tất cả các phần khi chia sẻ.";
+"lesson_evaluation.title" = "Xem lại";
+"lesson_evaluation.wasThisHelpful" = "Bài học này có ích cho bạn không?";
+"lesson_evaluation.shareFaith" = "Mức độ bạn cảm thấy sẵn sàng cho cuộc trò chuyện tâm linh?";
+"lesson_evaluation.sendButtonTitle" = "Gửi đánh giá";
 "onboardingTutorial.0.title" = "Sẵn sàng cho mọi cuộc trò chuyện";
 "onboardingTutorial.0.videoLink.title" = "Xem video";
 "onboardingTutorial.1.title" = "Nói về Chúa với người khác";
@@ -79,7 +120,7 @@
 "remove_from_favorites_message" = "Bạn có chắc chắn muốn xóa %@ khỏi mục Ưa thích của mình không?";
 
 /* Gospel indicates the gospel of Jesus Christ */
-"tool_category_gospel" = "Lời mời đến với Kinh Phúc âm";
+"tool_category_gospel" = "Lời mời đến với Phúc Âm";
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Bài viết";
@@ -129,11 +170,11 @@
 // Tool Detail
 "about" = "Giới thiệu về";
 "help" = "Câu hỏi thường gặp";
-"contact_us" = "Liên hệ chúng tôi";
+"contact_us" = "Liên hệ";
 "preview_mode_translators_only" = "Chế độ Xem trước (chỉ dành cho phiên dịch viên)";
-"share_god_tools" = "Chia sẻ Ứng dụng GodTools";
-"share_a_story_with_us" = "Chia sẻ một Câu chuyện với Chúng tôi";
-"terms_of_use" = "Điều khoản Sử dụng";
+"share_god_tools" = "Chia sẻ ứng dụng GodTools";
+"share_a_story_with_us" = "Chia sẻ câu chuyện với chúng tôi";
+"terms_of_use" = "Điều khoản sử dụng";
 "privacy_policy" = "Chính sách Quyền riêng tư";
 "copyright_info" = "Thông tin Bản quyền";
 "share_god_tools_share_sheet_text" = "Tải về ứng dụng GodTools. http://godtoolsapp.com
