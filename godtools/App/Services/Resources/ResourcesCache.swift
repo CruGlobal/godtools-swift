@@ -41,6 +41,11 @@ class ResourcesCache {
         return resources
     }
     
+    func getAllVisibleToolsSorted() -> [ResourceModel] {
+                
+        return getSortedResources().filter({ $0.isNotLessonType && $0.isHidden == false })
+    }
+    
     func getResource(id: String) -> ResourceModel? {
         let realm: Realm = realmDatabase.mainThreadRealm
         if let realmResource = realm.object(ofType: RealmResource.self, forPrimaryKey: id) {

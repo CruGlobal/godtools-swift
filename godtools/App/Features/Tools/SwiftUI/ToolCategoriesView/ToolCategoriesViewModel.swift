@@ -64,39 +64,13 @@ extension ToolCategoriesViewModel {
             }
         }
     }
-    
+        
     private func reloadAvailableCategoriesFromCache() {
-        let sortedResources: [ResourceModel] = dataDownloader.resourcesCache.getSortedResources()
-        let categoryButtonViewModels: [ToolCategoryButtonViewModel] = sortedResources
-            .filter({
-                let resourceType: ResourceType = $0.resourceTypeEnum
-                return (resourceType == .tract || resourceType == .article || resourceType == .chooseYourOwnAdventure) && !$0.isHidden
-            })
-            .sorted(by: { resource1, resource2 in
-                guard let primaryLanguageId = languageSettingsService.primaryLanguage.value?.id else { return true }
-                let resourcesCache = dataDownloader.resourcesCache
-                
-                let resource1HasTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource1.id, languageId: primaryLanguageId) != nil
-                    
-                let resource2HasTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource2.id, languageId: primaryLanguageId) != nil
-                    
-                if resource1HasTranslation && resource2HasTranslation {
-                    // TODO: - sort by category name alphabetically
-                    return true
-                    
-                } else if resource1HasTranslation {
-                    return true
-                    
-                } else if resource2HasTranslation {
-                    return false
-                    
-                } else {
-                    // TODO: - neither have a translation, sort alphabetically
-                    return true
-                }
-                
-                // TODO: - remove duplicates
-            })
+        let sortedTools = dataDownloader.resourcesCache
+            .getAllVisibleToolsSorted()
+            .sortedByPrimaryLanguageAvailable(languageSettingsService: languageSettingsService, dataDownloader: dataDownloader)
+        
+        let categoryButtonViewModels: [ToolCategoryButtonViewModel] = sortedTools
             .map { resource in
                 
                 let category = resource.attrCategory

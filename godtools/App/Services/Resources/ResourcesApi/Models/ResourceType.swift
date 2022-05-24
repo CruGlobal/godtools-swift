@@ -16,3 +16,16 @@ enum ResourceType: String {
     case tract = "tract"
     case unknown = "unknown"
 }
+
+extension ResourceType {
+    
+    var isNotLesson: Bool {
+        switch self {
+        case .article, .chooseYourOwnAdventure, .tract:
+            return true
+            
+        case .lesson, .unknown:
+            return false
+        }
+    }
+}

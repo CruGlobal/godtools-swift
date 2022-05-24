@@ -163,6 +163,10 @@ extension ResourceModel {
         return ResourceType(rawValue: resourceType) ?? .unknown
     }
     
+    var isNotLessonType: Bool {
+        return resourceTypeEnum.isNotLesson
+    }
+    
     func supportsLanguage(languageId: String) -> Bool {
         if !languageId.isEmpty {
             return languageIds.contains(languageId)
