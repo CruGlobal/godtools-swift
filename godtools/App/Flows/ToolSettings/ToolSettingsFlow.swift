@@ -271,7 +271,6 @@ class ToolSettingsFlow: Flow {
             }
             
             self?.dismissLanguagesList()
-            self?.flowDelegate?.navigate(step: .toolSettingsFlowCompleted)
         })
         
         let view = LanguagesListView(viewModel: viewModel)
