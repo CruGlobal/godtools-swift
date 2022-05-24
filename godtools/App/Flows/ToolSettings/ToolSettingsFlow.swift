@@ -205,7 +205,7 @@ class ToolSettingsFlow: Flow {
             flowDelegate: self,
             localizationServices: appDiContainer.localizationServices,
             tutorialItemsProvider: tutorialItemsProvider,
-            shareToolScreenTutorialNumberOfViewsCache: appDiContainer.shareToolScreenTutorialNumberOfViewsCache,
+            shareToolScreenTutorialNumberOfViewsCache: appDiContainer.getShareToolScreenTutorialNumberOfViewsCache(),
             resource: toolData.resource,
             analyticsContainer: appDiContainer.analytics,
             tutorialVideoAnalytics: appDiContainer.getTutorialVideoAnalytics()
