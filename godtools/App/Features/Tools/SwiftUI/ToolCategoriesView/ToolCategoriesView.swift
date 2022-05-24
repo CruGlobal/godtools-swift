@@ -12,7 +12,7 @@ struct ToolCategoriesView: View {
     
     // MARK: - Properties
     
-    var viewModel: ToolCategoriesViewModel
+    @ObservedObject var viewModel: ToolCategoriesViewModel
     let leadingPadding: CGFloat
     
     // MARK: - Body
@@ -44,7 +44,16 @@ struct ToolCategoriesView: View {
 
 struct ToolCategoriesView_Previews: PreviewProvider {
     static var previews: some View {
-        ToolCategoriesView(viewModel: ToolCategoriesViewModel(), leadingPadding: 20)
+        
+        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
+        
+        let viewModel = ToolCategoriesViewModel(
+            dataDownloader: appDiContainer.initialDataDownloader,
+            languageSettingsService: appDiContainer.languageSettingsService,
+            localizationServices: appDiContainer.localizationServices
+        )
+        
+        ToolCategoriesView(viewModel: viewModel, leadingPadding: 20)
             .padding()
             .previewLayout(.sizeThatFits)
     }

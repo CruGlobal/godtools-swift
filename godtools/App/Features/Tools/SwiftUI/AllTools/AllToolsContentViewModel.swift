@@ -69,7 +69,11 @@ extension AllToolsContentViewModel {
     }
     
     func categoriesViewModel() -> ToolCategoriesViewModel {
-        return ToolCategoriesViewModel()
+        return ToolCategoriesViewModel(
+            dataDownloader: dataDownloader,
+            languageSettingsService: languageSettingsService,
+            localizationServices: localizationServices
+        )
     }
     
     func cardViewModel(for tool: ResourceModel) -> ToolCardViewModel {
