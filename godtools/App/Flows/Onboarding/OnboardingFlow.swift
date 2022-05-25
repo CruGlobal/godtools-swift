@@ -47,7 +47,7 @@ class OnboardingFlow: Flow {
             onboardingTutorialItemsRepository: onboardingTutorialItemsRepository,
             onboardingTutorialAvailability: appDiContainer.getOnboardingTutorialAvailability(),
             openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache,
-            customViewBuilder: appDiContainer.onboardingTutorialCustomViewBuilder(flowDelegate: self),
+            customViewBuilder: appDiContainer.getOnboardingTutorialCustomViewBuilder(flowDelegate: self),
             localizationServices: appDiContainer.localizationServices
         )
         let view = OnboardingTutorialView(viewModel: viewModel)

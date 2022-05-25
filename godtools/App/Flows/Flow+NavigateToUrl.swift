@@ -12,7 +12,7 @@ extension Flow {
     
     func navigateToURL(url: URL, exitLink: ExitLinkModel) {
         
-        appDiContainer.exitLinkAnalytics.trackExitLink(exitLink: exitLink)
+        appDiContainer.getExitLinkAnalytics().trackExitLink(exitLink: exitLink)
         
         UIApplication.shared.open(url)
     }
