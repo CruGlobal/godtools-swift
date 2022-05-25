@@ -34,9 +34,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
         self.deepLinkingService = appDiContainer.getDeepLinkingService()
         
         super.init()
-            
-        let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
-        
+                    
         var languageTranslationManifests: [MobileContentRendererLanguageTranslationManifest] = Array()
         
         let primaryLanguageTranslationManifest = MobileContentRendererLanguageTranslationManifest(
@@ -50,20 +48,14 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             
             languageTranslationManifests.append(MobileContentRendererLanguageTranslationManifest(manifest: parallelLanguageManifest, language: parallelLanguage))
         }
-
-        let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
-            type: .tract,
+        
+        let renderer: MobileContentRenderer = appDiContainer.getMobileContentRenderer(
             flowDelegate: self,
-            appDiContainer: appDiContainer,
-            deepLinkingService: deepLinkingService
-        )
-                
-        let renderer = MobileContentRenderer(
+            deepLinkingService: deepLinkingService,
+            type: .tract,
             resource: resource,
             primaryLanguage: primaryLanguage,
-            languageTranslationManifests: languageTranslationManifests,
-            pageViewFactories: pageViewFactories,
-            translationsFileCache: translationsFileCache
+            languageTranslationManifests: languageTranslationManifests
         )
         
         let parentFlowIsHomeFlow: Bool = flowDelegate is AppFlow
