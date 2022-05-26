@@ -277,6 +277,24 @@ class AppDiContainer {
         return MobileContentParser(translationsFileCache: translationsFileCache)
     }
     
+    func getMobileContentRenderer(flowDelegate: FlowDelegate, deepLinkingService: DeepLinkingServiceType, type: MobileContentRendererPageViewFactoriesType, resource: ResourceModel, primaryLanguage: LanguageModel, languageTranslationManifests: [MobileContentRendererLanguageTranslationManifest]) -> MobileContentRenderer {
+                             
+        let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
+            type: type,
+            flowDelegate: flowDelegate,
+            appDiContainer: self,
+            deepLinkingService: deepLinkingService
+        )
+        
+        return MobileContentRenderer(
+            resource: resource,
+            primaryLanguage: primaryLanguage,
+            languageTranslationManifests: languageTranslationManifests,
+            pageViewFactories: pageViewFactories,
+            translationsFileCache: translationsFileCache
+        )
+    }
+    
     func getOnboardingTutorialAvailability() -> OnboardingTutorialAvailabilityType {
         return OnboardingTutorialAvailability(
             getTutorialIsAvailableUseCase: getTutorialIsAvailableUseCase(),

@@ -41,21 +41,15 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
         
         languageTranslationManifests.append(primaryLanguageTranslationManifest)
         
-        let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
-            type: .lesson,
+        let renderer: MobileContentRenderer = appDiContainer.getMobileContentRenderer(
             flowDelegate: self,
-            appDiContainer: appDiContainer,
-            deepLinkingService: deepLinkingService
-        )
-                   
-        let renderer = MobileContentRenderer(
+            deepLinkingService: deepLinkingService,
+            type: .lesson,
             resource: resource,
             primaryLanguage: primaryLanguage,
-            languageTranslationManifests: languageTranslationManifests,
-            pageViewFactories: pageViewFactories,
-            translationsFileCache: appDiContainer.translationsFileCache
+            languageTranslationManifests: languageTranslationManifests
         )
-                
+              
         let viewModel = LessonViewModel(
             flowDelegate: self,
             renderer: renderer,
