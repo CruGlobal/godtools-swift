@@ -8,7 +8,6 @@
 
 import UIKit
 import SwiftUI
-import GodToolsToolParser
 
 class ToolSettingsFlow: Flow {
     
@@ -25,7 +24,7 @@ class ToolSettingsFlow: Flow {
     let navigationController: UINavigationController
     
     required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, toolData: ToolSettingsFlowToolData, tool: ToolSettingsToolType) {
-        
+            
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
@@ -34,7 +33,7 @@ class ToolSettingsFlow: Flow {
     }
     
     func getInitialView() -> UIViewController {
-        
+            
         let viewModel = ToolSettingsViewModel(
             flowDelegate: self,
             manifestResourcesCache: toolData.manifestResourcesCache,
@@ -66,7 +65,7 @@ class ToolSettingsFlow: Flow {
             flowDelegate?.navigate(step: .toolSettingsFlowCompleted)
             
         case .shareLinkTappedFromToolSettings:
-            
+                    
             let viewModel = ShareToolViewModel(
                 resource: toolData.resource,
                 language: toolData.selectedLanguage,
@@ -82,7 +81,7 @@ class ToolSettingsFlow: Flow {
                 animated: true,
                 completion: nil
             )
-            
+                    
         case .screenShareTappedFromToolSettings:
             
             let shareToolScreenTutorialNumberOfViewsCache: ShareToolScreenTutorialNumberOfViewsCache = appDiContainer.getShareToolScreenTutorialNumberOfViewsCache()
@@ -113,7 +112,7 @@ class ToolSettingsFlow: Flow {
             navigateToLoadToolRemoteSession()
                         
         case .finishedLoadingToolRemoteSession(let result):
-                        
+                                
             loadToolRemoteSessionModal?.dismiss(animated: true, completion: nil)
             loadToolRemoteSessionModal = nil
             flowDelegate?.navigate(step: .toolSettingsFlowCompleted)
@@ -194,7 +193,7 @@ class ToolSettingsFlow: Flow {
             break
             
         case .shareableTappedFromToolSettings(let shareable, let imageToShare):
-            
+                    
             let viewModel = ShareShareableViewModel(
                 shareable: shareable,
                 imageToShare: imageToShare
@@ -271,6 +270,7 @@ class ToolSettingsFlow: Flow {
             }
             
             self?.dismissLanguagesList()
+            self?.flowDelegate?.navigate(step: .toolSettingsFlowCompleted)
         })
         
         let view = LanguagesListView(viewModel: viewModel)

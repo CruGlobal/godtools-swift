@@ -61,6 +61,7 @@ class ToolSettingsViewModel: BaseToolSettingsViewModel {
     }
     
     override func getShareablesViewModel() -> BaseToolSettingsShareablesViewModel {
+        
         guard let flowDelegate = flowDelegate else {
             assertionFailure("Failed to instantiate viewModel, flowDelegate should not be nil.")
             return BaseToolSettingsShareablesViewModel()

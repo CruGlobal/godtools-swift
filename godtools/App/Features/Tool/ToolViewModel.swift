@@ -253,6 +253,10 @@ extension ToolViewModel {
     }
     
     func navToolSettingsTapped(page: Int, selectedLanguage: LanguageModel) {
+            
+        guard let pageRenderer = currentPageRenderer else {
+            return
+        }
         
         guard let pageRenderer = currentPageRenderer else {
             return

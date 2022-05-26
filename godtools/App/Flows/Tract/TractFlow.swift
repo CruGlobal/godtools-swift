@@ -34,7 +34,9 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
         self.deepLinkingService = appDiContainer.getDeepLinkingService()
         
         super.init()
-                    
+            
+        let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
+        
         var languageTranslationManifests: [MobileContentRendererLanguageTranslationManifest] = Array()
         
         let primaryLanguageTranslationManifest = MobileContentRendererLanguageTranslationManifest(
@@ -48,14 +50,20 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             
             languageTranslationManifests.append(MobileContentRendererLanguageTranslationManifest(manifest: parallelLanguageManifest, language: parallelLanguage))
         }
-        
-        let renderer: MobileContentRenderer = appDiContainer.getMobileContentRenderer(
-            flowDelegate: self,
-            deepLinkingService: deepLinkingService,
+
+        let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
             type: .tract,
+            flowDelegate: self,
+            appDiContainer: appDiContainer,
+            deepLinkingService: deepLinkingService
+        )
+                
+        let renderer = MobileContentRenderer(
             resource: resource,
             primaryLanguage: primaryLanguage,
-            languageTranslationManifests: languageTranslationManifests
+            languageTranslationManifests: languageTranslationManifests,
+            pageViewFactories: pageViewFactories,
+            translationsFileCache: translationsFileCache
         )
         
         let parentFlowIsHomeFlow: Bool = flowDelegate is AppFlow
@@ -172,7 +180,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             }
             
         case .toolSettingsTappedFromTool(let toolData):
-            
+                    
             guard let tool = getFirstToolViewInFlow() else {
                 assertionFailure("Failed to fetch ToolSettingsToolType for ToolSettingsFlow in the view hierarchy.  A view with protocol ToolSettingsToolType should exist.")
                 return
@@ -190,7 +198,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             
             self.toolSettingsFlow = toolSettingsFlow
             
-            // TODO: GT-1565 remove ShareToolMenuFlow. ~Levi            
+            // TODO: GT-1565 remove ShareToolMenuFlow. ~Levi
             /*
             let shareToolMenuFlow = ShareToolMenuFlow(
                 flowDelegate: self,
