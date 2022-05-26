@@ -153,7 +153,7 @@
 "set_your_languages" = "Thiết lập Ngôn ngữ của bạn";
 "okay" = "Ok";
 // Menu
-"menu_general" = "Nói chung";
+"menu_general" = "Tổng quát";
 "menu_account" = "Tài khoản";
 "menu_share" = "Chia sẻ";
 "menu_legal" = "Hợp pháp";
@@ -169,13 +169,13 @@
 
 // Tool Detail
 "about" = "Giới thiệu về";
-"help" = "Câu hỏi thường gặp";
+"help" = "Câu hỏi thường gặp";
 "contact_us" = "Liên hệ";
 "preview_mode_translators_only" = "Chế độ Xem trước (chỉ dành cho phiên dịch viên)";
 "share_god_tools" = "Chia sẻ ứng dụng GodTools";
 "share_a_story_with_us" = "Chia sẻ câu chuyện với chúng tôi";
 "terms_of_use" = "Điều khoản sử dụng";
-"privacy_policy" = "Chính sách Quyền riêng tư";
+"privacy_policy" = "Chính sách quyền riêng tư";
 "copyright_info" = "Thông tin Bản quyền";
 "share_god_tools_share_sheet_text" = "Tải về ứng dụng GodTools. http://godtoolsapp.com
 
@@ -188,12 +188,12 @@ Một phiên bản trực tuyến có thể tìm thấy ở https://knowgod.com/
 "total_languages" = "%d ngôn ngữ";
 
 // Language Settings
-"primary_language" = "Ngôn ngữ Chính";
+"primary_language" = "Ngôn ngữ chính";
 "select_primary_language" = "Chọn một Ngôn ngữ Chính";
-"parallel_language" = "Ngôn ngữ Tương đương";
-"select_parallel_language" = "Chọn một Ngôn ngữ Tương đương";
+"parallel_language" = "Ngôn ngữ song song";
+"select_parallel_language" = "Chọn một ngôn ngữ song song";
 "share_god_tools_native_language" = "Chia sẻ GodTools với một ai đó bằng ngôn ngữ bản địa của họ";
-"not_every_tool_is_available" = "Không phải tất cả các công cụ đều có sẵn trong mọi ngôn ngữ";
+"not_every_tool_is_available" = "Không phải mọi công cụ đều có sẵn trong mọi ngôn ngữ.";
 
 // Settings
 "settings" = "Các thiết lập";
@@ -224,7 +224,7 @@ Có thể tải xuống ứng dụng từ https://godtoolsapp.com";
 "remove" = "Loại bỏ";
 "clear" = "Rõ ràng";
 /* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Mở Công cụ";
+"toolinfo_opentool" = "Mở công cụ";
 
 // Alerts
 "error" = "Lỗi";
@@ -235,30 +235,30 @@ Có thể tải xuống ứng dụng từ https://godtoolsapp.com";
 "onboardingTutorial.getStartedButton.title" = "Bắt đầu";
 
 // About
-"general_about_1" = "GodTools giúp bạn chia sẻ niềm tin của mình theo một cách dễ hiểu và dễ dàng.";
+"general_about_1" = "GodTools giúp bạn chia sẻ niềm tin của mình theo cách đơn giản và rõ ràng.";
 // Tutorial
 "tutorial.tutorialItem.0.title" = "Xem";
-"general_about_2" = "Những công cụ này giúp bạn giải thích một cách tự tin với một ai đó cách thức họ bắt đầu một mối quan hệ với Chúa qua Jesus Christ, ngay cả khi bạn chưa từng chia sẻ niềm tin của mình trước đó hoặc họ nói một thứ ngôn ngữ khác";
+"general_about_2" = "Những công cụ này giúp bạn tự tin trình bày với người khác cách họ có thể bắt đầu mối quan hệ với Đức Chúa Trời qua Chúa Giê-xu Christ, ngay cả khi bạn chưa từng chia sẻ đức tin hoặc người nghe nói ngôn ngữ khác với bạn.";
 "tutorial.tutorialItem.0.message" = "Xem GodTools có gì trong video demo của chúng tôi
 (Chạm vào video để hiển thị cài đặt cho phụ đề)";
-"general_about_3" = "Chọn từ vô số các công cụ dựa trên ưu tiên và khán giả của bạn. Không phải tất cả các công cụ đều sẵn có trong mọi ngôn ngữ.";
+"general_about_3" = "Chọn các công cụ dựa trên sự ưu tiên và người bạn sắp chia sẻ. Không phải tất cả các công cụ đều sẵn có trong mọi ngôn ngữ.";
 "tutorial.tutorialItem.1.title" = "Chuẩn bị";
-"general_about_4" = "Các đường dẫn đến các nguồn khác được gộp lại ở cuối mỗi công cụ.";
-"tutorial.tutorialItem.1.message" = "Làm quen với một số công cụ của bạn. Công cụ \"Dạy tôi chia sẻ\" là một nơi phù hợp để bắt đầu.
+"general_about_4" = "Ở trang cuối của mỗi công cụ đều có đường link đến các nguồn tham khảo thêm.";
+"tutorial.tutorialItem.1.message" = "Làm quen với một số công cụ. Bạn có thể bắt đầu với công cụ \"Hướng Dẫn Tôi Chia Sẻ\".
 
-Nhấn nút thông tin trên bất kỳ công cụ nào để xem thêm thông tin.";
-"general_about_5" = "Kết nối trực tuyến là cần thiết để tải về mỗi công cụ và/hoặc ngôn ngữ mới. Khi đã tải về rồi, chúng có thể được sử dụng trực tuyến.";
+Nhấn nút \"Giới thiệu\" để biết thêm về công cụ.";
+"general_about_5" = "Để tải công cụ mới hoặc ngôn ngữ mới, điện thoại cần được kết nối internet. Sau khi tải về, bạn hoàn toàn có thể sử dụng chúng offline.";
 "tutorial.tutorialItem.2.title" = "Thử";
-"general_about_6" = "Thắc mắc? Gợi ý? Yêu cầu? Hãy liên hệ chúng tôi tại support@godtoolsapp.com";
-"tutorial.tutorialItem.2.message" = "Mỗi người đều bắt đầu là người mới mới học. Hãy thử sử dụng công cụ trong một cuộc trò chuyện và xem bạn học được những gì.";
-"general_about_7" = "Bạn có thể tìm thấy một phiên bản trực tuyến của những công cụ này tại knowgod.com. Được gắn vào nó trên trang của riêng bạn!";
+"general_about_6" = "Bạn có thắc mắc, đóng góp, đề xuất? Hãy liên hệ chúng tôi tại support@godtoolsapp.com";
+"tutorial.tutorialItem.2.message" = "Mỗi người khi bắt đầu đều là người mới học. Hãy thử sử dụng một công cụ trong một cuộc trò chuyện và xem bạn học được những gì.";
+"general_about_7" = "Bạn có thể tìm thấy một phiên bản trực tuyến của những công cụ này tại knowgod.com/vi. Bạn cũng có thể tạo nhúng trên trang web riêng của mình.";
 "tutorial.tutorialItem.3.title" = "Bạn có thể xem lại hướng dẫn này trong menu";
-"general_about_8" = "Ghé thăm godtoolsapp.com để biết thêm thông tin.";
+"general_about_8" = "Ghé thăm godtoolsapp.com/vi để biết thêm thông tin.";
 "tutorial.continueButton.title.continue" = "Tiếp tục";
-"general_about_9" = "Vì bạn đã bắt đầu chia sẻ niềm tin của mình, hãy ghi nhớ rằng Chúa là người thay đổi trái tim. Hãy yêu thương từng người thật tốt bằng cách lắng nghe để thấu hiểu.";
+"general_about_9" = "Khi bạn chủ động chia sẻ đức tin của mình, hãy nhớ rằng chính Chúa là Đấng thay đổi tấm lòng. Hãy bày tỏ tình yêu thương với từng người bạn chia sẻ bằng cách lắng nghe để hiểu hơn về họ.";
 "tutorial.continueButton.title.startUsingGodTools" = "Bắt đầu sử dụng GodTools";
 
-"general_about_10" = "\"Hãy để cuộc hội thoại của bạn luôn chứa đầy sự duyên dáng, nồng nhiệt để bạn có thể biết cách trả lời mọi người.\" Colossians 4:6";
+"general_about_10" = "\"Lời nói của anh em phải luôn có ân hậu và nêm thêm muối, để anh em biết phải đối đáp thế nào với mỗi người.\" Cô-lô-se 4:6";
 
 // OpenTutorial
 "openTutorial.showTutorialLabel.text" = "Cho tôi xem hướng dẫn";
@@ -284,11 +284,11 @@ Nhấn nút thông tin trên bất kỳ công cụ nào để xem thêm thông t
 "onboardingWelcome.titleLabel.welcome" = "Chào mừng ";
 "accountActivity.globalAnalytics.users.title" = "Người dùng\nduy nhất";
 "onboardingWelcome.titleLabel.tagline" = "Giúp bạn chia sẻ đức tin của mình";
-"accountActivity.globalAnalytics.gospelPresentation.title" = "Bài thuyết trình\nKinh Phúc âm";
-"accountActivity.globalAnalytics.launches.title" = "Các phiên";
+"accountActivity.globalAnalytics.gospelPresentation.title" = "Trình bày\nPhúc Âm";
+"accountActivity.globalAnalytics.launches.title" = "Phần";
 // OnboardingTutorial
 "onboardingTutorial.aboutAppItem.0.title" = "Chia sẻ với người khác";
-"accountActivity.globalAnalytics.countries.title" = "Các quốc gia";
+"accountActivity.globalAnalytics.countries.title" = "Quốc gia";
 
 "onboardingTutorial.aboutAppItem.0.message" = "GodTools được xây dựng để dẫn dắt các cuộc trò chuyện về đức tin của bạn";
 "onboardingTutorial.aboutAppItem.1.title" = "Chọn công cụ của bạn";
