@@ -10,6 +10,8 @@ import Foundation
 
 class BaseToolSettingsTopBarViewModel: ObservableObject {
     
+    @Published var title: String = ""
+    
     init() {}
     
     func closeTapped() {}

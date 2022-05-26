@@ -28,6 +28,8 @@ class ToolSettingsViewModel: BaseToolSettingsViewModel {
         self.parallelLanguage = parallelLanguage
         self.trainingTipsEnabled = trainingTipsEnabled
         self.shareables = shareables
+        
+        super.init()        
     }
     
     override func getTopBarViewModel() -> BaseToolSettingsTopBarViewModel {
@@ -37,7 +39,10 @@ class ToolSettingsViewModel: BaseToolSettingsViewModel {
             return BaseToolSettingsTopBarViewModel()
         }
 
-        return ToolSettingsTopBarViewModel(flowDelegate: flowDelegate)
+        return ToolSettingsTopBarViewModel(
+            flowDelegate: flowDelegate,
+            localizationServices: localizationServices
+        )
     }
     
     override func getOptionsViewModel() -> BaseToolSettingsOptionsViewModel {
@@ -47,7 +52,11 @@ class ToolSettingsViewModel: BaseToolSettingsViewModel {
             return BaseToolSettingsOptionsViewModel()
         }
         
-        return ToolSettingsOptionsViewModel(flowDelegate: flowDelegate, trainingTipsEnabled: trainingTipsEnabled)
+        return ToolSettingsOptionsViewModel(
+            flowDelegate: flowDelegate,
+            localizationServices: localizationServices,
+            trainingTipsEnabled: trainingTipsEnabled
+        )
     }
     
     override func getChooseLanguageViewModel() -> BaseToolSettingsChooseLanguageViewModel {
@@ -57,7 +66,12 @@ class ToolSettingsViewModel: BaseToolSettingsViewModel {
             return BaseToolSettingsChooseLanguageViewModel()
         }
         
-        return ToolSettingsChooseLanguageViewModel(flowDelegate: flowDelegate, localizationServices: localizationServices, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage)
+        return ToolSettingsChooseLanguageViewModel(
+            flowDelegate: flowDelegate,
+            localizationServices: localizationServices,
+            primaryLanguage: primaryLanguage,
+            parallelLanguage: parallelLanguage
+        )
     }
     
     override func getShareablesViewModel() -> BaseToolSettingsShareablesViewModel {
@@ -67,6 +81,11 @@ class ToolSettingsViewModel: BaseToolSettingsViewModel {
             return BaseToolSettingsShareablesViewModel()
         }
         
-        return ToolSettingsShareablesViewModel(flowDelegate: flowDelegate, shareables: shareables, manifestResourcesCache: manifestResourcesCache)
+        return ToolSettingsShareablesViewModel(
+            flowDelegate: flowDelegate,
+            shareables: shareables,
+            manifestResourcesCache: manifestResourcesCache,
+            localizationServices: localizationServices
+        )
     }
 }

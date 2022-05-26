@@ -16,7 +16,7 @@ struct ToolSettingsTopBarView: View {
     
     var body: some View {
         HStack {
-            Text("Tool Settings")
+            Text(viewModel.title)
             Spacer()
             Button {
                 viewModel.closeTapped()

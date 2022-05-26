@@ -9,7 +9,7 @@
 import Foundation
 
 class BaseToolSettingsViewModel: ObservableObject {
-    
+        
     init() {}
     
     func getTopBarViewModel() -> BaseToolSettingsTopBarViewModel {

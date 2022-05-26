@@ -19,6 +19,8 @@ class ToolSettingsChooseLanguageViewModel: BaseToolSettingsChooseLanguageViewMod
         self.localizationServices = localizationServices
         
         super.init()
+        
+        title = localizationServices.stringForMainBundle(key: "toolSettings.chooseLanguage.title")
                 
         primaryLanguageTitle = LanguageViewModel(language: primaryLanguage, localizationServices: localizationServices).translatedLanguageName
         

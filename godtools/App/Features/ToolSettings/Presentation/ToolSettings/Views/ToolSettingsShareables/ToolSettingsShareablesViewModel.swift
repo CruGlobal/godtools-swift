@@ -13,18 +13,21 @@ class ToolSettingsShareablesViewModel: BaseToolSettingsShareablesViewModel {
     
     private let shareables: [Shareable]
     private let manifestResourcesCache: ManifestResourcesCache
+    private let localizationServices: LocalizationServices
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, shareables: [Shareable], manifestResourcesCache: ManifestResourcesCache) {
+    required init(flowDelegate: FlowDelegate, shareables: [Shareable], manifestResourcesCache: ManifestResourcesCache, localizationServices: LocalizationServices) {
         
         self.flowDelegate = flowDelegate
         self.shareables = shareables
         self.manifestResourcesCache = manifestResourcesCache
+        self.localizationServices = localizationServices
         
         super.init()
         
-        self.numberOfItems = shareables.count
+        title = localizationServices.stringForMainBundle(key: "toolSettings.shareables.title")
+        numberOfItems = shareables.count
     }
     
     override func getShareableItemViewModel(index: Int) -> BaseToolSettingsShareableItemViewModel {

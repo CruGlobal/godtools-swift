@@ -21,7 +21,7 @@ struct ToolSettingsShareablesView: View {
         
         VStack(alignment: .leading, spacing: 10) {
             
-            Text("Related graphics")
+            Text(viewModel.title)
                 .foregroundColor(primaryTextColor)
                 .font(FontLibrary.sfProTextRegular.font(size: 19))
                 .padding(EdgeInsets(top: 0, leading: leadingInset, bottom: 0, trailing: 0))
