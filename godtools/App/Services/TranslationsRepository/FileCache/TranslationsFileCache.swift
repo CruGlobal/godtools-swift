@@ -37,40 +37,16 @@ class TranslationsFileCache {
     func getData(location: SHA256FileLocation) -> Result<Data?, Error> {
         return sha256FileCache.getData(location: location)
     }
-    
-    // MARK: - Get Translation Manifest By Translation Id
-    
-    func getTranslationManifestOnMainThread(translationId: String) -> Result<TranslationManifestData, TranslationsFileCacheError> {
         
-        return getTranslationManifest(realm: realmDatabase.mainThreadRealm, translationId: translationId)
+    func getTranslation(translationId: String) -> Result<TranslationManifestData, TranslationsFileCacheError> {
+        
+        return getTranslations(translationIds: [translationId])[0]
     }
     
-    func getTranslationManifest(translationId: String, completeOnMain: @escaping ((_ result: Result<TranslationManifestData, TranslationsFileCacheError>) -> Void)) {
-                
-        realmDatabase.background { [weak self] (realm: Realm) in
-            
-            guard let translationsFileCache = self else {
-                return
-            }
-            
-            let result: Result<TranslationManifestData, TranslationsFileCacheError> = translationsFileCache.getTranslationManifest(
-                realm: realm,
-                translationId: translationId
-            )
-            
-            DispatchQueue.main.async {
-                completeOnMain(result)
-            }
-        }
-    }
-    
-    func getTranslationManifest(realm: Realm, translationId: String) -> Result<TranslationManifestData, TranslationsFileCacheError> {
-                
-        return getTranslationManifests(realm: realm, translationIds: [translationId])[0]
-    }
-    
-    func getTranslationManifests(realm: Realm, translationIds: [String]) -> [Result<TranslationManifestData, TranslationsFileCacheError>] {
-                
+    func getTranslations(translationIds: [String]) -> [Result<TranslationManifestData, TranslationsFileCacheError>] {
+        
+        let realm: Realm = realmDatabase.mainThreadRealm
+        
         var results: [Result<TranslationManifestData, TranslationsFileCacheError>] = Array()
         
         for translationId in translationIds {
