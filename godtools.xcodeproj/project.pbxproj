@@ -950,7 +950,6 @@
 		45FB160927DBDDB60009DF8E /* ArticleDeepLinkFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FB15EC27DBDDB50009DF8E /* ArticleDeepLinkFlow.swift */; };
 		45FB160A27DBDDB60009DF8E /* OnboardingFlowCompletedState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FB15EE27DBDDB50009DF8E /* OnboardingFlowCompletedState.swift */; };
 		45FB160B27DBDDB60009DF8E /* OnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FB15EF27DBDDB50009DF8E /* OnboardingFlow.swift */; };
-		45FB160C27DBDDB60009DF8E /* ShareToolMenuFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FB15F127DBDDB50009DF8E /* ShareToolMenuFlow.swift */; };
 		45FB160D27DBDDB60009DF8E /* TractFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FB15F327DBDDB50009DF8E /* TractFlow.swift */; };
 		45FB160E27DBDDB60009DF8E /* TractFlowCompletedState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FB15F427DBDDB50009DF8E /* TractFlowCompletedState.swift */; };
 		45FB160F27DBDDB60009DF8E /* LanguageSettingsFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FB15F627DBDDB50009DF8E /* LanguageSettingsFlow.swift */; };
@@ -2024,7 +2023,6 @@
 		45FB15EC27DBDDB50009DF8E /* ArticleDeepLinkFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleDeepLinkFlow.swift; sourceTree = "<group>"; };
 		45FB15EE27DBDDB50009DF8E /* OnboardingFlowCompletedState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingFlowCompletedState.swift; sourceTree = "<group>"; };
 		45FB15EF27DBDDB50009DF8E /* OnboardingFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingFlow.swift; sourceTree = "<group>"; };
-		45FB15F127DBDDB50009DF8E /* ShareToolMenuFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareToolMenuFlow.swift; sourceTree = "<group>"; };
 		45FB15F327DBDDB50009DF8E /* TractFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractFlow.swift; sourceTree = "<group>"; };
 		45FB15F427DBDDB50009DF8E /* TractFlowCompletedState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractFlowCompletedState.swift; sourceTree = "<group>"; };
 		45FB15F627DBDDB50009DF8E /* LanguageSettingsFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageSettingsFlow.swift; sourceTree = "<group>"; };
@@ -4459,7 +4457,6 @@
 				45FB15E827DBDDB40009DF8E /* Lesson */,
 				45FB15FE27DBDDB50009DF8E /* Menu */,
 				45FB15ED27DBDDB50009DF8E /* Onboarding */,
-				45FB15F027DBDDB50009DF8E /* ShareToolMenu */,
 				45FB15F927DBDDB50009DF8E /* ToolNavigation */,
 				451CEDFB282C322F006E5105 /* ToolSettings */,
 				45FB15F227DBDDB50009DF8E /* Tract */,
@@ -5932,14 +5929,6 @@
 				45FB15EE27DBDDB50009DF8E /* OnboardingFlowCompletedState.swift */,
 			);
 			path = Onboarding;
-			sourceTree = "<group>";
-		};
-		45FB15F027DBDDB50009DF8E /* ShareToolMenu */ = {
-			isa = PBXGroup;
-			children = (
-				45FB15F127DBDDB50009DF8E /* ShareToolMenuFlow.swift */,
-			);
-			path = ShareToolMenu;
 			sourceTree = "<group>";
 		};
 		45FB15F227DBDDB50009DF8E /* Tract */ = {
@@ -7451,7 +7440,6 @@
 				45F38D312833ED90009E3E15 /* MobileContentLanguagesApi.swift in Sources */,
 				455583DB269F2DA500C3FF14 /* MobileContentAccordionViewModel.swift in Sources */,
 				45E39ED527457CB5006A59E4 /* MobileContentAnimationViewModelType.swift in Sources */,
-				45FB160C27DBDDB60009DF8E /* ShareToolMenuFlow.swift in Sources */,
 				4555833B269F2C7B00C3FF14 /* ToolPageHeroViewModel.swift in Sources */,
 				450EE366283FC25F0025C8EC /* ShareToolRemoteSessionURLView.swift in Sources */,
 				45FB160927DBDDB60009DF8E /* ArticleDeepLinkFlow.swift in Sources */,

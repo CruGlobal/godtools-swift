@@ -85,11 +85,7 @@ enum FlowStep {
     case languageSelectedFromParallelLanguageList
     case backgroundTappedFromSetupParallelLanguage
     case backgroundTappedFromParallelLanguageList
-    
-    // share tool menu
-    case shareToolTappedFromShareToolMenu
-    case remoteShareToolTappedFromShareToolMenu
-    
+        
     // tutorial
     case closeTappedFromTutorial
     case startUsingGodToolsTappedFromTutorial

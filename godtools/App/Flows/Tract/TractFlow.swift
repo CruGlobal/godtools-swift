@@ -13,7 +13,6 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
     
     private let deepLinkingService: DeepLinkingServiceType
     
-    private var shareToolMenuFlow: ShareToolMenuFlow?
     private var toolSettingsFlow: ToolSettingsFlow?
     
     private weak var flowDelegate: FlowDelegate?
@@ -198,23 +197,6 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             
             self.toolSettingsFlow = toolSettingsFlow
             
-            // TODO: GT-1565 remove ShareToolMenuFlow. ~Levi
-            /*
-            let shareToolMenuFlow = ShareToolMenuFlow(
-                flowDelegate: self,
-                appDiContainer: appDiContainer,
-                navigationController: navigationController,
-                tractRemoteSharePublisher: tractRemoteSharePublisher,
-                resource: resource,
-                selectedLanguage: selectedLanguage,
-                primaryLanguage: primaryLanguage,
-                parallelLanguage: parallelLanguage,
-                pageNumber: pageNumber,
-                hidesRemoteShareToolAction: tractRemoteShareSubscriber.isSubscribedToChannel
-            )
-            
-            self.shareToolMenuFlow = shareToolMenuFlow*/
-            
         case .toolSettingsFlowCompleted:
             
             guard toolSettingsFlow != nil else {
@@ -242,10 +224,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             
         case .closeTappedFromToolTraining:
             navigationController.dismiss(animated: true, completion: nil)
-            
-        case .closeTappedFromShareToolScreenTutorial:
-            self.shareToolMenuFlow = nil
-            
+                        
         case .tractFlowCompleted(let state):
             
             guard tractFlow != nil else {
