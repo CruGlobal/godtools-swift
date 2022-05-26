@@ -179,8 +179,8 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
                 closeTool()
             }
             
-        case .toolSettingsTappedFromTool(let tractRemoteShareSubscriber, let tractRemoteSharePublisher, let resource, let selectedLanguage, let primaryLanguage, let parallelLanguage, let pageNumber, let trainingTipsEnabled):
-            
+        case .toolSettingsTappedFromTool(let toolData):
+                    
             guard let tool = getFirstToolViewInFlow() else {
                 assertionFailure("Failed to fetch ToolSettingsToolType for ToolSettingsFlow in the view hierarchy.  A view with protocol ToolSettingsToolType should exist.")
                 return
@@ -190,23 +190,15 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
                 flowDelegate: self,
                 appDiContainer: appDiContainer,
                 sharedNavigationController: navigationController,
-                tool: tool,
-                trainingTipsEnabled: trainingTipsEnabled,
-                tractRemoteSharePublisher: tractRemoteSharePublisher,
-                resource: resource,
-                selectedLanguage: selectedLanguage,
-                primaryLanguage: primaryLanguage,
-                parallelLanguage: parallelLanguage,
-                pageNumber: pageNumber,
-                hidesRemoteShareToolAction: tractRemoteShareSubscriber.isSubscribedToChannel
-                
+                toolData: toolData,
+                tool: tool
             )
             
             navigationController.present(toolSettingsFlow.getInitialView(), animated: true)
             
             self.toolSettingsFlow = toolSettingsFlow
             
-            // TODO: GT-1565 remove ShareToolMenuFlow. ~Levi            
+            // TODO: GT-1565 remove ShareToolMenuFlow. ~Levi
             /*
             let shareToolMenuFlow = ShareToolMenuFlow(
                 flowDelegate: self,
