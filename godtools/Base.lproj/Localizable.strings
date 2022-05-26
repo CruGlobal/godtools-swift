@@ -318,6 +318,7 @@ Press the About button on any tool for more info.";
 "toolSettings.title" = "Tool Settings";
 "toolSettings.option.shareLink.title" = "Share link";
 "toolSettings.option.screenShare.title" = "Screen share";
-"toolSettings.option.trainingTips.title" = "Training tips";
+"toolSettings.option.trainingTips.show.title" = "Training tips";
+"toolSettings.option.trainingTips.hide.title" = "Hide tips";
 "toolSettings.chooseLanguage.title" = "Parallel Language";
 "toolSettings.shareables.title" = "Related graphics";
