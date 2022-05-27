@@ -232,23 +232,23 @@ class DownloadToolViewModel: NSObject, DownloadToolViewModelType {
             
         case .success(let toolLanguageTranslations):
             
-            let getToolTranslationManifests = GetToolTranslationManifestsFromCache(
+            let getToolTranslations = GetToolTranslationsFromCache(
                 dataDownloader: initialDataDownloader,
                 resourcesCache: resourcesCache,
                 translationsFileCache: translationsFileCache
             )
             
-            let getToolTranslationManifestsCacheResult: GetToolTranslationManifestsFromCacheResult = getToolTranslationManifests.getTranslationManifests(
+            let getToolTranslationsCacheResult: GetToolTranslationsFromCacheResult = getToolTranslations.getTranslations(
                 resource: toolLanguageTranslations.resource,
                 languages: toolLanguageTranslations.languages
             )
             
-            guard getToolTranslationManifestsCacheResult.translationIdsNeededDownloading.isEmpty else {
-                downloadTranslationManifestsFromRemoteDatabase(translationIds: getToolTranslationManifestsCacheResult.translationIdsNeededDownloading)
+            guard getToolTranslationsCacheResult.translationIdsNeededDownloading.isEmpty else {
+                downloadTranslationManifestsFromRemoteDatabase(translationIds: getToolTranslationsCacheResult.translationIdsNeededDownloading)
                 return
             }
             
-            let toolData = DownloadedToolData(resource: toolLanguageTranslations.resource, languageTranslations: getToolTranslationManifestsCacheResult.toolTranslations)
+            let toolData = DownloadedToolData(resource: toolLanguageTranslations.resource, languageTranslations: getToolTranslationsCacheResult.toolTranslations)
             
             downloadedToolResult = .success(toolData)
                         
