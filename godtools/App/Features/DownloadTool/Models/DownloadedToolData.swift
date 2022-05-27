@@ -11,9 +11,9 @@ import Foundation
 class DownloadedToolData {
     
     let resource: ResourceModel
-    let languageTranslations: [ToolTranslationData]
+    let languageTranslations: [ToolTranslation]
     
-    required init(resource: ResourceModel, languageTranslations: [ToolTranslationData]) {
+    required init(resource: ResourceModel, languageTranslations: [ToolTranslation]) {
         
         self.resource = resource
         self.languageTranslations = languageTranslations

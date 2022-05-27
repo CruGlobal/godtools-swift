@@ -1,5 +1,5 @@
 //
-//  GetToolTranslationManifestsFromCacheResult.swift
+//  GetToolTranslationsFromCacheResult.swift
 //  godtools
 //
 //  Created by Levi Eggert on 1/17/22.
@@ -8,12 +8,12 @@
 
 import Foundation
 
-class GetToolTranslationManifestsFromCacheResult {
+class GetToolTranslationsFromCacheResult {
     
-    let toolTranslations: [ToolTranslationData]
+    let toolTranslations: [ToolTranslation]
     let translationIdsNeededDownloading: [String]
     
-    required init(toolTranslations: [ToolTranslationData], translationIdsNeededDownloading: [String]) {
+    required init(toolTranslations: [ToolTranslation], translationIdsNeededDownloading: [String]) {
         
         self.toolTranslations = toolTranslations
         self.translationIdsNeededDownloading = translationIdsNeededDownloading

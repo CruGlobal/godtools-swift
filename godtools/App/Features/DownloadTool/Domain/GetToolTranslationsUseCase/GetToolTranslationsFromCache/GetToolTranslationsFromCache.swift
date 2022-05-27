@@ -1,5 +1,5 @@
 //
-//  GetToolTranslationManifestsFromCache.swift
+//  GetToolTranslationsFromCache.swift
 //  godtools
 //
 //  Created by Levi Eggert on 1/17/22.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class GetToolTranslationManifestsFromCache {
+class GetToolTranslationsFromCache {
     
     private let dataDownloader: InitialDataDownloader
     private let resourcesCache: ResourcesCache
@@ -21,11 +21,11 @@ class GetToolTranslationManifestsFromCache {
         self.translationsFileCache = translationsFileCache
     }
     
-    func getTranslationManifests(resource: ResourceModel, languages: [LanguageModel]) -> GetToolTranslationManifestsFromCacheResult {
+    func getTranslations(resource: ResourceModel, languages: [LanguageModel]) -> GetToolTranslationsFromCacheResult {
         
         let resourceId: String = resource.id
         
-        var toolTranslations: [ToolTranslationData] = Array()
+        var toolTranslations: [ToolTranslation] = Array()
         var translationIdsNeededDownloading: [String] = Array()
         
         for language in languages {
@@ -58,21 +58,21 @@ class GetToolTranslationManifestsFromCache {
             )
         }
                 
-        return GetToolTranslationManifestsFromCacheResult(
+        return GetToolTranslationsFromCacheResult(
             toolTranslations: toolTranslations,
             translationIdsNeededDownloading: translationIdsNeededDownloading
         )
     }
     
-    private func getTranslationManifest(resource: ResourceModel, language: LanguageModel, languageTranslation: TranslationModel, toolTranslations: inout [ToolTranslationData], translationIdsNeededDownloading: inout [String]) {
+    private func getTranslationManifest(resource: ResourceModel, language: LanguageModel, languageTranslation: TranslationModel, toolTranslations: inout [ToolTranslation], translationIdsNeededDownloading: inout [String]) {
         
-        let translationManifestResult: Result<TranslationManifestData, TranslationsFileCacheError> = translationsFileCache.getTranslationManifestOnMainThread(translationId: languageTranslation.id)
+        let translationManifestResult: Result<TranslationManifestData, TranslationsFileCacheError> = translationsFileCache.getTranslation(translationId: languageTranslation.id)
         
         switch translationManifestResult {
             
         case .success(let translationManifestData):
             
-            let toolTranslation: ToolTranslationData = ToolTranslationData(
+            let toolTranslation: ToolTranslation = ToolTranslation(
                 resource: resource,
                 language: language,
                 translation: languageTranslation,

@@ -109,20 +109,20 @@ extension ToolNavigationFlow {
             
         case .success(let downloadToolLanguageTranslations):
             
-            let getToolTranslationManifests = GetToolTranslationManifestsFromCache(
+            let getToolTranslations = GetToolTranslationsFromCache(
                 dataDownloader: appDiContainer.initialDataDownloader,
                 resourcesCache: appDiContainer.initialDataDownloader.resourcesCache,
                 translationsFileCache: appDiContainer.translationsFileCache
             )
             
-            let getToolTranslationManifestsCacheResult: GetToolTranslationManifestsFromCacheResult = getToolTranslationManifests.getTranslationManifests(
+            let getToolTranslationsCacheResult: GetToolTranslationsFromCacheResult = getToolTranslations.getTranslations(
                 resource: downloadToolLanguageTranslations.resource,
                 languages: downloadToolLanguageTranslations.languages
             )
             
-            if getToolTranslationManifestsCacheResult.translationIdsNeededDownloading.isEmpty {
+            if getToolTranslationsCacheResult.translationIdsNeededDownloading.isEmpty {
                 
-                let toolData = DownloadedToolData(resource: downloadToolLanguageTranslations.resource, languageTranslations: getToolTranslationManifestsCacheResult.toolTranslations)
+                let toolData = DownloadedToolData(resource: downloadToolLanguageTranslations.resource, languageTranslations: getToolTranslationsCacheResult.toolTranslations)
                 
                 navigateToToolWithToolData(toolData: toolData, liveShareStream: liveShareStream, trainingTipsEnabled: trainingTipsEnabled, page: page)
             }
@@ -141,9 +141,9 @@ extension ToolNavigationFlow {
         
         let mobileContentParser: MobileContentParser = appDiContainer.getMobileContentParser()
         let resource: ResourceModel = toolData.resource
-        let toolLanguageTranslations: [ToolTranslationData] = toolData.languageTranslations
+        let toolLanguageTranslations: [ToolTranslation] = toolData.languageTranslations
         
-        let primaryLanguageTranslationData: ToolTranslationData?
+        let primaryLanguageTranslationData: ToolTranslation?
         
         if let firstLanguageTranslation = toolLanguageTranslations.first {
             primaryLanguageTranslationData = firstLanguageTranslation
@@ -184,11 +184,11 @@ extension ToolNavigationFlow {
         }
         
         // parallelLanguageManifest
-        let parallelLanguageTranslation: ToolTranslationData?
+        let parallelLanguageTranslation: ToolTranslation?
         let parallelLanguageManifest: Manifest?
         
         if toolLanguageTranslations.count > 1 {
-            let parallelLanguageTranslationData: ToolTranslationData = toolLanguageTranslations[1]
+            let parallelLanguageTranslationData: ToolTranslation = toolLanguageTranslations[1]
             parallelLanguageTranslation = parallelLanguageTranslationData
             switch mobileContentParser.parse(translationManifestData: parallelLanguageTranslationData.translationManifestData) {
             case .success(let manifest):
