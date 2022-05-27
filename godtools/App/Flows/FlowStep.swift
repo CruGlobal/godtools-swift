@@ -65,6 +65,9 @@ enum FlowStep {
     // learnToShareTool
     case closeTappedFromLearnToShareTool(resource: ResourceModel)
     case continueTappedFromLearnToShareTool(resource: ResourceModel)
+    
+    // download tool translations
+    case downloadToolTranslationsFlowCompleted(state: DownloadToolTranslationsFlowCompletedState)
         
     // tool
     case homeTappedFromTool(isScreenSharing: Bool)
