@@ -14,16 +14,18 @@ class ParallelLanguageListViewModel: NSObject, ParallelLanguageListViewModelType
     private weak var flowDelegate: FlowDelegate?
     
     private let dataDownloader: InitialDataDownloader
+    private let languagesRepository: LanguagesRepository
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
     
     let selectButtonText: String
     let numberOfLanguages: ObservableValue<Int>
     
-    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices) {
+    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languagesRepository: LanguagesRepository, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
+        self.languagesRepository = languagesRepository
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
         
@@ -67,7 +69,7 @@ class ParallelLanguageListViewModel: NSObject, ParallelLanguageListViewModelType
         
         let primaryLanguage: LanguageModel? = languageSettingsService.primaryLanguage.value
         
-        var storedLanguageModels: [LanguageModel] = dataDownloader.getStoredLanguages()
+        var storedLanguageModels: [LanguageModel] = languagesRepository.getAllLanguages()
         
         // remove primary language from list of parallel languages
         if let primaryLanguage = primaryLanguage {

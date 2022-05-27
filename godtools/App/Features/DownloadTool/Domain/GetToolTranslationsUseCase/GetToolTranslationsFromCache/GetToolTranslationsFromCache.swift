@@ -10,14 +10,14 @@ import Foundation
 
 class GetToolTranslationsFromCache {
     
-    private let dataDownloader: InitialDataDownloader
     private let resourcesCache: ResourcesCache
+    private let languagesRepository: LanguagesRepository
     private let translationsFileCache: TranslationsFileCache
     
-    required init(dataDownloader: InitialDataDownloader, resourcesCache: ResourcesCache, translationsFileCache: TranslationsFileCache) {
+    required init(resourcesCache: ResourcesCache, languagesRepository: LanguagesRepository, translationsFileCache: TranslationsFileCache) {
         
-        self.dataDownloader = dataDownloader
         self.resourcesCache = resourcesCache
+        self.languagesRepository = languagesRepository
         self.translationsFileCache = translationsFileCache
     }
     
@@ -46,7 +46,7 @@ class GetToolTranslationsFromCache {
         let shouldFallbackToEnglishLanguage: Bool = translationIdsNeededDownloading.isEmpty && toolTranslations.isEmpty
         
         if shouldFallbackToEnglishLanguage,
-            let englishLanguage = dataDownloader.getStoredLanguage(code: "en"),
+            let englishLanguage = languagesRepository.getLanguage(code: "en"),
             let englishLanguageTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resourceId, languageId: englishLanguage.id) {
             
             getTranslationManifest(

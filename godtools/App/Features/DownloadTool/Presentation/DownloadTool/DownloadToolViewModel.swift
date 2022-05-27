@@ -14,6 +14,7 @@ class DownloadToolViewModel: NSObject, DownloadToolViewModelType {
     private let translationDownloader: TranslationDownloader
     private let determineTranslationsToDownload: DetermineToolTranslationsToDownloadType
     private let resourcesCache: ResourcesCache
+    private let languagesRepository: LanguagesRepository
     private let translationsFileCache: TranslationsFileCache
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let localizationServices: LocalizationServices
@@ -33,12 +34,13 @@ class DownloadToolViewModel: NSObject, DownloadToolViewModelType {
     let downloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
     let progressValue: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(initialDataDownloader: InitialDataDownloader, translationDownloader: TranslationDownloader, determineTranslationsToDownload: DetermineToolTranslationsToDownloadType, resourcesCache: ResourcesCache, translationsFileCache: TranslationsFileCache, favoritedResourcesCache: FavoritedResourcesCache, localizationServices: LocalizationServices, didDownloadToolClosure: @escaping ((_ result: Result<DownloadedToolData, DownloadToolError>) -> Void), didCloseClosure: @escaping (() -> Void)) {
+    required init(initialDataDownloader: InitialDataDownloader, translationDownloader: TranslationDownloader, determineTranslationsToDownload: DetermineToolTranslationsToDownloadType, resourcesCache: ResourcesCache, languagesRepository: LanguagesRepository, translationsFileCache: TranslationsFileCache, favoritedResourcesCache: FavoritedResourcesCache, localizationServices: LocalizationServices, didDownloadToolClosure: @escaping ((_ result: Result<DownloadedToolData, DownloadToolError>) -> Void), didCloseClosure: @escaping (() -> Void)) {
         
         self.initialDataDownloader = initialDataDownloader
         self.translationDownloader = translationDownloader
         self.determineTranslationsToDownload = determineTranslationsToDownload
         self.resourcesCache = resourcesCache
+        self.languagesRepository = languagesRepository
         self.translationsFileCache = translationsFileCache
         self.favoritedResourcesCache = favoritedResourcesCache
         self.localizationServices = localizationServices
@@ -233,8 +235,8 @@ class DownloadToolViewModel: NSObject, DownloadToolViewModelType {
         case .success(let toolLanguageTranslations):
             
             let getToolTranslations = GetToolTranslationsFromCache(
-                dataDownloader: initialDataDownloader,
                 resourcesCache: resourcesCache,
+                languagesRepository: languagesRepository,
                 translationsFileCache: translationsFileCache
             )
             

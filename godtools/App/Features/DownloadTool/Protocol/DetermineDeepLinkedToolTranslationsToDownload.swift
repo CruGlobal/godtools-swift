@@ -12,15 +12,17 @@ class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsTo
     
     private let toolDeepLink: ToolDeepLink
     private let dataDownloader: InitialDataDownloader
+    private let languagesRepository: LanguagesRepository
     private let languageSettingsService: LanguageSettingsService
     
     let resourcesCache: ResourcesCache
     
-    required init(toolDeepLink: ToolDeepLink, resourcesCache: ResourcesCache, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService) {
+    required init(toolDeepLink: ToolDeepLink, resourcesCache: ResourcesCache, dataDownloader: InitialDataDownloader, languagesRepository: LanguagesRepository, languageSettingsService: LanguageSettingsService) {
         
         self.toolDeepLink = toolDeepLink
         self.resourcesCache = resourcesCache
         self.dataDownloader = dataDownloader
+        self.languagesRepository = languagesRepository
         self.languageSettingsService = languageSettingsService
     }
     
@@ -36,7 +38,7 @@ class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsTo
         
         let cachedPrimaryLanguage: LanguageModel?
         
-        if let primaryLanguageFromCodes = dataDownloader.fetchFirstSupportedLanguageForResource(resource: cachedResource, codes: toolDeepLink.primaryLanguageCodes) {
+        if let primaryLanguageFromCodes = fetchFirstSupportedLanguageForResource(resource: cachedResource, codes: toolDeepLink.primaryLanguageCodes) {
             
             cachedPrimaryLanguage = primaryLanguageFromCodes
         }
@@ -46,10 +48,10 @@ class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsTo
         }
         else {
             
-            cachedPrimaryLanguage = dataDownloader.getStoredLanguage(code: "en")
+            cachedPrimaryLanguage = languagesRepository.getLanguage(code: "en")
         }
         
-        let cachedParallelLanguage: LanguageModel? = dataDownloader.fetchFirstSupportedLanguageForResource(resource: cachedResource, codes: toolDeepLink.parallelLanguageCodes)
+        let cachedParallelLanguage: LanguageModel? = fetchFirstSupportedLanguageForResource(resource: cachedResource, codes: toolDeepLink.parallelLanguageCodes)
         
         var languageTranslationsToDownload: [LanguageModel] = Array()
         
@@ -67,5 +69,15 @@ class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsTo
         )
         
         return .success(toolLanguageTranslations)
+    }
+    
+    private func fetchFirstSupportedLanguageForResource(resource: ResourceModel, codes: [String]) -> LanguageModel? {
+        for code in codes {
+            if let language = languagesRepository.getLanguage(code: code), resource.supportsLanguage(languageId: language.id) {
+                return language
+            }
+        }
+        
+        return nil
     }
 }

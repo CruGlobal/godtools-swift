@@ -27,6 +27,7 @@ extension ToolNavigationFlow {
             toolDeepLink: toolDeepLink,
             resourcesCache: appDiContainer.initialDataDownloader.resourcesCache,
             dataDownloader: appDiContainer.initialDataDownloader,
+            languagesRepository: appDiContainer.getLanguagesRepository(),
             languageSettingsService: appDiContainer.languageSettingsService
         )
         
@@ -67,7 +68,7 @@ extension ToolNavigationFlow {
             resourceId: resourceId,
             languageIds: languageIds,
             resourcesCache: appDiContainer.initialDataDownloader.resourcesCache,
-            dataDownloader: appDiContainer.initialDataDownloader
+            languagesRepository: appDiContainer.getLanguagesRepository()
         )
         
         navigateToToolAndDetermineToolTranslationsToDownload(
@@ -110,8 +111,8 @@ extension ToolNavigationFlow {
         case .success(let downloadToolLanguageTranslations):
             
             let getToolTranslations = GetToolTranslationsFromCache(
-                dataDownloader: appDiContainer.initialDataDownloader,
                 resourcesCache: appDiContainer.initialDataDownloader.resourcesCache,
+                languagesRepository: appDiContainer.getLanguagesRepository(),
                 translationsFileCache: appDiContainer.translationsFileCache
             )
             
@@ -272,6 +273,7 @@ extension ToolNavigationFlow {
             translationDownloader: appDiContainer.translationDownloader,
             determineTranslationsToDownload: determineToolTranslationsToDownload,
             resourcesCache: appDiContainer.initialDataDownloader.resourcesCache,
+            languagesRepository: appDiContainer.getLanguagesRepository(),
             translationsFileCache: appDiContainer.translationsFileCache,
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             localizationServices: appDiContainer.localizationServices,

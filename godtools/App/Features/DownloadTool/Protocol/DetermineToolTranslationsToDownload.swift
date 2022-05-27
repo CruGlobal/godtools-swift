@@ -12,16 +12,16 @@ class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadTy
     
     private let resourceId: String
     private let languageIds: [String]
-    private let dataDownloader: InitialDataDownloader
+    private let languagesRepository: LanguagesRepository
     
     let resourcesCache: ResourcesCache
     
-    required init(resourceId: String, languageIds: [String], resourcesCache: ResourcesCache, dataDownloader: InitialDataDownloader) {
+    required init(resourceId: String, languageIds: [String], resourcesCache: ResourcesCache, languagesRepository: LanguagesRepository) {
         
         self.resourceId = resourceId
         self.languageIds = languageIds
         self.resourcesCache = resourcesCache
-        self.dataDownloader = dataDownloader
+        self.languagesRepository = languagesRepository
     }
     
     func getResource() -> ResourceModel? {
@@ -38,7 +38,7 @@ class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadTy
         
         for languageId in languageIds {
             
-            if let language = dataDownloader.getStoredLanguage(id: languageId) {
+            if let language = languagesRepository.getLanguage(id: languageId) {
                 cachedLanguages.append(language)
             }
             else {
