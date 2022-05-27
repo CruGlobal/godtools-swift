@@ -775,6 +775,7 @@ extension AppFlow {
         let viewModel = ParallelLanguageListViewModel(
             flowDelegate: self,
             dataDownloader: appDiContainer.initialDataDownloader,
+            languagesRepository: appDiContainer.getLanguagesRepository(),
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices
         )
