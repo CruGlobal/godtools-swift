@@ -11,12 +11,15 @@ struct ToolSettingsTopBarView: View {
         
     @ObservedObject var viewModel: BaseToolSettingsTopBarViewModel
     
+    let primaryTextColor: Color
     let leadingInset: CGFloat
     let trailingInset: CGFloat
     
     var body: some View {
         HStack {
             Text(viewModel.title)
+                .foregroundColor(primaryTextColor)
+                .font(FontLibrary.sfProTextRegular.font(size: 23))
             Spacer()
             Button {
                 viewModel.closeTapped()
@@ -32,6 +35,6 @@ struct ToolSettingsTopBarView: View {
 
 struct ToolSettingsTopBarView_Preview: PreviewProvider {
     static var previews: some View {
-        ToolSettingsTopBarView(viewModel: BaseToolSettingsTopBarViewModel(), leadingInset: 20, trailingInset: 20)
+        ToolSettingsTopBarView(viewModel: BaseToolSettingsTopBarViewModel(), primaryTextColor: Color.black, leadingInset: 20, trailingInset: 20)
     }
 }

@@ -38,19 +38,13 @@ class ChooseYourOwnAdventureFlow: Flow {
             languageTranslationManifests.append(MobileContentRendererLanguageTranslationManifest(manifest: manifest, language: language))
         }
         
-        let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
-            type: .chooseYourOwnAdventure,
+        let renderer: MobileContentRenderer = appDiContainer.getMobileContentRenderer(
             flowDelegate: self,
-            appDiContainer: appDiContainer,
-            deepLinkingService: deepLinkingService
-        )
-        
-        let renderer = MobileContentRenderer(
+            deepLinkingService: deepLinkingService,
+            type: .chooseYourOwnAdventure,
             resource: resource,
             primaryLanguage: primaryLanguage,
-            languageTranslationManifests: languageTranslationManifests,
-            pageViewFactories: pageViewFactories,
-            translationsFileCache: appDiContainer.translationsFileCache
+            languageTranslationManifests: languageTranslationManifests
         )
         
         let viewModel = ChooseYourOwnAdventureViewModel(

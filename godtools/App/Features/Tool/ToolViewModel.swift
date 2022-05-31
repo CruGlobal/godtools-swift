@@ -258,6 +258,10 @@ extension ToolViewModel {
             return
         }
         
+        guard let pageRenderer = currentPageRenderer else {
+            return
+        }
+        
         let primaryLanguage: LanguageModel = renderer.primaryLanguage
         let shareables: [Shareable] = pageRenderer.manifest.shareables
         
