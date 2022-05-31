@@ -1,16 +1,17 @@
 //
-//  DownloadToolError.swift
+//  GetToolTranslationsError.swift
 //  godtools
 //
-//  Created by Levi Eggert on 1/18/22.
+//  Created by Levi Eggert on 5/27/22.
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
 import Foundation
 
-enum DownloadToolError: Error {
+enum GetToolTranslationsError: Error {
     
-    case failedToDetermineToolTranslationsToDownload(determineToolTranslationsToDownloadError: DetermineToolTranslationsToDownloadError)
+    case failedToFetchResourceFromCache
+    case failedToFetchLanguageFromCache
     case failedToDownloadTranslations(translationDownloaderErrors: [TranslationDownloaderError])
     case failedToFetchPrimaryTranslationManifest
 }

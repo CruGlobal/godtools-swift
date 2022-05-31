@@ -25,8 +25,9 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
     var chooseYourOwnAdventureFlow: ChooseYourOwnAdventureFlow?
     var lessonFlow: LessonFlow?
     var tractFlow: TractFlow?
+    var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController?, resource: ResourceModel, primaryLanguage: LanguageModel, primaryLanguageManifest: Manifest, parallelLanguage: LanguageModel?, parallelLanguageManifest: Manifest?, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
+    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController?, toolTranslations: ToolTranslations, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -34,38 +35,14 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
         self.deepLinkingService = appDiContainer.getDeepLinkingService()
         
         super.init()
-            
-        let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
-        
-        var languageTranslationManifests: [MobileContentRendererLanguageTranslationManifest] = Array()
-        
-        let primaryLanguageTranslationManifest = MobileContentRendererLanguageTranslationManifest(
-            manifest: primaryLanguageManifest,
-            language: primaryLanguage
-        )
-        
-        languageTranslationManifests.append(primaryLanguageTranslationManifest)
-        
-        if !trainingTipsEnabled, let parallelLanguage = parallelLanguage, let parallelLanguageManifest = parallelLanguageManifest, parallelLanguage.code != primaryLanguage.code {
-            
-            languageTranslationManifests.append(MobileContentRendererLanguageTranslationManifest(manifest: parallelLanguageManifest, language: parallelLanguage))
-        }
-
-        let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
-            type: .tract,
+                    
+        let renderer: MobileContentRenderer = appDiContainer.getMobileContentRenderer(
             flowDelegate: self,
-            appDiContainer: appDiContainer,
-            deepLinkingService: deepLinkingService
+            deepLinkingService: deepLinkingService,
+            type: .tract,
+            toolTranslations: toolTranslations
         )
                 
-        let renderer = MobileContentRenderer(
-            resource: resource,
-            primaryLanguage: primaryLanguage,
-            languageTranslationManifests: languageTranslationManifests,
-            pageViewFactories: pageViewFactories,
-            translationsFileCache: translationsFileCache
-        )
-        
         let parentFlowIsHomeFlow: Bool = flowDelegate is AppFlow
         
         let viewModel = ToolViewModel(

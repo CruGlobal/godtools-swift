@@ -22,8 +22,9 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
     var chooseYourOwnAdventureFlow: ChooseYourOwnAdventureFlow?
     var lessonFlow: LessonFlow?
     var tractFlow: TractFlow?
+    var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, resource: ResourceModel, primaryLanguage: LanguageModel, primaryLanguageManifest: Manifest, trainingTipsEnabled: Bool, page: Int?) {
+    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, toolTranslations: ToolTranslations, trainingTipsEnabled: Bool, page: Int?) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -31,30 +32,19 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
         self.deepLinkingService = appDiContainer.getDeepLinkingService()
         
         super.init()
-        
-        var languageTranslationManifests: [MobileContentRendererLanguageTranslationManifest] = Array()
-        
-        let primaryLanguageTranslationManifest = MobileContentRendererLanguageTranslationManifest(
-            manifest: primaryLanguageManifest,
-            language: primaryLanguage
-        )
-        
-        languageTranslationManifests.append(primaryLanguageTranslationManifest)
-        
+                
         let renderer: MobileContentRenderer = appDiContainer.getMobileContentRenderer(
             flowDelegate: self,
             deepLinkingService: deepLinkingService,
             type: .lesson,
-            resource: resource,
-            primaryLanguage: primaryLanguage,
-            languageTranslationManifests: languageTranslationManifests
+            toolTranslations: toolTranslations
         )
               
         let viewModel = LessonViewModel(
             flowDelegate: self,
             renderer: renderer,
-            resource: resource,
-            primaryLanguage: primaryLanguage,
+            resource: renderer.resource,
+            primaryLanguage: renderer.primaryLanguage,
             page: page,
             mobileContentEventAnalytics: appDiContainer.getMobileContentEventAnalyticsTracking(),
             trainingTipsEnabled: trainingTipsEnabled

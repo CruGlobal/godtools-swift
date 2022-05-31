@@ -17,13 +17,15 @@ class MobileContentRenderer {
     let primaryLanguage: LanguageModel
     let pageRenderers: [MobileContentPageRenderer]
     
-    required init(resource: ResourceModel, primaryLanguage: LanguageModel, languageTranslationManifests: [MobileContentRendererLanguageTranslationManifest], pageViewFactories: MobileContentRendererPageViewFactories, translationsFileCache: TranslationsFileCache) {
+    required init(toolTranslations: ToolTranslations, pageViewFactories: MobileContentRendererPageViewFactories, translationsFileCache: TranslationsFileCache) {
         
         let sharedState: State = State()
+        let resource: ResourceModel = toolTranslations.tool
+        let primaryLanguage: LanguageModel = toolTranslations.languageTranslationManifests[0].language
         
         var pageRenderers: [MobileContentPageRenderer] = Array()
         
-        for languageTranslationManifest in languageTranslationManifests {
+        for languageTranslationManifest in toolTranslations.languageTranslationManifests {
 
             let pageRenderer = MobileContentPageRenderer(
                 sharedState: sharedState,

@@ -1,5 +1,5 @@
 //
-//  DownloadToolLanguageTranslations.swift
+//  ToolTranslationsToDownload.swift
 //  godtools
 //
 //  Created by Levi Eggert on 1/14/22.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct DownloadToolLanguageTranslations {
+struct ToolTranslationsToDownload {
     
     let resource: ResourceModel
     let languages: [LanguageModel]

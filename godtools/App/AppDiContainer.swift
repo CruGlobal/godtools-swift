@@ -144,8 +144,9 @@ class AppDiContainer {
             favoritedResourceTranslationDownloader: favoritedResourceTranslationDownloader
         )
         
+        // TODO: Remove LanguagesRepository(cache: languagesCache) allocation here and use getLanguagesRepository().  This will be possible when no longer storing references in AppDiContainer. ~Levi
         languageSettingsService = LanguageSettingsService(
-            dataDownloader: initialDataDownloader,
+            languagesRepository: LanguagesRepository(cache: languagesCache),
             languageSettingsCache: languageSettingsCache
         )
         
@@ -277,7 +278,7 @@ class AppDiContainer {
         return MobileContentParser(translationsFileCache: translationsFileCache)
     }
     
-    func getMobileContentRenderer(flowDelegate: FlowDelegate, deepLinkingService: DeepLinkingServiceType, type: MobileContentRendererPageViewFactoriesType, resource: ResourceModel, primaryLanguage: LanguageModel, languageTranslationManifests: [MobileContentRendererLanguageTranslationManifest]) -> MobileContentRenderer {
+    func getMobileContentRenderer(flowDelegate: FlowDelegate, deepLinkingService: DeepLinkingServiceType, type: MobileContentRendererPageViewFactoriesType, toolTranslations: ToolTranslations) -> MobileContentRenderer {
                              
         let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
             type: type,
@@ -287,9 +288,7 @@ class AppDiContainer {
         )
         
         return MobileContentRenderer(
-            resource: resource,
-            primaryLanguage: primaryLanguage,
-            languageTranslationManifests: languageTranslationManifests,
+            toolTranslations: toolTranslations,
             pageViewFactories: pageViewFactories,
             translationsFileCache: translationsFileCache
         )
@@ -333,6 +332,18 @@ class AppDiContainer {
     func getToolTrainingTipsOnboardingViews() -> ToolTrainingTipsOnboardingViewsService {
         return ToolTrainingTipsOnboardingViewsService(
             cache: ToolTrainingTipsOnboardingViewsUserDefaultsCache(userDefaultsCache: sharedUserDefaultsCache)
+        )
+    }
+    
+    func getToolTranslationsUseCase() -> GetToolTranslationsUseCase {
+        return GetToolTranslationsUseCase(
+            initialDataDownloader: initialDataDownloader,
+            translationDownloader: translationDownloader,
+            resourcesCache: initialDataDownloader.resourcesCache,
+            languagesRepository: getLanguagesRepository(),
+            translationsFileCache: translationsFileCache,
+            mobileContentParser: getMobileContentParser(),
+            languageSettingsService: languageSettingsService
         )
     }
     

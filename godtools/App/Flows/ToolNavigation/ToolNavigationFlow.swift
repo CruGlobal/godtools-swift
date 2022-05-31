@@ -15,6 +15,7 @@ protocol ToolNavigationFlow: Flow {
     var chooseYourOwnAdventureFlow: ChooseYourOwnAdventureFlow? { get set }
     var lessonFlow: LessonFlow? { get set }
     var tractFlow: TractFlow? { get set }
+    var downloadToolTranslationFlow: DownloadToolTranslationsFlow? { get set }
 }
 
 extension ToolNavigationFlow {
@@ -52,7 +53,7 @@ extension ToolNavigationFlow {
         if let parallelLanguageId = languageSettingsService.parallelLanguage.value?.id {
             languageIds.append(parallelLanguageId)
         }
-                
+                        
         navigateToTool(
             resourceId: resourceId,
             languageIds: languageIds,
@@ -81,141 +82,54 @@ extension ToolNavigationFlow {
     
     private func navigateToToolAndDetermineToolTranslationsToDownload(determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
         
-        let didDownloadToolClosure: ((_ result: Result<DownloadedToolData, DownloadToolError>) -> Void) = { [weak self] (result: Result<DownloadedToolData, DownloadToolError>) in
-            
+        let didDownloadToolTranslationsClosure = { [weak self] (result: Result<ToolTranslations, GetToolTranslationsError>) in
+                        
             switch result {
             
-            case .success(let downloadedToolData):
+            case .success(let toolTranslations):
                 
-                self?.navigateToToolWithToolData(toolData: downloadedToolData, liveShareStream: liveShareStream, trainingTipsEnabled: trainingTipsEnabled, page: page)
-                self?.leaveDownloadToolView(animated: true, completion: nil)
+                self?.navigateToTool(
+                    toolTranslations: toolTranslations,
+                    liveShareStream: liveShareStream,
+                    trainingTipsEnabled: trainingTipsEnabled,
+                    page: page
+                )
                 
-            case .failure(let downloadToolError):
-                
-                self?.leaveDownloadToolView(animated: true, completion: { [weak self] in
-                        
-                    self?.presentDownloadToolError(downloadToolError: downloadToolError)
-                })
+            case .failure(let error):
+                // TODO: Present error. ~Levi
+                break
             }
         }
         
-        let didCloseClosure: (() -> Void) = { [weak self] in
-            
-            self?.leaveDownloadToolView(animated: true, completion: nil)
-        }
+        let downloadToolTranslationFlow = DownloadToolTranslationsFlow(
+            presentInFlow: self,
+            appDiContainer: appDiContainer,
+            determineToolTranslationsToDownload: determineToolTranslationsToDownload,
+            didDownloadToolTranslations: didDownloadToolTranslationsClosure
+        )
         
-        let translationsToDownloadResult: Result<DownloadToolLanguageTranslations, DetermineToolTranslationsToDownloadError> = determineToolTranslationsToDownload.determineToolTranslationsToDownload()
-        
-        switch translationsToDownloadResult {
-            
-        case .success(let downloadToolLanguageTranslations):
-            
-            let getToolTranslations = GetToolTranslationsFromCache(
-                resourcesCache: appDiContainer.initialDataDownloader.resourcesCache,
-                languagesRepository: appDiContainer.getLanguagesRepository(),
-                translationsFileCache: appDiContainer.translationsFileCache
-            )
-            
-            let getToolTranslationsCacheResult: GetToolTranslationsFromCacheResult = getToolTranslations.getTranslations(
-                resource: downloadToolLanguageTranslations.resource,
-                languages: downloadToolLanguageTranslations.languages
-            )
-            
-            if getToolTranslationsCacheResult.translationIdsNeededDownloading.isEmpty {
-                
-                let toolData = DownloadedToolData(resource: downloadToolLanguageTranslations.resource, languageTranslations: getToolTranslationsCacheResult.toolTranslations)
-                
-                navigateToToolWithToolData(toolData: toolData, liveShareStream: liveShareStream, trainingTipsEnabled: trainingTipsEnabled, page: page)
-            }
-            else {
-                
-                navigateToDownloadTool(determineToolTranslationsToDownload: determineToolTranslationsToDownload, didDownloadToolClosure: didDownloadToolClosure, didCloseClosure: didCloseClosure)
-            }
-                        
-        case .failure( _):
-            
-            navigateToDownloadTool(determineToolTranslationsToDownload: determineToolTranslationsToDownload, didDownloadToolClosure: didDownloadToolClosure, didCloseClosure: didCloseClosure)
-        }
+        self.downloadToolTranslationFlow = downloadToolTranslationFlow
     }
     
-    private func navigateToToolWithToolData(toolData: DownloadedToolData, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
+    private func navigateToTool(toolTranslations: ToolTranslations, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
         
-        let mobileContentParser: MobileContentParser = appDiContainer.getMobileContentParser()
-        let resource: ResourceModel = toolData.resource
-        let toolLanguageTranslations: [ToolTranslation] = toolData.languageTranslations
-        
-        let primaryLanguageTranslationData: ToolTranslation?
-        
-        if let firstLanguageTranslation = toolLanguageTranslations.first {
-            primaryLanguageTranslationData = firstLanguageTranslation
-        }
-        else {
-            primaryLanguageTranslationData = nil
-        }
-        
-        guard let primaryLanguageTranslation = primaryLanguageTranslationData else {
-            presentDownloadToolError(downloadToolError: .failedToFetchPrimaryTranslationManifest)
-            return
-        }
-        
-        // primaryLanguageManifest
-        let primaryManifest: Manifest?
-        
-        switch mobileContentParser.parse(translationManifestData: primaryLanguageTranslation.translationManifestData) {
-        
-        case .success(let manifest):
-            primaryManifest = manifest
-        case .failure(let error):
-            primaryManifest = nil
-        }
-        
-        guard let primaryLanguageManifest = primaryManifest else {
-            
-            let viewModel = AlertMessageViewModel(
-                title: "Internal Error",
-                message: "Unable to fetch manifest for tool.",
-                cancelTitle: nil,
-                acceptTitle: "OK",
-                acceptHandler: nil
-            )
-            
-            presentAlertMessage(viewModel: viewModel)
-            
-            return
-        }
-        
-        // parallelLanguageManifest
-        let parallelLanguageTranslation: ToolTranslation?
-        let parallelLanguageManifest: Manifest?
-        
-        if toolLanguageTranslations.count > 1 {
-            let parallelLanguageTranslationData: ToolTranslation = toolLanguageTranslations[1]
-            parallelLanguageTranslation = parallelLanguageTranslationData
-            switch mobileContentParser.parse(translationManifestData: parallelLanguageTranslationData.translationManifestData) {
-            case .success(let manifest):
-                parallelLanguageManifest = manifest
-            case .failure(let error):
-                parallelLanguageManifest = nil
-            }
-        }
-        else {
-            parallelLanguageTranslation = nil
-            parallelLanguageManifest = nil
-        }
-        
-        let resourceType: ResourceType = resource.resourceTypeEnum
+        let resourceType: ResourceType = toolTranslations.tool.resourceTypeEnum
         
         switch resourceType {
             
         case .article:
+            break
             
+            // TODO: Update to use Manifest from GodToolsToolParser. ~Levi
+            
+            /*
             articleFlow = ArticleFlow(
                 flowDelegate: self,
                 appDiContainer: appDiContainer,
                 sharedNavigationController: navigationController,
                 resource: resource,
                 translationManifest: primaryLanguageTranslation.translationManifestData
-            )
+            )*/
             
         case .lesson:
             
@@ -223,9 +137,7 @@ extension ToolNavigationFlow {
                 flowDelegate: self,
                 appDiContainer: appDiContainer,
                 sharedNavigationController: navigationController,
-                resource: resource,
-                primaryLanguage: primaryLanguageTranslation.language,
-                primaryLanguageManifest: primaryLanguageManifest,
+                toolTranslations: toolTranslations,
                 trainingTipsEnabled: trainingTipsEnabled,
                 page: page
             )
@@ -236,11 +148,7 @@ extension ToolNavigationFlow {
                 flowDelegate: self,
                 appDiContainer: appDiContainer,
                 sharedNavigationController: navigationController,
-                resource: resource,
-                primaryLanguage: primaryLanguageTranslation.language,
-                primaryLanguageManifest: primaryLanguageManifest,
-                parallelLanguage: parallelLanguageTranslation?.language,
-                parallelLanguageManifest: parallelLanguageManifest,
+                toolTranslations: toolTranslations,
                 liveShareStream: liveShareStream,
                 trainingTipsEnabled: trainingTipsEnabled,
                 page: page
@@ -252,11 +160,7 @@ extension ToolNavigationFlow {
                 flowDelegate: self,
                 appDiContainer: appDiContainer,
                 sharedNavigationController: navigationController,
-                resource: resource,
-                primaryLanguage: primaryLanguageTranslation.language,
-                primaryLanguageManifest: primaryLanguageManifest,
-                parallelLanguage: parallelLanguageTranslation?.language,
-                parallelLanguageManifest: parallelLanguageManifest
+                toolTranslations: toolTranslations
             )
             
         case .unknown:
@@ -266,34 +170,7 @@ extension ToolNavigationFlow {
     
     // MARK: - Download Tool
     
-    private func navigateToDownloadTool(determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, didDownloadToolClosure: @escaping ((_ result: Result<DownloadedToolData, DownloadToolError>) -> Void), didCloseClosure: @escaping (() -> Void)) {
-            
-        let viewModel = DownloadToolViewModel(
-            initialDataDownloader: appDiContainer.initialDataDownloader,
-            translationDownloader: appDiContainer.translationDownloader,
-            determineTranslationsToDownload: determineToolTranslationsToDownload,
-            resourcesCache: appDiContainer.initialDataDownloader.resourcesCache,
-            languagesRepository: appDiContainer.getLanguagesRepository(),
-            translationsFileCache: appDiContainer.translationsFileCache,
-            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
-            localizationServices: appDiContainer.localizationServices,
-            didDownloadToolClosure: didDownloadToolClosure,
-            didCloseClosure: didCloseClosure
-        )
-        
-        let view = DownloadToolView(viewModel: viewModel)
-        
-        let modal = ModalNavigationController(rootView: view, navBarColor: .white, navBarIsTranslucent: false)
-        
-        navigationController.present(modal, animated: true, completion: nil)
-    }
-    
-    private func leaveDownloadToolView(animated: Bool, completion: (() -> Void)?) {
-        
-        navigationController.dismissPresented(animated: animated, completion: completion)
-    }
-    
-    private func presentDownloadToolError(downloadToolError: DownloadToolError) {
+    private func presentDownloadToolError(downloadToolError: GetToolTranslationsError) {
         
         let viewModel = DownloadToolErrorViewModel(
             downloadToolError: downloadToolError,

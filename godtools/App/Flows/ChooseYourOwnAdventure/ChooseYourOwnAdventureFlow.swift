@@ -18,38 +18,22 @@ class ChooseYourOwnAdventureFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, resource: ResourceModel, primaryLanguage: LanguageModel, primaryLanguageManifest: Manifest, parallelLanguage: LanguageModel?, parallelLanguageManifest: Manifest?) {
+    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, toolTranslations: ToolTranslations) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
         self.deepLinkingService = appDiContainer.getDeepLinkingService()
-            
-        var languageTranslationManifests: [MobileContentRendererLanguageTranslationManifest] = Array()
-        
-        let primaryLanguageTranslationManifest = MobileContentRendererLanguageTranslationManifest(
-            manifest: primaryLanguageManifest,
-            language: primaryLanguage
-        )
-        
-        languageTranslationManifests.append(primaryLanguageTranslationManifest)
-        
-        if let manifest = parallelLanguageManifest, let language = parallelLanguage {
-            languageTranslationManifests.append(MobileContentRendererLanguageTranslationManifest(manifest: manifest, language: language))
-        }
-        
+                    
         let renderer: MobileContentRenderer = appDiContainer.getMobileContentRenderer(
             flowDelegate: self,
             deepLinkingService: deepLinkingService,
             type: .chooseYourOwnAdventure,
-            resource: resource,
-            primaryLanguage: primaryLanguage,
-            languageTranslationManifests: languageTranslationManifests
+            toolTranslations: toolTranslations
         )
         
         let viewModel = ChooseYourOwnAdventureViewModel(
             flowDelegate: self,
-            primaryManifest: primaryLanguageManifest,
             renderer: renderer,
             page: nil,
             mobileContentEventAnalytics: appDiContainer.getMobileContentEventAnalyticsTracking(),

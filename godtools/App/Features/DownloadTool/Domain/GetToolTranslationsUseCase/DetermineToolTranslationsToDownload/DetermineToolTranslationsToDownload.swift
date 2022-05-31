@@ -28,7 +28,7 @@ class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadTy
         return resourcesCache.getResource(id: resourceId)
     }
     
-    func determineToolTranslationsToDownload() -> Result<DownloadToolLanguageTranslations, DetermineToolTranslationsToDownloadError> {
+    func determineToolTranslationsToDownload() -> Result<ToolTranslationsToDownload, DetermineToolTranslationsToDownloadError> {
         
         guard let cachedResource = getResource() else {
             return .failure(.failedToFetchResourceFromCache)
@@ -46,6 +46,6 @@ class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadTy
             }
         }
         
-        return .success(DownloadToolLanguageTranslations(resource: cachedResource, languages: cachedLanguages))
+        return .success(ToolTranslationsToDownload(resource: cachedResource, languages: cachedLanguages))
     }
 }

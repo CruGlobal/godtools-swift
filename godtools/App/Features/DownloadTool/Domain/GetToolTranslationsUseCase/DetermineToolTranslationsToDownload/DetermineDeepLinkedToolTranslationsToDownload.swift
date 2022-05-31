@@ -30,7 +30,7 @@ class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsTo
         return resourcesCache.getResource(abbreviation: toolDeepLink.resourceAbbreviation)
     }
     
-    func determineToolTranslationsToDownload() -> Result<DownloadToolLanguageTranslations, DetermineToolTranslationsToDownloadError> {
+    func determineToolTranslationsToDownload() -> Result<ToolTranslationsToDownload, DetermineToolTranslationsToDownloadError> {
         
         guard let cachedResource = getResource() else {
             return .failure(.failedToFetchResourceFromCache)
@@ -63,12 +63,12 @@ class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsTo
             languageTranslationsToDownload.append(cachedParallelLanguage)
         }
         
-        let toolLanguageTranslations: DownloadToolLanguageTranslations = DownloadToolLanguageTranslations(
+        let toolTranslationsToDownload: ToolTranslationsToDownload = ToolTranslationsToDownload(
             resource: cachedResource,
             languages: languageTranslationsToDownload
         )
         
-        return .success(toolLanguageTranslations)
+        return .success(toolTranslationsToDownload)
     }
     
     private func fetchFirstSupportedLanguageForResource(resource: ResourceModel, codes: [String]) -> LanguageModel? {

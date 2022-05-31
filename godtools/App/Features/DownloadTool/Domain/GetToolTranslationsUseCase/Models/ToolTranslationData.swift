@@ -1,5 +1,5 @@
 //
-//  ToolTranslation.swift
+//  ToolTranslationData.swift
 //  godtools
 //
 //  Created by Levi Eggert on 5/26/22.
@@ -8,14 +8,14 @@
 
 import Foundation
 
-class ToolTranslation {
+class ToolTranslationData {
     
     let resource: ResourceModel
     let language: LanguageModel
     let translation: TranslationModel
     let translationManifestData: TranslationManifestData
     
-    required init(resource: ResourceModel, language: LanguageModel, translation: TranslationModel, translationManifestData: TranslationManifestData) {
+    init(resource: ResourceModel, language: LanguageModel, translation: TranslationModel, translationManifestData: TranslationManifestData) {
         
         self.resource = resource
         self.language = language
@@ -23,3 +23,4 @@ class ToolTranslation {
         self.translationManifestData = translationManifestData
     }
 }
+
