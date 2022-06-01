@@ -40,6 +40,19 @@ class ToolCategoriesViewModel: NSObject, ObservableObject {
     }
 }
 
+// MARK: - Public
+
+extension ToolCategoriesViewModel {
+    
+    func categoryTapped(_ category: String) {
+        selectedCategory = category
+        
+        for buttonViewModel in buttonViewModels {
+            buttonViewModel.updateStateWithSelectedCategory(selectedCategory)
+        }
+    }
+}
+
 // MARK: - Private
 
 extension ToolCategoriesViewModel {

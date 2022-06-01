@@ -32,6 +32,9 @@ struct ToolCategoriesView: View {
                     if let buttonViewModel = viewModel.buttonViewModels[safe: buttonIndex] {
                         
                         ToolCategoryButtonView(viewModel: buttonViewModel)
+                            .onTapGesture {
+                                viewModel.categoryTapped(buttonViewModel.attrCategory)
+                            }
                         
                     } else {
                         Spacer()

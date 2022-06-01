@@ -10,10 +10,14 @@ import Foundation
 
 class ToolCategoryButtonViewModel: BaseToolCategoryButtonViewModel {
     
+    // MARK: - Properties
+    
     let attrCategory: String
     let localizationServices: LocalizationServices
     let languageSettingsService: LanguageSettingsService
         
+    // MARK: - Init
+    
     init(attrCategory: String, selectedAttrCategory: String?, localizationServices: LocalizationServices, languageSettingsService: LanguageSettingsService) {
         self.attrCategory = attrCategory
         self.localizationServices = localizationServices
@@ -25,5 +29,15 @@ class ToolCategoryButtonViewModel: BaseToolCategoryButtonViewModel {
         let buttonState = ToolCategoryButtonState(category: attrCategory, selectedCategory: selectedAttrCategory)
         
         super.init(categoryText: translatedCategory, buttonState: buttonState)                
+    }
+}
+
+// MARK: - Public
+
+extension ToolCategoryButtonViewModel {
+    func updateStateWithSelectedCategory(_ selectedAttrCategory: String?) {
+        state = ToolCategoryButtonState(category: attrCategory, selectedCategory: selectedAttrCategory)
+        
+        setPublishedValues()
     }
 }

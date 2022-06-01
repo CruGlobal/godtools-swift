@@ -13,7 +13,7 @@ class BaseToolCategoryButtonViewModel: ObservableObject {
     // MARK: - Properties
     
     let categoryText: String
-    let state: ToolCategoryButtonState
+    var state: ToolCategoryButtonState
     
     // MARK: - Published
     
@@ -30,8 +30,10 @@ class BaseToolCategoryButtonViewModel: ObservableObject {
     }
 }
 
+// MARK: - Public
+
 extension BaseToolCategoryButtonViewModel {
-    private func setPublishedValues() {
+    func setPublishedValues() {
         
         switch state {
         case .notSelected:
