@@ -24,7 +24,7 @@ struct TwoRowHGrid<Content: View>: View {
     var body: some View {
         HStack(spacing: spacing) {
             
-            let numColumns = itemCount / 2
+            let numColumns = Int(ceil(Double(itemCount) / 2))
             
             ForEach(0..<numColumns, id: \.self) { columnNumber in
                 

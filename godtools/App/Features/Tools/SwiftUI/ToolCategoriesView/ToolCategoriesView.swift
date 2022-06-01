@@ -29,8 +29,13 @@ struct ToolCategoriesView: View {
                 
                 TwoRowHGrid(itemCount: viewModel.buttonViewModels.count, spacing: 15) { buttonIndex in
                     
-                    let buttonViewModel = viewModel.buttonViewModels[buttonIndex]
-                    ToolCategoryButtonView(viewModel: buttonViewModel)
+                    if let buttonViewModel = viewModel.buttonViewModels[safe: buttonIndex] {
+                        
+                        ToolCategoryButtonView(viewModel: buttonViewModel)
+                        
+                    } else {
+                        Spacer()
+                    }
                 }
                 .padding(.leading, leadingPadding)
                 .padding([.top, .bottom], 8)
