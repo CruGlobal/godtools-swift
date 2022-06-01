@@ -1,40 +1,36 @@
 //
-//  ToolCategoryButtonViewModel.swift
+//  BaseToolCategoryButtonViewModel.swift
 //  godtools
 //
-//  Created by Rachael Skeath on 5/19/22.
+//  Created by Rachael Skeath on 6/1/22.
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
 
-class ToolCategoryButtonViewModel: ObservableObject {
+class BaseToolCategoryButtonViewModel: ObservableObject {
     
-    let category: String
-    var state: ToolCategoryButtonState
+    // MARK: - Properties
+    
+    let categoryText: String
+    let state: ToolCategoryButtonState
+    
+    // MARK: - Published
     
     @Published var showBorder: Bool = false
     @Published var greyOutText: Bool = false
     
-    init(category: String, selectedCategory: String?) {
-        self.category = category
-        state = ToolCategoryButtonState(category: category, selectedCategory: selectedCategory)
-        
-        setPublishedValues()
-    }
+    // MARK: - Init
     
-    init(category: String, buttonState: ToolCategoryButtonState) {
-        self.category = category
+    init(categoryText: String, buttonState: ToolCategoryButtonState) {
+        self.categoryText = categoryText
         self.state = buttonState
         
         setPublishedValues()
     }
 }
 
-// MARK: - Private
-
-extension ToolCategoryButtonViewModel {
-    
+extension BaseToolCategoryButtonViewModel {
     private func setPublishedValues() {
         
         switch state {

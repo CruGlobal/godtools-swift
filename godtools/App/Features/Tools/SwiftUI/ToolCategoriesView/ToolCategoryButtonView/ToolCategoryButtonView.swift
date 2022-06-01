@@ -12,7 +12,7 @@ struct ToolCategoryButtonView: View {
     
     // MARK: - Properties
     
-    @ObservedObject var viewModel: ToolCategoryButtonViewModel
+    @ObservedObject var viewModel: BaseToolCategoryButtonViewModel
     
     // MARK: - Body
     
@@ -20,7 +20,7 @@ struct ToolCategoryButtonView: View {
         ZStack(alignment: .topLeading) {
             RoundedCardBackgroundView()
             
-            Text(viewModel.category)
+            Text(viewModel.categoryText)
                 .foregroundColor(viewModel.greyOutText ? .gray : .black)
                 .font(FontLibrary.sfProTextBold.font(size: 18))
                 .fixedSize(horizontal: false, vertical: true)
@@ -35,11 +35,10 @@ struct ToolCategoryButtonView: View {
 
 struct ToolCategoryButtonView_Previews: PreviewProvider {
     static var previews: some View {
-        let conversationStarterCategory = "Conversation Starter"
-        let trainingCategory = "Training"
-        let christianGrowth = "Christian Growth"
         
-        ToolCategoryButtonView(viewModel: ToolCategoryButtonViewModel(category: christianGrowth, selectedCategory: trainingCategory))
+        let viewModel = BaseToolCategoryButtonViewModel(categoryText: "Conversation Starter", buttonState: .greyedOut)
+        
+        ToolCategoryButtonView(viewModel: viewModel)
             .padding()
             .previewLayout(.sizeThatFits)
     }

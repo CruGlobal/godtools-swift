@@ -88,8 +88,7 @@ extension ToolCategoriesViewModel {
         let categoryButtonViewModels: [ToolCategoryButtonViewModel] = toolsWithDuplicateCategoriesRemoved
             .map { resource in
                 
-                let category = resource.attrCategory
-                return ToolCategoryButtonViewModel(category: category, selectedCategory: selectedCategory)
+                return ToolCategoryButtonViewModel(attrCategory: resource.attrCategory, selectedAttrCategory: selectedCategory, localizationServices: localizationServices, languageSettingsService: languageSettingsService)
             }
         
         buttonViewModels = categoryButtonViewModels
