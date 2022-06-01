@@ -17,4 +17,5 @@ protocol DownloadToolViewModelType {
     
     func pageDidAppear()
     func closeTapped()
+    func completeDownload(didCompleteDownload: @escaping (() -> Void))
 }

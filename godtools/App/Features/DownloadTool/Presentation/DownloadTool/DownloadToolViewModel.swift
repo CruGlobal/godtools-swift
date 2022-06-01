@@ -14,9 +14,11 @@ class DownloadToolViewModel: NSObject, DownloadToolViewModelType {
     private let downloadProgressNumberFormatter: NumberFormatter = NumberFormatter()
     private let downloadProgressIntervalRatePerSecond: TimeInterval = 60
     
+    private var didCompleteDownloadClosure: (() -> Void)?
     private var downloadProgressTimer: Timer?
     private var downloadProgressTimerIntervalCount: TimeInterval = 0
     private var didStartToolDownload: Bool = false
+    private var didCompleteToolDownload: Bool = false
     
     let message: ObservableValue<String> = ObservableValue(value: "")
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
@@ -49,6 +51,11 @@ class DownloadToolViewModel: NSObject, DownloadToolViewModelType {
         stopDownload()
         
         didCloseClosure()
+    }
+    
+    func completeDownload(didCompleteDownload: @escaping (() -> Void)) {
+        didCompleteDownloadClosure = didCompleteDownload
+        didCompleteToolDownload = true
     }
     
     private func startToolDownload() {
@@ -97,8 +104,6 @@ class DownloadToolViewModel: NSObject, DownloadToolViewModelType {
                
         downloadProgressTimerIntervalCount += 1
         
-        let didCompleteToolDownload: Bool = false
-
         let slowDownloadProgress: Double = downloadProgressInterval / 10
         let fastDownloadProgress: Double = downloadProgressInterval / 1
                 
@@ -107,11 +112,21 @@ class DownloadToolViewModel: NSObject, DownloadToolViewModelType {
         
         var newDownloadProgress: Double = (currentDownloadProgress + downloadProgressSpeed) * 100
         
-        if newDownloadProgress > 99 {
+        if newDownloadProgress > 99 && !didCompleteToolDownload {
             newDownloadProgress = 99
+        }
+        else if newDownloadProgress >= 99 && didCompleteToolDownload {
+            newDownloadProgress = 100
         }
         
         setDownloadProgress(progress: newDownloadProgress / 100)
+        
+        if didCompleteToolDownload && newDownloadProgress == 100 {
+            stopDownload()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                self?.didCompleteDownloadClosure?()
+            }
+        }
     }
     
     private func setDownloadProgress(progress: Double) {

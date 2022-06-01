@@ -14,6 +14,7 @@ class DownloadToolTranslationsFlow: Flow {
     private let getToolTranslationsUseCase: GetToolTranslationsUseCase
     private let didDownloadToolTranslations: ((_ result: Result<ToolTranslations, GetToolTranslationsError>) -> Void)
     
+    private var downloadToolView: DownloadToolView?
     private var downloadToolModal: UIViewController?
     
     private weak var presentInFlow: Flow?
@@ -41,7 +42,11 @@ class DownloadToolTranslationsFlow: Flow {
         }, downloadFinished: { [weak self] (result: Result<ToolTranslations, GetToolTranslationsError>) in
                         
             self?.didDownloadToolTranslations(result)
-            self?.dismissDownloadTool()
+            
+            self?.downloadToolView?.completeDownload(didCompleteDownload: { [weak self] in
+                
+                self?.dismissDownloadTool()
+            })
         })
     }
     
@@ -89,6 +94,7 @@ class DownloadToolTranslationsFlow: Flow {
         
         navigationController.present(modal, animated: true, completion: nil)
         
+        downloadToolView = view
         downloadToolModal = modal
     }
     
@@ -100,6 +106,7 @@ class DownloadToolTranslationsFlow: Flow {
         
         modal.dismiss(animated: true)
         
+        downloadToolView = nil
         downloadToolModal = nil
     }
 }
