@@ -69,14 +69,8 @@ enum FlowStep {
     // tool
     case homeTappedFromTool(isScreenSharing: Bool)
     case toolSettingsTappedFromTool(toolData: ToolSettingsFlowToolData)
-    case buttonWithUrlTappedFromMobileContentRenderer(url: String, exitLink: ExitLinkModel)
-    case trainingTipTappedFromMobileContentRenderer(event: TrainingTipEvent)
-    case errorOccurredFromMobileContentRenderer(error: MobileContentErrorViewModel)
     case tractFlowCompleted(state: TractFlowCompletedState)
-    
-    // tool training
-    case closeTappedFromToolTraining
-    
+        
     // setup parallel language
     case languageSelectorTappedFromSetupParallelLanguage
     case yesTappedFromSetupParallelLanguage
@@ -128,10 +122,7 @@ enum FlowStep {
     // choose your own adventure
     case backTappedFromChooseYourOwnAdventure
     case chooseYourOwnAdventureFlowCompleted(state: ChooseYourOwnAdventureFlowCompletedState)
-    
-    // mobile content renderer events
-    case didTriggerDismissToolEventFromMobileContentRenderer
-    
+        
     // tool settings
     case closeTappedFromToolSettings
     case shareLinkTappedFromToolSettings

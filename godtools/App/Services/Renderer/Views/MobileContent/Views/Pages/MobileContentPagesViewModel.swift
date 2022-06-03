@@ -24,7 +24,6 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     private(set) var trainingTipsEnabled: Bool = false
     
     private(set) weak var window: UIViewController?
-    private(set) weak var flowDelegate: FlowDelegate?
     
     let renderer: MobileContentRenderer
     let numberOfPages: ObservableValue<Int> = ObservableValue(value: 0)
@@ -33,9 +32,8 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     let pageNavigation: ObservableValue<MobileContentPagesNavigationModel?> = ObservableValue(value: nil)
     let pagesRemoved: ObservableValue<[IndexPath]> = ObservableValue(value: [])
     
-    required init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool) {
+    required init(renderer: MobileContentRenderer, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool) {
         
-        self.flowDelegate = flowDelegate
         self.renderer = renderer
         self.startingPage = page
         self.mobileContentEventAnalytics = mobileContentEventAnalytics
@@ -349,7 +347,12 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     
     func handleDismissToolEvent() {
         
-        flowDelegate?.navigate(step: .didTriggerDismissToolEventFromMobileContentRenderer)
+        let event = DismissToolEvent(
+            resource: renderer.resource,
+            highestPageNumberViewed: highestPageNumberViewed
+        )
+        
+        renderer.navigation.dismissTool(event: event)
     }
     
     func setTrainingTipsEnabled(enabled: Bool) {

@@ -9,10 +9,8 @@
 import UIKit
 import GodToolsToolParser
 
-class TractFlow: NSObject, ToolNavigationFlow, Flow {
-    
-    private let deepLinkingService: DeepLinkingServiceType
-    
+class TractFlow: ToolNavigationFlow, Flow {
+        
     private var shareToolMenuFlow: ShareToolMenuFlow?
     private var toolSettingsFlow: ToolSettingsFlow?
     
@@ -32,14 +30,11 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController ?? UINavigationController()
-        self.deepLinkingService = appDiContainer.getDeepLinkingService()
-        
-        super.init()
-                    
+                            
         let renderer: MobileContentRenderer = appDiContainer.getMobileContentRenderer(
-            flowDelegate: self,
-            deepLinkingService: deepLinkingService,
+            navigationDelegate: self,
             type: .tract,
+            navigationController: navigationController,
             toolTranslations: toolTranslations
         )
                 
@@ -72,13 +67,10 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
         }
         
         configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
-        
-        addDeepLinkingObserver()
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
-        deepLinkingService.deepLinkObserver.removeObserver(self)
     }
     
     private func getFirstToolViewInFlow() -> ToolView? {
@@ -97,39 +89,10 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
         navigationController.setNavigationBarHidden(false, animated: shouldAnimateNavigationBarHiddenState)
     }
     
-    private func addDeepLinkingObserver() {
-        deepLinkingService.deepLinkObserver.addObserver(self) { [weak self] (parsedDeepLink: ParsedDeepLinkType?) in
-            if let deepLink = parsedDeepLink {
-                self?.navigate(step: .deepLink(deepLinkType: deepLink))
-            }
-        }
-    }
-    
     func navigate(step: FlowStep) {
         
         switch step {
-            
-        case .deepLink(let deepLink):
-            
-            switch deepLink {
-            
-            case .allToolsList:
-                break
-            
-            case .article(let articleURI):
-                break
-            
-            case .favoritedToolsList:
-                break
-            
-            case .lessonsList:
-                flowDelegate?.navigate(step: .tractFlowCompleted(state: .userClosedTractToLessonsList))
-            
-            case .tool(let toolDeepLink):
-                
-                navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
-            }
-        
+                    
         case .homeTappedFromTool(let isScreenSharing):
             
             if isScreenSharing {
@@ -201,24 +164,6 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             navigationController.dismiss(animated: true)
             
             toolSettingsFlow = nil
-
-        case .buttonWithUrlTappedFromMobileContentRenderer(let url, let exitLink):
-            guard let webUrl = URL(string: url) else {
-                return
-            }
-            navigateToURL(url: webUrl, exitLink: exitLink)
-            
-        case .trainingTipTappedFromMobileContentRenderer(let event):
-            navigateToToolTraining(event: event)
-            
-        case .errorOccurredFromMobileContentRenderer(let error):
-            
-            let view = MobileContentErrorView(viewModel: error)
-            
-            navigationController.present(view.controller, animated: true, completion: nil)
-            
-        case .closeTappedFromToolTraining:
-            navigationController.dismiss(animated: true, completion: nil)
             
         case .closeTappedFromShareToolScreenTutorial:
             self.shareToolMenuFlow = nil
@@ -245,9 +190,6 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             
             lessonFlow = nil
             
-        case .didTriggerDismissToolEventFromMobileContentRenderer:
-            closeTool()
-            
         default:
             break
         }
@@ -257,40 +199,33 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
         
         flowDelegate?.navigate(step: .tractFlowCompleted(state: .userClosedTract))
     }
+}
+
+extension TractFlow: MobileContentRendererNavigationDelegate {
     
-    private func navigateToToolTraining(event: TrainingTipEvent) {
-                        
-        let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
-            type: .trainingTip,
-            flowDelegate: self,
-            appDiContainer: appDiContainer,
-            deepLinkingService: deepLinkingService
-        )
+    func mobileContentRendererNavigationDismissRenderer(navigation: MobileContentRendererNavigation, event: DismissToolEvent) {
+        closeTool()
+    }
+    
+    func mobileContentRendererNavigationDeepLink(navigation: MobileContentRendererNavigation, deepLink: ParsedDeepLinkType) {
+                
+        switch deepLink {
         
-        let languageTranslationManifest = MobileContentRendererLanguageTranslationManifest(manifest: event.renderedPageContext.manifest, language: event.renderedPageContext.language)
+        case .allToolsList:
+            break
         
-        let pageRenderer = MobileContentPageRenderer(
-            sharedState: State(),
-            resource: event.renderedPageContext.resource,
-            primaryLanguage: event.renderedPageContext.primaryRendererLanguage,
-            languageTranslationManifest: languageTranslationManifest,
-            pageViewFactories: pageViewFactories,
-            translationsFileCache: appDiContainer.translationsFileCache
-        )
-                           
-        let viewModel = ToolTrainingViewModel(
-            flowDelegate: self,
-            pageRenderer: pageRenderer,
-            renderedPageContext: event.renderedPageContext,
-            trainingTipId: event.trainingTipId,
-            tipModel: event.tipModel,
-            analytics: appDiContainer.analytics,
-            localizationServices: appDiContainer.localizationServices,
-            viewedTrainingTips: appDiContainer.getViewedTrainingTipsService()
-        )
+        case .article(let articleURI):
+            break
         
-        let view = ToolTrainingView(viewModel: viewModel)
+        case .favoritedToolsList:
+            break
         
-        navigationController.present(view, animated: true, completion: nil)
+        case .lessonsList:
+            flowDelegate?.navigate(step: .tractFlowCompleted(state: .userClosedTractToLessonsList))
+        
+        case .tool(let toolDeepLink):
+            
+            navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
+        }
     }
 }

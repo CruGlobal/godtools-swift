@@ -13,11 +13,12 @@ class MobileContentRenderer {
             
     private let sharedState: State
     
+    let navigation: MobileContentRendererNavigation
     let resource: ResourceModel
     let primaryLanguage: LanguageModel
     let pageRenderers: [MobileContentPageRenderer]
     
-    required init(toolTranslations: ToolTranslations, pageViewFactories: MobileContentRendererPageViewFactories, translationsFileCache: TranslationsFileCache) {
+    required init(navigation: MobileContentRendererNavigation, toolTranslations: ToolTranslations, pageViewFactories: MobileContentRendererPageViewFactories, translationsFileCache: TranslationsFileCache) {
         
         let sharedState: State = State()
         let resource: ResourceModel = toolTranslations.tool
@@ -33,6 +34,7 @@ class MobileContentRenderer {
                 primaryLanguage: primaryLanguage,
                 languageTranslationManifest: languageTranslationManifest,
                 pageViewFactories: pageViewFactories,
+                navigation: navigation,
                 translationsFileCache: translationsFileCache
             )
             
@@ -40,6 +42,7 @@ class MobileContentRenderer {
         }
         
         self.sharedState = sharedState
+        self.navigation = navigation
         self.resource = resource
         self.primaryLanguage = primaryLanguage
         self.pageRenderers = pageRenderers

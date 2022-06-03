@@ -6,7 +6,7 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import OktaAuthentication
 
 class AppDiContainer {
@@ -282,16 +282,22 @@ class AppDiContainer {
         return MobileContentParser(translationsFileCache: translationsFileCache)
     }
     
-    func getMobileContentRenderer(flowDelegate: FlowDelegate, deepLinkingService: DeepLinkingServiceType, type: MobileContentRendererPageViewFactoriesType, toolTranslations: ToolTranslations) -> MobileContentRenderer {
-                             
+    func getMobileContentRenderer(navigationDelegate: MobileContentRendererNavigationDelegate, type: MobileContentRendererPageViewFactoriesType, navigationController: UINavigationController, toolTranslations: ToolTranslations) -> MobileContentRenderer {
+          
+        let navigation: MobileContentRendererNavigation = MobileContentRendererNavigation(
+            delegate: navigationDelegate,
+            appDiContainer: self,
+            navigationController: navigationController,
+            exitLinkAnalytics: getExitLinkAnalytics()
+        )
+        
         let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
             type: type,
-            flowDelegate: flowDelegate,
-            appDiContainer: self,
-            deepLinkingService: deepLinkingService
+            appDiContainer: self
         )
         
         return MobileContentRenderer(
+            navigation: navigation,
             toolTranslations: toolTranslations,
             pageViewFactories: pageViewFactories,
             translationsFileCache: translationsFileCache

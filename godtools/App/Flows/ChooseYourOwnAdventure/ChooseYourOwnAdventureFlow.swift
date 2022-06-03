@@ -10,9 +10,7 @@ import UIKit
 import GodToolsToolParser
 
 class ChooseYourOwnAdventureFlow: Flow {
-    
-    private let deepLinkingService: DeepLinkingServiceType
-    
+        
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
@@ -23,12 +21,11 @@ class ChooseYourOwnAdventureFlow: Flow {
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
-        self.deepLinkingService = appDiContainer.getDeepLinkingService()
                     
         let renderer: MobileContentRenderer = appDiContainer.getMobileContentRenderer(
-            flowDelegate: self,
-            deepLinkingService: deepLinkingService,
+            navigationDelegate: self,
             type: .chooseYourOwnAdventure,
+            navigationController: navigationController,
             toolTranslations: toolTranslations
         )
         
@@ -55,11 +52,25 @@ class ChooseYourOwnAdventureFlow: Flow {
         
         switch step {
         case .backTappedFromChooseYourOwnAdventure:
-            
-            flowDelegate?.navigate(step: .chooseYourOwnAdventureFlowCompleted(state: .userClosedTool))
+            closeTool()
             
         default:
             break
         }
+    }
+    
+    private func closeTool() {
+        flowDelegate?.navigate(step: .chooseYourOwnAdventureFlowCompleted(state: .userClosedTool))
+    }
+}
+
+extension ChooseYourOwnAdventureFlow: MobileContentRendererNavigationDelegate {
+    
+    func mobileContentRendererNavigationDismissRenderer(navigation: MobileContentRendererNavigation, event: DismissToolEvent) {
+        closeTool()
+    }
+    
+    func mobileContentRendererNavigationDeepLink(navigation: MobileContentRendererNavigation, deepLink: ParsedDeepLinkType) {
+        
     }
 }

@@ -11,6 +11,8 @@ import GodToolsToolParser
 
 class MobileContentPageRenderer {
     
+    private let navigation: MobileContentRendererNavigation
+    
     let sharedState: State
     let resource: ResourceModel
     let primaryLanguage: LanguageModel
@@ -19,7 +21,7 @@ class MobileContentPageRenderer {
     let manifestResourcesCache: ManifestResourcesCache
     let pageViewFactories: MobileContentRendererPageViewFactories
     
-    required init(sharedState: State, resource: ResourceModel, primaryLanguage: LanguageModel, languageTranslationManifest: MobileContentRendererLanguageTranslationManifest, pageViewFactories: MobileContentRendererPageViewFactories, translationsFileCache: TranslationsFileCache) {
+    required init(sharedState: State, resource: ResourceModel, primaryLanguage: LanguageModel, languageTranslationManifest: MobileContentRendererLanguageTranslationManifest, pageViewFactories: MobileContentRendererPageViewFactories, navigation: MobileContentRendererNavigation, translationsFileCache: TranslationsFileCache) {
         
         self.sharedState = sharedState
         self.resource = resource
@@ -28,6 +30,7 @@ class MobileContentPageRenderer {
         self.language = languageTranslationManifest.language
         self.manifestResourcesCache = ManifestResourcesCache(translationsFileCache: translationsFileCache)
         self.pageViewFactories = pageViewFactories
+        self.navigation = navigation
     }
     
     func getRenderablePageModels() -> [Page] {
@@ -83,6 +86,7 @@ class MobileContentPageRenderer {
             resource: resource,
             language: language,
             pageViewFactories: pageViewFactories,
+            navigation: navigation,
             primaryRendererLanguage: primaryLanguage,
             rendererState: sharedState,
             trainingTipsEnabled: trainingTipsEnabled

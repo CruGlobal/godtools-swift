@@ -21,11 +21,14 @@ class ToolViewModel: MobileContentPagesViewModel, ToolViewModelType {
     private let toolOpenedAnalytics: ToolOpenedAnalytics
     private let liveShareStream: String?
     
+    private weak var flowDelegate: FlowDelegate?
+    
     let navBarViewModel: ToolNavBarViewModel
     let didSubscribeForRemoteSharePublishing: ObservableValue<Bool> = ObservableValue(value: false)
         
     required init(flowDelegate: FlowDelegate, backButtonImageType: ToolBackButtonImageType, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, localizationServices: LocalizationServices, fontService: FontService, viewsService: ViewsService, analytics: AnalyticsContainer, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, page: Int?, trainingTipsEnabled: Bool) {
         
+        self.flowDelegate = flowDelegate
         self.backButtonImageType = backButtonImageType
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
         self.tractRemoteShareSubscriber = tractRemoteShareSubscriber
@@ -51,13 +54,13 @@ class ToolViewModel: MobileContentPagesViewModel, ToolViewModelType {
             analytics: analytics
         )
         
-        super.init(flowDelegate: flowDelegate, renderer: renderer, page: page, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .visiblePages, trainingTipsEnabled: trainingTipsEnabled)
+        super.init(renderer: renderer, page: page, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .visiblePages, trainingTipsEnabled: trainingTipsEnabled)
         
         setupBinding()
     }
     
-    required init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool) {
-        fatalError("init(flowDelegate:renderer:page:mobileContentEventAnalytics:initialPageRenderingType:trainingTipsEnabled:) has not been implemented")
+    required init(renderer: MobileContentRenderer, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool) {
+        fatalError("init(renderer:page:mobileContentEventAnalytics:initialPageRenderingType:trainingTipsEnabled:) has not been implemented")
     }
     
     deinit {

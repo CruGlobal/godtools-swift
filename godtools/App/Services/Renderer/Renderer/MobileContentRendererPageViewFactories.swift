@@ -13,7 +13,7 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
         
     let factories: [MobileContentPageViewFactoryType]
     
-    required init(type: MobileContentRendererPageViewFactoriesType, flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, deepLinkingService: DeepLinkingServiceType) {
+    required init(type: MobileContentRendererPageViewFactoriesType, appDiContainer: AppDiContainer) {
                 
         var pageViewFactories: [MobileContentPageViewFactoryType] = Array()
         
@@ -31,8 +31,6 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
         case .chooseYourOwnAdventure:
             
             let chooseYourOwnAdventureViewFactory = ChooseYourOwnAdventurePageViewFactory(
-                flowDelegate: flowDelegate,
-                deepLinkingService: deepLinkingService,
                 analytics: analytics
             )
             
@@ -41,14 +39,11 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
         case .lesson:
             
             let lessonPageViewFactory = LessonPageViewFactory(
-                flowDelegate: flowDelegate,
-                deepLinkService: deepLinkingService,
                 analytics: analytics,
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
             let toolPageViewFactory = ToolPageViewFactory(
-                flowDelegate: flowDelegate,
                 analytics: analytics,
                 mobileContentAnalytics: mobileContentAnalytics,
                 fontService: fontService,
@@ -56,8 +51,7 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
                 cardJumpService: cardJumpService,
                 followUpService: followUpsService,
                 translationsFileCache: translationsFileCache,
-                viewedTrainingTipsService: viewedTrainingTipsService,
-                deepLinkService: deepLinkingService
+                viewedTrainingTipsService: viewedTrainingTipsService
             )
             
             let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
@@ -70,7 +64,6 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
         case .tract:
             
             let toolPageViewFactory = ToolPageViewFactory(
-                flowDelegate: flowDelegate,
                 analytics: analytics,
                 mobileContentAnalytics: mobileContentAnalytics,
                 fontService: fontService,
@@ -78,8 +71,7 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
                 cardJumpService: cardJumpService,
                 followUpService: followUpsService,
                 translationsFileCache: translationsFileCache,
-                viewedTrainingTipsService: viewedTrainingTipsService,
-                deepLinkService: deepLinkingService
+                viewedTrainingTipsService: viewedTrainingTipsService
             )
             
             let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
@@ -100,10 +92,8 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
         }
         
         let mobileContentPageViewFactory = MobileContentPageViewFactory(
-            flowDelegate: flowDelegate,
             mobileContentAnalytics: mobileContentAnalytics,
             fontService: fontService,
-            deepLinkingService: deepLinkingService,
             analytics: analytics
         )
         

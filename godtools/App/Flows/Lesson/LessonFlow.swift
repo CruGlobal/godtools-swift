@@ -9,10 +9,8 @@
 import UIKit
 import GodToolsToolParser
 
-class LessonFlow: NSObject, ToolNavigationFlow, Flow {
-    
-    private let deepLinkingService: DeepLinkingServiceType
-            
+class LessonFlow: ToolNavigationFlow, Flow {
+                
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
@@ -29,14 +27,11 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
-        self.deepLinkingService = appDiContainer.getDeepLinkingService()
-        
-        super.init()
-                
+                        
         let renderer: MobileContentRenderer = appDiContainer.getMobileContentRenderer(
-            flowDelegate: self,
-            deepLinkingService: deepLinkingService,
+            navigationDelegate: self,
             type: .lesson,
+            navigationController: navigationController,
             toolTranslations: toolTranslations
         )
               
@@ -55,25 +50,14 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
         navigationController.pushViewController(view, animated: true)
         
         configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
-        
-        addDeepLinkingObserver()
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
-        deepLinkingService.deepLinkObserver.removeObserver(self)
     }
     
     private func configureNavigationBar(shouldAnimateNavigationBarHiddenState: Bool) {
         navigationController.setNavigationBarHidden(true, animated: shouldAnimateNavigationBarHiddenState)
-    }
-    
-    private func addDeepLinkingObserver() {
-        deepLinkingService.deepLinkObserver.addObserver(self) { [weak self] (parsedDeepLink: ParsedDeepLinkType?) in
-            if let deepLink = parsedDeepLink {
-                self?.navigate(step: .deepLink(deepLinkType: deepLink))
-            }
-        }
     }
     
     func navigate(step: FlowStep) {
@@ -81,42 +65,11 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
         switch step {
         
         case .deepLink(let deepLink):
-            
-            switch deepLink {
-            
-            case .allToolsList:
-                break
-            
-            case .article(let articleURI):
-                break
-            
-            case .favoritedToolsList:
-                break
-            
-            case .lessonsList:
-                break
-            
-            case .tool(let toolDeepLink):
-                
-                navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
-            }
+            break
         
         case .closeTappedFromLesson(let lesson, let highestPageNumberViewed):
-            
-            flowDelegate?.navigate(step: .lessonFlowCompleted(state: .userClosedLesson(lesson: lesson, highestPageNumberViewed: highestPageNumberViewed)))
-            
-        case .buttonWithUrlTappedFromMobileContentRenderer(let url, let exitLink):
-            guard let webUrl = URL(string: url) else {
-                return
-            }
-            navigateToURL(url: webUrl, exitLink: exitLink)
-                        
-        case .errorOccurredFromMobileContentRenderer(let error):
-            
-            let view = MobileContentErrorView(viewModel: error)
-            
-            navigationController.present(view.controller, animated: true, completion: nil)
-            
+            closeTool(lesson: lesson, highestPageNumberViewed: highestPageNumberViewed)
+                                                
         case .articleFlowCompleted(let state):
             
             guard articleFlow != nil else {
@@ -152,6 +105,40 @@ class LessonFlow: NSObject, ToolNavigationFlow, Flow {
                     
         default:
             break
+        }
+    }
+    
+    private func closeTool(lesson: ResourceModel, highestPageNumberViewed: Int) {
+        flowDelegate?.navigate(step: .lessonFlowCompleted(state: .userClosedLesson(lesson: lesson, highestPageNumberViewed: highestPageNumberViewed)))
+    }
+}
+
+extension LessonFlow: MobileContentRendererNavigationDelegate {
+    
+    func mobileContentRendererNavigationDismissRenderer(navigation: MobileContentRendererNavigation, event: DismissToolEvent) {
+        
+        closeTool(lesson: event.resource, highestPageNumberViewed: event.highestPageNumberViewed)
+    }
+    
+    func mobileContentRendererNavigationDeepLink(navigation: MobileContentRendererNavigation, deepLink: ParsedDeepLinkType) {
+        
+        switch deepLink {
+        
+        case .allToolsList:
+            break
+        
+        case .article(let articleURI):
+            break
+        
+        case .favoritedToolsList:
+            break
+        
+        case .lessonsList:
+            break
+        
+        case .tool(let toolDeepLink):
+            
+            navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
         }
     }
 }
