@@ -300,7 +300,7 @@ class AppDiContainer {
             navigation: navigation,
             toolTranslations: toolTranslations,
             pageViewFactories: pageViewFactories,
-            translationsFileCache: translationsFileCache
+            manifestResourcesCache: getManifestResourcesCache()
         )
     }
     

@@ -94,7 +94,7 @@ class MobileContentRendererNavigation {
             languageTranslationManifest: languageTranslationManifest,
             pageViewFactories: pageViewFactories,
             navigation: navigation,
-            translationsFileCache: appDiContainer.translationsFileCache
+            manifestResourcesCache: appDiContainer.getManifestResourcesCache()
         )
                            
         let viewModel = ToolTrainingViewModel(
