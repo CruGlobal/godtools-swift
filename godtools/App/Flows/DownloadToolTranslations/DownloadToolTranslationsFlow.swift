@@ -113,3 +113,4 @@ class DownloadToolTranslationsFlow: Flow {
         downloadToolModal = nil
     }
 }
+

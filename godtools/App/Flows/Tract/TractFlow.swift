@@ -11,7 +11,6 @@ import GodToolsToolParser
 
 class TractFlow: ToolNavigationFlow, Flow {
         
-    private var shareToolMenuFlow: ShareToolMenuFlow?
     private var toolSettingsFlow: ToolSettingsFlow?
     
     private weak var flowDelegate: FlowDelegate?
@@ -142,23 +141,6 @@ class TractFlow: ToolNavigationFlow, Flow {
             
             self.toolSettingsFlow = toolSettingsFlow
             
-            // TODO: GT-1565 remove ShareToolMenuFlow. ~Levi
-            /*
-            let shareToolMenuFlow = ShareToolMenuFlow(
-                flowDelegate: self,
-                appDiContainer: appDiContainer,
-                navigationController: navigationController,
-                tractRemoteSharePublisher: tractRemoteSharePublisher,
-                resource: resource,
-                selectedLanguage: selectedLanguage,
-                primaryLanguage: primaryLanguage,
-                parallelLanguage: parallelLanguage,
-                pageNumber: pageNumber,
-                hidesRemoteShareToolAction: tractRemoteShareSubscriber.isSubscribedToChannel
-            )
-            
-            self.shareToolMenuFlow = shareToolMenuFlow*/
-            
         case .toolSettingsFlowCompleted:
             
             guard toolSettingsFlow != nil else {
@@ -168,10 +150,7 @@ class TractFlow: ToolNavigationFlow, Flow {
             navigationController.dismiss(animated: true)
             
             toolSettingsFlow = nil
-            
-        case .closeTappedFromShareToolScreenTutorial:
-            self.shareToolMenuFlow = nil
-            
+                        
         case .tractFlowCompleted(let state):
             
             guard tractFlow != nil else {

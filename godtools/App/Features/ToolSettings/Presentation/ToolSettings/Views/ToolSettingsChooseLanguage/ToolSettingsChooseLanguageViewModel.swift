@@ -28,6 +28,8 @@ class ToolSettingsChooseLanguageViewModel: BaseToolSettingsChooseLanguageViewMod
         
         super.init()
         
+        title = localizationServices.stringForMainBundle(key: "toolSettings.chooseLanguage.title")
+        
         primaryLanguageCancellable = primaryLanguageSubject.sink(receiveValue: { [weak self] (language: LanguageModel) in
             
             guard let weakSelf = self else {

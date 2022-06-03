@@ -25,7 +25,7 @@ class ToolShortcutItem: UIApplicationShortcutItem {
         
         let urlString: String
         
-        let primaryUrlString: String = "GodTools://knowgod.com/" + primaryLanguageCode + "/" + resource.abbreviation + "/0"
+        let primaryUrlString: String = "godtools://knowgod.com/" + primaryLanguageCode + "/" + resource.abbreviation + "/0"
         if let parallelLanguageCode = parallelLanguageCode {
             urlString = primaryUrlString + "?parallelLanguage=" + parallelLanguageCode
         }

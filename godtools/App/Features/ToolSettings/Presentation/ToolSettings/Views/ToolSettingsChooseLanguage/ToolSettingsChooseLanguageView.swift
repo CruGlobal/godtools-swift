@@ -22,7 +22,7 @@ struct ToolSettingsChooseLanguageView: View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .center, spacing: 0) {
                 VStack (alignment: .leading, spacing: 4) {
-                    Text("Parallel Language")
+                    Text(viewModel.title)
                         .foregroundColor(primaryTextColor)
                         .font(FontLibrary.sfProTextRegular.font(size: 19))
                     Text("Toggle between the two different languages in this tool.")
