@@ -1,5 +1,5 @@
 //
-//  ArticleResource.swift
+//  ArticleCategory.swift
 //  godtools
 //
 //  Created by Levi Eggert on 4/21/20.
@@ -8,8 +8,8 @@
 
 import Foundation
 
-struct ArticleResource {
+struct ArticleCategory {
     
-    let filename: String
-    let src: String
+    let aemTags: [String]
+    let id: String
 }

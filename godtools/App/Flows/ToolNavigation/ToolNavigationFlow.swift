@@ -116,18 +116,13 @@ extension ToolNavigationFlow {
         switch resourceType {
             
         case .article:
-            break
             
-            // TODO: Update to use Manifest from GodToolsToolParser. ~Levi
-            
-            /*
             articleFlow = ArticleFlow(
                 flowDelegate: self,
                 appDiContainer: appDiContainer,
                 sharedNavigationController: navigationController,
-                resource: resource,
-                translationManifest: primaryLanguageTranslation.translationManifestData
-            )*/
+                toolTranslations: toolTranslations
+            )
             
         case .lesson:
             

@@ -7,15 +7,16 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class ArticlesViewModel: NSObject, ArticlesViewModelType {
     
     typealias AemUri = String
     
     private let resource: ResourceModel
-    private let translationZipFile: TranslationZipFileModel
-    private let category: ArticleCategory
-    private let articleManifest: ArticleManifestXmlParser
+    private let language: LanguageModel
+    private let category: GodToolsToolParser.Category
+    private let manifest: Manifest
     private let articleManifestAemRepository: ArticleManifestAemRepository
     private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
@@ -31,13 +32,13 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     let errorMessage: ObservableValue<ArticlesErrorMessageViewModel?> = ObservableValue(value: nil)
         
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, translationZipFile: TranslationZipFileModel, category: ArticleCategory, articleManifest: ArticleManifestXmlParser, articleManifestAemRepository: ArticleManifestAemRepository, localizationServices: LocalizationServices, analytics: AnalyticsContainer, currentArticleDownloadReceipt: ArticleManifestDownloadArticlesReceipt?) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageModel, category: GodToolsToolParser.Category, manifest: Manifest, articleManifestAemRepository: ArticleManifestAemRepository, localizationServices: LocalizationServices, analytics: AnalyticsContainer, currentArticleDownloadReceipt: ArticleManifestDownloadArticlesReceipt?) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
-        self.translationZipFile = translationZipFile
+        self.language = language
         self.category = category
-        self.articleManifest = articleManifest
+        self.manifest = manifest
         self.articleManifestAemRepository = articleManifestAemRepository
         self.localizationServices = localizationServices
         self.analytics = analytics
@@ -45,7 +46,7 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
         
         super.init()
                         
-        navTitle.accept(value: category.title)
+        navTitle.accept(value: category.label?.text ?? "")
 
         let cachedArticles: [AemUri] = getCachedArticles()
         
@@ -67,7 +68,7 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
     }
     
     private var analyticsScreenName: String {
-        return "Category : \(category.title)"
+        return "Category : \(category.label?.text ?? "")"
     }
     
     private var analyticsSiteSection: String {
@@ -117,7 +118,7 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
         
         errorMessage.accept(value: nil)
         
-        downloadArticlesReceipt = articleManifestAemRepository.downloadAndCacheManifestAemUris(manifest: articleManifest, languageCode: translationZipFile.languageCode, forceDownload: forceDownload) { [weak self] (result: ArticleAemRepositoryResult) in
+        downloadArticlesReceipt = articleManifestAemRepository.downloadAndCacheManifestAemUris(manifest: manifest, languageCode: language.code, forceDownload: forceDownload) { [weak self] (result: ArticleAemRepositoryResult) in
             self?.downloadArticlesReceipt = nil
             DispatchQueue.main.async { [weak self] in
                 self?.handleCompleteArticlesDownload(result: result)
@@ -154,11 +155,14 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
     
     private func getCachedArticles() -> [AemUri] {
         
-        let category: ArticleCategory = self.category
-        let languageCode: String = translationZipFile.languageCode
+        guard let categoryId = category.id else {
+            return []
+        }
+        
+        let languageCode: String = language.code
         
         let categoryArticles: [CategoryArticleModel] = articleManifestAemRepository.getCategoryArticles(
-            category: category,
+            categoryId: categoryId,
             languageCode: languageCode
         )
         

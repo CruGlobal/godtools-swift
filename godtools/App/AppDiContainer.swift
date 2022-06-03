@@ -266,6 +266,10 @@ class AppDiContainer {
         )
     }
     
+    func getManifestResourcesCache() -> ManifestResourcesCache {
+        return ManifestResourcesCache(translationsFileCache: translationsFileCache)
+    }
+    
     func getMobileContentAnalytics() -> MobileContentAnalytics {
         return MobileContentAnalytics(analytics: analytics)
     }

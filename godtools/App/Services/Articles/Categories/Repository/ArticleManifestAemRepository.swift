@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class ArticleManifestAemRepository: NSObject, ArticleAemRepositoryType {
     
@@ -24,18 +25,27 @@ class ArticleManifestAemRepository: NSObject, ArticleAemRepositoryType {
         super.init()
     }
     
-    func getCategoryArticles(category: ArticleCategory, languageCode: String) -> [CategoryArticleModel] {
+    func getCategoryArticles(categoryId: String, languageCode: String) -> [CategoryArticleModel] {
         
-        let realmCategoryArticles: [RealmCategoryArticle] = categoryArticlesCache.getCategoryArticles(category: category, languageCode: languageCode)
+        let realmCategoryArticles: [RealmCategoryArticle] = categoryArticlesCache.getCategoryArticles(categoryId: categoryId, languageCode: languageCode)
         
         return realmCategoryArticles.map({CategoryArticleModel(realmModel: $0)})
     }
     
-    func downloadAndCacheManifestAemUris(manifest: ArticleManifestType, languageCode: String, forceDownload: Bool, completion: @escaping ((_ result: ArticleAemRepositoryResult) -> Void)) -> ArticleManifestDownloadArticlesReceipt {
+    func downloadAndCacheManifestAemUris(manifest: Manifest, languageCode: String, forceDownload: Bool, completion: @escaping ((_ result: ArticleAemRepositoryResult) -> Void)) -> ArticleManifestDownloadArticlesReceipt {
                 
         let receipt = ArticleManifestDownloadArticlesReceipt()
         
-        let downloadQueue = downloadAndCache(aemUris: manifest.aemUris, forceDownload: forceDownload) { [weak self] (result: ArticleAemRepositoryResult) in
+        let aemUris: [String] = manifest.aemImports.map({$0.absoluteString})
+        
+        let categories: [ArticleCategory] = manifest.categories.map({
+            ArticleCategory(
+                aemTags: Array($0.aemTags),
+                id: $0.id ?? ""
+            )
+        })
+        
+        let downloadQueue = downloadAndCache(aemUris: aemUris, forceDownload: forceDownload) { [weak self] (result: ArticleAemRepositoryResult) in
             
             guard let repository = self else {
                 return
@@ -43,7 +53,7 @@ class ArticleManifestAemRepository: NSObject, ArticleAemRepositoryType {
             
             let aemDataObjects: [ArticleAemData] = result.downloaderResult.aemDataObjects
             
-            repository.categoryArticlesCache.storeAemDataObjectsForManifest(manifest: manifest, languageCode: languageCode, aemDataObjects: aemDataObjects) { (cacheError: [Error]) in
+            repository.categoryArticlesCache.storeAemDataObjectsForCategories(categories: categories, languageCode: languageCode, aemDataObjects: aemDataObjects) { (cacheError: [Error]) in
                 
                 completion(result)
                 
