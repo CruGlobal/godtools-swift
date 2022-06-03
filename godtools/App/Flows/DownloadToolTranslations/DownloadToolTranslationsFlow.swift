@@ -33,20 +33,23 @@ class DownloadToolTranslationsFlow: Flow {
            
         getToolTranslationsUseCase.getToolTranslations(determineToolTranslationsToDownload: determineToolTranslationsToDownload, downloadStarted: { [weak self] in
             
-            self?.navigateToDownloadTool { [weak self] in
+            self?.navigateToDownloadTool(didCloseClosure: { [weak self] in
                 
                 self?.getToolTranslationsUseCase.cancel()
                 self?.dismissDownloadTool()
-            }
+            })
             
         }, downloadFinished: { [weak self] (result: Result<ToolTranslations, GetToolTranslationsError>) in
                         
-            self?.didDownloadToolTranslations(result)
-            
-            self?.downloadToolView?.completeDownload(didCompleteDownload: { [weak self] in
-                
-                self?.dismissDownloadTool()
-            })
+            if let downloadToolView = self?.downloadToolView {
+                downloadToolView.completeDownloadProgress {
+                    self?.didDownloadToolTranslations(result)
+                    self?.dismissDownloadTool()
+                }
+            }
+            else {
+                self?.didDownloadToolTranslations(result)
+            }
         })
     }
     

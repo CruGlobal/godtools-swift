@@ -82,7 +82,7 @@ class DownloadToolView: UIViewController {
         viewModel.closeTapped()
     }
     
-    func completeDownload(didCompleteDownload: @escaping (() -> Void)) {
-        viewModel.completeDownload(didCompleteDownload: didCompleteDownload)
+    func completeDownloadProgress(didCompleteDownload: @escaping (() -> Void)) {
+        viewModel.completeDownloadProgress(didCompleteDownload: didCompleteDownload)
     }
 }

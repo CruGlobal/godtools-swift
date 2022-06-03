@@ -53,7 +53,7 @@ class DownloadToolViewModel: NSObject, DownloadToolViewModelType {
         didCloseClosure()
     }
     
-    func completeDownload(didCompleteDownload: @escaping (() -> Void)) {
+    func completeDownloadProgress(didCompleteDownload: @escaping (() -> Void)) {
         didCompleteDownloadClosure = didCompleteDownload
         didCompleteToolDownload = true
     }
