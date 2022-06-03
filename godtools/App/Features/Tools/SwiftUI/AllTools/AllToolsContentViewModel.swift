@@ -22,6 +22,8 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     private let favoritingToolMessageCache: FavoritingToolMessageCache
     private let analytics: AnalyticsContainer
     
+    private var categoryFilterValue: String?
+    
     // MARK: - Published
     
     @Published var tools: [ResourceModel] = []
@@ -72,7 +74,8 @@ extension AllToolsContentViewModel {
         return ToolCategoriesViewModel(
             dataDownloader: dataDownloader,
             languageSettingsService: languageSettingsService,
-            localizationServices: localizationServices
+            localizationServices: localizationServices,
+            delegate: self
         )
     }
     
@@ -129,13 +132,8 @@ extension AllToolsContentViewModel {
     }
     
     private func reloadResourcesFromCache() {
-        let sortedResources: [ResourceModel] = dataDownloader.resourcesCache.getSortedResources()
-        let resources: [ResourceModel] = sortedResources.filter({
-            let resourceType: ResourceType = $0.resourceTypeEnum
-            return (resourceType == .tract || resourceType == .article || resourceType == .chooseYourOwnAdventure) && !$0.isHidden
-        })
-        
-        tools = resources
+        let categoryFilter: ((ResourceModel) -> Bool)? = categoryFilterValue == nil ? nil : { $0.attrCategory == self.categoryFilterValue }
+        tools = dataDownloader.resourcesCache.getAllVisibleToolsSorted(with: categoryFilter)
         isLoading = false
     }
 }
@@ -156,6 +154,16 @@ extension AllToolsContentViewModel: ToolSpotlightDelegate {
     
     func spotlightCardTapped(resource: ResourceModel) {
         toolTapped(resource: resource)
+    }
+}
+
+// MARK: - ToolCategoriesViewModelDelegate
+
+extension AllToolsContentViewModel: ToolCategoriesViewModelDelegate {
+    
+    func filterToolsWithCategory(_ attrCategory: String?) {
+        categoryFilterValue = attrCategory
+        reloadResourcesFromCache()
     }
 }
 

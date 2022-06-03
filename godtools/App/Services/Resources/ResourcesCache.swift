@@ -41,9 +41,15 @@ class ResourcesCache {
         return resources
     }
     
-    func getAllVisibleToolsSorted() -> [ResourceModel] {
-                
-        return getSortedResources().filter({ $0.isNotLessonType && $0.isHidden == false })
+    func getAllVisibleToolsSorted(with additionalFilter: ((ResourceModel) -> Bool)? = nil) -> [ResourceModel] {
+        return getSortedResources().filter { resource in
+            
+            if let additionalFilter = additionalFilter, additionalFilter(resource) == false {
+                return false
+            }
+            
+            return resource.isNotLessonType && resource.isHidden == false
+        }
     }
     
     func getResource(id: String) -> ResourceModel? {

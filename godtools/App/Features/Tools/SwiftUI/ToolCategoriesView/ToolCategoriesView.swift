@@ -58,7 +58,8 @@ struct ToolCategoriesView_Previews: PreviewProvider {
         let viewModel = ToolCategoriesViewModel(
             dataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
-            localizationServices: appDiContainer.localizationServices
+            localizationServices: appDiContainer.localizationServices,
+            delegate: nil
         )
         
         ToolCategoriesView(viewModel: viewModel, leadingPadding: 20)

@@ -9,6 +9,10 @@
 import Foundation
 import SwiftUI
 
+protocol ToolCategoriesViewModelDelegate: AnyObject {
+    func filterToolsWithCategory(_ attrCategory: String?)
+}
+
 class ToolCategoriesViewModel: NSObject, ObservableObject {
     
     // MARK: - Properties
@@ -16,6 +20,7 @@ class ToolCategoriesViewModel: NSObject, ObservableObject {
     private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
+    private weak var delegate: ToolCategoriesViewModelDelegate?
         
     // MARK: - Published
     
@@ -24,10 +29,11 @@ class ToolCategoriesViewModel: NSObject, ObservableObject {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices) {
+    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: ToolCategoriesViewModelDelegate?) {
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
+        self.delegate = delegate
         
         super.init()
         
@@ -46,16 +52,16 @@ extension ToolCategoriesViewModel {
     
     func categoryTapped(_ category: String) {
         if category == selectedCategory {
-            
             selectedCategory = nil
         } else {
-            
             selectedCategory = category
         }
         
         for buttonViewModel in buttonViewModels {
             buttonViewModel.updateStateWithSelectedCategory(selectedCategory)
         }
+        
+        delegate?.filterToolsWithCategory(category)
     }
 }
 
