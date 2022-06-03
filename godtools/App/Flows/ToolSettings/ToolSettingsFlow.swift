@@ -17,6 +17,7 @@ class ToolSettingsFlow: Flow {
     private var shareToolScreenTutorialModal: UIViewController?
     private var loadToolRemoteSessionModal: UIViewController?
     private var languagesListModal: UIViewController?
+    private var downloadToolTranslationsFlow: DownloadToolTranslationsFlow?
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -262,15 +263,15 @@ class ToolSettingsFlow: Flow {
             
         }, languageTappedClosure: { [weak self] language in
             
-            switch languageListType {
-            case .primary:
-                self?.tool.setPrimaryLanguage(languageId: language.id)
-            case .parallel:
-                self?.tool.setParallelLanguage(languageId: language.id)
-            }
-            
-            self?.dismissLanguagesList()
-            self?.flowDelegate?.navigate(step: .toolSettingsFlowCompleted)
+            self?.dismissLanguagesList(animated: true, completion: { [weak self] in
+                
+                switch languageListType {
+                case .primary:
+                    self?.setToolPrimaryLanguage(languageId: language.id)
+                case .parallel:
+                    self?.setToolParallelLanguage(languageId: language.id)
+                }
+            })
         })
         
         let view = LanguagesListView(viewModel: viewModel)
@@ -284,13 +285,79 @@ class ToolSettingsFlow: Flow {
         languagesListModal = hostingView
     }
     
-    private func dismissLanguagesList() {
+    private func setToolPrimaryLanguage(languageId: String) {
+        
+        var currentLanguageIds: [String] = toolData.renderer.pageRenderers.map({$0.language.id})
+    
+        if currentLanguageIds.isEmpty {
+            
+            setToolLanguages(languageIds: [languageId])
+        }
+        else {
+            
+            currentLanguageIds[0] = languageId
+            setToolLanguages(languageIds: currentLanguageIds)
+        }
+    }
+    
+    private func setToolParallelLanguage(languageId: String) {
+        
+        var currentLanguageIds: [String] = toolData.renderer.pageRenderers.map({$0.language.id})
+    }
+    
+    private func setToolLanguages(languageIds: [String]) {
+        
+        let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
+            resourceId: toolData.resource.id,
+            languageIds: languageIds,
+            resourcesCache: appDiContainer.initialDataDownloader.resourcesCache,
+            languagesRepository: appDiContainer.getLanguagesRepository()
+        )
+        
+        let didDownloadToolTranslationsClosure = { [weak self] (result: Result<ToolTranslations, GetToolTranslationsError>) in
+                   
+            guard let weakSelf = self else {
+                return
+            }
+            
+            switch result {
+            
+            case .success(let toolTranslations):
+                
+                let newRenderer: MobileContentRenderer = weakSelf.toolData.renderer.copy(toolTranslations: toolTranslations)
+                weakSelf.tool.setRenderer(renderer: newRenderer)
+                
+            case .failure(let error):
+                break
+            }
+            
+            self?.downloadToolTranslationsFlow = nil
+        }
+        
+        let downloadToolTranslationsFlow = DownloadToolTranslationsFlow(
+            presentInFlow: self,
+            appDiContainer: appDiContainer,
+            determineToolTranslationsToDownload: determineToolTranslationsToDownload,
+            didDownloadToolTranslations: didDownloadToolTranslationsClosure
+        )
+        
+        self.downloadToolTranslationsFlow = downloadToolTranslationsFlow
+    }
+    
+    private func dismissLanguagesList(animated: Bool = true, completion: (() -> Void)? = nil) {
         
         guard let languagesListModal = languagesListModal else {
             return
         }
         
-        languagesListModal.dismiss(animated: true, completion: nil)
+        if animated {
+            languagesListModal.dismiss(animated: true, completion: completion)
+        }
+        else {
+            languagesListModal.dismiss(animated: false)
+            completion?()
+        }
+                
         self.languagesListModal = nil
     }
 }

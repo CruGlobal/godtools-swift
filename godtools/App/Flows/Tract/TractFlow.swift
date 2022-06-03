@@ -30,11 +30,15 @@ class TractFlow: ToolNavigationFlow, Flow {
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController ?? UINavigationController()
-                            
-        let renderer: MobileContentRenderer = appDiContainer.getMobileContentRenderer(
+          
+        let navigation: MobileContentRendererNavigation = appDiContainer.getMobileContentRendererNavigation(
             navigationDelegate: self,
+            navigationController: navigationController
+        )
+        
+        let renderer: MobileContentRenderer = appDiContainer.getMobileContentRenderer(
             type: .tract,
-            navigationController: navigationController,
+            navigation: navigation,
             toolTranslations: toolTranslations
         )
                 

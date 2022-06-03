@@ -10,9 +10,6 @@ import Foundation
 
 protocol ToolSettingsToolType {
     
+    func setRenderer(renderer: MobileContentRenderer)
     func setTrainingTipsEnabled(enabled: Bool)
-    func setPrimaryLanguage(languageId: String)
-    func setParallelLanguage(languageId: String)
-    func clearParallelLanguage()
-    func swapLanguages(fromLanguageId: String, toLanguageId: String)
 }

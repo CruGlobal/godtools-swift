@@ -27,11 +27,15 @@ class LessonFlow: ToolNavigationFlow, Flow {
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
-                        
-        let renderer: MobileContentRenderer = appDiContainer.getMobileContentRenderer(
+               
+        let navigation: MobileContentRendererNavigation = appDiContainer.getMobileContentRendererNavigation(
             navigationDelegate: self,
+            navigationController: navigationController
+        )
+        
+        let renderer: MobileContentRenderer = appDiContainer.getMobileContentRenderer(
             type: .lesson,
-            navigationController: navigationController,
+            navigation: navigation,
             toolTranslations: toolTranslations
         )
               

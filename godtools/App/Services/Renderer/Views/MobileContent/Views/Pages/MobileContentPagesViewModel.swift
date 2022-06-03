@@ -18,6 +18,7 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     private var safeArea: UIEdgeInsets?
     private var pageModels: [Page] = Array()
     
+    private(set) var renderer: MobileContentRenderer
     private(set) var currentPageRenderer: MobileContentPageRenderer?
     private(set) var currentPage: Int = 0
     private(set) var highestPageNumberViewed: Int = 0
@@ -25,7 +26,6 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     
     private(set) weak var window: UIViewController?
     
-    let renderer: MobileContentRenderer
     let numberOfPages: ObservableValue<Int> = ObservableValue(value: 0)
     let pageNavigationSemanticContentAttribute: UISemanticContentAttribute
     let rendererWillChangeSignal: Signal = Signal()
@@ -217,6 +217,17 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         }
         
         setPageRenderer(pageRenderer: pageRenderer)
+    }
+    
+    func setRenderer(renderer: MobileContentRenderer) {
+            
+        guard let firstPageRenderer = renderer.pageRenderers.first else {
+            return
+        }
+        
+        self.renderer = renderer
+        
+        setPageRenderer(pageRenderer: firstPageRenderer)
     }
     
     func setPageRenderer(pageRenderer: MobileContentPageRenderer) {

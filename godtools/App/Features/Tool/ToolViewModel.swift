@@ -269,6 +269,7 @@ extension ToolViewModel {
         let shareables: [Shareable] = pageRenderer.manifest.shareables
         
         let toolData = ToolSettingsFlowToolData(
+            renderer: renderer,
             manifestResourcesCache: pageRenderer.manifestResourcesCache,
             tractRemoteSharePublisher: tractRemoteSharePublisher,
             resource: resource,

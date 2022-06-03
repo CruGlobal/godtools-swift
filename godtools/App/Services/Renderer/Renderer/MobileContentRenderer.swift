@@ -12,13 +12,15 @@ import GodToolsToolParser
 class MobileContentRenderer {
             
     private let sharedState: State
+    private let pageViewFactories: MobileContentRendererPageViewFactories
+    private let manifestResourcesCache: ManifestResourcesCache
     
     let navigation: MobileContentRendererNavigation
     let resource: ResourceModel
     let primaryLanguage: LanguageModel
     let pageRenderers: [MobileContentPageRenderer]
     
-    required init(navigation: MobileContentRendererNavigation, toolTranslations: ToolTranslations, pageViewFactories: MobileContentRendererPageViewFactories, manifestResourcesCache: ManifestResourcesCache) {
+    init(navigation: MobileContentRendererNavigation, toolTranslations: ToolTranslations, pageViewFactories: MobileContentRendererPageViewFactories, manifestResourcesCache: ManifestResourcesCache) {
         
         let sharedState: State = State()
         let resource: ResourceModel = toolTranslations.tool
@@ -42,10 +44,22 @@ class MobileContentRenderer {
         }
         
         self.sharedState = sharedState
+        self.pageViewFactories = pageViewFactories
+        self.manifestResourcesCache = manifestResourcesCache
         self.navigation = navigation
         self.resource = resource
         self.primaryLanguage = primaryLanguage
         self.pageRenderers = pageRenderers
+    }
+    
+    func copy(toolTranslations: ToolTranslations) -> MobileContentRenderer {
+        
+        return MobileContentRenderer(
+            navigation: navigation,
+            toolTranslations: toolTranslations,
+            pageViewFactories: pageViewFactories,
+            manifestResourcesCache: manifestResourcesCache
+        )
     }
 }
 

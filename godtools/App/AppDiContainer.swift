@@ -282,15 +282,8 @@ class AppDiContainer {
         return MobileContentParser(translationsFileCache: translationsFileCache)
     }
     
-    func getMobileContentRenderer(navigationDelegate: MobileContentRendererNavigationDelegate, type: MobileContentRendererPageViewFactoriesType, navigationController: UINavigationController, toolTranslations: ToolTranslations) -> MobileContentRenderer {
-          
-        let navigation: MobileContentRendererNavigation = MobileContentRendererNavigation(
-            delegate: navigationDelegate,
-            appDiContainer: self,
-            navigationController: navigationController,
-            exitLinkAnalytics: getExitLinkAnalytics()
-        )
-        
+    func getMobileContentRenderer(type: MobileContentRendererPageViewFactoriesType, navigation: MobileContentRendererNavigation, toolTranslations: ToolTranslations) -> MobileContentRenderer {
+
         let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
             type: type,
             appDiContainer: self
@@ -301,6 +294,16 @@ class AppDiContainer {
             toolTranslations: toolTranslations,
             pageViewFactories: pageViewFactories,
             manifestResourcesCache: getManifestResourcesCache()
+        )
+    }
+    
+    func getMobileContentRendererNavigation(navigationDelegate: MobileContentRendererNavigationDelegate, navigationController: UINavigationController) -> MobileContentRendererNavigation {
+        
+        return MobileContentRendererNavigation(
+            delegate: navigationDelegate,
+            appDiContainer: self,
+            navigationController: navigationController,
+            exitLinkAnalytics: getExitLinkAnalytics()
         )
     }
     

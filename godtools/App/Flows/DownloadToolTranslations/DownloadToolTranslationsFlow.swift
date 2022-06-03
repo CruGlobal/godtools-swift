@@ -35,16 +35,16 @@ class DownloadToolTranslationsFlow: Flow {
             
             self?.navigateToDownloadTool(didCloseClosure: { [weak self] in
                 
-                self?.getToolTranslationsUseCase.cancel()
                 self?.dismissDownloadTool()
+                self?.getToolTranslationsUseCase.cancel()
             })
             
         }, downloadFinished: { [weak self] (result: Result<ToolTranslations, GetToolTranslationsError>) in
                         
             if let downloadToolView = self?.downloadToolView {
                 downloadToolView.completeDownloadProgress {
-                    self?.didDownloadToolTranslations(result)
                     self?.dismissDownloadTool()
+                    self?.didDownloadToolTranslations(result)
                 }
             }
             else {

@@ -21,11 +21,15 @@ class ChooseYourOwnAdventureFlow: Flow {
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
-                    
-        let renderer: MobileContentRenderer = appDiContainer.getMobileContentRenderer(
+                 
+        let navigation: MobileContentRendererNavigation = appDiContainer.getMobileContentRendererNavigation(
             navigationDelegate: self,
+            navigationController: navigationController
+        )
+        
+        let renderer: MobileContentRenderer = appDiContainer.getMobileContentRenderer(
             type: .chooseYourOwnAdventure,
-            navigationController: navigationController,
+            navigation: navigation,
             toolTranslations: toolTranslations
         )
         

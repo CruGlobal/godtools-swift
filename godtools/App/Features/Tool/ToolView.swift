@@ -136,23 +136,11 @@ extension ToolView: ToolPageViewDelegate {
 
 extension ToolView: ToolSettingsToolType {
     
+    func setRenderer(renderer: MobileContentRenderer) {
+        viewModel.setRenderer(renderer: renderer)
+    }
+    
     func setTrainingTipsEnabled(enabled: Bool) {
         viewModel.setTrainingTipsEnabled(enabled: enabled)
-    }
-    
-    func setPrimaryLanguage(languageId: String) {
-        
-    }
-    
-    func setParallelLanguage(languageId: String) {
-        
-    }
-    
-    func clearParallelLanguage() {
-        
-    }
-    
-    func swapLanguages(fromLanguageId: String, toLanguageId: String) {
-        
     }
 }

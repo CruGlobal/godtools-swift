@@ -97,6 +97,8 @@ extension ToolNavigationFlow {
                 
                 self?.presentDownloadToolError(downloadToolError: error)
             }
+            
+            self?.downloadToolTranslationFlow = nil
         }
         
         let downloadToolTranslationFlow = DownloadToolTranslationsFlow(
