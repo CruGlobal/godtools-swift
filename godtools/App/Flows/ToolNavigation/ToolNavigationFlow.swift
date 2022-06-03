@@ -96,8 +96,8 @@ extension ToolNavigationFlow {
                 )
                 
             case .failure(let error):
-                // TODO: Present error. ~Levi
-                break
+                
+                self?.presentDownloadToolError(downloadToolError: error)
             }
         }
         
