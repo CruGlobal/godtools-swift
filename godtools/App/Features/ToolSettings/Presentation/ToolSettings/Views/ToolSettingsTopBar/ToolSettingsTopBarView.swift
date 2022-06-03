@@ -17,7 +17,7 @@ struct ToolSettingsTopBarView: View {
     
     var body: some View {
         HStack {
-            Text("Tool Settings")
+            Text(viewModel.title)
                 .foregroundColor(primaryTextColor)
                 .font(FontLibrary.sfProTextRegular.font(size: 23))
             Spacer()

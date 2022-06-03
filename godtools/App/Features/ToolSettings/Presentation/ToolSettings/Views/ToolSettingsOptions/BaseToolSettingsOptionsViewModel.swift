@@ -10,6 +10,8 @@ import SwiftUI
 
 class BaseToolSettingsOptionsViewModel: ObservableObject {
     
+    @Published var shareLinkTitle: String = ""
+    @Published var screenShareTitle: String = ""
     @Published var trainingTipsIcon: Image = Image("")
     @Published var trainingTipsTitle: String = ""
     

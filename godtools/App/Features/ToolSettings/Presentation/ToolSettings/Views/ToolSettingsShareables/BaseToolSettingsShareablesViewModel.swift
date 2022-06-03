@@ -10,6 +10,7 @@ import Foundation
 
 class BaseToolSettingsShareablesViewModel: ObservableObject {
     
+    @Published var title: String = ""
     @Published var numberOfItems: Int = 0
     
     init() {}

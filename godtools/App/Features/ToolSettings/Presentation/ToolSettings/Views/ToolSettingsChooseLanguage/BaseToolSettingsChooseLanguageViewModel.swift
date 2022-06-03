@@ -10,6 +10,7 @@ import Foundation
 
 class BaseToolSettingsChooseLanguageViewModel: ObservableObject {
     
+    @Published var title: String = ""
     @Published var primaryLanguageTitle: String = ""
     @Published var parallelLanguageTitle: String = ""
     
