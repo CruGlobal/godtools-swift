@@ -45,7 +45,13 @@ class ToolCategoriesViewModel: NSObject, ObservableObject {
 extension ToolCategoriesViewModel {
     
     func categoryTapped(_ category: String) {
-        selectedCategory = category
+        if category == selectedCategory {
+            
+            selectedCategory = nil
+        } else {
+            
+            selectedCategory = category
+        }
         
         for buttonViewModel in buttonViewModels {
             buttonViewModel.updateStateWithSelectedCategory(selectedCategory)
