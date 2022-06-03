@@ -302,7 +302,13 @@ class ToolSettingsFlow: Flow {
     
     private func setToolParallelLanguage(languageId: String) {
         
-        var currentLanguageIds: [String] = toolData.renderer.pageRenderers.map({$0.language.id})
+        let currentLanguageIds: [String] = toolData.renderer.pageRenderers.map({$0.language.id})
+        
+        guard let primaryLanguageId = currentLanguageIds.first else {
+            return
+        }
+        
+        setToolLanguages(languageIds: [primaryLanguageId, languageId])
     }
     
     private func setToolLanguages(languageIds: [String]) {
