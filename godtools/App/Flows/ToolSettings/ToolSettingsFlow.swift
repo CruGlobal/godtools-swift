@@ -8,11 +8,14 @@
 
 import UIKit
 import SwiftUI
+import Combine
 
 class ToolSettingsFlow: Flow {
     
     private let toolData: ToolSettingsFlowToolData
     private let tool: ToolSettingsToolType
+    private let settingsPrimaryLanguage: CurrentValueSubject<LanguageModel, Never>
+    private let settingsParallelLanguage: CurrentValueSubject<LanguageModel?, Never>
     
     private var shareToolScreenTutorialModal: UIViewController?
     private var loadToolRemoteSessionModal: UIViewController?
@@ -31,6 +34,8 @@ class ToolSettingsFlow: Flow {
         self.navigationController = sharedNavigationController
         self.toolData = toolData
         self.tool = tool
+        self.settingsPrimaryLanguage = CurrentValueSubject(toolData.primaryLanguage)
+        self.settingsParallelLanguage = CurrentValueSubject(toolData.parallelLanguage)
     }
     
     func getInitialView() -> UIViewController {
@@ -39,8 +44,8 @@ class ToolSettingsFlow: Flow {
             flowDelegate: self,
             manifestResourcesCache: toolData.manifestResourcesCache,
             localizationServices: appDiContainer.localizationServices,
-            primaryLanguage: toolData.primaryLanguage,
-            parallelLanguage: toolData.parallelLanguage,
+            primaryLanguageSubject: settingsPrimaryLanguage,
+            parallelLanguageSubject: settingsParallelLanguage,
             trainingTipsEnabled: toolData.trainingTipsEnabled,
             shareables: toolData.shareables
         )
@@ -312,6 +317,19 @@ class ToolSettingsFlow: Flow {
     }
     
     private func setToolLanguages(languageIds: [String]) {
+        
+        let languagesRepository: LanguagesRepository = appDiContainer.getLanguagesRepository()
+        
+        if let primaryLanguageId = languageIds.first, let primaryLanguage = languagesRepository.getLanguage(id: primaryLanguageId) {
+            settingsPrimaryLanguage.send(primaryLanguage)
+        }
+        
+        if let parallelLanguageId = languageIds[safe: 1], let parallelLanguage = languagesRepository.getLanguage(id: parallelLanguageId) {
+            settingsParallelLanguage.send(parallelLanguage)
+        }
+        else {
+            settingsParallelLanguage.send(nil)
+        }
         
         let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
             resourceId: toolData.resource.id,
