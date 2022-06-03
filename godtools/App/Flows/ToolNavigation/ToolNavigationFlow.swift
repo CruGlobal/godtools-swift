@@ -19,9 +19,7 @@ protocol ToolNavigationFlow: Flow {
 }
 
 extension ToolNavigationFlow {
-    
-    // MARK: - Tool Navigation
-    
+        
     func navigateToToolFromToolDeepLink(toolDeepLink: ToolDeepLink, didCompleteToolNavigation: ((_ resource: ResourceModel) -> Void)?) {
         
         let determineDeepLinkedToolTranslationsToDownload = DetermineDeepLinkedToolTranslationsToDownload(
@@ -167,9 +165,7 @@ extension ToolNavigationFlow {
             navigationController.presentAlertMessage(alertMessage: AlertMessage(title: "Internal Error", message: "Attempted to navigate to a tool with an unknown resource type."))
         }
     }
-    
-    // MARK: - Download Tool
-    
+        
     private func presentDownloadToolError(downloadToolError: GetToolTranslationsError) {
         
         let viewModel = DownloadToolErrorViewModel(
