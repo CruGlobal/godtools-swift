@@ -8,6 +8,10 @@
 
 import Foundation
 
+protocol ToolCardsViewModelDelegate: AnyObject {
+    func toolCardTapped(resource: ResourceModel)
+}
+
 class ToolCardsViewModel: NSObject, ObservableObject {
     
     // MARK: - Properties
@@ -19,6 +23,7 @@ class ToolCardsViewModel: NSObject, ObservableObject {
     private let localizationServices: LocalizationServices
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let analytics: AnalyticsContainer
+    private weak var delegate: ToolCardsViewModelDelegate?
     
     private var categoryFilterValue: String?
     
@@ -28,13 +33,14 @@ class ToolCardsViewModel: NSObject, ObservableObject {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, analytics: AnalyticsContainer) {
+    init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, analytics: AnalyticsContainer, delegate: ToolCardsViewModelDelegate?) {
         self.dataDownloader = dataDownloader
         self.deviceAttachmentBanners = deviceAttachmentBanners
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
         self.favoritedResourcesCache = favoritedResourcesCache
         self.analytics = analytics
+        self.delegate = delegate
         
         super.init()
         
@@ -94,9 +100,7 @@ extension ToolCardsViewModel {
     }
     
     func toolTapped(resource: ResourceModel) {
-        // TODO: - handle taps
-//        trackToolTappedAnalytics()
-//        flowDelegate?.navigate(step: .aboutToolTappedFromAllTools(resource: resource))
+        delegate?.toolCardTapped(resource: resource)
     }
     
     func filterTools(with attrCategory: String?) {

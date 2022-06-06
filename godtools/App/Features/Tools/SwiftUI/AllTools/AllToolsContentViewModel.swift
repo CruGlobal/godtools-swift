@@ -104,7 +104,8 @@ extension AllToolsContentViewModel {
                 languageSettingsService: languageSettingsService,
                 localizationServices: localizationServices,
                 favoritedResourcesCache: favoritedResourcesCache,
-                analytics: analytics
+                analytics: analytics,
+                delegate: self
             )
             
             toolCardsViewModel = toolCardsVM
@@ -115,16 +116,16 @@ extension AllToolsContentViewModel {
     func refreshTools() {
         dataDownloader.downloadInitialData()
     }
-    
-    func toolTapped(resource: ResourceModel) {
-        trackToolTappedAnalytics()
-        flowDelegate?.navigate(step: .aboutToolTappedFromAllTools(resource: resource))
-    }
 }
 
 // MARK: - Private
 
 extension AllToolsContentViewModel {
+    
+    private func toolTapped(resource: ResourceModel) {
+        trackToolTappedAnalytics()
+        flowDelegate?.navigate(step: .aboutToolTappedFromAllTools(resource: resource))
+    }
 }
 
 // MARK: - FavoritingToolBannerDelegate
@@ -152,6 +153,15 @@ extension AllToolsContentViewModel: ToolCategoriesViewModelDelegate {
     
     func filterToolsWithCategory(_ attrCategory: String?) {
         toolCardsViewModel?.filterTools(with: attrCategory)
+    }
+}
+
+// MARK: - ToolCardsViewModelDelegate
+
+extension AllToolsContentViewModel: ToolCardsViewModelDelegate {
+    
+    func toolCardTapped(resource: ResourceModel) {
+        toolTapped(resource: resource)
     }
 }
 
