@@ -40,6 +40,8 @@ struct AllToolsList: View {
             
             
             ToolCardsView(viewModel: viewModel.getToolCardsViewModel(), width: width, leadingPadding: leadingTrailingPadding)
+            
+            Spacer(minLength: 20)
         }
         
     }
