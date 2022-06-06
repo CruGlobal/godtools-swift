@@ -31,7 +31,7 @@ struct AllToolsList: View {
             ToolSpotlightView(viewModel: viewModel.spotlightViewModel(), width: width, leadingPadding: leadingTrailingPadding)
                 .listRowInsets(EdgeInsets())
             
-            ToolCategoriesView(viewModel: viewModel.categoriesViewModel(), leadingPadding: leadingTrailingPadding)
+            ToolCategoriesView(viewModel: viewModel.getCategoriesViewModel(), leadingPadding: leadingTrailingPadding)
                 .listRowInsets(EdgeInsets())
             
             SeparatorView()
@@ -39,7 +39,7 @@ struct AllToolsList: View {
                 .padding([.leading, .trailing], leadingTrailingPadding)
             
             
-            ToolCardsView(viewModel: viewModel, width: width, leadingPadding: leadingTrailingPadding)
+            ToolCardsView(viewModel: viewModel.getToolCardsViewModel(), width: width, leadingPadding: leadingTrailingPadding)
         }
         
     }

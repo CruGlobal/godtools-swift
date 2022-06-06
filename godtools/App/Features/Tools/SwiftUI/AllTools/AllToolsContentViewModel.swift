@@ -24,9 +24,11 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     
     private var categoryFilterValue: String?
     
+    var categoriesViewModel: ToolCategoriesViewModel?
+    var toolCardsViewModel: ToolCardsViewModel?
+    
     // MARK: - Published
     
-    @Published var tools: [ResourceModel] = []
     @Published var isLoading: Bool = false
     @Published var hideFavoritingToolBanner: Bool
     
@@ -44,14 +46,6 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
         self.hideFavoritingToolBanner = favoritingToolMessageCache.favoritingToolMessageDisabled
         
         super.init()
-        
-        setupBinding()
-    }
-    
-    deinit {
-        print("x deinit: \(type(of: self))")
-        dataDownloader.cachedResourcesAvailable.removeObserver(self)
-        dataDownloader.resourcesUpdatedFromRemoteDatabase.removeObserver(self)
     }
 }
 
@@ -70,29 +64,45 @@ extension AllToolsContentViewModel {
         )
     }
     
-    func categoriesViewModel() -> ToolCategoriesViewModel {
-        return ToolCategoriesViewModel(
-            dataDownloader: dataDownloader,
-            languageSettingsService: languageSettingsService,
-            localizationServices: localizationServices,
-            delegate: self
-        )
-    }
-    
-    func cardViewModel(for tool: ResourceModel) -> ToolCardViewModel {
-        return ToolCardViewModel(
-            resource: tool,
-            dataDownloader: dataDownloader,
-            deviceAttachmentBanners: deviceAttachmentBanners,
-            favoritedResourcesCache: favoritedResourcesCache,
-            languageSettingsService: languageSettingsService,
-            localizationServices: localizationServices
-        )
+    func getCategoriesViewModel() -> ToolCategoriesViewModel {
+        if let categoriesViewModel = categoriesViewModel {
+            return categoriesViewModel
+            
+        } else {
+            let categoriesVM = ToolCategoriesViewModel(
+                dataDownloader: dataDownloader,
+                languageSettingsService: languageSettingsService,
+                localizationServices: localizationServices,
+                delegate: self
+            )
+            
+            categoriesViewModel = categoriesVM
+            return categoriesVM
+        }
     }
     
     func favoritingToolBannerViewModel() -> FavoritingToolBannerViewModel {
         
         return FavoritingToolBannerViewModel(localizationServices: localizationServices, delegate: self)
+    }
+    
+    func getToolCardsViewModel() -> ToolCardsViewModel {
+        if let toolCardsViewModel = toolCardsViewModel {
+            return toolCardsViewModel
+            
+        } else {
+            let toolCardsVM = ToolCardsViewModel(
+                dataDownloader: dataDownloader,
+                deviceAttachmentBanners: deviceAttachmentBanners,
+                languageSettingsService: languageSettingsService,
+                localizationServices: localizationServices,
+                favoritedResourcesCache: favoritedResourcesCache,
+                analytics: analytics
+            )
+            
+            toolCardsViewModel = toolCardsVM
+            return toolCardsVM
+        }
     }
     
     func refreshTools() {
@@ -108,34 +118,6 @@ extension AllToolsContentViewModel {
 // MARK: - Private
 
 extension AllToolsContentViewModel {
-    
-    private func setupBinding() {
-        
-        dataDownloader.cachedResourcesAvailable.addObserver(self) { [weak self] (cachedResourcesAvailable: Bool) in
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                
-                self.isLoading = !cachedResourcesAvailable
-                if cachedResourcesAvailable {
-                    self.reloadResourcesFromCache()
-                }
-            }
-        }
-        
-        dataDownloader.resourcesUpdatedFromRemoteDatabase.addObserver(self) { [weak self] (error: InitialDataDownloaderError?) in
-            DispatchQueue.main.async { [weak self] in
-                if error == nil {
-                    self?.reloadResourcesFromCache()
-                }
-            }
-        }
-    }
-    
-    private func reloadResourcesFromCache() {
-        let categoryFilter: ((ResourceModel) -> Bool)? = categoryFilterValue == nil ? nil : { $0.attrCategory == self.categoryFilterValue }
-        tools = dataDownloader.resourcesCache.getAllVisibleToolsSorted(with: categoryFilter)
-        isLoading = false
-    }
 }
 
 // MARK: - FavoritingToolBannerDelegate
@@ -162,8 +144,7 @@ extension AllToolsContentViewModel: ToolSpotlightDelegate {
 extension AllToolsContentViewModel: ToolCategoriesViewModelDelegate {
     
     func filterToolsWithCategory(_ attrCategory: String?) {
-        categoryFilterValue = attrCategory
-        reloadResourcesFromCache()
+        toolCardsViewModel?.filterTools(with: attrCategory)
     }
 }
 
