@@ -61,7 +61,7 @@ extension ToolCategoriesViewModel {
             buttonViewModel.updateStateWithSelectedCategory(selectedCategory)
         }
         
-        delegate?.filterToolsWithCategory(category)
+        delegate?.filterToolsWithCategory(selectedCategory)
     }
 }
 

@@ -28,7 +28,7 @@ struct AllToolsList: View {
         
         Group {
             
-            ToolSpotlightView(viewModel: viewModel.spotlightViewModel(), width: width, leadingPadding: leadingTrailingPadding)
+            ToolSpotlightView(viewModel: viewModel.getSpotlightViewModel(), width: width, leadingPadding: leadingTrailingPadding)
                 .listRowInsets(EdgeInsets())
             
             ToolCategoriesView(viewModel: viewModel.getCategoriesViewModel(), leadingPadding: leadingTrailingPadding)

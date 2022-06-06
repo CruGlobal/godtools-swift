@@ -21,11 +21,10 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let favoritingToolMessageCache: FavoritingToolMessageCache
     private let analytics: AnalyticsContainer
-    
-    private var categoryFilterValue: String?
-    
-    var categoriesViewModel: ToolCategoriesViewModel?
-    var toolCardsViewModel: ToolCardsViewModel?
+        
+    private var spotlightViewModel: ToolSpotlightViewModel?
+    private var categoriesViewModel: ToolCategoriesViewModel?
+    private var toolCardsViewModel: ToolCardsViewModel?
     
     // MARK: - Published
     
@@ -53,15 +52,28 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
 
 extension AllToolsContentViewModel {
     
-    func spotlightViewModel() -> ToolSpotlightViewModel {
-        return ToolSpotlightViewModel(
-            dataDownloader: dataDownloader,
-            deviceAttachmentBanners: deviceAttachmentBanners,
-            favoritedResourcesCache: favoritedResourcesCache,
-            languageSettingsService: languageSettingsService,
-            localizationServices: localizationServices,
-            delegate: self
-        )
+    func getFavoritingToolBannerViewModel() -> FavoritingToolBannerViewModel {
+        
+        return FavoritingToolBannerViewModel(localizationServices: localizationServices, delegate: self)
+    }
+    
+    func getSpotlightViewModel() -> ToolSpotlightViewModel {
+        if let spotlightViewModel = spotlightViewModel {
+            return spotlightViewModel
+            
+        } else {
+            let spotlightVM = ToolSpotlightViewModel(
+                dataDownloader: dataDownloader,
+                deviceAttachmentBanners: deviceAttachmentBanners,
+                favoritedResourcesCache: favoritedResourcesCache,
+                languageSettingsService: languageSettingsService,
+                localizationServices: localizationServices,
+                delegate: self
+            )
+            
+            spotlightViewModel = spotlightVM
+            return spotlightVM
+        }
     }
     
     func getCategoriesViewModel() -> ToolCategoriesViewModel {
@@ -79,11 +91,6 @@ extension AllToolsContentViewModel {
             categoriesViewModel = categoriesVM
             return categoriesVM
         }
-    }
-    
-    func favoritingToolBannerViewModel() -> FavoritingToolBannerViewModel {
-        
-        return FavoritingToolBannerViewModel(localizationServices: localizationServices, delegate: self)
     }
     
     func getToolCardsViewModel() -> ToolCardsViewModel {
