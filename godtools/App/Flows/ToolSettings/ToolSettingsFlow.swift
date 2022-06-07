@@ -264,12 +264,18 @@ class ToolSettingsFlow: Flow {
         let languages: [ToolLanguageModel] = getToolLanguagesUseCase.getToolLanguages(resource: toolData.resource)
         
         let selectedLanguage: LanguageModel?
+        let deleteTappedClosure: (() -> Void)?
         
         switch languageListType {
         case .primary:
             selectedLanguage = settingsPrimaryLanguage.value
+            deleteTappedClosure = nil
+            
         case .parallel:
             selectedLanguage = settingsParallelLanguage.value
+            deleteTappedClosure = { [weak self] in
+                
+            }
         }
         
         let viewModel = LanguagesListViewModel(languages: languages, selectedLanguageId: selectedLanguage?.id, closeTappedClosure: { [weak self] in
@@ -287,7 +293,7 @@ class ToolSettingsFlow: Flow {
                     self?.setToolParallelLanguage(languageId: language.id)
                 }
             })
-        })
+        }, deleteTappedClosure: deleteTappedClosure)
         
         let view = LanguagesListView(viewModel: viewModel)
                 

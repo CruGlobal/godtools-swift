@@ -58,7 +58,7 @@ struct LanguagesListView_Preview: PreviewProvider {
             
         }, languageTappedClosure: { language in
             
-        })
+        }, deleteTappedClosure: nil)
         
         return LanguagesListView(viewModel: viewModel)
     }

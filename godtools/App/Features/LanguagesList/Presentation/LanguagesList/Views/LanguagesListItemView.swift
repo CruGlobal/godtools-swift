@@ -10,6 +10,7 @@ import SwiftUI
 
 struct LanguagesListItemView: View {
     
+    private let highlightColor: Color = Color(.sRGB, red: 209 / 256, green: 238 / 256, blue: 213 / 256, opacity: 1)
     private let verticalSpacing: CGFloat = 15
     
     @ObservedObject var viewModel: LanguagesListItemViewModel
@@ -29,7 +30,7 @@ struct LanguagesListItemView: View {
                 .frame(maxWidth: .infinity, minHeight: 1, maxHeight: 1)
                 .foregroundColor(Color(.sRGB, red: 226 / 256, green: 226 / 256, blue: 226 / 256, opacity: 1))
         }
-        .background(viewModel.isSelected ? Color.red : Color.white)
+        .background(viewModel.isSelected ? highlightColor : Color.white)
         .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
     }
 }
