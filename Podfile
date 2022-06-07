@@ -24,7 +24,6 @@ target 'godtools' do
     pod 'SnowplowTracker', '~> 1.3'
     pod 'SSZipArchive', '~> 2.4.0'
     pod 'Starscream', '~> 4.0.0'
-    pod 'SWXMLHash', '~> 5.0.1'
     pod 'TTTAttributedLabel', '~> 2.0.0'
     pod 'youtube-ios-player-helper', '~> 1.0.3'
     
