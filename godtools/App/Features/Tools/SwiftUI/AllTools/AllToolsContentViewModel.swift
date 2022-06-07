@@ -163,6 +163,10 @@ extension AllToolsContentViewModel: ToolCardsViewModelDelegate {
     func toolCardTapped(resource: ResourceModel) {
         toolTapped(resource: resource)
     }
+    
+    func toolsAreLoading(_ isLoading: Bool) {
+        self.isLoading = isLoading
+    }
 }
 
 // MARK: - Analytics

@@ -10,6 +10,7 @@ import Foundation
 
 protocol ToolCardsViewModelDelegate: AnyObject {
     func toolCardTapped(resource: ResourceModel)
+    func toolsAreLoading(_ isLoading: Bool)
 }
 
 class ToolCardsViewModel: NSObject, ObservableObject {
@@ -59,8 +60,7 @@ extension ToolCardsViewModel {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 
-                // TODO: - fix loading
-//                self.isLoading = !cachedResourcesAvailable
+                self.delegate?.toolsAreLoading(!cachedResourcesAvailable)
                 if cachedResourcesAvailable {
                     self.reloadResourcesFromCache()
                 }
@@ -80,8 +80,7 @@ extension ToolCardsViewModel {
         let categoryFilter: ResourceFilter? = categoryFilterValue == nil ? nil : { $0.attrCategory == self.categoryFilterValue }
         tools = dataDownloader.resourcesCache.getAllVisibleToolsSorted(andFilteredBy: categoryFilter)
         
-        // TODO: - fix loading
-//        isLoading = false
+        self.delegate?.toolsAreLoading(false)
     }
 }
 
