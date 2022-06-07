@@ -10,8 +10,6 @@ import Foundation
 import GodToolsToolParser
 
 protocol MobileContentPageViewFactoryType {
-    
-    var flowDelegate: FlowDelegate? { get }
-    
+        
     func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView?
 }

@@ -106,7 +106,7 @@ class SetupParallelLanguageView: UIViewController {
         yesButton.layer.cornerRadius = buttonCornerRadius
         
         noButton.layer.cornerRadius = buttonCornerRadius
-        noButton.drawBorder(color: ColorPalette.gtBlue.color)
+        noButton.drawBorder(color: ColorPalette.gtBlue.uiColor)
         noButton.layer.borderWidth = 1
         
         getStartedButton.layer.cornerRadius = buttonCornerRadius
@@ -147,7 +147,15 @@ extension SetupParallelLanguageView: TransparentModalCustomView {
         return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     }
     
-    func transparentModalDidLayout() {
-        
+    var modalLayoutType: TransparentModalCustomViewLayoutType {
+        return .centerVertically
     }
+    
+    func addToParentForCustomLayout(parent: UIView) {}
+    
+    func transparentModalDidLayout() {}
+    
+    func transparentModalParentWillAnimateForPresented() {}
+    
+    func transparentModalParentWillAnimateForDismissed() {}
 }

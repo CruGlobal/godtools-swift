@@ -10,15 +10,11 @@ import Foundation
 import GodToolsToolParser
 
 class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
-    
-    private(set) weak var flowDelegate: FlowDelegate?
-    
+        
     let factories: [MobileContentPageViewFactoryType]
     
-    required init(type: MobileContentRendererPageViewFactoriesType, flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, trainingTipsEnabled: Bool, deepLinkingService: DeepLinkingServiceType) {
-        
-        self.flowDelegate = flowDelegate
-        
+    required init(type: MobileContentRendererPageViewFactoriesType, flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, deepLinkingService: DeepLinkingServiceType) {
+                
         var pageViewFactories: [MobileContentPageViewFactoryType] = Array()
         
         let analytics: AnalyticsContainer = appDiContainer.analytics
@@ -61,15 +57,12 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
                 followUpService: followUpsService,
                 translationsFileCache: translationsFileCache,
                 viewedTrainingTipsService: viewedTrainingTipsService,
-                deepLinkService: deepLinkingService,
-                trainingTipsEnabled: trainingTipsEnabled
+                deepLinkService: deepLinkingService
             )
             
             let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
-                flowDelegate: flowDelegate,
                 translationsFileCache: translationsFileCache,
-                viewedTrainingTipsService: viewedTrainingTipsService,
-                trainingTipsEnabled: trainingTipsEnabled
+                viewedTrainingTipsService: viewedTrainingTipsService
             )
             
             pageViewFactories = [lessonPageViewFactory, toolPageViewFactory, trainingViewFactory]
@@ -86,15 +79,12 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
                 followUpService: followUpsService,
                 translationsFileCache: translationsFileCache,
                 viewedTrainingTipsService: viewedTrainingTipsService,
-                deepLinkService: deepLinkingService,
-                trainingTipsEnabled: trainingTipsEnabled
+                deepLinkService: deepLinkingService
             )
             
             let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
-                flowDelegate: flowDelegate,
                 translationsFileCache: translationsFileCache,
-                viewedTrainingTipsService: viewedTrainingTipsService,
-                trainingTipsEnabled: trainingTipsEnabled
+                viewedTrainingTipsService: viewedTrainingTipsService
             )
             
             pageViewFactories = [toolPageViewFactory, trainingViewFactory]
@@ -102,10 +92,8 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
         case .trainingTip:
             
             let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
-                flowDelegate: flowDelegate,
                 translationsFileCache: translationsFileCache,
-                viewedTrainingTipsService: viewedTrainingTipsService,
-                trainingTipsEnabled: false
+                viewedTrainingTipsService: viewedTrainingTipsService
             )
             
             pageViewFactories = [trainingViewFactory]

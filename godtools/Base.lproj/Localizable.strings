@@ -191,6 +191,11 @@ An online version can be found at https://knowgod.com/";
 // Add Tools
 "add_tools" = "Add Tools";
 
+// All Tools
+"allTools.spotlight.title" = "Tool Spotlight";
+"allTools.spotlight.description" = "Here are some tools we thought you might like";
+"allTools.categories.title" = "Categories";
+
 "total_views" = "%d views";
 "total_languages" = "%d languages";
 
@@ -308,3 +313,12 @@ Press the About button on any tool for more info.";
 "onboardingTutorial.appUsageItem.3.message" = "Choose from over 90 languages";
 "onboardingTutorial.appUsageItem.4.message" = "Help someone get started as a Christian";
 "onboardingTutorial.showMoreButton.title" = "Show Me More";
+
+// Tool Settings
+"toolSettings.title" = "Tool Settings";
+"toolSettings.option.shareLink.title" = "Share link";
+"toolSettings.option.screenShare.title" = "Screen share";
+"toolSettings.option.trainingTips.show.title" = "Training tips";
+"toolSettings.option.trainingTips.hide.title" = "Hide tips";
+"toolSettings.chooseLanguage.title" = "Parallel Language";
+"toolSettings.shareables.title" = "Related graphics";

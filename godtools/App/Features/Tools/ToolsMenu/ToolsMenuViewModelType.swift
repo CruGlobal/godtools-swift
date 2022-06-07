@@ -14,7 +14,7 @@ protocol ToolsMenuViewModelType {
     
     func lessonsWillAppear() -> LessonsListViewModelType
     func favoritedToolsWillAppear() -> FavoritedToolsViewModelType
-    func allToolsWillAppear() -> AllToolsViewModelType
+    func allToolsWillAppear() -> AllToolsContentViewModel
     func toolbarWillAppear() -> ToolsMenuToolbarViewModelType
     func menuTapped()
     func languageTapped()

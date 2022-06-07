@@ -21,10 +21,9 @@ class MobileContentParser {
             ParserConfigKt.FEATURE_FLOW,
             ParserConfigKt.FEATURE_MULTISELECT
         ]
-                        
-        ParserConfig().supportedFeatures = Set(enabledFeatures)
+        let config = ParserConfig().withSupportedFeatures(features: Set(enabledFeatures))
         
-        iOSManifestParser = IosManifestParser(parserFactory: MobileContentMultiplatformParserFactory(translationsFileCache: translationsFileCache))
+        iOSManifestParser = IosManifestParser(parserFactory: MobileContentMultiplatformParserFactory(translationsFileCache: translationsFileCache), defaultConfig: config)
     }
     
     func parse(translationManifestData: TranslationManifestData) -> Result<Manifest, Error> {

@@ -30,7 +30,7 @@ class OpenTutorialView: UIView, NibBased {
     
     func configure(viewModel: OpenTutorialViewModelType) {
         
-        backgroundColor = ColorPalette.bannerColor
+        backgroundColor = ColorPalette.banner.uiColor
         
         self.viewModel = viewModel
         showTutorialLabel.text = viewModel.showTutorialTitle

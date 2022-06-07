@@ -36,7 +36,7 @@ class LearnToShareToolFlow: Flow {
         let viewModel = LearnToShareToolViewModel(
             flowDelegate: self,
             resource: resource,
-            learnToShareToolItemsProvider: appDiContainer.learnToShareToolItemsProvider,
+            learnToShareToolItemsProvider: appDiContainer.getLearnToShareToolItemsProvider(),
             localizationServices: appDiContainer.localizationServices
         )
         let view = LearnToShareToolView(viewModel: viewModel)

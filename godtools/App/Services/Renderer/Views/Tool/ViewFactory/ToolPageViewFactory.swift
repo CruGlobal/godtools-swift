@@ -20,11 +20,10 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
     private let translationsFileCache: TranslationsFileCache
     private let viewedTrainingTipsService: ViewedTrainingTipsService
     private let deepLinkService: DeepLinkingServiceType
-    private let trainingTipsEnabled: Bool
     
     private(set) weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, followUpService: FollowUpsService, translationsFileCache: TranslationsFileCache, viewedTrainingTipsService: ViewedTrainingTipsService, deepLinkService: DeepLinkingServiceType, trainingTipsEnabled: Bool) {
+    required init(flowDelegate: FlowDelegate, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, followUpService: FollowUpsService, translationsFileCache: TranslationsFileCache, viewedTrainingTipsService: ViewedTrainingTipsService, deepLinkService: DeepLinkingServiceType) {
         
         self.flowDelegate = flowDelegate
         self.analytics = analytics
@@ -36,7 +35,6 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
         self.translationsFileCache = translationsFileCache
         self.viewedTrainingTipsService = viewedTrainingTipsService
         self.deepLinkService = deepLinkService
-        self.trainingTipsEnabled = trainingTipsEnabled
     }
     
     func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
@@ -51,7 +49,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
                 fontService: fontService,
                 localizationServices: localizationServices,
                 numberOfVisbleCards: cardModel.numberOfVisibleCards,
-                trainingTipsEnabled: trainingTipsEnabled
+                trainingTipsEnabled: renderedPageContext.trainingTipsEnabled
             )
             
             let view = ToolPageCardView(viewModel: viewModel)

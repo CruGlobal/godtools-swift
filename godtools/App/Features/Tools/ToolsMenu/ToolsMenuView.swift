@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class ToolsMenuView: UIViewController {
     
@@ -118,6 +119,9 @@ class ToolsMenuView: UIViewController {
     
     func reset(toolbarItem: ToolsMenuPageType, animated: Bool) {
         
+        // TODO: Need to implement GT-1545 before Cru22 and before merging iOS 13 branch. ~Levi
+        // https://jira.cru.org/browse/GT-1545
+        
         guard didLayoutSubviews else {
             startingPage = toolbarItem
             return
@@ -139,7 +143,7 @@ class ToolsMenuView: UIViewController {
         switch pageType {
         
         case .allTools:
-            return AllToolsView(viewModel: viewModel.allToolsWillAppear())
+            return AllToolsView(contentView: AllToolsContentView(viewModel: viewModel.allToolsWillAppear()))
             
         case .favoritedTools:
             let favoritedToolsView: FavoritedToolsView = FavoritedToolsView(viewModel: viewModel.favoritedToolsWillAppear())
@@ -153,12 +157,12 @@ class ToolsMenuView: UIViewController {
     
     private func configureNavigationBarAppearance(shouldAnimateNavigationBarHiddenState: Bool) {
                 
-        AppDelegate.setWindowBackgroundColorForStatusBarColor(color: ColorPalette.primaryNavBar.color)
+        AppDelegate.setWindowBackgroundColorForStatusBarColor(color: ColorPalette.primaryNavBar.uiColor)
         
         navigationController?.setNavigationBarHidden(false, animated: shouldAnimateNavigationBarHiddenState)
                 
         navigationController?.navigationBar.setupNavigationBarAppearance(
-            backgroundColor: ColorPalette.primaryNavBar.color,
+            backgroundColor: ColorPalette.primaryNavBar.uiColor,
             controlColor: .white,
             titleFont: viewModel.navTitleFont,
             titleColor: .white,
