@@ -21,7 +21,7 @@ struct ToolCategoryButtonView: View {
             RoundedCardBackgroundView()
             
             Text(viewModel.categoryText)
-                .foregroundColor(viewModel.greyOutText ? .gray : .black)
+                .foregroundColor(viewModel.greyOutText ? Color.gray : ColorPalette.gtGrey.color)
                 .font(FontLibrary.sfProTextBold.font(size: 18))
                 .fixedSize(horizontal: false, vertical: true)
                 .padding([.leading, .trailing], 20)

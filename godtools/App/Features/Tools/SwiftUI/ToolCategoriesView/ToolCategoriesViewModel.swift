@@ -24,6 +24,7 @@ class ToolCategoriesViewModel: NSObject, ObservableObject {
         
     // MARK: - Published
     
+    @Published var categoryTitleText: String = ""
     @Published var buttonViewModels = [ToolCategoryButtonViewModel]()
     @Published var selectedCategory: String?
     
@@ -34,15 +35,17 @@ class ToolCategoriesViewModel: NSObject, ObservableObject {
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
         self.delegate = delegate
-        
+                
         super.init()
         
         setupBinding()
+        setTitleText()
     }
     
     deinit {
         dataDownloader.cachedResourcesAvailable.removeObserver(self)
         dataDownloader.resourcesUpdatedFromRemoteDatabase.removeObserver(self)
+        languageSettingsService.primaryLanguage.removeObserver(self)
     }
 }
 
@@ -88,6 +91,12 @@ extension ToolCategoriesViewModel {
                 }
             }
         }
+        
+        languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
+            DispatchQueue.main.async { [weak self] in
+                self?.reloadForLanguageChange()
+            }
+        }
     }
         
     private func reloadAvailableCategoriesFromCache() {
@@ -117,5 +126,15 @@ extension ToolCategoriesViewModel {
             }
         
         buttonViewModels = categoryButtonViewModels
+    }
+    
+    private func setTitleText() {
+        let languageBundle = localizationServices.bundleLoader.bundleForPrimaryLanguageOrFallback(in: languageSettingsService)
+        categoryTitleText = localizationServices.stringForBundle(bundle: languageBundle, key: "allTools.categories.title")
+    }
+    
+    private func reloadForLanguageChange() {
+        reloadAvailableCategoriesFromCache()
+        setTitleText()
     }
 }

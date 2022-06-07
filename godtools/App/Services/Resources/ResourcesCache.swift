@@ -9,6 +9,8 @@
 import Foundation
 import RealmSwift
 
+typealias ResourceFilter = (ResourceModel) -> Bool
+
 class ResourcesCache {
     
     private let realmDatabase: RealmDatabase
@@ -41,7 +43,7 @@ class ResourcesCache {
         return resources
     }
     
-    func getAllVisibleToolsSorted(with additionalFilter: ((ResourceModel) -> Bool)? = nil) -> [ResourceModel] {
+    func getAllVisibleToolsSorted(andFilteredBy additionalFilter: ResourceFilter? = nil) -> [ResourceModel] {
         return getSortedResources().filter { resource in
             
             if let additionalFilter = additionalFilter, additionalFilter(resource) == false {

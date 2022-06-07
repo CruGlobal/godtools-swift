@@ -20,8 +20,9 @@ struct ToolCategoriesView: View {
     var body: some View {
         VStack(alignment: .leading) {
             
-            Text("Categories")
+            Text(viewModel.categoryTitleText)
                 .font(FontLibrary.sfProTextRegular.font(size: 22))
+                .foregroundColor(ColorPalette.gtGrey.color)
                 .padding(.leading, leadingPadding)
                 .padding(.top, 20)
             
@@ -40,7 +41,7 @@ struct ToolCategoriesView: View {
                         Spacer()
                     }
                 }
-                .padding(.leading, leadingPadding)
+                .padding([.leading, .trailing], leadingPadding)
                 .padding([.top, .bottom], 8)
             }
             .fixedSize(horizontal: false, vertical: true)

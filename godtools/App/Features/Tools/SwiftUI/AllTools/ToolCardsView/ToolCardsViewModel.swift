@@ -77,8 +77,8 @@ extension ToolCardsViewModel {
     }
     
     private func reloadResourcesFromCache() {
-        let categoryFilter: ((ResourceModel) -> Bool)? = categoryFilterValue == nil ? nil : { $0.attrCategory == self.categoryFilterValue }
-        tools = dataDownloader.resourcesCache.getAllVisibleToolsSorted(with: categoryFilter)
+        let categoryFilter: ResourceFilter? = categoryFilterValue == nil ? nil : { $0.attrCategory == self.categoryFilterValue }
+        tools = dataDownloader.resourcesCache.getAllVisibleToolsSorted(andFilteredBy: categoryFilter)
         
         // TODO: - fix loading
 //        isLoading = false
