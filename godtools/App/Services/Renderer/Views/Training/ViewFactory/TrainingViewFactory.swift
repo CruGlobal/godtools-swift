@@ -13,16 +13,11 @@ class TrainingViewFactory: MobileContentPageViewFactoryType {
     
     private let translationsFileCache: TranslationsFileCache
     private let viewedTrainingTipsService: ViewedTrainingTipsService
-    private let trainingTipsEnabled: Bool
-    
-    private(set) weak var flowDelegate: FlowDelegate?
+            
+    required init(translationsFileCache: TranslationsFileCache, viewedTrainingTipsService: ViewedTrainingTipsService) {
         
-    required init(flowDelegate: FlowDelegate, translationsFileCache: TranslationsFileCache, viewedTrainingTipsService: ViewedTrainingTipsService, trainingTipsEnabled: Bool) {
-        
-        self.flowDelegate = flowDelegate
         self.translationsFileCache = translationsFileCache
         self.viewedTrainingTipsService = viewedTrainingTipsService
-        self.trainingTipsEnabled = trainingTipsEnabled
     }
     
     func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
@@ -57,7 +52,7 @@ class TrainingViewFactory: MobileContentPageViewFactoryType {
     
     private func getTrainingTipView(tipModel: Tip, renderedPageContext: MobileContentRenderedPageContext, trainingTipViewType: TrainingTipViewType) -> TrainingTipView? {
         
-        guard trainingTipsEnabled else {
+        guard renderedPageContext.trainingTipsEnabled else {
             return nil
         }
         

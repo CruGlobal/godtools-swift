@@ -8,18 +8,23 @@
 import SwiftUI
 
 struct ToolSettingsTopBarView: View {
+        
+    @ObservedObject var viewModel: BaseToolSettingsTopBarViewModel
     
+    let primaryTextColor: Color
     let leadingInset: CGFloat
     let trailingInset: CGFloat
     
     var body: some View {
         HStack {
-            Text("Tool Settings")
+            Text(viewModel.title)
+                .foregroundColor(primaryTextColor)
+                .font(FontLibrary.sfProTextRegular.font(size: 23))
             Spacer()
             Button {
-                print("tapped")
+                viewModel.closeTapped()
             } label: {
-                Image("tool_settings_close")
+                Image(ImageCatalog.navClose.name)
             }
             .frame(minWidth: 44, minHeight: 44)
         }
@@ -30,6 +35,6 @@ struct ToolSettingsTopBarView: View {
 
 struct ToolSettingsTopBarView_Preview: PreviewProvider {
     static var previews: some View {
-        ToolSettingsTopBarView(leadingInset: 20, trailingInset: 20)
+        ToolSettingsTopBarView(viewModel: BaseToolSettingsTopBarViewModel(), primaryTextColor: Color.black, leadingInset: 20, trailingInset: 20)
     }
 }

@@ -120,9 +120,19 @@ extension LessonEvaluationView: TransparentModalCustomView {
         return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     }
     
+    var modalLayoutType: TransparentModalCustomViewLayoutType {
+        return .centerVertically
+    }
+    
+    func addToParentForCustomLayout(parent: UIView) {}
+    
     func transparentModalDidLayout() {
         chooseScaleSliderView.setScale(scaleValue: viewModel.readyToShareFaithScale)
     }
+    
+    func transparentModalParentWillAnimateForPresented() {}
+    
+    func transparentModalParentWillAnimateForDismissed() {}
 }
 
 // MARK: - ChooseScaleSliderViewDelegate

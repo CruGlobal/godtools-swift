@@ -33,7 +33,7 @@ extension UIView {
         view.addConstraint(top)
     }
     
-    func constrainBottomToView(view: UIView, constant: CGFloat = 0) {
+    func constrainBottomToView(view: UIView, constant: CGFloat = 0) -> NSLayoutConstraint {
         
         let bottom: NSLayoutConstraint = NSLayoutConstraint(
             item: self,
@@ -46,6 +46,8 @@ extension UIView {
         )
         
         view.addConstraint(bottom)
+        
+        return bottom
     }
     
     func constrainLeadingToView(view: UIView, constant: CGFloat = 0) {

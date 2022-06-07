@@ -6,7 +6,8 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
+import GodToolsToolParser
 
 enum FlowStep {
     
@@ -67,7 +68,7 @@ enum FlowStep {
         
     // tool
     case homeTappedFromTool(isScreenSharing: Bool)
-    case toolSettingsTappedFromTool(tractRemoteShareSubscriber: TractRemoteShareSubscriber, tractRemoteSharePublisher: TractRemoteSharePublisher, resource: ResourceModel, selectedLanguage: LanguageModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, pageNumber: Int)
+    case toolSettingsTappedFromTool(toolData: ToolSettingsFlowToolData)
     case buttonWithUrlTappedFromMobileContentRenderer(url: String, exitLink: ExitLinkModel)
     case trainingTipTappedFromMobileContentRenderer(event: TrainingTipEvent)
     case errorOccurredFromMobileContentRenderer(error: MobileContentErrorViewModel)
@@ -84,15 +85,7 @@ enum FlowStep {
     case languageSelectedFromParallelLanguageList
     case backgroundTappedFromSetupParallelLanguage
     case backgroundTappedFromParallelLanguageList
-    
-    // share tool menu
-    case shareToolTappedFromShareToolMenu
-    case remoteShareToolTappedFromShareToolMenu
-    case closeTappedFromShareToolScreenTutorial
-    case shareLinkTappedFromShareToolScreenTutorial
-    case finishedLoadingToolRemoteSession(result: Result<TractRemoteShareChannel, TractRemoteSharePublisherError>)
-    case cancelledLoadingToolRemoteSession
-    
+        
     // tutorial
     case closeTappedFromTutorial
     case startUsingGodToolsTappedFromTutorial
@@ -134,4 +127,20 @@ enum FlowStep {
     
     // mobile content renderer events
     case didTriggerDismissToolEventFromMobileContentRenderer
+    
+    // tool settings
+    case closeTappedFromToolSettings
+    case shareLinkTappedFromToolSettings
+    case screenShareTappedFromToolSettings
+    case closeTappedFromShareToolScreenTutorial
+    case shareLinkTappedFromShareToolScreenTutorial
+    case finishedLoadingToolRemoteSession(result: Result<TractRemoteShareChannel, TractRemoteSharePublisherError>)
+    case cancelledLoadingToolRemoteSession
+    case enableTrainingTipsTappedFromToolSettings
+    case disableTrainingTipsTappedFromToolSettings
+    case primaryLanguageTappedFromToolSettings
+    case parallelLanguageTappedFromToolSettings
+    case swapLanguagesTappedFromToolSettings
+    case shareableTappedFromToolSettings(shareable: Shareable, shareImage: UIImage)
+    case toolSettingsFlowCompleted
 }
