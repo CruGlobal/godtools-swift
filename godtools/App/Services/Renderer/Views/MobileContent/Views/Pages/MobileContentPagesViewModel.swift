@@ -219,15 +219,27 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         setPageRenderer(pageRenderer: pageRenderer)
     }
     
-    func setRenderer(renderer: MobileContentRenderer) {
+    func setRenderer(renderer: MobileContentRenderer, pageRendererIndex: Int?) {
             
-        guard let firstPageRenderer = renderer.pageRenderers.first else {
-            return
+        let pageRenderer: MobileContentPageRenderer?
+        
+        if let pageRendererIndex = pageRendererIndex, pageRendererIndex >= 0 && pageRendererIndex < renderer.pageRenderers.count {
+            pageRenderer = renderer.pageRenderers[pageRendererIndex]
+        }
+        else if let firstPageRenderer = renderer.pageRenderers.first {
+            pageRenderer = firstPageRenderer
+        }
+        else {
+            pageRenderer = nil
         }
         
+        guard let pageRenderer = pageRenderer else {
+            return
+        }
+
         self.renderer = renderer
         
-        setPageRenderer(pageRenderer: firstPageRenderer)
+        setPageRenderer(pageRenderer: pageRenderer)
     }
     
     func setPageRenderer(pageRenderer: MobileContentPageRenderer) {

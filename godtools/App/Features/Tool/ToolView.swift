@@ -42,11 +42,14 @@ class ToolView: MobileContentPagesView {
     override func setupBinding() {
         super.setupBinding()
         
-        navBarView.configure(
-            parentViewController: self,
-            viewModel: viewModel.navBarViewModel,
-            delegate: self
-        )
+        viewModel.navBarViewModel.addObserver(self) { [weak self] (navBarViewModel: ToolNavBarViewModelType) in
+            
+            guard let weakSelf = self else {
+                return
+            }
+            
+            weakSelf.navBarView.configure(parentViewController: weakSelf, viewModel: navBarViewModel, delegate: weakSelf)
+        }
         
         viewModel.didSubscribeForRemoteSharePublishing.addObserver(self) { [weak self] (didSubscribeForRemoteSharePublishing: Bool) in
             guard let toolView = self else {
@@ -137,7 +140,7 @@ extension ToolView: ToolPageViewDelegate {
 extension ToolView: ToolSettingsToolType {
     
     func setRenderer(renderer: MobileContentRenderer) {
-        viewModel.setRenderer(renderer: renderer)
+        viewModel.setRenderer(renderer: renderer, pageRendererIndex: nil)
     }
     
     func setTrainingTipsEnabled(enabled: Bool) {

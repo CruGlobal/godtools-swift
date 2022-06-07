@@ -196,7 +196,8 @@ class ToolSettingsFlow: Flow {
             presentLanguagesList(languageListType: .parallel)
             
         case .swapLanguagesTappedFromToolSettings:
-            break
+            
+            swapToolPrimaryAndParallelLanguage()
             
         case .shareableTappedFromToolSettings(let shareable, let imageToShare):
                     
@@ -262,7 +263,16 @@ class ToolSettingsFlow: Flow {
         let getToolLanguagesUseCase: GetToolLanguagesUseCase = GetToolLanguagesUseCase(languagesRepository: languagesRepository)
         let languages: [ToolLanguageModel] = getToolLanguagesUseCase.getToolLanguages(resource: toolData.resource)
         
-        let viewModel = LanguagesListViewModel(languages: languages, closeTappedClosure: { [weak self] in
+        let selectedLanguage: LanguageModel?
+        
+        switch languageListType {
+        case .primary:
+            selectedLanguage = settingsPrimaryLanguage.value
+        case .parallel:
+            selectedLanguage = settingsParallelLanguage.value
+        }
+        
+        let viewModel = LanguagesListViewModel(languages: languages, selectedLanguageId: selectedLanguage?.id, closeTappedClosure: { [weak self] in
             
             self?.dismissLanguagesList()
             
@@ -292,50 +302,45 @@ class ToolSettingsFlow: Flow {
     
     private func setToolPrimaryLanguage(languageId: String) {
         
-        var currentLanguageIds: [String] = toolData.renderer.pageRenderers.map({$0.language.id})
-    
-        if currentLanguageIds.isEmpty {
-            
-            setToolLanguages(languageIds: [languageId])
+        var languageIds: [String] = Array()
+        
+        languageIds.append(languageId)
+        
+        if let parallelLanguageId = settingsParallelLanguage.value?.id {
+            languageIds.append(parallelLanguageId)
         }
-        else {
-            
-            currentLanguageIds[0] = languageId
-            setToolLanguages(languageIds: currentLanguageIds)
-        }
+        
+        setToolLanguages(languageIds: languageIds)
     }
     
     private func setToolParallelLanguage(languageId: String) {
         
-        let currentLanguageIds: [String] = toolData.renderer.pageRenderers.map({$0.language.id})
+        var languageIds: [String] = Array()
         
-        guard let primaryLanguageId = currentLanguageIds.first else {
+        languageIds.append(settingsPrimaryLanguage.value.id)
+        languageIds.append(languageId)
+            
+        setToolLanguages(languageIds: languageIds)
+    }
+    
+    private func swapToolPrimaryAndParallelLanguage() {
+        
+        guard let parallelLanguageId = settingsParallelLanguage.value?.id else {
             return
         }
         
-        setToolLanguages(languageIds: [primaryLanguageId, languageId])
+        setToolLanguages(languageIds: [parallelLanguageId, settingsPrimaryLanguage.value.id])
     }
     
     private func setToolLanguages(languageIds: [String]) {
         
         let languagesRepository: LanguagesRepository = appDiContainer.getLanguagesRepository()
         
-        if let primaryLanguageId = languageIds.first, let primaryLanguage = languagesRepository.getLanguage(id: primaryLanguageId) {
-            settingsPrimaryLanguage.send(primaryLanguage)
-        }
-        
-        if let parallelLanguageId = languageIds[safe: 1], let parallelLanguage = languagesRepository.getLanguage(id: parallelLanguageId) {
-            settingsParallelLanguage.send(parallelLanguage)
-        }
-        else {
-            settingsParallelLanguage.send(nil)
-        }
-        
         let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
             resourceId: toolData.resource.id,
             languageIds: languageIds,
             resourcesCache: appDiContainer.initialDataDownloader.resourcesCache,
-            languagesRepository: appDiContainer.getLanguagesRepository()
+            languagesRepository: languagesRepository
         )
         
         let didDownloadToolTranslationsClosure = { [weak self] (result: Result<ToolTranslations, GetToolTranslationsError>) in
@@ -347,6 +352,17 @@ class ToolSettingsFlow: Flow {
             switch result {
             
             case .success(let toolTranslations):
+                
+                if let primaryLanguageId = languageIds.first, let primaryLanguage = languagesRepository.getLanguage(id: primaryLanguageId) {
+                    weakSelf.settingsPrimaryLanguage.send(primaryLanguage)
+                }
+                
+                if let parallelLanguageId = languageIds[safe: 1], let parallelLanguage = languagesRepository.getLanguage(id: parallelLanguageId) {
+                    weakSelf.settingsParallelLanguage.send(parallelLanguage)
+                }
+                else {
+                    weakSelf.settingsParallelLanguage.send(nil)
+                }
                 
                 let newRenderer: MobileContentRenderer = weakSelf.toolData.renderer.copy(toolTranslations: toolTranslations)
                 weakSelf.tool.setRenderer(renderer: newRenderer)
