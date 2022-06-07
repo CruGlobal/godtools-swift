@@ -132,8 +132,16 @@ extension ParallelLanguageListView: TransparentModalCustomView {
         return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
     }
     
-    func transparentModalDidLayout() {
-        
+    var modalLayoutType: TransparentModalCustomViewLayoutType {
+        return .centerVertically
     }
+    
+    func addToParentForCustomLayout(parent: UIView) {}
+    
+    func transparentModalDidLayout() {}
+    
+    func transparentModalParentWillAnimateForPresented() {}
+    
+    func transparentModalParentWillAnimateForDismissed() {}
 }
 

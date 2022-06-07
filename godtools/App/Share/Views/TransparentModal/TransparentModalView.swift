@@ -18,6 +18,7 @@ class TransparentModalView: UIViewController {
     private let closeModalFlowStep: FlowStep
     
     private var didLayoutSubviews: Bool = false
+    private var didTriggerAnimationControllerForPresentationAnimation: Bool = false
     
     @IBOutlet weak private var overlayButton: UIButton!
     
@@ -49,12 +50,25 @@ class TransparentModalView: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        if !didLayoutSubviews {
-            didLayoutSubviews = true
-            if modalView.modal.frame.size.height > view.frame.size.height {
-                addModalViewToScrollView()
-            }
-            modalView.transparentModalDidLayout()
+        guard !didLayoutSubviews else {
+            return
+        }
+        
+        didLayoutSubviews = true
+        
+        if modalView.modalLayoutType == .centerVertically && modalView.modal.frame.size.height > view.frame.size.height {
+            addModalViewToScrollView()
+        }
+        
+        modalView.transparentModalDidLayout()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if didTriggerAnimationControllerForPresentationAnimation {
+            didTriggerAnimationControllerForPresentationAnimation = false
+            modalView.transparentModalParentWillAnimateForPresented()
         }
     }
     
@@ -93,6 +107,20 @@ extension TransparentModalView {
         guard !view.subviews.contains(modalView.modal) else {
             return
         }
+        
+        switch modalView.modalLayoutType {
+            
+        case .centerVertically:
+            centerModalViewVertically(modalView: modalView)
+        
+        case .definedInCustomViewProtocol:
+            modalView.addToParentForCustomLayout(parent: view)
+        }
+        
+        modalView.transparentModalDidLayout()
+    }
+    
+    private func centerModalViewVertically(modalView: TransparentModalCustomView) {
         
         view.addSubview(modalView.modal)
                 
@@ -148,7 +176,6 @@ extension TransparentModalView {
         
         modalView.modal.layer.cornerRadius = modalCornerRadius
         modalView.modal.clipsToBounds = true
-        modalView.transparentModalDidLayout()
     }
     
     private func addModalViewToScrollView() {
@@ -193,10 +220,14 @@ extension TransparentModalView: UIViewControllerTransitioningDelegate {
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
+        didTriggerAnimationControllerForPresentationAnimation = true
+        
         return FadeAnimationTransition(fade: .fadeIn)
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        
+        modalView.transparentModalParentWillAnimateForDismissed()
         
         return FadeAnimationTransition(fade: .fadeOut)
     }

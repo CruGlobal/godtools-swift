@@ -96,11 +96,11 @@ extension ToolView: ToolNavBarViewDelegate {
         viewModel.navHomeTapped(remoteShareIsActive: remoteShareIsActive)
     }
     
-    func navBarShareTapped(navBar: ToolNavBarView, selectedLanguage: LanguageModel) {
+    func navBarToolSettingsTapped(navBar: ToolNavBarView, selectedLanguage: LanguageModel) {
         
         let page: Int = pageNavigationView.currentPage
         
-        viewModel.navShareTapped(page: page, selectedLanguage: selectedLanguage)
+        viewModel.navToolSettingsTapped(page: page, selectedLanguage: selectedLanguage)
     }
     
     func navBarLanguageChanged(navBar: ToolNavBarView) {
@@ -131,5 +131,28 @@ extension ToolView: ToolPageViewDelegate {
     
     func toolPageCallToActionNextButtonTapped(pageView: ToolPageView, page: Int) {
         pageNavigationView.scrollToNextPage(animated: true)
+    }
+}
+
+extension ToolView: ToolSettingsToolType {
+    
+    func setTrainingTipsEnabled(enabled: Bool) {
+        viewModel.setTrainingTipsEnabled(enabled: enabled)
+    }
+    
+    func setPrimaryLanguage(languageId: String) {
+        
+    }
+    
+    func setParallelLanguage(languageId: String) {
+        
+    }
+    
+    func clearParallelLanguage() {
+        
+    }
+    
+    func swapLanguages(fromLanguageId: String, toLanguageId: String) {
+        
     }
 }

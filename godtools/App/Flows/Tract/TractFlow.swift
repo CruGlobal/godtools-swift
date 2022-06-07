@@ -13,7 +13,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
     
     private let deepLinkingService: DeepLinkingServiceType
     
-    private var shareToolMenuFlow: ShareToolMenuFlow?
+    private var toolSettingsFlow: ToolSettingsFlow?
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -54,7 +54,6 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             type: .tract,
             flowDelegate: self,
             appDiContainer: appDiContainer,
-            trainingTipsEnabled: trainingTipsEnabled,
             deepLinkingService: deepLinkingService
         )
                 
@@ -72,21 +71,21 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             flowDelegate: self,
             backButtonImageType: (parentFlowIsHomeFlow) ? .home : .backArrow,
             renderer: renderer,
-            tractRemoteSharePublisher: appDiContainer.tractRemoteSharePublisher,
-            tractRemoteShareSubscriber: appDiContainer.tractRemoteShareSubscriber,
+            tractRemoteSharePublisher: appDiContainer.getTractRemoteSharePublisher(),
+            tractRemoteShareSubscriber: appDiContainer.getTractRemoteShareSubscriber(),
             localizationServices: appDiContainer.localizationServices,
             fontService: appDiContainer.getFontService(),
             viewsService: appDiContainer.viewsService,
             analytics: appDiContainer.analytics,
             mobileContentEventAnalytics: appDiContainer.getMobileContentEventAnalyticsTracking(),
-            toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics,
+            toolOpenedAnalytics: appDiContainer.getToolOpenedAnalytics(),
             liveShareStream: liveShareStream,
-            trainingTipsEnabled: trainingTipsEnabled,
-            page: page
+            page: page,
+            trainingTipsEnabled: trainingTipsEnabled
         )
         
         let view = ToolView(viewModel: viewModel)
-                
+                        
         if let sharedNavController = sharedNavigationController {
             sharedNavController.pushViewController(view, animated: true)
         }
@@ -102,6 +101,18 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
     deinit {
         print("x deinit: \(type(of: self))")
         deepLinkingService.deepLinkObserver.removeObserver(self)
+    }
+    
+    private func getFirstToolViewInFlow() -> ToolView? {
+        
+        for index in 0 ..< navigationController.viewControllers.count {
+            let view: UIViewController = navigationController.viewControllers[index]
+            guard let toolView = view as? ToolView else {
+                continue
+            }
+            return toolView
+        }
+        return nil
     }
     
     private func configureNavigationBar(shouldAnimateNavigationBarHiddenState: Bool) {
@@ -167,22 +178,34 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
                 closeTool()
             }
             
-        case .shareMenuTappedFromTool(let tractRemoteShareSubscriber, let tractRemoteSharePublisher, let resource, let selectedLanguage, let primaryLanguage, let parallelLanguage, let pageNumber):
+        case .toolSettingsTappedFromTool(let toolData):
+                    
+            guard let tool = getFirstToolViewInFlow() else {
+                assertionFailure("Failed to fetch ToolSettingsToolType for ToolSettingsFlow in the view hierarchy.  A view with protocol ToolSettingsToolType should exist.")
+                return
+            }
             
-            let shareToolMenuFlow = ShareToolMenuFlow(
+            let toolSettingsFlow = ToolSettingsFlow(
                 flowDelegate: self,
                 appDiContainer: appDiContainer,
-                navigationController: navigationController,
-                tractRemoteSharePublisher: tractRemoteSharePublisher,
-                resource: resource,
-                selectedLanguage: selectedLanguage,
-                primaryLanguage: primaryLanguage,
-                parallelLanguage: parallelLanguage,
-                pageNumber: pageNumber,
-                hidesRemoteShareToolAction: tractRemoteShareSubscriber.isSubscribedToChannel
+                sharedNavigationController: navigationController,
+                toolData: toolData,
+                tool: tool
             )
             
-            self.shareToolMenuFlow = shareToolMenuFlow
+            navigationController.present(toolSettingsFlow.getInitialView(), animated: true)
+            
+            self.toolSettingsFlow = toolSettingsFlow
+            
+        case .toolSettingsFlowCompleted:
+            
+            guard toolSettingsFlow != nil else {
+                return
+            }
+        
+            navigationController.dismiss(animated: true)
+            
+            toolSettingsFlow = nil
 
         case .buttonWithUrlTappedFromMobileContentRenderer(let url, let exitLink):
             guard let webUrl = URL(string: url) else {
@@ -201,10 +224,7 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             
         case .closeTappedFromToolTraining:
             navigationController.dismiss(animated: true, completion: nil)
-            
-        case .closeTappedFromShareToolScreenTutorial:
-            self.shareToolMenuFlow = nil
-            
+                        
         case .tractFlowCompleted(let state):
             
             guard tractFlow != nil else {
@@ -246,7 +266,6 @@ class TractFlow: NSObject, ToolNavigationFlow, Flow {
             type: .trainingTip,
             flowDelegate: self,
             appDiContainer: appDiContainer,
-            trainingTipsEnabled: false,
             deepLinkingService: deepLinkingService
         )
         

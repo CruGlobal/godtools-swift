@@ -70,7 +70,7 @@ class MobileContentPageRenderer {
     
     // MARK: - Page Renderering
     
-    private func getRenderedPageContext(pageModel: Page, page: Int, numberOfPages: Int, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, manifestResourcesCache: ManifestResourcesCache, resource: ResourceModel, language: LanguageModel, pageViewFactories: MobileContentRendererPageViewFactories, primaryLanguage: LanguageModel, sharedState: State) -> MobileContentRenderedPageContext {
+    private func getRenderedPageContext(pageModel: Page, page: Int, numberOfPages: Int, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, manifestResourcesCache: ManifestResourcesCache, resource: ResourceModel, language: LanguageModel, pageViewFactories: MobileContentRendererPageViewFactories, primaryLanguage: LanguageModel, sharedState: State, trainingTipsEnabled: Bool) -> MobileContentRenderedPageContext {
         
         let renderedPageContext = MobileContentRenderedPageContext(
             pageModel: pageModel,
@@ -84,13 +84,14 @@ class MobileContentPageRenderer {
             language: language,
             pageViewFactories: pageViewFactories,
             primaryRendererLanguage: primaryLanguage,
-            rendererState: sharedState
+            rendererState: sharedState,
+            trainingTipsEnabled: trainingTipsEnabled
         )
         
         return renderedPageContext
     }
     
-    func renderPageModel(pageModel: Page, page: Int, numberOfPages: Int, window: UIViewController, safeArea: UIEdgeInsets) -> Result<MobileContentView, Error> {
+    func renderPageModel(pageModel: Page, page: Int, numberOfPages: Int, window: UIViewController, safeArea: UIEdgeInsets, trainingTipsEnabled: Bool) -> Result<MobileContentView, Error> {
         
         let renderedPageContext: MobileContentRenderedPageContext = getRenderedPageContext(
             pageModel: pageModel,
@@ -104,7 +105,8 @@ class MobileContentPageRenderer {
             language: language,
             pageViewFactories: pageViewFactories,
             primaryLanguage: primaryLanguage,
-            sharedState: sharedState
+            sharedState: sharedState,
+            trainingTipsEnabled: trainingTipsEnabled
         )
         
         guard let renderableView = recurseAndRender(renderableModel: pageModel, renderableModelParent: nil, renderedPageContext: renderedPageContext) else {

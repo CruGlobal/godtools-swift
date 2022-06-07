@@ -12,6 +12,10 @@ protocol TransparentModalCustomView {
     
     var modal: UIView { get }
     var modalInsets: UIEdgeInsets { get }
+    var modalLayoutType: TransparentModalCustomViewLayoutType { get }
     
+    func addToParentForCustomLayout(parent: UIView)
     func transparentModalDidLayout()
+    func transparentModalParentWillAnimateForPresented()
+    func transparentModalParentWillAnimateForDismissed()
 }

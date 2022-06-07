@@ -26,7 +26,7 @@ class MobileContentLinkViewModel: MobileContentLinkViewModelType {
         self.renderedPageContext = renderedPageContext
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
-        self.titleColor = linkModel.text?.textColor ?? linkModel.textColor
+        self.titleColor = linkModel.text.textColor
     }
     
     var backgroundColor: UIColor {
@@ -38,7 +38,7 @@ class MobileContentLinkViewModel: MobileContentLinkViewModelType {
     }
     
     var title: String? {
-        return linkModel.text?.text
+        return linkModel.text.text
     }
     
     var linkEvents: [EventId] {
