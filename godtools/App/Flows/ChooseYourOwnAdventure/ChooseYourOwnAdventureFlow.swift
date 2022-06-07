@@ -9,12 +9,18 @@
 import UIKit
 import GodToolsToolParser
 
-class ChooseYourOwnAdventureFlow: Flow {
+class ChooseYourOwnAdventureFlow: ToolNavigationFlow {
         
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
+    
+    var articleFlow: ArticleFlow?
+    var chooseYourOwnAdventureFlow: ChooseYourOwnAdventureFlow?
+    var lessonFlow: LessonFlow?
+    var tractFlow: TractFlow?
+    var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
     
     required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, toolTranslations: ToolTranslations) {
         
@@ -23,8 +29,8 @@ class ChooseYourOwnAdventureFlow: Flow {
         self.navigationController = sharedNavigationController
                  
         let navigation: MobileContentRendererNavigation = appDiContainer.getMobileContentRendererNavigation(
-            navigationDelegate: self,
-            navigationController: navigationController
+            parentFlow: self,
+            navigationDelegate: self
         )
         
         let renderer: MobileContentRenderer = appDiContainer.getMobileContentRenderer(
@@ -74,7 +80,7 @@ extension ChooseYourOwnAdventureFlow: MobileContentRendererNavigationDelegate {
         closeTool()
     }
     
-    func mobileContentRendererNavigationDeepLink(navigation: MobileContentRendererNavigation, deepLink: ParsedDeepLinkType) {
+    func mobileContentRendererNavigationDeepLink(navigation: MobileContentRendererNavigation, deepLink: MobileContentRendererNavigationDeepLinkType) {
         
     }
 }

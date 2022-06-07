@@ -297,13 +297,12 @@ class AppDiContainer {
         )
     }
     
-    func getMobileContentRendererNavigation(navigationDelegate: MobileContentRendererNavigationDelegate, navigationController: UINavigationController) -> MobileContentRendererNavigation {
+    func getMobileContentRendererNavigation(parentFlow: ToolNavigationFlow, navigationDelegate: MobileContentRendererNavigationDelegate) -> MobileContentRendererNavigation {
         
         return MobileContentRendererNavigation(
+            parentFlow: parentFlow,
             delegate: navigationDelegate,
-            appDiContainer: self,
-            navigationController: navigationController,
-            exitLinkAnalytics: getExitLinkAnalytics()
+            appDiContainer: self
         )
     }
     

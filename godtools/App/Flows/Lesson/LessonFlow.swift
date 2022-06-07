@@ -29,8 +29,8 @@ class LessonFlow: ToolNavigationFlow, Flow {
         self.navigationController = sharedNavigationController
                
         let navigation: MobileContentRendererNavigation = appDiContainer.getMobileContentRendererNavigation(
-            navigationDelegate: self,
-            navigationController: navigationController
+            parentFlow: self,
+            navigationDelegate: self
         )
         
         let renderer: MobileContentRenderer = appDiContainer.getMobileContentRenderer(
@@ -124,25 +124,7 @@ extension LessonFlow: MobileContentRendererNavigationDelegate {
         closeTool(lesson: event.resource, highestPageNumberViewed: event.highestPageNumberViewed)
     }
     
-    func mobileContentRendererNavigationDeepLink(navigation: MobileContentRendererNavigation, deepLink: ParsedDeepLinkType) {
+    func mobileContentRendererNavigationDeepLink(navigation: MobileContentRendererNavigation, deepLink: MobileContentRendererNavigationDeepLinkType) {
         
-        switch deepLink {
-        
-        case .allToolsList:
-            break
-        
-        case .article(let articleURI):
-            break
-        
-        case .favoritedToolsList:
-            break
-        
-        case .lessonsList:
-            break
-        
-        case .tool(let toolDeepLink):
-            
-            navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
-        }
     }
 }

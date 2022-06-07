@@ -12,25 +12,23 @@ import GodToolsToolParser
 protocol MobileContentRendererNavigationDelegate: AnyObject {
     
     func mobileContentRendererNavigationDismissRenderer(navigation: MobileContentRendererNavigation, event: DismissToolEvent)
-    func mobileContentRendererNavigationDeepLink(navigation: MobileContentRendererNavigation, deepLink: ParsedDeepLinkType)
+    func mobileContentRendererNavigationDeepLink(navigation: MobileContentRendererNavigation, deepLink: MobileContentRendererNavigationDeepLinkType)
 }
 
 class MobileContentRendererNavigation {
     
     private let appDiContainer: AppDiContainer
-    private let navigationController: UINavigationController
-    private let exitLinkAnalytics: ExitLinkAnalytics
     
     private var toolTraining: ToolTrainingView?
     
+    private weak var parentFlow: ToolNavigationFlow?
     private weak var delegate: MobileContentRendererNavigationDelegate?
     
-    init(delegate: MobileContentRendererNavigationDelegate, appDiContainer: AppDiContainer, navigationController: UINavigationController, exitLinkAnalytics: ExitLinkAnalytics) {
+    init(parentFlow: ToolNavigationFlow, delegate: MobileContentRendererNavigationDelegate, appDiContainer: AppDiContainer) {
         
+        self.parentFlow = parentFlow
         self.delegate = delegate
         self.appDiContainer = appDiContainer
-        self.navigationController = navigationController
-        self.exitLinkAnalytics = exitLinkAnalytics
     }
     
     func buttonWithUrlTapped(url: String, exitLink: ExitLinkModel) {
@@ -44,13 +42,29 @@ class MobileContentRendererNavigation {
         
         if let deepLink = deepLink {
             
-            delegate?.mobileContentRendererNavigationDeepLink(navigation: self, deepLink: deepLink)
+            switch deepLink {
+            
+            case .allToolsList:
+                break
+            
+            case .article(let articleURI):
+                break
+            
+            case .favoritedToolsList:
+                break
+            
+            case .lessonsList:
+               
+                delegate?.mobileContentRendererNavigationDeepLink(navigation: self, deepLink: .lessonsList)
+            
+            case .tool(let toolDeepLink):
+                
+                parentFlow?.navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
+            }
         }
         else {
             
-            exitLinkAnalytics.trackExitLink(exitLink: exitLink)
-            
-            UIApplication.shared.open(url)
+            parentFlow?.navigateToURL(url: url, exitLink: exitLink)
         }
     }
     
@@ -63,7 +77,7 @@ class MobileContentRendererNavigation {
         
         let view = MobileContentErrorView(viewModel: error)
         
-        navigationController.present(view.controller, animated: true, completion: nil)
+        parentFlow?.navigationController.present(view.controller, animated: true, completion: nil)
     }
     
     func trainingTipTapped(event: TrainingTipEvent) {
@@ -73,6 +87,10 @@ class MobileContentRendererNavigation {
     
     private func presentToolTraining(event: TrainingTipEvent) {
         
+        guard let parentFlow = parentFlow else {
+            return
+        }
+
         let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
             type: .trainingTip,
             appDiContainer: appDiContainer
@@ -81,10 +99,9 @@ class MobileContentRendererNavigation {
         let languageTranslationManifest = MobileContentRendererLanguageTranslationManifest(manifest: event.renderedPageContext.manifest, language: event.renderedPageContext.language)
         
         let navigation = MobileContentRendererNavigation(
+            parentFlow: parentFlow,
             delegate: self,
-            appDiContainer: appDiContainer,
-            navigationController: navigationController,
-            exitLinkAnalytics: exitLinkAnalytics
+            appDiContainer: appDiContainer
         )
         
         let pageRenderer = MobileContentPageRenderer(
@@ -111,7 +128,7 @@ class MobileContentRendererNavigation {
         
         let view = ToolTrainingView(viewModel: viewModel)
         
-        navigationController.present(view, animated: true, completion: nil)
+        parentFlow.navigationController.present(view, animated: true, completion: nil)
         
         self.toolTraining = view
     }
@@ -122,7 +139,7 @@ class MobileContentRendererNavigation {
             return
         }
         
-        navigationController.dismiss(animated: true, completion: nil)
+        parentFlow?.navigationController.dismiss(animated: true, completion: nil)
         toolTraining = nil
     }
 }
@@ -133,7 +150,8 @@ extension MobileContentRendererNavigation: MobileContentRendererNavigationDelega
         dismissToolTraining()
     }
     
-    func mobileContentRendererNavigationDeepLink(navigation: MobileContentRendererNavigation, deepLink: ParsedDeepLinkType) {
+    func mobileContentRendererNavigationDeepLink(navigation: MobileContentRendererNavigation, deepLink: MobileContentRendererNavigationDeepLinkType) {
         
     }
 }
+

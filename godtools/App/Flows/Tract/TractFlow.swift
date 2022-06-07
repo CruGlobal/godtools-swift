@@ -31,8 +31,8 @@ class TractFlow: ToolNavigationFlow, Flow {
         self.navigationController = sharedNavigationController ?? UINavigationController()
           
         let navigation: MobileContentRendererNavigation = appDiContainer.getMobileContentRendererNavigation(
-            navigationDelegate: self,
-            navigationController: navigationController
+            parentFlow: self,
+            navigationDelegate: self
         )
         
         let renderer: MobileContentRenderer = appDiContainer.getMobileContentRenderer(
@@ -190,25 +190,12 @@ extension TractFlow: MobileContentRendererNavigationDelegate {
         closeTool()
     }
     
-    func mobileContentRendererNavigationDeepLink(navigation: MobileContentRendererNavigation, deepLink: ParsedDeepLinkType) {
-                
+    func mobileContentRendererNavigationDeepLink(navigation: MobileContentRendererNavigation, deepLink: MobileContentRendererNavigationDeepLinkType) {
+        
         switch deepLink {
-        
-        case .allToolsList:
-            break
-        
-        case .article(let articleURI):
-            break
-        
-        case .favoritedToolsList:
-            break
         
         case .lessonsList:
             flowDelegate?.navigate(step: .tractFlowCompleted(state: .userClosedTractToLessonsList))
-        
-        case .tool(let toolDeepLink):
-            
-            navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
         }
     }
 }
