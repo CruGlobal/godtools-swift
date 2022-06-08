@@ -27,6 +27,17 @@ struct LanguagesListView: View {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 0) {
                     
+                    if !viewModel.hidesDeleteOption {
+                        
+                        let deleteItemViewModel = DeleteLanguageListItemViewModel()
+                        let itemView = LanguagesListItemView(viewModel: deleteItemViewModel)
+                        
+                        itemView
+                            .onTapGesture {
+                                viewModel.deleteTapped()
+                            }
+                    }
+                    
                     ForEach(viewModel.languages) { language in
                         
                         let itemViewModel = viewModel.getLanguagesListItemViewModel(language: language)
