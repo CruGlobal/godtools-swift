@@ -75,8 +75,6 @@ class ToolNavBarView: NSObject {
         
         remoteShareActiveNavItem = nil
         
-        parentViewController.title = viewModel.navTitle
-        
         navigationController?.navigationBar.setupNavigationBarAppearance(
             backgroundColor: navBarColor,
             controlColor: navBarControlColor,
@@ -127,7 +125,13 @@ class ToolNavBarView: NSObject {
             chooseLanguageControl.setTitleTextAttributes([.font: font, .foregroundColor: navBarControlColor], for: .normal)
             chooseLanguageControl.setTitleTextAttributes([.font: font, .foregroundColor: navBarColor.withAlphaComponent(1)], for: .selected)
             
+            parentViewController.title = nil
             parentViewController.navigationItem.titleView = chooseLanguageControl
+        }
+        else {
+            
+            parentViewController.navigationItem.titleView = nil
+            parentViewController.title = viewModel.navTitle
         }
         
         setRemoteShareActiveNavItem(hidden: !viewModel.remoteShareIsActive.value)
