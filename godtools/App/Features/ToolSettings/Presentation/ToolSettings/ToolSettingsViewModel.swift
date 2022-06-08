@@ -30,7 +30,9 @@ class ToolSettingsViewModel: BaseToolSettingsViewModel {
         self.trainingTipsEnabled = trainingTipsEnabled
         self.shareables = shareables
         
-        super.init()        
+        super.init()
+        
+        hidesShareables = shareables.isEmpty
     }
     
     override func getTopBarViewModel() -> BaseToolSettingsTopBarViewModel {
