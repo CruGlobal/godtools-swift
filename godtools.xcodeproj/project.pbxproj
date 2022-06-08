@@ -901,6 +901,9 @@
 		45CBA01B261FB0EA0036BEB3 /* LessonViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CBA01A261FB0EA0036BEB3 /* LessonViewModelType.swift */; };
 		45CBE9E128511F44008DD9E2 /* BaseLanguagesListItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CBE9E028511F44008DD9E2 /* BaseLanguagesListItemViewModel.swift */; };
 		45CBE9E328511F92008DD9E2 /* DeleteLanguageListItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CBE9E228511F92008DD9E2 /* DeleteLanguageListItemViewModel.swift */; };
+		45CBE9E52851254D008DD9E2 /* BaseLanguagesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CBE9E42851254D008DD9E2 /* BaseLanguagesListViewModel.swift */; };
+		45CBE9E728512612008DD9E2 /* MockLanguagesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CBE9E628512612008DD9E2 /* MockLanguagesListViewModel.swift */; };
+		45CBE9E9285126A8008DD9E2 /* MockLanguagesListItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CBE9E8285126A8008DD9E2 /* MockLanguagesListItemViewModel.swift */; };
 		45CDFB4D281730FA00AC4F2E /* GoogleTagManager in Frameworks */ = {isa = PBXBuildFile; productRef = 45CDFB4C281730FA00AC4F2E /* GoogleTagManager */; };
 		45CDFB502817324B00AC4F2E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 45CDFB4F2817324B00AC4F2E /* FirebaseAnalytics */; };
 		45CDFB522817324B00AC4F2E /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 45CDFB512817324B00AC4F2E /* FirebaseCrashlytics */; };
@@ -1979,6 +1982,9 @@
 		45CBA01A261FB0EA0036BEB3 /* LessonViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonViewModelType.swift; sourceTree = "<group>"; };
 		45CBE9E028511F44008DD9E2 /* BaseLanguagesListItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseLanguagesListItemViewModel.swift; sourceTree = "<group>"; };
 		45CBE9E228511F92008DD9E2 /* DeleteLanguageListItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteLanguageListItemViewModel.swift; sourceTree = "<group>"; };
+		45CBE9E42851254D008DD9E2 /* BaseLanguagesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseLanguagesListViewModel.swift; sourceTree = "<group>"; };
+		45CBE9E628512612008DD9E2 /* MockLanguagesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLanguagesListViewModel.swift; sourceTree = "<group>"; };
+		45CBE9E8285126A8008DD9E2 /* MockLanguagesListItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLanguagesListItemViewModel.swift; sourceTree = "<group>"; };
 		45D266E8277499AD00960990 /* UIViewController+DismissPresented.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+DismissPresented.swift"; sourceTree = "<group>"; };
 		45D6D0292708B8FF0063C38A /* LessonEvaluationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LessonEvaluationModel.swift; sourceTree = "<group>"; };
 		45D6D02A2708B8FF0063C38A /* RealmLessonEvaluation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmLessonEvaluation.swift; sourceTree = "<group>"; };
@@ -5859,7 +5865,9 @@
 			isa = PBXGroup;
 			children = (
 				45F38D132833D245009E3E15 /* LanguagesListView.swift */,
+				45CBE9E42851254D008DD9E2 /* BaseLanguagesListViewModel.swift */,
 				45F38D142833D245009E3E15 /* LanguagesListViewModel.swift */,
+				45CBE9E628512612008DD9E2 /* MockLanguagesListViewModel.swift */,
 				45F38D172833D583009E3E15 /* Views */,
 			);
 			path = LanguagesList;
@@ -5872,6 +5880,7 @@
 				45CBE9E028511F44008DD9E2 /* BaseLanguagesListItemViewModel.swift */,
 				45CBE9E228511F92008DD9E2 /* DeleteLanguageListItemViewModel.swift */,
 				45F38D1E2833D887009E3E15 /* LanguagesListItemViewModel.swift */,
+				45CBE9E8285126A8008DD9E2 /* MockLanguagesListItemViewModel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -7138,6 +7147,7 @@
 				45AD1F7725938A9800A096A0 /* ViewedTrainingTip.swift in Sources */,
 				45AD206425938B1300A096A0 /* AlertMessageType.swift in Sources */,
 				45AD1F8B25938A9800A096A0 /* AttachmentModelType.swift in Sources */,
+				45CBE9E9285126A8008DD9E2 /* MockLanguagesListItemViewModel.swift in Sources */,
 				455583F6269F2DA500C3FF14 /* MobileContentImageViewModelType.swift in Sources */,
 				450E441A27565D1C00D4311E /* TutorialViewModelType.swift in Sources */,
 				D4BCE3712824147E005757B5 /* ProgressBarView.swift in Sources */,
@@ -7172,6 +7182,7 @@
 				4555833F269F2C7B00C3FF14 /* ToolPageModalViewModel.swift in Sources */,
 				45AD20BC25938F1A00A096A0 /* SignalValue.swift in Sources */,
 				458F7C93282DB6CD00872013 /* BaseToolSettingsTopBarViewModel.swift in Sources */,
+				45CBE9E728512612008DD9E2 /* MockLanguagesListViewModel.swift in Sources */,
 				45AD20E32593915300A096A0 /* GlobalActivityAnalytics.swift in Sources */,
 				451CCF2027A9DB2D00E8D2D3 /* PageNavigationCollectionViewNavigationModel.swift in Sources */,
 				45CB9FFD261FB0BE0036BEB3 /* LessonListItemViewModel.swift in Sources */,
@@ -7847,6 +7858,7 @@
 				458EFEDE26B1D135009EEB03 /* ToolBackButtonImageType+Image.swift in Sources */,
 				45AD1F5D25938A9800A096A0 /* ActionCableChannelSubscriber.swift in Sources */,
 				45AD1F8525938A9800A096A0 /* ResourcesSHA256FileCache.swift in Sources */,
+				45CBE9E52851254D008DD9E2 /* BaseLanguagesListViewModel.swift in Sources */,
 				45B98767283BFE5300E1DA7F /* RealmTranslationZipFile.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

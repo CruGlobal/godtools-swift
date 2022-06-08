@@ -279,7 +279,7 @@ class ToolSettingsFlow: Flow {
             }
         }
         
-        let viewModel = LanguagesListViewModel(languages: languages, selectedLanguageId: selectedLanguage?.id, closeTappedClosure: { [weak self] in
+        let viewModel = LanguagesListViewModel(languages: languages, selectedLanguageId: selectedLanguage?.id, localizationServices: appDiContainer.localizationServices, closeTappedClosure: { [weak self] in
             
             self?.dismissLanguagesList()
             

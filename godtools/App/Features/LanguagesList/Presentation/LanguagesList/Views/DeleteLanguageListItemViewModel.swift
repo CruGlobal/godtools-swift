@@ -10,11 +10,11 @@ import Foundation
 
 class DeleteLanguageListItemViewModel: BaseLanguagesListItemViewModel {
     
-    override init() {
+    init(localizationServices: LocalizationServices) {
         
         super.init()
         
-        self.name = "None"
+        self.name = localizationServices.stringForMainBundle(key: "toolSettings.languagesList.deleteLanguage.title")
         self.isSelected = false
     }
 }
