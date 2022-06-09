@@ -315,7 +315,7 @@ Press the About button on any tool for more info.";
 "onboardingTutorial.showMoreButton.title" = "Show Me More";
 
 // Tool Settings
-"toolSettings.title" = "Tool Settings";
+"toolSettings.title" = "Tool Options";
 "toolSettings.option.shareLink.title" = "Share link";
 "toolSettings.option.screenShare.title" = "Screen share";
 "toolSettings.option.trainingTips.show.title" = "Training tips";
