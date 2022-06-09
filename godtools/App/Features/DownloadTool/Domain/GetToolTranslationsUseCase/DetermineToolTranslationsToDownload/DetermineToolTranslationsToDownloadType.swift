@@ -13,5 +13,5 @@ protocol DetermineToolTranslationsToDownloadType {
     var resourcesCache: ResourcesCache { get }
     
     func getResource() -> ResourceModel?
-    func determineToolTranslationsToDownload() -> Result<DownloadToolLanguageTranslations, DetermineToolTranslationsToDownloadError>
+    func determineToolTranslationsToDownload() -> Result<ToolTranslationsToDownload, DetermineToolTranslationsToDownloadError>
 }

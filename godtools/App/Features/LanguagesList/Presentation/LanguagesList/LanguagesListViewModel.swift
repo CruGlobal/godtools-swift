@@ -10,20 +10,26 @@ import Foundation
 
 class LanguagesListViewModel: ObservableObject {
     
+    private let selectedLanguageId: String?
+    
     @Published var languages: [ToolLanguageModel] = Array()
+    @Published var hidesDeleteOption: Bool = true
     
     let closeTappedClosure: (() -> Void)
     let languageTappedClosure: ((_ language: ToolLanguageModel) -> Void)
+    let deleteTappedClosure: (() -> Void)?
         
-    required init(languages: [ToolLanguageModel], closeTappedClosure: @escaping (() -> Void), languageTappedClosure: @escaping ((_ language: ToolLanguageModel) -> Void)) {
+    required init(languages: [ToolLanguageModel], selectedLanguageId: String?, closeTappedClosure: @escaping (() -> Void), languageTappedClosure: @escaping ((_ language: ToolLanguageModel) -> Void), deleteTappedClosure: (() -> Void)?) {
         
         self.languages = languages
+        self.selectedLanguageId = selectedLanguageId
         self.closeTappedClosure = closeTappedClosure
         self.languageTappedClosure = languageTappedClosure
+        self.deleteTappedClosure = deleteTappedClosure
     }
     
     func getLanguagesListItemViewModel(language: ToolLanguageModel) -> LanguagesListItemViewModel {
-        return LanguagesListItemViewModel(language: language)
+        return LanguagesListItemViewModel(language: language, selectedLanguageId: selectedLanguageId)
     }
     
     func closeTapped() {
@@ -34,5 +40,10 @@ class LanguagesListViewModel: ObservableObject {
     func languageTapped(language: ToolLanguageModel) {
             
         languageTappedClosure(language)
+    }
+    
+    func deleteTapped() {
+        
+        deleteTappedClosure?()
     }
 }

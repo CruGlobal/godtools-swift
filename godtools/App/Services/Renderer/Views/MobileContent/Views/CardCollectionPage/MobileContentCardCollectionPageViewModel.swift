@@ -15,17 +15,17 @@ class MobileContentCardCollectionPageViewModel: MobileContentPageViewModel, Mobi
     private let renderedPageContext: MobileContentRenderedPageContext
     private let analytics: AnalyticsContainer
         
-    required init(flowDelegate: FlowDelegate, cardCollectionPage: CardCollectionPage, renderedPageContext: MobileContentRenderedPageContext, deepLinkService: DeepLinkingServiceType, analytics: AnalyticsContainer) {
+    required init(cardCollectionPage: CardCollectionPage, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer) {
         
         self.cardCollectionPage = cardCollectionPage
         self.renderedPageContext = renderedPageContext
         self.analytics = analytics
         
-        super.init(flowDelegate: flowDelegate, pageModel: cardCollectionPage, renderedPageContext: renderedPageContext, deepLinkService: deepLinkService, hidesBackgroundImage: false)
+        super.init(pageModel: cardCollectionPage, renderedPageContext: renderedPageContext, hidesBackgroundImage: false)
     }
     
-    required init(flowDelegate: FlowDelegate, pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, deepLinkService: DeepLinkingServiceType, hidesBackgroundImage: Bool) {
-        fatalError("init(flowDelegate:pageModel:renderedPageContext:deepLinkService:hidesBackgroundImage:) has not been implemented")
+    required init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, hidesBackgroundImage: Bool) {
+        fatalError("init(pageModel:renderedPageContext:hidesBackgroundImage:) has not been implemented")
     }
     
     private func getPageAnalyticsScreenName() -> String {

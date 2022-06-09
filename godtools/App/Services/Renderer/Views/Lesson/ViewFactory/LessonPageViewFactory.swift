@@ -11,16 +11,11 @@ import GodToolsToolParser
 
 class LessonPageViewFactory: MobileContentPageViewFactoryType {
     
-    private let deepLinkService: DeepLinkingServiceType
     private let analytics: AnalyticsContainer
     private let mobileContentAnalytics: MobileContentAnalytics
+        
+    required init(analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics) {
     
-    private(set) weak var flowDelegate: FlowDelegate?
-    
-    required init(flowDelegate: FlowDelegate, deepLinkService: DeepLinkingServiceType, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics) {
-    
-        self.flowDelegate = flowDelegate
-        self.deepLinkService = deepLinkService
         self.analytics = analytics
         self.mobileContentAnalytics = mobileContentAnalytics
     }
@@ -28,16 +23,10 @@ class LessonPageViewFactory: MobileContentPageViewFactoryType {
     func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
         
         if let pageModel = renderableModel as? Page {
-                    
-            guard let flowDelegate = self.flowDelegate else {
-                return nil
-            }
-            
+                     
             let viewModel = LessonPageViewModel(
-                flowDelegate: flowDelegate,
                 pageModel: pageModel,
                 renderedPageContext: renderedPageContext,
-                deepLinkService: deepLinkService,
                 analytics: analytics,
                 mobileContentAnalytics: mobileContentAnalytics
             )

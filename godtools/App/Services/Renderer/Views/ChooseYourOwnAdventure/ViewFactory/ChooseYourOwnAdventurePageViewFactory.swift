@@ -11,25 +11,16 @@ import GodToolsToolParser
 
 class ChooseYourOwnAdventurePageViewFactory: MobileContentPageViewFactoryType {
     
-    private let deepLinkingService: DeepLinkingServiceType
     private let analytics: AnalyticsContainer
-    
-    private(set) weak var flowDelegate: FlowDelegate?
-    
-    required init(flowDelegate: FlowDelegate, deepLinkingService: DeepLinkingServiceType, analytics: AnalyticsContainer) {
         
-        self.flowDelegate = flowDelegate
-        self.deepLinkingService = deepLinkingService
+    required init(analytics: AnalyticsContainer) {
+        
         self.analytics = analytics
     }
     
     func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
         
         if let contentPage = renderableModel as? ContentPage {
-            
-            guard let flowDelegate = self.flowDelegate else {
-                return nil
-            }
             
             let page: Int = renderedPageContext.page
             let contentInsets: UIEdgeInsets
@@ -52,10 +43,8 @@ class ChooseYourOwnAdventurePageViewFactory: MobileContentPageViewFactoryType {
             }
             
             let viewModel = MobileContentContentPageViewModel(
-                flowDelegate: flowDelegate,
                 contentPage: contentPage,
                 renderedPageContext: renderedPageContext,
-                deepLinkService: deepLinkingService,
                 analytics: analytics
             )
             

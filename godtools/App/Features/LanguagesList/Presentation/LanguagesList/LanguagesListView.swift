@@ -52,11 +52,13 @@ struct LanguagesListView_Preview: PreviewProvider {
             ToolLanguageModel(id: "es", name: "Spanish")
         ]
         
-        let viewModel = LanguagesListViewModel(languages: languages, closeTappedClosure: {
+        let selectedLanguageId = "en"
+        
+        let viewModel = LanguagesListViewModel(languages: languages, selectedLanguageId: selectedLanguageId, closeTappedClosure: {
             
         }, languageTappedClosure: { language in
             
-        })
+        }, deleteTappedClosure: nil)
         
         return LanguagesListView(viewModel: viewModel)
     }

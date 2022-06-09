@@ -12,18 +12,23 @@ import GodToolsToolParser
 class MobileContentRenderer {
             
     private let sharedState: State
+    private let pageViewFactories: MobileContentRendererPageViewFactories
+    private let manifestResourcesCache: ManifestResourcesCache
     
+    let navigation: MobileContentRendererNavigation
     let resource: ResourceModel
     let primaryLanguage: LanguageModel
     let pageRenderers: [MobileContentPageRenderer]
     
-    required init(resource: ResourceModel, primaryLanguage: LanguageModel, languageTranslationManifests: [MobileContentRendererLanguageTranslationManifest], pageViewFactories: MobileContentRendererPageViewFactories, translationsFileCache: TranslationsFileCache) {
+    init(navigation: MobileContentRendererNavigation, toolTranslations: ToolTranslations, pageViewFactories: MobileContentRendererPageViewFactories, manifestResourcesCache: ManifestResourcesCache) {
         
         let sharedState: State = State()
+        let resource: ResourceModel = toolTranslations.tool
+        let primaryLanguage: LanguageModel = toolTranslations.languageTranslationManifests[0].language
         
         var pageRenderers: [MobileContentPageRenderer] = Array()
         
-        for languageTranslationManifest in languageTranslationManifests {
+        for languageTranslationManifest in toolTranslations.languageTranslationManifests {
 
             let pageRenderer = MobileContentPageRenderer(
                 sharedState: sharedState,
@@ -31,16 +36,30 @@ class MobileContentRenderer {
                 primaryLanguage: primaryLanguage,
                 languageTranslationManifest: languageTranslationManifest,
                 pageViewFactories: pageViewFactories,
-                translationsFileCache: translationsFileCache
+                navigation: navigation,
+                manifestResourcesCache: manifestResourcesCache
             )
             
             pageRenderers.append(pageRenderer)
         }
         
         self.sharedState = sharedState
+        self.pageViewFactories = pageViewFactories
+        self.manifestResourcesCache = manifestResourcesCache
+        self.navigation = navigation
         self.resource = resource
         self.primaryLanguage = primaryLanguage
         self.pageRenderers = pageRenderers
+    }
+    
+    func copy(toolTranslations: ToolTranslations) -> MobileContentRenderer {
+        
+        return MobileContentRenderer(
+            navigation: navigation,
+            toolTranslations: toolTranslations,
+            pageViewFactories: pageViewFactories,
+            manifestResourcesCache: manifestResourcesCache
+        )
     }
 }
 

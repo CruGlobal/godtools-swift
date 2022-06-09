@@ -7,25 +7,26 @@
 
 import Foundation
 import GodToolsToolParser
+import Combine
 
 class ToolSettingsViewModel: BaseToolSettingsViewModel {
     
     private let manifestResourcesCache: ManifestResourcesCache
     private let localizationServices: LocalizationServices
-    private let primaryLanguage: LanguageModel
-    private let parallelLanguage: LanguageModel?
+    private let primaryLanguageSubject: CurrentValueSubject<LanguageModel, Never>
+    private let parallelLanguageSubject: CurrentValueSubject<LanguageModel?, Never>
     private let trainingTipsEnabled: Bool
     private let shareables: [Shareable]
     
     private weak var flowDelegate: FlowDelegate?
         
-    required init(flowDelegate: FlowDelegate, manifestResourcesCache: ManifestResourcesCache, localizationServices: LocalizationServices, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, trainingTipsEnabled: Bool, shareables: [Shareable]) {
+    required init(flowDelegate: FlowDelegate, manifestResourcesCache: ManifestResourcesCache, localizationServices: LocalizationServices, primaryLanguageSubject: CurrentValueSubject<LanguageModel, Never>, parallelLanguageSubject: CurrentValueSubject<LanguageModel?, Never>, trainingTipsEnabled: Bool, shareables: [Shareable]) {
         
         self.flowDelegate = flowDelegate
         self.manifestResourcesCache = manifestResourcesCache
         self.localizationServices = localizationServices
-        self.primaryLanguage = primaryLanguage
-        self.parallelLanguage = parallelLanguage
+        self.primaryLanguageSubject = primaryLanguageSubject
+        self.parallelLanguageSubject = parallelLanguageSubject
         self.trainingTipsEnabled = trainingTipsEnabled
         self.shareables = shareables
         
@@ -69,8 +70,8 @@ class ToolSettingsViewModel: BaseToolSettingsViewModel {
         return ToolSettingsChooseLanguageViewModel(
             flowDelegate: flowDelegate,
             localizationServices: localizationServices,
-            primaryLanguage: primaryLanguage,
-            parallelLanguage: parallelLanguage
+            primaryLanguageSubject: primaryLanguageSubject,
+            parallelLanguageSubject: parallelLanguageSubject
         )
     }
     

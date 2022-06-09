@@ -63,6 +63,7 @@ class LanguageSettingsFlow: Flow {
         let viewModel = ChooseLanguageViewModel(
             flowDelegate: self,
             dataDownloader: appDiContainer.initialDataDownloader,
+            languagesRepository: appDiContainer.getLanguagesRepository(),
             languageSettingsService: appDiContainer.languageSettingsService,
             downloadedLanguagesCache: appDiContainer.downloadedLanguagesCache,
             localizationServices: appDiContainer.localizationServices,

@@ -6,7 +6,7 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import OktaAuthentication
 
 class AppDiContainer {
@@ -82,7 +82,7 @@ class AppDiContainer {
         
         languagesCache = RealmLanguagesCache(realmDatabase: realmDatabase)
         
-        translationsFileCache = TranslationsFileCache(realmDatabase: realmDatabase, resourcesCache: resourcesCache, sha256FileCache: resourcesSHA256FileCache)
+        translationsFileCache = TranslationsFileCache(realmDatabase: realmDatabase, sha256FileCache: resourcesSHA256FileCache)
                 
         translationDownloader = TranslationDownloader(realmDatabase: realmDatabase, resourcesCache: resourcesCache, translationsApi: translationsApi, translationsFileCache: translationsFileCache)
         
@@ -144,8 +144,9 @@ class AppDiContainer {
             favoritedResourceTranslationDownloader: favoritedResourceTranslationDownloader
         )
         
+        // TODO: Remove LanguagesRepository(cache: languagesCache) allocation here and use getLanguagesRepository().  This will be possible when no longer storing references in AppDiContainer. ~Levi
         languageSettingsService = LanguageSettingsService(
-            dataDownloader: initialDataDownloader,
+            languagesRepository: LanguagesRepository(cache: languagesCache),
             languageSettingsCache: languageSettingsCache
         )
         
@@ -265,6 +266,10 @@ class AppDiContainer {
         )
     }
     
+    func getManifestResourcesCache() -> ManifestResourcesCache {
+        return ManifestResourcesCache(translationsFileCache: translationsFileCache)
+    }
+    
     func getMobileContentAnalytics() -> MobileContentAnalytics {
         return MobileContentAnalytics(analytics: analytics)
     }
@@ -277,21 +282,27 @@ class AppDiContainer {
         return MobileContentParser(translationsFileCache: translationsFileCache)
     }
     
-    func getMobileContentRenderer(flowDelegate: FlowDelegate, deepLinkingService: DeepLinkingServiceType, type: MobileContentRendererPageViewFactoriesType, resource: ResourceModel, primaryLanguage: LanguageModel, languageTranslationManifests: [MobileContentRendererLanguageTranslationManifest]) -> MobileContentRenderer {
-                             
+    func getMobileContentRenderer(type: MobileContentRendererPageViewFactoriesType, navigation: MobileContentRendererNavigation, toolTranslations: ToolTranslations) -> MobileContentRenderer {
+
         let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
             type: type,
-            flowDelegate: flowDelegate,
-            appDiContainer: self,
-            deepLinkingService: deepLinkingService
+            appDiContainer: self
         )
         
         return MobileContentRenderer(
-            resource: resource,
-            primaryLanguage: primaryLanguage,
-            languageTranslationManifests: languageTranslationManifests,
+            navigation: navigation,
+            toolTranslations: toolTranslations,
             pageViewFactories: pageViewFactories,
-            translationsFileCache: translationsFileCache
+            manifestResourcesCache: getManifestResourcesCache()
+        )
+    }
+    
+    func getMobileContentRendererNavigation(parentFlow: ToolNavigationFlow, navigationDelegate: MobileContentRendererNavigationDelegate) -> MobileContentRendererNavigation {
+        
+        return MobileContentRendererNavigation(
+            parentFlow: parentFlow,
+            delegate: navigationDelegate,
+            appDiContainer: self
         )
     }
     
@@ -333,6 +344,18 @@ class AppDiContainer {
     func getToolTrainingTipsOnboardingViews() -> ToolTrainingTipsOnboardingViewsService {
         return ToolTrainingTipsOnboardingViewsService(
             cache: ToolTrainingTipsOnboardingViewsUserDefaultsCache(userDefaultsCache: sharedUserDefaultsCache)
+        )
+    }
+    
+    func getToolTranslationsUseCase() -> GetToolTranslationsUseCase {
+        return GetToolTranslationsUseCase(
+            initialDataDownloader: initialDataDownloader,
+            translationDownloader: translationDownloader,
+            resourcesCache: initialDataDownloader.resourcesCache,
+            languagesRepository: getLanguagesRepository(),
+            translationsFileCache: translationsFileCache,
+            mobileContentParser: getMobileContentParser(),
+            languageSettingsService: languageSettingsService
         )
     }
     

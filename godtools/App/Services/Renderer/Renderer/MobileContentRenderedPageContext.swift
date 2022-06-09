@@ -20,13 +20,14 @@ class MobileContentRenderedPageContext {
     let resource: ResourceModel
     let language: LanguageModel
     let pageViewFactories: MobileContentRendererPageViewFactories
+    let navigation: MobileContentRendererNavigation
     let primaryRendererLanguage: LanguageModel
     let rendererState: State
     let trainingTipsEnabled: Bool
     
     private weak var weakWindow: UIViewController?
     
-    required init(pageModel: Page, page: Int, isLastPage: Bool, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, resourcesCache: ManifestResourcesCache, resource: ResourceModel, language: LanguageModel, pageViewFactories: MobileContentRendererPageViewFactories, primaryRendererLanguage: LanguageModel, rendererState: State, trainingTipsEnabled: Bool) {
+    required init(pageModel: Page, page: Int, isLastPage: Bool, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, resourcesCache: ManifestResourcesCache, resource: ResourceModel, language: LanguageModel, pageViewFactories: MobileContentRendererPageViewFactories, navigation: MobileContentRendererNavigation, primaryRendererLanguage: LanguageModel, rendererState: State, trainingTipsEnabled: Bool) {
         
         self.pageModel = pageModel
         self.page = page
@@ -38,6 +39,7 @@ class MobileContentRenderedPageContext {
         self.resource = resource
         self.language = language
         self.pageViewFactories = pageViewFactories
+        self.navigation = navigation
         self.primaryRendererLanguage = primaryRendererLanguage
         self.rendererState = rendererState
         self.trainingTipsEnabled = trainingTipsEnabled
