@@ -323,3 +323,6 @@ Press the About button on any tool for more info.";
 "toolSettings.chooseLanguage.title" = "Parallel Language";
 "toolSettings.chooseLanguage.noParallelLanguageTitle" = "Parallel";
 "toolSettings.shareables.title" = "Related graphics";
+
+// Tool Details
+"toolDetails.learnToShareToolButton.title" = "Learn to share this tool";

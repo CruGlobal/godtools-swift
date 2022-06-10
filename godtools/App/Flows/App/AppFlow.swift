@@ -654,6 +654,21 @@ extension AppFlow {
     
     private func navigateToToolDetail(resource: ResourceModel) {
         
+        let viewModel = ToolDetailsViewModel(
+            flowDelegate: self,
+            resource: resource,
+            dataDownloader: appDiContainer.initialDataDownloader,
+            languageSettingsService: appDiContainer.languageSettingsService,
+            localizationServices: appDiContainer.localizationServices,
+            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
+            analytics: appDiContainer.analytics,
+            getToolTranslationsUseCase: appDiContainer.getToolTranslationsUseCase(),
+            languagesRepository: appDiContainer.getLanguagesRepository()
+        )
+        
+        let view = ToolDetailsHostingView(view: ToolDetailsView(viewModel: viewModel))
+        
+        /*
         let viewModel = ToolDetailViewModel(
             flowDelegate: self,
             resource: resource,
@@ -665,7 +680,7 @@ extension AppFlow {
             mobileContentParser: appDiContainer.getMobileContentParser(),
             analytics: appDiContainer.analytics
         )
-        let view = ToolDetailView(viewModel: viewModel)
+        let view = ToolDetailView(viewModel: viewModel)*/
         
         navigationController.pushViewController(view, animated: true)
     }
