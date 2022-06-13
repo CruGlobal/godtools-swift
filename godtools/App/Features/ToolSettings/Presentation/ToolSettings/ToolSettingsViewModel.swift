@@ -34,6 +34,8 @@ class ToolSettingsViewModel: ObservableObject {
     @Published var primaryLanguageTitle: String = ""
     @Published var parallelLanguageTitle: String = ""
     @Published var hidesShareables: Bool = false
+    @Published var shareablesTitle: String = ""
+    @Published var numberOfShareableItems: Int = 0
         
     required init(flowDelegate: FlowDelegate, manifestResourcesCache: ManifestResourcesCache, localizationServices: LocalizationServices, primaryLanguageSubject: CurrentValueSubject<LanguageModel, Never>, parallelLanguageSubject: CurrentValueSubject<LanguageModel?, Never>, trainingTipsEnabled: Bool, shareables: [Shareable]) {
         
@@ -56,6 +58,8 @@ class ToolSettingsViewModel: ObservableObject {
         }
         chooseLanguageTitle = localizationServices.stringForMainBundle(key: "toolSettings.chooseLanguage.title")
         hidesShareables = shareables.isEmpty
+        shareablesTitle = localizationServices.stringForMainBundle(key: "toolSettings.shareables.title")
+        numberOfShareableItems = shareables.count
         
         primaryLanguageCancellable = primaryLanguageSubject.sink(receiveValue: { [weak self] (language: LanguageModel) in
             
@@ -90,21 +94,6 @@ class ToolSettingsViewModel: ObservableObject {
 
         return ToolSettingsTopBarViewModel(
             flowDelegate: flowDelegate,
-            localizationServices: localizationServices
-        )
-    }
-    
-    func getShareablesViewModel() -> BaseToolSettingsShareablesViewModel {
-        
-        guard let flowDelegate = flowDelegate else {
-            assertionFailure("Failed to instantiate viewModel, flowDelegate should not be nil.")
-            return BaseToolSettingsShareablesViewModel()
-        }
-        
-        return ToolSettingsShareablesViewModel(
-            flowDelegate: flowDelegate,
-            shareables: shareables,
-            manifestResourcesCache: manifestResourcesCache,
             localizationServices: localizationServices
         )
     }
@@ -145,5 +134,21 @@ class ToolSettingsViewModel: ObservableObject {
     func swapLanguageTapped() {
         
         flowDelegate?.navigate(step: .swapLanguagesTappedFromToolSettings)
+    }
+    
+    func getShareableItemViewModel(index: Int) -> ToolSettingsShareableItemViewModel {
+        
+        return ToolSettingsShareableItemViewModel(shareable: shareables[index], manifestResourcesCache: manifestResourcesCache)
+    }
+    
+    func shareableTapped(index: Int) {
+        
+        let shareable: Shareable = shareables[index]
+        
+        guard let shareableImage = shareable as? ShareableImage, let resource = shareableImage.resource, let imageToShare = manifestResourcesCache.getImageFromManifestResources(resource: resource) else {
+            return
+        }
+        
+        flowDelegate?.navigate(step: .shareableTappedFromToolSettings(shareable: shareable, shareImage: imageToShare))
     }
 }
