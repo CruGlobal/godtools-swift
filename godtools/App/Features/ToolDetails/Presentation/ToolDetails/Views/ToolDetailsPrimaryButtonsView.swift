@@ -10,23 +10,14 @@ import SwiftUI
 
 struct ToolDetailsPrimaryButtonsView: View {
     
-    private let primaryButtonWidth: CGFloat
     private let primaryButtonHeight: CGFloat = 55
     private let primaryButtonCornerRadius: CGFloat = 8
+    private let addToFavoritesButtonColor: Color = ColorPalette.gtBlue.color
     private let removeFromFavoritesButtonColor: Color = Color(.sRGB, red: 229 / 255, green: 91 / 255, blue: 54 / 255, opacity: 1.0)
     
     @ObservedObject var viewModel: ToolDetailsViewModel
-    
-    let contentInsets: EdgeInsets
-    let geometry: GeometryProxy
-    
-    init(viewModel: ToolDetailsViewModel, contentInsets: EdgeInsets, geometry: GeometryProxy) {
-        
-        self.viewModel = viewModel
-        self.primaryButtonWidth = geometry.size.width - contentInsets.leading - contentInsets.trailing
-        self.contentInsets = contentInsets
-        self.geometry = geometry
-    }
+       
+    let primaryButtonWidth: CGFloat
     
     var body: some View {
         
@@ -64,14 +55,15 @@ struct ToolDetailsPrimaryButtonsView: View {
                     HStack(alignment: .center, spacing: 8) {
                         Image(ImageCatalog.favoriteIcon.name)
                         Text(viewModel.addToFavoritesButtonTitle)
-                            .foregroundColor(ColorPalette.gtBlue.color)
+                            .foregroundColor(addToFavoritesButtonColor)
                     }
                 }
                 .frame(width: primaryButtonWidth, height: primaryButtonHeight, alignment: .center)
                 .background(Color.white)
+                .accentColor(addToFavoritesButtonColor)
                 .overlay(
                         RoundedRectangle(cornerRadius: primaryButtonCornerRadius)
-                            .stroke(ColorPalette.gtBlue.color, lineWidth: 1)
+                            .stroke(addToFavoritesButtonColor, lineWidth: 1)
                     )
             }
             
@@ -89,12 +81,12 @@ struct ToolDetailsPrimaryButtonsView: View {
                 }
                 .frame(width: primaryButtonWidth, height: primaryButtonHeight, alignment: .center)
                 .background(Color.white)
+                .accentColor(removeFromFavoritesButtonColor)
                 .overlay(
                         RoundedRectangle(cornerRadius: primaryButtonCornerRadius)
                             .stroke(removeFromFavoritesButtonColor, lineWidth: 1)
                     )
             }
         }
-        .padding(EdgeInsets(top: 0, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))
     }
 }

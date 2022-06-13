@@ -32,6 +32,8 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
     @Published var hidesLearnToShareToolButton: Bool = true
     @Published var hidesAddToFavoritesButton: Bool = false
     @Published var hidesRemoveFromFavoritesButton: Bool = true
+    @Published var aboutTitle: String = ""
+    @Published var versionsTitle: String = ""
     @Published var aboutDetails: String = ""
     
     init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, analytics: AnalyticsContainer, getToolTranslationsUseCase: GetToolTranslationsUseCase, languagesRepository: LanguagesRepository) {
@@ -197,39 +199,16 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
             aboutDetailsValue = resource.resourceDescription
             languageBundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
         }
-        
-        let languages: [LanguageModel] =  dataDownloader.resourcesCache.getResourceLanguages(resourceId: resource.id)
-        let languageNames: [String] = languages.map({LanguageViewModel(language: $0, localizationServices: localizationServices).translatedLanguageName})
-        let sortedLanguageNames: [String] = languageNames.sorted(by: { $0 < $1 })
-        let languageDetailsValue: String = sortedLanguageNames.joined(separator: ", ")
-        
-        let numberOfLanguages: Int = languages.count
-        
+                
         name = nameValue
         totalViews = String.localizedStringWithFormat(localizationServices.stringForBundle(bundle: languageBundle, key: "total_views"), resource.totalViews)
         openToolButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "toolinfo_opentool")
         learnToShareToolButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "toolDetails.learnToShareToolButton.title")
         addToFavoritesButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "add_to_favorites")
         removeFromFavoritesButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "remove_from_favorites")
+        aboutTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "about")
+        versionsTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "toolDetails.versions.title")
         aboutDetails = aboutDetailsValue
-        
-        // tool details
-        let aboutDetailsControl = ToolDetailControl(
-            id: "about",
-            title: localizationServices.stringForBundle(bundle: languageBundle, key: "about"),
-            controlId: .about
-        )
-        
-        let languageDetailsControl = ToolDetailControl(
-            id: "language",
-            title: String.localizedStringWithFormat(localizationServices.stringForBundle(bundle: languageBundle, key: "total_languages"), numberOfLanguages),
-            controlId: .languages
-        )
-        
-        //toolDetailsControls.accept(value: [aboutDetailsControl, languageDetailsControl])
-        //selectedDetailControl.accept(value: aboutDetailsControl)
-        
-        //languageDetails.accept(value: languageDetailsValue)
     }
     
     func pageViewed() {
@@ -257,5 +236,17 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
     func removeFromFavoritesTapped() {
        
         favoritedResourcesCache.removeFromFavorites(resourceId: resource.id)
+    }
+    
+    func urlTapped(url: URL) {
+                
+        let exitLink = ExitLinkModel(
+            screenName: analyticsScreenName,
+            siteSection: siteSection,
+            siteSubSection: siteSubSection,
+            url: url.absoluteString
+        )
+        
+        flowDelegate?.navigate(step: .urlLinkTappedFromToolDetail(url: url, exitLink: exitLink))
     }
 }

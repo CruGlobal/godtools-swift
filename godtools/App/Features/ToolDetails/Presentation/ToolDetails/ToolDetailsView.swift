@@ -12,6 +12,8 @@ struct ToolDetailsView: View {
     
     private let contentInsets: EdgeInsets = EdgeInsets(top: 0, leading: 40, bottom: 0, trailing: 40)
     
+    @State private var selectedSegmentIndex: Int? = 0
+    
     @ObservedObject var viewModel: ToolDetailsViewModel
     
     var body: some View {
@@ -20,15 +22,28 @@ struct ToolDetailsView: View {
             
             VStack(alignment: .leading, spacing: 0) {
                 
-                ToolDetailsMediaView(viewModel: viewModel, geometry: geometry)
+                ToolDetailsMediaView(viewModel: viewModel, width: geometry.size.width)
                 
-                ToolDetailsTitleHeaderView(viewModel: viewModel)
-                    .padding(EdgeInsets(top: 40, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))
-                
-                ToolDetailsPrimaryButtonsView(viewModel: viewModel, contentInsets: contentInsets, geometry: geometry)
-                    .padding(EdgeInsets(top: 16, leading: 0, bottom: 0, trailing: 0))
-                
-                ToolDetailsSectionsHeaderView(geometry: geometry)
+                ScrollView(.vertical, showsIndicators: true) {
+                    
+                    ToolDetailsTitleHeaderView(viewModel: viewModel)
+                        .padding(EdgeInsets(top: 40, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))
+                    
+                    ToolDetailsPrimaryButtonsView(viewModel: viewModel, primaryButtonWidth: geometry.size.width - contentInsets.leading - contentInsets.trailing)
+                        .padding(EdgeInsets(top: 16, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))                    
+                                        
+                    SegmentControl(selectedIndex: $selectedSegmentIndex, segments: [viewModel.aboutTitle, viewModel.versionsTitle], segmentTappedClosure: { (index: Int) in
+                                                
+                    })
+                    .padding(EdgeInsets(top: 50, leading: 0, bottom: 0, trailing: 0))
+                    
+                    Rectangle()
+                        .frame(width: geometry.size.width, height: 20)
+                        .foregroundColor(.clear)
+                                        
+                    ToolDetailsAboutView(viewModel: viewModel, width: geometry.size.width - contentInsets.leading - contentInsets.trailing)
+                        .padding(EdgeInsets(top: 0, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))
+                }
             }
         }
         .onAppear {

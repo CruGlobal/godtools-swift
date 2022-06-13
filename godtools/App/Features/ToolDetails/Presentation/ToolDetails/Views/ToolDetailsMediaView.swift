@@ -14,16 +14,13 @@ struct ToolDetailsMediaView: View {
     private let mediaViewSize: CGSize
     
     @ObservedObject var viewModel: ToolDetailsViewModel
-    
-    let geometry: GeometryProxy
-    
-    init(viewModel: ToolDetailsViewModel, geometry: GeometryProxy) {
         
-        let mediaWidth: CGFloat = geometry.size.width
+    init(viewModel: ToolDetailsViewModel, width: CGFloat) {
+        
+        let mediaWidth: CGFloat = width
         let mediaHeight: CGFloat = floor((mediaWidth / aspectRatio.width) * aspectRatio.height)
         
         self.viewModel = viewModel
-        self.geometry = geometry
         self.mediaViewSize = CGSize(width: mediaWidth, height: mediaHeight)
     }
     

@@ -17,11 +17,3 @@ struct ToolDetailsVersionsView: View {
         }
     }
 }
-
-struct ToolDetailsVersionsView_Preview: PreviewProvider {
-    
-    static var previews: some View {
-                
-        ToolDetailsVersionsView()
-    }
-}

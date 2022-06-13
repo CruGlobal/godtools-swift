@@ -326,3 +326,4 @@ Press the About button on any tool for more info.";
 
 // Tool Details
 "toolDetails.learnToShareToolButton.title" = "Learn to share this tool";
+"toolDetails.versions.title" = "Versions";

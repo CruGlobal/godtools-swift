@@ -9,19 +9,22 @@
 import SwiftUI
 
 struct ToolDetailsAboutView: View {
-        
+           
+    @ObservedObject var viewModel: ToolDetailsViewModel
+    
+    let width: CGFloat
+    
     var body: some View {
         
-        VStack(alignment: .leading, spacing: 0) {
-            
-        }
-    }
-}
-
-struct ToolDetailsAboutView_Preview: PreviewProvider {
-    
-    static var previews: some View {
-                
-        ToolDetailsAboutView()
+        TextWithLinks(
+            text: viewModel.aboutDetails,
+            textColor: ColorPalette.primaryTextColor.uiColor,
+            font: FontLibrary.sfProTextRegular.uiFont(size: 16),
+            lineSpacing: 3,
+            width: width,
+            didInteractWithUrlClosure: { (url: URL) in
+                viewModel.urlTapped(url: url)
+            }
+        )
     }
 }
