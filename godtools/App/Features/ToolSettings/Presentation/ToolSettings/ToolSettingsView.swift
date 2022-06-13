@@ -32,7 +32,7 @@ struct ToolSettingsView: View {
                     VStack {
                         
                         ToolSettingsOptionsView(
-                            viewModel: viewModel.getOptionsViewModel(),
+                            viewModel: viewModel,
                             leadingInset: contentInsets.leading,
                             trailingInset: contentInsets.trailing
                         )
