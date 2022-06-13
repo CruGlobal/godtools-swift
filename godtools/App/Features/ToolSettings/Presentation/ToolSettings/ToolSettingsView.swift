@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ToolSettingsView: View {
     
-    @ObservedObject var viewModel: BaseToolSettingsViewModel
+    @ObservedObject var viewModel: ToolSettingsViewModel
     
     private let contentInsets: EdgeInsets = EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 20)
     private let separatorLineSpacing: CGFloat = 25
@@ -44,7 +44,7 @@ struct ToolSettingsView: View {
                         )
                         
                         ToolSettingsChooseLanguageView(
-                            viewModel: viewModel.getChooseLanguageViewModel(),
+                            viewModel: viewModel,
                             geometryProxy: geometry,
                             leadingInset: contentInsets.leading,
                             trailingInset: contentInsets.trailing,
@@ -77,13 +77,5 @@ struct ToolSettingsView: View {
         .padding(EdgeInsets(top: contentInsets.top, leading: 0, bottom: 0, trailing: 0))
         .background(Color.white)
         .cornerRadius(12)
-    }
-}
-
-struct ToolSettingsView_Preview: PreviewProvider {
-    
-    static var previews: some View {
-        
-        ToolSettingsView(viewModel: BaseToolSettingsViewModel())
     }
 }
