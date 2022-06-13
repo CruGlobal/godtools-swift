@@ -23,6 +23,8 @@ struct ToolCategoryButtonView: View {
             Text(viewModel.categoryText)
                 .foregroundColor(viewModel.greyOutText ? Color.gray : ColorPalette.gtGrey.color)
                 .font(FontLibrary.sfProTextBold.font(size: 18))
+                .lineLimit(2)
+                .minimumScaleFactor(0.5)
                 .fixedSize(horizontal: false, vertical: true)
                 .padding([.leading, .trailing], 20)
                 .padding([.top, .bottom], 15)

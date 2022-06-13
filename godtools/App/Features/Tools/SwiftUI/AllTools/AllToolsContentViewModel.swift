@@ -104,7 +104,6 @@ extension AllToolsContentViewModel {
                 languageSettingsService: languageSettingsService,
                 localizationServices: localizationServices,
                 favoritedResourcesCache: favoritedResourcesCache,
-                analytics: analytics,
                 delegate: self
             )
             

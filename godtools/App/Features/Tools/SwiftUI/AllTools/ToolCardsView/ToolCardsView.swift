@@ -48,7 +48,6 @@ struct ToolCardsView_Previews: PreviewProvider {
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
-            analytics: appDiContainer.analytics,
             delegate: nil
         )
         

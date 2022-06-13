@@ -17,13 +17,11 @@ class ToolCardsViewModel: NSObject, ObservableObject {
     
     // MARK: - Properties
     
-    private weak var flowDelegate: FlowDelegate?
     private let dataDownloader: InitialDataDownloader
     private let deviceAttachmentBanners: DeviceAttachmentBanners
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
     private let favoritedResourcesCache: FavoritedResourcesCache
-    private let analytics: AnalyticsContainer
     private weak var delegate: ToolCardsViewModelDelegate?
     
     private var categoryFilterValue: String?
@@ -34,18 +32,22 @@ class ToolCardsViewModel: NSObject, ObservableObject {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, analytics: AnalyticsContainer, delegate: ToolCardsViewModelDelegate?) {
+    init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, delegate: ToolCardsViewModelDelegate?) {
         self.dataDownloader = dataDownloader
         self.deviceAttachmentBanners = deviceAttachmentBanners
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
         self.favoritedResourcesCache = favoritedResourcesCache
-        self.analytics = analytics
         self.delegate = delegate
         
         super.init()
         
         setupBinding()
+    }
+    
+    deinit {
+        dataDownloader.cachedResourcesAvailable.removeObserver(self)
+        dataDownloader.resourcesUpdatedFromRemoteDatabase.removeObserver(self)
     }
     
 }
@@ -77,8 +79,11 @@ extension ToolCardsViewModel {
     }
     
     private func reloadResourcesFromCache() {
-        let categoryFilter: ResourceFilter? = categoryFilterValue == nil ? nil : { $0.attrCategory == self.categoryFilterValue }
-        tools = dataDownloader.resourcesCache.getAllVisibleToolsSorted(andFilteredBy: categoryFilter)
+        if let categoryFilterValue = categoryFilterValue {
+            tools = dataDownloader.resourcesCache.getAllVisibleToolsSorted(andFilteredBy: { $0.attrCategory == categoryFilterValue })
+        } else {
+            tools = dataDownloader.resourcesCache.getAllVisibleToolsSorted()
+        }
         
         self.delegate?.toolsAreLoading(false)
     }
@@ -105,25 +110,5 @@ extension ToolCardsViewModel {
     func filterTools(with attrCategory: String?) {
         categoryFilterValue = attrCategory
         reloadResourcesFromCache()
-    }
-}
-
-// MARK: - Analytics
-
-extension ToolCardsViewModel {
-    var analyticsScreenName: String {
-        return "All Tools"
-    }
-    
-    private var analyticsSiteSection: String {
-        return "home"
-    }
-    
-    private var analyticsSiteSubSection: String {
-        return ""
-    }
-    
-    private func trackToolTappedAnalytics() {
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.ActionNames.toolOpenTapped, siteSection: "", siteSubSection: "", url: nil, data: [AnalyticsConstants.Keys.toolOpenTapped: 1]))
     }
 }
