@@ -22,7 +22,7 @@ struct ToolSettingsView: View {
             VStack {
                 
                 ToolSettingsTopBarView(
-                    viewModel: viewModel.getTopBarViewModel(),
+                    viewModel: viewModel,
                     primaryTextColor: primaryTextColor,
                     leadingInset: contentInsets.leading,
                     trailingInset: contentInsets.trailing

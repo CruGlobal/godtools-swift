@@ -26,6 +26,7 @@ class ToolSettingsViewModel: ObservableObject {
     
     private weak var flowDelegate: FlowDelegate?
     
+    @Published var title: String = ""
     @Published var shareLinkTitle: String = ""
     @Published var screenShareTitle: String = ""
     @Published var trainingTipsIcon: SwiftUI.Image = Image("")
@@ -47,6 +48,7 @@ class ToolSettingsViewModel: ObservableObject {
         self.trainingTipsEnabled = trainingTipsEnabled
         self.shareables = shareables
         
+        title = localizationServices.stringForMainBundle(key: "toolSettings.title")
         shareLinkTitle = localizationServices.stringForMainBundle(key: "toolSettings.option.shareLink.title")
         screenShareTitle = localizationServices.stringForMainBundle(key: "toolSettings.option.screenShare.title")
         
@@ -85,21 +87,12 @@ class ToolSettingsViewModel: ObservableObject {
         })
     }
     
-    func getTopBarViewModel() -> BaseToolSettingsTopBarViewModel {
-        
-        guard let flowDelegate = flowDelegate else {
-            assertionFailure("Failed to instantiate viewModel, flowDelegate should not be nil.")
-            return BaseToolSettingsTopBarViewModel()
-        }
-
-        return ToolSettingsTopBarViewModel(
-            flowDelegate: flowDelegate,
-            localizationServices: localizationServices
-        )
-    }
-    
     private func getTranslatedLanguageName(language: LanguageModel) -> String {
         return LanguageViewModel(language: language, localizationServices: localizationServices).translatedLanguageName
+    }
+    
+    func closeTapped() {
+        flowDelegate?.navigate(step: .closeTappedFromToolSettings)
     }
     
     func shareLinkTapped() {
