@@ -60,9 +60,7 @@ extension ToolCategoriesViewModel {
             selectedCategory = category
         }
         
-        for buttonViewModel in buttonViewModels {
-            buttonViewModel.updateStateWithSelectedCategory(selectedCategory)
-        }
+        buttonViewModels.forEach { $0.updateStateWithSelectedCategory(selectedCategory) }
         
         delegate?.filterToolsWithCategory(selectedCategory)
     }
@@ -105,27 +103,18 @@ extension ToolCategoriesViewModel {
             .sortedByPrimaryLanguageAvailable(languageSettingsService: languageSettingsService, dataDownloader: dataDownloader)
         
         var uniqueCategories = [String]()
-        let toolsWithDuplicateCategoriesRemoved = sortedTools
-            .filter({ tool in
-                let category = tool.attrCategory
-                
-                if uniqueCategories.contains(category) {
-                    return false
-                    
-                } else {
-                    uniqueCategories.append(category)
-                    return true
-                }
-            })
-        
-        
-        let categoryButtonViewModels: [ToolCategoryButtonViewModel] = toolsWithDuplicateCategoriesRemoved
-            .map { resource in
-                
-                return ToolCategoryButtonViewModel(attrCategory: resource.attrCategory, selectedAttrCategory: selectedCategory, localizationServices: localizationServices, languageSettingsService: languageSettingsService)
+        sortedTools.forEach { tool in
+            let category = tool.attrCategory
+            
+            if uniqueCategories.contains(category) == false {
+                uniqueCategories.append(category)
             }
+        }
         
-        buttonViewModels = categoryButtonViewModels
+        buttonViewModels = uniqueCategories.map { category in
+                
+            return ToolCategoryButtonViewModel(attrCategory: category, selectedAttrCategory: selectedCategory, localizationServices: localizationServices, languageSettingsService: languageSettingsService)
+        }
     }
     
     private func setTitleText() {
