@@ -101,7 +101,7 @@ extension ToolCategoriesViewModel {
         
     private func reloadAvailableCategoriesFromCache() {
         let sortedTools = dataDownloader.resourcesCache
-            .getAllVisibleToolsSorted()
+            .getAllVisibleTools()
             .sortedByPrimaryLanguageAvailable(languageSettingsService: languageSettingsService, dataDownloader: dataDownloader)
         
         var uniqueCategories = [String]()

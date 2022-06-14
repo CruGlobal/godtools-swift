@@ -11,23 +11,33 @@ import Foundation
 extension Array where Element == ResourceModel {
     
     func sortedByPrimaryLanguageAvailable(languageSettingsService: LanguageSettingsService, dataDownloader: InitialDataDownloader) -> [ResourceModel] {
+        guard let primaryLanguageId = languageSettingsService.primaryLanguage.value?.id else { return self }
         
         return self.sorted(by: { resource1, resource2 in
+                        
+            func resourceHasTranslation(_ resource: ResourceModel) -> Bool {
+                return dataDownloader.resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageId: primaryLanguageId) != nil
+            }
             
-            guard let primaryLanguageId = languageSettingsService.primaryLanguage.value?.id else { return true }
-            let resourcesCache = dataDownloader.resourcesCache
+            func isSortedByDefaultOrder() -> Bool {
+                return resource1.attrDefaultOrder < resource2.attrDefaultOrder
+            }
             
-            let resource1HasTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource1.id, languageId: primaryLanguageId) != nil
-            let resource2HasTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource2.id, languageId: primaryLanguageId) != nil
+            if resourceHasTranslation(resource1) {
                 
-            if resource1HasTranslation {
-                return true
+                if resourceHasTranslation(resource2) {
+                    return isSortedByDefaultOrder()
+                    
+                } else {
+                    return true
+                }
                 
-            } else if resource2HasTranslation {
+            } else if resourceHasTranslation(resource2) {
+
                 return false
                 
             } else {
-                return true
+                return isSortedByDefaultOrder()
             }
         })
     }
