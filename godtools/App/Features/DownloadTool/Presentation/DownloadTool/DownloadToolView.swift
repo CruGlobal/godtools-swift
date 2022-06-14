@@ -78,7 +78,11 @@ class DownloadToolView: UIViewController {
         }
     }
     
-    @objc func handleClose(barButtonItem: UIBarButtonItem) {
+    @objc private func handleClose(barButtonItem: UIBarButtonItem) {
         viewModel.closeTapped()
+    }
+    
+    func completeDownloadProgress(didCompleteDownload: @escaping (() -> Void)) {
+        viewModel.completeDownloadProgress(didCompleteDownload: didCompleteDownload)
     }
 }

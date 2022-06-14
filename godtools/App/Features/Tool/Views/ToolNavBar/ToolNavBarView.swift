@@ -26,21 +26,25 @@ class ToolNavBarView: NSObject {
     
     private var viewModel: ToolNavBarViewModelType?
     private var remoteShareActiveNavItem: UIBarButtonItem?
-    private var isConfigured: Bool = false
     
     private weak var parentViewController: UIViewController?
     private weak var delegate: ToolNavBarViewDelegate?
     
     override init() {
         super.init()
+        
+        chooseLanguageControl.addTarget(
+            self,
+            action: #selector(didChooseLanguage(segmentedControl:)),
+            for: .valueChanged
+        )
     }
     
     func configure(parentViewController: UIViewController, viewModel: ToolNavBarViewModelType, delegate: ToolNavBarViewDelegate) {
         
-        guard !isConfigured else {
-            return
+        if let currentViewModel = self.viewModel {
+            removeBinding(viewModel: currentViewModel)
         }
-        isConfigured = true
         
         self.parentViewController = parentViewController
         self.viewModel = viewModel
@@ -70,8 +74,6 @@ class ToolNavBarView: NSObject {
         chooseLanguageControl.removeAllSegments()
         
         remoteShareActiveNavItem = nil
-        
-        parentViewController.title = viewModel.navTitle
         
         navigationController?.navigationBar.setupNavigationBarAppearance(
             backgroundColor: navBarColor,
@@ -123,18 +125,23 @@ class ToolNavBarView: NSObject {
             chooseLanguageControl.setTitleTextAttributes([.font: font, .foregroundColor: navBarControlColor], for: .normal)
             chooseLanguageControl.setTitleTextAttributes([.font: font, .foregroundColor: navBarColor.withAlphaComponent(1)], for: .selected)
             
+            parentViewController.title = nil
             parentViewController.navigationItem.titleView = chooseLanguageControl
-                        
-            chooseLanguageControl.addTarget(
-                self,
-                action: #selector(didChooseLanguage(segmentedControl:)),
-                for: .valueChanged
-            )
+        }
+        else {
+            
+            parentViewController.navigationItem.titleView = nil
+            parentViewController.title = viewModel.navTitle
         }
         
         setRemoteShareActiveNavItem(hidden: !viewModel.remoteShareIsActive.value)
         
         chooseLanguageControl.selectedSegmentIndex = viewModel.selectedLanguage.value
+    }
+    
+    private func removeBinding(viewModel: ToolNavBarViewModelType) {
+        viewModel.remoteShareIsActive.removeObserver(self)
+        viewModel.selectedLanguage.removeObserver(self)
     }
     
     private func setupBinding(viewModel: ToolNavBarViewModelType) {

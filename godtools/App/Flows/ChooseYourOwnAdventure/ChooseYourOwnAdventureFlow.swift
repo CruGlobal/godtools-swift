@@ -9,47 +9,38 @@
 import UIKit
 import GodToolsToolParser
 
-class ChooseYourOwnAdventureFlow: Flow {
-    
-    private let deepLinkingService: DeepLinkingServiceType
-    
+class ChooseYourOwnAdventureFlow: ToolNavigationFlow {
+        
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, resource: ResourceModel, primaryLanguage: LanguageModel, primaryLanguageManifest: Manifest, parallelLanguage: LanguageModel?, parallelLanguageManifest: Manifest?) {
+    var articleFlow: ArticleFlow?
+    var chooseYourOwnAdventureFlow: ChooseYourOwnAdventureFlow?
+    var lessonFlow: LessonFlow?
+    var tractFlow: TractFlow?
+    var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
+    
+    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, toolTranslations: ToolTranslations) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
-        self.deepLinkingService = appDiContainer.getDeepLinkingService()
-            
-        var languageTranslationManifests: [MobileContentRendererLanguageTranslationManifest] = Array()
-        
-        let primaryLanguageTranslationManifest = MobileContentRendererLanguageTranslationManifest(
-            manifest: primaryLanguageManifest,
-            language: primaryLanguage
+                 
+        let navigation: MobileContentRendererNavigation = appDiContainer.getMobileContentRendererNavigation(
+            parentFlow: self,
+            navigationDelegate: self
         )
         
-        languageTranslationManifests.append(primaryLanguageTranslationManifest)
-        
-        if let manifest = parallelLanguageManifest, let language = parallelLanguage {
-            languageTranslationManifests.append(MobileContentRendererLanguageTranslationManifest(manifest: manifest, language: language))
-        }
-        
         let renderer: MobileContentRenderer = appDiContainer.getMobileContentRenderer(
-            flowDelegate: self,
-            deepLinkingService: deepLinkingService,
             type: .chooseYourOwnAdventure,
-            resource: resource,
-            primaryLanguage: primaryLanguage,
-            languageTranslationManifests: languageTranslationManifests
+            navigation: navigation,
+            toolTranslations: toolTranslations
         )
         
         let viewModel = ChooseYourOwnAdventureViewModel(
             flowDelegate: self,
-            primaryManifest: primaryLanguageManifest,
             renderer: renderer,
             page: nil,
             mobileContentEventAnalytics: appDiContainer.getMobileContentEventAnalyticsTracking(),
@@ -71,11 +62,25 @@ class ChooseYourOwnAdventureFlow: Flow {
         
         switch step {
         case .backTappedFromChooseYourOwnAdventure:
-            
-            flowDelegate?.navigate(step: .chooseYourOwnAdventureFlowCompleted(state: .userClosedTool))
+            closeTool()
             
         default:
             break
         }
+    }
+    
+    private func closeTool() {
+        flowDelegate?.navigate(step: .chooseYourOwnAdventureFlowCompleted(state: .userClosedTool))
+    }
+}
+
+extension ChooseYourOwnAdventureFlow: MobileContentRendererNavigationDelegate {
+    
+    func mobileContentRendererNavigationDismissRenderer(navigation: MobileContentRendererNavigation, event: DismissToolEvent) {
+        closeTool()
+    }
+    
+    func mobileContentRendererNavigationDeepLink(navigation: MobileContentRendererNavigation, deepLink: MobileContentRendererNavigationDeepLinkType) {
+        
     }
 }

@@ -21,6 +21,7 @@ protocol ToolNavBarViewModelType {
     var selectedLanguage: ObservableValue<Int> { get }
     var languageControlFont: UIFont { get }
     var language: LanguageModel { get }
+    var languages: [LanguageModel] { get }
     
     func languageSegmentWillAppear(index: Int) -> ToolLanguageSegmentViewModel
     func languageTapped(index: Int)

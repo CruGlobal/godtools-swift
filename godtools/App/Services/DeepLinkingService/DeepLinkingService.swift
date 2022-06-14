@@ -20,9 +20,9 @@ class DeepLinkingService: NSObject, DeepLinkingServiceType {
         
         super.init()
     }
-     
-    func parseDeepLinkAndNotify(incomingDeepLink: IncomingDeepLinkType) -> Bool {
-        
+    
+    func parseDeepLink(incomingDeepLink: IncomingDeepLinkType) -> ParsedDeepLinkType? {
+       
         for parserManifest in manifest.parserManifests {
             
             guard let parser = parserManifest.getParserIfValidIncomingDeepLink(incomingDeepLink: incomingDeepLink) else {
@@ -54,10 +54,20 @@ class DeepLinkingService: NSObject, DeepLinkingServiceType {
                 continue
             }
             
-            deepLinkObserver.accept(value: deepLink)
-            return true
+            return deepLink
         }
         
-        return false
+        return nil
+    }
+     
+    func parseDeepLinkAndNotify(incomingDeepLink: IncomingDeepLinkType) -> Bool {
+        
+        guard let parsedDeepLink = parseDeepLink(incomingDeepLink: incomingDeepLink) else {
+            return false
+        }
+        
+        deepLinkObserver.accept(value: parsedDeepLink)
+        
+        return true
     }
 }

@@ -10,7 +10,7 @@ import SwiftUI
 
 struct LanguagesListView: View {
         
-    @ObservedObject var viewModel: LanguagesListViewModel
+    @ObservedObject var viewModel: BaseLanguagesListViewModel
     
     var body: some View {
         
@@ -26,6 +26,16 @@ struct LanguagesListView: View {
             
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 0) {
+                    
+                    if let deleteItemViewModel = viewModel.getDeleteLanguageListItemViewModel() {
+                        
+                        let itemView = LanguagesListItemView(viewModel: deleteItemViewModel)
+                        
+                        itemView
+                            .onTapGesture {
+                                viewModel.deleteTapped()
+                            }
+                    }
                     
                     ForEach(viewModel.languages) { language in
                         
@@ -52,11 +62,9 @@ struct LanguagesListView_Preview: PreviewProvider {
             ToolLanguageModel(id: "es", name: "Spanish")
         ]
         
-        let viewModel = LanguagesListViewModel(languages: languages, closeTappedClosure: {
-            
-        }, languageTappedClosure: { language in
-            
-        })
+        let selectedLanguageId = "en"
+        
+        let viewModel = MockLanguagesListViewModel(languages: languages, selectedLanguageId: selectedLanguageId)
         
         return LanguagesListView(viewModel: viewModel)
     }

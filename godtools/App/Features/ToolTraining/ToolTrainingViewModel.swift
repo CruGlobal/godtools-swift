@@ -18,11 +18,10 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     private let analytics: AnalyticsContainer
     private let localizationServices: LocalizationServices
     private let viewedTrainingTips: ViewedTrainingTipsService
+    private let closeTappedClosure: (() -> Void)
     
     private var page: Int = 0
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     let progress: ObservableValue<AnimatableValue<CGFloat>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
     let trainingTipBackgroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     let trainingTipForegroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
@@ -30,9 +29,8 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     let continueButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     let numberOfTipPages: ObservableValue<Int> = ObservableValue(value: 0)
     
-    required init(flowDelegate: FlowDelegate, pageRenderer: MobileContentPageRenderer, renderedPageContext: MobileContentRenderedPageContext, trainingTipId: String, tipModel: Tip, analytics: AnalyticsContainer, localizationServices: LocalizationServices, viewedTrainingTips: ViewedTrainingTipsService) {
+    required init(pageRenderer: MobileContentPageRenderer, renderedPageContext: MobileContentRenderedPageContext, trainingTipId: String, tipModel: Tip, analytics: AnalyticsContainer, localizationServices: LocalizationServices, viewedTrainingTips: ViewedTrainingTipsService, closeTappedClosure: @escaping (() -> Void)) {
         
-        self.flowDelegate = flowDelegate
         self.renderedPageContext = renderedPageContext
         self.pageRenderer = pageRenderer
         self.trainingTipId = trainingTipId
@@ -40,6 +38,7 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
         self.analytics = analytics
         self.localizationServices = localizationServices
         self.viewedTrainingTips = viewedTrainingTips
+        self.closeTappedClosure = closeTappedClosure
         
         super.init()
         
@@ -134,11 +133,11 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     }
     
     func overlayTapped() {
-        flowDelegate?.navigate(step: .closeTappedFromToolTraining)
+        closeTappedClosure()
     }
     
     func closeTapped() {
-        flowDelegate?.navigate(step: .closeTappedFromToolTraining)
+        closeTappedClosure()
     }
     
     func continueTapped() {
@@ -147,7 +146,7 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
         let reachedEnd: Bool = nextPage >= numberOfTipPages.value
         
         if reachedEnd {
-            flowDelegate?.navigate(step: .closeTappedFromToolTraining)
+            closeTappedClosure()
         }
     }
     
@@ -160,7 +159,7 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
             url: url
         )
         
-        flowDelegate?.navigate(step: .buttonWithUrlTappedFromMobileContentRenderer(url: url, exitLink: exitLink))
+        renderedPageContext.navigation.buttonWithUrlTapped(url: url, exitLink: exitLink)
     }
     
     func tipPageWillAppear(page: Int, window: UIViewController, safeArea: UIEdgeInsets) -> MobileContentView? {

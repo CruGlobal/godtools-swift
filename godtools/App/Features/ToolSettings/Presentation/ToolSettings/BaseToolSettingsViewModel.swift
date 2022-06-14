@@ -10,6 +10,8 @@ import Foundation
 
 class BaseToolSettingsViewModel: ObservableObject {
     
+    @Published var hidesShareables: Bool = false
+    
     init() {}
     
     func getTopBarViewModel() -> BaseToolSettingsTopBarViewModel {

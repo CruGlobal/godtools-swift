@@ -8,31 +8,55 @@
 
 import Foundation
 
-class LanguagesListViewModel: ObservableObject {
+class LanguagesListViewModel: BaseLanguagesListViewModel {
     
-    @Published var languages: [ToolLanguageModel] = Array()
-    
-    let closeTappedClosure: (() -> Void)
-    let languageTappedClosure: ((_ language: ToolLanguageModel) -> Void)
+    private let selectedLanguageId: String?
+    private let localizationServices: LocalizationServices
+    private let closeTappedClosure: (() -> Void)
+    private let languageTappedClosure: ((_ language: ToolLanguageModel) -> Void)
+    private let deleteTappedClosure: (() -> Void)?
         
-    required init(languages: [ToolLanguageModel], closeTappedClosure: @escaping (() -> Void), languageTappedClosure: @escaping ((_ language: ToolLanguageModel) -> Void)) {
+    required init(languages: [ToolLanguageModel], selectedLanguageId: String?, localizationServices: LocalizationServices, closeTappedClosure: @escaping (() -> Void), languageTappedClosure: @escaping ((_ language: ToolLanguageModel) -> Void), deleteTappedClosure: (() -> Void)?) {
         
-        self.languages = languages
+        self.selectedLanguageId = selectedLanguageId
+        self.localizationServices = localizationServices
         self.closeTappedClosure = closeTappedClosure
         self.languageTappedClosure = languageTappedClosure
+        self.deleteTappedClosure = deleteTappedClosure
+        
+        super.init()
+        
+        self.languages = languages
     }
     
-    func getLanguagesListItemViewModel(language: ToolLanguageModel) -> LanguagesListItemViewModel {
-        return LanguagesListItemViewModel(language: language)
+    private var hidesDeleteOption: Bool {
+        return deleteTappedClosure == nil
     }
     
-    func closeTapped() {
+    override func getDeleteLanguageListItemViewModel() -> DeleteLanguageListItemViewModel? {
+        guard !hidesDeleteOption else {
+            return nil
+        }
+        
+        return DeleteLanguageListItemViewModel(localizationServices: localizationServices)
+    }
+    
+    override func getLanguagesListItemViewModel(language: ToolLanguageModel) -> BaseLanguagesListItemViewModel {
+        return LanguagesListItemViewModel(language: language, selectedLanguageId: selectedLanguageId)
+    }
+    
+    override func closeTapped() {
             
         closeTappedClosure()
     }
     
-    func languageTapped(language: ToolLanguageModel) {
+    override func languageTapped(language: ToolLanguageModel) {
             
         languageTappedClosure(language)
+    }
+    
+    override func deleteTapped() {
+        
+        deleteTappedClosure?()
     }
 }

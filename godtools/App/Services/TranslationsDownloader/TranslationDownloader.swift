@@ -52,7 +52,7 @@ class TranslationDownloader: NSObject {
     
     func fetchTranslationManifestAndDownloadIfNeeded(translationId: String, cache: @escaping ((_ translationManifest: TranslationManifestData) -> Void), downloadStarted: @escaping (() -> Void), downloadComplete: @escaping ((_ result: Result<TranslationManifestData, TranslationDownloaderError>) -> Void)) {
         
-        let cachedResult: Result<TranslationManifestData, TranslationsFileCacheError> = translationsFileCache.getTranslationManifestOnMainThread(
+        let cachedResult: Result<TranslationManifestData, TranslationsFileCacheError> = translationsFileCache.getTranslation(
             translationId: translationId
         )
                 
@@ -83,7 +83,7 @@ class TranslationDownloader: NSObject {
                     }
                     else {
                         
-                        let cachedResult: Result<TranslationManifestData, TranslationsFileCacheError> = downloader.translationsFileCache.getTranslationManifestOnMainThread(
+                        let cachedResult: Result<TranslationManifestData, TranslationsFileCacheError> = downloader.translationsFileCache.getTranslation(
                             translationId: translationId
                         )
                                             

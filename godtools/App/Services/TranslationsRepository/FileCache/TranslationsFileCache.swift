@@ -12,13 +12,11 @@ import RealmSwift
 class TranslationsFileCache {
         
     private let realmDatabase: RealmDatabase
-    private let resourcesCache: ResourcesCache
     private let sha256FileCache: ResourcesSHA256FileCache
     
-    required init(realmDatabase: RealmDatabase, resourcesCache: ResourcesCache, sha256FileCache: ResourcesSHA256FileCache) {
+    required init(realmDatabase: RealmDatabase, sha256FileCache: ResourcesSHA256FileCache) {
         
         self.realmDatabase = realmDatabase
-        self.resourcesCache = resourcesCache
         self.sha256FileCache = sha256FileCache
     }
     
@@ -39,75 +37,16 @@ class TranslationsFileCache {
     func getData(location: SHA256FileLocation) -> Result<Data?, Error> {
         return sha256FileCache.getData(location: location)
     }
-    
-    // MARK: - Get Translation Manifest By Resource and Language
-    
-    func getResourceLanguageTranslationManifestOnMainThread(resourceId: String, languageId: String) -> Result<TranslationManifestData, TranslationsFileCacheError> {
         
-        return getResourceLanguageTranslationManifest(realm: realmDatabase.mainThreadRealm, resourceId: resourceId, languageId: languageId)
-    }
-    
-    func getResourceLanguageTranslationManifest(resourceId: String, languageId: String, completeOnMain: @escaping ((_ result: Result<TranslationManifestData, TranslationsFileCacheError>) -> Void)) {
+    func getTranslation(translationId: String) -> Result<TranslationManifestData, TranslationsFileCacheError> {
         
-        realmDatabase.background { [weak self] (realm: Realm) in
-            
-            let translationManifestResult: Result<TranslationManifestData, TranslationsFileCacheError>
-            
-            if let result = self?.getResourceLanguageTranslationManifest(realm: realm, resourceId: resourceId, languageId: languageId) {
-                translationManifestResult = result
-            }
-            else {
-                translationManifestResult = .failure(.translationDoesNotExistInCache)
-            }
-            
-            DispatchQueue.main.async {
-                completeOnMain(translationManifestResult)
-            }
-        }
+        return getTranslations(translationIds: [translationId])[0]
     }
     
-    func getResourceLanguageTranslationManifest(realm: Realm, resourceId: String, languageId: String) -> Result<TranslationManifestData, TranslationsFileCacheError> {
+    func getTranslations(translationIds: [String]) -> [Result<TranslationManifestData, TranslationsFileCacheError>] {
         
-        guard let translationModel = resourcesCache.getResourceLanguageTranslation(resourceId: resourceId, languageId: languageId) else {
-            return .failure(.translationDoesNotExistInCache)
-        }
+        let realm: Realm = realmDatabase.mainThreadRealm
         
-        return getTranslationManifest(realm: realm, translationId: translationModel.id)
-    }
-    
-    // MARK: - Get Translation Manifest By Translation Id
-    
-    func getTranslationManifestOnMainThread(translationId: String) -> Result<TranslationManifestData, TranslationsFileCacheError> {
-        
-        return getTranslationManifest(realm: realmDatabase.mainThreadRealm, translationId: translationId)
-    }
-    
-    func getTranslationManifest(translationId: String, completeOnMain: @escaping ((_ result: Result<TranslationManifestData, TranslationsFileCacheError>) -> Void)) {
-                
-        realmDatabase.background { [weak self] (realm: Realm) in
-            
-            guard let translationsFileCache = self else {
-                return
-            }
-            
-            let result: Result<TranslationManifestData, TranslationsFileCacheError> = translationsFileCache.getTranslationManifest(
-                realm: realm,
-                translationId: translationId
-            )
-            
-            DispatchQueue.main.async {
-                completeOnMain(result)
-            }
-        }
-    }
-    
-    func getTranslationManifest(realm: Realm, translationId: String) -> Result<TranslationManifestData, TranslationsFileCacheError> {
-                
-        return getTranslationManifests(realm: realm, translationIds: [translationId])[0]
-    }
-    
-    func getTranslationManifests(realm: Realm, translationIds: [String]) -> [Result<TranslationManifestData, TranslationsFileCacheError>] {
-                
         var results: [Result<TranslationManifestData, TranslationsFileCacheError>] = Array()
         
         for translationId in translationIds {

@@ -2,7 +2,7 @@
 //  ToolTranslationData.swift
 //  godtools
 //
-//  Created by Levi Eggert on 1/16/22.
+//  Created by Levi Eggert on 5/26/22.
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
@@ -15,7 +15,7 @@ class ToolTranslationData {
     let translation: TranslationModel
     let translationManifestData: TranslationManifestData
     
-    required init(resource: ResourceModel, language: LanguageModel, translation: TranslationModel, translationManifestData: TranslationManifestData) {
+    init(resource: ResourceModel, language: LanguageModel, translation: TranslationModel, translationManifestData: TranslationManifestData) {
         
         self.resource = resource
         self.language = language
@@ -23,3 +23,4 @@ class ToolTranslationData {
         self.translationManifestData = translationManifestData
     }
 }
+

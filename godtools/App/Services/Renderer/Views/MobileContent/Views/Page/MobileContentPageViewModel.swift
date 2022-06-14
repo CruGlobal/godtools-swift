@@ -8,22 +8,18 @@
 
 import UIKit
 import GodToolsToolParser
+import SwiftUI
 
 class MobileContentPageViewModel: MobileContentPageViewModelType {
     
     private let pageModel: Page
     private let renderedPageContext: MobileContentRenderedPageContext
-    private let deepLinkService: DeepLinkingServiceType
     private let hidesBackgroundImage: Bool
-    
-    private weak var flowDelegate: FlowDelegate?
-    
-    required init(flowDelegate: FlowDelegate, pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, deepLinkService: DeepLinkingServiceType, hidesBackgroundImage: Bool) {
         
-        self.flowDelegate = flowDelegate
+    required init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, hidesBackgroundImage: Bool) {
+        
         self.pageModel = pageModel
         self.renderedPageContext = renderedPageContext
-        self.deepLinkService = deepLinkService
         self.hidesBackgroundImage = hidesBackgroundImage
     }
     
@@ -93,29 +89,24 @@ class MobileContentPageViewModel: MobileContentPageViewModelType {
     }
     
     func buttonWithUrlTapped(url: String) {
-                    
-        if let webUrl = URL(string: url) {
-            if deepLinkService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: webUrl))) {
-                return
-            }
-        }
-        
+               
         let exitLink = ExitLinkModel(
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
             url: url
         )
-        
-        flowDelegate?.navigate(step: .buttonWithUrlTappedFromMobileContentRenderer(url: url, exitLink: exitLink))
+                        
+        renderedPageContext.navigation.buttonWithUrlTapped(url: url, exitLink: exitLink)
     }
     
     func trainingTipTapped(event: TrainingTipEvent) {
-        
-        flowDelegate?.navigate(step: .trainingTipTappedFromMobileContentRenderer(event: event))
+                
+        renderedPageContext.navigation.trainingTipTapped(event: event)
     }
     
     func errorOccurred(error: MobileContentErrorViewModel) {
-        flowDelegate?.navigate(step: .errorOccurredFromMobileContentRenderer(error: error))
+                        
+        renderedPageContext.navigation.errorOccurred(error: error)
     }
 }

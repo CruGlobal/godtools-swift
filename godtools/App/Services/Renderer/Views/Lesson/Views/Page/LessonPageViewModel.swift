@@ -16,7 +16,7 @@ class LessonPageViewModel: MobileContentPageViewModel, LessonPageViewModelType {
     private let analytics: AnalyticsContainer
     private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
     
-    required init(flowDelegate: FlowDelegate, pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, deepLinkService: DeepLinkingServiceType, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics) {
+    required init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics) {
             
         self.pageModel = pageModel
         self.renderedPageContext = renderedPageContext
@@ -28,11 +28,11 @@ class LessonPageViewModel: MobileContentPageViewModel, LessonPageViewModelType {
             renderedPageContext: renderedPageContext
         )
         
-        super.init(flowDelegate: flowDelegate, pageModel: pageModel, renderedPageContext: renderedPageContext, deepLinkService: deepLinkService, hidesBackgroundImage: false)
+        super.init(pageModel: pageModel, renderedPageContext: renderedPageContext, hidesBackgroundImage: false)
     }
     
-    required init(flowDelegate: FlowDelegate, pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, deepLinkService: DeepLinkingServiceType, hidesBackgroundImage: Bool) {
-        fatalError("init(flowDelegate:pageModel:renderedPageContext:deepLinkService:hidesBackgroundImage:) has not been implemented")
+    required init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, hidesBackgroundImage: Bool) {
+        fatalError("init(pageModel:renderedPageContext:hidesBackgroundImage:) has not been implemented")
     }
     
     func pageDidAppear() {

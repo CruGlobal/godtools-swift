@@ -12,5 +12,6 @@ protocol DeepLinkingServiceType {
         
     var deepLinkObserver: PassthroughValue<ParsedDeepLinkType?> { get }
     
+    func parseDeepLink(incomingDeepLink: IncomingDeepLinkType) -> ParsedDeepLinkType?
     func parseDeepLinkAndNotify(incomingDeepLink: IncomingDeepLinkType) -> Bool
 }
