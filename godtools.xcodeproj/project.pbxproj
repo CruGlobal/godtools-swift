@@ -1065,7 +1065,7 @@
 		D44F3ABA283BC7DB0008390D /* ToolCategoriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44F3AB9283BC7DB0008390D /* ToolCategoriesViewModel.swift */; };
 		D44F3ABC283C13E20008390D /* TwoRowHGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44F3ABB283C13E20008390D /* TwoRowHGrid.swift */; };
 		D44F3ABE283D18A70008390D /* SeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44F3ABD283D18A70008390D /* SeparatorView.swift */; };
-		D44F3AC0283D64A50008390D /* Array+Sorted.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44F3ABF283D64A50008390D /* Array+Sorted.swift */; };
+		D44F3AC0283D64A50008390D /* Array+ResourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44F3ABF283D64A50008390D /* Array+ResourceModel.swift */; };
 		D44F3AC32847BD0B0008390D /* BaseToolCategoryButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44F3AC22847BD0B0008390D /* BaseToolCategoryButtonViewModel.swift */; };
 		D44F3ACB284E79BB0008390D /* ToolCardsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44F3ACA284E79BB0008390D /* ToolCardsViewModel.swift */; };
 		D47C49D8280EF0B10084F4DE /* AllToolsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D7280EF0B10084F4DE /* AllToolsList.swift */; };
@@ -2208,7 +2208,7 @@
 		D44F3AB9283BC7DB0008390D /* ToolCategoriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCategoriesViewModel.swift; sourceTree = "<group>"; };
 		D44F3ABB283C13E20008390D /* TwoRowHGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoRowHGrid.swift; sourceTree = "<group>"; };
 		D44F3ABD283D18A70008390D /* SeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorView.swift; sourceTree = "<group>"; };
-		D44F3ABF283D64A50008390D /* Array+Sorted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Sorted.swift"; sourceTree = "<group>"; };
+		D44F3ABF283D64A50008390D /* Array+ResourceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+ResourceModel.swift"; sourceTree = "<group>"; };
 		D44F3AC22847BD0B0008390D /* BaseToolCategoryButtonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseToolCategoryButtonViewModel.swift; sourceTree = "<group>"; };
 		D44F3ACA284E79BB0008390D /* ToolCardsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardsViewModel.swift; sourceTree = "<group>"; };
 		D47C49D7280EF0B10084F4DE /* AllToolsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllToolsList.swift; sourceTree = "<group>"; };
@@ -4548,6 +4548,7 @@
 		45AD18B025938A4E00A096A0 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				D44F3ABF283D64A50008390D /* Array+ResourceModel.swift */,
 				D115B25C27C0318100C18EF6 /* Collection+SafeLookup.swift */,
 				D44F3AAB2835444F0008390D /* Image+OptionalUIImage.swift */,
 				45B116C12625FC6D007A7127 /* LanguageDirection+SemanticContentAttribute.swift */,
@@ -4570,7 +4571,6 @@
 				45AD18B525938A4E00A096A0 /* UIViewController+NavBackItem.swift */,
 				45AD18B225938A4E00A096A0 /* UIViewController+NavItem.swift */,
 				D44C693A2804B8050000B970 /* View+CustomModifiers.swift */,
-				D44F3ABF283D64A50008390D /* Array+Sorted.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -7018,7 +7018,7 @@
 				456BB02B27C588E80087CCA4 /* MobileContentHeadingViewModel.swift in Sources */,
 				45C93AF6261D310900592FFF /* ArticleManifestDownloadArticlesReceipt.swift in Sources */,
 				45C61DD0280902D50058946F /* DashboardDeepLinkDashboardPath.swift in Sources */,
-				D44F3AC0283D64A50008390D /* Array+Sorted.swift in Sources */,
+				D44F3AC0283D64A50008390D /* Array+ResourceModel.swift in Sources */,
 				45AD1B4F25938A4F00A096A0 /* ToolTrainingViewModelType.swift in Sources */,
 				45750839279A40B000943197 /* ChooseYourOwnAdventureViewModel.swift in Sources */,
 				450F94DC27A1F0F6009DEA43 /* MobileContentCardCollectionPageCardViewModelType.swift in Sources */,

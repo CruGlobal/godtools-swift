@@ -1,5 +1,5 @@
 //
-//  Array+Sorted.swift
+//  Array+ResourceModel.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 5/24/22.
@@ -10,6 +10,17 @@ import Foundation
 
 extension Array where Element == ResourceModel {
     
+    func filterForToolTypes(andFilteredBy additionalFilter: ResourceFilter? = nil) -> [ResourceModel] {
+        return self.filter { resource in
+            
+            if let additionalFilter = additionalFilter, additionalFilter(resource) == false {
+                return false
+            }
+            
+            return resource.isToolType && resource.isHidden == false
+        }
+    }
+    
     func sortedByPrimaryLanguageAvailable(languageSettingsService: LanguageSettingsService, dataDownloader: InitialDataDownloader) -> [ResourceModel] {
         guard let primaryLanguageId = languageSettingsService.primaryLanguage.value?.id else { return self }
         
@@ -19,14 +30,14 @@ extension Array where Element == ResourceModel {
                 return dataDownloader.resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageId: primaryLanguageId) != nil
             }
             
-            func isSortedByDefaultOrder() -> Bool {
+            func isInDefaultOrder() -> Bool {
                 return resource1.attrDefaultOrder < resource2.attrDefaultOrder
             }
             
             if resourceHasTranslation(resource1) {
                 
                 if resourceHasTranslation(resource2) {
-                    return isSortedByDefaultOrder()
+                    return isInDefaultOrder()
                     
                 } else {
                     return true
@@ -37,7 +48,7 @@ extension Array where Element == ResourceModel {
                 return false
                 
             } else {
-                return isSortedByDefaultOrder()
+                return isInDefaultOrder()
             }
         })
     }

@@ -19,7 +19,7 @@ enum ResourceType: String {
 
 extension ResourceType {
     
-    var isNotLesson: Bool {
+    var isToolType: Bool {
         switch self {
         case .article, .chooseYourOwnAdventure, .tract:
             return true

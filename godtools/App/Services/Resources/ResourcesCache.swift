@@ -44,25 +44,11 @@ class ResourcesCache {
     }
     
     func getAllVisibleToolsSorted(andFilteredBy additionalFilter: ResourceFilter? = nil) -> [ResourceModel] {
-        return getSortedResources().filter { resource in
-            
-            if let additionalFilter = additionalFilter, additionalFilter(resource) == false {
-                return false
-            }
-            
-            return resource.isNotLessonType && resource.isHidden == false
-        }
+        return getSortedResources().filterForToolTypes(andFilteredBy: additionalFilter)
     }
     
     func getAllVisibleTools(andFilteredBy additionalFilter: ResourceFilter? = nil) -> [ResourceModel] {
-        return getResources().filter { resource in
-            
-            if let additionalFilter = additionalFilter, additionalFilter(resource) == false {
-                return false
-            }
-            
-            return resource.isNotLessonType && resource.isHidden == false
-        }
+        return getResources().filterForToolTypes(andFilteredBy: additionalFilter)
     }
     
     func getResource(id: String) -> ResourceModel? {
