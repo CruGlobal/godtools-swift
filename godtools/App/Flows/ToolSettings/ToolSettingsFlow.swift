@@ -274,11 +274,12 @@ class ToolSettingsFlow: Flow {
         case .parallel:
             selectedLanguage = settingsParallelLanguage.value
             deleteTappedClosure = { [weak self] in
-                
+                self?.setToolParallelLanguage(languageId: nil)
+                self?.dismissLanguagesList()
             }
         }
         
-        let viewModel = LanguagesListViewModel(languages: languages, selectedLanguageId: selectedLanguage?.id, closeTappedClosure: { [weak self] in
+        let viewModel = LanguagesListViewModel(languages: languages, selectedLanguageId: selectedLanguage?.id, localizationServices: appDiContainer.localizationServices, closeTappedClosure: { [weak self] in
             
             self?.dismissLanguagesList()
             
@@ -319,13 +320,16 @@ class ToolSettingsFlow: Flow {
         setToolLanguages(languageIds: languageIds)
     }
     
-    private func setToolParallelLanguage(languageId: String) {
+    private func setToolParallelLanguage(languageId: String?) {
         
         var languageIds: [String] = Array()
         
         languageIds.append(settingsPrimaryLanguage.value.id)
-        languageIds.append(languageId)
-            
+        
+        if let parallelLanguageId = languageId {
+            languageIds.append(parallelLanguageId)
+        }
+        
         setToolLanguages(languageIds: languageIds)
     }
     

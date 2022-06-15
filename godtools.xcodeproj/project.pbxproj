@@ -916,6 +916,8 @@
 		45CBA009261FB0D30036BEB3 /* LessonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CBA008261FB0D30036BEB3 /* LessonView.swift */; };
 		45CBA015261FB0E30036BEB3 /* LessonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CBA014261FB0E30036BEB3 /* LessonViewModel.swift */; };
 		45CBA01B261FB0EA0036BEB3 /* LessonViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CBA01A261FB0EA0036BEB3 /* LessonViewModelType.swift */; };
+		45CBE9E128511F44008DD9E2 /* BaseLanguagesListItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CBE9E028511F44008DD9E2 /* BaseLanguagesListItemViewModel.swift */; };
+		45CBE9E328511F92008DD9E2 /* DeleteLanguageListItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CBE9E228511F92008DD9E2 /* DeleteLanguageListItemViewModel.swift */; };
 		45CDFB4D281730FA00AC4F2E /* GoogleTagManager in Frameworks */ = {isa = PBXBuildFile; productRef = 45CDFB4C281730FA00AC4F2E /* GoogleTagManager */; };
 		45CDFB502817324B00AC4F2E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 45CDFB4F2817324B00AC4F2E /* FirebaseAnalytics */; };
 		45CDFB522817324B00AC4F2E /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 45CDFB512817324B00AC4F2E /* FirebaseCrashlytics */; };
@@ -2010,6 +2012,8 @@
 		45CBA008261FB0D30036BEB3 /* LessonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonView.swift; sourceTree = "<group>"; };
 		45CBA014261FB0E30036BEB3 /* LessonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonViewModel.swift; sourceTree = "<group>"; };
 		45CBA01A261FB0EA0036BEB3 /* LessonViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonViewModelType.swift; sourceTree = "<group>"; };
+		45CBE9E028511F44008DD9E2 /* BaseLanguagesListItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseLanguagesListItemViewModel.swift; sourceTree = "<group>"; };
+		45CBE9E228511F92008DD9E2 /* DeleteLanguageListItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteLanguageListItemViewModel.swift; sourceTree = "<group>"; };
 		45D266E8277499AD00960990 /* UIViewController+DismissPresented.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+DismissPresented.swift"; sourceTree = "<group>"; };
 		45D6D0292708B8FF0063C38A /* LessonEvaluationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LessonEvaluationModel.swift; sourceTree = "<group>"; };
 		45D6D02A2708B8FF0063C38A /* RealmLessonEvaluation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmLessonEvaluation.swift; sourceTree = "<group>"; };
@@ -5979,6 +5983,8 @@
 			isa = PBXGroup;
 			children = (
 				45F38D182833D59D009E3E15 /* LanguagesListItemView.swift */,
+				45CBE9E028511F44008DD9E2 /* BaseLanguagesListItemViewModel.swift */,
+				45CBE9E228511F92008DD9E2 /* DeleteLanguageListItemViewModel.swift */,
 				45F38D1E2833D887009E3E15 /* LanguagesListItemViewModel.swift */,
 			);
 			path = Views;
@@ -7561,6 +7567,7 @@
 				454C85CA28577CB900DF5A66 /* ViewSizePreferenceKey.swift in Sources */,
 				451CEDF5282C31C7006E5105 /* ToolSettingsOptionsView.swift in Sources */,
 				45AD1B3825938A4F00A096A0 /* ChooseLanguageCellViewModelType.swift in Sources */,
+				45CBE9E128511F44008DD9E2 /* BaseLanguagesListItemViewModel.swift in Sources */,
 				45558323269F2C7B00C3FF14 /* ToolPageViewModel.swift in Sources */,
 				D1AF02ED2730763700BEC921 /* VideoPlayerView.swift in Sources */,
 				45558321269F2C7B00C3FF14 /* ToolPagePositions.swift in Sources */,
@@ -7841,6 +7848,7 @@
 				45AD205725938AC300A096A0 /* FirebaseAnalyticsType.swift in Sources */,
 				45558350269F2D1000C3FF14 /* LessonPageViewFactory.swift in Sources */,
 				45AD1AAF25938A4E00A096A0 /* TutorialCell.swift in Sources */,
+				45CBE9E328511F92008DD9E2 /* DeleteLanguageListItemViewModel.swift in Sources */,
 				4567CE3F27CD0C6B00C3B543 /* MobileContentPageRenderer.swift in Sources */,
 				45AD1B5625938A4F00A096A0 /* GlobalActivityResults.swift in Sources */,
 				45C93AED261D310900592FFF /* ArticleAemDataType.swift in Sources */,

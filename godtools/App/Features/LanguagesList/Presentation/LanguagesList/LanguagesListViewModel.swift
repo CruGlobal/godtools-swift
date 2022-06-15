@@ -11,24 +11,37 @@ import Foundation
 class LanguagesListViewModel: ObservableObject {
     
     private let selectedLanguageId: String?
+    private let localizationServices: LocalizationServices
+    private let closeTappedClosure: (() -> Void)
+    private let languageTappedClosure: ((_ language: ToolLanguageModel) -> Void)
+    private let deleteTappedClosure: (() -> Void)?
     
     @Published var languages: [ToolLanguageModel] = Array()
-    @Published var hidesDeleteOption: Bool = true
-    
-    let closeTappedClosure: (() -> Void)
-    let languageTappedClosure: ((_ language: ToolLanguageModel) -> Void)
-    let deleteTappedClosure: (() -> Void)?
         
-    required init(languages: [ToolLanguageModel], selectedLanguageId: String?, closeTappedClosure: @escaping (() -> Void), languageTappedClosure: @escaping ((_ language: ToolLanguageModel) -> Void), deleteTappedClosure: (() -> Void)?) {
+    required init(languages: [ToolLanguageModel], selectedLanguageId: String?, localizationServices: LocalizationServices, closeTappedClosure: @escaping (() -> Void), languageTappedClosure: @escaping ((_ language: ToolLanguageModel) -> Void), deleteTappedClosure: (() -> Void)?) {
         
-        self.languages = languages
         self.selectedLanguageId = selectedLanguageId
+        self.localizationServices = localizationServices
         self.closeTappedClosure = closeTappedClosure
         self.languageTappedClosure = languageTappedClosure
         self.deleteTappedClosure = deleteTappedClosure
+                
+        self.languages = languages
     }
     
-    func getLanguagesListItemViewModel(language: ToolLanguageModel) -> LanguagesListItemViewModel {
+    private var hidesDeleteOption: Bool {
+        return deleteTappedClosure == nil
+    }
+    
+    func getDeleteLanguageListItemViewModel() -> DeleteLanguageListItemViewModel? {
+        guard !hidesDeleteOption else {
+            return nil
+        }
+        
+        return DeleteLanguageListItemViewModel(localizationServices: localizationServices)
+    }
+    
+    func getLanguagesListItemViewModel(language: ToolLanguageModel) -> BaseLanguagesListItemViewModel {
         return LanguagesListItemViewModel(language: language, selectedLanguageId: selectedLanguageId)
     }
     
