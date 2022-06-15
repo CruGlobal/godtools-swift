@@ -25,9 +25,3 @@ struct ToolSettingsLanguageDropDownView: View {
         .frame(minWidth: nil, idealWidth: nil, maxWidth: .infinity, minHeight: nil, idealHeight: nil, maxHeight: .infinity, alignment: .center)
     }
 }
-
-struct ToolSettingsLanguageDropDownView_Preview: PreviewProvider {
-    static var previews: some View {
-        ToolSettingsLanguageDropDownView(primaryTextColor: Color.black, title: "English")
-    }
-}
