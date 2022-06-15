@@ -11,7 +11,7 @@ struct ToolSettingsChooseLanguageView: View {
     
     private let languageDropDownHeight: CGFloat = 52
     
-    @ObservedObject var viewModel: BaseToolSettingsChooseLanguageViewModel
+    @ObservedObject var viewModel: ToolSettingsViewModel
     
     let geometryProxy: GeometryProxy
     let leadingInset: CGFloat
@@ -22,7 +22,7 @@ struct ToolSettingsChooseLanguageView: View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .center, spacing: 0) {
                 VStack (alignment: .leading, spacing: 4) {
-                    Text(viewModel.title)
+                    Text(viewModel.chooseLanguageTitle)
                         .foregroundColor(primaryTextColor)
                         .font(FontLibrary.sfProTextRegular.font(size: 19))
                     Text("Toggle between the two different languages in this tool.")
@@ -63,20 +63,6 @@ struct ToolSettingsChooseLanguageView: View {
                 alignment: .leading
             )
             .padding(EdgeInsets(top: 0, leading: leadingInset, bottom: 0, trailing: trailingInset))
-        }
-    }
-}
-
-struct ToolSettingsChooseLanguageView_Preview: PreviewProvider {
-    static var previews: some View {
-        GeometryReader { geometry in
-            ToolSettingsChooseLanguageView(
-                viewModel: BaseToolSettingsChooseLanguageViewModel(),
-                geometryProxy: geometry,
-                leadingInset: 20,
-                trailingInset: 20,
-                primaryTextColor: .black
-            )
         }
     }
 }

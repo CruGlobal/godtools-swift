@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ToolSettingsOptionsView: View {
             
-    @ObservedObject var viewModel: BaseToolSettingsOptionsViewModel
+    @ObservedObject var viewModel: ToolSettingsViewModel
     
     let leadingInset: CGFloat
     let trailingInset: CGFloat
@@ -53,12 +53,5 @@ struct ToolSettingsOptionsView: View {
                 .padding(EdgeInsets(top: 0, leading: leadingInset, bottom: 0, trailing: trailingInset))
             }
         }
-    }
-}
-
-struct ToolSettingsOptionsView_Preview: PreviewProvider {
-    static var previews: some View {
-        let viewModel = BaseToolSettingsOptionsViewModel()
-        ToolSettingsOptionsView(viewModel: viewModel, leadingInset: 20, trailingInset: 20)
     }
 }

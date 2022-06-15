@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ToolSettingsTopBarView: View {
         
-    @ObservedObject var viewModel: BaseToolSettingsTopBarViewModel
+    @ObservedObject var viewModel: ToolSettingsViewModel
     
     let primaryTextColor: Color
     let leadingInset: CGFloat
@@ -30,11 +30,5 @@ struct ToolSettingsTopBarView: View {
         }
         .padding(EdgeInsets(top: 0, leading: leadingInset, bottom: 0, trailing: trailingInset))
         .frame(height: 50)
-    }
-}
-
-struct ToolSettingsTopBarView_Preview: PreviewProvider {
-    static var previews: some View {
-        ToolSettingsTopBarView(viewModel: BaseToolSettingsTopBarViewModel(), primaryTextColor: Color.black, leadingInset: 20, trailingInset: 20)
     }
 }
