@@ -32,6 +32,7 @@ class ToolSettingsViewModel: ObservableObject {
     @Published var trainingTipsIcon: SwiftUI.Image = Image("")
     @Published var trainingTipsTitle: String = ""
     @Published var chooseLanguageTitle: String = ""
+    @Published var chooseLanguageToggleMessage: String = ""
     @Published var primaryLanguageTitle: String = ""
     @Published var parallelLanguageTitle: String = ""
     @Published var hidesShareables: Bool = false
@@ -59,6 +60,7 @@ class ToolSettingsViewModel: ObservableObject {
             self?.trainingTipsIcon = trainingTipsEnabled ? Image(ImageCatalog.toolSettingsOptionHideTips.name) : Image(ImageCatalog.toolSettingsOptionTrainingTips.name)
         }
         chooseLanguageTitle = localizationServices.stringForMainBundle(key: "toolSettings.chooseLanguage.title")
+        chooseLanguageToggleMessage = localizationServices.stringForMainBundle(key: "toolSettings.chooseLanguage.toggleMessage")
         hidesShareables = shareables.isEmpty
         shareablesTitle = localizationServices.stringForMainBundle(key: "toolSettings.shareables.title")
         numberOfShareableItems = shareables.count

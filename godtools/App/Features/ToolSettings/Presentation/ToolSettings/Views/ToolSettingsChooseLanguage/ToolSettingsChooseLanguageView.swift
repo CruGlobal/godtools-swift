@@ -24,7 +24,7 @@ struct ToolSettingsChooseLanguageView: View {
                 Text(viewModel.chooseLanguageTitle)
                     .foregroundColor(primaryTextColor)
                     .font(FontLibrary.sfProTextRegular.font(size: 19))
-                Text("Toggle between the two different languages in this tool.")
+                Text(viewModel.chooseLanguageToggleMessage)
                     .frame(maxWidth: geometryProxy.size.width * 0.65, alignment: .leading)
                     .foregroundColor(primaryTextColor)
                     .font(FontLibrary.sfProTextRegular.font(size: 14))
