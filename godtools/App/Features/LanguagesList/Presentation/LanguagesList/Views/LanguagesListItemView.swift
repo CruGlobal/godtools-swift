@@ -34,17 +34,3 @@ struct LanguagesListItemView: View {
         .background(viewModel.isSelected ? highlightColor : Color.white)
     }
 }
-
-struct LanguagesListItemView_Preview: PreviewProvider {
-    static var previews: some View {
-        
-        let language = ToolLanguageModel(id: "en", name: "English")
-        
-        let viewModel = MockLanguagesListItemViewModel(
-            language: language,
-            selectedLanguageId: "en"
-        )
-        
-        LanguagesListItemView(viewModel: viewModel)
-    }
-}

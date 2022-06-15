@@ -10,7 +10,7 @@ import SwiftUI
 
 struct LanguagesListView: View {
         
-    @ObservedObject var viewModel: BaseLanguagesListViewModel
+    @ObservedObject var viewModel: LanguagesListViewModel
     
     var body: some View {
         
@@ -51,21 +51,5 @@ struct LanguagesListView: View {
             }
         }
         .background(Color.white)
-    }
-}
-
-struct LanguagesListView_Preview: PreviewProvider {
-    static var previews: some View {
-        
-        let languages: [ToolLanguageModel] = [
-            ToolLanguageModel(id: "en", name: "English"),
-            ToolLanguageModel(id: "es", name: "Spanish")
-        ]
-        
-        let selectedLanguageId = "en"
-        
-        let viewModel = MockLanguagesListViewModel(languages: languages, selectedLanguageId: selectedLanguageId)
-        
-        return LanguagesListView(viewModel: viewModel)
     }
 }
