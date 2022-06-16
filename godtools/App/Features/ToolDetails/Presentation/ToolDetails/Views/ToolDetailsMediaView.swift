@@ -32,7 +32,11 @@ struct ToolDetailsMediaView: View {
                 
             case .animation(let viewModel):
                 
-                AnimatedSwiftUIView(viewModel: viewModel)
+                AnimatedSwiftUIView(
+                    viewModel: viewModel,
+                    frameSize: mediaViewSize,
+                    contentMode: .scaleAspectFill
+                )
             
             case .image(let image):
                 
