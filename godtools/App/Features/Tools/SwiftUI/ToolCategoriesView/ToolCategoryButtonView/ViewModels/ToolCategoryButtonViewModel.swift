@@ -36,8 +36,8 @@ class ToolCategoryButtonViewModel: BaseToolCategoryButtonViewModel {
 
 extension ToolCategoryButtonViewModel {
     func updateStateWithSelectedCategory(_ selectedAttrCategory: String?) {
-        state = ToolCategoryButtonState(category: attrCategory, selectedCategory: selectedAttrCategory)
+        let buttonState = ToolCategoryButtonState(category: attrCategory, selectedCategory: selectedAttrCategory)
         
-        setPublishedValues()
+        setButtonState(buttonState)
     }
 }
