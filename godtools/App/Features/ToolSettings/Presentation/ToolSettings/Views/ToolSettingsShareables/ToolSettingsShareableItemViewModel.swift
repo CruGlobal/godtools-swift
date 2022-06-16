@@ -9,18 +9,19 @@
 import SwiftUI
 import GodToolsToolParser
 
-class ToolSettingsShareableItemViewModel: BaseToolSettingsShareableItemViewModel {
+class ToolSettingsShareableItemViewModel: ObservableObject {
     
     private let shareable: Shareable
     private let manifestResourcesCache: ManifestResourcesCache
+    
+    @Published var image: SwiftUI.Image = Image("")
+    @Published var title: String = ""
     
     required init(shareable: Shareable, manifestResourcesCache: ManifestResourcesCache) {
         
         self.shareable = shareable
         self.manifestResourcesCache = manifestResourcesCache
-        
-        super.init()
-                
+                        
         if let shareableImage = shareable as? ShareableImage {
             
             self.title = shareableImage.description_?.text ?? ""

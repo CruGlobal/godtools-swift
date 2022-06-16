@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ToolSettingsShareableItemView: View {
     
-    @ObservedObject var viewModel: BaseToolSettingsShareableItemViewModel
+    @ObservedObject var viewModel: ToolSettingsShareableItemViewModel
     
     var body: some View {
         GeometryReader { geometry in
@@ -26,16 +26,5 @@ struct ToolSettingsShareableItemView: View {
         }
         .frame(width: 112, height: 112)
         .background(Color.white)
-    }
-}
-
-struct ToolSettingsShareableItemView_Preview: PreviewProvider {
-    static var previews: some View {
-                
-        let viewModel = MockToolSettingsShareableItemViewModel(
-            imageName: "onboarding_welcome_logo",
-            title: "Title Here"
-        )
-        ToolSettingsShareableItemView(viewModel: viewModel)
     }
 }
