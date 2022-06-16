@@ -15,18 +15,21 @@ class ArticleFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, resource: ResourceModel, translationManifest: TranslationManifestData) {
+    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, toolTranslations: ToolTranslations) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
         
+        let languageTranslationManifest: MobileContentRendererLanguageTranslationManifest = toolTranslations.languageTranslationManifests[0]
+        
         let viewModel = ArticleCategoriesViewModel(
             flowDelegate: self,
-            resource: resource,
-            translationManifest: translationManifest,
+            resource: toolTranslations.tool,
+            language: languageTranslationManifest.language,
+            manifest: languageTranslationManifest.manifest,
             articleManifestAemRepository: appDiContainer.getArticleManifestAemRepository(),
-            translationsFileCache: appDiContainer.translationsFileCache,
+            manifestResourcesCache: appDiContainer.getManifestResourcesCache(),
             localizationServices: appDiContainer.localizationServices,
             analytics: appDiContainer.analytics
         )
@@ -47,14 +50,14 @@ class ArticleFlow: Flow {
         case .backTappedFromArticleCategories:
             flowDelegate?.navigate(step: .articleFlowCompleted(state: .userClosedArticle))
         
-        case .articleCategoryTappedFromArticleCategories(let resource, let translationZipFile, let category, let articleManifest, let currentArticleDownloadReceipt):
+        case .articleCategoryTappedFromArticleCategories(let resource, let language, let category, let manifest, let currentArticleDownloadReceipt):
             
             let viewModel = ArticlesViewModel(
                 flowDelegate: self,
                 resource: resource,
-                translationZipFile: translationZipFile,
+                language: language,
                 category: category,
-                articleManifest: articleManifest,
+                manifest: manifest,
                 articleManifestAemRepository: appDiContainer.getArticleManifestAemRepository(),
                 localizationServices: appDiContainer.localizationServices,
                 analytics: appDiContainer.analytics,

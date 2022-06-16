@@ -16,6 +16,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
     }
     
     private let dataDownloader: InitialDataDownloader
+    private let languagesRepository: LanguagesRepository
     private let languageSettingsService: LanguageSettingsService
     private let downloadedLanguagesCache: DownloadedLanguagesCache
     private let localizationServices: LocalizationServices
@@ -32,10 +33,11 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
     let numberOfLanguages: ObservableValue<Int> = ObservableValue(value: 0)
     let selectedLanguageIndex: ObservableValue<Int?> = ObservableValue(value: nil)
     
-    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, downloadedLanguagesCache: DownloadedLanguagesCache, localizationServices: LocalizationServices, analytics: AnalyticsContainer, chooseLanguageType: ChooseLanguageType) {
+    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languagesRepository: LanguagesRepository, languageSettingsService: LanguageSettingsService, downloadedLanguagesCache: DownloadedLanguagesCache, localizationServices: LocalizationServices, analytics: AnalyticsContainer, chooseLanguageType: ChooseLanguageType) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
+        self.languagesRepository = languagesRepository
         self.languageSettingsService = languageSettingsService
         self.downloadedLanguagesCache = downloadedLanguagesCache
         self.localizationServices = localizationServices
@@ -101,7 +103,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
         let userPrimaryLanguage: LanguageModel? = languageSettingsService.primaryLanguage.value
         let userParallelLanguage: LanguageModel? = languageSettingsService.parallelLanguage.value
         
-        var storedLanguageModels: [LanguageModel] = dataDownloader.getStoredLanguages()
+        var storedLanguageModels: [LanguageModel] = languagesRepository.getAllLanguages()
         
         switch chooseLanguageType {
         

@@ -10,7 +10,7 @@ import Foundation
 
 protocol ToolViewModelType: MobileContentPagesViewModel {
     
-    var navBarViewModel: ToolNavBarViewModel { get }
+    var navBarViewModel: ObservableValue<ToolNavBarViewModelType> { get }
     var didSubscribeForRemoteSharePublishing: ObservableValue<Bool> { get }
     
     func subscribedForRemoteSharePublishing(page: Int, pagePositions: ToolPagePositions)

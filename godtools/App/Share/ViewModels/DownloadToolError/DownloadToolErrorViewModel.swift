@@ -16,7 +16,7 @@ class DownloadToolErrorViewModel: AlertMessageViewModelType {
     let cancelTitle: String? = nil
     let acceptTitle: String
     
-    required init(downloadToolError: DownloadToolError, localizationServices: LocalizationServices) {
+    required init(downloadToolError: GetToolTranslationsError, localizationServices: LocalizationServices) {
         
         self.acceptTitle = localizationServices.stringForMainBundle(key: "OK")
         
@@ -24,18 +24,13 @@ class DownloadToolErrorViewModel: AlertMessageViewModelType {
         
         switch downloadToolError {
             
-        case .failedToDetermineToolTranslationsToDownload(let determineToolTranslationsToDownloadError):
-            
-            switch determineToolTranslationsToDownloadError {
-            
-            case .failedToFetchResourceFromCache:
-                title = internalErrorTitle
-                message = "Failed to fetch resource from cache."
-            
-            case .failedToFetchLanguageFromCache:
-                title = internalErrorTitle
-                message = "Failed to fetch language from cache."
-            }
+        case .failedToFetchResourceFromCache:
+            title = internalErrorTitle
+            message = "Failed to fetch resource from cache."
+        
+        case .failedToFetchLanguageFromCache:
+            title = internalErrorTitle
+            message = "Failed to fetch language from cache."
         
         case .failedToDownloadTranslations(let translationDownloaderErrors):
             

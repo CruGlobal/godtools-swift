@@ -20,7 +20,7 @@ class ToolPageViewModel: MobileContentPageViewModel, ToolPageViewModelType {
     
     let hidesCallToAction: Bool
     
-    required init(flowDelegate: FlowDelegate, pageModel: TractPage, renderedPageContext: MobileContentRenderedPageContext, deepLinkService: DeepLinkingServiceType, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics) {
+    required init(pageModel: TractPage, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics) {
                 
         self.pageModel = pageModel
         self.renderedPageContext = renderedPageContext
@@ -33,11 +33,11 @@ class ToolPageViewModel: MobileContentPageViewModel, ToolPageViewModelType {
             renderedPageContext: renderedPageContext
         )
         
-        super.init(flowDelegate: flowDelegate, pageModel: pageModel, renderedPageContext: renderedPageContext, deepLinkService: deepLinkService, hidesBackgroundImage: false)
+        super.init(pageModel: pageModel, renderedPageContext: renderedPageContext, hidesBackgroundImage: false)
     }
     
-    required init(flowDelegate: FlowDelegate, pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, deepLinkService: DeepLinkingServiceType, hidesBackgroundImage: Bool) {
-        fatalError("init(flowDelegate:pageModel:renderedPageContext:deepLinkService:hidesBackgroundImage:) has not been implemented")
+    required init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, hidesBackgroundImage: Bool) {
+        fatalError("init(pageModel:renderedPageContext:hidesBackgroundImage:) has not been implemented")
     }
     
     override var analyticsScreenName: String {

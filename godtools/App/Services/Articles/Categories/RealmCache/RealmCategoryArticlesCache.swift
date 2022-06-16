@@ -8,6 +8,7 @@
 
 import Foundation
 import RealmSwift
+import GodToolsToolParser
 
 class RealmCategoryArticlesCache {
     
@@ -18,12 +19,12 @@ class RealmCategoryArticlesCache {
         self.realmDatabase = realmDatabase
     }
     
-    func getCategoryArticles(category: ArticleCategory, languageCode: String) -> [RealmCategoryArticle] {
+    func getCategoryArticles(categoryId: String, languageCode: String) -> [RealmCategoryArticle] {
         
         let realm: Realm = realmDatabase.mainThreadRealm
         let allRealmArticles = realm.objects(RealmCategoryArticle.self)
         
-        let predicate = NSPredicate(format: "categoryId == %@ AND languageCode == %@", category.id, languageCode)
+        let predicate = NSPredicate(format: "categoryId == %@ AND languageCode == %@", categoryId, languageCode)
         
         return Array(allRealmArticles.filter(predicate))
     }
@@ -38,13 +39,12 @@ class RealmCategoryArticlesCache {
         return realm.object(ofType: RealmCategoryArticle.self, forPrimaryKey: uuid.uuidString)
     }
     
-    func storeAemDataObjectsForManifest(manifest: ArticleManifestType, languageCode: String, aemDataObjects: [ArticleAemData], completion: @escaping ((_ errors: [Error]) -> Void)) {
+    func storeAemDataObjectsForCategories(categories: [ArticleCategory], languageCode: String, aemDataObjects: [ArticleAemData], completion: @escaping ((_ errors: [Error]) -> Void)) {
         
         realmDatabase.background { [weak self] (realm: Realm) in
             
             typealias AemTag = String
             
-            let categories: [ArticleCategory] = manifest.categories
             var realmCategoryArticles: [AemTag: RealmCategoryArticle] = Dictionary()
             var errors: [Error] = Array()
             

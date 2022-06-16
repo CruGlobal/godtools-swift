@@ -27,6 +27,16 @@ struct LanguagesListView: View {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 0) {
                     
+                    if let deleteItemViewModel = viewModel.getDeleteLanguageListItemViewModel() {
+                        
+                        let itemView = LanguagesListItemView(viewModel: deleteItemViewModel)
+                        
+                        itemView
+                            .onTapGesture {
+                                viewModel.deleteTapped()
+                            }
+                    }
+                    
                     ForEach(viewModel.languages) { language in
                         
                         let itemViewModel = viewModel.getLanguagesListItemViewModel(language: language)
@@ -41,23 +51,5 @@ struct LanguagesListView: View {
             }
         }
         .background(Color.white)
-    }
-}
-
-struct LanguagesListView_Preview: PreviewProvider {
-    static var previews: some View {
-        
-        let languages: [ToolLanguageModel] = [
-            ToolLanguageModel(id: "en", name: "English"),
-            ToolLanguageModel(id: "es", name: "Spanish")
-        ]
-        
-        let viewModel = LanguagesListViewModel(languages: languages, closeTappedClosure: {
-            
-        }, languageTappedClosure: { language in
-            
-        })
-        
-        return LanguagesListView(viewModel: viewModel)
     }
 }

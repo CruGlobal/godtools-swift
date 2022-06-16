@@ -10,6 +10,7 @@ import GodToolsToolParser
 
 class ToolSettingsFlowToolData {
     
+    let renderer: MobileContentRenderer
     let manifestResourcesCache: ManifestResourcesCache
     let tractRemoteSharePublisher: TractRemoteSharePublisher
     let resource: ResourceModel
@@ -20,8 +21,9 @@ class ToolSettingsFlowToolData {
     let pageNumber: Int
     let trainingTipsEnabled: Bool
     
-    required init(manifestResourcesCache: ManifestResourcesCache, tractRemoteSharePublisher: TractRemoteSharePublisher, resource: ResourceModel, selectedLanguage: LanguageModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, shareables: [Shareable], pageNumber: Int, trainingTipsEnabled: Bool) {
+    required init(renderer: MobileContentRenderer, manifestResourcesCache: ManifestResourcesCache, tractRemoteSharePublisher: TractRemoteSharePublisher, resource: ResourceModel, selectedLanguage: LanguageModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, shareables: [Shareable], pageNumber: Int, trainingTipsEnabled: Bool) {
         
+        self.renderer = renderer
         self.manifestResourcesCache = manifestResourcesCache
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
         self.resource = resource

@@ -19,13 +19,9 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
     private let followUpService: FollowUpsService
     private let translationsFileCache: TranslationsFileCache
     private let viewedTrainingTipsService: ViewedTrainingTipsService
-    private let deepLinkService: DeepLinkingServiceType
-    
-    private(set) weak var flowDelegate: FlowDelegate?
-    
-    required init(flowDelegate: FlowDelegate, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, followUpService: FollowUpsService, translationsFileCache: TranslationsFileCache, viewedTrainingTipsService: ViewedTrainingTipsService, deepLinkService: DeepLinkingServiceType) {
         
-        self.flowDelegate = flowDelegate
+    required init(analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, followUpService: FollowUpsService, translationsFileCache: TranslationsFileCache, viewedTrainingTipsService: ViewedTrainingTipsService) {
+        
         self.analytics = analytics
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
@@ -34,7 +30,6 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
         self.followUpService = followUpService
         self.translationsFileCache = translationsFileCache
         self.viewedTrainingTipsService = viewedTrainingTipsService
-        self.deepLinkService = deepLinkService
     }
     
     func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
@@ -143,15 +138,9 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let pageModel = renderableModel as? TractPage {
                     
-            guard let flowDelegate = self.flowDelegate else {
-                return nil
-            }
-            
             let viewModel = ToolPageViewModel(
-                flowDelegate: flowDelegate,
                 pageModel: pageModel,
                 renderedPageContext: renderedPageContext,
-                deepLinkService: deepLinkService,
                 analytics: analytics,
                 mobileContentAnalytics: mobileContentAnalytics
             )

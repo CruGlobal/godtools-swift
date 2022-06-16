@@ -8,18 +8,19 @@
 
 import Foundation
 import RealmSwift
+import GodToolsToolParser
 
 class ArticleCategoriesViewModel: NSObject, ArticleCategoriesViewModelType {
         
     private let resource: ResourceModel
-    private let translationZipFile: TranslationZipFileModel
+    private let language: LanguageModel
+    private let manifest: Manifest
     private let articleManifestAemRepository: ArticleManifestAemRepository
     private let localizationServices: LocalizationServices
-    private let translationsFileCache: TranslationsFileCache
+    private let manifestResourcesCache: ManifestResourcesCache
     private let analytics: AnalyticsContainer
-    private let articleManifest: ArticleManifestXmlParser
     
-    private var categories: [ArticleCategory] = Array()
+    private var categories: [GodToolsToolParser.Category] = Array()
     private var downloadArticlesReceipt: ArticleManifestDownloadArticlesReceipt?
     
     private weak var flowDelegate: FlowDelegate?
@@ -27,16 +28,16 @@ class ArticleCategoriesViewModel: NSObject, ArticleCategoriesViewModelType {
     let numberOfCategories: ObservableValue<Int> = ObservableValue(value: 0)
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
         
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, translationManifest: TranslationManifestData, articleManifestAemRepository: ArticleManifestAemRepository, translationsFileCache: TranslationsFileCache, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageModel, manifest: Manifest, articleManifestAemRepository: ArticleManifestAemRepository, manifestResourcesCache: ManifestResourcesCache, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
-        self.translationZipFile = translationManifest.translationZipFile
+        self.language = language
+        self.manifest = manifest
         self.articleManifestAemRepository = articleManifestAemRepository
-        self.translationsFileCache = translationsFileCache
+        self.manifestResourcesCache = manifestResourcesCache
         self.localizationServices = localizationServices
         self.analytics = analytics
-        self.articleManifest = ArticleManifestXmlParser(xmlData: translationManifest.manifestXmlData)
         
         super.init()
                                             
@@ -68,7 +69,7 @@ class ArticleCategoriesViewModel: NSObject, ArticleCategoriesViewModelType {
     }
     
     private func reloadCategories() {
-        self.categories = articleManifest.categories
+        self.categories = manifest.categories
         numberOfCategories.accept(value: categories.count)
     }
 
@@ -78,7 +79,7 @@ class ArticleCategoriesViewModel: NSObject, ArticleCategoriesViewModelType {
         
         isLoading.accept(value: true)
         
-        downloadArticlesReceipt = articleManifestAemRepository.downloadAndCacheManifestAemUris(manifest: articleManifest, languageCode: translationZipFile.languageCode, forceDownload: forceDownload, completion: { [weak self] (result: ArticleAemRepositoryResult) in
+        downloadArticlesReceipt = articleManifestAemRepository.downloadAndCacheManifestAemUris(manifest: manifest, languageCode: language.code, forceDownload: forceDownload, completion: { [weak self] (result: ArticleAemRepositoryResult) in
             
             DispatchQueue.main.async { [weak self] in
                 self?.isLoading.accept(value: false)
@@ -94,19 +95,19 @@ class ArticleCategoriesViewModel: NSObject, ArticleCategoriesViewModelType {
     
     func categoryWillAppear(index: Int) -> ArticleCategoryCellViewModelType {
         
-        let category: ArticleCategory = categories[index]
+        let category: GodToolsToolParser.Category = categories[index]
         
         return ArticleCategoryCellViewModel(
             category: category,
-            translationsFileCache: translationsFileCache
+            manifestResourcesCache: manifestResourcesCache
         )
     }
     
     func categoryTapped(index: Int) {
         
-        let category: ArticleCategory = categories[index]
+        let category: GodToolsToolParser.Category = categories[index]
         
-        flowDelegate?.navigate(step: .articleCategoryTappedFromArticleCategories(resource: resource, translationZipFile: translationZipFile, category: category, articleManifest: articleManifest, currentArticleDownloadReceipt: downloadArticlesReceipt))
+        flowDelegate?.navigate(step: .articleCategoryTappedFromArticleCategories(resource: resource, language: language, category: category, manifest: manifest, currentArticleDownloadReceipt: downloadArticlesReceipt))
     }
     
     func refreshArticles() {

@@ -8,15 +8,19 @@
 
 import Foundation
 
-class LanguagesListItemViewModel: ObservableObject {
+class LanguagesListItemViewModel: BaseLanguagesListItemViewModel {
     
     private let language: ToolLanguageModel
+    private let selectedLanguageId: String?
     
-    @Published var name: String = ""
-    
-    required init(language: ToolLanguageModel) {
+    init(language: ToolLanguageModel, selectedLanguageId: String?) {
         
         self.language = language
+        self.selectedLanguageId = selectedLanguageId
+        
+        super.init()
+        
         self.name = language.name
+        self.isSelected = language.id == selectedLanguageId
     }
 }

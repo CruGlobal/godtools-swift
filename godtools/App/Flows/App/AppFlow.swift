@@ -41,6 +41,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     var chooseYourOwnAdventureFlow: ChooseYourOwnAdventureFlow?
     var lessonFlow: LessonFlow?
     var tractFlow: TractFlow?
+    var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
         
     init(appDiContainer: AppDiContainer, window: UIWindow, appDeepLinkingService: DeepLinkingServiceType) {
         
@@ -775,6 +776,7 @@ extension AppFlow {
         let viewModel = ParallelLanguageListViewModel(
             flowDelegate: self,
             dataDownloader: appDiContainer.initialDataDownloader,
+            languagesRepository: appDiContainer.getLanguagesRepository(),
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices
         )

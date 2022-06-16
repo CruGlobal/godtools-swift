@@ -65,18 +65,12 @@ enum FlowStep {
     // learnToShareTool
     case closeTappedFromLearnToShareTool(resource: ResourceModel)
     case continueTappedFromLearnToShareTool(resource: ResourceModel)
-        
+            
     // tool
     case homeTappedFromTool(isScreenSharing: Bool)
     case toolSettingsTappedFromTool(toolData: ToolSettingsFlowToolData)
-    case buttonWithUrlTappedFromMobileContentRenderer(url: String, exitLink: ExitLinkModel)
-    case trainingTipTappedFromMobileContentRenderer(event: TrainingTipEvent)
-    case errorOccurredFromMobileContentRenderer(error: MobileContentErrorViewModel)
     case tractFlowCompleted(state: TractFlowCompletedState)
-    
-    // tool training
-    case closeTappedFromToolTraining
-    
+        
     // setup parallel language
     case languageSelectorTappedFromSetupParallelLanguage
     case yesTappedFromSetupParallelLanguage
@@ -112,7 +106,7 @@ enum FlowStep {
     
     // article
     case backTappedFromArticleCategories
-    case articleCategoryTappedFromArticleCategories(resource: ResourceModel, translationZipFile: TranslationZipFileModel, category: ArticleCategory, articleManifest: ArticleManifestXmlParser, currentArticleDownloadReceipt: ArticleManifestDownloadArticlesReceipt?)
+    case articleCategoryTappedFromArticleCategories(resource: ResourceModel, language: LanguageModel, category: GodToolsToolParser.Category, manifest: Manifest, currentArticleDownloadReceipt: ArticleManifestDownloadArticlesReceipt?)
     case articleTappedFromArticles(resource: ResourceModel, aemCacheObject: ArticleAemCacheObject)
     case sharedTappedFromArticle(articleAemData: ArticleAemData)
     case articleFlowCompleted(state: ArticleFlowCompletedState)
@@ -124,10 +118,7 @@ enum FlowStep {
     // choose your own adventure
     case backTappedFromChooseYourOwnAdventure
     case chooseYourOwnAdventureFlowCompleted(state: ChooseYourOwnAdventureFlowCompletedState)
-    
-    // mobile content renderer events
-    case didTriggerDismissToolEventFromMobileContentRenderer
-    
+        
     // tool settings
     case closeTappedFromToolSettings
     case shareLinkTappedFromToolSettings

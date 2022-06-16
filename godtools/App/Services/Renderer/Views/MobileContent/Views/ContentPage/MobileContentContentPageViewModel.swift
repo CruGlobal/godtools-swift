@@ -15,17 +15,17 @@ class MobileContentContentPageViewModel: MobileContentPageViewModel, MobileConte
     private let renderedPageContext: MobileContentRenderedPageContext
     private let analytics: AnalyticsContainer
     
-    required init(flowDelegate: FlowDelegate, contentPage: Page, renderedPageContext: MobileContentRenderedPageContext, deepLinkService: DeepLinkingServiceType, analytics: AnalyticsContainer) {
+    required init(contentPage: Page, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer) {
         
         self.contentPage = contentPage
         self.renderedPageContext = renderedPageContext
         self.analytics = analytics
         
-        super.init(flowDelegate: flowDelegate, pageModel: contentPage, renderedPageContext: renderedPageContext, deepLinkService: deepLinkService, hidesBackgroundImage: false)
+        super.init(pageModel: contentPage, renderedPageContext: renderedPageContext, hidesBackgroundImage: false)
     }
     
-    required init(flowDelegate: FlowDelegate, pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, deepLinkService: DeepLinkingServiceType, hidesBackgroundImage: Bool) {
-        fatalError("init(flowDelegate:pageModel:renderedPageContext:deepLinkService:hidesBackgroundImage:) has not been implemented")
+    required init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, hidesBackgroundImage: Bool) {
+        fatalError("init(pageModel:renderedPageContext:hidesBackgroundImage:) has not been implemented")
     }
     
     private func getPageAnalyticsScreenName() -> String {

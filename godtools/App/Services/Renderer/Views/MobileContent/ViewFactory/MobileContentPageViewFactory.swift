@@ -14,17 +14,12 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
     
     private let mobileContentAnalytics: MobileContentAnalytics
     private let fontService: FontService
-    private let deepLinkingService: DeepLinkingServiceType
     private let analytics: AnalyticsContainer
-    
-    private(set) weak var flowDelegate: FlowDelegate?
-    
-    required init(flowDelegate: FlowDelegate, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, deepLinkingService: DeepLinkingServiceType, analytics: AnalyticsContainer) {
         
-        self.flowDelegate = flowDelegate
+    required init(mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, analytics: AnalyticsContainer) {
+        
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
-        self.deepLinkingService = deepLinkingService
         self.analytics = analytics
     }
     
@@ -110,16 +105,9 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let contentPage = renderableModel as? ContentPage {
             
-            guard let flowDelegate = self.flowDelegate else {
-                // TODO: Return an error here if flowDelegate is null for some reason. ~Levi
-                return nil
-            }
-            
             let viewModel = MobileContentContentPageViewModel(
-                flowDelegate: flowDelegate,
                 contentPage: contentPage,
                 renderedPageContext: renderedPageContext,
-                deepLinkService: deepLinkingService,
                 analytics: analytics
             )
             
@@ -128,17 +116,10 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             return view
         }
         else if let cardCollectionPage = renderableModel as? CardCollectionPage {
-            
-            guard let flowDelegate = self.flowDelegate else {
-                // TODO: Return an error here if flowDelegate is null for some reason. ~Levi
-                return nil
-            }
-            
+
             let viewModel = MobileContentCardCollectionPageViewModel(
-                flowDelegate: flowDelegate,
                 cardCollectionPage: cardCollectionPage,
                 renderedPageContext: renderedPageContext,
-                deepLinkService: deepLinkingService,
                 analytics: analytics
             )
             

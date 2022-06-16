@@ -16,12 +16,15 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOw
     private let localizationServices: LocalizationServices
     private let fontService: FontService
     
+    private weak var flowDelegate: FlowDelegate?
+    
     let backButtonImage: ObservableValue<UIImage?>
     let navBarColors: ObservableValue<ChooseYourOwnAdventureNavBarModel>
     let navBarTitleType: ChooseYourOwnAdventureNavBarTitleType
     
-    required init(flowDelegate: FlowDelegate, primaryManifest: Manifest, renderer: MobileContentRenderer, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, localizationServices: LocalizationServices, fontService: FontService, trainingTipsEnabled: Bool) {
+    required init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, localizationServices: LocalizationServices, fontService: FontService, trainingTipsEnabled: Bool) {
         
+        self.flowDelegate = flowDelegate
         self.localizationServices = localizationServices
         self.fontService = fontService
         
@@ -30,6 +33,8 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOw
         let navBarColor: UIColor
         let navBarControlColor: UIColor
 
+        let primaryManifest: Manifest = renderer.pageRenderers[0].manifest
+        
         navBarColor = primaryManifest.navBarColor
         navBarControlColor = primaryManifest.navBarControlColor
         
@@ -51,11 +56,11 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOw
             navBarTitleType = .title(title: "GodTools")
         }
         
-        super.init(flowDelegate: flowDelegate, renderer: renderer, page: page, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .chooseYourOwnAdventure, trainingTipsEnabled: trainingTipsEnabled)
+        super.init(renderer: renderer, page: page, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .chooseYourOwnAdventure, trainingTipsEnabled: trainingTipsEnabled)
     }
 
-    required init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool) {
-        fatalError("init(flowDelegate:renderer:page:mobileContentEventAnalytics:initialPageRenderingType:trainingTipsEnabled:) has not been implemented")
+    required init(renderer: MobileContentRenderer, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool) {
+        fatalError("init(renderer:page:mobileContentEventAnalytics:initialPageRenderingType:trainingTipsEnabled:) has not been implemented")
     }
     
     override func pageDidAppear(page: Int) {

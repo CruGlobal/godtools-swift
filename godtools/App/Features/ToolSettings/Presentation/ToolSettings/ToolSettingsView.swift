@@ -9,11 +9,12 @@ import SwiftUI
 
 struct ToolSettingsView: View {
     
-    @ObservedObject var viewModel: BaseToolSettingsViewModel
+    @ObservedObject var viewModel: ToolSettingsViewModel
     
     private let contentInsets: EdgeInsets = EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 20)
     private let separatorLineSpacing: CGFloat = 25
     private let primaryTextColor: Color = Color(.sRGB, red: 84 / 256, green: 84 / 256, blue: 84 / 256, opacity: 1)
+    private let bottomSpace: CGFloat = 15
     
     var body: some View {
         GeometryReader { geometry in
@@ -21,7 +22,7 @@ struct ToolSettingsView: View {
             VStack {
                 
                 ToolSettingsTopBarView(
-                    viewModel: viewModel.getTopBarViewModel(),
+                    viewModel: viewModel,
                     primaryTextColor: primaryTextColor,
                     leadingInset: contentInsets.leading,
                     trailingInset: contentInsets.trailing
@@ -31,7 +32,7 @@ struct ToolSettingsView: View {
                     VStack {
                         
                         ToolSettingsOptionsView(
-                            viewModel: viewModel.getOptionsViewModel(),
+                            viewModel: viewModel,
                             leadingInset: contentInsets.leading,
                             trailingInset: contentInsets.trailing
                         )
@@ -43,25 +44,32 @@ struct ToolSettingsView: View {
                         )
                         
                         ToolSettingsChooseLanguageView(
-                            viewModel: viewModel.getChooseLanguageViewModel(),
+                            viewModel: viewModel,
                             geometryProxy: geometry,
                             leadingInset: contentInsets.leading,
                             trailingInset: contentInsets.trailing,
                             primaryTextColor: primaryTextColor
                         )
                         
-                        ToolSettingsSeparatorView(
-                            separatorSpacing: separatorLineSpacing,
-                            separatorLeadingInset: contentInsets.leading,
-                            separatorTrailingInset: contentInsets.trailing
-                        )
+                        if !viewModel.hidesShareables {
+                            
+                            ToolSettingsSeparatorView(
+                                separatorSpacing: separatorLineSpacing,
+                                separatorLeadingInset: contentInsets.leading,
+                                separatorTrailingInset: contentInsets.trailing
+                            )
+                            
+                            ToolSettingsShareablesView(
+                                viewModel: viewModel,
+                                primaryTextColor: primaryTextColor,
+                                leadingInset: contentInsets.leading,
+                                trailingInset: contentInsets.trailing
+                            )
+                        }
                         
-                        ToolSettingsShareablesView(
-                            viewModel: viewModel.getShareablesViewModel(),
-                            primaryTextColor: primaryTextColor,
-                            leadingInset: contentInsets.leading,
-                            trailingInset: contentInsets.trailing
-                        )
+                        Rectangle()
+                            .frame(maxWidth: .infinity, minHeight: bottomSpace, maxHeight: bottomSpace)
+                            .foregroundColor(.clear)
                     }
                 }
             }
@@ -69,13 +77,5 @@ struct ToolSettingsView: View {
         .padding(EdgeInsets(top: contentInsets.top, leading: 0, bottom: 0, trailing: 0))
         .background(Color.white)
         .cornerRadius(12)
-    }
-}
-
-struct ToolSettingsView_Preview: PreviewProvider {
-    
-    static var previews: some View {
-        
-        ToolSettingsView(viewModel: BaseToolSettingsViewModel())
     }
 }

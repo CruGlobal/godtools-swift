@@ -18,24 +18,22 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     private var safeArea: UIEdgeInsets?
     private var pageModels: [Page] = Array()
     
+    private(set) var renderer: MobileContentRenderer
     private(set) var currentPageRenderer: MobileContentPageRenderer?
     private(set) var currentPage: Int = 0
     private(set) var highestPageNumberViewed: Int = 0
     private(set) var trainingTipsEnabled: Bool = false
     
     private(set) weak var window: UIViewController?
-    private(set) weak var flowDelegate: FlowDelegate?
     
-    let renderer: MobileContentRenderer
     let numberOfPages: ObservableValue<Int> = ObservableValue(value: 0)
     let pageNavigationSemanticContentAttribute: UISemanticContentAttribute
     let rendererWillChangeSignal: Signal = Signal()
     let pageNavigation: ObservableValue<MobileContentPagesNavigationModel?> = ObservableValue(value: nil)
     let pagesRemoved: ObservableValue<[IndexPath]> = ObservableValue(value: [])
     
-    required init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool) {
+    required init(renderer: MobileContentRenderer, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool) {
         
-        self.flowDelegate = flowDelegate
         self.renderer = renderer
         self.startingPage = page
         self.mobileContentEventAnalytics = mobileContentEventAnalytics
@@ -221,6 +219,29 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         setPageRenderer(pageRenderer: pageRenderer)
     }
     
+    func setRenderer(renderer: MobileContentRenderer, pageRendererIndex: Int?) {
+            
+        let pageRenderer: MobileContentPageRenderer?
+        
+        if let pageRendererIndex = pageRendererIndex, pageRendererIndex >= 0 && pageRendererIndex < renderer.pageRenderers.count {
+            pageRenderer = renderer.pageRenderers[pageRendererIndex]
+        }
+        else if let firstPageRenderer = renderer.pageRenderers.first {
+            pageRenderer = firstPageRenderer
+        }
+        else {
+            pageRenderer = nil
+        }
+        
+        guard let pageRenderer = pageRenderer else {
+            return
+        }
+
+        self.renderer = renderer
+        
+        setPageRenderer(pageRenderer: pageRenderer)
+    }
+    
     func setPageRenderer(pageRenderer: MobileContentPageRenderer) {
         
         let pageRenderers: [MobileContentPageRenderer] = renderer.pageRenderers
@@ -349,7 +370,12 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     
     func handleDismissToolEvent() {
         
-        flowDelegate?.navigate(step: .didTriggerDismissToolEventFromMobileContentRenderer)
+        let event = DismissToolEvent(
+            resource: renderer.resource,
+            highestPageNumberViewed: highestPageNumberViewed
+        )
+        
+        renderer.navigation.dismissTool(event: event)
     }
     
     func setTrainingTipsEnabled(enabled: Bool) {

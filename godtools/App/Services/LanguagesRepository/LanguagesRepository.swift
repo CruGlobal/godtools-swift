@@ -26,6 +26,15 @@ class LanguagesRepository {
         return LanguageModel(model: realmLanguage)
     }
     
+    func getLanguage(code: String) -> LanguageModel? {
+        
+        guard let realmLanguage = cache.getLanguage(code: code) else {
+            return nil
+        }
+        
+        return LanguageModel(model: realmLanguage)
+    }
+    
     func getLanguages(ids: [String]) -> [LanguageModel] {
         
         var languages: [LanguageModel] = Array()
@@ -40,5 +49,10 @@ class LanguagesRepository {
         }
         
         return languages
+    }
+    
+    func getAllLanguages() -> [LanguageModel] {
+        
+        return cache.getLanguages().map({LanguageModel(model: $0)})
     }
 }
