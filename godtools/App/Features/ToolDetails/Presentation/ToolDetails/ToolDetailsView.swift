@@ -20,6 +20,8 @@ struct ToolDetailsView: View {
         
         GeometryReader { geometry in
             
+            let contentWidth: CGFloat = geometry.size.width - contentInsets.leading - contentInsets.trailing
+            
             VStack(alignment: .leading, spacing: 0) {
                 
                 ToolDetailsMediaView(viewModel: viewModel, width: geometry.size.width)
@@ -29,7 +31,7 @@ struct ToolDetailsView: View {
                     ToolDetailsTitleHeaderView(viewModel: viewModel)
                         .padding(EdgeInsets(top: 40, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))
                     
-                    ToolDetailsPrimaryButtonsView(viewModel: viewModel, primaryButtonWidth: geometry.size.width - contentInsets.leading - contentInsets.trailing)
+                    ToolDetailsPrimaryButtonsView(viewModel: viewModel, primaryButtonWidth: contentWidth)
                         .padding(EdgeInsets(top: 16, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))                    
                                         
                     SegmentControl(selectedIndex: $selectedSegmentIndex, segments: [viewModel.aboutTitle, viewModel.versionsTitle], segmentTappedClosure: { (index: Int) in
@@ -41,7 +43,7 @@ struct ToolDetailsView: View {
                         .frame(width: geometry.size.width, height: 20)
                         .foregroundColor(.clear)
                                         
-                    ToolDetailsAboutView(viewModel: viewModel, width: geometry.size.width - contentInsets.leading - contentInsets.trailing)
+                    ToolDetailsAboutView(viewModel: viewModel, width: contentWidth)
                         .padding(EdgeInsets(top: 0, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))
                 }
             }
