@@ -39,7 +39,7 @@ class OnboardingTutorialIntroView: UIView, NibBased {
         
         let playsInFullScreen = 0
         
-        return ["playsinline": playsInFullScreen]
+        return [Strings.YoutubePlayerParameters.playsInline.rawValue: playsInFullScreen]
     }
     
     override func layoutSubviews() {

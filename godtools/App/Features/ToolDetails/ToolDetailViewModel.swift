@@ -57,7 +57,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         if !resource.attrAboutOverviewVideoYoutube.isEmpty {
             
             let playsInFullScreen: Int = 0
-            let playerParameters: [String: Any] = ["playsinline": playsInFullScreen]
+            let playerParameters: [String: Any] = [Strings.YoutubePlayerParameters.playsInline.rawValue: playsInFullScreen]
             
             bannerValue = .youtube(videoId: resource.attrAboutOverviewVideoYoutube, playerParameters: playerParameters)
         }
