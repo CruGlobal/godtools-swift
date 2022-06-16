@@ -132,7 +132,7 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
             languagesRepository: languagesRepository
         )
         
-        getToolTranslationsUseCase.getToolTranslations(determineToolTranslationsToDownload: determineToolTranslationsToDownload, downloadStarted: { [weak self] in
+        getToolTranslationsUseCase.getToolTranslations(determineToolTranslationsToDownload: determineToolTranslationsToDownload, downloadStarted: {
             // download started, currently nothing will be shown while this downloads in the background. ~Levi
         }, downloadFinished: { [weak self] (result: Result<ToolTranslations, GetToolTranslationsError>) in
             DispatchQueue.main.async { [weak self] in
@@ -151,7 +151,7 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
                         hidesLearnToShareToolButtonValue = true
                     }
                     
-                case .failure(let error):
+                case .failure( _):
                     
                     hidesLearnToShareToolButtonValue = true
                 }
