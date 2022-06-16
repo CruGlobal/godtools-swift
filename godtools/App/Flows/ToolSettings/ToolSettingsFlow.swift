@@ -199,8 +199,16 @@ class ToolSettingsFlow: Flow {
             
             swapToolPrimaryAndParallelLanguage()
             
-        case .shareableTappedFromToolSettings(let shareable, let imageToShare):
-                    
+        case .shareableTappedFromToolSettings(let imageToShare):
+                   
+            let viewModel = ReviewShareShareableViewModel(imageToShare: imageToShare)
+            
+            let view = ReviewShareShareableHostingView(view: ReviewShareShareableView(viewModel: viewModel))
+            
+            navigationController.present(view, animated: true, completion: nil)
+            
+            // TODO: This will need to be presented when tapping share image from ReviewShareShareableView. ~Levi
+            /*
             let viewModel = ShareShareableViewModel(
                 shareable: shareable,
                 imageToShare: imageToShare
@@ -208,7 +216,7 @@ class ToolSettingsFlow: Flow {
             
             let view = ShareShareableView(viewModel: viewModel)
                         
-            navigationController.present(view, animated: true, completion: nil)
+            navigationController.present(view, animated: true, completion: nil)*/
             
         default:
             break
