@@ -12,7 +12,7 @@ struct ToolCardsView: View {
     
     // MARK: - Properties
     
-    @ObservedObject var viewModel: AllToolsContentViewModel
+    @ObservedObject var viewModel: ToolCardsViewModel
     let width: CGFloat
     let leadingPadding: CGFloat
     
@@ -42,15 +42,13 @@ struct ToolCardsView_Previews: PreviewProvider {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
-        let viewModel = AllToolsContentViewModel(
-            flowDelegate: MockFlowDelegate(),
+        let viewModel = ToolCardsViewModel(
             dataDownloader: appDiContainer.initialDataDownloader,
             deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
-            favoritingToolMessageCache: appDiContainer.favoritingToolMessageCache,
-            analytics: appDiContainer.analytics
+            delegate: nil
         )
         
         GeometryReader { geo in

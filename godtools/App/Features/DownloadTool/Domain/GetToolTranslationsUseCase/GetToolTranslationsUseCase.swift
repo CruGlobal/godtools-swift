@@ -57,7 +57,7 @@ class GetToolTranslationsUseCase: NSObject {
         destroyDownloadTranslationsReceipt()
     }
     
-    func getToolTranslations(determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, downloadStarted: @escaping (() -> Void), downloadFinished: @escaping ((_ result: Result<ToolTranslations, GetToolTranslationsError>) -> Void)) -> OperationQueue? {
+    func getToolTranslations(determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, downloadStarted: @escaping (() -> Void), downloadFinished: @escaping ((_ result: Result<ToolTranslations, GetToolTranslationsError>) -> Void)) {
         
         let downloadResourcesNeeded: Bool
         let downloadTranslationsNeeded: [TranslationId]
@@ -144,8 +144,6 @@ class GetToolTranslationsUseCase: NSObject {
             
             downloadFinished(.failure(.failedToDownloadTranslations(translationDownloaderErrors: [])))
         }
-        
-        return nil
     }
 }
 

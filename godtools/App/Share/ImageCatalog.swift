@@ -14,6 +14,7 @@ enum ImageCatalog: String {
     case accordionSectionMinus = "accordion_section_minus"
     case favorited = "favorited"
     case favoritedCircle = "favorited_circle"
+    case favoriteIcon = "favorite_icon"
     case lessonPageLeftArrow = "lesson_page_left_arrow"
     case lessonPageRightArrow = "lesson_page_right_arrow"
     case navClose = "nav_item_close"
@@ -45,6 +46,7 @@ enum ImageCatalog: String {
     case tutorialToolNonEnglish = "tutorial_tool_non_english"
     case tutorialPeople = "tutorial_people"
     case unfavoritedCircle = "unfavorited_circle"
+    case unfavoriteIcon = "unfavorite_icon"
     
     var image: UIImage? {
         return UIImage(named: rawValue)

@@ -18,12 +18,14 @@ struct SpotlightTitleView: View {
     // MARK: - Body
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 3) {
             
             Text(title)
                 .font(FontLibrary.sfProTextRegular.font(size: 22))
+                .foregroundColor(ColorPalette.gtGrey.color)
             Text(subtitle)
                 .font(FontLibrary.sfProTextRegular.font(size: 12))
+                .foregroundColor(ColorPalette.gtGrey.color)
         }
     }
 }
