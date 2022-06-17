@@ -17,12 +17,12 @@ struct ToolDetailsTitleHeaderView: View {
         VStack(alignment: .leading, spacing: 0) {
             
             Text(viewModel.name)
-                .foregroundColor(ColorPalette.primaryTextColor.color)
+                .foregroundColor(ColorPalette.gtGrey.color)
                 .font(FontLibrary.sfProDisplayLight.font(size: 28))
                 .frame(maxWidth: .infinity, alignment: .leading)
             
             Text(viewModel.totalViews)
-                .foregroundColor(ColorPalette.primaryTextColor.color)
+                .foregroundColor(ColorPalette.gtGrey.color)
                 .font(FontLibrary.sfProTextRegular.font(size: 16))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(EdgeInsets(top: 18, leading: 0, bottom: 0, trailing: 0))

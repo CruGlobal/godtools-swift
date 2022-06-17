@@ -17,7 +17,6 @@ enum ColorPalette {
     case gtLightGrey
     case media
     case primaryNavBar
-    case primaryTextColor
     case progressBarBlue
     case banner
     
@@ -29,7 +28,6 @@ enum ColorPalette {
         case .gtLightGrey:      return Color("gtLightGrey")
         case .media:            return Color("media")
         case .primaryNavBar:    return Color("gtBlue")
-        case .primaryTextColor: return Color("primaryTextColor")
         case .progressBarBlue:  return Color("progressBarBlue")
         case .banner:           return Color("banner")
         }
@@ -48,7 +46,6 @@ enum ColorPalette {
             case .gtLightGrey:      return getGtLightGreyColor()
             case .media:            return getMediaColor()
             case .primaryNavBar:    return getGtBlueColor()
-            case .primaryTextColor: return getPrimaryTextColor()
             case .progressBarBlue:  return getProgressBarBlueColor()
             case .banner:           return getBannerColor()
             }
@@ -69,10 +66,6 @@ enum ColorPalette {
     
     private func getMediaColor() -> UIColor {
         return UIColor(red: 230 / 255, green: 230 / 255, blue: 230 / 255, alpha: 1.0)
-    }
-    
-    private func getPrimaryTextColor() -> UIColor {
-        return UIColor(red: 90 / 255, green: 90 / 255, blue: 90 / 255, alpha: 1.0)
     }
     
     private func getProgressBarBlueColor() -> UIColor {

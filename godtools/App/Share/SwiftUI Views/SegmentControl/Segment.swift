@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Segment: View {
     
-    private let selectedTextColor: Color = ColorPalette.primaryTextColor.color
+    private let selectedTextColor: Color = ColorPalette.gtGrey.color
     private let deselectedTextColor: Color = Color(.sRGB, red: 190 / 255, green: 190 / 255, blue: 190 / 255, opacity: 1)
     private let underlineColor: Color = ColorPalette.gtBlue.color
     private let underlineHeight: CGFloat = 3

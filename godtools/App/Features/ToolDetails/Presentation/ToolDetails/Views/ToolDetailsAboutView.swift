@@ -18,7 +18,7 @@ struct ToolDetailsAboutView: View {
         
         TextWithLinks(
             text: viewModel.aboutDetails,
-            textColor: ColorPalette.primaryTextColor.uiColor,
+            textColor: ColorPalette.gtGrey.uiColor,
             font: FontLibrary.sfProTextRegular.uiFont(size: 16),
             lineSpacing: 3,
             width: width,
