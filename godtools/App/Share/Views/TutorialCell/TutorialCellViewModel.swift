@@ -45,7 +45,7 @@ class TutorialCellViewModel: TutorialCellViewModelType {
             let playsInFullScreen = 0
             
             let youTubeVideoParameters: [String : Any] = [
-                "playsinline": playsInFullScreen
+                Strings.YoutubePlayerParameters.playsInline.rawValue: playsInFullScreen
             ]
             
             assetContent = .video(youTubeVideoId: youTubeVideoId, youTubeVideoParameters: youTubeVideoParameters)
