@@ -12,8 +12,6 @@ struct ToolDetailsPrimaryButtonsView: View {
     
     private let primaryButtonHeight: CGFloat = 55
     private let primaryButtonCornerRadius: CGFloat = 8
-    private let addToFavoritesButtonColor: Color = ColorPalette.gtBlue.color
-    private let removeFromFavoritesButtonColor: Color = Color(.sRGB, red: 229 / 255, green: 91 / 255, blue: 54 / 255, opacity: 1.0)
     
     @ObservedObject var viewModel: ToolDetailsViewModel
        
@@ -46,47 +44,12 @@ struct ToolDetailsPrimaryButtonsView: View {
                 .cornerRadius(primaryButtonCornerRadius)
             }
             
-            if !viewModel.hidesAddToFavoritesButton {
-                
-                Button(action: {
-                    viewModel.addToFavoritesTapped()
-                }) {
-                    
-                    HStack(alignment: .center, spacing: 8) {
-                        Image(ImageCatalog.favoriteIcon.name)
-                        Text(viewModel.addToFavoritesButtonTitle)
-                            .foregroundColor(addToFavoritesButtonColor)
-                    }
-                }
-                .frame(width: primaryButtonWidth, height: primaryButtonHeight, alignment: .center)
-                .background(Color.white)
-                .accentColor(addToFavoritesButtonColor)
-                .overlay(
-                        RoundedRectangle(cornerRadius: primaryButtonCornerRadius)
-                            .stroke(addToFavoritesButtonColor, lineWidth: 1)
-                    )
-            }
-            
-            if !viewModel.hidesRemoveFromFavoritesButton {
-                
-                Button(action: {
-                    viewModel.removeFromFavoritesTapped()
-                }) {
-                    
-                    HStack(alignment: .center, spacing: 8) {
-                        Image(ImageCatalog.unfavoriteIcon.name)
-                        Text(viewModel.removeFromFavoritesButtonTitle)
-                            .foregroundColor(removeFromFavoritesButtonColor)
-                    }
-                }
-                .frame(width: primaryButtonWidth, height: primaryButtonHeight, alignment: .center)
-                .background(Color.white)
-                .accentColor(removeFromFavoritesButtonColor)
-                .overlay(
-                        RoundedRectangle(cornerRadius: primaryButtonCornerRadius)
-                            .stroke(removeFromFavoritesButtonColor, lineWidth: 1)
-                    )
-            }
+            ToolDetailsToggleFavoriteButton(
+                viewModel: viewModel,
+                width: primaryButtonWidth,
+                height: primaryButtonHeight,
+                cornerRadius: primaryButtonCornerRadius
+            )
         }
     }
 }

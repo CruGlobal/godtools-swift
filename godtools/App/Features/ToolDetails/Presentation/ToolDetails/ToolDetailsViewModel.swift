@@ -30,8 +30,7 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
     @Published var addToFavoritesButtonTitle: String = ""
     @Published var removeFromFavoritesButtonTitle: String = ""
     @Published var hidesLearnToShareToolButton: Bool = true
-    @Published var hidesAddToFavoritesButton: Bool = false
-    @Published var hidesRemoveFromFavoritesButton: Bool = true
+    @Published var isFavorited: Bool = false
     @Published var aboutTitle: String = ""
     @Published var versionsTitle: String = ""
     @Published var aboutDetails: String = ""
@@ -163,14 +162,7 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
     
     private func reloadFavorited() {
                 
-        if favoritedResourcesCache.isFavorited(resourceId: resource.id) {
-            hidesAddToFavoritesButton = true
-            hidesRemoveFromFavoritesButton = false
-        }
-        else {
-            hidesAddToFavoritesButton = false
-            hidesRemoveFromFavoritesButton = true
-        }
+        isFavorited = favoritedResourcesCache.isFavorited(resourceId: resource.id)
     }
     
     private func reloadToolDetails() {
@@ -228,14 +220,16 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
         flowDelegate?.navigate(step: .learnToShareToolTappedFromToolDetails(resource: resource))
     }
     
-    func addToFavoritesTapped() {
+    func toggleFavorited() {
         
-        favoritedResourcesCache.addToFavorites(resourceId: resource.id)
-    }
-    
-    func removeFromFavoritesTapped() {
-       
-        favoritedResourcesCache.removeFromFavorites(resourceId: resource.id)
+        if isFavorited {
+            
+            favoritedResourcesCache.removeFromFavorites(resourceId: resource.id)
+        }
+        else {
+            
+            favoritedResourcesCache.addToFavorites(resourceId: resource.id)
+        }
     }
     
     func urlTapped(url: URL) {
