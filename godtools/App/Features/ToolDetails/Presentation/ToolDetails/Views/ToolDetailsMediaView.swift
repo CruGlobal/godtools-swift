@@ -61,6 +61,6 @@ struct ToolDetailsMediaView: View {
             }
         }
         .frame(width: mediaViewSize.width, height: mediaViewSize.height, alignment: .leading)
-        .background(ColorPalette.media.color)
+        .background(ColorPalette.gtLightestGrey.color)
     }
 }

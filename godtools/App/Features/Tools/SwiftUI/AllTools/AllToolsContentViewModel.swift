@@ -21,10 +21,38 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let favoritingToolMessageCache: FavoritingToolMessageCache
     private let analytics: AnalyticsContainer
+        
+    private(set) lazy var spotlightViewModel: ToolSpotlightViewModel = {
+        ToolSpotlightViewModel(
+            dataDownloader: dataDownloader,
+            deviceAttachmentBanners: deviceAttachmentBanners,
+            favoritedResourcesCache: favoritedResourcesCache,
+            languageSettingsService: languageSettingsService,
+            localizationServices: localizationServices,
+            delegate: self
+        )
+    }()
+    private(set) lazy var categoriesViewModel: ToolCategoriesViewModel = {
+        ToolCategoriesViewModel(
+            dataDownloader: dataDownloader,
+            languageSettingsService: languageSettingsService,
+            localizationServices: localizationServices,
+            delegate: self
+        )
+    }()
+    private(set) lazy var toolCardsViewModel: ToolCardsViewModel = {
+        ToolCardsViewModel(
+            dataDownloader: dataDownloader,
+            deviceAttachmentBanners: deviceAttachmentBanners,
+            languageSettingsService: languageSettingsService,
+            localizationServices: localizationServices,
+            favoritedResourcesCache: favoritedResourcesCache,
+            delegate: self
+        )
+    }()
     
     // MARK: - Published
     
-    @Published var tools: [ResourceModel] = []
     @Published var isLoading: Bool = false
     @Published var hideFavoritingToolBanner: Bool
     
@@ -42,14 +70,6 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
         self.hideFavoritingToolBanner = favoritingToolMessageCache.favoritingToolMessageDisabled
         
         super.init()
-        
-        setupBinding()
-    }
-    
-    deinit {
-        print("x deinit: \(type(of: self))")
-        dataDownloader.cachedResourcesAvailable.removeObserver(self)
-        dataDownloader.resourcesUpdatedFromRemoteDatabase.removeObserver(self)
     }
 }
 
@@ -57,29 +77,7 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
 
 extension AllToolsContentViewModel {
     
-    func spotlightViewModel() -> ToolSpotlightViewModel {
-        return ToolSpotlightViewModel(
-            dataDownloader: dataDownloader,
-            deviceAttachmentBanners: deviceAttachmentBanners,
-            favoritedResourcesCache: favoritedResourcesCache,
-            languageSettingsService: languageSettingsService,
-            localizationServices: localizationServices,
-            delegate: self
-        )
-    }
-    
-    func cardViewModel(for tool: ResourceModel) -> ToolCardViewModel {
-        return ToolCardViewModel(
-            resource: tool,
-            dataDownloader: dataDownloader,
-            deviceAttachmentBanners: deviceAttachmentBanners,
-            favoritedResourcesCache: favoritedResourcesCache,
-            languageSettingsService: languageSettingsService,
-            localizationServices: localizationServices
-        )
-    }
-    
-    func favoritingToolBannerViewModel() -> FavoritingToolBannerViewModel {
+    func getFavoritingToolBannerViewModel() -> FavoritingToolBannerViewModel {
         
         return FavoritingToolBannerViewModel(localizationServices: localizationServices, delegate: self)
     }
@@ -87,48 +85,15 @@ extension AllToolsContentViewModel {
     func refreshTools() {
         dataDownloader.downloadInitialData()
     }
-    
-    func toolTapped(resource: ResourceModel) {
-        trackToolTappedAnalytics()
-        flowDelegate?.navigate(step: .aboutToolTappedFromAllTools(resource: resource))
-    }
 }
 
 // MARK: - Private
 
 extension AllToolsContentViewModel {
     
-    private func setupBinding() {
-        
-        dataDownloader.cachedResourcesAvailable.addObserver(self) { [weak self] (cachedResourcesAvailable: Bool) in
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                
-                self.isLoading = !cachedResourcesAvailable
-                if cachedResourcesAvailable {
-                    self.reloadResourcesFromCache()
-                }
-            }
-        }
-        
-        dataDownloader.resourcesUpdatedFromRemoteDatabase.addObserver(self) { [weak self] (error: InitialDataDownloaderError?) in
-            DispatchQueue.main.async { [weak self] in
-                if error == nil {
-                    self?.reloadResourcesFromCache()
-                }
-            }
-        }
-    }
-    
-    private func reloadResourcesFromCache() {
-        let sortedResources: [ResourceModel] = dataDownloader.resourcesCache.getSortedResources()
-        let resources: [ResourceModel] = sortedResources.filter({
-            let resourceType: ResourceType = $0.resourceTypeEnum
-            return (resourceType == .tract || resourceType == .article || resourceType == .chooseYourOwnAdventure) && !$0.isHidden
-        })
-        
-        tools = resources
-        isLoading = false
+    private func toolTapped(resource: ResourceModel) {
+        trackToolTappedAnalytics()
+        flowDelegate?.navigate(step: .aboutToolTappedFromAllTools(resource: resource))
     }
 }
 
@@ -148,6 +113,28 @@ extension AllToolsContentViewModel: ToolSpotlightDelegate {
     
     func spotlightCardTapped(resource: ResourceModel) {
         toolTapped(resource: resource)
+    }
+}
+
+// MARK: - ToolCategoriesViewModelDelegate
+
+extension AllToolsContentViewModel: ToolCategoriesViewModelDelegate {
+    
+    func filterToolsWithCategory(_ attrCategory: String?) {
+        toolCardsViewModel.filterTools(with: attrCategory)
+    }
+}
+
+// MARK: - ToolCardsViewModelDelegate
+
+extension AllToolsContentViewModel: ToolCardsViewModelDelegate {
+    
+    func toolCardTapped(resource: ResourceModel) {
+        toolTapped(resource: resource)
+    }
+    
+    func toolsAreLoading(_ isLoading: Bool) {
+        self.isLoading = isLoading
     }
 }
 

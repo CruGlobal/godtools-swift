@@ -15,7 +15,7 @@ enum ColorPalette {
     case gtBlue
     case gtGrey
     case gtLightGrey
-    case media
+    case gtLightestGrey
     case primaryNavBar
     case progressBarBlue
     case banner
@@ -23,13 +23,13 @@ enum ColorPalette {
     // This var uses custom SwiftUI color sets in the asset catalog
     var color: Color {
         switch self {
-        case .gtBlue:           return Color("gtBlue")
-        case .gtGrey:           return Color("gtGrey")
-        case .gtLightGrey:      return Color("gtLightGrey")
-        case .media:            return Color("media")
-        case .primaryNavBar:    return Color("gtBlue")
-        case .progressBarBlue:  return Color("progressBarBlue")
-        case .banner:           return Color("banner")
+        case .gtBlue:               return Color("gtBlue")
+        case .gtGrey:               return Color("gtGrey")
+        case .gtLightGrey:          return Color("gtLightGrey")
+        case .gtLightestGrey:       return Color("gtLightestGrey")
+        case .primaryNavBar:        return Color("gtBlue")
+        case .progressBarBlue:      return Color("progressBarBlue")
+        case .banner:               return Color("banner")
         }
     }
     
@@ -44,7 +44,7 @@ enum ColorPalette {
             case .gtBlue:           return getGtBlueColor()
             case .gtGrey:           return getGtBlueColor()
             case .gtLightGrey:      return getGtLightGreyColor()
-            case .media:            return getMediaColor()
+            case .gtLightestGrey:   return getGtLightestGreyColor()
             case .primaryNavBar:    return getGtBlueColor()
             case .progressBarBlue:  return getProgressBarBlueColor()
             case .banner:           return getBannerColor()
@@ -64,7 +64,7 @@ enum ColorPalette {
         return UIColor(red: 128 / 255, green: 130 / 255, blue: 132 / 255, alpha: 1.0)
     }
     
-    private func getMediaColor() -> UIColor {
+    private func getGtLightestGreyColor() -> UIColor {
         return UIColor(red: 230 / 255, green: 230 / 255, blue: 230 / 255, alpha: 1.0)
     }
     

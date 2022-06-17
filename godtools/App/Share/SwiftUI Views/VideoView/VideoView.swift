@@ -41,9 +41,9 @@ struct VideoView: UIViewRepresentable {
         containerView.addSubview(loadingView)
         loadingView.addSubview(loadingActivityIndicator)
         
-        containerView.backgroundColor = ColorPalette.media.uiColor
+        containerView.backgroundColor = ColorPalette.gtLightestGrey.uiColor
         youtubePlayerView.backgroundColor = .white
-        loadingView.backgroundColor = ColorPalette.media.uiColor
+        loadingView.backgroundColor = ColorPalette.gtLightestGrey.uiColor
         
         loadingActivityIndicator.layer.position = CGPoint(
             x: loadingView.frame.size.width / 2,

@@ -12,7 +12,7 @@ struct ToolSettingsView: View {
     @ObservedObject var viewModel: ToolSettingsViewModel
     
     private let contentInsets: EdgeInsets = EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 20)
-    private let separatorLineSpacing: CGFloat = 25
+    private let separatorLineSpacing: CGFloat = 20
     private let primaryTextColor: Color = Color(.sRGB, red: 84 / 256, green: 84 / 256, blue: 84 / 256, opacity: 1)
     private let bottomSpace: CGFloat = 15
     
