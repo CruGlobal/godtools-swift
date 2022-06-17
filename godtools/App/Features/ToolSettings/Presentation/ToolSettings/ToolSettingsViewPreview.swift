@@ -13,6 +13,11 @@ struct ToolSettingsViewPreview: PreviewProvider {
     
     static var previews: some View {
         
+        ToolSettingsView(viewModel: ToolSettingsViewPreview.getToolSettingsViewModel())
+    }
+    
+    static func getToolSettingsViewModel() -> ToolSettingsViewModel {
+        
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
         let languagesRepository: LanguagesRepository = appDiContainer.getLanguagesRepository()
@@ -28,6 +33,6 @@ struct ToolSettingsViewPreview: PreviewProvider {
             shareables: []
         )
         
-        ToolSettingsView(viewModel: viewModel)
+        return viewModel
     }
 }

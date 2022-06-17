@@ -321,6 +321,7 @@ Press the About button on any tool for more info.";
 "toolSettings.option.trainingTips.show.title" = "Training tips";
 "toolSettings.option.trainingTips.hide.title" = "Hide tips";
 "toolSettings.chooseLanguage.title" = "Parallel Language";
+"toolSettings.chooseLanguage.toggleMessage" = "Toggle between the two different languages in this tool.";
 "toolSettings.chooseLanguage.noParallelLanguageTitle" = "Parallel";
 "toolSettings.shareables.title" = "Related graphics";
 "toolSettings.languagesList.deleteLanguage.title" = "None";
