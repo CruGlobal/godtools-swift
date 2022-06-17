@@ -20,6 +20,7 @@ class ToolSettingsFlow: Flow {
     private var shareToolScreenTutorialModal: UIViewController?
     private var loadToolRemoteSessionModal: UIViewController?
     private var languagesListModal: UIViewController?
+    private var reviewShareShareableModal: UIViewController?
     private var downloadToolTranslationsFlow: DownloadToolTranslationsFlow?
     
     private weak var flowDelegate: FlowDelegate?
@@ -201,22 +202,30 @@ class ToolSettingsFlow: Flow {
             
         case .shareableTappedFromToolSettings(let imageToShare):
                    
-            let viewModel = ReviewShareShareableViewModel(imageToShare: imageToShare)
+            let viewModel = ReviewShareShareableViewModel(
+                flowDelegate: self,
+                imageToShare: imageToShare,
+                localizationServices: appDiContainer.localizationServices
+            )
             
             let view = ReviewShareShareableHostingView(view: ReviewShareShareableView(viewModel: viewModel))
             
+            reviewShareShareableModal = view
+            
             navigationController.present(view, animated: true, completion: nil)
             
-            // TODO: This will need to be presented when tapping share image from ReviewShareShareableView. ~Levi
-            /*
-            let viewModel = ShareShareableViewModel(
-                shareable: shareable,
-                imageToShare: imageToShare
-            )
+        case .shareImageTappedFromReviewShareShareable(let imageToShare):
             
-            let view = ShareShareableView(viewModel: viewModel)
-                        
-            navigationController.present(view, animated: true, completion: nil)*/
+            dismissReviewShareShareable(animated: true) { [weak self] in
+                
+                let viewModel = ShareShareableViewModel(
+                    imageToShare: imageToShare
+                )
+                
+                let view = ShareShareableView(viewModel: viewModel)
+                            
+                self?.navigationController.present(view, animated: true, completion: nil)
+            }
             
         default:
             break
@@ -405,6 +414,7 @@ class ToolSettingsFlow: Flow {
     private func dismissLanguagesList(animated: Bool = true, completion: (() -> Void)? = nil) {
         
         guard let languagesListModal = languagesListModal else {
+            completion?()
             return
         }
         
@@ -417,5 +427,23 @@ class ToolSettingsFlow: Flow {
         }
                 
         self.languagesListModal = nil
+    }
+    
+    private func dismissReviewShareShareable(animated: Bool = true, completion: (() -> Void)? = nil) {
+        
+        guard let reviewShareShareableModal = reviewShareShareableModal else {
+            completion?()
+            return
+        }
+        
+        if animated {
+            reviewShareShareableModal.dismiss(animated: true, completion: completion)
+        }
+        else {
+            reviewShareShareableModal.dismiss(animated: false)
+            completion?()
+        }
+        
+        self.reviewShareShareableModal = nil
     }
 }

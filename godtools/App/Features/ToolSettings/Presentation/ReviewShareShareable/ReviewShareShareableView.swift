@@ -11,7 +11,8 @@ import GodToolsToolParser
 
 struct ReviewShareShareableView: View {
     
-    private let bottomSpacing: CGFloat = 30
+    private let maxPreviewImageSize: CGFloat = 250
+    private let bottomSpacing: CGFloat = 50
     
     @ObservedObject var viewModel: ReviewShareShareableViewModel
     
@@ -23,29 +24,27 @@ struct ReviewShareShareableView: View {
                 
                 Spacer()
                 
-                Image("tutorial_in_menu_english")
+                viewModel.imagePreview
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxWidth: maxPreviewImageSize, maxHeight: maxPreviewImageSize, alignment: .center)
+                    .padding(EdgeInsets(top: 0, leading: 50, bottom: 0, trailing: 50))
                 
-                Rectangle()
-                    .fill(Color.clear)
-                    .frame(width: geometry.size.width, height: 15, alignment: .leading)
+                Spacer()
                 
                 Button(action: {
-                    // button tapped
+                    viewModel.shareImageTapped()
                 }) {
                     
                     HStack(alignment: .center, spacing: 8) {
-                        Image(ImageCatalog.navShare.name)
-                        Text("Share Image")
-                            .foregroundColor(.blue)
+                        Image(ImageCatalog.toolSettingsShareImageButtonIcon.name)
+                        Text(viewModel.shareImageButtonTitle)
+                            .foregroundColor(.white)
                     }
                 }
                 .frame(width: 200, height: 50, alignment: .center)
-                .background(Color.white)
-                .accentColor(.blue)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 6)
-                        .stroke(.blue, lineWidth: 1)
-                )
+                .background(ColorPalette.gtBlue.color)
+                .cornerRadius(6)
             }
             .frame(width: geometry.size.width)
             .padding(EdgeInsets(top: 0, leading: 0, bottom: bottomSpacing, trailing: 0))
@@ -63,6 +62,12 @@ struct ReviewShareShareableViewPreview: PreviewProvider {
     
     static func getReviewShareShareableViewModel() -> ReviewShareShareableViewModel {
                 
-        return ReviewShareShareableViewModel(imageToShare: UIImage())
+        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
+                
+        return ReviewShareShareableViewModel(
+            flowDelegate: MockFlowDelegate(),
+            imageToShare: UIImage(),
+            localizationServices: appDiContainer.localizationServices
+        )
     }
 }

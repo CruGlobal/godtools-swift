@@ -325,3 +325,4 @@ Press the About button on any tool for more info.";
 "toolSettings.chooseLanguage.noParallelLanguageTitle" = "Parallel";
 "toolSettings.shareables.title" = "Related graphics";
 "toolSettings.languagesList.deleteLanguage.title" = "None";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Share image";
