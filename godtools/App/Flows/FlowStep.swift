@@ -58,6 +58,7 @@ enum FlowStep {
     case aboutToolTappedFromAllTools(resource: ResourceModel)
     
     // toolDetails
+    case backTappedFromToolDetails
     case openToolTappedFromToolDetails(resource: ResourceModel)
     case learnToShareToolTappedFromToolDetails(resource: ResourceModel)
     case urlLinkTappedFromToolDetail(url: URL, exitLink: ExitLinkModel)
