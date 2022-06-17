@@ -20,9 +20,6 @@ struct ToolCardView: View {
     
     private enum Sizes {
         static let cornerRadius: CGFloat = 6
-        static let spotlightCardWidth: CGFloat = 200
-        static let spotlightCardHeight: CGFloat = 255
-        static let spotlightCardHeightRatio: CGFloat = spotlightCardHeight / spotlightCardWidth
     }
     
     // MARK: - Body
@@ -30,7 +27,7 @@ struct ToolCardView: View {
     var body: some View {
         ZStack(alignment: .top) {
             
-            ToolCardBackgroundView(cornerRadius: Sizes.cornerRadius)
+            RoundedCardBackgroundView(cornerRadius: Sizes.cornerRadius)
             
             VStack(alignment: .leading, spacing: 0) {
                 ZStack(alignment: .topTrailing) {
@@ -70,13 +67,12 @@ struct ToolCardView: View {
                             .padding(.trailing, 10)
                     }
                 }
-                .frame(width: cardWidth)
+                .frame(width: cardWidth, height: isSpotlight ? 75 : nil, alignment: .topLeading)
                 .padding(.top, 12)
                 
             }
             
         }
-        .frame(height: isSpotlight ? cardWidth * Sizes.spotlightCardHeightRatio : nil)
         .fixedSize(horizontal: true, vertical: true)
         .environment(\.layoutDirection, viewModel.layoutDirection)
     }

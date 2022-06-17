@@ -22,7 +22,7 @@ struct ToolSpotlightView: View {
         
         if viewModel.spotlightTools.isEmpty == false {
             
-            VStack(alignment: .leading, spacing: 5) {
+            VStack(alignment: .leading, spacing: 10) {
                 
                 SpotlightTitleView(title: viewModel.spotlightTitle, subtitle: viewModel.spotlightSubtitle)
                 .padding(.leading, leadingPadding)

@@ -16,9 +16,6 @@ class ToolSpotlightViewModel: NSObject, ObservableObject {
     
     // MARK: - Properties
     
-    let spotlightTitle: String
-    let spotlightSubtitle: String
-    
     private let dataDownloader: InitialDataDownloader
     private let deviceAttachmentBanners: DeviceAttachmentBanners
     private let favoritedResourcesCache: FavoritedResourcesCache
@@ -28,6 +25,8 @@ class ToolSpotlightViewModel: NSObject, ObservableObject {
     
     // MARK: - Published
     
+    @Published var spotlightTitle: String = ""
+    @Published var spotlightSubtitle: String = ""
     @Published var spotlightTools: [ResourceModel] = []
     
     // MARK: - Init
@@ -40,17 +39,16 @@ class ToolSpotlightViewModel: NSObject, ObservableObject {
         self.localizationServices = localizationServices
         self.delegate = delegate
         
-        spotlightTitle = localizationServices.stringForMainBundle(key: "allTools.spotlight.title")
-        spotlightSubtitle = localizationServices.stringForMainBundle(key: "allTools.spotlight.description")
-        
         super.init()
         
+        setTitleText()
         setupBinding()
     }
     
     deinit {
         dataDownloader.cachedResourcesAvailable.removeObserver(self)
         dataDownloader.resourcesUpdatedFromRemoteDatabase.removeObserver(self)
+        languageSettingsService.primaryLanguage.removeObserver(self)
     }
 }
 
@@ -77,16 +75,22 @@ extension ToolSpotlightViewModel {
                 }
             }
         }
+        
+        languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
+            DispatchQueue.main.async { [weak self] in
+                self?.setTitleText()
+            }
+        }
     }
     
     private func reloadResourcesFromCache() {
-        let sortedResources: [ResourceModel] = dataDownloader.resourcesCache.getSortedResources()
-        let spotlightResources: [ResourceModel] = sortedResources.filter({
-            let resourceType: ResourceType = $0.resourceTypeEnum
-            return (resourceType == .tract || resourceType == .article || resourceType == .chooseYourOwnAdventure) && !$0.isHidden && $0.attrSpotlight
-        })
-        
-        spotlightTools = spotlightResources
+        spotlightTools = dataDownloader.resourcesCache.getAllVisibleToolsSorted(andFilteredBy: { $0.attrSpotlight })
+    }
+    
+    private func setTitleText() {
+        let languageBundle = localizationServices.bundleLoader.bundleForPrimaryLanguageOrFallback(in: languageSettingsService)
+        spotlightTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "allTools.spotlight.title")
+        spotlightSubtitle = localizationServices.stringForBundle(bundle: languageBundle, key: "allTools.spotlight.description")
     }
 }
 

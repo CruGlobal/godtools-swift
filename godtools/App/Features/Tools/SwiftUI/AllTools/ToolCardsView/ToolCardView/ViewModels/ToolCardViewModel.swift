@@ -147,7 +147,8 @@ class ToolCardViewModel: BaseToolCardViewModel, ToolItemInitialDownloadProgress 
     
     private func reloadDataForPrimaryLanguage() {
         let resourcesCache: ResourcesCache = dataDownloader.resourcesCache
-             
+        let bundleLoader = localizationServices.bundleLoader
+        
         let toolName: String
         let languageBundle: Bundle
         let languageDirection: LanguageDirection
@@ -155,24 +156,24 @@ class ToolCardViewModel: BaseToolCardViewModel, ToolItemInitialDownloadProgress 
         if let primaryLanguage = languageSettingsService.primaryLanguage.value, let primaryTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageId: primaryLanguage.id) {
             
             toolName = primaryTranslation.translatedName
-            languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.code) ?? Bundle.main
+            languageBundle = bundleLoader.bundleForResource(resourceName: primaryLanguage.code) ?? Bundle.main
             languageDirection = primaryLanguage.languageDirection
         }
         else if let englishTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageCode: "en") {
             
             toolName = englishTranslation.translatedName
-            languageBundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
+            languageBundle = bundleLoader.englishBundle ?? Bundle.main
             languageDirection = .leftToRight
         }
         else {
             
             toolName = resource.name
-            languageBundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
+            languageBundle = bundleLoader.englishBundle ?? Bundle.main
             languageDirection = .leftToRight
         }
         
         title = toolName
-        category = localizationServices.stringForBundle(bundle: languageBundle, key: "tool_category_\(resource.attrCategory)")
+        category = localizationServices.toolCategoryStringForBundle(bundle: languageBundle, attrCategory: resource.attrCategory)
         layoutDirection = LayoutDirection.from(languageDirection: languageDirection)
     }
     
