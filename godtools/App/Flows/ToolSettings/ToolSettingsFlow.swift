@@ -261,17 +261,26 @@ class ToolSettingsFlow: Flow {
         
         let languagesRepository: LanguagesRepository = appDiContainer.getLanguagesRepository()
         let getToolLanguagesUseCase: GetToolLanguagesUseCase = GetToolLanguagesUseCase(languagesRepository: languagesRepository)
-        let languages: [ToolLanguageModel] = getToolLanguagesUseCase.getToolLanguages(resource: toolData.resource)
+        let toolLanguages: [ToolLanguageModel] = getToolLanguagesUseCase.getToolLanguages(resource: toolData.resource)
+        var languagesList: [ToolLanguageModel] = toolLanguages
         
         let selectedLanguage: LanguageModel?
         let deleteTappedClosure: (() -> Void)?
         
         switch languageListType {
         case .primary:
+            
+            if let parallelLanguageId = settingsParallelLanguage.value?.id {
+                languagesList = languagesList.filter({$0.id != parallelLanguageId})
+            }
+            
             selectedLanguage = settingsPrimaryLanguage.value
             deleteTappedClosure = nil
             
         case .parallel:
+            
+            languagesList = languagesList.filter({$0.id != settingsPrimaryLanguage.value.id})
+            
             selectedLanguage = settingsParallelLanguage.value
             deleteTappedClosure = { [weak self] in
                 self?.setToolParallelLanguage(languageId: nil)
@@ -279,7 +288,7 @@ class ToolSettingsFlow: Flow {
             }
         }
         
-        let viewModel = LanguagesListViewModel(languages: languages, selectedLanguageId: selectedLanguage?.id, localizationServices: appDiContainer.localizationServices, closeTappedClosure: { [weak self] in
+        let viewModel = LanguagesListViewModel(languages: languagesList, selectedLanguageId: selectedLanguage?.id, localizationServices: appDiContainer.localizationServices, closeTappedClosure: { [weak self] in
             
             self?.dismissLanguagesList()
             
