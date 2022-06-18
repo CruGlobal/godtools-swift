@@ -363,7 +363,6 @@
 		457E199E27C6EA4C00BABD49 /* NSError+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457E199D27C6EA4C00BABD49 /* NSError+Error.swift */; };
 		4581657626F4DD4D000D660F /* MobileContentRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4581657526F4DD4D000D660F /* MobileContentRowView.swift */; };
 		4581B83427977A9F00470F1D /* DownloadToolErrorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4581B83327977A9F00470F1D /* DownloadToolErrorViewModel.swift */; };
-		4581C57B285A5B1C0078425B /* ToolSettingsViewPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4581C57A285A5B1C0078425B /* ToolSettingsViewPreview.swift */; };
 		4581C57D285A5BD00078425B /* ToolSettingsLanguageDropDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4581C57C285A5BD00078425B /* ToolSettingsLanguageDropDownView.swift */; };
 		4581C581285A5BDD0078425B /* ToolSettingsOptionItemBackgroundType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4581C57F285A5BDD0078425B /* ToolSettingsOptionItemBackgroundType.swift */; };
 		4581C582285A5BDD0078425B /* ToolSettingsOptionItemTitleColorStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4581C580285A5BDD0078425B /* ToolSettingsOptionItemTitleColorStyle.swift */; };
@@ -1479,7 +1478,6 @@
 		457E199D27C6EA4C00BABD49 /* NSError+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSError+Error.swift"; sourceTree = "<group>"; };
 		4581657526F4DD4D000D660F /* MobileContentRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRowView.swift; sourceTree = "<group>"; };
 		4581B83327977A9F00470F1D /* DownloadToolErrorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadToolErrorViewModel.swift; sourceTree = "<group>"; };
-		4581C57A285A5B1C0078425B /* ToolSettingsViewPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolSettingsViewPreview.swift; sourceTree = "<group>"; };
 		4581C57C285A5BD00078425B /* ToolSettingsLanguageDropDownView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolSettingsLanguageDropDownView.swift; sourceTree = "<group>"; };
 		4581C57F285A5BDD0078425B /* ToolSettingsOptionItemBackgroundType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolSettingsOptionItemBackgroundType.swift; sourceTree = "<group>"; };
 		4581C580285A5BDD0078425B /* ToolSettingsOptionItemTitleColorStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolSettingsOptionItemTitleColorStyle.swift; sourceTree = "<group>"; };
@@ -2714,7 +2712,6 @@
 				450A3A48282D36BB00FC2E14 /* ToolSettingsHostingView.swift */,
 				451CEDD2282C31C6006E5105 /* ToolSettingsView.swift */,
 				451CEDD3282C31C6006E5105 /* ToolSettingsViewModel.swift */,
-				4581C57A285A5B1C0078425B /* ToolSettingsViewPreview.swift */,
 				451CEDD4282C31C6006E5105 /* Views */,
 			);
 			path = ToolSettings;
@@ -7952,7 +7949,6 @@
 				D42600D5282C01B500E7A520 /* RoundedCardBackgroundView.swift in Sources */,
 				D42600C8282BFA1200E7A520 /* ToolCardParallelLanguageView.swift in Sources */,
 				456431DF284ACC8700846720 /* ArticleCategory.swift in Sources */,
-				4581C57B285A5B1C0078425B /* ToolSettingsViewPreview.swift in Sources */,
 				45AD1BA625938A4F00A096A0 /* FlowStep.swift in Sources */,
 				D1E98EDD27974F0000D1B738 /* LessonEvaluationViewModelType.swift in Sources */,
 				45AD22A12593CE8900A096A0 /* ColorPalette.swift in Sources */,

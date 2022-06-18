@@ -81,7 +81,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOw
     
     func getNavBarLanguageTitles() -> [String] {
         
-        let languageTitles: [String] = renderer.pageRenderers.map({ LanguageViewModel(language: $0.language, localizationServices: localizationServices).translatedLanguageName })
+        let languageTitles: [String] = renderer.value.pageRenderers.map({ LanguageViewModel(language: $0.language, localizationServices: localizationServices).translatedLanguageName })
         guard languageTitles.count > 1 else {
             return Array()
         }
@@ -99,7 +99,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOw
     
     func navLanguageTapped(index: Int) {
         
-        let pageRenderer: MobileContentPageRenderer = renderer.pageRenderers[index]
+        let pageRenderer: MobileContentPageRenderer = renderer.value.pageRenderers[index]
         setPageRenderer(pageRenderer: pageRenderer)
     }
 }

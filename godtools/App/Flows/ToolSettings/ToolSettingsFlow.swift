@@ -34,20 +34,19 @@ class ToolSettingsFlow: Flow {
         self.navigationController = sharedNavigationController
         self.toolData = toolData
         self.tool = tool
-        self.settingsPrimaryLanguage = CurrentValueSubject(toolData.primaryLanguage)
-        self.settingsParallelLanguage = CurrentValueSubject(toolData.parallelLanguage)
+        self.settingsPrimaryLanguage = CurrentValueSubject(toolData.renderer.value.primaryLanguage)
+        self.settingsParallelLanguage = CurrentValueSubject(toolData.renderer.value.pageRenderers[safe: 1]?.language)
     }
     
     func getInitialView() -> UIViewController {
             
         let viewModel = ToolSettingsViewModel(
             flowDelegate: self,
-            manifestResourcesCache: toolData.manifestResourcesCache,
             localizationServices: appDiContainer.localizationServices,
+            currentPageRenderer: toolData.currentPageRenderer,
             primaryLanguageSubject: settingsPrimaryLanguage,
             parallelLanguageSubject: settingsParallelLanguage,
-            trainingTipsEnabled: toolData.trainingTipsEnabled,
-            shareables: toolData.shareables
+            trainingTipsEnabled: toolData.trainingTipsEnabled
         )
         
         let toolSettingsView = ToolSettingsView(viewModel: viewModel)
@@ -72,9 +71,12 @@ class ToolSettingsFlow: Flow {
             
         case .shareLinkTappedFromToolSettings:
                     
+            let resource: ResourceModel = toolData.renderer.value.resource
+            let language: LanguageModel = toolData.currentPageRenderer.value.language
+            
             let viewModel = ShareToolViewModel(
-                resource: toolData.resource,
-                language: toolData.selectedLanguage,
+                resource: resource,
+                language: language,
                 pageNumber: toolData.pageNumber,
                 localizationServices: appDiContainer.localizationServices,
                 analytics: appDiContainer.analytics
@@ -91,7 +93,7 @@ class ToolSettingsFlow: Flow {
         case .screenShareTappedFromToolSettings:
             
             let shareToolScreenTutorialNumberOfViewsCache: ShareToolScreenTutorialNumberOfViewsCache = appDiContainer.getShareToolScreenTutorialNumberOfViewsCache()
-            let numberOfTutorialViews: Int = shareToolScreenTutorialNumberOfViewsCache.getNumberOfViews(resource: toolData.resource)
+            let numberOfTutorialViews: Int = shareToolScreenTutorialNumberOfViewsCache.getNumberOfViews(resource: toolData.renderer.value.resource)
             
             if toolData.tractRemoteSharePublisher.webSocketIsConnected, let channel = toolData.tractRemoteSharePublisher.tractRemoteShareChannel {
                 navigate(step: .finishedLoadingToolRemoteSession(result: .success(channel)))
@@ -129,7 +131,11 @@ class ToolSettingsFlow: Flow {
                 
                 let tractRemoteShareURLBuilder: TractRemoteShareURLBuilder = appDiContainer.getTractRemoteShareURLBuilder()
                 
-                guard let remoteShareUrl = tractRemoteShareURLBuilder.buildRemoteShareURL(resource: toolData.resource, primaryLanguage: toolData.primaryLanguage, parallelLanguage: toolData.parallelLanguage, subscriberChannelId: channel.subscriberChannelId) else {
+                let resource: ResourceModel = toolData.renderer.value.resource
+                let primaryLanguage: LanguageModel = settingsPrimaryLanguage.value
+                let parallelLanguage: LanguageModel? = settingsParallelLanguage.value
+                
+                guard let remoteShareUrl = tractRemoteShareURLBuilder.buildRemoteShareURL(resource: resource, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, subscriberChannelId: channel.subscriberChannelId) else {
                     
                     let viewModel = AlertMessageViewModel(
                         title: "Error",
@@ -224,7 +230,7 @@ class ToolSettingsFlow: Flow {
             localizationServices: appDiContainer.localizationServices,
             tutorialItemsProvider: tutorialItemsProvider,
             shareToolScreenTutorialNumberOfViewsCache: appDiContainer.getShareToolScreenTutorialNumberOfViewsCache(),
-            resource: toolData.resource,
+            resource: toolData.renderer.value.resource,
             analyticsContainer: appDiContainer.analytics,
             tutorialVideoAnalytics: appDiContainer.getTutorialVideoAnalytics()
         )
@@ -261,7 +267,7 @@ class ToolSettingsFlow: Flow {
         
         let languagesRepository: LanguagesRepository = appDiContainer.getLanguagesRepository()
         let getToolLanguagesUseCase: GetToolLanguagesUseCase = GetToolLanguagesUseCase(languagesRepository: languagesRepository)
-        let languages: [ToolLanguageModel] = getToolLanguagesUseCase.getToolLanguages(resource: toolData.resource)
+        let languages: [ToolLanguageModel] = getToolLanguagesUseCase.getToolLanguages(resource: toolData.renderer.value.resource)
         
         let selectedLanguage: LanguageModel?
         let deleteTappedClosure: (() -> Void)?
@@ -347,7 +353,7 @@ class ToolSettingsFlow: Flow {
         let languagesRepository: LanguagesRepository = appDiContainer.getLanguagesRepository()
         
         let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
-            resourceId: toolData.resource.id,
+            resourceId: toolData.renderer.value.resource.id,
             languageIds: languageIds,
             resourcesCache: appDiContainer.initialDataDownloader.resourcesCache,
             languagesRepository: languagesRepository
@@ -374,7 +380,7 @@ class ToolSettingsFlow: Flow {
                     weakSelf.settingsParallelLanguage.send(nil)
                 }
                 
-                let newRenderer: MobileContentRenderer = weakSelf.toolData.renderer.copy(toolTranslations: toolTranslations)
+                let newRenderer: MobileContentRenderer = weakSelf.toolData.renderer.value.copy(toolTranslations: toolTranslations)
                 weakSelf.tool.setRenderer(renderer: newRenderer)
                 
             case .failure(let error):

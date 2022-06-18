@@ -12,15 +12,14 @@ import Combine
 
 class ToolSettingsViewModel: ObservableObject {
     
-    private let manifestResourcesCache: ManifestResourcesCache
     private let localizationServices: LocalizationServices
+    private let currentPageRenderer: CurrentValueSubject<MobileContentPageRenderer, Never>
     private let primaryLanguageSubject: CurrentValueSubject<LanguageModel, Never>
     private let parallelLanguageSubject: CurrentValueSubject<LanguageModel?, Never>
-    private let trainingTipsEnabled: Bool
-    private let shareables: [Shareable]
     private let trainingTipsEnabledSubject: CurrentValueSubject<Bool, Never> = CurrentValueSubject(false)
     
     private var trainingTipsCancellable: AnyCancellable?
+    private var currentPageRendererCancellable: AnyCancellable?
     private var primaryLanguageCancellable: AnyCancellable?
     private var parallelLanguageCancellable: AnyCancellable?
     
@@ -31,6 +30,7 @@ class ToolSettingsViewModel: ObservableObject {
     @Published var screenShareTitle: String = ""
     @Published var trainingTipsIcon: SwiftUI.Image = Image("")
     @Published var trainingTipsTitle: String = ""
+    @Published var hidesToggleTrainingTipsButton: Bool = false
     @Published var chooseLanguageTitle: String = ""
     @Published var chooseLanguageToggleMessage: String = ""
     @Published var primaryLanguageTitle: String = ""
@@ -39,15 +39,13 @@ class ToolSettingsViewModel: ObservableObject {
     @Published var shareablesTitle: String = ""
     @Published var numberOfShareableItems: Int = 0
         
-    required init(flowDelegate: FlowDelegate, manifestResourcesCache: ManifestResourcesCache, localizationServices: LocalizationServices, primaryLanguageSubject: CurrentValueSubject<LanguageModel, Never>, parallelLanguageSubject: CurrentValueSubject<LanguageModel?, Never>, trainingTipsEnabled: Bool, shareables: [Shareable]) {
+    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, currentPageRenderer: CurrentValueSubject<MobileContentPageRenderer, Never>, primaryLanguageSubject: CurrentValueSubject<LanguageModel, Never>, parallelLanguageSubject: CurrentValueSubject<LanguageModel?, Never>, trainingTipsEnabled: Bool) {
         
         self.flowDelegate = flowDelegate
-        self.manifestResourcesCache = manifestResourcesCache
         self.localizationServices = localizationServices
+        self.currentPageRenderer = currentPageRenderer
         self.primaryLanguageSubject = primaryLanguageSubject
         self.parallelLanguageSubject = parallelLanguageSubject
-        self.trainingTipsEnabled = trainingTipsEnabled
-        self.shareables = shareables
         
         title = localizationServices.stringForMainBundle(key: "toolSettings.title")
         shareLinkTitle = localizationServices.stringForMainBundle(key: "toolSettings.option.shareLink.title")
@@ -61,9 +59,12 @@ class ToolSettingsViewModel: ObservableObject {
         }
         chooseLanguageTitle = localizationServices.stringForMainBundle(key: "toolSettings.chooseLanguage.title")
         chooseLanguageToggleMessage = localizationServices.stringForMainBundle(key: "toolSettings.chooseLanguage.toggleMessage")
-        hidesShareables = shareables.isEmpty
         shareablesTitle = localizationServices.stringForMainBundle(key: "toolSettings.shareables.title")
-        numberOfShareableItems = shareables.count
+        
+        currentPageRendererCancellable = currentPageRenderer.sink(receiveValue: { [weak self] (pageRenderer: MobileContentPageRenderer) in
+
+            self?.pageRendererChanged(pageRenderer: pageRenderer)
+        })
         
         primaryLanguageCancellable = primaryLanguageSubject.sink(receiveValue: { [weak self] (language: LanguageModel) in
             
@@ -87,10 +88,19 @@ class ToolSettingsViewModel: ObservableObject {
                 weakSelf.parallelLanguageTitle = weakSelf.localizationServices.stringForMainBundle(key: "toolSettings.chooseLanguage.noParallelLanguageTitle")
             }
         })
+        
+        pageRendererChanged(pageRenderer: currentPageRenderer.value)
     }
     
     private func getTranslatedLanguageName(language: LanguageModel) -> String {
         return LanguageViewModel(language: language, localizationServices: localizationServices).translatedLanguageName
+    }
+    
+    private func pageRendererChanged(pageRenderer: MobileContentPageRenderer) {
+        
+        hidesToggleTrainingTipsButton = pageRenderer.manifest.tips.isEmpty
+        hidesShareables = pageRenderer.manifest.shareables.isEmpty
+        numberOfShareableItems = pageRenderer.manifest.shareables.count
     }
     
     func closeTapped() {
@@ -133,12 +143,16 @@ class ToolSettingsViewModel: ObservableObject {
     
     func getShareableItemViewModel(index: Int) -> ToolSettingsShareableItemViewModel {
         
-        return ToolSettingsShareableItemViewModel(shareable: shareables[index], manifestResourcesCache: manifestResourcesCache)
+        return ToolSettingsShareableItemViewModel(
+            shareable: currentPageRenderer.value.manifest.shareables[index],
+            manifestResourcesCache: currentPageRenderer.value.manifestResourcesCache
+        )
     }
     
     func shareableTapped(index: Int) {
         
-        let shareable: Shareable = shareables[index]
+        let manifestResourcesCache: ManifestResourcesCache = currentPageRenderer.value.manifestResourcesCache
+        let shareable: Shareable = currentPageRenderer.value.manifest.shareables[index]
         
         guard let shareableImage = shareable as? ShareableImage, let resource = shareableImage.resource, let imageToShare = manifestResourcesCache.getImageFromManifestResources(resource: resource) else {
             return

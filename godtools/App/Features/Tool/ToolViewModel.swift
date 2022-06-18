@@ -80,10 +80,6 @@ class ToolViewModel: MobileContentPagesViewModel, ToolViewModelType {
         }
     }
 
-    private var resource: ResourceModel {
-        return renderer.resource
-    }
-
     private var analyticsScreenName: String {
         return resource.abbreviation
     }
@@ -93,14 +89,14 @@ class ToolViewModel: MobileContentPagesViewModel, ToolViewModelType {
     }
         
     private var parallelLanguage: LanguageModel? {
-        if renderer.pageRenderers.count > 1 {
-            return renderer.pageRenderers[1].language
+        if renderer.value.pageRenderers.count > 1 {
+            return renderer.value.pageRenderers[1].language
         }
         return nil
     }
     
     private func getPageRenderer(language: LanguageModel) -> MobileContentPageRenderer? {
-        for pageRenderer in renderer.pageRenderers {
+        for pageRenderer in renderer.value.pageRenderers {
             if pageRenderer.language.code.lowercased() == language.code.lowercased() {
                 return pageRenderer
             }
@@ -226,7 +222,7 @@ extension ToolViewModel {
         if let remoteShareLanguageIndex = remoteShareLanguageIndex, navBarLanguageChanged {
             
             navBarViewModel.value.selectedLanguage.accept(value: remoteShareLanguageIndex)
-            setPageRenderer(pageRenderer: renderer.pageRenderers[remoteShareLanguageIndex])
+            setPageRenderer(pageRenderer: renderer.value.pageRenderers[remoteShareLanguageIndex])
         }
     }
     
@@ -275,27 +271,11 @@ extension ToolViewModel {
     }
     
     func navToolSettingsTapped(page: Int, selectedLanguage: LanguageModel) {
-            
-        guard let pageRenderer = currentPageRenderer else {
-            return
-        }
-        
-        guard let pageRenderer = currentPageRenderer else {
-            return
-        }
-        
-        let primaryLanguage: LanguageModel = renderer.primaryLanguage
-        let shareables: [Shareable] = pageRenderer.manifest.shareables
-        
+                            
         let toolData = ToolSettingsFlowToolData(
             renderer: renderer,
-            manifestResourcesCache: pageRenderer.manifestResourcesCache,
+            currentPageRenderer: currentPageRenderer,
             tractRemoteSharePublisher: tractRemoteSharePublisher,
-            resource: resource,
-            selectedLanguage: selectedLanguage,
-            primaryLanguage: primaryLanguage,
-            parallelLanguage: parallelLanguage,
-            shareables: shareables,
             pageNumber: page,
             trainingTipsEnabled: trainingTipsEnabled
         )
