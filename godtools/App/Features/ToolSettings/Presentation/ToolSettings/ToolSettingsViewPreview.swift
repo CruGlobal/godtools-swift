@@ -27,6 +27,7 @@ struct ToolSettingsViewPreview: PreviewProvider {
             flowDelegate: MockFlowDelegate(),
             manifestResourcesCache: appDiContainer.getManifestResourcesCache(),
             localizationServices: appDiContainer.localizationServices,
+            getTranslatedLanguageUseCase: appDiContainer.getTranslatedLanguageUseCase(),
             primaryLanguageSubject: CurrentValueSubject(englishLanguage),
             parallelLanguageSubject: CurrentValueSubject(nil),
             trainingTipsEnabled: false,

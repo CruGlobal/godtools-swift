@@ -776,6 +776,7 @@ extension AppFlow {
                 flowDelegate: weakSelf,
                 localizationServices: appDiContainer.localizationServices,
                 languageSettingsService: appDiContainer.languageSettingsService,
+                getTranslatedLanguageUseCase: appDiContainer.getTranslatedLanguageUseCase(),
                 setupParallelLanguageAvailability: appDiContainer.getSetupParallelLanguageAvailability()
             )
             let view = SetupParallelLanguageView(viewModel: viewModel)
@@ -793,7 +794,8 @@ extension AppFlow {
             dataDownloader: appDiContainer.initialDataDownloader,
             languagesRepository: appDiContainer.getLanguagesRepository(),
             languageSettingsService: appDiContainer.languageSettingsService,
-            localizationServices: appDiContainer.localizationServices
+            localizationServices: appDiContainer.localizationServices,
+            getTranslatedLanguageUseCase: appDiContainer.getTranslatedLanguageUseCase()
         )
         let view = ParallelLanguageListView(viewModel: viewModel)
         

@@ -383,6 +383,10 @@ class AppDiContainer {
         return TractRemoteShareURLBuilder()
     }
     
+    func getTranslatedLanguageUseCase() -> GetTranslatedLanguageUseCase {
+        return GetTranslatedLanguageUseCase(localizationServices: localizationServices)
+    }
+    
     func getTutorialIsAvailableUseCase() -> GetTutorialIsAvailableUseCase {
         return GetTutorialIsAvailableUseCase(deviceLanguage: deviceLanguage)
     }

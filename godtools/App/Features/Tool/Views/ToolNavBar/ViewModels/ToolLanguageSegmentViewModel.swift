@@ -9,11 +9,11 @@
 import Foundation
 
 class ToolLanguageSegmentViewModel {
-    
+        
     let title: String
     
-    required init(language: LanguageModel, localizationServices: LocalizationServices) {
+    required init(language: LanguageModel, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase) {
         
-        title = LanguageViewModel(language: language, localizationServices: localizationServices).translatedLanguageName
+        self.title = getTranslatedLanguageUseCase.getTranslatedLanguage(language: language).name
     }
 }

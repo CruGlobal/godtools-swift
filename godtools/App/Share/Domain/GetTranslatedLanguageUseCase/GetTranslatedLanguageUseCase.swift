@@ -1,29 +1,30 @@
 //
-//  LanguageViewModel.swift
+//  GetTranslatedLanguageUseCase.swift
 //  godtools
 //
-//  Created by Levi Eggert on 8/30/20.
-//  Copyright © 2020 Cru. All rights reserved.
+//  Created by Levi Eggert on 6/18/22.
+//  Copyright © 2022 Cru. All rights reserved.
 //
 
 import Foundation
 
-// TODO: This logic has been moved to GetTranslatedLanguageUseCase.  LanguageViewModel will need to be removed in JIRA Task GT-1633.
-@available(*, deprecated)
-class LanguageViewModel {
-        
-    let language: LanguageModel
-    let translatedLanguageName: String
+class GetTranslatedLanguageUseCase {
     
-    required init(language: LanguageModel, localizationServices: LocalizationServices) {
-                
-        self.language = language
+    private let localizationServices: LocalizationServices
+    
+    init(localizationServices: LocalizationServices) {
+        
+        self.localizationServices = localizationServices
+    }
+    
+    func getTranslatedLanguage(language: LanguageModel) -> TranslatedLanguage {
+        
         let strippedCode: String = language.code.components(separatedBy: "-x-")[0]
 
         let localizedKey: String = "language_name_" + language.code
         let localizedName: String = localizationServices.stringForBundle(bundle: Bundle.main, key: localizedKey)
         
-        let translatedLanguageName: String
+        var translatedLanguageName: String
         
         if !localizedName.isEmpty && localizedName != localizedKey {
             translatedLanguageName = localizedName
@@ -34,16 +35,17 @@ class LanguageViewModel {
         else {
             translatedLanguageName = language.name
         }
-        
-        var transformedLanguageName: String = translatedLanguageName
-                
-        if transformedLanguageName.contains(", ") {
+                        
+        if translatedLanguageName.contains(", ") {
             let names: [String] = translatedLanguageName.components(separatedBy: ", ")
             if names.count == 2 {
-                transformedLanguageName = names[0] + " (" + names[1] + ")"
+                translatedLanguageName = names[0] + " (" + names[1] + ")"
             }
         }
                 
-        self.translatedLanguageName = transformedLanguageName
+        return TranslatedLanguage(
+            id: language.id,
+            name: translatedLanguageName
+        )
     }
 }
