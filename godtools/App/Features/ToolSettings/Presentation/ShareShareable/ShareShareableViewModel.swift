@@ -7,17 +7,13 @@
 //
 
 import UIKit
-import GodToolsToolParser
 
 class ShareShareableViewModel {
-    
-    private let shareable: Shareable
-    
+        
     let imageToShare: UIImage
     
-    init(shareable: Shareable, imageToShare: UIImage) {
+    init(imageToShare: UIImage) {
         
-        self.shareable = shareable
         self.imageToShare = imageToShare
     }
 }
