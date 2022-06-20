@@ -100,6 +100,7 @@ extension ToolSpotlightViewModel {
     
     func cardViewModel(for tool: ResourceModel) -> BaseToolCardViewModel {
         return ToolCardViewModel(
+            cardType: .spotlight,
             resource: tool,
             dataDownloader: dataDownloader,
             deviceAttachmentBanners: deviceAttachmentBanners,

@@ -94,6 +94,7 @@ extension ToolCardsViewModel {
 extension ToolCardsViewModel {
     func cardViewModel(for tool: ResourceModel) -> ToolCardViewModel {
         return ToolCardViewModel(
+            cardType: .standard,
             resource: tool,
             dataDownloader: dataDownloader,
             deviceAttachmentBanners: deviceAttachmentBanners,

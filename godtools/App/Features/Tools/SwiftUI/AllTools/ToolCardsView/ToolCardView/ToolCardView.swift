@@ -14,7 +14,6 @@ struct ToolCardView: View {
     
     @ObservedObject var viewModel: BaseToolCardViewModel
     let cardWidth: CGFloat
-    var isSpotlight = false
     
     // MARK: - Constants
     
@@ -32,7 +31,7 @@ struct ToolCardView: View {
             VStack(alignment: .leading, spacing: 0) {
                 ZStack(alignment: .topTrailing) {
                     
-                    ToolCardBannerImageView(bannerImage: viewModel.bannerImage, isSpotlight: isSpotlight, cardWidth: cardWidth, cornerRadius: Sizes.cornerRadius)
+                    ToolCardBannerImageView(bannerImage: viewModel.bannerImage, isSpotlight: viewModel.cardType == .spotlight, cardWidth: cardWidth, cornerRadius: Sizes.cornerRadius)
                     
                     ToolCardFavoritedView(isFavorited: viewModel.isFavorited)
                         .onTapGesture {
@@ -47,7 +46,7 @@ struct ToolCardView: View {
                         
                         ToolCardTitleView(title: viewModel.title)
                         
-                        if isSpotlight {
+                        if viewModel.cardType == .spotlight {
                             
                             Spacer(minLength: 0)
                             ToolCardParallelLanguageView(languageName: viewModel.parallelLanguageName)
@@ -60,14 +59,14 @@ struct ToolCardView: View {
                     
                     Spacer()
                     
-                    if isSpotlight == false {
+                    if viewModel.cardType != .spotlight {
                         
                         ToolCardParallelLanguageView(languageName: viewModel.parallelLanguageName)
                             .padding(.top, 4)
                             .padding(.trailing, 10)
                     }
                 }
-                .frame(width: cardWidth, height: isSpotlight ? 75 : nil, alignment: .topLeading)
+                .frame(width: cardWidth, height: viewModel.cardType == .spotlight ? 75 : nil, alignment: .topLeading)
                 .padding(.top, 12)
                 
             }
@@ -88,6 +87,7 @@ struct ToolCardView_Previews: PreviewProvider {
         
         ToolCardView(viewModel:
                         MockToolCardViewModel(
+                            cardType: isSpotlight ? .spotlight : .standard,
                             title: "Knowing God Personally",
                             category: "Gospel Invitation",
                             showParallelLanguage: true,
@@ -96,8 +96,7 @@ struct ToolCardView_Previews: PreviewProvider {
                             translationDownloadProgress: 0.55,
                             deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners
                         ),
-                     cardWidth: isSpotlight ? 200 : 375,
-                     isSpotlight: isSpotlight
+                     cardWidth: isSpotlight ? 200 : 375
         )
         .padding()
         .previewLayout(.sizeThatFits)

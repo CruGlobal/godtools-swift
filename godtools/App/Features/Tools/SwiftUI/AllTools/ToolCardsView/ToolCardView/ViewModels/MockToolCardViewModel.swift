@@ -10,8 +10,8 @@ import SwiftUI
 
 class MockToolCardViewModel: BaseToolCardViewModel {
     
-    init(title: String, category: String, showParallelLanguage: Bool, showBannerImage: Bool, attachmentsDownloadProgress: Double, translationDownloadProgress: Double, deviceAttachmentBanners: DeviceAttachmentBanners) {
-        super.init()
+    init(cardType: ToolCardType, title: String, category: String, showParallelLanguage: Bool, showBannerImage: Bool, attachmentsDownloadProgress: Double, translationDownloadProgress: Double, deviceAttachmentBanners: DeviceAttachmentBanners) {
+        super.init(cardType: cardType)
         
         self.title = title
         self.category = category

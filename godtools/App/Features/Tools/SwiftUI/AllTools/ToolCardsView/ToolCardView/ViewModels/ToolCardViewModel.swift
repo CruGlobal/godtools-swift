@@ -27,7 +27,7 @@ class ToolCardViewModel: BaseToolCardViewModel, ToolItemInitialDownloadProgress 
     
     // MARK: - Init
     
-    init(resource: ResourceModel, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices) {
+    init(cardType: ToolCardType, resource: ResourceModel, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices) {
         
         self.resource = resource
         self.dataDownloader = dataDownloader
@@ -36,7 +36,7 @@ class ToolCardViewModel: BaseToolCardViewModel, ToolItemInitialDownloadProgress 
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
                 
-        super.init()
+        super.init(cardType: cardType)
         
         setup()
     }
