@@ -284,7 +284,7 @@ class ToolSettingsFlow: Flow {
         
         let getToolLanguagesUseCase: GetToolLanguagesUseCase = appDiContainer.getToolLanguagesUseCase()
         
-        let languages: [ToolLanguageModel] = getToolLanguagesUseCase.getToolLanguages(resource: toolData.resource)
+        let languages: [ToolLanguageModel] = getToolLanguagesUseCase.getToolLanguages(resource: toolData.renderer.value.resource)
         
         let selectedLanguage: LanguageModel?
         let deleteTappedClosure: (() -> Void)?
