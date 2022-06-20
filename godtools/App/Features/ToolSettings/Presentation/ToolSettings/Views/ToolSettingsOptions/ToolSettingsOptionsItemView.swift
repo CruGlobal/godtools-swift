@@ -49,14 +49,3 @@ struct ToolSettingsOptionsItemView: View {
         .cornerRadius(12)
     }
 }
-
-struct ToolSettingsOptionView_Preview: PreviewProvider {
-    static var previews: some View {
-        ToolSettingsOptionsItemView(
-            backgroundType: .image(image: Image(ImageCatalog.toolSettingsOptionTrainingTipsBackground.name)),
-            iconImage: Image(ImageCatalog.toolSettingsOptionShareLink.name),
-            title: "Share link",
-            titleColorStyle: .darkBackground
-        )
-    }
-}

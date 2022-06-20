@@ -22,9 +22,34 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     private let favoritingToolMessageCache: FavoritingToolMessageCache
     private let analytics: AnalyticsContainer
         
-    private var spotlightViewModel: ToolSpotlightViewModel?
-    private var categoriesViewModel: ToolCategoriesViewModel?
-    private var toolCardsViewModel: ToolCardsViewModel?
+    private(set) lazy var spotlightViewModel: ToolSpotlightViewModel = {
+        ToolSpotlightViewModel(
+            dataDownloader: dataDownloader,
+            deviceAttachmentBanners: deviceAttachmentBanners,
+            favoritedResourcesCache: favoritedResourcesCache,
+            languageSettingsService: languageSettingsService,
+            localizationServices: localizationServices,
+            delegate: self
+        )
+    }()
+    private(set) lazy var categoriesViewModel: ToolCategoriesViewModel = {
+        ToolCategoriesViewModel(
+            dataDownloader: dataDownloader,
+            languageSettingsService: languageSettingsService,
+            localizationServices: localizationServices,
+            delegate: self
+        )
+    }()
+    private(set) lazy var toolCardsViewModel: ToolCardsViewModel = {
+        ToolCardsViewModel(
+            dataDownloader: dataDownloader,
+            deviceAttachmentBanners: deviceAttachmentBanners,
+            languageSettingsService: languageSettingsService,
+            localizationServices: localizationServices,
+            favoritedResourcesCache: favoritedResourcesCache,
+            delegate: self
+        )
+    }()
     
     // MARK: - Published
     
@@ -55,61 +80,6 @@ extension AllToolsContentViewModel {
     func getFavoritingToolBannerViewModel() -> FavoritingToolBannerViewModel {
         
         return FavoritingToolBannerViewModel(localizationServices: localizationServices, delegate: self)
-    }
-    
-    func getSpotlightViewModel() -> ToolSpotlightViewModel {
-        if let spotlightViewModel = spotlightViewModel {
-            return spotlightViewModel
-            
-        } else {
-            let spotlightVM = ToolSpotlightViewModel(
-                dataDownloader: dataDownloader,
-                deviceAttachmentBanners: deviceAttachmentBanners,
-                favoritedResourcesCache: favoritedResourcesCache,
-                languageSettingsService: languageSettingsService,
-                localizationServices: localizationServices,
-                delegate: self
-            )
-            
-            spotlightViewModel = spotlightVM
-            return spotlightVM
-        }
-    }
-    
-    func getCategoriesViewModel() -> ToolCategoriesViewModel {
-        if let categoriesViewModel = categoriesViewModel {
-            return categoriesViewModel
-            
-        } else {
-            let categoriesVM = ToolCategoriesViewModel(
-                dataDownloader: dataDownloader,
-                languageSettingsService: languageSettingsService,
-                localizationServices: localizationServices,
-                delegate: self
-            )
-            
-            categoriesViewModel = categoriesVM
-            return categoriesVM
-        }
-    }
-    
-    func getToolCardsViewModel() -> ToolCardsViewModel {
-        if let toolCardsViewModel = toolCardsViewModel {
-            return toolCardsViewModel
-            
-        } else {
-            let toolCardsVM = ToolCardsViewModel(
-                dataDownloader: dataDownloader,
-                deviceAttachmentBanners: deviceAttachmentBanners,
-                languageSettingsService: languageSettingsService,
-                localizationServices: localizationServices,
-                favoritedResourcesCache: favoritedResourcesCache,
-                delegate: self
-            )
-            
-            toolCardsViewModel = toolCardsVM
-            return toolCardsVM
-        }
     }
     
     func refreshTools() {
@@ -151,7 +121,7 @@ extension AllToolsContentViewModel: ToolSpotlightDelegate {
 extension AllToolsContentViewModel: ToolCategoriesViewModelDelegate {
     
     func filterToolsWithCategory(_ attrCategory: String?) {
-        toolCardsViewModel?.filterTools(with: attrCategory)
+        toolCardsViewModel.filterTools(with: attrCategory)
     }
 }
 
