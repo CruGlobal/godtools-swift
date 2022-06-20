@@ -11,14 +11,13 @@ struct ToolSettingsTopBarView: View {
         
     @ObservedObject var viewModel: ToolSettingsViewModel
     
-    let primaryTextColor: Color
     let leadingInset: CGFloat
     let trailingInset: CGFloat
     
     var body: some View {
         HStack {
             Text(viewModel.title)
-                .foregroundColor(primaryTextColor)
+                .foregroundColor(ColorPalette.gtGrey.color)
                 .font(FontLibrary.sfProTextRegular.font(size: 23))
             Spacer()
             Button {
