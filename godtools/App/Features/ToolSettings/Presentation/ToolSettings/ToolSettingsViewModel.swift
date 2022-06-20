@@ -158,6 +158,6 @@ class ToolSettingsViewModel: ObservableObject {
             return
         }
         
-        flowDelegate?.navigate(step: .shareableTappedFromToolSettings(shareable: shareable, shareImage: imageToShare))
+        flowDelegate?.navigate(step: .shareableTappedFromToolSettings(shareImage: imageToShare))
     }
 }

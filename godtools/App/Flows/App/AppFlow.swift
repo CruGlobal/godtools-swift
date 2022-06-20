@@ -164,6 +164,9 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         case .aboutToolTappedFromFavoritedTools(let resource):
             navigateToToolDetail(resource: resource)
             
+        case .backTappedFromToolDetails:
+            navigationController.popViewController(animated: true)
+            
         case .unfavoriteToolTappedFromFavoritedTools(let resource, let removeHandler):
             
             let handler = CallbackHandler { [weak self] in
