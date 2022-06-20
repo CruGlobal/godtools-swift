@@ -18,7 +18,7 @@ struct AllToolsList: View {
     // MARK: - Constants
     
     private enum Sizes {
-        static let toolsPaddingMultiplier: CGFloat = 20/375
+        static let toolsPaddingMultiplier: CGFloat = 15/375
     }
     
     // MARK: - Body

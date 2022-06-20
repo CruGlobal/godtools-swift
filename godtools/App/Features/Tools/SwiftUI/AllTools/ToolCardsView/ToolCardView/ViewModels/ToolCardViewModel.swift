@@ -187,10 +187,8 @@ class ToolCardViewModel: BaseToolCardViewModel, ToolItemInitialDownloadProgress 
         if let language = language {
             
             if resource.supportsLanguage(languageId: language.id) {
-                let nameAvailableSuffix: String = " ✓"
-                let translatedName: String = LanguageViewModel(language: language, localizationServices: localizationServices).translatedLanguageName
-                
-                return translatedName + nameAvailableSuffix
+               
+                return LanguageViewModel(language: language, localizationServices: localizationServices).translatedLanguageNameWithCheckmark
             }
         }
         return ""
