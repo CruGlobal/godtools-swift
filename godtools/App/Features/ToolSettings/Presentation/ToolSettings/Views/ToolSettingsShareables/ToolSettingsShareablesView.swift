@@ -13,7 +13,6 @@ struct ToolSettingsShareablesView: View {
     
     @ObservedObject var viewModel: ToolSettingsViewModel
     
-    let primaryTextColor: Color
     let leadingInset: CGFloat
     let trailingInset: CGFloat
         
@@ -22,7 +21,7 @@ struct ToolSettingsShareablesView: View {
         VStack(alignment: .leading, spacing: 10) {
             
             Text(viewModel.shareablesTitle)
-                .foregroundColor(primaryTextColor)
+                .foregroundColor(ColorPalette.gtGrey.color)
                 .font(FontLibrary.sfProTextRegular.font(size: 19))
                 .padding(EdgeInsets(top: 0, leading: leadingInset, bottom: 0, trailing: 0))
             

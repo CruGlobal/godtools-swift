@@ -20,6 +20,7 @@ class ToolSettingsFlow: Flow {
     private var shareToolScreenTutorialModal: UIViewController?
     private var loadToolRemoteSessionModal: UIViewController?
     private var languagesListModal: UIViewController?
+    private var reviewShareShareableModal: UIViewController?
     private var downloadToolTranslationsFlow: DownloadToolTranslationsFlow?
     
     private weak var flowDelegate: FlowDelegate?
@@ -199,16 +200,32 @@ class ToolSettingsFlow: Flow {
             
             swapToolPrimaryAndParallelLanguage()
             
-        case .shareableTappedFromToolSettings(let shareable, let imageToShare):
-                    
-            let viewModel = ShareShareableViewModel(
-                shareable: shareable,
-                imageToShare: imageToShare
+        case .shareableTappedFromToolSettings(let imageToShare):
+                   
+            let viewModel = ReviewShareShareableViewModel(
+                flowDelegate: self,
+                imageToShare: imageToShare,
+                localizationServices: appDiContainer.localizationServices
             )
             
-            let view = ShareShareableView(viewModel: viewModel)
-                        
+            let view = ReviewShareShareableHostingView(view: ReviewShareShareableView(viewModel: viewModel))
+            
+            reviewShareShareableModal = view
+            
             navigationController.present(view, animated: true, completion: nil)
+            
+        case .shareImageTappedFromReviewShareShareable(let imageToShare):
+            
+            dismissReviewShareShareable(animated: true) { [weak self] in
+                
+                let viewModel = ShareShareableViewModel(
+                    imageToShare: imageToShare
+                )
+                
+                let view = ShareShareableView(viewModel: viewModel)
+                            
+                self?.navigationController.present(view, animated: true, completion: nil)
+            }
             
         default:
             break
@@ -259,9 +276,10 @@ class ToolSettingsFlow: Flow {
     
     private func presentLanguagesList(languageListType: ToolSettingsLanguageListType) {
         
-        let languagesRepository: LanguagesRepository = appDiContainer.getLanguagesRepository()
-        let getToolLanguagesUseCase: GetToolLanguagesUseCase = GetToolLanguagesUseCase(languagesRepository: languagesRepository)
+        let getToolLanguagesUseCase: GetToolLanguagesUseCase = appDiContainer.getToolLanguagesUseCase()
+  
         let toolLanguages: [ToolLanguageModel] = getToolLanguagesUseCase.getToolLanguages(resource: toolData.resource)
+      
         var languagesList: [ToolLanguageModel] = toolLanguages
         
         let selectedLanguage: LanguageModel?
@@ -406,6 +424,7 @@ class ToolSettingsFlow: Flow {
     private func dismissLanguagesList(animated: Bool = true, completion: (() -> Void)? = nil) {
         
         guard let languagesListModal = languagesListModal else {
+            completion?()
             return
         }
         
@@ -418,5 +437,23 @@ class ToolSettingsFlow: Flow {
         }
                 
         self.languagesListModal = nil
+    }
+    
+    private func dismissReviewShareShareable(animated: Bool = true, completion: (() -> Void)? = nil) {
+        
+        guard let reviewShareShareableModal = reviewShareShareableModal else {
+            completion?()
+            return
+        }
+        
+        if animated {
+            reviewShareShareableModal.dismiss(animated: true, completion: completion)
+        }
+        else {
+            reviewShareShareableModal.dismiss(animated: false)
+            completion?()
+        }
+        
+        self.reviewShareShareableModal = nil
     }
 }

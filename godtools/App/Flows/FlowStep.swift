@@ -58,6 +58,7 @@ enum FlowStep {
     case aboutToolTappedFromAllTools(resource: ResourceModel)
     
     // toolDetails
+    case backTappedFromToolDetails
     case openToolTappedFromToolDetails(resource: ResourceModel)
     case learnToShareToolTappedFromToolDetails(resource: ResourceModel)
     case urlLinkTappedFromToolDetail(url: URL, exitLink: ExitLinkModel)
@@ -132,6 +133,7 @@ enum FlowStep {
     case primaryLanguageTappedFromToolSettings
     case parallelLanguageTappedFromToolSettings
     case swapLanguagesTappedFromToolSettings
-    case shareableTappedFromToolSettings(shareable: Shareable, shareImage: UIImage)
+    case shareableTappedFromToolSettings(shareImage: UIImage)
+    case shareImageTappedFromReviewShareShareable(shareImage: UIImage)
     case toolSettingsFlowCompleted
 }

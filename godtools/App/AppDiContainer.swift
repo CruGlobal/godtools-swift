@@ -337,6 +337,13 @@ class AppDiContainer {
         return ShareToolScreenTutorialNumberOfViewsCache(sharedUserDefaultsCache: sharedUserDefaultsCache)
     }
     
+    func getToolLanguagesUseCase() -> GetToolLanguagesUseCase {
+        return GetToolLanguagesUseCase(
+            languagesRepository: getLanguagesRepository(),
+            localizationServices: localizationServices
+        )
+    }
+    
     func getToolOpenedAnalytics() -> ToolOpenedAnalytics {
         return ToolOpenedAnalytics(appsFlyerAnalytics: analytics.appsFlyerAnalytics)
     }

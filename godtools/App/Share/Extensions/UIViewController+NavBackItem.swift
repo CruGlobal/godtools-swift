@@ -30,6 +30,8 @@ extension UIViewController {
             return nil
         }
         
+        navigationItem.setHidesBackButton(true, animated: false)
+                
         return addBarButtonItem(
             to: .left,
             image: ImageCatalog.navBack.image,
