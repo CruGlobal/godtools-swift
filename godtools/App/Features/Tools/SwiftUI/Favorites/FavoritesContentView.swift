@@ -12,7 +12,7 @@ struct FavoritesContentView: View {
     
     // MARK: - Properties
     
-//    @ObservedObject var viewModel: FavoritesContentViewModel
+    @ObservedObject var viewModel: FavoritesContentViewModel
     
     // MARK: - Body
     
@@ -24,6 +24,19 @@ struct FavoritesContentView: View {
 
 struct FavoritesContentView_Previews: PreviewProvider {
     static var previews: some View {
-        FavoritesContentView()
+        
+        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
+        
+        let viewModel = FavoritesContentViewModel(
+            flowDelegate: MockFlowDelegate(),
+            dataDownloader: appDiContainer.initialDataDownloader,
+            deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
+            languageSettingsService: appDiContainer.languageSettingsService,
+            localizationServices: appDiContainer.localizationServices,
+            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
+            analytics: appDiContainer.analytics
+        )
+        
+        FavoritesContentView(viewModel: viewModel)
     }
 }
