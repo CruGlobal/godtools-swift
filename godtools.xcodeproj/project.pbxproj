@@ -1087,6 +1087,7 @@
 		D44F3AE128625B130008390D /* FavoritesContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44F3AE028625B130008390D /* FavoritesContentViewModel.swift */; };
 		D44F3AE728625C3F0008390D /* FavoriteToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44F3AE628625C3F0008390D /* FavoriteToolsView.swift */; };
 		D44F3AE928625C660008390D /* FavoriteToolsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44F3AE828625C660008390D /* FavoriteToolsViewModel.swift */; };
+		D44F3AEB28628E7D0008390D /* BackwardCompatibleList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44F3AEA28628E7D0008390D /* BackwardCompatibleList.swift */; };
 		D47C49D8280EF0B10084F4DE /* AllToolsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D7280EF0B10084F4DE /* AllToolsList.swift */; };
 		D47C49DA28104E0B0084F4DE /* OptionalImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D928104E0B0084F4DE /* OptionalImage.swift */; };
 		D47C49E02816EEBD0084F4DE /* MockFlowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49DF2816EEBD0084F4DE /* MockFlowDelegate.swift */; };
@@ -2249,6 +2250,7 @@
 		D44F3AE028625B130008390D /* FavoritesContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesContentViewModel.swift; sourceTree = "<group>"; };
 		D44F3AE628625C3F0008390D /* FavoriteToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteToolsView.swift; sourceTree = "<group>"; };
 		D44F3AE828625C660008390D /* FavoriteToolsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteToolsViewModel.swift; sourceTree = "<group>"; };
+		D44F3AEA28628E7D0008390D /* BackwardCompatibleList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackwardCompatibleList.swift; sourceTree = "<group>"; };
 		D47C49D7280EF0B10084F4DE /* AllToolsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllToolsList.swift; sourceTree = "<group>"; };
 		D47C49D928104E0B0084F4DE /* OptionalImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalImage.swift; sourceTree = "<group>"; };
 		D47C49DF2816EEBD0084F4DE /* MockFlowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFlowDelegate.swift; sourceTree = "<group>"; };
@@ -6481,6 +6483,7 @@
 			children = (
 				D44C69442809B6880000B970 /* ActivityIndicator.swift */,
 				45325F1B285CF8B40078D932 /* AnimatedSwiftUIView */,
+				D44F3AEA28628E7D0008390D /* BackwardCompatibleList.swift */,
 				4508D26828341BE20092ECA4 /* CloseButton.swift */,
 				D44F3AD428623CD90008390D /* GTBlueButton.swift */,
 				D44F3AD62862429A0008390D /* GTWhiteButton.swift */,
@@ -7217,6 +7220,7 @@
 				45AD1F9925938A9800A096A0 /* RealmResource.swift in Sources */,
 				45AD1FF825938A9800A096A0 /* IsNewUserService.swift in Sources */,
 				4508D26928341BE20092ECA4 /* CloseButton.swift in Sources */,
+				D44F3AEB28628E7D0008390D /* BackwardCompatibleList.swift in Sources */,
 				D44F3AAF2835817A0008390D /* ToolCategoryButtonView.swift in Sources */,
 				450F94DF27A1F38E009DEA43 /* MobileContentCardCollectionPageItemView.swift in Sources */,
 				45AD1F5E25938A9800A096A0 /* StarscreamWebSocket.swift in Sources */,

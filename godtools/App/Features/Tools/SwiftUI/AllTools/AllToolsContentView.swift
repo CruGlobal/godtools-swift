@@ -49,33 +49,10 @@ struct AllToolsContentView: View {
                 GeometryReader { geo in
                     let width = geo.size.width
                     
-                    if #available(iOS 15.0, *) {
-                        // Pull to refresh is supported only in iOS 15+
-                        
-                        List {
-                            AllToolsList(viewModel: viewModel, width: width)
-                                .listRowSeparator(.hidden)
-                                
-                        }
-                        .modifier(PlainList())
-                        .refreshable {
-                            viewModel.refreshTools()
-                        }
-                        
-                    } else if #available(iOS 14.0, *) {
-                        
-                        ScrollView {
-                            LazyVStack(spacing: 0) {
-                                AllToolsList(viewModel: viewModel, width: width)
-                            }
-                        }
-                                                
-                    } else {
-                        
-                        List {
-                            AllToolsList(viewModel: viewModel, width: width)
-                        }
-                        .modifier(PlainList())
+                    BackwardCompatibleList {
+                        AllToolsList(viewModel: viewModel, width: width)
+                    } refreshHandler: {
+                        viewModel.refreshTools()
                     }
                 }
             }
