@@ -63,19 +63,3 @@ struct ToolSettingsChooseLanguageView: View {
         }
     }
 }
-
-struct ToolSettingsChooseLanguageViewPreview: PreviewProvider {
-    
-    static var previews: some View {
-        
-        GeometryReader { geometry in
-            
-            ToolSettingsChooseLanguageView(
-                viewModel: ToolSettingsViewPreview.getToolSettingsViewModel(),
-                geometryProxy: geometry,
-                leadingInset: 30,
-                trailingInset: 30
-            )
-        }
-    }
-}
