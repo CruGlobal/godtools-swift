@@ -10,12 +10,6 @@ import SwiftUI
 
 class BaseToolCardViewModel: NSObject, ObservableObject {
     
-    enum ToolCardType {
-        case standard
-        case spotlight
-        case favorites
-    }
-    
     let cardType: ToolCardType
     
     // MARK: - Published

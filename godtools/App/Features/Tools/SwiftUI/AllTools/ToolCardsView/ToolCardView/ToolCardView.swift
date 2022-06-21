@@ -15,6 +15,14 @@ struct ToolCardView: View {
     @ObservedObject var viewModel: BaseToolCardViewModel
     let cardWidth: CGFloat
     
+    var whiteSpaceHeight: CGFloat? {
+        switch viewModel.cardType {
+        case .standard:     return nil
+        case .spotlight:    return 75
+        case .favorites:    return 134
+        }
+    }
+    
     // MARK: - Constants
     
     private enum Sizes {
@@ -31,7 +39,7 @@ struct ToolCardView: View {
             VStack(alignment: .leading, spacing: 0) {
                 ZStack(alignment: .topTrailing) {
                     
-                    ToolCardBannerImageView(bannerImage: viewModel.bannerImage, isSpotlight: viewModel.cardType == .spotlight, cardWidth: cardWidth, cornerRadius: Sizes.cornerRadius)
+                    ToolCardBannerImageView(bannerImage: viewModel.bannerImage, cardType: viewModel.cardType, cardWidth: cardWidth, cornerRadius: Sizes.cornerRadius)
                     
                     ToolCardFavoritedView(isFavorited: viewModel.isFavorited)
                         .onTapGesture {
@@ -46,27 +54,42 @@ struct ToolCardView: View {
                         
                         ToolCardTitleView(title: viewModel.title)
                         
-                        if viewModel.cardType == .spotlight {
+                        switch viewModel.cardType {
+                        case .standard:
+                            ToolCardCategoryView(category: viewModel.category)
                             
+                        case .spotlight:
                             Spacer(minLength: 0)
                             ToolCardParallelLanguageView(languageName: viewModel.parallelLanguageName)
                             
-                        } else {
+                        case .favorites:
                             ToolCardCategoryView(category: viewModel.category)
+                            ToolCardParallelLanguageView(languageName: viewModel.parallelLanguageName)
+                            
+                            Spacer(minLength: 0)
+                            HStack(spacing: 5) {
+                                GTWhiteButton(title: "Details", width: (cardWidth - 35)/2, height: 30) {
+                                    // TODO: - open about
+                                }
+                                GTBlueButton(title: "Open", width: (cardWidth - 35)/2, height: 30) {
+                                    // TODO: - open tool
+                                }
+                            }
                         }
                     }
-                    .padding([.leading, .bottom], 15)
+                    .padding(.leading, 15)
+                    .padding(.bottom, 12)
                     
                     Spacer()
                     
-                    if viewModel.cardType != .spotlight {
+                    if viewModel.cardType.isSquareLayout == false {
                         
                         ToolCardParallelLanguageView(languageName: viewModel.parallelLanguageName)
                             .padding(.top, 4)
                             .padding(.trailing, 10)
                     }
                 }
-                .frame(width: cardWidth, height: viewModel.cardType == .spotlight ? 75 : nil, alignment: .topLeading)
+                .frame(width: cardWidth, height: whiteSpaceHeight, alignment: .topLeading)
                 .padding(.top, 12)
                 
             }
@@ -83,11 +106,11 @@ struct ToolCardView_Previews: PreviewProvider {
     
     static var previews: some View {
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
-        let isSpotlight = true
+        let cardType: ToolCardType = .favorites
         
         ToolCardView(viewModel:
                         MockToolCardViewModel(
-                            cardType: isSpotlight ? .spotlight : .standard,
+                            cardType: cardType,
                             title: "Knowing God Personally",
                             category: "Gospel Invitation",
                             showParallelLanguage: true,
@@ -96,7 +119,7 @@ struct ToolCardView_Previews: PreviewProvider {
                             translationDownloadProgress: 0.55,
                             deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners
                         ),
-                     cardWidth: isSpotlight ? 200 : 375
+                     cardWidth: cardType.isSquareLayout ? 200 : 375
         )
         .padding()
         .previewLayout(.sizeThatFits)
