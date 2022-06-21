@@ -20,7 +20,7 @@ struct ToolSpotlightView: View {
     
     var body: some View {
         
-        if viewModel.spotlightTools.isEmpty == false {
+        if viewModel.tools.isEmpty == false {
             
             VStack(alignment: .leading, spacing: 10) {
                 
@@ -30,7 +30,7 @@ struct ToolSpotlightView: View {
                 
                 ScrollView(.horizontal, showsIndicators: false) {
                     
-                    SpotlightToolCardsView(viewModel: viewModel, width: width)
+                    HorizontalToolCardsView(viewModel: viewModel, width: width)
                     .padding(.leading, leadingPadding)
                 }
             }

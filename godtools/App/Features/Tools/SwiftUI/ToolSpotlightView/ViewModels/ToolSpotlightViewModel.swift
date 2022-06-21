@@ -12,7 +12,7 @@ protocol ToolSpotlightDelegate: AnyObject {
     func spotlightCardTapped(resource: ResourceModel)
 }
 
-class ToolSpotlightViewModel: NSObject, ObservableObject {
+class ToolSpotlightViewModel: HorizontalToolCardsViewModel {
     
     // MARK: - Properties
     
@@ -27,7 +27,6 @@ class ToolSpotlightViewModel: NSObject, ObservableObject {
     
     @Published var spotlightTitle: String = ""
     @Published var spotlightSubtitle: String = ""
-    @Published var spotlightTools: [ResourceModel] = []
     
     // MARK: - Init
     
@@ -49,6 +48,24 @@ class ToolSpotlightViewModel: NSObject, ObservableObject {
         dataDownloader.cachedResourcesAvailable.removeObserver(self)
         dataDownloader.resourcesUpdatedFromRemoteDatabase.removeObserver(self)
         languageSettingsService.primaryLanguage.removeObserver(self)
+    }
+    
+    // MARK: - Overrides
+    
+    override func cardViewModel(for tool: ResourceModel) -> BaseToolCardViewModel {
+        return ToolCardViewModel(
+            cardType: .spotlight,
+            resource: tool,
+            dataDownloader: dataDownloader,
+            deviceAttachmentBanners: deviceAttachmentBanners,
+            favoritedResourcesCache: favoritedResourcesCache,
+            languageSettingsService: languageSettingsService,
+            localizationServices: localizationServices
+        )
+    }
+    
+    override func toolTapped(resource: ResourceModel) {
+        delegate?.spotlightCardTapped(resource: resource)
     }
 }
 
@@ -84,33 +101,12 @@ extension ToolSpotlightViewModel {
     }
     
     private func reloadResourcesFromCache() {
-        spotlightTools = dataDownloader.resourcesCache.getAllVisibleToolsSorted(andFilteredBy: { $0.attrSpotlight })
+        tools = dataDownloader.resourcesCache.getAllVisibleToolsSorted(andFilteredBy: { $0.attrSpotlight })
     }
     
     private func setTitleText() {
         let languageBundle = localizationServices.bundleLoader.bundleForPrimaryLanguageOrFallback(in: languageSettingsService)
         spotlightTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "allTools.spotlight.title")
         spotlightSubtitle = localizationServices.stringForBundle(bundle: languageBundle, key: "allTools.spotlight.description")
-    }
-}
-
-// MARK: - Public
-
-extension ToolSpotlightViewModel {
-    
-    func cardViewModel(for tool: ResourceModel) -> BaseToolCardViewModel {
-        return ToolCardViewModel(
-            cardType: .spotlight,
-            resource: tool,
-            dataDownloader: dataDownloader,
-            deviceAttachmentBanners: deviceAttachmentBanners,
-            favoritedResourcesCache: favoritedResourcesCache,
-            languageSettingsService: languageSettingsService,
-            localizationServices: localizationServices
-        )
-    }
-    
-    func spotlightToolTapped(resource: ResourceModel) {
-        delegate?.spotlightCardTapped(resource: resource)
     }
 }
