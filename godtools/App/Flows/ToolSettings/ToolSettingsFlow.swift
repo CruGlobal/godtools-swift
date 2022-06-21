@@ -284,7 +284,7 @@ class ToolSettingsFlow: Flow {
         
         let getToolLanguagesUseCase: GetToolLanguagesUseCase = appDiContainer.getToolLanguagesUseCase()
   
-        let toolLanguages: [ToolLanguageModel] = getToolLanguagesUseCase.getToolLanguages(resource: toolData.resource)
+        let toolLanguages: [ToolLanguageModel] = getToolLanguagesUseCase.getToolLanguages(resource: toolData.renderer.value.resource)
       
         var languagesList: [ToolLanguageModel] = toolLanguages
         
