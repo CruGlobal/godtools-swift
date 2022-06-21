@@ -17,6 +17,7 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
     let attrBannerAbout: String
     let attrCategory: String
     let attrDefaultOrder: Int
+    let attrDefaultVariant: String
     let attrSpotlight: Bool
     let id: String
     let isHidden: Bool
@@ -47,6 +48,7 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
         case attrBannerAbout = "attr-banner-about"
         case attrCategory = "attr-category"
         case attrDefaultOrder = "attr-default-order"
+        case attrDefaultVariant = "attr-default-variant"
         case attrSpotlight = "attr-spotlight"
         case description = "description"
         case isHidden = "attr-hidden"
@@ -75,6 +77,7 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
         attrBannerAbout = realmResource.attrBannerAbout
         attrCategory = realmResource.attrCategory
         attrDefaultOrder = realmResource.attrDefaultOrder
+        attrDefaultVariant = realmResource.attrDefaultVariant
         attrSpotlight = realmResource.attrSpotlight
         id = realmResource.id
         isHidden = realmResource.isHidden
@@ -129,6 +132,7 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
         else {
             attrDefaultOrder = -1
         }
+        attrDefaultVariant = try attributesContainer?.decodeIfPresent(String.self, forKey: .attrDefaultVariant) ?? ""
         let isHiddenString: String = try attributesContainer?.decodeIfPresent(String.self, forKey: .isHidden) ?? "false"
         isHidden = isHiddenString == "true" ? true : false
         manifest = try attributesContainer?.decodeIfPresent(String.self, forKey: .manifest) ?? ""
