@@ -152,6 +152,8 @@
 		4533A928270E2567009B1AF5 /* UINavigationBar+Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4533A927270E2567009B1AF5 /* UINavigationBar+Appearance.swift */; };
 		45363FD127E2420B0000546A /* AppsFlyerDeepLinkValueParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45363FD027E2420B0000546A /* AppsFlyerDeepLinkValueParser.swift */; };
 		453A93F72705FDB80046B4FC /* PrimaryEvaluationOptionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453A93F62705FDB80046B4FC /* PrimaryEvaluationOptionState.swift */; };
+		453D1EFF2861CE0E00CEA3AC /* ToolDetailsVersionsCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453D1EFE2861CE0E00CEA3AC /* ToolDetailsVersionsCardView.swift */; };
+		453D1F022861CFEE00CEA3AC /* CircleSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453D1F012861CFEE00CEA3AC /* CircleSelectorView.swift */; };
 		453D866A24E08461004EA89F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 453D866824E08461004EA89F /* Localizable.strings */; };
 		453F0B6026EA369000436EE4 /* MobileContentMultiSelectOptionViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453F0B5D26EA369000436EE4 /* MobileContentMultiSelectOptionViewModelType.swift */; };
 		453F0B6126EA369000436EE4 /* MobileContentMultiSelectOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453F0B5E26EA369000436EE4 /* MobileContentMultiSelectOptionView.swift */; };
@@ -1270,6 +1272,8 @@
 		4533A927270E2567009B1AF5 /* UINavigationBar+Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Appearance.swift"; sourceTree = "<group>"; };
 		45363FD027E2420B0000546A /* AppsFlyerDeepLinkValueParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsFlyerDeepLinkValueParser.swift; sourceTree = "<group>"; };
 		453A93F62705FDB80046B4FC /* PrimaryEvaluationOptionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryEvaluationOptionState.swift; sourceTree = "<group>"; };
+		453D1EFE2861CE0E00CEA3AC /* ToolDetailsVersionsCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolDetailsVersionsCardView.swift; sourceTree = "<group>"; };
+		453D1F012861CFEE00CEA3AC /* CircleSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleSelectorView.swift; sourceTree = "<group>"; };
 		453D866324E08310004EA89F /* mn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = mn; path = mn.lproj/Localizable.strings; sourceTree = "<group>"; };
 		453D866424E08347004EA89F /* tpi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tpi; path = tpi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		453D866924E08461004EA89F /* no */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = no; path = Localizable.strings; sourceTree = "<group>"; };
@@ -2871,6 +2875,7 @@
 				45325F0A285CF88D0078D932 /* ToolDetailsTitleHeaderView.swift */,
 				45325F09285CF88D0078D932 /* ToolDetailsToggleFavoriteButton.swift */,
 				45325F08285CF88D0078D932 /* ToolDetailsVersionsView.swift */,
+				453D1EFD2861CDF900CEA3AC /* VersionsCard */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2945,6 +2950,22 @@
 				45363FD027E2420B0000546A /* AppsFlyerDeepLinkValueParser.swift */,
 			);
 			path = AppsFlyerDeepLinkValue;
+			sourceTree = "<group>";
+		};
+		453D1EFD2861CDF900CEA3AC /* VersionsCard */ = {
+			isa = PBXGroup;
+			children = (
+				453D1EFE2861CE0E00CEA3AC /* ToolDetailsVersionsCardView.swift */,
+			);
+			path = VersionsCard;
+			sourceTree = "<group>";
+		};
+		453D1F002861CFE100CEA3AC /* CircleSelector */ = {
+			isa = PBXGroup;
+			children = (
+				453D1F012861CFEE00CEA3AC /* CircleSelectorView.swift */,
+			);
+			path = CircleSelector;
 			sourceTree = "<group>";
 		};
 		453D866624E08454004EA89F /* MissingLocalizations */ = {
@@ -6497,6 +6518,7 @@
 			children = (
 				D44C69442809B6880000B970 /* ActivityIndicator.swift */,
 				45325F1B285CF8B40078D932 /* AnimatedSwiftUIView */,
+				453D1F002861CFE100CEA3AC /* CircleSelector */,
 				4508D26828341BE20092ECA4 /* CloseButton.swift */,
 				451CEDCA282C31AB006E5105 /* LazyHList */,
 				D47C49D928104E0B0084F4DE /* OptionalImage.swift */,
@@ -7203,6 +7225,7 @@
 				D44F3AAF2835817A0008390D /* ToolCategoryButtonView.swift in Sources */,
 				450F94DF27A1F38E009DEA43 /* MobileContentCardCollectionPageItemView.swift in Sources */,
 				45AD1F5E25938A9800A096A0 /* StarscreamWebSocket.swift in Sources */,
+				453D1EFF2861CE0E00CEA3AC /* ToolDetailsVersionsCardView.swift in Sources */,
 				45B116C22625FC6D007A7127 /* LanguageDirection+SemanticContentAttribute.swift in Sources */,
 				457E199E27C6EA4C00BABD49 /* NSError+Error.swift in Sources */,
 				45AD1FED25938A9800A096A0 /* OpenTutorialCalloutUserDefaultsCache.swift in Sources */,
@@ -7991,6 +8014,7 @@
 				455582E9269F2C1000C3FF14 /* TrainingPageView.swift in Sources */,
 				45C61DDB280905F40058946F /* ParsedDeepLinkType.swift in Sources */,
 				450EE36D283FC28D0025C8EC /* ShareToolViewModelType.swift in Sources */,
+				453D1F022861CFEE00CEA3AC /* CircleSelectorView.swift in Sources */,
 				45AE974D27C97A9500C2CB33 /* Multiselect+MobileContentRenderableModel.swift in Sources */,
 				45C93B27261D31B900592FFF /* LoadingArticleViewModel.swift in Sources */,
 				45BD7A7026A235780007426B /* MobileContentRendererPageViewFactories.swift in Sources */,
