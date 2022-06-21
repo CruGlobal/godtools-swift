@@ -1,18 +1,72 @@
+"toolSettings.languagesList.deleteLanguage.title" = "Nav";
+"toolSettings.chooseLanguage.toggleMessage" = "Pārslēgties starp divām dažādām valodām šajā rīkā.";
+"toolDetails.versions.title" = "Rīka versijas";
+"toolDetails.learnToShareToolButton.title" = "Iemācīties koplietot šo rīku";
+"toolSettings.title" = "Rīka iestatījumi";
+"toolSettings.option.shareLink.title" = "Kopīgo saiti";
+"toolSettings.option.screenShare.title" = "Ekrāna koplietošana";
+"toolSettings.option.trainingTips.show.title" = "Apmācības padomi";
+"toolSettings.option.trainingTips.hide.title" = "Paslēpt padomus";
+"toolSettings.chooseLanguage.title" = "Paralēlā valoda";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Paralēli";
+"toolSettings.shareables.title" = "Saistītie attēli";
+"allTools.spotlight.title" = "Izmēģini rīku";
+"allTools.spotlight.description" = "Lūk, daži rīki, kas tev varētu patikt";
+"allTools.categories.title" = "Kategorijas";
+"training_tip_ask" = "Jautā";
+"training_tip_consider" = "Ņem vērā";
+"training_tip_prepare" = "Sagatavojies";
+"training_tip_quote" = "Citāts";
+"training_tip_tip" = "Padoms";
+"start_training" = "Sākt apmācību";
+"close" = "Aizvērt";
 "tool_menu_item.lessons" = "Nodarbības";
 "parallelLanguage.yesButton.title" = "Jā";
 "parallelLanguage.noButton.title" = "Nē, paldies";
+"parallelLanguage.selectButton.title" = "Izvēlēties";
 "parallelLanguage.getStartedButton.title" = "Sākt";
-"parallelLanguage.selectLanguageButton.title" = "Atlasīt valodu";
-"parellelLanguage.prompt" = "Vai vēlaties iestatīt otro valodu?";
+"parallelLanguage.selectLanguageButton.title" = "Izvēlies valodu";
+"parellelLanguage.prompt" = "Vai vēlies iestatīt paralēlo valodu?";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.continueButton.title.closeTutorial" = "Aizvērt pamācību";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.tool.title" = "Rīki";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.tool.message" = "Katrs rīks ir paredzēts citam sarunas posmam – pirms sarunas, sarunas laikā vai pēc sarunas.";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.toolTip.title" = "Padomi rīka lietošanā";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.toolTip.message" = "'GodTools' padomi palīdz paskaidrot Labo vēsti un iepazīt Jēzu.";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.screenShare.title" = "Ekrāna koplietošana";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.screenShare.message" = "Tagad vari attālināti kopīgot savu ekrānu, lai sarunu biedrs varētu sekot tam, kā tu izmanto rīku sarunās par Labo vēsti.";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.lesson.title" = "Nodarbības";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.lesson.message" = "Katrā 'GodTools' nodarbībā uzzini kaut ko tādu, kas var palīdzēt veidot sarunas par Dievu.";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.findTutorial.title" = "Šo pamācību vari atrast izvēlnē, kad vien tā ir nepieciešama.";
+
 "onboardingTutorial.beginButton.title" = "Sākt";
-"onboardingQuickStart.2.title" = "Vēlos runāt par gospeli ar kādu citu";
-"onboardingQuickStart.2.button.title" = "Izvēlieties vienu no mūsu rīkiem";
+"onboardingQuickStart.2.title" = "Vēlos kādam pastāstīt Labo vēsti";
+"onboardingQuickStart.2.button.title" = "Izvēlies kādu no mūsu rīkiem";
 "onboardingTutorial.nextButton.title" = "Tālāk";
 "onboardingQuickStart.title" = "Ātrās sākšanas saites";
-"onboardingQuickStart.0.title" = "Es vēlos iepazīt kristietību";
-"onboardingQuickStart.0.button.title" = "Lasiet mūsu rakstus";
-"onboardingQuickStart.1.title" = "Es vēlos uzzināt par sarunām par gospeli";
-"onboardingQuickStart.1.button.title" = "Izmēģiniet mūsu Mācību stundas";
+"onboardingQuickStart.0.title" = "Vēlos iepazīt kristietību";
+"onboardingQuickStart.0.button.title" = "Lasi mūsu rakstus";
+"onboardingQuickStart.1.title" = "Vēlos uzzināt, kā veidot sarunas par Labo vēsti";
+"onboardingQuickStart.1.button.title" = "Izmēģini mūsu Nodarbības";
 "tool_offline_favorite_message" = "Padari rīku pieejamu bezsaistē, nospiežot sirds ikonu, lai pievienotu to Izlasei.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -25,30 +79,36 @@
 "share_tool_menu.remote_share_tool" = "Kopīgo savu ekrānu";
 "share_tool_menu.send_tool" = "Nosūti šo rīku";
 "share_tool_screen_tutorial.share_your_screen.title" = "Kopīgo savu ekrānu";
-"share_tool_screen_tutorial.share_your_screen.message" = "Šī funkcija nosūtīs draugam saiti uz šo rīku. Ekrāna koplietošanas sesija tiks sākta pēc saites atvēršanas.";
+"share_tool_screen_tutorial.share_your_screen.message" = "Šī funkcija nosūtīs draugam saiti uz šo rīku. Pēc saites atvēršanas sāksies ekrāna koplietošana.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "Kopīga lietošana";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Ritinot rīku savā tālrunī, tava drauga ekrānā notiks tas pats. Šī funkcija ļauj vienlaicīgi izmantot vienu rīku 2 dažādās ierīcēs.";
 "share_tool_screen_tutorial.get_started.title" = "Sākt";
-"share_tool_screen_tutorial.get_started.message" = "Nosūti saiti vienam vai vairākiem cilvēkiem, lai sāktu ekrāna koplietošanas sesiju.
+"share_tool_screen_tutorial.get_started.message" = "Lai sāktu ekrāna koplietošanu, nosūti saiti vienam vai vairākiem cilvēkiem.
 
 Šīs funkcijas darbībai ir nepieciešams, lai visu dalībnieku ierīcēs būtu uzinstalēta lietotne 'GodTools'.";
 "share_tool_remote_link_message" = "Sveiki! Pievienojies man lietotnē 'GodTools', izmantojot ekrāna koplietošanas funkciju. Lūk, saite: %@
 
 Ja saņēmi šo ziņojumu novēloti, iespējams, ka saite vairs nedarbojas. Mēs varam vēlreiz pamēģināt kādu citu reizi.";
-"exit_tract_remote_share_session.message" = "Iziet no attālinātās koplietošanas sesijas?";
-"load_tool_remote_session.message" = "Sākas ekrāna koplietošana...";
+"exit_tract_remote_share_session.message" = "Beigt attālināto koplietošanu?";
+"load_tool_remote_session.message" = "Sākas ekrāna koplietošana…";
+"learn_to_share_tool.learn_to_share.title" = "Iemācies kopīgot rīku";
+"learn_to_share_tool.learn_to_share.message" = "Praktizējies izmantot tik daudz padomu, cik nepieciešams, lai pārliecinoši kopīgotu šo rīku.";
+"learn_to_share_tool.tips_light_the_way.title" = "Padomi rīka lietošanā";
+"learn_to_share_tool.tips_light_the_way.message" = "Dažādos šīs apmācības ekrānos ir dažādas ikonas. Lai atklātos padoms, kas palīdzēs runāt par ekrāna saturu, spied uz ikonas.";
+"learn_to_share_tool.light_up_the_tips.title" = "Izgaismo padomus";
+"learn_to_share_tool.light_up_the_tips.message" = "Kad atvērsi padomu, atbilstošā ikona izgaismosies. Praktizējies izmantot tik daudz padomu, cik nepieciešams, lai pārliecinoši izskaidrotu rīku.";
 "lesson_evaluation.title" = "Atsauksmes";
-"lesson_evaluation.wasThisHelpful" = "Vai šī nodarbībā bija tev noderīga?";
+"lesson_evaluation.wasThisHelpful" = "Vai šī nodarbība bija tev noderīga?";
 "lesson_evaluation.shareFaith" = "Cik gatavs tu esi uzsākt sarunu par garīgiem jautājumiem?";
 "lesson_evaluation.sendButtonTitle" = "Nosūtīt";
-"onboardingTutorial.0.title" = "Gatavs jebkurai sarunai";
-"onboardingTutorial.0.videoLink.title" = "Skatīties video";
-"onboardingTutorial.1.title" = "Runājiet par Dievu ar citiem";
-"onboardingTutorial.1.message" = "GodTools palīdz jums piedalīties jēgpilnās sarunās par Dievu.";
-"onboardingTutorial.2.title" = "Sagatavojaties svarīgiem brīžiem";
-"onboardingTutorial.2.message" = "Uzziniet, kā sarunāties par ticību jūsu ikdienas dzīvē.";
-"onboardingTutorial.3.title" = "Palīdziet citiem atklāt Jēzu";
-"onboardingTutorial.3.message" = "GodTools palīdzēs jums runāt par gospeli skaidrā un saistošā veidā.";
+"onboardingTutorial.0.title" = "Gatavs sarunai";
+"onboardingTutorial.0.videoLink.title" = "Noskaties video";
+"onboardingTutorial.1.title" = "Runā par Dievu ar citiem";
+"onboardingTutorial.1.message" = "'GodTools' palīdz veidot jēgpilnas sarunas par Dievu.";
+"onboardingTutorial.2.title" = "Sagatavojies nozīmīgiem pavērsieniem";
+"onboardingTutorial.2.message" = "Uzzini, kā sarunas par ticību integrēt savā ikdienā.";
+"onboardingTutorial.3.title" = "Palīdzi kādam atklāt Jēzu";
+"onboardingTutorial.3.message" = "'GodTools' ir tavs ceļvedis, kas palīdz pastāstīt Labo vēsti skaidrā un atbilstošā veidā.";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Apmācība";
@@ -60,20 +120,20 @@ Ja saņēmi šo ziņojumu novēloti, iespējams, ka saite vairs nedarbojas. Mēs
 "add_to_favorites" = "Pievienot Izlasei";
 
 /* A user will be selecting this option to remove the tool from their Favorites screen */
-"remove_from_favorites" = "Dzēst no Izlases";
+"remove_from_favorites" = "Izņemt no Izlases";
 
 /* This is a loading screen */
-"loading_unfavorited_tool" = "Notiek rīka lejupielāde. Lai nākotnē izvairītos no gaidīšanas, atzīmējiet šo rīku kā Izlases rīku. 
+"loading_unfavorited_tool" = "Notiek rīka lejupielāde… Lai nākotnē izvairītos no gaidīšanas, padari rīku pieejamu bezsaistē, nospiežot sirds ikonu, lai pievienotu to Izlasei.
 ";
 
 /* This is a loading screen */
 "loading_favorited_tool" = "Notiek šī rīka jaunākā tulkojuma lejupielāde.";
 
 /* Adds a question mark */
-"remove_from_favorites_title" = "Izņemt no Izlases? ";
+"remove_from_favorites_title" = "Izņemt no Izlases?";
 
 /* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
-"remove_from_favorites_message" = "Vai tiešām vēlies izņemt %@ no Izlases? ";
+"remove_from_favorites_message" = "Vai tiešām vēlies izņemt \"%@\" no Izlases?";
 
 /* Gospel indicates the gospel of Jesus Christ */
 "tool_category_gospel" = "Labā vēsts";
@@ -114,6 +174,7 @@ Ja saņēmi šo ziņojumu novēloti, iespējams, ka saite vairs nedarbojas. Mēs
 "menu_share" = "Dalies";
 "menu_legal" = "Juridiskie paziņojumi (angļu val.)";
 "language_settings" = "Valodas iestatījumi";
+"menu.tutorial" = "Pamācība";
 "menu.my_account" = "Mans konts";
 
 // Login
@@ -128,11 +189,11 @@ Ja saņēmi šo ziņojumu novēloti, iespējams, ka saite vairs nedarbojas. Mēs
 "contact_us" = "Sazinies ar mums";
 "preview_mode_translators_only" = "Priekšskata režīms (tikai tulkiem)";
 "share_god_tools" = "Kopīgo 'GodTools' lietotni";
-"share_a_story_with_us" = "Pastāsti mums savu liecību";
+"share_a_story_with_us" = "Pastāsti savu liecību";
 "terms_of_use" = "Lietošanas noteikumi";
 "privacy_policy" = "Privātuma politika";
 "copyright_info" = "Informācija par autortiesībām";
-"share_god_tools_share_sheet_text" = "Lejupielādē 'GodTools' lietotni: https://GodToolsApp.com
+"share_god_tools_share_sheet_text" = "Lejupielādē 'GodTools' lietotni: https://GodToolsApp.com/lv
 
 Tiešsaistes versija ir pieejama: https://KnowGod.com/lv";
 
@@ -145,10 +206,10 @@ Tiešsaistes versija ir pieejama: https://KnowGod.com/lv";
 // Language Settings
 "primary_language" = "Pirmā valoda";
 "select_primary_language" = "Izvēlies pirmo valodu";
-"parallel_language" = "Sekundārā valoda";
-"select_parallel_language" = "Izvēlies sekundāro valodu";
+"parallel_language" = "Paralēlā valoda";
+"select_parallel_language" = "Izvēlies paralēlo valodu";
 "share_god_tools_native_language" = "Koplieto 'GodTools' ar citiem viņu dzimtajā valodā.";
-"not_every_tool_is_available" = "Ne visi rīki ir pieejami visās valodās";
+"not_every_tool_is_available" = "Ne visi rīki ir pieejami visās valodās.";
 
 // Settings
 "settings" = "Iestatījumi";
@@ -170,11 +231,11 @@ Tiešsaistes versija ir pieejama: https://KnowGod.com/lv";
 
 Turpināsim sarunu!
 
-Lietotni var lejupielādēt no: https://godtoolsapp.com";
+Lietotni var lejupielādēt savā tālrunī no https://ej.uz/GodTools";
 
 // Buttons
 "download" = "Lejupielādēt";
-"dismiss" = "Atcelt";
+"dismiss" = "Aizvērt";
 "done" = "Labi";
 "remove" = "Noņemt";
 "clear" = "Dzēst";
@@ -185,30 +246,73 @@ Lietotni var lejupielādēt no: https://godtoolsapp.com";
 "error" = "Kļūda";
 "OK" = "OK";
 "cancel" = "Atcelt";
-"required_field_missing" = "\"%@\" ir obligāts lauks.";
+"required_field_missing" = "Lauks \"%@\" aizpildāms obligāti!";
 
 "onboardingTutorial.getStartedButton.title" = "Sākt";
 
 // About
-"general_about_1" = "'GodTools' var palīdzēt tev pastāstīt citiem par Jēzu Kristu ērtā un vienkārša veidā.";
-"general_about_2" = "Šie rīki palīdz tev pastāstīt citiem, kā uzsākt attiecības ar Dievu caur Jēzu Kristu, pat, ja nekad neesi to darījis vai ja sarunbiedrs runā citā valodā.";
+"general_about_1" = "'GodTools' var palīdzēt pastāstīt citiem par Jēzu Kristu ērtā un vienkārša veidā.";
+// Tutorial
+"tutorial.tutorialItem.0.title" = "Noskaties video";
+"general_about_2" = "Šie rīki var palīdzēt pastāstīt citiem, kā uzsākt attiecības ar Dievu caur Jēzu Kristu, pat, ja nekad neesi to darījis vai ja sarunbiedrs runā citā valodā.";
+"tutorial.tutorialItem.0.message" = "Lūk, ko 'GodTools' piedāvā šajā demo video
+
+(Lai iestatītu subtitrus, uzspied uz video)";
 "general_about_3" = "Izvēlies rīkus atbilstoši savām vēlmēm un auditorijai. Ne visi rīki ir pieejami visās valodās.";
+"tutorial.tutorialItem.1.title" = "Sagatavojies";
 "general_about_4" = "Katra rīka beigās ir pievienotas saites uz citiem resursiem.";
+"tutorial.tutorialItem.1.message" = "Iepazīsties ar rīkiem. Iesakām sākt ar rīku \"Māci man pastāstīt par ticību\".
+
+Lai iegūtu vairāk informācijas, nospied pogu \"Par rīku\".";
 "general_about_5" = "Interneta pieslēgums ir nepieciešams, lai lejupielādētu jaunu rīku un/vai valodu. Pēc lejupielādes, tos var izmantot bezsaistē.";
+"tutorial.tutorialItem.2.title" = "Izmēģini";
 "general_about_6" = "Jautājumi? Ieteikumi? Lūgumi? Raksti mums uz godtools@agape.lv";
+"tutorial.tutorialItem.2.message" = "Iegūsti pieredzi, lietojot kādu no rīkiem sarunās.";
 "general_about_7" = "Šo rīku tīmekļa versijas ir pieejamas vietnē KnowGod.com/lv. Papildini savu tīmekļa vietni ar šo saiti!";
-"general_about_8" = "Apmeklē GodToolsApp.com, lai uzzinātu vairāk.";
+"tutorial.tutorialItem.3.title" = "Šo pamācību vari atrast izvēlnē, kad vien tā ir nepieciešama.";
+"general_about_8" = "Lai uzzinātu vairāk, apmeklē GodToolsApp.com/lv";
 "tutorial.continueButton.title.continue" = "Turpināt";
-"general_about_9" = "Uzņemoties iniciatīvu dalīties savā ticībā, atcerieties, ka Dievs pārliecina cilvēku. Mīliet ikvienu, uzklausot un meklējot sapratni.";
+"general_about_9" = "Uzņemoties iniciatīvu dalīties ticībā, atceries, ka vienīgi Dievs pārliecina cilvēku. Parādi mīlestību ikvienam, uzklausot un cenšoties saprast.";
+"tutorial.continueButton.title.startUsingGodTools" = "Sākt lietot 'GodTools'";
+
 "general_about_10" = "“Jūsu runa lai vienmēr ir labvēlīga, lai tajā ir sāls, un lai jūs zinātu, kā jums ikvienam jāatbild.” (Kolosiešiem 4:6)";
 
+// OpenTutorial
+"openTutorial.showTutorialLabel.text" = "Parādiet man pamācību";
 // Downloads
-"Download in progress" = "Notiek lejupielāde";
+"Download in progress" = "Notiek lejupielāde…";
+
+"openTutorial.openTutorialButton.title" = "Atvērt pamācību";
 
 // Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "Atpakaļ";
+// Account
+"account.navTitle" = "Mans konts";
 "card_status2" = "Tālāk";
+
+"account.activity.title" = "Aktivitāte";
 
 // Language Name Strings
 "language_name_fa" = "Persiešu (Farsi)";
 
+// Account Activity
+"accountActivity.globalAnalytics.header.title" = "Globālā aktivitāte";
+"accountActivity.globalAnalytics.users.title" = "Unikālie\nlietotāji";
+"onboardingWelcome.titleLabel.tagline" = "Tava iespēja parunāt par Jēzu";
+"accountActivity.globalAnalytics.gospelPresentation.title" = "Labās vēsts\nprezentācijas";
+"accountActivity.globalAnalytics.launches.title" = "Sesijas";
+// OnboardingTutorial
+"onboardingTutorial.aboutAppItem.0.title" = "Runā par Dievu ar citiem";
+"accountActivity.globalAnalytics.countries.title" = "Valstis";
+
+"onboardingTutorial.aboutAppItem.0.message" = "'GodTools' palīdz veidot jēgpilnas sarunas par Dievu.";
+"onboardingTutorial.aboutAppItem.1.title" = "Izvēlies savus rīkus";
+"onboardingTutorial.aboutAppItem.1.message" = "'GodTools' rīki palīdz pirms sarunas, sarunas laikā vai pēc sarunas.";
+"onboardingTutorial.aboutAppItem.2.title" = "Esi gatavs!";
+"onboardingTutorial.aboutAppItem.2.message" = "'GodTools' tev palīdzēs sarunās.";
+"onboardingTutorial.appUsageItem.0.message" = "Sagatavojies katrai sarunai";
+"onboardingTutorial.appUsageItem.1.message" = "Izskaidro Labo vēsti";
+"onboardingTutorial.appUsageItem.2.message" = "Izmanto iespēju lietot 2 valodas paralēli";
+"onboardingTutorial.appUsageItem.3.message" = "Izvēlies no 90+ valodām";
+"onboardingTutorial.appUsageItem.4.message" = "Palīdzi jaunajam kristietim augt ticībā";
+"onboardingTutorial.showMoreButton.title" = "Vairāk";
