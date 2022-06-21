@@ -45,6 +45,7 @@ class ToolSettingsFlow: Flow {
             flowDelegate: self,
             manifestResourcesCache: toolData.manifestResourcesCache,
             localizationServices: appDiContainer.localizationServices,
+            getTranslatedLanguageUseCase: appDiContainer.getTranslatedLanguageUseCase(),
             primaryLanguageSubject: settingsPrimaryLanguage,
             parallelLanguageSubject: settingsParallelLanguage,
             trainingTipsEnabled: toolData.trainingTipsEnabled,

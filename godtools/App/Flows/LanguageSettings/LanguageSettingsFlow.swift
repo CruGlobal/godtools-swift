@@ -26,6 +26,7 @@ class LanguageSettingsFlow: Flow {
             dataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
+            getTranslatedLanguageUseCase: appDiContainer.getTranslatedLanguageUseCase(),
             analytics: appDiContainer.analytics
         )
         let view = LanguageSettingsView(viewModel: viewModel)
@@ -67,6 +68,7 @@ class LanguageSettingsFlow: Flow {
             languageSettingsService: appDiContainer.languageSettingsService,
             downloadedLanguagesCache: appDiContainer.downloadedLanguagesCache,
             localizationServices: appDiContainer.localizationServices,
+            getTranslatedLanguageUseCase: appDiContainer.getTranslatedLanguageUseCase(),
             analytics: appDiContainer.analytics,
             chooseLanguageType: chooseLanguageType
         )

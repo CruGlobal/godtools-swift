@@ -8,6 +8,8 @@
 
 import Foundation
 
+// TODO: This logic has been moved to GetTranslatedLanguageUseCase.  LanguageViewModel will need to be removed in JIRA Task GT-1633.
+@available(*, deprecated)
 class LanguageViewModel {
         
     let language: LanguageModel

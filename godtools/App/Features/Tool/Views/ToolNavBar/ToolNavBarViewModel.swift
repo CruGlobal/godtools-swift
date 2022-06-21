@@ -8,6 +8,7 @@
 
 import UIKit
 import GodToolsToolParser
+import SwiftUI
 
 class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
     
@@ -15,7 +16,7 @@ class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
     private let resource: ResourceModel
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
     private let tractRemoteShareSubscriber: TractRemoteShareSubscriber
-    private let localizationServices: LocalizationServices
+    private let getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase
     private let fontService: FontService
     private let analytics: AnalyticsContainer
     
@@ -27,14 +28,14 @@ class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
     let remoteShareIsActive: ObservableValue<Bool> = ObservableValue(value: false)
     let selectedLanguage: ObservableValue<Int>
     
-    required init(backButtonImageType: ToolBackButtonImageType, resource: ResourceModel, manifest: Manifest, languages: [LanguageModel], tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, localizationServices: LocalizationServices, fontService: FontService, analytics: AnalyticsContainer, selectedLanguageValue: Int?) {
+    required init(backButtonImageType: ToolBackButtonImageType, resource: ResourceModel, manifest: Manifest, languages: [LanguageModel], tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, fontService: FontService, analytics: AnalyticsContainer, selectedLanguageValue: Int?) {
         
         self.backButtonImageType = backButtonImageType
         self.resource = resource
         self.languages = languages
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
         self.tractRemoteShareSubscriber = tractRemoteShareSubscriber
-        self.localizationServices = localizationServices
+        self.getTranslatedLanguageUseCase = getTranslatedLanguageUseCase
         self.fontService = fontService
         self.analytics = analytics
         self.selectedLanguage = ObservableValue(value: selectedLanguageValue ?? 0)
@@ -107,10 +108,11 @@ class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
     }
     
     func languageSegmentWillAppear(index: Int) -> ToolLanguageSegmentViewModel {
-        
-        let language: LanguageModel = languages[index]
-        
-        return ToolLanguageSegmentViewModel(language: language, localizationServices: localizationServices)
+                
+        return ToolLanguageSegmentViewModel(
+            language: languages[index],
+            getTranslatedLanguageUseCase: getTranslatedLanguageUseCase
+        )
     }
     
     func languageTapped(index: Int) {

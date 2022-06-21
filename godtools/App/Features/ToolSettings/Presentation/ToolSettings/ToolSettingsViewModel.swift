@@ -14,6 +14,7 @@ class ToolSettingsViewModel: ObservableObject {
     
     private let manifestResourcesCache: ManifestResourcesCache
     private let localizationServices: LocalizationServices
+    private let getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase
     private let primaryLanguageSubject: CurrentValueSubject<LanguageModel, Never>
     private let parallelLanguageSubject: CurrentValueSubject<LanguageModel?, Never>
     private let trainingTipsEnabled: Bool
@@ -39,11 +40,12 @@ class ToolSettingsViewModel: ObservableObject {
     @Published var shareablesTitle: String = ""
     @Published var numberOfShareableItems: Int = 0
         
-    required init(flowDelegate: FlowDelegate, manifestResourcesCache: ManifestResourcesCache, localizationServices: LocalizationServices, primaryLanguageSubject: CurrentValueSubject<LanguageModel, Never>, parallelLanguageSubject: CurrentValueSubject<LanguageModel?, Never>, trainingTipsEnabled: Bool, shareables: [Shareable]) {
+    required init(flowDelegate: FlowDelegate, manifestResourcesCache: ManifestResourcesCache, localizationServices: LocalizationServices, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, primaryLanguageSubject: CurrentValueSubject<LanguageModel, Never>, parallelLanguageSubject: CurrentValueSubject<LanguageModel?, Never>, trainingTipsEnabled: Bool, shareables: [Shareable]) {
         
         self.flowDelegate = flowDelegate
         self.manifestResourcesCache = manifestResourcesCache
         self.localizationServices = localizationServices
+        self.getTranslatedLanguageUseCase = getTranslatedLanguageUseCase
         self.primaryLanguageSubject = primaryLanguageSubject
         self.parallelLanguageSubject = parallelLanguageSubject
         self.trainingTipsEnabled = trainingTipsEnabled
@@ -90,7 +92,7 @@ class ToolSettingsViewModel: ObservableObject {
     }
     
     private func getTranslatedLanguageName(language: LanguageModel) -> String {
-        return LanguageViewModel(language: language, localizationServices: localizationServices).translatedLanguageName
+        return getTranslatedLanguageUseCase.getTranslatedLanguage(language: language).name
     }
     
     func closeTapped() {
