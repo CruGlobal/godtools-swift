@@ -158,6 +158,10 @@ extension ToolNavigationFlow {
                 toolTranslations: toolTranslations
             )
             
+        case .metaTool:
+            // TODO: Complete in GT-1418. ~Levi
+            break
+            
         case .unknown:
             navigationController.presentAlertMessage(alertMessage: AlertMessage(title: "Internal Error", message: "Attempted to navigate to a tool with an unknown resource type."))
         }
