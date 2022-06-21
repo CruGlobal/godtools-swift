@@ -12,6 +12,7 @@ enum ImageCatalog: String {
     
     case accordionSectionPlus = "accordion_section_plus"
     case accordionSectionMinus = "accordion_section_minus"
+    case circleSelectorBackground = "circle_selector_background"
     case favorited = "favorited"
     case favoritedCircle = "favorited_circle"
     case favoriteIcon = "favorite_icon"
