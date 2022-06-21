@@ -100,10 +100,8 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
         if let language = language {
             
             if resource.supportsLanguage(languageId: language.id) {
-                let nameAvailablePrefix: String = "✓ "
-                let translatedName: String = LanguageViewModel(language: language, localizationServices: localizationServices).translatedLanguageName
-                
-                return nameAvailablePrefix + translatedName
+
+                return LanguageViewModel(language: language, localizationServices: localizationServices).translatedLanguageNameWithCheckmark
             }
         }
         return ""

@@ -8,6 +8,7 @@
 
 import UIKit
 import GodToolsToolParser
+import Combine
 
 class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     
@@ -18,8 +19,8 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     private var safeArea: UIEdgeInsets?
     private var pageModels: [Page] = Array()
     
-    private(set) var renderer: MobileContentRenderer
-    private(set) var currentPageRenderer: MobileContentPageRenderer?
+    private(set) var renderer: CurrentValueSubject<MobileContentRenderer, Never>
+    private(set) var currentPageRenderer: CurrentValueSubject<MobileContentPageRenderer, Never>
     private(set) var currentPage: Int = 0
     private(set) var highestPageNumberViewed: Int = 0
     private(set) var trainingTipsEnabled: Bool = false
@@ -34,7 +35,8 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     
     required init(renderer: MobileContentRenderer, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool) {
         
-        self.renderer = renderer
+        self.renderer = CurrentValueSubject(renderer)
+        self.currentPageRenderer = CurrentValueSubject(renderer.pageRenderers[0])
         self.startingPage = page
         self.mobileContentEventAnalytics = mobileContentEventAnalytics
         self.initialPageRenderingType = initialPageRenderingType
@@ -128,13 +130,13 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     
     private func trackContentEvent(eventId: EventId) {
         
-        guard let language = currentPageRenderer?.language else {
-            assertionFailure("Failed to track content event for current page renderer.  Language was not found.")
-            return
-        }
+        let language: LanguageModel = currentPageRenderer.value.language
         
-        
-        mobileContentEventAnalytics.trackContentEvent(eventId: eventId, resource: renderer.resource, language: language)
+        mobileContentEventAnalytics.trackContentEvent(
+            eventId: eventId,
+            resource: resource,
+            language: language
+        )
     }
     
     private func didReceivePageListenerForPage(page: Int, pageModel: Page) {
@@ -186,13 +188,11 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     }
     
     var primaryPageRenderer: MobileContentPageRenderer {
-        
-        guard let primaryPageRenderer = renderer.pageRenderers.first else {
-            assertionFailure("ViewModel does not contain any renderers.  It should have at least 1 renderer.")
-            return renderer.pageRenderers[0]
-        }
-        
-        return primaryPageRenderer
+        return renderer.value.pageRenderers[0]
+    }
+    
+    var resource: ResourceModel {
+        return renderer.value.resource
     }
     
     func viewDidFinishLayout(window: UIViewController, safeArea: UIEdgeInsets) {
@@ -200,7 +200,7 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         self.window = window
         self.safeArea = safeArea
         
-        guard let pageRenderer = renderer.pageRenderers.first else {
+        guard let pageRenderer = renderer.value.pageRenderers.first else {
             return
         }
         
@@ -236,15 +236,15 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         guard let pageRenderer = pageRenderer else {
             return
         }
-
-        self.renderer = renderer
+        
+        self.renderer.send(renderer)
         
         setPageRenderer(pageRenderer: pageRenderer)
     }
     
     func setPageRenderer(pageRenderer: MobileContentPageRenderer) {
         
-        let pageRenderers: [MobileContentPageRenderer] = renderer.pageRenderers
+        let pageRenderers: [MobileContentPageRenderer] = renderer.value.pageRenderers
         let pageModelsToRender: [Page]
         
         switch initialPageRenderingType {
@@ -275,8 +275,8 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         
         rendererWillChangeSignal.accept()
         
-        currentPageRenderer = pageRenderer
-        
+        currentPageRenderer.send(pageRenderer)
+                
         self.pageModels = pageModelsToRender
         
         numberOfPages.accept(value: pageModels.count)
@@ -288,15 +288,11 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
             return nil
         }
         
-        guard let currentPageRenderer = self.currentPageRenderer else {
-            return nil
-        }
-        
         guard page >= 0 && page < pageModels.count else {
             return nil
         }
                 
-        let renderPageResult: Result<MobileContentView, Error> =  currentPageRenderer.renderPageModel(
+        let renderPageResult: Result<MobileContentView, Error> =  currentPageRenderer.value.renderPageModel(
             pageModel: pageModels[page],
             page: page,
             numberOfPages: pageModels.count,
@@ -343,9 +339,7 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         
         trackContentEvent(eventId: eventId)
         
-        guard let currentPageRenderer = currentPageRenderer else {
-            return nil
-        }
+        let currentPageRenderer: MobileContentPageRenderer = currentPageRenderer.value
         
         if currentPageRenderer.manifest.dismissListeners.contains(eventId) {
             handleDismissToolEvent()
@@ -371,21 +365,21 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     func handleDismissToolEvent() {
         
         let event = DismissToolEvent(
-            resource: renderer.resource,
+            resource: resource,
             highestPageNumberViewed: highestPageNumberViewed
         )
         
-        renderer.navigation.dismissTool(event: event)
+        renderer.value.navigation.dismissTool(event: event)
     }
     
     func setTrainingTipsEnabled(enabled: Bool) {
         
-        guard trainingTipsEnabled != enabled, let pageRenderer = currentPageRenderer else {
+        guard trainingTipsEnabled != enabled else {
             return
         }
         
         trainingTipsEnabled = enabled
         
-        setPageRenderer(pageRenderer: pageRenderer)
+        setPageRenderer(pageRenderer: currentPageRenderer.value)
     }
 }

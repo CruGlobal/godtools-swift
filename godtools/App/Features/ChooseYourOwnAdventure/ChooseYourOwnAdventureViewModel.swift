@@ -13,7 +13,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOw
     
     private static let navHomeImage: UIImage? = ImageCatalog.navHome.image
     
-    private let localizationServices: LocalizationServices
+    private let getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase
     private let fontService: FontService
     
     private weak var flowDelegate: FlowDelegate?
@@ -22,10 +22,10 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOw
     let navBarColors: ObservableValue<ChooseYourOwnAdventureNavBarModel>
     let navBarTitleType: ChooseYourOwnAdventureNavBarTitleType
     
-    required init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, localizationServices: LocalizationServices, fontService: FontService, trainingTipsEnabled: Bool) {
+    required init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, fontService: FontService, trainingTipsEnabled: Bool) {
         
         self.flowDelegate = flowDelegate
-        self.localizationServices = localizationServices
+        self.getTranslatedLanguageUseCase = getTranslatedLanguageUseCase
         self.fontService = fontService
         
         backButtonImage = ObservableValue(value: ChooseYourOwnAdventureViewModel.navHomeImage)
@@ -81,7 +81,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOw
     
     func getNavBarLanguageTitles() -> [String] {
         
-        let languageTitles: [String] = renderer.pageRenderers.map({ LanguageViewModel(language: $0.language, localizationServices: localizationServices).translatedLanguageName })
+        let languageTitles: [String] = renderer.value.pageRenderers.map({getTranslatedLanguageUseCase.getTranslatedLanguage(language: $0.language).name})
         guard languageTitles.count > 1 else {
             return Array()
         }
@@ -99,7 +99,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOw
     
     func navLanguageTapped(index: Int) {
         
-        let pageRenderer: MobileContentPageRenderer = renderer.pageRenderers[index]
+        let pageRenderer: MobileContentPageRenderer = renderer.value.pageRenderers[index]
         setPageRenderer(pageRenderer: pageRenderer)
     }
 }

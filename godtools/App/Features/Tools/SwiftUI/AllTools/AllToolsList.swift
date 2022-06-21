@@ -18,7 +18,7 @@ struct AllToolsList: View {
     // MARK: - Constants
     
     private enum Sizes {
-        static let toolsPaddingMultiplier: CGFloat = 20/375
+        static let toolsPaddingMultiplier: CGFloat = 15/375
     }
     
     // MARK: - Body
@@ -28,12 +28,20 @@ struct AllToolsList: View {
         
         Group {
             
-            ToolSpotlightView(viewModel: viewModel.spotlightViewModel(), width: width, leadingPadding: leadingTrailingPadding)
+            ToolSpotlightView(viewModel: viewModel.spotlightViewModel, width: width, leadingPadding: leadingTrailingPadding)
                 .listRowInsets(EdgeInsets())
             
-            // TODO: - GT-1265: Categories Section
+            ToolCategoriesView(viewModel: viewModel.categoriesViewModel, leadingPadding: leadingTrailingPadding)
+                .listRowInsets(EdgeInsets())
             
-            ToolCardsView(viewModel: viewModel, width: width, leadingPadding: leadingTrailingPadding)
+            SeparatorView()
+                .listRowInsets(EdgeInsets())
+                .padding([.leading, .trailing], leadingTrailingPadding)
+            
+            
+            ToolCardsView(viewModel: viewModel.toolCardsViewModel, width: width, leadingPadding: leadingTrailingPadding)
+            
+            Spacer(minLength: 20)
         }
         
     }
@@ -58,7 +66,9 @@ struct AllToolsList_Previews: PreviewProvider {
         )
         
         GeometryReader { geo in
-            AllToolsList(viewModel: viewModel, width: geo.size.width)
+            VStack {
+                AllToolsList(viewModel: viewModel, width: geo.size.width)
+            }
         }
     }
 }

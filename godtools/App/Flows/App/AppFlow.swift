@@ -164,6 +164,9 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         case .aboutToolTappedFromFavoritedTools(let resource):
             navigateToToolDetail(resource: resource)
             
+        case .backTappedFromToolDetails:
+            navigationController.popViewController(animated: true)
+            
         case .unfavoriteToolTappedFromFavoritedTools(let resource, let removeHandler):
             
             let handler = CallbackHandler { [weak self] in
@@ -654,6 +657,21 @@ extension AppFlow {
     
     private func navigateToToolDetail(resource: ResourceModel) {
         
+        let viewModel = ToolDetailsViewModel(
+            flowDelegate: self,
+            resource: resource,
+            dataDownloader: appDiContainer.initialDataDownloader,
+            languageSettingsService: appDiContainer.languageSettingsService,
+            localizationServices: appDiContainer.localizationServices,
+            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
+            analytics: appDiContainer.analytics,
+            getToolTranslationsUseCase: appDiContainer.getToolTranslationsUseCase(),
+            languagesRepository: appDiContainer.getLanguagesRepository()
+        )
+        
+        let view = ToolDetailsHostingView(view: ToolDetailsView(viewModel: viewModel))
+        
+        /*
         let viewModel = ToolDetailViewModel(
             flowDelegate: self,
             resource: resource,
@@ -665,7 +683,7 @@ extension AppFlow {
             mobileContentParser: appDiContainer.getMobileContentParser(),
             analytics: appDiContainer.analytics
         )
-        let view = ToolDetailView(viewModel: viewModel)
+        let view = ToolDetailView(viewModel: viewModel)*/
         
         navigationController.pushViewController(view, animated: true)
     }
@@ -761,6 +779,7 @@ extension AppFlow {
                 flowDelegate: weakSelf,
                 localizationServices: appDiContainer.localizationServices,
                 languageSettingsService: appDiContainer.languageSettingsService,
+                getTranslatedLanguageUseCase: appDiContainer.getTranslatedLanguageUseCase(),
                 setupParallelLanguageAvailability: appDiContainer.getSetupParallelLanguageAvailability()
             )
             let view = SetupParallelLanguageView(viewModel: viewModel)
@@ -778,7 +797,8 @@ extension AppFlow {
             dataDownloader: appDiContainer.initialDataDownloader,
             languagesRepository: appDiContainer.getLanguagesRepository(),
             languageSettingsService: appDiContainer.languageSettingsService,
-            localizationServices: appDiContainer.localizationServices
+            localizationServices: appDiContainer.localizationServices,
+            getTranslatedLanguageUseCase: appDiContainer.getTranslatedLanguageUseCase()
         )
         let view = ParallelLanguageListView(viewModel: viewModel)
         

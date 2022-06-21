@@ -36,7 +36,7 @@ class MobileContentEmbeddedVideoViewModel: MobileContentEmbeddedVideoViewModelTy
         let playsInFullScreen = 0
         
         return [
-            "playsinline": playsInFullScreen
+            Strings.YoutubePlayerParameters.playsInline.rawValue: playsInFullScreen
         ]
     }
 }

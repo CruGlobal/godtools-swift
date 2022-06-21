@@ -12,8 +12,7 @@ struct ToolSettingsView: View {
     @ObservedObject var viewModel: ToolSettingsViewModel
     
     private let contentInsets: EdgeInsets = EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 20)
-    private let separatorLineSpacing: CGFloat = 25
-    private let primaryTextColor: Color = Color(.sRGB, red: 84 / 256, green: 84 / 256, blue: 84 / 256, opacity: 1)
+    private let separatorLineSpacing: CGFloat = 20
     private let bottomSpace: CGFloat = 15
     
     var body: some View {
@@ -23,7 +22,6 @@ struct ToolSettingsView: View {
                 
                 ToolSettingsTopBarView(
                     viewModel: viewModel,
-                    primaryTextColor: primaryTextColor,
                     leadingInset: contentInsets.leading,
                     trailingInset: contentInsets.trailing
                 )
@@ -47,8 +45,7 @@ struct ToolSettingsView: View {
                             viewModel: viewModel,
                             geometryProxy: geometry,
                             leadingInset: contentInsets.leading,
-                            trailingInset: contentInsets.trailing,
-                            primaryTextColor: primaryTextColor
+                            trailingInset: contentInsets.trailing
                         )
                         
                         if !viewModel.hidesShareables {
@@ -61,7 +58,6 @@ struct ToolSettingsView: View {
                             
                             ToolSettingsShareablesView(
                                 viewModel: viewModel,
-                                primaryTextColor: primaryTextColor,
                                 leadingInset: contentInsets.leading,
                                 trailingInset: contentInsets.trailing
                             )

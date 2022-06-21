@@ -16,27 +16,24 @@ struct ToolSettingsChooseLanguageView: View {
     let geometryProxy: GeometryProxy
     let leadingInset: CGFloat
     let trailingInset: CGFloat
-    let primaryTextColor: Color
         
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            HStack(alignment: .center, spacing: 0) {
-                VStack (alignment: .leading, spacing: 4) {
-                    Text(viewModel.chooseLanguageTitle)
-                        .foregroundColor(primaryTextColor)
-                        .font(FontLibrary.sfProTextRegular.font(size: 19))
-                    Text("Toggle between the two different languages in this tool.")
-                        .foregroundColor(primaryTextColor)
-                        .font(FontLibrary.sfProTextRegular.font(size: 14))
-                }
-                .frame(width: geometryProxy.size.width * 0.65)
-                .padding(EdgeInsets(top: 0, leading: leadingInset, bottom: 0, trailing: 0))
+            VStack (alignment: .leading, spacing: 4) {
+                Text(viewModel.chooseLanguageTitle)
+                    .foregroundColor(ColorPalette.gtGrey.color)
+                    .font(FontLibrary.sfProTextRegular.font(size: 19))
+                Text(viewModel.chooseLanguageToggleMessage)
+                    .frame(maxWidth: geometryProxy.size.width * 0.65, alignment: .leading)
+                    .foregroundColor(ColorPalette.gtGrey.color)
+                    .font(FontLibrary.sfProTextRegular.font(size: 14))
             }
+            .padding(EdgeInsets(top: 0, leading: leadingInset, bottom: 0, trailing: 0))
             Rectangle()
                 .frame(width: geometryProxy.size.width, height: 20, alignment: .leading)
                 .foregroundColor(.clear)
             HStack(alignment: .top, spacing: 0) {
-                ToolSettingsLanguageDropDownView(primaryTextColor: primaryTextColor, title: viewModel.primaryLanguageTitle)
+                ToolSettingsLanguageDropDownView(title: viewModel.primaryLanguageTitle)
                     .onTapGesture {
                         viewModel.primaryLanguageTapped()
                     }
@@ -46,7 +43,7 @@ struct ToolSettingsChooseLanguageView: View {
                     Image(ImageCatalog.toolSettingsSwapLanguage.name)
                 }
                 .frame(minWidth: 44, maxHeight: .infinity)
-                ToolSettingsLanguageDropDownView(primaryTextColor: primaryTextColor, title: viewModel.parallelLanguageTitle)
+                ToolSettingsLanguageDropDownView(title: viewModel.parallelLanguageTitle)
                     .onTapGesture {
                         viewModel.parallelLanguageTapped()
                     }

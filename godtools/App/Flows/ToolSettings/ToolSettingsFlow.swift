@@ -20,6 +20,7 @@ class ToolSettingsFlow: Flow {
     private var shareToolScreenTutorialModal: UIViewController?
     private var loadToolRemoteSessionModal: UIViewController?
     private var languagesListModal: UIViewController?
+    private var reviewShareShareableModal: UIViewController?
     private var downloadToolTranslationsFlow: DownloadToolTranslationsFlow?
     
     private weak var flowDelegate: FlowDelegate?
@@ -34,20 +35,20 @@ class ToolSettingsFlow: Flow {
         self.navigationController = sharedNavigationController
         self.toolData = toolData
         self.tool = tool
-        self.settingsPrimaryLanguage = CurrentValueSubject(toolData.primaryLanguage)
-        self.settingsParallelLanguage = CurrentValueSubject(toolData.parallelLanguage)
+        self.settingsPrimaryLanguage = CurrentValueSubject(toolData.renderer.value.primaryLanguage)
+        self.settingsParallelLanguage = CurrentValueSubject(toolData.renderer.value.pageRenderers[safe: 1]?.language)
     }
     
     func getInitialView() -> UIViewController {
             
         let viewModel = ToolSettingsViewModel(
             flowDelegate: self,
-            manifestResourcesCache: toolData.manifestResourcesCache,
             localizationServices: appDiContainer.localizationServices,
+            getTranslatedLanguageUseCase: appDiContainer.getTranslatedLanguageUseCase(),
+            currentPageRenderer: toolData.currentPageRenderer,
             primaryLanguageSubject: settingsPrimaryLanguage,
             parallelLanguageSubject: settingsParallelLanguage,
-            trainingTipsEnabled: toolData.trainingTipsEnabled,
-            shareables: toolData.shareables
+            trainingTipsEnabled: toolData.trainingTipsEnabled
         )
         
         let toolSettingsView = ToolSettingsView(viewModel: viewModel)
@@ -72,9 +73,12 @@ class ToolSettingsFlow: Flow {
             
         case .shareLinkTappedFromToolSettings:
                     
+            let resource: ResourceModel = toolData.renderer.value.resource
+            let language: LanguageModel = toolData.currentPageRenderer.value.language
+            
             let viewModel = ShareToolViewModel(
-                resource: toolData.resource,
-                language: toolData.selectedLanguage,
+                resource: resource,
+                language: language,
                 pageNumber: toolData.pageNumber,
                 localizationServices: appDiContainer.localizationServices,
                 analytics: appDiContainer.analytics
@@ -91,7 +95,7 @@ class ToolSettingsFlow: Flow {
         case .screenShareTappedFromToolSettings:
             
             let shareToolScreenTutorialNumberOfViewsCache: ShareToolScreenTutorialNumberOfViewsCache = appDiContainer.getShareToolScreenTutorialNumberOfViewsCache()
-            let numberOfTutorialViews: Int = shareToolScreenTutorialNumberOfViewsCache.getNumberOfViews(resource: toolData.resource)
+            let numberOfTutorialViews: Int = shareToolScreenTutorialNumberOfViewsCache.getNumberOfViews(resource: toolData.renderer.value.resource)
             
             if toolData.tractRemoteSharePublisher.webSocketIsConnected, let channel = toolData.tractRemoteSharePublisher.tractRemoteShareChannel {
                 navigate(step: .finishedLoadingToolRemoteSession(result: .success(channel)))
@@ -129,7 +133,11 @@ class ToolSettingsFlow: Flow {
                 
                 let tractRemoteShareURLBuilder: TractRemoteShareURLBuilder = appDiContainer.getTractRemoteShareURLBuilder()
                 
-                guard let remoteShareUrl = tractRemoteShareURLBuilder.buildRemoteShareURL(resource: toolData.resource, primaryLanguage: toolData.primaryLanguage, parallelLanguage: toolData.parallelLanguage, subscriberChannelId: channel.subscriberChannelId) else {
+                let resource: ResourceModel = toolData.renderer.value.resource
+                let primaryLanguage: LanguageModel = settingsPrimaryLanguage.value
+                let parallelLanguage: LanguageModel? = settingsParallelLanguage.value
+                
+                guard let remoteShareUrl = tractRemoteShareURLBuilder.buildRemoteShareURL(resource: resource, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, subscriberChannelId: channel.subscriberChannelId) else {
                     
                     let viewModel = AlertMessageViewModel(
                         title: "Error",
@@ -199,16 +207,32 @@ class ToolSettingsFlow: Flow {
             
             swapToolPrimaryAndParallelLanguage()
             
-        case .shareableTappedFromToolSettings(let shareable, let imageToShare):
-                    
-            let viewModel = ShareShareableViewModel(
-                shareable: shareable,
-                imageToShare: imageToShare
+        case .shareableTappedFromToolSettings(let imageToShare):
+                   
+            let viewModel = ReviewShareShareableViewModel(
+                flowDelegate: self,
+                imageToShare: imageToShare,
+                localizationServices: appDiContainer.localizationServices
             )
             
-            let view = ShareShareableView(viewModel: viewModel)
-                        
+            let view = ReviewShareShareableHostingView(view: ReviewShareShareableView(viewModel: viewModel))
+            
+            reviewShareShareableModal = view
+            
             navigationController.present(view, animated: true, completion: nil)
+            
+        case .shareImageTappedFromReviewShareShareable(let imageToShare):
+            
+            dismissReviewShareShareable(animated: true) { [weak self] in
+                
+                let viewModel = ShareShareableViewModel(
+                    imageToShare: imageToShare
+                )
+                
+                let view = ShareShareableView(viewModel: viewModel)
+                            
+                self?.navigationController.present(view, animated: true, completion: nil)
+            }
             
         default:
             break
@@ -224,7 +248,7 @@ class ToolSettingsFlow: Flow {
             localizationServices: appDiContainer.localizationServices,
             tutorialItemsProvider: tutorialItemsProvider,
             shareToolScreenTutorialNumberOfViewsCache: appDiContainer.getShareToolScreenTutorialNumberOfViewsCache(),
-            resource: toolData.resource,
+            resource: toolData.renderer.value.resource,
             analyticsContainer: appDiContainer.analytics,
             tutorialVideoAnalytics: appDiContainer.getTutorialVideoAnalytics()
         )
@@ -259,19 +283,29 @@ class ToolSettingsFlow: Flow {
     
     private func presentLanguagesList(languageListType: ToolSettingsLanguageListType) {
         
-        let languagesRepository: LanguagesRepository = appDiContainer.getLanguagesRepository()
-        let getToolLanguagesUseCase: GetToolLanguagesUseCase = GetToolLanguagesUseCase(languagesRepository: languagesRepository)
-        let languages: [ToolLanguageModel] = getToolLanguagesUseCase.getToolLanguages(resource: toolData.resource)
+        let getToolLanguagesUseCase: GetToolLanguagesUseCase = appDiContainer.getToolLanguagesUseCase()
+  
+        let toolLanguages: [ToolLanguageModel] = getToolLanguagesUseCase.getToolLanguages(resource: toolData.renderer.value.resource)
+      
+        var languagesList: [ToolLanguageModel] = toolLanguages
         
         let selectedLanguage: LanguageModel?
         let deleteTappedClosure: (() -> Void)?
         
         switch languageListType {
         case .primary:
+            
+            if let parallelLanguageId = settingsParallelLanguage.value?.id {
+                languagesList = languagesList.filter({$0.id != parallelLanguageId})
+            }
+            
             selectedLanguage = settingsPrimaryLanguage.value
             deleteTappedClosure = nil
             
         case .parallel:
+            
+            languagesList = languagesList.filter({$0.id != settingsPrimaryLanguage.value.id})
+            
             selectedLanguage = settingsParallelLanguage.value
             deleteTappedClosure = { [weak self] in
                 self?.setToolParallelLanguage(languageId: nil)
@@ -279,7 +313,7 @@ class ToolSettingsFlow: Flow {
             }
         }
         
-        let viewModel = LanguagesListViewModel(languages: languages, selectedLanguageId: selectedLanguage?.id, localizationServices: appDiContainer.localizationServices, closeTappedClosure: { [weak self] in
+        let viewModel = LanguagesListViewModel(languages: languagesList, selectedLanguageId: selectedLanguage?.id, localizationServices: appDiContainer.localizationServices, closeTappedClosure: { [weak self] in
             
             self?.dismissLanguagesList()
             
@@ -347,7 +381,7 @@ class ToolSettingsFlow: Flow {
         let languagesRepository: LanguagesRepository = appDiContainer.getLanguagesRepository()
         
         let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
-            resourceId: toolData.resource.id,
+            resourceId: toolData.renderer.value.resource.id,
             languageIds: languageIds,
             resourcesCache: appDiContainer.initialDataDownloader.resourcesCache,
             languagesRepository: languagesRepository
@@ -374,7 +408,7 @@ class ToolSettingsFlow: Flow {
                     weakSelf.settingsParallelLanguage.send(nil)
                 }
                 
-                let newRenderer: MobileContentRenderer = weakSelf.toolData.renderer.copy(toolTranslations: toolTranslations)
+                let newRenderer: MobileContentRenderer = weakSelf.toolData.renderer.value.copy(toolTranslations: toolTranslations)
                 weakSelf.tool.setRenderer(renderer: newRenderer)
                 
             case .failure(let error):
@@ -397,6 +431,7 @@ class ToolSettingsFlow: Flow {
     private func dismissLanguagesList(animated: Bool = true, completion: (() -> Void)? = nil) {
         
         guard let languagesListModal = languagesListModal else {
+            completion?()
             return
         }
         
@@ -409,5 +444,23 @@ class ToolSettingsFlow: Flow {
         }
                 
         self.languagesListModal = nil
+    }
+    
+    private func dismissReviewShareShareable(animated: Bool = true, completion: (() -> Void)? = nil) {
+        
+        guard let reviewShareShareableModal = reviewShareShareableModal else {
+            completion?()
+            return
+        }
+        
+        if animated {
+            reviewShareShareableModal.dismiss(animated: true, completion: completion)
+        }
+        else {
+            reviewShareShareableModal.dismiss(animated: false)
+            completion?()
+        }
+        
+        self.reviewShareShareableModal = nil
     }
 }
