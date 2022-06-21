@@ -23,6 +23,7 @@ class RealmResource: Object, ResourceModelType {
     @objc dynamic var id: String = ""
     @objc dynamic var isHidden: Bool = false
     @objc dynamic var manifest: String = ""
+    @objc dynamic var metatoolId: String?
     @objc dynamic var name: String = ""
     @objc dynamic var oneskyProjectId: Int = -1
     @objc dynamic var resourceDescription: String = ""
