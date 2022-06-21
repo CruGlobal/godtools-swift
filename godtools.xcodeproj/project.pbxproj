@@ -418,7 +418,6 @@
 		45AD1AAF25938A4E00A096A0 /* TutorialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD176125938A4D00A096A0 /* TutorialCell.swift */; };
 		45AD1AB925938A4E00A096A0 /* ToolsTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45AD176D25938A4D00A096A0 /* ToolsTableView.xib */; };
 		45AD1ABB25938A4E00A096A0 /* FavoritedToolsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD176F25938A4D00A096A0 /* FavoritedToolsViewModel.swift */; };
-		45AD1ABC25938A4E00A096A0 /* FavoritedToolsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45AD177025938A4D00A096A0 /* FavoritedToolsView.xib */; };
 		45AD1AC125938A4E00A096A0 /* FavoritingToolMessageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD177625938A4D00A096A0 /* FavoritingToolMessageCache.swift */; };
 		45AD1AC425938A4E00A096A0 /* FavoritedToolsViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD177925938A4D00A096A0 /* FavoritedToolsViewModelType.swift */; };
 		45AD1AC725938A4E00A096A0 /* FavoritedToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD177C25938A4D00A096A0 /* FavoritedToolsView.swift */; };
@@ -1541,7 +1540,6 @@
 		45AD176125938A4D00A096A0 /* TutorialCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialCell.swift; sourceTree = "<group>"; };
 		45AD176D25938A4D00A096A0 /* ToolsTableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToolsTableView.xib; sourceTree = "<group>"; };
 		45AD176F25938A4D00A096A0 /* FavoritedToolsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritedToolsViewModel.swift; sourceTree = "<group>"; };
-		45AD177025938A4D00A096A0 /* FavoritedToolsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FavoritedToolsView.xib; sourceTree = "<group>"; };
 		45AD177625938A4D00A096A0 /* FavoritingToolMessageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritingToolMessageCache.swift; sourceTree = "<group>"; };
 		45AD177925938A4D00A096A0 /* FavoritedToolsViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritedToolsViewModelType.swift; sourceTree = "<group>"; };
 		45AD177C25938A4D00A096A0 /* FavoritedToolsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritedToolsView.swift; sourceTree = "<group>"; };
@@ -4151,7 +4149,6 @@
 			children = (
 				4505C697282B4D940047951D /* AllToolsView.swift */,
 				45AD177C25938A4D00A096A0 /* FavoritedToolsView.swift */,
-				45AD177025938A4D00A096A0 /* FavoritedToolsView.xib */,
 				45AD176F25938A4D00A096A0 /* FavoritedToolsViewModel.swift */,
 				45AD177925938A4D00A096A0 /* FavoritedToolsViewModelType.swift */,
 				45AD177E25938A4D00A096A0 /* ToolsTableView.swift */,
@@ -6974,7 +6971,6 @@
 				450E444D2756B66300D4311E /* MenuSectionHeaderView.xib in Resources */,
 				451EBE2B24AD968B00C4D6DD /* e5dd66976d53a69bbd12867079750e14732c5112a254022c038738f7f12953a8.png in Resources */,
 				4503BEFF2821B7D800629692 /* languages.json in Resources */,
-				45AD1ABC25938A4E00A096A0 /* FavoritedToolsView.xib in Resources */,
 				451EBE2A24AD968B00C4D6DD /* a6765002e46cea44dc6245bcb842ce01a0134c147c47cf108134a4c4d1a5c129.jpg in Resources */,
 				D19EB5DE259BB39300685156 /* training_tip_callout.json in Resources */,
 				450E441827565D1C00D4311E /* TutorialView.xib in Resources */,

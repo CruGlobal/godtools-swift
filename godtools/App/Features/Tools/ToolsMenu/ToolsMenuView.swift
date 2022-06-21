@@ -146,7 +146,8 @@ class ToolsMenuView: UIViewController {
             return AllToolsView(contentView: AllToolsContentView(viewModel: viewModel.allToolsWillAppear()))
             
         case .favoritedTools:
-            let favoritedToolsView: FavoritedToolsView = FavoritedToolsView(viewModel: viewModel.favoritedToolsWillAppear())
+            let favoritedToolsView = FavoritedToolsView(contentView: FavoritesContentView())
+//            let favoritedToolsView: FavoritedToolsView = FavoritedToolsView(viewModel: viewModel.favoritedToolsWillAppear())
             favoritedToolsView.setDelegate(delegate: self)
             return favoritedToolsView
         
