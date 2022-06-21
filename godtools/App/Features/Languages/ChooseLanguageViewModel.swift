@@ -20,6 +20,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
     private let languageSettingsService: LanguageSettingsService
     private let downloadedLanguagesCache: DownloadedLanguagesCache
     private let localizationServices: LocalizationServices
+    private let getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase
     private let analytics: AnalyticsContainer
     private let chooseLanguageType: ChooseLanguageType
     private let shouldDisplaySelectedLanguageAtTop: Bool = false
@@ -33,7 +34,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
     let numberOfLanguages: ObservableValue<Int> = ObservableValue(value: 0)
     let selectedLanguageIndex: ObservableValue<Int?> = ObservableValue(value: nil)
     
-    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languagesRepository: LanguagesRepository, languageSettingsService: LanguageSettingsService, downloadedLanguagesCache: DownloadedLanguagesCache, localizationServices: LocalizationServices, analytics: AnalyticsContainer, chooseLanguageType: ChooseLanguageType) {
+    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languagesRepository: LanguagesRepository, languageSettingsService: LanguageSettingsService, downloadedLanguagesCache: DownloadedLanguagesCache, localizationServices: LocalizationServices, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, analytics: AnalyticsContainer, chooseLanguageType: ChooseLanguageType) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
@@ -41,6 +42,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
         self.languageSettingsService = languageSettingsService
         self.downloadedLanguagesCache = downloadedLanguagesCache
         self.localizationServices = localizationServices
+        self.getTranslatedLanguageUseCase = getTranslatedLanguageUseCase
         self.analytics = analytics
         self.chooseLanguageType = chooseLanguageType
         
@@ -98,7 +100,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
         }
     }
     
-    private var allLanguages: [LanguageViewModel] {
+    private var allLanguages: [TranslatedLanguage] {
         
         let userPrimaryLanguage: LanguageModel? = languageSettingsService.primaryLanguage.value
         let userParallelLanguage: LanguageModel? = languageSettingsService.parallelLanguage.value
@@ -128,23 +130,23 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
             }
         }
         
-        let languageViewModels: [LanguageViewModel] = storedLanguageModels.map({LanguageViewModel(language: $0, localizationServices: localizationServices)})
-        let sortedLanguages: [LanguageViewModel] = languageViewModels.sorted(by: {$0.translatedLanguageName < $1.translatedLanguageName})
+        let translatedLanguages: [TranslatedLanguage] = storedLanguageModels.map({getTranslatedLanguageUseCase.getTranslatedLanguage(language: $0)})
+        let sortedLanguages: [TranslatedLanguage] = translatedLanguages.sorted(by: {$0.name < $1.name})
         
         return sortedLanguages
     }
     
-    private var languagesList: [LanguageViewModel] = Array() {
+    private var languagesList: [TranslatedLanguage] = Array() {
         
         didSet {
             numberOfLanguages.accept(value: languagesList.count)
         }
     }
     
-    private var selectedLanguageModel: LanguageModel? {
+    private var selectedLanguage: TranslatedLanguage? {
         
         if let index = selectedLanguageIndex.value, index >= 0 && index < languagesList.count {
-            return languagesList[index].language
+            return languagesList[index]
         }
         
         return nil
@@ -176,8 +178,8 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
         var selectedIndex: Int? = nil
         
         for index in 0 ..< languagesList.count {
-            let languageViewModel: LanguageViewModel = languagesList[index]
-            if languageViewModel.language.id == language?.id {
+            let translatedLanguage: TranslatedLanguage = languagesList[index]
+            if translatedLanguage.id == language?.id {
                 selectedIndex = index
                 break
             }
@@ -219,7 +221,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
         
         selectedLanguageIndex.accept(value: index)
         
-        let selectedLanguage: LanguageModel = languagesList[index].language
+        let selectedLanguage: TranslatedLanguage = languagesList[index]
         
         switch chooseLanguageType {
         case .primary:
@@ -239,7 +241,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
         if !text.isEmpty {
                         
             let filteredLanguages = allLanguages.filter {
-                $0.translatedLanguageName.lowercased().contains(text.lowercased())
+                $0.name.lowercased().contains(text.lowercased())
             }
             
             languagesList = filteredLanguages
@@ -251,12 +253,12 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
     
     func willDisplayLanguage(index: Int) -> ChooseLanguageCellViewModel {
         
-        let languageViewModel: LanguageViewModel = languagesList[index]
+        let translatedLanguage: TranslatedLanguage = languagesList[index]
         
         return ChooseLanguageCellViewModel(
-            languageViewModel: languageViewModel,
-            languageIsDownloaded: downloadedLanguagesCache.isDownloaded(languageId: languageViewModel.language.id),
-            hidesSelected: languageViewModel.language.id != selectedLanguageModel?.id,
+            translatedLanguage: translatedLanguage,
+            languageIsDownloaded: downloadedLanguagesCache.isDownloaded(languageId: translatedLanguage.id),
+            hidesSelected: translatedLanguage.id != selectedLanguage?.id,
             selectorColor: nil,
             separatorColor: nil,
             separatorLeftInset: nil,

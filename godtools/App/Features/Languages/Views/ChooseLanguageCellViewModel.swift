@@ -11,6 +11,8 @@ import UIKit
 
 class ChooseLanguageCellViewModel: ChooseLanguageCellViewModelType {
     
+    private let translatedLanguage: TranslatedLanguage
+    
     let languageName: String
     let languageIsDownloaded: Bool
     let hidesSelected: Bool
@@ -21,9 +23,10 @@ class ChooseLanguageCellViewModel: ChooseLanguageCellViewModelType {
     let separatorRightInset: Float
     let languageLabelFontSize: Float?
     
-    required init(languageViewModel: LanguageViewModel, languageIsDownloaded: Bool, hidesSelected: Bool, selectorColor: UIColor?, separatorColor: UIColor?, separatorLeftInset: Float?, separatorRightInset: Float?, languageLabelFontSize: Float?) {
+    required init(translatedLanguage: TranslatedLanguage, languageIsDownloaded: Bool, hidesSelected: Bool, selectorColor: UIColor?, separatorColor: UIColor?, separatorLeftInset: Float?, separatorRightInset: Float?, languageLabelFontSize: Float?) {
         
-        self.languageName = languageViewModel.translatedLanguageName
+        self.translatedLanguage = translatedLanguage
+        self.languageName = translatedLanguage.name
         self.languageIsDownloaded = languageIsDownloaded
         self.hidesSelected = hidesSelected
         self.hidesSeparator = !hidesSelected

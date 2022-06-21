@@ -14,6 +14,7 @@ class SetupParallelLanguageViewModel: NSObject, SetupParallelLanguageViewModelTy
     
     private let localizationServices: LocalizationServices
     private let languageSettingsService: LanguageSettingsService
+    private let getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase
     
     let animatedViewModel: AnimatedViewModel
     let promptText: String
@@ -25,11 +26,12 @@ class SetupParallelLanguageViewModel: NSObject, SetupParallelLanguageViewModelTy
     let yesNoButtonsHidden: ObservableValue<Bool>
     let getStartedButtonHidden: ObservableValue<Bool>
     
-    required init (flowDelegate: FlowDelegate, localizationServices: LocalizationServices, languageSettingsService: LanguageSettingsService, setupParallelLanguageAvailability: SetupParallelLanguageAvailabilityType) {
+    required init (flowDelegate: FlowDelegate, localizationServices: LocalizationServices, languageSettingsService: LanguageSettingsService, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, setupParallelLanguageAvailability: SetupParallelLanguageAvailabilityType) {
         
         self.flowDelegate = flowDelegate
         self.localizationServices = localizationServices
         self.languageSettingsService = languageSettingsService
+        self.getTranslatedLanguageUseCase = getTranslatedLanguageUseCase
         
         animatedViewModel = AnimatedViewModel(
             animationDataResource: .mainBundleJsonFile(filename: "onboarding_parallel_language"),
@@ -66,7 +68,7 @@ class SetupParallelLanguageViewModel: NSObject, SetupParallelLanguageViewModelTy
                 
         if let parallelLanguage = languageSettingsService.parallelLanguage.value {
             
-            let buttonText = LanguageViewModel(language: parallelLanguage, localizationServices: localizationServices).translatedLanguageName
+            let buttonText: String = getTranslatedLanguageUseCase.getTranslatedLanguage(language: parallelLanguage).name
             
             selectLanguageButtonText.accept(value: buttonText)
             yesNoButtonsHidden.accept(value: true)

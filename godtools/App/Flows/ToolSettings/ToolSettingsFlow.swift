@@ -44,6 +44,7 @@ class ToolSettingsFlow: Flow {
         let viewModel = ToolSettingsViewModel(
             flowDelegate: self,
             localizationServices: appDiContainer.localizationServices,
+            getTranslatedLanguageUseCase: appDiContainer.getTranslatedLanguageUseCase(),
             currentPageRenderer: toolData.currentPageRenderer,
             primaryLanguageSubject: settingsPrimaryLanguage,
             parallelLanguageSubject: settingsParallelLanguage,
