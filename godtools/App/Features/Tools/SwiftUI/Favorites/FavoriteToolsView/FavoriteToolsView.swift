@@ -19,7 +19,11 @@ struct FavoriteToolsView: View {
     // MARK: - Body
     
     var body: some View {
-//        if viewModel.tools.isEmpty == false {
+        if viewModel.tools.isEmpty {
+            
+            // TODO: - add find tools view
+            
+        } else {
             
             VStack(alignment: .leading, spacing: 10) {
                 
@@ -29,13 +33,9 @@ struct FavoriteToolsView: View {
                     .padding(.leading, leadingPadding)
                     .padding(.top, 24)
                 
-                ScrollView(.horizontal, showsIndicators: false) {
-                    
-                    HorizontalToolCardsView(viewModel: viewModel, width: width)
-                    .padding(.leading, leadingPadding)
-                }
+                ToolCardsCarouselView(viewModel: viewModel, width: width, leadingTrailingPadding: leadingPadding)
             }
-//        }
+        }
     }
 }
 

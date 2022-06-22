@@ -8,7 +8,7 @@
 
 import Foundation
 
-class FavoriteToolsViewModel: HorizontalToolCardsViewModel {
+class FavoriteToolsViewModel: ToolCardsCarouselViewModel {
  
     // MARK: - Properties
     

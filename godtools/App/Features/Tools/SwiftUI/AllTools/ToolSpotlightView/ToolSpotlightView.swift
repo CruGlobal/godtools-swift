@@ -28,11 +28,7 @@ struct ToolSpotlightView: View {
                 .padding(.leading, leadingPadding)
                 .padding(.top, 24)
                 
-                ScrollView(.horizontal, showsIndicators: false) {
-                    
-                    HorizontalToolCardsView(viewModel: viewModel, width: width)
-                    .padding(.leading, leadingPadding)
-                }
+                ToolCardsCarouselView(viewModel: viewModel, width: width, leadingTrailingPadding: leadingPadding)
             }
         }
     }

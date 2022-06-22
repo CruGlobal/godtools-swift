@@ -12,7 +12,7 @@ protocol ToolSpotlightDelegate: AnyObject {
     func spotlightCardTapped(resource: ResourceModel)
 }
 
-class ToolSpotlightViewModel: HorizontalToolCardsViewModel {
+class ToolSpotlightViewModel: ToolCardsCarouselViewModel {
     
     // MARK: - Properties
     

@@ -1,5 +1,5 @@
 //
-//  HorizontalToolCardsViewModel.swift
+//  ToolCardsCarouselViewModel.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 6/21/22.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class HorizontalToolCardsViewModel: NSObject, ObservableObject {
+class ToolCardsCarouselViewModel: NSObject, ObservableObject {
     
     // MARK: - Published
     
