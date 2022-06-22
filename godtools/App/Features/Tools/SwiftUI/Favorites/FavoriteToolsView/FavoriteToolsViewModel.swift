@@ -18,6 +18,10 @@ class FavoriteToolsViewModel: ToolCardsCarouselViewModel {
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
     
+    // MARK: - Published
+    
+    @Published var sectionTitle: String = ""
+    
     // MARK: - Init
     
     init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices) {
@@ -30,6 +34,16 @@ class FavoriteToolsViewModel: ToolCardsCarouselViewModel {
         super.init()
         
         setupBinding()
+        setTitleText()
+    }
+    
+    deinit {
+        dataDownloader.cachedResourcesAvailable.removeObserver(self)
+        dataDownloader.resourcesUpdatedFromRemoteDatabase.removeObserver(self)
+        favoritedResourcesCache.resourceFavorited.removeObserver(self)
+        favoritedResourcesCache.resourceUnfavorited.removeObserver(self)
+        favoritedResourcesCache.resourceSorted.removeObserver(self)
+        languageSettingsService.primaryLanguage.removeObserver(self)
     }
     
     // MARK: - Overrides
@@ -92,6 +106,12 @@ extension FavoriteToolsViewModel {
         favoritedResourcesCache.resourceSorted.addObserver(self) { [weak self] (resourceId: String) in
             DispatchQueue.main.async { [weak self] in
                 self?.reloadFavoritedResourcesFromCache()
+            }
+        }
+        
+        languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
+            DispatchQueue.main.async { [weak self] in
+                self?.setTitleText()
             }
         }
     }
@@ -161,5 +181,10 @@ extension FavoriteToolsViewModel {
         // TODO: - fix this
 //        hidesFindToolsView.accept(value: !filteredResources.isEmpty)
 //        isLoading.accept(value: false)
+    }
+    
+    private func setTitleText() {
+        let languageBundle = localizationServices.bundleLoader.bundleForPrimaryLanguageOrFallback(in: languageSettingsService)
+        sectionTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.favoriteTools.title")
     }
 }

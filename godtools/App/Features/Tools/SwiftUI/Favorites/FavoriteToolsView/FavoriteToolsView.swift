@@ -25,9 +25,9 @@ struct FavoriteToolsView: View {
             
         } else {
             
-            VStack(alignment: .leading, spacing: 10) {
+            VStack(alignment: .leading, spacing: 15) {
                 
-                Text("Your favorite tools")
+                Text(viewModel.sectionTitle)
                     .font(FontLibrary.sfProTextRegular.font(size: 22))
                     .foregroundColor(ColorPalette.gtGrey.color)
                     .padding(.leading, leadingPadding)
