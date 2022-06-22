@@ -860,13 +860,13 @@ extension MobileContentStackView {
 
 extension MobileContentStackView: MobileContentAccordionViewDelegate {
     
-    func accordionViewDidChangeSectionViewTextHiddenState(accordionView: MobileContentAccordionView, sectionView: MobileContentAccordionSectionView, textIsHidden: Bool, textHeight: CGFloat) {
+    func accordionViewDidChangeSectionViewContentHiddenState(accordionView: MobileContentAccordionView, sectionView: MobileContentAccordionSectionView, contentIsHidden: Bool, contentHeight: CGFloat) {
         
         layoutIfNeeded()
         
         relayoutForSpacerViews()
         
-        guard let scrollView = self.scrollView, !textIsHidden else {
+        guard let scrollView = self.scrollView, !contentIsHidden else {
             return
         }
         
