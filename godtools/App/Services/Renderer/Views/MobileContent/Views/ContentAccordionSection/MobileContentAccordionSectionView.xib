@@ -14,9 +14,9 @@
                 <outlet property="contentStackContainerBottomToView" destination="kS1-Gg-ibk" id="2Si-A7-yl1"/>
                 <outlet property="contentStackContainerView" destination="Bho-ue-3qC" id="qM2-2n-GTy"/>
                 <outlet property="contentView" destination="UiB-zw-0fl" id="bCC-gs-XzU"/>
+                <outlet property="headerButton" destination="ab5-08-I51" id="dRs-v8-mzi"/>
                 <outlet property="headerContainerBottomToView" destination="Eyg-3t-XVl" id="L9a-jL-9p9"/>
                 <outlet property="headerContainerView" destination="fT8-zZ-Ha7" id="Xry-6a-jsV"/>
-                <outlet property="revealTextButton" destination="rxU-wm-wOn" id="FfB-zU-UL5"/>
                 <outlet property="textStateImageTrailing" destination="0Jj-5G-sqx" id="hTZ-g2-Xm7"/>
             </connections>
         </placeholder>
@@ -53,23 +53,26 @@
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="74" id="pqc-Ix-aEG"/>
                             </constraints>
                         </view>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rxU-wm-wOn" userLabel="revealTextButton">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ab5-08-I51" userLabel="headerButton">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="74"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain"/>
                         </button>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstItem="rxU-wm-wOn" firstAttribute="leading" secondItem="UiB-zw-0fl" secondAttribute="leading" id="4Ia-V8-Q4r"/>
-                        <constraint firstItem="rxU-wm-wOn" firstAttribute="top" secondItem="UiB-zw-0fl" secondAttribute="top" id="562-6a-ndG"/>
+                        <constraint firstItem="ab5-08-I51" firstAttribute="top" secondItem="fT8-zZ-Ha7" secondAttribute="top" id="5qY-IB-IPG"/>
                         <constraint firstAttribute="trailing" secondItem="Bho-ue-3qC" secondAttribute="trailing" id="AZ6-oN-3HB"/>
                         <constraint firstAttribute="bottom" secondItem="fT8-zZ-Ha7" secondAttribute="bottom" id="Eyg-3t-XVl"/>
                         <constraint firstItem="Bho-ue-3qC" firstAttribute="top" secondItem="fT8-zZ-Ha7" secondAttribute="bottom" id="J5N-DH-H6p"/>
+                        <constraint firstItem="ab5-08-I51" firstAttribute="bottom" secondItem="fT8-zZ-Ha7" secondAttribute="bottom" id="Ois-fJ-7cD"/>
                         <constraint firstItem="Bho-ue-3qC" firstAttribute="leading" secondItem="UiB-zw-0fl" secondAttribute="leading" id="SQh-jd-iSV"/>
                         <constraint firstItem="fT8-zZ-Ha7" firstAttribute="top" secondItem="UiB-zw-0fl" secondAttribute="top" id="dzo-DH-gdI"/>
-                        <constraint firstAttribute="bottom" secondItem="rxU-wm-wOn" secondAttribute="bottom" id="jQm-Iu-nvt"/>
+                        <constraint firstItem="ab5-08-I51" firstAttribute="trailing" secondItem="fT8-zZ-Ha7" secondAttribute="trailing" id="fcd-jk-smj"/>
                         <constraint firstAttribute="trailing" secondItem="fT8-zZ-Ha7" secondAttribute="trailing" id="jqu-6z-ZnR"/>
-                        <constraint firstAttribute="trailing" secondItem="rxU-wm-wOn" secondAttribute="trailing" id="kDg-tw-tcD"/>
                         <constraint firstAttribute="bottom" secondItem="Bho-ue-3qC" secondAttribute="bottom" id="kS1-Gg-ibk"/>
+                        <constraint firstItem="ab5-08-I51" firstAttribute="leading" secondItem="fT8-zZ-Ha7" secondAttribute="leading" id="nOe-Ww-ltv"/>
                         <constraint firstItem="fT8-zZ-Ha7" firstAttribute="leading" secondItem="UiB-zw-0fl" secondAttribute="leading" id="sLU-RJ-vwr"/>
                     </constraints>
                     <variation key="default">

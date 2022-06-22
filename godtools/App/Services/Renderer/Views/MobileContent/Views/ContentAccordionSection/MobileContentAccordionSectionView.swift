@@ -27,8 +27,8 @@ class MobileContentAccordionSectionView: MobileContentView, NibBased {
     @IBOutlet weak private var contentView: UIView!
     @IBOutlet weak private var contentStackContainerView: UIView!
     @IBOutlet weak private var headerContainerView: UIView!
+    @IBOutlet weak private var headerButton: UIButton!
     @IBOutlet weak private var accordionStateImageView: UIImageView!
-    @IBOutlet weak private var revealTextButton: UIButton!
     
     @IBOutlet private var headerContainerBottomToView: NSLayoutConstraint!
     @IBOutlet private var contentStackContainerBottomToView: NSLayoutConstraint!
@@ -49,7 +49,7 @@ class MobileContentAccordionSectionView: MobileContentView, NibBased {
         loadNib()
         setupLayout()
         
-        revealTextButton.addTarget(self, action: #selector(revealTextButtonTapped), for: .touchUpInside)
+        headerButton.addTarget(self, action: #selector(headerTapped), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
@@ -72,12 +72,18 @@ class MobileContentAccordionSectionView: MobileContentView, NibBased {
         contentStackContainerView.addSubview(contentStack)
         contentStack.translatesAutoresizingMaskIntoConstraints = false
         contentStack.constrainEdgesToView(view: contentStackContainerView)
+        
+        // headerButton
+        headerButton.setTitle("", for: .normal)
           
         setContentHidden(hidden: true, animated: false)
     }
     
-    @objc func revealTextButtonTapped() {
-        
+    @objc private func headerTapped() {
+        toggleContentHidden()
+    }
+    
+    private func toggleContentHidden() {
         setContentHidden(hidden: !contentIsHidden, animated: true)
     }
     
