@@ -50,7 +50,9 @@ struct AllToolsContentView: View {
                     let width = geo.size.width
                     
                     BackwardCompatibleList {
+                        
                         AllToolsList(viewModel: viewModel, width: width)
+                        
                     } refreshHandler: {
                         viewModel.refreshTools()
                     }

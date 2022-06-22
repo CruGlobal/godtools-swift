@@ -19,7 +19,7 @@ struct ToolCardView: View {
         switch viewModel.cardType {
         case .standard:     return nil
         case .spotlight:    return 75
-        case .favorites:    return 134
+        case .favorites:    return 136
         }
     }
     
@@ -65,6 +65,7 @@ struct ToolCardView: View {
                         case .favorites:
                             ToolCardCategoryView(category: viewModel.category)
                             ToolCardParallelLanguageView(languageName: viewModel.parallelLanguageName)
+                                .padding(.top, 2)
                             
                             Spacer(minLength: 0)
                             HStack(spacing: 5) {
@@ -78,7 +79,7 @@ struct ToolCardView: View {
                         }
                     }
                     .padding(.leading, 15)
-                    .padding(.bottom, 12)
+                    .padding(.bottom, 14)
                     
                     Spacer()
                     

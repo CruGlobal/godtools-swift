@@ -14,11 +14,41 @@ struct FavoritesContentView: View {
     
     @ObservedObject var viewModel: FavoritesContentViewModel
     
+    // MARK: - Constants
+    
+    private enum Sizes {
+        static let toolsPaddingMultiplier: CGFloat = 15/375
+    }
+    
     // MARK: - Body
     
     var body: some View {
         
-        Text("put stuff here")
+        VStack {
+            if viewModel.isLoading {
+                
+                ActivityIndicator(style: .medium, isAnimating: .constant(true))
+                
+            } else {
+                
+                GeometryReader { geo in
+                    let width = geo.size.width
+                    let leadingTrailingPadding = width * Sizes.toolsPaddingMultiplier
+                    
+                    BackwardCompatibleList {
+                        
+                        FavoriteToolsView(viewModel: viewModel.favoriteToolsViewModel, width: width, leadingPadding: leadingTrailingPadding)
+                            .listRowInsets(EdgeInsets())
+                            
+                    } refreshHandler: {
+//                        viewModel.refreshTools()
+                    }
+                }
+            }
+        }
+        .onAppear {
+//            viewModel.pageViewed()
+        }
     }
 }
 
