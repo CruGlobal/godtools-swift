@@ -48,3 +48,36 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
         super.init()
     }
 }
+
+// MARK: - Public
+
+extension FavoritesContentViewModel {
+    func refreshTools() {
+        dataDownloader.downloadInitialData()
+    }
+}
+
+// MARK: - Analytics
+
+extension FavoritesContentViewModel {
+    var analyticsScreenName: String {
+        return "Favorites"
+    }
+    
+    private var analyticsSiteSection: String {
+        return "home"
+    }
+    
+    private var analyticsSiteSubSection: String {
+        return ""
+    }
+    
+    func pageViewed() {
+        
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
+        
+        analytics.firebaseAnalytics.trackAction(screenName: "", siteSection: "", siteSubSection: "", actionName: AnalyticsConstants.ActionNames.viewedMyToolsAction, data: nil)
+        
+        flowDelegate?.navigate(step: .userViewedFavoritedToolsListFromTools)
+    }
+}

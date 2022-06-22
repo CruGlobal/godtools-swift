@@ -37,17 +37,19 @@ struct FavoritesContentView: View {
                     
                     BackwardCompatibleList {
                         
+                        // TODO: - Recommended Lessons section
+                        
                         FavoriteToolsView(viewModel: viewModel.favoriteToolsViewModel, width: width, leadingPadding: leadingTrailingPadding)
                             .listRowInsets(EdgeInsets())
                             
                     } refreshHandler: {
-//                        viewModel.refreshTools()
+                        viewModel.refreshTools()
                     }
                 }
             }
         }
         .onAppear {
-//            viewModel.pageViewed()
+            viewModel.pageViewed()
         }
     }
 }
