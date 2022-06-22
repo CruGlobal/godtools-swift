@@ -55,6 +55,7 @@ class RealmResource: Object, ResourceModelType {
         id = model.id
         isHidden = model.isHidden
         manifest = model.manifest
+        metatoolId = model.metatoolId
         name = model.name
         oneskyProjectId = model.oneskyProjectId
         resourceDescription = model.resourceDescription
