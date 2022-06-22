@@ -10,33 +10,39 @@ import UIKit
 
 protocol MobileContentAccordionSectionViewDelegate: AnyObject {
     
-    func sectionViewDidChangeTextHiddenState(sectionView: MobileContentAccordionSectionView, textIsHidden: Bool, textHeight: CGFloat)
+    func sectionViewDidChangeContentHiddenState(sectionView: MobileContentAccordionSectionView, contentIsHidden: Bool, contentHeight: CGFloat)
 }
 
 class MobileContentAccordionSectionView: MobileContentView, NibBased {
  
     private let viewModel: MobileContentAccordionSectionViewModelType
+    private let contentStack: MobileContentStackView
     private let viewCornerRadius: CGFloat = 10
     
     private var headerView: MobileContentHeaderView?
-    private var textView: MobileContentTextView?
-    private(set) var textIsHidden: Bool = true
+    private(set) var contentIsHidden: Bool = true
     
     private weak var delegate: MobileContentAccordionSectionViewDelegate?
     
     @IBOutlet weak private var contentView: UIView!
-    @IBOutlet weak private var textContainerView: UIView!
+    @IBOutlet weak private var contentStackContainerView: UIView!
     @IBOutlet weak private var headerContainerView: UIView!
-    @IBOutlet weak private var textStateImageView: UIImageView!
+    @IBOutlet weak private var accordionStateImageView: UIImageView!
     @IBOutlet weak private var revealTextButton: UIButton!
     
     @IBOutlet private var headerContainerBottomToView: NSLayoutConstraint!
-    @IBOutlet private var textContainerBottomToView: NSLayoutConstraint!
+    @IBOutlet private var contentStackContainerBottomToView: NSLayoutConstraint!
     @IBOutlet weak private var textStateImageTrailing: NSLayoutConstraint!
     
     required init(viewModel: MobileContentAccordionSectionViewModelType) {
         
         self.viewModel = viewModel
+        
+        self.contentStack = MobileContentStackView(
+            contentInsets: UIEdgeInsets(top: 0, left: 20, bottom: 20, right: 20),
+            itemSpacing: 10,
+            scrollIsEnabled: false
+        )
         
         super.init(frame: UIScreen.main.bounds)
         
@@ -61,76 +67,72 @@ class MobileContentAccordionSectionView: MobileContentView, NibBased {
         contentView.layer.cornerRadius = viewCornerRadius
         contentView.clipsToBounds = true
         
-        // textContainerView
-        textContainerView.alpha = 0
-                
-        setTextHidden(hidden: true, animated: false)
+        // contentStackContainerView
+        contentStackContainerView.alpha = 0
+        contentStackContainerView.addSubview(contentStack)
+        contentStack.translatesAutoresizingMaskIntoConstraints = false
+        contentStack.constrainEdgesToView(view: contentStackContainerView)
+          
+        setContentHidden(hidden: true, animated: false)
     }
     
     @objc func revealTextButtonTapped() {
         
-        setTextHidden(hidden: !textIsHidden, animated: true)
+        setContentHidden(hidden: !contentIsHidden, animated: true)
     }
     
     var viewHeight: CGFloat {
-        return headerHeight + textHeight
+        return headerHeight + contentHeight
     }
     
-    var headerHeight: CGFloat {
+    private var headerHeight: CGFloat {
         return headerContainerView.frame.size.height
     }
     
-    var textHeight: CGFloat {
-        if textIsHidden {
-            return 0
-        }
-        return textContainerView.frame.size.height
+    private var contentHeight: CGFloat {
+        
+        return contentStackContainerView.frame.size.height
     }
     
     func setDelegate(delegate: MobileContentAccordionSectionViewDelegate?) {
         self.delegate = delegate
     }
     
-    func setTextHidden(hidden: Bool, animated: Bool) {
+    func setContentHidden(hidden: Bool, animated: Bool) {
         
-        textIsHidden = hidden
+        contentIsHidden = hidden
         
-        let textAlpha: CGFloat
-        let textHeight: CGFloat = textContainerView.frame.size.height
-        let textStateImage: UIImage?
+        let contentAlpha: CGFloat
+        let accordionStateImage: UIImage?
         
         if hidden {
             
-            textAlpha = 0
-            textContainerBottomToView.isActive = false
+            contentAlpha = 0
+            contentStackContainerBottomToView.isActive = false
             headerContainerBottomToView.isActive = true
-            textStateImage = ImageCatalog.accordionSectionPlus.image
+            accordionStateImage = ImageCatalog.accordionSectionPlus.image
         }
         else {
             
-            textAlpha = 1
+            contentAlpha = 1
             headerContainerBottomToView.isActive = false
-            textContainerBottomToView.isActive = true
-            textStateImage = ImageCatalog.accordionSectionMinus.image
+            contentStackContainerBottomToView.isActive = true
+            accordionStateImage = ImageCatalog.accordionSectionMinus.image
         }
         
-        textStateImageView.image = textStateImage
+        accordionStateImageView.image = accordionStateImage
                 
         if animated {
             
-            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: { [weak self] in
-                guard let view = self else {
-                    return
-                }
-                
-                view.textContainerView.alpha = textAlpha
-                view.delegate?.sectionViewDidChangeTextHiddenState(sectionView: view, textIsHidden: hidden, textHeight: textHeight)
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+                self.contentStackContainerView.alpha = contentAlpha
+                self.delegate?.sectionViewDidChangeContentHiddenState(sectionView: self, contentIsHidden: hidden, contentHeight: self.contentHeight)
             }, completion: nil)
         }
         else {
             
-            textContainerView.alpha = textAlpha
-            delegate?.sectionViewDidChangeTextHiddenState(sectionView: self, textIsHidden: hidden, textHeight: textHeight)
+            contentStackContainerView.alpha = contentAlpha
+            delegate?.sectionViewDidChangeContentHiddenState(sectionView: self, contentIsHidden: hidden, contentHeight: contentHeight)
         }
     }
     
@@ -138,11 +140,11 @@ class MobileContentAccordionSectionView: MobileContentView, NibBased {
         
         super.renderChild(childView: childView)
         
-        if let headerView = childView as? MobileContentHeaderView {
+        if let headerView = childView as? MobileContentHeaderView, self.headerView == nil {
             addHeaderView(headerView: headerView)
         }
-        else if let textView = childView as? MobileContentTextView {
-            addTextView(textView: textView)
+        else {
+            contentStack.renderChild(childView: childView)
         }
     }
     
@@ -164,25 +166,7 @@ extension MobileContentAccordionSectionView {
         let parentView: UIView = headerContainerView
         parentView.addSubview(headerView)
         headerView.translatesAutoresizingMaskIntoConstraints = false
-        headerView.constrainEdgesToView(view: parentView, edgeInsets: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: textStateImageTrailing.constant + textStateImageView.frame.size.width + 10))
+        headerView.constrainEdgesToView(view: parentView, edgeInsets: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: textStateImageTrailing.constant + accordionStateImageView.frame.size.width + 10))
         self.headerView = headerView
-    }
-}
-
-// MARK: - Text
-
-extension MobileContentAccordionSectionView {
-    
-    private func addTextView(textView: MobileContentTextView) {
-        
-        guard self.textView == nil else {
-            return
-        }
-        
-        let parentView: UIView = textContainerView
-        parentView.addSubview(textView)
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.constrainEdgesToView(view: parentView, edgeInsets: UIEdgeInsets(top: 0, left: 20, bottom: 20, right: 20))
-        self.textView = textView
     }
 }
