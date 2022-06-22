@@ -174,6 +174,8 @@ class ToolCardViewModel: BaseToolCardViewModel, ToolItemInitialDownloadProgress 
         
         title = toolName
         category = localizationServices.toolCategoryStringForBundle(bundle: languageBundle, attrCategory: resource.attrCategory)
+        detailsButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.favoriteLessons.details")
+        openButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "open")
         layoutDirection = LayoutDirection.from(languageDirection: languageDirection)
     }
     

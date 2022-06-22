@@ -19,6 +19,8 @@ class BaseToolCardViewModel: NSObject, ObservableObject {
     @Published var title: String = ""
     @Published var category: String = ""
     @Published var parallelLanguageName: String = ""
+    @Published var detailsButtonTitle: String = ""
+    @Published var openButtonTitle: String = ""
     @Published var layoutDirection: LayoutDirection = .leftToRight
     @Published var attachmentsDownloadProgressValue: Double = 0
     @Published var translationDownloadProgressValue: Double = 0

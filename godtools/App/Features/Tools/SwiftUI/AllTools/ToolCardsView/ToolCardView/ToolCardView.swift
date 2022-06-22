@@ -27,6 +27,8 @@ struct ToolCardView: View {
     
     private enum Sizes {
         static let cornerRadius: CGFloat = 6
+        static let leadingPadding: CGFloat = 15
+        static let flowButtonSpacing: CGFloat = 4
     }
     
     // MARK: - Body
@@ -68,17 +70,21 @@ struct ToolCardView: View {
                                 .padding(.top, 2)
                             
                             Spacer(minLength: 0)
-                            HStack(spacing: 5) {
-                                GTWhiteButton(title: "Details", width: (cardWidth - 35)/2, height: 30) {
+                            HStack(spacing: Sizes.flowButtonSpacing) {
+                                
+                                let whiteSpaceAroundButtons = 2 * Sizes.leadingPadding + Sizes.flowButtonSpacing
+                                let buttonWidth = (cardWidth - whiteSpaceAroundButtons)/2
+                                
+                                GTWhiteButton(title: viewModel.detailsButtonTitle, width: buttonWidth, height: 30) {
                                     // TODO: - open about
                                 }
-                                GTBlueButton(title: "Open", width: (cardWidth - 35)/2, height: 30) {
+                                GTBlueButton(title: viewModel.openButtonTitle, width: buttonWidth, height: 30) {
                                     // TODO: - open tool
                                 }
                             }
                         }
                     }
-                    .padding(.leading, 15)
+                    .padding(.leading, Sizes.leadingPadding)
                     .padding(.bottom, 14)
                     
                     Spacer()
