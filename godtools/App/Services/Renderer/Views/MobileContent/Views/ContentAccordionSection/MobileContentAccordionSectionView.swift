@@ -72,6 +72,7 @@ class MobileContentAccordionSectionView: MobileContentView, NibBased {
         contentStackContainerView.addSubview(contentStack)
         contentStack.translatesAutoresizingMaskIntoConstraints = false
         contentStack.constrainEdgesToView(view: contentStackContainerView)
+        super.renderChild(childView: contentStack)
         
         // headerButton
         headerButton.setTitle("", for: .normal)
