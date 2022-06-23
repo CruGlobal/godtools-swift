@@ -26,7 +26,8 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
             deviceAttachmentBanners: deviceAttachmentBanners,
             favoritedResourcesCache: favoritedResourcesCache,
             languageSettingsService: languageSettingsService,
-            localizationServices: localizationServices
+            localizationServices: localizationServices,
+            toolCardDelegate: self
         )
     }()
     
@@ -57,6 +58,24 @@ extension FavoritesContentViewModel {
     }
 }
 
+// MARK: - ToolCardViewModelDelegate
+
+extension FavoritesContentViewModel: ToolCardViewModelDelegate {
+    func toolCardTapped(resource: ResourceModel) {
+        trackToolTappedAnalytics()
+        flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: resource))
+    }
+    
+    func toolDetailsButtonTapped(resource: ResourceModel) {
+        flowDelegate?.navigate(step: .aboutToolTappedFromFavoritedTools(resource: resource))
+    }
+    
+    func openToolButtonTapped(resource: ResourceModel) {
+        trackOpenToolButtonAnalytics()
+        flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: resource))
+    }
+}
+
 // MARK: - Analytics
 
 extension FavoritesContentViewModel {
@@ -79,5 +98,13 @@ extension FavoritesContentViewModel {
         analytics.firebaseAnalytics.trackAction(screenName: "", siteSection: "", siteSubSection: "", actionName: AnalyticsConstants.ActionNames.viewedMyToolsAction, data: nil)
         
         flowDelegate?.navigate(step: .userViewedFavoritedToolsListFromTools)
+    }
+    
+    func trackToolTappedAnalytics() {
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.ActionNames.toolOpenTapped, siteSection: "", siteSubSection: "", url: nil, data: [AnalyticsConstants.Keys.toolOpenTapped: 1]))
+    }
+    
+    func trackOpenToolButtonAnalytics() {
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.ActionNames.toolOpened, siteSection: "", siteSubSection: "", url: nil, data: [AnalyticsConstants.Keys.toolOpened: 1]))
     }
 }

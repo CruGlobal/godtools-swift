@@ -49,7 +49,8 @@ struct FavoriteToolsView_Previews: PreviewProvider {
             deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             languageSettingsService: appDiContainer.languageSettingsService,
-            localizationServices: appDiContainer.localizationServices
+            localizationServices: appDiContainer.localizationServices,
+            toolCardDelegate: nil
         )
         
         FavoriteToolsView(viewModel: viewModel, width: 375, leadingPadding: 20)

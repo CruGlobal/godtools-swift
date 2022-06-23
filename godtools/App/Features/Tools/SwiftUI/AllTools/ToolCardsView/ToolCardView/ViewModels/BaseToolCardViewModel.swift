@@ -33,6 +33,9 @@ class BaseToolCardViewModel: NSObject, ObservableObject {
 
     // MARK: - Public Methods
     
-    func favoritedButtonTapped() {}
+    func favoriteToolButtonTapped() {}
+    func toolCardTapped() {}
+    func toolDetailsButtonTapped() {}
+    func openToolButtonTapped() {}
     
 }

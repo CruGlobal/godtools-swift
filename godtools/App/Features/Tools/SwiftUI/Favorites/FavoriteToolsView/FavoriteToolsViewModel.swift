@@ -17,6 +17,7 @@ class FavoriteToolsViewModel: ToolCardsCarouselViewModel {
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
+    private weak var toolCardDelegate: ToolCardViewModelDelegate?
     
     // MARK: - Published
     
@@ -24,12 +25,13 @@ class FavoriteToolsViewModel: ToolCardsCarouselViewModel {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices) {
+    init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, toolCardDelegate: ToolCardViewModelDelegate?) {
         self.dataDownloader = dataDownloader
         self.deviceAttachmentBanners = deviceAttachmentBanners
         self.favoritedResourcesCache = favoritedResourcesCache
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
+        self.toolCardDelegate = toolCardDelegate
         
         super.init()
         
@@ -56,7 +58,8 @@ class FavoriteToolsViewModel: ToolCardsCarouselViewModel {
             deviceAttachmentBanners: deviceAttachmentBanners,
             favoritedResourcesCache: favoritedResourcesCache,
             languageSettingsService: languageSettingsService,
-            localizationServices: localizationServices
+            localizationServices: localizationServices,
+            delegate: toolCardDelegate
         )
     }
 }

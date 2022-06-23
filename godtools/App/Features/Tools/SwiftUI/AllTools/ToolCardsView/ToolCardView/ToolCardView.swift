@@ -45,7 +45,7 @@ struct ToolCardView: View {
                     
                     ToolCardFavoritedView(isFavorited: viewModel.isFavorited)
                         .onTapGesture {
-                            viewModel.favoritedButtonTapped()
+                            viewModel.favoriteToolButtonTapped()
                         }
                 }
                 
@@ -76,10 +76,10 @@ struct ToolCardView: View {
                                 let buttonWidth = (cardWidth - whiteSpaceAroundButtons)/2
                                 
                                 GTWhiteButton(title: viewModel.detailsButtonTitle, width: buttonWidth, height: 30) {
-                                    // TODO: - open about
+                                    viewModel.toolDetailsButtonTapped()
                                 }
                                 GTBlueButton(title: viewModel.openButtonTitle, width: buttonWidth, height: 30) {
-                                    // TODO: - open tool
+                                    viewModel.openToolButtonTapped()
                                 }
                             }
                         }
@@ -104,6 +104,9 @@ struct ToolCardView: View {
         }
         .fixedSize(horizontal: true, vertical: true)
         .environment(\.layoutDirection, viewModel.layoutDirection)
+        .onTapGesture {
+            viewModel.toolCardTapped()
+        }
     }
 }
 
