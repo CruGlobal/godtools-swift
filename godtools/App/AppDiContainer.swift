@@ -366,6 +366,14 @@ class AppDiContainer {
         )
     }
     
+    func getToolVersionsUseCase() -> GetToolVersionsUseCase {
+        return GetToolVersionsUseCase(
+            resourcesCache: initialDataDownloader.resourcesCache,
+            languageSettingsService: languageSettingsService,
+            getToolLanguagesUseCase: getToolLanguagesUseCase()
+        )
+    }
+    
     func getTractRemoteSharePublisher() -> TractRemoteSharePublisher {
         let webSocket: WebSocketType = StarscreamWebSocket()
         return TractRemoteSharePublisher(

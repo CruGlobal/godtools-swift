@@ -19,6 +19,7 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
     private let analytics: AnalyticsContainer
     private let getToolTranslationsUseCase: GetToolTranslationsUseCase
     private let languagesRepository: LanguagesRepository
+    private let getToolVersionsUseCase: GetToolVersionsUseCase
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -34,8 +35,9 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
     @Published var aboutTitle: String = ""
     @Published var versionsTitle: String = ""
     @Published var aboutDetails: String = ""
+    @Published var toolVersions: [ToolVersion] = Array()
     
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, analytics: AnalyticsContainer, getToolTranslationsUseCase: GetToolTranslationsUseCase, languagesRepository: LanguagesRepository) {
+    init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, analytics: AnalyticsContainer, getToolTranslationsUseCase: GetToolTranslationsUseCase, languagesRepository: LanguagesRepository, getToolVersionsUseCase: GetToolVersionsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -46,6 +48,7 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
         self.analytics = analytics
         self.getToolTranslationsUseCase = getToolTranslationsUseCase
         self.languagesRepository = languagesRepository
+        self.getToolVersionsUseCase = getToolVersionsUseCase
         self.mediaType = ToolDetailsViewModel.getMediaType(resource: resource, dataDownloader: dataDownloader)
         
         super.init()
@@ -54,6 +57,7 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
         reloadFavorited()
         setupBinding()
         reloadLearnToShareToolButtonState()
+        toolVersions = getToolVersionsUseCase.getToolVersions(resourceId: resource.id)
     }
     
     deinit {

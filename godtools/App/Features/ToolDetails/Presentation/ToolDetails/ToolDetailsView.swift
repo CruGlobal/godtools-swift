@@ -42,9 +42,13 @@ struct ToolDetailsView: View {
                     Rectangle()
                         .frame(width: geometry.size.width, height: 20)
                         .foregroundColor(.clear)
-                                        
+                    
+                    // TODO: Complete toggling between sections (About, Versions) in GT-1418. ~Levi
+                    /*
                     ToolDetailsAboutView(viewModel: viewModel, width: contentWidth)
-                        .padding(EdgeInsets(top: 0, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))
+                        .padding(EdgeInsets(top: 0, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))*/
+                    
+                    ToolDetailsVersionsView(viewModel: viewModel)
                 }
             }
         }
@@ -69,7 +73,8 @@ struct ToolDetailsView_Preview: PreviewProvider {
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             analytics: appDiContainer.analytics,
             getToolTranslationsUseCase: appDiContainer.getToolTranslationsUseCase(),
-            languagesRepository: appDiContainer.getLanguagesRepository()
+            languagesRepository: appDiContainer.getLanguagesRepository(),
+            getToolVersionsUseCase: appDiContainer.getToolVersionsUseCase()
         )
         
         return ToolDetailsView(viewModel: viewModel)
