@@ -27,7 +27,7 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
             favoritedResourcesCache: favoritedResourcesCache,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
-            toolCardDelegate: self
+            delegate: self
         )
     }()
     
@@ -58,9 +58,13 @@ extension FavoritesContentViewModel {
     }
 }
 
-// MARK: - ToolCardViewModelDelegate
+// MARK: - FavoriteToolsViewModelDelegate
 
-extension FavoritesContentViewModel: ToolCardDelegate {
+extension FavoritesContentViewModel: FavoriteToolsViewModelDelegate {
+    func viewAllFavoriteToolsButtonTapped() {
+        flowDelegate?.navigate(step: .viewAllFavoriteToolsTappedFromFavoritedTools)
+    }
+    
     func toolCardTapped(resource: ResourceModel) {
         trackToolTappedAnalytics()
         flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: resource))

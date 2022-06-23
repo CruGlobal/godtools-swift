@@ -9,6 +9,10 @@
 import Foundation
 import SwiftUI
 
+protocol FavoriteToolsViewModelDelegate: ToolCardDelegate {
+    func viewAllFavoriteToolsButtonTapped()
+}
+
 class FavoriteToolsViewModel: ToolCardsCarouselViewModel {
  
     // MARK: - Properties
@@ -18,26 +22,27 @@ class FavoriteToolsViewModel: ToolCardsCarouselViewModel {
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
-    private weak var toolCardDelegate: ToolCardDelegate?
+    private weak var delegate: FavoriteToolsViewModelDelegate?
     
     // MARK: - Published
     
     @Published var sectionTitle: String = ""
+    @Published var viewAllButtonText: String = ""
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, toolCardDelegate: ToolCardDelegate?) {
+    init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: FavoriteToolsViewModelDelegate?) {
         self.dataDownloader = dataDownloader
         self.deviceAttachmentBanners = deviceAttachmentBanners
         self.favoritedResourcesCache = favoritedResourcesCache
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
-        self.toolCardDelegate = toolCardDelegate
+        self.delegate = delegate
         
         super.init()
         
         setupBinding()
-        setTitleText()
+        setText()
     }
     
     deinit {
@@ -60,8 +65,16 @@ class FavoriteToolsViewModel: ToolCardsCarouselViewModel {
             favoritedResourcesCache: favoritedResourcesCache,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
-            delegate: toolCardDelegate
+            delegate: delegate
         )
+    }
+}
+
+// MARK: - Public
+
+extension FavoriteToolsViewModel {
+    func viewAllButtonTapped() {
+        delegate?.viewAllFavoriteToolsButtonTapped()
     }
 }
 
@@ -115,7 +128,7 @@ extension FavoriteToolsViewModel {
         
         languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
             DispatchQueue.main.async { [weak self] in
-                self?.setTitleText()
+                self?.setText()
             }
         }
     }
@@ -189,8 +202,9 @@ extension FavoriteToolsViewModel {
 //        isLoading.accept(value: false)
     }
     
-    private func setTitleText() {
+    private func setText() {
         let languageBundle = localizationServices.bundleLoader.bundleForPrimaryLanguageOrFallback(in: languageSettingsService)
         sectionTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.favoriteTools.title")
+        viewAllButtonText = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.favoriteTools.viewAll") + " >"
     }
 }

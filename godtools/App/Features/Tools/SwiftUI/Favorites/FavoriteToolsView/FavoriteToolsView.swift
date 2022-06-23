@@ -21,17 +21,33 @@ struct FavoriteToolsView: View {
     var body: some View {
         if viewModel.tools.isEmpty {
             
-            // TODO: - add find tools view
+//             TODO: - add find tools view
             
         } else {
             
             VStack(alignment: .leading, spacing: 15) {
                 
-                Text(viewModel.sectionTitle)
-                    .font(FontLibrary.sfProTextRegular.font(size: 22))
-                    .foregroundColor(ColorPalette.gtGrey.color)
-                    .padding(.leading, leadingPadding)
+                HStack(alignment: .bottom) {
+                    Text(viewModel.sectionTitle)
+                        .font(FontLibrary.sfProTextRegular.font(size: 22))
+                        .foregroundColor(ColorPalette.gtGrey.color)
+                        .padding(.leading, leadingPadding)
                     .padding(.top, 24)
+                    
+                    Spacer()
+                    
+                    Text(viewModel.viewAllButtonText)
+                        .font(FontLibrary.sfProTextRegular.font(size: 12))
+                        .foregroundColor(ColorPalette.gtBlue.color)
+                        .background(Color.white)
+                        .padding(.bottom, 2)
+                        .frame(height: 30, alignment: .bottom)
+                        .onTapGesture {
+                            viewModel.viewAllButtonTapped()
+                        }
+
+                }
+                .padding(.trailing, 20)
                 
                 ToolCardsCarouselView(viewModel: viewModel, width: width, leadingTrailingPadding: leadingPadding)
             }
@@ -50,7 +66,7 @@ struct FavoriteToolsView_Previews: PreviewProvider {
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
-            toolCardDelegate: nil
+            delegate: nil
         )
         
         FavoriteToolsView(viewModel: viewModel, width: 375, leadingPadding: 20)
