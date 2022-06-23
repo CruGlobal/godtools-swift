@@ -28,12 +28,16 @@ struct AllFavoriteToolsView: View {
             let leadingTrailingPadding = width * Sizes.toolsPaddingMultiplier
             
             BackwardCompatibleList {
-                Text("Your favorite tools")
-                    .font(FontLibrary.sfProTextRegular.font(size: 22))
-                    .foregroundColor(ColorPalette.gtGrey.color)
-                    .padding(.leading, leadingTrailingPadding)
-                    .padding(.top, 40)
-                
+                VStack {
+                    Text("Your favorite tools")
+                        .font(FontLibrary.sfProTextRegular.font(size: 22))
+                        .foregroundColor(ColorPalette.gtGrey.color)
+                        .padding(.leading, leadingTrailingPadding)
+                        .padding(.top, 40)
+                    
+                    ToolCardsView(viewModel: viewModel, width: width, leadingPadding: leadingTrailingPadding)
+                }
+                .listRowInsets(EdgeInsets())
             } refreshHandler: {}
         }
     }
