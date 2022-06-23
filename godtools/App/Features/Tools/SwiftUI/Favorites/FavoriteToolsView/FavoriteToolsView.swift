@@ -32,7 +32,7 @@ struct FavoriteToolsView: View {
                         .font(FontLibrary.sfProTextRegular.font(size: 22))
                         .foregroundColor(ColorPalette.gtGrey.color)
                         .padding(.leading, leadingPadding)
-                    .padding(.top, 24)
+                        .padding(.top, 24)
                     
                     Spacer()
                     

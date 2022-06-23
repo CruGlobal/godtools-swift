@@ -12,7 +12,7 @@ protocol ToolCardsViewModelDelegate: ToolCardDelegate {
     func toolsAreLoading(_ isLoading: Bool)
 }
 
-class ToolCardsViewModel: NSObject, ObservableObject {
+class ToolCardsViewModel: ToolCardProvider {
     
     // MARK: - Properties
     
@@ -24,10 +24,6 @@ class ToolCardsViewModel: NSObject, ObservableObject {
     private weak var delegate: ToolCardsViewModelDelegate?
     
     private var categoryFilterValue: String?
-    
-    // MARK: - Published
-    
-    @Published var tools: [ResourceModel] = []
     
     // MARK: - Init
     
@@ -49,6 +45,24 @@ class ToolCardsViewModel: NSObject, ObservableObject {
         dataDownloader.resourcesUpdatedFromRemoteDatabase.removeObserver(self)
     }
     
+    // MARK: - Overrides
+    
+    override func cardViewModel(for tool: ResourceModel) -> BaseToolCardViewModel {
+        return ToolCardViewModel(
+            cardType: .standard,
+            resource: tool,
+            dataDownloader: dataDownloader,
+            deviceAttachmentBanners: deviceAttachmentBanners,
+            favoritedResourcesCache: favoritedResourcesCache,
+            languageSettingsService: languageSettingsService,
+            localizationServices: localizationServices,
+            delegate: delegate
+        )
+    }
+    
+    override func toolTapped(resource: ResourceModel) {
+        delegate?.toolCardTapped(resource: resource)
+    }
 }
 
 // MARK: - Private
@@ -91,22 +105,6 @@ extension ToolCardsViewModel {
 // MARK: - Public
 
 extension ToolCardsViewModel {
-    func cardViewModel(for tool: ResourceModel) -> ToolCardViewModel {
-        return ToolCardViewModel(
-            cardType: .standard,
-            resource: tool,
-            dataDownloader: dataDownloader,
-            deviceAttachmentBanners: deviceAttachmentBanners,
-            favoritedResourcesCache: favoritedResourcesCache,
-            languageSettingsService: languageSettingsService,
-            localizationServices: localizationServices,
-            delegate: delegate
-        )
-    }
-    
-    func toolTapped(resource: ResourceModel) {
-        delegate?.toolCardTapped(resource: resource)
-    }
     
     func filterTools(with attrCategory: String?) {
         categoryFilterValue = attrCategory

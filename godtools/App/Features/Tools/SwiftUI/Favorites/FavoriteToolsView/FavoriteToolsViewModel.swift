@@ -13,7 +13,7 @@ protocol FavoriteToolsViewModelDelegate: ToolCardDelegate {
     func viewAllFavoriteToolsButtonTapped()
 }
 
-class FavoriteToolsViewModel: ToolCardsCarouselViewModel {
+class FavoriteToolsViewModel: ToolCardProvider {
  
     // MARK: - Properties
     

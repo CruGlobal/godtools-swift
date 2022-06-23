@@ -8,6 +8,7 @@
 
 import UIKit
 import MessageUI
+import SwiftUI
 
 class AppFlow: NSObject, ToolNavigationFlow, Flow {
     
@@ -158,8 +159,10 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         case .lessonTappedFromLessonsList(let resource):
             navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)
             
-//        case .viewAllFavoriteToolsTappedFromFavoritedTools:
-            // TODO: - implement this
+        case .viewAllFavoriteToolsTappedFromFavoritedTools:
+
+            let hostingController = AllFavoriteToolsHostingView(view: AllFavoriteToolsView(viewModel: AllFavoriteToolsViewModel()))
+            navigationController.pushViewController(hostingController, animated: true)
             
         case .toolTappedFromFavoritedTools(let resource):
             navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)

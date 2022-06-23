@@ -1,5 +1,5 @@
 //
-//  ToolCardsCarouselViewModel.swift
+//  ToolCardProvider.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 6/21/22.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ToolCardsCarouselViewModel: NSObject, ObservableObject {
+class ToolCardProvider: NSObject, ObservableObject {
     
     // MARK: - Published
     
@@ -20,4 +20,6 @@ class ToolCardsCarouselViewModel: NSObject, ObservableObject {
         assertionFailure("This method should be overriden in the subclass")
         return MockToolCardViewModel()
     }
+    
+    func toolTapped(resource: ResourceModel) {}
 }

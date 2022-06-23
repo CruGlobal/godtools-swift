@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ToolSpotlightViewModel: ToolCardsCarouselViewModel {
+class ToolSpotlightViewModel: ToolCardProvider {
     
     // MARK: - Properties
     

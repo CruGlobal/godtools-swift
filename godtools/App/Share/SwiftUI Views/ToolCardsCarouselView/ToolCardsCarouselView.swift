@@ -12,7 +12,7 @@ struct ToolCardsCarouselView: View {
     
     // MARK: - Properties
     
-    @ObservedObject var viewModel: ToolCardsCarouselViewModel
+    @ObservedObject var viewModel: ToolCardProvider
     let width: CGFloat
     let leadingTrailingPadding: CGFloat
     
