@@ -41,6 +41,19 @@ struct AllFavoriteToolsView: View {
 
 struct AllFavoriteToolsView_Previews: PreviewProvider {
     static var previews: some View {
-        AllFavoriteToolsView(viewModel: AllFavoriteToolsViewModel())
+        
+        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
+        
+        let viewModel = AllFavoriteToolsViewModel(
+            cardType: .standard,
+            dataDownloader: appDiContainer.initialDataDownloader,
+            deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
+            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
+            languageSettingsService: appDiContainer.languageSettingsService,
+            localizationServices: appDiContainer.localizationServices,
+            delegate: nil
+        )
+        
+        AllFavoriteToolsView(viewModel: viewModel)
     }
 }

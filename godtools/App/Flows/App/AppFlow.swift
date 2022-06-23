@@ -160,9 +160,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)
             
         case .viewAllFavoriteToolsTappedFromFavoritedTools:
-
-            let hostingController = AllFavoriteToolsHostingView(view: AllFavoriteToolsView(viewModel: AllFavoriteToolsViewModel()))
-            navigationController.pushViewController(hostingController, animated: true)
+            navigateToAllToolFavorites()
             
         case .toolTappedFromFavoritedTools(let resource):
             navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)
@@ -654,6 +652,26 @@ extension AppFlow {
             navigationController.dismiss(animated: true, completion: nil)
             tutorialFlow = nil
         }
+    }
+}
+
+// MARK: - Tool Favorites
+
+extension AppFlow {
+    
+    private func navigateToAllToolFavorites() {
+        let viewModel = AllFavoriteToolsViewModel(
+            cardType: .standard,
+            dataDownloader: appDiContainer.initialDataDownloader,
+            deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
+            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
+            languageSettingsService: appDiContainer.languageSettingsService,
+            localizationServices: appDiContainer.localizationServices,
+            delegate: nil
+        )
+        
+        let view = AllFavoriteToolsHostingView(view: AllFavoriteToolsView(viewModel: viewModel))
+        navigationController.pushViewController(view, animated: true)
     }
 }
 

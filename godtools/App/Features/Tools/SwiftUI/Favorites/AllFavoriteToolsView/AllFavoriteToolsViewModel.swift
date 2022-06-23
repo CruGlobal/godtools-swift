@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AllFavoriteToolsViewModel: ToolCardProvider {
+class AllFavoriteToolsViewModel: BaseFavoriteToolsViewModel {
     
 }
 
