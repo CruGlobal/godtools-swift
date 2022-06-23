@@ -8,8 +8,7 @@
 
 import Foundation
 
-protocol ToolCardsViewModelDelegate: AnyObject {
-    func toolCardTapped(resource: ResourceModel)
+protocol ToolCardsViewModelDelegate: ToolCardDelegate {
     func toolsAreLoading(_ isLoading: Bool)
 }
 
@@ -100,7 +99,8 @@ extension ToolCardsViewModel {
             deviceAttachmentBanners: deviceAttachmentBanners,
             favoritedResourcesCache: favoritedResourcesCache,
             languageSettingsService: languageSettingsService,
-            localizationServices: localizationServices
+            localizationServices: localizationServices,
+            delegate: delegate
         )
     }
     

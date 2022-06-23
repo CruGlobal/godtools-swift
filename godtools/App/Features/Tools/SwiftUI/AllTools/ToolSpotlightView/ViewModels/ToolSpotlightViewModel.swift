@@ -8,10 +8,6 @@
 
 import Foundation
 
-protocol ToolSpotlightDelegate: AnyObject {
-    func spotlightCardTapped(resource: ResourceModel)
-}
-
 class ToolSpotlightViewModel: ToolCardsCarouselViewModel {
     
     // MARK: - Properties
@@ -21,7 +17,7 @@ class ToolSpotlightViewModel: ToolCardsCarouselViewModel {
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
-    private weak var delegate: ToolSpotlightDelegate?
+    private weak var delegate: ToolCardDelegate?
     
     // MARK: - Published
     
@@ -30,7 +26,7 @@ class ToolSpotlightViewModel: ToolCardsCarouselViewModel {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: ToolSpotlightDelegate?) {
+    init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: ToolCardDelegate?) {
         self.dataDownloader = dataDownloader
         self.deviceAttachmentBanners = deviceAttachmentBanners
         self.favoritedResourcesCache = favoritedResourcesCache
@@ -60,12 +56,9 @@ class ToolSpotlightViewModel: ToolCardsCarouselViewModel {
             deviceAttachmentBanners: deviceAttachmentBanners,
             favoritedResourcesCache: favoritedResourcesCache,
             languageSettingsService: languageSettingsService,
-            localizationServices: localizationServices
+            localizationServices: localizationServices,
+            delegate: delegate
         )
-    }
-    
-    override func toolTapped(resource: ResourceModel) {
-        delegate?.spotlightCardTapped(resource: resource)
     }
 }
 

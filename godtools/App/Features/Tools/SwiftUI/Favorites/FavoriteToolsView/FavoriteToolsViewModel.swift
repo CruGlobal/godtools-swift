@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 class FavoriteToolsViewModel: ToolCardsCarouselViewModel {
  
@@ -17,7 +18,7 @@ class FavoriteToolsViewModel: ToolCardsCarouselViewModel {
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
-    private weak var toolCardDelegate: ToolCardViewModelDelegate?
+    private weak var toolCardDelegate: ToolCardDelegate?
     
     // MARK: - Published
     
@@ -25,7 +26,7 @@ class FavoriteToolsViewModel: ToolCardsCarouselViewModel {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, toolCardDelegate: ToolCardViewModelDelegate?) {
+    init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, toolCardDelegate: ToolCardDelegate?) {
         self.dataDownloader = dataDownloader
         self.deviceAttachmentBanners = deviceAttachmentBanners
         self.favoritedResourcesCache = favoritedResourcesCache
@@ -152,7 +153,9 @@ extension FavoriteToolsViewModel {
             }
         }
         
-        tools = updatedToolsList
+        withAnimation {
+            tools = updatedToolsList
+        }
     }
     
     private func addFavoritedResource(resourceId: String) {

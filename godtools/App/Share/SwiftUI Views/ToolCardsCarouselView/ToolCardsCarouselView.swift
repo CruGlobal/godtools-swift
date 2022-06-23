@@ -37,9 +37,6 @@ struct ToolCardsCarouselView: View {
                     )
                         // onTapGesture's tappable area doesn't always line up with the card's actual position-- possibly due to added padding (?).  This is especially noticeable on iOS14.  Adding .contentShape fixed this.
                         .contentShape(Rectangle())
-                        .onTapGesture {
-                            viewModel.toolTapped(resource: tool)
-                        }
                         .padding(.bottom, 12)
                         .padding(.top, 5)
                 }

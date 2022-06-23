@@ -9,8 +9,9 @@
 import Foundation
 import SwiftUI
 
-protocol ToolCardViewModelDelegate: AnyObject {
+protocol ToolCardDelegate: AnyObject {
     func toolCardTapped(resource: ResourceModel)
+    func toolFavoriteButtonTapped(resource: ResourceModel)
     func toolDetailsButtonTapped(resource: ResourceModel)
     func openToolButtonTapped(resource: ResourceModel)
 }
@@ -25,7 +26,7 @@ class ToolCardViewModel: BaseToolCardViewModel, ToolItemInitialDownloadProgress 
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
-    private weak var delegate: ToolCardViewModelDelegate?
+    private weak var delegate: ToolCardDelegate?
     
     var attachmentsDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
     var translationDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
@@ -34,7 +35,7 @@ class ToolCardViewModel: BaseToolCardViewModel, ToolItemInitialDownloadProgress 
     
     // MARK: - Init
     
-    init(cardType: ToolCardType, resource: ResourceModel, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: ToolCardViewModelDelegate? = nil) {
+    init(cardType: ToolCardType, resource: ResourceModel, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: ToolCardDelegate?) {
         
         self.resource = resource
         self.dataDownloader = dataDownloader
@@ -64,7 +65,7 @@ class ToolCardViewModel: BaseToolCardViewModel, ToolItemInitialDownloadProgress 
     // MARK: - Overrides
  
     override func favoriteToolButtonTapped() {
-        favoritedResourcesCache.toggleFavorited(resourceId: resource.id)
+        delegate?.toolFavoriteButtonTapped(resource: resource)
     }
     
     override func toolCardTapped() {

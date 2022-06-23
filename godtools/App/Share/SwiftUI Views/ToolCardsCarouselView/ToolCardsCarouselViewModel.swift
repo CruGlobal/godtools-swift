@@ -20,6 +20,4 @@ class ToolCardsCarouselViewModel: NSObject, ObservableObject {
         assertionFailure("This method should be overriden in the subclass")
         return MockToolCardViewModel()
     }
-    
-    func toolTapped(resource: ResourceModel) {}
 }

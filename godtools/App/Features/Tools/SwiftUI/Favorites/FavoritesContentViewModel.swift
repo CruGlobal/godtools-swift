@@ -60,10 +60,17 @@ extension FavoritesContentViewModel {
 
 // MARK: - ToolCardViewModelDelegate
 
-extension FavoritesContentViewModel: ToolCardViewModelDelegate {
+extension FavoritesContentViewModel: ToolCardDelegate {
     func toolCardTapped(resource: ResourceModel) {
         trackToolTappedAnalytics()
         flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: resource))
+    }
+    
+    func toolFavoriteButtonTapped(resource: ResourceModel) {
+        let removedHandler = CallbackHandler { [weak self] in
+            self?.favoritedResourcesCache.removeFromFavorites(resourceId: resource.id)
+        }
+        flowDelegate?.navigate(step: .unfavoriteToolTappedFromFavoritedTools(resource: resource, removeHandler: removedHandler))
     }
     
     func toolDetailsButtonTapped(resource: ResourceModel) {
