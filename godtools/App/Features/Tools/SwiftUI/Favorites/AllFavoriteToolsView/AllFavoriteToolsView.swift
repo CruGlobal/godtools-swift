@@ -28,8 +28,8 @@ struct AllFavoriteToolsView: View {
             let leadingTrailingPadding = width * Sizes.toolsPaddingMultiplier
             
             BackwardCompatibleList {
-                VStack {
-                    Text("Your favorite tools")
+                VStack(alignment: .leading) {
+                    Text(viewModel.sectionTitle)
                         .font(FontLibrary.sfProTextRegular.font(size: 22))
                         .foregroundColor(ColorPalette.gtGrey.color)
                         .padding(.leading, leadingTrailingPadding)
@@ -49,12 +49,12 @@ struct AllFavoriteToolsView_Previews: PreviewProvider {
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
         let viewModel = AllFavoriteToolsViewModel(
-            cardType: .standard,
             dataDownloader: appDiContainer.initialDataDownloader,
             deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
+            flowDelegate: nil,
             delegate: nil
         )
         

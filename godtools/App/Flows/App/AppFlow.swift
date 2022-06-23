@@ -162,6 +162,9 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         case .viewAllFavoriteToolsTappedFromFavoritedTools:
             navigateToAllToolFavorites()
             
+        case .backTappedFromAllFavoriteTools:
+            navigationController.popViewController(animated: true)
+            
         case .toolTappedFromFavoritedTools(let resource):
             navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)
             
@@ -661,12 +664,12 @@ extension AppFlow {
     
     private func navigateToAllToolFavorites() {
         let viewModel = AllFavoriteToolsViewModel(
-            cardType: .standard,
             dataDownloader: appDiContainer.initialDataDownloader,
             deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
+            flowDelegate: self,
             delegate: nil
         )
         

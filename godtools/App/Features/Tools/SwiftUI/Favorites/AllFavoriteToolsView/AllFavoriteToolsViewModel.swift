@@ -10,6 +10,17 @@ import Foundation
 
 class AllFavoriteToolsViewModel: BaseFavoriteToolsViewModel {
     
+    // MARK: - Properties
+    
+    private weak var flowDelegate: FlowDelegate?
+    
+    // MARK: - Init
+    
+    init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, flowDelegate: FlowDelegate?, delegate: ToolCardDelegate?) {
+        self.flowDelegate = flowDelegate
+        
+        super.init(cardType: .standard, dataDownloader: dataDownloader, deviceAttachmentBanners: deviceAttachmentBanners, favoritedResourcesCache: favoritedResourcesCache, languageSettingsService: languageSettingsService, localizationServices: localizationServices, delegate: delegate)
+    }
 }
 
 // MARK: - Public
@@ -17,6 +28,6 @@ class AllFavoriteToolsViewModel: BaseFavoriteToolsViewModel {
 extension AllFavoriteToolsViewModel {
     
     func backButtonTapped() {
-        // TODO: - implement this
+        flowDelegate?.navigate(step: .backTappedFromAllFavoriteTools)
     }
 }
