@@ -40,14 +40,17 @@ struct ToolSettingsOptionsView: View {
                         viewModel.screenShareTapped()
                     }
                     
-                    ToolSettingsOptionsItemView(
-                        backgroundType: .image(image: Image(ImageCatalog.toolSettingsOptionTrainingTipsBackground.name)),
-                        iconImage: viewModel.trainingTipsIcon,
-                        title: viewModel.trainingTipsTitle,
-                        titleColorStyle: .lightBackground
-                    )
-                    .onTapGesture {
-                        viewModel.trainingTipsTapped()
+                    if !viewModel.hidesToggleTrainingTipsButton {
+                        
+                        ToolSettingsOptionsItemView(
+                            backgroundType: .image(image: Image(ImageCatalog.toolSettingsOptionTrainingTipsBackground.name)),
+                            iconImage: viewModel.trainingTipsIcon,
+                            title: viewModel.trainingTipsTitle,
+                            titleColorStyle: .lightBackground
+                        )
+                        .onTapGesture {
+                            viewModel.trainingTipsTapped()
+                        }
                     }
                 }
                 .padding(EdgeInsets(top: 0, leading: leadingInset, bottom: 0, trailing: trailingInset))

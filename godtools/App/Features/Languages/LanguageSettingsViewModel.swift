@@ -13,6 +13,7 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
     private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
+    private let getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase
     private let analytics: AnalyticsContainer
     
     private weak var flowDelegate: FlowDelegate?
@@ -25,12 +26,13 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
     let shareGodToolsInNativeLanguage: String
     let languageAvailability: String
     
-    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
+        self.getTranslatedLanguageUseCase = getTranslatedLanguageUseCase
         self.analytics = analytics
         
         primaryLanguageTitle = localizationServices.stringForMainBundle(key: "primary_language")
@@ -108,7 +110,7 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
         let title: String
         
         if let primaryLanguage = languageSettingsService.primaryLanguage.value {
-            title = LanguageViewModel(language: primaryLanguage, localizationServices: localizationServices).translatedLanguageName
+            title = getTranslatedLanguageUseCase.getTranslatedLanguage(language: primaryLanguage).name
         }
         else {
             title = localizationServices.stringForMainBundle(key: "select_primary_language")
@@ -122,7 +124,7 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
         let title: String
         
         if let parallelLanguage = languageSettingsService.parallelLanguage.value {
-            title = LanguageViewModel(language: parallelLanguage, localizationServices: localizationServices).translatedLanguageName
+            title = getTranslatedLanguageUseCase.getTranslatedLanguage(language: parallelLanguage).name
         }
         else {
             title = localizationServices.stringForMainBundle(key: "select_parallel_language")

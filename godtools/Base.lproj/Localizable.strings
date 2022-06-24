@@ -3,6 +3,18 @@
 "favorites.favoriteLessons.title" = "Recommended";
 "favorites.favoriteTools.title" = "Your favorite tools";
 "favorites.favoriteTools.viewAll" = "View all";
+"toolSettings.languagesList.deleteLanguage.title" = "None";
+"toolSettings.chooseLanguage.toggleMessage" = "Toggle between the two different languages in this tool.";
+"toolDetails.versions.title" = "Versions";
+"toolDetails.learnToShareToolButton.title" = "Learn to share this tool";
+"toolSettings.title" = "Tool Options";
+"toolSettings.option.shareLink.title" = "Share link";
+"toolSettings.option.screenShare.title" = "Screen share";
+"toolSettings.option.trainingTips.show.title" = "Training tips";
+"toolSettings.option.trainingTips.hide.title" = "Hide tips";
+"toolSettings.chooseLanguage.title" = "Parallel Language";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Parallel";
+"toolSettings.shareables.title" = "Related graphics";
 "allTools.spotlight.title" = "Tool Spotlight";
 "allTools.spotlight.description" = "Here are some tools we thought you might like";
 "allTools.categories.title" = "Categories";
@@ -196,11 +208,6 @@ An online version can be found at https://knowgod.com/";
 // Add Tools
 "add_tools" = "Add Tools";
 
-// All Tools
-"allTools.spotlight.title" = "Tool Spotlight";
-"allTools.spotlight.description" = "Here are some tools we thought you might like";
-"allTools.categories.title" = "Categories";
-
 "total_views" = "%d views";
 "total_languages" = "%d languages";
 
@@ -318,20 +325,3 @@ Press the About button on any tool for more info.";
 "onboardingTutorial.appUsageItem.3.message" = "Choose from over 90 languages";
 "onboardingTutorial.appUsageItem.4.message" = "Help someone get started as a Christian";
 "onboardingTutorial.showMoreButton.title" = "Show Me More";
-
-// Tool Settings
-"toolSettings.title" = "Tool Options";
-"toolSettings.option.shareLink.title" = "Share link";
-"toolSettings.option.screenShare.title" = "Screen share";
-"toolSettings.option.trainingTips.show.title" = "Training tips";
-"toolSettings.option.trainingTips.hide.title" = "Hide tips";
-"toolSettings.chooseLanguage.title" = "Parallel Language";
-"toolSettings.chooseLanguage.toggleMessage" = "Toggle between the two different languages in this tool.";
-"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Parallel";
-"toolSettings.shareables.title" = "Related graphics";
-"toolSettings.languagesList.deleteLanguage.title" = "None";
-"toolSettings.shareImagePreview.shareImageButton.title" = "Share image";
-
-// Tool Details
-"toolDetails.learnToShareToolButton.title" = "Learn to share this tool";
-"toolDetails.versions.title" = "Versions";

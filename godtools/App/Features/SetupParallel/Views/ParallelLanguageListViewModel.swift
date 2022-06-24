@@ -17,17 +17,19 @@ class ParallelLanguageListViewModel: NSObject, ParallelLanguageListViewModelType
     private let languagesRepository: LanguagesRepository
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
+    private let getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase
     
     let selectButtonText: String
     let numberOfLanguages: ObservableValue<Int>
     
-    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languagesRepository: LanguagesRepository, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices) {
+    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languagesRepository: LanguagesRepository, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.languagesRepository = languagesRepository
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
+        self.getTranslatedLanguageUseCase = getTranslatedLanguageUseCase
         
         selectButtonText = localizationServices.stringForMainBundle(key: "parallelLanguage.selectButton.title")
         numberOfLanguages = ObservableValue(value: 0)
@@ -65,7 +67,7 @@ class ParallelLanguageListViewModel: NSObject, ParallelLanguageListViewModelType
         }
     }
     
-    private var allLanguages: [LanguageViewModel] {
+    private var allLanguages: [TranslatedLanguage] {
         
         let primaryLanguage: LanguageModel? = languageSettingsService.primaryLanguage.value
         
@@ -78,13 +80,13 @@ class ParallelLanguageListViewModel: NSObject, ParallelLanguageListViewModelType
             }
         }
         
-        let languageViewModels: [LanguageViewModel] = storedLanguageModels.map({LanguageViewModel(language: $0, localizationServices: localizationServices)})
-        let sortedLanguages: [LanguageViewModel] = languageViewModels.sorted(by: {$0.translatedLanguageName < $1.translatedLanguageName})
+        let translatedLanguages: [TranslatedLanguage] = storedLanguageModels.map({getTranslatedLanguageUseCase.getTranslatedLanguage(language: $0)})
+        let sortedLanguages: [TranslatedLanguage] = translatedLanguages.sorted(by: {$0.name < $1.name})
         
         return sortedLanguages
     }
     
-    private var languagesList: [LanguageViewModel] = Array() {
+    private var languagesList: [TranslatedLanguage] = Array() {
         
         didSet {
             
@@ -104,10 +106,10 @@ class ParallelLanguageListViewModel: NSObject, ParallelLanguageListViewModelType
     
     func languageWillAppear(index: Int) -> ChooseLanguageCellViewModel {
         
-        let languageViewModel: LanguageViewModel = languagesList[index]
+        let translatedLanguage: TranslatedLanguage = languagesList[index]
         
         return ChooseLanguageCellViewModel(
-            languageViewModel: languageViewModel,
+            translatedLanguage: translatedLanguage,
             languageIsDownloaded: true, //hides downloadImageView for all cells in this list
             hidesSelected: true,
             selectorColor: UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0),
@@ -120,7 +122,7 @@ class ParallelLanguageListViewModel: NSObject, ParallelLanguageListViewModelType
     
     func languageTapped(index: Int) {
                 
-        let selectedLanguage: LanguageModel = languagesList[index].language
+        let selectedLanguage: TranslatedLanguage = languagesList[index]
         
         languageSettingsService.languageSettingsCache.cacheParallelLanguageId(languageId: selectedLanguage.id)
         

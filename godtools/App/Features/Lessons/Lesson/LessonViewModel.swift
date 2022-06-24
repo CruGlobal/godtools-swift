@@ -52,9 +52,7 @@ class LessonViewModel: MobileContentPagesViewModel, LessonViewModelType {
     }
     
     func closeTapped() {
-        
-        let lesson: ResourceModel = renderer.resource
-        
-        flowDelegate?.navigate(step: .closeTappedFromLesson(lesson: lesson, highestPageNumberViewed: highestPageNumberViewed))
+                
+        flowDelegate?.navigate(step: .closeTappedFromLesson(lesson: resource, highestPageNumberViewed: highestPageNumberViewed))
     }
 }

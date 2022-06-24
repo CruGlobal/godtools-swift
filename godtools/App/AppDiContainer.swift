@@ -337,6 +337,13 @@ class AppDiContainer {
         return ShareToolScreenTutorialNumberOfViewsCache(sharedUserDefaultsCache: sharedUserDefaultsCache)
     }
     
+    func getToolLanguagesUseCase() -> GetToolLanguagesUseCase {
+        return GetToolLanguagesUseCase(
+            languagesRepository: getLanguagesRepository(),
+            localizationServices: localizationServices
+        )
+    }
+    
     func getToolOpenedAnalytics() -> ToolOpenedAnalytics {
         return ToolOpenedAnalytics(appsFlyerAnalytics: analytics.appsFlyerAnalytics)
     }
@@ -381,6 +388,10 @@ class AppDiContainer {
     
     func getTractRemoteShareURLBuilder() -> TractRemoteShareURLBuilder {
         return TractRemoteShareURLBuilder()
+    }
+    
+    func getTranslatedLanguageUseCase() -> GetTranslatedLanguageUseCase {
+        return GetTranslatedLanguageUseCase(localizationServices: localizationServices)
     }
     
     func getTutorialIsAvailableUseCase() -> GetTutorialIsAvailableUseCase {
