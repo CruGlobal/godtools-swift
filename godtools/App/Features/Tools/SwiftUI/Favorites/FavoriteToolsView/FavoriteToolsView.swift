@@ -21,29 +21,7 @@ struct FavoriteToolsView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 15) {
             
-            HStack(alignment: .bottom) {
-                Text(viewModel.sectionTitle)
-                    .font(FontLibrary.sfProTextRegular.font(size: 22))
-                    .foregroundColor(ColorPalette.gtGrey.color)
-                    .padding(.leading, leadingPadding)
-                    .padding(.top, 24)
-                
-                Spacer()
-                
-                if viewModel.tools.isEmpty == false {
-                    
-                    Text(viewModel.viewAllButtonText)
-                        .font(FontLibrary.sfProTextRegular.font(size: 12))
-                        .foregroundColor(ColorPalette.gtBlue.color)
-                        .background(Color.white)
-                        .padding(.bottom, 2)
-                        .frame(height: 30, alignment: .bottom)
-                        .onTapGesture {
-                            viewModel.viewAllButtonTapped()
-                        }
-                }
-            }
-            .padding(.trailing, 20)
+            FavoriteToolsHeaderView(viewModel: viewModel, leadingPadding: leadingPadding)
             
             if viewModel.tools.isEmpty {
                 

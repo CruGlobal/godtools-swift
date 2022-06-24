@@ -10,6 +10,12 @@ import SwiftUI
 
 struct FindFavoriteToolsView: View {
     
+    // MARK: - Properties
+    
+    @ObservedObject var viewModel: FavoriteToolsViewModel
+    
+    // MARK: - Body
+    
     var body: some View {
         ZStack {
             Color(.sRGB, red: 243/256, green: 243/256, blue: 243/256, opacity: 1)
