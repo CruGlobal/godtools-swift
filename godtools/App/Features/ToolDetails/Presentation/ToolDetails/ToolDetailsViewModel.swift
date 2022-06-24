@@ -20,6 +20,7 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
     private let getToolTranslationsUseCase: GetToolTranslationsUseCase
     private let languagesRepository: LanguagesRepository
     private let getToolVersionsUseCase: GetToolVersionsUseCase
+    private let segmentTypes: [ToolDetailsSegmentType] = [.about, .versions]
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -32,8 +33,8 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
     @Published var removeFromFavoritesButtonTitle: String = ""
     @Published var hidesLearnToShareToolButton: Bool = true
     @Published var isFavorited: Bool = false
-    @Published var aboutTitle: String = ""
-    @Published var versionsTitle: String = ""
+    @Published var segments: [String] = Array()
+    @Published var selectedSegment: ToolDetailsSegmentType = .about
     @Published var aboutDetails: String = ""
     @Published var toolVersions: [ToolVersion] = Array()
     
@@ -202,9 +203,16 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
         learnToShareToolButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "toolDetails.learnToShareToolButton.title")
         addToFavoritesButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "add_to_favorites")
         removeFromFavoritesButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "remove_from_favorites")
-        aboutTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "about")
-        versionsTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "toolDetails.versions.title")
         aboutDetails = aboutDetailsValue
+        
+        segments = segmentTypes.map({
+            switch $0 {
+            case .about:
+                return localizationServices.stringForBundle(bundle: languageBundle, key: "about")
+            case .versions:
+                return localizationServices.stringForBundle(bundle: languageBundle, key: "toolDetails.versions.title")
+            }
+        })
     }
     
     func backButtonTapped() {
@@ -239,6 +247,10 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
             
             favoritedResourcesCache.addToFavorites(resourceId: resource.id)
         }
+    }
+    
+    func segmentTapped(index: Int) {
+        selectedSegment = segmentTypes[index]
     }
     
     func urlTapped(url: URL) {

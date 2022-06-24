@@ -34,8 +34,9 @@ struct ToolDetailsView: View {
                     ToolDetailsPrimaryButtonsView(viewModel: viewModel, primaryButtonWidth: contentWidth)
                         .padding(EdgeInsets(top: 16, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))                    
                                         
-                    SegmentControl(selectedIndex: $selectedSegmentIndex, segments: [viewModel.aboutTitle, viewModel.versionsTitle], segmentTappedClosure: { (index: Int) in
-                                                
+                    SegmentControl(selectedIndex: $selectedSegmentIndex, segments: viewModel.segments, segmentTappedClosure: { (index: Int) in
+                        
+                        viewModel.segmentTapped(index: index)
                     })
                     .padding(EdgeInsets(top: 50, leading: 0, bottom: 0, trailing: 0))
                     
@@ -43,12 +44,15 @@ struct ToolDetailsView: View {
                         .frame(width: geometry.size.width, height: 20)
                         .foregroundColor(.clear)
                     
-                    // TODO: Complete toggling between sections (About, Versions) in GT-1418. ~Levi
-                    /*
-                    ToolDetailsAboutView(viewModel: viewModel, width: contentWidth)
-                        .padding(EdgeInsets(top: 0, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))*/
+                    switch viewModel.selectedSegment {
                     
-                    ToolDetailsVersionsView(viewModel: viewModel)
+                    case .about:
+                        ToolDetailsAboutView(viewModel: viewModel, width: contentWidth)
+                            .padding(EdgeInsets(top: 0, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))
+                    
+                    case .versions:
+                        ToolDetailsVersionsView(viewModel: viewModel)
+                    }
                 }
             }
         }
