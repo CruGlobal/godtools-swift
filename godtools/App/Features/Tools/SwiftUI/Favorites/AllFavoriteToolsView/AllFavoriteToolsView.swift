@@ -54,8 +54,7 @@ struct AllFavoriteToolsView_Previews: PreviewProvider {
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
-            flowDelegate: nil,
-            delegate: nil
+            flowDelegate: nil
         )
         
         AllFavoriteToolsView(viewModel: viewModel)

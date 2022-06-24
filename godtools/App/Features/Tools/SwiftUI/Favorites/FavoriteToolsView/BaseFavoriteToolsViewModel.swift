@@ -12,10 +12,10 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
  
     // MARK: - Properties
     
-    private let cardType: ToolCardType
-    private let dataDownloader: InitialDataDownloader
-    private let deviceAttachmentBanners: DeviceAttachmentBanners
-    private let favoritedResourcesCache: FavoritedResourcesCache
+    let cardType: ToolCardType
+    let dataDownloader: InitialDataDownloader
+    let deviceAttachmentBanners: DeviceAttachmentBanners
+    let favoritedResourcesCache: FavoritedResourcesCache
     let languageSettingsService: LanguageSettingsService
     let localizationServices: LocalizationServices
     let delegate: ToolCardDelegate?

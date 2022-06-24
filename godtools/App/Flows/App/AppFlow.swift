@@ -669,8 +669,7 @@ extension AppFlow {
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
-            flowDelegate: self,
-            delegate: nil
+            flowDelegate: self
         )
         
         let view = AllFavoriteToolsHostingView(view: AllFavoriteToolsView(viewModel: viewModel))
