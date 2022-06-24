@@ -92,6 +92,8 @@ struct ToolCardView: View {
         }
         .fixedSize(horizontal: true, vertical: true)
         .environment(\.layoutDirection, viewModel.layoutDirection)
+        // onTapGesture's tappable area doesn't always line up with the card's actual position-- possibly due to added padding (?).  This is especially noticeable on iOS14.  Adding .contentShape fixed this.
+        .contentShape(Rectangle())
         .onTapGesture {
             viewModel.toolCardTapped()
         }

@@ -29,20 +29,33 @@ struct ToolCardsCarouselView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             
             HStack(spacing: 15) {
-                ForEach(viewModel.tools) { tool in
+                if let maxNumberCardsToShow = viewModel.maxNumberCardsToShow {
                     
-                    ToolCardView(
-                        viewModel: viewModel.cardViewModel(for: tool),
-                        cardWidth: width * Sizes.spotlightCardWidthMultiplier
-                    )
-                        // onTapGesture's tappable area doesn't always line up with the card's actual position-- possibly due to added padding (?).  This is especially noticeable on iOS14.  Adding .contentShape fixed this.
-                        .contentShape(Rectangle())
-                        .padding(.bottom, 12)
-                        .padding(.top, 5)
+                    ForEach(viewModel.tools[0..<maxNumberCardsToShow]) { tool in
+                        
+                        makeToolCardView(with: tool)
+                    }
+                    
+                } else {
+                    ForEach(viewModel.tools) { tool in
+                        
+                        makeToolCardView(with: tool)
+                    }
                 }
             }
             .padding([.leading, .trailing], leadingTrailingPadding)
         }
+    }
+    
+    @ViewBuilder
+    func makeToolCardView(with tool: ResourceModel) -> some View {
+        
+        ToolCardView(
+            viewModel: viewModel.cardViewModel(for: tool),
+            cardWidth: width * Sizes.spotlightCardWidthMultiplier
+        )
+        .padding(.bottom, 12)
+        .padding(.top, 5)
     }
 }
 

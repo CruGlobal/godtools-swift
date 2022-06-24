@@ -10,6 +10,10 @@ import Foundation
 
 class ToolCardProvider: NSObject, ObservableObject {
     
+    // MARK: - Properties
+    
+    var maxNumberCardsToShow: Int? = nil
+    
     // MARK: - Published
     
     @Published var tools: [ResourceModel] = []

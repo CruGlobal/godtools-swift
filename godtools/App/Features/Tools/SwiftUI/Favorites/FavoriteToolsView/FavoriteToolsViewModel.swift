@@ -15,7 +15,12 @@ protocol FavoriteToolsViewModelDelegate: ToolCardDelegate, BaseFavoriteToolsView
 
 class FavoriteToolsViewModel: BaseFavoriteToolsViewModel {
  
+    // MARK: - Constants
+    
+    private let maxNumberCardsShown = 3
+    
     // MARK: - Properties
+    
     private var favoriteToolsViewModelDelegate: FavoriteToolsViewModelDelegate? {
         return delegate as? FavoriteToolsViewModelDelegate
     }
@@ -29,6 +34,8 @@ class FavoriteToolsViewModel: BaseFavoriteToolsViewModel {
     init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: FavoriteToolsViewModelDelegate?) {
         
         super.init(cardType: .squareWithNavButtons, dataDownloader: dataDownloader, deviceAttachmentBanners: deviceAttachmentBanners, favoritedResourcesCache: favoritedResourcesCache, languageSettingsService: languageSettingsService, localizationServices: localizationServices, delegate: delegate, toolCardDelegate: delegate)
+        
+        maxNumberCardsToShow = maxNumberCardsShown
     }
     
     override func setText() {

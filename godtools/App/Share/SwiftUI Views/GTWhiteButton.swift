@@ -39,9 +39,9 @@ struct GTWhiteButton: View {
                 RoundedRectangle(cornerRadius: cornerRadius)
                     .stroke(ColorPalette.gtBlue.color, lineWidth: 1)
             )
-        .onTapGesture {
-            action()
-        }
+            .onTapGesture {
+                action()
+            }
     }
 }
 
