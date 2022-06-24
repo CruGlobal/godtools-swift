@@ -1095,6 +1095,7 @@
 		D45922C62864F18900904B87 /* BaseFavoriteToolsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922C52864F18900904B87 /* BaseFavoriteToolsViewModel.swift */; };
 		D45922C82865346500904B87 /* ToolCardVerticalTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922C72865346500904B87 /* ToolCardVerticalTextView.swift */; };
 		D45922CA2865368100904B87 /* ToolCardNavButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922C92865368100904B87 /* ToolCardNavButtonView.swift */; };
+		D45922CE28663D4300904B87 /* FindFavoriteToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922CD28663D4300904B87 /* FindFavoriteToolsView.swift */; };
 		D47C49D8280EF0B10084F4DE /* AllToolsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D7280EF0B10084F4DE /* AllToolsList.swift */; };
 		D47C49DA28104E0B0084F4DE /* OptionalImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D928104E0B0084F4DE /* OptionalImage.swift */; };
 		D47C49E02816EEBD0084F4DE /* MockFlowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49DF2816EEBD0084F4DE /* MockFlowDelegate.swift */; };
@@ -2265,6 +2266,7 @@
 		D45922C52864F18900904B87 /* BaseFavoriteToolsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseFavoriteToolsViewModel.swift; sourceTree = "<group>"; };
 		D45922C72865346500904B87 /* ToolCardVerticalTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardVerticalTextView.swift; sourceTree = "<group>"; };
 		D45922C92865368100904B87 /* ToolCardNavButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardNavButtonView.swift; sourceTree = "<group>"; };
+		D45922CD28663D4300904B87 /* FindFavoriteToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindFavoriteToolsView.swift; sourceTree = "<group>"; };
 		D47C49D7280EF0B10084F4DE /* AllToolsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllToolsList.swift; sourceTree = "<group>"; };
 		D47C49D928104E0B0084F4DE /* OptionalImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalImage.swift; sourceTree = "<group>"; };
 		D47C49DF2816EEBD0084F4DE /* MockFlowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFlowDelegate.swift; sourceTree = "<group>"; };
@@ -6608,6 +6610,7 @@
 				D44F3AE628625C3F0008390D /* FavoriteToolsView.swift */,
 				D44F3AE828625C660008390D /* FavoriteToolsViewModel.swift */,
 				D45922C52864F18900904B87 /* BaseFavoriteToolsViewModel.swift */,
+				D45922CD28663D4300904B87 /* FindFavoriteToolsView.swift */,
 			);
 			path = FavoriteToolsView;
 			sourceTree = "<group>";
@@ -7894,6 +7897,7 @@
 				45AD223D2593C90000A096A0 /* FirebaseCrashlyticsService.swift in Sources */,
 				45AD1B9C25938A4F00A096A0 /* LegacyRealmDatabase.swift in Sources */,
 				45AD1B6925938A4F00A096A0 /* ToolDetailViewModel.swift in Sources */,
+				D45922CE28663D4300904B87 /* FindFavoriteToolsView.swift in Sources */,
 				45AD1F6B25938A9800A096A0 /* LanguageSettingsUserDefaultsCache.swift in Sources */,
 				45AD1B5E25938A4F00A096A0 /* AccountItemCell.swift in Sources */,
 				45AD1BAA25938A4F00A096A0 /* Flow.swift in Sources */,
