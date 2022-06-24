@@ -31,7 +31,7 @@ class FavoritedToolsView: UIHostingController<FavoritesContentView>, ToolsMenuPa
     
     private weak var delegate: FavoritedToolsViewDelegate?
     
-    // TODO: - make sure this works still
+    // TODO: - GT-1643: make tutorial work in SwiftUI
 //    @IBOutlet weak private var openTutorialTop: NSLayoutConstraint!
     
     override func viewDidLoad() {
@@ -39,7 +39,7 @@ class FavoritedToolsView: UIHostingController<FavoritesContentView>, ToolsMenuPa
         
         setupBinding()
         
-        // TODO: - add find tools
+        // TODO: - GT-1631: make find tools work in SwiftUI
 //        findToolsButton.addTarget(self, action: #selector(handleFindTools(button:)), for: .touchUpInside)
     }
     
@@ -49,7 +49,7 @@ class FavoritedToolsView: UIHostingController<FavoritesContentView>, ToolsMenuPa
     
     private func setupBinding() {
                 
-        // TODO: - fix this
+        // TODO: - GT-1643: tutorial
 //        let openTutorialViewModel = viewModel.openTutorialWillAppear()
 //        openTutorialView.configure(viewModel: openTutorialViewModel)
         
@@ -57,7 +57,7 @@ class FavoritedToolsView: UIHostingController<FavoritesContentView>, ToolsMenuPa
 //            self?.setOpenTutorialHidden(animatableValue.value, animated: animatableValue.animated)
 //        }
         
-        
+        // TODO: - GT-1631: find tools
 //        viewModel.hidesFindToolsView.addObserver(self) { [weak self] (hidesFindToolsView: Bool) in
 //            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
 //                self?.findToolsView.alpha = hidesFindToolsView ? 0 : 1
@@ -69,7 +69,7 @@ class FavoritedToolsView: UIHostingController<FavoritesContentView>, ToolsMenuPa
         delegate?.favoritedToolsViewFindToolsTapped(favoritedToolsView: self)
     }
     
-    // TODO: - fix this
+    // TODO: - GT-1643: tutorial
     private func setOpenTutorialHidden(_ hidden: Bool, animated: Bool) {
 //        openTutorialTop.constant = hidden ? (openTutorialView.frame.size.height * -1) : 0
 //
@@ -93,8 +93,7 @@ class FavoritedToolsView: UIHostingController<FavoritesContentView>, ToolsMenuPa
     }
     
     func pageViewed() {
-        // TODO: - fix this
-//        contentView.pageViewed()
+        contentView.viewModel.pageViewed()
     }
     
     func scrollToTop(animated: Bool) {

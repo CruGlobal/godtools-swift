@@ -21,7 +21,7 @@ struct FavoriteToolsView: View {
     var body: some View {
         if viewModel.tools.isEmpty {
             
-//             TODO: - add find tools view
+        // TODO: - GT-1631: add find tools view
             
         } else {
             

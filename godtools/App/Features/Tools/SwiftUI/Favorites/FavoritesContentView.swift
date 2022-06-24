@@ -37,7 +37,7 @@ struct FavoritesContentView: View {
                     
                     BackwardCompatibleList {
                         
-                        // TODO: - Recommended Lessons section
+                        // TODO: - GT-1632: Recommended Lessons section
                         
                         FavoriteToolsView(viewModel: viewModel.favoriteToolsViewModel, width: width, leadingPadding: leadingTrailingPadding)
                             .listRowInsets(EdgeInsets())

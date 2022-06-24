@@ -169,14 +169,14 @@ extension BaseFavoriteToolsViewModel {
     private func addFavoritedResource(resourceId: String) {
         if let tool = dataDownloader.resourcesCache.getResource(id: resourceId) {
             addTool(tool: tool)
-            // TODO: -
+            // TODO: - GT-1631: Implement Find Tools in SwiftUI
 //            hidesFindToolsView.accept(value: !tools.value.isEmpty)
         }
     }
     
     private func removeFavoritedResource(resourceIds: [String]) {
         removeTools(toolIdsToRemove: resourceIds)
-        // TODO: -
+        // TODO: - GT-1631: Implement Find Tools in SwiftUI
 //        hidesFindToolsView.accept(value: !tools.value.isEmpty)
     }
     
@@ -193,7 +193,7 @@ extension BaseFavoriteToolsViewModel {
         
         tools = filteredResources
         self.delegate?.toolsAreLoading(false)
-        // TODO: - fix this
+        // TODO: - GT-1631: Implement Find Tools in SwiftUI
 //        hidesFindToolsView.accept(value: !filteredResources.isEmpty)
     }
 }
