@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-protocol FavoriteToolsViewModelDelegate: ToolCardDelegate {
+protocol FavoriteToolsViewModelDelegate: ToolCardDelegate, BaseFavoriteToolsViewModelDelegate {
     func viewAllFavoriteToolsButtonTapped()
 }
 
@@ -28,7 +28,7 @@ class FavoriteToolsViewModel: BaseFavoriteToolsViewModel {
     
     init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: FavoriteToolsViewModelDelegate?) {
         
-        super.init(cardType: .squareWithNavButtons, dataDownloader: dataDownloader, deviceAttachmentBanners: deviceAttachmentBanners, favoritedResourcesCache: favoritedResourcesCache, languageSettingsService: languageSettingsService, localizationServices: localizationServices, delegate: delegate)
+        super.init(cardType: .squareWithNavButtons, dataDownloader: dataDownloader, deviceAttachmentBanners: deviceAttachmentBanners, favoritedResourcesCache: favoritedResourcesCache, languageSettingsService: languageSettingsService, localizationServices: localizationServices, delegate: delegate, toolCardDelegate: delegate)
     }
     
     override func setText() {

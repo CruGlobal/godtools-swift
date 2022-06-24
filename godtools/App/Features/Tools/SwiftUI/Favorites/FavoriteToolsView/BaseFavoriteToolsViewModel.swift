@@ -8,6 +8,10 @@
 
 import SwiftUI
 
+protocol BaseFavoriteToolsViewModelDelegate: AnyObject {
+    func toolsAreLoading(_ isLoading: Bool)
+}
+
 class BaseFavoriteToolsViewModel: ToolCardProvider {
  
     // MARK: - Properties
@@ -18,7 +22,8 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
     let favoritedResourcesCache: FavoritedResourcesCache
     let languageSettingsService: LanguageSettingsService
     let localizationServices: LocalizationServices
-    let delegate: ToolCardDelegate?
+    weak var delegate: BaseFavoriteToolsViewModelDelegate?
+    weak var toolCardDelegate: ToolCardDelegate?
     
     // MARK: - Published
     
@@ -26,7 +31,7 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
     
     // MARK: - Init
     
-    init(cardType: ToolCardType, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: ToolCardDelegate?) {
+    init(cardType: ToolCardType, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: BaseFavoriteToolsViewModelDelegate?, toolCardDelegate: ToolCardDelegate?) {
         self.cardType = cardType
         self.dataDownloader = dataDownloader
         self.deviceAttachmentBanners = deviceAttachmentBanners
@@ -34,6 +39,7 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
         self.delegate = delegate
+        self.toolCardDelegate = toolCardDelegate
         
         super.init()
         
@@ -61,7 +67,7 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
             favoritedResourcesCache: favoritedResourcesCache,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
-            delegate: delegate
+            delegate: toolCardDelegate
         )
     }
     
@@ -80,23 +86,17 @@ extension BaseFavoriteToolsViewModel {
         
         dataDownloader.cachedResourcesAvailable.addObserver(self) { [weak self] (cachedResourcesAvailable: Bool) in
             DispatchQueue.main.async { [weak self] in
-                if !cachedResourcesAvailable {
-                    // TODO: - add loading & find tools views
-//                    self?.isLoading.accept(value: true)
-//                    self?.hidesFindToolsView.accept(value: true)
-                }
-                else {
-                    // TODO: - add loading view
-//                    self?.isLoading.accept(value: false)
-                    self?.reloadFavoritedResourcesFromCache()
+                guard let self = self else { return }
+                
+                self.delegate?.toolsAreLoading(!cachedResourcesAvailable)
+                if cachedResourcesAvailable {
+                    self.reloadFavoritedResourcesFromCache()
                 }
             }
         }
         
         dataDownloader.resourcesUpdatedFromRemoteDatabase.addObserver(self) { [weak self] (error: InitialDataDownloaderError?) in
             DispatchQueue.main.async { [weak self] in
-                // TODO: -
-//                self?.didEndRefreshing.accept()
                 if error == nil {
                     self?.reloadFavoritedResourcesFromCache()
                 }
@@ -192,8 +192,8 @@ extension BaseFavoriteToolsViewModel {
         })
         
         tools = filteredResources
+        self.delegate?.toolsAreLoading(false)
         // TODO: - fix this
 //        hidesFindToolsView.accept(value: !filteredResources.isEmpty)
-//        isLoading.accept(value: false)
     }
 }

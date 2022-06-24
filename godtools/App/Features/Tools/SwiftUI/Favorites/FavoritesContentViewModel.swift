@@ -61,6 +61,10 @@ extension FavoritesContentViewModel {
 // MARK: - FavoriteToolsViewModelDelegate
 
 extension FavoritesContentViewModel: FavoriteToolsViewModelDelegate {
+    func toolsAreLoading(_ isLoading: Bool) {
+        self.isLoading = isLoading
+    }
+    
     func viewAllFavoriteToolsButtonTapped() {
         flowDelegate?.navigate(step: .viewAllFavoriteToolsTappedFromFavoritedTools)
     }

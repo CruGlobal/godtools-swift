@@ -19,7 +19,7 @@ class AllFavoriteToolsViewModel: BaseFavoriteToolsViewModel {
     init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, flowDelegate: FlowDelegate?) {
         self.flowDelegate = flowDelegate
         
-        super.init(cardType: .standardWithNavButtons, dataDownloader: dataDownloader, deviceAttachmentBanners: deviceAttachmentBanners, favoritedResourcesCache: favoritedResourcesCache, languageSettingsService: languageSettingsService, localizationServices: localizationServices, delegate: nil)
+        super.init(cardType: .standardWithNavButtons, dataDownloader: dataDownloader, deviceAttachmentBanners: deviceAttachmentBanners, favoritedResourcesCache: favoritedResourcesCache, languageSettingsService: languageSettingsService, localizationServices: localizationServices, delegate: nil, toolCardDelegate: nil)
     }
     
     override func cardViewModel(for tool: ResourceModel) -> BaseToolCardViewModel {
