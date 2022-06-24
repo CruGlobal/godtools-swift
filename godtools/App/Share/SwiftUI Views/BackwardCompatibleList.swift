@@ -13,6 +13,24 @@ struct BackwardCompatibleList<Content: View>: View {
     let content: () -> Content
     let refreshHandler: () -> Void
     
+    init(content: @escaping () -> Content, refreshHandler: @escaping () -> Void) {
+        self.content = content
+        self.refreshHandler = refreshHandler
+        
+        /*
+         About removing the List separators:
+         - iOS 15 - use the `listRowSeparator` view modifier to hide the separators
+         - iOS 13 - list is built on UITableView, so `UITableView.appearance` works to set the separator style
+         - iOS 14 - `appearance` no longer works, and the modifier doesn't yet exist.  Solution is the AllToolsListIOS14 view.
+         */
+        if #available(iOS 14.0, *) {} else {
+            // TODO: - When we stop supporting iOS 13, get rid of this.
+            UITableView.appearance(whenContainedInInstancesOf: [UIHostingController<BackwardCompatibleList>.self]).separatorStyle = .none
+            UITableView.appearance(whenContainedInInstancesOf: [UIHostingController<AllToolsContentView>.self]).separatorStyle = .none
+            UITableView.appearance(whenContainedInInstancesOf: [UIHostingController<FavoritesContentView>.self]).separatorStyle = .none
+        }
+    }
+    
     var body: some View {
         
         if #available(iOS 15.0, *) {
