@@ -17,9 +17,12 @@ struct ToolCardView: View {
     
     var whiteSpaceHeight: CGFloat? {
         switch viewModel.cardType {
-        case .standard:     return nil
-        case .spotlight:    return 75
-        case .favorites:    return 136
+        case .standard, .standardWithNavButtons:
+            return nil
+        case .square:
+            return 75
+        case .squareWithNavButtons:
+            return 136
         }
     }
     
@@ -28,7 +31,7 @@ struct ToolCardView: View {
     private enum Sizes {
         static let cornerRadius: CGFloat = 6
         static let leadingPadding: CGFloat = 15
-        static let flowButtonSpacing: CGFloat = 4
+        static let navButtonWidthMultiplier: CGFloat = 192/335
     }
     
     // MARK: - Body
@@ -51,53 +54,38 @@ struct ToolCardView: View {
                 
                 ToolCardProgressView(frontProgress: viewModel.translationDownloadProgressValue, backProgress: viewModel.attachmentsDownloadProgressValue)
                 
-                HStack(alignment: .top) {
-                    VStack(alignment: .leading, spacing: 3) {
-                        
-                        ToolCardTitleView(title: viewModel.title)
-                        
-                        switch viewModel.cardType {
-                        case .standard:
-                            ToolCardCategoryView(category: viewModel.category)
+                VStack(alignment: .trailing, spacing: 5) {
+                    HStack(alignment: .top) {
+                        VStack(alignment: .leading, spacing: 3) {
                             
-                        case .spotlight:
-                            Spacer(minLength: 0)
-                            ToolCardParallelLanguageView(languageName: viewModel.parallelLanguageName)
+                            ToolCardVerticalTextView(viewModel: viewModel, cardWidth: cardWidth)
                             
-                        case .favorites:
-                            ToolCardCategoryView(category: viewModel.category)
-                            ToolCardParallelLanguageView(languageName: viewModel.parallelLanguageName)
-                                .padding(.top, 2)
-                            
-                            Spacer(minLength: 0)
-                            HStack(spacing: Sizes.flowButtonSpacing) {
+                            if viewModel.cardType == .squareWithNavButtons {
+                                Spacer(minLength: 0)
                                 
-                                let whiteSpaceAroundButtons = 2 * Sizes.leadingPadding + Sizes.flowButtonSpacing
-                                let buttonWidth = (cardWidth - whiteSpaceAroundButtons)/2
-                                
-                                GTWhiteButton(title: viewModel.detailsButtonTitle, width: buttonWidth, height: 30) {
-                                    viewModel.toolDetailsButtonTapped()
-                                }
-                                GTBlueButton(title: viewModel.openButtonTitle, width: buttonWidth, height: 30) {
-                                    viewModel.openToolButtonTapped()
-                                }
+                                ToolCardNavButtonView(sizeToFit: cardWidth, leadingPadding: Sizes.leadingPadding, buttonSpacing: 4, viewModel: viewModel)
                             }
                         }
-                    }
-                    .padding(.leading, Sizes.leadingPadding)
-                    .padding(.bottom, 14)
-                    
-                    Spacer()
-                    
-                    if viewModel.cardType.isSquareLayout == false {
+                        .padding(.leading, Sizes.leadingPadding)
                         
-                        ToolCardParallelLanguageView(languageName: viewModel.parallelLanguageName)
-                            .padding(.top, 4)
-                            .padding(.trailing, 10)
+                        Spacer()
+                        
+                        if viewModel.cardType.isStandardLayout {
+                            
+                            ToolCardParallelLanguageView(languageName: viewModel.parallelLanguageName)
+                                .padding(.top, 4)
+                                .padding(.trailing, 14)
+                        }
+                    }
+                    
+                    if viewModel.cardType == .standardWithNavButtons {
+                        ToolCardNavButtonView(sizeToFit: cardWidth * Sizes.navButtonWidthMultiplier, leadingPadding: 0, buttonSpacing: 8, viewModel: viewModel)
+                            .padding(.trailing, 14)
                     }
                 }
                 .frame(width: cardWidth, height: whiteSpaceHeight, alignment: .topLeading)
                 .padding(.top, 12)
+                .padding(.bottom, 14)
                 
             }
             
@@ -116,22 +104,21 @@ struct ToolCardView_Previews: PreviewProvider {
     
     static var previews: some View {
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
-        let cardType: ToolCardType = .favorites
+        let cardType: ToolCardType = .standardWithNavButtons
         
-        ToolCardView(viewModel:
-                        MockToolCardViewModel(
-                            cardType: cardType,
-                            title: "Knowing God Personally",
-                            category: "Gospel Invitation",
-                            showParallelLanguage: true,
-                            showBannerImage: true,
-                            attachmentsDownloadProgress: 0.80,
-                            translationDownloadProgress: 0.55,
-                            deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners
-                        ),
-                     cardWidth: cardType.isSquareLayout ? 200 : 375
+        let viewModel = MockToolCardViewModel(
+            cardType: cardType,
+            title: "Knowing God Personally",
+            category: "Gospel Invitation",
+            showParallelLanguage: true,
+            showBannerImage: true,
+            attachmentsDownloadProgress: 0.80,
+            translationDownloadProgress: 0.55,
+            deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners
         )
-        .padding()
-        .previewLayout(.sizeThatFits)
+        
+        ToolCardView(viewModel: viewModel, cardWidth: cardType.isSquareLayout ? 200 : 375)
+            .padding()
+            .previewLayout(.sizeThatFits)
     }
 }

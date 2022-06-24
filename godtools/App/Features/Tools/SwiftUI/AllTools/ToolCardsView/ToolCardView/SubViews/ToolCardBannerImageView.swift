@@ -49,7 +49,7 @@ struct ToolCardBannerImageView_Previews: PreviewProvider {
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         let bannerImage = appDiContainer.deviceAttachmentBanners.getDeviceBanner(resourceId: "2")
 
-        let cardType: ToolCardType = .spotlight
+        let cardType: ToolCardType = .square
         
         ToolCardBannerImageView(
             bannerImage: Image.from(uiImage: bannerImage),

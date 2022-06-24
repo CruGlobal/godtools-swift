@@ -10,22 +10,20 @@ import Foundation
 
 enum ToolCardType {
     case standard
-    case spotlight
-    case favorites
+    case standardWithNavButtons
+    case square
+    case squareWithNavButtons
     
     var isSquareLayout: Bool {
         switch self {
-        case .standard:
+        case .standard, .standardWithNavButtons:
             return false
-        case .spotlight, .favorites:
+        case .square, .squareWithNavButtons:
             return true
         }
     }
     
-    var isFavorites: Bool {
-        switch self {
-        case .favorites:    return true
-        default:            return false
-        }
+    var isStandardLayout: Bool {
+        return isSquareLayout == false
     }
 }

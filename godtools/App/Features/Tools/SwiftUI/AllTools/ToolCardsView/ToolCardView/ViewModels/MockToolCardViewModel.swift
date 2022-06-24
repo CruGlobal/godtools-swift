@@ -11,7 +11,7 @@ import SwiftUI
 class MockToolCardViewModel: BaseToolCardViewModel {
     
     convenience init() {
-        self.init(cardType: .favorites, title: "title", category: "category", showParallelLanguage: true, showBannerImage: true, attachmentsDownloadProgress: 0.5, translationDownloadProgress: 0.3, deviceAttachmentBanners: DeviceAttachmentBanners())
+        self.init(cardType: .square, title: "title", category: "category", showParallelLanguage: true, showBannerImage: true, attachmentsDownloadProgress: 0.5, translationDownloadProgress: 0.3, deviceAttachmentBanners: DeviceAttachmentBanners())
     }
     
     init(cardType: ToolCardType, title: String, category: String, showParallelLanguage: Bool, showBannerImage: Bool, attachmentsDownloadProgress: Double, translationDownloadProgress: Double, deviceAttachmentBanners: DeviceAttachmentBanners) {
