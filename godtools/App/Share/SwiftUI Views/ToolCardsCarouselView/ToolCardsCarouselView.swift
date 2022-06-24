@@ -29,7 +29,7 @@ struct ToolCardsCarouselView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             
             HStack(spacing: 15) {
-                if let maxNumberCardsToShow = viewModel.maxNumberCardsToShow {
+                if let maxNumberCardsToShow = viewModel.maxNumberCardsToShow, viewModel.tools.count > maxNumberCardsToShow {
                     
                     ForEach(viewModel.tools[0..<maxNumberCardsToShow]) { tool in
                         
