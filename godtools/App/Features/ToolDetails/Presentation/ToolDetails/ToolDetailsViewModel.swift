@@ -264,4 +264,9 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
         
         flowDelegate?.navigate(step: .urlLinkTappedFromToolDetail(url: url, exitLink: exitLink))
     }
+    
+    func getToolVersionCarViewModel(toolVersion: ToolVersion) -> ToolDetailsVersionsCardViewModel {
+        
+        return ToolDetailsVersionsCardViewModel(toolVersion: toolVersion)
+    }
 }

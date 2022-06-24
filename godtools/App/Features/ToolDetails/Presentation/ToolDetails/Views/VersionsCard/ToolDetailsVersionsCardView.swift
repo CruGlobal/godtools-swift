@@ -10,6 +10,8 @@ import SwiftUI
 
 struct ToolDetailsVersionsCardView: View {
     
+    @ObservedObject var viewModel: ToolDetailsVersionsCardViewModel
+    
     @State var isSelected: Bool = false
     
     var body: some View {
@@ -29,7 +31,7 @@ struct ToolDetailsVersionsCardView: View {
                 
                 VStack(alignment: .leading, spacing: 0) {
                     
-                    Text("Hello World")
+                    Text(viewModel.name)
                         .foregroundColor(ColorPalette.gtGrey.color)
                         .font(FontLibrary.sfProTextSemibold.font(size: 19))
                     
@@ -37,7 +39,7 @@ struct ToolDetailsVersionsCardView: View {
                         .fill(.clear)
                         .frame(height: 5)
                     
-                    Text("Connecting with God is a version of the Four Spiritual Laws adapted for high schoolers. This version contains updated language and visuals that appeal to a younger audience.")
+                    Text(viewModel.description)
                         .foregroundColor(ColorPalette.gtGrey.color)
                         .font(FontLibrary.sfProTextRegular.font(size: 15))
                     
@@ -47,7 +49,7 @@ struct ToolDetailsVersionsCardView: View {
                     
                     HStack(alignment: .top, spacing: 5) {
                         Spacer()
-                        Text("30 Languages")
+                        Text(viewModel.languages)
                         Text("|")
                         Text("French")
                         Text("|")
@@ -67,6 +69,18 @@ struct ToolDetailsVersionsCardView_Preview: PreviewProvider {
     
     static var previews: some View {
         
-        ToolDetailsVersionsCardView()
+        let toolVersion = ToolVersion(
+            id: "1",
+            bannerImageId: "1",
+            name: "Tool Name",
+            description: "Tool description",
+            languages: "45 languages",
+            primaryLanguageSupported: "English",
+            parallelLanguageSupported: "Spanish"
+        )
+        
+        let viewModel = ToolDetailsVersionsCardViewModel(toolVersion: toolVersion)
+        
+        ToolDetailsVersionsCardView(viewModel: viewModel)
     }
 }

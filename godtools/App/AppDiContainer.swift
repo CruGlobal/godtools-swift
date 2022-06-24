@@ -369,6 +369,7 @@ class AppDiContainer {
     func getToolVersionsUseCase() -> GetToolVersionsUseCase {
         return GetToolVersionsUseCase(
             resourcesCache: initialDataDownloader.resourcesCache,
+            localizationServices: localizationServices,
             languageSettingsService: languageSettingsService,
             getToolLanguagesUseCase: getToolLanguagesUseCase()
         )

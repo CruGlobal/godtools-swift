@@ -14,5 +14,7 @@ struct ToolVersion: Identifiable {
     let bannerImageId: String
     let name: String
     let description: String
-    let languagesDetails: String
+    let languages: String
+    let primaryLanguageSupported: String
+    let parallelLanguageSupported: String
 }
