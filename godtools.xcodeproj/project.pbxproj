@@ -121,6 +121,7 @@
 		451EBE3B24AD968B00C4D6DD /* db11fd9214b9a05b5d1e760c707e9db8d4b821dea36bca0c94263efa28e8ac4b.png in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE2424AD968A00C4D6DD /* db11fd9214b9a05b5d1e760c707e9db8d4b821dea36bca0c94263efa28e8ac4b.png */; };
 		451EBE3C24AD968B00C4D6DD /* 8a2312f958cdf6548a1637347bf89560f6ebf284549669638dfef944d8268a08.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE2524AD968A00C4D6DD /* 8a2312f958cdf6548a1637347bf89560f6ebf284549669638dfef944d8268a08.jpg */; };
 		451EBE3D24AD968B00C4D6DD /* e961f409d06308e87deb9ed9166264c7c732d9dc24e70f886944636308810d6e.png in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE2624AD968A00C4D6DD /* e961f409d06308e87deb9ed9166264c7c732d9dc24e70f886944636308810d6e.png */; };
+		45202EA528651664007E3AD7 /* ToolDetailsSegmentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45202EA428651664007E3AD7 /* ToolDetailsSegmentType.swift */; };
 		45218E9F285A7A1100915546 /* ReviewShareShareableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45218E9E285A7A1100915546 /* ReviewShareShareableView.swift */; };
 		45218EA1285A7A5300915546 /* ReviewShareShareableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45218EA0285A7A5300915546 /* ReviewShareShareableViewModel.swift */; };
 		45218EA3285A7B9D00915546 /* ReviewShareShareableHostingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45218EA2285A7B9D00915546 /* ReviewShareShareableHostingView.swift */; };
@@ -1243,6 +1244,7 @@
 		451EBE2424AD968A00C4D6DD /* db11fd9214b9a05b5d1e760c707e9db8d4b821dea36bca0c94263efa28e8ac4b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = db11fd9214b9a05b5d1e760c707e9db8d4b821dea36bca0c94263efa28e8ac4b.png; sourceTree = "<group>"; };
 		451EBE2524AD968A00C4D6DD /* 8a2312f958cdf6548a1637347bf89560f6ebf284549669638dfef944d8268a08.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 8a2312f958cdf6548a1637347bf89560f6ebf284549669638dfef944d8268a08.jpg; sourceTree = "<group>"; };
 		451EBE2624AD968A00C4D6DD /* e961f409d06308e87deb9ed9166264c7c732d9dc24e70f886944636308810d6e.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = e961f409d06308e87deb9ed9166264c7c732d9dc24e70f886944636308810d6e.png; sourceTree = "<group>"; };
+		45202EA428651664007E3AD7 /* ToolDetailsSegmentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolDetailsSegmentType.swift; sourceTree = "<group>"; };
 		45218E9E285A7A1100915546 /* ReviewShareShareableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewShareShareableView.swift; sourceTree = "<group>"; };
 		45218EA0285A7A5300915546 /* ReviewShareShareableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewShareShareableViewModel.swift; sourceTree = "<group>"; };
 		45218EA2285A7B9D00915546 /* ReviewShareShareableHostingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewShareShareableHostingView.swift; sourceTree = "<group>"; };
@@ -2818,6 +2820,14 @@
 			path = attachment_about_banners;
 			sourceTree = "<group>";
 		};
+		45202EA328651659007E3AD7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				45202EA428651664007E3AD7 /* ToolDetailsSegmentType.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		45218E9D285A7A0400915546 /* ReviewShareShareable */ = {
 			isa = PBXGroup;
 			children = (
@@ -2866,6 +2876,7 @@
 				45325F04285CF88D0078D932 /* ToolDetailsHostingView.swift */,
 				45325F05285CF88D0078D932 /* ToolDetailsView.swift */,
 				45325F03285CF88D0078D932 /* ToolDetailsViewModel.swift */,
+				45202EA328651659007E3AD7 /* Models */,
 				45325F06285CF88D0078D932 /* Views */,
 			);
 			path = ToolDetails;
@@ -7666,6 +7677,7 @@
 				4555833E269F2C7B00C3FF14 /* ToolPageModalView.swift in Sources */,
 				4581C59A285A5C7A0078425B /* ToolTrainingViewModel.swift in Sources */,
 				45B6480C25E581660098BAF1 /* (null) in Sources */,
+				45202EA528651664007E3AD7 /* ToolDetailsSegmentType.swift in Sources */,
 				455582E5269F2C1000C3FF14 /* TrainingTipView.swift in Sources */,
 				D40EE3AC281C69F800EAD1FE /* FavoritingToolBannerViewModel.swift in Sources */,
 				45AD205925938AC300A096A0 /* SnowplowAnalyticsType.swift in Sources */,
