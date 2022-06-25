@@ -32,7 +32,8 @@ struct NoFavoriteToolsView: View {
                     .lineSpacing(4)
                 
                 GTBlueButton(title: viewModel.noFavoriteToolsButtonText, fontSize: 12, width: 118, height: 30) {
-                    // TODO: - go to tools
+                    
+                    viewModel.goToToolsButtonTapped()
                 }
                 .padding(.top, 10)
             }

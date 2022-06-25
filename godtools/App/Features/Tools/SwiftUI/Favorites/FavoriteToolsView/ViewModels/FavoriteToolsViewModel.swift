@@ -11,6 +11,7 @@ import SwiftUI
 
 protocol FavoriteToolsViewModelDelegate: ToolCardDelegate, BaseFavoriteToolsViewModelDelegate {
     func viewAllFavoriteToolsButtonTapped()
+    func goToToolsButtonTapped()
 }
 
 class FavoriteToolsViewModel: BaseFavoriteToolsViewModel {
@@ -58,5 +59,9 @@ class FavoriteToolsViewModel: BaseFavoriteToolsViewModel {
 extension FavoriteToolsViewModel {
     func viewAllButtonTapped() {
         favoriteToolsViewModelDelegate?.viewAllFavoriteToolsButtonTapped()
+    }
+    
+    func goToToolsButtonTapped() {
+        favoriteToolsViewModelDelegate?.goToToolsButtonTapped()
     }
 }
