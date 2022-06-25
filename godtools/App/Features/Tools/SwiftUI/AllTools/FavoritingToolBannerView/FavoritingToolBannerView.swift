@@ -17,32 +17,16 @@ struct FavoritingToolBannerView: View {
     // MARK: - Body
     
     var body: some View {
-        ZStack(alignment: .topTrailing) {
-            ColorPalette.banner.color
+        
+        BannerView {
             
-            HStack {
-                Spacer()
-                
-                Text(viewModel.message)
-                    .font(FontLibrary.sfProTextRegular.font(size: 18))
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(ColorPalette.gtGrey.color)
-                    .padding([.top, .bottom], 30)
-                    .padding([.leading, .trailing], 45)
-                
-                Spacer()
-            }
+            Text(viewModel.message)
+                .modifier(BannerTextStyle())
             
-            Image(ImageCatalog.navClose.name)
-                .padding(.trailing, 4)
-                .frame(width: 44, height: 44)
-                .onTapGesture {
-                    withAnimation {
-                        viewModel.closeTapped()
-                    }
-                }
+        } closeButtonTapHandler: {
+            
+            viewModel.closeTapped()
         }
-        .fixedSize(horizontal: false, vertical: true)
     }
 }
 
