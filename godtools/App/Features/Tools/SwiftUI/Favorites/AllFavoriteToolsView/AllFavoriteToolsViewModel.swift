@@ -22,6 +22,8 @@ class AllFavoriteToolsViewModel: BaseFavoriteToolsViewModel {
         super.init(cardType: .standardWithNavButtons, dataDownloader: dataDownloader, deviceAttachmentBanners: deviceAttachmentBanners, favoritedResourcesCache: favoritedResourcesCache, languageSettingsService: languageSettingsService, localizationServices: localizationServices, delegate: nil, toolCardDelegate: nil)
     }
     
+    // MARK: - Overrides
+    
     override func cardViewModel(for tool: ResourceModel) -> BaseToolCardViewModel {
         return ToolCardViewModel(
             cardType: cardType,
@@ -34,6 +36,14 @@ class AllFavoriteToolsViewModel: BaseFavoriteToolsViewModel {
             delegate: self
         )
     }
+    
+    override func removeFavoritedResource(resourceIds: [String]) {
+        super.removeFavoritedResource(resourceIds: resourceIds)
+        
+        if tools.isEmpty {
+            closePage()
+        }
+    }
 }
 
 // MARK: - Public
@@ -41,6 +51,15 @@ class AllFavoriteToolsViewModel: BaseFavoriteToolsViewModel {
 extension AllFavoriteToolsViewModel {
     
     func backButtonTapped() {
+        closePage()
+    }
+}
+
+// MARK: - Private
+
+extension AllFavoriteToolsViewModel {
+    
+    func closePage() {
         flowDelegate?.navigate(step: .backTappedFromAllFavoriteTools)
     }
 }
@@ -54,7 +73,9 @@ extension AllFavoriteToolsViewModel: ToolCardDelegate {
     
     func toolFavoriteButtonTapped(resource: ResourceModel) {
         let removedHandler = CallbackHandler { [weak self] in
-            self?.favoritedResourcesCache.removeFromFavorites(resourceId: resource.id)
+            guard let self = self else { return }
+            
+            self.favoritedResourcesCache.removeFromFavorites(resourceId: resource.id)
         }
         flowDelegate?.navigate(step: .unfavoriteToolTappedFromFavoritedTools(resource: resource, removeHandler: removedHandler))
     }

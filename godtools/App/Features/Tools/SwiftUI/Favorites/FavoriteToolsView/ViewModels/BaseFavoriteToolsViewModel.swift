@@ -77,6 +77,10 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
         let languageBundle = localizationServices.bundleLoader.bundleForPrimaryLanguageOrFallback(in: languageSettingsService)
         sectionTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.favoriteTools.title")
     }
+    
+    func removeFavoritedResource(resourceIds: [String]) {
+        removeTools(toolIdsToRemove: resourceIds)
+    }
 }
 
 // MARK: - Private
@@ -170,11 +174,6 @@ extension BaseFavoriteToolsViewModel {
         if let tool = dataDownloader.resourcesCache.getResource(id: resourceId) {
             addTool(tool: tool)
         }
-    }
-    
-    private func removeFavoritedResource(resourceIds: [String]) {
-        removeTools(toolIdsToRemove: resourceIds)
-
     }
     
     private func reloadFavoritedResourcesFromCache() {
