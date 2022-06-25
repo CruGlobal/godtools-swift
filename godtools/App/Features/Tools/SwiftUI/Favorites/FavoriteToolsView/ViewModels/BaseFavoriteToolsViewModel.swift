@@ -189,8 +189,5 @@ extension BaseFavoriteToolsViewModel {
         
         tools = filteredResources
         self.delegate?.toolsAreLoading(false)
-        
-        // TODO: - GT-1631: Implement Find Tools in SwiftUI
-//        hidesFindToolsView.accept(value: !filteredResources.isEmpty)
     }
 }

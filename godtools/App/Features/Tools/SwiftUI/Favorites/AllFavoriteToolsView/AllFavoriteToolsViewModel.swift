@@ -73,9 +73,7 @@ extension AllFavoriteToolsViewModel: ToolCardDelegate {
     
     func toolFavoriteButtonTapped(resource: ResourceModel) {
         let removedHandler = CallbackHandler { [weak self] in
-            guard let self = self else { return }
-            
-            self.favoritedResourcesCache.removeFromFavorites(resourceId: resource.id)
+            self?.favoritedResourcesCache.removeFromFavorites(resourceId: resource.id)
         }
         flowDelegate?.navigate(step: .unfavoriteToolTappedFromFavoritedTools(resource: resource, removeHandler: removedHandler))
     }
