@@ -25,7 +25,7 @@ struct FavoriteToolsView: View {
             
             if viewModel.tools.isEmpty {
                 
-                FindFavoriteToolsView()
+                NoFavoriteToolsView(viewModel: viewModel)
                     .padding([.leading, .trailing], leadingPadding)
                 
             } else {

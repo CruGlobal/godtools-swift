@@ -1,5 +1,5 @@
 //
-//  FindFavoriteToolsView.swift
+//  NoFavoriteToolsView.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 6/24/22.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct FindFavoriteToolsView: View {
+struct NoFavoriteToolsView: View {
     
     // MARK: - Properties
     
@@ -21,17 +21,17 @@ struct FindFavoriteToolsView: View {
             Color(.sRGB, red: 243/256, green: 243/256, blue: 243/256, opacity: 1)
             
             VStack(spacing: 4) {
-                Text("No favorite tools to display")
+                Text(viewModel.noFavoriteToolsTitle)
                     .font(FontLibrary.sfProTextRegular.font(size: 18))
                     .foregroundColor(ColorPalette.gtGrey.color)
                 
-                Text("Tap on the heart icon to favorite a tool and make it available offline.")
+                Text(viewModel.noFavoriteToolsDescription)
                     .font(FontLibrary.sfProTextRegular.font(size: 14))
                     .foregroundColor(ColorPalette.gtGrey.color)
                     .multilineTextAlignment(.center)
                     .lineSpacing(4)
                 
-                GTBlueButton(title: "Go To Tools", fontSize: 12, width: 118, height: 30) {
+                GTBlueButton(title: viewModel.noFavoriteToolsButtonText, fontSize: 12, width: 118, height: 30) {
                     // TODO: - go to tools
                 }
                 .padding(.top, 10)
@@ -43,8 +43,20 @@ struct FindFavoriteToolsView: View {
     }
 }
 
-struct FindFavoriteToolsView_Previews: PreviewProvider {
+struct NoFavoriteToolsView_Previews: PreviewProvider {
     static var previews: some View {
-        FindFavoriteToolsView()
+        
+        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
+
+        let viewModel = FavoriteToolsViewModel(
+            dataDownloader: appDiContainer.initialDataDownloader,
+            deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
+            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
+            languageSettingsService: appDiContainer.languageSettingsService,
+            localizationServices: appDiContainer.localizationServices,
+            delegate: nil
+        )
+        
+        NoFavoriteToolsView(viewModel: viewModel)
     }
 }

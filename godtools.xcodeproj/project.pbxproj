@@ -1095,7 +1095,7 @@
 		D45922C62864F18900904B87 /* BaseFavoriteToolsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922C52864F18900904B87 /* BaseFavoriteToolsViewModel.swift */; };
 		D45922C82865346500904B87 /* ToolCardVerticalTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922C72865346500904B87 /* ToolCardVerticalTextView.swift */; };
 		D45922CA2865368100904B87 /* ToolCardNavButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922C92865368100904B87 /* ToolCardNavButtonView.swift */; };
-		D45922CE28663D4300904B87 /* FindFavoriteToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922CD28663D4300904B87 /* FindFavoriteToolsView.swift */; };
+		D45922CE28663D4300904B87 /* NoFavoriteToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922CD28663D4300904B87 /* NoFavoriteToolsView.swift */; };
 		D45922D0286653AA00904B87 /* FavoriteToolsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922CF286653AA00904B87 /* FavoriteToolsHeaderView.swift */; };
 		D47C49D8280EF0B10084F4DE /* AllToolsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D7280EF0B10084F4DE /* AllToolsList.swift */; };
 		D47C49DA28104E0B0084F4DE /* OptionalImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D928104E0B0084F4DE /* OptionalImage.swift */; };
@@ -2267,7 +2267,7 @@
 		D45922C52864F18900904B87 /* BaseFavoriteToolsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseFavoriteToolsViewModel.swift; sourceTree = "<group>"; };
 		D45922C72865346500904B87 /* ToolCardVerticalTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardVerticalTextView.swift; sourceTree = "<group>"; };
 		D45922C92865368100904B87 /* ToolCardNavButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardNavButtonView.swift; sourceTree = "<group>"; };
-		D45922CD28663D4300904B87 /* FindFavoriteToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindFavoriteToolsView.swift; sourceTree = "<group>"; };
+		D45922CD28663D4300904B87 /* NoFavoriteToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoFavoriteToolsView.swift; sourceTree = "<group>"; };
 		D45922CF286653AA00904B87 /* FavoriteToolsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteToolsHeaderView.swift; sourceTree = "<group>"; };
 		D47C49D7280EF0B10084F4DE /* AllToolsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllToolsList.swift; sourceTree = "<group>"; };
 		D47C49D928104E0B0084F4DE /* OptionalImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalImage.swift; sourceTree = "<group>"; };
@@ -6630,7 +6630,7 @@
 			isa = PBXGroup;
 			children = (
 				D45922CF286653AA00904B87 /* FavoriteToolsHeaderView.swift */,
-				D45922CD28663D4300904B87 /* FindFavoriteToolsView.swift */,
+				D45922CD28663D4300904B87 /* NoFavoriteToolsView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -7916,7 +7916,7 @@
 				45AD223D2593C90000A096A0 /* FirebaseCrashlyticsService.swift in Sources */,
 				45AD1B9C25938A4F00A096A0 /* LegacyRealmDatabase.swift in Sources */,
 				45AD1B6925938A4F00A096A0 /* ToolDetailViewModel.swift in Sources */,
-				D45922CE28663D4300904B87 /* FindFavoriteToolsView.swift in Sources */,
+				D45922CE28663D4300904B87 /* NoFavoriteToolsView.swift in Sources */,
 				45AD1F6B25938A9800A096A0 /* LanguageSettingsUserDefaultsCache.swift in Sources */,
 				45AD1B5E25938A4F00A096A0 /* AccountItemCell.swift in Sources */,
 				45AD1BAA25938A4F00A096A0 /* Flow.swift in Sources */,
