@@ -13,7 +13,7 @@ struct BackwardCompatibleList<Content: View>: View {
     let content: () -> Content
     let refreshHandler: () -> Void
     
-    init(content: @escaping () -> Content, refreshHandler: @escaping () -> Void) {
+    init(@ViewBuilder content: @escaping () -> Content, refreshHandler: @escaping () -> Void) {
         self.content = content
         self.refreshHandler = refreshHandler
         

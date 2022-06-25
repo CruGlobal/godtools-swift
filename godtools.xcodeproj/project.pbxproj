@@ -1097,6 +1097,8 @@
 		D45922CA2865368100904B87 /* ToolCardNavButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922C92865368100904B87 /* ToolCardNavButtonView.swift */; };
 		D45922CE28663D4300904B87 /* NoFavoriteToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922CD28663D4300904B87 /* NoFavoriteToolsView.swift */; };
 		D45922D0286653AA00904B87 /* FavoriteToolsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922CF286653AA00904B87 /* FavoriteToolsHeaderView.swift */; };
+		D45922D42867973B00904B87 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922D32867973B00904B87 /* BannerView.swift */; };
+		D45922D62867998200904B87 /* BannerTextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922D52867998200904B87 /* BannerTextStyle.swift */; };
 		D47C49D8280EF0B10084F4DE /* AllToolsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D7280EF0B10084F4DE /* AllToolsList.swift */; };
 		D47C49DA28104E0B0084F4DE /* OptionalImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D928104E0B0084F4DE /* OptionalImage.swift */; };
 		D47C49E02816EEBD0084F4DE /* MockFlowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49DF2816EEBD0084F4DE /* MockFlowDelegate.swift */; };
@@ -2269,6 +2271,8 @@
 		D45922C92865368100904B87 /* ToolCardNavButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardNavButtonView.swift; sourceTree = "<group>"; };
 		D45922CD28663D4300904B87 /* NoFavoriteToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoFavoriteToolsView.swift; sourceTree = "<group>"; };
 		D45922CF286653AA00904B87 /* FavoriteToolsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteToolsHeaderView.swift; sourceTree = "<group>"; };
+		D45922D32867973B00904B87 /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
+		D45922D52867998200904B87 /* BannerTextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerTextStyle.swift; sourceTree = "<group>"; };
 		D47C49D7280EF0B10084F4DE /* AllToolsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllToolsList.swift; sourceTree = "<group>"; };
 		D47C49D928104E0B0084F4DE /* OptionalImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalImage.swift; sourceTree = "<group>"; };
 		D47C49DF2816EEBD0084F4DE /* MockFlowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFlowDelegate.swift; sourceTree = "<group>"; };
@@ -6530,6 +6534,7 @@
 				D44C69442809B6880000B970 /* ActivityIndicator.swift */,
 				45325F1B285CF8B40078D932 /* AnimatedSwiftUIView */,
 				D44F3AEA28628E7D0008390D /* BackwardCompatibleList.swift */,
+				D45922D32867973B00904B87 /* BannerView.swift */,
 				4508D26828341BE20092ECA4 /* CloseButton.swift */,
 				D44F3AD428623CD90008390D /* GTBlueButton.swift */,
 				D44F3AD62862429A0008390D /* GTWhiteButton.swift */,
@@ -6656,6 +6661,7 @@
 		D4EB51D82833E079009C185F /* SwiftUI Modifiers */ = {
 			isa = PBXGroup;
 			children = (
+				D45922D52867998200904B87 /* BannerTextStyle.swift */,
 				D44F3AB228368A330008390D /* OptionalRoundedBorder.swift */,
 				D4EB51D92833E0A5009C185F /* PlainList.swift */,
 			);
@@ -7393,6 +7399,7 @@
 				45C93AF1261D310900592FFF /* ArticleAemDownloadOperationError.swift in Sources */,
 				457579E326E96ABE00C898D2 /* MobileContentMultiSelectViewModelType.swift in Sources */,
 				4578176F279C7CDA00ED50F2 /* ChooseYourOwnAdventurePageViewFactory.swift in Sources */,
+				D45922D62867998200904B87 /* BannerTextStyle.swift in Sources */,
 				4542F401281080C00016C254 /* DeepLinkingParserManifestType.swift in Sources */,
 				45558330269F2C7B00C3FF14 /* ToolPageCardsViewModel.swift in Sources */,
 				45AD1FCE25938A9800A096A0 /* SHA256FileLocation.swift in Sources */,
@@ -8041,6 +8048,7 @@
 				D45922D0286653AA00904B87 /* FavoriteToolsHeaderView.swift in Sources */,
 				45AD200025938A9800A096A0 /* ViewsService.swift in Sources */,
 				45AD204D25938AC300A096A0 /* GoogleAdwordsAnalytics.swift in Sources */,
+				D45922D42867973B00904B87 /* BannerView.swift in Sources */,
 				45F38D252833E521009E3E15 /* ToolLanguageModel.swift in Sources */,
 				45AD20B025938EE500A096A0 /* FileCacheType.swift in Sources */,
 				45AE975427C97A9500C2CB33 /* ContentPage+MobileContentRenderableModel.swift in Sources */,
