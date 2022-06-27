@@ -39,6 +39,7 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
     // MARK: - Published
     
     @Published var isLoading: Bool = false
+    @Published var hideFavoritingToolBanner: Bool
     
     // MARK: - Init
     
@@ -50,6 +51,9 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
         self.localizationServices = localizationServices
         self.favoritedResourcesCache = favoritedResourcesCache
         self.analytics = analytics
+        
+        // TODO:
+        hideFavoritingToolBanner = false
         
         super.init()
     }
