@@ -71,7 +71,9 @@ class OnboardingFlow: Flow {
     
     private func navigateToQuickStartOrTools() {
         
-        if appDiContainer.deviceLanguage.isEnglish {
+        let getOnboardingQuickLinksEnabledUseCase: GetOnboardingQuickLinksEnabledUseCase = appDiContainer.getOnboardingQuickLinksEnabledUseCase()
+        
+        if getOnboardingQuickLinksEnabledUseCase.getQuickLinksEnabled() {
             
             let viewModel = OnboardingQuickStartViewModel(flowDelegate: self, localizationServices: appDiContainer.localizationServices, trackActionAnalytics: appDiContainer.analytics.trackActionAnalytics)
             let view = OnboardingQuickStartView(viewModel: viewModel)

@@ -125,6 +125,7 @@
 		45218E9F285A7A1100915546 /* ReviewShareShareableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45218E9E285A7A1100915546 /* ReviewShareShareableView.swift */; };
 		45218EA1285A7A5300915546 /* ReviewShareShareableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45218EA0285A7A5300915546 /* ReviewShareShareableViewModel.swift */; };
 		45218EA3285A7B9D00915546 /* ReviewShareShareableHostingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45218EA2285A7B9D00915546 /* ReviewShareShareableHostingView.swift */; };
+		4531C7F22866202E001C8C00 /* GetOnboardingQuickLinksEnabledUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4531C7F12866202E001C8C00 /* GetOnboardingQuickLinksEnabledUseCase.swift */; };
 		453235B827BEB6290050D08F /* ChooseYourOwnAdventureNavBarTitleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453235B727BEB6290050D08F /* ChooseYourOwnAdventureNavBarTitleType.swift */; };
 		45325F0E285CF88D0078D932 /* ToolDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45325F03285CF88D0078D932 /* ToolDetailsViewModel.swift */; };
 		45325F0F285CF88D0078D932 /* ToolDetailsHostingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45325F04285CF88D0078D932 /* ToolDetailsHostingView.swift */; };
@@ -1249,6 +1250,7 @@
 		45218EA0285A7A5300915546 /* ReviewShareShareableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewShareShareableViewModel.swift; sourceTree = "<group>"; };
 		45218EA2285A7B9D00915546 /* ReviewShareShareableHostingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewShareShareableHostingView.swift; sourceTree = "<group>"; };
 		45267B7625F19709004DB4C4 /* MobileContentBackgroundImageRendererTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentBackgroundImageRendererTests.swift; sourceTree = "<group>"; };
+		4531C7F12866202E001C8C00 /* GetOnboardingQuickLinksEnabledUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOnboardingQuickLinksEnabledUseCase.swift; sourceTree = "<group>"; };
 		453235B727BEB6290050D08F /* ChooseYourOwnAdventureNavBarTitleType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseYourOwnAdventureNavBarTitleType.swift; sourceTree = "<group>"; };
 		45325F03285CF88D0078D932 /* ToolDetailsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolDetailsViewModel.swift; sourceTree = "<group>"; };
 		45325F04285CF88D0078D932 /* ToolDetailsHostingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolDetailsHostingView.swift; sourceTree = "<group>"; };
@@ -2860,6 +2862,14 @@
 				45267B7625F19709004DB4C4 /* MobileContentBackgroundImageRendererTests.swift */,
 			);
 			path = BackgroundImage;
+			sourceTree = "<group>";
+		};
+		4531C7F028662023001C8C00 /* GetOnboardingQuickLinksEnabledUseCase */ = {
+			isa = PBXGroup;
+			children = (
+				4531C7F12866202E001C8C00 /* GetOnboardingQuickLinksEnabledUseCase.swift */,
+			);
+			path = GetOnboardingQuickLinksEnabledUseCase;
 			sourceTree = "<group>";
 		};
 		45325F01285CF88D0078D932 /* Presentation */ = {
@@ -6054,6 +6064,7 @@
 		45F88AFA2860BA8700C8027F /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				4531C7F028662023001C8C00 /* GetOnboardingQuickLinksEnabledUseCase */,
 				456A8A472864C702000EC6B4 /* GetToolLanguagesUseCase */,
 				45F88AFB2860BA8700C8027F /* GetTranslatedLanguageUseCase */,
 				45F88AFE2860BA8700C8027F /* GetTutorialIsAvailableUseCase */,
@@ -7906,6 +7917,7 @@
 				45AD1B9725938A4F00A096A0 /* ToolLanguageSegmentViewModel.swift in Sources */,
 				4561AC94279C4C7D003718C0 /* MobileContentContentPageView.swift in Sources */,
 				45E39ED327457CB5006A59E4 /* MobileContentAnimationView.swift in Sources */,
+				4531C7F22866202E001C8C00 /* GetOnboardingQuickLinksEnabledUseCase.swift in Sources */,
 				D44F3ABE283D18A70008390D /* SeparatorView.swift in Sources */,
 				45AD1B9425938A4F00A096A0 /* ToolViewModel.swift in Sources */,
 				450A3A4B282D38C300FC2E14 /* TransparentModalCustomViewLayoutType.swift in Sources */,

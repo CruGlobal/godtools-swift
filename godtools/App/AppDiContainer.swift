@@ -306,6 +306,10 @@ class AppDiContainer {
         )
     }
     
+    func getOnboardingQuickLinksEnabledUseCase() -> GetOnboardingQuickLinksEnabledUseCase {
+        return GetOnboardingQuickLinksEnabledUseCase()
+    }
+    
     func getOnboardingTutorialAvailability() -> OnboardingTutorialAvailabilityType {
         return OnboardingTutorialAvailability(
             getTutorialIsAvailableUseCase: getTutorialIsAvailableUseCase(),
