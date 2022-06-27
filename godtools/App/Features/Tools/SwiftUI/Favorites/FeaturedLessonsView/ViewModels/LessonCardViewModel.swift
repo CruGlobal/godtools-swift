@@ -12,30 +12,27 @@ protocol LessonCardDelegate: AnyObject {
     func lessonCardTapped(resource: ResourceModel)
 }
 
-class LessonCardViewModel: NSObject, ObservableObject, ToolItemInitialDownloadProgress {
+class LessonCardViewModel: BaseLessonCardViewModel, ToolItemInitialDownloadProgress {
     
     // MARK: - Properties
     
     let resource: ResourceModel
     let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
+    private weak var delegate: LessonCardDelegate?
 
     var attachmentsDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
     var translationDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
     var downloadAttachmentsReceipt: DownloadAttachmentsReceipt?
     var downloadResourceTranslationsReceipt: DownloadTranslationsReceipt?
     
-    // MARK: - Published
-    
-    @Published var bannerImage: Image?
-    @Published var title: String = ""
-    
     // MARK: - Init
     
-    init(resource: ResourceModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService) {
+    init(resource: ResourceModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, delegate: LessonCardDelegate?) {
         self.resource = resource
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
+        self.delegate = delegate
         
         super.init()
         
@@ -47,6 +44,14 @@ class LessonCardViewModel: NSObject, ObservableObject, ToolItemInitialDownloadPr
     deinit {
         removeDataDownloaderObservers()
         languageSettingsService.primaryLanguage.removeObserver(self)
+        attachmentsDownloadProgress.removeObserver(self)
+        translationDownloadProgress.removeObserver(self)
+    }
+    
+    // MARK: - Overrides
+    
+    override func lessonCardTapped() {
+        delegate?.lessonCardTapped(resource: resource)
     }
     
     // MARK: - ToolItemInitialDownloadProgress
@@ -59,6 +64,7 @@ class LessonCardViewModel: NSObject, ObservableObject, ToolItemInitialDownloadPr
 // MARK: - Private
 
 extension LessonCardViewModel {
+    
     private func setup() {
         setupPublishedProperties()
         setupBinding()
@@ -109,6 +115,21 @@ extension LessonCardViewModel {
         
         languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
             self?.reloadTitle()
+        }
+        
+        attachmentsDownloadProgress.addObserver(self) { [weak self] (progress: Double) in
+            DispatchQueue.main.async {
+                withAnimation {
+                    self?.attachmentsDownloadProgressValue = progress
+                }
+            }
+        }
+        translationDownloadProgress.addObserver(self) { [weak self] (progress: Double) in
+            DispatchQueue.main.async {
+                withAnimation {
+                    self?.translationDownloadProgressValue = progress
+                }
+            }
         }
     }
 }
