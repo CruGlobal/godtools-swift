@@ -8,7 +8,11 @@
 
 import Foundation
 
-class OpenTutorialBannerViewModel: NSObject, ObservableObject {
+protocol OpenTutorialBannerViewModelDelegate: BannerViewModelDelegate {
+    func openTutorial()
+}
+
+class OpenTutorialBannerViewModel: BannerViewModel {
     
     // MARK: - Properties
     
@@ -18,6 +22,10 @@ class OpenTutorialBannerViewModel: NSObject, ObservableObject {
     private let analytics: AnalyticsContainer
     private weak var flowDelegate: FlowDelegate?
     
+    var openTutorialBannerViewModelDelegate: OpenTutorialBannerViewModelDelegate? {
+        return delegate as? OpenTutorialBannerViewModelDelegate
+    }
+    
     // MARK: - Published
     
     @Published var showTutorialText: String
@@ -25,7 +33,7 @@ class OpenTutorialBannerViewModel: NSObject, ObservableObject {
     
     // MARK: - Init
     
-    init(flowDelegate: FlowDelegate?, getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase, openTutorialCalloutCache: OpenTutorialCalloutCacheType, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
+    init(flowDelegate: FlowDelegate?, getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase, openTutorialCalloutCache: OpenTutorialCalloutCacheType, localizationServices: LocalizationServices, analytics: AnalyticsContainer, delegate: OpenTutorialBannerViewModelDelegate?) {
         
         self.flowDelegate = flowDelegate
         self.getTutorialIsAvailableUseCase = getTutorialIsAvailableUseCase
@@ -35,6 +43,16 @@ class OpenTutorialBannerViewModel: NSObject, ObservableObject {
         
         showTutorialText = localizationServices.stringForMainBundle(key: "openTutorial.showTutorialLabel.text")
         openTutorialButtonText = localizationServices.stringForMainBundle(key: "openTutorial.openTutorialButton.title")
+        
+        super.init(delegate: delegate)
+    }
+    
+    // MARK: - Overrides
+    
+    override func closeTapped() {
+        super.closeTapped()
+        
+        trackCloseTapped()
     }
 }
 
@@ -43,15 +61,19 @@ class OpenTutorialBannerViewModel: NSObject, ObservableObject {
 extension OpenTutorialBannerViewModel {
     
     func openTutorialButtonTapped() {
-        
+        openTutorialBannerViewModelDelegate?.openTutorial()
     }
-    
-    func closeButtonTapped() {
-        openTutorialCalloutCache.disableOpenTutorialCallout()
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.ActionNames.tutorialHomeDismiss, siteSection: "", siteSubSection: "", url: nil, data: [AnalyticsConstants.Keys.tutorialDismissed: 1]))
-    }
+}
+
+// MARK: - Analytics
+
+extension OpenTutorialBannerViewModel {
     
     private var analyticsScreenName: String {
         return "home"
+    }
+    
+    private func trackCloseTapped() {
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.ActionNames.tutorialHomeDismiss, siteSection: "", siteSubSection: "", url: nil, data: [AnalyticsConstants.Keys.tutorialDismissed: 1]))
     }
 }

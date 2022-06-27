@@ -36,7 +36,7 @@ struct OpenTutorialBannerView: View {
             }
             
         } closeButtonTapHandler: {
-            viewModel.closeButtonTapped()
+            viewModel.closeTapped()
         }
     }
 }
@@ -51,7 +51,8 @@ struct OpenTutorialBannerView_Previews: PreviewProvider {
             getTutorialIsAvailableUseCase: appDiContainer.getTutorialIsAvailableUseCase(),
             openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache,
             localizationServices: appDiContainer.localizationServices,
-            analytics: appDiContainer.analytics
+            analytics: appDiContainer.analytics,
+            delegate: nil
         )
         
         OpenTutorialBannerView(viewModel: viewModel)

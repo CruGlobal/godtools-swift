@@ -80,8 +80,24 @@ extension FavoritesContentViewModel {
             getTutorialIsAvailableUseCase: getTutorialIsAvailableUseCase,
             openTutorialCalloutCache: openTutorialCalloutCache,
             localizationServices: localizationServices,
-            analytics: analytics
+            analytics: analytics,
+            delegate: self
         )
+    }
+}
+
+// MARK: - OpenTutorialBannerViewModelDelegate
+
+extension FavoritesContentViewModel: OpenTutorialBannerViewModelDelegate {
+    func closeBanner() {
+        hideTutorialBanner = true
+        openTutorialCalloutCache.disableOpenTutorialCallout()
+    }
+    
+    func openTutorial() {
+        flowDelegate?.navigate(step: .openTutorialTappedFromTools)
+        
+        closeBanner()
     }
 }
 
