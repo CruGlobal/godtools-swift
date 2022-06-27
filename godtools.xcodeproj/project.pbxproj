@@ -875,10 +875,6 @@
 		45C93B1D261D319500592FFF /* ArticleWebViewModelFlowType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C93B1C261D319500592FFF /* ArticleWebViewModelFlowType.swift */; };
 		45C93B27261D31B900592FFF /* LoadingArticleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C93B26261D31B900592FFF /* LoadingArticleViewModel.swift */; };
 		45C93B31261D31D600592FFF /* WebArchiveUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C93B30261D31D600592FFF /* WebArchiveUrl.swift */; };
-		45CB9FA6261F8BA80036BEB3 /* ToolCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45CB9F9A261F8BA80036BEB3 /* ToolCell.xib */; };
-		45CB9FA7261F8BA80036BEB3 /* ToolCellViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CB9F9B261F8BA80036BEB3 /* ToolCellViewModelType.swift */; };
-		45CB9FA8261F8BA80036BEB3 /* ToolCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CB9F9C261F8BA80036BEB3 /* ToolCell.swift */; };
-		45CB9FA9261F8BA80036BEB3 /* ToolCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CB9F9D261F8BA80036BEB3 /* ToolCellViewModel.swift */; };
 		45CB9FF8261FB0BE0036BEB3 /* LessonsListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45CB9FEF261FB0BE0036BEB3 /* LessonsListView.xib */; };
 		45CB9FF9261FB0BE0036BEB3 /* LessonsListViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CB9FF0261FB0BE0036BEB3 /* LessonsListViewType.swift */; };
 		45CB9FFA261FB0BE0036BEB3 /* LessonsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CB9FF1261FB0BE0036BEB3 /* LessonsListView.swift */; };
@@ -1985,10 +1981,6 @@
 		45C93B1C261D319500592FFF /* ArticleWebViewModelFlowType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleWebViewModelFlowType.swift; sourceTree = "<group>"; };
 		45C93B26261D31B900592FFF /* LoadingArticleViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingArticleViewModel.swift; sourceTree = "<group>"; };
 		45C93B30261D31D600592FFF /* WebArchiveUrl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebArchiveUrl.swift; sourceTree = "<group>"; };
-		45CB9F9A261F8BA80036BEB3 /* ToolCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToolCell.xib; sourceTree = "<group>"; };
-		45CB9F9B261F8BA80036BEB3 /* ToolCellViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolCellViewModelType.swift; sourceTree = "<group>"; };
-		45CB9F9C261F8BA80036BEB3 /* ToolCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolCell.swift; sourceTree = "<group>"; };
-		45CB9F9D261F8BA80036BEB3 /* ToolCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolCellViewModel.swift; sourceTree = "<group>"; };
 		45CB9FEF261FB0BE0036BEB3 /* LessonsListView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LessonsListView.xib; sourceTree = "<group>"; };
 		45CB9FF0261FB0BE0036BEB3 /* LessonsListViewType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LessonsListViewType.swift; sourceTree = "<group>"; };
 		45CB9FF1261FB0BE0036BEB3 /* LessonsListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LessonsListView.swift; sourceTree = "<group>"; };
@@ -5808,10 +5800,6 @@
 		45CB9F99261F8BA80036BEB3 /* Tool */ = {
 			isa = PBXGroup;
 			children = (
-				45CB9F9C261F8BA80036BEB3 /* ToolCell.swift */,
-				45CB9F9A261F8BA80036BEB3 /* ToolCell.xib */,
-				45CB9F9D261F8BA80036BEB3 /* ToolCellViewModel.swift */,
-				45CB9F9B261F8BA80036BEB3 /* ToolCellViewModelType.swift */,
 				45AC60182624BAB100253217 /* ToolItemInitialDownloadProgress.swift */,
 			);
 			path = Tool;
@@ -7024,7 +7012,6 @@
 				450E441827565D1C00D4311E /* TutorialView.xib in Resources */,
 				D19EB5E0259BB75900685156 /* training_tip_tips.json in Resources */,
 				4556AED823E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf in Resources */,
-				45CB9FA6261F8BA80036BEB3 /* ToolCell.xib in Resources */,
 				45714AD5262100E000EF41FB /* LessonProgressView.xib in Resources */,
 				D1D5692027063B2700BBE2A6 /* OnboardingTutorialIntroView.xib in Resources */,
 				45AD1B3925938A4F00A096A0 /* LanguageSettingsView.xib in Resources */,
@@ -7625,7 +7612,6 @@
 				45AD1F7425938A9800A096A0 /* ViewedTrainingTipsCacheType.swift in Sources */,
 				45C93AE9261D310900592FFF /* ArticleAemDataParserError.swift in Sources */,
 				450E442727565DCD00D4311E /* TutorialItem.swift in Sources */,
-				45CB9FA7261F8BA80036BEB3 /* ToolCellViewModelType.swift in Sources */,
 				45F88B0A2860BA8700C8027F /* GetTranslatedLanguageUseCase.swift in Sources */,
 				45AD1B6625938A4F00A096A0 /* GlobalActivityHeaderView.swift in Sources */,
 				45AD1FD825938A9800A096A0 /* WebArchive.swift in Sources */,
@@ -7640,7 +7626,6 @@
 				45FB161027DBDDB60009DF8E /* LearnToShareToolFlow.swift in Sources */,
 				45AD1BD325938A4F00A096A0 /* LoadingView.swift in Sources */,
 				4578783027C41C08004552D5 /* MobileContentBackgroundImageAlignment.swift in Sources */,
-				45CB9FA8261F8BA80036BEB3 /* ToolCell.swift in Sources */,
 				45AD1B1925938A4E00A096A0 /* LearnToShareToolViewModel.swift in Sources */,
 				45325F27285CF8B40078D932 /* VideoViewCoordinator.swift in Sources */,
 				45051207275AA71F0081BF56 /* MobileContentParagraphViewModel.swift in Sources */,
@@ -7973,7 +7958,6 @@
 				45B9875D283BFE5300E1DA7F /* DownloadedTranslationResult.swift in Sources */,
 				450A3A49282D36BB00FC2E14 /* ToolSettingsHostingView.swift in Sources */,
 				45AE974F27C97A9500C2CB33 /* Hero+MobileContentRenderableModel.swift in Sources */,
-				45CB9FA9261F8BA80036BEB3 /* ToolCellViewModel.swift in Sources */,
 				45AE975727C97A9500C2CB33 /* Form+MobileContentRenderableModel.swift in Sources */,
 				45AD1BCF25938A4F00A096A0 /* ImageCatalog.swift in Sources */,
 				D45922C62864F18900904B87 /* BaseFavoriteToolsViewModel.swift in Sources */,
