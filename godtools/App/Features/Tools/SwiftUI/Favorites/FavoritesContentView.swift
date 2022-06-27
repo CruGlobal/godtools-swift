@@ -25,6 +25,11 @@ struct FavoritesContentView: View {
     var body: some View {
         
         VStack {
+            if viewModel.hideTutorialBanner == false {
+                
+                OpenTutorialBannerView(viewModel: viewModel.getTutorialBannerViewModel())
+            }
+            
             if viewModel.isLoading {
                 
                 ActivityIndicator(style: .medium, isAnimating: .constant(true))
@@ -66,7 +71,9 @@ struct FavoritesContentView_Previews: PreviewProvider {
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
-            analytics: appDiContainer.analytics
+            analytics: appDiContainer.analytics,
+            getTutorialIsAvailableUseCase: appDiContainer.getTutorialIsAvailableUseCase(),
+            openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache
         )
         
         FavoritesContentView(viewModel: viewModel)

@@ -20,15 +20,19 @@ struct OpenTutorialBannerView: View {
         
         BannerView {
             VStack {
-                Text("Show Me A Tutorial")
+                Text(viewModel.showTutorialText)
                     .modifier(BannerTextStyle())
                 
-                Text("Open Tutorial")
-                    .foregroundColor(ColorPalette.gtBlue.color)
-                    .font(FontLibrary.sfProTextRegular.font(size: 17))
-                    .onTapGesture {
-                        viewModel.openTutorialButtonTapped()
+                HStack {
+                    Text(viewModel.openTutorialButtonText)
+                        .foregroundColor(ColorPalette.gtBlue.color)
+                        .font(FontLibrary.sfProTextRegular.font(size: 17))
+                        .onTapGesture {
+                            viewModel.openTutorialButtonTapped()
                     }
+                    
+                    Image(ImageCatalog.openTutorialArrow.name)
+                }
             }
             
         } closeButtonTapHandler: {
@@ -40,8 +44,17 @@ struct OpenTutorialBannerView: View {
 struct OpenTutorialBannerView_Previews: PreviewProvider {
     static var previews: some View {
         
-        let viewModel = OpenTutorialBannerViewModel()
+        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
+        
+        let viewModel = OpenTutorialBannerViewModel(
+            flowDelegate: MockFlowDelegate(),
+            getTutorialIsAvailableUseCase: appDiContainer.getTutorialIsAvailableUseCase(),
+            openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache,
+            localizationServices: appDiContainer.localizationServices,
+            analytics: appDiContainer.analytics
+        )
         
         OpenTutorialBannerView(viewModel: viewModel)
+            .previewLayout(.sizeThatFits)
     }
 }

@@ -64,7 +64,9 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
             favoritedResourcesCache: favoritedResourcesCache,
-            analytics: analytics
+            analytics: analytics,
+            getTutorialIsAvailableUseCase: getTutorialIsAvailableUseCase,
+            openTutorialCalloutCache: openTutorialCalloutCache
         )
     }
     
