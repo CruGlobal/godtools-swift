@@ -56,7 +56,6 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
         self.getTutorialIsAvailableUseCase = getTutorialIsAvailableUseCase
         self.openTutorialCalloutCache = openTutorialCalloutCache
         
-        // TODO:
         hideTutorialBanner = openTutorialCalloutCache.openTutorialCalloutDisabled
         
         super.init()
