@@ -15,6 +15,8 @@ struct ToolVersionDomainModel: Identifiable {
     let name: String
     let description: String
     let languages: String
-    let primaryLanguageSupported: String
-    let parallelLanguageSupported: String
+    let primaryLanguage: String?
+    let primaryLanguageIsSupported: Bool
+    let parallelLanguage: String?
+    let parallelLanguageIsSupported: Bool
 }

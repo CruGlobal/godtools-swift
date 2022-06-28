@@ -17,6 +17,10 @@ class ToolDetailsVersionsCardViewModel: ObservableObject {
     let name: String
     let description: String
     let languages: String
+    let primaryLanguageName: String?
+    let primaryLanguageIsSupported: Bool
+    let parallelLanguageName: String?
+    let parallelLanguageIsSupported: Bool
     
     init(toolVersion: ToolVersionDomainModel, bannerImageRepository: ResourceBannerImageRepository) {
         
@@ -26,5 +30,9 @@ class ToolDetailsVersionsCardViewModel: ObservableObject {
         name = toolVersion.name
         description = toolVersion.description
         languages = toolVersion.languages
+        primaryLanguageName = toolVersion.primaryLanguage
+        primaryLanguageIsSupported = toolVersion.primaryLanguageIsSupported
+        parallelLanguageName = toolVersion.parallelLanguage
+        parallelLanguageIsSupported = toolVersion.parallelLanguageIsSupported
     }
 }

@@ -14,13 +14,15 @@ class GetToolVersionsUseCase {
     private let localizationServices: LocalizationServices
     private let languageSettingsService: LanguageSettingsService
     private let getToolLanguagesUseCase: GetToolLanguagesUseCase
+    private let getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase
     
-    init(resourcesCache: ResourcesCache, localizationServices: LocalizationServices, languageSettingsService: LanguageSettingsService, getToolLanguagesUseCase: GetToolLanguagesUseCase) {
+    init(resourcesCache: ResourcesCache, localizationServices: LocalizationServices, languageSettingsService: LanguageSettingsService, getToolLanguagesUseCase: GetToolLanguagesUseCase, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase) {
         
         self.resourcesCache = resourcesCache
         self.localizationServices = localizationServices
         self.languageSettingsService = languageSettingsService
         self.getToolLanguagesUseCase = getToolLanguagesUseCase
+        self.getTranslatedLanguageUseCase = getTranslatedLanguageUseCase
     }
     
     func getToolVersions(resourceId: String) -> [ToolVersionDomainModel] {
@@ -39,6 +41,7 @@ class GetToolVersionsUseCase {
     private func getToolVersion(resource: ResourceModel) -> ToolVersionDomainModel {
         
         let toolLanguages: [ToolLanguageModel] = getToolLanguagesUseCase.getToolLanguages(resource: resource)
+        let toolLanguagesIds: [String] = toolLanguages.map({$0.id})
                 
         let name: String
         let languageBundle: Bundle
@@ -60,14 +63,44 @@ class GetToolVersionsUseCase {
             languageBundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
         }
         
+        let primaryLanguage: String?
+        let supportsPrimaryLanguage: Bool
+        
+        let parallelLanguage: String?
+        let supportsParallelLanguage: Bool
+        
+        if let primaryLanguageId = languageSettingsService.primaryLanguage.value?.id {
+            
+            primaryLanguage = getTranslatedLanguageUseCase.getTranslatedLanguage(languageId: primaryLanguageId)?.name
+            supportsPrimaryLanguage = toolLanguagesIds.contains(primaryLanguageId)
+        }
+        else {
+            
+            primaryLanguage = nil
+            supportsPrimaryLanguage = false
+        }
+        
+        if let parallelLanguageId = languageSettingsService.parallelLanguage.value?.id {
+            
+            parallelLanguage = getTranslatedLanguageUseCase.getTranslatedLanguage(languageId: parallelLanguageId)?.name
+            supportsParallelLanguage = toolLanguagesIds.contains(parallelLanguageId)
+        }
+        else {
+            
+            parallelLanguage = nil
+            supportsParallelLanguage = false
+        }
+                
         return ToolVersionDomainModel(
             id: resource.id,
             bannerImageId: resource.attrBanner,
             name: name,
             description: resource.resourceDescription,
             languages: String.localizedStringWithFormat(localizationServices.stringForBundle(bundle: languageBundle, key: "total_languages"), toolLanguages.count),
-            primaryLanguageSupported: "",
-            parallelLanguageSupported: ""
+            primaryLanguage: primaryLanguage,
+            primaryLanguageIsSupported: supportsPrimaryLanguage,
+            parallelLanguage: parallelLanguage,
+            parallelLanguageIsSupported: supportsParallelLanguage
         )
     }
 }

@@ -10,11 +10,22 @@ import Foundation
 
 class GetTranslatedLanguageUseCase {
     
+    private let languagesRepository: LanguagesRepository
     private let localizationServices: LocalizationServices
     
-    init(localizationServices: LocalizationServices) {
+    init(languagesRepository: LanguagesRepository, localizationServices: LocalizationServices) {
         
+        self.languagesRepository = languagesRepository
         self.localizationServices = localizationServices
+    }
+    
+    func getTranslatedLanguage(languageId: String) -> TranslatedLanguage? {
+        
+        guard let language = languagesRepository.getLanguage(id: languageId) else {
+            return nil
+        }
+        
+        return getTranslatedLanguage(language: language)
     }
     
     func getTranslatedLanguage(language: LanguageModel) -> TranslatedLanguage {

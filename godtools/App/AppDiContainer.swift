@@ -378,7 +378,8 @@ class AppDiContainer {
             resourcesCache: initialDataDownloader.resourcesCache,
             localizationServices: localizationServices,
             languageSettingsService: languageSettingsService,
-            getToolLanguagesUseCase: getToolLanguagesUseCase()
+            getToolLanguagesUseCase: getToolLanguagesUseCase(),
+            getTranslatedLanguageUseCase: getTranslatedLanguageUseCase()
         )
     }
     
@@ -407,7 +408,10 @@ class AppDiContainer {
     }
     
     func getTranslatedLanguageUseCase() -> GetTranslatedLanguageUseCase {
-        return GetTranslatedLanguageUseCase(localizationServices: localizationServices)
+        return GetTranslatedLanguageUseCase(
+            languagesRepository: getLanguagesRepository(),
+            localizationServices: localizationServices
+        )
     }
     
     func getTutorialIsAvailableUseCase() -> GetTutorialIsAvailableUseCase {

@@ -64,17 +64,25 @@ struct ToolDetailsVersionsCardView: View {
                             .fill(.clear)
                             .frame(height: 35)
                         
-                        HStack(alignment: .top, spacing: 5) {
+                        HStack(alignment: .top, spacing: 0) {
+                            
                             Spacer()
-                            Text(viewModel.languages)
-                            Text("|")
-                            Text("French")
-                            Text("|")
-                            Text("English")
+                            
+                            VStack(alignment: .trailing, spacing: 5) {
+                                
+                                Text(viewModel.languages)
+                                
+                                if let primaryLanguageName = viewModel.primaryLanguageName {
+                                    LanguageSupportedText(languageName: primaryLanguageName, isSupported: viewModel.primaryLanguageIsSupported)
+                                }
+                                
+                                if let parallelLanguageName = viewModel.parallelLanguageName {
+                                    LanguageSupportedText(languageName: parallelLanguageName, isSupported: viewModel.parallelLanguageIsSupported)
+                                }
+                            }
+                            .foregroundColor(ColorPalette.gtLightGrey.color)
+                            .font(FontLibrary.sfProTextRegular.font(size: 13))
                         }
-                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 20))
-                        .foregroundColor(ColorPalette.gtLightGrey.color)
-                        .font(FontLibrary.sfProTextRegular.font(size: 13))
                     }
                 }
                 .padding(EdgeInsets(top: 15, leading: 25, bottom: 25, trailing: 25))
@@ -98,8 +106,10 @@ struct ToolDetailsVersionsCardView_Preview: PreviewProvider {
             name: "Tool Name",
             description: "Tool description",
             languages: "45 languages",
-            primaryLanguageSupported: "English",
-            parallelLanguageSupported: "Spanish"
+            primaryLanguage: "English",
+            primaryLanguageIsSupported: true,
+            parallelLanguage: "Spanish",
+            parallelLanguageIsSupported: false
         )
         
         let viewModel = ToolDetailsVersionsCardViewModel(
