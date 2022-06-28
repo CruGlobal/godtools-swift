@@ -35,7 +35,7 @@ struct FavoritesContentView: View {
                     let width = geo.size.width
                     let leadingTrailingPadding = width * Sizes.toolsPaddingMultiplier
                     
-                    BackwardCompatibleList {
+                    BackwardCompatibleList(rootViewType: Self.self) {
                         
                         // TODO: - GT-1632: Recommended Lessons section
                         
