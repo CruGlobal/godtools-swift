@@ -61,7 +61,7 @@ class GetToolVersionsUseCase {
         }
         
         return ToolVersion(
-            id: UUID().uuidString,
+            id: resource.id,
             bannerImageId: resource.attrBanner,
             name: name,
             description: resource.resourceDescription,

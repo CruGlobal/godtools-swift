@@ -10,15 +10,28 @@ import SwiftUI
 
 struct ToolDetailsVersionsCardView: View {
     
+    private let bannerHeight: CGFloat = 87
+    
     @ObservedObject var viewModel: ToolDetailsVersionsCardViewModel
     
     @State var isSelected: Bool = false
     
     var body: some View {
         
-        VStack {
+        VStack(alignment: .leading, spacing: 0) {
             
-            Image("tutorial_tool_non_english")
+            if let bannerImage = viewModel.bannerImage {
+                bannerImage
+                    .resizable()
+                    .scaledToFill()
+                    .frame(height: bannerHeight)
+                    .clipped()
+            }
+            else {
+                Rectangle()
+                    .fill(ColorPalette.gtLightestGrey.color)
+                    .frame(height: bannerHeight)
+            }
             
             HStack(alignment: .top, spacing: 0) {
                 
@@ -69,6 +82,8 @@ struct ToolDetailsVersionsCardView_Preview: PreviewProvider {
     
     static var previews: some View {
         
+        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
+        
         let toolVersion = ToolVersion(
             id: "1",
             bannerImageId: "1",
@@ -79,7 +94,10 @@ struct ToolDetailsVersionsCardView_Preview: PreviewProvider {
             parallelLanguageSupported: "Spanish"
         )
         
-        let viewModel = ToolDetailsVersionsCardViewModel(toolVersion: toolVersion)
+        let viewModel = ToolDetailsVersionsCardViewModel(
+            toolVersion: toolVersion,
+            bannerImageRepository: appDiContainer.getResourceBannerImageRepository()
+        )
         
         ToolDetailsVersionsCardView(viewModel: viewModel)
     }

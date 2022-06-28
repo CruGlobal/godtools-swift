@@ -20,6 +20,7 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
     private let getToolTranslationsUseCase: GetToolTranslationsUseCase
     private let languagesRepository: LanguagesRepository
     private let getToolVersionsUseCase: GetToolVersionsUseCase
+    private let bannerImageRepository: ResourceBannerImageRepository
     private let segmentTypes: [ToolDetailsSegmentType] = [.about, .versions]
     
     private weak var flowDelegate: FlowDelegate?
@@ -38,7 +39,7 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
     @Published var aboutDetails: String = ""
     @Published var toolVersions: [ToolVersion] = Array()
     
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, analytics: AnalyticsContainer, getToolTranslationsUseCase: GetToolTranslationsUseCase, languagesRepository: LanguagesRepository, getToolVersionsUseCase: GetToolVersionsUseCase) {
+    init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, analytics: AnalyticsContainer, getToolTranslationsUseCase: GetToolTranslationsUseCase, languagesRepository: LanguagesRepository, getToolVersionsUseCase: GetToolVersionsUseCase, bannerImageRepository: ResourceBannerImageRepository) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -50,6 +51,7 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
         self.getToolTranslationsUseCase = getToolTranslationsUseCase
         self.languagesRepository = languagesRepository
         self.getToolVersionsUseCase = getToolVersionsUseCase
+        self.bannerImageRepository = bannerImageRepository
         self.mediaType = ToolDetailsViewModel.getMediaType(resource: resource, dataDownloader: dataDownloader)
         
         super.init()
@@ -267,6 +269,9 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
     
     func getToolVersionCarViewModel(toolVersion: ToolVersion) -> ToolDetailsVersionsCardViewModel {
         
-        return ToolDetailsVersionsCardViewModel(toolVersion: toolVersion)
+        return ToolDetailsVersionsCardViewModel(
+            toolVersion: toolVersion,
+            bannerImageRepository: bannerImageRepository
+        )
     }
 }

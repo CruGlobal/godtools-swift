@@ -322,6 +322,13 @@ class AppDiContainer {
         return OnboardingTutorialViewedUserDefaultsCache()
     }
     
+    func getResourceBannerImageRepository() -> ResourceBannerImageRepository {
+        return ResourceBannerImageRepository(
+            attachmentsFileCache: attachmentsFileCache,
+            bundleBannerImages: BundleResourceBannerImages()
+        )
+    }
+    
     func getSetupParallelLanguageAvailability() -> SetupParallelLanguageAvailabilityType {
         return SetupParallelLanguageAvailability(
             setupParallelLanguageViewedCache: getSetupParallelLanguageViewedCache(),
