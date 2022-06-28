@@ -1,0 +1,75 @@
+//
+//  LessonCardsViewModel.swift
+//  godtools
+//
+//  Created by Rachael Skeath on 6/28/22.
+//  Copyright © 2022 Cru. All rights reserved.
+//
+
+import Foundation
+
+protocol LessonCardsViewModelDelegate: LessonCardDelegate {
+    func lessonsAreLoading(_ isLoading: Bool)
+}
+
+class LessonCardsViewModel: LessonCardProvider {
+    
+    // MARK: - Properties
+    
+    private let dataDownloader: InitialDataDownloader
+    private let languageSettingsService: LanguageSettingsService
+    private weak var delegate: LessonCardsViewModelDelegate?
+    
+    // MARK: - Init
+    
+    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, delegate: LessonCardsViewModelDelegate?) {
+        self.dataDownloader = dataDownloader
+        self.languageSettingsService = languageSettingsService
+        self.delegate = delegate
+        
+        super.init()
+        
+        setupBinding()
+    }
+    
+    // MARK: - Overrides
+    
+    override func cardViewModel(for lesson: ResourceModel) -> BaseLessonCardViewModel {
+        return LessonCardViewModel(
+            resource: lesson,
+            dataDownloader: dataDownloader,
+            languageSettingsService: languageSettingsService,
+            delegate: delegate
+        )
+    }
+}
+
+// MARK: - Private
+
+extension LessonCardsViewModel {
+    
+    private func setupBinding() {
+        
+        dataDownloader.cachedResourcesAvailable.addObserver(self) { [weak self] (cachedResourcesAvailable: Bool) in
+            DispatchQueue.main.async { [weak self] in
+                self?.delegate?.lessonsAreLoading(!cachedResourcesAvailable)
+                if cachedResourcesAvailable {
+                    self?.reloadLessonsFromCache()
+                }
+            }
+        }
+        
+        dataDownloader.resourcesUpdatedFromRemoteDatabase.addObserver(self) { [weak self] (error: InitialDataDownloaderError?) in
+            DispatchQueue.main.async { [weak self] in
+                self?.delegate?.lessonsAreLoading(false)
+                if error == nil {
+                    self?.reloadLessonsFromCache()
+                }
+            }
+        }
+    }
+    
+    private func reloadLessonsFromCache() {
+        lessons = dataDownloader.resourcesCache.getAllVisibleLessonsSorted(andFilteredBy: { $0.attrSpotlight })
+    }
+}
