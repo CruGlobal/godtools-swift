@@ -30,7 +30,7 @@ struct FavoritesContentView: View {
                 OpenTutorialBannerView(viewModel: viewModel.getTutorialBannerViewModel())
             }
             
-            if viewModel.isLoading {
+            if viewModel.lessonsLoading && viewModel.toolsLoading {
                 
                 ActivityIndicator(style: .medium, isAnimating: .constant(true))
                 

@@ -34,6 +34,12 @@ class LessonCardsViewModel: LessonCardProvider {
         setup()
     }
     
+    deinit {
+        dataDownloader.cachedResourcesAvailable.removeObserver(self)
+        dataDownloader.resourcesUpdatedFromRemoteDatabase.removeObserver(self)
+        languageSettingsService.primaryLanguage.removeObserver(self)
+    }
+    
     // MARK: - Overrides
     
     override func cardViewModel(for lesson: ResourceModel) -> BaseLessonCardViewModel {
@@ -77,6 +83,12 @@ extension LessonCardsViewModel {
                 if error == nil {
                     self?.reloadLessonsFromCache()
                 }
+            }
+        }
+        
+        languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
+            DispatchQueue.main.async { [weak self] in
+                self?.setupTitle()
             }
         }
     }

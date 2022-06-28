@@ -48,7 +48,8 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
     
     // MARK: - Published
     
-    @Published var isLoading: Bool = false
+    @Published var lessonsLoading = false
+    @Published var toolsLoading = false
     @Published var hideTutorialBanner: Bool
 
     // MARK: - Init
@@ -112,11 +113,11 @@ extension FavoritesContentViewModel: OpenTutorialBannerViewModelDelegate {
 
 extension FavoritesContentViewModel: LessonCardsViewModelDelegate {
     func lessonsAreLoading(_ isLoading: Bool) {
-        // TODO
+        lessonsLoading = isLoading
     }
     
     func lessonCardTapped(resource: ResourceModel) {
-        // TODO
+        flowDelegate?.navigate(step: .lessonTappedFromFeaturedLessons(resource: resource))
     }
 }
 
@@ -124,7 +125,7 @@ extension FavoritesContentViewModel: LessonCardsViewModelDelegate {
 
 extension FavoritesContentViewModel: FavoriteToolsViewModelDelegate {
     func toolsAreLoading(_ isLoading: Bool) {
-        self.isLoading = isLoading
+        toolsLoading = isLoading
     }
     
     func viewAllFavoriteToolsButtonTapped() {

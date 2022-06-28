@@ -20,7 +20,7 @@ struct LessonCardsView: View {
     
     var body: some View {
         
-        VStack(alignment: .leading, spacing: 5) {
+        VStack(alignment: .leading, spacing: 7) {
             Text(viewModel.sectionTitle)
                 .font(FontLibrary.sfProTextRegular.font(size: 22))
                 .foregroundColor(ColorPalette.gtGrey.color)
