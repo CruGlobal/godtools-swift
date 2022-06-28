@@ -84,7 +84,7 @@ struct ToolDetailsVersionsCardView_Preview: PreviewProvider {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
-        let toolVersion = ToolVersion(
+        let toolVersion = ToolVersionDomainModel(
             id: "1",
             bannerImageId: "1",
             name: "Tool Name",

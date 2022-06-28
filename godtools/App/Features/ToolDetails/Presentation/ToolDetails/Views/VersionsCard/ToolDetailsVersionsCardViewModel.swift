@@ -18,7 +18,7 @@ class ToolDetailsVersionsCardViewModel: ObservableObject {
     let description: String
     let languages: String
     
-    init(toolVersion: ToolVersion, bannerImageRepository: ResourceBannerImageRepository) {
+    init(toolVersion: ToolVersionDomainModel, bannerImageRepository: ResourceBannerImageRepository) {
         
         self.bannerImageRepository = bannerImageRepository
         

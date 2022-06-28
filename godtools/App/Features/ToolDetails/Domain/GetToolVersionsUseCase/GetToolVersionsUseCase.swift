@@ -23,7 +23,7 @@ class GetToolVersionsUseCase {
         self.getToolLanguagesUseCase = getToolLanguagesUseCase
     }
     
-    func getToolVersions(resourceId: String) -> [ToolVersion] {
+    func getToolVersions(resourceId: String) -> [ToolVersionDomainModel] {
         
         let variants: [ResourceModel] = resourcesCache.getResourceVariants(resourceId: resourceId)
         
@@ -36,7 +36,7 @@ class GetToolVersionsUseCase {
         })
     }
     
-    private func getToolVersion(resource: ResourceModel) -> ToolVersion {
+    private func getToolVersion(resource: ResourceModel) -> ToolVersionDomainModel {
         
         let toolLanguages: [ToolLanguageModel] = getToolLanguagesUseCase.getToolLanguages(resource: resource)
                 
@@ -60,7 +60,7 @@ class GetToolVersionsUseCase {
             languageBundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
         }
         
-        return ToolVersion(
+        return ToolVersionDomainModel(
             id: resource.id,
             bannerImageId: resource.attrBanner,
             name: name,

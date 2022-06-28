@@ -37,7 +37,7 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
     @Published var segments: [String] = Array()
     @Published var selectedSegment: ToolDetailsSegmentType = .about
     @Published var aboutDetails: String = ""
-    @Published var toolVersions: [ToolVersion] = Array()
+    @Published var toolVersions: [ToolVersionDomainModel] = Array()
     
     init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, analytics: AnalyticsContainer, getToolTranslationsUseCase: GetToolTranslationsUseCase, languagesRepository: LanguagesRepository, getToolVersionsUseCase: GetToolVersionsUseCase, bannerImageRepository: ResourceBannerImageRepository) {
         
@@ -267,7 +267,7 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
         flowDelegate?.navigate(step: .urlLinkTappedFromToolDetail(url: url, exitLink: exitLink))
     }
     
-    func getToolVersionCarViewModel(toolVersion: ToolVersion) -> ToolDetailsVersionsCardViewModel {
+    func getToolVersionCarViewModel(toolVersion: ToolVersionDomainModel) -> ToolDetailsVersionsCardViewModel {
         
         return ToolDetailsVersionsCardViewModel(
             toolVersion: toolVersion,

@@ -337,7 +337,7 @@
 		456A8A4A2864C702000EC6B4 /* ToolLanguageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456A8A482864C702000EC6B4 /* ToolLanguageModel.swift */; };
 		456A8A4B2864C702000EC6B4 /* GetToolLanguagesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456A8A492864C702000EC6B4 /* GetToolLanguagesUseCase.swift */; };
 		456A8A502864C831000EC6B4 /* GetToolVersionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456A8A4E2864C831000EC6B4 /* GetToolVersionsUseCase.swift */; };
-		456A8A512864C831000EC6B4 /* ToolVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456A8A4F2864C831000EC6B4 /* ToolVersion.swift */; };
+		456A8A512864C831000EC6B4 /* ToolVersionDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456A8A4F2864C831000EC6B4 /* ToolVersionDomainModel.swift */; };
 		456BB02427C583650087CCA4 /* MobileContentTextLabelAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456BB02327C583650087CCA4 /* MobileContentTextLabelAttributes.swift */; };
 		456BB02927C588E80087CCA4 /* MobileContentHeadingViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456BB02627C588E80087CCA4 /* MobileContentHeadingViewModelType.swift */; };
 		456BB02A27C588E80087CCA4 /* MobileContentHeadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456BB02727C588E80087CCA4 /* MobileContentHeadingView.swift */; };
@@ -1468,7 +1468,7 @@
 		456A8A482864C702000EC6B4 /* ToolLanguageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolLanguageModel.swift; sourceTree = "<group>"; };
 		456A8A492864C702000EC6B4 /* GetToolLanguagesUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetToolLanguagesUseCase.swift; sourceTree = "<group>"; };
 		456A8A4E2864C831000EC6B4 /* GetToolVersionsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetToolVersionsUseCase.swift; sourceTree = "<group>"; };
-		456A8A4F2864C831000EC6B4 /* ToolVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolVersion.swift; sourceTree = "<group>"; };
+		456A8A4F2864C831000EC6B4 /* ToolVersionDomainModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolVersionDomainModel.swift; sourceTree = "<group>"; };
 		456BB02327C583650087CCA4 /* MobileContentTextLabelAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentTextLabelAttributes.swift; sourceTree = "<group>"; };
 		456BB02627C588E80087CCA4 /* MobileContentHeadingViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentHeadingViewModelType.swift; sourceTree = "<group>"; };
 		456BB02727C588E80087CCA4 /* MobileContentHeadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentHeadingView.swift; sourceTree = "<group>"; };
@@ -3846,7 +3846,7 @@
 			isa = PBXGroup;
 			children = (
 				456A8A4E2864C831000EC6B4 /* GetToolVersionsUseCase.swift */,
-				456A8A4F2864C831000EC6B4 /* ToolVersion.swift */,
+				456A8A4F2864C831000EC6B4 /* ToolVersionDomainModel.swift */,
 			);
 			path = GetToolVersionsUseCase;
 			sourceTree = "<group>";
@@ -7886,7 +7886,7 @@
 				456431D7284ACC0900846720 /* DownloadToolViewModelType.swift in Sources */,
 				455583E3269F2DA500C3FF14 /* MobileContentViewModelType.swift in Sources */,
 				45B9875F283BFE5300E1DA7F /* TranslationDownloaderError.swift in Sources */,
-				456A8A512864C831000EC6B4 /* ToolVersion.swift in Sources */,
+				456A8A512864C831000EC6B4 /* ToolVersionDomainModel.swift in Sources */,
 				4555833A269F2C7B00C3FF14 /* ToolPageHeroView.swift in Sources */,
 				455583F8269F2DA500C3FF14 /* MobileContentLinkViewModel.swift in Sources */,
 				45828BD2279CCBD200F6B5F3 /* MobileContentFlowViewModelType.swift in Sources */,

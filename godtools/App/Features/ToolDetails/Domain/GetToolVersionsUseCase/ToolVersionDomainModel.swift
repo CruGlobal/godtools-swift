@@ -1,5 +1,5 @@
 //
-//  ToolVersion.swift
+//  ToolVersionDomainModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 6/23/22.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ToolVersion: Identifiable {
+struct ToolVersionDomainModel: Identifiable {
     
     let id: String
     let bannerImageId: String
