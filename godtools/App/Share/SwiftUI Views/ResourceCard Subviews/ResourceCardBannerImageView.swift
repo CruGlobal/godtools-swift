@@ -1,5 +1,5 @@
 //
-//  ToolCardImageView.swift
+//  ResourceCardBannerImageView.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 5/11/22.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct ToolCardBannerImageView: View {
+struct ResourceCardBannerImageView: View {
     
     // MARK: - Properties
     
@@ -44,14 +44,14 @@ struct ToolCardBannerImageView: View {
 
 // MARK: - Preview
 
-struct ToolCardBannerImageView_Previews: PreviewProvider {
+struct ResourceCardBannerImageView_Previews: PreviewProvider {
     static var previews: some View {
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         let bannerImage = appDiContainer.deviceAttachmentBanners.getDeviceBanner(resourceId: "2")
 
         let cardType: ToolCardType = .square
         
-        ToolCardBannerImageView(
+        ResourceCardBannerImageView(
             bannerImage: Image.from(uiImage: bannerImage),
             cardType: cardType,
             cardWidth: cardType.isSquareLayout ? 200 : 375,

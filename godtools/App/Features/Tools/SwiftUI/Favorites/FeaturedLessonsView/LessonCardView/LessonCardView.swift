@@ -30,7 +30,7 @@ struct LessonCardView: View {
             RoundedCardBackgroundView(cornerRadius: Sizes.cornerRadius)
             
             VStack(alignment: .leading, spacing: 0) {
-                ToolCardBannerImageView(bannerImage: viewModel.bannerImage, cardType: .standard, cardWidth: cardWidth, cornerRadius: Sizes.cornerRadius)
+                ResourceCardBannerImageView(bannerImage: viewModel.bannerImage, cardType: .standard, cardWidth: cardWidth, cornerRadius: Sizes.cornerRadius)
                 
                 ResourceCardProgressView(frontProgress: viewModel.translationDownloadProgressValue, backProgress: viewModel.attachmentsDownloadProgressValue)
                 
