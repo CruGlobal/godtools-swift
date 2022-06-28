@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-protocol FavoriteToolsViewModelDelegate: ToolCardDelegate, BaseFavoriteToolsViewModelDelegate {
+protocol FavoriteToolsViewModelDelegate: ToolCardViewModelDelegate, BaseFavoriteToolsViewModelDelegate {
     func viewAllFavoriteToolsButtonTapped()
     func goToToolsButtonTapped()
 }
@@ -37,7 +37,7 @@ class FavoriteToolsViewModel: BaseFavoriteToolsViewModel {
     
     init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: FavoriteToolsViewModelDelegate?) {
         
-        super.init(cardType: .squareWithNavButtons, dataDownloader: dataDownloader, deviceAttachmentBanners: deviceAttachmentBanners, favoritedResourcesCache: favoritedResourcesCache, languageSettingsService: languageSettingsService, localizationServices: localizationServices, delegate: delegate, toolCardDelegate: delegate)
+        super.init(cardType: .squareWithNavButtons, dataDownloader: dataDownloader, deviceAttachmentBanners: deviceAttachmentBanners, favoritedResourcesCache: favoritedResourcesCache, languageSettingsService: languageSettingsService, localizationServices: localizationServices, delegate: delegate, toolCardViewModelDelegate: delegate)
         
         maxNumberCardsToShow = maxNumberCardsShown
     }
