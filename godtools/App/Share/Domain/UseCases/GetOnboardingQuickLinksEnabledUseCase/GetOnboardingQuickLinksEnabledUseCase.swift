@@ -23,7 +23,7 @@ class GetOnboardingQuickLinksEnabledUseCase {
         
         let deviceLocale: Locale = deviceLanguage.preferredLocalizationLocale ?? deviceLanguage.locale
         
-        let languageCode: String = deviceLocale.languageCode ?? deviceLocale.identifier
+        let languageCode: String = (deviceLocale.languageCode ?? deviceLocale.identifier).lowercased()
         
         return supportedLanguageCodes.contains(languageCode)
     }
