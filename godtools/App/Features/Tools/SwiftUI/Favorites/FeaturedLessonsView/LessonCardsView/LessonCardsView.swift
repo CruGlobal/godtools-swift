@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct LessonCardsView: View {
+    
     // MARK: - Properties
     
     @ObservedObject var viewModel: LessonCardProvider

@@ -27,6 +27,13 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
     private let getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase
     private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     
+    private(set) lazy var lessonCardsViewModel: LessonCardsViewModel = {
+        return LessonCardsViewModel(
+            dataDownloader: dataDownloader,
+            languageSettingsService: languageSettingsService,
+            delegate: self
+        )
+    }()
     private(set) lazy var favoriteToolsViewModel: FavoriteToolsViewModel = {
         return FavoriteToolsViewModel(
             dataDownloader: dataDownloader,
@@ -97,6 +104,18 @@ extension FavoritesContentViewModel: OpenTutorialBannerViewModelDelegate {
         flowDelegate?.navigate(step: .openTutorialTappedFromTools)
         
         closeBanner()
+    }
+}
+
+// MARK: - LessonCardsViewModelDelegate
+
+extension FavoritesContentViewModel: LessonCardsViewModelDelegate {
+    func lessonsAreLoading(_ isLoading: Bool) {
+        // TODO
+    }
+    
+    func lessonCardTapped(resource: ResourceModel) {
+        // TODO
     }
 }
 
