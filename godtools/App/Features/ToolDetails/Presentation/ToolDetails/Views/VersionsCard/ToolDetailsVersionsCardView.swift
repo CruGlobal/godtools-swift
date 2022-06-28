@@ -18,63 +18,71 @@ struct ToolDetailsVersionsCardView: View {
     
     var body: some View {
         
-        VStack(alignment: .leading, spacing: 0) {
+        ZStack {
             
-            if let bannerImage = viewModel.bannerImage {
-                bannerImage
-                    .resizable()
-                    .scaledToFill()
-                    .frame(height: bannerHeight)
-                    .clipped()
-            }
-            else {
-                Rectangle()
-                    .fill(ColorPalette.gtLightestGrey.color)
-                    .frame(height: bannerHeight)
-            }
+            Color.white
             
-            HStack(alignment: .top, spacing: 0) {
+            VStack(alignment: .leading, spacing: 0) {
                 
-                CircleSelectorView(isSelected: $isSelected)
-                    .padding(EdgeInsets(top: 3, leading: 0, bottom: 0, trailing: 0))
-                
-                Rectangle()
-                    .fill(.clear)
-                    .frame(width: 16)
-                
-                VStack(alignment: .leading, spacing: 0) {
-                    
-                    Text(viewModel.name)
-                        .foregroundColor(ColorPalette.gtGrey.color)
-                        .font(FontLibrary.sfProTextSemibold.font(size: 19))
-                    
-                    Rectangle()
-                        .fill(.clear)
-                        .frame(height: 5)
-                    
-                    Text(viewModel.description)
-                        .foregroundColor(ColorPalette.gtGrey.color)
-                        .font(FontLibrary.sfProTextRegular.font(size: 15))
-                    
-                    Rectangle()
-                        .fill(.clear)
-                        .frame(height: 35)
-                    
-                    HStack(alignment: .top, spacing: 5) {
-                        Spacer()
-                        Text(viewModel.languages)
-                        Text("|")
-                        Text("French")
-                        Text("|")
-                        Text("English")
-                    }
-                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 20))
-                    .foregroundColor(ColorPalette.gtLightGrey.color)
-                    .font(FontLibrary.sfProTextRegular.font(size: 13))
+                if let bannerImage = viewModel.bannerImage {
+                    bannerImage
+                        .resizable()
+                        .scaledToFill()
+                        .frame(height: bannerHeight)
+                        .clipped()
                 }
+                else {
+                    Rectangle()
+                        .fill(ColorPalette.gtLightestGrey.color)
+                        .frame(height: bannerHeight)
+                }
+                
+                HStack(alignment: .top, spacing: 0) {
+                    
+                    CircleSelectorView(isSelected: $isSelected)
+                        .padding(EdgeInsets(top: 3, leading: 0, bottom: 0, trailing: 0))
+                    
+                    Rectangle()
+                        .fill(.clear)
+                        .frame(width: 16)
+                    
+                    VStack(alignment: .leading, spacing: 0) {
+                        
+                        Text(viewModel.name)
+                            .foregroundColor(ColorPalette.gtGrey.color)
+                            .font(FontLibrary.sfProTextSemibold.font(size: 19))
+                        
+                        Rectangle()
+                            .fill(.clear)
+                            .frame(height: 5)
+                        
+                        Text(viewModel.description)
+                            .foregroundColor(ColorPalette.gtGrey.color)
+                            .font(FontLibrary.sfProTextRegular.font(size: 15))
+                        
+                        Rectangle()
+                            .fill(.clear)
+                            .frame(height: 35)
+                        
+                        HStack(alignment: .top, spacing: 5) {
+                            Spacer()
+                            Text(viewModel.languages)
+                            Text("|")
+                            Text("French")
+                            Text("|")
+                            Text("English")
+                        }
+                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 20))
+                        .foregroundColor(ColorPalette.gtLightGrey.color)
+                        .font(FontLibrary.sfProTextRegular.font(size: 13))
+                    }
+                }
+                .padding(EdgeInsets(top: 15, leading: 25, bottom: 25, trailing: 25))
             }
-            .padding(EdgeInsets(top: 15, leading: 25, bottom: 0, trailing: 25))
         }
+        .cornerRadius(6)
+        .shadow(color: Color.black.opacity(0.3), radius: 4, x: 1, y: 1)
+        .padding(EdgeInsets(top: 15, leading: 20, bottom: 0, trailing: 20))
     }
 }
 
