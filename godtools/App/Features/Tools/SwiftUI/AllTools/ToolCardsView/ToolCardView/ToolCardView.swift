@@ -52,7 +52,7 @@ struct ToolCardView: View {
                         }
                 }
                 
-                ToolCardProgressView(frontProgress: viewModel.translationDownloadProgressValue, backProgress: viewModel.attachmentsDownloadProgressValue)
+                ResourceCardProgressView(frontProgress: viewModel.translationDownloadProgressValue, backProgress: viewModel.attachmentsDownloadProgressValue)
                 
                 VStack(alignment: .trailing, spacing: 5) {
                     HStack(alignment: .top) {

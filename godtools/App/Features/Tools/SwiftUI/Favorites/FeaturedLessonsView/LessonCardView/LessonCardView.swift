@@ -32,7 +32,7 @@ struct LessonCardView: View {
             VStack(alignment: .leading, spacing: 0) {
                 ToolCardBannerImageView(bannerImage: viewModel.bannerImage, cardType: .standard, cardWidth: cardWidth, cornerRadius: Sizes.cornerRadius)
                 
-                ToolCardProgressView(frontProgress: viewModel.translationDownloadProgressValue, backProgress: viewModel.attachmentsDownloadProgressValue)
+                ResourceCardProgressView(frontProgress: viewModel.translationDownloadProgressValue, backProgress: viewModel.attachmentsDownloadProgressValue)
                 
                 Text(viewModel.title)
                     .font(FontLibrary.sfProTextBold.font(size: 17))
