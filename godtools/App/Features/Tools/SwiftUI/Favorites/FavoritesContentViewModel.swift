@@ -73,6 +73,10 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
         
         setup()
     }
+    
+    deinit {
+        languageSettingsService.primaryLanguage.removeObserver(self)
+    }
 }
 
 // MARK: - Public
