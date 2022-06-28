@@ -10,7 +10,7 @@ import UIKit
 
 protocol MobileContentAccordionViewDelegate: AnyObject {
     
-    func accordionViewDidChangeSectionViewTextHiddenState(accordionView: MobileContentAccordionView, sectionView: MobileContentAccordionSectionView, textIsHidden: Bool, textHeight: CGFloat)
+    func accordionViewDidChangeSectionViewContentHiddenState(accordionView: MobileContentAccordionView, sectionView: MobileContentAccordionSectionView, contentIsHidden: Bool, contentHeight: CGFloat)
 }
 
 class MobileContentAccordionView: MobileContentView {
@@ -43,7 +43,7 @@ class MobileContentAccordionView: MobileContentView {
     
     var isRevealingSectionText: Bool {
         for sectionView in sectionViews {
-            if !sectionView.textIsHidden {
+            if !sectionView.contentIsHidden {
                 return true
             }
         }
@@ -200,21 +200,21 @@ extension MobileContentAccordionView {
 
 extension MobileContentAccordionView: MobileContentAccordionSectionViewDelegate {
     
-    func sectionViewDidChangeTextHiddenState(sectionView: MobileContentAccordionSectionView, textIsHidden: Bool, textHeight: CGFloat) {
+    func sectionViewDidChangeContentHiddenState(sectionView: MobileContentAccordionSectionView, contentIsHidden: Bool, contentHeight: CGFloat) {
         
-        if allowsOnlyOneExpandedSectionAtATime && !textIsHidden {
+        if allowsOnlyOneExpandedSectionAtATime && !contentIsHidden {
             for otherSectionView in sectionViews {
-                if otherSectionView != sectionView && !otherSectionView.textIsHidden {
-                    otherSectionView.setTextHidden(hidden: true, animated: true)
+                if otherSectionView != sectionView && !otherSectionView.contentIsHidden {
+                    otherSectionView.setContentHidden(hidden: true, animated: true)
                 }
             }
         }
         
-        delegate?.accordionViewDidChangeSectionViewTextHiddenState(
+        delegate?.accordionViewDidChangeSectionViewContentHiddenState(
             accordionView: self,
             sectionView: sectionView,
-            textIsHidden: textIsHidden,
-            textHeight: textHeight
+            contentIsHidden: contentIsHidden,
+            contentHeight: contentHeight
         )
     }
 }

@@ -306,6 +306,10 @@ class AppDiContainer {
         )
     }
     
+    func getOnboardingQuickLinksEnabledUseCase() -> GetOnboardingQuickLinksEnabledUseCase {
+        return GetOnboardingQuickLinksEnabledUseCase(deviceLanguage: deviceLanguage)
+    }
+    
     func getOnboardingTutorialAvailability() -> OnboardingTutorialAvailabilityType {
         return OnboardingTutorialAvailability(
             getTutorialIsAvailableUseCase: getTutorialIsAvailableUseCase(),
@@ -363,6 +367,14 @@ class AppDiContainer {
             translationsFileCache: translationsFileCache,
             mobileContentParser: getMobileContentParser(),
             languageSettingsService: languageSettingsService
+        )
+    }
+    
+    func getToolVersionsUseCase() -> GetToolVersionsUseCase {
+        return GetToolVersionsUseCase(
+            resourcesCache: initialDataDownloader.resourcesCache,
+            languageSettingsService: languageSettingsService,
+            getToolLanguagesUseCase: getToolLanguagesUseCase()
         )
     }
     

@@ -34,17 +34,25 @@ struct ToolDetailsView: View {
                     ToolDetailsPrimaryButtonsView(viewModel: viewModel, primaryButtonWidth: contentWidth)
                         .padding(EdgeInsets(top: 16, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))                    
                                         
-                    SegmentControl(selectedIndex: $selectedSegmentIndex, segments: [viewModel.aboutTitle, viewModel.versionsTitle], segmentTappedClosure: { (index: Int) in
-                                                
+                    SegmentControl(selectedIndex: $selectedSegmentIndex, segments: viewModel.segments, segmentTappedClosure: { (index: Int) in
+                        
+                        viewModel.segmentTapped(index: index)
                     })
                     .padding(EdgeInsets(top: 50, leading: 0, bottom: 0, trailing: 0))
                     
                     Rectangle()
                         .frame(width: geometry.size.width, height: 20)
                         .foregroundColor(.clear)
-                                        
-                    ToolDetailsAboutView(viewModel: viewModel, width: contentWidth)
-                        .padding(EdgeInsets(top: 0, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))
+                    
+                    switch viewModel.selectedSegment {
+                    
+                    case .about:
+                        ToolDetailsAboutView(viewModel: viewModel, width: contentWidth)
+                            .padding(EdgeInsets(top: 0, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))
+                    
+                    case .versions:
+                        ToolDetailsVersionsView(viewModel: viewModel)
+                    }
                 }
             }
         }
@@ -69,7 +77,8 @@ struct ToolDetailsView_Preview: PreviewProvider {
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             analytics: appDiContainer.analytics,
             getToolTranslationsUseCase: appDiContainer.getToolTranslationsUseCase(),
-            languagesRepository: appDiContainer.getLanguagesRepository()
+            languagesRepository: appDiContainer.getLanguagesRepository(),
+            getToolVersionsUseCase: appDiContainer.getToolVersionsUseCase()
         )
         
         return ToolDetailsView(viewModel: viewModel)

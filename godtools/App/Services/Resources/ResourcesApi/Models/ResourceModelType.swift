@@ -20,9 +20,11 @@ protocol ResourceModelType {
     var attrBannerAbout: String { get }
     var attrCategory: String { get }
     var attrDefaultOrder: Int { get }
+    var attrDefaultVariant: String { get }
     var attrSpotlight: Bool { get }
     var id: String { get }
     var manifest: String { get }
+    var metatoolId: String? { get }
     var name: String { get }
     var oneskyProjectId: Int { get }
     var resourceDescription: String { get }

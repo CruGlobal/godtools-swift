@@ -17,10 +17,12 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
     let attrBannerAbout: String
     let attrCategory: String
     let attrDefaultOrder: Int
+    let attrDefaultVariant: String
     let attrSpotlight: Bool
     let id: String
     let isHidden: Bool
     let manifest: String
+    let metatoolId: String?
     let name: String
     let oneskyProjectId: Int
     let resourceDescription: String
@@ -47,6 +49,7 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
         case attrBannerAbout = "attr-banner-about"
         case attrCategory = "attr-category"
         case attrDefaultOrder = "attr-default-order"
+        case attrDefaultVariant = "attr-default-variant"
         case attrSpotlight = "attr-spotlight"
         case description = "description"
         case isHidden = "attr-hidden"
@@ -60,6 +63,7 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
     enum RelationshipsKeys: String, CodingKey {
         case attachments = "attachments"
         case latestTranslations = "latest-translations"
+        case metatool = "metatool"
     }
     
     enum DataCodingKeys: String, CodingKey {
@@ -75,10 +79,12 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
         attrBannerAbout = realmResource.attrBannerAbout
         attrCategory = realmResource.attrCategory
         attrDefaultOrder = realmResource.attrDefaultOrder
+        attrDefaultVariant = realmResource.attrDefaultVariant
         attrSpotlight = realmResource.attrSpotlight
         id = realmResource.id
         isHidden = realmResource.isHidden
         manifest = realmResource.manifest
+        metatoolId = realmResource.metatoolId
         name = realmResource.name
         oneskyProjectId = realmResource.oneskyProjectId
         resourceDescription = realmResource.resourceDescription
@@ -129,6 +135,7 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
         else {
             attrDefaultOrder = -1
         }
+        attrDefaultVariant = try attributesContainer?.decodeIfPresent(String.self, forKey: .attrDefaultVariant) ?? ""
         let isHiddenString: String = try attributesContainer?.decodeIfPresent(String.self, forKey: .isHidden) ?? "false"
         isHidden = isHiddenString == "true" ? true : false
         manifest = try attributesContainer?.decodeIfPresent(String.self, forKey: .manifest) ?? ""
@@ -145,6 +152,20 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
         // relationships - attachments
         let attachments: [AttachmentModel] = try attachmentsContainer?.decodeIfPresent([AttachmentModel].self, forKey: .data) ?? []
         attachmentIds = attachments.map({$0.id})
+        
+        // relationships - metatool
+        
+        let metatoolData: MetatoolData?
+
+        do {
+            let metatoolContainer: KeyedDecodingContainer<DataCodingKeys>? = try relationshipsContainer?.nestedContainer(keyedBy: DataCodingKeys.self, forKey: .metatool)
+            metatoolData = try metatoolContainer?.decodeIfPresent(MetatoolData.self, forKey: .data)
+        }
+        catch {
+            metatoolData = nil
+        }
+        
+        metatoolId = metatoolData?.id
         
         // set when initialized from a RealmResource.
         languageIds = Array()
