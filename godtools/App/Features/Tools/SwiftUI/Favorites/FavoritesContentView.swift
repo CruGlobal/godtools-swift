@@ -44,12 +44,15 @@ struct FavoritesContentView: View {
                         
                         LessonCardsView(viewModel: viewModel.lessonCardsViewModel, width: width, leadingPadding: leadingTrailingPadding)
                             .listRowInsets(EdgeInsets())
+                            .padding(.bottom, 10)
                         
                         FavoriteToolsView(viewModel: viewModel.favoriteToolsViewModel, width: width, leadingPadding: leadingTrailingPadding)
                             .listRowInsets(EdgeInsets())
                             
+                        Spacer()
+                        
                     } refreshHandler: {
-                        viewModel.refreshTools()
+                        viewModel.refreshData()
                     }
                 }
             }

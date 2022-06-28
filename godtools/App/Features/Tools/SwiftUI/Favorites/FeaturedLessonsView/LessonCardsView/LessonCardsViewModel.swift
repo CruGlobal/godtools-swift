@@ -18,18 +18,20 @@ class LessonCardsViewModel: LessonCardProvider {
     
     private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
+    private let localizationServices: LocalizationServices
     private weak var delegate: LessonCardsViewModelDelegate?
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, delegate: LessonCardsViewModelDelegate?) {
+    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: LessonCardsViewModelDelegate?) {
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
+        self.localizationServices = localizationServices
         self.delegate = delegate
         
         super.init()
         
-        setupBinding()
+        setup()
     }
     
     // MARK: - Overrides
@@ -47,6 +49,16 @@ class LessonCardsViewModel: LessonCardProvider {
 // MARK: - Private
 
 extension LessonCardsViewModel {
+    
+    private func setup() {
+        setupTitle()
+        setupBinding()
+    }
+    
+    private func setupTitle() {
+        let languageBundle = localizationServices.bundleLoader.bundleForPrimaryLanguageOrFallback(in: languageSettingsService)
+        sectionTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.favoriteLessons.title")
+    }
     
     private func setupBinding() {
         

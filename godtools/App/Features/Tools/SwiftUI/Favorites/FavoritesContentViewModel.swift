@@ -31,6 +31,7 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
         return LessonCardsViewModel(
             dataDownloader: dataDownloader,
             languageSettingsService: languageSettingsService,
+            localizationServices: localizationServices,
             delegate: self
         )
     }()
@@ -76,7 +77,7 @@ extension FavoritesContentViewModel {
         self.delegate = delegate
     }
     
-    func refreshTools() {
+    func refreshData() {
         dataDownloader.downloadInitialData()
     }
     

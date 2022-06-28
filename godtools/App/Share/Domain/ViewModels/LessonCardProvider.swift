@@ -12,6 +12,7 @@ class LessonCardProvider: NSObject, ObservableObject {
     
     // MARK: - Published
     
+    @Published var sectionTitle: String = ""
     @Published var lessons: [ResourceModel] = []
     
     // MARK: - Public

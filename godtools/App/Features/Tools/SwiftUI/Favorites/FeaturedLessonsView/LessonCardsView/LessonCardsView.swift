@@ -20,14 +20,21 @@ struct LessonCardsView: View {
     
     var body: some View {
         
-        ForEach(viewModel.lessons) { lesson in
+        VStack(alignment: .leading, spacing: 5) {
+            Text(viewModel.sectionTitle)
+                .font(FontLibrary.sfProTextRegular.font(size: 22))
+                .foregroundColor(ColorPalette.gtGrey.color)
+                .padding(.leading, leadingPadding)
             
-            LessonCardView(viewModel: viewModel.cardViewModel(for: lesson), cardWidth: width - 2 * leadingPadding)
-                .listRowInsets(EdgeInsets())
-                .contentShape(Rectangle())
-                .padding([.top, .bottom], 8)
-                .padding([.leading, .trailing], leadingPadding)
-            
+            ForEach(viewModel.lessons) { lesson in
+                
+                LessonCardView(viewModel: viewModel.cardViewModel(for: lesson), cardWidth: width - 2 * leadingPadding)
+                    .listRowInsets(EdgeInsets())
+                    .contentShape(Rectangle())
+                    .padding([.top, .bottom], 8)
+                    .padding([.leading, .trailing], leadingPadding)
+                
+            }
         }
     }
 }
@@ -40,9 +47,10 @@ struct LessonCardsView_Previews: PreviewProvider {
         let viewModel = LessonCardsViewModel(
             dataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
+            localizationServices: appDiContainer.localizationServices,
             delegate: nil
         )
         
-        LessonCardsView(viewModel: viewModel, width: 375, leadingPadding: 20)
+        LessonCardsView(viewModel: viewModel, width: 375, leadingPadding: 0)
     }
 }
