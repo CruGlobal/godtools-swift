@@ -19,7 +19,7 @@ class AllFavoriteToolsViewModel: BaseFavoriteToolsViewModel {
     init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, flowDelegate: FlowDelegate?) {
         self.flowDelegate = flowDelegate
         
-        super.init(cardType: .standardWithNavButtons, dataDownloader: dataDownloader, deviceAttachmentBanners: deviceAttachmentBanners, favoritedResourcesCache: favoritedResourcesCache, languageSettingsService: languageSettingsService, localizationServices: localizationServices, delegate: nil, toolCardDelegate: nil)
+        super.init(cardType: .standardWithNavButtons, dataDownloader: dataDownloader, deviceAttachmentBanners: deviceAttachmentBanners, favoritedResourcesCache: favoritedResourcesCache, languageSettingsService: languageSettingsService, localizationServices: localizationServices, delegate: nil, toolCardViewModelDelegate: nil)
     }
     
     // MARK: - Overrides
@@ -64,9 +64,9 @@ extension AllFavoriteToolsViewModel {
     }
 }
 
-// MARK: - ToolCardDelegate
+// MARK: - ToolCardViewModelDelegate
 
-extension AllFavoriteToolsViewModel: ToolCardDelegate {
+extension AllFavoriteToolsViewModel: ToolCardViewModelDelegate {
     func toolCardTapped(resource: ResourceModel) {
         flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: resource))
     }

@@ -13,7 +13,7 @@ struct BackwardCompatibleList<Content: View>: View {
     let content: () -> Content
     let refreshHandler: () -> Void
     
-    init(@ViewBuilder content: @escaping () -> Content, refreshHandler: @escaping () -> Void) {
+    init<T: View>(rootViewType: T.Type, @ViewBuilder content: @escaping () -> Content, refreshHandler: @escaping () -> Void) {
         self.content = content
         self.refreshHandler = refreshHandler
         
@@ -25,9 +25,7 @@ struct BackwardCompatibleList<Content: View>: View {
          */
         if #available(iOS 14.0, *) {} else {
             // TODO: - When we stop supporting iOS 13, get rid of this.
-            UITableView.appearance(whenContainedInInstancesOf: [UIHostingController<BackwardCompatibleList>.self]).separatorStyle = .none
-            UITableView.appearance(whenContainedInInstancesOf: [UIHostingController<AllToolsContentView>.self]).separatorStyle = .none
-            UITableView.appearance(whenContainedInInstancesOf: [UIHostingController<FavoritesContentView>.self]).separatorStyle = .none
+            UITableView.appearance(whenContainedInInstancesOf: [UIHostingController<T>.self]).separatorStyle = .none
         }
     }
     
@@ -67,7 +65,7 @@ struct BackwardCompatibleList<Content: View>: View {
 
 struct BackwardCompatibleList_Previews: PreviewProvider {
     static var previews: some View {
-        BackwardCompatibleList {
+        BackwardCompatibleList(rootViewType: EmptyView.self) {
             ForEach(0..<10) { itemIndex in
                 ZStack {
                     Color.blue

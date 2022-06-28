@@ -23,7 +23,7 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
     let languageSettingsService: LanguageSettingsService
     let localizationServices: LocalizationServices
     weak var delegate: BaseFavoriteToolsViewModelDelegate?
-    weak var toolCardDelegate: ToolCardDelegate?
+    weak var toolCardViewModelDelegate: ToolCardViewModelDelegate?
     
     // MARK: - Published
     
@@ -31,7 +31,7 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
     
     // MARK: - Init
     
-    init(cardType: ToolCardType, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: BaseFavoriteToolsViewModelDelegate?, toolCardDelegate: ToolCardDelegate?) {
+    init(cardType: ToolCardType, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: BaseFavoriteToolsViewModelDelegate?, toolCardViewModelDelegate: ToolCardViewModelDelegate?) {
         self.cardType = cardType
         self.dataDownloader = dataDownloader
         self.deviceAttachmentBanners = deviceAttachmentBanners
@@ -39,7 +39,7 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
         self.delegate = delegate
-        self.toolCardDelegate = toolCardDelegate
+        self.toolCardViewModelDelegate = toolCardViewModelDelegate
         
         super.init()
         
@@ -67,7 +67,7 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
             favoritedResourcesCache: favoritedResourcesCache,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
-            delegate: toolCardDelegate
+            delegate: toolCardViewModelDelegate
         )
     }
     

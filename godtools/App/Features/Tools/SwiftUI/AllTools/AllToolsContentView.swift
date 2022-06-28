@@ -34,7 +34,7 @@ struct AllToolsContentView: View {
                 GeometryReader { geo in
                     let width = geo.size.width
                     
-                    BackwardCompatibleList {
+                    BackwardCompatibleList(rootViewType: Self.self) {
                         
                         AllToolsList(viewModel: viewModel, width: width)
                         

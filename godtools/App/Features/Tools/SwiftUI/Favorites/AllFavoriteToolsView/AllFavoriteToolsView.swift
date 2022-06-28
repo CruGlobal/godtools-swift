@@ -27,7 +27,7 @@ struct AllFavoriteToolsView: View {
             let width = geo.size.width
             let leadingTrailingPadding = width * Sizes.toolsPaddingMultiplier
             
-            BackwardCompatibleList {
+            BackwardCompatibleList(rootViewType: Self.self) {
                 VStack(alignment: .leading) {
                     Text(viewModel.sectionTitle)
                         .font(FontLibrary.sfProTextRegular.font(size: 22))

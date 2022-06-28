@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ToolCardsViewModelDelegate: ToolCardDelegate {
+protocol ToolCardsViewModelDelegate: ToolCardViewModelDelegate {
     func toolsAreLoading(_ isLoading: Bool)
 }
 
