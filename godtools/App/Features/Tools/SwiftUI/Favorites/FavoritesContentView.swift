@@ -40,7 +40,7 @@ struct FavoritesContentView: View {
                     let width = geo.size.width
                     let leadingTrailingPadding = width * Sizes.toolsPaddingMultiplier
                     
-                    BackwardCompatibleList {
+                    BackwardCompatibleList(rootViewType: Self.self) {
                         
                         Text(viewModel.pageTitle)
                             .font(FontLibrary.sfProTextRegular.font(size: 30))

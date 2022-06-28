@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-protocol ToolCardDelegate: AnyObject {
+protocol ToolCardViewModelDelegate: AnyObject {
     func toolCardTapped(resource: ResourceModel)
     func toolFavoriteButtonTapped(resource: ResourceModel)
     func toolDetailsButtonTapped(resource: ResourceModel)
@@ -26,7 +26,7 @@ class ToolCardViewModel: BaseToolCardViewModel, ToolItemInitialDownloadProgress 
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
-    private weak var delegate: ToolCardDelegate?
+    private weak var delegate: ToolCardViewModelDelegate?
     
     var attachmentsDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
     var translationDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
@@ -35,7 +35,7 @@ class ToolCardViewModel: BaseToolCardViewModel, ToolItemInitialDownloadProgress 
     
     // MARK: - Init
     
-    init(cardType: ToolCardType, resource: ResourceModel, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: ToolCardDelegate?) {
+    init(cardType: ToolCardType, resource: ResourceModel, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: ToolCardViewModelDelegate?) {
         
         self.resource = resource
         self.dataDownloader = dataDownloader
