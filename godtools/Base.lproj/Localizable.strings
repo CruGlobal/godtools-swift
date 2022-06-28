@@ -1,3 +1,7 @@
+"favorites.noTools.title" = "No favorite tools to display";
+"favorites.noTools.description" = "Tap on the heart icon to favorite a tool and make it available offline.";
+"favorites.noTools.button" = "Go to Tools";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Share image";
 "favorites.pageTitle" = "Welcome to GodTools";
 "favorites.favoriteLessons.title" = "Featured lesson";
 "favorites.favoriteTools.title" = "Your favorite tools";
