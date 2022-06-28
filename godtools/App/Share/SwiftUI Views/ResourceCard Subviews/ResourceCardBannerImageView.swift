@@ -13,19 +13,19 @@ struct ResourceCardBannerImageView: View {
     // MARK: - Properties
     
     let bannerImage: Image?
-    let cardType: ToolCardType
+    let isSquareLayout: Bool
     let cardWidth: CGFloat
     let cornerRadius: CGFloat
     
     // MARK: - Constants
     
     private enum Sizes {
-        enum Default {
+        enum Standard {
             static let cardWidth: CGFloat = 335
             static let bannerImageHeight: CGFloat = 87
             static let bannerImageAspectRatio: CGFloat = cardWidth/bannerImageHeight
         }
-        enum Spotlight {
+        enum Square {
             static let cardWidth: CGFloat = 200
             static let bannerImageHeight: CGFloat = 162
             static let bannerImageAspectRatio: CGFloat = cardWidth/bannerImageHeight
@@ -35,7 +35,7 @@ struct ResourceCardBannerImageView: View {
     // MARK: - Body
     
     var body: some View {
-        let bannerImageAspectRatio = cardType.isSquareLayout ? Sizes.Spotlight.bannerImageAspectRatio : Sizes.Default.bannerImageAspectRatio
+        let bannerImageAspectRatio = isSquareLayout ? Sizes.Square.bannerImageAspectRatio : Sizes.Standard.bannerImageAspectRatio
         
         OptionalImage(image: bannerImage, width: cardWidth, height: cardWidth / bannerImageAspectRatio)
             .cornerRadius(cornerRadius, corners: [.topLeft, .topRight])
@@ -53,7 +53,7 @@ struct ResourceCardBannerImageView_Previews: PreviewProvider {
         
         ResourceCardBannerImageView(
             bannerImage: Image.from(uiImage: bannerImage),
-            cardType: cardType,
+            isSquareLayout: cardType.isSquareLayout,
             cardWidth: cardType.isSquareLayout ? 200 : 375,
             cornerRadius: 6
         )
