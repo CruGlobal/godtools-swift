@@ -24,6 +24,7 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let analytics: AnalyticsContainer
     private weak var delegate: FavoritesContentViewModelDelegate?
+    
     private let getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase
     private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     
@@ -50,6 +51,7 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
     
     @Published var lessonsLoading = false
     @Published var toolsLoading = false
+    @Published var pageTitle: String = ""
     @Published var hideTutorialBanner: Bool
 
     // MARK: - Init
@@ -68,6 +70,8 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
         hideTutorialBanner = openTutorialCalloutCache.openTutorialCalloutDisabled
         
         super.init()
+        
+        setup()
     }
 }
 
@@ -91,6 +95,29 @@ extension FavoritesContentViewModel {
             analytics: analytics,
             delegate: self
         )
+    }
+}
+
+// MARK: - Private
+
+extension FavoritesContentViewModel {
+    
+    private func setup() {
+        setupBinding()
+        setupTitle()
+    }
+    
+    private func setupBinding() {
+        languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
+            DispatchQueue.main.async { [weak self] in
+                self?.setupTitle()
+            }
+        }
+    }
+    
+    private func setupTitle() {
+        let languageBundle = localizationServices.bundleLoader.bundleForPrimaryLanguageOrFallback(in: languageSettingsService)
+        pageTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.pageTitle")
     }
 }
 

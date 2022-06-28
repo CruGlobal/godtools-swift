@@ -42,6 +42,12 @@ struct FavoritesContentView: View {
                     
                     BackwardCompatibleList {
                         
+                        Text(viewModel.pageTitle)
+                            .font(FontLibrary.sfProTextRegular.font(size: 30))
+                            .foregroundColor(ColorPalette.gtGrey.color)
+                            .padding(.top, 12)
+                            .padding(.bottom, 15)
+                        
                         LessonCardsView(viewModel: viewModel.lessonCardsViewModel, width: width, leadingPadding: leadingTrailingPadding)
                             .listRowInsets(EdgeInsets())
                             .padding(.bottom, 10)
