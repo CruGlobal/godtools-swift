@@ -8,8 +8,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct BannerView<Content: View>: View {
     
     // MARK: - Properties
