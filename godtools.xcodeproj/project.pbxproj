@@ -1083,7 +1083,6 @@
 		D45922D62867998200904B87 /* BannerTextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922D52867998200904B87 /* BannerTextStyle.swift */; };
 		D45922D828679CEB00904B87 /* OpenTutorialBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922D728679CEB00904B87 /* OpenTutorialBannerView.swift */; };
 		D45922DB2869F83500904B87 /* OpenTutorialBannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922DA2869F83500904B87 /* OpenTutorialBannerViewModel.swift */; };
-		D45922DE286A2B2500904B87 /* BannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922DD286A2B2500904B87 /* BannerViewModel.swift */; };
 		D45922E3286A376800904B87 /* LessonCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922E2286A376800904B87 /* LessonCardView.swift */; };
 		D45922E5286A3A3B00904B87 /* LessonCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922E4286A3A3B00904B87 /* LessonCardViewModel.swift */; };
 		D45922E7286A405A00904B87 /* BaseLessonCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922E6286A405A00904B87 /* BaseLessonCardViewModel.swift */; };
@@ -2249,7 +2248,6 @@
 		D45922D52867998200904B87 /* BannerTextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerTextStyle.swift; sourceTree = "<group>"; };
 		D45922D728679CEB00904B87 /* OpenTutorialBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenTutorialBannerView.swift; sourceTree = "<group>"; };
 		D45922DA2869F83500904B87 /* OpenTutorialBannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenTutorialBannerViewModel.swift; sourceTree = "<group>"; };
-		D45922DD286A2B2500904B87 /* BannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerViewModel.swift; sourceTree = "<group>"; };
 		D45922E2286A376800904B87 /* LessonCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonCardView.swift; sourceTree = "<group>"; };
 		D45922E4286A3A3B00904B87 /* LessonCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonCardViewModel.swift; sourceTree = "<group>"; };
 		D45922E6286A405A00904B87 /* BaseLessonCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseLessonCardViewModel.swift; sourceTree = "<group>"; };
@@ -6614,7 +6612,6 @@
 			isa = PBXGroup;
 			children = (
 				D45922D32867973B00904B87 /* BannerView.swift */,
-				D45922DD286A2B2500904B87 /* BannerViewModel.swift */,
 			);
 			path = BannerView;
 			sourceTree = "<group>";
@@ -7300,7 +7297,6 @@
 				45AD1BD025938A4F00A096A0 /* LoadingViewModelType.swift in Sources */,
 				451CCF1D27A9D87600E8D2D3 /* MobileContentCardCollectionPagePositionState.swift in Sources */,
 				D44F3ABA283BC7DB0008390D /* ToolCategoriesViewModel.swift in Sources */,
-				D45922DE286A2B2500904B87 /* BannerViewModel.swift in Sources */,
 				D44F3ACD2859115D0008390D /* LanguageViewModel+String.swift in Sources */,
 				45AE975927C97A9500C2CB33 /* TipPage+MobileContentRenderableModel.swift in Sources */,
 				45AE975B27C97A9500C2CB33 /* Link+MobileContentRenderableModel.swift in Sources */,
