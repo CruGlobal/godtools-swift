@@ -77,6 +77,10 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
         let languageBundle = localizationServices.bundleLoader.bundleForPrimaryLanguageOrFallback(in: languageSettingsService)
         sectionTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.favoriteTools.title")
     }
+    
+    func removeFavoritedResource(resourceIds: [String]) {
+        removeTools(toolIdsToRemove: resourceIds)
+    }
 }
 
 // MARK: - Private
@@ -169,15 +173,7 @@ extension BaseFavoriteToolsViewModel {
     private func addFavoritedResource(resourceId: String) {
         if let tool = dataDownloader.resourcesCache.getResource(id: resourceId) {
             addTool(tool: tool)
-            // TODO: - GT-1631: Implement Find Tools in SwiftUI
-//            hidesFindToolsView.accept(value: !tools.value.isEmpty)
         }
-    }
-    
-    private func removeFavoritedResource(resourceIds: [String]) {
-        removeTools(toolIdsToRemove: resourceIds)
-        // TODO: - GT-1631: Implement Find Tools in SwiftUI
-//        hidesFindToolsView.accept(value: !tools.value.isEmpty)
     }
     
     private func reloadFavoritedResourcesFromCache() {
@@ -193,8 +189,5 @@ extension BaseFavoriteToolsViewModel {
         
         tools = filteredResources
         self.delegate?.toolsAreLoading(false)
-        
-        // TODO: - GT-1631: Implement Find Tools in SwiftUI
-//        hidesFindToolsView.accept(value: !filteredResources.isEmpty)
     }
 }

@@ -9,11 +9,6 @@
 import UIKit
 import SwiftUI
 
-protocol FavoritedToolsViewDelegate: AnyObject {
-    
-    func favoritedToolsViewFindToolsTapped(favoritedToolsView: FavoritedToolsView)
-}
-
 class FavoritedToolsView: UIHostingController<FavoritesContentView>, ToolsMenuPageView {
     
     private let contentView: FavoritesContentView
@@ -28,9 +23,7 @@ class FavoritedToolsView: UIHostingController<FavoritesContentView>, ToolsMenuPa
     @MainActor required dynamic init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    private weak var delegate: FavoritedToolsViewDelegate?
-    
+        
     // TODO: - GT-1643: make tutorial work in SwiftUI
 //    @IBOutlet weak private var openTutorialTop: NSLayoutConstraint!
     
@@ -38,13 +31,6 @@ class FavoritedToolsView: UIHostingController<FavoritesContentView>, ToolsMenuPa
         super.viewDidLoad()
         
         setupBinding()
-        
-        // TODO: - GT-1631: make find tools work in SwiftUI
-//        findToolsButton.addTarget(self, action: #selector(handleFindTools(button:)), for: .touchUpInside)
-    }
-    
-    func setDelegate(delegate: FavoritedToolsViewDelegate?) {
-        self.delegate = delegate
     }
     
     private func setupBinding() {
@@ -56,17 +42,6 @@ class FavoritedToolsView: UIHostingController<FavoritesContentView>, ToolsMenuPa
 //        openTutorialViewModel.hidesOpenTutorial.addObserver(self) { [weak self] (animatableValue: AnimatableValue<Bool>) in
 //            self?.setOpenTutorialHidden(animatableValue.value, animated: animatableValue.animated)
 //        }
-        
-        // TODO: - GT-1631: find tools
-//        viewModel.hidesFindToolsView.addObserver(self) { [weak self] (hidesFindToolsView: Bool) in
-//            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
-//                self?.findToolsView.alpha = hidesFindToolsView ? 0 : 1
-//            }, completion: nil)
-//        }
-    }
-    
-    @objc func handleFindTools(button: UIButton) {
-        delegate?.favoritedToolsViewFindToolsTapped(favoritedToolsView: self)
     }
     
     // TODO: - GT-1643: tutorial

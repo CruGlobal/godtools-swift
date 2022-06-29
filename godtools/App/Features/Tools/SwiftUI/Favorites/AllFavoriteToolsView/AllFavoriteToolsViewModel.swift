@@ -22,6 +22,8 @@ class AllFavoriteToolsViewModel: BaseFavoriteToolsViewModel {
         super.init(cardType: .standardWithNavButtons, dataDownloader: dataDownloader, deviceAttachmentBanners: deviceAttachmentBanners, favoritedResourcesCache: favoritedResourcesCache, languageSettingsService: languageSettingsService, localizationServices: localizationServices, delegate: nil, toolCardViewModelDelegate: nil)
     }
     
+    // MARK: - Overrides
+    
     override func cardViewModel(for tool: ResourceModel) -> BaseToolCardViewModel {
         return ToolCardViewModel(
             cardType: cardType,
@@ -34,6 +36,14 @@ class AllFavoriteToolsViewModel: BaseFavoriteToolsViewModel {
             delegate: self
         )
     }
+    
+    override func removeFavoritedResource(resourceIds: [String]) {
+        super.removeFavoritedResource(resourceIds: resourceIds)
+        
+        if tools.isEmpty {
+            closePage()
+        }
+    }
 }
 
 // MARK: - Public
@@ -41,6 +51,15 @@ class AllFavoriteToolsViewModel: BaseFavoriteToolsViewModel {
 extension AllFavoriteToolsViewModel {
     
     func backButtonTapped() {
+        closePage()
+    }
+}
+
+// MARK: - Private
+
+extension AllFavoriteToolsViewModel {
+    
+    func closePage() {
         flowDelegate?.navigate(step: .backTappedFromAllFavoriteTools)
     }
 }

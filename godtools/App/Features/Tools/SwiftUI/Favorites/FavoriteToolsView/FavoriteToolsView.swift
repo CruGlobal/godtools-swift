@@ -19,35 +19,16 @@ struct FavoriteToolsView: View {
     // MARK: - Body
     
     var body: some View {
-        if viewModel.tools.isEmpty {
+        VStack(alignment: .leading, spacing: 15) {
             
-        // TODO: - GT-1631: add find tools view
+            FavoriteToolsHeaderView(viewModel: viewModel, leadingPadding: leadingPadding)
             
-        } else {
-            
-            VStack(alignment: .leading, spacing: 15) {
+            if viewModel.tools.isEmpty {
                 
-                HStack(alignment: .bottom) {
-                    Text(viewModel.sectionTitle)
-                        .font(FontLibrary.sfProTextRegular.font(size: 22))
-                        .foregroundColor(ColorPalette.gtGrey.color)
-                        .padding(.leading, leadingPadding)
-                        .padding(.top, 24)
-                    
-                    Spacer()
-                    
-                    Text(viewModel.viewAllButtonText)
-                        .font(FontLibrary.sfProTextRegular.font(size: 12))
-                        .foregroundColor(ColorPalette.gtBlue.color)
-                        .background(Color.white)
-                        .padding(.bottom, 2)
-                        .frame(height: 30, alignment: .bottom)
-                        .onTapGesture {
-                            viewModel.viewAllButtonTapped()
-                        }
-
-                }
-                .padding(.trailing, 20)
+                NoFavoriteToolsView(viewModel: viewModel)
+                    .padding([.leading, .trailing], leadingPadding)
+                
+            } else {
                 
                 ToolCardsCarouselView(viewModel: viewModel, width: width, leadingTrailingPadding: leadingPadding)
             }

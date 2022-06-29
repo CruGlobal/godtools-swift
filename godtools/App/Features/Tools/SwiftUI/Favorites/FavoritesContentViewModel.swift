@@ -8,6 +8,10 @@
 
 import SwiftUI
 
+protocol FavoritesContentViewModelDelegate: AnyObject {
+    func favoriteToolsViewGoToToolsTapped()
+}
+
 class FavoritesContentViewModel: NSObject, ObservableObject {
     
     // MARK: - Properties
@@ -19,6 +23,7 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
     private let localizationServices: LocalizationServices
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let analytics: AnalyticsContainer
+    private weak var delegate: FavoritesContentViewModelDelegate?
     
     private(set) lazy var favoriteToolsViewModel: FavoriteToolsViewModel = {
         return FavoriteToolsViewModel(
@@ -53,6 +58,10 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
 // MARK: - Public
 
 extension FavoritesContentViewModel {
+    func setDelegate(delegate: FavoritesContentViewModelDelegate) {
+        self.delegate = delegate
+    }
+    
     func refreshTools() {
         dataDownloader.downloadInitialData()
     }
@@ -67,6 +76,10 @@ extension FavoritesContentViewModel: FavoriteToolsViewModelDelegate {
     
     func viewAllFavoriteToolsButtonTapped() {
         flowDelegate?.navigate(step: .viewAllFavoriteToolsTappedFromFavoritedTools)
+    }
+    
+    func goToToolsButtonTapped() {
+        delegate?.favoriteToolsViewGoToToolsTapped()
     }
     
     func toolCardTapped(resource: ResourceModel) {

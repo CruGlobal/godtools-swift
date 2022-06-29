@@ -11,6 +11,7 @@ import SwiftUI
 
 protocol FavoriteToolsViewModelDelegate: ToolCardViewModelDelegate, BaseFavoriteToolsViewModelDelegate {
     func viewAllFavoriteToolsButtonTapped()
+    func goToToolsButtonTapped()
 }
 
 class FavoriteToolsViewModel: BaseFavoriteToolsViewModel {
@@ -28,6 +29,9 @@ class FavoriteToolsViewModel: BaseFavoriteToolsViewModel {
     // MARK: - Published
     
     @Published var viewAllButtonText: String = ""
+    @Published var noFavoriteToolsTitle: String = ""
+    @Published var noFavoriteToolsDescription: String = ""
+    @Published var noFavoriteToolsButtonText: String = ""
     
     // MARK: - Init
     
@@ -40,7 +44,11 @@ class FavoriteToolsViewModel: BaseFavoriteToolsViewModel {
     
     override func setText() {
         let languageBundle = localizationServices.bundleLoader.bundleForPrimaryLanguageOrFallback(in: languageSettingsService)
+        
         viewAllButtonText = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.favoriteTools.viewAll") + " >"
+        noFavoriteToolsTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.noTools.title")
+        noFavoriteToolsDescription = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.noTools.description")
+        noFavoriteToolsButtonText = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.noTools.button")
         
         super.setText()
     }
@@ -51,5 +59,9 @@ class FavoriteToolsViewModel: BaseFavoriteToolsViewModel {
 extension FavoriteToolsViewModel {
     func viewAllButtonTapped() {
         favoriteToolsViewModelDelegate?.viewAllFavoriteToolsButtonTapped()
+    }
+    
+    func goToToolsButtonTapped() {
+        favoriteToolsViewModelDelegate?.goToToolsButtonTapped()
     }
 }
