@@ -9,6 +9,13 @@
 import Foundation
 import SwiftUI
 
+protocol ToolCardViewModelDelegate: AnyObject {
+    func toolCardTapped(resource: ResourceModel)
+    func toolFavoriteButtonTapped(resource: ResourceModel)
+    func toolDetailsButtonTapped(resource: ResourceModel)
+    func openToolButtonTapped(resource: ResourceModel)
+}
+
 class ToolCardViewModel: BaseToolCardViewModel, ToolItemInitialDownloadProgress {
     
     // MARK: - Properties
@@ -19,6 +26,7 @@ class ToolCardViewModel: BaseToolCardViewModel, ToolItemInitialDownloadProgress 
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
+    private weak var delegate: ToolCardViewModelDelegate?
     
     var attachmentsDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
     var translationDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
@@ -27,7 +35,7 @@ class ToolCardViewModel: BaseToolCardViewModel, ToolItemInitialDownloadProgress 
     
     // MARK: - Init
     
-    init(resource: ResourceModel, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices) {
+    init(cardType: ToolCardType, resource: ResourceModel, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: ToolCardViewModelDelegate?) {
         
         self.resource = resource
         self.dataDownloader = dataDownloader
@@ -35,8 +43,9 @@ class ToolCardViewModel: BaseToolCardViewModel, ToolItemInitialDownloadProgress 
         self.favoritedResourcesCache = favoritedResourcesCache
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
-                
-        super.init()
+        self.delegate = delegate
+        
+        super.init(cardType: cardType)
         
         setup()
     }
@@ -52,19 +61,39 @@ class ToolCardViewModel: BaseToolCardViewModel, ToolItemInitialDownloadProgress 
         languageSettingsService.primaryLanguage.removeObserver(self)
         languageSettingsService.parallelLanguage.removeObserver(self)
     }
+    
+    // MARK: - Overrides
  
-    
-    // MARK: - Public
-    
-    override func favoritedButtonTapped() {
-        favoritedResourcesCache.toggleFavorited(resourceId: resource.id)
+    override func favoriteToolButtonTapped() {
+        delegate?.toolFavoriteButtonTapped(resource: resource)
     }
+    
+    override func toolCardTapped() {
+        delegate?.toolCardTapped(resource: resource)
+    }
+
+    override func toolDetailsButtonTapped() {
+        delegate?.toolDetailsButtonTapped(resource: resource)
+    }
+    
+    override func openToolButtonTapped() {
+        delegate?.openToolButtonTapped(resource: resource)
+    }
+}
+
+// MARK: - Public
+ 
+extension ToolCardViewModel {
  
     func didDownloadAttachments() {
         reloadBannerImage()
     }
     
-    // MARK: - Private
+}
+
+// MARK: - Private
+
+extension ToolCardViewModel {
     
     private func setup() {
         setupPublishedProperties()
@@ -174,6 +203,8 @@ class ToolCardViewModel: BaseToolCardViewModel, ToolItemInitialDownloadProgress 
         
         title = toolName
         category = localizationServices.toolCategoryStringForBundle(bundle: languageBundle, attrCategory: resource.attrCategory)
+        detailsButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.favoriteLessons.details")
+        openButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "open")
         layoutDirection = LayoutDirection.from(languageDirection: languageDirection)
     }
     

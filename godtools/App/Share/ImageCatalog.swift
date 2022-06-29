@@ -29,6 +29,7 @@ enum ImageCatalog: String {
     case navShare = "share"
     case navToolSettings = "nav_tool_settings"
     case nextCard = "next_card"
+    case openTutorialArrow = "open_tutorial_arrow"
     case notFavorited = "not_favorited"
     case playIcon = "play_icon"
     case previousCard = "previous_card"

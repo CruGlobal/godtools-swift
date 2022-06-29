@@ -16,21 +16,6 @@ struct AllToolsContentView: View {
     
     // MARK: - Init
     
-    init(viewModel: AllToolsContentViewModel) {
-        self.viewModel = viewModel
-        
-        /*
-         About removing the List separators:
-         - iOS 15 - use the `listRowSeparator` view modifier to hide the separators
-         - iOS 13 - list is built on UITableView, so `UITableView.appearance` works to set the separator style
-         - iOS 14 - `appearance` no longer works, and the modifier doesn't yet exist.  Solution is the AllToolsListIOS14 view.
-         */
-        if #available(iOS 14.0, *) {} else {
-            // TODO: - When we stop supporting iOS 13, get rid of this.
-            UITableView.appearance(whenContainedInInstancesOf: [UIHostingController<AllToolsContentView>.self]).separatorStyle = .none
-        }
-    }
-    
     // MARK: - Body
     
     var body: some View {
@@ -49,33 +34,12 @@ struct AllToolsContentView: View {
                 GeometryReader { geo in
                     let width = geo.size.width
                     
-                    if #available(iOS 15.0, *) {
-                        // Pull to refresh is supported only in iOS 15+
+                    BackwardCompatibleList(rootViewType: Self.self) {
                         
-                        List {
-                            AllToolsList(viewModel: viewModel, width: width)
-                                .listRowSeparator(.hidden)
-                                
-                        }
-                        .modifier(PlainList())
-                        .refreshable {
-                            viewModel.refreshTools()
-                        }
+                        AllToolsList(viewModel: viewModel, width: width)
                         
-                    } else if #available(iOS 14.0, *) {
-                        
-                        ScrollView {
-                            LazyVStack(spacing: 0) {
-                                AllToolsList(viewModel: viewModel, width: width)
-                            }
-                        }
-                                                
-                    } else {
-                        
-                        List {
-                            AllToolsList(viewModel: viewModel, width: width)
-                        }
-                        .modifier(PlainList())
+                    } refreshHandler: {
+                        viewModel.refreshTools()
                     }
                 }
             }
