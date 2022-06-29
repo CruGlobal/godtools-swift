@@ -16,6 +16,8 @@ enum ImageCatalog: String {
     case favorited = "favorited"
     case favoritedCircle = "favorited_circle"
     case favoriteIcon = "favorite_icon"
+    case languageAvailableCheck = "language_available_check"
+    case languageUnavailableX = "language_unavailable_x"
     case lessonPageLeftArrow = "lesson_page_left_arrow"
     case lessonPageRightArrow = "lesson_page_right_arrow"
     case navClose = "nav_item_close"

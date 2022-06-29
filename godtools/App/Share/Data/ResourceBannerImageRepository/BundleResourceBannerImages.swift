@@ -1,25 +1,23 @@
 //
-//  DeviceAttachmentBanners.swift
+//  BundleResourceBannerImages.swift
 //  godtools
 //
-//  Created by Levi Eggert on 7/6/20.
-//  Copyright © 2020 Cru. All rights reserved.
+//  Created by Levi Eggert on 6/28/22.
+//  Copyright © 2022 Cru. All rights reserved.
 //
 
 import UIKit
 
-// TODO: Remove in place of ResourceBannerImageRepository. ~Levi
-@available(*, deprecated)
-class DeviceAttachmentBanners {
+class BundleResourceBannerImages {
     
     typealias ResourceId = String
     
-    private let deviceAttachments: [ResourceId: SHA256FileLocation]
+    private let bundleBannerImageFilenames: [ResourceId: SHA256FileLocation]
     private let bundle: Bundle = Bundle.main
     
-    required init() {
+    init() {
         
-        deviceAttachments = [
+        bundleBannerImageFilenames = [
             "1": SHA256FileLocation(sha256: "a6765002e46cea44dc6245bcb842ce01a0134c147c47cf108134a4c4d1a5c129", pathExtension: "jpg"),
             "2": SHA256FileLocation(sha256: "2626c83091f11eb08c2bded5d4a237fa986fe3a318d1fb14933906021a7493a7", pathExtension: "jpg"),
             "3": SHA256FileLocation(sha256: "86c8e65bddaa4b889e572aa89714ee846f27294abc62b69d291b52ea1cc05144", pathExtension: "jpg"),
@@ -33,9 +31,9 @@ class DeviceAttachmentBanners {
         ]
     }
     
-    func getDeviceBanner(resourceId: String) -> UIImage? {
+    func getBannerImage(resourceId: String) -> UIImage? {
         
-        guard let location = deviceAttachments[resourceId] else {
+        guard let location = bundleBannerImageFilenames[resourceId] else {
             return nil
         }
         
