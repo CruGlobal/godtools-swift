@@ -28,17 +28,24 @@ struct ToolDetailsView: View {
                 
                 ScrollView(.vertical, showsIndicators: true) {
                     
-                    ToolDetailsTitleHeaderView(viewModel: viewModel)
-                        .padding(EdgeInsets(top: 40, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))
-                    
-                    ToolDetailsPrimaryButtonsView(viewModel: viewModel, primaryButtonWidth: contentWidth)
-                        .padding(EdgeInsets(top: 16, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))                    
-                                        
-                    SegmentControl(selectedIndex: $selectedSegmentIndex, segments: viewModel.segments, segmentTappedClosure: { (index: Int) in
+                    VStack(alignment: .center, spacing: 0) {
+                                                
+                        ToolDetailsTitleHeaderView(viewModel: viewModel)
+                            .padding(EdgeInsets(top: 40, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))
                         
-                        viewModel.segmentTapped(index: index)
-                    })
-                    .padding(EdgeInsets(top: 50, leading: 0, bottom: 0, trailing: 0))
+                        ToolDetailsPrimaryButtonsView(viewModel: viewModel, primaryButtonWidth: contentWidth)
+                            .padding(EdgeInsets(top: 16, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))
+                                            
+                        SegmentControl(selectedIndex: $selectedSegmentIndex, segments: viewModel.segments, segmentTappedClosure: { (index: Int) in
+                            
+                            viewModel.segmentTapped(index: index)
+                        })
+                        .padding(EdgeInsets(top: 50, leading: 0, bottom: 0, trailing: 0))
+                    }
+                    .background(Rectangle()
+                        .fill(Color.white)
+                        .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 1)
+                    )
                     
                     Rectangle()
                         .frame(width: geometry.size.width, height: 20)
@@ -53,9 +60,14 @@ struct ToolDetailsView: View {
                     case .versions:
                         ToolDetailsVersionsView(viewModel: viewModel)
                     }
+                    
+                    Rectangle()
+                        .frame(width: geometry.size.width, height: 20)
+                        .foregroundColor(.clear)
                 }
             }
         }
+        .background(Color(.sRGB, red: 245 / 255, green: 245 / 255, blue: 245 / 255, opacity: 1))
         .onAppear {
             viewModel.pageViewed()
         }
