@@ -8,11 +8,7 @@
 
 import Foundation
 
-protocol ToolSpotlightDelegate: AnyObject {
-    func spotlightCardTapped(resource: ResourceModel)
-}
-
-class ToolSpotlightViewModel: NSObject, ObservableObject {
+class ToolSpotlightViewModel: ToolCardProvider {
     
     // MARK: - Properties
     
@@ -21,17 +17,16 @@ class ToolSpotlightViewModel: NSObject, ObservableObject {
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
-    private weak var delegate: ToolSpotlightDelegate?
+    private weak var delegate: ToolCardViewModelDelegate?
     
     // MARK: - Published
     
     @Published var spotlightTitle: String = ""
     @Published var spotlightSubtitle: String = ""
-    @Published var spotlightTools: [ResourceModel] = []
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: ToolSpotlightDelegate?) {
+    init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: ToolCardViewModelDelegate?) {
         self.dataDownloader = dataDownloader
         self.deviceAttachmentBanners = deviceAttachmentBanners
         self.favoritedResourcesCache = favoritedResourcesCache
@@ -49,6 +44,21 @@ class ToolSpotlightViewModel: NSObject, ObservableObject {
         dataDownloader.cachedResourcesAvailable.removeObserver(self)
         dataDownloader.resourcesUpdatedFromRemoteDatabase.removeObserver(self)
         languageSettingsService.primaryLanguage.removeObserver(self)
+    }
+    
+    // MARK: - Overrides
+    
+    override func cardViewModel(for tool: ResourceModel) -> BaseToolCardViewModel {
+        return ToolCardViewModel(
+            cardType: .square,
+            resource: tool,
+            dataDownloader: dataDownloader,
+            deviceAttachmentBanners: deviceAttachmentBanners,
+            favoritedResourcesCache: favoritedResourcesCache,
+            languageSettingsService: languageSettingsService,
+            localizationServices: localizationServices,
+            delegate: delegate
+        )
     }
 }
 
@@ -84,32 +94,12 @@ extension ToolSpotlightViewModel {
     }
     
     private func reloadResourcesFromCache() {
-        spotlightTools = dataDownloader.resourcesCache.getAllVisibleToolsSorted(andFilteredBy: { $0.attrSpotlight })
+        tools = dataDownloader.resourcesCache.getAllVisibleToolsSorted(andFilteredBy: { $0.attrSpotlight })
     }
     
     private func setTitleText() {
         let languageBundle = localizationServices.bundleLoader.bundleForPrimaryLanguageOrFallback(in: languageSettingsService)
         spotlightTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "allTools.spotlight.title")
         spotlightSubtitle = localizationServices.stringForBundle(bundle: languageBundle, key: "allTools.spotlight.description")
-    }
-}
-
-// MARK: - Public
-
-extension ToolSpotlightViewModel {
-    
-    func cardViewModel(for tool: ResourceModel) -> BaseToolCardViewModel {
-        return ToolCardViewModel(
-            resource: tool,
-            dataDownloader: dataDownloader,
-            deviceAttachmentBanners: deviceAttachmentBanners,
-            favoritedResourcesCache: favoritedResourcesCache,
-            languageSettingsService: languageSettingsService,
-            localizationServices: localizationServices
-        )
-    }
-    
-    func spotlightToolTapped(resource: ResourceModel) {
-        delegate?.spotlightCardTapped(resource: resource)
     }
 }

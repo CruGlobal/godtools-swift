@@ -13,7 +13,7 @@ protocol ToolsMenuViewModelType {
     var navTitleFont: UIFont { get }
     
     func lessonsWillAppear() -> LessonsListViewModelType
-    func favoritedToolsWillAppear() -> FavoritedToolsViewModelType
+    func favoritedToolsWillAppear() -> FavoritesContentViewModel
     func allToolsWillAppear() -> AllToolsContentViewModel
     func toolbarWillAppear() -> ToolsMenuToolbarViewModelType
     func menuTapped()

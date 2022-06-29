@@ -1,30 +1,30 @@
 //
-//  AllToolsContentView.swift
+//  FavoritesContentView.swift
 //  godtools
 //
-//  Created by Rachael Skeath on 4/6/22.
+//  Created by Rachael Skeath on 6/21/22.
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
 import SwiftUI
 
-struct AllToolsContentView: View {
+struct FavoritesContentView: View {
     
     // MARK: - Properties
     
-    @ObservedObject var viewModel: AllToolsContentViewModel
+    @ObservedObject var viewModel: FavoritesContentViewModel
     
-    // MARK: - Init
+    // MARK: - Constants
+    
+    private enum Sizes {
+        static let toolsPaddingMultiplier: CGFloat = 15/375
+    }
     
     // MARK: - Body
     
     var body: some View {
+        
         VStack {
-            if viewModel.hideFavoritingToolBanner == false {
-                FavoritingToolBannerView(viewModel: viewModel.getFavoritingToolBannerViewModel())
-                    .transition(.move(edge: .top))
-            }
-            
             if viewModel.isLoading {
                 
                 ActivityIndicator(style: .medium, isAnimating: .constant(true))
@@ -33,11 +33,15 @@ struct AllToolsContentView: View {
                 
                 GeometryReader { geo in
                     let width = geo.size.width
+                    let leadingTrailingPadding = width * Sizes.toolsPaddingMultiplier
                     
                     BackwardCompatibleList(rootViewType: Self.self) {
                         
-                        AllToolsList(viewModel: viewModel, width: width)
+                        // TODO: - GT-1632: Recommended Lessons section
                         
+                        FavoriteToolsView(viewModel: viewModel.favoriteToolsViewModel, width: width, leadingPadding: leadingTrailingPadding)
+                            .listRowInsets(EdgeInsets())
+                            
                     } refreshHandler: {
                         viewModel.refreshTools()
                     }
@@ -48,31 +52,23 @@ struct AllToolsContentView: View {
             viewModel.pageViewed()
         }
     }
-    
-    func pageViewed() {
-        viewModel.pageViewed()
-    }
 }
 
-// MARK: - Preview
-
-struct AllToolsContentView_Previews: PreviewProvider {
-    
+struct FavoritesContentView_Previews: PreviewProvider {
     static var previews: some View {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
-        let viewModel = AllToolsContentViewModel(
+        let viewModel = FavoritesContentViewModel(
             flowDelegate: MockFlowDelegate(),
             dataDownloader: appDiContainer.initialDataDownloader,
             deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
-            favoritingToolMessageCache: appDiContainer.favoritingToolMessageCache,
             analytics: appDiContainer.analytics
         )
         
-        AllToolsContentView(viewModel: viewModel)
+        FavoritesContentView(viewModel: viewModel)
     }
 }

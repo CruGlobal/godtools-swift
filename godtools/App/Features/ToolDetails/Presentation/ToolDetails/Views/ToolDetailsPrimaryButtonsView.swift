@@ -21,27 +21,27 @@ struct ToolDetailsPrimaryButtonsView: View {
         
         VStack(alignment: .center, spacing: 12) {
             
-            Button(action: {
+            GTBlueButton(
+                title: viewModel.openToolButtonTitle,
+                fontSize: 17,
+                width: primaryButtonWidth,
+                height: primaryButtonHeight,
+                cornerRadius: primaryButtonCornerRadius
+            ){
                 viewModel.openToolTapped()
-            }) {
-                Text(viewModel.openToolButtonTitle)
-                    .foregroundColor(Color.white)
             }
-            .frame(width: primaryButtonWidth, height: primaryButtonHeight, alignment: .center)
-            .background(ColorPalette.gtBlue.color)
-            .cornerRadius(primaryButtonCornerRadius)
             
             if !viewModel.hidesLearnToShareToolButton {
                 
-                Button(action: {
+                GTBlueButton(
+                    title: viewModel.learnToShareToolButtonTitle,
+                    fontSize: 17,
+                    width: primaryButtonWidth,
+                    height: primaryButtonHeight,
+                    cornerRadius: primaryButtonCornerRadius
+                ) {
                     viewModel.learnToShareToolTapped()
-                }) {
-                    Text(viewModel.learnToShareToolButtonTitle)
-                        .foregroundColor(Color.white)
                 }
-                .frame(width: primaryButtonWidth, height: primaryButtonHeight, alignment: .center)
-                .background(ColorPalette.gtBlue.color)
-                .cornerRadius(primaryButtonCornerRadius)
             }
             
             ToolDetailsToggleFavoriteButton(

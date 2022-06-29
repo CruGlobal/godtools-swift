@@ -12,7 +12,7 @@ struct ToolCardsView: View {
     
     // MARK: - Properties
     
-    @ObservedObject var viewModel: ToolCardsViewModel
+    @ObservedObject var viewModel: ToolCardProvider
     let width: CGFloat
     let leadingPadding: CGFloat
     

@@ -56,18 +56,15 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
         )
     }
     
-    func favoritedToolsWillAppear() -> FavoritedToolsViewModelType {
-
-        return FavoritedToolsViewModel(
+    func favoritedToolsWillAppear() -> FavoritesContentViewModel {
+        return FavoritesContentViewModel(
             flowDelegate: getFlowDelegate(),
             dataDownloader: initialDataDownloader,
+            deviceAttachmentBanners: deviceAttachmentBanners,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
             favoritedResourcesCache: favoritedResourcesCache,
-            deviceAttachmentBanners: deviceAttachmentBanners,
-            analytics: analytics,
-            getTutorialIsAvailableUseCase: getTutorialIsAvailableUseCase,
-            openTutorialCalloutCache: openTutorialCalloutCache
+            analytics: analytics
         )
     }
     

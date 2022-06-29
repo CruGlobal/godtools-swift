@@ -1,3 +1,8 @@
+"favorites.pageTitle" = "Welcome to GodTools";
+"favorites.favoriteLessons.details" = "Details";
+"favorites.favoriteLessons.title" = "Recommended";
+"favorites.favoriteTools.title" = "Your favorite tools";
+"favorites.favoriteTools.viewAll" = "View all";
 "toolSettings.languagesList.deleteLanguage.title" = "None";
 "toolSettings.chooseLanguage.toggleMessage" = "Toggle between the two different languages in this tool.";
 "toolDetails.versions.title" = "Versions";

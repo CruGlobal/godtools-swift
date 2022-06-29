@@ -13,7 +13,7 @@ struct ToolCardBannerImageView: View {
     // MARK: - Properties
     
     let bannerImage: Image?
-    let isSpotlight: Bool
+    let cardType: ToolCardType
     let cardWidth: CGFloat
     let cornerRadius: CGFloat
     
@@ -35,7 +35,7 @@ struct ToolCardBannerImageView: View {
     // MARK: - Body
     
     var body: some View {
-        let bannerImageAspectRatio = isSpotlight ? Sizes.Spotlight.bannerImageAspectRatio : Sizes.Default.bannerImageAspectRatio
+        let bannerImageAspectRatio = cardType.isSquareLayout ? Sizes.Spotlight.bannerImageAspectRatio : Sizes.Default.bannerImageAspectRatio
         
         OptionalImage(image: bannerImage, width: cardWidth, height: cardWidth / bannerImageAspectRatio)
             .cornerRadius(cornerRadius, corners: [.topLeft, .topRight])
@@ -49,12 +49,12 @@ struct ToolCardBannerImageView_Previews: PreviewProvider {
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         let bannerImage = appDiContainer.deviceAttachmentBanners.getDeviceBanner(resourceId: "2")
 
-        let isSpotlight = true
+        let cardType: ToolCardType = .square
         
         ToolCardBannerImageView(
             bannerImage: Image.from(uiImage: bannerImage),
-            isSpotlight: isSpotlight,
-            cardWidth: isSpotlight ? 200 : 375,
+            cardType: cardType,
+            cardWidth: cardType.isSquareLayout ? 200 : 375,
             cornerRadius: 6
         )
         .padding()
