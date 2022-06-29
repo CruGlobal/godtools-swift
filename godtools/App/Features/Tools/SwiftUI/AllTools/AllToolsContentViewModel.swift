@@ -87,32 +87,13 @@ extension AllToolsContentViewModel {
     }
 }
 
-// MARK: - Private
+// MARK: - FavoritingToolBannerViewModelDelegate
 
-extension AllToolsContentViewModel {
-    
-    private func toolTapped(resource: ResourceModel) {
-        trackToolTappedAnalytics()
-        flowDelegate?.navigate(step: .aboutToolTappedFromAllTools(resource: resource))
-    }
-}
-
-// MARK: - FavoritingToolBannerDelegate
-
-extension AllToolsContentViewModel: FavoritingToolBannerDelegate {
+extension AllToolsContentViewModel: FavoritingToolBannerViewModelDelegate {
     
     func closeBanner() {
         hideFavoritingToolBanner = true
         favoritingToolMessageCache.disableFavoritingToolMessage()
-    }
-}
-
-// MARK: - ToolSpotlightDelegate
-
-extension AllToolsContentViewModel: ToolSpotlightDelegate {
-    
-    func spotlightCardTapped(resource: ResourceModel) {
-        toolTapped(resource: resource)
     }
 }
 
@@ -128,14 +109,21 @@ extension AllToolsContentViewModel: ToolCategoriesViewModelDelegate {
 // MARK: - ToolCardsViewModelDelegate
 
 extension AllToolsContentViewModel: ToolCardsViewModelDelegate {
-    
     func toolCardTapped(resource: ResourceModel) {
-        toolTapped(resource: resource)
+        trackToolTappedAnalytics()
+        flowDelegate?.navigate(step: .aboutToolTappedFromAllTools(resource: resource))
+    }
+    
+    func toolFavoriteButtonTapped(resource: ResourceModel) {
+        favoritedResourcesCache.toggleFavorited(resourceId: resource.id)
     }
     
     func toolsAreLoading(_ isLoading: Bool) {
         self.isLoading = isLoading
     }
+    
+    func toolDetailsButtonTapped(resource: ResourceModel) {}
+    func openToolButtonTapped(resource: ResourceModel) {}
 }
 
 // MARK: - Analytics

@@ -146,8 +146,10 @@ class ToolsMenuView: UIViewController {
             return AllToolsView(contentView: AllToolsContentView(viewModel: viewModel.allToolsWillAppear()))
             
         case .favoritedTools:
-            let favoritedToolsView: FavoritedToolsView = FavoritedToolsView(viewModel: viewModel.favoritedToolsWillAppear())
-            favoritedToolsView.setDelegate(delegate: self)
+            let viewModel = viewModel.favoritedToolsWillAppear()
+            viewModel.setDelegate(delegate: self)
+            
+            let favoritedToolsView = FavoritedToolsView(contentView: FavoritesContentView(viewModel: viewModel))
             return favoritedToolsView
         
         case .lessons:
@@ -293,9 +295,9 @@ extension ToolsMenuView: UIScrollViewDelegate {
 
 // MARK: - FavoritedToolsViewDelegate
 
-extension ToolsMenuView: FavoritedToolsViewDelegate {
+extension ToolsMenuView: FavoritesContentViewModelDelegate {
     
-    func favoritedToolsViewFindToolsTapped(favoritedToolsView: FavoritedToolsView) {
+    func favoriteToolsViewGoToToolsTapped() {
               
         navigateToPage(pageType: .allTools, animated: true)
     }

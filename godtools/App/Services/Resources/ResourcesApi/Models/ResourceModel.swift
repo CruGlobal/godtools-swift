@@ -188,6 +188,10 @@ extension ResourceModel {
         return resourceTypeEnum.isToolType
     }
     
+    var isLessonType: Bool {
+        return resourceTypeEnum.isLessonType
+    }
+    
     func supportsLanguage(languageId: String) -> Bool {
         if !languageId.isEmpty {
             return languageIds.contains(languageId)

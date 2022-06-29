@@ -43,6 +43,10 @@ class ResourcesCache {
         return resources
     }
     
+    func getAllVisibleLessonsSorted(andFilteredBy additionalFilter: ResourceFilter? = nil) -> [ResourceModel] {
+        return getSortedResources().filterForLessonTypes(andFilteredBy: additionalFilter)
+    }
+    
     func getAllVisibleToolsSorted(andFilteredBy additionalFilter: ResourceFilter? = nil) -> [ResourceModel] {
         return getSortedResources().filterForToolTypes(andFilteredBy: additionalFilter)
     }
