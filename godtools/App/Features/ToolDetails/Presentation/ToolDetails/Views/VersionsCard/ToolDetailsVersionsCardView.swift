@@ -13,9 +13,7 @@ struct ToolDetailsVersionsCardView: View {
     private let bannerHeight: CGFloat = 87
     
     @ObservedObject var viewModel: ToolDetailsVersionsCardViewModel
-    
-    @State var isSelected: Bool = false
-    
+        
     var body: some View {
         
         ZStack {
@@ -39,7 +37,7 @@ struct ToolDetailsVersionsCardView: View {
                 
                 HStack(alignment: .top, spacing: 0) {
                     
-                    CircleSelectorView(isSelected: $isSelected)
+                    CircleSelectorView(isSelected: viewModel.isSelected)
                         .padding(EdgeInsets(top: 3, leading: 0, bottom: 0, trailing: 0))
                     
                     Rectangle()
@@ -109,12 +107,14 @@ struct ToolDetailsVersionsCardView_Preview: PreviewProvider {
             primaryLanguage: "English",
             primaryLanguageIsSupported: true,
             parallelLanguage: "Spanish",
-            parallelLanguageIsSupported: false
+            parallelLanguageIsSupported: false,
+            isDefaultVersion: false
         )
         
         let viewModel = ToolDetailsVersionsCardViewModel(
             toolVersion: toolVersion,
-            bannerImageRepository: appDiContainer.getResourceBannerImageRepository()
+            bannerImageRepository: appDiContainer.getResourceBannerImageRepository(),
+            isSelected: false
         )
         
         ToolDetailsVersionsCardView(viewModel: viewModel)
