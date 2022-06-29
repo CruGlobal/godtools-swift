@@ -12,7 +12,7 @@ import RealmSwift
 class RealmDatabase {
     
     private static let config: Realm.Configuration = RealmDatabase.createConfig
-    private static let schemaVersion: UInt64 = 7
+    private static let schemaVersion: UInt64 = 8
     
     private let backgroundQueue: DispatchQueue = DispatchQueue(label: "realm.background_queue", attributes: .concurrent)
     

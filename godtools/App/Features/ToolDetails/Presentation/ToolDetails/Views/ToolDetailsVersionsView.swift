@@ -10,10 +10,16 @@ import SwiftUI
 
 struct ToolDetailsVersionsView: View {
         
+    @ObservedObject var viewModel: ToolDetailsViewModel
+    
     var body: some View {
         
         VStack(alignment: .leading, spacing: 0) {
             
+            ForEach(viewModel.toolVersions) { toolVersion in
+                
+                ToolDetailsVersionsCardView()
+            }
         }
     }
 }

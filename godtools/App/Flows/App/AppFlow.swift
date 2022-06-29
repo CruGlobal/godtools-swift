@@ -695,7 +695,9 @@ extension AppFlow {
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             analytics: appDiContainer.analytics,
             getToolTranslationsUseCase: appDiContainer.getToolTranslationsUseCase(),
-            languagesRepository: appDiContainer.getLanguagesRepository()
+            languagesRepository: appDiContainer.getLanguagesRepository(),
+            getToolVersionsUseCase: appDiContainer.getToolVersionsUseCase()
+            
         )
         
         let view = ToolDetailsHostingView(view: ToolDetailsView(viewModel: viewModel))

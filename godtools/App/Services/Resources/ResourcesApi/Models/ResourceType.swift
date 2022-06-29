@@ -13,6 +13,7 @@ enum ResourceType: String {
     case article = "article"
     case chooseYourOwnAdventure = "cyoa"
     case lesson = "lesson"
+    case metaTool = "metatool"
     case tract = "tract"
     case unknown = "unknown"
 }
@@ -21,7 +22,7 @@ extension ResourceType {
     
     var isToolType: Bool {
         switch self {
-        case .article, .chooseYourOwnAdventure, .tract:
+        case .article, .chooseYourOwnAdventure, .metaTool, .tract:
             return true
             
         case .lesson, .unknown:
