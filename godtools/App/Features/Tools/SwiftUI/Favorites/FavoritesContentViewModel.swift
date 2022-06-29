@@ -24,6 +24,8 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let analytics: AnalyticsContainer
     private weak var delegate: FavoritesContentViewModelDelegate?
+    private let getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase
+    private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     
     private(set) lazy var favoriteToolsViewModel: FavoriteToolsViewModel = {
         return FavoriteToolsViewModel(
@@ -39,10 +41,11 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
     // MARK: - Published
     
     @Published var isLoading: Bool = false
-    
+    @Published var hideTutorialBanner: Bool
+
     // MARK: - Init
     
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, analytics: AnalyticsContainer) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, analytics: AnalyticsContainer, getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase, openTutorialCalloutCache: OpenTutorialCalloutCacheType) {
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.deviceAttachmentBanners = deviceAttachmentBanners
@@ -50,6 +53,10 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
         self.localizationServices = localizationServices
         self.favoritedResourcesCache = favoritedResourcesCache
         self.analytics = analytics
+        self.getTutorialIsAvailableUseCase = getTutorialIsAvailableUseCase
+        self.openTutorialCalloutCache = openTutorialCalloutCache
+        
+        hideTutorialBanner = openTutorialCalloutCache.openTutorialCalloutDisabled
         
         super.init()
     }
@@ -64,6 +71,32 @@ extension FavoritesContentViewModel {
     
     func refreshTools() {
         dataDownloader.downloadInitialData()
+    }
+    
+    func getTutorialBannerViewModel() -> OpenTutorialBannerViewModel {
+        return OpenTutorialBannerViewModel(
+            flowDelegate: flowDelegate,
+            getTutorialIsAvailableUseCase: getTutorialIsAvailableUseCase,
+            openTutorialCalloutCache: openTutorialCalloutCache,
+            localizationServices: localizationServices,
+            analytics: analytics,
+            delegate: self
+        )
+    }
+}
+
+// MARK: - OpenTutorialBannerViewModelDelegate
+
+extension FavoritesContentViewModel: OpenTutorialBannerViewModelDelegate {
+    func closeBanner() {
+        hideTutorialBanner = true
+        openTutorialCalloutCache.disableOpenTutorialCallout()
+    }
+    
+    func openTutorial() {
+        flowDelegate?.navigate(step: .openTutorialTappedFromTools)
+        
+        closeBanner()
     }
 }
 

@@ -12,44 +12,31 @@ struct FavoritingToolBannerView: View {
     
     // MARK: - Properties
     
-    @ObservedObject var viewModel: BaseFavoritingToolBannerViewModel
+    @ObservedObject var viewModel: FavoritingToolBannerViewModel
     
     // MARK: - Body
     
     var body: some View {
-        ZStack(alignment: .topTrailing) {
-            ColorPalette.banner.color
+        
+        BannerView {
             
-            HStack {
-                Spacer()
-                
-                Text(viewModel.message)
-                    .font(FontLibrary.sfProTextRegular.font(size: 18))
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(ColorPalette.gtGrey.color)
-                    .padding([.top, .bottom], 30)
-                    .padding([.leading, .trailing], 45)
-                
-                Spacer()
-            }
+            Text(viewModel.message)
+                .modifier(BannerTextStyle())
             
-            Image(ImageCatalog.navClose.name)
-                .padding(.trailing, 4)
-                .frame(width: 44, height: 44)
-                .onTapGesture {
-                    withAnimation {
-                        viewModel.closeTapped()
-                    }
-                }
+        } closeButtonTapHandler: {
+            
+            viewModel.closeTapped()
         }
-        .fixedSize(horizontal: false, vertical: true)
     }
 }
 
 struct FavoritingToolBannerView_Previews: PreviewProvider {
     static var previews: some View {
         
-        FavoritingToolBannerView(viewModel: BaseFavoritingToolBannerViewModel(message: "This is a test message.  It's pretty long.  Let's see what happens when the lines need to wrap."))
+        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
+        let viewModel = FavoritingToolBannerViewModel(localizationServices: appDiContainer.localizationServices, delegate: nil)
+        
+        FavoritingToolBannerView(viewModel: viewModel)
             .frame(width: 375)
             .previewLayout(.sizeThatFits)
     }
