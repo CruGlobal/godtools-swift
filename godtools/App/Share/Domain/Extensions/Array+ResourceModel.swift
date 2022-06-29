@@ -21,6 +21,17 @@ extension Array where Element == ResourceModel {
         }
     }
     
+    func filterForLessonTypes(andFilteredBy additionalFilter: ResourceFilter? = nil) -> [ResourceModel] {
+        return self.filter { resource in
+            
+            if let additionalFilter = additionalFilter, additionalFilter(resource) == false {
+                return false
+            }
+            
+            return resource.isLessonType && resource.isHidden == false
+        }
+    }
+    
     func sortedByPrimaryLanguageAvailable(languageSettingsService: LanguageSettingsService, dataDownloader: InitialDataDownloader) -> [ResourceModel] {
         guard let primaryLanguageId = languageSettingsService.primaryLanguage.value?.id else { return self }
         

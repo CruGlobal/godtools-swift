@@ -159,6 +159,9 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         case .lessonTappedFromLessonsList(let resource):
             navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)
             
+        case .lessonTappedFromFeaturedLessons(let resource):
+            navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)
+            
         case .viewAllFavoriteToolsTappedFromFavoritedTools:
             navigateToAllToolFavorites()
             

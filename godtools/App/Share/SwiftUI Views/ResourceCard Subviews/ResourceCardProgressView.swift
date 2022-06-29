@@ -1,5 +1,5 @@
 //
-//  ToolCardProgressView.swift
+//  ResourceCardProgressView.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 5/11/22.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct ToolCardProgressView: View {
+struct ResourceCardProgressView: View {
     let frontProgress: Double
     let backProgress: Double
     
@@ -21,9 +21,9 @@ struct ToolCardProgressView: View {
     }
 }
 
-struct ToolCardProgressView_Previews: PreviewProvider {
+struct ResourceCardProgressView_Previews: PreviewProvider {
     static var previews: some View {
-        ToolCardProgressView(frontProgress: 0.5, backProgress: 0.99)
+        ResourceCardProgressView(frontProgress: 0.5, backProgress: 0.99)
             .padding()
             .previewLayout(.sizeThatFits)
     }

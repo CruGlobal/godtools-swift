@@ -30,7 +30,7 @@ struct FavoritesContentView: View {
                 OpenTutorialBannerView(viewModel: viewModel.getTutorialBannerViewModel())
             }
             
-            if viewModel.isLoading {
+            if viewModel.lessonsLoading && viewModel.toolsLoading {
                 
                 ActivityIndicator(style: .medium, isAnimating: .constant(true))
                 
@@ -42,13 +42,23 @@ struct FavoritesContentView: View {
                     
                     BackwardCompatibleList(rootViewType: Self.self) {
                         
-                        // TODO: - GT-1632: Recommended Lessons section
+                        Text(viewModel.pageTitle)
+                            .font(FontLibrary.sfProTextRegular.font(size: 30))
+                            .foregroundColor(ColorPalette.gtGrey.color)
+                            .padding(.top, 12)
+                            .padding(.bottom, 15)
+                        
+                        LessonCardsView(viewModel: viewModel.lessonCardsViewModel, width: width, leadingPadding: leadingTrailingPadding)
+                            .listRowInsets(EdgeInsets())
+                            .padding(.bottom, 10)
                         
                         FavoriteToolsView(viewModel: viewModel.favoriteToolsViewModel, width: width, leadingPadding: leadingTrailingPadding)
                             .listRowInsets(EdgeInsets())
                             
+                        Spacer()
+                        
                     } refreshHandler: {
-                        viewModel.refreshTools()
+                        viewModel.refreshData()
                     }
                 }
             }

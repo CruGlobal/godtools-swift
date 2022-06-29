@@ -24,9 +24,18 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let analytics: AnalyticsContainer
     private weak var delegate: FavoritesContentViewModelDelegate?
+    
     private let getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase
     private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     
+    private(set) lazy var lessonCardsViewModel: LessonCardsViewModel = {
+        return LessonCardsViewModel(
+            dataDownloader: dataDownloader,
+            languageSettingsService: languageSettingsService,
+            localizationServices: localizationServices,
+            delegate: self
+        )
+    }()
     private(set) lazy var favoriteToolsViewModel: FavoriteToolsViewModel = {
         return FavoriteToolsViewModel(
             dataDownloader: dataDownloader,
@@ -40,7 +49,9 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
     
     // MARK: - Published
     
-    @Published var isLoading: Bool = false
+    @Published var lessonsLoading = false
+    @Published var toolsLoading = false
+    @Published var pageTitle: String = ""
     @Published var hideTutorialBanner: Bool
 
     // MARK: - Init
@@ -59,6 +70,12 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
         hideTutorialBanner = openTutorialCalloutCache.openTutorialCalloutDisabled
         
         super.init()
+        
+        setup()
+    }
+    
+    deinit {
+        languageSettingsService.primaryLanguage.removeObserver(self)
     }
 }
 
@@ -69,7 +86,7 @@ extension FavoritesContentViewModel {
         self.delegate = delegate
     }
     
-    func refreshTools() {
+    func refreshData() {
         dataDownloader.downloadInitialData()
     }
     
@@ -82,6 +99,29 @@ extension FavoritesContentViewModel {
             analytics: analytics,
             delegate: self
         )
+    }
+}
+
+// MARK: - Private
+
+extension FavoritesContentViewModel {
+    
+    private func setup() {
+        setupBinding()
+        setupTitle()
+    }
+    
+    private func setupBinding() {
+        languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
+            DispatchQueue.main.async { [weak self] in
+                self?.setupTitle()
+            }
+        }
+    }
+    
+    private func setupTitle() {
+        let languageBundle = localizationServices.bundleLoader.bundleForPrimaryLanguageOrFallback(in: languageSettingsService)
+        pageTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.pageTitle")
     }
 }
 
@@ -100,11 +140,23 @@ extension FavoritesContentViewModel: OpenTutorialBannerViewModelDelegate {
     }
 }
 
+// MARK: - LessonCardsViewModelDelegate
+
+extension FavoritesContentViewModel: LessonCardsViewModelDelegate {
+    func lessonsAreLoading(_ isLoading: Bool) {
+        lessonsLoading = isLoading
+    }
+    
+    func lessonCardTapped(resource: ResourceModel) {
+        flowDelegate?.navigate(step: .lessonTappedFromFeaturedLessons(resource: resource))
+    }
+}
+
 // MARK: - FavoriteToolsViewModelDelegate
 
 extension FavoritesContentViewModel: FavoriteToolsViewModelDelegate {
     func toolsAreLoading(_ isLoading: Bool) {
-        self.isLoading = isLoading
+        toolsLoading = isLoading
     }
     
     func viewAllFavoriteToolsButtonTapped() {

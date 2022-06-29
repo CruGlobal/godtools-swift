@@ -1,5 +1,5 @@
 //
-//  ToolCardImageView.swift
+//  ResourceCardBannerImageView.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 5/11/22.
@@ -8,24 +8,24 @@
 
 import SwiftUI
 
-struct ToolCardBannerImageView: View {
+struct ResourceCardBannerImageView: View {
     
     // MARK: - Properties
     
     let bannerImage: Image?
-    let cardType: ToolCardType
+    let isSquareLayout: Bool
     let cardWidth: CGFloat
     let cornerRadius: CGFloat
     
     // MARK: - Constants
     
     private enum Sizes {
-        enum Default {
+        enum Standard {
             static let cardWidth: CGFloat = 335
             static let bannerImageHeight: CGFloat = 87
             static let bannerImageAspectRatio: CGFloat = cardWidth/bannerImageHeight
         }
-        enum Spotlight {
+        enum Square {
             static let cardWidth: CGFloat = 200
             static let bannerImageHeight: CGFloat = 162
             static let bannerImageAspectRatio: CGFloat = cardWidth/bannerImageHeight
@@ -35,7 +35,7 @@ struct ToolCardBannerImageView: View {
     // MARK: - Body
     
     var body: some View {
-        let bannerImageAspectRatio = cardType.isSquareLayout ? Sizes.Spotlight.bannerImageAspectRatio : Sizes.Default.bannerImageAspectRatio
+        let bannerImageAspectRatio = isSquareLayout ? Sizes.Square.bannerImageAspectRatio : Sizes.Standard.bannerImageAspectRatio
         
         OptionalImage(image: bannerImage, width: cardWidth, height: cardWidth / bannerImageAspectRatio)
             .cornerRadius(cornerRadius, corners: [.topLeft, .topRight])
@@ -44,16 +44,16 @@ struct ToolCardBannerImageView: View {
 
 // MARK: - Preview
 
-struct ToolCardBannerImageView_Previews: PreviewProvider {
+struct ResourceCardBannerImageView_Previews: PreviewProvider {
     static var previews: some View {
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         let bannerImage = appDiContainer.deviceAttachmentBanners.getDeviceBanner(resourceId: "2")
 
         let cardType: ToolCardType = .square
         
-        ToolCardBannerImageView(
+        ResourceCardBannerImageView(
             bannerImage: Image.from(uiImage: bannerImage),
-            cardType: cardType,
+            isSquareLayout: cardType.isSquareLayout,
             cardWidth: cardType.isSquareLayout ? 200 : 375,
             cornerRadius: 6
         )
