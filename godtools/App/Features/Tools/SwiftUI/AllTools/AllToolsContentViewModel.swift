@@ -87,9 +87,9 @@ extension AllToolsContentViewModel {
     }
 }
 
-// MARK: - BannerViewModelDelegate
+// MARK: - FavoritingToolBannerViewModelDelegate
 
-extension AllToolsContentViewModel: BannerViewModelDelegate {
+extension AllToolsContentViewModel: FavoritingToolBannerViewModelDelegate {
     
     func closeBanner() {
         hideFavoritingToolBanner = true

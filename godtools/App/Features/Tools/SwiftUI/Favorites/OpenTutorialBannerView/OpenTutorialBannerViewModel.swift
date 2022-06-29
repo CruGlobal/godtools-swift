@@ -8,11 +8,12 @@
 
 import Foundation
 
-protocol OpenTutorialBannerViewModelDelegate: BannerViewModelDelegate {
+protocol OpenTutorialBannerViewModelDelegate: AnyObject {
+    func closeBanner()
     func openTutorial()
 }
 
-class OpenTutorialBannerViewModel: BannerViewModel {
+class OpenTutorialBannerViewModel: NSObject, ObservableObject {
     
     // MARK: - Properties
     
@@ -21,10 +22,7 @@ class OpenTutorialBannerViewModel: BannerViewModel {
     private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
     private weak var flowDelegate: FlowDelegate?
-    
-    var openTutorialBannerViewModelDelegate: OpenTutorialBannerViewModelDelegate? {
-        return delegate as? OpenTutorialBannerViewModelDelegate
-    }
+    private weak var delegate: OpenTutorialBannerViewModelDelegate?
     
     // MARK: - Published
     
@@ -40,19 +38,10 @@ class OpenTutorialBannerViewModel: BannerViewModel {
         self.openTutorialCalloutCache = openTutorialCalloutCache
         self.localizationServices = localizationServices
         self.analytics = analytics
+        self.delegate = delegate
         
         showTutorialText = localizationServices.stringForMainBundle(key: "openTutorial.showTutorialLabel.text")
         openTutorialButtonText = localizationServices.stringForMainBundle(key: "openTutorial.openTutorialButton.title")
-        
-        super.init(delegate: delegate)
-    }
-    
-    // MARK: - Overrides
-    
-    override func closeTapped() {
-        super.closeTapped()
-        
-        trackCloseTapped()
     }
 }
 
@@ -60,8 +49,13 @@ class OpenTutorialBannerViewModel: BannerViewModel {
 
 extension OpenTutorialBannerViewModel {
     
+    func closeTapped() {
+        delegate?.closeBanner()
+        trackCloseTapped()
+    }
+    
     func openTutorialButtonTapped() {
-        openTutorialBannerViewModelDelegate?.openTutorial()
+        delegate?.openTutorial()
     }
 }
 
