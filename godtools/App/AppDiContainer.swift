@@ -326,6 +326,13 @@ class AppDiContainer {
         return OnboardingTutorialViewedUserDefaultsCache()
     }
     
+    func getResourceBannerImageRepository() -> ResourceBannerImageRepository {
+        return ResourceBannerImageRepository(
+            attachmentsFileCache: attachmentsFileCache,
+            bundleBannerImages: BundleResourceBannerImages()
+        )
+    }
+    
     func getSetupParallelLanguageAvailability() -> SetupParallelLanguageAvailabilityType {
         return SetupParallelLanguageAvailability(
             setupParallelLanguageViewedCache: getSetupParallelLanguageViewedCache(),
@@ -373,8 +380,10 @@ class AppDiContainer {
     func getToolVersionsUseCase() -> GetToolVersionsUseCase {
         return GetToolVersionsUseCase(
             resourcesCache: initialDataDownloader.resourcesCache,
+            localizationServices: localizationServices,
             languageSettingsService: languageSettingsService,
-            getToolLanguagesUseCase: getToolLanguagesUseCase()
+            getToolLanguagesUseCase: getToolLanguagesUseCase(),
+            getTranslatedLanguageUseCase: getTranslatedLanguageUseCase()
         )
     }
     
@@ -403,7 +412,10 @@ class AppDiContainer {
     }
     
     func getTranslatedLanguageUseCase() -> GetTranslatedLanguageUseCase {
-        return GetTranslatedLanguageUseCase(localizationServices: localizationServices)
+        return GetTranslatedLanguageUseCase(
+            languagesRepository: getLanguagesRepository(),
+            localizationServices: localizationServices
+        )
     }
     
     func getTutorialIsAvailableUseCase() -> GetTutorialIsAvailableUseCase {

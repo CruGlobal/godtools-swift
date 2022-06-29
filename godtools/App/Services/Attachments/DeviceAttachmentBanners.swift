@@ -8,6 +8,8 @@
 
 import UIKit
 
+// TODO: Remove in place of ResourceBannerImageRepository. ~Levi
+@available(*, deprecated)
 class DeviceAttachmentBanners {
     
     typealias ResourceId = String

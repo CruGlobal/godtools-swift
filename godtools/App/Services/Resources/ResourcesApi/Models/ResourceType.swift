@@ -29,4 +29,14 @@ extension ResourceType {
             return false
         }
     }
+    
+    var isLessonType: Bool {
+        switch self {
+        case .lesson:
+            return true
+            
+        default:
+            return false
+        }
+    }
 }

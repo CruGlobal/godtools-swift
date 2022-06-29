@@ -17,8 +17,10 @@ struct ToolDetailsVersionsView: View {
         VStack(alignment: .leading, spacing: 0) {
             
             ForEach(viewModel.toolVersions) { toolVersion in
-                
-                ToolDetailsVersionsCardView()
+                                
+                ToolDetailsVersionsCardView(
+                    viewModel: viewModel.getToolVersionCardViewModel(toolVersion: toolVersion)
+                )
             }
         }
     }

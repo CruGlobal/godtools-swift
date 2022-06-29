@@ -8,6 +8,7 @@
 
 import UIKit
 import MessageUI
+import SwiftUI
 
 class AppFlow: NSObject, ToolNavigationFlow, Flow {
     
@@ -157,6 +158,15 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
         case .lessonTappedFromLessonsList(let resource):
             navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)
+            
+        case .lessonTappedFromFeaturedLessons(let resource):
+            navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)
+            
+        case .viewAllFavoriteToolsTappedFromFavoritedTools:
+            navigateToAllToolFavorites()
+            
+        case .backTappedFromAllFavoriteTools:
+            navigationController.popViewController(animated: true)
             
         case .toolTappedFromFavoritedTools(let resource):
             navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)
@@ -651,6 +661,25 @@ extension AppFlow {
     }
 }
 
+// MARK: - Tool Favorites
+
+extension AppFlow {
+    
+    private func navigateToAllToolFavorites() {
+        let viewModel = AllFavoriteToolsViewModel(
+            dataDownloader: appDiContainer.initialDataDownloader,
+            deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
+            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
+            languageSettingsService: appDiContainer.languageSettingsService,
+            localizationServices: appDiContainer.localizationServices,
+            flowDelegate: self
+        )
+        
+        let view = AllFavoriteToolsHostingView(view: AllFavoriteToolsView(viewModel: viewModel))
+        navigationController.pushViewController(view, animated: true)
+    }
+}
+
 // MARK: - Tool Detail
 
 extension AppFlow {
@@ -667,7 +696,8 @@ extension AppFlow {
             analytics: appDiContainer.analytics,
             getToolTranslationsUseCase: appDiContainer.getToolTranslationsUseCase(),
             languagesRepository: appDiContainer.getLanguagesRepository(),
-            getToolVersionsUseCase: appDiContainer.getToolVersionsUseCase()
+            getToolVersionsUseCase: appDiContainer.getToolVersionsUseCase(),
+            bannerImageRepository: appDiContainer.getResourceBannerImageRepository()
             
         )
         
