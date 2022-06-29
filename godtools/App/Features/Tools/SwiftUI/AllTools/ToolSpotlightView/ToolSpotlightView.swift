@@ -28,7 +28,7 @@ struct ToolSpotlightView: View {
                 .padding(.leading, leadingPadding)
                 .padding(.top, 24)
                 
-                ToolCardsCarouselView(viewModel: viewModel, width: width, leadingTrailingPadding: leadingPadding)
+                ToolCardsCarouselView(viewModel: viewModel, cardType: .square, width: width, leadingTrailingPadding: leadingPadding)
             }
         }
     }

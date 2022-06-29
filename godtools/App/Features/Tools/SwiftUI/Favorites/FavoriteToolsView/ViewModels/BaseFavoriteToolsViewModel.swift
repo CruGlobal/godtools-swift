@@ -16,7 +16,6 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
  
     // MARK: - Properties
     
-    let cardType: ToolCardType
     let dataDownloader: InitialDataDownloader
     let deviceAttachmentBanners: DeviceAttachmentBanners
     let favoritedResourcesCache: FavoritedResourcesCache
@@ -31,8 +30,7 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
     
     // MARK: - Init
     
-    init(cardType: ToolCardType, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: BaseFavoriteToolsViewModelDelegate?, toolCardViewModelDelegate: ToolCardViewModelDelegate?) {
-        self.cardType = cardType
+    init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: BaseFavoriteToolsViewModelDelegate?, toolCardViewModelDelegate: ToolCardViewModelDelegate?) {
         self.dataDownloader = dataDownloader
         self.deviceAttachmentBanners = deviceAttachmentBanners
         self.favoritedResourcesCache = favoritedResourcesCache
@@ -60,7 +58,6 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
     
     override func cardViewModel(for tool: ResourceModel) -> BaseToolCardViewModel {
         return ToolCardViewModel(
-            cardType: cardType,
             resource: tool,
             dataDownloader: dataDownloader,
             deviceAttachmentBanners: deviceAttachmentBanners,

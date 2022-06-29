@@ -13,10 +13,11 @@ struct ToolCardView: View {
     // MARK: - Properties
     
     @ObservedObject var viewModel: BaseToolCardViewModel
+    let cardType: ToolCardType
     let cardWidth: CGFloat
     
     var whiteSpaceHeight: CGFloat? {
-        switch viewModel.cardType {
+        switch cardType {
         case .standard, .standardWithNavButtons:
             return nil
         case .square:
@@ -44,7 +45,7 @@ struct ToolCardView: View {
             VStack(alignment: .leading, spacing: 0) {
                 ZStack(alignment: .topTrailing) {
                     
-                    ResourceCardBannerImageView(bannerImage: viewModel.bannerImage, isSquareLayout: viewModel.cardType.isSquareLayout, cardWidth: cardWidth, cornerRadius: Sizes.cornerRadius)
+                    ResourceCardBannerImageView(bannerImage: viewModel.bannerImage, isSquareLayout: cardType.isSquareLayout, cardWidth: cardWidth, cornerRadius: Sizes.cornerRadius)
                     
                     ToolCardFavoritedView(isFavorited: viewModel.isFavorited)
                         .onTapGesture {
@@ -58,9 +59,9 @@ struct ToolCardView: View {
                     HStack(alignment: .top) {
                         VStack(alignment: .leading, spacing: 3) {
                             
-                            ToolCardVerticalTextView(viewModel: viewModel, cardWidth: cardWidth)
+                            ToolCardVerticalTextView(viewModel: viewModel, cardType: cardType, cardWidth: cardWidth)
                             
-                            if viewModel.cardType == .squareWithNavButtons {
+                            if cardType == .squareWithNavButtons {
                                 Spacer(minLength: 0)
                                 
                                 ToolCardNavButtonView(sizeToFit: cardWidth, leadingPadding: Sizes.leadingPadding, buttonSpacing: 4, viewModel: viewModel)
@@ -70,7 +71,7 @@ struct ToolCardView: View {
                         
                         Spacer()
                         
-                        if viewModel.cardType.isStandardLayout {
+                        if cardType.isStandardLayout {
                             
                             ToolCardParallelLanguageView(languageName: viewModel.parallelLanguageName)
                                 .padding(.top, 4)
@@ -78,7 +79,7 @@ struct ToolCardView: View {
                         }
                     }
                     
-                    if viewModel.cardType == .standardWithNavButtons {
+                    if cardType == .standardWithNavButtons {
                         ToolCardNavButtonView(sizeToFit: cardWidth * Sizes.navButtonWidthMultiplier, leadingPadding: 0, buttonSpacing: 8, viewModel: viewModel)
                             .padding(.trailing, 14)
                     }
@@ -109,7 +110,6 @@ struct ToolCardView_Previews: PreviewProvider {
         let cardType: ToolCardType = .standardWithNavButtons
         
         let viewModel = MockToolCardViewModel(
-            cardType: cardType,
             title: "Knowing God Personally",
             category: "Gospel Invitation",
             showParallelLanguage: true,
@@ -119,7 +119,7 @@ struct ToolCardView_Previews: PreviewProvider {
             deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners
         )
         
-        ToolCardView(viewModel: viewModel, cardWidth: cardType.isSquareLayout ? 200 : 375)
+        ToolCardView(viewModel: viewModel, cardType: cardType, cardWidth: cardType.isSquareLayout ? 200 : 375)
             .padding()
             .previewLayout(.sizeThatFits)
     }
