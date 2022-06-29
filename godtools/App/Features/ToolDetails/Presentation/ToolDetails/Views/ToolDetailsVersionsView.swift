@@ -19,7 +19,7 @@ struct ToolDetailsVersionsView: View {
             ForEach(viewModel.toolVersions) { toolVersion in
                                 
                 ToolDetailsVersionsCardView(
-                    viewModel: viewModel.getToolVersionCarViewModel(toolVersion: toolVersion)
+                    viewModel: viewModel.getToolVersionCardViewModel(toolVersion: toolVersion)
                 )
             }
         }
