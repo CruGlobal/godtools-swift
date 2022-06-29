@@ -49,6 +49,14 @@ class GetTutorialUseCase {
         let tutorialItems: [TutorialItem] = [
             
             TutorialItem(
+                title: localizationServices.stringForMainBundle(key: "tutorial.lesson.title"),
+                message: localizationServices.stringForMainBundle(key: "tutorial.lesson.message"),
+                imageName: nil,
+                animationName: "tutorial_lessons",
+                youTubeVideoId: nil,
+                customViewId: nil
+            ),
+            TutorialItem(
                 title: localizationServices.stringForMainBundle(key: "tutorial.tool.title"),
                 message: localizationServices.stringForMainBundle(key: "tutorial.tool.message"),
                 imageName: ImageCatalog.tutorialTool.rawValue,
@@ -69,14 +77,6 @@ class GetTutorialUseCase {
                 message: localizationServices.stringForMainBundle(key: "tutorial.screenShare.message"),
                 imageName: nil,
                 animationName: "tutorial_screenshare",
-                youTubeVideoId: nil,
-                customViewId: nil
-            ),
-            TutorialItem(
-                title: localizationServices.stringForMainBundle(key: "tutorial.lesson.title"),
-                message: localizationServices.stringForMainBundle(key: "tutorial.lesson.message"),
-                imageName: nil,
-                animationName: "tutorial_lessons",
                 youTubeVideoId: nil,
                 customViewId: nil
             ),
