@@ -34,7 +34,7 @@ class ResourcesCache {
     
     func getResourcesWithoutMetaToolVariants() -> [ResourceModel] {
         let realm: Realm = realmDatabase.mainThreadRealm
-        let resourcesWithoutVariants: [RealmResource] = Array(realm.objects(RealmResource.self).filter(NSPredicate(format: "%K == nil || %K == ''", #keyPath(RealmResource.metatoolId), #keyPath(RealmResource.metatoolId), "")))
+        let resourcesWithoutVariants: [RealmResource] = Array(realm.objects(RealmResource.self).filter(NSPredicate(format: "%K == nil || %K == ''", #keyPath(RealmResource.metatoolId), #keyPath(RealmResource.metatoolId))))
         return resourcesWithoutVariants.map { ResourceModel(realmResource: $0) }
     }
     
