@@ -6540,7 +6540,6 @@
 				D42B87CC2822F72D000B001D /* BaseToolCardViewModel.swift */,
 				D4ACAD572821B23F00249490 /* MockToolCardViewModel.swift */,
 				D44C6932280479720000B970 /* ToolCardViewModel.swift */,
-				D44F3ACE28620AC40008390D /* ToolCardType.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -6797,6 +6796,7 @@
 			children = (
 				D42600C6282BF9F700E7A520 /* SubViews */,
 				D49F80F427FCD63A001AE5B3 /* ToolCardView.swift */,
+				D44F3ACE28620AC40008390D /* ToolCardType.swift */,
 				D42B87CE2822F76C000B001D /* ViewModels */,
 			);
 			path = ToolCardView;
