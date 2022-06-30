@@ -19,4 +19,5 @@ struct ToolVersionDomainModel: Identifiable {
     let primaryLanguageIsSupported: Bool
     let parallelLanguage: String?
     let parallelLanguageIsSupported: Bool
+    let isDefaultVersion: Bool
 }
