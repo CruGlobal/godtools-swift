@@ -478,11 +478,7 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func instantiateToolsMenuIfNeeded() {
-        
-        guard toolsMenuView == nil else {
-            return
-        }
+    private func getToolsMenu(startingPage: ToolsMenuPageType = AppFlow.defaultStartingToolsMenuPage) -> ToolsMenuView {
         
         let toolsMenuViewModel = ToolsMenuViewModel(
             flowDelegate: self,
@@ -500,8 +496,19 @@ extension AppFlow {
         
         let toolsMenuView = ToolsMenuView(
             viewModel: toolsMenuViewModel,
-            startingPage: AppFlow.defaultStartingToolsMenuPage
+            startingPage: startingPage
         )
+        
+        return toolsMenuView
+    }
+    
+    private func instantiateToolsMenuIfNeeded() {
+        
+        guard toolsMenuView == nil else {
+            return
+        }
+        
+        let toolsMenuView = getToolsMenu()
         
         navigationController.setViewControllers([toolsMenuView], animated: false)
                             
