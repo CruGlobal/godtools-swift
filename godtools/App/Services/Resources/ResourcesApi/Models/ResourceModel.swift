@@ -83,7 +83,7 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
         attrDefaultOrder = realmResource.attrDefaultOrder
         attrDefaultVariant = realmResource.attrDefaultVariant
         attrSpotlight = realmResource.attrSpotlight
-        defaultVariantId = nil  // TODO: - fix this
+        defaultVariantId = realmResource.defaultVariantId
         id = realmResource.id
         isHidden = realmResource.isHidden
         manifest = realmResource.manifest
