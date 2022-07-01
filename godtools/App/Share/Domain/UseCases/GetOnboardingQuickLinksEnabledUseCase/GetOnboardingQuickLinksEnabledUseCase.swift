@@ -19,7 +19,7 @@ class GetOnboardingQuickLinksEnabledUseCase {
     
     func getQuickLinksEnabled() -> Bool {
         
-        let supportedLanguageCodes: [String] = ["en", "fr", "lv", "vi"]
+        let supportedLanguageCodes: [String] = ["en"]
         
         let deviceLocale: Locale = deviceLanguage.preferredLocalizationLocale ?? deviceLanguage.locale
         

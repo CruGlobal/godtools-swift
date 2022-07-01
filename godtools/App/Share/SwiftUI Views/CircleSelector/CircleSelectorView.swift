@@ -10,7 +10,7 @@ import SwiftUI
 
 struct CircleSelectorView: View {
         
-    @Binding var isSelected: Bool
+    let isSelected: Bool
     
     var body: some View {
         

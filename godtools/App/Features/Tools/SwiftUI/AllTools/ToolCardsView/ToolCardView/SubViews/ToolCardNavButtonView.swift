@@ -46,7 +46,6 @@ struct ToolCardNavButtonView_Previews: PreviewProvider {
         let cardType: ToolCardType = .square
         
         let viewModel = MockToolCardViewModel(
-            cardType: cardType,
             title: "Knowing God Personally",
             category: "Gospel Invitation",
             showParallelLanguage: true,

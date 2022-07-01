@@ -50,7 +50,6 @@ class ToolSpotlightViewModel: ToolCardProvider {
     
     override func cardViewModel(for tool: ResourceModel) -> BaseToolCardViewModel {
         return ToolCardViewModel(
-            cardType: .square,
             resource: tool,
             dataDownloader: dataDownloader,
             deviceAttachmentBanners: deviceAttachmentBanners,

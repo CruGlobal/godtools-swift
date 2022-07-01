@@ -21,6 +21,9 @@ struct ToolDetailsVersionsView: View {
                 ToolDetailsVersionsCardView(
                     viewModel: viewModel.getToolVersionCardViewModel(toolVersion: toolVersion)
                 )
+                .onTapGesture {
+                    viewModel.toolVersionTapped(toolVersion: toolVersion)
+                }
             }
         }
     }

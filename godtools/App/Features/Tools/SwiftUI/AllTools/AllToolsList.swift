@@ -39,7 +39,7 @@ struct AllToolsList: View {
                 .padding([.leading, .trailing], leadingTrailingPadding)
             
             
-            ToolCardsView(viewModel: viewModel.toolCardsViewModel, width: width, leadingPadding: leadingTrailingPadding)
+            ToolCardsView(viewModel: viewModel.toolCardsViewModel, cardType: .standard, width: width, leadingPadding: leadingTrailingPadding)
             
             Spacer(minLength: 20)
         }

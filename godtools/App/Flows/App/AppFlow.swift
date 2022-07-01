@@ -703,20 +703,6 @@ extension AppFlow {
         
         let view = ToolDetailsHostingView(view: ToolDetailsView(viewModel: viewModel))
         
-        /*
-        let viewModel = ToolDetailViewModel(
-            flowDelegate: self,
-            resource: resource,
-            dataDownloader: appDiContainer.initialDataDownloader,
-            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
-            languageSettingsService: appDiContainer.languageSettingsService,
-            localizationServices: appDiContainer.localizationServices,
-            translationDownloader: appDiContainer.translationDownloader,
-            mobileContentParser: appDiContainer.getMobileContentParser(),
-            analytics: appDiContainer.analytics
-        )
-        let view = ToolDetailView(viewModel: viewModel)*/
-        
         navigationController.pushViewController(view, animated: true)
     }
 }

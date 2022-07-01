@@ -30,7 +30,7 @@ struct FavoriteToolsView: View {
                 
             } else {
                 
-                ToolCardsCarouselView(viewModel: viewModel, width: width, leadingTrailingPadding: leadingPadding)
+                ToolCardsCarouselView(viewModel: viewModel, cardType: .squareWithNavButtons, width: width, leadingTrailingPadding: leadingPadding)
             }
         }
     }

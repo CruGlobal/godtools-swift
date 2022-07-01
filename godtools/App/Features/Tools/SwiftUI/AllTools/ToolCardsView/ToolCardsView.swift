@@ -13,6 +13,7 @@ struct ToolCardsView: View {
     // MARK: - Properties
     
     @ObservedObject var viewModel: ToolCardProvider
+    let cardType: ToolCardType
     let width: CGFloat
     let leadingPadding: CGFloat
     
@@ -22,7 +23,7 @@ struct ToolCardsView: View {
         
         ForEach(viewModel.tools) { tool in
             
-            ToolCardView(viewModel: viewModel.cardViewModel(for: tool), cardWidth: width - 2 * leadingPadding)
+            ToolCardView(viewModel: viewModel.cardViewModel(for: tool), cardType: cardType, cardWidth: width - 2 * leadingPadding)
                 .listRowInsets(EdgeInsets())
                 .contentShape(Rectangle())
                 .padding([.top, .bottom], 8)
@@ -49,7 +50,7 @@ struct ToolCardsView_Previews: PreviewProvider {
         )
         
         GeometryReader { geo in
-            ToolCardsView(viewModel: viewModel, width: geo.size.width, leadingPadding: 20)
+            ToolCardsView(viewModel: viewModel, cardType: .standardWithNavButtons, width: geo.size.width, leadingPadding: 20)
         }
     }
 }
