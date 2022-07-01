@@ -105,7 +105,7 @@ class GetToolVersionsUseCase {
             primaryLanguageIsSupported: supportsPrimaryLanguage,
             parallelLanguage: parallelLanguage,
             parallelLanguageIsSupported: supportsParallelLanguage,
-            isDefaultVersion: resourceVersion.abbreviation.lowercased() == resource.attrDefaultVariant.lowercased()
+            isDefaultVersion: resourceVersion.id == resource.defaultVariantId
         )
     }
 }

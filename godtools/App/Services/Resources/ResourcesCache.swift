@@ -54,8 +54,8 @@ class ResourcesCache {
     }
     
     func getAllVisibleTools(andFilteredBy additionalFilter: ResourceFilter? = nil) -> [ResourceModel] {
-        let defaultVariantAbbreviations = getMetaTools().map { $0.attrDefaultVariant }
-        let defaultVariants = getToolsWithAbbreviations(defaultVariantAbbreviations)
+        let defaultVariantIds = getMetaTools().compactMap { $0.defaultVariantId }
+        let defaultVariants = getResources(resourceIds: defaultVariantIds)
         
         let resourcesExcludingVariants = getResourcesWithoutMetaToolVariants()
         

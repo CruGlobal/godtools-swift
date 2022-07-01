@@ -17,8 +17,8 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
     let attrBannerAbout: String
     let attrCategory: String
     let attrDefaultOrder: Int
-    let attrDefaultVariant: String
     let attrSpotlight: Bool
+    let defaultVariantId: String?
     let id: String
     let isHidden: Bool
     let manifest: String
@@ -49,7 +49,6 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
         case attrBannerAbout = "attr-banner-about"
         case attrCategory = "attr-category"
         case attrDefaultOrder = "attr-default-order"
-        case attrDefaultVariant = "attr-default-variant"
         case attrSpotlight = "attr-spotlight"
         case description = "description"
         case isHidden = "attr-hidden"
@@ -62,6 +61,7 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
     
     enum RelationshipsKeys: String, CodingKey {
         case attachments = "attachments"
+        case defaultVariant = "default-variant"
         case latestTranslations = "latest-translations"
         case metatool = "metatool"
     }
@@ -79,8 +79,8 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
         attrBannerAbout = realmResource.attrBannerAbout
         attrCategory = realmResource.attrCategory
         attrDefaultOrder = realmResource.attrDefaultOrder
-        attrDefaultVariant = realmResource.attrDefaultVariant
         attrSpotlight = realmResource.attrSpotlight
+        defaultVariantId = realmResource.defaultVariantId
         id = realmResource.id
         isHidden = realmResource.isHidden
         manifest = realmResource.manifest
@@ -135,7 +135,6 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
         else {
             attrDefaultOrder = -1
         }
-        attrDefaultVariant = try attributesContainer?.decodeIfPresent(String.self, forKey: .attrDefaultVariant) ?? ""
         let isHiddenString: String = try attributesContainer?.decodeIfPresent(String.self, forKey: .isHidden) ?? "false"
         isHidden = isHiddenString == "true" ? true : false
         manifest = try attributesContainer?.decodeIfPresent(String.self, forKey: .manifest) ?? ""
@@ -166,6 +165,20 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
         }
         
         metatoolId = metatoolData?.id
+        
+        // relationships - default variant
+        
+        let defaultVariantData: DefaultVariantData?
+        
+        do {
+            let defaultVariantContainer = try relationshipsContainer?.nestedContainer(keyedBy: DataCodingKeys.self, forKey: .defaultVariant)
+            defaultVariantData = try defaultVariantContainer?.decodeIfPresent(DefaultVariantData.self, forKey: .data)
+        }
+        catch {
+            defaultVariantData = nil
+        }
+        
+        defaultVariantId = defaultVariantData?.id
         
         // set when initialized from a RealmResource.
         languageIds = Array()
