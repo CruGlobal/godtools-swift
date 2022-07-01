@@ -59,8 +59,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/google/GoogleDataTransport.git",
       "state" : {
-        "revision" : "15ccdfd25ac55b9239b82809531ff26605e7556e",
-        "version" : "9.1.2"
+        "revision" : "b905c49326b72211531ed9d7baa02d724828a8dc",
+        "version" : "9.1.4"
       }
     },
     {
@@ -122,8 +122,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/CruGlobal/okta-authentication-ios.git",
       "state" : {
-        "revision" : "1af791ad7baf2e9cfd3a9332c0d2a01dc90eaf7c",
-        "version" : "1.2.1"
+        "revision" : "0b55d52c2aee9cf18bff6ec6ee7da855788fd911",
+        "version" : "1.2.3"
       }
     },
     {
@@ -131,8 +131,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/okta/okta-oidc-ios.git",
       "state" : {
-        "revision" : "555cac26344a9562837f1e24dfa2fcceb98d274f",
-        "version" : "3.10.8"
+        "revision" : "91eac722b8e859ba7f15d65a9085a64a296bc065",
+        "version" : "3.11.2"
       }
     },
     {
@@ -140,8 +140,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/google/promises.git",
       "state" : {
-        "revision" : "46c1e6b5ac09d8f82c991061c659f67e573d425d",
-        "version" : "2.1.0"
+        "revision" : "3e4e743631e86c8c70dbc6efdc7beaa6e90fd3bb",
+        "version" : "2.1.1"
       }
     },
     {
