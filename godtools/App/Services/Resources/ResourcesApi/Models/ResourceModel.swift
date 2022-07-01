@@ -19,6 +19,7 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
     let attrDefaultOrder: Int
     let attrDefaultVariant: String
     let attrSpotlight: Bool
+    let defaultVariantId: String?
     let id: String
     let isHidden: Bool
     let manifest: String
@@ -62,6 +63,7 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
     
     enum RelationshipsKeys: String, CodingKey {
         case attachments = "attachments"
+        case defaultVariant = "default-variant"
         case latestTranslations = "latest-translations"
         case metatool = "metatool"
     }
@@ -81,6 +83,7 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
         attrDefaultOrder = realmResource.attrDefaultOrder
         attrDefaultVariant = realmResource.attrDefaultVariant
         attrSpotlight = realmResource.attrSpotlight
+        defaultVariantId = nil  // TODO: - fix this
         id = realmResource.id
         isHidden = realmResource.isHidden
         manifest = realmResource.manifest
@@ -166,6 +169,20 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
         }
         
         metatoolId = metatoolData?.id
+        
+        // relationships - default variant
+        
+        let defaultVariantData: DefaultVariantData?
+        
+        do {
+            let defaultVariantContainer = try relationshipsContainer?.nestedContainer(keyedBy: DataCodingKeys.self, forKey: .defaultVariant)
+            defaultVariantData = try defaultVariantContainer?.decodeIfPresent(DefaultVariantData.self, forKey: .data)
+        }
+        catch {
+            defaultVariantData = nil
+        }
+        
+        defaultVariantId = defaultVariantData?.id
         
         // set when initialized from a RealmResource.
         languageIds = Array()
