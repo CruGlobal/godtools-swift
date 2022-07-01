@@ -20,7 +20,6 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     private let viewsService: ViewsService
     private let deepLinkingService: DeepLinkingServiceType
     
-    private var toolsMenuView: ToolsMenuView?
     private var onboardingFlow: OnboardingFlow?
     private var menuFlow: MenuFlow?
     private var languageSettingsFlow: LanguageSettingsFlow?
@@ -102,7 +101,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             }
             else {
                 
-                navigateToToolsMenu(toolbarItem: nil, animateToolMenuToolbarItemTransition: false, animatedDismissal: false, didCompleteDismissal: nil)
+                navigateToToolsMenu()
             }
             
             loadInitialData()
@@ -129,8 +128,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 loadingView.backgroundColor = .white
                 window.addSubview(loadingView)
                 
-                navigateToToolsMenu(toolbarItem: nil, animateToolMenuToolbarItemTransition: false, animatedDismissal: false, didCompleteDismissal: nil)
-                
+                navigateToToolsMenu()
+                                
                 loadInitialData()
                 
                 appDiContainer.userAuthentication.refreshAuthenticationIfAvailable()
@@ -303,8 +302,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
         case .onboardingFlowCompleted(let onboardingFlowCompletedState):
             
-            instantiateToolsMenuIfNeeded()
-            
+            navigateToToolsMenu()
+                        
             dismissOnboarding(animated: true) { [weak self] in
                 
                 switch onboardingFlowCompletedState {
@@ -323,13 +322,13 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                     self?.navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
                     
                 case .tryLessons:
-                    self?.navigateToToolsMenu(toolbarItem: .lessons, animateToolMenuToolbarItemTransition: true, animatedDismissal: false, didCompleteDismissal: nil)
+                    self?.navigateToToolsMenu(startingPage: .lessons)
                     
                 case .chooseTool:
-                    self?.navigateToToolsMenu(toolbarItem: .allTools, animateToolMenuToolbarItemTransition: true, animatedDismissal: false, didCompleteDismissal: nil)
+                    self?.navigateToToolsMenu(startingPage: .allTools)
                     
                 default:
-                    self?.navigateToToolsMenu(toolbarItem: nil, animateToolMenuToolbarItemTransition: false, animatedDismissal: false, didCompleteDismissal: nil)
+                    self?.navigateToToolsMenu()
                 }
             }
                     
@@ -478,7 +477,7 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func getToolsMenu(startingPage: ToolsMenuPageType = AppFlow.defaultStartingToolsMenuPage) -> ToolsMenuView {
+    private func getToolsMenu(startingPage: ToolsMenuPageType?) -> ToolsMenuView {
         
         let toolsMenuViewModel = ToolsMenuViewModel(
             flowDelegate: self,
@@ -496,32 +495,17 @@ extension AppFlow {
         
         let toolsMenuView = ToolsMenuView(
             viewModel: toolsMenuViewModel,
-            startingPage: startingPage
+            startingPage: startingPage ?? AppFlow.defaultStartingToolsMenuPage
         )
         
         return toolsMenuView
     }
     
-    private func instantiateToolsMenuIfNeeded() {
+    private func navigateToToolsMenu(startingPage: ToolsMenuPageType = AppFlow.defaultStartingToolsMenuPage, animateDismissingPresentedView: Bool = false, didCompleteDismissingPresentedView: (() -> Void)? = nil) {
         
-        guard toolsMenuView == nil else {
-            return
-        }
+        let toolsMenu: ToolsMenuView = getToolsMenu(startingPage: startingPage)
         
-        let toolsMenuView = getToolsMenu()
-        
-        navigationController.setViewControllers([toolsMenuView], animated: false)
-                            
-        self.toolsMenuView = toolsMenuView
-    }
-    
-    private func navigateToToolsMenu(toolbarItem: ToolsMenuPageType?, animateToolMenuToolbarItemTransition: Bool, animatedDismissal: Bool, didCompleteDismissal: (() -> Void)? = nil) {
-        
-        instantiateToolsMenuIfNeeded()
-        
-        guard let toolsMenuView = self.toolsMenuView else {
-            return
-        }
+        navigationController.setViewControllers([toolsMenu], animated: false)
         
         closeMenu(animated: false)
         
@@ -533,12 +517,13 @@ extension AppFlow {
         lessonFlow = nil
         tractFlow = nil
         articleFlow = nil
-                
-        toolsMenuView.reset(toolbarItem: toolbarItem ?? AppFlow.defaultStartingToolsMenuPage, animated: animateToolMenuToolbarItemTransition)
-                
+                                
         navigationController.popToRootViewController(animated: false)
         
-        navigationController.dismissPresented(animated: animatedDismissal, completion: didCompleteDismissal)
+        navigationController.dismissPresented(
+            animated: animateDismissingPresentedView,
+            completion: didCompleteDismissingPresentedView
+        )
     }
 }
 
@@ -586,14 +571,14 @@ extension AppFlow {
                
             // TODO: Do we need to set starting toolbar item to lessons if deeplinking from a lesson? ~Levi
 
-            navigateToToolsMenu(toolbarItem: .favoritedTools, animateToolMenuToolbarItemTransition: false, animatedDismissal: false, didCompleteDismissal: { [weak self] in
+            navigateToToolsMenu(startingPage: .favoritedTools, animateDismissingPresentedView: false, didCompleteDismissingPresentedView: { [weak self] in
                 
                 self?.navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
             })
             
         case .article(let articleUri):
             
-            navigateToToolsMenu(toolbarItem: .favoritedTools, animateToolMenuToolbarItemTransition: false, animatedDismissal: false, didCompleteDismissal: { [weak self] in
+            navigateToToolsMenu(startingPage: .favoritedTools, animateDismissingPresentedView: false, didCompleteDismissingPresentedView: { [weak self] in
                 
                 guard let weakSelf = self else {
                     return
@@ -610,13 +595,13 @@ extension AppFlow {
             })
             
         case .lessonsList:
-            navigateToToolsMenu(toolbarItem: .lessons, animateToolMenuToolbarItemTransition: false, animatedDismissal: false, didCompleteDismissal: nil)
+            navigateToToolsMenu(startingPage: .lessons)
             
         case .favoritedToolsList:
-            navigateToToolsMenu(toolbarItem: .favoritedTools, animateToolMenuToolbarItemTransition: false, animatedDismissal: false, didCompleteDismissal: nil)
+            navigateToToolsMenu(startingPage: .favoritedTools)
             
         case .allToolsList:
-            navigateToToolsMenu(toolbarItem: .allTools, animateToolMenuToolbarItemTransition: false, animatedDismissal: false, didCompleteDismissal: nil)
+            navigateToToolsMenu(startingPage: .allTools, animateDismissingPresentedView: false, didCompleteDismissingPresentedView: nil)
         }
     }
 }
@@ -657,7 +642,7 @@ extension AppFlow {
     private func dismissTutorial() {
         
         if menuFlow != nil {
-            toolsMenuView?.reset(toolbarItem: .favoritedTools, animated: false)
+            navigateToToolsMenu(startingPage: .favoritedTools)
             closeMenu(animated: true)
         }
         
