@@ -52,14 +52,14 @@ struct ToolDetailsToggleFavoriteButton: View {
                 Text(title)
                     .foregroundColor(color)
             }
+            .background(Color.white)
+            .frame(width: width, height: height, alignment: .center)
         }
-        .frame(width: width, height: height, alignment: .center)
-        .background(Color.white)
         .accentColor(color)
         .overlay(
-                RoundedRectangle(cornerRadius: cornerRadius)
-                    .stroke(color, lineWidth: 1)
-            )
+            RoundedRectangle(cornerRadius: cornerRadius)
+                .stroke(color, lineWidth: 1)
+        )
     }
 }
 

@@ -9,9 +9,7 @@
 import SwiftUI
 
 class BaseToolCardViewModel: NSObject, ObservableObject {
-    
-    let cardType: ToolCardType
-    
+        
     // MARK: - Published
     
     @Published var bannerImage: Image?
@@ -24,12 +22,6 @@ class BaseToolCardViewModel: NSObject, ObservableObject {
     @Published var layoutDirection: LayoutDirection = .leftToRight
     @Published var attachmentsDownloadProgressValue: Double = 0
     @Published var translationDownloadProgressValue: Double = 0
-    
-    // MARK: - Init
-    
-    init(cardType: ToolCardType) {
-        self.cardType = cardType
-    }
 
     // MARK: - Public Methods
     
