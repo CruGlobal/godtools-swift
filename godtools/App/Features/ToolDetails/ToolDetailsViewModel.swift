@@ -37,6 +37,7 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
     @Published var segments: [String] = Array()
     @Published var selectedSegment: ToolDetailsSegmentType = .about
     @Published var aboutDetails: String = ""
+    @Published var versionsMessage: String = ""
     @Published var toolVersions: [ToolVersionDomainModel] = Array()
     @Published var selectedToolVersion: ToolVersionDomainModel?
     
@@ -54,6 +55,7 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
         self.getToolVersionsUseCase = getToolVersionsUseCase
         self.bannerImageRepository = bannerImageRepository
         self.mediaType = ToolDetailsViewModel.getMediaType(resource: resource, dataDownloader: dataDownloader)
+        self.versionsMessage = localizationServices.stringForMainBundle(key: "toolDetails.versions.message")
         
         super.init()
         
